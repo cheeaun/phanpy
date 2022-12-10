@@ -82,4 +82,4 @@ And here I am. Building a Mastodon web client.
 
 ## License
 
-[MIT]([LICENSE](https://cheeaun.mit-license.org/)).
+[MIT](https://cheeaun.mit-license.org/).

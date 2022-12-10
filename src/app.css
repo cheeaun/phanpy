@@ -360,6 +360,17 @@ button.carousel-dot.active {
 button.carousel-dot.active {
   pointer-events: none;
 }
+@media (hover: hover) {
+  .carousel-controls {
+    transform: translateY(100%);
+    transition: transform 0.2s ease-in-out;
+  }
+  .carousel:hover + .carousel-controls,
+  .carousel-controls:hover,
+  .carousel-controls:focus-within {
+    transform: translateY(0);
+  }
+}
 
 /* COMPOSE BUTTON */
 

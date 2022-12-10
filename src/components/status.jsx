@@ -207,7 +207,7 @@ function Card({ card }) {
               __html: title,
             }}
           />
-          <p class="meta">{providerName || authorName}</p>
+          <p class="meta">{description || providerName || authorName}</p>
         </div>
       </a>
     );

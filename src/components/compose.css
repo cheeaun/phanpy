@@ -1,0 +1,232 @@
+#compose-container {
+  width: 40em;
+  max-width: 100vw;
+  align-self: stretch;
+  animation: fade-in 0.2s ease-out;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+#compose-container .compose-top {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#compose-container .close-button {
+  padding: 6px;
+  color: var(--text-insignificant-color);
+}
+
+#compose-container textarea{
+  width: 100%;
+  max-width: 100%;
+  height: 3em;
+  min-height: 3em;
+  max-height: 10em;
+  resize: vertical;
+}
+@keyframes appear-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#compose-container .reply-to {
+  border-radius: 8px 8px 0 0;
+  max-height: 160px;
+  pointer-events: none;
+  filter: saturate(0.25) opacity(0.75);
+  background-color: var(--bg-blur-color);
+  margin: 0 12px;
+  border: 1px solid var(--outline-color);
+  border-bottom: 0;
+  /* box-shadow: 0 0 12px var(--divider-color); */
+  /* mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1) 90%, transparent); */
+  animation: appear-up 1s ease-in-out;
+}
+@keyframes appear-down {
+  0% {
+    transform: translateY(-2em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+#compose-container form {
+  border-radius: 8px;
+  padding: 4px 12px;
+  background-image: linear-gradient(var(--bg-color) 75%, transparent);
+  /* outline: 1px solid var(--outline-color); */
+  /* box-shadow: 0 0 12px var(--divider-color); */
+  position: relative;
+  z-index: 1;
+}
+#compose-container .reply-to ~ form {
+  animation: appear-down 1s ease-in-out;
+  box-shadow: 0 -12px 12px -12px var(--divider-color);
+}
+
+#compose-container .toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  gap: 8px;
+}
+#compose-container .toolbar.stretch {
+  justify-content: stretch;
+}
+#compose-container .toolbar .spoiler-text-field {
+  flex: 1;
+  min-width: 0;
+}
+#compose-container .toolbar-button {
+  cursor: pointer;
+  display: inline-block;
+  background-color: var(--bg-faded-color);
+  padding: 0 8px;
+  border-radius: 8px;
+  min-height: 2.5em;
+  line-height: 2.5em;
+  min-width: 2.5em;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+#compose-container .toolbar-button > * {
+  vertical-align: middle;
+  cursor: inherit;
+}
+#compose-container .toolbar-button:has([disabled]) {
+  cursor: not-allowed;
+}
+#compose-container .toolbar-button:has([disabled]) > * {
+  filter: opacity(0.3);
+}
+#compose-container .toolbar-button:not(.show-field) :is(input[type="checkbox"], select, input[type="file"]) {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+}
+#compose-container .toolbar-button input[type="file"] {
+  /* Move this out of the way, to fix cursor: pointer bug */
+  left: -100vw !important;
+}
+#compose-container .toolbar-button select {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  padding: 0 0 0 8px;
+}
+#compose-container .toolbar-button:not(.show-field) select {
+  right: 0;
+  left: auto !important;
+}
+#compose-container .toolbar-button:hover {
+  outline: 2px solid var(--divider-color);
+}
+#compose-container .toolbar-button:active {
+  filter: brightness(0.8);
+}
+
+#compose-container text-expander {
+  position: relative;
+}
+#compose-container .text-expander-menu {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  position: absolute;
+  margin: 0 0 0 -8px;
+  padding: 0;
+  list-style: none;
+  outline: 1px solid var(--outline-color);
+  /* box-shadow: 0 0 12px var(--outline-color); */
+  border-radius: 8px;
+  overflow: hidden;
+  top: 0 !important;
+  z-index: 100;
+  min-width: 50vw;
+}
+#compose-container .text-expander-menu li {
+  white-space: nowrap;
+  padding: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 90%;
+}
+#compose-container .text-expander-menu li img {
+  /* The shortcode emojis */
+  width: 1em;
+  height: 1em;
+}
+#compose-container .text-expander-menu li .avatar {
+  width: 2.2em;
+  height: 2.2em;
+}
+#compose-container .text-expander-menu li:hover {
+  color: var(--bg-color);
+  background-color: var(--link-color);
+}
+
+#compose-container .media-attachments {
+  background-color: var(--bg-faded-color);
+  padding: 8px;
+  border-radius: 8px;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#compose-container .media-attachment {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+#compose-container .media-preview {
+  flex-shrink: 1;
+}
+#compose-container .media-preview > *{
+  min-width: 80px;
+  width: 80px !important;
+  height: 80px;
+  object-fit: contain;
+  background-color: var(--img-bg-color);
+  border-radius: 8px;
+  outline: 1px solid var(--outline-color);
+}
+#compose-container .media-attachment textarea {
+  height: 80px;
+  flex-grow: 1;
+  resize: none;
+}
+#compose-container .media-aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+#compose-container .media-aside .close-button {
+  padding: 4px;
+  align-self: flex-start;
+  color: var(--text-insignificant-color);
+}
+#compose-container .media-aside .uploaded {
+  color: var(--green-color);
+  margin-bottom: 4px;
+}

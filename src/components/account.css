@@ -1,0 +1,30 @@
+#account-container.skeleton {
+  color: var(--outline-color);
+}
+
+#account-container header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#account-container .note {
+  font-size: 95%;
+  line-height: 1.5;
+}
+
+#account-container .stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#account-container .actions {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  min-height: 2.5em;
+}
+#account-container .actions button {
+  align-self: flex-end;
+}

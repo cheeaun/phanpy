@@ -1,0 +1,43 @@
+.loader-container {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  animation: slow-appear .3s ease-in-out 1s both;
+  vertical-align: middle;
+}
+@keyframes slow-appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.loader-container.abrupt {
+  animation: none;
+}
+.loader-container.hidden {
+  visibility: hidden;
+}
+
+.loader {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2.5px solid;
+  border-color: var(--loader-color) var(--loader-color) transparent transparent;
+  animation: loader 1s infinite linear;
+}
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader-container.hidden .loader {
+  animation: none;
+}

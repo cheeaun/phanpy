@@ -1,0 +1,85 @@
+<div align="center">
+  <img src="design/logo-2.svg" width="128" height="128" alt="">
+
+Phanpy
+===
+
+**Minimalistic opinionated Mastodon web client.**
+</div>
+
+<br>
+
+This is an alternative web client for [Mastodon](https://joinmastodon.org/).
+
+Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
+
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+
+**🐘 This is an early ALPHA project. Many features are missing, many bugs are present. Please report issues as detailed as possible. Thanks 🙏**
+
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+
+## Features
+
+- Minimalistic UI
+- Accounts switching
+- Theme switching (light, dark, auto)
+
+## Design decisions
+
+- **Status actions (reply, boost, favourite, bookmark, etc) are hidden by default**.<br>They only appear in individual status page. This is to reduce clutter and distraction. It may result in lower engagement, but we're not chasing numbers here.
+- **Boost is represented with the rocket icon**.<br>The green double arrow icon (retweet for Twitter) doesn't look right for the term "boost". Green rocket looks weird, so I use purple.
+- **Short usernames (`@username`) are displayed in timelines, instead of the full account username (`@username@instance`)**.<br>Despite the [guideline](https://docs.joinmastodon.org/api/guidelines/#username) mentioned that "Decentralization must be transparent to the user", I don't think we should shove it to the face every single time. There are also some [screen-reader-related accessibility concerns](https://twitter.com/lifeofablindgrl/status/1595864647554502656) with the full username, though this web app is unfortunately not accessible yet.
+- **Hash-based URLs**.<br>This web app is not meant to be a full-fledged replacement to Mastodon's existing front-end. There's no SEO, database, serverless or any long-running servers. I could be wrong one day.
+
+## Development
+
+Prerequisites: Node.js 18+
+
+- `npm install` - Install dependencies
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview the production build
+- `npm run fetch-instances` - Fetch instances list from [instances.social](https://instances.social/), save it to `src/data/instances.json`
+  - requires `.env.dev` file with `INSTANCES_SOCIAL_SECRET_TOKEN` variable set
+
+## Tech stack
+
+- [Vite](https://vitejs.dev/) - Build tool
+- [Preact](https://preactjs.com/) - UI library
+- [Valtio](https://valtio.pmnd.rs/) - State management
+- [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
+- [Iconify](https://iconify.design/) - Icon library
+- Vanilla CSS - *Yes, I'm old school.*
+
+Some of these may change in the future. The front-end world is ever-changing.
+
+## Mascot
+
+[Phanpy](https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)) is a Ground-type Pokémon.
+
+## Maintainers
+
+- [Chee Aun](https://github.com/cheeaun) ([Mastodon](https://mastodon.social/@cheeaun)) ([Twitter](https://twitter.com/cheeaun))
+
+## Backstory
+
+I am one of the earliest users of Twitter. Twitter was launched on [15 July 2006](https://en.wikipedia.org/wiki/Twitter). I joined on December 2006 and my [first tweet](https://twitter.com/cheeaun/status/1298723) was posted on 18 December 2006.
+
+I know how early Twitter looks like. It was fun.
+
+Back then, I [made a Twitter clone](https://twitter.com/cheeaun/status/789031599) called "Twig" written in Python and Google App Engine. I almost made my own [Twitter desktop client](https://github.com/cheeaun/chidori) written in Appcelerator Titanium. I [gave one of my best talks about the Twitter client](https://www.slideshare.net/cheeaun/story-of-a-thousand-birds) in a mini-conference. I built this thing called "Twitter [Columns](https://twitter.com/columns)", a web app that shows your list of followings, your followings' followings, your followers, your followers' followers and so on. In 2009, I wrote a blog post titled ["How I got started with Twitter"](https://cheeaun.com/blog/2009/04/how-i-got-started-with-twitter/). I created [two](https://twitter.com/cheeaun/status/1273422454) [themes](https://twitter.com/cheeaun/status/1487781343) for DestroyTwitter (a desktop client made with Adobe Air by Jonnie Hallman) and one of them is called ["Vimeo"](https://dribbble.com/shots/31624). In 2013, I wrote [my own tweets backup site](https://github.com/cheeaun/tweets) with a front-end to view my tweets and a [CouchDB backend](https://github.com/cheeaun/tweet-couch) to store them.
+
+It's been **more than 15 years**.
+
+And here I am. Building a Mastodon web client.
+
+## Alternative clients
+
+- [Pinafore](https://pinafore.social/)
+- [Elk](https://m.webtoo.ls/@elk)
+- [More...](https://github.com/tleb/awesome-mastodon#clients)
+
+## License
+
+[MIT]([LICENSE](https://cheeaun.mit-license.org/)).

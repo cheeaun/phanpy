@@ -1,0 +1,49 @@
+.notification {
+  display: flex;
+  padding: 16px !important;
+  gap: 16px;
+}
+.notification.skeleton {
+  color: var(--outline-color);
+}
+
+.notification-type {
+  width: 24px;
+  flex-shrink: 0;
+  opacity: 0.75;
+  color: var(--text-insignificant-color);
+}
+.notification-type.favourite {
+  color: var(--favourite-color);
+}
+.notification-type.reblog {
+  color: var(--reblog-color);
+}
+.notification-type.poll,
+.notification-type.mention {
+  color: var(--link-color);
+}
+
+.notification .status-link {
+  border-radius: 8px 8px 0 0;
+  border: 1px solid var(--divider-color);
+  max-height: 160px;
+  overflow: hidden;
+  /* fade out mask gradient bottom */
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1) 50%, transparent);
+  filter: saturate(0.25);
+}
+.notification .status-link:hover {
+  background-color: var(--bg-blur-color);
+  filter: saturate(1);
+}
+.notification .status-link > * {
+  pointer-events: none;
+}
+
+.notification-content {
+  flex-grow: 1;
+}
+.notification-content p:first-child {
+  margin-top: 0;
+}

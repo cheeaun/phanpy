@@ -1,0 +1,95 @@
+#settings-container {
+  text-align: left;
+  padding-bottom: 3em;
+  animation: fade-in 0.2s ease-out;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+#settings-container .close-button {
+  float: right;
+}
+
+#settings-container h2 {
+  margin: 3em 0 1em;
+  font-size: .9em;
+  text-transform: uppercase;
+  color: var(--text-insignificant-color);
+}
+
+#settings-container ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#settings-container ul li {
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#settings-container ul li .current {
+  margin-right: 8px;
+  color: var(--green-color);
+  opacity: 0.1;
+}
+#settings-container ul li .current.is-current {
+  opacity: 1;
+}
+#settings-container ul li .current.is-current + .avatar {
+  outline-color: var(--green-color);
+  outline-width: 2px;
+}
+#settings-container ul li > div {
+  flex-grow: 1;
+  max-width: 100%;
+}
+#settings-container ul li > div.actions {
+  flex-basis: min-content;
+  margin-top: 8px;
+}
+#settings-container ul li > div:last-child {
+  text-align: right;
+}
+#settings-container div,
+#settings-container div > *{
+  vertical-align: middle;
+}
+#settings-container .avatar {
+  margin-right: 8px;
+}
+
+#settings-container .radio-group {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--button-bg-color);
+  overflow: hidden;
+  padding: 1px;
+}
+#settings-container .radio-group input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+#settings-container .radio-group label {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+#settings-container .radio-group label input:checked + span {
+  color: var(--link-color);
+  font-weight: bold;
+}
+#settings-container .radio-group label:hover {
+  color: var(--button-bg-color);
+}
+#settings-container .radio-group label:has(input:checked) {
+  border-radius: 999px;
+  color: var(--button-text-color);
+  background-color: var(--button-bg-color);
+}
+#settings-container .radio-group label:has(input:checked) input:checked + span {
+  color: inherit;
+}

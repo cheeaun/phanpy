@@ -1,0 +1,19 @@
+.name-text {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+a.name-text:hover b,
+a.name-text.short:hover i {
+  text-decoration: underline;
+  text-decoration-color: var(--text-insignificant-color);
+}
+.name-text i {
+  font-style: normal;
+  opacity: 0.75;
+}
+
+.name-text .avatar {
+  vertical-align: middle;
+  margin-right: 4px;
+}

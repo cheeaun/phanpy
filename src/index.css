@@ -1,0 +1,191 @@
+:root {
+  --blue-color: royalblue;
+  --purple-color: blueviolet;
+  --green-color: green;
+  --orange-color: orange;
+  --red-color: orangered;
+  --bg-color: #fff;
+  --bg-faded-color: #f0f2f5;
+  --bg-blur-color: #fff9;
+  --bg-faded-blur-color: #f0f2f599;
+  --text-color: #1c1e21;
+  --text-insignificant-color: #1c1e2199;
+  --link-color: var(--blue-color);
+  --link-light-color: #4169e199;
+  --link-faded-color: #4169e122;
+  --link-bg-hover-color: #f0f2f599;
+  --button-bg-color: var(--blue-color);
+  --button-bg-blur-color: #4169e1aa;
+  --button-text-color: white;
+  --button-plain-bg-hover-color: rgba(128, 128, 128, 0.1);
+  --reblog-color: var(--purple-color);
+  --reblog-faded-color: #892be220;
+  --reply-to-color: var(--orange-color);
+  --favourite-color: var(--red-color);
+  --reply-to-faded-color: #ffa6001a;
+  --outline-color: rgba(128, 128, 128, .2);
+  --outline-hover-color: rgba(128, 128, 128, .7);
+  --divider-color: rgba(0, 0, 0, 0.1);
+  --backdrop-color: rgba(255, 255, 255, 0.5);
+  --img-bg-color: rgba(128, 128, 128, 0.2);
+  --loader-color: #1c1e2199;
+  --comment-line-color: #e5e5e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blue-color: CornflowerBlue;
+    --purple-color: mediumpurple;
+    --green-color: MediumSeaGreen;
+    --bg-color: #242526;
+    --bg-faded-color: #18191a;
+    --bg-blur-color: #0009;
+    --bg-faded-blur-color: #18191a99;
+    --text-color: #f0f2f5;
+    --text-insignificant-color: #f0f2f599;
+    --link-bg-hover-color: #34353799;
+    --divider-color: rgba(255, 255, 255, 0.1);
+    --bg-blur-color: #24252699;
+    --backdrop-color: rgba(0, 0, 0, 0.5);
+    --comment-line-color: #565656;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  font-size: 15px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration-color: var(--link-faded-color);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+a:hover {
+  text-decoration-color: var(--link-color);
+}
+
+img {
+  max-width: 100%;
+}
+
+hr {
+  height: 2px;
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+  background-image: linear-gradient(to right, transparent, var(--divider-color), transparent);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  max-width: 100%;
+}
+
+button, .button {
+  display: inline-block;
+  margin: 2px;
+  padding: 8px 12px;
+  border-radius: 2.5em;
+  border: 0;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  cursor: pointer;
+  line-height: 1;
+  vertical-align: middle;
+  text-decoration: none;
+}
+button > * {
+  vertical-align: middle;
+}
+:is(button, .button):not([disabled]):hover {
+  filter: brightness(1.2);
+}
+:is(button, .button):active {
+  filter: brightness(0.8);
+}
+:is(button, .button)[disabled] {
+  cursor: auto;
+  opacity: 0.5;
+}
+
+:is(button, .button).plain {
+  background-color: transparent;
+  color: var(--link-color);
+  backdrop-filter: blur(12px);
+}
+:is(button, .button).light {
+  background-color: var(--bg-faded-color);
+  color: var(--text-color);
+  outline: 1px solid var(--outline-color);
+}
+
+:is(button, .button).block {
+  display: block;
+  width: 100%;
+  padding: 12px;
+}
+
+input[type="text"], textarea, select {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 2px solid var(--divider-color);
+  padding: 8px;
+  border-radius: 4px;
+}
+input[type="text"]:focus, textarea:focus, select:focus {
+  border-color: var(--outline-color);
+}
+input[type="text"].large, textarea.large, select.large, button.large {
+  font-size: 125%;
+  padding: 12px;
+}
+
+button.small {
+  font-size: 90%;
+  padding: 4px 8px;
+}
+
+select.plain {
+  border: 0;
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  img, video {
+    filter: brightness(0.7);
+    transition: filter 0.3s ease-out;
+  }
+  img:hover, video:hover {
+    filter: brightness(1);
+  }
+}
+
+/* UTILS */
+
+.ib {
+  display: inline-block;
+}
+
+/* KEYFRAMES */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

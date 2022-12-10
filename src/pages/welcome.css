@@ -1,0 +1,40 @@
+#welcome {
+  overflow: auto;
+  max-height: 90vh;
+}
+
+#welcome img {
+  margin-top: 16px;
+  height: auto;
+}
+@keyframes dance {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(5deg);
+  }
+  40% {
+    transform: rotate(-5deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+#welcome:hover img {
+  animation: dance 2s infinite 15s linear;
+}
+
+#welcome .warning {
+  font-weight: bold;
+  padding: 16px;
+  background: lemonchiffon;
+  color: chocolate;
+  border-radius: 16px;
+}

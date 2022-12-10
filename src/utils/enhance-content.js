@@ -1,16 +1,24 @@
 import emojifyText from './emojify-text';
 
-export default (content, { emojis }) => {
-  // 1. Emojis
+export default (content, opts = {}) => {
+  const { emojis } = opts;
   let enhancedContent = content;
+  const dom = document.createElement('div');
+  dom.innerHTML = enhancedContent;
 
+  // 1. Emojis
   if (emojis) {
     enhancedContent = emojifyText(enhancedContent, emojis);
   }
 
-  // 2. Code blocks
-  const dom = document.createElement('div');
-  dom.innerHTML = enhancedContent;
+  // 2. Add target="_blank" to all links with no target="_blank"
+  // E.g. `note` in `account`
+  const links = Array.from(dom.querySelectorAll('a:not([target="_blank"])'));
+  links.forEach((link) => {
+    link.setAttribute('target', '_blank');
+  });
+
+  // 3. Code blocks
   // Check for <p> with markdown-like content "```"
   const blocks = Array.from(dom.querySelectorAll('p')).filter((p) =>
     /^```[^]+```$/g.test(p.innerText.trim()),
@@ -28,7 +36,7 @@ export default (content, { emojis }) => {
     pre.appendChild(code);
     block.replaceWith(pre);
   });
-  enhancedContent = dom.innerHTML;
 
+  enhancedContent = dom.innerHTML;
   return enhancedContent;
 };

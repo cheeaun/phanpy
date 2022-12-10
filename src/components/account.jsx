@@ -2,6 +2,7 @@ import './account.css';
 
 import { useEffect, useState } from 'preact/hooks';
 
+import enhanceContent from '../utils/enhance-content';
 import shortenNumber from '../utils/shorten-number';
 import store from '../utils/store';
 
@@ -122,7 +123,12 @@ export default ({ account }) => {
             <Avatar url={avatar} size="xxl" />
             <NameText account={info} showAcct external />
           </header>
-          <div class="note" dangerouslySetInnerHTML={{ __html: note }} />
+          <div
+            class="note"
+            dangerouslySetInnerHTML={{
+              __html: enhanceContent(note, { emojis }),
+            }}
+          />
           <p class="stats">
             <span>
               <b title={statusesCount}>{shortenNumber(statusesCount)}</b> Posts

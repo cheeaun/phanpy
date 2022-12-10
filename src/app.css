@@ -339,9 +339,11 @@ a.hashtag {
   gap: 8px;
   justify-content: space-between;
   text-align: center;
+  pointer-events: none;
 }
 
 button.carousel-button {
+  pointer-events: auto;
   font-weight: bold;
   color: var(--link-color);
 }
@@ -367,12 +369,19 @@ button.carousel-dot.active {
   pointer-events: none;
 }
 @media (hover: hover) {
+  .carousel-top-controls {
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-in-out;
+  }
   .carousel-controls {
     transform: translateY(100%);
     transition: transform 0.2s ease-in-out;
   }
-  .carousel:hover + .carousel-controls,
+  .carousel:hover + .carousel-top-controls,
+  .carousel:hover + .carousel-top-controls + .carousel-controls,
+  .carousel-top-controls:hover,
   .carousel-controls:hover,
+  .carousel-top-controls:focus-within,
   .carousel-controls:focus-within {
     transform: translateY(0);
   }

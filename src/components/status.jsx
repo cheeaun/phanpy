@@ -785,16 +785,6 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
       </div>
       {showMediaModal !== false && (
         <Modal>
-          <div class="carousel-top-controls">
-            <span />
-            <button
-              type="button"
-              class="carousel-button plain"
-              onClick={() => setShowMediaModal(false)}
-            >
-              <Icon icon="x" />
-            </button>
-          </div>
           <div
             class="carousel"
             onClick={(e) => {
@@ -817,6 +807,16 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                 <Media media={media} showOriginal />
               </div>
             ))}
+          </div>
+          <div class="carousel-top-controls">
+            <span />
+            <button
+              type="button"
+              class="carousel-button plain"
+              onClick={() => setShowMediaModal(false)}
+            >
+              <Icon icon="x" />
+            </button>
           </div>
           {mediaAttachments?.length > 1 && (
             <div class="carousel-controls">

@@ -4,17 +4,22 @@
   animation: fade-in 0.2s ease-out;
   max-height: 100vh;
   overflow: auto;
+  position: relative;
 }
 
 #settings-container .close-button {
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #settings-container h2 {
-  margin: 3em 0 1em;
   font-size: .9em;
   text-transform: uppercase;
   color: var(--text-insignificant-color);
+}
+#settings-container h2 ~ h2 {
+  margin-top: 2em;
 }
 
 #settings-container ul {

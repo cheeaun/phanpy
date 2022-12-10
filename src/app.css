@@ -13,6 +13,22 @@ html, body {
   justify-content: center;
 }
 
+/* MENTIONS */
+
+a.mention {
+  text-decoration-line: none;
+}
+a.mention span {
+  text-decoration-line: underline;
+  text-decoration-color: inherit;
+}
+a.hashtag {
+  color: var(--link-light-color);
+}
+:is(a.hashtag, a.u-url) span{
+  color: var(--text-color);
+}
+
 .deck-container {
   width: 100%;
   height: 100vh;

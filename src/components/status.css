@@ -150,25 +150,6 @@
 .status .content .ellipsis::after {
   content: '…';
 }
-.status:hover .content a {
-  text-decoration-line: underline;
-}
-.status .content a.mention {
-  text-decoration-line: none;
-}
-.status .content a.mention span {
-  text-decoration-line: underline;
-  text-decoration-color: inherit;
-}
-.status .content a.hashtag {
-  color: var(--link-light-color);
-}
-.status .content a.hashtag span{
-  color: var(--text-color);
-}
-.status .content a.u-url span{
-  color: var(--text-color);
-}
 .status.large .content {
   font-size: 150%;
 }

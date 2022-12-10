@@ -128,6 +128,9 @@ export default ({ hidden }) => {
               class={`button plain ${
                 snapStates.notificationsNew.length > 0 ? 'has-badge' : ''
               }`}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Icon icon="notification" size="l" alt="Notifications" />
             </a>

@@ -325,16 +325,22 @@ a.hashtag {
   max-height: 100vh;
 }
 
+.carousel-top-controls {
+  top: 0;
+}
 .carousel-controls {
+  bottom: 0;
+}
+:is(.carousel-top-controls, .carousel-controls) {
   position: fixed;
   width: 100%;
-  bottom: 0;
-  text-align: center;
-  padding: 32px;
+  padding: 16px;
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  text-align: center;
 }
+
 button.carousel-button {
   font-weight: bold;
   color: var(--link-color);
@@ -458,6 +464,9 @@ button.carousel-dot.active {
     box-shadow: 0px 1px var(--bg-blur-color);
   }
   .box {
+    padding: 32px;
+  }
+  :is(.carousel-top-controls, .carousel-controls) {
     padding: 32px;
   }
 }

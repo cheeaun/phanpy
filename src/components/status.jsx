@@ -785,10 +785,25 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
       </div>
       {showMediaModal !== false && (
         <Modal>
+          <div class="carousel-top-controls">
+            <span />
+            <button
+              type="button"
+              class="carousel-button plain"
+              onClick={() => setShowMediaModal(false)}
+            >
+              <Icon icon="x" />
+            </button>
+          </div>
           <div
             class="carousel"
-            onClick={() => {
-              setShowMediaModal(false);
+            onClick={(e) => {
+              if (
+                e.target.classList.contains('carousel-item') ||
+                e.target.classList.contains('media')
+              ) {
+                setShowMediaModal(false);
+              }
             }}
             tabindex="0"
           >

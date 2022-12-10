@@ -357,6 +357,9 @@ button.carousel-dot:hover,
 button.carousel-dot.active {
   color: var(--link-color) !important;
 }
+button.carousel-dot.active {
+  pointer-events: none;
+}
 
 /* COMPOSE BUTTON */
 

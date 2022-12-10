@@ -60,7 +60,7 @@ function Media({ media, showOriginal, onClick }) {
             backgroundImage: `url(${previewUrl})`,
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: focalBackgroundPosition || 'center',
+            backgroundPosition: 'center',
             aspectRatio: `${width}/${height}`,
             width,
             height,

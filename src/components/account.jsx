@@ -3,6 +3,7 @@ import './account.css';
 import { useEffect, useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
+import store from '../utils/store';
 
 import Avatar from './avatar';
 import NameText from './name-text';
@@ -58,6 +59,11 @@ export default ({ account }) => {
   const [relationship, setRelationship] = useState(null);
   useEffect(() => {
     if (info) {
+      const currentAccount = store.session.get('currentAccount');
+      if (currentAccount === id) {
+        // It's myself!
+        return;
+      }
       setRelationshipUIState('loading');
       (async () => {
         try {

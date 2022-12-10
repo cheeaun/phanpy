@@ -165,7 +165,7 @@ export default () => {
   // Group notifications by today, yesterday, and older
   const groupedNotifications = snapStates.notifications.reduce(
     (acc, notification) => {
-      const date = new Date(notification.created_at);
+      const date = new Date(notification.createdAt);
       const today = new Date();
       const yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);

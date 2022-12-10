@@ -2,6 +2,7 @@ import './compose.css';
 
 import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import stringLength from 'string-length';
 
 import emojifyText from '../utils/emojify-text';
 import store from '../utils/store';
@@ -236,11 +237,14 @@ export default ({ onClose, replyToStatus }) => {
           sensitive = sensitive === 'on'; // checkboxes return "on" if checked
 
           // Validation
-          if (status.length > maxCharacters) {
+          if (stringLength(status) > maxCharacters) {
             alert(`Status is too long! Max characters: ${maxCharacters}`);
             return;
           }
-          if (sensitive && status.length + spoilerText.length > maxCharacters) {
+          if (
+            sensitive &&
+            stringLength(status) + stringLength(spoilerText) > maxCharacters
+          ) {
             alert(
               `Status and content warning is too long! Max characters: ${maxCharacters}`,
             );

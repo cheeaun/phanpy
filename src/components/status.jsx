@@ -488,6 +488,8 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
     );
   }
 
+  const [actionsUIState, setActionsUIState] = useState(null); // boost-loading, favourite-loading, bookmark-loading
+
   return (
     <div
       class={`status ${
@@ -668,6 +670,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                 type="button"
                 title={reblogged ? 'Unboost' : 'Boost'}
                 class={`plain reblog-button ${reblogged ? 'reblogged' : ''}`}
+                disabled={actionsUIState === 'boost-loading'}
                 onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -675,13 +678,24 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                     reblogged ? 'Unboost this status?' : 'Boost this status?',
                   );
                   if (!yes) return;
-                  if (reblogged) {
-                    const newStatus = await masto.statuses.unreblog(id);
-                    states.statuses.set(newStatus.id, newStatus);
-                  } else {
-                    const newStatus = await masto.statuses.reblog(id);
-                    states.statuses.set(newStatus.id, newStatus);
-                    states.statuses.set(newStatus.reblog.id, newStatus.reblog);
+                  setActionsUIState('boost-loading');
+                  try {
+                    if (reblogged) {
+                      const newStatus = await masto.statuses.unreblog(id);
+                      states.statuses.set(newStatus.id, newStatus);
+                    } else {
+                      const newStatus = await masto.statuses.reblog(id);
+                      states.statuses.set(newStatus.id, newStatus);
+                      states.statuses.set(
+                        newStatus.reblog.id,
+                        newStatus.reblog,
+                      );
+                    }
+                  } catch (e) {
+                    alert(e);
+                    console.error(e);
+                  } finally {
+                    setActionsUIState(null);
                   }
                 }}
               >
@@ -702,9 +716,11 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               type="button"
               title={favourited ? 'Unfavourite' : 'Favourite'}
               class={`plain favourite-button ${favourited ? 'favourited' : ''}`}
+              disabled={actionsUIState === 'favourite-loading'}
               onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setActionsUIState('favourite-loading');
                 try {
                   if (favourited) {
                     const newStatus = await masto.statuses.unfavourite(id);
@@ -713,7 +729,12 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                     const newStatus = await masto.statuses.favourite(id);
                     states.statuses.set(newStatus.id, newStatus);
                   }
-                } catch (e) {}
+                } catch (e) {
+                  alert(e);
+                  console.error(e);
+                } finally {
+                  setActionsUIState(null);
+                }
               }}
             >
               <Icon
@@ -732,9 +753,11 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               type="button"
               title={bookmarked ? 'Unbookmark' : 'Bookmark'}
               class={`plain bookmark-button ${bookmarked ? 'bookmarked' : ''}`}
+              disabled={actionsUIState === 'bookmark-loading'}
               onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setActionsUIState('bookmark-loading');
                 try {
                   if (bookmarked) {
                     const newStatus = await masto.statuses.unbookmark(id);
@@ -743,7 +766,12 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                     const newStatus = await masto.statuses.bookmark(id);
                     states.statuses.set(newStatus.id, newStatus);
                   }
-                } catch (e) {}
+                } catch (e) {
+                  alert(e);
+                  console.error(e);
+                } finally {
+                  setActionsUIState(null);
+                }
               }}
             >
               <Icon

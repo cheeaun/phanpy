@@ -67,8 +67,6 @@
   border-radius: 8px;
   padding: 4px 12px;
   background-image: linear-gradient(var(--bg-color) 75%, transparent);
-  /* outline: 1px solid var(--outline-color); */
-  /* box-shadow: 0 0 12px var(--divider-color); */
   position: relative;
   z-index: 1;
 }
@@ -96,13 +94,14 @@
   background-color: var(--bg-faded-color);
   padding: 0 8px;
   border-radius: 8px;
-  min-height: 2.5em;
-  line-height: 2.5em;
-  min-width: 2.5em;
+  min-height: 2.4em;
+  line-height: 2.4em;
+  min-width: 2.6em;
   text-align: center;
   overflow: hidden;
   position: relative;
   white-space: nowrap;
+  border: 2px solid transparent;
 }
 #compose-container .toolbar-button > * {
   vertical-align: middle;
@@ -119,6 +118,7 @@
   position: absolute;
   left: 0;
   height: 100%;
+  margin: 0;
 }
 #compose-container .toolbar-button input[type="file"] {
   /* Move this out of the way, to fix cursor: pointer bug */
@@ -127,7 +127,6 @@
 #compose-container .toolbar-button select {
   background-color: transparent;
   border: 0;
-  outline: 0;
   padding: 0 0 0 8px;
 }
 #compose-container .toolbar-button:not(.show-field) select {
@@ -135,7 +134,7 @@
   left: auto !important;
 }
 #compose-container .toolbar-button:hover {
-  outline: 2px solid var(--divider-color);
+  border-color: var(--divider-color);
 }
 #compose-container .toolbar-button:active {
   filter: brightness(0.8);
@@ -151,7 +150,7 @@
   margin: 0 0 0 -8px;
   padding: 0;
   list-style: none;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
   /* box-shadow: 0 0 12px var(--outline-color); */
   border-radius: 8px;
   overflow: hidden;
@@ -208,7 +207,7 @@
   object-fit: contain;
   background-color: var(--img-bg-color);
   border-radius: 8px;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
 }
 #compose-container .media-attachment textarea {
   height: 80px;

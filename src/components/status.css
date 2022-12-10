@@ -107,7 +107,7 @@
 .status .content-container.has-spoiler .spoiler {
   margin: 8px 0;
   font-size: 90%;
-  outline: 1px dashed var(--button-bg-color);
+  border: 1px dashed var(--button-bg-color);
   display: flex;
   gap: 8px;
   align-items: center;
@@ -122,7 +122,7 @@
   opacity: .5;
 }
 .status .content-container.show-spoiler .spoiler {
-  outline-style: dotted;
+  border-style: dotted;
 }
 .status .content-container.show-spoiler .spoiler ~ * {
   filter: none;
@@ -174,10 +174,10 @@
   border-radius: 8px;
   overflow: hidden;
   max-height: 160px;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
 }
 .status .media:hover {
-  outline-color: var(--outline-hover-color);
+  border-color: var(--outline-hover-color);
 }
 .status .media.block {
   flex-basis: 100%;
@@ -237,7 +237,7 @@
   object-fit: cover;
 }
 .status .media-audio {
-  outline: 0;
+  border: 0;
 }
 .status .media-audio audio {
   width: 100%;
@@ -249,7 +249,7 @@
   display: flex;
   margin-top: 8px;
   border-radius: 8px;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
   overflow: hidden;
   gap: 8px;
   color: inherit;
@@ -263,7 +263,7 @@
   min-height: 120px;
   max-height: 160px;
   object-fit: cover;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
 }
 .card:hover .image {
   animation: position-object 5s ease-in-out 1s infinite;
@@ -289,6 +289,14 @@
   font-size: smaller;
   opacity: 0.75;
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical; 
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 .card .meta.domain {
   opacity: 1;
@@ -299,7 +307,7 @@ a.card {
   transition: opacity 0.2s ease-in-out;
 }
 a.card:hover {
-  outline: 1px solid var(--outline-hover-color);
+  border: 1px solid var(--outline-hover-color);
 }
 .card.video {
   max-width: 320px;
@@ -320,7 +328,7 @@ a.card:hover {
   justify-content: space-between;
   background-image: linear-gradient(to right, var(--link-faded-color), var(--link-faded-color) var(--percentage), transparent var(--percentage), transparent);
   border-radius: 8px;
-  outline: 1px solid rgba(128, 128, 128, .1);
+  border: 1px solid rgba(128, 128, 128, .1);
   align-items: center;
 }
 .poll-label {
@@ -376,18 +384,18 @@ a.card:hover {
 }
 .status .actions > button.plain.reblog-button.reblogged {
   color: var(--reblog-color);
-  outline: 1.5px solid var(--reblog-color);
+  border: 1.5px solid var(--reblog-color);
 }
 .status .actions > button.plain.favourite-button:hover {
   color: var(--favourite-color);
 }
 .status .actions > button.plain.favourite-button.favourited {
   color: var(--favourite-color);
-  outline: 1.5px solid var(--favourite-color);
+  border: 1.5px solid var(--favourite-color);
 }
 .status .actions > button.plain.bookmark-button.bookmarked {
   color: var(--link-color);
-  outline: 1.5px solid var(--link-color);
+  border: 1.5px solid var(--link-color);
 }
 
 /* ENHANCED CONTENT */
@@ -399,7 +407,7 @@ a.card:hover {
   overflow: auto;
   width: 100%;
   font-size: 90%;
-  outline: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-color);
   background: linear-gradient(to bottom right, var(
     --bg-faded-color
   ), transparent 160px);

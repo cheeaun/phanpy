@@ -58,9 +58,10 @@
 .indirect .status {
   padding-left: 57px;
 }
-.indirect .status > .avatar {
+.indirect .status .avatar {
   width: 25px !important;
   height: 25px !important;
+  transform: translateX(5px);
 }
 
 .status:not(.small) .container {

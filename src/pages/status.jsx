@@ -179,10 +179,11 @@ export default ({ id }) => {
                 )}
                 {uiState === 'loading' &&
                   isHero &&
-                  !!heroStatus?.repliesCount && (
+                  !!heroStatus?.repliesCount &&
+                  statuses.length === 1 && (
                     <div class="status-loading">
-                      <Loader />{' '}
-                      <span>
+                      <Loader />
+                      {/* {' '}<span>
                         {!!replies.length &&
                           replies.length !== comments.length && (
                             <>
@@ -197,7 +198,7 @@ export default ({ id }) => {
                             {comments.length > 1 ? 's' : ''}
                           </>
                         )}
-                      </span>
+                      </span> */}
                     </div>
                   )}
               </li>

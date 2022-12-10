@@ -245,7 +245,7 @@ export function App() {
             setCurrentDeck('notifications');
           } else if (url === '/') {
             setCurrentDeck('home');
-            document.title = `Home / ${CLIENT_NAME}}`;
+            document.title = `Home / ${CLIENT_NAME}`;
           } else if (url === '/login' || url === '/welcome') {
             setCurrentDeck(null);
           }

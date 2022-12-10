@@ -31,6 +31,17 @@ export default () => {
           </b>
         </big>
       </p>
+      <hr />
+      <p>
+        <a href="https://github.com/cheeaun/phanpy" target="_blank">
+          Built
+        </a>{' '}
+        by{' '}
+        <a href="https://mastodon.social/@cheeaun" target="_blank">
+          @cheeaun
+        </a>
+        .
+      </p>
     </main>
   );
 };

@@ -1,5 +1,6 @@
 import './welcome.css';
 
+import logo from '../assets/logo.svg';
 import useTitle from '../utils/useTitle';
 
 export default () => {
@@ -7,7 +8,7 @@ export default () => {
   return (
     <main id="welcome" class="box">
       <img
-        src="../design/logo-2.svg"
+        src={logo}
         alt=""
         width="140"
         height="140"

@@ -181,7 +181,7 @@ function Card({ card }) {
   const hasText = title || providerName || authorName;
 
   if (hasText && image) {
-    const domain = new URL(url).hostname;
+    const domain = new URL(url).hostname.replace(/^www\./, '');
     return (
       <a
         href={url}
@@ -200,6 +200,7 @@ function Card({ card }) {
           }}
         />
         <div class="meta-container">
+          <p class="meta domain">{domain}</p>
           <p
             class="title"
             dangerouslySetInnerHTML={{
@@ -207,7 +208,6 @@ function Card({ card }) {
             }}
           />
           <p class="meta">{providerName || authorName}</p>
-          <p class="meta domain">{domain}</p>
         </div>
       </a>
     );

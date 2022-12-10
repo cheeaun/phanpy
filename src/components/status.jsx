@@ -585,7 +585,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               console.log('click', target, e);
               if (
                 target.tagName.toLowerCase() === 'a' &&
-                target.classList.contains('mention')
+                target.classList.contains('u-url')
               ) {
                 e.preventDefault();
                 e.stopPropagation();

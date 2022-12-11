@@ -91,7 +91,7 @@
   color: var(--reply-to-color);
   vertical-align: middle;
 }
-.status > .container >  .meta .time {
+.status > .container >  .meta :is(.time, .edited) {
   color: inherit;
   text-align: end;
   opacity: 0.5;
@@ -369,6 +369,32 @@ a.card:hover {
   margin: 8px 0;
 }
 
+/* EXTRA META */
+
+.status .extra-meta {
+  padding-top: 8px;
+  color: var(--text-insignificant-color);
+}
+.status .extra-meta * {
+  vertical-align: middle;
+}
+.status .extra-meta a {
+  color: inherit;
+  text-decoration: none;
+}
+.status .extra-meta a:hover {
+  text-decoration: underline;
+}
+.status .extra-meta .edited:hover {
+  cursor: pointer;
+  color: var(--text-color);
+}
+.status.large .extra-meta {
+  padding-top: 0;
+  margin-left: calc(-50px - 16px);
+  background-color: var(--bg-color);
+}
+
 /* ACTIONS */
 
 .status .actions {
@@ -450,4 +476,22 @@ a.card:hover {
   height: 1.2em;
   vertical-align: middle;
   object-fit: contain;
+}
+
+/* EDIT HISTORY */
+
+#edit-history {
+  min-height: 50vh;
+  min-height: 50dvh;
+}
+
+#edit-history :is(ol, ol li){
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#edit-history .history-item .status {
+  border: 1px solid var(--outline-color);
+  border-radius: 8px;
 }

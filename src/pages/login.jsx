@@ -53,7 +53,7 @@ export default () => {
   };
 
   return (
-    <main class="box">
+    <main class="box" style={{ textAlign: 'center' }}>
       <form onSubmit={onSubmit}>
         <h1>Log in</h1>
         <label>

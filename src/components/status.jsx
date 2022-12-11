@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
+import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
@@ -375,12 +376,86 @@ function Poll({ poll }) {
   );
 }
 
+function EditedAtModal({ statusID, onClose = () => {} }) {
+  const [uiState, setUIState] = useState('default');
+  const [editHistory, setEditHistory] = useState([]);
+
+  useEffect(() => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const editHistory = await masto.statuses.fetchHistory(statusID);
+        console.log(editHistory);
+        setEditHistory(editHistory);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <div id="edit-history" class="box">
+      <button type="button" class="close-button plain large" onClick={onClose}>
+        <Icon icon="x" alt="Close" />
+      </button>
+      <h2>Edit History</h2>
+      {uiState === 'error' && <p>Failed to load history</p>}
+      {uiState === 'loading' && (
+        <p>
+          <Loader abrupt /> Loading&hellip;
+        </p>
+      )}
+      {editHistory.length > 0 && (
+        <ol>
+          {editHistory.map((status) => {
+            const { createdAt } = status;
+            const createdAtDate = new Date(createdAt);
+            return (
+              <li key={createdAt} class="history-item">
+                <h3>
+                  <time>
+                    {Intl.DateTimeFormat('en', {
+                      // Show year if not current year
+                      year:
+                        createdAtDate.getFullYear() === currentYear
+                          ? undefined
+                          : 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      weekday: 'short',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    }).format(createdAtDate)}
+                  </time>
+                </h3>
+                <Status status={status} size="s" withinContext editStatus />
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </div>
+  );
+}
+
 function fetchAccount(id) {
   return masto.accounts.fetch(id);
 }
 const memFetchAccount = mem(fetchAccount);
 
-function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
+function Status({
+  statusID,
+  status,
+  withinContext,
+  size = 'm',
+  skeleton,
+  editStatus,
+}) {
   if (skeleton) {
     return (
       <div class="status skeleton">
@@ -443,8 +518,9 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
   } = status;
 
   const createdAtDate = new Date(createdAt);
+  const editedAtDate = new Date(editedAt);
 
-  let inReplyToAccountRef = mentions.find(
+  let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,
   );
   if (!inReplyToAccountRef && inReplyToAccountId === id) {
@@ -498,8 +574,10 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
   }
 
   const [actionsUIState, setActionsUIState] = useState(null); // boost-loading, favourite-loading, bookmark-loading
+  const [showEdited, setShowEdited] = useState(false);
 
   const carouselRef = useRef(null);
+  const currentYear = new Date().getFullYear();
 
   return (
     <div
@@ -546,21 +624,23 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               </>
             )}
           </span>{' '}
-          <a href={uri} target="_blank" class="time">
-            <Icon
-              icon={visibilityIconsMap[visibility]}
-              alt={visibility}
-              size="s"
-            />{' '}
-            <relative-time
-              datetime={createdAtDate.toISOString()}
-              format="micro"
-              threshold="P1D"
-              prefix=""
-            >
-              {createdAtDate.toLocaleString()}
-            </relative-time>
-          </a>
+          {size !== 'l' && !editStatus && (
+            <a href={uri} target="_blank" class="time">
+              <Icon
+                icon={visibilityIconsMap[visibility]}
+                alt={visibility}
+                size="s"
+              />{' '}
+              <relative-time
+                datetime={createdAtDate.toISOString()}
+                format="micro"
+                threshold="P1D"
+                prefix=""
+              >
+                {createdAtDate.toLocaleString()}
+              </relative-time>
+            </a>
+          )}
         </div>
         <div
           class={`content-container ${
@@ -593,7 +673,6 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               if (target.parentNode.tagName.toLowerCase() === 'a') {
                 target = target.parentNode;
               }
-              console.log('click', target, e);
               if (
                 target.tagName.toLowerCase() === 'a' &&
                 target.classList.contains('u-url')
@@ -662,53 +741,137 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
             )}
         </div>
         {size === 'l' && (
-          <div class="actions">
-            <button
-              type="button"
-              title="Comment"
-              class="plain reply-button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                states.showCompose = {
-                  replyToStatus: status,
-                };
-              }}
-            >
-              <Icon icon="comment" size="l" alt="Reply" />
-              {!!repliesCount && (
+          <>
+            <div class="extra-meta">
+              <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
+              <a href={uri} target="_blank">
+                <time class="created" datetime={createdAtDate.toISOString()}>
+                  {Intl.DateTimeFormat('en', {
+                    // Show year if not current year
+                    year:
+                      createdAtDate.getFullYear() === currentYear
+                        ? undefined
+                        : 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  }).format(createdAtDate)}
+                </time>
+              </a>
+              {editedAt && (
                 <>
                   {' '}
-                  <small>{shortenNumber(repliesCount)}</small>
+                  &bull; <Icon icon="pencil" alt="Edited" />{' '}
+                  <time
+                    class="edited"
+                    datetime={editedAtDate.toISOString()}
+                    onClick={() => {
+                      setShowEdited(id);
+                    }}
+                  >
+                    {Intl.DateTimeFormat('en', {
+                      // Show year if not this year
+                      year:
+                        editedAtDate.getFullYear() === currentYear
+                          ? undefined
+                          : 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    }).format(editedAtDate)}
+                  </time>
                 </>
               )}
-            </button>
-            {/* TODO: if visibility = private, only can reblog own statuses */}
-            {visibility !== 'direct' && (
+            </div>
+            <div class="actions">
               <button
                 type="button"
-                title={reblogged ? 'Unboost' : 'Boost'}
-                class={`plain reblog-button ${reblogged ? 'reblogged' : ''}`}
-                disabled={actionsUIState === 'boost-loading'}
+                title="Comment"
+                class="plain reply-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  states.showCompose = {
+                    replyToStatus: status,
+                  };
+                }}
+              >
+                <Icon icon="comment" size="l" alt="Reply" />
+                {!!repliesCount && (
+                  <>
+                    {' '}
+                    <small>{shortenNumber(repliesCount)}</small>
+                  </>
+                )}
+              </button>
+              {/* TODO: if visibility = private, only can reblog own statuses */}
+              {visibility !== 'direct' && (
+                <button
+                  type="button"
+                  title={reblogged ? 'Unboost' : 'Boost'}
+                  class={`plain reblog-button ${reblogged ? 'reblogged' : ''}`}
+                  disabled={actionsUIState === 'boost-loading'}
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const yes = confirm(
+                      reblogged ? 'Unboost this status?' : 'Boost this status?',
+                    );
+                    if (!yes) return;
+                    setActionsUIState('boost-loading');
+                    try {
+                      if (reblogged) {
+                        const newStatus = await masto.statuses.unreblog(id);
+                        states.statuses.set(newStatus.id, newStatus);
+                      } else {
+                        const newStatus = await masto.statuses.reblog(id);
+                        states.statuses.set(newStatus.id, newStatus);
+                        states.statuses.set(
+                          newStatus.reblog.id,
+                          newStatus.reblog,
+                        );
+                      }
+                    } catch (e) {
+                      alert(e);
+                      console.error(e);
+                    } finally {
+                      setActionsUIState(null);
+                    }
+                  }}
+                >
+                  <Icon
+                    icon="rocket"
+                    size="l"
+                    alt={reblogged ? 'Boosted' : 'Boost'}
+                  />
+                  {!!reblogsCount && (
+                    <>
+                      {' '}
+                      <small>{shortenNumber(reblogsCount)}</small>
+                    </>
+                  )}
+                </button>
+              )}
+              <button
+                type="button"
+                title={favourited ? 'Unfavourite' : 'Favourite'}
+                class={`plain favourite-button ${
+                  favourited ? 'favourited' : ''
+                }`}
+                disabled={actionsUIState === 'favourite-loading'}
                 onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  const yes = confirm(
-                    reblogged ? 'Unboost this status?' : 'Boost this status?',
-                  );
-                  if (!yes) return;
-                  setActionsUIState('boost-loading');
+                  setActionsUIState('favourite-loading');
                   try {
-                    if (reblogged) {
-                      const newStatus = await masto.statuses.unreblog(id);
+                    if (favourited) {
+                      const newStatus = await masto.statuses.unfavourite(id);
                       states.statuses.set(newStatus.id, newStatus);
                     } else {
-                      const newStatus = await masto.statuses.reblog(id);
+                      const newStatus = await masto.statuses.favourite(id);
                       states.statuses.set(newStatus.id, newStatus);
-                      states.statuses.set(
-                        newStatus.reblog.id,
-                        newStatus.reblog,
-                      );
                     }
                   } catch (e) {
                     alert(e);
@@ -719,87 +882,52 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
                 }}
               >
                 <Icon
-                  icon="rocket"
+                  icon="heart"
                   size="l"
-                  alt={reblogged ? 'Boosted' : 'Boost'}
+                  alt={favourited ? 'Favourited' : 'Favourite'}
                 />
-                {!!reblogsCount && (
+                {!!favouritesCount && (
                   <>
                     {' '}
-                    <small>{shortenNumber(reblogsCount)}</small>
+                    <small>{shortenNumber(favouritesCount)}</small>
                   </>
                 )}
               </button>
-            )}
-            <button
-              type="button"
-              title={favourited ? 'Unfavourite' : 'Favourite'}
-              class={`plain favourite-button ${favourited ? 'favourited' : ''}`}
-              disabled={actionsUIState === 'favourite-loading'}
-              onClick={async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setActionsUIState('favourite-loading');
-                try {
-                  if (favourited) {
-                    const newStatus = await masto.statuses.unfavourite(id);
-                    states.statuses.set(newStatus.id, newStatus);
-                  } else {
-                    const newStatus = await masto.statuses.favourite(id);
-                    states.statuses.set(newStatus.id, newStatus);
+              <button
+                type="button"
+                title={bookmarked ? 'Unbookmark' : 'Bookmark'}
+                class={`plain bookmark-button ${
+                  bookmarked ? 'bookmarked' : ''
+                }`}
+                disabled={actionsUIState === 'bookmark-loading'}
+                onClick={async (e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setActionsUIState('bookmark-loading');
+                  try {
+                    if (bookmarked) {
+                      const newStatus = await masto.statuses.unbookmark(id);
+                      states.statuses.set(newStatus.id, newStatus);
+                    } else {
+                      const newStatus = await masto.statuses.bookmark(id);
+                      states.statuses.set(newStatus.id, newStatus);
+                    }
+                  } catch (e) {
+                    alert(e);
+                    console.error(e);
+                  } finally {
+                    setActionsUIState(null);
                   }
-                } catch (e) {
-                  alert(e);
-                  console.error(e);
-                } finally {
-                  setActionsUIState(null);
-                }
-              }}
-            >
-              <Icon
-                icon="heart"
-                size="l"
-                alt={favourited ? 'Favourited' : 'Favourite'}
-              />
-              {!!favouritesCount && (
-                <>
-                  {' '}
-                  <small>{shortenNumber(favouritesCount)}</small>
-                </>
-              )}
-            </button>
-            <button
-              type="button"
-              title={bookmarked ? 'Unbookmark' : 'Bookmark'}
-              class={`plain bookmark-button ${bookmarked ? 'bookmarked' : ''}`}
-              disabled={actionsUIState === 'bookmark-loading'}
-              onClick={async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setActionsUIState('bookmark-loading');
-                try {
-                  if (bookmarked) {
-                    const newStatus = await masto.statuses.unbookmark(id);
-                    states.statuses.set(newStatus.id, newStatus);
-                  } else {
-                    const newStatus = await masto.statuses.bookmark(id);
-                    states.statuses.set(newStatus.id, newStatus);
-                  }
-                } catch (e) {
-                  alert(e);
-                  console.error(e);
-                } finally {
-                  setActionsUIState(null);
-                }
-              }}
-            >
-              <Icon
-                icon="bookmark"
-                size="l"
-                alt={bookmarked ? 'Bookmarked' : 'Bookmark'}
-              />
-            </button>
-          </div>
+                }}
+              >
+                <Icon
+                  icon="bookmark"
+                  size="l"
+                  alt={bookmarked ? 'Bookmarked' : 'Bookmark'}
+                />
+              </button>
+            </div>
+          </>
         )}
       </div>
       {showMediaModal !== false && (
@@ -906,6 +1034,22 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               </button>
             </div>
           )}
+        </Modal>
+      )}
+      {!!showEdited && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowEdited(false);
+            }
+          }}
+        >
+          <EditedAtModal
+            statusID={showEdited}
+            onClose={() => {
+              setShowEdited(false);
+            }}
+          />
         </Modal>
       )}
     </div>

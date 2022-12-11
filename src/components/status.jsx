@@ -849,7 +849,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
             <span />
             <button
               type="button"
-              class="carousel-button plain"
+              class="carousel-button plain2"
               onClick={() => setShowMediaModal(false)}
             >
               <Icon icon="x" />
@@ -859,7 +859,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
             <div class="carousel-controls">
               <button
                 type="button"
-                class="carousel-button plain"
+                class="carousel-button plain2"
                 hidden={showMediaModal === 0}
                 onClick={(e) => {
                   e.preventDefault();
@@ -892,7 +892,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
               </span>
               <button
                 type="button"
-                class="carousel-button plain"
+                class="carousel-button plain2"
                 hidden={showMediaModal === mediaAttachments.length - 1}
                 onClick={(e) => {
                   e.preventDefault();

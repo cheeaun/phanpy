@@ -68,7 +68,7 @@ function Notification({ notification }) {
             {
               mention: 'comment',
               status: 'notification',
-              reblog: 'reblog',
+              reblog: 'rocket',
               follow: 'follow',
               follow_request: 'follow-add',
               favourite: 'heart',

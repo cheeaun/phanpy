@@ -8,6 +8,7 @@ html, body {
 
 #app {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,6 +54,7 @@ a.hashtag {
 
 .deck {
   min-height: 100vh;
+  min-height: 100dvh;
   margin: auto;
   width: 40em;
   max-width: 100vw;
@@ -64,6 +66,7 @@ a.hashtag {
   overflow: auto;
   overflow-x: hidden;
   height: 100vh;
+  height: 100dvh;
 }
 
 .deck header {
@@ -320,12 +323,14 @@ a.hashtag {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 .carousel > * :is(img, video) {
   width: auto;
   max-width: 100vw;
   height: auto;
   max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .carousel-top-controls {

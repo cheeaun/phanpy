@@ -15,6 +15,17 @@
     --reply-to-faded-color
   ), transparent 160px);
 }
+.visibility-direct {
+  /* diagonal stripes of yellow */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--reply-to-faded-color),
+    var(--reply-to-faded-color) 10px,
+    var(--reply-to-faded-color) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
 
 /* STATUS PRE META */
 

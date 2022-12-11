@@ -495,7 +495,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
     <div
       class={`status ${
         !withinContext && inReplyToAccount ? 'status-reply-to' : ''
-      } ${
+      } visibility-${visibility} ${
         {
           s: 'small',
           m: 'medium',

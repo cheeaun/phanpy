@@ -311,6 +311,7 @@ a.hashtag {
   scroll-snap-type: x mandatory;
   /* scroll-behavior: smooth; */
   scrollbar-width: none;
+  overscroll-behavior: contain;
 }
 .carousel::-webkit-scrollbar {
   display: none;

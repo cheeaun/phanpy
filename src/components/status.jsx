@@ -95,7 +95,14 @@ function Media({ media, showOriginal, onClick }) {
         style={{
           backgroundColor: `rgb(${rgbAverageColor.join(',')})`,
         }}
-        onClick={onClick}
+        onClick={(e) => {
+          if (isGIF) {
+            try {
+              videoRef.current?.pause();
+            } catch (e) {}
+          }
+          onClick(e);
+        }}
         onMouseEnter={() => {
           if (isGIF) {
             try {

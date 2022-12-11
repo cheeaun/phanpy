@@ -225,21 +225,35 @@
 .status .media-video {
   position: relative;
 }
+.status .media-video:before {
+  /* draw a circle in the middle */
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--bg-blur-color);
+  backdrop-filter: blur(6px) saturate(3) invert(.2);
+  z-index: 1;
+}
 .status .media-video:after {
   /* show play icon */
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-35%, -50%);
   width: 0;
   height: 0;
   border-style: solid;
   border-width: 15px 0 15px 26.0px;
-  border-color: transparent transparent transparent var(--text-color);
+  border-color: transparent transparent transparent var(--text-insignificant-color);
   pointer-events: none;
-  filter: drop-shadow(0 0 10px var(--bg-color)) drop-shadow(0 0 10px var(--bg-color)) drop-shadow(0 0 10px var(--bg-color)) drop-shadow(0 0 10px var(--bg-color)) drop-shadow(0 0 10px var(--bg-color));
   opacity: 0.75;
+  z-index: 2;
 }
 .status .media-video:hover:after {
   opacity: 1;

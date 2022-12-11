@@ -15,7 +15,7 @@ export default ({ account, showAvatar, showAcct, short, external }) => {
     <a
       class={`name-text ${short ? 'short' : ''}`}
       href={url}
-      target="_blank"
+      // target="_blank"
       title={`@${acct}`}
       onClick={(e) => {
         if (external) return;

@@ -506,7 +506,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
       {size !== 's' && (
         <a
           href={url}
-          target="_blank"
+          // target="_blank"
           title={`@${acct}`}
           onClick={(e) => {
             e.preventDefault();
@@ -604,6 +604,14 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
             dangerouslySetInnerHTML={{
               __html: enhanceContent(content, {
                 emojis,
+                postEnhanceDOM: (dom) => {
+                  dom
+                    .querySelectorAll('a.u-url[target="_blank"]')
+                    .forEach((a) => {
+                      // Remove target="_blank" from links
+                      a.removeAttribute('target');
+                    });
+                },
               }),
             }}
           />

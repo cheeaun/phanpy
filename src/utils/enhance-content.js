@@ -1,7 +1,7 @@
 import emojifyText from './emojify-text';
 
 export default (content, opts = {}) => {
-  const { emojis } = opts;
+  const { emojis, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   const dom = document.createElement('div');
   dom.innerHTML = enhancedContent;
@@ -27,7 +27,7 @@ export default (content, opts = {}) => {
     const pre = document.createElement('pre');
     const code = document.createElement('code');
     const breaks = block.querySelectorAll('br');
-    Array.from(breaks).forEach((br) => br.replaceWith('\n'));
+    breaks.forEach((br) => br.replaceWith('\n'));
     code.innerHTML = block.innerText
       .trim()
       // .replace(/^```/g, '')
@@ -37,6 +37,11 @@ export default (content, opts = {}) => {
     block.replaceWith(pre);
   });
 
+  if (postEnhanceDOM) {
+    postEnhanceDOM(dom); // mutate dom
+  }
+
   enhancedContent = dom.innerHTML;
+
   return enhancedContent;
 };

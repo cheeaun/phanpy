@@ -119,6 +119,7 @@ function Media({ media, showOriginal, onClick }) {
             height={height}
             preload
             autoplay
+            muted={isGIF}
             controls={!isGIF}
             playsinline
             loop

@@ -274,7 +274,7 @@
   min-height: 120px;
   max-height: 160px;
   object-fit: cover;
-  border: 1px solid var(--outline-color);
+  border-inline-end: 1px solid var(--outline-color);
 }
 .card:hover .image {
   animation: position-object 5s ease-in-out 1s infinite;

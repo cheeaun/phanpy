@@ -349,7 +349,8 @@ a.hashtag {
   pointer-events: none;
 }
 
-button.carousel-button {
+button.carousel-button,
+button.carousel-dot {
   pointer-events: auto;
   font-weight: bold;
 }
@@ -360,7 +361,12 @@ button.carousel-button[hidden] {
 }
 .carousel-dots {
   border-radius: 999px;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) invert(.25) brightness(1.5);
+}
+@media (prefers-color-scheme: dark) {
+  .carousel-dots {
+    backdrop-filter: blur(12px) brightness(.5);
+  }
 }
 button.carousel-dot {
   color: var(--text-insignificant-color) !important;
@@ -390,6 +396,12 @@ button.carousel-dot.active {
   .carousel-top-controls:focus-within,
   .carousel-controls:focus-within {
     transform: translateY(0);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .carousel :is(img, video) {
+    /* No need fade out if inside carousel */
+    filter: none;
   }
 }
 

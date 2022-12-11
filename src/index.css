@@ -123,7 +123,7 @@ button > * {
 :is(button, .button).plain {
   background-color: transparent;
   color: var(--link-color);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) invert(.25) brightness(1.5);
 }
 :is(button, .button).light {
   background-color: var(--bg-faded-color);
@@ -169,6 +169,9 @@ select.plain {
   }
   img:hover, video:hover {
     filter: brightness(1);
+  }
+  :is(button, .button).plain {
+    backdrop-filter: blur(12px) brightness(.5);
   }
 }
 

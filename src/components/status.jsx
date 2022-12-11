@@ -3,6 +3,7 @@ import './status.css';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Modal from '../components/modal';
@@ -477,7 +478,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
   const prevShowMediaModal = useRef(showMediaModal);
   useEffect(() => {
     if (showMediaModal !== false) {
-      carouselFocusItem.current?.scrollIntoView({
+      carouselFocusItem.current?.node?.scrollIntoView({
         behavior: prevShowMediaModal.current === false ? 'auto' : 'smooth',
       });
     }
@@ -497,6 +498,8 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
   }
 
   const [actionsUIState, setActionsUIState] = useState(null); // boost-loading, favourite-loading, bookmark-loading
+
+  const carouselRef = useRef(null);
 
   return (
     <div
@@ -802,6 +805,7 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
       {showMediaModal !== false && (
         <Modal>
           <div
+            ref={carouselRef}
             class="carousel"
             onClick={(e) => {
               if (
@@ -813,16 +817,33 @@ function Status({ statusID, status, withinContext, size = 'm', skeleton }) {
             }}
             tabindex="0"
           >
-            {mediaAttachments?.map((media, i) => (
-              <div
-                class="carousel-item"
-                tabindex="0"
-                key={media.id}
-                ref={i === showMediaModal ? carouselFocusItem : null}
-              >
-                <Media media={media} showOriginal />
-              </div>
-            ))}
+            {mediaAttachments?.map((media, i) => {
+              const { blurhash } = media;
+              const rgbAverageColor = blurhash
+                ? getBlurHashAverageColor(blurhash)
+                : null;
+              return (
+                <InView
+                  class="carousel-item"
+                  style={{
+                    backgroundColor: `rgba(${rgbAverageColor.join(',')}, .5)`,
+                  }}
+                  tabindex="0"
+                  key={media.id}
+                  ref={i === showMediaModal ? carouselFocusItem : null}
+                  // InView options
+                  root={carouselRef.current}
+                  threshold={1}
+                  onChange={(inView) => {
+                    if (inView) {
+                      setShowMediaModal(i);
+                    }
+                  }}
+                >
+                  <Media media={media} showOriginal />
+                </InView>
+              );
+            })}
           </div>
           <div class="carousel-top-controls">
             <span />

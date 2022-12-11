@@ -158,6 +158,7 @@ export default () => {
 
   useEffect(() => {
     loadNotifications(true);
+    states.notificationsNew = [];
   }, []);
 
   const scrollableRef = useRef();

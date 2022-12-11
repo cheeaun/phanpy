@@ -9,6 +9,7 @@ import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import Status from '../components/status';
 import states from '../utils/states';
+import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
 /*
@@ -34,6 +35,8 @@ const contentText = {
   follow_request: 'requested to follow you.',
   favourite: 'favourited your status.',
   poll: 'A poll you have voted in or created has ended.',
+  'poll-self': 'A poll you have created has ended.',
+  'poll-voted': 'A poll you have voted in has ended.',
   update: 'A status you interacted with has been edited.',
 };
 
@@ -44,6 +47,15 @@ function Notification({ notification }) {
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
   const actualStatusID = status?.reblog?.id || status?.id;
+
+  const currentAccount = store.session.get('currentAccount');
+  const isSelf = currentAccount?.id === account.id;
+  const isVoted = status?.poll?.voted;
+
+  const text =
+    type === 'poll'
+      ? contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll']
+      : contentText[type];
 
   return (
     <>
@@ -75,7 +87,7 @@ function Notification({ notification }) {
               <NameText account={account} showAvatar />{' '}
             </>
           )}
-          {contentText[type]}
+          {text}
         </p>
         {status && (
           <Link class="status-link" href={`#/s/${actualStatusID}`}>

@@ -34,6 +34,7 @@ const ICONS = {
   attachment: 'mingcute:attachment-line',
   upload: 'mingcute:upload-3-line',
   gear: 'mingcute:settings-3-line',
+  more: 'mingcute:more-1-line',
 };
 
 export default ({ icon, size = 'm', alt, title, class: className = '' }) => {

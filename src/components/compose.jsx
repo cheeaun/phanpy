@@ -17,7 +17,7 @@ import Status from './status';
   - Max character limit includes BOTH status text and Content Warning text
 */
 
-export default ({ onClose, replyToStatus }) => {
+export default ({ onClose, replyToStatus, editStatus }) => {
   const [uiState, setUIState] = useState('default');
 
   const accounts = store.local.getJSON('accounts');
@@ -69,6 +69,32 @@ export default ({ onClose, replyToStatus }) => {
     }, 0);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    console.log({ editStatus });
+    if (editStatus) {
+      const { visibility, sensitive, mediaAttachments } = editStatus;
+      setUIState('loading');
+      (async () => {
+        try {
+          const statusSource = await masto.statuses.fetchSource(editStatus.id);
+          console.log({ statusSource });
+          const { text, spoilerText } = statusSource;
+          textareaRef.current.value = text;
+          textareaRef.current.dataset.source = text;
+          spoilerTextRef.current.value = spoilerText;
+          setVisibility(visibility);
+          setSensitive(sensitive);
+          setMediaAttachments(mediaAttachments);
+          setUIState('default');
+        } catch (e) {
+          console.error(e);
+          alert(e?.reason || e);
+          setUIState('error');
+        }
+      })();
+    }
+  }, [editStatus]);
 
   const textExpanderRef = useRef();
   const textExpanderTextRef = useRef('');
@@ -168,7 +194,12 @@ export default ({ onClose, replyToStatus }) => {
     'You have unsaved changes. Are you sure you want to discard this post?';
   const canClose = () => {
     // check for status or mediaAttachments
-    if (textareaRef.current.value || mediaAttachments.length > 0) {
+    const { value, dataset } = textareaRef.current;
+    const containNonIDMediaAttachments =
+      mediaAttachments.length > 0 &&
+      mediaAttachments.some((media) => !media.id);
+
+    if (value !== dataset?.source || containNonIDMediaAttachments) {
       const yes = confirm(beforeUnloadCopy);
       return yes;
     }
@@ -275,7 +306,6 @@ export default ({ onClose, replyToStatus }) => {
                       description,
                     };
                     return masto.mediaAttachments.create(params).then((res) => {
-                      // Update media attachment with ID
                       if (res.id) {
                         attachment.id = res.id;
                       }
@@ -306,14 +336,22 @@ export default ({ onClose, replyToStatus }) => {
 
               const params = {
                 status,
-                visibility,
-                sensitive,
                 spoilerText,
-                inReplyToId: replyToStatus?.id || undefined,
+                sensitive,
                 mediaIds: mediaAttachments.map((attachment) => attachment.id),
               };
+              if (!editStatus) {
+                params.visibility = visibility;
+                params.inReplyToId = replyToStatus?.id || undefined;
+              }
               console.log('POST', params);
-              const newStatus = await masto.statuses.create(params);
+
+              let newStatus;
+              if (editStatus) {
+                newStatus = await masto.statuses.update(editStatus.id, params);
+              } else {
+                newStatus = await masto.statuses.create(params);
+              }
               setUIState('default');
 
               // Close
@@ -348,7 +386,7 @@ export default ({ onClose, replyToStatus }) => {
             <input
               name="sensitive"
               type="checkbox"
-              disabled={uiState === 'loading'}
+              disabled={uiState === 'loading' || !!editStatus}
               onChange={(e) => {
                 const sensitive = e.target.checked;
                 setSensitive(sensitive);
@@ -374,7 +412,7 @@ export default ({ onClose, replyToStatus }) => {
               onChange={(e) => {
                 setVisibility(e.target.value);
               }}
-              disabled={uiState === 'loading'}
+              disabled={uiState === 'loading' || !!editStatus}
             >
               <option value="public">
                 Public <Icon icon="earth" />
@@ -485,7 +523,7 @@ export default ({ onClose, replyToStatus }) => {
             </label>
           </div>
           <div>
-            {uiState === 'loading' && <Loader />}{' '}
+            {uiState === 'loading' && <Loader abrupt />}{' '}
             <button
               type="submit"
               class="large"
@@ -506,7 +544,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
-  const { url, type, id } = attachment;
+  const { url, type, id, description } = attachment;
   const suffixType = type.split('/')[0];
   return (
     <div class="media-attachment">
@@ -522,11 +560,11 @@ function MediaAttachment({
       {!!id ? (
         <div class="media-desc">
           <span class="tag">Uploaded</span>
-          <p>{attachment.description || <i>No description</i>}</p>
+          <p title={description}>{description || <i>No description</i>}</p>
         </div>
       ) : (
         <textarea
-          value={attachment.description || ''}
+          value={description || ''}
           placeholder={
             {
               image: 'Image description',

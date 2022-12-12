@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: var(--bg-color);
@@ -23,10 +24,10 @@ a.mention span {
   text-decoration-line: underline;
   text-decoration-color: inherit;
 }
-a.hashtag {
+a.mention:has(span).hashtag {
   color: var(--link-light-color);
 }
-:is(a.hashtag, a.u-url) span{
+a.mention span {
   color: var(--text-color);
 }
 
@@ -36,7 +37,7 @@ a.hashtag {
   height: 100dvh;
   overflow: auto;
   overflow-x: hidden;
-  transition: opacity .1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 }
 .deck-container[hidden] {
   display: block;
@@ -103,7 +104,7 @@ a.hashtag {
 .deck h2 {
   font-size: 1.45em;
 }
-.deck.padded-bottom .timeline li:last-child {
+.deck.padded-bottom .timeline > li:last-child {
   padding-bottom: 80vh;
 }
 
@@ -111,13 +112,13 @@ a.hashtag {
   margin: 0 auto;
   padding: 0;
 }
-.timeline li {
+.timeline > li {
   list-style: none;
   margin: 0;
   padding: 0;
   border-bottom: 1px solid var(--divider-color);
 }
-.timeline.flat li {
+.timeline.flat > li {
   border-bottom: none;
 }
 /* .timeline li.insignificant {
@@ -131,23 +132,31 @@ a.hashtag {
   opacity: 1;
 } */
 
-.timeline.contextual li {
+.timeline.contextual > li {
   --width: 3px;
   --left: 40px;
   --right: calc(var(--left) + var(--width));
-  background-image: linear-gradient(to right, transparent, transparent var(--left), var(--comment-line-color) var(--left), var(--comment-line-color) var(--right), transparent var(--right), transparent);
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    transparent var(--left),
+    var(--comment-line-color) var(--left),
+    var(--comment-line-color) var(--right),
+    transparent var(--right),
+    transparent
+  );
   background-repeat: no-repeat;
 }
-.timeline.contextual li:first-child {
+.timeline.contextual > li:first-child {
   background-position: 0 16px;
 }
-.timeline.contextual li:last-child {
+.timeline.contextual > li:last-child {
   background-size: 100% 20px;
 }
-.timeline.contextual li.descendant {
+.timeline.contextual > li.descendant {
   position: relative;
 }
-.timeline.contextual li.descendant.indirect:before {
+.timeline.contextual > li.descendant.indirect:before {
   --radius: 10px;
   --diameter: calc(var(--radius) * 2);
   content: '';
@@ -162,7 +171,7 @@ a.hashtag {
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
 }
-.timeline.contextual li.descendant.indirect .status-link {
+.timeline.contextual > li.descendant.indirect .status-link {
   position: relative;
 }
 
@@ -172,7 +181,11 @@ a.hashtag {
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);
   overflow: hidden;
-  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1) 80%, transparent 95%);
+  mask-image: linear-gradient(
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1) 80%,
+    transparent 95%
+  );
 }
 .timeline-deck.compact .status .meta ~ * {
   pointer-events: none;
@@ -221,7 +234,7 @@ a.hashtag {
 }
 .deck-backdrop > a {
   flex-grow: 1;
-  backdrop-filter: saturate(.75);
+  backdrop-filter: saturate(0.75);
 }
 @keyframes slide-in {
   0% {
@@ -258,7 +271,7 @@ a.hashtag {
 }
 
 :is(button, .button).plain.has-badge:after {
-  content: "";
+  content: '';
   display: inline-block;
   position: absolute;
   right: 10px;
@@ -266,7 +279,7 @@ a.hashtag {
   height: 4px;
   border-radius: 50%;
   background-color: var(--link-color);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 @keyframes fade-from-top {
@@ -311,7 +324,11 @@ a.hashtag {
 }
 
 .box-shadow {
-  box-shadow: 0px 36px 89px rgb(0 0 0 / 4%), 0px 23.3333px 52.1227px rgb(0 0 0 / 3%), 0px 13.8667px 28.3481px rgb(0 0 0 / 2%), 0px 7.2px 14.4625px rgb(0 0 0 / 2%), 0px 2.93333px 7.25185px rgb(0 0 0 / 2%), 0px 0.666667px 3.50231px rgb(0 0 0 / 1%);
+  box-shadow: 0px 36px 89px rgb(0 0 0 / 4%),
+    0px 23.3333px 52.1227px rgb(0 0 0 / 3%),
+    0px 13.8667px 28.3481px rgb(0 0 0 / 2%), 0px 7.2px 14.4625px rgb(0 0 0 / 2%),
+    0px 2.93333px 7.25185px rgb(0 0 0 / 2%),
+    0px 0.666667px 3.50231px rgb(0 0 0 / 1%);
 }
 
 /* CAROUSEL */
@@ -375,11 +392,11 @@ button.carousel-button[hidden] {
 }
 .carousel-dots {
   border-radius: 999px;
-  backdrop-filter: blur(12px) invert(.25) brightness(1.5);
+  backdrop-filter: blur(12px) invert(0.25) brightness(1.5);
 }
 @media (prefers-color-scheme: dark) {
   .carousel-dots {
-    backdrop-filter: blur(12px) brightness(.5);
+    backdrop-filter: blur(12px) brightness(0.5);
   }
 }
 button.carousel-dot {
@@ -395,7 +412,7 @@ button.carousel-dot[disabled].active {
 button.carousel-dot.active,
 button.carousel-dot[disabled].active {
   opacity: 1;
-  transform: scale(2) translateY(-.5px);
+  transform: scale(2) translateY(-0.5px);
 }
 @media (hover: hover) {
   .carousel-top-controls {
@@ -432,7 +449,7 @@ button.carousel-dot[disabled].active {
   box-shadow: 0 0 32px var(--bg-color);
   z-index: 1;
   border: 1px solid var(--bg-color);
-  opacity: .75;
+  opacity: 0.75;
 }
 
 /* SHEET */
@@ -475,8 +492,59 @@ button.carousel-dot[disabled].active {
   align-self: center;
 }
 
+/* MENU POPUP */
+
+.menu-container {
+  position: relative;
+}
+.menu-container button {
+  color: inherit !important;
+}
+.menu-container button:is(:hover, :active, :focus) {
+  background-color: var(--button-plain-bg-hover-color);
+}
+.menu-container menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  padding: 8px 0;
+  margin: 0;
+  font-size: 16px;
+  background-color: var(--bg-color);
+  width: 10em;
+  list-style: none;
+  z-index: 100;
+  border: 1px solid var(--outline-color);
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.menu-container menu li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu-container > button:is(:active, :focus) + menu,
+.menu-container menu:is(:hover, :active) {
+  opacity: 1;
+  pointer-events: auto;
+}
+.menu-container menu button {
+  width: 100%;
+  text-align: left;
+  color: var(--text-color) !important;
+  border-radius: 0;
+}
+.menu-container menu button:hover {
+  color: var(--bg-color) !important;
+  background-color: var(--link-color);
+}
+
 @media (min-width: 40em) {
-  html, body {
+  html,
+  body {
     background-color: var(--bg-faded-color);
   }
   #app {
@@ -498,7 +566,12 @@ button.carousel-dot[disabled].active {
     border-bottom: 0;
     background-color: var(--bg-faded-blur-color);
     border-bottom: 0;
-    mask-image: linear-gradient(rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, .7) 80%, rgba(0, 0, 0, .5) 90%, transparent);
+    mask-image: linear-gradient(
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.7) 80%,
+      rgba(0, 0, 0, 0.5) 90%,
+      transparent
+    );
   }
   .deck header h1 {
     font-size: 1.5em;

@@ -23,8 +23,8 @@
   --reply-to-color: var(--orange-color);
   --favourite-color: var(--red-color);
   --reply-to-faded-color: #ffa6001a;
-  --outline-color: rgba(128, 128, 128, .2);
-  --outline-hover-color: rgba(128, 128, 128, .7);
+  --outline-color: rgba(128, 128, 128, 0.2);
+  --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(255, 255, 255, 0.5);
   --img-bg-color: rgba(128, 128, 128, 0.2);
@@ -43,6 +43,8 @@
     --bg-faded-blur-color: #18191a99;
     --text-color: #f0f2f5;
     --text-insignificant-color: #f0f2f599;
+    --link-light-color: #6494ed99;
+    --link-faded-color: #6494ed44;
     --link-bg-hover-color: #34353799;
     --divider-color: rgba(255, 255, 255, 0.1);
     --bg-blur-color: #24252699;
@@ -52,12 +54,15 @@
   }
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular',
+    sans-serif;
   font-size: 16px;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -83,19 +88,27 @@ hr {
   border: 0;
   padding: 0;
   margin: 16px 0;
-  background-image: linear-gradient(to right, transparent, var(--divider-color), transparent);
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--divider-color),
+    transparent
+  );
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   max-width: 100%;
 }
 
-button, .button {
+button,
+.button {
   display: inline-block;
-  margin: 2px;
   padding: 8px 12px;
   border-radius: 2.5em;
   border: 0;
@@ -128,7 +141,7 @@ button > * {
 :is(button, .button).plain2 {
   background-color: transparent;
   color: var(--link-color);
-  backdrop-filter: blur(12px) invert(.25) brightness(1.5);
+  backdrop-filter: blur(12px) invert(0.25) brightness(1.5);
 }
 :is(button, .button).light {
   background-color: var(--bg-faded-color);
@@ -142,17 +155,24 @@ button > * {
   padding: 12px;
 }
 
-input[type="text"], textarea, select {
+input[type='text'],
+textarea,
+select {
   color: var(--text-color);
   background-color: var(--bg-color);
   border: 2px solid var(--divider-color);
   padding: 8px;
   border-radius: 4px;
 }
-input[type="text"]:focus, textarea:focus, select:focus {
+input[type='text']:focus,
+textarea:focus,
+select:focus {
   border-color: var(--outline-color);
 }
-input[type="text"].large, textarea.large, select.large, button.large {
+input[type='text'].large,
+textarea.large,
+select.large,
+button.large {
   font-size: 125%;
   padding: 12px;
 }
@@ -168,15 +188,17 @@ select.plain {
 }
 
 @media (prefers-color-scheme: dark) {
-  img, video {
+  img,
+  video {
     filter: brightness(0.7);
     transition: filter 0.3s ease-out;
   }
-  img:hover, video:hover {
+  img:hover,
+  video:hover {
     filter: brightness(1);
   }
   :is(button, .button).plain2 {
-    backdrop-filter: blur(12px) brightness(.5);
+    backdrop-filter: blur(12px) brightness(0.5);
   }
 }
 

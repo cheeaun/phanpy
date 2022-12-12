@@ -2,7 +2,7 @@ import './status.css';
 
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
@@ -12,6 +12,7 @@ import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
+import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -81,7 +82,8 @@ function Media({ media, showOriginal, onClick }) {
           height={height}
           style={
             !showOriginal && {
-              backgroundColor: `rgb(${rgbAverageColor.join(',')})`,
+              backgroundColor:
+                rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
               backgroundPosition: focalBackgroundPosition || 'center',
             }
           }
@@ -95,7 +97,8 @@ function Media({ media, showOriginal, onClick }) {
       <div
         class={`media media-${isGIF ? 'gif' : 'video'}`}
         style={{
-          backgroundColor: `rgb(${rgbAverageColor.join(',')})`,
+          backgroundColor:
+            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
           if (isGIF) {
@@ -527,6 +530,11 @@ function Status({
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
+  const isSelf = useMemo(() => {
+    const currentAccount = store.session.get('currentAccount');
+    return currentAccount && currentAccount === accountId;
+  }, [accountId]);
+
   let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,
   );
@@ -933,6 +941,32 @@ function Status({
                   alt={bookmarked ? 'Bookmarked' : 'Bookmark'}
                 />
               </button>
+              {isSelf && (
+                <span class="menu-container">
+                  <button type="button" title="More" class="plain more-button">
+                    <Icon icon="more" size="l" alt="More" />
+                  </button>
+                  <menu>
+                    {isSelf && (
+                      <li>
+                        <button
+                          type="button"
+                          class="plain"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            states.showCompose = {
+                              editStatus: status,
+                            };
+                          }}
+                        >
+                          Edit&hellip;
+                        </button>
+                      </li>
+                    )}
+                  </menu>
+                </span>
+              )}
             </div>
           </>
         )}
@@ -961,7 +995,9 @@ function Status({
                 <InView
                   class="carousel-item"
                   style={{
-                    backgroundColor: `rgba(${rgbAverageColor.join(',')}, .5)`,
+                    backgroundColor:
+                      rgbAverageColor &&
+                      `rgba(${rgbAverageColor.join(',')}, .5)`,
                   }}
                   tabindex="0"
                   key={media.id}

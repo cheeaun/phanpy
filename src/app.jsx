@@ -266,6 +266,7 @@ export function App() {
                 ? snapStates.showCompose.replyToStatus
                 : null
             }
+            editStatus={snapStates.showCompose?.editStatus || null}
             onClose={(result) => {
               states.showCompose = false;
               if (result) {

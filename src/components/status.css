@@ -433,13 +433,7 @@ a.card:hover {
   padding-top: 8px;
   padding-bottom: 16px;
   margin-left: calc(-50px - 16px);
-}
-.status .actions > * {
-  opacity: 0.5;
-  transition: opacity 0.2s ease-in-out;
-}
-.status:hover .actions > * {
-  opacity: 1;
+  color: var(--text-insignificant-color);
 }
 .status .actions > button {
   min-height: 40px;
@@ -447,7 +441,7 @@ a.card:hover {
   padding: 0 8px;
 }
 .status .actions > button.plain {
-  color: var(--text-insignificant-color);
+  color: inherit;
 }
 .status .actions > button.plain:hover {
   color: var(--link-color);

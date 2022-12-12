@@ -199,7 +199,7 @@ export default ({ onClose, replyToStatus, editStatus }) => {
       mediaAttachments.length > 0 &&
       mediaAttachments.some((media) => !media.id);
 
-    if (value !== dataset?.source || containNonIDMediaAttachments) {
+    if ((value && value !== dataset?.source) || containNonIDMediaAttachments) {
       const yes = confirm(beforeUnloadCopy);
       return yes;
     }

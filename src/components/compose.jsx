@@ -263,26 +263,33 @@ export default ({ onClose, replyToStatus }) => {
               if (mediaAttachments.length > 0) {
                 // Upload media attachments first
                 const mediaPromises = mediaAttachments.map((attachment) => {
-                  const params = {
-                    file: attachment.file,
-                    description: attachment.description || undefined,
-                  };
-                  return masto.mediaAttachments.create(params).then((res) => {
-                    // Update media attachment with ID
-                    if (res.id) {
-                      attachment.id = res.id;
-                    }
-                    return res;
-                  });
+                  const { file, description, sourceDescription, id } =
+                    attachment;
+                  console.log('UPLOADING', attachment);
+                  if (id) {
+                    // If already uploaded
+                    return attachment;
+                  } else {
+                    const params = {
+                      file,
+                      description,
+                    };
+                    return masto.mediaAttachments.create(params).then((res) => {
+                      // Update media attachment with ID
+                      if (res.id) {
+                        attachment.id = res.id;
+                      }
+                      return res;
+                    });
+                  }
                 });
                 const results = await Promise.allSettled(mediaPromises);
 
                 // If any failed, return
                 if (
-                  results.some(
-                    (result) =>
-                      result.status === 'rejected' || !result.value.id,
-                  )
+                  results.some((result) => {
+                    return result.status === 'rejected' || !result.value?.id;
+                  })
                 ) {
                   setUIState('error');
                   // Alert all the reasons
@@ -314,7 +321,8 @@ export default ({ onClose, replyToStatus }) => {
                 newStatus,
               });
             } catch (e) {
-              alert(e);
+              console.error(e);
+              alert(e?.reason || e);
               setUIState('error');
             }
           })();
@@ -410,63 +418,25 @@ export default ({ onClose, replyToStatus }) => {
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
             {mediaAttachments.map((attachment, i) => {
-              const { url, type, id } = attachment;
-              const suffixType = type.split('/')[0];
+              const { id } = attachment;
               return (
-                <div class="media-attachment" key={i + id}>
-                  <div class="media-preview">
-                    {suffixType === 'image' ? (
-                      <img src={url} alt="" />
-                    ) : suffixType === 'video' ? (
-                      <video src={url} playsinline muted />
-                    ) : suffixType === 'audio' ? (
-                      <audio src={url} controls />
-                    ) : null}
-                  </div>
-                  <textarea
-                    placeholder={
-                      {
-                        image: 'Image description',
-                        video: 'Video description',
-                        audio: 'Audio description',
-                      }[suffixType]
-                    }
-                    autoCapitalize="sentences"
-                    autoComplete="on"
-                    autoCorrect="on"
-                    spellCheck="true"
-                    dir="auto"
-                    disabled={uiState === 'loading'}
-                    maxlength="1500"
-                    // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
-                    onInput={(e) => {
-                      const { value } = e.target;
-                      // Modify `description` in media attachment
-                      setMediaAttachments((attachments) => {
-                        const newAttachments = [...attachments];
-                        newAttachments[i].description = value;
-                        return newAttachments;
-                      });
-                    }}
-                  ></textarea>
-                  <div class="media-aside">
-                    <button
-                      type="button"
-                      class="plain close-button"
-                      disabled={uiState === 'loading'}
-                      onClick={() => {
-                        setMediaAttachments((attachments) => {
-                          return attachments.filter((_, j) => j !== i);
-                        });
-                      }}
-                    >
-                      <Icon icon="x" />
-                    </button>
-                    {!!id && (
-                      <Icon icon="upload" title="Uploaded" class="uploaded" />
-                    )}
-                  </div>
-                </div>
+                <MediaAttachment
+                  key={i + id}
+                  attachment={attachment}
+                  disabled={uiState === 'loading'}
+                  onDescriptionChange={(value) => {
+                    setMediaAttachments((attachments) => {
+                      const newAttachments = [...attachments];
+                      newAttachments[i].description = value;
+                      return newAttachments;
+                    });
+                  }}
+                  onRemove={() => {
+                    setMediaAttachments((attachments) => {
+                      return attachments.filter((_, j) => j !== i);
+                    });
+                  }}
+                />
               );
             })}
           </div>
@@ -529,3 +499,65 @@ export default ({ onClose, replyToStatus }) => {
     </div>
   );
 };
+
+function MediaAttachment({
+  attachment,
+  disabled,
+  onDescriptionChange = () => {},
+  onRemove = () => {},
+}) {
+  const { url, type, id } = attachment;
+  const suffixType = type.split('/')[0];
+  return (
+    <div class="media-attachment">
+      <div class="media-preview">
+        {suffixType === 'image' ? (
+          <img src={url} alt="" />
+        ) : suffixType === 'video' ? (
+          <video src={url} playsinline muted />
+        ) : suffixType === 'audio' ? (
+          <audio src={url} controls />
+        ) : null}
+      </div>
+      {!!id ? (
+        <div class="media-desc">
+          <span class="tag">Uploaded</span>
+          <p>{attachment.description || <i>No description</i>}</p>
+        </div>
+      ) : (
+        <textarea
+          value={attachment.description || ''}
+          placeholder={
+            {
+              image: 'Image description',
+              video: 'Video description',
+              audio: 'Audio description',
+            }[suffixType]
+          }
+          autoCapitalize="sentences"
+          autoComplete="on"
+          autoCorrect="on"
+          spellCheck="true"
+          dir="auto"
+          disabled={disabled}
+          maxlength="1500" // Not unicode-aware :(
+          // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
+          onInput={(e) => {
+            const { value } = e.target;
+            onDescriptionChange(value);
+          }}
+        ></textarea>
+      )}
+      <div class="media-aside">
+        <button
+          type="button"
+          class="plain close-button"
+          disabled={disabled}
+          onClick={onRemove}
+        >
+          <Icon icon="x" />
+        </button>
+      </div>
+    </div>
+  );
+}

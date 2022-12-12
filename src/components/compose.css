@@ -24,7 +24,7 @@
   color: var(--text-insignificant-color);
 }
 
-#compose-container textarea{
+#compose-container textarea {
   width: 100%;
   max-width: 100%;
   height: 3em;
@@ -114,14 +114,16 @@
 #compose-container .toolbar-button:has([disabled]) > * {
   filter: opacity(0.3);
 }
-#compose-container .toolbar-button:not(.show-field) :is(input[type="checkbox"], select, input[type="file"]) {
+#compose-container
+  .toolbar-button:not(.show-field)
+  :is(input[type='checkbox'], select, input[type='file']) {
   opacity: 0;
   position: absolute;
   left: 0;
   height: 100%;
   margin: 0;
 }
-#compose-container .toolbar-button input[type="file"] {
+#compose-container .toolbar-button input[type='file'] {
   /* Move this out of the way, to fix cursor: pointer bug */
   left: -100vw !important;
 }
@@ -201,7 +203,7 @@
 #compose-container .media-preview {
   flex-shrink: 1;
 }
-#compose-container .media-preview > *{
+#compose-container .media-preview > * {
   min-width: 80px;
   width: 80px !important;
   height: 80px;
@@ -215,6 +217,22 @@
   flex-grow: 1;
   resize: none;
 }
+#compose-container .media-attachments .media-desc {
+  flex-grow: 1;
+}
+#compose-container .media-attachments .media-desc p {
+  font-size: 90%;
+  margin: 0;
+  padding: 0;
+  /* clamp 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+#compose-container .media-attachments .media-desc p i {
+  color: var(--text-insignificant-color);
+}
 #compose-container .media-aside {
   display: flex;
   flex-direction: column;
@@ -225,6 +243,9 @@
   padding: 4px;
   align-self: flex-start;
   color: var(--text-insignificant-color);
+}
+#compose-container .media-aside .close-button:hover {
+  color: var(--text-color);
 }
 #compose-container .media-aside .uploaded {
   color: var(--green-color);

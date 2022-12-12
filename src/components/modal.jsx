@@ -1,7 +1,6 @@
 import './modal.css';
 
 import { createPortal } from 'preact/compat';
-import { useEffect } from 'preact/hooks';
 
 const $modalContainer = document.getElementById('modal-container');
 

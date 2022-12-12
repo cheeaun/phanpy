@@ -174,11 +174,18 @@ export default ({ hidden }) => {
                 );
               })}
               {showMore && (
-                <InView
-                  onChange={(inView) => {
-                    if (inView) loadStatuses();
-                  }}
-                >
+                <>
+                  <InView
+                    as="li"
+                    style={{
+                      height: '20vh',
+                    }}
+                    onChange={(inView) => {
+                      if (inView) loadStatuses();
+                    }}
+                  >
+                    <Status skeleton />
+                  </InView>
                   <li
                     style={{
                       height: '25vh',
@@ -186,14 +193,7 @@ export default ({ hidden }) => {
                   >
                     <Status skeleton />
                   </li>
-                  <li
-                    style={{
-                      height: '25vh',
-                    }}
-                  >
-                    <Status skeleton />
-                  </li>
-                </InView>
+                </>
               )}
             </ul>
           </>

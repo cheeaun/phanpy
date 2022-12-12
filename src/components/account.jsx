@@ -155,11 +155,16 @@ export default ({ account }) => {
                     try {
                       let newRelationship;
                       if (following) {
-                        newRelationship = await masto.accounts.unfollow(id);
+                        const yes = confirm(
+                          'Are you sure that you want to unfollow this account?',
+                        );
+                        if (yes) {
+                          newRelationship = await masto.accounts.unfollow(id);
+                        }
                       } else {
                         newRelationship = await masto.accounts.follow(id);
                       }
-                      setRelationship(newRelationship);
+                      if (newRelationship) setRelationship(newRelationship);
                       setRelationshipUIState('default');
                     } catch (e) {
                       alert(e);

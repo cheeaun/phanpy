@@ -99,11 +99,13 @@
   min-width: 0;
 }
 
-.status.large > .container > .meta {
+.status > .container > .meta {
   display: flex;
   gap: 8px;
-  min-height: 50px;
   justify-content: space-between;
+}
+.status.large > .container > .meta {
+  min-height: 50px;
 }
 .status > .container > .meta .arrow {
   color: var(--reply-to-color);

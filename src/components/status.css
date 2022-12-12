@@ -318,6 +318,7 @@
 }
 .card .meta-container {
   padding: 8px;
+  min-width: 0;
 }
 .card .title {
   font-weight: normal;
@@ -334,18 +335,18 @@
   font-size: smaller;
   opacity: 0.75;
   margin: 0;
+  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  display: -webkit-box;
-  display: box;
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  display: block;
 }
 .card .meta.domain {
   opacity: 1;
   color: var(--link-color);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
 }
 a.card {
   text-decoration: none;

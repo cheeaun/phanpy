@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-faded-color);
+  background-color: var(--bg-color);
   color: var(--text-color);
   overflow: hidden;
 }
@@ -476,6 +476,9 @@ button.carousel-dot[disabled].active {
 }
 
 @media (min-width: 40em) {
+  html, body {
+    background-color: var(--bg-faded-color);
+  }
   #app {
     display: flex;
   }

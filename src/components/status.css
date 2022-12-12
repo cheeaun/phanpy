@@ -173,6 +173,9 @@
 .status .content p:last-child {
   margin-block-end: 0;
 }
+.status .content p code {
+  color: var(--green-color);
+}
 .status .content .invisible {
   display: none;
 }

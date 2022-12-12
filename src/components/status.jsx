@@ -1005,6 +1005,7 @@ function Status({
                   <button
                     key={media.id}
                     type="button"
+                    disabled={i === showMediaModal}
                     class={`plain carousel-dot ${
                       i === showMediaModal ? 'active' : ''
                     }`}

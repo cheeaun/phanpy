@@ -388,11 +388,14 @@ button.carousel-dot {
   backdrop-filter: none !important;
 }
 button.carousel-dot:hover,
-button.carousel-dot.active {
+button.carousel-dot.active,
+button.carousel-dot[disabled].active {
   color: var(--link-color) !important;
 }
-button.carousel-dot.active {
-  pointer-events: none;
+button.carousel-dot.active,
+button.carousel-dot[disabled].active {
+  opacity: 1;
+  transform: scale(2) translateY(-.5px);
 }
 @media (hover: hover) {
   .carousel-top-controls {

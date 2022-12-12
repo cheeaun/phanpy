@@ -551,7 +551,7 @@ function MediaAttachment({
       <div class="media-preview">
         {suffixType === 'image' ? (
           <img src={url} alt="" />
-        ) : suffixType === 'video' ? (
+        ) : suffixType === 'video' || suffixType === 'gifv' ? (
           <video src={url} playsinline muted />
         ) : suffixType === 'audio' ? (
           <audio src={url} controls />

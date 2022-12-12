@@ -1,9 +1,13 @@
+import './index.css';
+
+import '@github/time-elements';
+import 'iconify-icon';
 import { render } from 'preact';
+
 import { App } from './app';
 
-import 'iconify-icon';
-import '@github/time-elements';
-
-import './index.css';
+if (import.meta.env.DEV) {
+  import('preact/debug');
+}
 
 render(<App />, document.getElementById('app'));

@@ -427,7 +427,11 @@ export default ({ onClose, replyToStatus, editStatus }) => {
             class="large"
             ref={textareaRef}
             placeholder={
-              replyToStatus ? 'Post your reply' : 'What are you doing?'
+              replyToStatus
+                ? 'Post your reply'
+                : editStatus
+                ? 'Edit your status'
+                : 'What are you doing?'
             }
             required={mediaAttachments.length === 0}
             autoCapitalize="sentences"
@@ -528,7 +532,7 @@ export default ({ onClose, replyToStatus, editStatus }) => {
               class="large"
               disabled={uiState === 'loading'}
             >
-              {replyToStatus ? 'Reply' : 'Post'}
+              {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
             </button>
           </div>
         </div>

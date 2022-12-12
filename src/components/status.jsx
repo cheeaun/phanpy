@@ -126,12 +126,19 @@ function Media({ media, showOriginal, onClick }) {
             poster={previewUrl}
             width={width}
             height={height}
-            preload
+            preload="auto"
             autoplay
             muted={isGIF}
             controls={!isGIF}
             playsinline
             loop
+            onClick={() => {
+              if (isGIF) {
+                try {
+                  videoRef.current?.play();
+                } catch (e) {}
+              }
+            }}
           ></video>
         ) : isGIF ? (
           <video
@@ -140,7 +147,7 @@ function Media({ media, showOriginal, onClick }) {
             poster={previewUrl}
             width={width}
             height={height}
-            preload
+            preload="auto"
             // controls
             playsinline
             loop

@@ -727,7 +727,7 @@ function Status({
               content
             </button>
           )}
-          {!!mediaAttachments.length && size !== 's' && (
+          {!!mediaAttachments.length && (
             <div class="media-container">
               {mediaAttachments.map((media, i) => (
                 <Media

@@ -76,14 +76,13 @@ export default ({ hidden }) => {
       if (document.hidden) {
         const timestamp = Date.now();
         store.session.set('lastHidden', timestamp);
-        console.log('hidden', timestamp);
       } else {
         const timestamp = Date.now();
         const lastHidden = store.session.get('lastHidden');
         const diff = timestamp - lastHidden;
         const diffMins = Math.round(diff / 1000 / 60);
-        console.log('visible', { timestamp, diff, diffMins });
         if (diffMins > 1) {
+          console.log('visible', { lastHidden, diffMins });
           setTimeout(() => {
             loadStatuses(true);
             states.homeNew = [];

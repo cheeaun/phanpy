@@ -71,7 +71,6 @@ export default ({ onClose, replyToStatus, editStatus }) => {
   }, []);
 
   useEffect(() => {
-    console.log({ editStatus });
     if (editStatus) {
       const { visibility, sensitive, mediaAttachments } = editStatus;
       setUIState('loading');

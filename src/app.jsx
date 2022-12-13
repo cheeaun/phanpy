@@ -1,7 +1,7 @@
 import './app.css';
 
 import { createHashHistory } from 'history';
-import { login } from 'masto/fetch';
+import { login } from 'masto';
 import Router from 'preact-router';
 import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';

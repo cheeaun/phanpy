@@ -17,7 +17,13 @@ import Status from './status';
   - Max character limit includes BOTH status text and Content Warning text
 */
 
-export default ({ onClose, replyToStatus, editStatus }) => {
+export default ({
+  onClose,
+  replyToStatus,
+  editStatus,
+  draftStatus,
+  standalone,
+}) => {
   const [uiState, setUIState] = useState('default');
 
   const accounts = store.local.getJSON('accounts');
@@ -51,27 +57,34 @@ export default ({ onClose, replyToStatus, editStatus }) => {
 
   const textareaRef = useRef();
 
-  const [visibility, setVisibility] = useState(
-    replyToStatus?.visibility || 'public',
-  );
-  const [sensitive, setSensitive] = useState(replyToStatus?.sensitive || false);
+  const [visibility, setVisibility] = useState('public');
+  const [sensitive, setSensitive] = useState(false);
   const spoilerTextRef = useRef();
 
   useEffect(() => {
-    let timer = setTimeout(() => {
-      const spoilerText = replyToStatus?.spoilerText;
+    if (replyToStatus) {
+      const { spoilerText, visibility, sensitive } = replyToStatus;
       if (spoilerText && spoilerTextRef.current) {
         spoilerTextRef.current.value = spoilerText;
         spoilerTextRef.current.focus();
       } else {
-        textareaRef.current?.focus();
+        textareaRef.current.focus();
+        if (replyToStatus.account.id !== currentAccount) {
+          textareaRef.current.value = `@${replyToStatus.account.acct} `;
+        }
       }
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (editStatus) {
+      setVisibility(visibility);
+      setSensitive(sensitive);
+    }
+    if (draftStatus) {
+      const { status, spoilerText, visibility, sensitive, mediaAttachments } =
+        draftStatus;
+      textareaRef.current.value = status;
+      spoilerTextRef.current.value = spoilerText;
+      setVisibility(visibility);
+      setSensitive(sensitive);
+      setMediaAttachments(mediaAttachments);
+    } else if (editStatus) {
       const { visibility, sensitive, mediaAttachments } = editStatus;
       setUIState('loading');
       (async () => {
@@ -93,7 +106,7 @@ export default ({ onClose, replyToStatus, editStatus }) => {
         }
       })();
     }
-  }, [editStatus]);
+  }, [draftStatus, editStatus, replyToStatus]);
 
   const textExpanderRef = useRef();
   const textExpanderTextRef = useRef('');
@@ -192,13 +205,32 @@ export default ({ onClose, replyToStatus, editStatus }) => {
   const beforeUnloadCopy =
     'You have unsaved changes. Are you sure you want to discard this post?';
   const canClose = () => {
-    // check for status or mediaAttachments
     const { value, dataset } = textareaRef.current;
-    const containNonIDMediaAttachments =
+
+    // check for non-ID media attachments
+    const hasNonIDMediaAttachments =
       mediaAttachments.length > 0 &&
       mediaAttachments.some((media) => !media.id);
 
-    if ((value && value !== dataset?.source) || containNonIDMediaAttachments) {
+    // check if status contains only "@acct", if replying
+    const hasAcct =
+      replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
+
+    // check if status is different than source
+    const differentThanSource = dataset?.source && value !== dataset.source;
+
+    console.log({
+      value,
+      hasAcct,
+      differentThanSource,
+      hasNonIDMediaAttachments,
+    });
+
+    if (
+      (value && !hasAcct) ||
+      differentThanSource ||
+      hasNonIDMediaAttachments
+    ) {
       const yes = confirm(beforeUnloadCopy);
       return yes;
     }
@@ -223,7 +255,7 @@ export default ({ onClose, replyToStatus, editStatus }) => {
   }, []);
 
   return (
-    <div id="compose-container">
+    <div id="compose-container" class={standalone ? 'standalone' : ''}>
       <div class="compose-top">
         {currentAccountInfo?.avatarStatic && (
           <Avatar
@@ -232,21 +264,137 @@ export default ({ onClose, replyToStatus, editStatus }) => {
             alt={currentAccountInfo.username}
           />
         )}
-        <button
-          type="button"
-          class="light close-button"
-          onClick={() => {
-            if (canClose()) {
-              onClose();
-            }
-          }}
-        >
-          <Icon icon="x" />
-        </button>
+        {!standalone ? (
+          <span>
+            <button
+              type="button"
+              class="light"
+              onClick={() => {
+                // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                const containNonIDMediaAttachments =
+                  mediaAttachments.length > 0 &&
+                  mediaAttachments.some((media) => !media.id);
+                if (containNonIDMediaAttachments) {
+                  const yes = confirm(
+                    'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                  );
+                  if (!yes) {
+                    return;
+                  }
+                }
+
+                const url = new URL('/compose/', window.location);
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                const left = Math.max(0, (screenWidth - 600) / 2);
+                const top = Math.max(0, (screenHeight - 450) / 2);
+                const width = Math.min(screenWidth, 600);
+                const height = Math.min(screenHeight, 450);
+                const newWin = window.open(
+                  url,
+                  'compose' + Math.random(),
+                  `width=${width},height=${height},left=${left},top=${top}`,
+                );
+
+                if (!newWin) {
+                  alert('Looks like your browser is blocking popups.');
+                  return;
+                }
+
+                const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                  (media) => media.id,
+                );
+
+                newWin.masto = masto;
+                newWin.__COMPOSE__ = {
+                  editStatus,
+                  replyToStatus,
+                  draftStatus: {
+                    status: textareaRef.current.value,
+                    spoilerText: spoilerTextRef.current.value,
+                    visibility,
+                    sensitive,
+                    mediaAttachments: mediaAttachmentsWithIDs,
+                  },
+                };
+                onClose(() => {
+                  window.opener.__STATES__.reloadStatusPage++;
+                });
+              }}
+            >
+              <Icon icon="popout" alt="Pop out" />
+            </button>{' '}
+            <button
+              type="button"
+              class="light close-button"
+              onClick={() => {
+                if (canClose()) {
+                  onClose();
+                }
+              }}
+            >
+              <Icon icon="x" />
+            </button>
+          </span>
+        ) : (
+          <button
+            type="button"
+            class="light"
+            onClick={() => {
+              // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+              const containNonIDMediaAttachments =
+                mediaAttachments.length > 0 &&
+                mediaAttachments.some((media) => !media.id);
+              if (containNonIDMediaAttachments) {
+                const yes = confirm(
+                  'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                );
+                if (!yes) {
+                  return;
+                }
+              }
+
+              if (!window.opener) {
+                alert('Looks like you closed the parent window.');
+                return;
+              }
+
+              const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                (media) => media.id,
+              );
+
+              onClose(() => {
+                window.opener.__STATES__.showCompose = {
+                  editStatus,
+                  replyToStatus,
+                  draftStatus: {
+                    status: textareaRef.current.value,
+                    spoilerText: spoilerTextRef.current.value,
+                    visibility,
+                    sensitive,
+                    mediaAttachments: mediaAttachmentsWithIDs,
+                  },
+                };
+              });
+            }}
+          >
+            <Icon icon="popin" alt="Pop in" />
+          </button>
+        )}
       </div>
       {!!replyToStatus && (
-        <div class="reply-to">
+        <div class="status-preview">
           <Status status={replyToStatus} size="s" />
+          <div class="status-preview-legend reply-to">
+            Replying to @
+            {replyToStatus.account.acct || replyToStatus.account.username}
+          </div>
+        </div>
+      )}
+      {!!editStatus && (
+        <div class="status-preview">
+          <Status status={editStatus} size="s" />
+          <div class="status-preview-legend">Editing source status</div>
         </div>
       )}
       <form
@@ -385,6 +533,7 @@ export default ({ onClose, replyToStatus, editStatus }) => {
             <input
               name="sensitive"
               type="checkbox"
+              checked={sensitive}
               disabled={uiState === 'loading' || !!editStatus}
               onChange={(e) => {
                 const sensitive = e.target.checked;

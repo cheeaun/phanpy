@@ -19,11 +19,6 @@
   z-index: 100;
 }
 
-#compose-container .close-button {
-  padding: 6px;
-  color: var(--text-insignificant-color);
-}
-
 #compose-container textarea {
   width: 100%;
   max-width: 100%;
@@ -42,18 +37,21 @@
     transform: translateY(0);
   }
 }
-#compose-container .reply-to {
+#compose-container .status-preview {
   border-radius: 8px 8px 0 0;
   max-height: 160px;
-  pointer-events: none;
-  filter: saturate(0.25) opacity(0.75);
-  background-color: var(--bg-blur-color);
+  background-color: var(--bg-color);
   margin: 0 12px;
   border: 1px solid var(--outline-color);
   border-bottom: 0;
-  /* box-shadow: 0 0 12px var(--divider-color); */
-  /* mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1) 90%, transparent); */
   animation: appear-up 1s ease-in-out;
+  overflow: auto;
+}
+#compose-container.standalone .status-preview * {
+  /*
+    For standalone mode (new window), prevent interacting with the status preview for now
+  */
+  pointer-events: none;
 }
 @keyframes appear-down {
   0% {
@@ -63,6 +61,38 @@
     transform: translateY(0);
   }
 }
+
+#compose-container .status-preview-legend {
+  pointer-events: none;
+  position: sticky;
+  bottom: 0;
+  padding: 8px;
+  font-size: 80%;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-insignificant-color);
+  background-color: var(--bg-blur-color);
+  /* background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--bg-faded-color)
+  ); */
+  border-top: 1px solid var(--outline-color);
+  backdrop-filter: blur(8px);
+  text-shadow: 0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color);
+}
+#_compose-container .status-preview-legend.reply-to {
+  color: var(--reply-to-color);
+  background-color: var(--reply-to-faded-color);
+  /* background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--reply-to-faded-color)
+  ); */
+}
+
 #compose-container form {
   border-radius: 8px;
   padding: 4px 12px;
@@ -70,7 +100,7 @@
   position: relative;
   z-index: 1;
 }
-#compose-container .reply-to ~ form {
+#compose-container .status-preview ~ form {
   animation: appear-down 1s ease-in-out;
   box-shadow: 0 -12px 12px -12px var(--divider-color);
 }

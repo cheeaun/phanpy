@@ -23,7 +23,7 @@ import store from './utils/store';
 
 const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
 
-window._STATES = states;
+window.__STATES__ = states;
 
 async function startStream() {
   const stream = await masto.stream.streamUser();
@@ -267,6 +267,7 @@ export function App() {
                 : null
             }
             editStatus={snapStates.showCompose?.editStatus || null}
+            draftStatus={snapStates.showCompose?.draftStatus || null}
             onClose={(result) => {
               states.showCompose = false;
               if (result) {

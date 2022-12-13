@@ -93,10 +93,12 @@
   transform: translateX(5px);
 }
 
-.status:not(.small) .container {
-  padding-left: 16px;
+.status .container {
   flex-grow: 1;
   min-width: 0;
+}
+.status:not(.small) .container {
+  padding-left: 16px;
 }
 
 .status > .container > .meta {

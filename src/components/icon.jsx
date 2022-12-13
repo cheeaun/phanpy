@@ -1,3 +1,5 @@
+import 'iconify-icon';
+
 const SIZES = {
   s: 12,
   m: 16,
@@ -35,11 +37,18 @@ const ICONS = {
   upload: 'mingcute:upload-3-line',
   gear: 'mingcute:settings-3-line',
   more: 'mingcute:more-1-line',
+  external: 'mingcute:external-link-line',
+  popout: 'mingcute:external-link-line',
+  popin: ['mingcute:external-link-line', '180deg'],
 };
 
 export default ({ icon, size = 'm', alt, title, class: className = '' }) => {
   const iconSize = SIZES[size];
-  const iconName = ICONS[icon];
+  let iconName = ICONS[icon];
+  let rotate;
+  if (Array.isArray(iconName)) {
+    [iconName, rotate] = iconName;
+  }
   return (
     <div
       class={`icon ${className}`}
@@ -52,7 +61,12 @@ export default ({ icon, size = 'm', alt, title, class: className = '' }) => {
         lineHeight: 0,
       }}
     >
-      <iconify-icon width={iconSize} height={iconSize} icon={iconName}>
+      <iconify-icon
+        width={iconSize}
+        height={iconSize}
+        icon={iconName}
+        rotate={rotate}
+      >
         {alt}
       </iconify-icon>
     </div>

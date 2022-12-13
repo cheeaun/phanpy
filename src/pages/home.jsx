@@ -49,7 +49,6 @@ export default ({ hidden }) => {
       states.home.push(...homeValues);
     }
     states.homeLastFetchTime = Date.now();
-    console.log(allStatuses);
     return allStatuses;
   }
 

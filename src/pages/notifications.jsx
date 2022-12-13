@@ -151,7 +151,6 @@ export default () => {
       states.notifications.push(...notificationsValues);
     }
     states.notificationsLastFetchTime = Date.now();
-    console.log(allNotifications);
     return allNotifications;
   }
 

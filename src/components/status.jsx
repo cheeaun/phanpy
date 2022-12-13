@@ -287,7 +287,8 @@ function Poll({ poll }) {
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const percentage = Math.round((optionVotesCount / votesCount) * 100);
+          const percentage =
+            Math.round((optionVotesCount / votesCount) * 100) || 0;
           return (
             <div
               class="poll-option"

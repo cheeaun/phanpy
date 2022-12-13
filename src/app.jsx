@@ -18,6 +18,7 @@ import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { getAccessToken } from './utils/auth';
+import openCompose from './utils/open-compose';
 import states from './utils/states';
 import store from './utils/store';
 
@@ -224,7 +225,17 @@ export function App() {
           <button
             type="button"
             id="compose-button"
-            onClick={() => (states.showCompose = true)}
+            onClick={(e) => {
+              if (e.shiftKey) {
+                const newWin = openCompose();
+                if (!newWin) {
+                  alert('Looks like your browser is blocking popups.');
+                  states.showCompose = true;
+                }
+              } else {
+                states.showCompose = true;
+              }
+            }}
           >
             <Icon icon="quill" size="xxl" alt="Compose" />
           </button>
@@ -268,9 +279,10 @@ export function App() {
             }
             editStatus={snapStates.showCompose?.editStatus || null}
             draftStatus={snapStates.showCompose?.draftStatus || null}
-            onClose={(result) => {
+            onClose={(results) => {
+              const { newStatus } = results || {};
               states.showCompose = false;
-              if (result) {
+              if (newStatus) {
                 states.reloadStatusPage++;
               }
             }}

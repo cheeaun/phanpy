@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import stringLength from 'string-length';
 
 import emojifyText from '../utils/emojify-text';
+import openCompose from '../utils/open-compose';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -207,30 +208,36 @@ export default ({
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
-    // check for non-ID media attachments
-    const hasNonIDMediaAttachments =
+    // check for status and media attachments with IDs
+    const hasIDMediaAttachments =
       mediaAttachments.length > 0 &&
-      mediaAttachments.some((media) => !media.id);
+      mediaAttachments.every((media) => media.id);
+    if (!value && hasIDMediaAttachments) {
+      console.log('canClose', { value, mediaAttachments });
+      return true;
+    }
 
     // check if status contains only "@acct", if replying
-    const hasAcct =
+    const isSelf = replyToStatus?.account.id === currentAccount;
+    const hasOnlyAcct =
       replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
+    if (!isSelf && hasOnlyAcct) {
+      console.log('canClose', { isSelf, hasOnlyAcct });
+      return true;
+    }
 
-    // check if status is different than source
-    const differentThanSource = dataset?.source && value !== dataset.source;
+    // check if status is same with source
+    const sameWithSource = value === dataset?.source;
+    if (sameWithSource) {
+      console.log('canClose', { sameWithSource });
+      return true;
+    }
 
-    console.log({
-      value,
-      hasAcct,
-      differentThanSource,
-      hasNonIDMediaAttachments,
-    });
+    return false;
+  };
 
-    if (
-      (value && !hasAcct) ||
-      differentThanSource ||
-      hasNonIDMediaAttachments
-    ) {
+  const confirmClose = () => {
+    if (canClose()) {
       const yes = confirm(beforeUnloadCopy);
       return yes;
     }
@@ -283,30 +290,11 @@ export default ({
                   }
                 }
 
-                const url = new URL('/compose/', window.location);
-                const screenWidth = window.screen.width;
-                const screenHeight = window.screen.height;
-                const left = Math.max(0, (screenWidth - 600) / 2);
-                const top = Math.max(0, (screenHeight - 450) / 2);
-                const width = Math.min(screenWidth, 600);
-                const height = Math.min(screenHeight, 450);
-                const newWin = window.open(
-                  url,
-                  'compose' + Math.random(),
-                  `width=${width},height=${height},left=${left},top=${top}`,
-                );
-
-                if (!newWin) {
-                  alert('Looks like your browser is blocking popups.');
-                  return;
-                }
-
                 const mediaAttachmentsWithIDs = mediaAttachments.filter(
                   (media) => media.id,
                 );
 
-                newWin.masto = masto;
-                newWin.__COMPOSE__ = {
+                const newWin = openCompose({
                   editStatus,
                   replyToStatus,
                   draftStatus: {
@@ -316,10 +304,14 @@ export default ({
                     sensitive,
                     mediaAttachments: mediaAttachmentsWithIDs,
                   },
-                };
-                onClose(() => {
-                  window.opener.__STATES__.reloadStatusPage++;
                 });
+
+                if (!newWin) {
+                  alert('Looks like your browser is blocking popups.');
+                  return;
+                }
+
+                onClose();
               }}
             >
               <Icon icon="popout" alt="Pop out" />
@@ -328,7 +320,7 @@ export default ({
               type="button"
               class="light close-button"
               onClick={() => {
-                if (canClose()) {
+                if (confirmClose()) {
                   onClose();
                 }
               }}
@@ -363,18 +355,20 @@ export default ({
                 (media) => media.id,
               );
 
-              onClose(() => {
-                window.opener.__STATES__.showCompose = {
-                  editStatus,
-                  replyToStatus,
-                  draftStatus: {
-                    status: textareaRef.current.value,
-                    spoilerText: spoilerTextRef.current.value,
-                    visibility,
-                    sensitive,
-                    mediaAttachments: mediaAttachmentsWithIDs,
-                  },
-                };
+              onClose({
+                fn: () => {
+                  window.opener.__STATES__.showCompose = {
+                    editStatus,
+                    replyToStatus,
+                    draftStatus: {
+                      status: textareaRef.current.value,
+                      spoilerText: spoilerTextRef.current.value,
+                      visibility,
+                      sensitive,
+                      mediaAttachments: mediaAttachmentsWithIDs,
+                    },
+                  };
+                },
               });
             }}
           >

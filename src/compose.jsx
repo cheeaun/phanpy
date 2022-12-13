@@ -8,6 +8,10 @@ import { useEffect, useState } from 'preact/hooks';
 
 import Compose from './components/compose';
 
+if (window.opener) {
+  console = window.opener.console;
+}
+
 function App() {
   const [uiState, setUIState] = useState('default');
 
@@ -42,8 +46,12 @@ function App() {
       replyToStatus={replyToStatus}
       draftStatus={draftStatus}
       standalone
-      onClose={(fn = () => {}) => {
+      onClose={(results) => {
+        const { newStatus, fn = () => {} } = results || {};
         try {
+          if (newStatus) {
+            window.opener.__STATES__.reloadStatusPage++;
+          }
           fn();
           setUIState('closed');
         } catch (e) {}

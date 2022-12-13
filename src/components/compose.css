@@ -139,10 +139,10 @@
   outline: 0;
 }
 #compose-container .toolbar-button:has([disabled]) {
-  cursor: not-allowed;
+  pointer-events: none;
 }
 #compose-container .toolbar-button:has([disabled]) > * {
-  filter: opacity(0.3);
+  filter: opacity(0.5);
 }
 #compose-container
   .toolbar-button:not(.show-field)

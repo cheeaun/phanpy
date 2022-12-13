@@ -114,7 +114,7 @@ export default ({
   useEffect(() => {
     if (textExpanderRef.current) {
       const handleChange = (e) => {
-        console.log('text-expander-change', e);
+        // console.log('text-expander-change', e);
         const { key, provide, text } = e.detail;
         textExpanderTextRef.current = text;
         if (text === '') {

@@ -53,14 +53,6 @@
   */
   pointer-events: none;
 }
-@keyframes appear-down {
-  0% {
-    transform: translateY(-2em);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
 
 #compose-container .status-preview-legend {
   pointer-events: none;
@@ -101,7 +93,6 @@
   z-index: 1;
 }
 #compose-container .status-preview ~ form {
-  animation: appear-down 1s ease-in-out;
   box-shadow: 0 -12px 12px -12px var(--divider-color);
 }
 

@@ -237,7 +237,7 @@ export default ({
   };
 
   const confirmClose = () => {
-    if (canClose()) {
+    if (!canClose()) {
       const yes = confirm(beforeUnloadCopy);
       return yes;
     }

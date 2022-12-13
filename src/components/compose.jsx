@@ -18,13 +18,13 @@ import Status from './status';
   - Max character limit includes BOTH status text and Content Warning text
 */
 
-export default ({
+function Compose({
   onClose,
   replyToStatus,
   editStatus,
   draftStatus,
   standalone,
-}) => {
+}) {
   const [uiState, setUIState] = useState('default');
 
   const accounts = store.local.getJSON('accounts');
@@ -696,7 +696,7 @@ export default ({
       </form>
     </div>
   );
-};
+}
 
 function MediaAttachment({
   attachment,
@@ -759,3 +759,5 @@ function MediaAttachment({
     </div>
   );
 }
+
+export default Compose;

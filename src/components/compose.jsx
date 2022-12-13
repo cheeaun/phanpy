@@ -208,12 +208,17 @@ export default ({
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
-    // check for status and media attachments with IDs
-    const hasIDMediaAttachments =
-      mediaAttachments.length > 0 &&
-      mediaAttachments.every((media) => media.id);
-    if (!value && hasIDMediaAttachments) {
+    // check for status and media attachments
+    const hasMediaAttachments = mediaAttachments.length > 0;
+    if (!value && !hasMediaAttachments) {
       console.log('canClose', { value, mediaAttachments });
+      return true;
+    }
+
+    // check if all media attachments have IDs
+    const hasIDMediaAttachments = mediaAttachments.every((media) => media.id);
+    if (hasIDMediaAttachments) {
+      console.log('canClose', { hasIDMediaAttachments });
       return true;
     }
 
@@ -232,6 +237,15 @@ export default ({
       console.log('canClose', { sameWithSource });
       return true;
     }
+
+    console.log('canClose', {
+      value,
+      hasMediaAttachments,
+      hasIDMediaAttachments,
+      isSelf,
+      hasOnlyAcct,
+      sameWithSource,
+    });
 
     return false;
   };

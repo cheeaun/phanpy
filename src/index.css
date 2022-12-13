@@ -36,7 +36,7 @@
   :root {
     --blue-color: CornflowerBlue;
     --purple-color: mediumpurple;
-    --green-color: MediumSeaGreen;
+    --green-color: limegreen;
     --bg-color: #242526;
     --bg-faded-color: #18191a;
     --bg-blur-color: #0009;
@@ -185,6 +185,13 @@ button.small {
 select.plain {
   border: 0;
   background-color: transparent;
+}
+
+pre code,
+code {
+  font-size: 95%;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+    monospace;
 }
 
 @media (prefers-color-scheme: dark) {

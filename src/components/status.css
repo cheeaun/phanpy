@@ -475,13 +475,16 @@ a.card:hover {
   margin: 8px 0;
   overflow: auto;
   width: 100%;
-  font-size: 90%;
   border: 1px solid var(--outline-color);
   background: linear-gradient(
     to bottom right,
     var(--bg-faded-color),
     transparent 160px
   );
+}
+
+.status .content p code {
+  color: var(--green-color);
 }
 
 /* MISC */

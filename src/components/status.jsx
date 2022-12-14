@@ -10,6 +10,7 @@ import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
+import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -695,6 +696,14 @@ function Status({
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
+          style={
+            size === 'l' && {
+              '--content-text-weight':
+                Math.round(
+                  (spoilerText.length + htmlContentLength(content)) / 140,
+                ) || 1,
+            }
+          }
         >
           {!!spoilerText && sensitive && (
             <>

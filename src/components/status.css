@@ -191,6 +191,7 @@
 }
 .status.large .content {
   font-size: 150%;
+  font-size: calc(100% + 50% / var(--content-text-weight));
 }
 .status.large .poll,
 .status.large .actions {

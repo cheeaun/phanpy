@@ -4,6 +4,7 @@ import { Link } from 'preact-router/match';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
@@ -43,13 +44,13 @@ const contentText = {
 const LIMIT = 20;
 
 function Notification({ notification }) {
-  const { id, type, status, account } = notification;
+  const { id, type, status, account, _accounts } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
   const actualStatusID = status?.reblog?.id || status?.id;
 
   const currentAccount = store.session.get('currentAccount');
-  const isSelf = currentAccount?.id === account.id;
+  const isSelf = currentAccount?.id === account?.id;
   const isVoted = status?.poll?.voted;
 
   const text =
@@ -84,11 +85,50 @@ function Notification({ notification }) {
         <p>
           {!/poll|update/i.test(type) && (
             <>
-              <NameText account={account} showAvatar />{' '}
+              {_accounts?.length > 1 ? (
+                <>
+                  <b>{_accounts.length} people</b>{' '}
+                </>
+              ) : (
+                <>
+                  <NameText account={account} showAvatar />{' '}
+                </>
+              )}
             </>
           )}
           {text}
         </p>
+        {_accounts?.length > 1 && (
+          <p>
+            {_accounts.map((account, i) => (
+              <>
+                <a
+                  href={account.url}
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = account;
+                  }}
+                >
+                  <Avatar
+                    url={account.avatarStatic}
+                    size={
+                      accounts < 10
+                        ? 'xl'
+                        : accounts < 100
+                        ? 'l'
+                        : accounts < 1000
+                        ? 'm'
+                        : 's' // My god, this person is popular!
+                    }
+                    key={account.id}
+                    alt={`${account.displayName} @${account.acct}`}
+                  />
+                </a>{' '}
+              </>
+            ))}
+          </p>
+        )}
         {status && (
           <Link class="status-link" href={`#/s/${actualStatusID}`}>
             <Status status={status} size="s" />
@@ -103,9 +143,34 @@ function NotificationsList({ notifications, emptyCopy }) {
   if (!notifications.length && emptyCopy) {
     return <p class="timeline-empty">{emptyCopy}</p>;
   }
+
+  // Create new flat list of notifications
+  // Combine sibling notifications based on type and status id, ignore the id
+  // Concat all notification.account into an array of _accounts
+  const cleanNotifications = [notifications[0]];
+  for (let i = 1, j = 0; i < notifications.length; i++) {
+    const notification = notifications[i];
+    const cleanNotification = cleanNotifications[j];
+    const { status, account, type } = notification;
+    if (
+      account &&
+      cleanNotification?.account &&
+      cleanNotification?.status?.id === status?.id &&
+      cleanNotification?.type === type
+    ) {
+      cleanNotification._accounts.push(account);
+    } else {
+      cleanNotifications[++j] = {
+        ...notification,
+        _accounts: [account],
+      };
+    }
+  }
+  // console.log({ notifications, cleanNotifications });
+
   return (
     <ul class="timeline flat">
-      {notifications.map((notification) => {
+      {cleanNotifications.map((notification, i) => {
         const { id, type } = notification;
         return (
           <li key={id} class={`notification ${type}`}>
@@ -200,8 +265,7 @@ export default () => {
     },
     { today: [], yesterday: [], older: [] },
   );
-
-  console.log(groupedNotifications);
+  // console.log(groupedNotifications);
 
   return (
     <div class="deck-container" ref={scrollableRef}>

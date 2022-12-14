@@ -17,6 +17,7 @@ export default ({ url, size, alt = '' }) => {
         width: size,
         height: size,
       }}
+      title={alt}
     >
       {!!url && (
         <img src={url} width={size} height={size} alt={alt} loading="lazy" />

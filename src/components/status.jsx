@@ -695,9 +695,14 @@ function Status({
               ) {
                 e.preventDefault();
                 e.stopPropagation();
-                const username = target.querySelector('span');
+                const username = (
+                  target.querySelector('span') || target
+                ).innerText
+                  .trim()
+                  .replace(/^@/, '');
                 const mention = mentions.find(
-                  (mention) => mention.username === username?.innerText.trim(),
+                  (mention) =>
+                    mention.username === username || mention.acct === username,
                 );
                 if (mention) {
                   states.showAccount = mention.acct;

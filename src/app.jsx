@@ -277,8 +277,8 @@ export function App() {
                 ? snapStates.showCompose.replyToStatus
                 : null
             }
-            editStatus={snapStates.showCompose?.editStatus || null}
-            draftStatus={snapStates.showCompose?.draftStatus || null}
+            editStatus={states.showCompose?.editStatus || null}
+            draftStatus={states.showCompose?.draftStatus || null}
             onClose={(results) => {
               const { newStatus } = results || {};
               states.showCompose = false;

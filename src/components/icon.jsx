@@ -40,9 +40,12 @@ const ICONS = {
   external: 'mingcute:external-link-line',
   popout: 'mingcute:external-link-line',
   popin: ['mingcute:external-link-line', '180deg'],
+  plus: 'mingcute:add-circle-line',
 };
 
 export default ({ icon, size = 'm', alt, title, class: className = '' }) => {
+  if (!icon) return null;
+
   const iconSize = SIZES[size];
   let iconName = ICONS[icon];
   let rotate;

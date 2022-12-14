@@ -25,7 +25,7 @@ function App() {
 
   if (uiState === 'closed') {
     return (
-      <div>
+      <div class="box">
         <p>You may close this page now.</p>
         <p>
           <button
@@ -46,6 +46,7 @@ function App() {
       replyToStatus={replyToStatus}
       draftStatus={draftStatus}
       standalone
+      hasOpener={window.opener}
       onClose={(results) => {
         const { newStatus, fn = () => {} } = results || {};
         try {
@@ -60,4 +61,4 @@ function App() {
   );
 }
 
-render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app-standalone'));

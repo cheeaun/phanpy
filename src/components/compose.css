@@ -6,6 +6,10 @@
   max-height: 100vh;
   overflow: auto;
 }
+#compose-container.standalone {
+  max-height: none;
+  margin: auto;
+}
 
 #compose-container .compose-top {
   text-align: right;
@@ -110,8 +114,8 @@
   min-width: 0;
 }
 #compose-container .toolbar-button {
-  cursor: pointer;
   display: inline-block;
+  color: var(--text-color);
   background-color: var(--bg-faded-color);
   padding: 0 8px;
   border-radius: 8px;
@@ -123,6 +127,7 @@
   position: relative;
   white-space: nowrap;
   border: 2px solid transparent;
+  vertical-align: middle;
 }
 #compose-container .toolbar-button > * {
   vertical-align: middle;
@@ -131,9 +136,11 @@
 }
 #compose-container .toolbar-button:has([disabled]) {
   pointer-events: none;
+  background-color: var(--bg-faded-color);
+  opacity: 0.5;
 }
 #compose-container .toolbar-button:has([disabled]) > * {
-  filter: opacity(0.5);
+  /* filter: opacity(0.5); */
 }
 #compose-container
   .toolbar-button:not(.show-field)
@@ -157,10 +164,12 @@
   right: 0;
   left: auto !important;
 }
-#compose-container .toolbar-button:hover {
+#compose-container .toolbar-button:not(:disabled):hover {
+  cursor: pointer;
+  filter: none;
   border-color: var(--divider-color);
 }
-#compose-container .toolbar-button:active {
+#compose-container .toolbar-button:not(:disabled):active {
   filter: brightness(0.8);
 }
 
@@ -271,4 +280,81 @@
 #compose-container .media-aside .uploaded {
   color: var(--green-color);
   margin-bottom: 4px;
+}
+
+#compose-container .poll {
+  background-color: var(--bg-faded-color);
+  border-radius: 8px;
+  margin: 8px 0 0;
+}
+
+#compose-container .poll-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+#compose-container .poll-choice {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: stretch;
+  flex-direction: row-reverse;
+}
+#compose-container .poll-choice input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+#compose-container .poll-button {
+  border: 2px solid var(--outline-color);
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  flex-shrink: 0;
+  line-height: 0;
+  overflow: hidden;
+  transition: border-radius 1s ease-out;
+  font-size: 14px;
+}
+#compose-container .multiple .poll-button {
+  border-radius: 4px;
+}
+
+#compose-container .poll-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  justify-content: space-between;
+  font-size: 90%;
+  border-top: 1px solid var(--outline-color);
+  padding: 8px;
+}
+#compose-container .poll-toolbar select {
+  padding: 4px;
+}
+
+#compose-container .multiple-choices {
+  flex-grow: 1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-left: 1px solid var(--outline-color);
+  padding-left: 8px;
+}
+
+#compose-container .expires-in {
+  flex-grow: 1;
+  border-left: 1px solid var(--outline-color);
+  padding-left: 8px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#compose-container .remove-poll-button {
+  width: 100%;
+  color: var(--red-color);
 }

@@ -113,11 +113,11 @@ function Notification({ notification }) {
                   <Avatar
                     url={account.avatarStatic}
                     size={
-                      accounts < 10
+                      _accounts.length < 10
                         ? 'xl'
-                        : accounts < 100
+                        : _accounts.length < 100
                         ? 'l'
-                        : accounts < 1000
+                        : _accounts.length < 1000
                         ? 'm'
                         : 's' // My god, this person is popular!
                     }

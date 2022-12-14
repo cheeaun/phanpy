@@ -301,7 +301,7 @@ function Poll({ poll }) {
                 {voted && ownVotes.includes(i) && (
                   <>
                     {' '}
-                    <Icon icon="check" size="s" />
+                    <Icon icon="check-circle" size="s" />
                   </>
                 )}
               </div>

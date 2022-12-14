@@ -112,6 +112,7 @@ function Compose({
         expiresIn: poll?.expiresIn || expiresInFromExpiresAt(poll.expiresAt),
       };
       textareaRef.current.value = status;
+      textareaRef.current.dispatchEvent(new Event('input'));
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
       setSensitive(sensitive);
@@ -131,6 +132,7 @@ function Compose({
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
+          textareaRef.current.dispatchEvent(new Event('input'));
           textareaRef.current.dataset.source = text;
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);

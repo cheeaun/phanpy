@@ -290,9 +290,13 @@ function Poll({ poll }) {
           const pollVotesCount = votersCount || votesCount;
           const percentage =
             Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
+          // check if current poll choice is the leading one
+          const isLeading =
+            optionVotesCount > 0 &&
+            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
           return (
             <div
-              class="poll-option"
+              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
               style={{
                 '--percentage': `${percentage}%`,
               }}

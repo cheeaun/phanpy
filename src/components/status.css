@@ -396,6 +396,13 @@ a.card:hover {
   gap: 8px;
   cursor: pointer;
 }
+.poll-option-votes {
+  flex-shrink: 0;
+  font-size: 90%;
+}
+.poll-option-leading .poll-option-votes {
+  font-weight: bold;
+}
 .poll-vote-button {
   margin-top: 8px;
 }

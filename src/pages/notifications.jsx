@@ -50,7 +50,7 @@ function Notification({ notification }) {
   const actualStatusID = status?.reblog?.id || status?.id;
 
   const currentAccount = store.session.get('currentAccount');
-  const isSelf = currentAccount?.id === account?.id;
+  const isSelf = currentAccount === account?.id;
   const isVoted = status?.poll?.voted;
 
   const text =

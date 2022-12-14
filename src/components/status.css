@@ -42,6 +42,12 @@
   opacity: 0.75;
   font-size: smaller;
   vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.status-pre-meta .name-text {
+  display: inline;
 }
 .status-pre-meta .icon {
   color: var(--reblog-color);

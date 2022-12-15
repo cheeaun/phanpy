@@ -89,10 +89,15 @@ function Compose({
         spoilerTextRef.current.value = spoilerText;
         spoilerTextRef.current.focus();
       } else {
+        const mentions = new Set([
+          replyToStatus.account.acct,
+          ...replyToStatus.mentions.map((m) => m.acct),
+        ]);
+        textareaRef.current.value = `${[...mentions]
+          .filter((m) => m !== currentAccountInfo.acct) // Excluding self
+          .map((m) => `@${m}`)
+          .join(' ')} `;
         textareaRef.current.focus();
-        if (replyToStatus.account.id !== currentAccount) {
-          textareaRef.current.value = `@${replyToStatus.account.acct} `;
-        }
       }
       setVisibility(visibility);
       setSensitive(sensitive);

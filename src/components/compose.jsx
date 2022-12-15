@@ -97,6 +97,7 @@ function Compose({
           .filter((m) => m !== currentAccountInfo.acct) // Excluding self
           .map((m) => `@${m}`)
           .join(' ')} `;
+        textareaRef.current.dispatchEvent(new Event('input'));
         textareaRef.current.focus();
       }
       setVisibility(visibility);

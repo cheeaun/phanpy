@@ -111,18 +111,25 @@ export default ({ id }) => {
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';
-    const { content } = heroStatus;
-    const div = document.createElement('div');
-    div.innerHTML = content;
-    let text = div.innerText.trim();
+    const { spoilerText, content } = heroStatus;
+    let text;
+    if (spoilerText) {
+      text = spoilerText;
+    } else {
+      const div = document.createElement('div');
+      div.innerHTML = content;
+      text = div.innerText.trim();
+    }
     if (text.length > 64) {
+      // "The title should ideally be less than 64 characters in length"
+      // https://www.w3.org/Provider/Style/TITLE.html
       text = text.slice(0, 64) + '…';
     }
     return text;
   }, [heroStatus]);
   useTitle(
     heroDisplayName && heroContentText
-      ? `${heroDisplayName}: ${heroContentText}`
+      ? `${heroDisplayName}: "${heroContentText}"`
       : 'Status',
   );
 

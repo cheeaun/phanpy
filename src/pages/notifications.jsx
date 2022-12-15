@@ -338,6 +338,7 @@ export default () => {
                 class="plain block"
                 disabled={uiState === 'loading'}
                 onClick={() => loadNotifications()}
+                style={{ marginBlockEnd: '6em' }}
               >
                 {uiState === 'loading' ? <Loader /> : <>Show more&hellip;</>}
               </button>

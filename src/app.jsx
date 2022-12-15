@@ -143,6 +143,7 @@ export function App() {
         window.masto = await login({
           url: `https://${instanceURL}`,
           accessToken,
+          disableVersionCheck: true,
         });
 
         const mastoAccount = await masto.accounts.verifyCredentials();
@@ -183,6 +184,7 @@ export function App() {
           window.masto = await login({
             url: `https://${instanceURL}`,
             accessToken,
+            disableVersionCheck: true,
           });
           setIsLoggedIn(true);
         } catch (e) {

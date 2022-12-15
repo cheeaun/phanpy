@@ -186,6 +186,24 @@ export default ({ onClose }) => {
         </a>
         .
       </p>
+      {__BUILD_TIME__ && (
+        <p>
+          Last build:{' '}
+          <relative-time datetime={new Date(__BUILD_TIME__).toISOString()} />{' '}
+          {__COMMIT_HASH__ && (
+            <>
+              (
+              <a
+                href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
+                target="_blank"
+              >
+                <code>{__COMMIT_HASH__}</code>
+              </a>
+              )
+            </>
+          )}
+        </p>
+      )}
     </div>
   );
 };

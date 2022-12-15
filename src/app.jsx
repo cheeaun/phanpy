@@ -54,11 +54,10 @@ async function startStream() {
       states.statuses.set(status.reblog.id, status.reblog);
     }
   });
-  // Uncomment this once this bug is fixed: https://github.com/neet/masto.js/issues/750
-  // stream.on('delete', (statusID) => {
-  //   console.log('DELETE', statusID);
-  //   states.statuses.delete(statusID);
-  // });
+  stream.on('delete', (statusID) => {
+    console.log('DELETE', statusID);
+    states.statuses.delete(statusID);
+  });
   stream.on('notification', (notification) => {
     console.log('NOTIFICATION', notification);
 

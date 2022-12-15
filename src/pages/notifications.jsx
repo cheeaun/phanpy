@@ -147,7 +147,12 @@ function NotificationsList({ notifications, emptyCopy }) {
   // Create new flat list of notifications
   // Combine sibling notifications based on type and status id, ignore the id
   // Concat all notification.account into an array of _accounts
-  const cleanNotifications = [notifications[0]];
+  const cleanNotifications = [
+    {
+      ...notifications[0],
+      _accounts: [notifications[0].account],
+    },
+  ];
   for (let i = 1, j = 0; i < notifications.length; i++) {
     const notification = notifications[i];
     const cleanNotification = cleanNotifications[j];

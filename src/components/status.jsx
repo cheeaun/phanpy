@@ -81,6 +81,7 @@ function Media({ media, showOriginal, onClick }) {
           alt={description}
           width={width}
           height={height}
+          loading="lazy"
           style={
             !showOriginal && {
               backgroundColor:
@@ -163,6 +164,7 @@ function Media({ media, showOriginal, onClick }) {
             alt={description}
             width={width}
             height={height}
+            loading="lazy"
           />
         )}
       </div>
@@ -215,6 +217,7 @@ function Card({ card }) {
           src={image}
           width={width}
           height={height}
+          loading="lazy"
           alt=""
           onError={() => {
             this.style.display = 'none';
@@ -245,6 +248,7 @@ function Card({ card }) {
           width={width}
           height={height}
           alt={title || description}
+          loading="lazy"
           style={{
             height: 'auto',
             aspectRatio: `${width}/${height}`,

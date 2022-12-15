@@ -408,6 +408,13 @@ function Compose({
                   return;
                 }
 
+                if (window.opener.__STATES__.showCompose) {
+                  const yes = confirm(
+                    'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
+                  );
+                  if (!yes) return;
+                }
+
                 const mediaAttachmentsWithIDs = mediaAttachments.filter(
                   (media) => media.id,
                 );

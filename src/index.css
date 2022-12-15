@@ -194,7 +194,7 @@ code {
 }
 
 @media (prefers-color-scheme: dark) {
-  img,
+  /* img,
   video {
     filter: brightness(0.7);
     transition: filter 0.3s ease-out;
@@ -202,7 +202,7 @@ code {
   img:hover,
   video:hover {
     filter: brightness(1);
-  }
+  } */
   :is(button, .button).plain2 {
     backdrop-filter: blur(12px) brightness(0.5);
   }

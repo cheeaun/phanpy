@@ -3,14 +3,37 @@ import './index.css';
 import './app.css';
 
 import '@github/time-elements';
+import { login } from 'masto';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import Compose from './components/compose';
+import store from './utils/store';
 
 if (window.opener) {
   console = window.opener.console;
 }
+
+(async () => {
+  if (window.masto) return;
+  console.warn('window.masto not found. Trying to log in...');
+  try {
+    const accounts = store.local.getJSON('accounts') || [];
+    const currentAccount = store.session.get('currentAccount');
+    const account =
+      accounts.find((a) => a.info.id === currentAccount) || accounts[0];
+    const instanceURL = account.instanceURL;
+    const accessToken = account.accessToken;
+    window.masto = await login({
+      url: `https://${instanceURL}`,
+      accessToken,
+    });
+    console.info('Logged in successfully.');
+  } catch (e) {
+    console.error(e);
+    alert('Failed to log in. Please try again.');
+  }
+})();
 
 function App() {
   const [uiState, setUIState] = useState('default');

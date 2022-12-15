@@ -9,6 +9,7 @@ import { useEffect, useState } from 'preact/hooks';
 
 import Compose from './components/compose';
 import store from './utils/store';
+import useTitle from './utils/useTitle';
 
 if (window.opener) {
   console = window.opener.console;
@@ -41,11 +42,15 @@ function App() {
 
   const { editStatus, replyToStatus, draftStatus } = window.__COMPOSE__ || {};
 
-  useEffect(() => {
-    if (uiState === 'closed') {
-      window.close();
-    }
-  }, [uiState]);
+  useTitle(
+    editStatus
+      ? 'Editing source status'
+      : replyToStatus
+      ? `Replying to @${
+          replyToStatus.account?.acct || replyToStatus.account?.username
+        }`
+      : 'Compose',
+  );
 
   if (uiState === 'closed') {
     return (

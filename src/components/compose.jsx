@@ -453,6 +453,7 @@ function Compose({
           <div class="status-preview-legend reply-to">
             Replying to @
             {replyToStatus.account.acct || replyToStatus.account.username}
+            &rsquo;s status
           </div>
         </div>
       )}

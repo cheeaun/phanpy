@@ -271,6 +271,7 @@ function Compose({
     const isSelf = replyToStatus?.account.id === currentAccount;
     const hasOnlyAcct =
       replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
+    // TODO: check for mentions, or maybe just generic "@username<space>", including multiple mentions like "@username1<space>@username2<space>"
     if (!isSelf && hasOnlyAcct) {
       console.log('canClose', { isSelf, hasOnlyAcct });
       return true;

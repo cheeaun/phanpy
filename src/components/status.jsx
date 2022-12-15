@@ -10,6 +10,7 @@ import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
+import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -264,9 +265,13 @@ function Card({ card }) {
   }
 }
 
-function Poll({ poll }) {
+function Poll({ poll, readOnly }) {
   const [pollSnapshot, setPollSnapshot] = useState(poll);
   const [uiState, setUIState] = useState('default');
+
+  useEffect(() => {
+    setPollSnapshot(poll);
+  }, [poll]);
 
   const {
     expired,
@@ -280,17 +285,24 @@ function Poll({ poll }) {
     votesCount,
   } = pollSnapshot;
 
-  const expiresAtDate = new Date(expiresAt);
+  const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
   return (
     <div class="poll">
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const percentage = Math.round((optionVotesCount / votesCount) * 100);
+          const pollVotesCount = votersCount || votesCount;
+          const percentage =
+            Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
+          // check if current poll choice is the leading one
+          const isLeading =
+            optionVotesCount > 0 &&
+            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
           return (
             <div
-              class="poll-option"
+              key={`${i}-${title}-${optionVotesCount}`}
+              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
               style={{
                 '--percentage': `${percentage}%`,
               }}
@@ -300,7 +312,7 @@ function Poll({ poll }) {
                 {voted && ownVotes.includes(i) && (
                   <>
                     {' '}
-                    <Icon icon="check" size="s" />
+                    <Icon icon="check-circle" size="s" />
                   </>
                 )}
               </div>
@@ -337,7 +349,7 @@ function Poll({ poll }) {
             setUIState('default');
           }}
           style={{
-            pointerEvents: uiState === 'loading' ? 'none' : 'auto',
+            pointerEvents: uiState === 'loading' || readOnly ? 'none' : 'auto',
             opacity: uiState === 'loading' ? 0.5 : 1,
           }}
         >
@@ -351,37 +363,44 @@ function Poll({ poll }) {
                     name="poll"
                     value={i}
                     disabled={uiState === 'loading'}
+                    readOnly={readOnly}
                   />
                   <span class="poll-option-title">{title}</span>
                 </label>
               </div>
             );
           })}
-          <button
-            class="poll-vote-button"
-            type="submit"
-            disabled={uiState === 'loading'}
-          >
-            Vote
-          </button>
+          {!readOnly && (
+            <button
+              class="poll-vote-button"
+              type="submit"
+              disabled={uiState === 'loading'}
+            >
+              Vote
+            </button>
+          )}
         </form>
       )}
-      <p class="poll-meta">
-        <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-        {votersCount === 1 ? 'voter' : 'voters'}
-        {votersCount !== votesCount && (
-          <>
-            {' '}
-            &bull; <span title={votesCount}>
-              {shortenNumber(votesCount)}
-            </span>{' '}
-            vote
-            {votesCount === 1 ? '' : 's'}
-          </>
-        )}{' '}
-        &bull; {expired ? 'Ended' : 'Ending'}{' '}
-        <relative-time datetime={expiresAtDate.toISOString()} />
-      </p>
+      {!readOnly && (
+        <p class="poll-meta">
+          <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
+          {votersCount === 1 ? 'voter' : 'voters'}
+          {votersCount !== votesCount && (
+            <>
+              {' '}
+              &bull; <span title={votesCount}>
+                {shortenNumber(votesCount)}
+              </span>{' '}
+              vote
+              {votesCount === 1 ? '' : 's'}
+            </>
+          )}{' '}
+          &bull; {expired ? 'Ended' : 'Ending'}{' '}
+          {!!expiresAtDate && (
+            <relative-time datetime={expiresAtDate.toISOString()} />
+          )}
+        </p>
+      )}
     </div>
   );
 }
@@ -443,7 +462,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
                     }).format(createdAtDate)}
                   </time>
                 </h3>
-                <Status status={status} size="s" withinContext editStatus />
+                <Status status={status} size="s" withinContext readOnly />
               </li>
             );
           })}
@@ -464,7 +483,7 @@ function Status({
   withinContext,
   size = 'm',
   skeleton,
-  editStatus,
+  readOnly,
 }) {
   if (skeleton) {
     return (
@@ -639,7 +658,7 @@ function Status({
               </>
             )}
           </span>{' '}
-          {size !== 'l' && !editStatus && (
+          {size !== 'l' && uri ? (
             <a href={uri} target="_blank" class="time">
               <Icon
                 icon={visibilityIconsMap[visibility]}
@@ -655,12 +674,36 @@ function Status({
                 {createdAtDate.toLocaleString()}
               </relative-time>
             </a>
+          ) : (
+            <span class="time">
+              <Icon
+                icon={visibilityIconsMap[visibility]}
+                alt={visibility}
+                size="s"
+              />{' '}
+              <relative-time
+                datetime={createdAtDate.toISOString()}
+                format="micro"
+                threshold="P1D"
+                prefix=""
+              >
+                {createdAtDate.toLocaleString()}
+              </relative-time>
+            </span>
           )}
         </div>
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
+          style={
+            size === 'l' && {
+              '--content-text-weight':
+                Math.round(
+                  (spoilerText.length + htmlContentLength(content)) / 140,
+                ) || 1,
+            }
+          }
         >
           {!!spoilerText && sensitive && (
             <>
@@ -694,9 +737,14 @@ function Status({
               ) {
                 e.preventDefault();
                 e.stopPropagation();
-                const username = target.querySelector('span');
+                const username = (
+                  target.querySelector('span') || target
+                ).innerText
+                  .trim()
+                  .replace(/^@/, '');
                 const mention = mentions.find(
-                  (mention) => mention.username === username?.innerText.trim(),
+                  (mention) =>
+                    mention.username === username || mention.acct === username,
                 );
                 if (mention) {
                   states.showAccount = mention.acct;
@@ -720,7 +768,7 @@ function Status({
               }),
             }}
           />
-          {!!poll && <Poll poll={poll} />}
+          {!!poll && <Poll poll={poll} readOnly={readOnly} />}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
             <button
               class="plain spoiler"

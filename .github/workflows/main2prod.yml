@@ -1,0 +1,16 @@
+name: Pull Request to `main` from `production`
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  auto-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vsoch/pull-request-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_FROM_BRANCH: 'main'
+          PULL_REQUEST_BRANCH: 'production'

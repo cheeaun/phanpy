@@ -42,6 +42,12 @@
   opacity: 0.75;
   font-size: smaller;
   vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.status-pre-meta .name-text {
+  display: inline;
 }
 .status-pre-meta .icon {
   color: var(--reblog-color);
@@ -93,10 +99,12 @@
   transform: translateX(5px);
 }
 
-.status:not(.small) .container {
-  padding-left: 16px;
+.status .container {
   flex-grow: 1;
   min-width: 0;
+}
+.status:not(.small) .container {
+  padding-left: 16px;
 }
 
 .status > .container > .meta {
@@ -175,9 +183,6 @@
 .status .content p:last-child {
   margin-block-end: 0;
 }
-.status .content p code {
-  color: var(--green-color);
-}
 .status .content .invisible {
   display: none;
 }
@@ -186,10 +191,12 @@
 }
 .status.large .content {
   font-size: 150%;
+  font-size: calc(100% + 50% / var(--content-text-weight));
 }
 .status.large .poll,
 .status.large .actions {
   font-size: 125%;
+  font-size: calc(100% + 25% / var(--content-text-weight));
 }
 
 /* MEDIA */
@@ -207,6 +214,7 @@
   border-radius: 8px;
   overflow: hidden;
   max-height: 160px;
+  min-height: 80px;
   border: 1px solid var(--outline-color);
 }
 .status .media:hover {
@@ -374,6 +382,7 @@ a.card:hover {
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  background-color: var(--bg-blur-color);
   background-image: linear-gradient(
     to right,
     var(--link-faded-color),
@@ -391,11 +400,19 @@ a.card:hover {
   gap: 8px;
   cursor: pointer;
 }
+.poll-option-votes {
+  flex-shrink: 0;
+  font-size: 90%;
+}
+.poll-option-leading .poll-option-votes {
+  font-weight: bold;
+}
 .poll-vote-button {
   margin-top: 8px;
 }
 .poll-meta {
   margin: 8px 0;
+  font-size: 90%;
 }
 
 /* EXTRA META */

@@ -6,6 +6,10 @@
   max-height: 100vh;
   overflow: auto;
 }
+#compose-container.standalone {
+  max-height: none;
+  margin: auto;
+}
 
 #compose-container .compose-top {
   text-align: right;
@@ -17,11 +21,6 @@
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-#compose-container .close-button {
-  padding: 6px;
-  color: var(--text-insignificant-color);
 }
 
 #compose-container textarea {
@@ -42,27 +41,54 @@
     transform: translateY(0);
   }
 }
-#compose-container .reply-to {
+#compose-container .status-preview {
   border-radius: 8px 8px 0 0;
   max-height: 160px;
-  pointer-events: none;
-  filter: saturate(0.25) opacity(0.75);
-  background-color: var(--bg-blur-color);
+  background-color: var(--bg-color);
   margin: 0 12px;
   border: 1px solid var(--outline-color);
   border-bottom: 0;
-  /* box-shadow: 0 0 12px var(--divider-color); */
-  /* mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1) 90%, transparent); */
   animation: appear-up 1s ease-in-out;
+  overflow: auto;
 }
-@keyframes appear-down {
-  0% {
-    transform: translateY(-2em);
-  }
-  100% {
-    transform: translateY(0);
-  }
+#compose-container.standalone .status-preview * {
+  /*
+    For standalone mode (new window), prevent interacting with the status preview for now
+  */
+  pointer-events: none;
 }
+
+#compose-container .status-preview-legend {
+  pointer-events: none;
+  position: sticky;
+  bottom: 0;
+  padding: 8px;
+  font-size: 80%;
+  font-weight: bold;
+  text-align: center;
+  color: var(--text-insignificant-color);
+  background-color: var(--bg-blur-color);
+  /* background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--bg-faded-color)
+  ); */
+  border-top: 1px solid var(--outline-color);
+  backdrop-filter: blur(8px);
+  text-shadow: 0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color);
+}
+#_compose-container .status-preview-legend.reply-to {
+  color: var(--reply-to-color);
+  background-color: var(--reply-to-faded-color);
+  /* background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--reply-to-faded-color)
+  ); */
+}
+
 #compose-container form {
   border-radius: 8px;
   padding: 4px 12px;
@@ -70,8 +96,7 @@
   position: relative;
   z-index: 1;
 }
-#compose-container .reply-to ~ form {
-  animation: appear-down 1s ease-in-out;
+#compose-container .status-preview ~ form {
   box-shadow: 0 -12px 12px -12px var(--divider-color);
 }
 
@@ -89,8 +114,8 @@
   min-width: 0;
 }
 #compose-container .toolbar-button {
-  cursor: pointer;
   display: inline-block;
+  color: var(--text-color);
   background-color: var(--bg-faded-color);
   padding: 0 8px;
   border-radius: 8px;
@@ -102,6 +127,7 @@
   position: relative;
   white-space: nowrap;
   border: 2px solid transparent;
+  vertical-align: middle;
 }
 #compose-container .toolbar-button > * {
   vertical-align: middle;
@@ -109,10 +135,12 @@
   outline: 0;
 }
 #compose-container .toolbar-button:has([disabled]) {
-  cursor: not-allowed;
+  pointer-events: none;
+  background-color: var(--bg-faded-color);
+  opacity: 0.5;
 }
 #compose-container .toolbar-button:has([disabled]) > * {
-  filter: opacity(0.3);
+  /* filter: opacity(0.5); */
 }
 #compose-container
   .toolbar-button:not(.show-field)
@@ -136,10 +164,12 @@
   right: 0;
   left: auto !important;
 }
-#compose-container .toolbar-button:hover {
+#compose-container .toolbar-button:not(:disabled):hover {
+  cursor: pointer;
+  filter: none;
   border-color: var(--divider-color);
 }
-#compose-container .toolbar-button:active {
+#compose-container .toolbar-button:not(:disabled):active {
   filter: brightness(0.8);
 }
 
@@ -250,4 +280,81 @@
 #compose-container .media-aside .uploaded {
   color: var(--green-color);
   margin-bottom: 4px;
+}
+
+#compose-container form .poll {
+  background-color: var(--bg-faded-color);
+  border-radius: 8px;
+  margin: 8px 0 0;
+}
+
+#compose-container .poll-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+#compose-container .poll-choice {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: stretch;
+  flex-direction: row-reverse;
+}
+#compose-container .poll-choice input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+#compose-container .poll-button {
+  border: 2px solid var(--outline-color);
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  flex-shrink: 0;
+  line-height: 0;
+  overflow: hidden;
+  transition: border-radius 1s ease-out;
+  font-size: 14px;
+}
+#compose-container .multiple .poll-button {
+  border-radius: 4px;
+}
+
+#compose-container .poll-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  justify-content: space-between;
+  font-size: 90%;
+  border-top: 1px solid var(--outline-color);
+  padding: 8px;
+}
+#compose-container .poll-toolbar select {
+  padding: 4px;
+}
+
+#compose-container .multiple-choices {
+  flex-grow: 1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-left: 1px solid var(--outline-color);
+  padding-left: 8px;
+}
+
+#compose-container .expires-in {
+  flex-grow: 1;
+  border-left: 1px solid var(--outline-color);
+  padding-left: 8px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#compose-container .remove-poll-button {
+  width: 100%;
+  color: var(--red-color);
 }

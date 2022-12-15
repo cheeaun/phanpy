@@ -114,7 +114,6 @@ button,
   border: 0;
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
-  cursor: pointer;
   line-height: 1;
   vertical-align: middle;
   text-decoration: none;
@@ -122,14 +121,14 @@ button,
 button > * {
   vertical-align: middle;
 }
-:is(button, .button):not([disabled]):hover {
+:is(button, .button):not(:disabled, .disabled):hover {
+  cursor: pointer;
   filter: brightness(1.2);
 }
-:is(button, .button):active {
+:is(button, .button):not(:disabled, .disabled):active {
   filter: brightness(0.8);
 }
-:is(button, .button)[disabled] {
-  cursor: auto;
+:is(button:disabled, .button.disabled) {
   opacity: 0.5;
 }
 
@@ -213,6 +212,10 @@ code {
 
 .ib {
   display: inline-block;
+}
+
+.spacer {
+  flex-grow: 1;
 }
 
 /* KEYFRAMES */

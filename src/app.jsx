@@ -18,12 +18,13 @@ import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { getAccessToken } from './utils/auth';
+import openCompose from './utils/open-compose';
 import states from './utils/states';
 import store from './utils/store';
 
 const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
 
-window._STATES = states;
+window.__STATES__ = states;
 
 async function startStream() {
   const stream = await masto.stream.streamUser();
@@ -53,11 +54,10 @@ async function startStream() {
       states.statuses.set(status.reblog.id, status.reblog);
     }
   });
-  // Uncomment this once this bug is fixed: https://github.com/neet/masto.js/issues/750
-  // stream.on('delete', (statusID) => {
-  //   console.log('DELETE', statusID);
-  //   states.statuses.delete(statusID);
-  // });
+  stream.on('delete', (statusID) => {
+    console.log('DELETE', statusID);
+    states.statuses.delete(statusID);
+  });
   stream.on('notification', (notification) => {
     console.log('NOTIFICATION', notification);
 
@@ -224,7 +224,17 @@ export function App() {
           <button
             type="button"
             id="compose-button"
-            onClick={() => (states.showCompose = true)}
+            onClick={(e) => {
+              if (e.shiftKey) {
+                const newWin = openCompose();
+                if (!newWin) {
+                  alert('Looks like your browser is blocking popups.');
+                  states.showCompose = true;
+                }
+              } else {
+                states.showCompose = true;
+              }
+            }}
           >
             <Icon icon="quill" size="xxl" alt="Compose" />
           </button>
@@ -266,10 +276,12 @@ export function App() {
                 ? snapStates.showCompose.replyToStatus
                 : null
             }
-            editStatus={snapStates.showCompose?.editStatus || null}
-            onClose={(result) => {
+            editStatus={states.showCompose?.editStatus || null}
+            draftStatus={states.showCompose?.draftStatus || null}
+            onClose={(results) => {
+              const { newStatus } = results || {};
               states.showCompose = false;
-              if (result) {
+              if (newStatus) {
                 states.reloadStatusPage++;
               }
             }}

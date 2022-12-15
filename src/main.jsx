@@ -1,7 +1,6 @@
 import './index.css';
 
 import '@github/time-elements';
-import 'iconify-icon';
 import { render } from 'preact';
 
 import { App } from './app';

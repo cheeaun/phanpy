@@ -11,8 +11,8 @@ Phanpy
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
-🔗 **Production**: https://phanpy.social <br>
-🔗 **Development**: https://dev.phanpy.social
+🔗 **Production**: https://phanpy.social (`production` branch)<br>
+🔗 **Development**: https://dev.phanpy.social (`main` branch, may break more often)
 
 Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
 

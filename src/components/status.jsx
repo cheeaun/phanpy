@@ -662,39 +662,40 @@ function Status({
               </>
             )}
           </span>{' '}
-          {size !== 'l' && uri ? (
-            <a href={uri} target="_blank" class="time">
-              <Icon
-                icon={visibilityIconsMap[visibility]}
-                alt={visibility}
-                size="s"
-              />{' '}
-              <relative-time
-                datetime={createdAtDate.toISOString()}
-                format="micro"
-                threshold="P1D"
-                prefix=""
-              >
-                {createdAtDate.toLocaleString()}
-              </relative-time>
-            </a>
-          ) : (
-            <span class="time">
-              <Icon
-                icon={visibilityIconsMap[visibility]}
-                alt={visibility}
-                size="s"
-              />{' '}
-              <relative-time
-                datetime={createdAtDate.toISOString()}
-                format="micro"
-                threshold="P1D"
-                prefix=""
-              >
-                {createdAtDate.toLocaleString()}
-              </relative-time>
-            </span>
-          )}
+          {size !== 'l' &&
+            (uri ? (
+              <a href={uri} target="_blank" class="time">
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={visibility}
+                  size="s"
+                />{' '}
+                <relative-time
+                  datetime={createdAtDate.toISOString()}
+                  format="micro"
+                  threshold="P1D"
+                  prefix=""
+                >
+                  {createdAtDate.toLocaleString()}
+                </relative-time>
+              </a>
+            ) : (
+              <span class="time">
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={visibility}
+                  size="s"
+                />{' '}
+                <relative-time
+                  datetime={createdAtDate.toISOString()}
+                  format="micro"
+                  threshold="P1D"
+                  prefix=""
+                >
+                  {createdAtDate.toLocaleString()}
+                </relative-time>
+              </span>
+            ))}
         </div>
         <div
           class={`content-container ${

@@ -11,6 +11,9 @@ Phanpy
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
+🔗 **Production**: https://phanpy.social <br>
+🔗 **Development**: https://dev.phanpy.social
+
 Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
 
 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
@@ -21,9 +24,10 @@ Everything is designed and engineered for my own use case, following my taste an
 
 ## Features
 
-- Minimalistic UI
-- Accounts switching
-- Theme switching (light, dark, auto)
+- 👪 Multiple accounts
+- 🪟 Compose window pop-out/in
+- 🌗 Light/dark/auto theme
+- 🔔 Grouped notifications
 
 ## Design decisions
 

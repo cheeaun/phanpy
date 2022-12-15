@@ -307,6 +307,7 @@ a.mention span {
   border: 1px solid var(--divider-color);
   overflow: auto;
   max-height: 90vh;
+  max-height: 90dvh;
   position: relative;
 }
 .box > :is(h1, h2, h3):first-of-type {
@@ -464,6 +465,7 @@ button.carousel-dot[disabled].active {
 .sheet {
   align-self: flex-end;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow: auto;
   overflow-x: hidden;
   background-color: var(--bg-color);

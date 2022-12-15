@@ -196,6 +196,7 @@
 .status.large .poll,
 .status.large .actions {
   font-size: 125%;
+  font-size: calc(100% + 25% / var(--content-text-weight));
 }
 
 /* MEDIA */

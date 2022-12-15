@@ -27,6 +27,7 @@ if (window.opener) {
     window.masto = await login({
       url: `https://${instanceURL}`,
       accessToken,
+      disableVersionCheck: true,
     });
     console.info('Logged in successfully.');
   } catch (e) {

@@ -54,7 +54,8 @@ function Media({ media, showOriginal, onClick }) {
     focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
   }
 
-  if (type === 'image') {
+  if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
+    // Note: type: unknown might not have width/height
     return (
       <div
         class={`media media-image`}

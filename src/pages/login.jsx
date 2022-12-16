@@ -6,7 +6,7 @@ import { getAuthorizationURL, registerApplication } from '../utils/auth';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
-export default () => {
+function Login() {
   useTitle('Log in');
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
@@ -96,4 +96,6 @@ export default () => {
       </form>
     </main>
   );
-};
+}
+
+export default Login;

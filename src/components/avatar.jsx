@@ -8,7 +8,7 @@ const SIZES = {
   xxl: 50,
 };
 
-export default ({ url, size, alt = '' }) => {
+function Avatar({ url, size, alt = '' }) {
   size = SIZES[size] || size || SIZES.m;
   return (
     <span
@@ -24,4 +24,6 @@ export default ({ url, size, alt = '' }) => {
       )}
     </span>
   );
-};
+}
+
+export default Avatar;

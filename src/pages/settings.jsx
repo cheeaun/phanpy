@@ -13,7 +13,7 @@ import store from '../utils/store';
   - Dark/light/auto theme switch (done with adding/removing 'is-light' or 'is-dark' class on the body)
 */
 
-export default ({ onClose }) => {
+function Settings({ onClose }) {
   // Accounts
   const accounts = store.local.getJSON('accounts');
   const currentAccount = store.session.get('currentAccount');
@@ -206,4 +206,6 @@ export default ({ onClose }) => {
       )}
     </div>
   );
-};
+}
+
+export default Settings;

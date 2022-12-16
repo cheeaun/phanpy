@@ -43,7 +43,7 @@ const ICONS = {
   plus: 'mingcute:add-circle-line',
 };
 
-export default ({ icon, size = 'm', alt, title, class: className = '' }) => {
+function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
   if (!icon) return null;
 
   const iconSize = SIZES[size];
@@ -74,4 +74,6 @@ export default ({ icon, size = 'm', alt, title, class: className = '' }) => {
       </iconify-icon>
     </div>
   );
-};
+}
+
+export default Icon;

@@ -14,7 +14,7 @@ import Status from '../components/status';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
-export default ({ id }) => {
+function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([{ id }]);
   const [uiState, setUIState] = useState('default');
@@ -215,4 +215,6 @@ export default ({ id }) => {
       </div>
     </div>
   );
-};
+}
+
+export default StatusPage;

@@ -52,6 +52,16 @@ function App() {
       : 'Compose',
   );
 
+  useEffect(() => {
+    if (uiState === 'closed') {
+      try {
+        // Focus parent window
+        window.opener.focus();
+      } catch (e) {}
+      window.close();
+    }
+  }, [uiState]);
+
   if (uiState === 'closed') {
     return (
       <div class="box">
@@ -79,11 +89,13 @@ function App() {
       onClose={(results) => {
         const { newStatus, fn = () => {} } = results || {};
         try {
+          console.log('onClose', newStatus, fn);
           if (newStatus) {
             window.opener.__STATES__.reloadStatusPage++;
           }
           fn();
           setUIState('closed');
+          window.close();
         } catch (e) {}
       }}
     />

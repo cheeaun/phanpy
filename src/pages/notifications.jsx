@@ -187,7 +187,7 @@ function NotificationsList({ notifications, emptyCopy }) {
   );
 }
 
-export default () => {
+function Notifications() {
   useTitle('Notifications');
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
@@ -271,7 +271,6 @@ export default () => {
     { today: [], yesterday: [], older: [] },
   );
   // console.log(groupedNotifications);
-
   return (
     <div class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
@@ -371,4 +370,6 @@ export default () => {
       </div>
     </div>
   );
-};
+}
+
+export default Notifications;

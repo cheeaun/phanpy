@@ -9,7 +9,7 @@ import store from '../utils/store';
 import Avatar from './avatar';
 import NameText from './name-text';
 
-export default ({ account }) => {
+function Account({ account }) {
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -181,4 +181,6 @@ export default ({ account }) => {
       )}
     </div>
   );
-};
+}
+
+export default Account;

@@ -5,7 +5,7 @@ import states from '../utils/states';
 
 import Avatar from './avatar';
 
-export default ({ account, showAvatar, showAcct, short, external }) => {
+function NameText({ account, showAvatar, showAcct, short, external }) {
   const { acct, avatar, avatarStatic, id, url, displayName, username, emojis } =
     account;
 
@@ -55,4 +55,6 @@ export default ({ account, showAvatar, showAcct, short, external }) => {
       )}
     </a>
   );
-};
+}
+
+export default NameText;

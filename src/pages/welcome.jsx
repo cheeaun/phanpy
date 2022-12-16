@@ -3,7 +3,7 @@ import './welcome.css';
 import logo from '../assets/logo.svg';
 import useTitle from '../utils/useTitle';
 
-export default () => {
+function Welcome() {
   useTitle();
   return (
     <main id="welcome" class="box">
@@ -44,4 +44,6 @@ export default () => {
       </p>
     </main>
   );
-};
+}
+
+export default Welcome;

@@ -4,7 +4,7 @@ import { createPortal } from 'preact/compat';
 
 const $modalContainer = document.getElementById('modal-container');
 
-export default ({ children, onClick, class: className }) => {
+function Modal({ children, onClick, class: className }) {
   if (!children) return null;
 
   const Modal = (
@@ -16,4 +16,6 @@ export default ({ children, onClick, class: className }) => {
   return createPortal(Modal, $modalContainer);
 
   // return createPortal(children, $modalContainer);
-};
+}
+
+export default Modal;

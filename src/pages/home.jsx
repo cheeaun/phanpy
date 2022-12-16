@@ -11,7 +11,7 @@ import store from '../utils/store';
 
 const LIMIT = 20;
 
-export default ({ hidden }) => {
+function Home({ hidden }) {
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
@@ -215,4 +215,6 @@ export default ({ hidden }) => {
       </div>
     </div>
   );
-};
+}
+
+export default Home;

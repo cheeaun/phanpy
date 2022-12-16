@@ -2,7 +2,7 @@ import emojifyText from './emojify-text';
 
 const fauxDiv = document.createElement('div');
 
-export default (content, opts = {}) => {
+function enhanceContent(content, opts = {}) {
   const { emojis, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   const dom = document.createElement('div');
@@ -64,7 +64,7 @@ export default (content, opts = {}) => {
   enhancedContent = dom.innerHTML;
 
   return enhancedContent;
-};
+}
 
 function extractTextNodes(dom) {
   const textNodes = [];
@@ -80,3 +80,5 @@ function extractTextNodes(dom) {
   }
   return textNodes;
 }
+
+export default enhanceContent;

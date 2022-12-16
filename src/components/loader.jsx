@@ -1,11 +1,15 @@
 import './loader.css';
 
-export default ({ abrupt, hidden }) => (
-  <div
-    class={`loader-container ${abrupt ? 'abrupt' : ''} ${
-      hidden ? 'hidden' : ''
-    }`}
-  >
-    <div class="loader" />
-  </div>
-);
+function Loader({ abrupt, hidden }) {
+  return (
+    <div
+      class={`loader-container ${abrupt ? 'abrupt' : ''} ${
+        hidden ? 'hidden' : ''
+      }`}
+    >
+      <div class="loader" />
+    </div>
+  );
+}
+
+export default Loader;

@@ -89,10 +89,16 @@ function Compose({
         spoilerTextRef.current.value = spoilerText;
         spoilerTextRef.current.focus();
       } else {
+        const mentions = new Set([
+          replyToStatus.account.acct,
+          ...replyToStatus.mentions.map((m) => m.acct),
+        ]);
+        textareaRef.current.value = `${[...mentions]
+          .filter((m) => m !== currentAccountInfo.acct) // Excluding self
+          .map((m) => `@${m}`)
+          .join(' ')} `;
+        textareaRef.current.dispatchEvent(new Event('input'));
         textareaRef.current.focus();
-        if (replyToStatus.account.id !== currentAccount) {
-          textareaRef.current.value = `@${replyToStatus.account.acct} `;
-        }
       }
       setVisibility(visibility);
       setSensitive(sensitive);
@@ -266,6 +272,7 @@ function Compose({
     const isSelf = replyToStatus?.account.id === currentAccount;
     const hasOnlyAcct =
       replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
+    // TODO: check for mentions, or maybe just generic "@username<space>", including multiple mentions like "@username1<space>@username2<space>"
     if (!isSelf && hasOnlyAcct) {
       console.log('canClose', { isSelf, hasOnlyAcct });
       return true;
@@ -448,6 +455,7 @@ function Compose({
           <div class="status-preview-legend reply-to">
             Replying to @
             {replyToStatus.account.acct || replyToStatus.account.username}
+            &rsquo;s status
           </div>
         </div>
       )}

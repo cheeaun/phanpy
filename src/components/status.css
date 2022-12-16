@@ -461,6 +461,7 @@ a.card:hover {
 }
 .status .actions > button.plain {
   color: inherit;
+  border: 1.5px solid transparent;
 }
 .status .actions > button.plain:hover {
   color: var(--link-color);
@@ -471,18 +472,79 @@ a.card:hover {
 }
 .status .actions > button.plain.reblog-button.reblogged {
   color: var(--reblog-color);
-  border: 1.5px solid var(--reblog-color);
+  border-color: var(--reblog-color);
+}
+@keyframes reblogged {
+  5% {
+    transform: translate(-2px, -2px);
+  }
+  10% {
+    transform: translate(2px, 2px);
+  }
+  15% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(30px, -30px);
+    opacity: 0;
+  }
+}
+.status .actions > button.plain.reblog-button.reblogged .icon {
+  animation: reblogged 1s ease-in-out;
 }
 .status .actions > button.plain.favourite-button:hover {
   color: var(--favourite-color);
 }
 .status .actions > button.plain.favourite-button.favourited {
   color: var(--favourite-color);
-  border: 1.5px solid var(--favourite-color);
+  border-color: var(--favourite-color);
+}
+@keyframes hearted {
+  20% {
+    transform: rotate(10deg) scale(1);
+  }
+  40% {
+    transform: rotate(-10deg) scale(1.25);
+  }
+  60% {
+    transform: rotate(10deg) scale(1.75);
+  }
+  80% {
+    transform: rotate(-10deg) scale(2);
+  }
+  100% {
+    transform: rotate(10deg) scale(2.25);
+    opacity: 0;
+  }
+}
+.status .actions > button.plain.favourite-button.favourited .icon {
+  transform-origin: bottom center;
+  animation: hearted 1s ease-in-out;
 }
 .status .actions > button.plain.bookmark-button.bookmarked {
   color: var(--link-color);
-  border: 1.5px solid var(--link-color);
+  border-color: var(--link-color);
+}
+@keyframes bookmarked {
+  25% {
+    transform: translateY(-10px) rotate(10deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-15px) rotate(-10deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.status .actions > button.plain.bookmark-button.bookmarked .icon {
+  animation: bookmarked 1s ease-in-out;
 }
 
 /* ENHANCED CONTENT */

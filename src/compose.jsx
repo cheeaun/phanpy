@@ -52,6 +52,16 @@ function App() {
       : 'Compose',
   );
 
+  useEffect(() => {
+    if (uiState === 'closed') {
+      try {
+        // Focus parent window
+        window.opener.focus();
+      } catch (e) {}
+      window.close();
+    }
+  }, [uiState]);
+
   if (uiState === 'closed') {
     return (
       <div class="box">

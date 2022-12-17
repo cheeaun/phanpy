@@ -294,6 +294,7 @@
 }
 .status .media-audio {
   border: 0;
+  min-height: 0;
 }
 .status .media-audio audio {
   width: 100%;
@@ -471,7 +472,7 @@ a.card:hover {
 .status .actions > button.plain.reblog-button:hover {
   color: var(--reblog-color);
 }
-.status .actions > button.plain.reblog-button.reblogged {
+.status .actions > button.plain.reblog-button.checked {
   color: var(--reblog-color);
   border-color: var(--reblog-color);
 }
@@ -490,13 +491,13 @@ a.card:hover {
     opacity: 0;
   }
 }
-.status .actions > button.plain.reblog-button.reblogged .icon {
+.status .actions > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
 .status .actions > button.plain.favourite-button:hover {
   color: var(--favourite-color);
 }
-.status .actions > button.plain.favourite-button.favourited {
+.status .actions > button.plain.favourite-button.checked {
   color: var(--favourite-color);
   border-color: var(--favourite-color);
 }
@@ -518,11 +519,11 @@ a.card:hover {
     opacity: 0;
   }
 }
-.status .actions > button.plain.favourite-button.favourited .icon {
+.status .actions > button.plain.favourite-button.checked .icon {
   transform-origin: bottom center;
   animation: hearted 1s ease-in-out;
 }
-.status .actions > button.plain.bookmark-button.bookmarked {
+.status .actions > button.plain.bookmark-button.checked {
   color: var(--link-color);
   border-color: var(--link-color);
 }
@@ -544,7 +545,7 @@ a.card:hover {
     opacity: 1;
   }
 }
-.status .actions > button.plain.bookmark-button.bookmarked .icon {
+.status .actions > button.plain.bookmark-button.checked .icon {
   animation: bookmarked 1s ease-in-out;
 }
 

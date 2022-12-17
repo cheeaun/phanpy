@@ -20,7 +20,7 @@ function enhanceContent(content, opts = {}) {
   // Convert :shortcode: to <img />
   let textNodes = extractTextNodes(dom);
   textNodes.forEach((node) => {
-    let html = node.nodeValue;
+    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     if (emojis) {
       html = emojifyText(html, emojis);
     }
@@ -34,7 +34,7 @@ function enhanceContent(content, opts = {}) {
   // Convert `code` to <code>code</code>
   textNodes = extractTextNodes(dom);
   textNodes.forEach((node) => {
-    let html = node.nodeValue;
+    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     if (/`[^`]+`/g.test(html)) {
       html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
     }

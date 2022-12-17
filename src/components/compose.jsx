@@ -93,11 +93,15 @@ function Compose({
           replyToStatus.account.acct,
           ...replyToStatus.mentions.map((m) => m.acct),
         ]);
-        textareaRef.current.value = `${[...mentions]
-          .filter((m) => m !== currentAccountInfo.acct) // Excluding self
-          .map((m) => `@${m}`)
-          .join(' ')} `;
-        textareaRef.current.dispatchEvent(new Event('input'));
+        const allMentions = [...mentions].filter(
+          (m) => m !== currentAccountInfo.acct,
+        );
+        if (allMentions.length > 0) {
+          textareaRef.current.value = `${allMentions
+            .map((m) => `@${m}`)
+            .join(' ')} `;
+          textareaRef.current.dispatchEvent(new Event('input'));
+        }
         textareaRef.current.focus();
       }
       setVisibility(visibility);

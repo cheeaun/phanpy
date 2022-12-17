@@ -220,8 +220,10 @@ function Card({ card }) {
           height={height}
           loading="lazy"
           alt=""
-          onError={() => {
-            this.style.display = 'none';
+          onError={(e) => {
+            try {
+              e.target.style.display = 'none';
+            } catch (e) {}
           }}
         />
         <div class="meta-container">

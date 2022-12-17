@@ -1196,7 +1196,7 @@ function StatusButton({
       {!!count && (
         <>
           {' '}
-          <small>{shortenNumber(count)}</small>
+          <small title={count}>{shortenNumber(count)}</small>
         </>
       )}
     </button>

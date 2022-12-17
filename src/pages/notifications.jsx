@@ -97,6 +97,18 @@ function Notification({ notification }) {
             </>
           )}
           {text}
+          {type === 'mention' && (
+            <span class="insignificant">
+              {' '}
+              •{' '}
+              <relative-time
+                datetime={notification.createdAt}
+                format="micro"
+                threshold="P1D"
+                prefix=""
+              />
+            </span>
+          )}
         </p>
         {_accounts?.length > 1 && (
           <p>
@@ -192,6 +204,7 @@ function Notifications() {
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
+  const [onlyMentions, setOnlyMentions] = useState(false);
 
   const notificationsIterator = useRef(
     masto.notifications.getIterator({
@@ -273,7 +286,7 @@ function Notifications() {
   // console.log(groupedNotifications);
   return (
     <div class="deck-container" ref={scrollableRef}>
-      <div class="timeline-deck deck">
+      <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header>
           <div class="header-side">
             <a href="#" class="button plain">
@@ -310,6 +323,18 @@ function Notifications() {
             </button>
           )}
         </header>
+        <div id="mentions-option">
+          <label>
+            <input
+              type="checkbox"
+              checked={onlyMentions}
+              onChange={(e) => {
+                setOnlyMentions(e.target.checked);
+              }}
+            />{' '}
+            Only mentions
+          </label>
+        </div>
         {snapStates.notifications.length ? (
           <>
             <h2 class="timeline-header">Today</h2>

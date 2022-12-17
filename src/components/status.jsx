@@ -614,7 +614,6 @@ function Status({
     );
   }
 
-  const [actionsUIState, setActionsUIState] = useState(null); // boost-loading, favourite-loading, bookmark-loading
   const [showEdited, setShowEdited] = useState(false);
 
   const carouselRef = useRef(null);

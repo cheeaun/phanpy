@@ -857,42 +857,35 @@ function Status({
               )}
             </div>
             <div class="actions">
-              <button
-                type="button"
-                title="Comment"
-                class="plain reply-button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
+              <StatusButton
+                title="Reply"
+                alt="Comments"
+                class="reply-button"
+                icon="comment"
+                count={repliesCount}
+                onClick={() => {
                   states.showCompose = {
                     replyToStatus: status,
                   };
                 }}
-              >
-                <Icon icon="comment" size="l" alt="Reply" />
-                {!!repliesCount && (
-                  <>
-                    {' '}
-                    <small>{shortenNumber(repliesCount)}</small>
-                  </>
-                )}
-              </button>
+              />
               {/* TODO: if visibility = private, only can reblog own statuses */}
               {visibility !== 'direct' && (
-                <button
-                  type="button"
-                  title={reblogged ? 'Unboost' : 'Boost'}
-                  class={`plain reblog-button ${reblogged ? 'reblogged' : ''}`}
-                  disabled={actionsUIState === 'boost-loading'}
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const yes = confirm(
-                      reblogged ? 'Unboost this status?' : 'Boost this status?',
-                    );
-                    if (!yes) return;
-                    setActionsUIState('boost-loading');
+                <StatusButton
+                  checked={reblogged}
+                  title={['Boost', 'Unboost']}
+                  alt={['Boost', 'Boosted']}
+                  class="reblog-button"
+                  icon="rocket"
+                  count={reblogsCount}
+                  onClick={async () => {
                     try {
+                      // Optimistic
+                      states.statuses.set(id, {
+                        ...status,
+                        reblogged: !reblogged,
+                        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+                      });
                       if (reblogged) {
                         const newStatus = await masto.statuses.unreblog(id);
                         states.statuses.set(newStatus.id, newStatus);
@@ -905,38 +898,26 @@ function Status({
                         );
                       }
                     } catch (e) {
-                      alert(e);
                       console.error(e);
-                    } finally {
-                      setActionsUIState(null);
                     }
                   }}
-                >
-                  <Icon
-                    icon="rocket"
-                    size="l"
-                    alt={reblogged ? 'Boosted' : 'Boost'}
-                  />
-                  {!!reblogsCount && (
-                    <>
-                      {' '}
-                      <small>{shortenNumber(reblogsCount)}</small>
-                    </>
-                  )}
-                </button>
+                />
               )}
-              <button
-                type="button"
-                title={favourited ? 'Unfavourite' : 'Favourite'}
-                class={`plain favourite-button ${
-                  favourited ? 'favourited' : ''
-                }`}
-                disabled={actionsUIState === 'favourite-loading'}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActionsUIState('favourite-loading');
+              <StatusButton
+                checked={favourited}
+                title={['Favourite', 'Unfavourite']}
+                alt={['Favourite', 'Favourited']}
+                class="favourite-button"
+                icon="heart"
+                count={favouritesCount}
+                onClick={async () => {
                   try {
+                    // Optimistic
+                    states.statuses.set(statusID, {
+                      ...status,
+                      favourited: !favourited,
+                      favouritesCount: favouritesCount + (favourited ? -1 : 1),
+                    });
                     if (favourited) {
                       const newStatus = await masto.statuses.unfavourite(id);
                       states.statuses.set(newStatus.id, newStatus);
@@ -945,37 +926,23 @@ function Status({
                       states.statuses.set(newStatus.id, newStatus);
                     }
                   } catch (e) {
-                    alert(e);
                     console.error(e);
-                  } finally {
-                    setActionsUIState(null);
                   }
                 }}
-              >
-                <Icon
-                  icon="heart"
-                  size="l"
-                  alt={favourited ? 'Favourited' : 'Favourite'}
-                />
-                {!!favouritesCount && (
-                  <>
-                    {' '}
-                    <small>{shortenNumber(favouritesCount)}</small>
-                  </>
-                )}
-              </button>
-              <button
-                type="button"
-                title={bookmarked ? 'Unbookmark' : 'Bookmark'}
-                class={`plain bookmark-button ${
-                  bookmarked ? 'bookmarked' : ''
-                }`}
-                disabled={actionsUIState === 'bookmark-loading'}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActionsUIState('bookmark-loading');
+              />
+              <StatusButton
+                checked={bookmarked}
+                title={['Bookmark', 'Unbookmark']}
+                alt={['Bookmark', 'Bookmarked']}
+                class="bookmark-button"
+                icon="bookmark"
+                onClick={async () => {
                   try {
+                    // Optimistic
+                    states.statuses.set(statusID, {
+                      ...status,
+                      bookmarked: !bookmarked,
+                    });
                     if (bookmarked) {
                       const newStatus = await masto.statuses.unbookmark(id);
                       states.statuses.set(newStatus.id, newStatus);
@@ -984,19 +951,10 @@ function Status({
                       states.statuses.set(newStatus.id, newStatus);
                     }
                   } catch (e) {
-                    alert(e);
                     console.error(e);
-                  } finally {
-                    setActionsUIState(null);
                   }
                 }}
-              >
-                <Icon
-                  icon="bookmark"
-                  size="l"
-                  alt={bookmarked ? 'Bookmarked' : 'Bookmark'}
-                />
-              </button>
+              />
               {isSelf && (
                 <span class="menu-container">
                   <button type="button" title="More" class="plain more-button">
@@ -1153,6 +1111,59 @@ function Status({
         </Modal>
       )}
     </div>
+  );
+}
+
+function StatusButton({
+  checked,
+  count,
+  class: className,
+  title,
+  alt,
+  icon,
+  onClick,
+  ...props
+}) {
+  if (typeof title === 'string') {
+    title = [title, title];
+  }
+  if (typeof alt === 'string') {
+    alt = [alt, alt];
+  }
+
+  const [buttonTitle, setButtonTitle] = useState(title[0] || '');
+  const [iconAlt, setIconAlt] = useState(alt[0] || '');
+
+  useEffect(() => {
+    if (checked) {
+      setButtonTitle(title[1] || '');
+      setIconAlt(alt[1] || '');
+    } else {
+      setButtonTitle(title[0] || '');
+      setIconAlt(alt[0] || '');
+    }
+  }, [checked, title, alt]);
+
+  return (
+    <button
+      type="button"
+      title={buttonTitle}
+      class={`plain ${className} ${checked ? 'checked' : ''}`}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(e);
+      }}
+      {...props}
+    >
+      <Icon icon={icon} size="l" alt={iconAlt} />
+      {!!count && (
+        <>
+          {' '}
+          <small>{shortenNumber(count)}</small>
+        </>
+      )}
+    </button>
   );
 }
 

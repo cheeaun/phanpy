@@ -175,28 +175,35 @@
   margin-top: 8px;
 }
 .timeline-deck .status .content {
-  display: -webkit-box;
-  -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
+  max-height: 50vh;
+  max-height: 50dvh;
   overflow: hidden;
   position: relative;
+}
+.timeline-deck .status .content.truncated {
+  mask-image: linear-gradient(to top, transparent 0.5em, black 1.5em);
 }
 .timeline-deck .status .content.truncated:after {
   content: attr(data-read-more);
   line-height: 1;
   display: inline-block;
   position: absolute;
-  inset-block-end: 0;
-  inset-inline-end: 0;
-  color: var(--link-color);
-  background-color: var(--link-faded-color);
-  backdrop-filter: blur(4px) brightness(2);
-  padding: 0.5em 0.5em 0.5em 2em;
-  border-radius: 0 1em 1em 0;
+  inset-block-end: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-color);
+  background-color: var(--bg-faded-color);
+  border: 2px solid var(--link-light-color);
+  padding: 0.5em 1em;
+  border-radius: 10em;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
-  mask-image: linear-gradient(to right, transparent, black 2em);
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 10px var(--bg-color),
+    0 0 10px var(--bg-color), 0 0 10px var(--bg-color);
+}
+.timeline-deck .status .content.truncated:hover:after {
+  border-color: var(--link-color);
 }
 .status .content p {
   margin-block: 0.75em;

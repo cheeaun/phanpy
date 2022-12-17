@@ -4,6 +4,7 @@ import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
+import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
 import Loader from '../components/loader';
@@ -619,6 +620,34 @@ function Status({
   const carouselRef = useRef(null);
   const currentYear = new Date().getFullYear();
 
+  const spoilerContentRef = useRef(null);
+  useResizeObserver({
+    ref: spoilerContentRef,
+    onResize: () => {
+      if (spoilerContentRef.current) {
+        const { scrollHeight, clientHeight } = spoilerContentRef.current;
+        spoilerContentRef.current.classList.toggle(
+          'truncated',
+          scrollHeight > clientHeight,
+        );
+      }
+    },
+  });
+  const contentRef = useRef(null);
+  useResizeObserver({
+    ref: contentRef,
+    onResize: () => {
+      if (contentRef.current) {
+        const { scrollHeight, clientHeight } = contentRef.current;
+        contentRef.current.classList.toggle(
+          'truncated',
+          scrollHeight > clientHeight,
+        );
+      }
+    },
+  });
+  const readMoreText = 'read more →';
+
   return (
     <div
       class={`status ${
@@ -714,7 +743,12 @@ function Status({
         >
           {!!spoilerText && sensitive && (
             <>
-              <div class="content">
+              <div
+                class="content"
+                lang={language}
+                ref={spoilerContentRef}
+                data-read-more={readMoreText}
+              >
                 <p>{spoilerText}</p>
               </div>
               <button
@@ -733,6 +767,9 @@ function Status({
           )}
           <div
             class="content"
+            lang={language}
+            ref={contentRef}
+            data-read-more={readMoreText}
             onClick={(e) => {
               let { target } = e;
               if (target.parentNode.tagName.toLowerCase() === 'a') {

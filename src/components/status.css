@@ -174,6 +174,30 @@
 .status .content {
   margin-top: 8px;
 }
+.timeline-deck .status .content {
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+.timeline-deck .status .content.truncated:after {
+  content: attr(data-read-more);
+  line-height: 1;
+  display: inline-block;
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  color: var(--link-color);
+  background-color: var(--link-faded-color);
+  backdrop-filter: blur(4px) brightness(2);
+  padding: 0.5em 0.5em 0.5em 2em;
+  border-radius: 0 1em 1em 0;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  mask-image: linear-gradient(to right, transparent, black 2em);
+}
 .status .content p {
   margin-block: 0.75em;
 }

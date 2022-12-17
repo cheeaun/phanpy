@@ -2,7 +2,7 @@
   color: var(--outline-color);
 }
 
-#account-container header{
+#account-container header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -16,8 +16,10 @@
 #account-container .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 4px;
   opacity: 0.75;
+  font-size: 90%;
 }
 
 #account-container .actions {

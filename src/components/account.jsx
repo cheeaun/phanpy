@@ -104,7 +104,7 @@ function Account({ account }) {
       {!info || uiState === 'loading' ? (
         <>
           <header>
-            <Avatar size="xxl" />
+            <Avatar size="xxxl" />
             ███ ████████████
           </header>
           <div class="note">
@@ -120,7 +120,7 @@ function Account({ account }) {
       ) : (
         <>
           <header>
-            <Avatar url={avatar} size="xxl" />
+            <Avatar url={avatar} size="xxxl" />
             <NameText account={info} showAcct external />
           </header>
           <div
@@ -141,6 +141,20 @@ function Account({ account }) {
               <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
               Followers
             </span>
+            {!!createdAt && (
+              <span>
+                Joined:{' '}
+                <b>
+                  <time datetime={createdAt}>
+                    {Intl.DateTimeFormat('en', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    }).format(new Date(createdAt))}
+                  </time>
+                </b>
+              </span>
+            )}
           </p>
           <p class="actions">
             {followedBy ? <span class="tag">Following you</span> : <span />}{' '}

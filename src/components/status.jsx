@@ -646,7 +646,7 @@ function Status({
       }
     },
   });
-  const readMoreText = 'read more →';
+  const readMoreText = 'Read more →';
 
   return (
     <div

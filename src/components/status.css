@@ -181,30 +181,35 @@
   position: relative;
 }
 .timeline-deck .status .content.truncated {
-  mask-image: linear-gradient(to top, transparent 0.5em, black 1.5em);
+  mask-image: linear-gradient(
+    to top,
+    transparent,
+    rgba(0, 0, 0, 0.5) 1em,
+    black 1.5em
+  );
 }
 .timeline-deck .status .content.truncated:after {
   content: attr(data-read-more);
   line-height: 1;
   display: inline-block;
   position: absolute;
-  inset-block-end: 1em;
+  inset-block-end: 1.5em;
   left: 50%;
   transform: translateX(-50%);
   color: var(--text-color);
   background-color: var(--bg-faded-color);
-  border: 2px solid var(--link-light-color);
-  padding: 0.5em 1em;
+  border: 1px dashed var(--link-color);
+  padding: 0.75em 1em;
   border-radius: 10em;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  box-shadow: 0 0 0 2px var(--bg-color), 0 0 10px var(--bg-color),
-    0 0 10px var(--bg-color), 0 0 10px var(--bg-color);
+  font-size: 90%;
   white-space: nowrap;
+  box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
+    0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+  transition: transform 0.5s ease-in-out;
 }
 .timeline-deck .status .content.truncated:hover:after {
-  border-color: var(--link-color);
+  color: var(--link-color);
+  transform: translateX(-50%) translateY(-2px) scale(1.01);
 }
 .status .content p {
   margin-block: 0.75em;

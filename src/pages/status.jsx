@@ -166,11 +166,9 @@ function StatusPage({ id }) {
               <li
                 key={statusID}
                 ref={isHero ? heroStatusRef : null}
-                class={`${isHero ? '' : 'insignificant'} ${
-                  ancestor ? 'ancestor' : ''
-                } ${descendant ? 'descendant' : ''} ${
-                  descendant && !directReply ? 'indirect' : ''
-                }`}
+                class={`${ancestor ? 'ancestor' : ''} ${
+                  descendant ? 'descendant' : ''
+                } ${descendant && !directReply ? 'indirect' : ''}`}
               >
                 {isHero ? (
                   <Status statusID={statusID} withinContext size="l" />

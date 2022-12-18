@@ -6,6 +6,7 @@ const SIZES = {
   l: 24,
   xl: 32,
   xxl: 50,
+  xxxl: 64,
 };
 
 function Avatar({ url, size, alt = '' }) {

@@ -16,13 +16,13 @@ function Home({ hidden }) {
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
 
-  const statusIterator = useRef(
-    masto.timelines.getHomeIterable({
+  const homeIterator = useRef(
+    masto.timelines.iterateHome({
       limit: LIMIT,
     }),
   ).current;
   async function fetchStatuses(firstLoad) {
-    const allStatuses = await statusIterator.next(
+    const allStatuses = await homeIterator.next(
       firstLoad
         ? {
             limit: LIMIT,
@@ -83,8 +83,16 @@ function Home({ hidden }) {
         if (diffMins > 1) {
           console.log('visible', { lastHidden, diffMins });
           setTimeout(() => {
-            loadStatuses(true);
-            states.homeNew = [];
+            (async () => {
+              const newStatus = await masto.timelines.fetchHome({
+                limit: 1,
+              });
+              if (newStatus.length && newStatus[0].id !== states.home[0].id) {
+                states.homeNew = newStatus;
+              }
+            })();
+            // loadStatuses(true);
+            // states.homeNew = [];
           }, 100);
         }
       }
@@ -133,7 +141,7 @@ function Home({ hidden }) {
               <Icon icon="notification" size="l" alt="Notifications" />
             </a>
           </div>
-          {snapStates.homeNew.length > 0 && (
+          {snapStates.homeNew.length > 1 && (
             <button
               class="updates-button"
               type="button"

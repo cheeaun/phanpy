@@ -2,7 +2,7 @@
   color: var(--outline-color);
 }
 
-#account-container header{
+#account-container header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -16,8 +16,10 @@
 #account-container .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 4px;
   opacity: 0.75;
+  font-size: 90%;
 }
 
 #account-container .actions {
@@ -28,4 +30,28 @@
 }
 #account-container .actions button {
   align-self: flex-end;
+}
+
+#account-container .profile-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+#account-container .profile-field {
+  flex-grow: 1;
+  font-size: 90%;
+  background-color: var(--bg-faded-color);
+  padding: 12px;
+  border-radius: 8px;
+  filter: saturate(0.75);
+  line-height: 1.25;
+}
+
+#account-container .profile-field b {
+  font-size: 90%;
+  color: var(--text-insignificant-color);
+  text-transform: uppercase;
+}
+#account-container .profile-field p {
+  margin: 0;
 }

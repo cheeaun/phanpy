@@ -20,466 +20,6 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 
-/*
-Media type
-===
-unknown = unsupported or unrecognized file type
-image = Static image
-gifv = Looping, soundless animation
-video = Video clip
-audio = Audio track
-*/
-
-function Media({ media, showOriginal, onClick }) {
-  const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
-    media;
-  const { original, small, focus } = meta || {};
-
-  const width = showOriginal ? original?.width : small?.width;
-  const height = showOriginal ? original?.height : small?.height;
-  const mediaURL = showOriginal ? url : previewUrl;
-
-  const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
-
-  const videoRef = useRef();
-
-  let focalBackgroundPosition;
-  if (focus) {
-    // Convert focal point to CSS background position
-    // Formula from jquery-focuspoint
-    // x = -1, y = 1 => 0% 0%
-    // x = 0, y = 0 => 50% 50%
-    // x = 1, y = -1 => 100% 100%
-    const x = ((focus.x + 1) / 2) * 100;
-    const y = ((1 - focus.y) / 2) * 100;
-    focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
-  }
-
-  if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
-    // Note: type: unknown might not have width/height
-    return (
-      <div
-        class={`media media-image`}
-        onClick={onClick}
-        style={
-          showOriginal && {
-            backgroundImage: `url(${previewUrl})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            aspectRatio: `${width}/${height}`,
-            width,
-            height,
-            maxWidth: '100%',
-            maxHeight: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }
-        }
-      >
-        <img
-          src={mediaURL}
-          alt={description}
-          width={width}
-          height={height}
-          loading="lazy"
-          style={
-            !showOriginal && {
-              backgroundColor:
-                rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-              backgroundPosition: focalBackgroundPosition || 'center',
-            }
-          }
-        />
-      </div>
-    );
-  } else if (type === 'gifv' || type === 'video') {
-    // 20 seconds, treat as a gif
-    const isGIF = type === 'gifv' && original.duration <= 20;
-    return (
-      <div
-        class={`media media-${isGIF ? 'gif' : 'video'}`}
-        style={{
-          backgroundColor:
-            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-        }}
-        onClick={(e) => {
-          if (isGIF) {
-            try {
-              videoRef.current?.pause();
-            } catch (e) {}
-          }
-          onClick(e);
-        }}
-        onMouseEnter={() => {
-          if (isGIF) {
-            try {
-              videoRef.current?.play();
-            } catch (e) {}
-          }
-        }}
-        onMouseLeave={() => {
-          if (isGIF) {
-            try {
-              videoRef.current?.pause();
-            } catch (e) {}
-          }
-        }}
-      >
-        {showOriginal ? (
-          <video
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            autoplay
-            muted={isGIF}
-            controls={!isGIF}
-            playsinline
-            loop
-            onClick={() => {
-              if (isGIF) {
-                try {
-                  videoRef.current?.play();
-                } catch (e) {}
-              }
-            }}
-          ></video>
-        ) : isGIF ? (
-          <video
-            ref={videoRef}
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            // controls
-            playsinline
-            loop
-            muted
-          />
-        ) : (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            loading="lazy"
-          />
-        )}
-      </div>
-    );
-  } else if (type === 'audio') {
-    return (
-      <div class="media media-audio">
-        <audio src={remoteUrl || url} preload="none" controls />
-      </div>
-    );
-  }
-}
-
-function Card({ card }) {
-  const {
-    blurhash,
-    title,
-    description,
-    html,
-    providerName,
-    authorName,
-    width,
-    height,
-    image,
-    url,
-    type,
-    embedUrl,
-  } = card;
-
-  /* type
-  link = Link OEmbed
-  photo = Photo OEmbed
-  video = Video OEmbed
-  rich = iframe OEmbed. Not currently accepted, so won’t show up in practice.
-  */
-
-  const hasText = title || providerName || authorName;
-
-  if (hasText && image) {
-    const domain = new URL(url).hostname.replace(/^www\./, '');
-    return (
-      <a
-        href={url}
-        target="_blank"
-        rel="nofollow noopener noreferrer"
-        class="card link"
-      >
-        <img
-          class="image"
-          src={image}
-          width={width}
-          height={height}
-          loading="lazy"
-          alt=""
-          onError={(e) => {
-            try {
-              e.target.style.display = 'none';
-            } catch (e) {}
-          }}
-        />
-        <div class="meta-container">
-          <p class="meta domain">{domain}</p>
-          <p
-            class="title"
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-          />
-          <p class="meta">{description || providerName || authorName}</p>
-        </div>
-      </a>
-    );
-  } else if (type === 'photo') {
-    return (
-      <a
-        href={url}
-        target="_blank"
-        rel="nofollow noopener noreferrer"
-        class="card photo"
-      >
-        <img
-          src={embedUrl}
-          width={width}
-          height={height}
-          alt={title || description}
-          loading="lazy"
-          style={{
-            height: 'auto',
-            aspectRatio: `${width}/${height}`,
-          }}
-        />
-      </a>
-    );
-  } else if (type === 'video') {
-    return (
-      <div
-        class="card video"
-        style={{
-          aspectRatio: `${width}/${height}`,
-        }}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
-  }
-}
-
-function Poll({ poll, readOnly }) {
-  const [pollSnapshot, setPollSnapshot] = useState(poll);
-  const [uiState, setUIState] = useState('default');
-
-  useEffect(() => {
-    setPollSnapshot(poll);
-  }, [poll]);
-
-  const {
-    expired,
-    expiresAt,
-    id,
-    multiple,
-    options,
-    ownVotes,
-    voted,
-    votersCount,
-    votesCount,
-  } = pollSnapshot;
-
-  const expiresAtDate = !!expiresAt && new Date(expiresAt);
-
-  return (
-    <div class="poll">
-      {voted || expired ? (
-        options.map((option, i) => {
-          const { title, votesCount: optionVotesCount } = option;
-          const pollVotesCount = votersCount || votesCount;
-          const percentage =
-            Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
-          // check if current poll choice is the leading one
-          const isLeading =
-            optionVotesCount > 0 &&
-            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
-          return (
-            <div
-              key={`${i}-${title}-${optionVotesCount}`}
-              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
-              style={{
-                '--percentage': `${percentage}%`,
-              }}
-            >
-              <div class="poll-option-title">
-                {title}
-                {voted && ownVotes.includes(i) && (
-                  <>
-                    {' '}
-                    <Icon icon="check-circle" size="s" />
-                  </>
-                )}
-              </div>
-              <div
-                class="poll-option-votes"
-                title={`${optionVotesCount} vote${
-                  optionVotesCount === 1 ? '' : 's'
-                }`}
-              >
-                {percentage}%
-              </div>
-            </div>
-          );
-        })
-      ) : (
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const votes = [];
-            formData.forEach((value, key) => {
-              if (key === 'poll') {
-                votes.push(value);
-              }
-            });
-            console.log(votes);
-            setUIState('loading');
-            const pollResponse = await masto.poll.vote(id, {
-              choices: votes,
-            });
-            console.log(pollResponse);
-            setPollSnapshot(pollResponse);
-            setUIState('default');
-          }}
-          style={{
-            pointerEvents: uiState === 'loading' || readOnly ? 'none' : 'auto',
-            opacity: uiState === 'loading' ? 0.5 : 1,
-          }}
-        >
-          {options.map((option, i) => {
-            const { title } = option;
-            return (
-              <div class="poll-option">
-                <label class="poll-label">
-                  <input
-                    type={multiple ? 'checkbox' : 'radio'}
-                    name="poll"
-                    value={i}
-                    disabled={uiState === 'loading'}
-                    readOnly={readOnly}
-                  />
-                  <span class="poll-option-title">{title}</span>
-                </label>
-              </div>
-            );
-          })}
-          {!readOnly && (
-            <button
-              class="poll-vote-button"
-              type="submit"
-              disabled={uiState === 'loading'}
-            >
-              Vote
-            </button>
-          )}
-        </form>
-      )}
-      {!readOnly && (
-        <p class="poll-meta">
-          <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-          {votersCount === 1 ? 'voter' : 'voters'}
-          {votersCount !== votesCount && (
-            <>
-              {' '}
-              &bull; <span title={votesCount}>
-                {shortenNumber(votesCount)}
-              </span>{' '}
-              vote
-              {votesCount === 1 ? '' : 's'}
-            </>
-          )}{' '}
-          &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && (
-            <relative-time datetime={expiresAtDate.toISOString()} />
-          )}
-        </p>
-      )}
-    </div>
-  );
-}
-
-function EditedAtModal({ statusID, onClose = () => {} }) {
-  const [uiState, setUIState] = useState('default');
-  const [editHistory, setEditHistory] = useState([]);
-
-  useEffect(() => {
-    setUIState('loading');
-    (async () => {
-      try {
-        const editHistory = await masto.statuses.fetchHistory(statusID);
-        console.log(editHistory);
-        setEditHistory(editHistory);
-        setUIState('default');
-      } catch (e) {
-        console.error(e);
-        setUIState('error');
-      }
-    })();
-  }, []);
-
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <div id="edit-history" class="box">
-      <button type="button" class="close-button plain large" onClick={onClose}>
-        <Icon icon="x" alt="Close" />
-      </button>
-      <h2>Edit History</h2>
-      {uiState === 'error' && <p>Failed to load history</p>}
-      {uiState === 'loading' && (
-        <p>
-          <Loader abrupt /> Loading&hellip;
-        </p>
-      )}
-      {editHistory.length > 0 && (
-        <ol>
-          {editHistory.map((status) => {
-            const { createdAt } = status;
-            const createdAtDate = new Date(createdAt);
-            return (
-              <li key={createdAt} class="history-item">
-                <h3>
-                  <time>
-                    {Intl.DateTimeFormat('en', {
-                      // Show year if not current year
-                      year:
-                        createdAtDate.getFullYear() === currentYear
-                          ? undefined
-                          : 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      weekday: 'short',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    }).format(createdAtDate)}
-                  </time>
-                </h3>
-                <Status status={status} size="s" withinContext readOnly />
-              </li>
-            );
-          })}
-        </ol>
-      )}
-    </div>
-  );
-}
-
 function fetchAccount(id) {
   return masto.accounts.fetch(id);
 }
@@ -1145,6 +685,466 @@ function Status({
             }}
           />
         </Modal>
+      )}
+    </div>
+  );
+}
+
+/*
+Media type
+===
+unknown = unsupported or unrecognized file type
+image = Static image
+gifv = Looping, soundless animation
+video = Video clip
+audio = Audio track
+*/
+
+function Media({ media, showOriginal, onClick }) {
+  const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
+    media;
+  const { original, small, focus } = meta || {};
+
+  const width = showOriginal ? original?.width : small?.width;
+  const height = showOriginal ? original?.height : small?.height;
+  const mediaURL = showOriginal ? url : previewUrl;
+
+  const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
+
+  const videoRef = useRef();
+
+  let focalBackgroundPosition;
+  if (focus) {
+    // Convert focal point to CSS background position
+    // Formula from jquery-focuspoint
+    // x = -1, y = 1 => 0% 0%
+    // x = 0, y = 0 => 50% 50%
+    // x = 1, y = -1 => 100% 100%
+    const x = ((focus.x + 1) / 2) * 100;
+    const y = ((1 - focus.y) / 2) * 100;
+    focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
+  }
+
+  if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
+    // Note: type: unknown might not have width/height
+    return (
+      <div
+        class={`media media-image`}
+        onClick={onClick}
+        style={
+          showOriginal && {
+            backgroundImage: `url(${previewUrl})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            aspectRatio: `${width}/${height}`,
+            width,
+            height,
+            maxWidth: '100%',
+            maxHeight: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }
+        }
+      >
+        <img
+          src={mediaURL}
+          alt={description}
+          width={width}
+          height={height}
+          loading="lazy"
+          style={
+            !showOriginal && {
+              backgroundColor:
+                rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+              backgroundPosition: focalBackgroundPosition || 'center',
+            }
+          }
+        />
+      </div>
+    );
+  } else if (type === 'gifv' || type === 'video') {
+    // 20 seconds, treat as a gif
+    const isGIF = type === 'gifv' && original.duration <= 20;
+    return (
+      <div
+        class={`media media-${isGIF ? 'gif' : 'video'}`}
+        style={{
+          backgroundColor:
+            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+        }}
+        onClick={(e) => {
+          if (isGIF) {
+            try {
+              videoRef.current?.pause();
+            } catch (e) {}
+          }
+          onClick(e);
+        }}
+        onMouseEnter={() => {
+          if (isGIF) {
+            try {
+              videoRef.current?.play();
+            } catch (e) {}
+          }
+        }}
+        onMouseLeave={() => {
+          if (isGIF) {
+            try {
+              videoRef.current?.pause();
+            } catch (e) {}
+          }
+        }}
+      >
+        {showOriginal ? (
+          <video
+            src={url}
+            poster={previewUrl}
+            width={width}
+            height={height}
+            preload="auto"
+            autoplay
+            muted={isGIF}
+            controls={!isGIF}
+            playsinline
+            loop
+            onClick={() => {
+              if (isGIF) {
+                try {
+                  videoRef.current?.play();
+                } catch (e) {}
+              }
+            }}
+          ></video>
+        ) : isGIF ? (
+          <video
+            ref={videoRef}
+            src={url}
+            poster={previewUrl}
+            width={width}
+            height={height}
+            preload="auto"
+            // controls
+            playsinline
+            loop
+            muted
+          />
+        ) : (
+          <img
+            src={previewUrl}
+            alt={description}
+            width={width}
+            height={height}
+            loading="lazy"
+          />
+        )}
+      </div>
+    );
+  } else if (type === 'audio') {
+    return (
+      <div class="media media-audio">
+        <audio src={remoteUrl || url} preload="none" controls />
+      </div>
+    );
+  }
+}
+
+function Card({ card }) {
+  const {
+    blurhash,
+    title,
+    description,
+    html,
+    providerName,
+    authorName,
+    width,
+    height,
+    image,
+    url,
+    type,
+    embedUrl,
+  } = card;
+
+  /* type
+  link = Link OEmbed
+  photo = Photo OEmbed
+  video = Video OEmbed
+  rich = iframe OEmbed. Not currently accepted, so won’t show up in practice.
+  */
+
+  const hasText = title || providerName || authorName;
+
+  if (hasText && image) {
+    const domain = new URL(url).hostname.replace(/^www\./, '');
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="nofollow noopener noreferrer"
+        class="card link"
+      >
+        <img
+          class="image"
+          src={image}
+          width={width}
+          height={height}
+          loading="lazy"
+          alt=""
+          onError={(e) => {
+            try {
+              e.target.style.display = 'none';
+            } catch (e) {}
+          }}
+        />
+        <div class="meta-container">
+          <p class="meta domain">{domain}</p>
+          <p
+            class="title"
+            dangerouslySetInnerHTML={{
+              __html: title,
+            }}
+          />
+          <p class="meta">{description || providerName || authorName}</p>
+        </div>
+      </a>
+    );
+  } else if (type === 'photo') {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="nofollow noopener noreferrer"
+        class="card photo"
+      >
+        <img
+          src={embedUrl}
+          width={width}
+          height={height}
+          alt={title || description}
+          loading="lazy"
+          style={{
+            height: 'auto',
+            aspectRatio: `${width}/${height}`,
+          }}
+        />
+      </a>
+    );
+  } else if (type === 'video') {
+    return (
+      <div
+        class="card video"
+        style={{
+          aspectRatio: `${width}/${height}`,
+        }}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
+  }
+}
+
+function Poll({ poll, readOnly }) {
+  const [pollSnapshot, setPollSnapshot] = useState(poll);
+  const [uiState, setUIState] = useState('default');
+
+  useEffect(() => {
+    setPollSnapshot(poll);
+  }, [poll]);
+
+  const {
+    expired,
+    expiresAt,
+    id,
+    multiple,
+    options,
+    ownVotes,
+    voted,
+    votersCount,
+    votesCount,
+  } = pollSnapshot;
+
+  const expiresAtDate = !!expiresAt && new Date(expiresAt);
+
+  return (
+    <div class="poll">
+      {voted || expired ? (
+        options.map((option, i) => {
+          const { title, votesCount: optionVotesCount } = option;
+          const pollVotesCount = votersCount || votesCount;
+          const percentage =
+            Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
+          // check if current poll choice is the leading one
+          const isLeading =
+            optionVotesCount > 0 &&
+            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
+          return (
+            <div
+              key={`${i}-${title}-${optionVotesCount}`}
+              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
+              style={{
+                '--percentage': `${percentage}%`,
+              }}
+            >
+              <div class="poll-option-title">
+                {title}
+                {voted && ownVotes.includes(i) && (
+                  <>
+                    {' '}
+                    <Icon icon="check-circle" size="s" />
+                  </>
+                )}
+              </div>
+              <div
+                class="poll-option-votes"
+                title={`${optionVotesCount} vote${
+                  optionVotesCount === 1 ? '' : 's'
+                }`}
+              >
+                {percentage}%
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const votes = [];
+            formData.forEach((value, key) => {
+              if (key === 'poll') {
+                votes.push(value);
+              }
+            });
+            console.log(votes);
+            setUIState('loading');
+            const pollResponse = await masto.poll.vote(id, {
+              choices: votes,
+            });
+            console.log(pollResponse);
+            setPollSnapshot(pollResponse);
+            setUIState('default');
+          }}
+          style={{
+            pointerEvents: uiState === 'loading' || readOnly ? 'none' : 'auto',
+            opacity: uiState === 'loading' ? 0.5 : 1,
+          }}
+        >
+          {options.map((option, i) => {
+            const { title } = option;
+            return (
+              <div class="poll-option">
+                <label class="poll-label">
+                  <input
+                    type={multiple ? 'checkbox' : 'radio'}
+                    name="poll"
+                    value={i}
+                    disabled={uiState === 'loading'}
+                    readOnly={readOnly}
+                  />
+                  <span class="poll-option-title">{title}</span>
+                </label>
+              </div>
+            );
+          })}
+          {!readOnly && (
+            <button
+              class="poll-vote-button"
+              type="submit"
+              disabled={uiState === 'loading'}
+            >
+              Vote
+            </button>
+          )}
+        </form>
+      )}
+      {!readOnly && (
+        <p class="poll-meta">
+          <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
+          {votersCount === 1 ? 'voter' : 'voters'}
+          {votersCount !== votesCount && (
+            <>
+              {' '}
+              &bull; <span title={votesCount}>
+                {shortenNumber(votesCount)}
+              </span>{' '}
+              vote
+              {votesCount === 1 ? '' : 's'}
+            </>
+          )}{' '}
+          &bull; {expired ? 'Ended' : 'Ending'}{' '}
+          {!!expiresAtDate && (
+            <relative-time datetime={expiresAtDate.toISOString()} />
+          )}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function EditedAtModal({ statusID, onClose = () => {} }) {
+  const [uiState, setUIState] = useState('default');
+  const [editHistory, setEditHistory] = useState([]);
+
+  useEffect(() => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const editHistory = await masto.statuses.fetchHistory(statusID);
+        console.log(editHistory);
+        setEditHistory(editHistory);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <div id="edit-history" class="box">
+      <button type="button" class="close-button plain large" onClick={onClose}>
+        <Icon icon="x" alt="Close" />
+      </button>
+      <h2>Edit History</h2>
+      {uiState === 'error' && <p>Failed to load history</p>}
+      {uiState === 'loading' && (
+        <p>
+          <Loader abrupt /> Loading&hellip;
+        </p>
+      )}
+      {editHistory.length > 0 && (
+        <ol>
+          {editHistory.map((status) => {
+            const { createdAt } = status;
+            const createdAtDate = new Date(createdAt);
+            return (
+              <li key={createdAt} class="history-item">
+                <h3>
+                  <time>
+                    {Intl.DateTimeFormat('en', {
+                      // Show year if not current year
+                      year:
+                        createdAtDate.getFullYear() === currentYear
+                          ? undefined
+                          : 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      weekday: 'short',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    }).format(createdAtDate)}
+                  </time>
+                </h3>
+                <Status status={status} size="s" withinContext readOnly />
+              </li>
+            );
+          })}
+        </ol>
       )}
     </div>
   );

@@ -207,7 +207,7 @@ function Notifications() {
   const [onlyMentions, setOnlyMentions] = useState(false);
 
   const notificationsIterator = useRef(
-    masto.notifications.getIterator({
+    masto.notifications.iterate({
       limit: LIMIT,
     }),
   ).current;

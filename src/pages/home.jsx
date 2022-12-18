@@ -16,13 +16,13 @@ function Home({ hidden }) {
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
 
-  const statusIterator = useRef(
-    masto.timelines.getHomeIterable({
+  const homeIterator = useRef(
+    masto.timelines.iterateHome({
       limit: LIMIT,
     }),
   ).current;
   async function fetchStatuses(firstLoad) {
-    const allStatuses = await statusIterator.next(
+    const allStatuses = await homeIterator.next(
       firstLoad
         ? {
             limit: LIMIT,

@@ -83,8 +83,16 @@ function Home({ hidden }) {
         if (diffMins > 1) {
           console.log('visible', { lastHidden, diffMins });
           setTimeout(() => {
-            loadStatuses(true);
-            states.homeNew = [];
+            (async () => {
+              const newStatus = await masto.timelines.fetchHome({
+                limit: 1,
+              });
+              if (newStatus.length && newStatus[0].id !== states.home[0].id) {
+                states.homeNew = newStatus;
+              }
+            })();
+            // loadStatuses(true);
+            // states.homeNew = [];
           }, 100);
         }
       }

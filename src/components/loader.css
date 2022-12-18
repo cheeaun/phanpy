@@ -3,8 +3,9 @@
   width: 16px;
   height: 16px;
   pointer-events: none;
-  animation: slow-appear .3s ease-in-out 1s both;
+  animation: slow-appear 0.3s ease-in-out 1s both;
   vertical-align: middle;
+  margin: 8px;
 }
 @keyframes slow-appear {
   0% {

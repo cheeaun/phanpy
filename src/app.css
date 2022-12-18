@@ -104,7 +104,8 @@ a.mention span {
   font-size: 1.45em;
 }
 .deck.padded-bottom .timeline > li:last-child {
-  padding-bottom: 80vh;
+  padding-bottom: 80vh !important;
+  padding-bottom: 80dvh !important;
 }
 
 .timeline {

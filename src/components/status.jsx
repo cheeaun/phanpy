@@ -2,7 +2,13 @@ import './status.css';
 
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
@@ -15,6 +21,7 @@ import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -132,16 +139,6 @@ function Status({
   };
 
   const [showMediaModal, setShowMediaModal] = useState(false);
-  const carouselFocusItem = useRef(null);
-  const prevShowMediaModal = useRef(showMediaModal);
-  useEffect(() => {
-    if (showMediaModal !== false) {
-      carouselFocusItem.current?.node?.scrollIntoView({
-        behavior: prevShowMediaModal.current === false ? 'auto' : 'smooth',
-      });
-    }
-    prevShowMediaModal.current = showMediaModal;
-  }, [showMediaModal]);
 
   if (reblog) {
     return (
@@ -157,7 +154,6 @@ function Status({
 
   const [showEdited, setShowEdited] = useState(false);
 
-  const carouselRef = useRef(null);
   const currentYear = new Date().getFullYear();
 
   const spoilerContentRef = useRef(null);
@@ -563,111 +559,13 @@ function Status({
       </div>
       {showMediaModal !== false && (
         <Modal>
-          <div
-            ref={carouselRef}
-            class="carousel"
-            onClick={(e) => {
-              if (
-                e.target.classList.contains('carousel-item') ||
-                e.target.classList.contains('media')
-              ) {
-                setShowMediaModal(false);
-              }
+          <Carousel
+            mediaAttachments={mediaAttachments}
+            index={showMediaModal}
+            onClose={() => {
+              setShowMediaModal(false);
             }}
-            tabindex="0"
-          >
-            {mediaAttachments?.map((media, i) => {
-              const { blurhash } = media;
-              const rgbAverageColor = blurhash
-                ? getBlurHashAverageColor(blurhash)
-                : null;
-              return (
-                <InView
-                  class="carousel-item"
-                  style={{
-                    backgroundColor:
-                      rgbAverageColor &&
-                      `rgba(${rgbAverageColor.join(',')}, .5)`,
-                  }}
-                  tabindex="0"
-                  key={media.id}
-                  ref={i === showMediaModal ? carouselFocusItem : null}
-                  // InView options
-                  root={carouselRef.current}
-                  threshold={1}
-                  onChange={(inView) => {
-                    if (inView) {
-                      setShowMediaModal(i);
-                    }
-                  }}
-                >
-                  <Media media={media} showOriginal />
-                </InView>
-              );
-            })}
-          </div>
-          <div class="carousel-top-controls">
-            <span />
-            <button
-              type="button"
-              class="carousel-button plain2"
-              onClick={() => setShowMediaModal(false)}
-            >
-              <Icon icon="x" />
-            </button>
-          </div>
-          {mediaAttachments?.length > 1 && (
-            <div class="carousel-controls">
-              <button
-                type="button"
-                class="carousel-button plain2"
-                hidden={showMediaModal === 0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setShowMediaModal(
-                    (showMediaModal - 1 + mediaAttachments.length) %
-                      mediaAttachments.length,
-                  );
-                }}
-              >
-                <Icon icon="arrow-left" />
-              </button>
-              <span class="carousel-dots">
-                {mediaAttachments?.map((media, i) => (
-                  <button
-                    key={media.id}
-                    type="button"
-                    disabled={i === showMediaModal}
-                    class={`plain carousel-dot ${
-                      i === showMediaModal ? 'active' : ''
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setShowMediaModal(i);
-                    }}
-                  >
-                    &bull;
-                  </button>
-                ))}
-              </span>
-              <button
-                type="button"
-                class="carousel-button plain2"
-                hidden={showMediaModal === mediaAttachments.length - 1}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setShowMediaModal(
-                    (showMediaModal + 1) % mediaAttachments.length,
-                  );
-                }}
-              >
-                <Icon icon="arrow-right" />
-              </button>
-            </div>
-          )}
+          />
         </Modal>
       )}
       {!!showEdited && (
@@ -1200,6 +1098,129 @@ function StatusButton({
         </>
       )}
     </button>
+  );
+}
+
+function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
+  const carouselRef = useRef(null);
+
+  const [currentIndex, setCurrentIndex] = useState(index);
+  const carouselFocusItem = useRef(null);
+  useLayoutEffect(() => {
+    carouselFocusItem.current?.node?.scrollIntoView();
+  }, []);
+  useLayoutEffect(() => {
+    carouselFocusItem.current?.node?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }, [currentIndex]);
+
+  const onSnap = useDebouncedCallback((inView, i) => {
+    if (inView) {
+      setCurrentIndex(i);
+    }
+  }, 100);
+
+  return (
+    <>
+      <div
+        ref={carouselRef}
+        class="carousel"
+        onClick={(e) => {
+          if (
+            e.target.classList.contains('carousel-item') ||
+            e.target.classList.contains('media')
+          ) {
+            onClose();
+          }
+        }}
+        tabindex="0"
+      >
+        {mediaAttachments?.map((media, i) => {
+          const { blurhash } = media;
+          const rgbAverageColor = blurhash
+            ? getBlurHashAverageColor(blurhash)
+            : null;
+          return (
+            <InView
+              class="carousel-item"
+              style={{
+                backgroundColor:
+                  rgbAverageColor && `rgba(${rgbAverageColor.join(',')}, .5)`,
+              }}
+              tabindex="0"
+              key={media.id}
+              ref={i === currentIndex ? carouselFocusItem : null} // InView options
+              root={carouselRef.current}
+              threshold={1}
+              onChange={(inView) => onSnap(inView, i)}
+            >
+              <Media media={media} showOriginal />
+            </InView>
+          );
+        })}
+      </div>
+      <div class="carousel-top-controls">
+        <span />
+        <button
+          type="button"
+          class="carousel-button plain2"
+          onClick={() => onClose()}
+        >
+          <Icon icon="x" />
+        </button>
+      </div>
+      {mediaAttachments?.length > 1 && (
+        <div class="carousel-controls">
+          <button
+            type="button"
+            class="carousel-button plain2"
+            hidden={currentIndex === 0}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentIndex(
+                (currentIndex - 1 + mediaAttachments.length) %
+                  mediaAttachments.length,
+              );
+            }}
+          >
+            <Icon icon="arrow-left" />
+          </button>
+          <span class="carousel-dots">
+            {mediaAttachments?.map((media, i) => (
+              <button
+                key={media.id}
+                type="button"
+                disabled={i === currentIndex}
+                class={`plain carousel-dot ${
+                  i === currentIndex ? 'active' : ''
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentIndex(i);
+                }}
+              >
+                &bull;
+              </button>
+            ))}
+          </span>
+          <button
+            type="button"
+            class="carousel-button plain2"
+            hidden={currentIndex === mediaAttachments.length - 1}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentIndex((currentIndex + 1) % mediaAttachments.length);
+            }}
+          >
+            <Icon icon="arrow-right" />
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 

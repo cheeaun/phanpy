@@ -21,8 +21,20 @@ function StatusPage({ id }) {
   const heroStatusRef = useRef();
 
   useEffect(async () => {
-    // If id is completely new, reset the whole list
-    if (!statuses.find((s) => s.id === id)) {
+    const containsStatus = statuses.find((s) => s.id === id);
+    const statusesWithSameAccountID = statuses.filter(
+      (s) => s.accountID === containsStatus?.accountID,
+    );
+    if (statusesWithSameAccountID.length > 1) {
+      setStatuses(
+        statusesWithSameAccountID.map((s) => ({
+          ...s,
+          thread: true,
+          descendant: undefined,
+          ancestor: undefined,
+        })),
+      );
+    } else {
       setStatuses([{ id }]);
     }
 
@@ -76,10 +88,15 @@ function StatusPage({ id }) {
       console.log({ ancestors, descendants, nestedDescendants });
 
       const allStatuses = [
-        ...ancestors.map((s) => ({ id: s.id, ancestor: true })),
-        { id },
+        ...ancestors.map((s) => ({
+          id: s.id,
+          ancestor: true,
+          accountID: s.account.id,
+        })),
+        { id, accountID: heroStatus.account.id },
         ...nestedDescendants.map((s) => ({
           id: s.id,
+          accountID: s.account.id,
           descendant: true,
           thread: s.account.id === heroStatus.account.id,
           replies: s.__replies?.map((r) => r.id),

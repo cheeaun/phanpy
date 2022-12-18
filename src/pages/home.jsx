@@ -141,7 +141,7 @@ function Home({ hidden }) {
               <Icon icon="notification" size="l" alt="Notifications" />
             </a>
           </div>
-          {snapStates.homeNew.length > 0 && (
+          {snapStates.homeNew.length > 1 && (
             <button
               class="updates-button"
               type="button"

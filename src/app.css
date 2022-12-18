@@ -215,6 +215,7 @@ a.mention span {
   font-size: 12px;
   color: var(--text-insignificant-color);
   user-select: none;
+  box-shadow: 0 0 0 2px var(--bg-color);
 }
 .timeline.contextual > li .replies summary:active,
 .timeline.contextual > li .replies[open] summary {

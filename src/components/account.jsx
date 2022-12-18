@@ -129,6 +129,18 @@ function Account({ account }) {
               __html: enhanceContent(note, { emojis }),
             }}
           />
+          <div class="profile-metadata">
+            {fields.map(({ name, value }) => (
+              <div class="profile-field" key={name}>
+                <b>{name}</b>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: value,
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           <p class="stats">
             <span>
               <b title={statusesCount}>{shortenNumber(statusesCount)}</b> Posts

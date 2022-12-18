@@ -94,10 +94,13 @@ function StatusPage({ id }) {
   }, [id]);
 
   useLayoutEffect(() => {
-    heroStatusRef.current?.scrollIntoView({
-      // behavior: 'smooth',
-      block: 'start',
-    });
+    const hasAncestor = statuses.some((s) => s.ancestor);
+    if (hasAncestor) {
+      heroStatusRef.current?.scrollIntoView({
+        // behavior: 'smooth',
+        block: 'start',
+      });
+    }
   }, [statuses]);
 
   const heroStatus = states.statuses.get(id);

@@ -7,6 +7,7 @@ import shortenNumber from '../utils/shorten-number';
 import store from '../utils/store';
 
 import Avatar from './avatar';
+import Icon from './icon';
 import NameText from './name-text';
 
 function Account({ account }) {
@@ -129,18 +130,28 @@ function Account({ account }) {
               __html: enhanceContent(note, { emojis }),
             }}
           />
-          <div class="profile-metadata">
-            {fields.map(({ name, value }) => (
-              <div class="profile-field" key={name}>
-                <b>{name}</b>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: value,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
+          {fields?.length > 0 && (
+            <div class="profile-metadata">
+              {fields.map(({ name, value, verifiedAt }) => (
+                <div
+                  class={`profile-field ${
+                    verifiedAt ? 'profile-verified' : ''
+                  }`}
+                  key={name}
+                >
+                  <b>
+                    {name}{' '}
+                    {!!verifiedAt && <Icon icon="check-circle" size="s" />}
+                  </b>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: value,
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           <p class="stats">
             <span>
               <b title={statusesCount}>{shortenNumber(statusesCount)}</b> Posts

@@ -12,6 +12,10 @@
   font-size: 95%;
   line-height: 1.5;
 }
+#account-container .note:not(:has(p)) {
+  /* Some notes don't have <p> tags, so we need to add some padding */
+  padding: 1em 0;
+}
 
 #account-container .stats {
   display: flex;
@@ -38,6 +42,7 @@
   gap: 12px;
 }
 #account-container .profile-field {
+  min-width: 0;
   flex-grow: 1;
   font-size: 90%;
   background-color: var(--bg-faded-color);
@@ -51,6 +56,9 @@
   font-size: 90%;
   color: var(--text-insignificant-color);
   text-transform: uppercase;
+}
+#account-container .profile-field b .icon {
+  color: var(--green-color);
 }
 #account-container .profile-field p {
   margin: 0;

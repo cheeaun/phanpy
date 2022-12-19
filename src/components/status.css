@@ -90,14 +90,6 @@
 .status.skeleton > .avatar {
   background-color: var(--outline-color);
 }
-.indirect .status {
-  padding-left: 57px;
-}
-.indirect .status .avatar {
-  width: 25px !important;
-  height: 25px !important;
-  transform: translateX(5px);
-}
 
 .status .container {
   flex-grow: 1;
@@ -242,7 +234,7 @@
   margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 2px;
   flex-direction: row;
 }
 .status .media {
@@ -454,12 +446,16 @@ a.card:hover {
   margin: 8px 0;
   font-size: 90%;
 }
+.poll-option-title .icon {
+  vertical-align: middle;
+}
 
 /* EXTRA META */
 
 .status .extra-meta {
   padding-top: 8px;
   color: var(--text-insignificant-color);
+  font-size: 90%;
 }
 .status .extra-meta * {
   vertical-align: middle;
@@ -477,7 +473,7 @@ a.card:hover {
 }
 .status.large .extra-meta {
   padding-top: 0;
-  margin-left: calc(-50px - 8px);
+  margin-left: calc(-50px - 16px);
 }
 
 /* ACTIONS */
@@ -485,32 +481,36 @@ a.card:hover {
 .status .actions {
   display: flex;
   gap: 8px;
-  justify-content: space-between;
 }
 .status.large .actions {
-  padding-top: 8px;
+  padding-top: 4px;
   padding-bottom: 16px;
   margin-left: calc(-50px - 16px);
   color: var(--text-insignificant-color);
+  border-top: 1px solid var(--outline-color);
+  margin-top: 8px;
 }
-.status .actions > button {
+.status .action.has-count {
+  flex: 1;
+}
+.status .action > button {
   min-height: 40px;
   min-width: 40px;
   padding: 0 8px;
   font-variant-numeric: tabular-nums;
 }
-.status .actions > button.plain {
+.status .action > button.plain {
   color: inherit;
   border: 1.5px solid transparent;
 }
-.status .actions > button.plain:hover {
+.status .action > button.plain:hover {
   color: var(--link-color);
   background-color: var(--button-plain-bg-hover-color);
 }
-.status .actions > button.plain.reblog-button:hover {
+.status .action > button.plain.reblog-button:hover {
   color: var(--reblog-color);
 }
-.status .actions > button.plain.reblog-button.checked {
+.status .action > button.plain.reblog-button.checked {
   color: var(--reblog-color);
   border-color: var(--reblog-color);
 }
@@ -529,13 +529,13 @@ a.card:hover {
     opacity: 0;
   }
 }
-.status .actions > button.plain.reblog-button.checked .icon {
+.status .action > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
-.status .actions > button.plain.favourite-button:hover {
+.status .action > button.plain.favourite-button:hover {
   color: var(--favourite-color);
 }
-.status .actions > button.plain.favourite-button.checked {
+.status .action > button.plain.favourite-button.checked {
   color: var(--favourite-color);
   border-color: var(--favourite-color);
 }
@@ -557,11 +557,11 @@ a.card:hover {
     opacity: 0;
   }
 }
-.status .actions > button.plain.favourite-button.checked .icon {
+.status .action > button.plain.favourite-button.checked .icon {
   transform-origin: bottom center;
   animation: hearted 1s ease-in-out;
 }
-.status .actions > button.plain.bookmark-button.checked {
+.status .action > button.plain.bookmark-button.checked {
   color: var(--link-color);
   border-color: var(--link-color);
 }

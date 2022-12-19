@@ -72,7 +72,6 @@ a.mention span {
 
 .deck header {
   min-height: 3em;
-  padding: 0 8px;
   position: sticky;
   top: 0;
   background-color: var(--bg-blur-color);
@@ -92,7 +91,7 @@ a.mention span {
   text-align: right;
 }
 .deck header h1 {
-  margin: 0;
+  margin: 0 8px;
   padding: 0;
   font-size: 1.2em;
   text-align: center;
@@ -105,7 +104,8 @@ a.mention span {
   font-size: 1.45em;
 }
 .deck.padded-bottom .timeline > li:last-child {
-  padding-bottom: 80vh;
+  padding-bottom: 80vh !important;
+  padding-bottom: 80dvh !important;
 }
 
 .timeline {
@@ -146,7 +146,41 @@ a.mention span {
 .timeline.contextual > li.descendant {
   position: relative;
 }
-.timeline.contextual > li.descendant.indirect:before {
+.timeline.contextual > li.descendant {
+  padding-bottom: 1em;
+}
+.timeline.contextual > li.descendant:not(.thread) > .status-link {
+  padding-left: 40px;
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
+  > summary {
+  margin-left: calc(50px + 16px + 16px);
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
+  .status-link {
+  padding-left: calc(50px + 16px + 16px);
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
+  > summary {
+  margin-left: calc(40px + 16px);
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
+  .status-link {
+  padding-left: calc(40px + 16px);
+}
+.timeline.contextual > li.descendant:not(.thread):before {
   --radius: 10px;
   --diameter: calc(var(--radius) * 2);
   content: '';
@@ -161,8 +195,82 @@ a.mention span {
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
 }
-.timeline.contextual > li.descendant.indirect .status-link {
+.timeline.contextual > li .replies {
+  margin-top: -12px;
+}
+.timeline.contextual > li .replies :is(ul, li) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline.contextual > li .replies summary {
+  padding: 8px 16px;
+  background-color: var(--bg-faded-color);
+  display: inline-block;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--text-insignificant-color);
+  user-select: none;
+  box-shadow: 0 0 0 2px var(--bg-color);
   position: relative;
+}
+.timeline.contextual > li .replies summary:active,
+.timeline.contextual > li .replies[open] summary {
+  color: var(--text-color);
+  background-color: var(--comment-line-color);
+  background-image: linear-gradient(
+    to top right,
+    var(--comment-line-color),
+    var(--bg-faded-color)
+  );
+}
+.timeline.contextual > li .replies[open] summary {
+  border-bottom-left-radius: 0;
+}
+.timeline.contextual > li .replies summary[hidden] {
+  display: none;
+}
+.timeline.contextual > li .replies li {
+  position: relative;
+}
+.timeline.contextual > li .replies li .status {
+  --width: 3px;
+  --left: 0px;
+  --right: calc(var(--left) + var(--width));
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    transparent var(--left),
+    var(--comment-line-color) var(--left),
+    var(--comment-line-color) var(--right),
+    transparent var(--right),
+    transparent
+  );
+  background-repeat: no-repeat;
+}
+.timeline.contextual > li .replies li:last-child .status {
+  background-size: 100% 20px;
+}
+.timeline.contextual > li .replies li:before {
+  --radius: 10px;
+  --diameter: calc(var(--radius) * 2);
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: calc(40px + 16px);
+  width: var(--diameter);
+  height: var(--diameter);
+  border-radius: var(--radius);
+  border-style: solid;
+  border-width: var(--width);
+  border-color: transparent transparent var(--comment-line-color) transparent;
+  transform: rotate(45deg);
+}
+.timeline.contextual > li.thread .replies li:before {
+  left: calc(50px + 16px + 16px);
 }
 
 .timeline-deck.compact .status {
@@ -353,13 +461,18 @@ a.mention span {
 
 .carousel-top-controls {
   top: 0;
+  top: env(safe-area-inset-top, 0);
 }
 .carousel-controls {
   bottom: 0;
+  bottom: env(safe-area-inset-bottom, 0);
 }
 :is(.carousel-top-controls, .carousel-controls) {
   position: fixed;
-  width: 100%;
+  left: 0;
+  left: env(safe-area-inset-left, 0);
+  right: 0;
+  right: env(safe-area-inset-right, 0);
   padding: 16px;
   display: flex;
   gap: 8px;
@@ -432,7 +545,9 @@ button.carousel-dot[disabled].active {
 #compose-button {
   position: fixed;
   bottom: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
   right: 16px;
+  right: max(16px, env(safe-area-inset-right));
   padding: 16px;
   box-shadow: 0 0 32px var(--bg-color);
   z-index: 1;
@@ -463,6 +578,9 @@ button.carousel-dot[disabled].active {
   max-width: calc(40em - 50px - 16px);
   border-radius: 16px 16px 0 0;
   padding: 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-shadow: 0 -1px 32px var(--divider-color);
   animation: slide-up 0.2s ease-out;
   border: 1px solid var(--outline-color);

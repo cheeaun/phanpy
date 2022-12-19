@@ -11,6 +11,7 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -21,22 +22,37 @@ function StatusPage({ id }) {
   const heroStatusRef = useRef();
 
   useEffect(async () => {
-    // If id is completely new, reset the whole list
-    if (!statuses.find((s) => s.id === id)) {
+    const containsStatus = statuses.find((s) => s.id === id);
+    const statusesWithSameAccountID = statuses.filter(
+      (s) => s.accountID === containsStatus?.accountID,
+    );
+    if (statusesWithSameAccountID.length > 1) {
+      setStatuses(
+        statusesWithSameAccountID.map((s) => ({
+          ...s,
+          thread: true,
+          descendant: undefined,
+          ancestor: undefined,
+        })),
+      );
+    } else {
       setStatuses([{ id }]);
     }
 
     setUIState('loading');
 
-    if (!states.statuses.has(id)) {
-      try {
-        const status = await masto.statuses.fetch(id);
-        states.statuses.set(id, status);
-      } catch (e) {
+    const hasStatus = snapStates.statuses.has(id);
+    let heroStatus = snapStates.statuses.get(id);
+    try {
+      heroStatus = await masto.statuses.fetch(id);
+      states.statuses.set(id, heroStatus);
+    } catch (e) {
+      // Silent fail if status is cached
+      if (!hasStatus) {
         setUIState('error');
         alert('Error fetching status');
-        return;
       }
+      return;
     }
 
     try {
@@ -46,38 +62,51 @@ function StatusPage({ id }) {
       ancestors.forEach((status) => {
         states.statuses.set(status.id, status);
       });
-      const directReplies = [];
+      const nestedDescendants = [];
       descendants.forEach((status) => {
         states.statuses.set(status.id, status);
-        if (status.inReplyToId === id) {
-          directReplies.push(status);
+        if (status.inReplyToAccountId === status.account.id) {
+          // If replying to self, it's part of the thread, level 1
+          nestedDescendants.push(status);
+        } else if (status.inReplyToId === heroStatus.id) {
+          // If replying to the hero status, it's a reply, level 1
+          nestedDescendants.push(status);
+        } else {
+          // If replying to someone else, it's a reply to a reply, level 2
+          const parent = descendants.find((s) => s.id === status.inReplyToId);
+          if (parent) {
+            if (!parent.__replies) {
+              parent.__replies = [];
+            }
+            parent.__replies.push(status);
+          } else {
+            // If no parent, it's probably a reply to a reply to a reply, level 3
+            console.warn('[LEVEL 3] No parent found for', status);
+          }
         }
       });
-      console.log({ ancestors, descendants, directReplies });
 
-      if (directReplies.length) {
-        const heroStatus = states.statuses.get(id);
-        const heroStatusRepliesCount = heroStatus.repliesCount;
-        if (heroStatusRepliesCount != directReplies.length) {
-          // If replies count doesn't match, refetch the status
-          const status = await masto.statuses.fetch(id);
-          states.statuses.set(id, status);
-        }
-      }
+      console.log({ ancestors, descendants, nestedDescendants });
 
       const allStatuses = [
-        ...ancestors.map((s) => ({ id: s.id, ancestor: true })),
-        { id },
-        ...descendants.map((s) => ({
+        ...ancestors.map((s) => ({
           id: s.id,
+          ancestor: true,
+          accountID: s.account.id,
+        })),
+        { id, accountID: heroStatus.account.id },
+        ...nestedDescendants.map((s) => ({
+          id: s.id,
+          accountID: s.account.id,
           descendant: true,
-          directReply:
-            s.inReplyToId === id || s.inReplyToAccountId === s.account.id,
-          // I can assume if the reply is to the same account, it's a direct reply. In other words, it's a thread?!?
+          thread: s.account.id === heroStatus.account.id,
+          replies: s.__replies?.map((r) => r.id),
         })),
       ];
+      console.log({ allStatuses });
       setStatuses(allStatuses);
     } catch (e) {
+      console.error(e);
       setUIState('error');
     }
 
@@ -94,13 +123,16 @@ function StatusPage({ id }) {
   }, [id]);
 
   useLayoutEffect(() => {
-    heroStatusRef.current?.scrollIntoView({
-      // behavior: 'smooth',
-      block: 'start',
-    });
+    const hasAncestor = statuses.some((s) => s.ancestor);
+    if (hasAncestor) {
+      heroStatusRef.current?.scrollIntoView({
+        // behavior: 'smooth',
+        block: 'start',
+      });
+    }
   }, [statuses]);
 
-  const heroStatus = states.statuses.get(id);
+  const heroStatus = snapStates.statuses.get(id);
   const heroDisplayName = useMemo(() => {
     // Remove shortcodes from display name
     if (!heroStatus) return '';
@@ -133,13 +165,18 @@ function StatusPage({ id }) {
       : 'Status',
   );
 
-  const comments = statuses.filter((s) => s.descendant);
-  const replies = comments.filter((s) => s.directReply);
-
   const prevRoute = states.history.findLast((h) => {
     return h === '/' || /notifications/i.test(h);
   });
   const closeLink = `#${prevRoute || '/'}`;
+
+  const [limit, setLimit] = useState(40);
+  const showMore = useMemo(() => {
+    // return number of statuses to show
+    return statuses.length - limit;
+  }, [statuses.length, limit]);
+
+  const hasManyStatuses = statuses.length > 40;
 
   return (
     <div class="deck-backdrop">
@@ -150,6 +187,11 @@ function StatusPage({ id }) {
         }`}
       >
         <header>
+          {/* <div>
+            <Link class="button plain deck-close" href={closeLink}>
+              <Icon icon="chevron-left" size="xl" />
+            </Link>
+          </div> */}
           <h1>Status</h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
@@ -159,8 +201,14 @@ function StatusPage({ id }) {
           </div>
         </header>
         <ul class="timeline flat contextual">
-          {statuses.map((status) => {
-            const { id: statusID, ancestor, descendant, directReply } = status;
+          {statuses.slice(0, limit).map((status) => {
+            const {
+              id: statusID,
+              ancestor,
+              descendant,
+              thread,
+              replies,
+            } = status;
             const isHero = statusID === id;
             return (
               <li
@@ -168,7 +216,7 @@ function StatusPage({ id }) {
                 ref={isHero ? heroStatusRef : null}
                 class={`${ancestor ? 'ancestor' : ''} ${
                   descendant ? 'descendant' : ''
-                } ${descendant && !directReply ? 'indirect' : ''}`}
+                } ${thread ? 'thread' : ''}`}
               >
                 {isHero ? (
                   <Status statusID={statusID} withinContext size="l" />
@@ -179,8 +227,31 @@ function StatusPage({ id }) {
               "
                     href={`#/s/${statusID}`}
                   >
-                    <Status statusID={statusID} withinContext />
+                    <Status
+                      statusID={statusID}
+                      withinContext
+                      size={thread || ancestor ? 'm' : 's'}
+                    />
                   </Link>
+                )}
+                {descendant && replies?.length > 0 && (
+                  <details class="replies" open={!hasManyStatuses}>
+                    <summary hidden={!hasManyStatuses}>
+                      <span title={replies.length}>
+                        {shortenNumber(replies.length)}
+                      </span>{' '}
+                      repl{replies.length === 1 ? 'y' : 'ies'}
+                    </summary>
+                    <ul>
+                      {replies.map((replyID) => (
+                        <li key={replyID}>
+                          <Link class="status-link" href={`#/s/${replyID}`}>
+                            <Status statusID={replyID} withinContext size="s" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 )}
                 {uiState === 'loading' &&
                   isHero &&
@@ -188,27 +259,25 @@ function StatusPage({ id }) {
                   statuses.length === 1 && (
                     <div class="status-loading">
                       <Loader />
-                      {/* {' '}<span>
-                        {!!replies.length &&
-                          replies.length !== comments.length && (
-                            <>
-                              {replies.length} repl
-                              {replies.length > 1 ? 'ies' : 'y'}
-                            </>
-                          )}
-                        {!!comments.length && (
-                          <>
-                            {' '}
-                            &bull; {comments.length} comment
-                            {comments.length > 1 ? 's' : ''}
-                          </>
-                        )}
-                      </span> */}
                     </div>
                   )}
               </li>
             );
           })}
+          {showMore > 0 && (
+            <li>
+              <button
+                type="button"
+                class="plain block"
+                disabled={uiState === 'loading'}
+                onClick={() => setLimit((l) => l + 40)}
+                style={{ marginBlockEnd: '6em' }}
+              >
+                Show more&hellip;{' '}
+                <span class="tag">{showMore > 40 ? '40+' : showMore}</span>
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </div>

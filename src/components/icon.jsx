@@ -41,6 +41,7 @@ const ICONS = {
   popout: 'mingcute:external-link-line',
   popin: ['mingcute:external-link-line', '180deg'],
   plus: 'mingcute:add-circle-line',
+  'chevron-left': 'mingcute:left-line',
 };
 
 function Icon({ icon, size = 'm', alt, title, class: className = '' }) {

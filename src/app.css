@@ -146,7 +146,7 @@ a.mention span {
 .timeline.contextual > li.descendant {
   position: relative;
 }
-.timeline.contextual > li.descendant:not(.thread) {
+.timeline.contextual > li.descendant {
   padding-bottom: 1em;
 }
 .timeline.contextual > li.descendant:not(.thread) > .status-link {
@@ -230,6 +230,9 @@ a.mention span {
 .timeline.contextual > li .replies[open] summary {
   border-bottom-left-radius: 0;
 }
+.timeline.contextual > li .replies summary[hidden] {
+  display: none;
+}
 .timeline.contextual > li .replies li {
   position: relative;
 }
@@ -307,6 +310,7 @@ a.mention span {
 }
 .status-link:hover {
   background-color: var(--link-bg-hover-color);
+  mix-blend-mode: multiply;
 }
 
 .ui-state {

@@ -186,14 +186,17 @@ function StatusPage({ id }) {
         }`}
       >
         <header>
-          <div>
+          {/* <div>
             <Link class="button plain deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
-          </div>
+          </div> */}
           <h1>Status</h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
+            <Link class="button plain deck-close" href={closeLink}>
+              <Icon icon="x" size="xl" />
+            </Link>
           </div>
         </header>
         <ul class="timeline flat contextual">

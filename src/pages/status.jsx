@@ -255,19 +255,21 @@ function StatusPage({ id }) {
               </li>
             );
           })}
+          {showMore > 0 && (
+            <li>
+              <button
+                type="button"
+                class="plain block"
+                disabled={uiState === 'loading'}
+                onClick={() => setLimit((l) => l + 40)}
+                style={{ marginBlockEnd: '6em' }}
+              >
+                Show more&hellip;{' '}
+                <span class="tag">{showMore > 40 ? '40+' : showMore}</span>
+              </button>
+            </li>
+          )}
         </ul>
-        {showMore > 0 && (
-          <button
-            type="button"
-            class="plain block"
-            disabled={uiState === 'loading'}
-            onClick={() => setLimit((l) => l + 40)}
-            style={{ marginBlockEnd: '6em' }}
-          >
-            Show more&hellip;{' '}
-            <span class="tag">{showMore > 40 ? '40+' : showMore}</span>
-          </button>
-        )}
       </div>
     </div>
   );

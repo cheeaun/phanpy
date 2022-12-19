@@ -85,7 +85,8 @@ function Home({ hidden }) {
           setTimeout(() => {
             (async () => {
               const newStatus = await masto.timelines.fetchHome({
-                limit: 1,
+                limit: 2,
+                // Need 2 because "new posts" only appear when there are 2 or more
               });
               if (newStatus.length && newStatus[0].id !== states.home[0].id) {
                 states.homeNew = newStatus;

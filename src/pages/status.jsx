@@ -175,6 +175,8 @@ function StatusPage({ id }) {
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
+  const hasManyStatuses = statuses.length > 40;
+
   return (
     <div class="deck-backdrop">
       <Link href={closeLink}></Link>
@@ -229,8 +231,8 @@ function StatusPage({ id }) {
                   </Link>
                 )}
                 {descendant && replies?.length > 0 && (
-                  <details class="replies">
-                    <summary>
+                  <details class="replies" open={!hasManyStatuses}>
+                    <summary hidden={!hasManyStatuses}>
                       {replies.length} repl{replies.length === 1 ? 'y' : 'ies'}
                     </summary>
                     <ul>

@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "fetch-instances": "env $(cat .env.dev | grep -v \"#\" | xargs) node scripts/fetch-instances-list.js"
+    "fetch-instances": "env $(cat .env.dev | grep -v \"#\" | xargs) node scripts/fetch-instances-list.js",
+    "source-map-explorer": "npx source-map-explorer dist/assets/*.js"
   },
   "dependencies": {
     "@github/text-expander-element": "~2.3.0",

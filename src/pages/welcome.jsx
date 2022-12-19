@@ -6,22 +6,25 @@ import useTitle from '../utils/useTitle';
 function Welcome() {
   useTitle();
   return (
-    <main id="welcome" class="box">
-      <img
-        src={logo}
-        alt=""
-        width="140"
-        height="140"
-        style={{
-          aspectRatio: '1/1',
-        }}
-      />
-      <h1>Welcome</h1>
-      <p>Phanpy is a minimalistic opinionated Mastodon web client.</p>
-      <p class="warning">
-        🚧 This is an early ALPHA project. Many features are missing, many bugs
-        are present. Please report issues as detailed as possible. Thanks 🙏
-      </p>
+    <main id="welcome">
+      <h1>
+        <img
+          src={logo}
+          alt=""
+          width="24"
+          height="24"
+          style={{
+            aspectRatio: '1/1',
+          }}
+        />{' '}
+        Phanpy
+      </h1>
+      <h2>
+        Trunk-tastic
+        <br />
+        Mastodon Experience
+      </h2>
+      <p>A minimalistic opinionated Mastodon web client.</p>
       <p>
         <big>
           <b>

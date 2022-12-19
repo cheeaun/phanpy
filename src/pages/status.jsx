@@ -11,6 +11,7 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -236,7 +237,10 @@ function StatusPage({ id }) {
                 {descendant && replies?.length > 0 && (
                   <details class="replies" open={!hasManyStatuses}>
                     <summary hidden={!hasManyStatuses}>
-                      {replies.length} repl{replies.length === 1 ? 'y' : 'ies'}
+                      <span title={replies.length}>
+                        {shortenNumber(replies.length)}
+                      </span>{' '}
+                      repl{replies.length === 1 ? 'y' : 'ies'}
                     </summary>
                     <ul>
                       {replies.map((replyID) => (

@@ -429,104 +429,113 @@ function Status({
               )}
             </div>
             <div class="actions">
-              <StatusButton
-                title="Reply"
-                alt="Comments"
-                class="reply-button"
-                icon="comment"
-                count={repliesCount}
-                onClick={() => {
-                  states.showCompose = {
-                    replyToStatus: status,
-                  };
-                }}
-              />
+              <div class="action has-count">
+                <StatusButton
+                  title="Reply"
+                  alt="Comments"
+                  class="reply-button"
+                  icon="comment"
+                  count={repliesCount}
+                  onClick={() => {
+                    states.showCompose = {
+                      replyToStatus: status,
+                    };
+                  }}
+                />
+              </div>
               {/* TODO: if visibility = private, only can reblog own statuses */}
               {visibility !== 'direct' && (
+                <div class="action has-count">
+                  <StatusButton
+                    checked={reblogged}
+                    title={['Boost', 'Unboost']}
+                    alt={['Boost', 'Boosted']}
+                    class="reblog-button"
+                    icon="rocket"
+                    count={reblogsCount}
+                    onClick={async () => {
+                      try {
+                        // Optimistic
+                        states.statuses.set(id, {
+                          ...status,
+                          reblogged: !reblogged,
+                          reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+                        });
+                        if (reblogged) {
+                          const newStatus = await masto.statuses.unreblog(id);
+                          states.statuses.set(newStatus.id, newStatus);
+                        } else {
+                          const newStatus = await masto.statuses.reblog(id);
+                          states.statuses.set(newStatus.id, newStatus);
+                          states.statuses.set(
+                            newStatus.reblog.id,
+                            newStatus.reblog,
+                          );
+                        }
+                      } catch (e) {
+                        console.error(e);
+                      }
+                    }}
+                  />
+                </div>
+              )}
+              <div class="action has-count">
                 <StatusButton
-                  checked={reblogged}
-                  title={['Boost', 'Unboost']}
-                  alt={['Boost', 'Boosted']}
-                  class="reblog-button"
-                  icon="rocket"
-                  count={reblogsCount}
+                  checked={favourited}
+                  title={['Favourite', 'Unfavourite']}
+                  alt={['Favourite', 'Favourited']}
+                  class="favourite-button"
+                  icon="heart"
+                  count={favouritesCount}
                   onClick={async () => {
                     try {
                       // Optimistic
-                      states.statuses.set(id, {
+                      states.statuses.set(statusID, {
                         ...status,
-                        reblogged: !reblogged,
-                        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+                        favourited: !favourited,
+                        favouritesCount:
+                          favouritesCount + (favourited ? -1 : 1),
                       });
-                      if (reblogged) {
-                        const newStatus = await masto.statuses.unreblog(id);
+                      if (favourited) {
+                        const newStatus = await masto.statuses.unfavourite(id);
                         states.statuses.set(newStatus.id, newStatus);
                       } else {
-                        const newStatus = await masto.statuses.reblog(id);
+                        const newStatus = await masto.statuses.favourite(id);
                         states.statuses.set(newStatus.id, newStatus);
-                        states.statuses.set(
-                          newStatus.reblog.id,
-                          newStatus.reblog,
-                        );
                       }
                     } catch (e) {
                       console.error(e);
                     }
                   }}
                 />
-              )}
-              <StatusButton
-                checked={favourited}
-                title={['Favourite', 'Unfavourite']}
-                alt={['Favourite', 'Favourited']}
-                class="favourite-button"
-                icon="heart"
-                count={favouritesCount}
-                onClick={async () => {
-                  try {
-                    // Optimistic
-                    states.statuses.set(statusID, {
-                      ...status,
-                      favourited: !favourited,
-                      favouritesCount: favouritesCount + (favourited ? -1 : 1),
-                    });
-                    if (favourited) {
-                      const newStatus = await masto.statuses.unfavourite(id);
-                      states.statuses.set(newStatus.id, newStatus);
-                    } else {
-                      const newStatus = await masto.statuses.favourite(id);
-                      states.statuses.set(newStatus.id, newStatus);
+              </div>
+              <div class="action">
+                <StatusButton
+                  checked={bookmarked}
+                  title={['Bookmark', 'Unbookmark']}
+                  alt={['Bookmark', 'Bookmarked']}
+                  class="bookmark-button"
+                  icon="bookmark"
+                  onClick={async () => {
+                    try {
+                      // Optimistic
+                      states.statuses.set(statusID, {
+                        ...status,
+                        bookmarked: !bookmarked,
+                      });
+                      if (bookmarked) {
+                        const newStatus = await masto.statuses.unbookmark(id);
+                        states.statuses.set(newStatus.id, newStatus);
+                      } else {
+                        const newStatus = await masto.statuses.bookmark(id);
+                        states.statuses.set(newStatus.id, newStatus);
+                      }
+                    } catch (e) {
+                      console.error(e);
                     }
-                  } catch (e) {
-                    console.error(e);
-                  }
-                }}
-              />
-              <StatusButton
-                checked={bookmarked}
-                title={['Bookmark', 'Unbookmark']}
-                alt={['Bookmark', 'Bookmarked']}
-                class="bookmark-button"
-                icon="bookmark"
-                onClick={async () => {
-                  try {
-                    // Optimistic
-                    states.statuses.set(statusID, {
-                      ...status,
-                      bookmarked: !bookmarked,
-                    });
-                    if (bookmarked) {
-                      const newStatus = await masto.statuses.unbookmark(id);
-                      states.statuses.set(newStatus.id, newStatus);
-                    } else {
-                      const newStatus = await masto.statuses.bookmark(id);
-                      states.statuses.set(newStatus.id, newStatus);
-                    }
-                  } catch (e) {
-                    console.error(e);
-                  }
-                }}
-              />
+                  }}
+                />
+              </div>
               {isSelf && (
                 <span class="menu-container">
                   <button type="button" title="More" class="plain more-button">

@@ -41,7 +41,7 @@ const contentText = {
   update: 'A status you interacted with has been edited.',
 };
 
-const LIMIT = 20;
+const LIMIT = 30; // 30 is the maximum limit :(
 
 function Notification({ notification }) {
   const { id, type, status, account, _accounts } = notification;

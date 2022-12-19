@@ -78,17 +78,18 @@ a.mention span {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--divider-color);
   z-index: 1;
-  display: flex;
-  align-items: center;
   cursor: default;
   z-index: 10;
-}
-.deck header > *:not(button) {
-  flex-grow: 1;
-  min-width: 44px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
 }
 .deck header > .header-side:last-of-type {
   text-align: right;
+  grid-column: 3;
+}
+.deck header :is(button, .button).plain {
+  backdrop-filter: none;
 }
 .deck header h1 {
   margin: 0 8px;

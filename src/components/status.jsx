@@ -455,6 +455,14 @@ function Status({
                     count={reblogsCount}
                     onClick={async () => {
                       try {
+                        if (!reblogged) {
+                          const yes = confirm(
+                            'Are you sure that you want to boost this post?',
+                          );
+                          if (!yes) {
+                            return;
+                          }
+                        }
                         // Optimistic
                         states.statuses.set(id, {
                           ...status,

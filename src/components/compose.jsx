@@ -542,7 +542,6 @@ function Compose({
                     const params = {
                       file,
                       description,
-                      skipPolling: true,
                     };
                     return masto.mediaAttachments.create(params).then((res) => {
                       if (res.id) {

@@ -144,6 +144,7 @@ export function App() {
           url: `https://${instanceURL}`,
           accessToken,
           disableVersionCheck: true,
+          timeout: 30_000,
         });
 
         const mastoAccount = await masto.accounts.verifyCredentials();
@@ -185,6 +186,7 @@ export function App() {
             url: `https://${instanceURL}`,
             accessToken,
             disableVersionCheck: true,
+            timeout: 30_000,
           });
           setIsLoggedIn(true);
         } catch (e) {

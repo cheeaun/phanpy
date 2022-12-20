@@ -11,7 +11,12 @@ function NameText({ account, showAvatar, showAcct, short, external }) {
 
   const displayNameWithEmoji = emojifyText(displayName, emojis);
 
-  if (username === displayName) username = null;
+  if (
+    !short &&
+    username.toLowerCase().trim() === (displayName || '').toLowerCase().trim()
+  ) {
+    username = null;
+  }
 
   return (
     <a

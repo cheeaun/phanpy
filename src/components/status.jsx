@@ -130,7 +130,7 @@ function Status({
     }
   }
 
-  const [showSpoiler, setShowSpoiler] = useState(false);
+  const showSpoiler = snapStates.spoilers.has(id) || false;
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -293,7 +293,11 @@ function Status({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setShowSpoiler(!showSpoiler);
+                  if (showSpoiler) {
+                    states.spoilers.delete(id);
+                  } else {
+                    states.spoilers.set(id, true);
+                  }
                 }}
               >
                 <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
@@ -356,7 +360,11 @@ function Status({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShowSpoiler(!showSpoiler);
+                if (showSpoiler) {
+                  states.spoilers.delete(id);
+                } else {
+                  states.spoilers.add(id);
+                }
               }}
             >
               <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} /> Sensitive

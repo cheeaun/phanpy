@@ -1,3 +1,5 @@
+import './login.css';
+
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import Loader from '../components/loader';
@@ -53,7 +55,7 @@ function Login() {
   };
 
   return (
-    <main class="box" style={{ textAlign: 'center' }}>
+    <main id="login" style={{ textAlign: 'center' }}>
       <form onSubmit={onSubmit}>
         <h1>Log in</h1>
         <label>
@@ -82,8 +84,8 @@ function Login() {
           <button class="large" disabled={uiState === 'loading'}>
             Log in
           </button>{' '}
-          <Loader hidden={uiState !== 'loading'} />
         </p>
+        <Loader hidden={uiState !== 'loading'} />
         <hr />
         <p>
           <a href="https://joinmastodon.org/servers" target="_blank">

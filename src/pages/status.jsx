@@ -13,20 +13,29 @@ import Loader from '../components/loader';
 import Status from '../components/status';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
+import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
 function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
-  const [statuses, setStatuses] = useState([{ id }]);
+  const cachedStatuses = store.session.getJSON('statuses-' + id);
+  const [statuses, setStatuses] = useState(cachedStatuses || [{ id }]);
   const [uiState, setUIState] = useState('default');
   const heroStatusRef = useRef();
 
-  useEffect(async () => {
+  useEffect(() => {
     const containsStatus = statuses.find((s) => s.id === id);
     if (!containsStatus) {
       setStatuses([{ id }]);
+    } else {
+      const cachedStatuses = store.session.getJSON('statuses-' + id);
+      if (cachedStatuses) {
+        setStatuses(cachedStatuses);
+      }
     }
+  }, [id]);
 
+  useEffect(async () => {
     setUIState('loading');
 
     const hasStatus = snapStates.statuses.has(id);
@@ -93,6 +102,7 @@ function StatusPage({ id }) {
       ];
       console.log({ allStatuses });
       setStatuses(allStatuses);
+      store.session.setJSON('statuses-' + id, allStatuses);
     } catch (e) {
       console.error(e);
       setUIState('error');

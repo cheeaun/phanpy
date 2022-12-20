@@ -273,6 +273,14 @@ a.mention span {
 .timeline.contextual > li.thread .replies li:before {
   left: calc(50px + 16px + 16px);
 }
+.timeline.contextual.loading > li:not(.hero) {
+  opacity: 0.2;
+  pointer-events: none;
+  background-image: none !important;
+}
+.timeline.contextual.loading > li:not(.hero):before {
+  content: none !important;
+}
 
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);

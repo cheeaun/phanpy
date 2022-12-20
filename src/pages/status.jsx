@@ -23,19 +23,7 @@ function StatusPage({ id }) {
 
   useEffect(async () => {
     const containsStatus = statuses.find((s) => s.id === id);
-    const statusesWithSameAccountID = statuses.filter(
-      (s) => s.accountID === containsStatus?.accountID,
-    );
-    if (statusesWithSameAccountID.length > 1) {
-      setStatuses(
-        statusesWithSameAccountID.map((s) => ({
-          ...s,
-          thread: true,
-          descendant: undefined,
-          ancestor: undefined,
-        })),
-      );
-    } else {
+    if (!containsStatus) {
       setStatuses([{ id }]);
     }
 
@@ -200,7 +188,11 @@ function StatusPage({ id }) {
             </Link>
           </div>
         </header>
-        <ul class="timeline flat contextual">
+        <ul
+          class={`timeline flat contextual ${
+            uiState === 'loading' ? 'loading' : ''
+          }`}
+        >
           {statuses.slice(0, limit).map((status) => {
             const {
               id: statusID,
@@ -216,7 +208,7 @@ function StatusPage({ id }) {
                 ref={isHero ? heroStatusRef : null}
                 class={`${ancestor ? 'ancestor' : ''} ${
                   descendant ? 'descendant' : ''
-                } ${thread ? 'thread' : ''}`}
+                } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
               >
                 {isHero ? (
                   <Status statusID={statusID} withinContext size="l" />

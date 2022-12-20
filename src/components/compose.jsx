@@ -289,6 +289,12 @@ function Compose({
       return true;
     }
 
+    // check if loading
+    if (uiState !== 'loading') {
+      console.log('canClose', { uiState });
+      return true;
+    }
+
     console.log('canClose', {
       value,
       hasMediaAttachments,
@@ -297,6 +303,7 @@ function Compose({
       isSelf,
       hasOnlyAcct,
       sameWithSource,
+      uiState,
     });
 
     return false;

@@ -598,7 +598,7 @@ button.carousel-dot[disabled].active {
   padding-right: max(16px, env(safe-area-inset-right));
   padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-shadow: 0 -1px 32px var(--divider-color);
-  animation: slide-up 0.2s ease-out;
+  animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
 }
 

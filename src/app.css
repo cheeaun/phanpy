@@ -334,12 +334,12 @@ a.mention span {
 }
 @keyframes slide-in {
   0% {
-    opacity: 0;
-    transform: translateX(100%);
+    opacity: 0.5;
+    transform: translate3d(100%, 0, 0);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 .deck-backdrop .deck {
@@ -347,7 +347,7 @@ a.mention span {
   max-width: 100vw;
   border-left: 1px solid var(--divider-color);
   background-color: var(--bg-color);
-  animation: slide-in 0.2s ease-out;
+  animation: slide-in 0.5s var(--timing-function);
   box-shadow: -1px 0 var(--bg-color);
 }
 .deck-backdrop .deck .status {
@@ -356,7 +356,7 @@ a.mention span {
 
 .decks {
   flex-grow: 1;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.5s var(--timing-function);
 }
 
 .deck-close {
@@ -668,7 +668,7 @@ button.carousel-dot[disabled].active {
     display: flex;
   }
   .decks:has(~ .deck-backdrop) {
-    transform: translateX(-5vw);
+    transform: translate3d(-5vw, 0, 0);
   }
   .deck-backdrop .deck {
     width: 50%;

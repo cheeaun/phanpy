@@ -630,7 +630,7 @@ video = Video clip
 audio = Audio track
 */
 
-function Media({ media, showOriginal, onClick }) {
+function Media({ media, showOriginal, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
   const { original, small, focus } = meta || {};

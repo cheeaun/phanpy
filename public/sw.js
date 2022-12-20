@@ -5,12 +5,17 @@ import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 const imageRoute = new Route(
   ({ request, sameOrigin }) => {
-    return !sameOrigin && request.destination === 'image';
+    const isRemote = !sameOrigin;
+    const isImage = request.destination === 'image';
+    const isAvatar = request.url.includes('/avatars/');
+    const isEmoji = request.url.includes('/emoji/');
+    return isRemote && isImage && (isAvatar || isEmoji);
   },
   new CacheFirst({
     cacheName: 'remote-images',
     plugins: [
       new ExpirationPlugin({
+        maxEntries: 100,
         maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
         purgeOnQuotaError: true,
       }),

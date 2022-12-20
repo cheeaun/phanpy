@@ -197,6 +197,13 @@ function Status({
       }`}
       onMouseEnter={debugHover}
     >
+      {size !== 'l' && (
+        <div class="status-badge">
+          {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
+          {favourited && <Icon class="favourite" icon="heart" size="s" />}
+          {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
+        </div>
+      )}
       {size !== 's' && (
         <a
           href={url}

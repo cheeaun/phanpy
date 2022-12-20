@@ -632,6 +632,8 @@ button.carousel-dot[disabled].active {
   border: 1px solid var(--outline-color);
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 8px var(--bg-faded-color), 0 4px 8px var(--bg-faded-color),
+    0 2px 4px var(--bg-faded-color);
 }
 .menu-container menu li {
   margin: 0;

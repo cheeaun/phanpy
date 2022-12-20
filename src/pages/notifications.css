@@ -17,14 +17,14 @@
   opacity: 0.75;
   color: var(--text-insignificant-color);
 }
-.notification-type.favourite {
+.notification-type.notification-favourite {
   color: var(--favourite-color);
 }
-.notification-type.reblog {
+.notification-type.notification-reblog {
   color: var(--reblog-color);
 }
-.notification-type.poll,
-.notification-type.mention {
+.notification-type.notification-poll,
+.notification-type.notification-mention {
   color: var(--link-color);
 }
 

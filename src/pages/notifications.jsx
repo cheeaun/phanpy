@@ -61,7 +61,7 @@ function Notification({ notification }) {
   return (
     <>
       <div
-        class={`notification-type ${type}`}
+        class={`notification-type notification-${type}`}
         title={new Date(notification.createdAt).toLocaleString()}
       >
         <Icon

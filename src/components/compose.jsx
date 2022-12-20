@@ -256,6 +256,12 @@ function Compose({
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
+    // check if loading
+    if (uiState === 'loading') {
+      console.log('canClose', { uiState });
+      return false;
+    }
+
     // check for status and media attachments
     const hasMediaAttachments = mediaAttachments.length > 0;
     if (!value && !hasMediaAttachments) {
@@ -286,12 +292,6 @@ function Compose({
     const sameWithSource = value === dataset?.source;
     if (sameWithSource) {
       console.log('canClose', { sameWithSource });
-      return true;
-    }
-
-    // check if loading
-    if (uiState !== 'loading') {
-      console.log('canClose', { uiState });
       return true;
     }
 

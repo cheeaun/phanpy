@@ -342,6 +342,7 @@ function Compose({
             <button
               type="button"
               class="light"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
                 const containNonIDMediaAttachments =
@@ -386,6 +387,7 @@ function Compose({
             <button
               type="button"
               class="light close-button"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 if (confirmClose()) {
                   onClose();
@@ -400,6 +402,7 @@ function Compose({
             <button
               type="button"
               class="light"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
                 const containNonIDMediaAttachments =

@@ -118,8 +118,9 @@ button,
   vertical-align: middle;
   text-decoration: none;
 }
-button > * {
+:is(button, .button) > * {
   vertical-align: middle;
+  pointer-events: none;
 }
 :is(button, .button):not(:disabled, .disabled):hover {
   cursor: pointer;

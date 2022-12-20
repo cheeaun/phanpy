@@ -359,3 +359,10 @@
   width: 100%;
   color: var(--red-color);
 }
+
+@media (display-mode: standalone) {
+  /* No popping in standalone mode */
+  #compose-container .pop-button {
+    display: none;
+  }
+}

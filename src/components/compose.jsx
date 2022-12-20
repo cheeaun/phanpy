@@ -348,7 +348,7 @@ function Compose({
           <span>
             <button
               type="button"
-              class="light"
+              class="light pop-button"
               disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
@@ -408,7 +408,7 @@ function Compose({
           hasOpener && (
             <button
               type="button"
-              class="light"
+              class="light pop-button"
               disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window

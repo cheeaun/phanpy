@@ -638,7 +638,7 @@ button.carousel-dot[disabled].active {
   padding: 0;
   list-style: none;
 }
-.menu-container > button:is(:active, :focus) + menu,
+.menu-container > button:is(:hover, :active, :focus) + menu,
 .menu-container menu:is(:hover, :active) {
   opacity: 1;
   pointer-events: auto;

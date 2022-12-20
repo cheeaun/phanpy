@@ -554,6 +554,7 @@ function Compose({
                   // Alert all the reasons
                   results.forEach((result) => {
                     if (result.status === 'rejected') {
+                      console.error(result);
                       alert(result.reason || `Attachment #${i} failed`);
                     }
                   });

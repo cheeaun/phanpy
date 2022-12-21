@@ -137,6 +137,7 @@ a.mention span {
     transparent
   );
   background-repeat: no-repeat;
+  transition: opacity 0.3s ease-in-out;
 }
 .timeline.contextual > li:first-child {
   background-position: 0 16px;
@@ -274,13 +275,13 @@ a.mention span {
   left: calc(50px + 16px + 16px);
 }
 .timeline.contextual.loading > li:not(.hero) {
-  opacity: 0.2;
+  opacity: 0.5;
   pointer-events: none;
-  background-image: none !important;
+  /* background-image: none !important; */
 }
-.timeline.contextual.loading > li:not(.hero):before {
+/* .timeline.contextual.loading > li:not(.hero):before {
   content: none !important;
-}
+} */
 
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);

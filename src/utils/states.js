@@ -13,6 +13,7 @@ export default proxy({
   accounts: new Map(),
   reloadStatusPage: 0,
   spoilers: proxyMap([]),
+  scrollPositions: new Map(),
   // Modals
   showCompose: false,
   showSettings: false,

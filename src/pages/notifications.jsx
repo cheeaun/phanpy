@@ -82,34 +82,36 @@ function Notification({ notification }) {
         />
       </div>
       <div class="notification-content">
-        <p>
-          {!/poll|update/i.test(type) && (
-            <>
-              {_accounts?.length > 1 ? (
-                <>
-                  <b>{_accounts.length} people</b>{' '}
-                </>
-              ) : (
-                <>
-                  <NameText account={account} showAvatar />{' '}
-                </>
-              )}
-            </>
-          )}
-          {text}
-          {type === 'mention' && (
-            <span class="insignificant">
-              {' '}
-              •{' '}
-              <relative-time
-                datetime={notification.createdAt}
-                format="micro"
-                threshold="P1D"
-                prefix=""
-              />
-            </span>
-          )}
-        </p>
+        {type !== 'mention' && (
+          <p>
+            {!/poll|update/i.test(type) && (
+              <>
+                {_accounts?.length > 1 ? (
+                  <>
+                    <b>{_accounts.length} people</b>{' '}
+                  </>
+                ) : (
+                  <>
+                    <NameText account={account} showAvatar />{' '}
+                  </>
+                )}
+              </>
+            )}
+            {text}
+            {type === 'mention' && (
+              <span class="insignificant">
+                {' '}
+                •{' '}
+                <relative-time
+                  datetime={notification.createdAt}
+                  format="micro"
+                  threshold="P1D"
+                  prefix=""
+                />
+              </span>
+            )}
+          </p>
+        )}
         {_accounts?.length > 1 && (
           <p>
             {_accounts.map((account, i) => (
@@ -142,7 +144,10 @@ function Notification({ notification }) {
           </p>
         )}
         {status && (
-          <Link class="status-link" href={`#/s/${actualStatusID}`}>
+          <Link
+            class={`status-link status-type-${type}`}
+            href={`#/s/${actualStatusID}`}
+          >
             <Status status={status} size="s" />
           </Link>
         )}

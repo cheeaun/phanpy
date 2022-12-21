@@ -359,7 +359,15 @@ function Status({
               }),
             }}
           />
-          {!!poll && <Poll poll={poll} readOnly={readOnly} />}
+          {!!poll && (
+            <Poll
+              poll={poll}
+              readOnly={readOnly}
+              onUpdate={(newPoll) => {
+                states.statuses.get(id).poll = newPoll;
+              }}
+            />
+          )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
             <button
               class="plain spoiler"
@@ -873,13 +881,8 @@ function Card({ card }) {
   }
 }
 
-function Poll({ poll, readOnly }) {
-  const [pollSnapshot, setPollSnapshot] = useState(poll);
+function Poll({ poll, readOnly, onUpdate = () => {} }) {
   const [uiState, setUIState] = useState('default');
-
-  useEffect(() => {
-    setPollSnapshot(poll);
-  }, [poll]);
 
   const {
     expired,
@@ -891,7 +894,7 @@ function Poll({ poll, readOnly }) {
     voted,
     votersCount,
     votesCount,
-  } = pollSnapshot;
+  } = poll;
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
@@ -953,7 +956,7 @@ function Poll({ poll, readOnly }) {
               choices: votes,
             });
             console.log(pollResponse);
-            setPollSnapshot(pollResponse);
+            onUpdate(pollResponse);
             setUIState('default');
           }}
           style={{

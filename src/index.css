@@ -157,6 +157,15 @@ button,
   padding: 12px;
 }
 
+:is(button, .button).textual {
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  color: var(--link-color);
+  background-color: transparent;
+  border-radius: 0;
+}
+
 input[type='text'],
 textarea,
 select {

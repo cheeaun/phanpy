@@ -410,6 +410,16 @@ a.card:hover {
 
 /* POLLS */
 
+.poll {
+  transition: opacity 0.2s ease-in-out;
+}
+.poll.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.poll.read-only {
+  pointer-events: none;
+}
 .poll-option {
   margin-top: 8px;
   padding: 8px;

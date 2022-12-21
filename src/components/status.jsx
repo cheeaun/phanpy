@@ -899,7 +899,11 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
   return (
-    <div class="poll">
+    <div
+      class={`poll ${readOnly ? 'read-only' : ''} ${
+        uiState === 'loading' ? 'loading' : ''
+      }`}
+    >
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
@@ -959,10 +963,6 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
             onUpdate(pollResponse);
             setUIState('default');
           }}
-          style={{
-            pointerEvents: uiState === 'loading' || readOnly ? 'none' : 'auto',
-            opacity: uiState === 'loading' ? 0.5 : 1,
-          }}
         >
           {options.map((option, i) => {
             const { title } = option;
@@ -994,6 +994,31 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
       )}
       {!readOnly && (
         <p class="poll-meta">
+          {!expired && (
+            <>
+              <button
+                type="button"
+                class="textual"
+                disabled={uiState === 'loading'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setUIState('loading');
+                  (async () => {
+                    try {
+                      const pollResponse = await masto.poll.fetch(id);
+                      onUpdate(pollResponse);
+                    } catch (e) {
+                      // Silent fail
+                    }
+                    setUIState('default');
+                  })();
+                }}
+              >
+                Refresh
+              </button>{' '}
+              &bull;{' '}
+            </>
+          )}
           <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
           {votersCount === 1 ? 'voter' : 'voters'}
           {votersCount !== votesCount && (

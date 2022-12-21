@@ -1063,10 +1063,10 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div id="edit-history" class="box">
-      <button type="button" class="close-button plain large" onClick={onClose}>
+    <div id="edit-history" class="sheet">
+      {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
-      </button>
+      </button> */}
       <h2>Edit History</h2>
       {uiState === 'error' && <p>Failed to load history</p>}
       {uiState === 'loading' && (

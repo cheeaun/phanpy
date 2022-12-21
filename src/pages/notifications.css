@@ -17,20 +17,20 @@
   opacity: 0.75;
   color: var(--text-insignificant-color);
 }
-.notification-type.favourite {
+.notification-type.notification-favourite {
   color: var(--favourite-color);
 }
-.notification-type.reblog {
+.notification-type.notification-reblog {
   color: var(--reblog-color);
 }
-.notification-type.poll,
-.notification-type.mention {
+.notification-type.notification-poll,
+.notification-type.notification-mention {
   color: var(--link-color);
 }
 
 .notification .status-link {
   border-radius: 8px 8px 0 0;
-  border: 1px solid var(--divider-color);
+  border: 1px solid var(--outline-color);
   max-height: 160px;
   overflow: hidden;
   /* fade out mask gradient bottom */
@@ -41,9 +41,16 @@
   );
   filter: saturate(0.25);
 }
+.notification .status-link.status-type-mention {
+  max-height: 320px;
+  filter: none;
+  background-color: var(--bg-color);
+  margin-top: calc(-16px - 1px);
+}
 .notification .status-link:hover {
   background-color: var(--bg-blur-color);
   filter: saturate(1);
+  border-color: var(--outline-hover-color);
 }
 .notification .status-link > * {
   pointer-events: none;

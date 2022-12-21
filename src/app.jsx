@@ -104,7 +104,7 @@ async function startStream() {
 export function App() {
   const snapStates = useSnapshot(states);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [uiState, setUIState] = useState('default');
+  const [uiState, setUIState] = useState('loading');
 
   useLayoutEffect(() => {
     const theme = store.local.get('theme');
@@ -144,6 +144,7 @@ export function App() {
           url: `https://${instanceURL}`,
           accessToken,
           disableVersionCheck: true,
+          timeout: 30_000,
         });
 
         const mastoAccount = await masto.accounts.verifyCredentials();
@@ -185,6 +186,7 @@ export function App() {
             url: `https://${instanceURL}`,
             accessToken,
             disableVersionCheck: true,
+            timeout: 30_000,
           });
           setIsLoggedIn(true);
         } catch (e) {
@@ -192,6 +194,8 @@ export function App() {
         }
         setUIState('default');
       })();
+    } else {
+      setUIState('default');
     }
   }, []);
 

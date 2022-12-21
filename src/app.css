@@ -137,6 +137,7 @@ a.mention span {
     transparent
   );
   background-repeat: no-repeat;
+  transition: opacity 0.3s ease-in-out;
 }
 .timeline.contextual > li:first-child {
   background-position: 0 16px;
@@ -273,6 +274,14 @@ a.mention span {
 .timeline.contextual > li.thread .replies li:before {
   left: calc(50px + 16px + 16px);
 }
+.timeline.contextual.loading > li:not(.hero) {
+  opacity: 0.5;
+  pointer-events: none;
+  /* background-image: none !important; */
+}
+/* .timeline.contextual.loading > li:not(.hero):before {
+  content: none !important;
+} */
 
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);
@@ -334,12 +343,12 @@ a.mention span {
 }
 @keyframes slide-in {
   0% {
-    opacity: 0;
-    transform: translateX(100%);
+    opacity: 0.5;
+    transform: translate3d(100%, 0, 0);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 .deck-backdrop .deck {
@@ -347,7 +356,7 @@ a.mention span {
   max-width: 100vw;
   border-left: 1px solid var(--divider-color);
   background-color: var(--bg-color);
-  animation: slide-in 0.2s ease-out;
+  animation: slide-in 0.5s var(--timing-function);
   box-shadow: -1px 0 var(--bg-color);
 }
 .deck-backdrop .deck .status {
@@ -356,7 +365,7 @@ a.mention span {
 
 .decks {
   flex-grow: 1;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.5s var(--timing-function);
 }
 
 .deck-close {
@@ -405,31 +414,6 @@ a.mention span {
   width: 40em;
   max-width: 100vw;
   padding: 16px;
-  background-color: var(--bg-color);
-  border-radius: 8px;
-  border: 1px solid var(--divider-color);
-  overflow: auto;
-  max-height: 90vh;
-  max-height: 90dvh;
-  position: relative;
-}
-.box > :is(h1, h2, h3):first-of-type {
-  margin-top: 0;
-}
-.box .close-button {
-  position: sticky;
-  top: 0;
-  float: right;
-  margin: -16px -8px 0 0;
-  transform: translate(0, -8px);
-}
-
-.box-shadow {
-  box-shadow: 0px 36px 89px rgb(0 0 0 / 4%),
-    0px 23.3333px 52.1227px rgb(0 0 0 / 3%),
-    0px 13.8667px 28.3481px rgb(0 0 0 / 2%), 0px 7.2px 14.4625px rgb(0 0 0 / 2%),
-    0px 2.93333px 7.25185px rgb(0 0 0 / 2%),
-    0px 0.666667px 3.50231px rgb(0 0 0 / 1%);
 }
 
 /* CAROUSEL */
@@ -462,6 +446,9 @@ a.mention span {
   height: auto;
   max-height: 100vh;
   max-height: 100dvh;
+}
+.carousel > * video {
+  min-height: 80px;
 }
 
 .carousel-top-controls {
@@ -587,7 +574,7 @@ button.carousel-dot[disabled].active {
   padding-right: max(16px, env(safe-area-inset-right));
   padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-shadow: 0 -1px 32px var(--divider-color);
-  animation: slide-up 0.2s ease-out;
+  animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
 }
 
@@ -632,13 +619,15 @@ button.carousel-dot[disabled].active {
   border: 1px solid var(--outline-color);
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 8px var(--bg-faded-color), 0 4px 8px var(--bg-faded-color),
+    0 2px 4px var(--bg-faded-color);
 }
 .menu-container menu li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.menu-container > button:is(:active, :focus) + menu,
+.menu-container > button:is(:hover, :active, :focus) + menu,
 .menu-container menu:is(:hover, :active) {
   opacity: 1;
   pointer-events: auto;
@@ -663,7 +652,7 @@ button.carousel-dot[disabled].active {
     display: flex;
   }
   .decks:has(~ .deck-backdrop) {
-    transform: translateX(-5vw);
+    transform: translate3d(-5vw, 0, 0);
   }
   .deck-backdrop .deck {
     width: 50%;

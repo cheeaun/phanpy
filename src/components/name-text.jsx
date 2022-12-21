@@ -6,10 +6,17 @@ import states from '../utils/states';
 import Avatar from './avatar';
 
 function NameText({ account, showAvatar, showAcct, short, external }) {
-  const { acct, avatar, avatarStatic, id, url, displayName, username, emojis } =
-    account;
+  const { acct, avatar, avatarStatic, id, url, displayName, emojis } = account;
+  let { username } = account;
 
   const displayNameWithEmoji = emojifyText(displayName, emojis);
+
+  if (
+    !short &&
+    username.toLowerCase().trim() === (displayName || '').toLowerCase().trim()
+  ) {
+    username = null;
+  }
 
   return (
     <a
@@ -35,7 +42,7 @@ function NameText({ account, showAvatar, showAcct, short, external }) {
               __html: displayNameWithEmoji,
             }}
           />
-          {!showAcct && (
+          {!showAcct && username && (
             <>
               {' '}
               <i>@{username}</i>

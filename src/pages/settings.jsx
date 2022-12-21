@@ -23,10 +23,10 @@ function Settings({ onClose }) {
   const [currentDefault, setCurrentDefault] = useState(0);
 
   return (
-    <div id="settings-container" class="box">
-      <button type="button" class="close-button plain large" onClick={onClose}>
+    <div id="settings-container" class="sheet">
+      {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
-      </button>
+      </button> */}
       <h2>Accounts</h2>
       <ul class="accounts-list">
         {accounts.map((account, i) => {

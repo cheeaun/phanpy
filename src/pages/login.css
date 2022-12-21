@@ -1,0 +1,26 @@
+#login {
+  padding: 16px;
+  background-image: radial-gradient(
+    closest-side at 50% 50%,
+    var(--bg-color),
+    transparent
+  );
+}
+
+#login .error {
+  color: var(--red-color);
+}
+
+#login label p {
+  margin: 0 0 0.25em 0;
+  padding: 0;
+  text-transform: uppercase;
+  font-size: 90%;
+  font-weight: bold;
+  color: var(--text-insignificant-color);
+}
+
+#login input {
+  display: block;
+  width: 100%;
+}

@@ -29,6 +29,7 @@ if (window.opener) {
       url: `https://${instanceURL}`,
       accessToken,
       disableVersionCheck: true,
+      timeout: 30_000,
     });
     console.info('Logged in successfully.');
   } catch (e) {

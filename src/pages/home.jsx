@@ -82,6 +82,7 @@ function Home({ hidden }) {
         const diffMins = Math.round(diff / 1000 / 60);
         if (diffMins > 1) {
           console.log('visible', { lastHidden, diffMins });
+          setUIState('loading');
           setTimeout(() => {
             (async () => {
               const newStatus = await masto.timelines.fetchHome({
@@ -91,6 +92,7 @@ function Home({ hidden }) {
               if (newStatus.length && newStatus[0].id !== states.home[0].id) {
                 states.homeNew = newStatus;
               }
+              setUIState('default');
             })();
             // loadStatuses(true);
             // states.homeNew = [];
@@ -101,6 +103,7 @@ function Home({ hidden }) {
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      setUIState('default');
     };
   }, []);
 

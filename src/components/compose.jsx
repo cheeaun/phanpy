@@ -256,6 +256,12 @@ function Compose({
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
+    // check if loading
+    if (uiState === 'loading') {
+      console.log('canClose', { uiState });
+      return false;
+    }
+
     // check for status and media attachments
     const hasMediaAttachments = mediaAttachments.length > 0;
     if (!value && !hasMediaAttachments) {
@@ -297,6 +303,7 @@ function Compose({
       isSelf,
       hasOnlyAcct,
       sameWithSource,
+      uiState,
     });
 
     return false;
@@ -341,7 +348,8 @@ function Compose({
           <span>
             <button
               type="button"
-              class="light"
+              class="light pop-button"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
                 const containNonIDMediaAttachments =
@@ -386,6 +394,7 @@ function Compose({
             <button
               type="button"
               class="light close-button"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 if (confirmClose()) {
                   onClose();
@@ -399,7 +408,8 @@ function Compose({
           hasOpener && (
             <button
               type="button"
-              class="light"
+              class="light pop-button"
+              disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
                 const containNonIDMediaAttachments =
@@ -532,7 +542,6 @@ function Compose({
                     const params = {
                       file,
                       description,
-                      skipPolling: true,
                     };
                     return masto.mediaAttachments.create(params).then((res) => {
                       if (res.id) {
@@ -554,6 +563,7 @@ function Compose({
                   // Alert all the reasons
                   results.forEach((result) => {
                     if (result.status === 'rejected') {
+                      console.error(result);
                       alert(result.reason || `Attachment #${i} failed`);
                     }
                   });

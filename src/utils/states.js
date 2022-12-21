@@ -10,8 +10,10 @@ export default proxy({
   notifications: [],
   notificationsNew: [],
   notificationsLastFetchTime: null,
-  accounts: new WeakMap(),
+  accounts: new Map(),
   reloadStatusPage: 0,
+  spoilers: proxyMap([]),
+  scrollPositions: new Map(),
   // Modals
   showCompose: false,
   showSettings: false,

@@ -30,6 +30,8 @@
   --img-bg-color: rgba(128, 128, 128, 0.2);
   --loader-color: #1c1e2199;
   --comment-line-color: #e5e5e5;
+
+  --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -118,8 +120,9 @@ button,
   vertical-align: middle;
   text-decoration: none;
 }
-button > * {
+:is(button, .button) > * {
   vertical-align: middle;
+  pointer-events: none;
 }
 :is(button, .button):not(:disabled, .disabled):hover {
   cursor: pointer;
@@ -152,6 +155,15 @@ button > * {
   display: block;
   width: 100%;
   padding: 12px;
+}
+
+:is(button, .button).textual {
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  color: var(--link-color);
+  background-color: transparent;
+  border-radius: 0;
 }
 
 input[type='text'],

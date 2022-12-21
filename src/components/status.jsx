@@ -130,7 +130,7 @@ function Status({
     }
   }
 
-  const [showSpoiler, setShowSpoiler] = useState(false);
+  const showSpoiler = snapStates.spoilers.has(id) || false;
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -197,6 +197,13 @@ function Status({
       }`}
       onMouseEnter={debugHover}
     >
+      {size !== 'l' && (
+        <div class="status-badge">
+          {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
+          {favourited && <Icon class="favourite" icon="heart" size="s" />}
+          {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
+        </div>
+      )}
       {size !== 's' && (
         <a
           href={url}
@@ -293,7 +300,11 @@ function Status({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setShowSpoiler(!showSpoiler);
+                  if (showSpoiler) {
+                    states.spoilers.delete(id);
+                  } else {
+                    states.spoilers.set(id, true);
+                  }
                 }}
               >
                 <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
@@ -348,7 +359,15 @@ function Status({
               }),
             }}
           />
-          {!!poll && <Poll poll={poll} readOnly={readOnly} />}
+          {!!poll && (
+            <Poll
+              poll={poll}
+              readOnly={readOnly}
+              onUpdate={(newPoll) => {
+                states.statuses.get(id).poll = newPoll;
+              }}
+            />
+          )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
             <button
               class="plain spoiler"
@@ -356,7 +375,11 @@ function Status({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setShowSpoiler(!showSpoiler);
+                if (showSpoiler) {
+                  states.spoilers.delete(id);
+                } else {
+                  states.spoilers.add(id);
+                }
               }}
             >
               <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} /> Sensitive
@@ -455,6 +478,14 @@ function Status({
                     count={reblogsCount}
                     onClick={async () => {
                       try {
+                        if (!reblogged) {
+                          const yes = confirm(
+                            'Are you sure that you want to boost this post?',
+                          );
+                          if (!yes) {
+                            return;
+                          }
+                        }
                         // Optimistic
                         states.statuses.set(id, {
                           ...status,
@@ -607,7 +638,7 @@ video = Video clip
 audio = Audio track
 */
 
-function Media({ media, showOriginal, onClick }) {
+function Media({ media, showOriginal, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
   const { original, small, focus } = meta || {};
@@ -850,13 +881,8 @@ function Card({ card }) {
   }
 }
 
-function Poll({ poll, readOnly }) {
-  const [pollSnapshot, setPollSnapshot] = useState(poll);
+function Poll({ poll, readOnly, onUpdate = () => {} }) {
   const [uiState, setUIState] = useState('default');
-
-  useEffect(() => {
-    setPollSnapshot(poll);
-  }, [poll]);
 
   const {
     expired,
@@ -868,12 +894,16 @@ function Poll({ poll, readOnly }) {
     voted,
     votersCount,
     votesCount,
-  } = pollSnapshot;
+  } = poll;
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
   return (
-    <div class="poll">
+    <div
+      class={`poll ${readOnly ? 'read-only' : ''} ${
+        uiState === 'loading' ? 'loading' : ''
+      }`}
+    >
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
@@ -930,12 +960,8 @@ function Poll({ poll, readOnly }) {
               choices: votes,
             });
             console.log(pollResponse);
-            setPollSnapshot(pollResponse);
+            onUpdate(pollResponse);
             setUIState('default');
-          }}
-          style={{
-            pointerEvents: uiState === 'loading' || readOnly ? 'none' : 'auto',
-            opacity: uiState === 'loading' ? 0.5 : 1,
           }}
         >
           {options.map((option, i) => {
@@ -968,6 +994,31 @@ function Poll({ poll, readOnly }) {
       )}
       {!readOnly && (
         <p class="poll-meta">
+          {!expired && (
+            <>
+              <button
+                type="button"
+                class="textual"
+                disabled={uiState === 'loading'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setUIState('loading');
+                  (async () => {
+                    try {
+                      const pollResponse = await masto.poll.fetch(id);
+                      onUpdate(pollResponse);
+                    } catch (e) {
+                      // Silent fail
+                    }
+                    setUIState('default');
+                  })();
+                }}
+              >
+                Refresh
+              </button>{' '}
+              &bull;{' '}
+            </>
+          )}
           <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
           {votersCount === 1 ? 'voter' : 'voters'}
           {votersCount !== votesCount && (
@@ -1012,10 +1063,10 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div id="edit-history" class="box">
-      <button type="button" class="close-button plain large" onClick={onClose}>
+    <div id="edit-history" class="sheet">
+      {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
-      </button>
+      </button> */}
       <h2>Edit History</h2>
       {uiState === 'error' && <p>Failed to load history</p>}
       {uiState === 'loading' && (

@@ -78,6 +78,7 @@
   text-shadow: 0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color);
+  z-index: 2;
 }
 #_compose-container .status-preview-legend.reply-to {
   color: var(--reply-to-color);
@@ -358,4 +359,11 @@
 #compose-container .remove-poll-button {
   width: 100%;
   color: var(--red-color);
+}
+
+@media (display-mode: standalone) {
+  /* No popping in standalone mode */
+  #compose-container .pop-button {
+    display: none;
+  }
 }

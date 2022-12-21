@@ -1,39 +1,41 @@
 #welcome {
   text-align: center;
+  background-image: radial-gradient(
+    closest-side at 50% 50%,
+    var(--bg-faded-color),
+    transparent
+  );
+  padding: 16px;
 }
 
-#welcome img {
-  margin-top: 16px;
-  height: auto;
+#welcome h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
 }
-@keyframes dance {
+#welcome img {
+  vertical-align: top;
+}
+
+#welcome h2 {
+  font-size: 3em;
+  letter-spacing: -0.05ex;
+  margin: 16px 0;
+  padding: 0;
+  /* gradiented text */
+  background: linear-gradient(45deg, var(--purple-color), var(--red-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes psychedelic {
   0% {
-    transform: rotate(0deg);
-  }
-  20% {
-    transform: rotate(5deg);
-  }
-  40% {
-    transform: rotate(-5deg);
-  }
-  60% {
-    transform: rotate(5deg);
-  }
-  80% {
-    transform: rotate(-5deg);
+    filter: hue-rotate(0deg);
   }
   100% {
-    transform: rotate(0deg);
+    filter: hue-rotate(360deg);
   }
 }
-#welcome:hover img {
-  animation: dance 2s infinite 15s linear;
-}
-
-#welcome .warning {
-  font-weight: bold;
-  padding: 16px;
-  background: lemonchiffon;
-  color: chocolate;
-  border-radius: 16px;
+#welcome:hover h2 {
+  animation: psychedelic 60s infinite;
 }

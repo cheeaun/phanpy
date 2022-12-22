@@ -317,6 +317,7 @@ a.mention span {
   text-decoration-line: none;
   color: inherit;
   transition: background-color 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 .status-link:hover {
   background-color: var(--link-bg-hover-color);

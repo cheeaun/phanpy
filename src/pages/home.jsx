@@ -85,12 +85,15 @@ function Home({ hidden }) {
           setUIState('loading');
           setTimeout(() => {
             (async () => {
-              const newStatus = await masto.timelines.fetchHome({
+              const newStatuses = await masto.timelines.fetchHome({
                 limit: 2,
                 // Need 2 because "new posts" only appear when there are 2 or more
               });
-              if (newStatus.length && newStatus[0].id !== states.home[0].id) {
-                states.homeNew = newStatus;
+              if (
+                newStatuses.value.length &&
+                newStatuses.value[0].id !== states.home[0].id
+              ) {
+                states.homeNew = newStatuses.value;
               }
               setUIState('default');
             })();

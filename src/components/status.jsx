@@ -271,7 +271,7 @@ function Status({
               </span>
             ))}
         </div>
-        {inReplyToAccount && !withinContext && size !== 's' && (
+        {inReplyToAccountId && !withinContext && size !== 's' && (
           <div
             class={`status-${
               inReplyToAccountId === status.account.id ? 'thread' : 'reply'
@@ -283,10 +283,12 @@ function Status({
                 Thread
               </>
             ) : (
-              <>
-                <Icon icon="reply" />{' '}
-                <NameText account={inReplyToAccount} short />
-              </>
+              !!inReplyToAccount && (
+                <>
+                  <Icon icon="reply" />{' '}
+                  <NameText account={inReplyToAccount} short />
+                </>
+              )
             )}
           </div>
         )}

@@ -45,6 +45,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-bottom: -8px;
 }
 .status-pre-meta .name-text {
   display: inline;
@@ -77,12 +78,6 @@
 }
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
-}
-.status-pre-meta + .status {
-  padding-top: 8px;
-}
-.status.small {
-  /* font-size: 95%; */
 }
 .status.skeleton {
   color: var(--outline-color);

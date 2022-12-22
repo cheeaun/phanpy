@@ -56,7 +56,9 @@ async function startStream() {
   });
   stream.on('delete', (statusID) => {
     console.log('DELETE', statusID);
-    states.statuses.delete(statusID);
+    // states.statuses.delete(statusID);
+    const s = states.statuses.get(statusID);
+    if (s) s._deleted = true;
   });
   stream.on('notification', (notification) => {
     console.log('NOTIFICATION', notification);

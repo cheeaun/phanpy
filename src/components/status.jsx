@@ -99,6 +99,7 @@ function Status({
     reblog,
     uri,
     emojis,
+    _deleted,
   } = status;
 
   const createdAtDate = new Date(createdAt);

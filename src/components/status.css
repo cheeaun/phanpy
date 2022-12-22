@@ -277,6 +277,10 @@
   gap: 2px;
   flex-direction: row;
 }
+.status:not(.large) .media-container.media-gt4 {
+  flex-wrap: nowrap;
+  overflow: auto;
+}
 .status .media {
   flex-grow: 1;
   flex-basis: calc(50% - 8px);
@@ -285,6 +289,12 @@
   max-height: 160px;
   min-height: 80px;
   border: 1px solid var(--outline-color);
+}
+.status .media-container.media-gt2 .media {
+  aspect-ratio: 1 / 1;
+}
+.status:not(.large) .media-container.media-gt4 .media {
+  min-width: 80px;
 }
 .status .media:hover {
   border-color: var(--outline-hover-color);

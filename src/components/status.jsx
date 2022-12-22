@@ -406,7 +406,11 @@ function Status({
             </button>
           )}
           {!!mediaAttachments.length && (
-            <div class="media-container">
+            <div
+              class={`media-container ${
+                mediaAttachments.length > 2 ? 'media-gt2' : ''
+              } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+            >
               {mediaAttachments.map((media, i) => (
                 <Media
                   media={media}

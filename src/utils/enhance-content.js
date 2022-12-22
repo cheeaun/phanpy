@@ -57,6 +57,23 @@ function enhanceContent(content, opts = {}) {
     block.replaceWith(pre);
   });
 
+  // TWITTER USERNAMES
+  // =================
+  // Convert @username@twitter.com to <a href="https://twitter.com/username">@username@twitter.com</a>
+  textNodes = extractTextNodes(dom);
+  textNodes.forEach((node) => {
+    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
+      html = html.replaceAll(
+        /(@([a-zA-Z0-9_]+)@twitter\.com)/g,
+        '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+      );
+    }
+    fauxDiv.innerHTML = html;
+    const nodes = Array.from(fauxDiv.childNodes);
+    node.replaceWith(...nodes);
+  });
+
   if (postEnhanceDOM) {
     postEnhanceDOM(dom); // mutate dom
   }

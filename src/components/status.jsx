@@ -378,7 +378,7 @@ function Status({
                 if (showSpoiler) {
                   states.spoilers.delete(id);
                 } else {
-                  states.spoilers.add(id);
+                  states.spoilers.set(id, true);
                 }
               }}
             >

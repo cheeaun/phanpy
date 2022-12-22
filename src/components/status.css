@@ -104,6 +104,12 @@
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  white-space: nowrap;
+}
+.status > .container > .meta > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .status.large > .container > .meta {
   min-height: 50px;
@@ -127,6 +133,39 @@
 .status > .container > .meta .reply-to {
   opacity: 0.5;
   font-size: smaller;
+}
+
+.status-reply-badge {
+  display: inline-flex;
+  margin-left: 4px;
+  gap: 4px;
+  align-items: center;
+}
+.status-reply-badge .icon {
+  color: var(--reply-to-color);
+}
+.status-thread-badge {
+  display: inline-flex;
+  margin: 8px 0 0 0;
+  gap: 4px;
+  align-items: center;
+  color: var(--reply-to-color);
+  background: var(--bg-color);
+  border: 1px solid var(--reply-to-color);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.75;
+  background-image: repeating-linear-gradient(
+    -70deg,
+    transparent,
+    transparent 3px,
+    var(--reply-to-faded-color) 3px,
+    var(--reply-to-faded-color) 4px
+  );
+  font-weight: bold;
 }
 
 .status.large .content-container {

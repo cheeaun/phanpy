@@ -42,6 +42,8 @@ const ICONS = {
   popin: ['mingcute:external-link-line', '180deg'],
   plus: 'mingcute:add-circle-line',
   'chevron-left': 'mingcute:left-line',
+  reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
+  thread: 'mingcute:route-line',
 };
 
 function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
@@ -49,9 +51,9 @@ function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
 
   const iconSize = SIZES[size];
   let iconName = ICONS[icon];
-  let rotate;
+  let rotate, flip;
   if (Array.isArray(iconName)) {
-    [iconName, rotate] = iconName;
+    [iconName, rotate, flip] = iconName;
   }
   return (
     <div
@@ -70,6 +72,7 @@ function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
         height={iconSize}
         icon={iconName}
         rotate={rotate}
+        flip={flip}
       >
         {alt}
       </iconify-icon>

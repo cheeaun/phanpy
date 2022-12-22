@@ -220,13 +220,13 @@ function Status({
       )}
       <div class="container">
         <div class="meta">
-          <span>
-            <NameText
-              account={status.account}
-              showAvatar={size === 's'}
-              showAcct={size === 'l'}
-            />
-            {inReplyToAccount && !withinContext && size !== 's' && (
+          {/* <span> */}
+          <NameText
+            account={status.account}
+            showAvatar={size === 's'}
+            showAcct={size === 'l'}
+          />
+          {/* {inReplyToAccount && !withinContext && size !== 's' && (
               <>
                 {' '}
                 <span class="ib">
@@ -234,8 +234,8 @@ function Status({
                   <NameText account={inReplyToAccount} short />
                 </span>
               </>
-            )}
-          </span>{' '}
+            )} */}
+          {/* </span> */}{' '}
           {size !== 'l' &&
             (uri ? (
               <a href={uri} target="_blank" class="time">
@@ -271,6 +271,25 @@ function Status({
               </span>
             ))}
         </div>
+        {inReplyToAccount && !withinContext && size !== 's' && (
+          <div
+            class={`status-${
+              inReplyToAccountId === status.account.id ? 'thread' : 'reply'
+            }-badge`}
+          >
+            {inReplyToAccountId === status.account.id ? (
+              <>
+                <Icon icon="thread" size="s" />
+                Thread
+              </>
+            ) : (
+              <>
+                <Icon icon="reply" />{' '}
+                <NameText account={inReplyToAccount} short />
+              </>
+            )}
+          </div>
+        )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''

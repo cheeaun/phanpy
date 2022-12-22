@@ -12,10 +12,13 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
+import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
+
+const LIMIT = 40;
 
 function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
@@ -215,13 +218,13 @@ function StatusPage({ id }) {
   });
   const closeLink = `#${prevRoute || '/'}`;
 
-  const [limit, setLimit] = useState(40);
+  const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
     // return number of statuses to show
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > 40;
+  const hasManyStatuses = statuses.length > LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
 
   return (
@@ -286,33 +289,24 @@ function StatusPage({ id }) {
                       withinContext
                       size={thread || ancestor ? 'm' : 's'}
                     />
+                    {replies?.length > LIMIT && (
+                      <div class="replies-link">
+                        <Icon icon="comment" />{' '}
+                        <span title={replies.length}>
+                          {shortenNumber(replies.length)}
+                        </span>
+                      </div>
+                    )}
                   </Link>
                 )}
-                {descendant && replies?.length > 0 && (
-                  <details class="replies" open={!hasManyStatuses}>
-                    <summary hidden={!hasManyStatuses}>
-                      <span title={replies.length}>
-                        {shortenNumber(replies.length)}
-                      </span>{' '}
-                      repl{replies.length === 1 ? 'y' : 'ies'}
-                    </summary>
-                    <ul>
-                      {replies.map((replyID) => (
-                        <li key={replyID}>
-                          <Link
-                            class="status-link"
-                            href={`#/s/${replyID}`}
-                            onClick={() => {
-                              userInitiated.current = true;
-                            }}
-                          >
-                            <Status statusID={replyID} withinContext size="s" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                )}
+                {descendant &&
+                  replies?.length > 0 &&
+                  replies?.length <= LIMIT && (
+                    <SubComments
+                      hasManyStatuses={hasManyStatuses}
+                      replies={replies}
+                    />
+                  )}
                 {uiState === 'loading' &&
                   isHero &&
                   !!heroStatus?.repliesCount &&
@@ -330,17 +324,58 @@ function StatusPage({ id }) {
                 type="button"
                 class="plain block"
                 disabled={uiState === 'loading'}
-                onClick={() => setLimit((l) => l + 40)}
+                onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
               >
                 Show more&hellip;{' '}
-                <span class="tag">{showMore > 40 ? '40+' : showMore}</span>
+                <span class="tag">
+                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                </span>
               </button>
             </li>
           )}
         </ul>
       </div>
     </div>
+  );
+}
+
+function SubComments({ hasManyStatuses, replies }) {
+  // If less than or 2 replies and total number of characters of content from replies is less than 500
+  let isBrief = false;
+  if (replies.length <= 2) {
+    let totalLength = replies.reduce((acc, reply) => {
+      const { content } = reply;
+      const length = htmlContentLength(content);
+      return acc + length;
+    }, 0);
+    isBrief = totalLength < 500;
+  }
+
+  const open = isBrief || !hasManyStatuses;
+
+  return (
+    <details class="replies" open={open}>
+      <summary hidden={open}>
+        <span title={replies.length}>{shortenNumber(replies.length)}</span> repl
+        {replies.length === 1 ? 'y' : 'ies'}
+      </summary>
+      <ul>
+        {replies.map((replyID) => (
+          <li key={replyID}>
+            <Link
+              class="status-link"
+              href={`#/s/${replyID}`}
+              onClick={() => {
+                userInitiated.current = true;
+              }}
+            >
+              <Status statusID={replyID} withinContext size="s" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 

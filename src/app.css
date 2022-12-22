@@ -197,6 +197,16 @@ a.mention span {
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
 }
+.timeline.contextual > li .replies-link {
+  color: var(--text-insignificant-color);
+  margin-left: 16px;
+  margin-top: -12px;
+  padding-bottom: 12px;
+  font-size: 90%;
+}
+.timeline.contextual > li .replies-link * {
+  vertical-align: middle;
+}
 .timeline.contextual > li .replies {
   margin-top: -12px;
 }

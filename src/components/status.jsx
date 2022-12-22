@@ -923,6 +923,16 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
+  const pollVotesCount = votersCount || votesCount;
+  let roundPrecision = 0;
+  if (pollVotesCount <= 1000) {
+    roundPrecision = 0;
+  } else if (pollVotesCount <= 10000) {
+    roundPrecision = 1;
+  } else if (pollVotesCount <= 100000) {
+    roundPrecision = 2;
+  }
+
   return (
     <div
       class={`poll ${readOnly ? 'read-only' : ''} ${
@@ -932,9 +942,10 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const pollVotesCount = votersCount || votesCount;
           const percentage =
-            Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
+            ((optionVotesCount / pollVotesCount) * 100).toFixed(
+              roundPrecision,
+            ) || 0;
           // check if current poll choice is the leading one
           const isLeading =
             optionVotesCount > 0 &&

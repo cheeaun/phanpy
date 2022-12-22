@@ -93,7 +93,17 @@ function Home({ hidden }) {
                 newStatuses.value.length &&
                 newStatuses.value[0].id !== states.home[0].id
               ) {
-                states.homeNew = newStatuses.value;
+                states.homeNew = newStatuses.value.map((status) => {
+                  states.statuses.set(status.id, status);
+                  if (status.reblog) {
+                    states.statuses.set(status.reblog.id, status.reblog);
+                  }
+                  return {
+                    id: status.id,
+                    reblog: status.reblog?.id,
+                    reply: !!status.inReplyToAccountId,
+                  };
+                });
               }
               setUIState('default');
             })();

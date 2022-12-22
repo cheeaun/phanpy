@@ -36,6 +36,10 @@ const expiresInFromExpiresAt = (expiresAt) => {
   return expirySeconds.find((s) => s >= delta) || oneDay;
 };
 
+const menu = document.createElement('ul');
+menu.role = 'listbox';
+menu.className = 'text-expander-menu';
+
 function Compose({
   onClose,
   replyToStatus,
@@ -81,6 +85,15 @@ function Compose({
   const [sensitive, setSensitive] = useState(false);
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
+
+  const customEmojis = useRef();
+  useEffect(() => {
+    (async () => {
+      const emojis = await masto.customEmojis.fetchAll();
+      console.log({ emojis });
+      customEmojis.current = emojis;
+    })();
+  }, []);
 
   useEffect(() => {
     if (replyToStatus) {
@@ -167,6 +180,7 @@ function Compose({
         // console.log('text-expander-change', e);
         const { key, provide, text } = e.detail;
         textExpanderTextRef.current = text;
+
         if (text === '') {
           provide(
             Promise.resolve({
@@ -175,6 +189,34 @@ function Compose({
           );
           return;
         }
+
+        if (key === ':') {
+          // const emojis = customEmojis.current.filter((emoji) =>
+          //   emoji.shortcode.startsWith(text),
+          // );
+          const emojis = filterShortcodes(customEmojis.current, text);
+          let html = '';
+          emojis.forEach((emoji) => {
+            const { shortcode, url } = emoji;
+            html += `
+                <li role="option" data-value="${encodeHTML(shortcode)}">
+                <img src="${encodeHTML(
+                  url,
+                )}" width="16" height="16" alt="" loading="lazy" /> 
+                :${encodeHTML(shortcode)}:
+              </li>`;
+          });
+          // console.log({ emojis, html });
+          menu.innerHTML = html;
+          provide(
+            Promise.resolve({
+              matched: emojis.length > 0,
+              fragment: menu,
+            }),
+          );
+          return;
+        }
+
         const type = {
           '@': 'accounts',
           '#': 'hashtags',
@@ -192,9 +234,7 @@ function Compose({
               }
               const results = value[type];
               console.log('RESULTS', value, results);
-              const menu = document.createElement('ul');
-              menu.role = 'listbox';
-              menu.className = 'text-expander-menu';
+              let html = '';
               results.forEach((result) => {
                 const {
                   name,
@@ -205,27 +245,29 @@ function Compose({
                   emojis,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
-                const item = document.createElement('li');
-                item.setAttribute('role', 'option');
+                // const item = menuItem.cloneNode();
                 if (acct) {
-                  item.dataset.value = acct;
-                  // Want to use <Avatar /> here, but will need to render to string 😅
-                  item.innerHTML = `
-                    <span class="avatar">
-                      <img src="${avatarStatic}" width="16" height="16" alt="" loading="lazy" />
-                    </span>
-                    <span>
-                    <b>${displayNameWithEmoji || username}</b>
-                    <br>@${acct}
-                    </span>
+                  html += `
+                    <li role="option" data-value="${encodeHTML(acct)}">
+                      <span class="avatar">
+                        <img src="${encodeHTML(
+                          avatarStatic,
+                        )}" width="16" height="16" alt="" loading="lazy" />
+                      </span>
+                      <span>
+                        <b>${encodeHTML(displayNameWithEmoji || username)}</b>
+                        <br>@${encodeHTML(acct)}
+                      </span>
+                    </li>
                   `;
                 } else {
-                  item.dataset.value = name;
-                  item.innerHTML = `
-                    <span>#<b>${name}</b></span>
+                  html += `
+                    <li role="option" data-value="${encodeHTML(name)}">
+                      <span>#<b>${encodeHTML(name)}</b></span>
+                    </li>
                   `;
                 }
-                menu.appendChild(item);
+                menu.innerHTML = html;
               });
               console.log('MENU', results, menu);
               resolve({
@@ -244,7 +286,11 @@ function Compose({
 
       textExpanderRef.current.addEventListener('text-expander-value', (e) => {
         const { key, item } = e.detail;
-        e.detail.value = key + item.dataset.value;
+        if (key === ':') {
+          e.detail.value = `:${item.dataset.value}:`;
+        } else {
+          e.detail.value = `${key}${item.dataset.value}`;
+        }
       });
     }
   }, []);
@@ -664,7 +710,7 @@ function Compose({
             </select>
           </label>{' '}
         </div>
-        <text-expander ref={textExpanderRef} keys="@ #">
+        <text-expander ref={textExpanderRef} keys="@ # :">
           <textarea
             class="large"
             ref={textareaRef}
@@ -978,6 +1024,45 @@ function Poll({
       </div>
     </div>
   );
+}
+
+function filterShortcodes(emojis, searchTerm) {
+  searchTerm = searchTerm.toLowerCase();
+
+  // Return an array of shortcodes that start with or contain the search term, sorted by relevance and limited to the first 5
+  return emojis
+    .sort((a, b) => {
+      let aLower = a.shortcode.toLowerCase();
+      let bLower = b.shortcode.toLowerCase();
+
+      let aStartsWith = aLower.startsWith(searchTerm);
+      let bStartsWith = bLower.startsWith(searchTerm);
+      let aContains = aLower.includes(searchTerm);
+      let bContains = bLower.includes(searchTerm);
+      let bothStartWith = aStartsWith && bStartsWith;
+      let bothContain = aContains && bContains;
+
+      return bothStartWith
+        ? a.length - b.length
+        : aStartsWith
+        ? -1
+        : bStartsWith
+        ? 1
+        : bothContain
+        ? a.length - b.length
+        : aContains
+        ? -1
+        : bContains
+        ? 1
+        : 0;
+    })
+    .slice(0, 5);
+}
+
+function encodeHTML(str) {
+  return str.replace(/[&<>"']/g, function (char) {
+    return '&#' + char.charCodeAt(0) + ';';
+  });
 }
 
 export default Compose;

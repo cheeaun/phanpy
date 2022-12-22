@@ -319,7 +319,7 @@
   }
 }
 .status .media img:hover {
-  animation: position-object 5s ease-in-out 1s infinite;
+  animation: position-object 5s ease-in-out 1s 5;
 }
 .status .media video {
   width: 100%;
@@ -398,7 +398,7 @@
   border-inline-end: 1px solid var(--outline-color);
 }
 .card:hover .image {
-  animation: position-object 5s ease-in-out 1s infinite;
+  animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {
   margin: 0;

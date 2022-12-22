@@ -13,7 +13,11 @@ function NameText({ account, showAvatar, showAcct, short, external }) {
 
   if (
     !short &&
-    username.toLowerCase().trim() === (displayName || '').toLowerCase().trim()
+    username.toLowerCase().trim() ===
+      (displayName || '')
+        .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
+        .toLowerCase()
+        .trim()
   ) {
     username = null;
   }

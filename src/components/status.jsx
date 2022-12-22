@@ -926,6 +926,31 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
+  // Update poll at point of expiry
+  useEffect(() => {
+    let timeout;
+    if (!expired && expiresAtDate) {
+      const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
+      if (ms > 0) {
+        timeout = setTimeout(() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              const pollResponse = await masto.poll.fetch(id);
+              onUpdate(pollResponse);
+            } catch (e) {
+              // Silent fail
+            }
+            setUIState('default');
+          })();
+        }, ms);
+      }
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [expired, expiresAtDate]);
+
   const pollVotesCount = votersCount || votesCount;
   let roundPrecision = 0;
   if (pollVotesCount <= 1000) {

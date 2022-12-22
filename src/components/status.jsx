@@ -354,9 +354,12 @@ function Status({
                 ).innerText
                   .trim()
                   .replace(/^@/, '');
+                const url = target.getAttribute('href');
                 const mention = mentions.find(
                   (mention) =>
-                    mention.username === username || mention.acct === username,
+                    mention.username === username ||
+                    mention.acct === username ||
+                    mention.url === url,
                 );
                 if (mention) {
                   states.showAccount = mention.acct;

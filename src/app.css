@@ -87,6 +87,7 @@ a.mention span {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  user-select: none;
 }
 .deck header > .header-side:last-of-type {
   text-align: right;

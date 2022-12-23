@@ -4,6 +4,7 @@ import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import stringLength from 'string-length';
 
+import urlRegex from '../data/url-regex';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import store from '../utils/store';
@@ -380,6 +381,20 @@ function Compose({
       });
   }, []);
 
+  const [charCount, setCharCount] = useState(
+    textareaRef.current?.value?.length +
+      spoilerTextRef.current?.value?.length || 0,
+  );
+  const leftChars = maxCharacters - charCount;
+  const getCharCount = () => {
+    const { value } = textareaRef.current;
+    const { value: spoilerText } = spoilerTextRef.current;
+    return stringLength(countableText(value)) + stringLength(spoilerText);
+  };
+  const updateCharCount = () => {
+    setCharCount(getCharCount());
+  };
+
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
       <div class="compose-top">
@@ -543,6 +558,7 @@ function Compose({
           sensitive = sensitive === 'on'; // checkboxes return "on" if checked
 
           // Validation
+          /* Let the backend validate this
           if (stringLength(status) > maxCharacters) {
             alert(`Status is too long! Max characters: ${maxCharacters}`);
             return;
@@ -556,6 +572,7 @@ function Compose({
             );
             return;
           }
+          */
           if (poll) {
             if (poll.options.length < 2) {
               alert('Poll must have at least 2 options');
@@ -664,6 +681,9 @@ function Compose({
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
             }}
+            onInput={() => {
+              updateCharCount();
+            }}
           />
           <label
             class="toolbar-button"
@@ -738,6 +758,7 @@ function Compose({
               e.target.style.height = value
                 ? scrollHeight + offset + 'px'
                 : null;
+              updateCharCount();
             }}
             style={{
               maxHeight: `${maxCharacters / 50}em`,
@@ -848,6 +869,27 @@ function Compose({
           </button>{' '}
           <div class="spacer" />
           {uiState === 'loading' && <Loader abrupt />}{' '}
+          {uiState !== 'loading' && charCount > maxCharacters / 2 && (
+            <>
+              <meter
+                class={`donut ${
+                  leftChars <= -10
+                    ? 'explode'
+                    : leftChars <= 0
+                    ? 'danger'
+                    : leftChars <= 20
+                    ? 'warning'
+                    : ''
+                }`}
+                value={charCount}
+                max={maxCharacters}
+                data-left={leftChars}
+                style={{
+                  '--percentage': (charCount / maxCharacters) * 100,
+                }}
+              />{' '}
+            </>
+          )}
           <button type="submit" class="large" disabled={uiState === 'loading'}>
             {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
           </button>
@@ -1063,6 +1105,16 @@ function encodeHTML(str) {
   return str.replace(/[&<>"']/g, function (char) {
     return '&#' + char.charCodeAt(0) + ';';
   });
+}
+
+// https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
+const urlRegexObj = new RegExp(urlRegex.source, urlRegex.flags);
+const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
+const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
+function countableText(inputText) {
+  return inputText
+    .replace(urlRegexObj, urlPlaceholder)
+    .replace(usernameRegex, '$1@$3');
 }
 
 export default Compose;

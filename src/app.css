@@ -658,6 +658,65 @@ button.carousel-dot[disabled].active {
   background-color: var(--link-color);
 }
 
+/* DONUT METER */
+
+meter.donut {
+  appearance: none;
+}
+
+meter.donut:is(
+    ::-webkit-progress-inner-element,
+    ::-webkit-progress-bar,
+    ::-webkit-progress-value,
+    ::-webkit-meter-bar,
+    ::-webkit-meter-optimum-value,
+    ::-webkit-meter-suboptimum-value,
+    ::-webkit-meter-even-less-good-value
+  ) {
+  display: none;
+}
+
+meter.donut:is(::-moz-progress-bar, ::-moz-meter-bar) {
+  background: transparent;
+}
+
+meter.donut {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  --fill: calc(var(--percentage) * 1%);
+  --color: var(--link-color);
+  --middle-circle: radial-gradient(
+    circle at 50% 50%,
+    var(--bg-faded-color) 10px,
+    transparent 10px
+  );
+  background-image: var(--middle-circle),
+    conic-gradient(var(--color) var(--fill), var(--bg-faded-blur-color) 0);
+}
+meter.donut.warning {
+  --color: var(--orange-color);
+}
+meter.donut.danger {
+  --color: var(--red-color);
+}
+meter.donut.explode {
+  background-image: none;
+}
+meter.donut:is(.warning, .danger, .explode):after {
+  content: attr(data-left);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--text-insignificant-color);
+}
+meter.donut:is(.danger, .explode):after {
+  color: var(--red-color);
+}
+
 @media (min-width: 40em) {
   html,
   body {

@@ -304,6 +304,9 @@ function StatusPage({ id }) {
                     <SubComments
                       hasManyStatuses={hasManyStatuses}
                       replies={replies}
+                      onStatusLinkClick={() => {
+                        userInitiated.current = true;
+                      }}
                     />
                   )}
                 {uiState === 'loading' &&
@@ -339,7 +342,11 @@ function StatusPage({ id }) {
   );
 }
 
-function SubComments({ hasManyStatuses, replies }) {
+function SubComments({
+  hasManyStatuses,
+  replies,
+  onStatusLinkClick = () => {},
+}) {
   // If less than or 2 replies and total number of characters of content from replies is less than 500
   let isBrief = false;
   if (replies.length <= 2) {
@@ -365,9 +372,7 @@ function SubComments({ hasManyStatuses, replies }) {
             <Link
               class="status-link"
               href={`#/s/${replyID}`}
-              onClick={() => {
-                userInitiated.current = true;
-              }}
+              onClick={onStatusLinkClick}
             >
               <Status statusID={replyID} withinContext size="s" />
             </Link>

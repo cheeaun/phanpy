@@ -144,6 +144,8 @@ function StatusPage({ id }) {
     })();
   }, [id, snapStates.reloadStatusPage]);
 
+  const firstLoad = useRef(true);
+
   useLayoutEffect(() => {
     if (!statuses.length) return;
     const isLoading = uiState === 'loading';
@@ -154,12 +156,18 @@ function StatusPage({ id }) {
         console.log('Case 1');
         heroStatusRef.current?.scrollIntoView();
       } else if (isLoading && statuses.length > 1) {
-        // Case 2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
-        console.log('Case 2');
-        heroStatusRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        if (firstLoad.current) {
+          // Case 2.1: User initiated, first load, don't smooth scroll anything
+          console.log('Case 2.1');
+          heroStatusRef.current?.scrollIntoView();
+        } else {
+          // Case 2.2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
+          console.log('Case 2.2');
+          heroStatusRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
       }
     } else {
       const scrollPosition = states.scrollPositions.get(id);
@@ -173,12 +181,14 @@ function StatusPage({ id }) {
       isLoading,
       userInitiated: userInitiated.current,
       statusesLength: statuses.length,
+      firstLoad: firstLoad.current,
       // scrollPosition,
     });
 
     if (!isLoading) {
       // Reset user initiated flag after statuses are loaded
       userInitiated.current = false;
+      firstLoad.current = false;
     }
   }, [statuses, uiState]);
 

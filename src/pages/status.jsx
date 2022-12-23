@@ -46,24 +46,23 @@ function StatusPage({ id }) {
   useEffect(() => {
     setUIState('loading');
 
-    const containsStatus = statuses.find((s) => s.id === id);
-    if (!containsStatus) {
-      // Case 1: On first load, or when navigating to a status that's not cached at all
-      setStatuses([{ id }]);
+    const cachedStatuses = store.session.getJSON('statuses-' + id);
+    if (cachedStatuses) {
+      // Case 1: It's cached, let's restore them to make it snappy
+      const reallyCachedStatuses = cachedStatuses.filter(
+        (s) => states.statuses.has(s.id),
+        // Some are not cached in the global state, so we need to filter them out
+      );
+      setStatuses(reallyCachedStatuses);
     } else {
-      const cachedStatuses = store.session.getJSON('statuses-' + id);
-      if (cachedStatuses) {
-        // Case 2: Looks like we've cached this status before, let's restore them to make it snappy
-        const reallyCachedStatuses = cachedStatuses.filter(
-          (s) => snapStates.statuses.has(s.id),
-          // Some are not cached in the global state, so we need to filter them out
-        );
-        setStatuses(reallyCachedStatuses);
-      } else {
-        // Case 3: Unknown state, could be a sub-comment. Let's slice off all descendant statuses after the hero status to be safe because they are custom-rendered with sub-comments etc
-        const heroIndex = statuses.findIndex((s) => s.id === id);
+      const heroIndex = statuses.findIndex((s) => s.id === id);
+      if (heroIndex !== -1) {
+        // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
         const slicedStatuses = statuses.slice(0, heroIndex + 1);
         setStatuses(slicedStatuses);
+      } else {
+        // Case 3: Not cached and not in statuses, let's start from scratch
+        setStatuses([{ id }]);
       }
     }
 

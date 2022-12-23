@@ -439,13 +439,13 @@ a.mention span {
   /* scroll-behavior: smooth; */
   scrollbar-width: none;
   overscroll-behavior: contain;
-  scroll-snap-stop: always;
 }
 .carousel::-webkit-scrollbar {
   display: none;
 }
 .carousel > * {
   scroll-snap-align: center;
+  scroll-snap-stop: always;
   flex-shrink: 0;
   display: flex;
   justify-content: center;

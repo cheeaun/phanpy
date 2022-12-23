@@ -67,10 +67,13 @@ function StatusPage({ id }) {
     }
 
     (async () => {
+      const heroFetch = masto.statuses.fetch(id);
+      const contextFetch = masto.statuses.fetchContext(id);
+
       const hasStatus = snapStates.statuses.has(id);
       let heroStatus = snapStates.statuses.get(id);
       try {
-        heroStatus = await masto.statuses.fetch(id);
+        heroStatus = await heroFetch;
         states.statuses.set(id, heroStatus);
       } catch (e) {
         // Silent fail if status is cached
@@ -82,7 +85,7 @@ function StatusPage({ id }) {
       }
 
       try {
-        const context = await masto.statuses.fetchContext(id);
+        const context = await contextFetch;
         const { ancestors, descendants } = context;
 
         ancestors.forEach((status) => {

@@ -23,6 +23,8 @@ a.mention {
 a.mention span {
   text-decoration-line: underline;
   text-decoration-color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
 }
 /* a.mention:has(span).hashtag {
   color: var(--link-light-color);

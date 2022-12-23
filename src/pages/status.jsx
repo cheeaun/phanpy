@@ -129,7 +129,11 @@ function StatusPage({ id }) {
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
-            replies: s.__replies?.map((r) => r.id),
+            replies: s.__replies?.map((r) => ({
+              id: r.id,
+              repliesCount: r.repliesCount,
+              content: r.content,
+            })),
           })),
         ];
 
@@ -380,14 +384,22 @@ function SubComments({
         {replies.length === 1 ? 'y' : 'ies'}
       </summary>
       <ul>
-        {replies.map((replyID) => (
-          <li key={replyID}>
+        {replies.map((r) => (
+          <li key={r.id}>
             <Link
               class="status-link"
-              href={`#/s/${replyID}`}
+              href={`#/s/${r.id}`}
               onClick={onStatusLinkClick}
             >
-              <Status statusID={replyID} withinContext size="s" />
+              <Status statusID={r.id} withinContext size="s" />
+              {r.repliesCount > 0 && (
+                <div class="replies-link">
+                  <Icon icon="comment" />{' '}
+                  <span title={r.repliesCount}>
+                    {shortenNumber(r.repliesCount)}
+                  </span>
+                </div>
+              )}
             </Link>
           </li>
         ))}

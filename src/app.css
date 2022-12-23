@@ -164,14 +164,14 @@ a.mention span {
   > .status-link
   + .replies
   > summary {
-  margin-left: calc(50px + 16px + 16px);
+  margin-left: calc(50px + 16px + 12px);
 }
 .timeline.contextual
   > li.descendant.thread
   > .status-link
   + .replies
   .status-link {
-  padding-left: calc(50px + 16px + 16px);
+  padding-left: calc(50px + 16px + 12px);
 }
 .timeline.contextual
   > li.descendant:not(.thread)
@@ -208,6 +208,9 @@ a.mention span {
   margin-top: -12px;
   padding-bottom: 12px;
   font-size: 90%;
+}
+.timeline.contextual > li.thread > .status-link .replies-link {
+  margin-left: calc(50px + 16px + 12px);
 }
 .timeline.contextual > li .replies-link * {
   vertical-align: middle;
@@ -253,9 +256,9 @@ a.mention span {
 .timeline.contextual > li .replies li {
   position: relative;
 }
-.timeline.contextual > li .replies li .status {
+.timeline.contextual > li .replies li {
   --width: 3px;
-  --left: 0px;
+  --left: calc(40px + 16px);
   --right: calc(var(--left) + var(--width));
   background-image: linear-gradient(
     to right,
@@ -268,7 +271,10 @@ a.mention span {
   );
   background-repeat: no-repeat;
 }
-.timeline.contextual > li .replies li:last-child .status {
+.timeline.contextual > li.thread .replies li {
+  --left: calc(50px + 16px + 12px);
+}
+.timeline.contextual > li .replies li:last-child {
   background-size: 100% 20px;
 }
 .timeline.contextual > li .replies li:before {
@@ -287,7 +293,7 @@ a.mention span {
   transform: rotate(45deg);
 }
 .timeline.contextual > li.thread .replies li:before {
-  left: calc(50px + 16px + 16px);
+  left: calc(50px + 16px + 12px);
 }
 .timeline.contextual.loading > li:not(.hero) {
   opacity: 0.5;

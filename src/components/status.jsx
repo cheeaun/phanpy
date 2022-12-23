@@ -273,25 +273,24 @@ function Status({
             ))}
         </div>
         {inReplyToAccountId && !withinContext && size !== 's' && (
-          <div
-            class={`status-${
-              inReplyToAccountId === status.account.id ? 'thread' : 'reply'
-            }-badge`}
-          >
+          <>
             {inReplyToAccountId === status.account.id ? (
-              <>
+              <div class="status-thread-badge">
                 <Icon icon="thread" size="s" />
                 Thread
-              </>
+              </div>
             ) : (
-              !!inReplyToAccount && (
-                <>
+              !!inReplyToAccount &&
+              !mentions.find((mention) => {
+                return mention.id === inReplyToAccountId;
+              }) && (
+                <div class="status-reply-badge">
                   <Icon icon="reply" />{' '}
                   <NameText account={inReplyToAccount} short />
-                </>
+                </div>
               )
             )}
-          </div>
+          </>
         )}
         <div
           class={`content-container ${

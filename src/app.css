@@ -38,6 +38,7 @@ a.mention span {
   overflow: auto;
   overflow-x: hidden;
   transition: opacity 0.1s ease-in-out;
+  overscroll-behavior: contain;
 }
 .deck-container[hidden] {
   display: block;
@@ -68,6 +69,7 @@ a.mention span {
   overflow-x: hidden;
   height: 100vh;
   height: 100dvh;
+  overscroll-behavior: contain;
 }
 
 .deck header {
@@ -437,6 +439,7 @@ a.mention span {
   /* scroll-behavior: smooth; */
   scrollbar-width: none;
   overscroll-behavior: contain;
+  scroll-snap-stop: always;
 }
 .carousel::-webkit-scrollbar {
   display: none;
@@ -587,6 +590,7 @@ button.carousel-dot[disabled].active {
   box-shadow: 0 -1px 32px var(--divider-color);
   animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
+  overscroll-behavior: contain;
 }
 
 /* TAG */

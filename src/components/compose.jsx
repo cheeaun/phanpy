@@ -96,28 +96,36 @@ function Compose({
     })();
   }, []);
 
+  const oninputTextarea = () => {
+    if (!textareaRef.current) return;
+    textareaRef.current.dispatchEvent(new Event('input'));
+  };
+  const focusTextarea = () => {
+    setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 100);
+  };
+
   useEffect(() => {
     if (replyToStatus) {
       const { spoilerText, visibility, sensitive } = replyToStatus;
       if (spoilerText && spoilerTextRef.current) {
         spoilerTextRef.current.value = spoilerText;
-        spoilerTextRef.current.focus();
-      } else {
-        const mentions = new Set([
-          replyToStatus.account.acct,
-          ...replyToStatus.mentions.map((m) => m.acct),
-        ]);
-        const allMentions = [...mentions].filter(
-          (m) => m !== currentAccountInfo.acct,
-        );
-        if (allMentions.length > 0) {
-          textareaRef.current.value = `${allMentions
-            .map((m) => `@${m}`)
-            .join(' ')} `;
-          textareaRef.current.dispatchEvent(new Event('input'));
-        }
-        textareaRef.current.focus();
       }
+      const mentions = new Set([
+        replyToStatus.account.acct,
+        ...replyToStatus.mentions.map((m) => m.acct),
+      ]);
+      const allMentions = [...mentions].filter(
+        (m) => m !== currentAccountInfo.acct,
+      );
+      if (allMentions.length > 0) {
+        textareaRef.current.value = `${allMentions
+          .map((m) => `@${m}`)
+          .join(' ')} `;
+        oninputTextarea();
+      }
+      focusTextarea();
       setVisibility(visibility);
       setSensitive(sensitive);
     }
@@ -136,7 +144,8 @@ function Compose({
         expiresIn: poll?.expiresIn || expiresInFromExpiresAt(poll.expiresAt),
       };
       textareaRef.current.value = status;
-      textareaRef.current.dispatchEvent(new Event('input'));
+      oninputTextarea();
+      focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
       setSensitive(sensitive);
@@ -156,8 +165,9 @@ function Compose({
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
-          textareaRef.current.dispatchEvent(new Event('input'));
           textareaRef.current.dataset.source = text;
+          oninputTextarea();
+          focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
           setSensitive(sensitive);
@@ -170,6 +180,8 @@ function Compose({
           setUIState('error');
         }
       })();
+    } else {
+      focusTextarea();
     }
   }, [draftStatus, editStatus, replyToStatus]);
 

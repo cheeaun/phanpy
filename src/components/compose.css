@@ -26,11 +26,20 @@
 #compose-container textarea {
   width: 100%;
   max-width: 100%;
-  height: 3em;
-  min-height: 3em;
+  height: 4em;
+  min-height: 4em;
   max-height: 10em;
   resize: vertical;
+  line-height: 1.4;
 }
+
+@media (min-width: 40em) {
+  #compose-container textarea {
+    font-size: 150%;
+    font-size: calc(100% + 50% / var(--text-weight));
+  }
+}
+
 @keyframes appear-up {
   0% {
     opacity: 0;

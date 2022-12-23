@@ -1,6 +1,6 @@
 export default {
   public: 'earth',
-  unlisted: 'unlock',
+  unlisted: 'group',
   private: 'lock',
   direct: 'message',
 };

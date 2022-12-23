@@ -744,7 +744,6 @@ function Compose({
         </div>
         <text-expander ref={textExpanderRef} keys="@ # :">
           <textarea
-            class="large"
             ref={textareaRef}
             placeholder={
               replyToStatus
@@ -774,6 +773,7 @@ function Compose({
             }}
             style={{
               maxHeight: `${maxCharacters / 50}em`,
+              '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
             }}
           ></textarea>
         </text-expander>

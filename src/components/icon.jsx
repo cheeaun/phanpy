@@ -44,6 +44,7 @@ const ICONS = {
   'chevron-left': 'mingcute:left-line',
   reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
   thread: 'mingcute:route-line',
+  group: 'mingcute:group-line',
 };
 
 function Icon({ icon, size = 'm', alt, title, class: className = '' }) {

@@ -37,7 +37,7 @@
 /* STATUS PRE META */
 
 .status-pre-meta {
-  line-height: 1.5;
+  line-height: 1.4;
   padding: 8px 16px 0;
   opacity: 0.75;
   font-size: smaller;
@@ -61,7 +61,7 @@
 .status {
   display: flex;
   padding: 16px 16px 20px;
-  line-height: 1.5;
+  line-height: 1.4;
   align-items: flex-start;
   position: relative;
 }
@@ -92,7 +92,7 @@
   min-width: 0;
 }
 .status:not(.small) .container {
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
 .status > .container > .meta {
@@ -170,7 +170,7 @@
 }
 
 .status .content-container.has-spoiler .spoiler {
-  margin: 8px 0;
+  margin: 4px 0;
   font-size: 90%;
   border: 1px dashed var(--button-bg-color);
   display: flex;
@@ -199,7 +199,7 @@
 }
 
 .status .content {
-  margin-top: 8px;
+  margin-top: 2px;
 }
 .timeline-deck .status .content {
   max-height: 50vh;

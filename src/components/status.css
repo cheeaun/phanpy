@@ -178,10 +178,12 @@
   align-items: center;
 }
 .status .content-container.has-spoiler .spoiler ~ * {
-  filter: blur(6px) invert(0.5);
+  /* filter: blur(6px) invert(0.5); */
+  filter: url(#spoiler);
+  transform: translate3d(-5px, -5px, 0);
   pointer-events: none;
-  transition: filter 0.5s;
   user-select: none;
+  contain: layout;
 }
 .status .content-container.has-spoiler .spoiler ~ .content ~ * {
   opacity: 0.5;
@@ -191,6 +193,7 @@
 }
 .status .content-container.show-spoiler .spoiler ~ * {
   filter: none;
+  transform: none;
   pointer-events: auto;
   user-select: auto;
 }

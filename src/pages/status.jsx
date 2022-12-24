@@ -1,3 +1,5 @@
+import './status.css';
+
 import debounce from 'just-debounce-it';
 import { Link } from 'preact-router/match';
 import {
@@ -7,15 +9,18 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Loader from '../components/loader';
+import NameText from '../components/name-text';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
@@ -243,6 +248,9 @@ function StatusPage({ id }) {
   const hasManyStatuses = statuses.length > LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
 
+  const [heroInView, setHeroInView] = useState(true);
+  const onView = useDebouncedCallback(setHeroInView, 100);
+
   return (
     <div class="deck-backdrop">
       <Link href={closeLink}></Link>
@@ -252,13 +260,43 @@ function StatusPage({ id }) {
           statuses.length > 1 ? 'padded-bottom' : ''
         }`}
       >
-        <header>
+        <header
+          class={`${heroInView ? 'inview' : ''}`}
+          onClick={(e) => {
+            if (
+              !/^(a|button)$/i.test(e.target.tagName) &&
+              heroStatusRef.current
+            ) {
+              heroStatusRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }
+          }}
+        >
           {/* <div>
             <Link class="button plain deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-          <h1>Status</h1>
+          <h1>
+            {!heroInView && heroStatus ? (
+              <span class="hero-heading">
+                <NameText showAvatar account={heroStatus.account} short />{' '}
+                <span class="insignificant">
+                  &bull;{' '}
+                  <relative-time
+                    datetime={heroStatus.createdAt}
+                    format="micro"
+                    threshold="P1D"
+                    prefix=""
+                  />
+                </span>
+              </span>
+            ) : (
+              'Status'
+            )}
+          </h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
             <Link class="button plain deck-close" href={closeLink}>
@@ -289,7 +327,9 @@ function StatusPage({ id }) {
                 } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
               >
                 {isHero ? (
-                  <Status statusID={statusID} withinContext size="l" />
+                  <InView threshold={0.5} onChange={onView}>
+                    <Status statusID={statusID} withinContext size="l" />
+                  </InView>
                 ) : (
                   <Link
                     class="

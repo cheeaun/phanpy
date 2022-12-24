@@ -376,7 +376,6 @@ a.mention span {
 .deck-backdrop .deck {
   width: 40em;
   max-width: 100vw;
-  border-left: 1px solid var(--divider-color);
   background-color: var(--bg-color);
   animation: slide-in 0.5s var(--timing-function);
   box-shadow: -1px 0 var(--bg-color);
@@ -740,6 +739,7 @@ meter.donut:is(.danger, .explode):after {
   .deck-backdrop .deck {
     width: 50%;
     min-width: 40em;
+    border-left: 1px solid var(--divider-color);
   }
   .timeline-deck {
     border: 0;

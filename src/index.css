@@ -153,6 +153,9 @@ button,
   color: var(--text-color);
   border: 1px solid var(--outline-color);
 }
+:is(button, .button).light.danger:not(:disabled, .disabled) {
+  color: var(--red-color);
+}
 
 :is(button, .button).block {
   display: block;

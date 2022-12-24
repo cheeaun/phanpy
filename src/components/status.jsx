@@ -732,7 +732,9 @@ function Media({ media, showOriginal, onClick = () => {} }) {
     );
   } else if (type === 'gifv' || type === 'video') {
     // 20 seconds, treat as a gif
-    const isGIF = type === 'gifv' && original.duration <= 20;
+    const shortDuration = original.duration <= 20;
+    const isGIF = type === 'gifv' || shortDuration;
+    const loopable = original.duration <= 60;
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'}`}
@@ -774,7 +776,7 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             muted={isGIF}
             controls={!isGIF}
             playsinline
-            loop
+            loop={loopable}
             onClick={() => {
               if (isGIF) {
                 try {

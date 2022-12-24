@@ -7,7 +7,6 @@ import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
 import states from '../utils/states';
-import store from '../utils/store';
 
 const LIMIT = 20;
 
@@ -68,56 +67,6 @@ function Home({ hidden }) {
 
   useEffect(() => {
     loadStatuses(true);
-  }, []);
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        const timestamp = Date.now();
-        store.session.set('lastHidden', timestamp);
-      } else {
-        const timestamp = Date.now();
-        const lastHidden = store.session.get('lastHidden');
-        const diff = timestamp - lastHidden;
-        const diffMins = Math.round(diff / 1000 / 60);
-        if (diffMins > 1) {
-          console.log('visible', { lastHidden, diffMins });
-          setUIState('loading');
-          setTimeout(() => {
-            (async () => {
-              const newStatuses = await masto.timelines.fetchHome({
-                limit: 2,
-                // Need 2 because "new posts" only appear when there are 2 or more
-              });
-              if (
-                newStatuses.value.length &&
-                newStatuses.value[0].id !== states.home[0].id
-              ) {
-                states.homeNew = newStatuses.value.map((status) => {
-                  states.statuses.set(status.id, status);
-                  if (status.reblog) {
-                    states.statuses.set(status.reblog.id, status.reblog);
-                  }
-                  return {
-                    id: status.id,
-                    reblog: status.reblog?.id,
-                    reply: !!status.inReplyToAccountId,
-                  };
-                });
-              }
-              setUIState('default');
-            })();
-            // loadStatuses(true);
-            // states.homeNew = [];
-          }, 100);
-        }
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      setUIState('default');
-    };
   }, []);
 
   const scrollableRef = useRef();

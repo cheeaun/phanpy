@@ -79,7 +79,7 @@ a.mention span {
   position: sticky;
   top: 0;
   background-color: var(--bg-blur-color);
-  backdrop-filter: blur(12px);
+  backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--divider-color);
   z-index: 1;
   cursor: default;

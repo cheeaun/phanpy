@@ -185,6 +185,11 @@
   user-select: none;
   contain: layout;
 }
+@media (prefers-color-scheme: dark) {
+  .status .content-container.has-spoiler .spoiler ~ * {
+    filter: url(#spoiler-dark);
+  }
+}
 .status .content-container.has-spoiler .spoiler ~ .content ~ * {
   opacity: 0.5;
 }
@@ -192,7 +197,7 @@
   border-style: dotted;
 }
 .status .content-container.show-spoiler .spoiler ~ * {
-  filter: none;
+  filter: none !important;
   transform: none;
   pointer-events: auto;
   user-select: auto;

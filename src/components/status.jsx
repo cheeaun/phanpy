@@ -743,30 +743,35 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (isGIF) {
+          if (showOriginal && isGIF) {
             try {
-              videoRef.current?.pause();
+              if (videoRef.current.paused) {
+                videoRef.current.play();
+              } else {
+                videoRef.current.pause();
+              }
             } catch (e) {}
           }
           onClick(e);
         }}
         onMouseEnter={() => {
-          if (isGIF) {
+          if (!showOriginal && isGIF) {
             try {
-              videoRef.current?.play();
+              videoRef.current.play();
             } catch (e) {}
           }
         }}
         onMouseLeave={() => {
-          if (isGIF) {
+          if (!showOriginal && isGIF) {
             try {
-              videoRef.current?.pause();
+              videoRef.current.pause();
             } catch (e) {}
           }
         }}
       >
         {showOriginal ? (
           <video
+            ref={videoRef}
             src={url}
             poster={previewUrl}
             width={width}
@@ -777,13 +782,6 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             controls={!isGIF}
             playsinline
             loop={loopable}
-            onClick={() => {
-              if (isGIF) {
-                try {
-                  videoRef.current?.play();
-                } catch (e) {}
-              }
-            }}
           ></video>
         ) : isGIF ? (
           <video

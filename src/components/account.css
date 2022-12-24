@@ -52,6 +52,13 @@
   line-height: 1.25;
 }
 
+#account-container :is(.note, .profile-field) .invisible {
+  display: none;
+}
+#account-container :is(.note, .profile-field) .ellipsis::after {
+  content: '…';
+}
+
 #account-container .profile-field b {
   font-size: 90%;
   color: var(--text-insignificant-color);

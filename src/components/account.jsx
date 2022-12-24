@@ -184,7 +184,7 @@ function Account({ account }) {
             {relationshipUIState !== 'loading' && relationship && (
               <button
                 type="button"
-                class={following ? 'light' : ''}
+                class={`${following ? 'light danger' : ''}`}
                 disabled={relationshipUIState === 'loading'}
                 onClick={() => {
                   setRelationshipUIState('loading');
@@ -210,7 +210,7 @@ function Account({ account }) {
                   })();
                 }}
               >
-                {following ? 'Unfollow' : 'Follow'}
+                {following ? 'Unfollow…' : 'Follow'}
               </button>
             )}
           </p>

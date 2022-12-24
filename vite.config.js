@@ -1,10 +1,13 @@
 import preact from '@preact/preset-vite';
 import { execSync } from 'child_process';
 import { resolve } from 'path';
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const { VITE_CLIENT_NAME: CLIENT_NAME, NODE_ENV } = process.env;
+const { VITE_CLIENT_NAME: CLIENT_NAME, NODE_ENV } = loadEnv(
+  'production',
+  process.cwd(),
+);
 
 const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 

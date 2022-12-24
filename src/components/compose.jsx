@@ -4,6 +4,7 @@ import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import stringLength from 'string-length';
 
+import urlRegex from '../data/url-regex';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import store from '../utils/store';
@@ -35,6 +36,10 @@ const expiresInFromExpiresAt = (expiresAt) => {
   const delta = (new Date(expiresAt).getTime() - Date.now()) / 1000;
   return expirySeconds.find((s) => s >= delta) || oneDay;
 };
+
+const menu = document.createElement('ul');
+menu.role = 'listbox';
+menu.className = 'text-expander-menu';
 
 function Compose({
   onClose,
@@ -82,28 +87,45 @@ function Compose({
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
 
+  const customEmojis = useRef();
+  useEffect(() => {
+    (async () => {
+      const emojis = await masto.customEmojis.fetchAll();
+      console.log({ emojis });
+      customEmojis.current = emojis;
+    })();
+  }, []);
+
+  const oninputTextarea = () => {
+    if (!textareaRef.current) return;
+    textareaRef.current.dispatchEvent(new Event('input'));
+  };
+  const focusTextarea = () => {
+    setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 100);
+  };
+
   useEffect(() => {
     if (replyToStatus) {
       const { spoilerText, visibility, sensitive } = replyToStatus;
       if (spoilerText && spoilerTextRef.current) {
         spoilerTextRef.current.value = spoilerText;
-        spoilerTextRef.current.focus();
-      } else {
-        const mentions = new Set([
-          replyToStatus.account.acct,
-          ...replyToStatus.mentions.map((m) => m.acct),
-        ]);
-        const allMentions = [...mentions].filter(
-          (m) => m !== currentAccountInfo.acct,
-        );
-        if (allMentions.length > 0) {
-          textareaRef.current.value = `${allMentions
-            .map((m) => `@${m}`)
-            .join(' ')} `;
-          textareaRef.current.dispatchEvent(new Event('input'));
-        }
-        textareaRef.current.focus();
       }
+      const mentions = new Set([
+        replyToStatus.account.acct,
+        ...replyToStatus.mentions.map((m) => m.acct),
+      ]);
+      const allMentions = [...mentions].filter(
+        (m) => m !== currentAccountInfo.acct,
+      );
+      if (allMentions.length > 0) {
+        textareaRef.current.value = `${allMentions
+          .map((m) => `@${m}`)
+          .join(' ')} `;
+        oninputTextarea();
+      }
+      focusTextarea();
       setVisibility(visibility);
       setSensitive(sensitive);
     }
@@ -122,7 +144,8 @@ function Compose({
         expiresIn: poll?.expiresIn || expiresInFromExpiresAt(poll.expiresAt),
       };
       textareaRef.current.value = status;
-      textareaRef.current.dispatchEvent(new Event('input'));
+      oninputTextarea();
+      focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
       setSensitive(sensitive);
@@ -142,8 +165,9 @@ function Compose({
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
-          textareaRef.current.dispatchEvent(new Event('input'));
           textareaRef.current.dataset.source = text;
+          oninputTextarea();
+          focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
           setSensitive(sensitive);
@@ -156,6 +180,8 @@ function Compose({
           setUIState('error');
         }
       })();
+    } else {
+      focusTextarea();
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -167,6 +193,7 @@ function Compose({
         // console.log('text-expander-change', e);
         const { key, provide, text } = e.detail;
         textExpanderTextRef.current = text;
+
         if (text === '') {
           provide(
             Promise.resolve({
@@ -175,6 +202,34 @@ function Compose({
           );
           return;
         }
+
+        if (key === ':') {
+          // const emojis = customEmojis.current.filter((emoji) =>
+          //   emoji.shortcode.startsWith(text),
+          // );
+          const emojis = filterShortcodes(customEmojis.current, text);
+          let html = '';
+          emojis.forEach((emoji) => {
+            const { shortcode, url } = emoji;
+            html += `
+                <li role="option" data-value="${encodeHTML(shortcode)}">
+                <img src="${encodeHTML(
+                  url,
+                )}" width="16" height="16" alt="" loading="lazy" /> 
+                :${encodeHTML(shortcode)}:
+              </li>`;
+          });
+          // console.log({ emojis, html });
+          menu.innerHTML = html;
+          provide(
+            Promise.resolve({
+              matched: emojis.length > 0,
+              fragment: menu,
+            }),
+          );
+          return;
+        }
+
         const type = {
           '@': 'accounts',
           '#': 'hashtags',
@@ -192,9 +247,7 @@ function Compose({
               }
               const results = value[type];
               console.log('RESULTS', value, results);
-              const menu = document.createElement('ul');
-              menu.role = 'listbox';
-              menu.className = 'text-expander-menu';
+              let html = '';
               results.forEach((result) => {
                 const {
                   name,
@@ -205,27 +258,29 @@ function Compose({
                   emojis,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
-                const item = document.createElement('li');
-                item.setAttribute('role', 'option');
+                // const item = menuItem.cloneNode();
                 if (acct) {
-                  item.dataset.value = acct;
-                  // Want to use <Avatar /> here, but will need to render to string 😅
-                  item.innerHTML = `
-                    <span class="avatar">
-                      <img src="${avatarStatic}" width="16" height="16" alt="" loading="lazy" />
-                    </span>
-                    <span>
-                    <b>${displayNameWithEmoji || username}</b>
-                    <br>@${acct}
-                    </span>
+                  html += `
+                    <li role="option" data-value="${encodeHTML(acct)}">
+                      <span class="avatar">
+                        <img src="${encodeHTML(
+                          avatarStatic,
+                        )}" width="16" height="16" alt="" loading="lazy" />
+                      </span>
+                      <span>
+                        <b>${encodeHTML(displayNameWithEmoji || username)}</b>
+                        <br>@${encodeHTML(acct)}
+                      </span>
+                    </li>
                   `;
                 } else {
-                  item.dataset.value = name;
-                  item.innerHTML = `
-                    <span>#<b>${name}</b></span>
+                  html += `
+                    <li role="option" data-value="${encodeHTML(name)}">
+                      <span>#<b>${encodeHTML(name)}</b></span>
+                    </li>
                   `;
                 }
-                menu.appendChild(item);
+                menu.innerHTML = html;
               });
               console.log('MENU', results, menu);
               resolve({
@@ -244,7 +299,11 @@ function Compose({
 
       textExpanderRef.current.addEventListener('text-expander-value', (e) => {
         const { key, item } = e.detail;
-        e.detail.value = key + item.dataset.value;
+        if (key === ':') {
+          e.detail.value = `:${item.dataset.value}:`;
+        } else {
+          e.detail.value = `${key}${item.dataset.value}`;
+        }
       });
     }
   }, []);
@@ -333,6 +392,20 @@ function Compose({
         capture: true,
       });
   }, []);
+
+  const [charCount, setCharCount] = useState(
+    textareaRef.current?.value?.length +
+      spoilerTextRef.current?.value?.length || 0,
+  );
+  const leftChars = maxCharacters - charCount;
+  const getCharCount = () => {
+    const { value } = textareaRef.current;
+    const { value: spoilerText } = spoilerTextRef.current;
+    return stringLength(countableText(value)) + stringLength(spoilerText);
+  };
+  const updateCharCount = () => {
+    setCharCount(getCharCount());
+  };
 
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -497,6 +570,7 @@ function Compose({
           sensitive = sensitive === 'on'; // checkboxes return "on" if checked
 
           // Validation
+          /* Let the backend validate this
           if (stringLength(status) > maxCharacters) {
             alert(`Status is too long! Max characters: ${maxCharacters}`);
             return;
@@ -510,6 +584,7 @@ function Compose({
             );
             return;
           }
+          */
           if (poll) {
             if (poll.options.length < 2) {
               alert('Poll must have at least 2 options');
@@ -618,6 +693,9 @@ function Compose({
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
             }}
+            onInput={() => {
+              updateCharCount();
+            }}
           />
           <label
             class="toolbar-button"
@@ -664,9 +742,8 @@ function Compose({
             </select>
           </label>{' '}
         </div>
-        <text-expander ref={textExpanderRef} keys="@ #">
+        <text-expander ref={textExpanderRef} keys="@ # :">
           <textarea
-            class="large"
             ref={textareaRef}
             placeholder={
               replyToStatus
@@ -692,9 +769,11 @@ function Compose({
               e.target.style.height = value
                 ? scrollHeight + offset + 'px'
                 : null;
+              updateCharCount();
             }}
             style={{
               maxHeight: `${maxCharacters / 50}em`,
+              '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
             }}
           ></textarea>
         </text-expander>
@@ -802,6 +881,27 @@ function Compose({
           </button>{' '}
           <div class="spacer" />
           {uiState === 'loading' && <Loader abrupt />}{' '}
+          {uiState !== 'loading' && charCount > maxCharacters / 2 && (
+            <>
+              <meter
+                class={`donut ${
+                  leftChars <= -10
+                    ? 'explode'
+                    : leftChars <= 0
+                    ? 'danger'
+                    : leftChars <= 20
+                    ? 'warning'
+                    : ''
+                }`}
+                value={charCount}
+                max={maxCharacters}
+                data-left={leftChars}
+                style={{
+                  '--percentage': (charCount / maxCharacters) * 100,
+                }}
+              />{' '}
+            </>
+          )}
           <button type="submit" class="large" disabled={uiState === 'loading'}>
             {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
           </button>
@@ -978,6 +1078,55 @@ function Poll({
       </div>
     </div>
   );
+}
+
+function filterShortcodes(emojis, searchTerm) {
+  searchTerm = searchTerm.toLowerCase();
+
+  // Return an array of shortcodes that start with or contain the search term, sorted by relevance and limited to the first 5
+  return emojis
+    .sort((a, b) => {
+      let aLower = a.shortcode.toLowerCase();
+      let bLower = b.shortcode.toLowerCase();
+
+      let aStartsWith = aLower.startsWith(searchTerm);
+      let bStartsWith = bLower.startsWith(searchTerm);
+      let aContains = aLower.includes(searchTerm);
+      let bContains = bLower.includes(searchTerm);
+      let bothStartWith = aStartsWith && bStartsWith;
+      let bothContain = aContains && bContains;
+
+      return bothStartWith
+        ? a.length - b.length
+        : aStartsWith
+        ? -1
+        : bStartsWith
+        ? 1
+        : bothContain
+        ? a.length - b.length
+        : aContains
+        ? -1
+        : bContains
+        ? 1
+        : 0;
+    })
+    .slice(0, 5);
+}
+
+function encodeHTML(str) {
+  return str.replace(/[&<>"']/g, function (char) {
+    return '&#' + char.charCodeAt(0) + ';';
+  });
+}
+
+// https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
+const urlRegexObj = new RegExp(urlRegex.source, urlRegex.flags);
+const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
+const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
+function countableText(inputText) {
+  return inputText
+    .replace(urlRegexObj, urlPlaceholder)
+    .replace(usernameRegex, '$1@$3');
 }
 
 export default Compose;

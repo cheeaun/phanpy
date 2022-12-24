@@ -29,20 +29,6 @@ function enhanceContent(content, opts = {}) {
     node.replaceWith(...nodes);
   });
 
-  // INLINE CODE
-  // ===========
-  // Convert `code` to <code>code</code>
-  textNodes = extractTextNodes(dom);
-  textNodes.forEach((node) => {
-    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    if (/`[^`]+`/g.test(html)) {
-      html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
-    }
-    fauxDiv.innerHTML = html;
-    const nodes = Array.from(fauxDiv.childNodes);
-    node.replaceWith(...nodes);
-  });
-
   // CODE BLOCKS
   // ===========
   // Convert ```code``` to <pre><code>code</code></pre>
@@ -57,6 +43,39 @@ function enhanceContent(content, opts = {}) {
     block.replaceWith(pre);
   });
 
+  // INLINE CODE
+  // ===========
+  // Convert `code` to <code>code</code>
+  textNodes = extractTextNodes(dom);
+  textNodes.forEach((node) => {
+    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (/`[^`]+`/g.test(html)) {
+      html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
+    }
+    fauxDiv.innerHTML = html;
+    const nodes = Array.from(fauxDiv.childNodes);
+    node.replaceWith(...nodes);
+  });
+
+  // TWITTER USERNAMES
+  // =================
+  // Convert @username@twitter.com to <a href="https://twitter.com/username">@username@twitter.com</a>
+  textNodes = extractTextNodes(dom, {
+    rejectFilter: ['A'],
+  });
+  textNodes.forEach((node) => {
+    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
+      html = html.replaceAll(
+        /(@([a-zA-Z0-9_]+)@twitter\.com)/g,
+        '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+      );
+    }
+    fauxDiv.innerHTML = html;
+    const nodes = Array.from(fauxDiv.childNodes);
+    node.replaceWith(...nodes);
+  });
+
   if (postEnhanceDOM) {
     postEnhanceDOM(dom); // mutate dom
   }
@@ -66,12 +85,60 @@ function enhanceContent(content, opts = {}) {
   return enhancedContent;
 }
 
-function extractTextNodes(dom) {
+const defaultRejectFilter = [
+  // Document metadata
+  'STYLE',
+  // Image and multimedia
+  'IMG',
+  'VIDEO',
+  'AUDIO',
+  'AREA',
+  'MAP',
+  'TRACK',
+  // Embedded content
+  'EMBED',
+  'IFRAME',
+  'OBJECT',
+  'PICTURE',
+  'PORTAL',
+  'SOURCE',
+  // SVG and MathML
+  'SVG',
+  'MATH',
+  // Scripting
+  'CANVAS',
+  'NOSCRIPT',
+  'SCRIPT',
+  // Forms
+  'INPUT',
+  'OPTION',
+  'TEXTAREA',
+  // Web Components
+  'SLOT',
+  'TEMPLATE',
+];
+const defaultRejectFilterMap = Object.fromEntries(
+  defaultRejectFilter.map((nodeName) => [nodeName, true]),
+);
+function extractTextNodes(dom, opts = {}) {
   const textNodes = [];
   const walk = document.createTreeWalker(
     dom,
     NodeFilter.SHOW_TEXT,
-    null,
+    {
+      acceptNode(node) {
+        if (defaultRejectFilterMap[node.parentNode.nodeName]) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (
+          opts.rejectFilter &&
+          opts.rejectFilter.includes(node.parentNode.nodeName)
+        ) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    },
     false,
   );
   let node;

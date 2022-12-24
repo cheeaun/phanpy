@@ -1,3 +1,5 @@
+import './status.css';
+
 import debounce from 'just-debounce-it';
 import { Link } from 'preact-router/match';
 import {
@@ -7,15 +9,21 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Loader from '../components/loader';
+import NameText from '../components/name-text';
 import Status from '../components/status';
+import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useTitle from '../utils/useTitle';
+
+const LIMIT = 40;
 
 function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
@@ -43,32 +51,34 @@ function StatusPage({ id }) {
   useEffect(() => {
     setUIState('loading');
 
-    const containsStatus = statuses.find((s) => s.id === id);
-    if (!containsStatus) {
-      // Case 1: On first load, or when navigating to a status that's not cached at all
-      setStatuses([{ id }]);
+    const cachedStatuses = store.session.getJSON('statuses-' + id);
+    if (cachedStatuses) {
+      // Case 1: It's cached, let's restore them to make it snappy
+      const reallyCachedStatuses = cachedStatuses.filter(
+        (s) => states.statuses.has(s.id),
+        // Some are not cached in the global state, so we need to filter them out
+      );
+      setStatuses(reallyCachedStatuses);
     } else {
-      const cachedStatuses = store.session.getJSON('statuses-' + id);
-      if (cachedStatuses) {
-        // Case 2: Looks like we've cached this status before, let's restore them to make it snappy
-        const reallyCachedStatuses = cachedStatuses.filter(
-          (s) => snapStates.statuses.has(s.id),
-          // Some are not cached in the global state, so we need to filter them out
-        );
-        setStatuses(reallyCachedStatuses);
-      } else {
-        // Case 3: Unknown state, could be a sub-comment. Let's slice off all descendant statuses after the hero status to be safe because they are custom-rendered with sub-comments etc
-        const heroIndex = statuses.findIndex((s) => s.id === id);
+      const heroIndex = statuses.findIndex((s) => s.id === id);
+      if (heroIndex !== -1) {
+        // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
         const slicedStatuses = statuses.slice(0, heroIndex + 1);
         setStatuses(slicedStatuses);
+      } else {
+        // Case 3: Not cached and not in statuses, let's start from scratch
+        setStatuses([{ id }]);
       }
     }
 
     (async () => {
+      const heroFetch = masto.statuses.fetch(id);
+      const contextFetch = masto.statuses.fetchContext(id);
+
       const hasStatus = snapStates.statuses.has(id);
       let heroStatus = snapStates.statuses.get(id);
       try {
-        heroStatus = await masto.statuses.fetch(id);
+        heroStatus = await heroFetch;
         states.statuses.set(id, heroStatus);
       } catch (e) {
         // Silent fail if status is cached
@@ -80,7 +90,7 @@ function StatusPage({ id }) {
       }
 
       try {
-        const context = await masto.statuses.fetchContext(id);
+        const context = await contextFetch;
         const { ancestors, descendants } = context;
 
         ancestors.forEach((status) => {
@@ -124,7 +134,11 @@ function StatusPage({ id }) {
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
-            replies: s.__replies?.map((r) => r.id),
+            replies: s.__replies?.map((r) => ({
+              id: r.id,
+              repliesCount: r.repliesCount,
+              content: r.content,
+            })),
           })),
         ];
 
@@ -139,6 +153,8 @@ function StatusPage({ id }) {
     })();
   }, [id, snapStates.reloadStatusPage]);
 
+  const firstLoad = useRef(true);
+
   useLayoutEffect(() => {
     if (!statuses.length) return;
     const isLoading = uiState === 'loading';
@@ -149,12 +165,18 @@ function StatusPage({ id }) {
         console.log('Case 1');
         heroStatusRef.current?.scrollIntoView();
       } else if (isLoading && statuses.length > 1) {
-        // Case 2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
-        console.log('Case 2');
-        heroStatusRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        if (firstLoad.current) {
+          // Case 2.1: User initiated, first load, don't smooth scroll anything
+          console.log('Case 2.1');
+          heroStatusRef.current?.scrollIntoView();
+        } else {
+          // Case 2.2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
+          console.log('Case 2.2');
+          heroStatusRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
       }
     } else {
       const scrollPosition = states.scrollPositions.get(id);
@@ -168,12 +190,14 @@ function StatusPage({ id }) {
       isLoading,
       userInitiated: userInitiated.current,
       statusesLength: statuses.length,
+      firstLoad: firstLoad.current,
       // scrollPosition,
     });
 
     if (!isLoading) {
       // Reset user initiated flag after statuses are loaded
       userInitiated.current = false;
+      firstLoad.current = false;
     }
   }, [statuses, uiState]);
 
@@ -215,14 +239,17 @@ function StatusPage({ id }) {
   });
   const closeLink = `#${prevRoute || '/'}`;
 
-  const [limit, setLimit] = useState(40);
+  const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
     // return number of statuses to show
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > 40;
+  const hasManyStatuses = statuses.length > LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
+
+  const [heroInView, setHeroInView] = useState(true);
+  const onView = useDebouncedCallback(setHeroInView, 100);
 
   return (
     <div class="deck-backdrop">
@@ -233,13 +260,43 @@ function StatusPage({ id }) {
           statuses.length > 1 ? 'padded-bottom' : ''
         }`}
       >
-        <header>
+        <header
+          class={`${heroInView ? 'inview' : ''}`}
+          onClick={(e) => {
+            if (
+              !/^(a|button)$/i.test(e.target.tagName) &&
+              heroStatusRef.current
+            ) {
+              heroStatusRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }
+          }}
+        >
           {/* <div>
             <Link class="button plain deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-          <h1>Status</h1>
+          <h1>
+            {!heroInView && heroStatus ? (
+              <span class="hero-heading">
+                <NameText showAvatar account={heroStatus.account} short />{' '}
+                <span class="insignificant">
+                  &bull;{' '}
+                  <relative-time
+                    datetime={heroStatus.createdAt}
+                    format="micro"
+                    threshold="P1D"
+                    prefix=""
+                  />
+                </span>
+              </span>
+            ) : (
+              'Status'
+            )}
+          </h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
             <Link class="button plain deck-close" href={closeLink}>
@@ -270,7 +327,9 @@ function StatusPage({ id }) {
                 } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
               >
                 {isHero ? (
-                  <Status statusID={statusID} withinContext size="l" />
+                  <InView threshold={0.5} onChange={onView}>
+                    <Status statusID={statusID} withinContext size="l" />
+                  </InView>
                 ) : (
                   <Link
                     class="
@@ -286,33 +345,27 @@ function StatusPage({ id }) {
                       withinContext
                       size={thread || ancestor ? 'm' : 's'}
                     />
+                    {replies?.length > LIMIT && (
+                      <div class="replies-link">
+                        <Icon icon="comment" />{' '}
+                        <span title={replies.length}>
+                          {shortenNumber(replies.length)}
+                        </span>
+                      </div>
+                    )}
                   </Link>
                 )}
-                {descendant && replies?.length > 0 && (
-                  <details class="replies" open={!hasManyStatuses}>
-                    <summary hidden={!hasManyStatuses}>
-                      <span title={replies.length}>
-                        {shortenNumber(replies.length)}
-                      </span>{' '}
-                      repl{replies.length === 1 ? 'y' : 'ies'}
-                    </summary>
-                    <ul>
-                      {replies.map((replyID) => (
-                        <li key={replyID}>
-                          <Link
-                            class="status-link"
-                            href={`#/s/${replyID}`}
-                            onClick={() => {
-                              userInitiated.current = true;
-                            }}
-                          >
-                            <Status statusID={replyID} withinContext size="s" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                )}
+                {descendant &&
+                  replies?.length > 0 &&
+                  replies?.length <= LIMIT && (
+                    <SubComments
+                      hasManyStatuses={hasManyStatuses}
+                      replies={replies}
+                      onStatusLinkClick={() => {
+                        userInitiated.current = true;
+                      }}
+                    />
+                  )}
                 {uiState === 'loading' &&
                   isHero &&
                   !!heroStatus?.repliesCount &&
@@ -330,17 +383,68 @@ function StatusPage({ id }) {
                 type="button"
                 class="plain block"
                 disabled={uiState === 'loading'}
-                onClick={() => setLimit((l) => l + 40)}
+                onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
               >
                 Show more&hellip;{' '}
-                <span class="tag">{showMore > 40 ? '40+' : showMore}</span>
+                <span class="tag">
+                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                </span>
               </button>
             </li>
           )}
         </ul>
       </div>
     </div>
+  );
+}
+
+function SubComments({
+  hasManyStatuses,
+  replies,
+  onStatusLinkClick = () => {},
+}) {
+  // If less than or 2 replies and total number of characters of content from replies is less than 500
+  let isBrief = false;
+  if (replies.length <= 2) {
+    let totalLength = replies.reduce((acc, reply) => {
+      const { content } = reply;
+      const length = htmlContentLength(content);
+      return acc + length;
+    }, 0);
+    isBrief = totalLength < 500;
+  }
+
+  const open = isBrief || !hasManyStatuses;
+
+  return (
+    <details class="replies" open={open}>
+      <summary hidden={open}>
+        <span title={replies.length}>{shortenNumber(replies.length)}</span> repl
+        {replies.length === 1 ? 'y' : 'ies'}
+      </summary>
+      <ul>
+        {replies.map((r) => (
+          <li key={r.id}>
+            <Link
+              class="status-link"
+              href={`#/s/${r.id}`}
+              onClick={onStatusLinkClick}
+            >
+              <Status statusID={r.id} withinContext size="s" />
+              {r.repliesCount > 0 && (
+                <div class="replies-link">
+                  <Icon icon="comment" />{' '}
+                  <span title={r.repliesCount}>
+                    {shortenNumber(r.repliesCount)}
+                  </span>
+                </div>
+              )}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 

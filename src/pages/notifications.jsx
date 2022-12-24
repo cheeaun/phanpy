@@ -292,7 +292,11 @@ function Notifications() {
   return (
     <div class="deck-container" ref={scrollableRef}>
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
-        <header>
+        <header
+          onClick={() => {
+            scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <div class="header-side">
             <a href="#" class="button plain">
               <Icon icon="home" size="l" />

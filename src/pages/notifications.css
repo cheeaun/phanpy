@@ -1,7 +1,7 @@
 .notification {
   display: flex;
   padding: 16px !important;
-  gap: 16px;
+  gap: 12px;
 }
 .only-mentions .notification:not(.mention),
 .only-mentions .timeline-empty {
@@ -58,9 +58,11 @@
 
 .notification-content {
   flex-grow: 1;
+  min-width: 0;
 }
 .notification-content p:first-child {
   margin-top: 0;
+  margin-bottom: 8px;
 }
 
 #mentions-option {

@@ -23,6 +23,8 @@ a.mention {
 a.mention span {
   text-decoration-line: underline;
   text-decoration-color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
 }
 /* a.mention:has(span).hashtag {
   color: var(--link-light-color);
@@ -38,6 +40,7 @@ a.mention span {
   overflow: auto;
   overflow-x: hidden;
   transition: opacity 0.1s ease-in-out;
+  overscroll-behavior: contain;
 }
 .deck-container[hidden] {
   display: block;
@@ -68,6 +71,7 @@ a.mention span {
   overflow-x: hidden;
   height: 100vh;
   height: 100dvh;
+  overscroll-behavior: contain;
 }
 
 .deck header {
@@ -75,7 +79,7 @@ a.mention span {
   position: sticky;
   top: 0;
   background-color: var(--bg-blur-color);
-  backdrop-filter: blur(12px);
+  backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--divider-color);
   z-index: 1;
   cursor: default;
@@ -83,6 +87,7 @@ a.mention span {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  user-select: none;
 }
 .deck header > .header-side:last-of-type {
   text-align: right;
@@ -159,14 +164,14 @@ a.mention span {
   > .status-link
   + .replies
   > summary {
-  margin-left: calc(50px + 16px + 16px);
+  margin-left: calc(50px + 16px + 12px);
 }
 .timeline.contextual
   > li.descendant.thread
   > .status-link
   + .replies
   .status-link {
-  padding-left: calc(50px + 16px + 16px);
+  padding-left: calc(50px + 16px + 12px);
 }
 .timeline.contextual
   > li.descendant:not(.thread)
@@ -196,6 +201,19 @@ a.mention span {
   border-width: var(--width);
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
+}
+.timeline.contextual > li .replies-link {
+  color: var(--text-insignificant-color);
+  margin-left: 16px;
+  margin-top: -12px;
+  padding-bottom: 12px;
+  font-size: 90%;
+}
+.timeline.contextual > li.thread > .status-link .replies-link {
+  margin-left: calc(50px + 16px + 12px);
+}
+.timeline.contextual > li .replies-link * {
+  vertical-align: middle;
 }
 .timeline.contextual > li .replies {
   margin-top: -12px;
@@ -238,9 +256,9 @@ a.mention span {
 .timeline.contextual > li .replies li {
   position: relative;
 }
-.timeline.contextual > li .replies li .status {
+.timeline.contextual > li .replies li {
   --width: 3px;
-  --left: 0px;
+  --left: calc(40px + 16px);
   --right: calc(var(--left) + var(--width));
   background-image: linear-gradient(
     to right,
@@ -253,7 +271,10 @@ a.mention span {
   );
   background-repeat: no-repeat;
 }
-.timeline.contextual > li .replies li:last-child .status {
+.timeline.contextual > li.thread .replies li {
+  --left: calc(50px + 16px + 12px);
+}
+.timeline.contextual > li .replies li:last-child {
   background-size: 100% 20px;
 }
 .timeline.contextual > li .replies li:before {
@@ -272,7 +293,7 @@ a.mention span {
   transform: rotate(45deg);
 }
 .timeline.contextual > li.thread .replies li:before {
-  left: calc(50px + 16px + 16px);
+  left: calc(50px + 16px + 12px);
 }
 .timeline.contextual.loading > li:not(.hero) {
   opacity: 0.5;
@@ -317,6 +338,7 @@ a.mention span {
   text-decoration-line: none;
   color: inherit;
   transition: background-color 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 .status-link:hover {
   background-color: var(--link-bg-hover-color);
@@ -432,6 +454,7 @@ a.mention span {
 }
 .carousel > * {
   scroll-snap-align: center;
+  scroll-snap-stop: always;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
@@ -576,6 +599,7 @@ button.carousel-dot[disabled].active {
   box-shadow: 0 -1px 32px var(--divider-color);
   animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
+  overscroll-behavior: contain;
 }
 
 /* TAG */
@@ -641,6 +665,65 @@ button.carousel-dot[disabled].active {
 .menu-container menu button:hover {
   color: var(--bg-color) !important;
   background-color: var(--link-color);
+}
+
+/* DONUT METER */
+
+meter.donut {
+  appearance: none;
+}
+
+meter.donut:is(
+    ::-webkit-progress-inner-element,
+    ::-webkit-progress-bar,
+    ::-webkit-progress-value,
+    ::-webkit-meter-bar,
+    ::-webkit-meter-optimum-value,
+    ::-webkit-meter-suboptimum-value,
+    ::-webkit-meter-even-less-good-value
+  ) {
+  display: none;
+}
+
+meter.donut:is(::-moz-progress-bar, ::-moz-meter-bar) {
+  background: transparent;
+}
+
+meter.donut {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  --fill: calc(var(--percentage) * 1%);
+  --color: var(--link-color);
+  --middle-circle: radial-gradient(
+    circle at 50% 50%,
+    var(--bg-faded-color) 10px,
+    transparent 10px
+  );
+  background-image: var(--middle-circle),
+    conic-gradient(var(--color) var(--fill), var(--bg-faded-blur-color) 0);
+}
+meter.donut.warning {
+  --color: var(--orange-color);
+}
+meter.donut.danger {
+  --color: var(--red-color);
+}
+meter.donut.explode {
+  background-image: none;
+}
+meter.donut:is(.warning, .danger, .explode):after {
+  content: attr(data-left);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--text-insignificant-color);
+}
+meter.donut:is(.danger, .explode):after {
+  color: var(--red-color);
 }
 
 @media (min-width: 40em) {

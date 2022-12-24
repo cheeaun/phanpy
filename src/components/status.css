@@ -37,7 +37,7 @@
 /* STATUS PRE META */
 
 .status-pre-meta {
-  line-height: 1.5;
+  line-height: 1.4;
   padding: 8px 16px 0;
   opacity: 0.75;
   font-size: smaller;
@@ -45,6 +45,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-bottom: -8px;
 }
 .status-pre-meta .name-text {
   display: inline;
@@ -60,7 +61,7 @@
 .status {
   display: flex;
   padding: 16px 16px 20px;
-  line-height: 1.5;
+  line-height: 1.4;
   align-items: flex-start;
   position: relative;
 }
@@ -78,12 +79,6 @@
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
 }
-.status-pre-meta + .status {
-  padding-top: 8px;
-}
-.status.small {
-  /* font-size: 95%; */
-}
 .status.skeleton {
   color: var(--outline-color);
 }
@@ -97,13 +92,19 @@
   min-width: 0;
 }
 .status:not(.small) .container {
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
 .status > .container > .meta {
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  white-space: nowrap;
+}
+.status > .container > .meta > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .status.large > .container > .meta {
   min-height: 50px;
@@ -129,6 +130,39 @@
   font-size: smaller;
 }
 
+.status-reply-badge {
+  display: inline-flex;
+  margin-left: 4px;
+  gap: 4px;
+  align-items: center;
+}
+.status-reply-badge .icon {
+  color: var(--reply-to-color);
+}
+.status-thread-badge {
+  display: inline-flex;
+  margin: 4px 0 0 0;
+  gap: 4px;
+  align-items: center;
+  color: var(--reply-to-color);
+  background: var(--bg-color);
+  border: 1px solid var(--reply-to-color);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.75;
+  background-image: repeating-linear-gradient(
+    -70deg,
+    transparent,
+    transparent 3px,
+    var(--reply-to-faded-color) 3px,
+    var(--reply-to-faded-color) 4px
+  );
+  font-weight: bold;
+}
+
 .status.large .content-container {
   margin-left: calc(-50px - 16px);
   padding-top: 10px;
@@ -136,7 +170,7 @@
 }
 
 .status .content-container.has-spoiler .spoiler {
-  margin: 8px 0;
+  margin: 4px 0;
   font-size: 90%;
   border: 1px dashed var(--button-bg-color);
   display: flex;
@@ -144,10 +178,17 @@
   align-items: center;
 }
 .status .content-container.has-spoiler .spoiler ~ * {
-  filter: blur(6px) invert(0.5);
+  /* filter: blur(6px) invert(0.5); */
+  filter: url(#spoiler);
+  transform: translate3d(-5px, -5px, 0);
   pointer-events: none;
-  transition: filter 0.5s;
   user-select: none;
+  contain: layout;
+}
+@media (prefers-color-scheme: dark) {
+  .status .content-container.has-spoiler .spoiler ~ * {
+    filter: url(#spoiler-dark);
+  }
 }
 .status .content-container.has-spoiler .spoiler ~ .content ~ * {
   opacity: 0.5;
@@ -156,7 +197,8 @@
   border-style: dotted;
 }
 .status .content-container.show-spoiler .spoiler ~ * {
-  filter: none;
+  filter: none !important;
+  transform: none;
   pointer-events: auto;
   user-select: auto;
 }
@@ -165,7 +207,7 @@
 }
 
 .status .content {
-  margin-top: 8px;
+  margin-top: 2px;
 }
 .timeline-deck .status .content {
   max-height: 50vh;
@@ -238,6 +280,10 @@
   gap: 2px;
   flex-direction: row;
 }
+.status:not(.large) .media-container.media-gt4 {
+  flex-wrap: nowrap;
+  overflow: auto;
+}
 .status .media {
   flex-grow: 1;
   flex-basis: calc(50% - 8px);
@@ -246,6 +292,12 @@
   max-height: 160px;
   min-height: 80px;
   border: 1px solid var(--outline-color);
+}
+.status .media-container.media-gt2 .media {
+  aspect-ratio: 1 / 1;
+}
+.status:not(.large) .media-container.media-gt4 .media {
+  min-width: 80px;
 }
 .status .media:hover {
   border-color: var(--outline-hover-color);
@@ -275,7 +327,7 @@
   }
 }
 .status .media img:hover {
-  animation: position-object 5s ease-in-out 1s infinite;
+  animation: position-object 5s ease-in-out 1s 5;
 }
 .status .media video {
   width: 100%;
@@ -354,7 +406,7 @@
   border-inline-end: 1px solid var(--outline-color);
 }
 .card:hover .image {
-  animation: position-object 5s ease-in-out 1s infinite;
+  animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {
   margin: 0;

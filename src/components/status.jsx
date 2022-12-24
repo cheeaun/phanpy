@@ -99,6 +99,7 @@ function Status({
     reblog,
     uri,
     emojis,
+    _deleted,
   } = status;
 
   const createdAtDate = new Date(createdAt);
@@ -220,13 +221,13 @@ function Status({
       )}
       <div class="container">
         <div class="meta">
-          <span>
-            <NameText
-              account={status.account}
-              showAvatar={size === 's'}
-              showAcct={size === 'l'}
-            />
-            {inReplyToAccount && !withinContext && size !== 's' && (
+          {/* <span> */}
+          <NameText
+            account={status.account}
+            showAvatar={size === 's'}
+            showAcct={size === 'l'}
+          />
+          {/* {inReplyToAccount && !withinContext && size !== 's' && (
               <>
                 {' '}
                 <span class="ib">
@@ -234,8 +235,8 @@ function Status({
                   <NameText account={inReplyToAccount} short />
                 </span>
               </>
-            )}
-          </span>{' '}
+            )} */}
+          {/* </span> */}{' '}
           {size !== 'l' &&
             (uri ? (
               <a href={uri} target="_blank" class="time">
@@ -271,6 +272,26 @@ function Status({
               </span>
             ))}
         </div>
+        {inReplyToAccountId && !withinContext && size !== 's' && (
+          <>
+            {inReplyToAccountId === status.account.id ? (
+              <div class="status-thread-badge">
+                <Icon icon="thread" size="s" />
+                Thread
+              </div>
+            ) : (
+              !!inReplyToAccount &&
+              !mentions.find((mention) => {
+                return mention.id === inReplyToAccountId;
+              }) && (
+                <div class="status-reply-badge">
+                  <Icon icon="reply" />{' '}
+                  <NameText account={inReplyToAccount} short />
+                </div>
+              )
+            )}
+          </>
+        )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''
@@ -333,9 +354,12 @@ function Status({
                 ).innerText
                   .trim()
                   .replace(/^@/, '');
+                const url = target.getAttribute('href');
                 const mention = mentions.find(
                   (mention) =>
-                    mention.username === username || mention.acct === username,
+                    mention.username === username ||
+                    mention.acct === username ||
+                    mention.url === url,
                 );
                 if (mention) {
                   states.showAccount = mention.acct;
@@ -387,7 +411,11 @@ function Status({
             </button>
           )}
           {!!mediaAttachments.length && (
-            <div class="media-container">
+            <div
+              class={`media-container ${
+                mediaAttachments.length > 2 ? 'media-gt2' : ''
+              } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+            >
               {mediaAttachments.map((media, i) => (
                 <Media
                   media={media}
@@ -704,7 +732,9 @@ function Media({ media, showOriginal, onClick = () => {} }) {
     );
   } else if (type === 'gifv' || type === 'video') {
     // 20 seconds, treat as a gif
-    const isGIF = type === 'gifv' && original.duration <= 20;
+    const shortDuration = original.duration <= 20;
+    const isGIF = type === 'gifv' || shortDuration;
+    const loopable = original.duration <= 60;
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'}`}
@@ -713,30 +743,35 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (isGIF) {
+          if (showOriginal && isGIF) {
             try {
-              videoRef.current?.pause();
+              if (videoRef.current.paused) {
+                videoRef.current.play();
+              } else {
+                videoRef.current.pause();
+              }
             } catch (e) {}
           }
           onClick(e);
         }}
         onMouseEnter={() => {
-          if (isGIF) {
+          if (!showOriginal && isGIF) {
             try {
-              videoRef.current?.play();
+              videoRef.current.play();
             } catch (e) {}
           }
         }}
         onMouseLeave={() => {
-          if (isGIF) {
+          if (!showOriginal && isGIF) {
             try {
-              videoRef.current?.pause();
+              videoRef.current.pause();
             } catch (e) {}
           }
         }}
       >
         {showOriginal ? (
           <video
+            ref={videoRef}
             src={url}
             poster={previewUrl}
             width={width}
@@ -746,14 +781,7 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             muted={isGIF}
             controls={!isGIF}
             playsinline
-            loop
-            onClick={() => {
-              if (isGIF) {
-                try {
-                  videoRef.current?.play();
-                } catch (e) {}
-              }
-            }}
+            loop={loopable}
           ></video>
         ) : isGIF ? (
           <video
@@ -898,6 +926,41 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
+  // Update poll at point of expiry
+  useEffect(() => {
+    let timeout;
+    if (!expired && expiresAtDate) {
+      const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
+      if (ms > 0) {
+        timeout = setTimeout(() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              const pollResponse = await masto.poll.fetch(id);
+              onUpdate(pollResponse);
+            } catch (e) {
+              // Silent fail
+            }
+            setUIState('default');
+          })();
+        }, ms);
+      }
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [expired, expiresAtDate]);
+
+  const pollVotesCount = votersCount || votesCount;
+  let roundPrecision = 0;
+  if (pollVotesCount <= 1000) {
+    roundPrecision = 0;
+  } else if (pollVotesCount <= 10000) {
+    roundPrecision = 1;
+  } else if (pollVotesCount <= 100000) {
+    roundPrecision = 2;
+  }
+
   return (
     <div
       class={`poll ${readOnly ? 'read-only' : ''} ${
@@ -907,9 +970,10 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const pollVotesCount = votersCount || votesCount;
           const percentage =
-            Math.round((optionVotesCount / pollVotesCount) * 100) || 0;
+            ((optionVotesCount / pollVotesCount) * 100).toFixed(
+              roundPrecision,
+            ) || 0;
           // check if current poll choice is the leading one
           const isLeading =
             optionVotesCount > 0 &&

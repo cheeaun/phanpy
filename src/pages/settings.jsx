@@ -5,6 +5,7 @@ import { useRef, useState } from 'preact/hooks';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import NameText from '../components/name-text';
+import states from '../utils/states';
 import store from '../utils/store';
 
 /*
@@ -42,7 +43,13 @@ function Settings({ onClose }) {
                     </span>
                   )}
                   <Avatar url={account.info.avatarStatic} size="xxl" />
-                  <NameText account={account.info} showAcct />
+                  <NameText
+                    account={account.info}
+                    showAcct
+                    onClick={() => {
+                      states.showAccount = `${account.info.username}@${account.instanceURL}`;
+                    }}
+                  />
                 </div>
                 <div class="actions">
                   {isDefault && moreThanOneAccount && (

@@ -982,10 +982,11 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const percentage =
-            ((optionVotesCount / pollVotesCount) * 100).toFixed(
-              roundPrecision,
-            ) || 0;
+          const percentage = pollVotesCount
+            ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
+                roundPrecision,
+              )
+            : 0;
           // check if current poll choice is the leading one
           const isLeading =
             optionVotesCount > 0 &&

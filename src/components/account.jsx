@@ -108,15 +108,17 @@ function Account({ account }) {
             <Avatar size="xxxl" />
             ███ ████████████
           </header>
-          <div class="note">
-            <p>████████ ███████</p>
-            <p>███████████████ ███████████████</p>
-          </div>
-          <p class="stats">
-            <span>██ Posts</span>
-            <span>██ Following</span>
-            <span>██ Followers</span>
-          </p>
+          <main>
+            <div class="note">
+              <p>████████ ███████</p>
+              <p>███████████████ ███████████████</p>
+            </div>
+            <p class="stats">
+              <span>██ Posts</span>
+              <span>██ Following</span>
+              <span>██ Followers</span>
+            </p>
+          </main>
         </>
       ) : (
         <>
@@ -124,96 +126,99 @@ function Account({ account }) {
             <Avatar url={avatar} size="xxxl" />
             <NameText account={info} showAcct external />
           </header>
-          <div
-            class="note"
-            dangerouslySetInnerHTML={{
-              __html: enhanceContent(note, { emojis }),
-            }}
-          />
-          {fields?.length > 0 && (
-            <div class="profile-metadata">
-              {fields.map(({ name, value, verifiedAt }) => (
-                <div
-                  class={`profile-field ${
-                    verifiedAt ? 'profile-verified' : ''
-                  }`}
-                  key={name}
-                >
-                  <b>
-                    {name}{' '}
-                    {!!verifiedAt && <Icon icon="check-circle" size="s" />}
-                  </b>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: value,
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-          <p class="stats">
-            <span>
-              <b title={statusesCount}>{shortenNumber(statusesCount)}</b> Posts
-            </span>
-            <span>
-              <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
-              Following
-            </span>
-            <span>
-              <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
-              Followers
-            </span>
-            {!!createdAt && (
+          <main>
+            <div
+              class="note"
+              dangerouslySetInnerHTML={{
+                __html: enhanceContent(note, { emojis }),
+              }}
+            />
+            {fields?.length > 0 && (
+              <div class="profile-metadata">
+                {fields.map(({ name, value, verifiedAt }) => (
+                  <div
+                    class={`profile-field ${
+                      verifiedAt ? 'profile-verified' : ''
+                    }`}
+                    key={name}
+                  >
+                    <b>
+                      {name}{' '}
+                      {!!verifiedAt && <Icon icon="check-circle" size="s" />}
+                    </b>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: value,
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            <p class="stats">
               <span>
-                Joined:{' '}
-                <b>
-                  <time datetime={createdAt}>
-                    {Intl.DateTimeFormat('en', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    }).format(new Date(createdAt))}
-                  </time>
-                </b>
+                <b title={statusesCount}>{shortenNumber(statusesCount)}</b>{' '}
+                Posts
               </span>
-            )}
-          </p>
-          <p class="actions">
-            {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
-            {relationshipUIState !== 'loading' && relationship && (
-              <button
-                type="button"
-                class={`${following ? 'light danger' : ''}`}
-                disabled={relationshipUIState === 'loading'}
-                onClick={() => {
-                  setRelationshipUIState('loading');
-                  (async () => {
-                    try {
-                      let newRelationship;
-                      if (following) {
-                        const yes = confirm(
-                          'Are you sure that you want to unfollow this account?',
-                        );
-                        if (yes) {
-                          newRelationship = await masto.accounts.unfollow(id);
+              <span>
+                <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
+                Following
+              </span>
+              <span>
+                <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
+                Followers
+              </span>
+              {!!createdAt && (
+                <span>
+                  Joined:{' '}
+                  <b>
+                    <time datetime={createdAt}>
+                      {Intl.DateTimeFormat('en', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      }).format(new Date(createdAt))}
+                    </time>
+                  </b>
+                </span>
+              )}
+            </p>
+            <p class="actions">
+              {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
+              {relationshipUIState !== 'loading' && relationship && (
+                <button
+                  type="button"
+                  class={`${following ? 'light danger' : ''}`}
+                  disabled={relationshipUIState === 'loading'}
+                  onClick={() => {
+                    setRelationshipUIState('loading');
+                    (async () => {
+                      try {
+                        let newRelationship;
+                        if (following) {
+                          const yes = confirm(
+                            'Are you sure that you want to unfollow this account?',
+                          );
+                          if (yes) {
+                            newRelationship = await masto.accounts.unfollow(id);
+                          }
+                        } else {
+                          newRelationship = await masto.accounts.follow(id);
                         }
-                      } else {
-                        newRelationship = await masto.accounts.follow(id);
+                        if (newRelationship) setRelationship(newRelationship);
+                        setRelationshipUIState('default');
+                      } catch (e) {
+                        alert(e);
+                        setRelationshipUIState('error');
                       }
-                      if (newRelationship) setRelationship(newRelationship);
-                      setRelationshipUIState('default');
-                    } catch (e) {
-                      alert(e);
-                      setRelationshipUIState('error');
-                    }
-                  })();
-                }}
-              >
-                {following ? 'Unfollow…' : 'Follow'}
-              </button>
-            )}
-          </p>
+                    })();
+                  }}
+                >
+                  {following ? 'Unfollow…' : 'Follow'}
+                </button>
+              )}
+            </p>
+          </main>
         </>
       )}
     </div>

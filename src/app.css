@@ -583,22 +583,36 @@ button.carousel-dot[disabled].active {
 }
 .sheet {
   align-self: flex-end;
+  display: flex;
+  flex-direction: column;
   max-height: 90vh;
   max-height: 90dvh;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: var(--bg-color);
   width: 100%;
   max-width: calc(40em - 50px - 16px);
   border-radius: 16px 16px 0 0;
-  padding: 16px;
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
-  padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-shadow: 0 -1px 32px var(--divider-color);
   animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
+}
+.sheet header {
+  padding: 16px 16px 8px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+.sheet main {
+  overflow: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
+  padding: 16px 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10px);
+}
+.sheet header + main {
+  padding-top: 0;
 }
 
 /* TAG */

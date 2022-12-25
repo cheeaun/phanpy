@@ -1134,46 +1134,50 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
 
   return (
     <div id="edit-history" class="sheet">
-      {/* <button type="button" class="close-button plain large" onClick={onClose}>
+      <header>
+        {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
       </button> */}
-      <h2>Edit History</h2>
-      {uiState === 'error' && <p>Failed to load history</p>}
-      {uiState === 'loading' && (
-        <p>
-          <Loader abrupt /> Loading&hellip;
-        </p>
-      )}
-      {editHistory.length > 0 && (
-        <ol>
-          {editHistory.map((status) => {
-            const { createdAt } = status;
-            const createdAtDate = new Date(createdAt);
-            return (
-              <li key={createdAt} class="history-item">
-                <h3>
-                  <time>
-                    {Intl.DateTimeFormat('en', {
-                      // Show year if not current year
-                      year:
-                        createdAtDate.getFullYear() === currentYear
-                          ? undefined
-                          : 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      weekday: 'short',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    }).format(createdAtDate)}
-                  </time>
-                </h3>
-                <Status status={status} size="s" withinContext readOnly />
-              </li>
-            );
-          })}
-        </ol>
-      )}
+        <h2>Edit History</h2>
+        {uiState === 'error' && <p>Failed to load history</p>}
+        {uiState === 'loading' && (
+          <p>
+            <Loader abrupt /> Loading&hellip;
+          </p>
+        )}
+      </header>
+      <main>
+        {editHistory.length > 0 && (
+          <ol>
+            {editHistory.map((status) => {
+              const { createdAt } = status;
+              const createdAtDate = new Date(createdAt);
+              return (
+                <li key={createdAt} class="history-item">
+                  <h3>
+                    <time>
+                      {Intl.DateTimeFormat('en', {
+                        // Show year if not current year
+                        year:
+                          createdAtDate.getFullYear() === currentYear
+                            ? undefined
+                            : 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        weekday: 'short',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      }).format(createdAtDate)}
+                    </time>
+                  </h3>
+                  <Status status={status} size="s" withinContext readOnly />
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </main>
     </div>
   );
 }

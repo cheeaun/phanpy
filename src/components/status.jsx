@@ -533,6 +533,8 @@ function Status({
                         }
                       } catch (e) {
                         console.error(e);
+                        // Revert optimistism
+                        states.statuses.set(id, status);
                       }
                     }}
                   />
@@ -564,6 +566,8 @@ function Status({
                       }
                     } catch (e) {
                       console.error(e);
+                      // Revert optimistism
+                      states.statuses.set(statusID, status);
                     }
                   }}
                 />
@@ -591,6 +595,8 @@ function Status({
                       }
                     } catch (e) {
                       console.error(e);
+                      // Revert optimistism
+                      states.statuses.set(statusID, status);
                     }
                   }}
                 />

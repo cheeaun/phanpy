@@ -28,7 +28,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 
 function fetchAccount(id) {
-  return masto.accounts.fetch(id);
+  return masto.v1.accounts.fetch(id);
 }
 const memFetchAccount = mem(fetchAccount);
 
@@ -521,10 +521,12 @@ function Status({
                           reblogsCount: reblogsCount + (reblogged ? -1 : 1),
                         });
                         if (reblogged) {
-                          const newStatus = await masto.statuses.unreblog(id);
+                          const newStatus = await masto.v1.statuses.unreblog(
+                            id,
+                          );
                           states.statuses.set(newStatus.id, newStatus);
                         } else {
-                          const newStatus = await masto.statuses.reblog(id);
+                          const newStatus = await masto.v1.statuses.reblog(id);
                           states.statuses.set(newStatus.id, newStatus);
                           states.statuses.set(
                             newStatus.reblog.id,
@@ -558,10 +560,12 @@ function Status({
                           favouritesCount + (favourited ? -1 : 1),
                       });
                       if (favourited) {
-                        const newStatus = await masto.statuses.unfavourite(id);
+                        const newStatus = await masto.v1.statuses.unfavourite(
+                          id,
+                        );
                         states.statuses.set(newStatus.id, newStatus);
                       } else {
-                        const newStatus = await masto.statuses.favourite(id);
+                        const newStatus = await masto.v1.statuses.favourite(id);
                         states.statuses.set(newStatus.id, newStatus);
                       }
                     } catch (e) {
@@ -587,10 +591,12 @@ function Status({
                         bookmarked: !bookmarked,
                       });
                       if (bookmarked) {
-                        const newStatus = await masto.statuses.unbookmark(id);
+                        const newStatus = await masto.v1.statuses.unbookmark(
+                          id,
+                        );
                         states.statuses.set(newStatus.id, newStatus);
                       } else {
-                        const newStatus = await masto.statuses.bookmark(id);
+                        const newStatus = await masto.v1.statuses.bookmark(id);
                         states.statuses.set(newStatus.id, newStatus);
                       }
                     } catch (e) {
@@ -942,7 +948,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
           setUIState('loading');
           (async () => {
             try {
-              const pollResponse = await masto.poll.fetch(id);
+              const pollResponse = await masto.v1.poll.fetch(id);
               onUpdate(pollResponse);
             } catch (e) {
               // Silent fail
@@ -1026,7 +1032,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
             });
             console.log(votes);
             setUIState('loading');
-            const pollResponse = await masto.poll.vote(id, {
+            const pollResponse = await masto.v1.poll.vote(id, {
               choices: votes,
             });
             console.log(pollResponse);
@@ -1075,7 +1081,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
                   setUIState('loading');
                   (async () => {
                     try {
-                      const pollResponse = await masto.poll.fetch(id);
+                      const pollResponse = await masto.v1.poll.fetch(id);
                       onUpdate(pollResponse);
                     } catch (e) {
                       // Silent fail
@@ -1119,7 +1125,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
     setUIState('loading');
     (async () => {
       try {
-        const editHistory = await masto.statuses.fetchHistory(statusID);
+        const editHistory = await masto.v1.statuses.listHistory(statusID);
         console.log(editHistory);
         setEditHistory(editHistory);
         setUIState('default');

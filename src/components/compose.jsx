@@ -90,7 +90,7 @@ function Compose({
   const customEmojis = useRef();
   useEffect(() => {
     (async () => {
-      const emojis = await masto.customEmojis.fetchAll();
+      const emojis = await masto.v1.customEmojis.list();
       console.log({ emojis });
       customEmojis.current = emojis;
     })();
@@ -161,7 +161,9 @@ function Compose({
       setUIState('loading');
       (async () => {
         try {
-          const statusSource = await masto.statuses.fetchSource(editStatus.id);
+          const statusSource = await masto.v1.statuses.fetchSource(
+            editStatus.id,
+          );
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
@@ -236,15 +238,16 @@ function Compose({
         }[key];
         provide(
           new Promise((resolve) => {
-            const resultsIterator = masto.search({
+            const searchResults = masto.v2.search({
               type,
               q: text,
               limit: 5,
             });
-            resultsIterator.next().then(({ value }) => {
+            searchResults.then((value) => {
               if (text !== textExpanderTextRef.current) {
                 return;
               }
+              console.log({ value, type, v: value[type] });
               const results = value[type];
               console.log('RESULTS', value, results);
               let html = '';
@@ -614,16 +617,18 @@ function Compose({
                     // If already uploaded
                     return attachment;
                   } else {
-                    const params = {
+                    const params = removeNullUndefined({
                       file,
                       description,
-                    };
-                    return masto.mediaAttachments.create(params).then((res) => {
-                      if (res.id) {
-                        attachment.id = res.id;
-                      }
-                      return res;
                     });
+                    return masto.v2.mediaAttachments
+                      .create(params)
+                      .then((res) => {
+                        if (res.id) {
+                          attachment.id = res.id;
+                        }
+                        return res;
+                      });
                   }
                 });
                 const results = await Promise.allSettled(mediaPromises);
@@ -648,7 +653,7 @@ function Compose({
                 console.log({ results, mediaAttachments });
               }
 
-              const params = {
+              let params = {
                 status,
                 spoilerText,
                 sensitive,
@@ -659,13 +664,17 @@ function Compose({
                 params.visibility = visibility;
                 params.inReplyToId = replyToStatus?.id || undefined;
               }
+              params = removeNullUndefined(params);
               console.log('POST', params);
 
               let newStatus;
               if (editStatus) {
-                newStatus = await masto.statuses.update(editStatus.id, params);
+                newStatus = await masto.v1.statuses.update(
+                  editStatus.id,
+                  params,
+                );
               } else {
-                newStatus = await masto.statuses.create(params);
+                newStatus = await masto.v1.statuses.create(params);
               }
               setUIState('default');
 
@@ -1127,6 +1136,15 @@ function countableText(inputText) {
   return inputText
     .replace(urlRegexObj, urlPlaceholder)
     .replace(usernameRegex, '$1@$3');
+}
+
+function removeNullUndefined(obj) {
+  for (let key in obj) {
+    if (obj[key] === null || obj[key] === undefined) {
+      delete obj[key];
+    }
+  }
+  return obj;
 }
 
 export default Compose;

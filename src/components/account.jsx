@@ -20,7 +20,7 @@ function Account({ account }) {
       setUIState('loading');
       (async () => {
         try {
-          const info = await masto.accounts.lookup({
+          const info = await masto.v1.accounts.lookup({
             acct: account,
             skip_webfinger: false,
           });
@@ -69,7 +69,9 @@ function Account({ account }) {
       setRelationshipUIState('loading');
       (async () => {
         try {
-          const relationships = await masto.accounts.fetchRelationships([id]);
+          const relationships = await masto.v1.accounts.fetchRelationships([
+            id,
+          ]);
           console.log('fetched relationship', relationships);
           if (relationships.length) {
             setRelationship(relationships[0]);
@@ -200,10 +202,12 @@ function Account({ account }) {
                             'Are you sure that you want to unfollow this account?',
                           );
                           if (yes) {
-                            newRelationship = await masto.accounts.unfollow(id);
+                            newRelationship = await masto.v1.accounts.unfollow(
+                              id,
+                            );
                           }
                         } else {
-                          newRelationship = await masto.accounts.follow(id);
+                          newRelationship = await masto.v1.accounts.follow(id);
                         }
                         if (newRelationship) setRelationship(newRelationship);
                         setRelationshipUIState('default');

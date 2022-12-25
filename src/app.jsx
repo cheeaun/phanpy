@@ -27,7 +27,7 @@ const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
 window.__STATES__ = states;
 
 async function startStream() {
-  const stream = await masto.stream.streamUser();
+  const stream = await masto.v1.stream.streamUser();
   console.log('STREAM START', { stream });
   stream.on('update', (status) => {
     console.log('UPDATE', status);
@@ -119,22 +119,20 @@ function startVisibility() {
           // Buffer for WS reconnect
           (async () => {
             try {
-              const fetchHome = masto.timelines.fetchHome({
+              const fetchHome = masto.v1.timelines.listHome({
                 limit: 2,
                 // Need 2 because "new posts" only appear when there are 2 or more
               });
-              const fetchNotifications = masto.notifications
-                .iterate({
-                  limit: 1,
-                })
-                .next();
+              const fetchNotifications = masto.v1.notifications.list({
+                limit: 1,
+              });
 
               const newStatuses = await fetchHome;
               if (
-                newStatuses.value.length &&
-                newStatuses.value[0].id !== states.home[0].id
+                newStatuses.length &&
+                newStatuses[0].id !== states.home[0].id
               ) {
-                states.homeNew = newStatuses.value.map((status) => {
+                states.homeNew = newStatuses.map((status) => {
                   states.statuses.set(status.id, status);
                   if (status.reblog) {
                     states.statuses.set(status.reblog.id, status.reblog);
@@ -148,8 +146,8 @@ function startVisibility() {
               }
 
               const newNotifications = await fetchNotifications;
-              if (newNotifications.value.length) {
-                const notification = newNotifications.value[0];
+              if (newNotifications.length) {
+                const notification = newNotifications[0];
                 const inNotificationsNew = states.notificationsNew.find(
                   (n) => n.id === notification.id,
                 );
@@ -242,7 +240,7 @@ export function App() {
           timeout: 30_000,
         });
 
-        const mastoAccount = await masto.accounts.verifyCredentials();
+        const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
         console.log({ tokenJSON, mastoAccount });
 
@@ -307,7 +305,7 @@ export function App() {
 
         // Collect instance info
         (async () => {
-          const info = await masto.instances.fetch();
+          const info = await masto.v2.instance.fetch();
           console.log(info);
           const { uri } = info;
           const instances = store.local.getJSON('instances') || {};

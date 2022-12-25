@@ -72,8 +72,8 @@ function StatusPage({ id }) {
     }
 
     (async () => {
-      const heroFetch = masto.statuses.fetch(id);
-      const contextFetch = masto.statuses.fetchContext(id);
+      const heroFetch = masto.v1.statuses.fetch(id);
+      const contextFetch = masto.v1.statuses.fetchContext(id);
 
       const hasStatus = snapStates.statuses.has(id);
       let heroStatus = snapStates.statuses.get(id);

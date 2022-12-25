@@ -16,18 +16,18 @@ function Home({ hidden }) {
   const [showMore, setShowMore] = useState(false);
 
   const homeIterator = useRef(
-    masto.timelines.iterateHome({
+    masto.v1.timelines.listHome({
       limit: LIMIT,
     }),
-  ).current;
+  );
   async function fetchStatuses(firstLoad) {
-    const allStatuses = await homeIterator.next(
-      firstLoad
-        ? {
-            limit: LIMIT,
-          }
-        : undefined,
-    );
+    if (firstLoad) {
+      // Reset iterator
+      homeIterator.current = masto.v1.timelines.listHome({
+        limit: LIMIT,
+      });
+    }
+    const allStatuses = await homeIterator.current.next();
     if (allStatuses.value <= 0) {
       return { done: true };
     }

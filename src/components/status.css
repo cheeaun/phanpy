@@ -392,18 +392,17 @@
   border: 1px solid var(--outline-color);
   overflow: hidden;
   color: inherit;
-  align-items: center;
+  align-items: stretch;
   background: var(--bg-color);
+  max-height: 160px;
 }
 .card .image {
-  /* min-width: 120px; */
-  width: 50%;
-  max-width: 160px;
+  width: 35%;
   height: auto;
-  min-height: 120px;
-  max-height: 160px;
-  object-fit: cover;
+  flex-grow: 1;
   border-inline-end: 1px solid var(--outline-color);
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
 }
 .card:hover .image {
   animation: position-object 5s ease-in-out 1s 5;
@@ -414,6 +413,8 @@
 .card .meta-container {
   padding: 8px;
   min-width: 0;
+  flex-grow: 1;
+  align-self: center;
 }
 .card .title {
   line-height: 1.25;
@@ -431,10 +432,14 @@
   font-size: smaller;
   opacity: 0.75;
   margin: 0;
-  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  display: block;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 .card .meta.domain {
   opacity: 1;

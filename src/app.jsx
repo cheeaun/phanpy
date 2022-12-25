@@ -120,8 +120,7 @@ function startVisibility() {
           (async () => {
             try {
               const fetchHome = masto.v1.timelines.listHome({
-                limit: 2,
-                // Need 2 because "new posts" only appear when there are 2 or more
+                limit: 1,
               });
               const fetchNotifications = masto.v1.notifications.list({
                 limit: 1,

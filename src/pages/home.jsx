@@ -78,6 +78,9 @@ function Home({ hidden }) {
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          onDblClick={() => {
+            loadStatuses(true);
+          }}
         >
           <div class="header-side">
             <button

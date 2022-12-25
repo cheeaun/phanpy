@@ -755,14 +755,19 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (showOriginal && isGIF) {
-            try {
-              if (videoRef.current.paused) {
-                videoRef.current.play();
-              } else {
-                videoRef.current.pause();
-              }
-            } catch (e) {}
+          if (isGIF) {
+            // Hmm, the videoRef might conflict here
+            if (showOriginal) {
+              try {
+                if (videoRef.current.paused) {
+                  videoRef.current.play();
+                } else {
+                  videoRef.current.pause();
+                }
+              } catch (e) {}
+            } else {
+              videoRef.current.pause();
+            }
           }
           onClick(e);
         }}

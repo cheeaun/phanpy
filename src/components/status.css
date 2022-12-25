@@ -605,25 +605,20 @@ a.card:hover {
 }
 @keyframes hearted {
   20% {
-    transform: rotate(10deg) scale(1);
+    transform: scale(1.25) translateY(-1px);
   }
-  40% {
-    transform: rotate(-10deg) scale(1.25);
+  45% {
+    transform: scale(1);
   }
-  60% {
-    transform: rotate(10deg) scale(1.75);
-  }
-  80% {
-    transform: rotate(-10deg) scale(2);
+  70% {
+    transform: scale(1.5) translateY(-2px);
   }
   100% {
-    transform: rotate(10deg) scale(2.25);
-    opacity: 0;
+    transform: scale(1);
   }
 }
 .status .action > button.plain.favourite-button.checked .icon {
-  transform-origin: bottom center;
-  animation: hearted 1s ease-in-out;
+  animation: hearted 1s ease-out;
 }
 .status .action > button.plain.bookmark-button.checked {
   color: var(--link-color);

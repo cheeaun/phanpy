@@ -694,19 +694,15 @@ meter.donut {
   appearance: none;
 }
 
-meter.donut:is(
-    ::-webkit-progress-inner-element,
-    ::-webkit-progress-bar,
-    ::-webkit-progress-value,
-    ::-webkit-meter-bar,
-    ::-webkit-meter-optimum-value,
-    ::-webkit-meter-suboptimum-value,
-    ::-webkit-meter-even-less-good-value
-  ) {
+meter.donut::-webkit-meter-inner-element,
+meter.donut::-webkit-meter-bar,
+meter.donut::-webkit-meter-optimum-value,
+meter.donut::-webkit-meter-suboptimum-value,
+meter.donut::-webkit-meter-even-less-good-value {
   display: none;
 }
 
-meter.donut:is(::-moz-progress-bar, ::-moz-meter-bar) {
+meter.donut::-moz-meter-bar {
   background: transparent;
 }
 

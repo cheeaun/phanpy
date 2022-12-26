@@ -107,7 +107,7 @@ async function startStream() {
 
 function startVisibility() {
   const handleVisibilityChange = () => {
-    if (document.hidden) {
+    if (document.visibilityState === 'hidden') {
       const timestamp = Date.now();
       store.session.set('lastHidden', timestamp);
     } else {

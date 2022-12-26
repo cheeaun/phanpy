@@ -215,6 +215,11 @@
   overflow: hidden;
   position: relative;
 }
+.timeline-deck .status-reblog .status .content {
+  /* Deprioritise long-form boosts */
+  max-height: 40vh;
+  max-height: 40dvh;
+}
 .timeline-deck .status .content.truncated {
   mask-image: linear-gradient(
     to top,

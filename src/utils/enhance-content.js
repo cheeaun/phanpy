@@ -39,7 +39,7 @@ function enhanceContent(content, opts = {}) {
     const pre = document.createElement('pre');
     // Replace <br /> with newlines
     block.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
-    pre.innerHTML = `<code>${block.innerText.trim()}</code>`;
+    pre.innerHTML = `<code>${block.innerHTML.trim()}</code>`;
     block.replaceWith(pre);
   });
 

@@ -276,7 +276,7 @@ function Compose({
                         )}" width="16" height="16" alt="" loading="lazy" />
                       </span>
                       <span>
-                        <b>${encodeHTML(displayNameWithEmoji || username)}</b>
+                        <b>${displayNameWithEmoji || username}</b>
                         <br>@${encodeHTML(acct)}
                       </span>
                     </li>

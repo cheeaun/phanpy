@@ -658,16 +658,23 @@ function Compose({
                 console.log({ results, mediaAttachments });
               }
 
+              /* NOTE:
+                Using snakecase here because masto.js's `isObject` returns false for `params`, ONLY happens when opening in pop-out window. This is maybe due to `window.masto` variable being passed from the parent window. The check that failed is `x.constructor === Object`, so maybe the `Object` in new window is different than parent window's?
+                Code: https://github.com/neet/masto.js/blob/dd0d649067b6a2b6e60fbb0a96597c373a255b00/src/serializers/is-object.ts#L2
+              */
               let params = {
                 status,
-                spoilerText,
+                // spoilerText,
+                spoiler_text: spoilerText,
                 sensitive,
                 poll,
-                mediaIds: mediaAttachments.map((attachment) => attachment.id),
+                // mediaIds: mediaAttachments.map((attachment) => attachment.id),
+                media_ids: mediaAttachments.map((attachment) => attachment.id),
               };
               if (!editStatus) {
                 params.visibility = visibility;
-                params.inReplyToId = replyToStatus?.id || undefined;
+                // params.inReplyToId = replyToStatus?.id || undefined;
+                params.in_reply_to_id = replyToStatus?.id || undefined;
               }
               params = removeNullUndefined(params);
               console.log('POST', params);

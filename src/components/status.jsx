@@ -953,7 +953,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
           setUIState('loading');
           (async () => {
             try {
-              const pollResponse = await masto.v1.poll.fetch(id);
+              const pollResponse = await masto.v1.polls.fetch(id);
               onUpdate(pollResponse);
             } catch (e) {
               // Silent fail
@@ -1038,7 +1038,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
             });
             console.log(votes);
             setUIState('loading');
-            const pollResponse = await masto.v1.poll.vote(id, {
+            const pollResponse = await masto.v1.polls.vote(id, {
               choices: votes,
             });
             console.log(pollResponse);
@@ -1087,7 +1087,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
                   setUIState('loading');
                   (async () => {
                     try {
-                      const pollResponse = await masto.v1.poll.fetch(id);
+                      const pollResponse = await masto.v1.polls.fetch(id);
                       onUpdate(pollResponse);
                     } catch (e) {
                       // Silent fail

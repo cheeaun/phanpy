@@ -308,9 +308,9 @@ export function App() {
         (async () => {
           const info = await masto.v2.instance.fetch();
           console.log(info);
-          const { uri } = info;
+          const { uri, domain } = info;
           const instances = store.local.getJSON('instances') || {};
-          instances[uri] = info;
+          instances[domain || uri] = info;
           store.local.setJSON('instances', instances);
         })();
       });

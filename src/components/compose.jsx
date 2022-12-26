@@ -58,13 +58,19 @@ function Compose({
   ).info;
 
   const configuration = useMemo(() => {
-    const instances = store.local.getJSON('instances');
-    const currentInstance = accounts.find(
-      (a) => a.info.id === currentAccount,
-    ).instanceURL;
-    const config = instances[currentInstance].configuration;
-    console.log(config);
-    return config;
+    try {
+      const instances = store.local.getJSON('instances');
+      const currentInstance = accounts.find(
+        (a) => a.info.id === currentAccount,
+      ).instanceURL;
+      const config = instances[currentInstance].configuration;
+      console.log(config);
+      return config;
+    } catch (e) {
+      alert('Failed to load instance configuration. Please try again.');
+      console.error(e);
+      return {};
+    }
   }, []);
 
   const {

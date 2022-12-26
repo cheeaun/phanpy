@@ -90,9 +90,14 @@ function Compose({
   const customEmojis = useRef();
   useEffect(() => {
     (async () => {
-      const emojis = await masto.v1.customEmojis.list();
-      console.log({ emojis });
-      customEmojis.current = emojis;
+      try {
+        const emojis = await masto.v1.customEmojis.list();
+        console.log({ emojis });
+        customEmojis.current = emojis;
+      } catch (e) {
+        // silent fail
+        console.error(e);
+      }
     })();
   }, []);
 

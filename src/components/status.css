@@ -215,6 +215,11 @@
   overflow: hidden;
   position: relative;
 }
+.timeline-deck .status-reblog .status .content {
+  /* Deprioritise long-form boosts */
+  max-height: 40vh;
+  max-height: 40dvh;
+}
 .timeline-deck .status .content.truncated {
   mask-image: linear-gradient(
     to top,
@@ -374,6 +379,7 @@
 }
 .status .media-gif video {
   object-fit: cover;
+  pointer-events: none;
 }
 .status .media-audio {
   border: 0;
@@ -392,18 +398,17 @@
   border: 1px solid var(--outline-color);
   overflow: hidden;
   color: inherit;
-  align-items: center;
+  align-items: stretch;
   background: var(--bg-color);
+  max-height: 160px;
 }
 .card .image {
-  /* min-width: 120px; */
-  width: 50%;
-  max-width: 160px;
+  width: 35%;
   height: auto;
-  min-height: 120px;
-  max-height: 160px;
-  object-fit: cover;
+  flex-grow: 1;
   border-inline-end: 1px solid var(--outline-color);
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
 }
 .card:hover .image {
   animation: position-object 5s ease-in-out 1s 5;
@@ -414,6 +419,8 @@
 .card .meta-container {
   padding: 8px;
   min-width: 0;
+  flex-grow: 1;
+  align-self: center;
 }
 .card .title {
   line-height: 1.25;
@@ -431,10 +438,14 @@
   font-size: smaller;
   opacity: 0.75;
   margin: 0;
-  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  display: block;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 .card .meta.domain {
   opacity: 1;
@@ -605,25 +616,20 @@ a.card:hover {
 }
 @keyframes hearted {
   20% {
-    transform: rotate(10deg) scale(1);
+    transform: scale(1.25) translateY(-1px);
   }
-  40% {
-    transform: rotate(-10deg) scale(1.25);
+  45% {
+    transform: scale(1);
   }
-  60% {
-    transform: rotate(10deg) scale(1.75);
-  }
-  80% {
-    transform: rotate(-10deg) scale(2);
+  70% {
+    transform: scale(1.5) translateY(-2px);
   }
   100% {
-    transform: rotate(10deg) scale(2.25);
-    opacity: 0;
+    transform: scale(1);
   }
 }
 .status .action > button.plain.favourite-button.checked .icon {
-  transform-origin: bottom center;
-  animation: hearted 1s ease-in-out;
+  animation: hearted 1s ease-out;
 }
 .status .action > button.plain.bookmark-button.checked {
   color: var(--link-color);
@@ -647,7 +653,7 @@ a.card:hover {
     opacity: 1;
   }
 }
-.status .actions > button.plain.bookmark-button.checked .icon {
+.status .action > button.plain.bookmark-button.checked .icon {
   animation: bookmarked 1s ease-in-out;
 }
 
@@ -665,6 +671,7 @@ a.card:hover {
     var(--bg-faded-color),
     transparent 160px
   );
+  white-space: pre-wrap;
 }
 
 .status .content p code {
@@ -701,7 +708,7 @@ a.card:hover {
 .shortcode-emoji {
   width: 1.2em;
   height: 1.2em;
-  vertical-align: middle;
+  vertical-align: text-bottom;
   object-fit: contain;
 }
 
@@ -710,6 +717,11 @@ a.card:hover {
 #edit-history {
   min-height: 50vh;
   min-height: 50dvh;
+}
+
+#edit-history h2 {
+  margin: 0;
+  padding: 0;
 }
 
 #edit-history :is(ol, ol li) {

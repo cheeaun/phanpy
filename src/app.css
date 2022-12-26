@@ -424,6 +424,14 @@ a.mention span {
   left: 50%;
   transform: translate(-50%, 0);
   font-size: 90%;
+  background: linear-gradient(
+    to bottom,
+    var(--button-bg-blur-color),
+    var(--button-bg-color)
+  );
+  backdrop-filter: blur(16px);
+  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
 }
 .updates-button .icon {
   vertical-align: top;
@@ -583,22 +591,36 @@ button.carousel-dot[disabled].active {
 }
 .sheet {
   align-self: flex-end;
+  display: flex;
+  flex-direction: column;
   max-height: 90vh;
   max-height: 90dvh;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: var(--bg-color);
   width: 100%;
   max-width: calc(40em - 50px - 16px);
   border-radius: 16px 16px 0 0;
-  padding: 16px;
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
-  padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-shadow: 0 -1px 32px var(--divider-color);
   animation: slide-up 0.2s var(--timing-function);
   border: 1px solid var(--outline-color);
+}
+.sheet header {
+  padding: 16px 16px 8px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+.sheet main {
+  overflow: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
+  padding: 16px 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10px);
+}
+.sheet header + main {
+  padding-top: 0;
 }
 
 /* TAG */
@@ -672,19 +694,15 @@ meter.donut {
   appearance: none;
 }
 
-meter.donut:is(
-    ::-webkit-progress-inner-element,
-    ::-webkit-progress-bar,
-    ::-webkit-progress-value,
-    ::-webkit-meter-bar,
-    ::-webkit-meter-optimum-value,
-    ::-webkit-meter-suboptimum-value,
-    ::-webkit-meter-even-less-good-value
-  ) {
+meter.donut::-webkit-meter-inner-element,
+meter.donut::-webkit-meter-bar,
+meter.donut::-webkit-meter-optimum-value,
+meter.donut::-webkit-meter-suboptimum-value,
+meter.donut::-webkit-meter-even-less-good-value {
   display: none;
 }
 
-meter.donut:is(::-moz-progress-bar, ::-moz-meter-bar) {
+meter.donut::-moz-meter-bar {
   background: transparent;
 }
 
@@ -723,6 +741,28 @@ meter.donut:is(.warning, .danger, .explode):after {
 }
 meter.donut:is(.danger, .explode):after {
   color: var(--red-color);
+}
+
+/* TOAST */
+
+:root .toastify {
+  background-image: linear-gradient(
+    to bottom,
+    var(--button-bg-blur-color),
+    var(--button-bg-color)
+  );
+  backdrop-filter: blur(16px);
+  color: var(--button-text-color);
+  border-radius: 10em;
+  padding: 8px 16px;
+  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
+}
+:root .toastify:hover {
+  filter: brightness(1.2);
+}
+:root .toastify:active {
+  filter: brightness(0.8);
 }
 
 @media (min-width: 40em) {

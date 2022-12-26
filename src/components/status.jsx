@@ -28,7 +28,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 
 function fetchAccount(id) {
-  return masto.accounts.fetch(id);
+  return masto.v1.accounts.fetch(id);
 }
 const memFetchAccount = mem(fetchAccount);
 
@@ -521,10 +521,12 @@ function Status({
                           reblogsCount: reblogsCount + (reblogged ? -1 : 1),
                         });
                         if (reblogged) {
-                          const newStatus = await masto.statuses.unreblog(id);
+                          const newStatus = await masto.v1.statuses.unreblog(
+                            id,
+                          );
                           states.statuses.set(newStatus.id, newStatus);
                         } else {
-                          const newStatus = await masto.statuses.reblog(id);
+                          const newStatus = await masto.v1.statuses.reblog(id);
                           states.statuses.set(newStatus.id, newStatus);
                           states.statuses.set(
                             newStatus.reblog.id,
@@ -533,6 +535,8 @@ function Status({
                         }
                       } catch (e) {
                         console.error(e);
+                        // Revert optimistism
+                        states.statuses.set(id, status);
                       }
                     }}
                   />
@@ -556,14 +560,18 @@ function Status({
                           favouritesCount + (favourited ? -1 : 1),
                       });
                       if (favourited) {
-                        const newStatus = await masto.statuses.unfavourite(id);
+                        const newStatus = await masto.v1.statuses.unfavourite(
+                          id,
+                        );
                         states.statuses.set(newStatus.id, newStatus);
                       } else {
-                        const newStatus = await masto.statuses.favourite(id);
+                        const newStatus = await masto.v1.statuses.favourite(id);
                         states.statuses.set(newStatus.id, newStatus);
                       }
                     } catch (e) {
                       console.error(e);
+                      // Revert optimistism
+                      states.statuses.set(statusID, status);
                     }
                   }}
                 />
@@ -583,14 +591,18 @@ function Status({
                         bookmarked: !bookmarked,
                       });
                       if (bookmarked) {
-                        const newStatus = await masto.statuses.unbookmark(id);
+                        const newStatus = await masto.v1.statuses.unbookmark(
+                          id,
+                        );
                         states.statuses.set(newStatus.id, newStatus);
                       } else {
-                        const newStatus = await masto.statuses.bookmark(id);
+                        const newStatus = await masto.v1.statuses.bookmark(id);
                         states.statuses.set(newStatus.id, newStatus);
                       }
                     } catch (e) {
                       console.error(e);
+                      // Revert optimistism
+                      states.statuses.set(statusID, status);
                     }
                   }}
                 />
@@ -743,14 +755,19 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (showOriginal && isGIF) {
-            try {
-              if (videoRef.current.paused) {
-                videoRef.current.play();
-              } else {
-                videoRef.current.pause();
-              }
-            } catch (e) {}
+          if (isGIF) {
+            // Hmm, the videoRef might conflict here
+            if (showOriginal) {
+              try {
+                if (videoRef.current.paused) {
+                  videoRef.current.play();
+                } else {
+                  videoRef.current.pause();
+                }
+              } catch (e) {}
+            } else {
+              videoRef.current.pause();
+            }
           }
           onClick(e);
         }}
@@ -936,7 +953,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
           setUIState('loading');
           (async () => {
             try {
-              const pollResponse = await masto.poll.fetch(id);
+              const pollResponse = await masto.v1.poll.fetch(id);
               onUpdate(pollResponse);
             } catch (e) {
               // Silent fail
@@ -970,10 +987,11 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
       {voted || expired ? (
         options.map((option, i) => {
           const { title, votesCount: optionVotesCount } = option;
-          const percentage =
-            ((optionVotesCount / pollVotesCount) * 100).toFixed(
-              roundPrecision,
-            ) || 0;
+          const percentage = pollVotesCount
+            ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
+                roundPrecision,
+              )
+            : 0;
           // check if current poll choice is the leading one
           const isLeading =
             optionVotesCount > 0 &&
@@ -1020,7 +1038,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
             });
             console.log(votes);
             setUIState('loading');
-            const pollResponse = await masto.poll.vote(id, {
+            const pollResponse = await masto.v1.poll.vote(id, {
               choices: votes,
             });
             console.log(pollResponse);
@@ -1069,7 +1087,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
                   setUIState('loading');
                   (async () => {
                     try {
-                      const pollResponse = await masto.poll.fetch(id);
+                      const pollResponse = await masto.v1.poll.fetch(id);
                       onUpdate(pollResponse);
                     } catch (e) {
                       // Silent fail
@@ -1113,7 +1131,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
     setUIState('loading');
     (async () => {
       try {
-        const editHistory = await masto.statuses.fetchHistory(statusID);
+        const editHistory = await masto.v1.statuses.listHistory(statusID);
         console.log(editHistory);
         setEditHistory(editHistory);
         setUIState('default');
@@ -1128,46 +1146,50 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
 
   return (
     <div id="edit-history" class="sheet">
-      {/* <button type="button" class="close-button plain large" onClick={onClose}>
+      <header>
+        {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
       </button> */}
-      <h2>Edit History</h2>
-      {uiState === 'error' && <p>Failed to load history</p>}
-      {uiState === 'loading' && (
-        <p>
-          <Loader abrupt /> Loading&hellip;
-        </p>
-      )}
-      {editHistory.length > 0 && (
-        <ol>
-          {editHistory.map((status) => {
-            const { createdAt } = status;
-            const createdAtDate = new Date(createdAt);
-            return (
-              <li key={createdAt} class="history-item">
-                <h3>
-                  <time>
-                    {Intl.DateTimeFormat('en', {
-                      // Show year if not current year
-                      year:
-                        createdAtDate.getFullYear() === currentYear
-                          ? undefined
-                          : 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      weekday: 'short',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    }).format(createdAtDate)}
-                  </time>
-                </h3>
-                <Status status={status} size="s" withinContext readOnly />
-              </li>
-            );
-          })}
-        </ol>
-      )}
+        <h2>Edit History</h2>
+        {uiState === 'error' && <p>Failed to load history</p>}
+        {uiState === 'loading' && (
+          <p>
+            <Loader abrupt /> Loading&hellip;
+          </p>
+        )}
+      </header>
+      <main>
+        {editHistory.length > 0 && (
+          <ol>
+            {editHistory.map((status) => {
+              const { createdAt } = status;
+              const createdAtDate = new Date(createdAt);
+              return (
+                <li key={createdAt} class="history-item">
+                  <h3>
+                    <time>
+                      {Intl.DateTimeFormat('en', {
+                        // Show year if not current year
+                        year:
+                          createdAtDate.getFullYear() === currentYear
+                            ? undefined
+                            : 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        weekday: 'short',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      }).format(createdAtDate)}
+                    </time>
+                  </h3>
+                  <Status status={status} size="s" withinContext readOnly />
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </main>
     </div>
   );
 }

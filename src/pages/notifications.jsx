@@ -212,18 +212,18 @@ function Notifications() {
   const [onlyMentions, setOnlyMentions] = useState(false);
 
   const notificationsIterator = useRef(
-    masto.notifications.iterate({
+    masto.v1.notifications.list({
       limit: LIMIT,
     }),
-  ).current;
+  );
   async function fetchNotifications(firstLoad) {
-    const allNotifications = await notificationsIterator.next(
-      firstLoad
-        ? {
-            limit: LIMIT,
-          }
-        : undefined,
-    );
+    if (firstLoad) {
+      // Reset iterator
+      notificationsIterator.current = masto.v1.notifications.list({
+        limit: LIMIT,
+      });
+    }
+    const allNotifications = await notificationsIterator.current.next();
     if (allNotifications.value <= 0) {
       return { done: true };
     }

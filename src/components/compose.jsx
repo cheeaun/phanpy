@@ -90,9 +90,14 @@ function Compose({
   const customEmojis = useRef();
   useEffect(() => {
     (async () => {
-      const emojis = await masto.customEmojis.fetchAll();
-      console.log({ emojis });
-      customEmojis.current = emojis;
+      try {
+        const emojis = await masto.v1.customEmojis.list();
+        console.log({ emojis });
+        customEmojis.current = emojis;
+      } catch (e) {
+        // silent fail
+        console.error(e);
+      }
     })();
   }, []);
 
@@ -161,7 +166,9 @@ function Compose({
       setUIState('loading');
       (async () => {
         try {
-          const statusSource = await masto.statuses.fetchSource(editStatus.id);
+          const statusSource = await masto.v1.statuses.fetchSource(
+            editStatus.id,
+          );
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
@@ -236,15 +243,16 @@ function Compose({
         }[key];
         provide(
           new Promise((resolve) => {
-            const resultsIterator = masto.search({
+            const searchResults = masto.v2.search({
               type,
               q: text,
               limit: 5,
             });
-            resultsIterator.next().then(({ value }) => {
+            searchResults.then((value) => {
               if (text !== textExpanderTextRef.current) {
                 return;
               }
+              console.log({ value, type, v: value[type] });
               const results = value[type];
               console.log('RESULTS', value, results);
               let html = '';
@@ -268,7 +276,7 @@ function Compose({
                         )}" width="16" height="16" alt="" loading="lazy" />
                       </span>
                       <span>
-                        <b>${encodeHTML(displayNameWithEmoji || username)}</b>
+                        <b>${displayNameWithEmoji || username}</b>
                         <br>@${encodeHTML(acct)}
                       </span>
                     </li>
@@ -614,16 +622,18 @@ function Compose({
                     // If already uploaded
                     return attachment;
                   } else {
-                    const params = {
+                    const params = removeNullUndefined({
                       file,
                       description,
-                    };
-                    return masto.mediaAttachments.create(params).then((res) => {
-                      if (res.id) {
-                        attachment.id = res.id;
-                      }
-                      return res;
                     });
+                    return masto.v2.mediaAttachments
+                      .create(params)
+                      .then((res) => {
+                        if (res.id) {
+                          attachment.id = res.id;
+                        }
+                        return res;
+                      });
                   }
                 });
                 const results = await Promise.allSettled(mediaPromises);
@@ -648,24 +658,35 @@ function Compose({
                 console.log({ results, mediaAttachments });
               }
 
-              const params = {
+              /* NOTE:
+                Using snakecase here because masto.js's `isObject` returns false for `params`, ONLY happens when opening in pop-out window. This is maybe due to `window.masto` variable being passed from the parent window. The check that failed is `x.constructor === Object`, so maybe the `Object` in new window is different than parent window's?
+                Code: https://github.com/neet/masto.js/blob/dd0d649067b6a2b6e60fbb0a96597c373a255b00/src/serializers/is-object.ts#L2
+              */
+              let params = {
                 status,
-                spoilerText,
+                // spoilerText,
+                spoiler_text: spoilerText,
                 sensitive,
                 poll,
-                mediaIds: mediaAttachments.map((attachment) => attachment.id),
+                // mediaIds: mediaAttachments.map((attachment) => attachment.id),
+                media_ids: mediaAttachments.map((attachment) => attachment.id),
               };
               if (!editStatus) {
                 params.visibility = visibility;
-                params.inReplyToId = replyToStatus?.id || undefined;
+                // params.inReplyToId = replyToStatus?.id || undefined;
+                params.in_reply_to_id = replyToStatus?.id || undefined;
               }
+              params = removeNullUndefined(params);
               console.log('POST', params);
 
               let newStatus;
               if (editStatus) {
-                newStatus = await masto.statuses.update(editStatus.id, params);
+                newStatus = await masto.v1.statuses.update(
+                  editStatus.id,
+                  params,
+                );
               } else {
-                newStatus = await masto.statuses.create(params);
+                newStatus = await masto.v1.statuses.create(params);
               }
               setUIState('default');
 
@@ -1127,6 +1148,15 @@ function countableText(inputText) {
   return inputText
     .replace(urlRegexObj, urlPlaceholder)
     .replace(usernameRegex, '$1@$3');
+}
+
+function removeNullUndefined(obj) {
+  for (let key in obj) {
+    if (obj[key] === null || obj[key] === undefined) {
+      delete obj[key];
+    }
+  }
+  return obj;
 }
 
 export default Compose;

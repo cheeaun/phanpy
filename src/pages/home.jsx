@@ -16,18 +16,18 @@ function Home({ hidden }) {
   const [showMore, setShowMore] = useState(false);
 
   const homeIterator = useRef(
-    masto.timelines.iterateHome({
+    masto.v1.timelines.listHome({
       limit: LIMIT,
     }),
-  ).current;
+  );
   async function fetchStatuses(firstLoad) {
-    const allStatuses = await homeIterator.next(
-      firstLoad
-        ? {
-            limit: LIMIT,
-          }
-        : undefined,
-    );
+    if (firstLoad) {
+      // Reset iterator
+      homeIterator.current = masto.v1.timelines.listHome({
+        limit: LIMIT,
+      });
+    }
+    const allStatuses = await homeIterator.current.next();
     if (allStatuses.value <= 0) {
       return { done: true };
     }
@@ -78,6 +78,9 @@ function Home({ hidden }) {
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          onDblClick={() => {
+            loadStatuses(true);
+          }}
         >
           <div class="header-side">
             <button
@@ -107,7 +110,7 @@ function Home({ hidden }) {
               <Icon icon="notification" size="l" alt="Notifications" />
             </a>
           </div>
-          {snapStates.homeNew.length > 1 && (
+          {snapStates.homeNew.length > 0 && (
             <button
               class="updates-button"
               type="button"

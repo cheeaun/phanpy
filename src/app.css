@@ -424,6 +424,14 @@ a.mention span {
   left: 50%;
   transform: translate(-50%, 0);
   font-size: 90%;
+  background: linear-gradient(
+    to bottom,
+    var(--button-bg-blur-color),
+    var(--button-bg-color)
+  );
+  backdrop-filter: blur(16px);
+  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
 }
 .updates-button .icon {
   vertical-align: top;
@@ -737,6 +745,28 @@ meter.donut:is(.warning, .danger, .explode):after {
 }
 meter.donut:is(.danger, .explode):after {
   color: var(--red-color);
+}
+
+/* TOAST */
+
+:root .toastify {
+  background-image: linear-gradient(
+    to bottom,
+    var(--button-bg-blur-color),
+    var(--button-bg-color)
+  );
+  backdrop-filter: blur(16px);
+  color: var(--button-text-color);
+  border-radius: 10em;
+  padding: 8px 16px;
+  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
+}
+:root .toastify:hover {
+  filter: brightness(1.2);
+}
+:root .toastify:active {
+  filter: brightness(0.8);
 }
 
 @media (min-width: 40em) {

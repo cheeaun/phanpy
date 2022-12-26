@@ -1,9 +1,11 @@
 import './app.css';
+import 'toastify-js/src/toastify.css';
 
 import { createHashHistory } from 'history';
 import { login } from 'masto';
-import Router from 'preact-router';
+import Router, { route } from 'preact-router';
 import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
+import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
@@ -382,6 +384,18 @@ export function App() {
               states.showCompose = false;
               if (newStatus) {
                 states.reloadStatusPage++;
+                const toast = Toastify({
+                  text: 'Status posted. Check it out.',
+                  duration: 10_000, // 10 seconds
+                  gravity: 'bottom',
+                  position: 'center',
+                  // destination: `/#/s/${newStatus.id}`,
+                  onClick: () => {
+                    toast.hideToast();
+                    route(`/s/${newStatus.id}`);
+                  },
+                });
+                toast.showToast();
               }
             }}
           />

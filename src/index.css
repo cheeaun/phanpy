@@ -172,6 +172,31 @@ button,
   border-radius: 0;
 }
 
+:is(button, .button).swap {
+  display: grid;
+  /* 1 column, 1 row */
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+:is(button, .button).swap > * {
+  grid-column: 1;
+  grid-row: 1;
+  transition: opacity 0.3s;
+}
+:is(button, .button).swap > *:nth-child(2) {
+  opacity: 0;
+}
+:is(button, .button).swap:hover > *:nth-child(2) {
+  opacity: 1;
+}
+:is(button, .button).swap[data-swap-state='danger']:hover {
+  color: var(--red-color);
+  border-color: var(--red-color);
+}
+:is(button, .button).swap:hover > *:nth-child(1) {
+  opacity: 0;
+}
+
 input[type='text'],
 textarea,
 select {

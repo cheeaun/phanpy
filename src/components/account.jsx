@@ -190,7 +190,8 @@ function Account({ account }) {
               {relationshipUIState !== 'loading' && relationship && (
                 <button
                   type="button"
-                  class={`${following ? 'light danger' : ''}`}
+                  class={`${following ? 'light' : ''} swap`}
+                  data-swap-state="danger"
                   disabled={relationshipUIState === 'loading'}
                   onClick={() => {
                     setRelationshipUIState('loading');
@@ -218,7 +219,15 @@ function Account({ account }) {
                     })();
                   }}
                 >
-                  {following ? 'Unfollow…' : 'Follow'}
+                  {following ? (
+                    <>
+                      <span>Following</span>
+                      <span>Unfollow…</span>
+                    </>
+                  ) : (
+                    'Follow'
+                  )}
+                  {/* {following ? 'Unfollow…' : 'Follow'} */}
                 </button>
               )}
             </p>

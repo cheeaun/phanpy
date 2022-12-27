@@ -385,6 +385,7 @@ function Status({
           />
           {!!poll && (
             <Poll
+              lang={language}
               poll={poll}
               readOnly={readOnly}
               onUpdate={(newPoll) => {
@@ -926,7 +927,7 @@ function Card({ card }) {
   }
 }
 
-function Poll({ poll, readOnly, onUpdate = () => {} }) {
+function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
   const [uiState, setUIState] = useState('default');
 
   const {
@@ -980,6 +981,7 @@ function Poll({ poll, readOnly, onUpdate = () => {} }) {
 
   return (
     <div
+      lang={lang}
       class={`poll ${readOnly ? 'read-only' : ''} ${
         uiState === 'loading' ? 'loading' : ''
       }`}

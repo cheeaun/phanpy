@@ -45,6 +45,7 @@ const ICONS = {
   reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
   thread: 'mingcute:route-line',
   group: 'mingcute:group-line',
+  bot: 'mingcute:android-2-line',
 };
 
 function Icon({ icon, size = 'm', alt, title, class: className = '' }) {

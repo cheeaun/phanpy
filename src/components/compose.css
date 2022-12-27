@@ -184,6 +184,15 @@
   filter: brightness(0.8);
 }
 
+#compose-container .toolbar-button .icon-text {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
 #compose-container text-expander {
   position: relative;
 }

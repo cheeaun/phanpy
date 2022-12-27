@@ -129,6 +129,13 @@ function Account({ account }) {
             <NameText account={info} showAcct external />
           </header>
           <main>
+            {bot && (
+              <>
+                <span class="tag">
+                  <Icon icon="bot" /> Automated
+                </span>
+              </>
+            )}
             <div
               class="note"
               dangerouslySetInnerHTML={{

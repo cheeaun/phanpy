@@ -617,10 +617,10 @@ button.carousel-dot[disabled].active {
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
   padding-bottom: max(16px, env(safe-area-inset-bottom));
-  mask-image: linear-gradient(to bottom, transparent 0%, black 10px);
 }
 .sheet header + main {
   padding-top: 0;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10px);
 }
 
 /* TAG */
@@ -634,6 +634,9 @@ button.carousel-dot[disabled].active {
   display: inline-block;
   margin: 4px;
   align-self: center;
+}
+.tag .icon {
+  vertical-align: middle;
 }
 
 /* MENU POPUP */

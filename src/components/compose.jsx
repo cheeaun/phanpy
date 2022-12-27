@@ -4,6 +4,7 @@ import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import stringLength from 'string-length';
 
+import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
@@ -14,6 +15,15 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Loader from './loader';
 import Status from './status';
+
+const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
+  const [code, common, native] = l;
+  acc[code] = {
+    common,
+    native,
+  };
+  return acc;
+}, {});
 
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
@@ -93,6 +103,9 @@ function Compose({
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
   const [sensitive, setSensitive] = useState(false);
+  const [language, setLanguage] = useState(
+    store.session.get('currentLanguage') || 'en',
+  );
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
 
@@ -122,7 +135,7 @@ function Compose({
 
   useEffect(() => {
     if (replyToStatus) {
-      const { spoilerText, visibility, sensitive } = replyToStatus;
+      const { spoilerText, visibility, language, sensitive } = replyToStatus;
       if (spoilerText && spoilerTextRef.current) {
         spoilerTextRef.current.value = spoilerText;
       }
@@ -141,6 +154,7 @@ function Compose({
       }
       focusTextarea();
       setVisibility(visibility);
+      setLanguage(language);
       setSensitive(sensitive);
     }
     if (draftStatus) {
@@ -148,6 +162,7 @@ function Compose({
         status,
         spoilerText,
         visibility,
+        language,
         sensitive,
         poll,
         mediaAttachments,
@@ -162,11 +177,13 @@ function Compose({
       focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
+      setLanguage(language);
       setSensitive(sensitive);
       setPoll(composablePoll);
       setMediaAttachments(mediaAttachments);
     } else if (editStatus) {
-      const { visibility, sensitive, poll, mediaAttachments } = editStatus;
+      const { visibility, language, sensitive, poll, mediaAttachments } =
+        editStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -186,6 +203,7 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
+          setLanguage(language);
           setSensitive(sensitive);
           setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -465,6 +483,7 @@ function Compose({
                     status: textareaRef.current.value,
                     spoilerText: spoilerTextRef.current.value,
                     visibility,
+                    language,
                     sensitive,
                     poll,
                     mediaAttachments: mediaAttachmentsWithIDs,
@@ -539,6 +558,7 @@ function Compose({
                         status: textareaRef.current.value,
                         spoilerText: spoilerTextRef.current.value,
                         visibility,
+                        language,
                         sensitive,
                         poll,
                         mediaAttachments: mediaAttachmentsWithIDs,
@@ -675,6 +695,7 @@ function Compose({
                 status,
                 // spoilerText,
                 spoiler_text: spoilerText,
+                language,
                 sensitive,
                 poll,
                 // mediaIds: mediaAttachments.map((attachment) => attachment.id),
@@ -932,6 +953,31 @@ function Compose({
               />{' '}
             </>
           )}
+          <label class="toolbar-button">
+            <span class="icon-text">
+              {supportedLanguagesMap[language].native}
+            </span>
+            <select
+              name="language"
+              value={language}
+              onChange={(e) => {
+                const { value } = e.target;
+                setLanguage(value);
+                store.session.set('language', value);
+              }}
+              disabled={uiState === 'loading'}
+            >
+              {supportedLanguages
+                .sort(([, commonA], [, commonB]) => {
+                  return commonA.localeCompare(commonB);
+                })
+                .map(([code, common, native]) => (
+                  <option value={code}>
+                    {common} ({native})
+                  </option>
+                ))}
+            </select>
+          </label>{' '}
           <button type="submit" class="large" disabled={uiState === 'loading'}>
             {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
           </button>

@@ -2,6 +2,7 @@ import preact from '@preact/preset-vite';
 import { execSync } from 'child_process';
 import { resolve } from 'path';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const { VITE_CLIENT_NAME: CLIENT_NAME, NODE_ENV } = loadEnv(
@@ -21,6 +22,7 @@ export default defineConfig({
   plugins: [
     preact(),
     splitVendorChunkPlugin(),
+    VitePluginHtmlEnv(),
     VitePWA({
       manifest: {
         name: CLIENT_NAME,

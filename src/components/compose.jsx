@@ -51,6 +51,8 @@ const menu = document.createElement('ul');
 menu.role = 'listbox';
 menu.className = 'text-expander-menu';
 
+const DEFAULT_LANG = 'en';
+
 function Compose({
   onClose,
   replyToStatus,
@@ -104,7 +106,7 @@ function Compose({
   const [visibility, setVisibility] = useState('public');
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
-    store.session.get('currentLanguage') || 'en',
+    store.session.get('currentLanguage') || DEFAULT_LANG,
   );
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
@@ -154,7 +156,7 @@ function Compose({
       }
       focusTextarea();
       setVisibility(visibility);
-      setLanguage(language);
+      setLanguage(language || DEFAULT_LANG);
       setSensitive(sensitive);
     }
     if (draftStatus) {
@@ -177,7 +179,7 @@ function Compose({
       focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
-      setLanguage(language);
+      setLanguage(language || DEFAULT_LANG);
       setSensitive(sensitive);
       setPoll(composablePoll);
       setMediaAttachments(mediaAttachments);
@@ -203,7 +205,7 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language);
+          setLanguage(language || DEFAULT_LANG);
           setSensitive(sensitive);
           setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -955,14 +957,14 @@ function Compose({
           )}
           <label class="toolbar-button">
             <span class="icon-text">
-              {supportedLanguagesMap[language].native}
+              {supportedLanguagesMap[language]?.native}
             </span>
             <select
               name="language"
               value={language}
               onChange={(e) => {
                 const { value } = e.target;
-                setLanguage(value);
+                setLanguage(value || DEFAULT_LANG);
                 store.session.set('language', value);
               }}
               disabled={uiState === 'loading'}

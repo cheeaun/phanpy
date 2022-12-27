@@ -3,17 +3,9 @@
   width: 16px;
   height: 16px;
   pointer-events: none;
-  animation: slow-appear 0.3s ease-in-out 1s both;
+  animation: appear 0.3s ease-in-out 1s both;
   vertical-align: middle;
   margin: 8px;
-}
-@keyframes slow-appear {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 .loader-container.abrupt {
   animation: none;

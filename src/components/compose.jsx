@@ -67,8 +67,11 @@ function Compose({
       console.log(config);
       return config;
     } catch (e) {
-      alert('Failed to load instance configuration. Please try again.');
       console.error(e);
+      alert('Failed to load instance configuration. Please try again.');
+      // Temporary fix for corrupted data
+      store.local.del('instances');
+      location.reload();
       return {};
     }
   }, []);

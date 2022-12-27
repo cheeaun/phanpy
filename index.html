@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Phanpy</title>
+    <title><{ VITE_CLIENT_NAME }></title>
     <meta
       name="description"
       content="Minimalistic opinionated Mastodon web client"
@@ -14,10 +14,10 @@
     <meta name="color-scheme" content="dark light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Phanpy" />
+    <meta name="apple-mobile-web-app-title" content="<{ VITE_CLIENT_NAME }>" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="canonical" href="https://phanpy.social" />
+    <link rel="canonical" href="<{ VITE_WEBSITE }>" />
     <meta
       name="theme-color"
       content="#fff"
@@ -28,13 +28,16 @@
       content="#242526"
       media="(prefers-color-scheme: dark)"
     />
-    <script>
+    <script vite-if="import.meta.env.VITE_APP_ENV === production">
+      var isDev = /dev\./.test(window.location.hostname);
       var _rollbarConfig = {
         accessToken: 'ec3e07829d324a29abf6c83472a9740d',
         captureUncaught: true,
         captureUnhandledRejections: true,
+        enabled: isDev,
+        hostSafeList: ['dev.phanpy.social', 'phanpy.social'],
         payload: {
-          environment: 'production',
+          environment: isDev ? 'development' : 'production',
         },
       };
       // Rollbar Snippet

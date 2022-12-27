@@ -83,11 +83,12 @@ function StatusPage({ id }) {
         states.statuses.set(id, heroStatus);
       } catch (e) {
         // Silent fail if status is cached
+        console.error(e);
         if (!hasStatus) {
           setUIState('error');
           alert('Error fetching status');
+          return;
         }
-        return;
       }
 
       try {

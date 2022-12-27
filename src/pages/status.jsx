@@ -36,6 +36,7 @@ function StatusPage({ id }) {
   useEffect(() => {
     const onScroll = debounce(() => {
       // console.log('onScroll');
+      if (!scrollableRef.current) return;
       const { scrollTop } = scrollableRef.current;
       states.scrollPositions.set(id, scrollTop);
     }, 100);

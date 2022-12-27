@@ -243,7 +243,7 @@ export function App() {
 
         const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
-        console.log({ tokenJSON, mastoAccount });
+        // console.log({ tokenJSON, mastoAccount });
 
         let account = accounts.find((a) => a.info.id === mastoAccount.id);
         if (account) {

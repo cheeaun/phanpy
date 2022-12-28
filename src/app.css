@@ -456,6 +456,7 @@ a.mention span {
   /* scroll-behavior: smooth; */
   scrollbar-width: none;
   overscroll-behavior: contain;
+  touch-action: pan-x;
 }
 .carousel::-webkit-scrollbar {
   display: none;

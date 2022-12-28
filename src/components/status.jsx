@@ -417,16 +417,19 @@ function Status({
                 mediaAttachments.length > 2 ? 'media-gt2' : ''
               } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
             >
-              {mediaAttachments.map((media, i) => (
-                <Media
-                  media={media}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setShowMediaModal(i);
-                  }}
-                />
-              ))}
+              {mediaAttachments
+                .slice(0, size === 'l' ? undefined : 4)
+                .map((media, i) => (
+                  <Media
+                    key={media.id}
+                    media={media}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setShowMediaModal(i);
+                    }}
+                  />
+                ))}
             </div>
           )}
           {!!card &&

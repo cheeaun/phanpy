@@ -51,6 +51,7 @@ function StatusPage({ id }) {
 
   useEffect(() => {
     setUIState('loading');
+    let heroTimer;
 
     const cachedStatuses = store.session.getJSON('statuses-' + id);
     if (cachedStatuses) {
@@ -73,18 +74,28 @@ function StatusPage({ id }) {
     }
 
     (async () => {
-      const heroFetch = masto.v1.statuses.fetch(id);
+      const heroFetch = () => masto.v1.statuses.fetch(id);
       const contextFetch = masto.v1.statuses.fetchContext(id);
 
       const hasStatus = snapStates.statuses.has(id);
       let heroStatus = snapStates.statuses.get(id);
-      try {
-        heroStatus = await heroFetch;
-        states.statuses.set(id, heroStatus);
-      } catch (e) {
-        // Silent fail if status is cached
-        console.error(e);
-        if (!hasStatus) {
+      if (hasStatus) {
+        console.log('Hero status is cached');
+        heroTimer = setTimeout(async () => {
+          try {
+            heroStatus = await heroFetch();
+            states.statuses.set(id, heroStatus);
+          } catch (e) {
+            // Silent fail if status is cached
+            console.error(e);
+          }
+        }, 1000);
+      } else {
+        try {
+          heroStatus = await heroFetch();
+          states.statuses.set(id, heroStatus);
+        } catch (e) {
+          console.error(e);
           setUIState('error');
           alert('Error fetching status');
           return;
@@ -153,6 +164,10 @@ function StatusPage({ id }) {
         setUIState('error');
       }
     })();
+
+    return () => {
+      clearTimeout(heroTimer);
+    };
   }, [id, snapStates.reloadStatusPage]);
 
   const firstLoad = useRef(true);

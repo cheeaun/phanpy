@@ -234,7 +234,7 @@
   display: inline-block;
   position: absolute;
   inset-block-end: 1.5em;
-  left: 50%;
+  left: 45%;
   transform: translateX(-50%);
   color: var(--text-color);
   background-color: var(--bg-faded-color);
@@ -280,36 +280,47 @@
 
 .status .media-container {
   margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
   gap: 2px;
-  flex-direction: row;
+  height: 160px;
 }
-.status:not(.large) .media-container.media-gt4 {
-  flex-wrap: nowrap;
-  overflow: auto;
+.status .media-container.media-gt2 {
+  height: 200px;
+}
+.status.large :is(.media-container, .media-container.media-gt2) {
+  height: auto;
+  max-height: 80vh;
 }
 .status .media {
-  flex-grow: 1;
-  flex-basis: calc(50% - 8px);
   border-radius: 8px;
   overflow: hidden;
-  max-height: 160px;
   min-height: 80px;
   border: 1px solid var(--outline-color);
 }
-.status .media-container.media-gt2 .media {
-  aspect-ratio: 1 / 1;
+.status .media:only-child {
+  grid-area: span 2 / span 2;
 }
-.status:not(.large) .media-container.media-gt4 .media {
-  min-width: 80px;
+.status .media:first-child:nth-last-child(3) {
+  grid-area: span 2;
 }
+
+.status:not(.large) .media-container.media-gt4 .media:last-child {
+  position: relative;
+}
+.status:not(.large) .media-container.media-gt4 .media:last-child:after {
+  content: '4+';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  background-color: var(--bg-faded-blur-color);
+}
+
 .status .media:hover {
   border-color: var(--outline-hover-color);
-}
-.status .media.block {
-  flex-basis: 100%;
-  max-height: auto;
 }
 .status .media :is(img, video) {
   width: 100%;

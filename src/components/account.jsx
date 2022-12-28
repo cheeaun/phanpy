@@ -198,7 +198,7 @@ function Account({ account }) {
                 <button
                   type="button"
                   class={`${following ? 'light' : ''} swap`}
-                  data-swap-state="danger"
+                  data-swap-state={following ? 'danger' : ''}
                   disabled={relationshipUIState === 'loading'}
                   onClick={() => {
                     setRelationshipUIState('loading');

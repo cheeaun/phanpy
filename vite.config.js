@@ -1,16 +1,24 @@
 import preact from '@preact/preset-vite';
 import { execSync } from 'child_process';
+import fs from 'fs';
 import { resolve } from 'path';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import htmlPlugin from 'vite-plugin-html-config';
 import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const { VITE_CLIENT_NAME: CLIENT_NAME, NODE_ENV } = loadEnv(
-  'production',
-  process.cwd(),
-);
+const {
+  VITE_CLIENT_NAME: CLIENT_NAME,
+  NODE_ENV,
+  VITE_APP_ERROR_LOGGING,
+} = loadEnv('production', process.cwd());
 
 const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
+
+const rollbarCode = fs.readFileSync(
+  resolve(__dirname, './rollbar.js'),
+  'utf-8',
+);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,6 +31,9 @@ export default defineConfig({
     preact(),
     splitVendorChunkPlugin(),
     VitePluginHtmlEnv(),
+    htmlPlugin({
+      headScripts: VITE_APP_ERROR_LOGGING ? [rollbarCode] : [],
+    }),
     VitePWA({
       manifest: {
         name: CLIENT_NAME,

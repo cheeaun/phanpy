@@ -79,6 +79,7 @@ a.mention span {
   position: sticky;
   top: 0;
   background-color: var(--bg-blur-color);
+  background-image: linear-gradient(to bottom, var(--bg-color), transparent);
   backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--divider-color);
   z-index: 1;
@@ -455,6 +456,7 @@ a.mention span {
   /* scroll-behavior: smooth; */
   scrollbar-width: none;
   overscroll-behavior: contain;
+  touch-action: pan-x;
 }
 .carousel::-webkit-scrollbar {
   display: none;
@@ -476,9 +478,11 @@ a.mention span {
   height: auto;
   max-height: 100vh;
   max-height: 100dvh;
+  vertical-align: middle;
 }
 .carousel > * video {
   min-height: 80px;
+  max-height: 80vh; /* prevent other UI elements from obscuring video */
 }
 
 .carousel-top-controls {
@@ -501,6 +505,9 @@ a.mention span {
   justify-content: space-between;
   text-align: center;
   pointer-events: none;
+}
+:is(.carousel-top-controls, .carousel-controls)[hidden] {
+  opacity: 0;
 }
 
 button.carousel-button,
@@ -545,6 +552,9 @@ button.carousel-dot[disabled].active {
   .carousel-controls {
     transform: translateY(100%);
     transition: transform 0.2s ease-in-out;
+  }
+  :is(.carousel-top-controls, .carousel-controls)[hidden] {
+    opacity: 1;
   }
   .carousel:hover + .carousel-top-controls,
   .carousel:hover + .carousel-top-controls + .carousel-controls,
@@ -761,6 +771,9 @@ meter.donut:is(.danger, .explode):after {
   box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
     0 10px 36px -4px var(--button-bg-blur-color);
 }
+.toastify-bottom {
+  margin-bottom: env(safe-area-inset-bottom);
+}
 :root .toastify:hover {
   filter: brightness(1.2);
 }
@@ -792,6 +805,11 @@ meter.donut:is(.danger, .explode):after {
     min-height: 6em;
     border-bottom: 0;
     background-color: var(--bg-faded-blur-color);
+    background-image: linear-gradient(
+      to bottom,
+      var(--bg-faded-color),
+      transparent 50%
+    );
     border-bottom: 0;
     mask-image: linear-gradient(
       rgba(0, 0, 0, 1) 50%,

@@ -10,6 +10,7 @@ import {
   useState,
 } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
+import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
@@ -417,16 +418,19 @@ function Status({
                 mediaAttachments.length > 2 ? 'media-gt2' : ''
               } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
             >
-              {mediaAttachments.map((media, i) => (
-                <Media
-                  media={media}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setShowMediaModal(i);
-                  }}
-                />
-              ))}
+              {mediaAttachments
+                .slice(0, size === 'l' ? undefined : 4)
+                .map((media, i) => (
+                  <Media
+                    key={media.id}
+                    media={media}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setShowMediaModal(i);
+                    }}
+                  />
+                ))}
             </div>
           )}
           {!!card &&
@@ -756,19 +760,10 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (isGIF) {
-            // Hmm, the videoRef might conflict here
-            if (showOriginal) {
-              try {
-                if (videoRef.current.paused) {
-                  videoRef.current.play();
-                } else {
-                  videoRef.current.pause();
-                }
-              } catch (e) {}
-            } else {
+          if (!showOriginal && isGIF) {
+            try {
               videoRef.current.pause();
-            }
+            } catch (e) {}
           }
           onClick(e);
         }}
@@ -788,19 +783,24 @@ function Media({ media, showOriginal, onClick = () => {} }) {
         }}
       >
         {showOriginal ? (
-          <video
-            ref={videoRef}
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            autoplay
-            muted={isGIF}
-            controls={!isGIF}
-            playsinline
-            loop={loopable}
-          ></video>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `
+                <video
+                  src="${url}"
+                  poster="${previewUrl}"
+                  width="${width}"
+                  height="${height}"
+                  preload="auto"
+                  autoplay
+                  muted="${isGIF}"
+                  ${isGIF ? '' : 'controls'}
+                  playsinline
+                  loop="${loopable}"
+                ></video>
+              `,
+            }}
+          />
         ) : isGIF ? (
           <video
             ref={videoRef}
@@ -1269,10 +1269,27 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
     }
   }, 100);
 
+  const [showControls, setShowControls] = useState(true);
+
+  useEffect(() => {
+    let handleSwipe = () => {
+      onClose();
+    };
+    if (carouselRef.current) {
+      carouselRef.current.addEventListener('swiped-down', handleSwipe);
+    }
+    return () => {
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('swiped-down', handleSwipe);
+      }
+    };
+  }, []);
+
   return (
     <>
       <div
         ref={carouselRef}
+        data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {
           if (
@@ -1302,13 +1319,18 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               root={carouselRef.current}
               threshold={1}
               onChange={(inView) => onSnap(inView, i)}
+              onClick={(e) => {
+                if (e.target !== e.currentTarget) {
+                  setShowControls(!showControls);
+                }
+              }}
             >
               <Media media={media} showOriginal />
             </InView>
           );
         })}
       </div>
-      <div class="carousel-top-controls">
+      <div class="carousel-top-controls" hidden={!showControls}>
         <span />
         <button
           type="button"
@@ -1319,7 +1341,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
         </button>
       </div>
       {mediaAttachments?.length > 1 && (
-        <div class="carousel-controls">
+        <div class="carousel-controls" hidden={!showControls}>
           <button
             type="button"
             class="carousel-button plain2"

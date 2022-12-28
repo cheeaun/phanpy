@@ -28,6 +28,7 @@ Everything is designed and engineered for my own use case, following my taste an
 - 🪟 Compose window pop-out/in
 - 🌗 Light/dark/auto theme
 - 🔔 Grouped notifications
+- 🪺 Nested replies view
 
 ## Design decisions
 

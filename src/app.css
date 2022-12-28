@@ -79,6 +79,7 @@ a.mention span {
   position: sticky;
   top: 0;
   background-color: var(--bg-blur-color);
+  background-image: linear-gradient(to bottom, var(--bg-color), transparent);
   backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--divider-color);
   z-index: 1;
@@ -792,6 +793,11 @@ meter.donut:is(.danger, .explode):after {
     min-height: 6em;
     border-bottom: 0;
     background-color: var(--bg-faded-blur-color);
+    background-image: linear-gradient(
+      to bottom,
+      var(--bg-faded-color),
+      transparent 50%
+    );
     border-bottom: 0;
     mask-image: linear-gradient(
       rgba(0, 0, 0, 1) 50%,

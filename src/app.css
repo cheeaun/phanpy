@@ -505,6 +505,9 @@ a.mention span {
   text-align: center;
   pointer-events: none;
 }
+:is(.carousel-top-controls, .carousel-controls)[hidden] {
+  opacity: 0;
+}
 
 button.carousel-button,
 button.carousel-dot {
@@ -548,6 +551,9 @@ button.carousel-dot[disabled].active {
   .carousel-controls {
     transform: translateY(100%);
     transition: transform 0.2s ease-in-out;
+  }
+  :is(.carousel-top-controls, .carousel-controls)[hidden] {
+    opacity: 1;
   }
   .carousel:hover + .carousel-top-controls,
   .carousel:hover + .carousel-top-controls + .carousel-controls,

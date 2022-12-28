@@ -1268,6 +1268,8 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
     }
   }, 100);
 
+  const [showControls, setShowControls] = useState(false);
+
   return (
     <>
       <div
@@ -1301,13 +1303,18 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               root={carouselRef.current}
               threshold={1}
               onChange={(inView) => onSnap(inView, i)}
+              onClick={(e) => {
+                if (e.target !== e.currentTarget) {
+                  setShowControls(!showControls);
+                }
+              }}
             >
               <Media media={media} showOriginal />
             </InView>
           );
         })}
       </div>
-      <div class="carousel-top-controls">
+      <div class="carousel-top-controls" hidden={!showControls}>
         <span />
         <button
           type="button"
@@ -1318,7 +1325,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
         </button>
       </div>
       {mediaAttachments?.length > 1 && (
-        <div class="carousel-controls">
+        <div class="carousel-controls" hidden={!showControls}>
           <button
             type="button"
             class="carousel-button plain2"

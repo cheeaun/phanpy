@@ -1269,7 +1269,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
     }
   }, 100);
 
-  const [showControls, setShowControls] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
     let handleSwipe = () => {

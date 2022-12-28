@@ -10,6 +10,7 @@ import {
   useState,
 } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
+import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
@@ -1270,10 +1271,25 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
 
   const [showControls, setShowControls] = useState(false);
 
+  useEffect(() => {
+    let handleSwipe = () => {
+      onClose();
+    };
+    if (carouselRef.current) {
+      carouselRef.current.addEventListener('swiped-down', handleSwipe);
+    }
+    return () => {
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('swiped-down', handleSwipe);
+      }
+    };
+  }, []);
+
   return (
     <>
       <div
         ref={carouselRef}
+        data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {
           if (

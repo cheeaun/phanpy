@@ -764,6 +764,9 @@ meter.donut:is(.danger, .explode):after {
   box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
     0 10px 36px -4px var(--button-bg-blur-color);
 }
+.toastify-bottom {
+  margin-bottom: env(safe-area-inset-bottom);
+}
 :root .toastify:hover {
   filter: brightness(1.2);
 }

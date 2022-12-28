@@ -759,19 +759,10 @@ function Media({ media, showOriginal, onClick = () => {} }) {
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (isGIF) {
-            // Hmm, the videoRef might conflict here
-            if (showOriginal) {
-              try {
-                if (videoRef.current.paused) {
-                  videoRef.current.play();
-                } else {
-                  videoRef.current.pause();
-                }
-              } catch (e) {}
-            } else {
+          if (!showOriginal && isGIF) {
+            try {
               videoRef.current.pause();
-            }
+            } catch (e) {}
           }
           onClick(e);
         }}
@@ -791,19 +782,24 @@ function Media({ media, showOriginal, onClick = () => {} }) {
         }}
       >
         {showOriginal ? (
-          <video
-            ref={videoRef}
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            autoplay
-            muted={isGIF}
-            controls={!isGIF}
-            playsinline
-            loop={loopable}
-          ></video>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `
+                <video
+                  src="${url}"
+                  poster="${previewUrl}"
+                  width="${width}"
+                  height="${height}"
+                  preload="auto"
+                  autoplay
+                  muted="${isGIF}"
+                  ${isGIF ? '' : 'controls'}
+                  playsinline
+                  loop="${loopable}"
+                ></video>
+              `,
+            }}
+          />
         ) : isGIF ? (
           <video
             ref={videoRef}

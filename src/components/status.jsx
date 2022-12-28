@@ -1272,9 +1272,8 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
   const [showControls, setShowControls] = useState(false);
 
   useEffect(() => {
-    let swipeTimeout;
     let handleSwipe = () => {
-      swipeTimeout = setTimeout(onClose, 500);
+      onClose();
     };
     if (carouselRef.current) {
       carouselRef.current.addEventListener('swiped-down', handleSwipe);
@@ -1283,7 +1282,6 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
       if (carouselRef.current) {
         carouselRef.current.removeEventListener('swiped-down', handleSwipe);
       }
-      clearTimeout(swipeTimeout);
     };
   }, []);
 

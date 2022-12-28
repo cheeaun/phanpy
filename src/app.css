@@ -477,9 +477,11 @@ a.mention span {
   height: auto;
   max-height: 100vh;
   max-height: 100dvh;
+  vertical-align: middle;
 }
 .carousel > * video {
   min-height: 80px;
+  max-height: 80vh; /* prevent other UI elements from obscuring video */
 }
 
 .carousel-top-controls {

@@ -384,18 +384,20 @@ export function App() {
               states.showCompose = false;
               if (newStatus) {
                 states.reloadStatusPage++;
-                const toast = Toastify({
-                  text: 'Status posted. Check it out.',
-                  duration: 10_000, // 10 seconds
-                  gravity: 'bottom',
-                  position: 'center',
-                  // destination: `/#/s/${newStatus.id}`,
-                  onClick: () => {
-                    toast.hideToast();
-                    route(`/s/${newStatus.id}`);
-                  },
-                });
-                toast.showToast();
+                setTimeout(() => {
+                  const toast = Toastify({
+                    text: 'Status posted. Check it out.',
+                    duration: 10_000, // 10 seconds
+                    gravity: 'bottom',
+                    position: 'center',
+                    // destination: `/#/s/${newStatus.id}`,
+                    onClick: () => {
+                      toast.hideToast();
+                      route(`/s/${newStatus.id}`);
+                    },
+                  });
+                  toast.showToast();
+                }, 1000);
               }
             }}
           />

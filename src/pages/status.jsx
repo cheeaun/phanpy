@@ -268,6 +268,12 @@ function StatusPage({ id }) {
 
   const [heroInView, setHeroInView] = useState(true);
   const onView = useDebouncedCallback(setHeroInView, 100);
+  const heroPointer = useMemo(() => {
+    // get top offset of heroStatus
+    if (!heroStatusRef.current) return null;
+    const { top } = heroStatusRef.current.getBoundingClientRect();
+    return top > 0 ? 'down' : 'up';
+  }, [heroInView]);
 
   return (
     <div class="deck-backdrop">
@@ -300,6 +306,13 @@ function StatusPage({ id }) {
           <h1>
             {!heroInView && heroStatus ? (
               <span class="hero-heading">
+                {!!heroPointer && (
+                  <>
+                    <Icon
+                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
+                    />{' '}
+                  </>
+                )}
                 <NameText showAvatar account={heroStatus.account} short />{' '}
                 <span class="insignificant">
                   &bull;{' '}

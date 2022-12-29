@@ -121,11 +121,15 @@ function startVisibility() {
           // Buffer for WS reconnect
           (async () => {
             try {
+              const firstStatusID = states.home[0]?.id;
+              const firstNotificationID = states.notifications[0]?.id;
               const fetchHome = masto.v1.timelines.listHome({
                 limit: 1,
+                ...(firstStatusID && { sinceId: firstStatusID }),
               });
               const fetchNotifications = masto.v1.notifications.list({
                 limit: 1,
+                ...(firstNotificationID && { sinceId: firstNotificationID }),
               });
 
               const newStatuses = await fetchHome;

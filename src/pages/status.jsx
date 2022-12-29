@@ -270,7 +270,7 @@ function StatusPage({ id }) {
   const onView = useDebouncedCallback(setHeroInView, 100);
   const heroPointer = useMemo(() => {
     // get top offset of heroStatus
-    if (!heroStatusRef.current) return null;
+    if (!heroStatusRef.current || heroInView) return null;
     const { top } = heroStatusRef.current.getBoundingClientRect();
     return top > 0 ? 'down' : 'up';
   }, [heroInView]);
@@ -358,7 +358,7 @@ function StatusPage({ id }) {
                 } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
               >
                 {isHero ? (
-                  <InView threshold={0.5} onChange={onView}>
+                  <InView threshold={0.25} onChange={onView}>
                     <Status statusID={statusID} withinContext size="l" />
                   </InView>
                 ) : (

@@ -410,8 +410,13 @@
   overflow: hidden;
   color: inherit;
   align-items: stretch;
-  background: var(--bg-color);
+  background-color: var(--bg-color);
   max-height: 160px;
+}
+.status.large .card.link.large {
+  border-radius: 16px;
+  flex-direction: column;
+  max-height: none;
 }
 .card .image {
   width: 35%;
@@ -420,6 +425,12 @@
   border-inline-end: 1px solid var(--outline-color);
   object-fit: cover;
   aspect-ratio: 1 / 1;
+}
+.status.large .card.link.large .image {
+  aspect-ratio: 1.91 / 1;
+  width: 100%;
+  max-height: 50vh;
+  border-inline-end: 0;
 }
 .card:hover .image {
   animation: position-object 5s ease-in-out 1s 5;
@@ -471,7 +482,8 @@ a.card {
   transition: opacity 0.2s ease-in-out;
 }
 a.card:hover {
-  border: 1px solid var(--outline-hover-color);
+  border: 1px solid var(--link-color);
+  box-shadow: 0 0 0 2px var(--link-faded-color);
 }
 .card.video {
   max-width: 320px;

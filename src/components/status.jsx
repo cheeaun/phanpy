@@ -436,7 +436,10 @@ function Status({
           {!!card &&
             (size === 'l' ||
               (size === 'm' && !poll && !mediaAttachments.length)) && (
-              <Card card={card} />
+              <Card
+                card={card}
+                size={!poll && !mediaAttachments.length ? 'l' : 'm'}
+              />
             )}
         </div>
         {size === 'l' && (
@@ -834,7 +837,7 @@ function Media({ media, showOriginal, onClick = () => {} }) {
   }
 }
 
-function Card({ card }) {
+function Card({ card, size }) {
   const {
     blurhash,
     title,
@@ -858,6 +861,7 @@ function Card({ card }) {
   */
 
   const hasText = title || providerName || authorName;
+  size = size === 'l' ? 'large' : '';
 
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
@@ -866,7 +870,7 @@ function Card({ card }) {
         href={url}
         target="_blank"
         rel="nofollow noopener noreferrer"
-        class="card link"
+        class={`card link ${size}`}
       >
         <img
           class="image"

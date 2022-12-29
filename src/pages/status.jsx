@@ -81,15 +81,16 @@ function StatusPage({ id }) {
       let heroStatus = snapStates.statuses.get(id);
       if (hasStatus) {
         console.log('Hero status is cached');
-        heroTimer = setTimeout(async () => {
-          try {
-            heroStatus = await heroFetch();
-            states.statuses.set(id, heroStatus);
-          } catch (e) {
-            // Silent fail if status is cached
-            console.error(e);
-          }
-        }, 1000);
+        // NOTE: This might conflict if the user interacts with the status before the fetch is done, e.g. favouriting it
+        // heroTimer = setTimeout(async () => {
+        //   try {
+        //     heroStatus = await heroFetch();
+        //     states.statuses.set(id, heroStatus);
+        //   } catch (e) {
+        //     // Silent fail if status is cached
+        //     console.error(e);
+        //   }
+        // }, 1000);
       } else {
         try {
           heroStatus = await heroFetch();

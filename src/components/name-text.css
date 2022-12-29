@@ -3,8 +3,8 @@
   text-decoration: none;
   display: inline-block;
 }
-a.name-text:hover b,
-a.name-text.short:hover i {
+a.name-text:is(:hover, :focus) b,
+a.name-text.short:is(:hover, :focus) i {
   text-decoration: underline;
   text-decoration-color: var(--text-insignificant-color);
 }

@@ -209,6 +209,7 @@ function Status({
       {size !== 's' && (
         <a
           href={url}
+          tabindex="-1"
           // target="_blank"
           title={`@${acct}`}
           onClick={(e) => {
@@ -1152,7 +1153,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div id="edit-history" class="sheet">
+    <div id="edit-history" class="sheet" tabIndex="-1">
       <header>
         {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
@@ -1294,6 +1295,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
     <>
       <div
         ref={carouselRef}
+        tabIndex="-1"
         data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {
@@ -1304,7 +1306,6 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             onClose();
           }
         }}
-        tabindex="0"
       >
         {mediaAttachments?.map((media, i) => {
           const { blurhash } = media;

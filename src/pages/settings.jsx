@@ -24,7 +24,7 @@ function Settings({ onClose }) {
   const [currentDefault, setCurrentDefault] = useState(0);
 
   return (
-    <div id="settings-container" class="sheet">
+    <div id="settings-container" class="sheet" tabIndex="-1">
       <main>
         {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />

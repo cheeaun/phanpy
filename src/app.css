@@ -341,7 +341,7 @@ a.mention span {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
-.status-link:hover {
+.status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
 }
 
@@ -393,7 +393,7 @@ a.mention span {
 .deck-close {
   color: var(--text-insignificant-color) !important;
 }
-.deck-close:hover {
+.deck-close:is(:hover, :focus) {
   color: var(--text-color) !important;
 }
 
@@ -534,8 +534,7 @@ button.carousel-dot {
   font-weight: bold;
   backdrop-filter: none !important;
 }
-button.carousel-dot:hover,
-button.carousel-dot.active,
+button.carousel-dot:is(:hover, :focus) button.carousel-dot.active,
 button.carousel-dot[disabled].active {
   color: var(--link-color) !important;
 }
@@ -696,7 +695,7 @@ button.carousel-dot[disabled].active {
   color: var(--text-color) !important;
   border-radius: 0;
 }
-.menu-container menu button:hover {
+.menu-container menu button:is(:hover, :focus) {
   color: var(--bg-color) !important;
   background-color: var(--link-color);
 }

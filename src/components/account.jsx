@@ -102,6 +102,7 @@ function Account({ account }) {
   return (
     <div
       id="account-container"
+      tabIndex="-1"
       class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
     >
       {!info || uiState === 'loading' ? (

@@ -72,7 +72,12 @@ function Home({ hidden }) {
   const scrollableRef = useRef();
 
   return (
-    <div class="deck-container" hidden={hidden} ref={scrollableRef}>
+    <div
+      class="deck-container"
+      hidden={hidden}
+      ref={scrollableRef}
+      tabIndex="-1"
+    >
       <div class="timeline-deck deck">
         <header
           onClick={() => {

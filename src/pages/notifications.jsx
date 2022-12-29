@@ -290,7 +290,7 @@ function Notifications() {
   );
   // console.log(groupedNotifications);
   return (
-    <div class="deck-container" ref={scrollableRef}>
+    <div class="deck-container" ref={scrollableRef} tabIndex="-1">
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
           onClick={() => {

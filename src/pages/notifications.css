@@ -50,7 +50,7 @@
   background-color: var(--bg-color);
   margin-top: calc(-16px - 1px);
 }
-.notification .status-link:hover {
+.notification .status-link:is(:hover, :focus) {
   background-color: var(--bg-blur-color);
   filter: saturate(1);
   border-color: var(--outline-hover-color);

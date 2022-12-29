@@ -72,7 +72,7 @@
   color: var(--link-color);
   font-weight: bold;
 }
-#settings-container .radio-group label:hover {
+#settings-container .radio-group label:is(:hover, :focus) {
   color: var(--button-bg-color);
 }
 #settings-container .radio-group label:has(input:checked) {

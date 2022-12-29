@@ -861,7 +861,8 @@ function Card({ card, size }) {
   */
 
   const hasText = title || providerName || authorName;
-  size = size === 'l' ? 'large' : '';
+  const isLandscape = width / height >= 1.2;
+  size = size === 'l' && isLandscape ? 'large' : '';
 
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');

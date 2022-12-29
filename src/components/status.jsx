@@ -187,7 +187,7 @@ function Status({
   const readMoreText = 'Read more →';
 
   return (
-    <div
+    <article
       class={`status ${
         !withinContext && inReplyToAccount ? 'status-reply-to' : ''
       } visibility-${visibility} ${
@@ -673,7 +673,7 @@ function Status({
           />
         </Modal>
       )}
-    </div>
+    </article>
   );
 }
 

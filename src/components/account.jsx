@@ -102,7 +102,6 @@ function Account({ account }) {
   return (
     <div
       id="account-container"
-      tabIndex="-1"
       class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
     >
       {!info || uiState === 'loading' ? (
@@ -129,7 +128,7 @@ function Account({ account }) {
             <Avatar url={avatar} size="xxxl" />
             <NameText account={info} showAcct external />
           </header>
-          <main>
+          <main tabIndex="-1">
             {bot && (
               <>
                 <span class="tag">

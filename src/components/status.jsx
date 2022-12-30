@@ -186,8 +186,12 @@ function Status({
   });
   const readMoreText = 'Read more →';
 
+  const statusRef = useRef(null);
+
   return (
     <article
+      ref={statusRef}
+      tabindex="-1"
       class={`status ${
         !withinContext && inReplyToAccount ? 'status-reply-to' : ''
       } visibility-${visibility} ${
@@ -653,6 +657,7 @@ function Status({
             index={showMediaModal}
             onClose={() => {
               setShowMediaModal(false);
+              statusRef.current?.focus();
             }}
           />
         </Modal>
@@ -662,6 +667,7 @@ function Status({
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowEdited(false);
+              statusRef.current?.focus();
             }
           }}
         >
@@ -669,6 +675,7 @@ function Status({
             statusID={showEdited}
             onClose={() => {
               setShowEdited(false);
+              statusRef.current?.focus();
             }}
           />
         </Modal>
@@ -1153,7 +1160,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div id="edit-history" class="sheet" tabIndex="-1">
+    <div id="edit-history" class="sheet">
       <header>
         {/* <button type="button" class="close-button plain large" onClick={onClose}>
         <Icon icon="x" alt="Close" />
@@ -1166,7 +1173,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
           </p>
         )}
       </header>
-      <main>
+      <main tabIndex="-1">
         {editHistory.length > 0 && (
           <ol>
             {editHistory.map((status) => {

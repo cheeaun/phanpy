@@ -298,6 +298,26 @@ export function App() {
   }, []);
 
   const [currentDeck, setCurrentDeck] = useState('home');
+  const focusDeck = () => {
+    let timer = setTimeout(() => {
+      const page = document.getElementById(`${currentDeck}-page`);
+      console.log('focus', currentDeck, page);
+      if (page) {
+        page.focus();
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  };
+  useEffect(focusDeck, [currentDeck]);
+  useEffect(() => {
+    if (
+      !snapStates.showCompose &&
+      !snapStates.showSettings &&
+      !snapStates.showAccount
+    ) {
+      focusDeck();
+    }
+  }, [snapStates.showCompose, snapStates.showSettings, snapStates.showAccount]);
 
   useEffect(() => {
     // HACK: prevent this from running again due to HMR
@@ -324,7 +344,7 @@ export function App() {
 
   return (
     <>
-      {isLoggedIn && currentDeck && (
+      {isLoggedIn && (
         <>
           <button
             type="button"
@@ -345,7 +365,7 @@ export function App() {
           </button>
           <div class="decks">
             {/* Home will never be unmounted */}
-            <Home hidden={currentDeck !== 'home'} />
+            <Home />
             {/* Notifications can be unmounted */}
             {currentDeck === 'notifications' && <Notifications />}
           </div>
@@ -355,6 +375,7 @@ export function App() {
       <Router
         history={createHashHistory()}
         onChange={(e) => {
+          console.log('router onChange', e);
           // Special handling for Home and Notifications
           const { url } = e;
           if (/notifications/i.test(url)) {
@@ -362,7 +383,7 @@ export function App() {
           } else if (url === '/') {
             setCurrentDeck('home');
             document.title = `Home / ${CLIENT_NAME}`;
-          } else if (url === '/login' || url === '/welcome') {
+          } else {
             setCurrentDeck(null);
           }
           states.history.push(url);

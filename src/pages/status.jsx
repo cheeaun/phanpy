@@ -34,6 +34,9 @@ function StatusPage({ id }) {
 
   const scrollableRef = useRef();
   useEffect(() => {
+    scrollableRef.current?.focus();
+  }, []);
+  useEffect(() => {
     const onScroll = debounce(() => {
       // console.log('onScroll');
       if (!scrollableRef.current) return;
@@ -279,6 +282,7 @@ function StatusPage({ id }) {
     <div class="deck-backdrop">
       <Link href={closeLink}></Link>
       <div
+        tabIndex="-1"
         ref={scrollableRef}
         class={`status-deck deck contained ${
           statuses.length > 1 ? 'padded-bottom' : ''

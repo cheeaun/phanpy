@@ -73,6 +73,7 @@ function Home({ hidden }) {
 
   return (
     <div
+      id="home-page"
       class="deck-container"
       hidden={hidden}
       ref={scrollableRef}

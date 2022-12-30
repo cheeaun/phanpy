@@ -304,7 +304,7 @@ function StatusPage({ id }) {
             </Link>
           </div> */}
           <h1>
-            {!heroInView && heroStatus ? (
+            {!heroInView && heroStatus && uiState !== 'loading' ? (
               <span class="hero-heading">
                 {!!heroPointer && (
                   <>

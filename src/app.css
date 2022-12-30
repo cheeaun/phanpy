@@ -344,6 +344,10 @@ a.mention span {
 .status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
 }
+.status-link:active {
+  filter: brightness(0.95);
+  transform: translateY(0.5px);
+}
 
 .ui-state {
   padding: 16px;

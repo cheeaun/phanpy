@@ -16,6 +16,7 @@
   --link-light-color: #4169e199;
   --link-faded-color: #4169e155;
   --link-bg-hover-color: #f0f2f599;
+  --focus-ring-color: var(--link-color);
   --button-bg-color: var(--blue-color);
   --button-bg-blur-color: #4169e1aa;
   --button-text-color: white;
@@ -244,6 +245,10 @@ code {
 
 [tabindex='-1'] {
   outline: 0;
+}
+
+:not([tabindex='-1']):focus {
+  outline: 2px solid var(--focus-ring-color);
 }
 
 /* UTILS */

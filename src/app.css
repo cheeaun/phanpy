@@ -343,6 +343,7 @@ a.mention span {
 }
 .status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
+  outline-offset: -2px;
 }
 .status-link:active {
   filter: brightness(0.95);

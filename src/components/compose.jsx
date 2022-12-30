@@ -2,6 +2,7 @@ import './compose.css';
 
 import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -596,6 +597,13 @@ function Compose({
         style={{
           pointerEvents: uiState === 'loading' ? 'none' : 'auto',
           opacity: uiState === 'loading' ? 0.5 : 1,
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            formRef.current.dispatchEvent(
+              new Event('submit', { cancelable: true }),
+            );
+          }
         }}
         onSubmit={(e) => {
           e.preventDefault();

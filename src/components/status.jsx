@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
@@ -1297,6 +1298,8 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
       }
     };
   }, []);
+
+  useHotkeys('esc', onClose, [onClose]);
 
   return (
     <>

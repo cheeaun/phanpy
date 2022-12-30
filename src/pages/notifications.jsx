@@ -195,7 +195,7 @@ function NotificationsList({ notifications, emptyCopy }) {
       {cleanNotifications.map((notification, i) => {
         const { id, type } = notification;
         return (
-          <li key={id} class={`notification ${type}`}>
+          <li key={id} class={`notification ${type}`} tabIndex="0">
             <Notification notification={notification} />
           </li>
         );

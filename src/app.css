@@ -592,16 +592,6 @@ button.carousel-dot[disabled].active {
 
 /* SHEET */
 
-@keyframes slide-up {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 .sheet {
   align-self: flex-end;
   display: flex;
@@ -614,7 +604,7 @@ button.carousel-dot[disabled].active {
   max-width: calc(40em - 50px - 16px);
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -1px 32px var(--divider-color);
-  animation: slide-up 0.2s var(--timing-function);
+  animation: slide-up 0.3s var(--timing-function);
   border: 1px solid var(--outline-color);
 }
 .sheet header {

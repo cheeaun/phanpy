@@ -291,7 +291,8 @@
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
-  max-height: 80vh;
+  min-height: 160px;
+  max-height: 50vh;
 }
 .status .media {
   border-radius: 8px;

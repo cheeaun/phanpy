@@ -41,6 +41,7 @@ a.mention span {
   overflow-x: hidden;
   transition: opacity 0.1s ease-in-out;
   overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 .deck-container[hidden] {
   display: block;

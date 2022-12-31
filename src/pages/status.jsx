@@ -1,6 +1,7 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
+import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
 import {
   useEffect,
@@ -9,6 +10,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
@@ -277,6 +279,10 @@ function StatusPage({ id }) {
     const { top } = heroStatusRef.current.getBoundingClientRect();
     return top > 0 ? 'down' : 'up';
   }, [heroInView]);
+
+  useHotkeys(['esc', 'backspace'], () => {
+    route(closeLink);
+  });
 
   return (
     <div class="deck-backdrop">

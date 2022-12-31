@@ -247,7 +247,7 @@ code {
   outline: 0;
 }
 
-:not([tabindex='-1']):focus {
+:not([tabindex='-1']):focus-visible {
   outline: 2px solid var(--focus-ring-color);
 }
 

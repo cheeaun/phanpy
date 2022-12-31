@@ -368,7 +368,7 @@ function StatusPage({ id }) {
                 } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
               >
                 {isHero ? (
-                  <InView threshold={0.25} onChange={onView}>
+                  <InView threshold={0.1} onChange={onView}>
                     <Status statusID={statusID} withinContext size="l" />
                   </InView>
                 ) : (

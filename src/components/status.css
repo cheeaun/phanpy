@@ -343,7 +343,7 @@
     object-position: 50% 50%;
   }
 }
-.status .media img:hover {
+.status:not(.large) .media img:hover {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .status .media video {

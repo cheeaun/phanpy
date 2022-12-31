@@ -2,7 +2,6 @@ import './compose.css';
 
 import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 
 import supportedLanguages from '../data/status-supported-languages';

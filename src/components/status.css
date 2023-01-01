@@ -251,6 +251,9 @@
   color: var(--link-color);
   transform: translateX(-50%) translateY(-2px) scale(1.01);
 }
+.timeline-deck .status .content.truncated ~ .card {
+  display: none;
+}
 .status .content p {
   margin-block: 0.75em;
 }

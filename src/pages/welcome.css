@@ -23,7 +23,12 @@
   margin: 16px 0;
   padding: 0;
   /* gradiented text */
-  background: linear-gradient(45deg, var(--purple-color), var(--red-color));
+  background: linear-gradient(
+    45deg,
+    var(--blue-color) 30%,
+    var(--purple-color),
+    var(--red-color) 70%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

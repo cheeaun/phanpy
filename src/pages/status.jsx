@@ -1,6 +1,7 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
+import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
 import {
   useEffect,
@@ -9,6 +10,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
@@ -33,6 +35,9 @@ function StatusPage({ id }) {
   const heroStatusRef = useRef();
 
   const scrollableRef = useRef();
+  useEffect(() => {
+    scrollableRef.current?.focus();
+  }, []);
   useEffect(() => {
     const onScroll = debounce(() => {
       // console.log('onScroll');
@@ -81,15 +86,16 @@ function StatusPage({ id }) {
       let heroStatus = snapStates.statuses.get(id);
       if (hasStatus) {
         console.log('Hero status is cached');
-        heroTimer = setTimeout(async () => {
-          try {
-            heroStatus = await heroFetch();
-            states.statuses.set(id, heroStatus);
-          } catch (e) {
-            // Silent fail if status is cached
-            console.error(e);
-          }
-        }, 1000);
+        // NOTE: This might conflict if the user interacts with the status before the fetch is done, e.g. favouriting it
+        // heroTimer = setTimeout(async () => {
+        //   try {
+        //     heroStatus = await heroFetch();
+        //     states.statuses.set(id, heroStatus);
+        //   } catch (e) {
+        //     // Silent fail if status is cached
+        //     console.error(e);
+        //   }
+        // }, 1000);
       } else {
         try {
           heroStatus = await heroFetch();
@@ -97,7 +103,6 @@ function StatusPage({ id }) {
         } catch (e) {
           console.error(e);
           setUIState('error');
-          alert('Error fetching status');
           return;
         }
       }
@@ -267,11 +272,22 @@ function StatusPage({ id }) {
 
   const [heroInView, setHeroInView] = useState(true);
   const onView = useDebouncedCallback(setHeroInView, 100);
+  const heroPointer = useMemo(() => {
+    // get top offset of heroStatus
+    if (!heroStatusRef.current || heroInView) return null;
+    const { top } = heroStatusRef.current.getBoundingClientRect();
+    return top > 0 ? 'down' : 'up';
+  }, [heroInView]);
+
+  useHotkeys(['esc', 'backspace'], () => {
+    route(closeLink);
+  });
 
   return (
     <div class="deck-backdrop">
       <Link href={closeLink}></Link>
       <div
+        tabIndex="-1"
         ref={scrollableRef}
         class={`status-deck deck contained ${
           statuses.length > 1 ? 'padded-bottom' : ''
@@ -297,8 +313,15 @@ function StatusPage({ id }) {
             </Link>
           </div> */}
           <h1>
-            {!heroInView && heroStatus ? (
+            {!heroInView && heroStatus && uiState !== 'loading' ? (
               <span class="hero-heading">
+                {!!heroPointer && (
+                  <>
+                    <Icon
+                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
+                    />{' '}
+                  </>
+                )}
                 <NameText showAvatar account={heroStatus.account} short />{' '}
                 <span class="insignificant">
                   &bull;{' '}
@@ -321,96 +344,141 @@ function StatusPage({ id }) {
             </Link>
           </div>
         </header>
-        <ul
-          class={`timeline flat contextual ${
-            uiState === 'loading' ? 'loading' : ''
-          }`}
-        >
-          {statuses.slice(0, limit).map((status) => {
-            const {
-              id: statusID,
-              ancestor,
-              descendant,
-              thread,
-              replies,
-            } = status;
-            const isHero = statusID === id;
-            return (
-              <li
-                key={statusID}
-                ref={isHero ? heroStatusRef : null}
-                class={`${ancestor ? 'ancestor' : ''} ${
-                  descendant ? 'descendant' : ''
-                } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
-              >
-                {isHero ? (
-                  <InView threshold={0.5} onChange={onView}>
-                    <Status statusID={statusID} withinContext size="l" />
-                  </InView>
-                ) : (
-                  <Link
-                    class="
+        {!!statuses.length && heroStatus ? (
+          <ul
+            class={`timeline flat contextual grow ${
+              uiState === 'loading' ? 'loading' : ''
+            }`}
+          >
+            {statuses.slice(0, limit).map((status) => {
+              const {
+                id: statusID,
+                ancestor,
+                descendant,
+                thread,
+                replies,
+              } = status;
+              const isHero = statusID === id;
+              return (
+                <li
+                  key={statusID}
+                  ref={isHero ? heroStatusRef : null}
+                  class={`${ancestor ? 'ancestor' : ''} ${
+                    descendant ? 'descendant' : ''
+                  } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
+                >
+                  {isHero ? (
+                    <InView threshold={0.1} onChange={onView}>
+                      <Status statusID={statusID} withinContext size="l" />
+                    </InView>
+                  ) : (
+                    <Link
+                      class="
                 status-link
               "
-                    href={`#/s/${statusID}`}
-                    onClick={() => {
-                      userInitiated.current = true;
-                    }}
-                  >
-                    <Status
-                      statusID={statusID}
-                      withinContext
-                      size={thread || ancestor ? 'm' : 's'}
-                    />
-                    {replies?.length > LIMIT && (
-                      <div class="replies-link">
-                        <Icon icon="comment" />{' '}
-                        <span title={replies.length}>
-                          {shortenNumber(replies.length)}
-                        </span>
-                      </div>
-                    )}
-                  </Link>
-                )}
-                {descendant &&
-                  replies?.length > 0 &&
-                  replies?.length <= LIMIT && (
-                    <SubComments
-                      hasManyStatuses={hasManyStatuses}
-                      replies={replies}
-                      onStatusLinkClick={() => {
+                      href={`#/s/${statusID}`}
+                      onClick={() => {
                         userInitiated.current = true;
                       }}
-                    />
+                    >
+                      <Status
+                        statusID={statusID}
+                        withinContext
+                        size={thread || ancestor ? 'm' : 's'}
+                      />
+                      {replies?.length > LIMIT && (
+                        <div class="replies-link">
+                          <Icon icon="comment" />{' '}
+                          <span title={replies.length}>
+                            {shortenNumber(replies.length)}
+                          </span>
+                        </div>
+                      )}
+                    </Link>
                   )}
-                {uiState === 'loading' &&
-                  isHero &&
-                  !!heroStatus?.repliesCount &&
-                  !hasDescendants && (
-                    <div class="status-loading">
-                      <Loader />
-                    </div>
-                  )}
+                  {descendant &&
+                    replies?.length > 0 &&
+                    replies?.length <= LIMIT && (
+                      <SubComments
+                        hasManyStatuses={hasManyStatuses}
+                        replies={replies}
+                        onStatusLinkClick={() => {
+                          userInitiated.current = true;
+                        }}
+                      />
+                    )}
+                  {uiState === 'loading' &&
+                    isHero &&
+                    !!heroStatus?.repliesCount &&
+                    !hasDescendants && (
+                      <div class="status-loading">
+                        <Loader />
+                      </div>
+                    )}
+                  {uiState === 'error' &&
+                    isHero &&
+                    !!heroStatus?.repliesCount &&
+                    !hasDescendants && (
+                      <div class="status-error">
+                        Unable to load replies.
+                        <br />
+                        <button
+                          type="button"
+                          class="plain"
+                          onClick={() => {
+                            states.reloadStatusPage++;
+                          }}
+                        >
+                          Try again
+                        </button>
+                      </div>
+                    )}
+                </li>
+              );
+            })}
+            {showMore > 0 && (
+              <li>
+                <button
+                  type="button"
+                  class="plain block"
+                  disabled={uiState === 'loading'}
+                  onClick={() => setLimit((l) => l + LIMIT)}
+                  style={{ marginBlockEnd: '6em' }}
+                >
+                  Show more&hellip;{' '}
+                  <span class="tag">
+                    {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                  </span>
+                </button>
               </li>
-            );
-          })}
-          {showMore > 0 && (
-            <li>
-              <button
-                type="button"
-                class="plain block"
-                disabled={uiState === 'loading'}
-                onClick={() => setLimit((l) => l + LIMIT)}
-                style={{ marginBlockEnd: '6em' }}
-              >
-                Show more&hellip;{' '}
-                <span class="tag">
-                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
-                </span>
-              </button>
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        ) : (
+          <>
+            {uiState === 'loading' && (
+              <ul class="timeline flat contextual grow loading">
+                <li>
+                  <Status skeleton size="l" />
+                </li>
+              </ul>
+            )}
+            {uiState === 'error' && (
+              <p class="ui-state">
+                Unable to load status
+                <br />
+                <br />
+                <button
+                  type="button"
+                  onClick={() => {
+                    states.reloadStatusPage++;
+                  }}
+                >
+                  Try again
+                </button>
+              </p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

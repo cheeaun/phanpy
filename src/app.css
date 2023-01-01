@@ -41,6 +41,7 @@ a.mention span {
   overflow-x: hidden;
   transition: opacity 0.1s ease-in-out;
   overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 .deck-container[hidden] {
   display: block;
@@ -118,6 +119,11 @@ a.mention span {
 .timeline {
   margin: 0 auto;
   padding: 0;
+}
+.timeline.grow {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
 }
 .timeline > li {
   list-style: none;
@@ -333,6 +339,10 @@ a.mention span {
   text-align: center;
   color: var(--text-insignificant-color);
 }
+.status-error {
+  text-align: center;
+  color: var(--text-insignificant-color);
+}
 
 .status-link {
   display: block;
@@ -341,8 +351,13 @@ a.mention span {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
-.status-link:hover {
+.status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
+  outline-offset: -2px;
+}
+.status-link:active {
+  filter: brightness(0.95);
+  transform: translateY(0.5px);
 }
 
 .ui-state {
@@ -393,7 +408,7 @@ a.mention span {
 .deck-close {
   color: var(--text-insignificant-color) !important;
 }
-.deck-close:hover {
+.deck-close:is(:hover, :focus) {
   color: var(--text-color) !important;
 }
 
@@ -415,7 +430,7 @@ a.mention span {
     opacity: 0;
   }
   100% {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 150%);
     opacity: 1;
   }
 }
@@ -423,7 +438,7 @@ a.mention span {
   position: absolute;
   animation: fade-from-top 2s ease-out;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 150%);
   font-size: 90%;
   background: linear-gradient(
     to bottom,
@@ -510,12 +525,12 @@ a.mention span {
   opacity: 0;
 }
 
-button.carousel-button,
+:is(.button, button).carousel-button,
 button.carousel-dot {
   pointer-events: auto;
   font-weight: bold;
 }
-button.carousel-button[hidden] {
+:is(.button, button).carousel-button[hidden] {
   display: inline-block;
   opacity: 0;
   pointer-events: none;
@@ -534,8 +549,7 @@ button.carousel-dot {
   font-weight: bold;
   backdrop-filter: none !important;
 }
-button.carousel-dot:hover,
-button.carousel-dot.active,
+button.carousel-dot:is(:hover, :focus) button.carousel-dot.active,
 button.carousel-dot[disabled].active {
   color: var(--link-color) !important;
 }
@@ -581,24 +595,27 @@ button.carousel-dot[disabled].active {
   right: 16px;
   right: max(16px, env(safe-area-inset-right));
   padding: 16px;
-  box-shadow: 0 0 32px var(--bg-color);
+  background-color: var(--button-bg-blur-color);
+  backdrop-filter: blur(16px);
   z-index: 1;
-  border: 1px solid var(--bg-color);
-  opacity: 0.75;
+  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
+  transition: background-color 0.2s ease-in-out;
+}
+#compose-button:is(:hover, :focus) {
+  background-color: var(--button-bg-color);
+  filter: none;
+}
+#compose-button:active {
+  filter: brightness(0.75);
+  transform: translateY(1px);
+}
+#compose-button .icon {
+  filter: drop-shadow(0 1px 2px var(--button-bg-color));
 }
 
 /* SHEET */
 
-@keyframes slide-up {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 .sheet {
   align-self: flex-end;
   display: flex;
@@ -611,7 +628,7 @@ button.carousel-dot[disabled].active {
   max-width: calc(40em - 50px - 16px);
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -1px 32px var(--divider-color);
-  animation: slide-up 0.2s var(--timing-function);
+  animation: slide-up 0.3s var(--timing-function);
   border: 1px solid var(--outline-color);
 }
 .sheet header {
@@ -696,7 +713,7 @@ button.carousel-dot[disabled].active {
   color: var(--text-color) !important;
   border-radius: 0;
 }
-.menu-container menu button:hover {
+.menu-container menu button:is(:hover, :focus) {
   color: var(--bg-color) !important;
   background-color: var(--link-color);
 }

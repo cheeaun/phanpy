@@ -195,7 +195,7 @@ function NotificationsList({ notifications, emptyCopy }) {
       {cleanNotifications.map((notification, i) => {
         const { id, type } = notification;
         return (
-          <li key={id} class={`notification ${type}`}>
+          <li key={id} class={`notification ${type}`} tabIndex="0">
             <Notification notification={notification} />
           </li>
         );
@@ -290,7 +290,12 @@ function Notifications() {
   );
   // console.log(groupedNotifications);
   return (
-    <div class="deck-container" ref={scrollableRef}>
+    <div
+      id="notifications-page"
+      class="deck-container"
+      ref={scrollableRef}
+      tabIndex="-1"
+    >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
           onClick={() => {
@@ -397,7 +402,14 @@ function Notifications() {
               </>
             )}
             {uiState === 'error' && (
-              <p class="ui-state">Error loading notifications</p>
+              <p class="ui-state">
+                Unable to load notifications
+                <br />
+                <br />
+                <button type="button" onClick={() => loadNotifications(true)}>
+                  Try again
+                </button>
+              </p>
             )}
           </>
         )}

@@ -150,9 +150,6 @@
   background-color: var(--bg-faded-color);
   opacity: 0.5;
 }
-#compose-container .toolbar-button:has([disabled]) > * {
-  /* filter: opacity(0.5); */
-}
 #compose-container
   .toolbar-button:not(.show-field)
   :is(input[type='checkbox'], select, input[type='file']) {
@@ -175,10 +172,17 @@
   right: 0;
   left: auto !important;
 }
-#compose-container .toolbar-button:not(:disabled):hover {
+#compose-container
+  .toolbar-button:not(:disabled):is(
+    :hover,
+    :focus,
+    :focus-within,
+    :focus-visible
+  ) {
   cursor: pointer;
   filter: none;
   border-color: var(--divider-color);
+  outline: 0;
 }
 #compose-container .toolbar-button:not(:disabled):active {
   filter: brightness(0.8);
@@ -231,7 +235,7 @@
   width: 2.2em;
   height: 2.2em;
 }
-#compose-container .text-expander-menu li:hover {
+#compose-container .text-expander-menu li:is(:hover, :focus) {
   color: var(--bg-color);
   background-color: var(--link-color);
 }
@@ -294,7 +298,7 @@
   align-self: flex-start;
   color: var(--text-insignificant-color);
 }
-#compose-container .media-aside .close-button:hover {
+#compose-container .media-aside .close-button:is(:hover, :focus) {
   color: var(--text-color);
 }
 #compose-container .media-aside .uploaded {

@@ -18,6 +18,7 @@ const ICONS = {
   'arrow-left': 'mingcute:arrow-left-line',
   'arrow-right': 'mingcute:arrow-right-line',
   'arrow-up': 'mingcute:arrow-up-line',
+  'arrow-down': 'mingcute:arrow-down-line',
   earth: 'mingcute:earth-line',
   lock: 'mingcute:lock-line',
   unlock: 'mingcute:unlock-line',

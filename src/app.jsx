@@ -2,6 +2,7 @@ import './app.css';
 import 'toastify-js/src/toastify.css';
 
 import { createHashHistory } from 'history';
+import debounce from 'just-debounce-it';
 import { login } from 'masto';
 import Router, { route } from 'preact-router';
 import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
@@ -28,174 +29,7 @@ const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
 
 window.__STATES__ = states;
 
-async function startStream() {
-  const stream = await masto.v1.stream.streamUser();
-  console.log('STREAM START', { stream });
-  stream.on('update', (status) => {
-    console.log('UPDATE', status);
-
-    const inHomeNew = states.homeNew.find((s) => s.id === status.id);
-    const inHome = states.home.find((s) => s.id === status.id);
-    if (!inHomeNew && !inHome) {
-      states.homeNew.unshift({
-        id: status.id,
-        reblog: status.reblog?.id,
-        reply: !!status.inReplyToAccountId,
-      });
-    }
-
-    states.statuses.set(status.id, status);
-    if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
-    }
-  });
-  stream.on('status.update', (status) => {
-    console.log('STATUS.UPDATE', status);
-    states.statuses.set(status.id, status);
-    if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
-    }
-  });
-  stream.on('delete', (statusID) => {
-    console.log('DELETE', statusID);
-    // states.statuses.delete(statusID);
-    const s = states.statuses.get(statusID);
-    if (s) s._deleted = true;
-  });
-  stream.on('notification', (notification) => {
-    console.log('NOTIFICATION', notification);
-
-    const inNotificationsNew = states.notificationsNew.find(
-      (n) => n.id === notification.id,
-    );
-    const inNotifications = states.notifications.find(
-      (n) => n.id === notification.id,
-    );
-    if (!inNotificationsNew && !inNotifications) {
-      states.notificationsNew.unshift(notification);
-    }
-
-    if (notification.status && !states.statuses.has(notification.status.id)) {
-      states.statuses.set(notification.status.id, notification.status);
-      if (
-        notification.status.reblog &&
-        !states.statuses.has(notification.status.reblog.id)
-      ) {
-        states.statuses.set(
-          notification.status.reblog.id,
-          notification.status.reblog,
-        );
-      }
-    }
-  });
-
-  stream.ws.onclose = () => {
-    console.log('STREAM CLOSED!');
-
-    requestAnimationFrame(() => {
-      startStream();
-    });
-  };
-
-  return {
-    stream,
-    stopStream: () => {
-      stream.ws.close();
-    },
-  };
-}
-
-function startVisibility() {
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === 'hidden') {
-      const timestamp = Date.now();
-      store.session.set('lastHidden', timestamp);
-    } else {
-      const timestamp = Date.now();
-      const lastHidden = store.session.get('lastHidden');
-      const diff = timestamp - lastHidden;
-      const diffMins = Math.round(diff / 1000 / 60);
-      if (diffMins > 1) {
-        console.log('visible', { lastHidden, diffMins });
-        setTimeout(() => {
-          // Buffer for WS reconnect
-          (async () => {
-            try {
-              const fetchHome = masto.v1.timelines.listHome({
-                limit: 1,
-              });
-              const fetchNotifications = masto.v1.notifications.list({
-                limit: 1,
-              });
-
-              const newStatuses = await fetchHome;
-              if (
-                newStatuses.length &&
-                newStatuses[0].id !== states.home[0].id
-              ) {
-                states.homeNew = newStatuses.map((status) => {
-                  states.statuses.set(status.id, status);
-                  if (status.reblog) {
-                    states.statuses.set(status.reblog.id, status.reblog);
-                  }
-                  return {
-                    id: status.id,
-                    reblog: status.reblog?.id,
-                    reply: !!status.inReplyToAccountId,
-                  };
-                });
-              }
-
-              const newNotifications = await fetchNotifications;
-              if (newNotifications.length) {
-                const notification = newNotifications[0];
-                const inNotificationsNew = states.notificationsNew.find(
-                  (n) => n.id === notification.id,
-                );
-                const inNotifications = states.notifications.find(
-                  (n) => n.id === notification.id,
-                );
-                if (!inNotificationsNew && !inNotifications) {
-                  states.notificationsNew.unshift(notification);
-                }
-
-                if (
-                  notification.status &&
-                  !states.statuses.has(notification.status.id)
-                ) {
-                  states.statuses.set(
-                    notification.status.id,
-                    notification.status,
-                  );
-                  if (
-                    notification.status.reblog &&
-                    !states.statuses.has(notification.status.reblog.id)
-                  ) {
-                    states.statuses.set(
-                      notification.status.reblog.id,
-                      notification.status.reblog,
-                    );
-                  }
-                }
-              }
-            } catch (e) {
-              // Silently fail
-              console.error(e);
-            }
-          })();
-        }, 100);
-      }
-    }
-  };
-  document.addEventListener('visibilitychange', handleVisibilityChange);
-  return {
-    stop: () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    },
-  };
-}
-
-export function App() {
+function App() {
   const snapStates = useSnapshot(states);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
@@ -294,6 +128,28 @@ export function App() {
   }, []);
 
   const [currentDeck, setCurrentDeck] = useState('home');
+  const [currentModal, setCurrentModal] = useState(null);
+  const focusDeck = () => {
+    if (currentModal) return;
+    let timer = setTimeout(() => {
+      const page = document.getElementById(`${currentDeck}-page`);
+      console.log('focus', currentDeck, page);
+      if (page) {
+        page.focus();
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  };
+  useEffect(focusDeck, [currentDeck, currentModal]);
+  useEffect(() => {
+    if (
+      !snapStates.showCompose &&
+      !snapStates.showSettings &&
+      !snapStates.showAccount
+    ) {
+      focusDeck();
+    }
+  }, [snapStates.showCompose, snapStates.showSettings, snapStates.showAccount]);
 
   useEffect(() => {
     // HACK: prevent this from running again due to HMR
@@ -306,7 +162,7 @@ export function App() {
 
         // Collect instance info
         (async () => {
-          const info = await masto.v2.instance.fetch();
+          const info = await masto.v1.instances.fetch();
           console.log(info);
           const { uri, domain } = info;
           const instances = store.local.getJSON('instances') || {};
@@ -351,14 +207,20 @@ export function App() {
       <Router
         history={createHashHistory()}
         onChange={(e) => {
+          console.log('router onChange', e);
           // Special handling for Home and Notifications
           const { url } = e;
           if (/notifications/i.test(url)) {
             setCurrentDeck('notifications');
+            setCurrentModal(null);
           } else if (url === '/') {
             setCurrentDeck('home');
             document.title = `Home / ${CLIENT_NAME}`;
-          } else if (url === '/login' || url === '/welcome') {
+            setCurrentModal(null);
+          } else if (/^\/s\//i.test(url)) {
+            setCurrentModal('status');
+          } else {
+            setCurrentModal(null);
             setCurrentDeck(null);
           }
           states.history.push(url);
@@ -433,3 +295,177 @@ export function App() {
     </>
   );
 }
+
+async function startStream() {
+  const stream = await masto.v1.stream.streamUser();
+  console.log('STREAM START', { stream });
+  const handleNewStatus = debounce((status) => {
+    console.log('UPDATE', status);
+
+    const inHomeNew = states.homeNew.find((s) => s.id === status.id);
+    const inHome = states.home.find((s) => s.id === status.id);
+    if (!inHomeNew && !inHome) {
+      states.homeNew.unshift({
+        id: status.id,
+        reblog: status.reblog?.id,
+        reply: !!status.inReplyToAccountId,
+      });
+    }
+
+    states.statuses.set(status.id, status);
+    if (status.reblog) {
+      states.statuses.set(status.reblog.id, status.reblog);
+    }
+  }, 5000);
+  stream.on('update', handleNewStatus);
+  stream.on('status.update', (status) => {
+    console.log('STATUS.UPDATE', status);
+    states.statuses.set(status.id, status);
+    if (status.reblog) {
+      states.statuses.set(status.reblog.id, status.reblog);
+    }
+  });
+  stream.on('delete', (statusID) => {
+    console.log('DELETE', statusID);
+    // states.statuses.delete(statusID);
+    const s = states.statuses.get(statusID);
+    if (s) s._deleted = true;
+  });
+  stream.on('notification', (notification) => {
+    console.log('NOTIFICATION', notification);
+
+    const inNotificationsNew = states.notificationsNew.find(
+      (n) => n.id === notification.id,
+    );
+    const inNotifications = states.notifications.find(
+      (n) => n.id === notification.id,
+    );
+    if (!inNotificationsNew && !inNotifications) {
+      states.notificationsNew.unshift(notification);
+    }
+
+    if (notification.status && !states.statuses.has(notification.status.id)) {
+      states.statuses.set(notification.status.id, notification.status);
+      if (
+        notification.status.reblog &&
+        !states.statuses.has(notification.status.reblog.id)
+      ) {
+        states.statuses.set(
+          notification.status.reblog.id,
+          notification.status.reblog,
+        );
+      }
+    }
+  });
+
+  stream.ws.onclose = () => {
+    console.log('STREAM CLOSED!');
+
+    requestAnimationFrame(() => {
+      startStream();
+    });
+  };
+
+  return {
+    stream,
+    stopStream: () => {
+      stream.ws.close();
+    },
+  };
+}
+
+function startVisibility() {
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      const timestamp = Date.now();
+      store.session.set('lastHidden', timestamp);
+    } else {
+      const timestamp = Date.now();
+      const lastHidden = store.session.get('lastHidden');
+      const diff = timestamp - lastHidden;
+      const diffMins = Math.round(diff / 1000 / 60);
+      if (diffMins > 1) {
+        console.log('visible', { lastHidden, diffMins });
+        setTimeout(() => {
+          // Buffer for WS reconnect
+          (async () => {
+            try {
+              const firstStatusID = states.home[0]?.id;
+              const firstNotificationID = states.notifications[0]?.id;
+              const fetchHome = masto.v1.timelines.listHome({
+                limit: 1,
+                ...(firstStatusID && { sinceId: firstStatusID }),
+              });
+              const fetchNotifications = masto.v1.notifications.list({
+                limit: 1,
+                ...(firstNotificationID && { sinceId: firstNotificationID }),
+              });
+
+              const newStatuses = await fetchHome;
+              if (
+                newStatuses.length &&
+                newStatuses[0].id !== states.home[0].id
+              ) {
+                states.homeNew = newStatuses.map((status) => {
+                  states.statuses.set(status.id, status);
+                  if (status.reblog) {
+                    states.statuses.set(status.reblog.id, status.reblog);
+                  }
+                  return {
+                    id: status.id,
+                    reblog: status.reblog?.id,
+                    reply: !!status.inReplyToAccountId,
+                  };
+                });
+              }
+
+              const newNotifications = await fetchNotifications;
+              if (newNotifications.length) {
+                const notification = newNotifications[0];
+                const inNotificationsNew = states.notificationsNew.find(
+                  (n) => n.id === notification.id,
+                );
+                const inNotifications = states.notifications.find(
+                  (n) => n.id === notification.id,
+                );
+                if (!inNotificationsNew && !inNotifications) {
+                  states.notificationsNew.unshift(notification);
+                }
+
+                if (
+                  notification.status &&
+                  !states.statuses.has(notification.status.id)
+                ) {
+                  states.statuses.set(
+                    notification.status.id,
+                    notification.status,
+                  );
+                  if (
+                    notification.status.reblog &&
+                    !states.statuses.has(notification.status.reblog.id)
+                  ) {
+                    states.statuses.set(
+                      notification.status.reblog.id,
+                      notification.status.reblog,
+                    );
+                  }
+                }
+              }
+            } catch (e) {
+              // Silently fail
+              console.error(e);
+            }
+          })();
+        }, 100);
+      }
+    }
+  };
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  return {
+    stop: () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    },
+  };
+}
+
+export { App };

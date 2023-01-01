@@ -1,5 +1,6 @@
 import { Link } from 'preact-router/match';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
@@ -71,8 +72,96 @@ function Home({ hidden }) {
 
   const scrollableRef = useRef();
 
+  useHotkeys('j', () => {
+    // focus on next status after active status
+    // Traverses .timeline li .status-link, focus on .status-link
+    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatusRect = activeStatus?.getBoundingClientRect();
+    if (
+      activeStatus &&
+      activeStatusRect.top < scrollableRef.current.clientHeight &&
+      activeStatusRect.bottom > 0
+    ) {
+      const nextStatus = activeStatus.parentElement.nextElementSibling;
+      if (nextStatus) {
+        const statusLink = nextStatus.querySelector('.status-link');
+        if (statusLink) {
+          statusLink.focus();
+        }
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const statusLinks = document.querySelectorAll(
+        '.timeline li .status-link',
+      );
+      let topmostStatusLink;
+      for (const statusLink of statusLinks) {
+        const statusLinkRect = statusLink.getBoundingClientRect();
+        if (statusLinkRect.top >= 44) {
+          // 44 is the magic number for header height, not real
+          topmostStatusLink = statusLink;
+          break;
+        }
+      }
+      if (topmostStatusLink) {
+        topmostStatusLink.focus();
+      }
+    }
+  });
+
+  useHotkeys('k', () => {
+    // focus on previous status after active status
+    // Traverses .timeline li .status-link, focus on .status-link
+    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatusRect = activeStatus?.getBoundingClientRect();
+    if (
+      activeStatus &&
+      activeStatusRect.top < scrollableRef.current.clientHeight &&
+      activeStatusRect.bottom > 0
+    ) {
+      const prevStatus = activeStatus.parentElement.previousElementSibling;
+      if (prevStatus) {
+        const statusLink = prevStatus.querySelector('.status-link');
+        if (statusLink) {
+          statusLink.focus();
+        }
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const statusLinks = document.querySelectorAll(
+        '.timeline li .status-link',
+      );
+      let topmostStatusLink;
+      for (const statusLink of statusLinks) {
+        const statusLinkRect = statusLink.getBoundingClientRect();
+        if (statusLinkRect.top >= 44) {
+          // 44 is the magic number for header height, not real
+          topmostStatusLink = statusLink;
+          break;
+        }
+      }
+      if (topmostStatusLink) {
+        topmostStatusLink.focus();
+      }
+    }
+  });
+
+  useHotkeys(['enter', 'o'], () => {
+    // open active status
+    const activeStatus = document.activeElement.closest('.status-link');
+    if (activeStatus) {
+      activeStatus.click();
+    }
+  });
+
   return (
-    <div class="deck-container" hidden={hidden} ref={scrollableRef}>
+    <div
+      id="home-page"
+      class="deck-container"
+      hidden={hidden}
+      ref={scrollableRef}
+      tabIndex="-1"
+    >
       <div class="timeline-deck deck">
         <header
           onClick={() => {
@@ -159,6 +248,8 @@ function Home({ hidden }) {
                     onChange={(inView) => {
                       if (inView) loadStatuses();
                     }}
+                    root={scrollableRef.current}
+                    rootMargin="100px 0px"
                   >
                     <Status skeleton />
                   </InView>
@@ -185,7 +276,19 @@ function Home({ hidden }) {
               </ul>
             )}
             {uiState === 'error' && (
-              <p class="ui-state">Error loading statuses</p>
+              <p class="ui-state">
+                Unable to load statuses
+                <br />
+                <br />
+                <button
+                  type="button"
+                  onClick={() => {
+                    loadStatuses(true);
+                  }}
+                >
+                  Try again
+                </button>
+              </p>
             )}
           </>
         )}

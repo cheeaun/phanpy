@@ -81,6 +81,8 @@
 }
 .status.skeleton {
   color: var(--outline-color);
+  user-select: none;
+  pointer-events: none;
 }
 
 .status.skeleton > .avatar {
@@ -122,7 +124,7 @@
   margin-left: 4px;
   white-space: nowrap;
 }
-.status > .container > .meta a.time:hover {
+.status > .container > .meta a.time:is(:hover, :focus) {
   text-decoration: underline;
 }
 .status > .container > .meta .reply-to {
@@ -206,9 +208,6 @@
   opacity: 1;
 }
 
-.status .content {
-  margin-top: 2px;
-}
 .timeline-deck .status .content {
   max-height: 50vh;
   max-height: 50dvh;
@@ -251,6 +250,9 @@
   color: var(--link-color);
   transform: translateX(-50%) translateY(-2px) scale(1.01);
 }
+.timeline-deck .status .content.truncated ~ .card {
+  display: none;
+}
 .status .content p {
   margin-block: 0.75em;
 }
@@ -291,7 +293,8 @@
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
-  max-height: 80vh;
+  min-height: 160px;
+  max-height: 50vh;
 }
 .status .media {
   border-radius: 8px;
@@ -319,7 +322,7 @@
   background-color: var(--bg-faded-blur-color);
 }
 
-.status .media:hover {
+.status .media:is(:hover, :focus) {
   border-color: var(--outline-hover-color);
 }
 .status .media :is(img, video) {
@@ -342,7 +345,7 @@
     object-position: 50% 50%;
   }
 }
-.status .media img:hover {
+.status:not(.large) .media img:hover {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .status .media video {
@@ -410,8 +413,13 @@
   overflow: hidden;
   color: inherit;
   align-items: stretch;
-  background: var(--bg-color);
+  background-color: var(--bg-color);
   max-height: 160px;
+}
+.status.large .card.link.large {
+  border-radius: 16px;
+  flex-direction: column;
+  max-height: none;
 }
 .card .image {
   width: 35%;
@@ -421,7 +429,13 @@
   object-fit: cover;
   aspect-ratio: 1 / 1;
 }
-.card:hover .image {
+.status.large .card.link.large .image {
+  aspect-ratio: 1.91 / 1;
+  width: 100%;
+  max-height: 50vh;
+  border-inline-end: 0;
+}
+.card:is(:hover, :focus) .image {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {
@@ -470,8 +484,9 @@ a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
 }
-a.card:hover {
-  border: 1px solid var(--outline-hover-color);
+a.card:is(:hover, :focus) {
+  border: 1px solid var(--link-color);
+  box-shadow: 0 0 0 2px var(--link-faded-color);
 }
 .card.video {
   max-width: 320px;
@@ -550,10 +565,10 @@ a.card:hover {
   color: inherit;
   text-decoration: none;
 }
-.status .extra-meta a:hover {
+.status .extra-meta a:is(:hover, :focus) {
   text-decoration: underline;
 }
-.status .extra-meta .edited:hover {
+.status .extra-meta .edited:is(:hover, :focus) {
   cursor: pointer;
   color: var(--text-color);
 }
@@ -589,11 +604,11 @@ a.card:hover {
   color: inherit;
   border: 1.5px solid transparent;
 }
-.status .action > button.plain:hover {
+.status .action > button.plain:is(:hover, :focus) {
   color: var(--link-color);
   background-color: var(--button-plain-bg-hover-color);
 }
-.status .action > button.plain.reblog-button:hover {
+.status .action > button.plain.reblog-button:is(:hover, :focus) {
   color: var(--reblog-color);
 }
 .status .action > button.plain.reblog-button.checked {
@@ -618,7 +633,7 @@ a.card:hover {
 .status .action > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
-.status .action > button.plain.favourite-button:hover {
+.status .action > button.plain.favourite-button:is(:hover, :focus) {
   color: var(--favourite-color);
 }
 .status .action > button.plain.favourite-button.checked {

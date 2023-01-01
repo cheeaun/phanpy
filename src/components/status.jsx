@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
@@ -186,8 +187,12 @@ function Status({
   });
   const readMoreText = 'Read more →';
 
+  const statusRef = useRef(null);
+
   return (
-    <div
+    <article
+      ref={statusRef}
+      tabindex="-1"
       class={`status ${
         !withinContext && inReplyToAccount ? 'status-reply-to' : ''
       } visibility-${visibility} ${
@@ -209,6 +214,7 @@ function Status({
       {size !== 's' && (
         <a
           href={url}
+          tabindex="-1"
           // target="_blank"
           title={`@${acct}`}
           onClick={(e) => {
@@ -436,7 +442,10 @@ function Status({
           {!!card &&
             (size === 'l' ||
               (size === 'm' && !poll && !mediaAttachments.length)) && (
-              <Card card={card} />
+              <Card
+                card={card}
+                size={!poll && !mediaAttachments.length ? 'l' : 'm'}
+              />
             )}
         </div>
         {size === 'l' && (
@@ -649,6 +658,7 @@ function Status({
             index={showMediaModal}
             onClose={() => {
               setShowMediaModal(false);
+              statusRef.current?.focus();
             }}
           />
         </Modal>
@@ -658,6 +668,7 @@ function Status({
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowEdited(false);
+              statusRef.current?.focus();
             }
           }}
         >
@@ -665,11 +676,12 @@ function Status({
             statusID={showEdited}
             onClose={() => {
               setShowEdited(false);
+              statusRef.current?.focus();
             }}
           />
         </Modal>
       )}
-    </div>
+    </article>
   );
 }
 
@@ -834,7 +846,7 @@ function Media({ media, showOriginal, onClick = () => {} }) {
   }
 }
 
-function Card({ card }) {
+function Card({ card, size }) {
   const {
     blurhash,
     title,
@@ -858,6 +870,8 @@ function Card({ card }) {
   */
 
   const hasText = title || providerName || authorName;
+  const isLandscape = width / height >= 1.2;
+  size = size === 'l' && isLandscape ? 'large' : '';
 
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
@@ -866,7 +880,7 @@ function Card({ card }) {
         href={url}
         target="_blank"
         rel="nofollow noopener noreferrer"
-        class="card link"
+        class={`card link ${size}`}
       >
         <img
           class="image"
@@ -1160,7 +1174,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
           </p>
         )}
       </header>
-      <main>
+      <main tabIndex="-1">
         {editHistory.length > 0 && (
           <ol>
             {editHistory.map((status) => {
@@ -1285,10 +1299,13 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
     };
   }, []);
 
+  useHotkeys('esc', onClose, [onClose]);
+
   return (
     <>
       <div
         ref={carouselRef}
+        tabIndex="-1"
         data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {
@@ -1299,7 +1316,6 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             onClose();
           }
         }}
-        tabindex="0"
       >
         {mediaAttachments?.map((media, i) => {
           const { blurhash } = media;
@@ -1332,13 +1348,26 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
       </div>
       <div class="carousel-top-controls" hidden={!showControls}>
         <span />
-        <button
-          type="button"
-          class="carousel-button plain2"
-          onClick={() => onClose()}
-        >
-          <Icon icon="x" />
-        </button>
+        <span>
+          <a
+            href={
+              mediaAttachments[currentIndex]?.remoteUrl ||
+              mediaAttachments[currentIndex]?.url
+            }
+            target="_blank"
+            class="button carousel-button plain2"
+            title="Open original media in new window"
+          >
+            <Icon icon="popout" alt="Open original media in new window" />
+          </a>{' '}
+          <button
+            type="button"
+            class="carousel-button plain2"
+            onClick={() => onClose()}
+          >
+            <Icon icon="x" />
+          </button>
+        </span>
       </div>
       {mediaAttachments?.length > 1 && (
         <div class="carousel-controls" hidden={!showControls}>

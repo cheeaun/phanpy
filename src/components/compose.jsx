@@ -131,8 +131,9 @@ function Compose({
   };
   const focusTextarea = () => {
     setTimeout(() => {
+      console.log('focusing');
       textareaRef.current?.focus();
-    }, 100);
+    }, 300);
   };
 
   useEffect(() => {
@@ -596,6 +597,13 @@ function Compose({
         style={{
           pointerEvents: uiState === 'loading' ? 'none' : 'auto',
           opacity: uiState === 'loading' ? 0.5 : 1,
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            formRef.current.dispatchEvent(
+              new Event('submit', { cancelable: true }),
+            );
+          }
         }}
         onSubmit={(e) => {
           e.preventDefault();

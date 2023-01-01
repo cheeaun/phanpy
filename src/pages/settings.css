@@ -28,8 +28,7 @@
   opacity: 1;
 }
 #settings-container ul li .current.is-current + .avatar {
-  border-color: var(--green-color);
-  border-width: 2px;
+  box-shadow: 0 0 0 1.5px var(--green-color);
 }
 #settings-container ul li > div {
   flex-grow: 1;
@@ -72,7 +71,7 @@
   color: var(--link-color);
   font-weight: bold;
 }
-#settings-container .radio-group label:hover {
+#settings-container .radio-group label:is(:hover, :focus) {
   color: var(--button-bg-color);
 }
 #settings-container .radio-group label:has(input:checked) {

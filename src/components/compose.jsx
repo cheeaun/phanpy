@@ -2,6 +2,7 @@ import './compose.css';
 
 import '@github/text-expander-element';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -444,6 +445,18 @@ function Compose({
   const updateCharCount = () => {
     setCharCount(getCharCount());
   };
+
+  useHotkeys(
+    'esc',
+    () => {
+      if (!standalone && confirmClose()) {
+        onClose();
+      }
+    },
+    {
+      enableOnFormTags: true,
+    },
+  );
 
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>

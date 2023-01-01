@@ -311,32 +311,31 @@ function Notifications() {
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
           </div>
-          {snapStates.notificationsNew.length > 0 && (
-            <button
-              class="updates-button"
-              type="button"
-              onClick={() => {
-                const uniqueNotificationsNew =
-                  snapStates.notificationsNew.filter(
-                    (notification) =>
-                      !snapStates.notifications.some(
-                        (n) => n.id === notification.id,
-                      ),
-                  );
-                states.notifications.unshift(...uniqueNotificationsNew);
-                loadNotifications(true);
-                states.notificationsNew = [];
-
-                scrollableRef.current?.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
-                });
-              }}
-            >
-              <Icon icon="arrow-up" /> New notifications
-            </button>
-          )}
         </header>
+        {snapStates.notificationsNew.length > 0 && (
+          <button
+            class="updates-button"
+            type="button"
+            onClick={() => {
+              const uniqueNotificationsNew = snapStates.notificationsNew.filter(
+                (notification) =>
+                  !snapStates.notifications.some(
+                    (n) => n.id === notification.id,
+                  ),
+              );
+              states.notifications.unshift(...uniqueNotificationsNew);
+              loadNotifications(true);
+              states.notificationsNew = [];
+
+              scrollableRef.current?.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="arrow-up" /> New notifications
+          </button>
+        )}
         <div id="mentions-option">
           <label>
             <input

@@ -3,7 +3,7 @@ import './login.css';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import Loader from '../components/loader';
-import instancesList from '../data/instances.json';
+import instancesListURL from '../data/instances.json?url';
 import { getAuthorizationURL, registerApplication } from '../utils/auth';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
@@ -13,6 +13,20 @@ function Login() {
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
+
+  const [instancesList, setInstancesList] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(instancesListURL);
+        const data = await res.json();
+        setInstancesList(data);
+      } catch (e) {
+        // Silently fail
+        console.error(e);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (cachedInstanceURL) {

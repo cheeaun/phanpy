@@ -415,6 +415,24 @@ function StatusPage({ id }) {
                       <Loader />
                     </div>
                   )}
+                {uiState === 'error' &&
+                  isHero &&
+                  !!heroStatus?.repliesCount &&
+                  !hasDescendants && (
+                    <div class="status-error">
+                      Unable to load replies.
+                      <br />
+                      <button
+                        type="button"
+                        class="plain"
+                        onClick={() => {
+                          states.reloadStatusPage++;
+                        }}
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  )}
               </li>
             );
           })}

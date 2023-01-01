@@ -73,9 +73,9 @@ function Compose({
   const configuration = useMemo(() => {
     try {
       const instances = store.local.getJSON('instances');
-      const currentInstance = accounts.find(
-        (a) => a.info.id === currentAccount,
-      ).instanceURL;
+      const currentInstance = accounts
+        .find((a) => a.info.id === currentAccount)
+        .instanceURL.toLowerCase();
       const config = instances[currentInstance].configuration;
       console.log(config);
       return config;

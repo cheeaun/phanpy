@@ -16,14 +16,14 @@ function Login() {
 
   useEffect(() => {
     if (cachedInstanceURL) {
-      instanceURLRef.current.value = cachedInstanceURL;
+      instanceURLRef.current.value = cachedInstanceURL.toLowerCase();
     }
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const { elements } = e.target;
-    let instanceURL = elements.instanceURL.value;
+    let instanceURL = elements.instanceURL.value.toLowerCase();
     // Remove protocol from instance URL
     instanceURL = instanceURL.replace(/(^\w+:|^)\/\//, '');
     store.local.set('instanceURL', instanceURL);

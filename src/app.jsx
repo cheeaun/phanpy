@@ -82,7 +82,7 @@ function App() {
         let account = accounts.find((a) => a.info.id === mastoAccount.id);
         if (account) {
           account.info = mastoAccount;
-          account.instanceURL = instanceURL;
+          account.instanceURL = instanceURL.toLowerCase();
           account.accessToken = accessToken;
         } else {
           account = {
@@ -166,7 +166,7 @@ function App() {
           console.log(info);
           const { uri, domain } = info;
           const instances = store.local.getJSON('instances') || {};
-          instances[domain || uri] = info;
+          instances[(domain || uri).toLowerCase()] = info;
           store.local.setJSON('instances', instances);
         })();
       });

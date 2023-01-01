@@ -123,6 +123,7 @@ a.mention span {
 .timeline.grow {
   min-height: 100vh;
   min-height: 100dvh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
 }
 .timeline > li {
   list-style: none;

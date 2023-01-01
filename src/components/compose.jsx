@@ -131,8 +131,9 @@ function Compose({
   };
   const focusTextarea = () => {
     setTimeout(() => {
+      console.log('focusing');
       textareaRef.current?.focus();
-    }, 100);
+    }, 300);
   };
 
   useEffect(() => {

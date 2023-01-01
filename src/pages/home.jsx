@@ -199,28 +199,28 @@ function Home({ hidden }) {
               <Icon icon="notification" size="l" alt="Notifications" />
             </a>
           </div>
-          {snapStates.homeNew.length > 0 && (
-            <button
-              class="updates-button"
-              type="button"
-              onClick={() => {
-                const uniqueHomeNew = snapStates.homeNew.filter(
-                  (status) => !states.home.some((s) => s.id === status.id),
-                );
-                states.home.unshift(...uniqueHomeNew);
-                loadStatuses(true);
-                states.homeNew = [];
-
-                scrollableRef.current?.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
-                });
-              }}
-            >
-              <Icon icon="arrow-up" /> New posts
-            </button>
-          )}
         </header>
+        {snapStates.homeNew.length > 0 && (
+          <button
+            class="updates-button"
+            type="button"
+            onClick={() => {
+              const uniqueHomeNew = snapStates.homeNew.filter(
+                (status) => !states.home.some((s) => s.id === status.id),
+              );
+              states.home.unshift(...uniqueHomeNew);
+              loadStatuses(true);
+              states.homeNew = [];
+
+              scrollableRef.current?.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="arrow-up" /> New posts
+          </button>
+        )}
         {snapStates.home.length ? (
           <>
             <ul class="timeline">

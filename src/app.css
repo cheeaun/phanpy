@@ -430,15 +430,17 @@ a.mention span {
     opacity: 0;
   }
   100% {
-    transform: translate(-50%, 150%);
+    transform: translate(-50%, 0);
     opacity: 1;
   }
 }
 .updates-button {
   position: absolute;
+  z-index: 1;
   animation: fade-from-top 2s ease-out;
   left: 50%;
-  transform: translate(-50%, 150%);
+  margin-top: 8px;
+  transform: translate(-50%, 0);
   font-size: 90%;
   background: linear-gradient(
     to bottom,

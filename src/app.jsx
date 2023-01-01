@@ -161,7 +161,7 @@ function App() {
 
         // Collect instance info
         (async () => {
-          const info = await masto.v2.instance.fetch();
+          const info = await masto.v1.instances.fetch();
           console.log(info);
           const { uri, domain } = info;
           const instances = store.local.getJSON('instances') || {};

@@ -2,6 +2,7 @@ import './app.css';
 import 'toastify-js/src/toastify.css';
 
 import { createHashHistory } from 'history';
+import debounce from 'just-debounce-it';
 import { login } from 'masto';
 import Router, { route } from 'preact-router';
 import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
@@ -298,7 +299,7 @@ function App() {
 async function startStream() {
   const stream = await masto.v1.stream.streamUser();
   console.log('STREAM START', { stream });
-  stream.on('update', (status) => {
+  const handleNewStatus = debounce((status) => {
     console.log('UPDATE', status);
 
     const inHomeNew = states.homeNew.find((s) => s.id === status.id);
@@ -315,7 +316,8 @@ async function startStream() {
     if (status.reblog) {
       states.statuses.set(status.reblog.id, status.reblog);
     }
-  });
+  }, 5000);
+  stream.on('update', handleNewStatus);
   stream.on('status.update', (status) => {
     console.log('STATUS.UPDATE', status);
     states.statuses.set(status.id, status);

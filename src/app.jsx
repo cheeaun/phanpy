@@ -127,7 +127,9 @@ function App() {
   }, []);
 
   const [currentDeck, setCurrentDeck] = useState('home');
+  const [currentModal, setCurrentModal] = useState(null);
   const focusDeck = () => {
+    if (currentModal) return;
     let timer = setTimeout(() => {
       const page = document.getElementById(`${currentDeck}-page`);
       console.log('focus', currentDeck, page);
@@ -137,7 +139,7 @@ function App() {
     }, 100);
     return () => clearTimeout(timer);
   };
-  useEffect(focusDeck, [currentDeck]);
+  useEffect(focusDeck, [currentDeck, currentModal]);
   useEffect(() => {
     if (
       !snapStates.showCompose &&
@@ -173,7 +175,7 @@ function App() {
 
   return (
     <>
-      {isLoggedIn && (
+      {isLoggedIn && currentDeck && (
         <>
           <button
             type="button"
@@ -194,7 +196,7 @@ function App() {
           </button>
           <div class="decks">
             {/* Home will never be unmounted */}
-            <Home />
+            <Home hidden={currentDeck !== 'home'} />
             {/* Notifications can be unmounted */}
             {currentDeck === 'notifications' && <Notifications />}
           </div>
@@ -209,10 +211,15 @@ function App() {
           const { url } = e;
           if (/notifications/i.test(url)) {
             setCurrentDeck('notifications');
+            setCurrentModal(null);
           } else if (url === '/') {
             setCurrentDeck('home');
             document.title = `Home / ${CLIENT_NAME}`;
+            setCurrentModal(null);
+          } else if (/^\/s\//i.test(url)) {
+            setCurrentModal('status');
           } else {
+            setCurrentModal(null);
             setCurrentDeck(null);
           }
           states.history.push(url);

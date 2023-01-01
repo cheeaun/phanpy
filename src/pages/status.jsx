@@ -346,7 +346,7 @@ function StatusPage({ id }) {
           </div>
         </header>
         <ul
-          class={`timeline flat contextual ${
+          class={`timeline flat contextual grow ${
             uiState === 'loading' ? 'loading' : ''
           }`}
         >

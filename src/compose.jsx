@@ -2,7 +2,7 @@ import './index.css';
 
 import './app.css';
 
-import '@github/time-elements';
+import '@github/relative-time-element';
 import { login } from 'masto';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';

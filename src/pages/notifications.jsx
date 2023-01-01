@@ -402,7 +402,14 @@ function Notifications() {
               </>
             )}
             {uiState === 'error' && (
-              <p class="ui-state">Error loading notifications</p>
+              <p class="ui-state">
+                Unable to load notifications
+                <br />
+                <br />
+                <button type="button" onClick={() => loadNotifications(true)}>
+                  Try again
+                </button>
+              </p>
             )}
           </>
         )}

@@ -276,7 +276,19 @@ function Home({ hidden }) {
               </ul>
             )}
             {uiState === 'error' && (
-              <p class="ui-state">Error loading statuses</p>
+              <p class="ui-state">
+                Unable to load statuses
+                <br />
+                <br />
+                <button
+                  type="button"
+                  onClick={() => {
+                    loadStatuses(true);
+                  }}
+                >
+                  Try again
+                </button>
+              </p>
             )}
           </>
         )}

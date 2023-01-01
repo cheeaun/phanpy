@@ -1348,13 +1348,26 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
       </div>
       <div class="carousel-top-controls" hidden={!showControls}>
         <span />
-        <button
-          type="button"
-          class="carousel-button plain2"
-          onClick={() => onClose()}
-        >
-          <Icon icon="x" />
-        </button>
+        <span>
+          <a
+            href={
+              mediaAttachments[currentIndex]?.remoteUrl ||
+              mediaAttachments[currentIndex]?.url
+            }
+            target="_blank"
+            class="button carousel-button plain2"
+            title="Open original media in new window"
+          >
+            <Icon icon="popout" alt="Open original media in new window" />
+          </a>{' '}
+          <button
+            type="button"
+            class="carousel-button plain2"
+            onClick={() => onClose()}
+          >
+            <Icon icon="x" />
+          </button>
+        </span>
       </div>
       {mediaAttachments?.length > 1 && (
         <div class="carousel-controls" hidden={!showControls}>

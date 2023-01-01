@@ -525,12 +525,12 @@ a.mention span {
   opacity: 0;
 }
 
-button.carousel-button,
+:is(.button, button).carousel-button,
 button.carousel-dot {
   pointer-events: auto;
   font-weight: bold;
 }
-button.carousel-button[hidden] {
+:is(.button, button).carousel-button[hidden] {
   display: inline-block;
   opacity: 0;
   pointer-events: none;

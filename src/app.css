@@ -430,7 +430,7 @@ a.mention span {
     opacity: 0;
   }
   100% {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 150%);
     opacity: 1;
   }
 }
@@ -438,7 +438,7 @@ a.mention span {
   position: absolute;
   animation: fade-from-top 2s ease-out;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 150%);
   font-size: 90%;
   background: linear-gradient(
     to bottom,

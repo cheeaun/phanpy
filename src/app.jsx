@@ -237,13 +237,22 @@ function App() {
             replyToStatus={
               typeof snapStates.showCompose !== 'boolean'
                 ? snapStates.showCompose.replyToStatus
-                : null
+                : window.__COMPOSE__?.replyToStatus || null
             }
-            editStatus={states.showCompose?.editStatus || null}
-            draftStatus={states.showCompose?.draftStatus || null}
+            editStatus={
+              states.showCompose?.editStatus ||
+              window.__COMPOSE__?.editStatus ||
+              null
+            }
+            draftStatus={
+              states.showCompose?.draftStatus ||
+              window.__COMPOSE__?.draftStatus ||
+              null
+            }
             onClose={(results) => {
               const { newStatus } = results || {};
               states.showCompose = false;
+              window.__COMPOSE__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
                 setTimeout(() => {

@@ -29,6 +29,7 @@ function Home({ hidden }) {
       homeIterator.current = masto.v1.timelines.listHome({
         limit: LIMIT,
       });
+      states.homeNew = [];
     }
     const allStatuses = await homeIterator.current.next();
     if (allStatuses.value <= 0) {
@@ -47,7 +48,6 @@ function Home({ hidden }) {
     });
     if (firstLoad) {
       states.home = homeValues;
-      states.homeNew = [];
     } else {
       states.home.push(...homeValues);
     }
@@ -256,6 +256,7 @@ function Home({ hidden }) {
               );
               states.home.unshift(...uniqueHomeNew);
               loadStatuses(true);
+              states.homeNew = [];
 
               scrollableRef.current?.scrollTo({
                 top: 0,

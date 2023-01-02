@@ -222,6 +222,7 @@ function Notifications() {
       notificationsIterator.current = masto.v1.notifications.list({
         limit: LIMIT,
       });
+      states.notificationsNew = [];
     }
     const allNotifications = await notificationsIterator.current.next();
     if (allNotifications.value <= 0) {
@@ -235,7 +236,6 @@ function Notifications() {
     });
     if (firstLoad) {
       states.notifications = notificationsValues;
-      states.notificationsNew = [];
     } else {
       states.notifications.push(...notificationsValues);
     }

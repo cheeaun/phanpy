@@ -374,18 +374,17 @@ a.mention span {
   z-index: 1000;
   display: flex;
   background-color: var(--backdrop-color);
+  animation: appear 0.2s ease-out;
 }
 .deck-backdrop > a {
   flex-grow: 1;
-  backdrop-filter: saturate(0.75);
+  /* backdrop-filter: saturate(0.75); */
 }
 @keyframes slide-in {
   0% {
-    opacity: 0.5;
     transform: translate3d(100%, 0, 0);
   }
   100% {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -402,7 +401,6 @@ a.mention span {
 
 .decks {
   flex-grow: 1;
-  transition: transform 0.5s var(--timing-function);
 }
 
 .deck-close {
@@ -808,7 +806,11 @@ meter.donut:is(.danger, .explode):after {
   #app {
     display: flex;
   }
+  .decks {
+    transition: transform 0.4s var(--timing-function);
+  }
   .decks:has(~ .deck-backdrop) {
+    transition: transform 0.4s ease-out;
     transform: translate3d(-5vw, 0, 0);
   }
   .deck-backdrop .deck {

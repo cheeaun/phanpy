@@ -658,7 +658,6 @@ function Status({
             index={showMediaModal}
             onClose={() => {
               setShowMediaModal(false);
-              statusRef.current?.focus();
             }}
           />
         </Modal>

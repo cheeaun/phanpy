@@ -300,7 +300,13 @@ function Home({ hidden }) {
                     root={scrollableRef.current}
                     rootMargin="100px 0px"
                   > */}
-                  <Status skeleton />
+                  <li
+                    style={{
+                      height: '20vh',
+                    }}
+                  >
+                    <Status skeleton />
+                  </li>
                   {/* </InView> */}
                   <li
                     style={{

@@ -46,20 +46,20 @@ const apiExtendedRoute = new RegExpRoute(
 );
 registerRoute(apiExtendedRoute);
 
-// Not caching API requests, doesn't seem to be necessary fo now
-//
-// const apiRoute = new RegExpRoute(
-//   /^https?:\/\/[^\/]+\/api\//,
-//   new StaleWhileRevalidate({
-//     cacheName: 'api',
-//     plugins: [
-//       new ExpirationPlugin({
-//         maxAgeSeconds: 60, // 1 minute
-//       }),
-//       new CacheableResponsePlugin({
-//         statuses: [0, 200],
-//       }),
-//     ],
-//   }),
-// );
-// registerRoute(apiRoute);
+const apiRoute = new RegExpRoute(
+  // Matches:
+  // - statuses/:id/context - some contexts are really huge
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(statuses\/\d+\/context)/,
+  new StaleWhileRevalidate({
+    cacheName: 'api',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 5 * 60, // 5 minutes
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(apiRoute);

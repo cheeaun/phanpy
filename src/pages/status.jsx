@@ -280,7 +280,7 @@ function StatusPage({ id }) {
   }, [heroInView]);
 
   useHotkeys(['esc', 'backspace'], () => {
-    route(closeLink);
+    location.hash = closeLink;
   });
 
   return (

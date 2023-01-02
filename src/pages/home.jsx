@@ -8,6 +8,8 @@ import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
 import states from '../utils/states';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useScroll from '../utils/useScroll';
 
 const LIMIT = 20;
 
@@ -52,7 +54,10 @@ function Home({ hidden }) {
     return allStatuses;
   }
 
-  const loadStatuses = (firstLoad) => {
+  const loadingStatuses = useRef(false);
+  const loadStatuses = useDebouncedCallback((firstLoad) => {
+    if (loadingStatuses.current) return;
+    loadingStatuses.current = true;
     setUIState('loading');
     (async () => {
       try {
@@ -62,9 +67,11 @@ function Home({ hidden }) {
       } catch (e) {
         console.warn(e);
         setUIState('error');
+      } finally {
+        loadingStatuses.current = false;
       }
     })();
-  };
+  }, 1000);
 
   useEffect(() => {
     loadStatuses(true);
@@ -154,6 +161,25 @@ function Home({ hidden }) {
     }
   });
 
+  const { scrollDirection, reachTop, nearReachTop, nearReachBottom } =
+    useScroll({
+      scrollableElement: scrollableRef.current,
+      distanceFromTop: window.innerHeight / 2,
+      distanceFromBottom: window.innerHeight,
+    });
+
+  useEffect(() => {
+    if (nearReachBottom && showMore) {
+      loadStatuses();
+    }
+  }, [nearReachBottom]);
+
+  useEffect(() => {
+    if (reachTop) {
+      loadStatuses(true);
+    }
+  }, [reachTop]);
+
   return (
     <div
       id="home-page"
@@ -162,8 +188,27 @@ function Home({ hidden }) {
       ref={scrollableRef}
       tabIndex="-1"
     >
+      <button
+        hidden={scrollDirection === 'down' && !nearReachTop}
+        type="button"
+        id="compose-button"
+        onClick={(e) => {
+          if (e.shiftKey) {
+            const newWin = openCompose();
+            if (!newWin) {
+              alert('Looks like your browser is blocking popups.');
+              states.showCompose = true;
+            }
+          } else {
+            states.showCompose = true;
+          }
+        }}
+      >
+        <Icon icon="quill" size="xxl" alt="Compose" />
+      </button>
       <div class="timeline-deck deck">
         <header
+          hidden={scrollDirection === 'down' && !nearReachTop}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -240,7 +285,7 @@ function Home({ hidden }) {
               })}
               {showMore && (
                 <>
-                  <InView
+                  {/* <InView
                     as="li"
                     style={{
                       height: '20vh',
@@ -250,9 +295,9 @@ function Home({ hidden }) {
                     }}
                     root={scrollableRef.current}
                     rootMargin="100px 0px"
-                  >
-                    <Status skeleton />
-                  </InView>
+                  > */}
+                  <Status skeleton />
+                  {/* </InView> */}
                   <li
                     style={{
                       height: '25vh',

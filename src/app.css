@@ -90,6 +90,13 @@ a.mention span {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   user-select: none;
+  transition: transform 0.5s ease-in-out;
+}
+.deck header[hidden] {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 .deck header > .header-side:last-of-type {
   text-align: right;
@@ -350,6 +357,7 @@ a.mention span {
   color: inherit;
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
+  animation: appear 0.2s ease-out;
 }
 .status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
@@ -600,7 +608,18 @@ button.carousel-dot[disabled].active {
   z-index: 1;
   box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
     0 10px 36px -4px var(--button-bg-blur-color);
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#compose-button[hidden] {
+  transform: translateY(150%);
+  pointer-events: none;
+  user-select: none;
+}
+#compose-button .icon {
+  transition: transform 0.3s ease-in-out;
+}
+#compose-button[hidden] .icon {
+  transform: rotate(90deg);
 }
 #compose-button:is(:hover, :focus) {
   background-color: var(--button-bg-color);

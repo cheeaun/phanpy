@@ -177,31 +177,12 @@ function App() {
   return (
     <>
       {isLoggedIn && currentDeck && (
-        <>
-          <button
-            type="button"
-            id="compose-button"
-            onClick={(e) => {
-              if (e.shiftKey) {
-                const newWin = openCompose();
-                if (!newWin) {
-                  alert('Looks like your browser is blocking popups.');
-                  states.showCompose = true;
-                }
-              } else {
-                states.showCompose = true;
-              }
-            }}
-          >
-            <Icon icon="quill" size="xxl" alt="Compose" />
-          </button>
-          <div class="decks">
-            {/* Home will never be unmounted */}
-            <Home hidden={currentDeck !== 'home'} />
-            {/* Notifications can be unmounted */}
-            {currentDeck === 'notifications' && <Notifications />}
-          </div>
-        </>
+        <div class="decks">
+          {/* Home will never be unmounted */}
+          <Home hidden={currentDeck !== 'home'} />
+          {/* Notifications can be unmounted */}
+          {currentDeck === 'notifications' && <Notifications />}
+        </div>
       )}
       {!isLoggedIn && uiState === 'loading' && <Loader />}
       <Router

@@ -4,6 +4,7 @@ export default function useScroll({
   scrollableElement = window,
   distanceFromTop = 0,
   distanceFromBottom = 0,
+  scrollThreshold = 10,
 } = {}) {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [reachTop, setReachTop] = useState(false);
@@ -15,9 +16,12 @@ export default function useScroll({
 
     function onScroll() {
       const { scrollTop, scrollHeight, clientHeight } = scrollableElement;
+      const scrollDistance = Math.abs(scrollTop - previousScrollTop);
 
-      setScrollDirection(previousScrollTop < scrollTop ? 'down' : 'up');
-      previousScrollTop = scrollTop;
+      if (scrollDistance >= scrollThreshold) {
+        setScrollDirection(previousScrollTop < scrollTop ? 'down' : 'up');
+        previousScrollTop = scrollTop;
+      }
 
       setReachTop(scrollTop === 0);
       setNearReachTop(scrollTop <= distanceFromTop);
@@ -29,7 +33,7 @@ export default function useScroll({
     scrollableElement.addEventListener('scroll', onScroll, { passive: true });
 
     return () => scrollableElement.removeEventListener('scroll', onScroll);
-  }, [scrollableElement, distanceFromTop, distanceFromBottom]);
+  }, [scrollableElement, distanceFromTop, distanceFromBottom, scrollThreshold]);
 
   return { scrollDirection, reachTop, nearReachTop, nearReachBottom };
 }

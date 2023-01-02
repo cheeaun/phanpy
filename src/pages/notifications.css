@@ -20,40 +20,55 @@
   opacity: 0.75;
   color: var(--text-insignificant-color);
 }
+.notification-type.notification-mention {
+  color: var(--reply-to-color);
+}
 .notification-type.notification-favourite {
   color: var(--favourite-color);
 }
 .notification-type.notification-reblog {
   color: var(--reblog-color);
 }
-.notification-type.notification-poll,
-.notification-type.notification-mention {
+.notification-type.notification-poll {
   color: var(--link-color);
 }
 
 .notification .status-link {
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px;
   border: 1px solid var(--outline-color);
+  max-height: 160px;
+  overflow: hidden;
+  filter: saturate(0.25);
+}
+.notification .status-link:not(.status-type-mention) > .status {
   max-height: 160px;
   overflow: hidden;
   /* fade out mask gradient bottom */
   mask-image: linear-gradient(
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 1) 50%,
-    transparent
+    rgba(0, 0, 0, 1) 130px,
+    rgba(0, 0, 0, 0.5) 145px,
+    transparent 159px
   );
-  filter: saturate(0.25);
 }
 .notification .status-link.status-type-mention {
   max-height: 320px;
   filter: none;
   background-color: var(--bg-color);
   margin-top: calc(-16px - 1px);
+  border-color: var(--reply-to-color);
+  box-shadow: 0 0 0 3px var(--reply-to-faded-color);
 }
 .notification .status-link:is(:hover, :focus) {
   background-color: var(--bg-blur-color);
   filter: saturate(1);
   border-color: var(--outline-hover-color);
+}
+.notification .status-link.status-type-mention:is(:hover, :focus) {
+  border-color: var(--reply-to-color);
+  box-shadow: 0 0 5px var(--reply-to-color);
+}
+.notification .status-link:active {
+  filter: brightness(0.95);
 }
 .notification .status-link > * {
   pointer-events: none;

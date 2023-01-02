@@ -235,6 +235,7 @@ function Notifications() {
     });
     if (firstLoad) {
       states.notifications = notificationsValues;
+      states.notificationsNew = [];
     } else {
       states.notifications.push(...notificationsValues);
     }
@@ -257,7 +258,6 @@ function Notifications() {
 
   useEffect(() => {
     loadNotifications(true);
-    states.notificationsNew = [];
   }, []);
 
   const scrollableRef = useRef();

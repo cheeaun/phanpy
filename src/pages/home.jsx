@@ -47,6 +47,7 @@ function Home({ hidden }) {
     });
     if (firstLoad) {
       states.home = homeValues;
+      states.homeNew = [];
     } else {
       states.home.push(...homeValues);
     }
@@ -255,7 +256,6 @@ function Home({ hidden }) {
               );
               states.home.unshift(...uniqueHomeNew);
               loadStatuses(true);
-              states.homeNew = [];
 
               scrollableRef.current?.scrollTo({
                 top: 0,

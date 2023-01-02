@@ -182,6 +182,9 @@
 .status .content-container.has-spoiler .spoiler ~ * {
   /* filter: blur(6px) invert(0.5); */
   filter: url(#spoiler);
+  text-rendering: optimizeSpeed;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
   transform: translate3d(-5px, -5px, 0);
   pointer-events: none;
   user-select: none;

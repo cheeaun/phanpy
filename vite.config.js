@@ -6,6 +6,7 @@ import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import htmlPlugin from 'vite-plugin-html-config';
 import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { VitePWA } from 'vite-plugin-pwa';
+import removeConsole from 'vite-plugin-remove-console';
 
 const { NODE_ENV } = process.env;
 const { VITE_CLIENT_NAME: CLIENT_NAME, VITE_APP_ERROR_LOGGING: ERROR_LOGGING } =
@@ -29,6 +30,7 @@ export default defineConfig({
     preact(),
     splitVendorChunkPlugin(),
     VitePluginHtmlEnv(),
+    removeConsole(),
     htmlPlugin({
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
     }),

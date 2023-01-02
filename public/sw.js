@@ -3,6 +3,8 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
 import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 const imageRoute = new Route(
   ({ request, sameOrigin }) => {
     const isRemote = !sameOrigin;

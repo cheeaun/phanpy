@@ -357,39 +357,40 @@
   position: relative;
   background-clip: padding-box;
 }
-.status .media-video:before {
-  /* draw a circle in the middle */
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.status .media-video[data-formatted-duration]:before {
+  pointer-events: none;
+  content: '⏵';
   width: 70px;
   height: 70px;
-  border-radius: 50%;
+  font-size: 50px;
+  position: absolute;
+  text-indent: 3px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-insignificant-color);
   background-color: var(--bg-blur-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
-  z-index: 1;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  border-radius: 70px;
 }
-.status .media-video:after {
-  /* show play icon */
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-35%, -50%);
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 15px 0 15px 26px;
-  border-color: transparent transparent transparent
-    var(--text-insignificant-color);
+.status .media-video[data-formatted-duration]:hover:before {
+  color: var(--text-color);
+}
+.status .media-video[data-formatted-duration]:after {
+  font-size: 12px;
   pointer-events: none;
-  opacity: 0.75;
-  z-index: 2;
-}
-.status .media-video:hover:after {
-  opacity: 1;
+  content: attr(data-formatted-duration);
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  color: var(--bg-color);
+  background-color: var(--text-color);
+  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  border-radius: 4px;
+  padding: 0 4px;
 }
 .status .media-gif video {
   object-fit: cover;

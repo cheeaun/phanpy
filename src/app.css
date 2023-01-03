@@ -91,6 +91,7 @@ a.mention span {
   align-items: center;
   user-select: none;
   transition: transform 0.5s ease-in-out;
+  user-select: none;
 }
 .deck header[hidden] {
   transform: translateY(-100%);
@@ -354,6 +355,7 @@ a.mention span {
   display: block;
   text-decoration-line: none;
   color: inherit;
+  user-select: none;
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
@@ -651,6 +653,7 @@ button.carousel-dot[disabled].active {
   padding: 16px 16px 8px;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
+  user-select: none;
 }
 .sheet main {
   overflow: auto;

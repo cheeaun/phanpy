@@ -438,6 +438,7 @@
   width: 100%;
   max-height: 50vh;
   border-inline-end: 0;
+  border-block-end: 1px solid var(--outline-color);
 }
 .card:is(:hover, :focus) .image {
   animation: position-object 5s ease-in-out 1s 5;

@@ -198,9 +198,6 @@
     filter: url(#spoiler-dark);
   }
 }
-.status .content-container.has-spoiler .spoiler ~ .content ~ * {
-  opacity: 0.5;
-}
 .status .content-container.show-spoiler .spoiler {
   border-style: dotted;
 }
@@ -209,9 +206,6 @@
   transform: none;
   pointer-events: auto;
   user-select: auto;
-}
-.status .content-container.has-spoiler .spoiler ~ .content ~ * {
-  opacity: 1;
 }
 
 .timeline-deck .status .content {

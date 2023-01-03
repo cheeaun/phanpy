@@ -781,7 +781,7 @@ function Compose({
               name="sensitive"
               type="checkbox"
               checked={sensitive}
-              disabled={uiState === 'loading' || !!editStatus}
+              disabled={uiState === 'loading'}
               onChange={(e) => {
                 const sensitive = e.target.checked;
                 setSensitive(sensitive);

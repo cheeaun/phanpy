@@ -18,4 +18,5 @@ export default proxy({
   showCompose: false,
   showSettings: false,
   showAccount: false,
+  composeCharacterCount: 0,
 });

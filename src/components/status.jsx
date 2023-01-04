@@ -94,6 +94,7 @@ function Status({
     filtered,
     card,
     createdAt,
+    inReplyToId,
     inReplyToAccountId,
     content,
     mentions,
@@ -279,26 +280,30 @@ function Status({
               </span>
             ))}
         </div>
-        {inReplyToAccountId && !withinContext && size !== 's' && (
-          <>
-            {inReplyToAccountId === status.account.id ? (
-              <div class="status-thread-badge">
-                <Icon icon="thread" size="s" />
-                Thread
-              </div>
-            ) : (
-              !!inReplyToAccount &&
-              !mentions.find((mention) => {
-                return mention.id === inReplyToAccountId;
-              }) && (
-                <div class="status-reply-badge">
-                  <Icon icon="reply" />{' '}
-                  <NameText account={inReplyToAccount} short />
+        {!!inReplyToId &&
+          !!inReplyToAccountId &&
+          !withinContext &&
+          size !== 's' && (
+            <>
+              {inReplyToAccountId === status.account.id ? (
+                <div class="status-thread-badge">
+                  <Icon icon="thread" size="s" />
+                  Thread
                 </div>
-              )
-            )}
-          </>
-        )}
+              ) : (
+                !!inReplyToAccount &&
+                (!!spoilerText ||
+                  !mentions.find((mention) => {
+                    return mention.id === inReplyToAccountId;
+                  })) && (
+                  <div class="status-reply-badge">
+                    <Icon icon="reply" />{' '}
+                    <NameText account={inReplyToAccount} short />
+                  </div>
+                )
+              )}
+            </>
+          )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''

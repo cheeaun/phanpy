@@ -247,9 +247,8 @@ function Home({ hidden }) {
           </div>
         </header>
         {snapStates.homeNew.length > 0 &&
-          scrollDirection === 'up' &&
-          !nearReachTop &&
-          !nearReachBottom && (
+          ((scrollDirection === 'up' && !nearReachTop && !nearReachBottom) ||
+            reachTop) && (
             <button
               class="updates-button"
               type="button"

@@ -1049,7 +1049,6 @@ const Textarea = forwardRef((props, ref) => {
         style={{
           width: '100%',
           height: '4em',
-          maxHeight: `${maxCharacters / 50}em`,
           '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
       />

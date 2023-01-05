@@ -165,8 +165,8 @@ function Home({ hidden }) {
   const { scrollDirection, reachTop, nearReachTop, nearReachBottom } =
     useScroll({
       scrollableElement: scrollableRef.current,
-      distanceFromTop: window.innerHeight / 2,
-      distanceFromBottom: window.innerHeight,
+      distanceFromTop: 0.1,
+      distanceFromBottom: 0.15,
     });
 
   useEffect(() => {
@@ -247,8 +247,9 @@ function Home({ hidden }) {
           </div>
         </header>
         {snapStates.homeNew.length > 0 &&
-          ((scrollDirection === 'up' && !nearReachTop && !nearReachBottom) ||
-            reachTop) && (
+          scrollDirection === 'up' &&
+          !nearReachTop &&
+          !nearReachBottom && (
             <button
               class="updates-button"
               type="button"

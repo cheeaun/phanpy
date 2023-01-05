@@ -432,6 +432,8 @@ function Status({
             </div>
           )}
           {!!card &&
+            !sensitive &&
+            !spoilerText &&
             (size === 'l' ||
               (size === 'm' && !poll && !mediaAttachments.length)) && (
               <Card

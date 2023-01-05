@@ -27,11 +27,12 @@ export default function RelativeTime({ datetime, format }) {
       raf = requestAnimationFrame(() => {
         let str;
         if (format === 'micro') {
-          // If date <= 7 days
-          if (date.diff(dayjs(), 'day') >= -7) {
+          // If date <= 1 day ago or day is within this year
+          const now = dayjs();
+          const dayDiff = now.diff(date, 'day');
+          if (dayDiff <= 1 || now.year() === date.year()) {
             str = date.twitter();
           } else {
-            // If date > 7 days
             str = dtf.format(date.toDate());
           }
         } else {

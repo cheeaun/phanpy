@@ -655,6 +655,9 @@ button.carousel-dot[disabled].active {
   padding-right: max(16px, env(safe-area-inset-right));
   user-select: none;
 }
+.sheet header :is(h1, h2, h3) {
+  margin: 0;
+}
 .sheet main {
   overflow: auto;
   overflow-x: hidden;

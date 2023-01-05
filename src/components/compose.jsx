@@ -13,11 +13,13 @@ import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
 import Icon from './icon';
 import Loader from './loader';
+import Modal from './modal';
 import Status from './status';
 
 const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
@@ -1090,26 +1092,41 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
-  const { url, type, id, description } = attachment;
+  const { url, type, id } = attachment;
+  console.log({ attachment });
+  const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];
-  return (
-    <div class="media-attachment">
-      <div class="media-preview">
-        {suffixType === 'image' ? (
-          <img src={url} alt="" />
-        ) : suffixType === 'video' || suffixType === 'gifv' ? (
-          <video src={url} playsinline muted />
-        ) : suffixType === 'audio' ? (
-          <audio src={url} controls />
-        ) : null}
-      </div>
+  const debouncedOnDescriptionChange = useDebouncedCallback(
+    onDescriptionChange,
+    500,
+  );
+
+  const [showModal, setShowModal] = useState(false);
+  const textareaRef = useRef(null);
+  useEffect(() => {
+    let timer;
+    if (showModal && textareaRef.current) {
+      timer = setTimeout(() => {
+        textareaRef.current.focus();
+      }, 100);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showModal]);
+
+  const descTextarea = (
+    <>
       {!!id ? (
         <div class="media-desc">
           <span class="tag">Uploaded</span>
-          <p title={description}>{description || <i>No description</i>}</p>
+          <p title={description}>
+            {attachment.description || <i>No description</i>}
+          </p>
         </div>
       ) : (
         <textarea
+          ref={textareaRef}
           value={description || ''}
           placeholder={
             {
@@ -1128,21 +1145,79 @@ function MediaAttachment({
           // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
           onInput={(e) => {
             const { value } = e.target;
-            onDescriptionChange(value);
+            setDescription(value);
+            debouncedOnDescriptionChange(value);
           }}
         ></textarea>
       )}
-      <div class="media-aside">
-        <button
-          type="button"
-          class="plain close-button"
-          disabled={disabled}
-          onClick={onRemove}
+    </>
+  );
+
+  return (
+    <>
+      <div class="media-attachment">
+        <div
+          class="media-preview"
+          onClick={() => {
+            setShowModal(true);
+          }}
         >
-          <Icon icon="x" />
-        </button>
+          {suffixType === 'image' ? (
+            <img src={url} alt="" />
+          ) : suffixType === 'video' || suffixType === 'gifv' ? (
+            <video src={url} playsinline muted />
+          ) : suffixType === 'audio' ? (
+            <audio src={url} controls />
+          ) : null}
+        </div>
+        {descTextarea}
+        <div class="media-aside">
+          <button
+            type="button"
+            class="plain close-button"
+            disabled={disabled}
+            onClick={onRemove}
+          >
+            <Icon icon="x" />
+          </button>
+        </div>
       </div>
-    </div>
+      {showModal && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+            }
+          }}
+        >
+          <div id="media-sheet" class="sheet">
+            <header>
+              <h2>
+                {
+                  {
+                    image: 'Edit image description',
+                    video: 'Edit video description',
+                    audio: 'Edit audio description',
+                  }[suffixType]
+                }
+              </h2>
+            </header>
+            <main tabIndex="-1">
+              <div class="media-preview">
+                {suffixType === 'image' ? (
+                  <img src={url} alt="" />
+                ) : suffixType === 'video' || suffixType === 'gifv' ? (
+                  <video src={url} playsinline controls />
+                ) : suffixType === 'audio' ? (
+                  <audio src={url} controls />
+                ) : null}
+              </div>
+              {descTextarea}
+            </main>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 

@@ -16,6 +16,8 @@ function NameText({ account, showAvatar, showAcct, short, external, onClick }) {
     username.toLowerCase().trim() ===
       (displayName || '')
         .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
+        .replace(/\s+/g, '') // E.g. "My name" === "myname"
+        .replace(/[^a-z0-9]/gi, '') // Remove non-alphanumeric characters
         .toLowerCase()
         .trim()
   ) {

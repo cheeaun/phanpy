@@ -8,6 +8,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -102,11 +103,9 @@ function Notification({ notification }) {
               <span class="insignificant">
                 {' '}
                 •{' '}
-                <relative-time
+                <RelativeTime
                   datetime={notification.createdAt}
                   format="micro"
-                  threshold="P1D"
-                  prefix=""
                 />
               </span>
             )}

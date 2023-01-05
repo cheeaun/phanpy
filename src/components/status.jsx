@@ -28,6 +28,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import RelativeTime from './relative-time';
 
 function fetchAccount(id) {
   return masto.v1.accounts.fetch(id);
@@ -253,14 +254,7 @@ function Status({
                   alt={visibility}
                   size="s"
                 />{' '}
-                <relative-time
-                  datetime={createdAtDate.toISOString()}
-                  format="micro"
-                  threshold="P1D"
-                  prefix=""
-                >
-                  {createdAtDate.toLocaleString()}
-                </relative-time>
+                <RelativeTime datetime={createdAtDate} format="micro" />
               </a>
             ) : (
               <span class="time">
@@ -269,14 +263,7 @@ function Status({
                   alt={visibility}
                   size="s"
                 />{' '}
-                <relative-time
-                  datetime={createdAtDate.toISOString()}
-                  format="micro"
-                  threshold="P1D"
-                  prefix=""
-                >
-                  {createdAtDate.toLocaleString()}
-                </relative-time>
+                <RelativeTime datetime={createdAtDate} format="micro" />
               </span>
             ))}
         </div>
@@ -1136,9 +1123,7 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
             </>
           )}{' '}
           &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && (
-            <relative-time datetime={expiresAtDate.toISOString()} />
-          )}
+          {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
         </p>
       )}
     </div>

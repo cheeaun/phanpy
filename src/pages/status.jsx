@@ -17,6 +17,7 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
@@ -325,11 +326,9 @@ function StatusPage({ id }) {
                 <NameText showAvatar account={heroStatus.account} short />{' '}
                 <span class="insignificant">
                   &bull;{' '}
-                  <relative-time
+                  <RelativeTime
                     datetime={heroStatus.createdAt}
                     format="micro"
-                    threshold="P1D"
-                    prefix=""
                   />
                 </span>
               </span>

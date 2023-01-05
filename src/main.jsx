@@ -1,6 +1,5 @@
 import './index.css';
 
-import '@github/relative-time-element';
 import { render } from 'preact';
 
 import { App } from './app';

@@ -434,8 +434,8 @@ function Status({
           {!!card &&
             !sensitive &&
             !spoilerText &&
-            (size === 'l' ||
-              (size === 'm' && !poll && !mediaAttachments.length)) && (
+            !poll &&
+            !mediaAttachments.length && (
               <Card
                 card={card}
                 size={!poll && !mediaAttachments.length ? 'l' : 'm'}

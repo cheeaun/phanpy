@@ -79,10 +79,12 @@ It's been **more than 15 years**.
 
 And here I am. Building a Mastodon web client.
 
-## Alternative clients
+## Alternative web clients
 
 - [Pinafore](https://pinafore.social/)
 - [Elk](https://m.webtoo.ls/@elk)
+- [Mastodeck](https://mastodeck.com/)
+- 
 - [More...](https://github.com/tleb/awesome-mastodon#clients)
 
 ## License

@@ -8,6 +8,8 @@ import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
 import states from '../utils/states';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useScroll from '../utils/useScroll';
 
 const LIMIT = 20;
 
@@ -27,6 +29,7 @@ function Home({ hidden }) {
       homeIterator.current = masto.v1.timelines.listHome({
         limit: LIMIT,
       });
+      states.homeNew = [];
     }
     const allStatuses = await homeIterator.current.next();
     if (allStatuses.value <= 0) {
@@ -52,7 +55,10 @@ function Home({ hidden }) {
     return allStatuses;
   }
 
-  const loadStatuses = (firstLoad) => {
+  const loadingStatuses = useRef(false);
+  const loadStatuses = useDebouncedCallback((firstLoad) => {
+    if (loadingStatuses.current) return;
+    loadingStatuses.current = true;
     setUIState('loading');
     (async () => {
       try {
@@ -62,9 +68,11 @@ function Home({ hidden }) {
       } catch (e) {
         console.warn(e);
         setUIState('error');
+      } finally {
+        loadingStatuses.current = false;
       }
     })();
-  };
+  }, 1000);
 
   useEffect(() => {
     loadStatuses(true);
@@ -154,6 +162,25 @@ function Home({ hidden }) {
     }
   });
 
+  const { scrollDirection, reachTop, nearReachTop, nearReachBottom } =
+    useScroll({
+      scrollableElement: scrollableRef.current,
+      distanceFromTop: 0.1,
+      distanceFromBottom: 0.15,
+    });
+
+  useEffect(() => {
+    if (nearReachBottom && showMore) {
+      loadStatuses();
+    }
+  }, [nearReachBottom]);
+
+  useEffect(() => {
+    if (reachTop) {
+      loadStatuses(true);
+    }
+  }, [reachTop]);
+
   return (
     <div
       id="home-page"
@@ -162,8 +189,27 @@ function Home({ hidden }) {
       ref={scrollableRef}
       tabIndex="-1"
     >
+      <button
+        hidden={scrollDirection === 'down' && !nearReachTop}
+        type="button"
+        id="compose-button"
+        onClick={(e) => {
+          if (e.shiftKey) {
+            const newWin = openCompose();
+            if (!newWin) {
+              alert('Looks like your browser is blocking popups.');
+              states.showCompose = true;
+            }
+          } else {
+            states.showCompose = true;
+          }
+        }}
+      >
+        <Icon icon="quill" size="xxl" alt="Compose" />
+      </button>
       <div class="timeline-deck deck">
         <header
+          hidden={scrollDirection === 'down' && !nearReachTop}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -200,27 +246,30 @@ function Home({ hidden }) {
             </a>
           </div>
         </header>
-        {snapStates.homeNew.length > 0 && (
-          <button
-            class="updates-button"
-            type="button"
-            onClick={() => {
-              const uniqueHomeNew = snapStates.homeNew.filter(
-                (status) => !states.home.some((s) => s.id === status.id),
-              );
-              states.home.unshift(...uniqueHomeNew);
-              loadStatuses(true);
-              states.homeNew = [];
+        {snapStates.homeNew.length > 0 &&
+          scrollDirection === 'up' &&
+          !nearReachTop &&
+          !nearReachBottom && (
+            <button
+              class="updates-button"
+              type="button"
+              onClick={() => {
+                const uniqueHomeNew = snapStates.homeNew.filter(
+                  (status) => !states.home.some((s) => s.id === status.id),
+                );
+                states.home.unshift(...uniqueHomeNew);
+                loadStatuses(true);
+                states.homeNew = [];
 
-              scrollableRef.current?.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              });
-            }}
-          >
-            <Icon icon="arrow-up" /> New posts
-          </button>
-        )}
+                scrollableRef.current?.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
+              }}
+            >
+              <Icon icon="arrow-up" /> New posts
+            </button>
+          )}
         {snapStates.home.length ? (
           <>
             <ul class="timeline">
@@ -240,7 +289,7 @@ function Home({ hidden }) {
               })}
               {showMore && (
                 <>
-                  <InView
+                  {/* <InView
                     as="li"
                     style={{
                       height: '20vh',
@@ -250,9 +299,15 @@ function Home({ hidden }) {
                     }}
                     root={scrollableRef.current}
                     rootMargin="100px 0px"
+                  > */}
+                  <li
+                    style={{
+                      height: '20vh',
+                    }}
                   >
                     <Status skeleton />
-                  </InView>
+                  </li>
+                  {/* </InView> */}
                   <li
                     style={{
                       height: '25vh',

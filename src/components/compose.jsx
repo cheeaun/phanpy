@@ -1,19 +1,25 @@
 import './compose.css';
 
 import '@github/text-expander-element';
+import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
+import states from '../utils/states';
 import store from '../utils/store';
+import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
 import Icon from './icon';
 import Loader from './loader';
+import Modal from './modal';
 import Status from './status';
 
 const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
@@ -53,6 +59,16 @@ menu.className = 'text-expander-menu';
 
 const DEFAULT_LANG = 'en';
 
+// https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
+const urlRegexObj = new RegExp(urlRegex.source, urlRegex.flags);
+const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
+const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
+function countableText(inputText) {
+  return inputText
+    .replace(urlRegexObj, urlPlaceholder)
+    .replace(usernameRegex, '$1@$3');
+}
+
 function Compose({
   onClose,
   replyToStatus,
@@ -61,6 +77,7 @@ function Compose({
   standalone,
   hasOpener,
 }) {
+  console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
 
   const accounts = store.local.getJSON('accounts');
@@ -72,9 +89,9 @@ function Compose({
   const configuration = useMemo(() => {
     try {
       const instances = store.local.getJSON('instances');
-      const currentInstance = accounts.find(
-        (a) => a.info.id === currentAccount,
-      ).instanceURL;
+      const currentInstance = accounts
+        .find((a) => a.info.id === currentAccount)
+        .instanceURL.toLowerCase();
       const config = instances[currentInstance].configuration;
       console.log(config);
       return config;
@@ -222,130 +239,6 @@ function Compose({
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
-  const textExpanderRef = useRef();
-  const textExpanderTextRef = useRef('');
-  useEffect(() => {
-    if (textExpanderRef.current) {
-      const handleChange = (e) => {
-        // console.log('text-expander-change', e);
-        const { key, provide, text } = e.detail;
-        textExpanderTextRef.current = text;
-
-        if (text === '') {
-          provide(
-            Promise.resolve({
-              matched: false,
-            }),
-          );
-          return;
-        }
-
-        if (key === ':') {
-          // const emojis = customEmojis.current.filter((emoji) =>
-          //   emoji.shortcode.startsWith(text),
-          // );
-          const emojis = filterShortcodes(customEmojis.current, text);
-          let html = '';
-          emojis.forEach((emoji) => {
-            const { shortcode, url } = emoji;
-            html += `
-                <li role="option" data-value="${encodeHTML(shortcode)}">
-                <img src="${encodeHTML(
-                  url,
-                )}" width="16" height="16" alt="" loading="lazy" /> 
-                :${encodeHTML(shortcode)}:
-              </li>`;
-          });
-          // console.log({ emojis, html });
-          menu.innerHTML = html;
-          provide(
-            Promise.resolve({
-              matched: emojis.length > 0,
-              fragment: menu,
-            }),
-          );
-          return;
-        }
-
-        const type = {
-          '@': 'accounts',
-          '#': 'hashtags',
-        }[key];
-        provide(
-          new Promise((resolve) => {
-            const searchResults = masto.v2.search({
-              type,
-              q: text,
-              limit: 5,
-            });
-            searchResults.then((value) => {
-              if (text !== textExpanderTextRef.current) {
-                return;
-              }
-              console.log({ value, type, v: value[type] });
-              const results = value[type];
-              console.log('RESULTS', value, results);
-              let html = '';
-              results.forEach((result) => {
-                const {
-                  name,
-                  avatarStatic,
-                  displayName,
-                  username,
-                  acct,
-                  emojis,
-                } = result;
-                const displayNameWithEmoji = emojifyText(displayName, emojis);
-                // const item = menuItem.cloneNode();
-                if (acct) {
-                  html += `
-                    <li role="option" data-value="${encodeHTML(acct)}">
-                      <span class="avatar">
-                        <img src="${encodeHTML(
-                          avatarStatic,
-                        )}" width="16" height="16" alt="" loading="lazy" />
-                      </span>
-                      <span>
-                        <b>${displayNameWithEmoji || username}</b>
-                        <br>@${encodeHTML(acct)}
-                      </span>
-                    </li>
-                  `;
-                } else {
-                  html += `
-                    <li role="option" data-value="${encodeHTML(name)}">
-                      <span>#<b>${encodeHTML(name)}</b></span>
-                    </li>
-                  `;
-                }
-                menu.innerHTML = html;
-              });
-              console.log('MENU', results, menu);
-              resolve({
-                matched: results.length > 0,
-                fragment: menu,
-              });
-            });
-          }),
-        );
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-change',
-        handleChange,
-      );
-
-      textExpanderRef.current.addEventListener('text-expander-value', (e) => {
-        const { key, item } = e.detail;
-        if (key === ':') {
-          e.detail.value = `:${item.dataset.value}:`;
-        } else {
-          e.detail.value = `${key}${item.dataset.value}`;
-        }
-      });
-    }
-  }, []);
-
   const formRef = useRef();
 
   const beforeUnloadCopy =
@@ -431,19 +324,28 @@ function Compose({
       });
   }, []);
 
-  const [charCount, setCharCount] = useState(
-    textareaRef.current?.value?.length +
-      spoilerTextRef.current?.value?.length || 0,
-  );
-  const leftChars = maxCharacters - charCount;
   const getCharCount = () => {
     const { value } = textareaRef.current;
     const { value: spoilerText } = spoilerTextRef.current;
     return stringLength(countableText(value)) + stringLength(spoilerText);
   };
   const updateCharCount = () => {
-    setCharCount(getCharCount());
+    const count = getCharCount();
+    states.composerCharacterCount = count;
   };
+  useEffect(updateCharCount, []);
+
+  useHotkeys(
+    'esc',
+    () => {
+      if (!standalone && confirmClose()) {
+        onClose();
+      }
+    },
+    {
+      enableOnFormTags: true,
+    },
+  );
 
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -463,21 +365,21 @@ function Compose({
               disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                const containNonIDMediaAttachments =
-                  mediaAttachments.length > 0 &&
-                  mediaAttachments.some((media) => !media.id);
-                if (containNonIDMediaAttachments) {
-                  const yes = confirm(
-                    'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                  );
-                  if (!yes) {
-                    return;
-                  }
-                }
+                // const containNonIDMediaAttachments =
+                //   mediaAttachments.length > 0 &&
+                //   mediaAttachments.some((media) => !media.id);
+                // if (containNonIDMediaAttachments) {
+                //   const yes = confirm(
+                //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                //   );
+                //   if (!yes) {
+                //     return;
+                //   }
+                // }
 
-                const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                  (media) => media.id,
-                );
+                // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                //   (media) => media.id,
+                // );
 
                 const newWin = openCompose({
                   editStatus,
@@ -489,7 +391,7 @@ function Compose({
                     language,
                     sensitive,
                     poll,
-                    mediaAttachments: mediaAttachmentsWithIDs,
+                    mediaAttachments,
                   },
                 });
 
@@ -524,17 +426,17 @@ function Compose({
               disabled={uiState === 'loading'}
               onClick={() => {
                 // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                const containNonIDMediaAttachments =
-                  mediaAttachments.length > 0 &&
-                  mediaAttachments.some((media) => !media.id);
-                if (containNonIDMediaAttachments) {
-                  const yes = confirm(
-                    'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                  );
-                  if (!yes) {
-                    return;
-                  }
-                }
+                // const containNonIDMediaAttachments =
+                //   mediaAttachments.length > 0 &&
+                //   mediaAttachments.some((media) => !media.id);
+                // if (containNonIDMediaAttachments) {
+                //   const yes = confirm(
+                //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                //   );
+                //   if (!yes) {
+                //     return;
+                //   }
+                // }
 
                 if (!window.opener) {
                   alert('Looks like you closed the parent window.');
@@ -548,13 +450,13 @@ function Compose({
                   if (!yes) return;
                 }
 
-                const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                  (media) => media.id,
-                );
+                // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                //   (media) => media.id,
+                // );
 
                 onClose({
                   fn: () => {
-                    window.opener.__STATES__.showCompose = {
+                    const passData = {
                       editStatus,
                       replyToStatus,
                       draftStatus: {
@@ -564,9 +466,11 @@ function Compose({
                         language,
                         sensitive,
                         poll,
-                        mediaAttachments: mediaAttachmentsWithIDs,
+                        mediaAttachments,
                       },
                     };
+                    window.opener.__COMPOSE__ = passData;
+                    window.opener.__STATES__.showCompose = true;
                   },
                 });
               }}
@@ -766,7 +670,7 @@ function Compose({
               name="sensitive"
               type="checkbox"
               checked={sensitive}
-              disabled={uiState === 'loading' || !!editStatus}
+              disabled={uiState === 'loading'}
               onChange={(e) => {
                 const sensitive = e.target.checked;
                 setSensitive(sensitive);
@@ -803,41 +707,22 @@ function Compose({
             </select>
           </label>{' '}
         </div>
-        <text-expander ref={textExpanderRef} keys="@ # :">
-          <textarea
-            ref={textareaRef}
-            placeholder={
-              replyToStatus
-                ? 'Post your reply'
-                : editStatus
-                ? 'Edit your status'
-                : 'What are you doing?'
-            }
-            required={mediaAttachments.length === 0}
-            autoCapitalize="sentences"
-            autoComplete="on"
-            autoCorrect="on"
-            spellCheck="true"
-            dir="auto"
-            rows="6"
-            cols="50"
-            name="status"
-            disabled={uiState === 'loading'}
-            onInput={(e) => {
-              const { scrollHeight, offsetHeight, clientHeight, value } =
-                e.target;
-              const offset = offsetHeight - clientHeight;
-              e.target.style.height = value
-                ? scrollHeight + offset + 'px'
-                : null;
-              updateCharCount();
-            }}
-            style={{
-              maxHeight: `${maxCharacters / 50}em`,
-              '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
-            }}
-          ></textarea>
-        </text-expander>
+        <Textarea
+          ref={textareaRef}
+          placeholder={
+            replyToStatus
+              ? 'Post your reply'
+              : editStatus
+              ? 'Edit your status'
+              : 'What are you doing?'
+          }
+          required={mediaAttachments.length === 0}
+          disabled={uiState === 'loading'}
+          onInput={() => {
+            updateCharCount();
+          }}
+          maxCharacters={maxCharacters}
+        />
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
             {mediaAttachments.map((attachment, i) => {
@@ -942,26 +827,8 @@ function Compose({
           </button>{' '}
           <div class="spacer" />
           {uiState === 'loading' && <Loader abrupt />}{' '}
-          {uiState !== 'loading' && charCount > maxCharacters / 2 && (
-            <>
-              <meter
-                class={`donut ${
-                  leftChars <= -10
-                    ? 'explode'
-                    : leftChars <= 0
-                    ? 'danger'
-                    : leftChars <= 20
-                    ? 'warning'
-                    : ''
-                }`}
-                value={charCount}
-                max={maxCharacters}
-                data-left={leftChars}
-                style={{
-                  '--percentage': (charCount / maxCharacters) * 100,
-                }}
-              />{' '}
-            </>
+          {uiState !== 'loading' && (
+            <CharCountMeter maxCharacters={maxCharacters} />
           )}
           <label class="toolbar-button">
             <span class="icon-text">
@@ -997,32 +864,269 @@ function Compose({
   );
 }
 
+const Textarea = forwardRef((props, ref) => {
+  const [text, setText] = useState(ref.current?.value || '');
+  const { maxCharacters, ...textareaProps } = props;
+  const snapStates = useSnapshot(states);
+  const charCount = snapStates.composerCharacterCount;
+
+  const textExpanderRef = useRef();
+  const textExpanderTextRef = useRef('');
+  useEffect(() => {
+    let handleChange, handleValue, handleCommited;
+    if (textExpanderRef.current) {
+      handleChange = (e) => {
+        // console.log('text-expander-change', e);
+        const { key, provide, text } = e.detail;
+        textExpanderTextRef.current = text;
+
+        if (text === '') {
+          provide(
+            Promise.resolve({
+              matched: false,
+            }),
+          );
+          return;
+        }
+
+        if (key === ':') {
+          // const emojis = customEmojis.current.filter((emoji) =>
+          //   emoji.shortcode.startsWith(text),
+          // );
+          const emojis = filterShortcodes(customEmojis.current, text);
+          let html = '';
+          emojis.forEach((emoji) => {
+            const { shortcode, url } = emoji;
+            html += `
+                <li role="option" data-value="${encodeHTML(shortcode)}">
+                <img src="${encodeHTML(
+                  url,
+                )}" width="16" height="16" alt="" loading="lazy" /> 
+                :${encodeHTML(shortcode)}:
+              </li>`;
+          });
+          // console.log({ emojis, html });
+          menu.innerHTML = html;
+          provide(
+            Promise.resolve({
+              matched: emojis.length > 0,
+              fragment: menu,
+            }),
+          );
+          return;
+        }
+
+        const type = {
+          '@': 'accounts',
+          '#': 'hashtags',
+        }[key];
+        provide(
+          new Promise((resolve) => {
+            const searchResults = masto.v2.search({
+              type,
+              q: text,
+              limit: 5,
+            });
+            searchResults.then((value) => {
+              if (text !== textExpanderTextRef.current) {
+                return;
+              }
+              console.log({ value, type, v: value[type] });
+              const results = value[type];
+              console.log('RESULTS', value, results);
+              let html = '';
+              results.forEach((result) => {
+                const {
+                  name,
+                  avatarStatic,
+                  displayName,
+                  username,
+                  acct,
+                  emojis,
+                } = result;
+                const displayNameWithEmoji = emojifyText(displayName, emojis);
+                // const item = menuItem.cloneNode();
+                if (acct) {
+                  html += `
+                    <li role="option" data-value="${encodeHTML(acct)}">
+                      <span class="avatar">
+                        <img src="${encodeHTML(
+                          avatarStatic,
+                        )}" width="16" height="16" alt="" loading="lazy" />
+                      </span>
+                      <span>
+                        <b>${displayNameWithEmoji || username}</b>
+                        <br>@${encodeHTML(acct)}
+                      </span>
+                    </li>
+                  `;
+                } else {
+                  html += `
+                    <li role="option" data-value="${encodeHTML(name)}">
+                      <span>#<b>${encodeHTML(name)}</b></span>
+                    </li>
+                  `;
+                }
+                menu.innerHTML = html;
+              });
+              console.log('MENU', results, menu);
+              resolve({
+                matched: results.length > 0,
+                fragment: menu,
+              });
+            });
+          }),
+        );
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-change',
+        handleChange,
+      );
+
+      handleValue = (e) => {
+        const { key, item } = e.detail;
+        if (key === ':') {
+          e.detail.value = `:${item.dataset.value}:`;
+        } else {
+          e.detail.value = `${key}${item.dataset.value}`;
+        }
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-value',
+        handleValue,
+      );
+
+      handleCommited = (e) => {
+        const { input } = e.detail;
+        setText(input.value);
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-committed',
+        handleCommited,
+      );
+    }
+
+    return () => {
+      if (textExpanderRef.current) {
+        textExpanderRef.current.removeEventListener(
+          'text-expander-change',
+          handleChange,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-value',
+          handleValue,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-committed',
+          handleCommited,
+        );
+      }
+    };
+  }, []);
+
+  return (
+    <text-expander ref={textExpanderRef} keys="@ # :">
+      <textarea
+        autoCapitalize="sentences"
+        autoComplete="on"
+        autoCorrect="on"
+        spellCheck="true"
+        dir="auto"
+        rows="6"
+        cols="50"
+        {...textareaProps}
+        ref={ref}
+        name="status"
+        value={text}
+        onInput={(e) => {
+          const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
+          setText(value);
+          const offset = offsetHeight - clientHeight;
+          e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+          props.onInput?.(e);
+        }}
+        style={{
+          width: '100%',
+          height: '4em',
+          '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
+        }}
+      />
+    </text-expander>
+  );
+});
+
+function CharCountMeter({ maxCharacters = 500 }) {
+  const snapStates = useSnapshot(states);
+  const charCount = snapStates.composerCharacterCount;
+  const leftChars = maxCharacters - charCount;
+  if (charCount <= maxCharacters / 2) {
+    return null;
+  }
+  return (
+    <meter
+      class={`donut ${
+        leftChars <= -10
+          ? 'explode'
+          : leftChars <= 0
+          ? 'danger'
+          : leftChars <= 20
+          ? 'warning'
+          : ''
+      }`}
+      value={charCount}
+      max={maxCharacters}
+      data-left={leftChars}
+      style={{
+        '--percentage': (charCount / maxCharacters) * 100,
+      }}
+    />
+  );
+}
+
 function MediaAttachment({
   attachment,
   disabled,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
-  const { url, type, id, description } = attachment;
+  const { url, type, id } = attachment;
+  console.log({ attachment });
+  const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];
-  return (
-    <div class="media-attachment">
-      <div class="media-preview">
-        {suffixType === 'image' ? (
-          <img src={url} alt="" />
-        ) : suffixType === 'video' || suffixType === 'gifv' ? (
-          <video src={url} playsinline muted />
-        ) : suffixType === 'audio' ? (
-          <audio src={url} controls />
-        ) : null}
-      </div>
+  const debouncedOnDescriptionChange = useDebouncedCallback(
+    onDescriptionChange,
+    500,
+  );
+
+  const [showModal, setShowModal] = useState(false);
+  const textareaRef = useRef(null);
+  useEffect(() => {
+    let timer;
+    if (showModal && textareaRef.current) {
+      timer = setTimeout(() => {
+        textareaRef.current.focus();
+      }, 100);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showModal]);
+
+  const descTextarea = (
+    <>
       {!!id ? (
         <div class="media-desc">
           <span class="tag">Uploaded</span>
-          <p title={description}>{description || <i>No description</i>}</p>
+          <p title={description}>
+            {attachment.description || <i>No description</i>}
+          </p>
         </div>
       ) : (
         <textarea
+          ref={textareaRef}
           value={description || ''}
           placeholder={
             {
@@ -1041,21 +1145,79 @@ function MediaAttachment({
           // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
           onInput={(e) => {
             const { value } = e.target;
-            onDescriptionChange(value);
+            setDescription(value);
+            debouncedOnDescriptionChange(value);
           }}
         ></textarea>
       )}
-      <div class="media-aside">
-        <button
-          type="button"
-          class="plain close-button"
-          disabled={disabled}
-          onClick={onRemove}
+    </>
+  );
+
+  return (
+    <>
+      <div class="media-attachment">
+        <div
+          class="media-preview"
+          onClick={() => {
+            setShowModal(true);
+          }}
         >
-          <Icon icon="x" />
-        </button>
+          {suffixType === 'image' ? (
+            <img src={url} alt="" />
+          ) : suffixType === 'video' || suffixType === 'gifv' ? (
+            <video src={url} playsinline muted />
+          ) : suffixType === 'audio' ? (
+            <audio src={url} controls />
+          ) : null}
+        </div>
+        {descTextarea}
+        <div class="media-aside">
+          <button
+            type="button"
+            class="plain close-button"
+            disabled={disabled}
+            onClick={onRemove}
+          >
+            <Icon icon="x" />
+          </button>
+        </div>
       </div>
-    </div>
+      {showModal && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+            }
+          }}
+        >
+          <div id="media-sheet" class="sheet">
+            <header>
+              <h2>
+                {
+                  {
+                    image: 'Edit image description',
+                    video: 'Edit video description',
+                    audio: 'Edit audio description',
+                  }[suffixType]
+                }
+              </h2>
+            </header>
+            <main tabIndex="-1">
+              <div class="media-preview">
+                {suffixType === 'image' ? (
+                  <img src={url} alt="" />
+                ) : suffixType === 'video' || suffixType === 'gifv' ? (
+                  <video src={url} playsinline controls />
+                ) : suffixType === 'audio' ? (
+                  <audio src={url} controls />
+                ) : null}
+              </div>
+              {descTextarea}
+            </main>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 
@@ -1203,16 +1365,6 @@ function encodeHTML(str) {
   return str.replace(/[&<>"']/g, function (char) {
     return '&#' + char.charCodeAt(0) + ';';
   });
-}
-
-// https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
-const urlRegexObj = new RegExp(urlRegex.source, urlRegex.flags);
-const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
-const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
-function countableText(inputText) {
-  return inputText
-    .replace(urlRegexObj, urlPlaceholder)
-    .replace(usernameRegex, '$1@$3');
 }
 
 function removeNullUndefined(obj) {

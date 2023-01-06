@@ -90,6 +90,13 @@ a.mention span {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   user-select: none;
+  transition: transform 0.5s ease-in-out;
+  user-select: none;
+}
+.deck header[hidden] {
+  transform: translateY(-100%);
+  pointer-events: none;
+  user-select: none;
 }
 .deck header > .header-side:last-of-type {
   text-align: right;
@@ -348,8 +355,10 @@ a.mention span {
   display: block;
   text-decoration-line: none;
   color: inherit;
+  user-select: none;
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
+  animation: appear 0.2s ease-out;
 }
 .status-link:is(:hover, :focus) {
   background-color: var(--link-bg-hover-color);
@@ -357,7 +366,6 @@ a.mention span {
 }
 .status-link:active {
   filter: brightness(0.95);
-  transform: translateY(0.5px);
 }
 
 .ui-state {
@@ -374,18 +382,17 @@ a.mention span {
   z-index: 1000;
   display: flex;
   background-color: var(--backdrop-color);
+  animation: appear 0.2s ease-out;
 }
 .deck-backdrop > a {
   flex-grow: 1;
-  backdrop-filter: saturate(0.75);
+  /* backdrop-filter: saturate(0.75); */
 }
 @keyframes slide-in {
   0% {
-    opacity: 0.5;
     transform: translate3d(100%, 0, 0);
   }
   100% {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -402,7 +409,6 @@ a.mention span {
 
 .decks {
   flex-grow: 1;
-  transition: transform 0.5s var(--timing-function);
 }
 
 .deck-close {
@@ -436,7 +442,7 @@ a.mention span {
 }
 .updates-button {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   animation: fade-from-top 2s ease-out;
   left: 50%;
   margin-top: 8px;
@@ -602,7 +608,18 @@ button.carousel-dot[disabled].active {
   z-index: 1;
   box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
     0 10px 36px -4px var(--button-bg-blur-color);
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#compose-button[hidden] {
+  transform: translateY(200%);
+  pointer-events: none;
+  user-select: none;
+}
+#compose-button .icon {
+  transition: transform 0.3s ease-in-out;
+}
+#compose-button[hidden] .icon {
+  transform: rotate(90deg);
 }
 #compose-button:is(:hover, :focus) {
   background-color: var(--button-bg-color);
@@ -610,7 +627,6 @@ button.carousel-dot[disabled].active {
 }
 #compose-button:active {
   filter: brightness(0.75);
-  transform: translateY(1px);
 }
 #compose-button .icon {
   filter: drop-shadow(0 1px 2px var(--button-bg-color));
@@ -637,6 +653,10 @@ button.carousel-dot[disabled].active {
   padding: 16px 16px 8px;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
+  user-select: none;
+}
+.sheet header :is(h1, h2, h3) {
+  margin: 0;
 }
 .sheet main {
   overflow: auto;
@@ -800,6 +820,14 @@ meter.donut:is(.danger, .explode):after {
   filter: brightness(0.8);
 }
 
+/* AVATARS STACK */
+
+.avatars-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 @media (min-width: 40em) {
   html,
   body {
@@ -808,7 +836,11 @@ meter.donut:is(.danger, .explode):after {
   #app {
     display: flex;
   }
+  .decks {
+    transition: transform 0.4s var(--timing-function);
+  }
   .decks:has(~ .deck-backdrop) {
+    transition: transform 0.4s ease-out;
     transform: translate3d(-5vw, 0, 0);
   }
   .deck-backdrop .deck {

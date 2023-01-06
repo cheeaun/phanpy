@@ -3,7 +3,7 @@ import './login.css';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import Loader from '../components/loader';
-import instancesList from '../data/instances.json';
+import instancesListURL from '../data/instances.json?url';
 import { getAuthorizationURL, registerApplication } from '../utils/auth';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
@@ -14,16 +14,30 @@ function Login() {
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
 
+  const [instancesList, setInstancesList] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(instancesListURL);
+        const data = await res.json();
+        setInstancesList(data);
+      } catch (e) {
+        // Silently fail
+        console.error(e);
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     if (cachedInstanceURL) {
-      instanceURLRef.current.value = cachedInstanceURL;
+      instanceURLRef.current.value = cachedInstanceURL.toLowerCase();
     }
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const { elements } = e.target;
-    let instanceURL = elements.instanceURL.value;
+    let instanceURL = elements.instanceURL.value.toLowerCase();
     // Remove protocol from instance URL
     instanceURL = instanceURL.replace(/(^\w+:|^)\/\//, '');
     store.local.set('instanceURL', instanceURL);
@@ -68,6 +82,10 @@ function Login() {
             ref={instanceURLRef}
             disabled={uiState === 'loading'}
             list="instances-list"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="off"
+            spellcheck="false"
           />
           <datalist id="instances-list">
             {instancesList.map((instance) => (

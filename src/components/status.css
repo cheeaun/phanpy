@@ -103,6 +103,9 @@
   justify-content: space-between;
   white-space: nowrap;
 }
+.status.small > .container > .meta {
+  margin-bottom: 4px;
+}
 .status > .container > .meta > * {
   min-width: 0;
   overflow: hidden;
@@ -179,33 +182,56 @@
   gap: 8px;
   align-items: center;
 }
-.status .content-container.has-spoiler .spoiler ~ * {
-  /* filter: blur(6px) invert(0.5); */
-  filter: url(#spoiler);
-  transform: translate3d(-5px, -5px, 0);
+.status
+  .content-container.has-spoiler
+  .spoiler
+  ~ *:not(.media-container, .card),
+.status .content-container.has-spoiler .spoiler ~ .card .meta-container {
+  filter: blur(6px) invert(0.5);
+  /* filter: url(#spoiler); */
+  text-rendering: optimizeSpeed;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  /* transform: translate3d(-5px, -5px, 0); */
   pointer-events: none;
   user-select: none;
   contain: layout;
 }
-@media (prefers-color-scheme: dark) {
-  .status .content-container.has-spoiler .spoiler ~ * {
+.status .content-container.has-spoiler .spoiler ~ .media-container .media > *,
+.status .content-container.has-spoiler .spoiler ~ .card > img {
+  filter: blur(32px);
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  animation: none !important;
+}
+/* @media (prefers-color-scheme: dark) {
+  .status
+    .content-container.has-spoiler
+    .spoiler
+    ~ *:not(.media-container, .card),
+  .status .content-container.has-spoiler .spoiler ~ .card .meta-container {
     filter: url(#spoiler-dark);
   }
-}
-.status .content-container.has-spoiler .spoiler ~ .content ~ * {
-  opacity: 0.5;
-}
+} */
 .status .content-container.show-spoiler .spoiler {
   border-style: dotted;
 }
-.status .content-container.show-spoiler .spoiler ~ * {
+.status
+  .content-container.show-spoiler
+  .spoiler
+  ~ *:not(.media-container, .card),
+.status .content-container.show-spoiler .spoiler ~ .card .meta-container {
   filter: none !important;
   transform: none;
   pointer-events: auto;
   user-select: auto;
+  text-rendering: auto;
+  image-rendering: auto;
 }
-.status .content-container.has-spoiler .spoiler ~ .content ~ * {
-  opacity: 1;
+.status .content-container.show-spoiler .spoiler ~ .media-container .media > *,
+.status .content-container.show-spoiler .spoiler ~ .card > img {
+  filter: none;
+  image-rendering: auto;
 }
 
 .timeline-deck .status .content {
@@ -353,47 +379,66 @@
   height: 100%;
   object-fit: contain;
 }
-.status .media-video {
+.status .media-video,
+.status .media-gif {
   position: relative;
   background-clip: padding-box;
 }
-.status .media-video:before {
-  /* draw a circle in the middle */
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.status .media-video[data-formatted-duration]:before {
+  pointer-events: none;
+  content: '⏵';
   width: 70px;
   height: 70px;
-  border-radius: 50%;
+  font-size: 50px;
+  position: absolute;
+  text-indent: 3px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-insignificant-color);
   background-color: var(--bg-blur-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
-  z-index: 1;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  border-radius: 70px;
 }
-.status .media-video:after {
-  /* show play icon */
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-35%, -50%);
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 15px 0 15px 26px;
-  border-color: transparent transparent transparent
-    var(--text-insignificant-color);
+.status .media-video[data-formatted-duration]:hover:before {
+  color: var(--text-color);
+}
+.status .media-video[data-formatted-duration]:after {
+  font-size: 12px;
   pointer-events: none;
-  opacity: 0.75;
-  z-index: 2;
+  content: attr(data-formatted-duration);
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  color: var(--bg-color);
+  background-color: var(--text-color);
+  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  border-radius: 4px;
+  padding: 0 4px;
 }
-.status .media-video:hover:after {
-  opacity: 1;
+.status .media-gif[data-label]:not(:hover):after {
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none;
+  content: attr(data-label);
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  color: var(--bg-faded-color);
+  background-color: var(--text-insignificant-color);
+  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  border-radius: 4px;
+  padding: 0 4px;
 }
 .status .media-gif video {
   object-fit: cover;
   pointer-events: none;
+}
+.status .media-contain video {
+  object-fit: contain !important;
 }
 .status .media-audio {
   border: 0;
@@ -434,6 +479,7 @@
   width: 100%;
   max-height: 50vh;
   border-inline-end: 0;
+  border-block-end: 1px solid var(--outline-color);
 }
 .card:is(:hover, :focus) .image {
   animation: position-object 5s ease-in-out 1s 5;
@@ -446,6 +492,9 @@
   min-width: 0;
   flex-grow: 1;
   align-self: center;
+}
+.card.large .meta-container {
+  align-self: flex-start;
 }
 .card .title {
   line-height: 1.25;

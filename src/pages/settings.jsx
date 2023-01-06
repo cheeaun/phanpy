@@ -5,6 +5,7 @@ import { useRef, useState } from 'preact/hooks';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -196,8 +197,7 @@ function Settings({ onClose }) {
         </p>
         {__BUILD_TIME__ && (
           <p>
-            Last build:{' '}
-            <relative-time datetime={new Date(__BUILD_TIME__).toISOString()} />{' '}
+            Last build: <RelativeTime datetime={new Date(__BUILD_TIME__)} />{' '}
             {__COMMIT_HASH__ && (
               <>
                 (

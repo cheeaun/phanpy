@@ -17,6 +17,7 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
@@ -54,7 +55,7 @@ function StatusPage({ id }) {
     };
   }, [id]);
 
-  useEffect(() => {
+  const initContext = () => {
     setUIState('loading');
     let heroTimer;
 
@@ -173,7 +174,30 @@ function StatusPage({ id }) {
     return () => {
       clearTimeout(heroTimer);
     };
-  }, [id, snapStates.reloadStatusPage]);
+  };
+
+  useEffect(initContext, [id]);
+
+  useEffect(() => {
+    // Delete the cache for the context
+    (async () => {
+      try {
+        const accounts = store.local.getJSON('accounts') || [];
+        const currentAccount = store.session.get('currentAccount');
+        const account =
+          accounts.find((a) => a.info.id === currentAccount) || accounts[0];
+        const instanceURL = account.instanceURL;
+        const contextURL = `https://${instanceURL}/api/v1/statuses/${id}/context`;
+        console.log('Clear cache', contextURL);
+        const apiCache = await caches.open('api');
+        await apiCache.delete(contextURL, { ignoreVary: true });
+
+        return initContext();
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [snapStates.reloadStatusPage]);
 
   const firstLoad = useRef(true);
 
@@ -280,7 +304,7 @@ function StatusPage({ id }) {
   }, [heroInView]);
 
   useHotkeys(['esc', 'backspace'], () => {
-    route(closeLink);
+    location.hash = closeLink;
   });
 
   return (
@@ -325,11 +349,9 @@ function StatusPage({ id }) {
                 <NameText showAvatar account={heroStatus.account} short />{' '}
                 <span class="insignificant">
                   &bull;{' '}
-                  <relative-time
+                  <RelativeTime
                     datetime={heroStatus.createdAt}
                     format="micro"
-                    threshold="P1D"
-                    prefix=""
                   />
                 </span>
               </span>

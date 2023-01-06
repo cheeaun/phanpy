@@ -6,12 +6,11 @@ import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import htmlPlugin from 'vite-plugin-html-config';
 import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { VitePWA } from 'vite-plugin-pwa';
+import removeConsole from 'vite-plugin-remove-console';
 
-const {
-  VITE_CLIENT_NAME: CLIENT_NAME,
-  NODE_ENV,
-  VITE_APP_ERROR_LOGGING,
-} = loadEnv('production', process.cwd());
+const { NODE_ENV } = process.env;
+const { VITE_CLIENT_NAME: CLIENT_NAME, VITE_APP_ERROR_LOGGING: ERROR_LOGGING } =
+  loadEnv('production', process.cwd());
 
 const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 
@@ -31,8 +30,9 @@ export default defineConfig({
     preact(),
     splitVendorChunkPlugin(),
     VitePluginHtmlEnv(),
+    removeConsole(),
     htmlPlugin({
-      headScripts: VITE_APP_ERROR_LOGGING ? [rollbarCode] : [],
+      headScripts: ERROR_LOGGING ? [rollbarCode] : [],
     }),
     VitePWA({
       manifest: {

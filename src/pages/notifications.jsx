@@ -8,6 +8,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -102,18 +103,16 @@ function Notification({ notification }) {
               <span class="insignificant">
                 {' '}
                 •{' '}
-                <relative-time
+                <RelativeTime
                   datetime={notification.createdAt}
                   format="micro"
-                  threshold="P1D"
-                  prefix=""
                 />
               </span>
             )}
           </p>
         )}
         {_accounts?.length > 1 && (
-          <p>
+          <p class="avatars-stack">
             {_accounts.map((account, i) => (
               <>
                 <a
@@ -127,7 +126,7 @@ function Notification({ notification }) {
                   <Avatar
                     url={account.avatarStatic}
                     size={
-                      _accounts.length < 10
+                      _accounts.length < 30
                         ? 'xl'
                         : _accounts.length < 100
                         ? 'l'
@@ -164,28 +163,23 @@ function NotificationsList({ notifications, emptyCopy }) {
   // Create new flat list of notifications
   // Combine sibling notifications based on type and status id, ignore the id
   // Concat all notification.account into an array of _accounts
-  const cleanNotifications = [
-    {
-      ...notifications[0],
-      _accounts: [notifications[0].account],
-    },
-  ];
-  for (let i = 1, j = 0; i < notifications.length; i++) {
+  const notificationsMap = {};
+  const cleanNotifications = [];
+  for (let i = 0, j = 0; i < notifications.length; i++) {
     const notification = notifications[i];
-    const cleanNotification = cleanNotifications[j];
-    const { status, account, type } = notification;
-    if (
-      account &&
-      cleanNotification?.account &&
-      cleanNotification?.status?.id === status?.id &&
-      cleanNotification?.type === type
-    ) {
-      cleanNotification._accounts.push(account);
+    // const cleanNotification = cleanNotifications[j];
+    const { status, account, type, created_at } = notification;
+    const createdAt = new Date(created_at).toLocaleDateString();
+    const key = `${status?.id}-${type}-${createdAt}`;
+    const mappedNotification = notificationsMap[key];
+    if (mappedNotification?.account) {
+      mappedNotification._accounts.push(account);
     } else {
-      cleanNotifications[++j] = {
+      let n = (notificationsMap[key] = {
         ...notification,
         _accounts: [account],
-      };
+      });
+      cleanNotifications[j++] = n;
     }
   }
   // console.log({ notifications, cleanNotifications });
@@ -222,6 +216,7 @@ function Notifications() {
       notificationsIterator.current = masto.v1.notifications.list({
         limit: LIMIT,
       });
+      states.notificationsNew = [];
     }
     const allNotifications = await notificationsIterator.current.next();
     if (allNotifications.value <= 0) {
@@ -257,7 +252,6 @@ function Notifications() {
 
   useEffect(() => {
     loadNotifications(true);
-    states.notificationsNew = [];
   }, []);
 
   const scrollableRef = useRef();

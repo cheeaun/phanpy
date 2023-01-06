@@ -28,6 +28,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import RelativeTime from './relative-time';
 
 function fetchAccount(id) {
   return masto.v1.accounts.fetch(id);
@@ -94,6 +95,7 @@ function Status({
     filtered,
     card,
     createdAt,
+    inReplyToId,
     inReplyToAccountId,
     content,
     mentions,
@@ -252,14 +254,7 @@ function Status({
                   alt={visibility}
                   size="s"
                 />{' '}
-                <relative-time
-                  datetime={createdAtDate.toISOString()}
-                  format="micro"
-                  threshold="P1D"
-                  prefix=""
-                >
-                  {createdAtDate.toLocaleString()}
-                </relative-time>
+                <RelativeTime datetime={createdAtDate} format="micro" />
               </a>
             ) : (
               <span class="time">
@@ -268,37 +263,34 @@ function Status({
                   alt={visibility}
                   size="s"
                 />{' '}
-                <relative-time
-                  datetime={createdAtDate.toISOString()}
-                  format="micro"
-                  threshold="P1D"
-                  prefix=""
-                >
-                  {createdAtDate.toLocaleString()}
-                </relative-time>
+                <RelativeTime datetime={createdAtDate} format="micro" />
               </span>
             ))}
         </div>
-        {inReplyToAccountId && !withinContext && size !== 's' && (
-          <>
-            {inReplyToAccountId === status.account.id ? (
-              <div class="status-thread-badge">
-                <Icon icon="thread" size="s" />
-                Thread
-              </div>
-            ) : (
-              !!inReplyToAccount &&
-              !mentions.find((mention) => {
-                return mention.id === inReplyToAccountId;
-              }) && (
-                <div class="status-reply-badge">
-                  <Icon icon="reply" />{' '}
-                  <NameText account={inReplyToAccount} short />
+        {!!inReplyToId &&
+          !!inReplyToAccountId &&
+          !withinContext &&
+          size !== 's' && (
+            <>
+              {inReplyToAccountId === status.account.id ? (
+                <div class="status-thread-badge">
+                  <Icon icon="thread" size="s" />
+                  Thread
                 </div>
-              )
-            )}
-          </>
-        )}
+              ) : (
+                !!inReplyToAccount &&
+                (!!spoilerText ||
+                  !mentions.find((mention) => {
+                    return mention.id === inReplyToAccountId;
+                  })) && (
+                  <div class="status-reply-badge">
+                    <Icon icon="reply" />{' '}
+                    <NameText account={inReplyToAccount} short />
+                  </div>
+                )
+              )}
+            </>
+          )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''
@@ -430,6 +422,7 @@ function Status({
                   <Media
                     key={media.id}
                     media={media}
+                    autoAnimate={size === 'l'}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -440,8 +433,10 @@ function Status({
             </div>
           )}
           {!!card &&
-            (size === 'l' ||
-              (size === 'm' && !poll && !mediaAttachments.length)) && (
+            !sensitive &&
+            !spoilerText &&
+            !poll &&
+            !mediaAttachments.length && (
               <Card
                 card={card}
                 size={!poll && !mediaAttachments.length ? 'l' : 'm'}
@@ -658,7 +653,6 @@ function Status({
             index={showMediaModal}
             onClose={() => {
               setShowMediaModal(false);
-              statusRef.current?.focus();
             }}
           />
         </Modal>
@@ -695,7 +689,7 @@ video = Video clip
 audio = Audio track
 */
 
-function Media({ media, showOriginal, onClick = () => {} }) {
+function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
   const { original, small, focus } = meta || {};
@@ -748,7 +742,7 @@ function Media({ media, showOriginal, onClick = () => {} }) {
           alt={description}
           width={width}
           height={height}
-          loading="lazy"
+          loading={showOriginal ? 'eager' : 'lazy'}
           style={
             !showOriginal && {
               backgroundColor:
@@ -762,17 +756,24 @@ function Media({ media, showOriginal, onClick = () => {} }) {
   } else if (type === 'gifv' || type === 'video') {
     // 20 seconds, treat as a gif
     const shortDuration = original.duration <= 20;
-    const isGIF = type === 'gifv' || shortDuration;
+    const isGIFV = type === 'gifv';
+    const isGIF = isGIFV || shortDuration;
     const loopable = original.duration <= 60;
+    const formattedDuration = formatDuration(original.duration);
+    const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
     return (
       <div
-        class={`media media-${isGIF ? 'gif' : 'video'}`}
+        class={`media media-${isGIF ? 'gif' : 'video'} ${
+          autoAnimate ? 'media-contain' : ''
+        }`}
+        data-formatted-duration={formattedDuration}
+        data-label={isGIF && !showOriginal && !autoAnimate ? 'GIF' : ''}
         style={{
           backgroundColor:
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.pause();
             } catch (e) {}
@@ -780,37 +781,41 @@ function Media({ media, showOriginal, onClick = () => {} }) {
           onClick(e);
         }}
         onMouseEnter={() => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.play();
             } catch (e) {}
           }
         }}
         onMouseLeave={() => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.pause();
             } catch (e) {}
           }
         }}
       >
-        {showOriginal ? (
+        {showOriginal || autoAnimate ? (
           <div
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
             dangerouslySetInnerHTML={{
               __html: `
-                <video
-                  src="${url}"
-                  poster="${previewUrl}"
-                  width="${width}"
-                  height="${height}"
-                  preload="auto"
-                  autoplay
-                  muted="${isGIF}"
-                  ${isGIF ? '' : 'controls'}
-                  playsinline
-                  loop="${loopable}"
-                ></video>
-              `,
+              <video
+                src="${url}"
+                poster="${previewUrl}"
+                width="${width}"
+                height="${height}"
+                preload="auto"
+                autoplay
+                muted="${isGIF}"
+                ${isGIFV ? '' : 'controls'}
+                playsinline
+                loop="${loopable}"
+              ></video>
+            `,
             }}
           />
         ) : isGIF ? (
@@ -1130,9 +1135,7 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
             </>
           )}{' '}
           &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && (
-            <relative-time datetime={expiresAtDate.toISOString()} />
-          )}
+          {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
         </p>
       )}
     </div>
@@ -1421,6 +1424,21 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
       )}
     </>
   );
+}
+
+function formatDuration(time) {
+  if (!time) return;
+  let hours = Math.floor(time / 3600);
+  let minutes = Math.floor((time % 3600) / 60);
+  let seconds = Math.round(time % 60);
+
+  if (hours === 0) {
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  } else {
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  }
 }
 
 export default Status;

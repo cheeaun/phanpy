@@ -82,7 +82,7 @@ function App() {
         let account = accounts.find((a) => a.info.id === mastoAccount.id);
         if (account) {
           account.info = mastoAccount;
-          account.instanceURL = instanceURL;
+          account.instanceURL = instanceURL.toLowerCase();
           account.accessToken = accessToken;
         } else {
           account = {
@@ -166,7 +166,7 @@ function App() {
           console.log(info);
           const { uri, domain } = info;
           const instances = store.local.getJSON('instances') || {};
-          instances[domain || uri] = info;
+          instances[(domain || uri).toLowerCase()] = info;
           store.local.setJSON('instances', instances);
         })();
       });
@@ -177,31 +177,12 @@ function App() {
   return (
     <>
       {isLoggedIn && currentDeck && (
-        <>
-          <button
-            type="button"
-            id="compose-button"
-            onClick={(e) => {
-              if (e.shiftKey) {
-                const newWin = openCompose();
-                if (!newWin) {
-                  alert('Looks like your browser is blocking popups.');
-                  states.showCompose = true;
-                }
-              } else {
-                states.showCompose = true;
-              }
-            }}
-          >
-            <Icon icon="quill" size="xxl" alt="Compose" />
-          </button>
-          <div class="decks">
-            {/* Home will never be unmounted */}
-            <Home hidden={currentDeck !== 'home'} />
-            {/* Notifications can be unmounted */}
-            {currentDeck === 'notifications' && <Notifications />}
-          </div>
-        </>
+        <div class="decks">
+          {/* Home will never be unmounted */}
+          <Home hidden={currentDeck !== 'home'} />
+          {/* Notifications can be unmounted */}
+          {currentDeck === 'notifications' && <Notifications />}
+        </div>
       )}
       {!isLoggedIn && uiState === 'loading' && <Loader />}
       <Router
@@ -237,13 +218,22 @@ function App() {
             replyToStatus={
               typeof snapStates.showCompose !== 'boolean'
                 ? snapStates.showCompose.replyToStatus
-                : null
+                : window.__COMPOSE__?.replyToStatus || null
             }
-            editStatus={states.showCompose?.editStatus || null}
-            draftStatus={states.showCompose?.draftStatus || null}
+            editStatus={
+              states.showCompose?.editStatus ||
+              window.__COMPOSE__?.editStatus ||
+              null
+            }
+            draftStatus={
+              states.showCompose?.draftStatus ||
+              window.__COMPOSE__?.draftStatus ||
+              null
+            }
             onClose={(results) => {
               const { newStatus } = results || {};
               states.showCompose = false;
+              window.__COMPOSE__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
                 setTimeout(() => {

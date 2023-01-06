@@ -28,7 +28,7 @@
   max-width: 100%;
   height: 4em;
   min-height: 4em;
-  max-height: 10em;
+  max-height: 50vh;
   resize: vertical;
   line-height: 1.4;
 }
@@ -255,16 +255,34 @@
   align-items: stretch;
 }
 #compose-container .media-preview {
-  flex-shrink: 1;
+  flex-shrink: 0;
+  border: 1px solid var(--outline-color);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 80px;
+  height: 80px;
+  /* checkerboard background */
+  background-image: linear-gradient(
+      45deg,
+      var(--img-bg-color) 25%,
+      transparent 25%
+    ),
+    linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
+  background-size: 10px 10px;
+  background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
 }
 #compose-container .media-preview > * {
-  min-width: 80px;
-  width: 80px !important;
+  width: 80px;
   height: 80px;
   object-fit: contain;
-  background-color: var(--img-bg-color);
-  border-radius: 8px;
-  border: 1px solid var(--outline-color);
+  vertical-align: middle;
+  pointer-events: none;
+}
+#compose-container .media-preview:hover {
+  box-shadow: 0 0 0 2px var(--link-light-color);
+  cursor: pointer;
 }
 #compose-container .media-attachment textarea {
   height: 80px;
@@ -388,4 +406,40 @@
   #compose-container .pop-button {
     display: none;
   }
+}
+
+#media-sheet main {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#media-sheet textarea {
+  width: 100%;
+  height: 10em;
+  margin-top: 8px;
+}
+#media-sheet .media-preview {
+  border: 2px solid var(--outline-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px var(--img-bg-color);
+  /* checkerboard background */
+  background-image: linear-gradient(
+      45deg,
+      var(--img-bg-color) 25%,
+      transparent 25%
+    ),
+    linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+#media-sheet .media-preview > * {
+  width: 100%;
+  height: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  vertical-align: middle;
 }

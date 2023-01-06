@@ -197,17 +197,19 @@ function Account({ account }) {
               {relationshipUIState !== 'loading' && relationship && (
                 <button
                   type="button"
-                  class={`${following ? 'light' : ''} swap`}
-                  data-swap-state={following ? 'danger' : ''}
+                  class={`${following || requested ? 'light swap' : ''}`}
+                  data-swap-state={following || requested ? 'danger' : ''}
                   disabled={relationshipUIState === 'loading'}
                   onClick={() => {
                     setRelationshipUIState('loading');
                     (async () => {
                       try {
                         let newRelationship;
-                        if (following) {
+                        if (following || requested) {
                           const yes = confirm(
-                            'Are you sure that you want to unfollow this account?',
+                            requested
+                              ? 'Are you sure that you want to withdraw follow request?'
+                              : 'Are you sure that you want to unfollow this account?',
                           );
                           if (yes) {
                             newRelationship = await masto.v1.accounts.unfollow(
@@ -231,10 +233,18 @@ function Account({ account }) {
                       <span>Following</span>
                       <span>Unfollow…</span>
                     </>
+                  ) : requested ? (
+                    <>
+                      <span>Requested</span>
+                      <span>Withdraw…</span>
+                    </>
+                  ) : locked ? (
+                    <>
+                      <Icon icon="lock" /> <span>Follow</span>
+                    </>
                   ) : (
                     'Follow'
                   )}
-                  {/* {following ? 'Unfollow…' : 'Follow'} */}
                 </button>
               )}
             </p>

@@ -742,7 +742,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
           alt={description}
           width={width}
           height={height}
-          loading="lazy"
+          loading={showOriginal ? 'eager' : 'lazy'}
           style={
             !showOriginal && {
               backgroundColor:

@@ -29,7 +29,6 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import RelativeTime from './relative-time';
-import Video from './video';
 
 function fetchAccount(id) {
   return masto.v1.accounts.fetch(id);
@@ -796,17 +795,27 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         }}
       >
         {showOriginal || autoAnimate ? (
-          <Video
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            autoplay
-            muted={isGIF}
-            controls={!isGIF}
-            playsinline
-            loop={loopable}
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            dangerouslySetInnerHTML={{
+              __html: `
+              <video
+                src="${url}"
+                poster="${previewUrl}"
+                width="${width}"
+                height="${height}"
+                preload="auto"
+                autoplay
+                muted="${isGIF}"
+                ${isGIF ? '' : 'controls'}
+                playsinline
+                loop="${loopable}"
+              ></video>
+            `,
+            }}
           />
         ) : isGIF ? (
           <video

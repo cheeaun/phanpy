@@ -820,6 +820,14 @@ meter.donut:is(.danger, .explode):after {
   filter: brightness(0.8);
 }
 
+/* AVATARS STACK */
+
+.avatars-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 @media (min-width: 40em) {
   html,
   body {

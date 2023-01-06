@@ -55,7 +55,7 @@ function StatusPage({ id }) {
     };
   }, [id]);
 
-  useEffect(() => {
+  const initContext = () => {
     setUIState('loading');
     let heroTimer;
 
@@ -174,7 +174,30 @@ function StatusPage({ id }) {
     return () => {
       clearTimeout(heroTimer);
     };
-  }, [id, snapStates.reloadStatusPage]);
+  };
+
+  useEffect(initContext, [id]);
+
+  useEffect(() => {
+    // Delete the cache for the context
+    (async () => {
+      try {
+        const accounts = store.local.getJSON('accounts') || [];
+        const currentAccount = store.session.get('currentAccount');
+        const account =
+          accounts.find((a) => a.info.id === currentAccount) || accounts[0];
+        const instanceURL = account.instanceURL;
+        const contextURL = `https://${instanceURL}/api/v1/statuses/${id}/context`;
+        console.log('Clear cache', contextURL);
+        const apiCache = await caches.open('api');
+        await apiCache.delete(contextURL, { ignoreVary: true });
+
+        return initContext();
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [snapStates.reloadStatusPage]);
 
   const firstLoad = useRef(true);
 

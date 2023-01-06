@@ -756,7 +756,8 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   } else if (type === 'gifv' || type === 'video') {
     // 20 seconds, treat as a gif
     const shortDuration = original.duration <= 20;
-    const isGIF = type === 'gifv' || shortDuration;
+    const isGIFV = type === 'gifv';
+    const isGIF = isGIFV || shortDuration;
     const loopable = original.duration <= 60;
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
@@ -810,7 +811,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
                 preload="auto"
                 autoplay
                 muted="${isGIF}"
-                ${isGIF ? '' : 'controls'}
+                ${isGIFV ? '' : 'controls'}
                 playsinline
                 loop="${loopable}"
               ></video>

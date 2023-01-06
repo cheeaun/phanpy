@@ -379,7 +379,8 @@
   height: 100%;
   object-fit: contain;
 }
-.status .media-video {
+.status .media-video,
+.status .media-gif {
   position: relative;
   background-clip: padding-box;
 }
@@ -418,9 +419,26 @@
   border-radius: 4px;
   padding: 0 4px;
 }
+.status .media-gif[data-label]:not(:hover):after {
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none;
+  content: attr(data-label);
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  color: var(--bg-faded-color);
+  background-color: var(--text-insignificant-color);
+  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  border-radius: 4px;
+  padding: 0 4px;
+}
 .status .media-gif video {
   object-fit: cover;
   pointer-events: none;
+}
+.status .media-contain video {
+  object-fit: contain !important;
 }
 .status .media-audio {
   border: 0;

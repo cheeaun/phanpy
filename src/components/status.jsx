@@ -29,6 +29,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import RelativeTime from './relative-time';
+import Video from './video';
 
 function fetchAccount(id) {
   return masto.v1.accounts.fetch(id);
@@ -422,6 +423,7 @@ function Status({
                   <Media
                     key={media.id}
                     media={media}
+                    autoAnimate={size === 'l'}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -688,7 +690,7 @@ video = Video clip
 audio = Audio track
 */
 
-function Media({ media, showOriginal, onClick = () => {} }) {
+function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
   const { original, small, focus } = meta || {};
@@ -758,16 +760,20 @@ function Media({ media, showOriginal, onClick = () => {} }) {
     const isGIF = type === 'gifv' || shortDuration;
     const loopable = original.duration <= 60;
     const formattedDuration = formatDuration(original.duration);
+    const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
     return (
       <div
-        class={`media media-${isGIF ? 'gif' : 'video'}`}
+        class={`media media-${isGIF ? 'gif' : 'video'} ${
+          autoAnimate ? 'media-contain' : ''
+        }`}
         data-formatted-duration={formattedDuration}
+        data-label={isGIF && !showOriginal && !autoAnimate ? 'GIF' : ''}
         style={{
           backgroundColor:
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
         onClick={(e) => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.pause();
             } catch (e) {}
@@ -775,38 +781,32 @@ function Media({ media, showOriginal, onClick = () => {} }) {
           onClick(e);
         }}
         onMouseEnter={() => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.play();
             } catch (e) {}
           }
         }}
         onMouseLeave={() => {
-          if (!showOriginal && isGIF) {
+          if (hoverAnimate) {
             try {
               videoRef.current.pause();
             } catch (e) {}
           }
         }}
       >
-        {showOriginal ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-                <video
-                  src="${url}"
-                  poster="${previewUrl}"
-                  width="${width}"
-                  height="${height}"
-                  preload="auto"
-                  autoplay
-                  muted="${isGIF}"
-                  ${isGIF ? '' : 'controls'}
-                  playsinline
-                  loop="${loopable}"
-                ></video>
-              `,
-            }}
+        {showOriginal || autoAnimate ? (
+          <Video
+            src={url}
+            poster={previewUrl}
+            width={width}
+            height={height}
+            preload="auto"
+            autoplay
+            muted={isGIF}
+            controls={!isGIF}
+            playsinline
+            loop={loopable}
           />
         ) : isGIF ? (
           <video

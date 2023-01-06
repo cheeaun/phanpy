@@ -82,6 +82,7 @@ And here I am. Building a Mastodon web client.
 ## Alternative web clients
 
 - [Pinafore](https://pinafore.social/)
+- [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://m.webtoo.ls/@elk)
 - [Mastodeck](https://mastodeck.com/)
 - 

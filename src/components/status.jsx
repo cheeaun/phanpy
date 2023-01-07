@@ -882,19 +882,20 @@ function Card({ card }) {
         rel="nofollow noopener noreferrer"
         class={`card link ${size}`}
       >
-        <img
-          class="image"
-          src={image}
-          width={width}
-          height={height}
-          loading="lazy"
-          alt=""
-          onError={(e) => {
-            try {
-              e.target.style.display = 'none';
-            } catch (e) {}
-          }}
-        />
+        <div class="card-image">
+          <img
+            src={image}
+            width={width}
+            height={height}
+            loading="lazy"
+            alt=""
+            onError={(e) => {
+              try {
+                e.target.style.display = 'none';
+              } catch (e) {}
+            }}
+          />
+        </div>
         <div class="meta-container">
           <p class="meta domain">{domain}</p>
           <p

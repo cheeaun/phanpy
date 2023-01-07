@@ -408,15 +408,17 @@
   top: 50%;
   transform: translate(-50%, -50%);
   color: var(--text-insignificant-color);
-  background-color: var(--bg-blur-color);
+  background-color: var(--backdrop-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
   display: flex;
   place-content: center;
   place-items: center;
   border-radius: 70px;
+  transition: all 0.2s ease-in-out;
 }
 .status .media-video[data-formatted-duration]:hover:before {
   color: var(--text-color);
+  background-color: var(--bg-blur-color);
 }
 .status .media-video[data-formatted-duration]:after {
   font-size: 12px;
@@ -475,32 +477,46 @@
   color: inherit;
   align-items: stretch;
   background-color: var(--bg-color);
-  max-height: 160px;
+  max-width: 480px;
+  /* max-height: 160px; */
 }
-.status.large .card.link {
+.status.large .card.large {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
 }
-.card .image {
+.card .card-image {
+  flex-shrink: 0;
+  width: 35%;
+  position: relative;
+  border-inline-end: 1px solid var(--outline-color);
+}
+.card .card-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* .card .image {
   width: 35%;
   height: auto;
   flex-grow: 1;
   border-inline-end: 1px solid var(--outline-color);
   object-fit: cover;
   aspect-ratio: 1 / 1;
+} */
+.status.large .card .card-image {
+  aspect-ratio: 1 / 1;
 }
-.status.large .card.link {
-  max-width: 480px;
-}
-.status.large .card.link .image {
+.status.large .card.large .card-image {
+  flex-grow: 1;
   aspect-ratio: 1.91 / 1;
   width: 100%;
   max-height: 40vh;
   border-inline-end: 0;
   border-block-end: 1px solid var(--outline-color);
 }
-.card:is(:hover, :focus) .image {
+.card:is(:hover, :focus) img {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {
@@ -512,8 +528,9 @@
   flex-grow: 1;
   align-self: center;
 }
-.status.large .card.link .meta-container {
+.status.large .card.large .meta-container {
   align-self: flex-start;
+  flex-grow: 0;
 }
 .card .title {
   line-height: 1.25;

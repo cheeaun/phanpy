@@ -726,13 +726,13 @@ a.card:is(:hover, :focus) {
   border-color: var(--favourite-color);
 }
 @keyframes hearted {
-  20% {
+  15% {
     transform: scale(1.25) translateY(-1px);
   }
-  45% {
+  30% {
     transform: scale(1);
   }
-  70% {
+  45% {
     transform: scale(1.5) translateY(-2px);
   }
   100% {

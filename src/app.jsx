@@ -133,7 +133,7 @@ function App() {
     if (currentModal) return;
     let timer = setTimeout(() => {
       const page = document.getElementById(`${currentDeck}-page`);
-      console.log('focus', currentDeck, page);
+      console.debug('FOCUS', currentDeck, page);
       if (page) {
         page.focus();
       }
@@ -188,7 +188,7 @@ function App() {
       <Router
         history={createHashHistory()}
         onChange={(e) => {
-          console.log('router onChange', e);
+          console.debug('ROUTER onChange', e);
           // Special handling for Home and Notifications
           const { url } = e;
           if (/notifications/i.test(url)) {

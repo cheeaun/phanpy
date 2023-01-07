@@ -190,7 +190,14 @@ function Settings({ onClose }) {
             Built
           </a>{' '}
           by{' '}
-          <a href="https://mastodon.social/@cheeaun" target="_blank">
+          <a
+            href="https://mastodon.social/@cheeaun"
+            // target="_blank"
+            onClick={(e) => {
+              e.preventDefault();
+              states.showAccount = 'cheeaun@mastodon.social';
+            }}
+          >
             @cheeaun
           </a>
           .

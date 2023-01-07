@@ -432,7 +432,7 @@ a.mention span {
 
 @keyframes fade-from-top {
   0% {
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
   100% {
@@ -443,7 +443,7 @@ a.mention span {
 .updates-button {
   position: absolute;
   z-index: 2;
-  animation: fade-from-top 2s ease-out;
+  animation: fade-from-top 0.3s ease-out;
   left: 50%;
   margin-top: 8px;
   transform: translate(-50%, 0);

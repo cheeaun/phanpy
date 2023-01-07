@@ -436,12 +436,7 @@ function Status({
             !sensitive &&
             !spoilerText &&
             !poll &&
-            !mediaAttachments.length && (
-              <Card
-                card={card}
-                size={!poll && !mediaAttachments.length ? 'l' : 'm'}
-              />
-            )}
+            !mediaAttachments.length && <Card card={card} />}
         </div>
         {size === 'l' && (
           <>
@@ -851,7 +846,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   }
 }
 
-function Card({ card, size }) {
+function Card({ card }) {
   const {
     blurhash,
     title,
@@ -876,7 +871,7 @@ function Card({ card, size }) {
 
   const hasText = title || providerName || authorName;
   const isLandscape = width / height >= 1.2;
-  size = size === 'l' && isLandscape ? 'large' : '';
+  const size = isLandscape ? 'large' : '';
 
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');

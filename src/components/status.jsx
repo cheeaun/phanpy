@@ -1326,8 +1326,10 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             <InView
               class="carousel-item"
               style={{
-                backgroundColor:
-                  rgbAverageColor && `rgba(${rgbAverageColor.join(',')}, .5)`,
+                '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
+                '--average-color-alpha': `rgba(${rgbAverageColor?.join(
+                  ',',
+                )}, .5)`,
               }}
               tabindex="0"
               key={media.id}

@@ -494,6 +494,13 @@ a.mention span {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
+  background-color: var(--average-color-alpha);
+  background-image: radial-gradient(
+    closest-side,
+    var(--average-color) 10%,
+    var(--average-color-alpha) 40%,
+    transparent 100%
+  );
 }
 .carousel > * :is(img, video) {
   width: auto;

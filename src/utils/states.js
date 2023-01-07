@@ -1,19 +1,18 @@
 import { proxy } from 'valtio';
-import { proxyMap } from 'valtio/utils';
 
 export default proxy({
   history: [],
-  statuses: proxyMap([]),
+  statuses: {},
   home: [],
   homeNew: [],
   homeLastFetchTime: null,
   notifications: [],
   notificationsNew: [],
   notificationsLastFetchTime: null,
-  accounts: new Map(),
+  accounts: {},
   reloadStatusPage: 0,
-  spoilers: proxyMap([]),
-  scrollPositions: new Map(),
+  spoilers: {},
+  scrollPositions: {},
   // Modals
   showCompose: false,
   showSettings: false,

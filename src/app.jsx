@@ -302,23 +302,23 @@ async function startStream() {
       });
     }
 
-    states.statuses.set(status.id, status);
+    states.statuses[status.id] = status;
     if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
+      states.statuses[status.reblog.id] = status.reblog;
     }
   }, 5000);
   stream.on('update', handleNewStatus);
   stream.on('status.update', (status) => {
     console.log('STATUS.UPDATE', status);
-    states.statuses.set(status.id, status);
+    states.statuses[status.id] = status;
     if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
+      states.statuses[status.reblog.id] = status.reblog;
     }
   });
   stream.on('delete', (statusID) => {
     console.log('DELETE', statusID);
-    // states.statuses.delete(statusID);
-    const s = states.statuses.get(statusID);
+    // delete states.statuses[statusID];
+    const s = states.statuses[statusID];
     if (s) s._deleted = true;
   });
   stream.on('notification', (notification) => {
@@ -334,16 +334,14 @@ async function startStream() {
       states.notificationsNew.unshift(notification);
     }
 
-    if (notification.status && !states.statuses.has(notification.status.id)) {
-      states.statuses.set(notification.status.id, notification.status);
+    if (notification.status && !states.statuses[notification.status.id]) {
+      states.statuses[notification.status.id] = notification.status;
       if (
         notification.status.reblog &&
-        !states.statuses.has(notification.status.reblog.id)
+        !states.statuses[notification.status.reblog.id]
       ) {
-        states.statuses.set(
-          notification.status.reblog.id,
-          notification.status.reblog,
-        );
+        states.statuses[notification.status.reblog.id] =
+          notification.status.reblog;
       }
     }
   });
@@ -397,9 +395,9 @@ function startVisibility() {
                 newStatuses[0].id !== states.home[0].id
               ) {
                 states.homeNew = newStatuses.map((status) => {
-                  states.statuses.set(status.id, status);
+                  states.statuses[status.id] = status;
                   if (status.reblog) {
-                    states.statuses.set(status.reblog.id, status.reblog);
+                    states.statuses[status.reblog.id] = status.reblog;
                   }
                   return {
                     id: status.id,
@@ -424,20 +422,15 @@ function startVisibility() {
 
                 if (
                   notification.status &&
-                  !states.statuses.has(notification.status.id)
+                  !states.statuses[notification.status.id]
                 ) {
-                  states.statuses.set(
-                    notification.status.id,
-                    notification.status,
-                  );
+                  states.statuses[notification.status.id] = notification.status;
                   if (
                     notification.status.reblog &&
-                    !states.statuses.has(notification.status.reblog.id)
+                    !states.statuses[notification.status.reblog.id]
                   ) {
-                    states.statuses.set(
-                      notification.status.reblog.id,
-                      notification.status.reblog,
-                    );
+                    states.statuses[notification.status.reblog.id] =
+                      notification.status.reblog;
                   }
                 }
               }

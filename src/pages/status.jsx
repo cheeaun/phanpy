@@ -44,7 +44,7 @@ function StatusPage({ id }) {
       // console.log('onScroll');
       if (!scrollableRef.current) return;
       const { scrollTop } = scrollableRef.current;
-      states.scrollPositions.set(id, scrollTop);
+      states.scrollPositions[id] = scrollTop;
     }, 100);
     scrollableRef.current.addEventListener('scroll', onScroll, {
       passive: true,
@@ -63,7 +63,7 @@ function StatusPage({ id }) {
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
-        (s) => states.statuses.has(s.id),
+        (s) => states.statuses[s.id],
         // Some are not cached in the global state, so we need to filter them out
       );
       setStatuses(reallyCachedStatuses);
@@ -83,15 +83,15 @@ function StatusPage({ id }) {
       const heroFetch = () => masto.v1.statuses.fetch(id);
       const contextFetch = masto.v1.statuses.fetchContext(id);
 
-      const hasStatus = snapStates.statuses.has(id);
-      let heroStatus = snapStates.statuses.get(id);
+      const hasStatus = !!snapStates.statuses[id];
+      let heroStatus = snapStates.statuses[id];
       if (hasStatus) {
         console.log('Hero status is cached');
         // NOTE: This might conflict if the user interacts with the status before the fetch is done, e.g. favouriting it
         // heroTimer = setTimeout(async () => {
         //   try {
         //     heroStatus = await heroFetch();
-        //     states.statuses.set(id, heroStatus);
+        //     states.statuses[id] = heroStatus;
         //   } catch (e) {
         //     // Silent fail if status is cached
         //     console.error(e);
@@ -100,7 +100,7 @@ function StatusPage({ id }) {
       } else {
         try {
           heroStatus = await heroFetch();
-          states.statuses.set(id, heroStatus);
+          states.statuses[id] = heroStatus;
         } catch (e) {
           console.error(e);
           setUIState('error');
@@ -113,11 +113,11 @@ function StatusPage({ id }) {
         const { ancestors, descendants } = context;
 
         ancestors.forEach((status) => {
-          states.statuses.set(status.id, status);
+          states.statuses[status.id] = status;
         });
         const nestedDescendants = [];
         descendants.forEach((status) => {
-          states.statuses.set(status.id, status);
+          states.statuses[status.id] = status;
           if (status.inReplyToAccountId === status.account.id) {
             // If replying to self, it's part of the thread, level 1
             nestedDescendants.push(status);
@@ -225,7 +225,7 @@ function StatusPage({ id }) {
         }
       }
     } else {
-      const scrollPosition = states.scrollPositions.get(id);
+      const scrollPosition = states.scrollPositions[id];
       if (scrollPosition && scrollableRef.current) {
         // Case 3: Not user initiated (e.g. back/forward button), restore to saved scroll position
         console.log('Case 3');
@@ -247,7 +247,7 @@ function StatusPage({ id }) {
     }
   }, [statuses, uiState]);
 
-  const heroStatus = snapStates.statuses.get(id);
+  const heroStatus = snapStates.statuses[id];
   const heroDisplayName = useMemo(() => {
     // Remove shortcodes from display name
     if (!heroStatus) return '';

@@ -2,6 +2,7 @@ import './status.css';
 
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
+import { memo } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -61,7 +62,7 @@ function Status({
 
   const snapStates = useSnapshot(states);
   if (!status) {
-    status = snapStates.statuses.get(statusID);
+    status = snapStates.statuses[statusID];
   }
   if (!status) {
     return null;
@@ -106,6 +107,8 @@ function Status({
     _deleted,
   } = status;
 
+  console.debug('RENDER Status', id, status?.account.displayName);
+
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
@@ -122,20 +125,20 @@ function Status({
   }
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
   if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
-    const account = states.accounts.get(inReplyToAccountId);
+    const account = states.accounts[inReplyToAccountId];
     if (account) {
       setInReplyToAccount(account);
     } else {
       memFetchAccount(inReplyToAccountId)
         .then((account) => {
           setInReplyToAccount(account);
-          states.accounts.set(account.id, account);
+          states.accounts[account.id] = account;
         })
         .catch((e) => {});
     }
   }
 
-  const showSpoiler = snapStates.spoilers.has(id) || false;
+  const showSpoiler = !!snapStates.spoilers[id] || false;
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -321,9 +324,9 @@ function Status({
                   e.preventDefault();
                   e.stopPropagation();
                   if (showSpoiler) {
-                    states.spoilers.delete(id);
+                    delete states.spoilers[id];
                   } else {
-                    states.spoilers.set(id, true);
+                    states.spoilers[id] = true;
                   }
                 }}
               >
@@ -388,7 +391,7 @@ function Status({
               poll={poll}
               readOnly={readOnly}
               onUpdate={(newPoll) => {
-                states.statuses.get(id).poll = newPoll;
+                states.statuses[id].poll = newPoll;
               }}
             />
           )}
@@ -400,9 +403,9 @@ function Status({
                 e.preventDefault();
                 e.stopPropagation();
                 if (showSpoiler) {
-                  states.spoilers.delete(id);
+                  delete states.spoilers[id];
                 } else {
-                  states.spoilers.set(id, true);
+                  states.spoilers[id] = true;
                 }
               }}
             >
@@ -519,28 +522,26 @@ function Status({
                           }
                         }
                         // Optimistic
-                        states.statuses.set(id, {
+                        states.statuses[id] = {
                           ...status,
                           reblogged: !reblogged,
                           reblogsCount: reblogsCount + (reblogged ? -1 : 1),
-                        });
+                        };
                         if (reblogged) {
                           const newStatus = await masto.v1.statuses.unreblog(
                             id,
                           );
-                          states.statuses.set(newStatus.id, newStatus);
+                          states.statuses[newStatus.id] = newStatus;
                         } else {
                           const newStatus = await masto.v1.statuses.reblog(id);
-                          states.statuses.set(newStatus.id, newStatus);
-                          states.statuses.set(
-                            newStatus.reblog.id,
-                            newStatus.reblog,
-                          );
+                          states.statuses[newStatus.id] = newStatus;
+                          states.statuses[newStatus.reblog.id] =
+                            newStatus.reblog;
                         }
                       } catch (e) {
                         console.error(e);
                         // Revert optimistism
-                        states.statuses.set(id, status);
+                        states.statuses[id] = status;
                       }
                     }}
                   />
@@ -557,25 +558,25 @@ function Status({
                   onClick={async () => {
                     try {
                       // Optimistic
-                      states.statuses.set(statusID, {
+                      states.statuses[statusID] = {
                         ...status,
                         favourited: !favourited,
                         favouritesCount:
                           favouritesCount + (favourited ? -1 : 1),
-                      });
+                      };
                       if (favourited) {
                         const newStatus = await masto.v1.statuses.unfavourite(
                           id,
                         );
-                        states.statuses.set(newStatus.id, newStatus);
+                        states.statuses[newStatus.id] = newStatus;
                       } else {
                         const newStatus = await masto.v1.statuses.favourite(id);
-                        states.statuses.set(newStatus.id, newStatus);
+                        states.statuses[newStatus.id] = newStatus;
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses.set(statusID, status);
+                      states.statuses[statusID] = status;
                     }
                   }}
                 />
@@ -590,23 +591,23 @@ function Status({
                   onClick={async () => {
                     try {
                       // Optimistic
-                      states.statuses.set(statusID, {
+                      states.statuses[statusID] = {
                         ...status,
                         bookmarked: !bookmarked,
-                      });
+                      };
                       if (bookmarked) {
                         const newStatus = await masto.v1.statuses.unbookmark(
                           id,
                         );
-                        states.statuses.set(newStatus.id, newStatus);
+                        states.statuses[newStatus.id] = newStatus;
                       } else {
                         const newStatus = await masto.v1.statuses.bookmark(id);
-                        states.statuses.set(newStatus.id, newStatus);
+                        states.statuses[newStatus.id] = newStatus;
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses.set(statusID, status);
+                      states.statuses[statusID] = status;
                     }
                   }}
                 />
@@ -1437,4 +1438,4 @@ function formatDuration(time) {
   }
 }
 
-export default Status;
+export default memo(Status);

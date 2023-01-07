@@ -18,6 +18,8 @@ function Home({ hidden }) {
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
 
+  console.debug('RENDER Home');
+
   const homeIterator = useRef(
     masto.v1.timelines.listHome({
       limit: LIMIT,
@@ -36,9 +38,9 @@ function Home({ hidden }) {
       return { done: true };
     }
     const homeValues = allStatuses.value.map((status) => {
-      states.statuses.set(status.id, status);
+      states.statuses[status.id] = status;
       if (status.reblog) {
-        states.statuses.set(status.reblog.id, status.reblog);
+        states.statuses[status.reblog.id] = status.reblog;
       }
       return {
         id: status.id,

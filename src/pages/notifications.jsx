@@ -1,6 +1,7 @@
 import './notifications.css';
 
 import { Link } from 'preact-router/match';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -205,6 +206,8 @@ function Notifications() {
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
 
+  console.debug('RENDER Notifications');
+
   const notificationsIterator = useRef(
     masto.v1.notifications.list({
       limit: LIMIT,
@@ -224,7 +227,7 @@ function Notifications() {
     }
     const notificationsValues = allNotifications.value.map((notification) => {
       if (notification.status) {
-        states.statuses.set(notification.status.id, notification.status);
+        states.statuses[notification.status.id] = notification.status;
       }
       return notification;
     });
@@ -411,4 +414,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default memo(Notifications);

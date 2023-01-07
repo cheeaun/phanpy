@@ -1,7 +1,7 @@
 import { Link } from 'preact-router/match';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
@@ -167,6 +167,7 @@ function Home({ hidden }) {
       scrollableElement: scrollableRef.current,
       distanceFromTop: 0.1,
       distanceFromBottom: 0.15,
+      scrollThresholdUp: 44,
     });
 
   useEffect(() => {
@@ -352,4 +353,4 @@ function Home({ hidden }) {
   );
 }
 
-export default Home;
+export default memo(Home);

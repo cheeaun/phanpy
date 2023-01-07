@@ -749,20 +749,20 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       </div>
     );
   } else if (type === 'gifv' || type === 'video') {
-    // 20 seconds, treat as a gif
-    const shortDuration = original.duration <= 20;
-    const isGIFV = type === 'gifv';
-    const isGIF = isGIFV || shortDuration;
-    const loopable = original.duration <= 60;
+    const shortDuration = original.duration < 31;
+    const isGIF = type === 'gifv' && shortDuration;
+    // If GIF is too long, treat it as a video
+    const loopable = original.duration < 61;
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
+    const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'} ${
-          autoAnimate ? 'media-contain' : ''
+          autoGIFAnimate ? 'media-contain' : ''
         }`}
         data-formatted-duration={formattedDuration}
-        data-label={isGIF && !showOriginal && !autoAnimate ? 'GIF' : ''}
+        data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
         style={{
           backgroundColor:
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -790,7 +790,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
           }
         }}
       >
-        {showOriginal || autoAnimate ? (
+        {showOriginal || autoGIFAnimate ? (
           <div
             style={{
               width: '100%',
@@ -806,7 +806,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
                 preload="auto"
                 autoplay
                 muted="${isGIF}"
-                ${isGIFV ? '' : 'controls'}
+                ${isGIF ? '' : 'controls'}
                 playsinline
                 loop="${loopable}"
               ></video>

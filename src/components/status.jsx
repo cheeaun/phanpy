@@ -839,9 +839,24 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       </div>
     );
   } else if (type === 'audio') {
+    const formattedDuration = formatDuration(original.duration);
     return (
-      <div class="media media-audio">
-        <audio src={remoteUrl || url} preload="none" controls />
+      <div
+        class="media media-audio"
+        data-formatted-duration={formattedDuration}
+        onClick={onClick}
+      >
+        {showOriginal ? (
+          <audio src={remoteUrl || url} preload="none" controls autoplay />
+        ) : previewUrl ? (
+          <img
+            src={previewUrl}
+            alt={description}
+            width={width}
+            height={height}
+            loading="lazy"
+          />
+        ) : null}
       </div>
     );
   }

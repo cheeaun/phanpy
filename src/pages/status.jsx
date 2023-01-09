@@ -14,7 +14,7 @@ import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useTitle from '../utils/useTitle';
@@ -25,7 +25,6 @@ function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
-  const userInitiated = useRef(true); // Initial open is user-initiated
   const heroStatusRef = useRef();
 
   const scrollableRef = useRef();
@@ -49,12 +48,13 @@ function StatusPage({ id }) {
   }, [id]);
 
   const scrollOffsets = useRef();
+  const cachedStatusesMap = useRef({});
   const initContext = () => {
     console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
 
-    const cachedStatuses = store.session.getJSON('statuses-' + id);
+    const cachedStatuses = cachedStatusesMap.current[id];
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
@@ -85,7 +85,11 @@ function StatusPage({ id }) {
       } else {
         try {
           heroStatus = await heroFetch();
-          states.statuses[id] = heroStatus;
+          saveStatus(heroStatus);
+          // Give time for context to appear
+          await new Promise((resolve) => {
+            setTimeout(resolve, 100);
+          });
         } catch (e) {
           console.error(e);
           setUIState('error');
@@ -153,7 +157,7 @@ function StatusPage({ id }) {
         };
         console.log({ allStatuses });
         setStatuses(allStatuses);
-        store.session.setJSON('statuses-' + id, allStatuses);
+        cachedStatusesMap.current[id] = allStatuses;
       } catch (e) {
         console.error(e);
         setUIState('error');
@@ -168,11 +172,11 @@ function StatusPage({ id }) {
   useEffect(initContext, [id]);
   useEffect(() => {
     if (!statuses.length) return;
+    console.debug('STATUSES', statuses);
     const scrollPosition = states.scrollPositions[id];
     console.debug('scrollPosition', scrollPosition);
-    if (!userInitiated.current && !!scrollPosition) {
+    if (!!scrollPosition) {
       console.debug('Case 1', {
-        userInitiated: userInitiated.current,
         scrollPosition,
       });
       scrollableRef.current.scrollTop = scrollPosition;
@@ -184,7 +188,6 @@ function StatusPage({ id }) {
       const newScrollTop =
         newScrollOffsets.offsetTop - scrollOffsets.current.offsetTop;
       console.debug('Case 2', {
-        userInitiated: userInitiated.current,
         scrollOffsets: scrollOffsets.current,
         newScrollOffsets,
         newScrollTop,
@@ -193,9 +196,10 @@ function StatusPage({ id }) {
       scrollableRef.current.scrollTop = newScrollTop;
     }
 
-    // Reset
-    userInitiated.current = false;
+    // RESET
+    // This will probably fail when user "forward" back to open the Status page again, but gosh, too many use-cases to mimic what the browser does
     scrollOffsets.current = null;
+    cachedStatusesMap.current = {};
   }, [statuses]);
 
   useEffect(() => {
@@ -384,9 +388,6 @@ function StatusPage({ id }) {
                 status-link
               "
                       href={`#/s/${statusID}`}
-                      onClick={() => {
-                        userInitiated.current = true;
-                      }}
                     >
                       <Status
                         statusID={statusID}
@@ -409,9 +410,6 @@ function StatusPage({ id }) {
                       <SubComments
                         hasManyStatuses={hasManyStatuses}
                         replies={replies}
-                        onStatusLinkClick={() => {
-                          userInitiated.current = true;
-                        }}
                       />
                     )}
                   {uiState === 'loading' &&

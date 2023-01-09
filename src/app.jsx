@@ -11,7 +11,6 @@ import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
 import Compose from './components/compose';
-import Icon from './components/icon';
 import Loader from './components/loader';
 import Modal from './components/modal';
 import Home from './pages/home';
@@ -21,7 +20,6 @@ import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { getAccessToken } from './utils/auth';
-import openCompose from './utils/open-compose';
 import states from './utils/states';
 import store from './utils/store';
 

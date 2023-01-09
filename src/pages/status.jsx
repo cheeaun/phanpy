@@ -1,15 +1,8 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
-import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';

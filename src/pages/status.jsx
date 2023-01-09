@@ -311,6 +311,10 @@ function StatusPage({ id }) {
               });
             }
           }}
+          onDblClick={(e) => {
+            // reload statuses
+            states.reloadStatusPage++;
+          }}
         >
           {/* <div>
             <Link class="button plain deck-close" href={closeLink}>

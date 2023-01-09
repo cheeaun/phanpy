@@ -620,7 +620,7 @@ a.card:is(:hover, :focus) {
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  background-color: var(--bg-blur-color);
+  background-color: var(--bg-faded-color);
   background-image: linear-gradient(
     to right,
     var(--link-faded-color),
@@ -628,9 +628,11 @@ a.card:is(:hover, :focus) {
     transparent var(--percentage),
     transparent
   );
+  background-repeat: no-repeat;
   border-radius: 8px;
-  border: 1px solid rgba(128, 128, 128, 0.1);
+  border: 1px solid var(--outline-color);
   align-items: center;
+  text-shadow: 0 1px var(--bg-blur-color);
 }
 .poll-label {
   width: 100%;

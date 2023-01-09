@@ -55,7 +55,9 @@ function StatusPage({ id }) {
     };
   }, [id]);
 
+  const scrollOffsets = useRef();
   const initContext = () => {
+    console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
 
@@ -68,15 +70,15 @@ function StatusPage({ id }) {
       );
       setStatuses(reallyCachedStatuses);
     } else {
-      const heroIndex = statuses.findIndex((s) => s.id === id);
-      if (heroIndex !== -1) {
-        // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
-        const slicedStatuses = statuses.slice(0, heroIndex + 1);
-        setStatuses(slicedStatuses);
-      } else {
-        // Case 3: Not cached and not in statuses, let's start from scratch
-        setStatuses([{ id }]);
-      }
+      // const heroIndex = statuses.findIndex((s) => s.id === id);
+      // if (heroIndex !== -1) {
+      //   // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
+      //   const slicedStatuses = statuses.slice(0, heroIndex + 1);
+      //   setStatuses(slicedStatuses);
+      // } else {
+      // Case 3: Not cached and not in statuses, let's start from scratch
+      setStatuses([{ id }]);
+      // }
     }
 
     (async () => {
@@ -86,17 +88,7 @@ function StatusPage({ id }) {
       const hasStatus = !!snapStates.statuses[id];
       let heroStatus = snapStates.statuses[id];
       if (hasStatus) {
-        console.log('Hero status is cached');
-        // NOTE: This might conflict if the user interacts with the status before the fetch is done, e.g. favouriting it
-        // heroTimer = setTimeout(async () => {
-        //   try {
-        //     heroStatus = await heroFetch();
-        //     states.statuses[id] = heroStatus;
-        //   } catch (e) {
-        //     // Silent fail if status is cached
-        //     console.error(e);
-        //   }
-        // }, 1000);
+        console.debug('Hero status is cached');
       } else {
         try {
           heroStatus = await heroFetch();
@@ -162,6 +154,10 @@ function StatusPage({ id }) {
         ];
 
         setUIState('default');
+        scrollOffsets.current = {
+          offsetTop: heroStatusRef.current?.offsetTop,
+          scrollTop: scrollableRef.current?.scrollTop,
+        };
         console.log({ allStatuses });
         setStatuses(allStatuses);
         store.session.setJSON('statuses-' + id, allStatuses);
@@ -177,8 +173,40 @@ function StatusPage({ id }) {
   };
 
   useEffect(initContext, [id]);
+  useEffect(() => {
+    if (!statuses.length) return;
+    const scrollPosition = states.scrollPositions[id];
+    console.debug('scrollPosition', scrollPosition);
+    if (!userInitiated.current && !!scrollPosition) {
+      console.debug('Case 1', {
+        userInitiated: userInitiated.current,
+        scrollPosition,
+      });
+      scrollableRef.current.scrollTop = scrollPosition;
+    } else if (scrollOffsets.current) {
+      const newScrollOffsets = {
+        offsetTop: heroStatusRef.current?.offsetTop,
+        scrollTop: scrollableRef.current?.scrollTop,
+      };
+      const newScrollTop =
+        newScrollOffsets.offsetTop - scrollOffsets.current.offsetTop;
+      console.debug('Case 2', {
+        userInitiated: userInitiated.current,
+        scrollOffsets: scrollOffsets.current,
+        newScrollOffsets,
+        newScrollTop,
+        statuses: [...statuses],
+      });
+      scrollableRef.current.scrollTop = newScrollTop;
+    }
+
+    // Reset
+    userInitiated.current = false;
+    scrollOffsets.current = null;
+  }, [statuses]);
 
   useEffect(() => {
+    if (snapStates.reloadStatusPage <= 0) return;
     // Delete the cache for the context
     (async () => {
       try {
@@ -199,53 +227,13 @@ function StatusPage({ id }) {
     })();
   }, [snapStates.reloadStatusPage]);
 
-  const firstLoad = useRef(true);
-
-  useLayoutEffect(() => {
-    if (!statuses.length) return;
-    const isLoading = uiState === 'loading';
-    if (userInitiated.current) {
-      const hasAncestors = statuses.findIndex((s) => s.id === id) > 0; // Cannot use `ancestor` key because the hero state is dynamic
-      if (!isLoading && hasAncestors) {
-        // Case 1: User initiated, has ancestors, after statuses are loaded, SNAP to hero status
-        console.log('Case 1');
-        heroStatusRef.current?.scrollIntoView();
-      } else if (isLoading && statuses.length > 1) {
-        if (firstLoad.current) {
-          // Case 2.1: User initiated, first load, don't smooth scroll anything
-          console.log('Case 2.1');
-          heroStatusRef.current?.scrollIntoView();
-        } else {
-          // Case 2.2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
-          console.log('Case 2.2');
-          heroStatusRef.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        }
-      }
-    } else {
-      const scrollPosition = states.scrollPositions[id];
-      if (scrollPosition && scrollableRef.current) {
-        // Case 3: Not user initiated (e.g. back/forward button), restore to saved scroll position
-        console.log('Case 3');
-        scrollableRef.current.scrollTop = scrollPosition;
-      }
-    }
-    console.log('No case', {
-      isLoading,
-      userInitiated: userInitiated.current,
-      statusesLength: statuses.length,
-      firstLoad: firstLoad.current,
-      // scrollPosition,
-    });
-
-    if (!isLoading) {
-      // Reset user initiated flag after statuses are loaded
-      userInitiated.current = false;
-      firstLoad.current = false;
-    }
-  }, [statuses, uiState]);
+  useEffect(() => {
+    return () => {
+      // clear all scrollPositions
+      states.scrollPositions = {};
+      states.reloadStatusPage = 0;
+    };
+  }, []);
 
   const heroStatus = snapStates.statuses[id];
   const heroDisplayName = useMemo(() => {

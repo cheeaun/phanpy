@@ -22,7 +22,7 @@ import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
@@ -531,12 +531,10 @@ function Status({
                           const newStatus = await masto.v1.statuses.unreblog(
                             id,
                           );
-                          states.statuses[newStatus.id] = newStatus;
+                          saveStatus(newStatus);
                         } else {
                           const newStatus = await masto.v1.statuses.reblog(id);
-                          states.statuses[newStatus.id] = newStatus;
-                          states.statuses[newStatus.reblog.id] =
-                            newStatus.reblog;
+                          saveStatus(newStatus);
                         }
                       } catch (e) {
                         console.error(e);
@@ -568,10 +566,10 @@ function Status({
                         const newStatus = await masto.v1.statuses.unfavourite(
                           id,
                         );
-                        states.statuses[newStatus.id] = newStatus;
+                        saveStatus(newStatus);
                       } else {
                         const newStatus = await masto.v1.statuses.favourite(id);
-                        states.statuses[newStatus.id] = newStatus;
+                        saveStatus(newStatus);
                       }
                     } catch (e) {
                       console.error(e);
@@ -599,10 +597,10 @@ function Status({
                         const newStatus = await masto.v1.statuses.unbookmark(
                           id,
                         );
-                        states.statuses[newStatus.id] = newStatus;
+                        saveStatus(newStatus);
                       } else {
                         const newStatus = await masto.v1.statuses.bookmark(id);
-                        states.statuses[newStatus.id] = newStatus;
+                        saveStatus(newStatus);
                       }
                     } catch (e) {
                       console.error(e);

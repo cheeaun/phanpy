@@ -7,7 +7,7 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 
@@ -38,10 +38,7 @@ function Home({ hidden }) {
       return { done: true };
     }
     const homeValues = allStatuses.value.map((status) => {
-      states.statuses[status.id] = status;
-      if (status.reblog) {
-        states.statuses[status.reblog.id] = status.reblog;
-      }
+      saveStatus(status);
       return {
         id: status.id,
         reblog: status.reblog?.id,

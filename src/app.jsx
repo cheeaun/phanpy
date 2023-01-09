@@ -20,7 +20,7 @@ import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { getAccessToken } from './utils/auth';
-import states from './utils/states';
+import states, { saveStatus } from './utils/states';
 import store from './utils/store';
 
 const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
@@ -300,18 +300,12 @@ async function startStream() {
       });
     }
 
-    states.statuses[status.id] = status;
-    if (status.reblog) {
-      states.statuses[status.reblog.id] = status.reblog;
-    }
+    saveStatus(status);
   }, 5000);
   stream.on('update', handleNewStatus);
   stream.on('status.update', (status) => {
     console.log('STATUS.UPDATE', status);
-    states.statuses[status.id] = status;
-    if (status.reblog) {
-      states.statuses[status.reblog.id] = status.reblog;
-    }
+    saveStatus(status);
   });
   stream.on('delete', (statusID) => {
     console.log('DELETE', statusID);
@@ -332,16 +326,7 @@ async function startStream() {
       states.notificationsNew.unshift(notification);
     }
 
-    if (notification.status && !states.statuses[notification.status.id]) {
-      states.statuses[notification.status.id] = notification.status;
-      if (
-        notification.status.reblog &&
-        !states.statuses[notification.status.reblog.id]
-      ) {
-        states.statuses[notification.status.reblog.id] =
-          notification.status.reblog;
-      }
-    }
+    saveStatus(notification.status, { override: false });
   });
 
   stream.ws.onclose = () => {
@@ -393,10 +378,7 @@ function startVisibility() {
                 newStatuses[0].id !== states.home[0].id
               ) {
                 states.homeNew = newStatuses.map((status) => {
-                  states.statuses[status.id] = status;
-                  if (status.reblog) {
-                    states.statuses[status.reblog.id] = status.reblog;
-                  }
+                  saveStatus(status);
                   return {
                     id: status.id,
                     reblog: status.reblog?.id,
@@ -418,19 +400,7 @@ function startVisibility() {
                   states.notificationsNew.unshift(notification);
                 }
 
-                if (
-                  notification.status &&
-                  !states.statuses[notification.status.id]
-                ) {
-                  states.statuses[notification.status.id] = notification.status;
-                  if (
-                    notification.status.reblog &&
-                    !states.statuses[notification.status.reblog.id]
-                  ) {
-                    states.statuses[notification.status.reblog.id] =
-                      notification.status.reblog;
-                  }
-                }
+                saveStatus(notification.status, { override: false });
               }
             } catch (e) {
               // Silently fail

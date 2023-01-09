@@ -364,7 +364,7 @@ a.mention span {
   background-color: var(--link-bg-hover-color);
   outline-offset: -2px;
 }
-.status-link:active {
+.status-link:active:not(:has(.media:active)) {
   filter: brightness(0.95);
 }
 

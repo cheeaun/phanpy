@@ -361,6 +361,9 @@
 .status .media:is(:hover, :focus) {
   border-color: var(--outline-hover-color);
 }
+.status .media:active {
+  filter: brightness(0.8);
+}
 .status .media :is(img, video) {
   width: 100%;
   height: 100%;

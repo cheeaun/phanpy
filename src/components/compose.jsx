@@ -726,10 +726,11 @@ function Compose({
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
             {mediaAttachments.map((attachment, i) => {
-              const { id } = attachment;
+              const { id, file } = attachment;
+              const fileID = file?.size + file?.type + file?.name;
               return (
                 <MediaAttachment
-                  key={i + id}
+                  key={id || fileID || i}
                   attachment={attachment}
                   disabled={uiState === 'loading'}
                   onDescriptionChange={(value) => {

@@ -85,32 +85,42 @@ function Notification({ notification }) {
       </div>
       <div class="notification-content">
         {type !== 'mention' && (
-          <p>
-            {!/poll|update/i.test(type) && (
-              <>
-                {_accounts?.length > 1 ? (
-                  <>
-                    <b>{_accounts.length} people</b>{' '}
-                  </>
-                ) : (
-                  <>
-                    <NameText account={account} showAvatar />{' '}
-                  </>
-                )}
-              </>
+          <>
+            <p>
+              {!/poll|update/i.test(type) && (
+                <>
+                  {_accounts?.length > 1 ? (
+                    <>
+                      <b>{_accounts.length} people</b>{' '}
+                    </>
+                  ) : (
+                    <>
+                      <NameText account={account} showAvatar />{' '}
+                    </>
+                  )}
+                </>
+              )}
+              {text}
+              {type === 'mention' && (
+                <span class="insignificant">
+                  {' '}
+                  •{' '}
+                  <RelativeTime
+                    datetime={notification.createdAt}
+                    format="micro"
+                  />
+                </span>
+              )}
+            </p>
+            {type === 'follow_request' && (
+              <FollowRequestButtons
+                accountID={account.id}
+                onChange={() => {
+                  loadNotifications(true);
+                }}
+              />
             )}
-            {text}
-            {type === 'mention' && (
-              <span class="insignificant">
-                {' '}
-                •{' '}
-                <RelativeTime
-                  datetime={notification.createdAt}
-                  format="micro"
-                />
-              </span>
-            )}
-          </p>
+          </>
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
@@ -411,6 +421,52 @@ function Notifications() {
         )}
       </div>
     </div>
+  );
+}
+
+function FollowRequestButtons({ accountID, onChange }) {
+  const [uiState, setUIState] = useState('default');
+  return (
+    <p>
+      <button
+        type="button"
+        disabled={uiState === 'loading'}
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.followRequests.authorize(accountID);
+              onChange();
+            } catch (e) {
+              console.error(e);
+              setUIState('default');
+            }
+          })();
+        }}
+      >
+        Accept
+      </button>{' '}
+      <button
+        type="button"
+        disabled={uiState === 'loading'}
+        class="light danger"
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.followRequests.reject(accountID);
+              onChange();
+            } catch (e) {
+              console.error(e);
+              setUIState('default');
+            }
+          })();
+        }}
+      >
+        Reject
+      </button>
+      <Loader hidden={uiState !== 'loading'} />
+    </p>
   );
 }
 

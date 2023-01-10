@@ -270,30 +270,32 @@ function Status({
               </span>
             ))}
         </div>
-        {!!inReplyToId &&
-          !!inReplyToAccountId &&
-          !withinContext &&
-          size !== 's' && (
-            <>
-              {inReplyToAccountId === status.account.id ? (
-                <div class="status-thread-badge">
-                  <Icon icon="thread" size="s" />
-                  Thread
+        {!withinContext && size !== 's' && (
+          <>
+            {inReplyToAccountId === status.account?.id ||
+            !!snapStates.statusThreadNumber[id] ? (
+              <div class="status-thread-badge">
+                <Icon icon="thread" size="s" />
+                Thread
+                {snapStates.statusThreadNumber[id]
+                  ? ` ${snapStates.statusThreadNumber[id]}/X`
+                  : ''}
+              </div>
+            ) : (
+              !!inReplyToId &&
+              !!inReplyToAccount &&
+              (!!spoilerText ||
+                !mentions.find((mention) => {
+                  return mention.id === inReplyToAccountId;
+                })) && (
+                <div class="status-reply-badge">
+                  <Icon icon="reply" />{' '}
+                  <NameText account={inReplyToAccount} short />
                 </div>
-              ) : (
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText account={inReplyToAccount} short />
-                  </div>
-                )
-              )}
-            </>
-          )}
+              )
+            )}
+          </>
+        )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''

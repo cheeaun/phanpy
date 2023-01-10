@@ -1,7 +1,11 @@
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
-import { CacheFirst, NetworkFirst } from 'workbox-strategies';
+import {
+  CacheFirst,
+  NetworkFirst,
+  StaleWhileRevalidate,
+} from 'workbox-strategies';
 
 self.__WB_DISABLE_DEV_LOGS = true;
 

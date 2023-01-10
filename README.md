@@ -81,11 +81,12 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/)
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Cuckoo+](https://www.cuckoo.social/)
+- [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
-- [Elk](https://m.webtoo.ls/@elk)
+- [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
-- 
 - [More...](https://github.com/tleb/awesome-mastodon#clients)
 
 ## License

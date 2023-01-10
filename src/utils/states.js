@@ -38,6 +38,9 @@ export function saveStatus(status, opts) {
   if (!skipThreading) {
     requestAnimationFrame(() => {
       threadifyStatus(status);
+      if (status.reblog) {
+        threadifyStatus(status.reblog);
+      }
     });
   }
 }

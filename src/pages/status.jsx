@@ -17,6 +17,7 @@ import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
@@ -278,6 +279,7 @@ function StatusPage({ id }) {
 
   const hasManyStatuses = statuses.length > LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
+  const ancestors = statuses.filter((s) => s.ancestor);
 
   const [heroInView, setHeroInView] = useState(true);
   const onView = useDebouncedCallback(setHeroInView, 100);
@@ -290,6 +292,10 @@ function StatusPage({ id }) {
 
   useHotkeys(['esc', 'backspace'], () => {
     location.hash = closeLink;
+  });
+
+  const { nearReachTop } = useScroll({
+    scrollableElement: scrollableRef.current,
   });
 
   return (
@@ -345,7 +351,29 @@ function StatusPage({ id }) {
                 </span>
               </span>
             ) : (
-              'Status'
+              <>
+                Status{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    // Scroll to top
+                    e.preventDefault();
+                    e.stopPropagation();
+                    scrollableRef.current.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
+                    });
+                  }}
+                  hidden={!ancestors.length || nearReachTop}
+                >
+                  <Icon icon="arrow-up" />
+                  <Icon icon="comment" />{' '}
+                  <span class="insignificant">
+                    {shortenNumber(ancestors.length)}
+                  </span>
+                </button>
+              </>
             )}
           </h1>
           <div class="header-side">

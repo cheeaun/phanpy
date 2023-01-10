@@ -198,9 +198,7 @@ function StatusPage({ id }) {
     }
 
     // RESET
-    // This will probably fail when user "forward" back to open the Status page again, but gosh, too many use-cases to mimic what the browser does
     scrollOffsets.current = null;
-    cachedStatusesMap.current = {};
   }, [statuses]);
 
   useEffect(() => {
@@ -227,9 +225,10 @@ function StatusPage({ id }) {
 
   useEffect(() => {
     return () => {
-      // clear all scrollPositions
+      // RESET
       states.scrollPositions = {};
       states.reloadStatusPage = 0;
+      cachedStatusesMap.current = {};
     };
   }, []);
 

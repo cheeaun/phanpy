@@ -4,7 +4,7 @@ body {
   padding: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
-  /* overflow: hidden; */
+  overflow-x: hidden;
 }
 
 #app {
@@ -128,8 +128,8 @@ a.mention span {
   padding: 0;
 }
 .timeline.grow {
-  min-height: 100vh;
-  min-height: 100dvh;
+  /* min-height: 100vh;
+  min-height: 100dvh; */
   padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
 }
 .timeline > li {
@@ -364,7 +364,7 @@ a.mention span {
   background-color: var(--link-bg-hover-color);
   outline-offset: -2px;
 }
-.status-link:active {
+.status-link:active:not(:has(.media:active)) {
   filter: brightness(0.95);
 }
 
@@ -409,6 +409,7 @@ a.mention span {
 
 .decks {
   flex-grow: 1;
+  width: 100%;
 }
 
 .deck-close {
@@ -432,7 +433,7 @@ a.mention span {
 
 @keyframes fade-from-top {
   0% {
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
   100% {
@@ -443,7 +444,7 @@ a.mention span {
 .updates-button {
   position: absolute;
   z-index: 2;
-  animation: fade-from-top 2s ease-out;
+  animation: fade-from-top 0.3s ease-out;
   left: 50%;
   margin-top: 8px;
   transform: translate(-50%, 0);
@@ -494,6 +495,13 @@ a.mention span {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
+  background-color: var(--average-color-alpha);
+  background-image: radial-gradient(
+    closest-side,
+    var(--average-color) 10%,
+    var(--average-color-alpha) 40%,
+    transparent 100%
+  );
 }
 .carousel > * :is(img, video) {
   width: auto;
@@ -619,7 +627,7 @@ button.carousel-dot[disabled].active {
   transition: transform 0.3s ease-in-out;
 }
 #compose-button[hidden] .icon {
-  transform: rotate(90deg);
+  transform: rotateY(360deg);
 }
 #compose-button:is(:hover, :focus) {
   background-color: var(--button-bg-color);

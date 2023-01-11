@@ -1,13 +1,13 @@
 import { Link } from 'preact-router/match';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 
@@ -17,6 +17,8 @@ function Home({ hidden }) {
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
+
+  console.debug('RENDER Home');
 
   const homeIterator = useRef(
     masto.v1.timelines.listHome({
@@ -36,10 +38,7 @@ function Home({ hidden }) {
       return { done: true };
     }
     const homeValues = allStatuses.value.map((status) => {
-      states.statuses.set(status.id, status);
-      if (status.reblog) {
-        states.statuses.set(status.reblog.id, status.reblog);
-      }
+      saveStatus(status);
       return {
         id: status.id,
         reblog: status.reblog?.id,
@@ -167,6 +166,7 @@ function Home({ hidden }) {
       scrollableElement: scrollableRef.current,
       distanceFromTop: 0.1,
       distanceFromBottom: 0.15,
+      scrollThresholdUp: 44,
     });
 
   useEffect(() => {
@@ -352,4 +352,4 @@ function Home({ hidden }) {
   );
 }
 
-export default Home;
+export default memo(Home);

@@ -2,6 +2,7 @@ import './status.css';
 
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
+import { memo } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -21,7 +22,7 @@ import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
@@ -61,7 +62,7 @@ function Status({
 
   const snapStates = useSnapshot(states);
   if (!status) {
-    status = snapStates.statuses.get(statusID);
+    status = snapStates.statuses[statusID];
   }
   if (!status) {
     return null;
@@ -106,6 +107,8 @@ function Status({
     _deleted,
   } = status;
 
+  console.debug('RENDER Status', id, status?.account.displayName);
+
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
@@ -122,20 +125,20 @@ function Status({
   }
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
   if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
-    const account = states.accounts.get(inReplyToAccountId);
+    const account = states.accounts[inReplyToAccountId];
     if (account) {
       setInReplyToAccount(account);
     } else {
       memFetchAccount(inReplyToAccountId)
         .then((account) => {
           setInReplyToAccount(account);
-          states.accounts.set(account.id, account);
+          states.accounts[account.id] = account;
         })
         .catch((e) => {});
     }
   }
 
-  const showSpoiler = snapStates.spoilers.has(id) || false;
+  const showSpoiler = !!snapStates.spoilers[id] || false;
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -267,30 +270,32 @@ function Status({
               </span>
             ))}
         </div>
-        {!!inReplyToId &&
-          !!inReplyToAccountId &&
-          !withinContext &&
-          size !== 's' && (
-            <>
-              {inReplyToAccountId === status.account.id ? (
-                <div class="status-thread-badge">
-                  <Icon icon="thread" size="s" />
-                  Thread
+        {!withinContext && size !== 's' && (
+          <>
+            {inReplyToAccountId === status.account?.id ||
+            !!snapStates.statusThreadNumber[id] ? (
+              <div class="status-thread-badge">
+                <Icon icon="thread" size="s" />
+                Thread
+                {snapStates.statusThreadNumber[id]
+                  ? ` ${snapStates.statusThreadNumber[id]}/X`
+                  : ''}
+              </div>
+            ) : (
+              !!inReplyToId &&
+              !!inReplyToAccount &&
+              (!!spoilerText ||
+                !mentions.find((mention) => {
+                  return mention.id === inReplyToAccountId;
+                })) && (
+                <div class="status-reply-badge">
+                  <Icon icon="reply" />{' '}
+                  <NameText account={inReplyToAccount} short />
                 </div>
-              ) : (
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText account={inReplyToAccount} short />
-                  </div>
-                )
-              )}
-            </>
-          )}
+              )
+            )}
+          </>
+        )}
         <div
           class={`content-container ${
             sensitive || spoilerText ? 'has-spoiler' : ''
@@ -321,9 +326,9 @@ function Status({
                   e.preventDefault();
                   e.stopPropagation();
                   if (showSpoiler) {
-                    states.spoilers.delete(id);
+                    delete states.spoilers[id];
                   } else {
-                    states.spoilers.set(id, true);
+                    states.spoilers[id] = true;
                   }
                 }}
               >
@@ -388,7 +393,7 @@ function Status({
               poll={poll}
               readOnly={readOnly}
               onUpdate={(newPoll) => {
-                states.statuses.get(id).poll = newPoll;
+                states.statuses[id].poll = newPoll;
               }}
             />
           )}
@@ -400,9 +405,9 @@ function Status({
                 e.preventDefault();
                 e.stopPropagation();
                 if (showSpoiler) {
-                  states.spoilers.delete(id);
+                  delete states.spoilers[id];
                 } else {
-                  states.spoilers.set(id, true);
+                  states.spoilers[id] = true;
                 }
               }}
             >
@@ -436,12 +441,7 @@ function Status({
             !sensitive &&
             !spoilerText &&
             !poll &&
-            !mediaAttachments.length && (
-              <Card
-                card={card}
-                size={!poll && !mediaAttachments.length ? 'l' : 'm'}
-              />
-            )}
+            !mediaAttachments.length && <Card card={card} />}
         </div>
         {size === 'l' && (
           <>
@@ -524,28 +524,24 @@ function Status({
                           }
                         }
                         // Optimistic
-                        states.statuses.set(id, {
+                        states.statuses[id] = {
                           ...status,
                           reblogged: !reblogged,
                           reblogsCount: reblogsCount + (reblogged ? -1 : 1),
-                        });
+                        };
                         if (reblogged) {
                           const newStatus = await masto.v1.statuses.unreblog(
                             id,
                           );
-                          states.statuses.set(newStatus.id, newStatus);
+                          saveStatus(newStatus);
                         } else {
                           const newStatus = await masto.v1.statuses.reblog(id);
-                          states.statuses.set(newStatus.id, newStatus);
-                          states.statuses.set(
-                            newStatus.reblog.id,
-                            newStatus.reblog,
-                          );
+                          saveStatus(newStatus);
                         }
                       } catch (e) {
                         console.error(e);
                         // Revert optimistism
-                        states.statuses.set(id, status);
+                        states.statuses[id] = status;
                       }
                     }}
                   />
@@ -562,25 +558,25 @@ function Status({
                   onClick={async () => {
                     try {
                       // Optimistic
-                      states.statuses.set(statusID, {
+                      states.statuses[statusID] = {
                         ...status,
                         favourited: !favourited,
                         favouritesCount:
                           favouritesCount + (favourited ? -1 : 1),
-                      });
+                      };
                       if (favourited) {
                         const newStatus = await masto.v1.statuses.unfavourite(
                           id,
                         );
-                        states.statuses.set(newStatus.id, newStatus);
+                        saveStatus(newStatus);
                       } else {
                         const newStatus = await masto.v1.statuses.favourite(id);
-                        states.statuses.set(newStatus.id, newStatus);
+                        saveStatus(newStatus);
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses.set(statusID, status);
+                      states.statuses[statusID] = status;
                     }
                   }}
                 />
@@ -595,23 +591,23 @@ function Status({
                   onClick={async () => {
                     try {
                       // Optimistic
-                      states.statuses.set(statusID, {
+                      states.statuses[statusID] = {
                         ...status,
                         bookmarked: !bookmarked,
-                      });
+                      };
                       if (bookmarked) {
                         const newStatus = await masto.v1.statuses.unbookmark(
                           id,
                         );
-                        states.statuses.set(newStatus.id, newStatus);
+                        saveStatus(newStatus);
                       } else {
                         const newStatus = await masto.v1.statuses.bookmark(id);
-                        states.statuses.set(newStatus.id, newStatus);
+                        saveStatus(newStatus);
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses.set(statusID, status);
+                      states.statuses[statusID] = status;
                     }
                   }}
                 />
@@ -754,20 +750,20 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       </div>
     );
   } else if (type === 'gifv' || type === 'video') {
-    // 20 seconds, treat as a gif
-    const shortDuration = original.duration <= 20;
-    const isGIFV = type === 'gifv';
-    const isGIF = isGIFV || shortDuration;
-    const loopable = original.duration <= 60;
+    const shortDuration = original.duration < 31;
+    const isGIF = type === 'gifv' && shortDuration;
+    // If GIF is too long, treat it as a video
+    const loopable = original.duration < 61;
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
+    const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'} ${
-          autoAnimate ? 'media-contain' : ''
+          autoGIFAnimate ? 'media-contain' : ''
         }`}
         data-formatted-duration={formattedDuration}
-        data-label={isGIF && !showOriginal && !autoAnimate ? 'GIF' : ''}
+        data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
         style={{
           backgroundColor:
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -795,7 +791,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
           }
         }}
       >
-        {showOriginal || autoAnimate ? (
+        {showOriginal || autoGIFAnimate ? (
           <div
             style={{
               width: '100%',
@@ -811,7 +807,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
                 preload="auto"
                 autoplay
                 muted="${isGIF}"
-                ${isGIFV ? '' : 'controls'}
+                ${isGIF ? '' : 'controls'}
                 playsinline
                 loop="${loopable}"
               ></video>
@@ -843,15 +839,30 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       </div>
     );
   } else if (type === 'audio') {
+    const formattedDuration = formatDuration(original.duration);
     return (
-      <div class="media media-audio">
-        <audio src={remoteUrl || url} preload="none" controls />
+      <div
+        class="media media-audio"
+        data-formatted-duration={formattedDuration}
+        onClick={onClick}
+      >
+        {showOriginal ? (
+          <audio src={remoteUrl || url} preload="none" controls autoplay />
+        ) : previewUrl ? (
+          <img
+            src={previewUrl}
+            alt={description}
+            width={width}
+            height={height}
+            loading="lazy"
+          />
+        ) : null}
       </div>
     );
   }
 }
 
-function Card({ card, size }) {
+function Card({ card }) {
   const {
     blurhash,
     title,
@@ -876,7 +887,7 @@ function Card({ card, size }) {
 
   const hasText = title || providerName || authorName;
   const isLandscape = width / height >= 1.2;
-  size = size === 'l' && isLandscape ? 'large' : '';
+  const size = isLandscape ? 'large' : '';
 
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
@@ -887,19 +898,20 @@ function Card({ card, size }) {
         rel="nofollow noopener noreferrer"
         class={`card link ${size}`}
       >
-        <img
-          class="image"
-          src={image}
-          width={width}
-          height={height}
-          loading="lazy"
-          alt=""
-          onError={(e) => {
-            try {
-              e.target.style.display = 'none';
-            } catch (e) {}
-          }}
-        />
+        <div class="card-image">
+          <img
+            src={image}
+            width={width}
+            height={height}
+            loading="lazy"
+            alt=""
+            onError={(e) => {
+              try {
+                e.target.style.display = 'none';
+              } catch (e) {}
+            }}
+          />
+        </div>
         <div class="meta-container">
           <p class="meta domain">{domain}</p>
           <p
@@ -1329,8 +1341,10 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             <InView
               class="carousel-item"
               style={{
-                backgroundColor:
-                  rgbAverageColor && `rgba(${rgbAverageColor.join(',')}, .5)`,
+                '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
+                '--average-color-alpha': `rgba(${rgbAverageColor?.join(
+                  ',',
+                )}, .5)`,
               }}
               tabindex="0"
               key={media.id}
@@ -1441,4 +1455,4 @@ function formatDuration(time) {
   }
 }
 
-export default Status;
+export default memo(Status);

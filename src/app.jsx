@@ -11,7 +11,6 @@ import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
 import Compose from './components/compose';
-import Icon from './components/icon';
 import Loader from './components/loader';
 import Modal from './components/modal';
 import Home from './pages/home';
@@ -21,8 +20,7 @@ import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { getAccessToken } from './utils/auth';
-import openCompose from './utils/open-compose';
-import states from './utils/states';
+import states, { saveStatus } from './utils/states';
 import store from './utils/store';
 
 const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
@@ -133,7 +131,7 @@ function App() {
     if (currentModal) return;
     let timer = setTimeout(() => {
       const page = document.getElementById(`${currentDeck}-page`);
-      console.log('focus', currentDeck, page);
+      console.debug('FOCUS', currentDeck, page);
       if (page) {
         page.focus();
       }
@@ -188,7 +186,7 @@ function App() {
       <Router
         history={createHashHistory()}
         onChange={(e) => {
-          console.log('router onChange', e);
+          console.debug('ROUTER onChange', e);
           // Special handling for Home and Notifications
           const { url } = e;
           if (/notifications/i.test(url)) {
@@ -302,23 +300,17 @@ async function startStream() {
       });
     }
 
-    states.statuses.set(status.id, status);
-    if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
-    }
+    saveStatus(status);
   }, 5000);
   stream.on('update', handleNewStatus);
   stream.on('status.update', (status) => {
     console.log('STATUS.UPDATE', status);
-    states.statuses.set(status.id, status);
-    if (status.reblog) {
-      states.statuses.set(status.reblog.id, status.reblog);
-    }
+    saveStatus(status);
   });
   stream.on('delete', (statusID) => {
     console.log('DELETE', statusID);
-    // states.statuses.delete(statusID);
-    const s = states.statuses.get(statusID);
+    // delete states.statuses[statusID];
+    const s = states.statuses[statusID];
     if (s) s._deleted = true;
   });
   stream.on('notification', (notification) => {
@@ -334,18 +326,7 @@ async function startStream() {
       states.notificationsNew.unshift(notification);
     }
 
-    if (notification.status && !states.statuses.has(notification.status.id)) {
-      states.statuses.set(notification.status.id, notification.status);
-      if (
-        notification.status.reblog &&
-        !states.statuses.has(notification.status.reblog.id)
-      ) {
-        states.statuses.set(
-          notification.status.reblog.id,
-          notification.status.reblog,
-        );
-      }
-    }
+    saveStatus(notification.status, { override: false });
   });
 
   stream.ws.onclose = () => {
@@ -397,10 +378,7 @@ function startVisibility() {
                 newStatuses[0].id !== states.home[0].id
               ) {
                 states.homeNew = newStatuses.map((status) => {
-                  states.statuses.set(status.id, status);
-                  if (status.reblog) {
-                    states.statuses.set(status.reblog.id, status.reblog);
-                  }
+                  saveStatus(status);
                   return {
                     id: status.id,
                     reblog: status.reblog?.id,
@@ -422,24 +400,7 @@ function startVisibility() {
                   states.notificationsNew.unshift(notification);
                 }
 
-                if (
-                  notification.status &&
-                  !states.statuses.has(notification.status.id)
-                ) {
-                  states.statuses.set(
-                    notification.status.id,
-                    notification.status,
-                  );
-                  if (
-                    notification.status.reblog &&
-                    !states.statuses.has(notification.status.reblog.id)
-                  ) {
-                    states.statuses.set(
-                      notification.status.reblog.id,
-                      notification.status.reblog,
-                    );
-                  }
-                }
+                saveStatus(notification.status, { override: false });
               }
             } catch (e) {
               // Silently fail

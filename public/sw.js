@@ -1,7 +1,11 @@
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
-import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import {
+  CacheFirst,
+  NetworkFirst,
+  StaleWhileRevalidate,
+} from 'workbox-strategies';
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
@@ -50,8 +54,9 @@ const apiRoute = new RegExpRoute(
   // Matches:
   // - statuses/:id/context - some contexts are really huge
   /^https?:\/\/[^\/]+\/api\/v\d+\/(statuses\/\d+\/context)/,
-  new StaleWhileRevalidate({
+  new NetworkFirst({
     cacheName: 'api',
+    networkTimeoutSeconds: 5,
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 5 * 60, // 5 minutes

@@ -11,8 +11,15 @@ Phanpy
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
-🔗 **Production**: https://phanpy.social (`production` branch)<br>
-🔗 **Development**: https://dev.phanpy.social (`main` branch, may break more often)
+- 🏢 **Production**: https://phanpy.social
+  - `production` branch
+  - break less often
+  - slower fixes unless critical
+- 🏗️ **Development**: https://dev.phanpy.social
+  - `main` branch
+  - may see new cool stuff sooner
+  - may break more often
+  - may be fixed much faster too
 
 Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
 
@@ -81,11 +88,12 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/)
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Cuckoo+](https://www.cuckoo.social/)
+- [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
-- [Elk](https://m.webtoo.ls/@elk)
+- [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
-- 
 - [More...](https://github.com/tleb/awesome-mastodon#clients)
 
 ## License

@@ -1,6 +1,7 @@
 import './notifications.css';
 
 import { Link } from 'preact-router/match';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -84,32 +85,42 @@ function Notification({ notification }) {
       </div>
       <div class="notification-content">
         {type !== 'mention' && (
-          <p>
-            {!/poll|update/i.test(type) && (
-              <>
-                {_accounts?.length > 1 ? (
-                  <>
-                    <b>{_accounts.length} people</b>{' '}
-                  </>
-                ) : (
-                  <>
-                    <NameText account={account} showAvatar />{' '}
-                  </>
-                )}
-              </>
+          <>
+            <p>
+              {!/poll|update/i.test(type) && (
+                <>
+                  {_accounts?.length > 1 ? (
+                    <>
+                      <b>{_accounts.length} people</b>{' '}
+                    </>
+                  ) : (
+                    <>
+                      <NameText account={account} showAvatar />{' '}
+                    </>
+                  )}
+                </>
+              )}
+              {text}
+              {type === 'mention' && (
+                <span class="insignificant">
+                  {' '}
+                  •{' '}
+                  <RelativeTime
+                    datetime={notification.createdAt}
+                    format="micro"
+                  />
+                </span>
+              )}
+            </p>
+            {type === 'follow_request' && (
+              <FollowRequestButtons
+                accountID={account.id}
+                onChange={() => {
+                  loadNotifications(true);
+                }}
+              />
             )}
-            {text}
-            {type === 'mention' && (
-              <span class="insignificant">
-                {' '}
-                •{' '}
-                <RelativeTime
-                  datetime={notification.createdAt}
-                  format="micro"
-                />
-              </span>
-            )}
-          </p>
+          </>
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
@@ -205,6 +216,8 @@ function Notifications() {
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
 
+  console.debug('RENDER Notifications');
+
   const notificationsIterator = useRef(
     masto.v1.notifications.list({
       limit: LIMIT,
@@ -224,7 +237,7 @@ function Notifications() {
     }
     const notificationsValues = allNotifications.value.map((notification) => {
       if (notification.status) {
-        states.statuses.set(notification.status.id, notification.status);
+        states.statuses[notification.status.id] = notification.status;
       }
       return notification;
     });
@@ -411,4 +424,50 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+function FollowRequestButtons({ accountID, onChange }) {
+  const [uiState, setUIState] = useState('default');
+  return (
+    <p>
+      <button
+        type="button"
+        disabled={uiState === 'loading'}
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.followRequests.authorize(accountID);
+              onChange();
+            } catch (e) {
+              console.error(e);
+              setUIState('default');
+            }
+          })();
+        }}
+      >
+        Accept
+      </button>{' '}
+      <button
+        type="button"
+        disabled={uiState === 'loading'}
+        class="light danger"
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.followRequests.reject(accountID);
+              onChange();
+            } catch (e) {
+              console.error(e);
+              setUIState('default');
+            }
+          })();
+        }}
+      >
+        Reject
+      </button>
+      <Loader hidden={uiState !== 'loading'} />
+    </p>
+  );
+}
+
+export default memo(Notifications);

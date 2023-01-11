@@ -383,6 +383,7 @@ function Compose({
                 // );
 
                 const newWin = openCompose({
+                  uid: UID.current,
                   editStatus,
                   replyToStatus,
                   draftStatus: {

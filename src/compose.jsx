@@ -7,7 +7,7 @@ import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import Compose from './components/compose';
-import store from './utils/store';
+import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 if (window.opener) {
@@ -18,12 +18,7 @@ if (window.opener) {
   if (window.masto) return;
   console.warn('window.masto not found. Trying to log in...');
   try {
-    const accounts = store.local.getJSON('accounts') || [];
-    const currentAccount = store.session.get('currentAccount');
-    const account =
-      accounts.find((a) => a.info.id === currentAccount) || accounts[0];
-    const instanceURL = account.instanceURL;
-    const accessToken = account.accessToken;
+    const { instanceURL, accessToken } = getCurrentAccount();
     window.masto = await login({
       url: `https://${instanceURL}`,
       accessToken,

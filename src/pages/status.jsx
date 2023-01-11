@@ -16,6 +16,7 @@ import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccount } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
@@ -206,11 +207,7 @@ function StatusPage({ id }) {
     // Delete the cache for the context
     (async () => {
       try {
-        const accounts = store.local.getJSON('accounts') || [];
-        const currentAccount = store.session.get('currentAccount');
-        const account =
-          accounts.find((a) => a.info.id === currentAccount) || accounts[0];
-        const instanceURL = account.instanceURL;
+        const { instanceURL } = getCurrentAccount();
         const contextURL = `https://${instanceURL}/api/v1/statuses/${id}/context`;
         console.log('Clear cache', contextURL);
         const apiCache = await caches.open('api');

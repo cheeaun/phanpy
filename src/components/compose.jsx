@@ -13,6 +13,7 @@ import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccount } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -80,18 +81,13 @@ function Compose({
   console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
 
-  const accounts = store.local.getJSON('accounts');
-  const currentAccount = store.session.get('currentAccount');
-  const currentAccountInfo = accounts.find(
-    (a) => a.info.id === currentAccount,
-  ).info;
+  const currentAccount = getCurrentAccount();
+  const currentAccountInfo = currentAccount.info;
 
   const configuration = useMemo(() => {
     try {
       const instances = store.local.getJSON('instances');
-      const currentInstance = accounts
-        .find((a) => a.info.id === currentAccount)
-        .instanceURL.toLowerCase();
+      const currentInstance = currentAccount.instanceURL.toLowerCase();
       const config = instances[currentInstance].configuration;
       console.log(config);
       return config;
@@ -269,7 +265,7 @@ function Compose({
     }
 
     // check if status contains only "@acct", if replying
-    const isSelf = replyToStatus?.account.id === currentAccount;
+    const isSelf = replyToStatus?.account.id === currentAccountInfo.id;
     const hasOnlyAcct =
       replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
     // TODO: check for mentions, or maybe just generic "@username<space>", including multiple mentions like "@username1<space>@username2<space>"

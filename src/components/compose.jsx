@@ -5,6 +5,7 @@ import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -80,6 +81,8 @@ function Compose({
 }) {
   console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
+  const UID = useMemo(() => uid(), []);
+  console.log('Compose UID', UID);
 
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
@@ -626,7 +629,9 @@ function Compose({
                   params,
                 );
               } else {
-                newStatus = await masto.v1.statuses.create(params);
+                newStatus = await masto.v1.statuses.create(params, {
+                  idempotencyKey: UID,
+                });
               }
               setUIState('default');
 

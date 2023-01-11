@@ -81,8 +81,8 @@ function Compose({
 }) {
   console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
-  const UID = useMemo(() => uid(), []);
-  console.log('Compose UID', UID);
+  const UID = useRef(uid());
+  console.log('Compose UID', UID.current);
 
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
@@ -178,6 +178,7 @@ function Compose({
     }
     if (draftStatus) {
       const {
+        uid,
         status,
         spoilerText,
         visibility,
@@ -186,6 +187,7 @@ function Compose({
         poll,
         mediaAttachments,
       } = draftStatus;
+      UID.current = uid;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -384,6 +386,7 @@ function Compose({
                   editStatus,
                   replyToStatus,
                   draftStatus: {
+                    uid: UID.current,
                     status: textareaRef.current.value,
                     spoilerText: spoilerTextRef.current.value,
                     visibility,
@@ -459,6 +462,7 @@ function Compose({
                       editStatus,
                       replyToStatus,
                       draftStatus: {
+                        uid: UID.current,
                         status: textareaRef.current.value,
                         spoilerText: spoilerTextRef.current.value,
                         visibility,
@@ -630,7 +634,7 @@ function Compose({
                 );
               } else {
                 newStatus = await masto.v1.statuses.create(params, {
-                  idempotencyKey: UID,
+                  idempotencyKey: UID.current,
                 });
               }
               setUIState('default');

@@ -74,6 +74,8 @@ function App() {
     );
   }
 
+  console.debug('OPEN COMPOSE');
+
   return (
     <Compose
       editStatus={editStatus}

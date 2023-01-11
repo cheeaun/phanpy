@@ -45,7 +45,7 @@ export function saveStatus(status, opts) {
   }
 }
 
-function threadifyStatus(status) {
+export function threadifyStatus(status) {
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
   async function traverse(status, index = 0) {

@@ -14,7 +14,7 @@ import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states, { saveStatus } from '../utils/states';
+import states, { saveStatus, threadifyStatus } from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccount } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
@@ -160,6 +160,11 @@ function StatusPage({ id }) {
         console.log({ allStatuses });
         setStatuses(allStatuses);
         cachedStatusesMap.current[id] = allStatuses;
+
+        // Let's threadify this one
+        // Note that all non-hero statuses will trigger saveStatus which will threadify them too
+        // By right, at this point, all descendant statuses should be cached
+        threadifyStatus(heroStatus);
       } catch (e) {
         console.error(e);
         setUIState('error');

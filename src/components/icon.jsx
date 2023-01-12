@@ -30,7 +30,7 @@ const ICONS = {
   notification: 'mingcute:notification-line',
   follow: 'mingcute:user-follow-line',
   'follow-add': 'mingcute:user-add-line',
-  poll: 'mingcute:chart-bar-line',
+  poll: ['mingcute:chart-bar-line', '90deg'],
   pencil: 'mingcute:pencil-line',
   quill: 'mingcute:quill-pen-line',
   at: 'mingcute:at-line',

@@ -627,7 +627,7 @@ button.carousel-dot[disabled].active {
   transition: transform 0.3s ease-in-out;
 }
 #compose-button[hidden] .icon {
-  transform: rotateY(360deg);
+  transform: rotateY(180deg);
 }
 #compose-button:is(:hover, :focus) {
   background-color: var(--button-bg-color);

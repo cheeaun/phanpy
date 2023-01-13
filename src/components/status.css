@@ -645,9 +645,11 @@ a.card:is(:hover, :focus) {
 .poll-option-votes {
   flex-shrink: 0;
   font-size: 90%;
+  opacity: 0.75;
 }
 .poll-option-leading .poll-option-votes {
   font-weight: bold;
+  opacity: 1;
 }
 .poll-vote-button {
   margin-top: 8px;

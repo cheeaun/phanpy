@@ -1263,7 +1263,7 @@ function MediaAttachment({
             }
           }}
         >
-          <div id="media-sheet" class="sheet">
+          <div id="media-sheet" class="sheet sheet-max">
             <header>
               <h2>
                 {

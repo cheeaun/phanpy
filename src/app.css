@@ -657,6 +657,13 @@ button.carousel-dot[disabled].active {
   animation: slide-up 0.3s var(--timing-function);
   border: 1px solid var(--outline-color);
 }
+.sheet-max {
+  width: 90vw;
+  width: 90dvw;
+  max-width: none;
+  height: 90vh;
+  height: 90dvh;
+}
 .sheet header {
   padding: 16px 16px 8px;
   padding-left: max(16px, env(safe-area-inset-left));

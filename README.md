@@ -94,6 +94,7 @@ And here I am. Building a Mastodon web client.
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
+- [Tooty](https://github.com/n1k0/tooty)
 - [More...](https://github.com/tleb/awesome-mastodon#clients)
 
 ## License

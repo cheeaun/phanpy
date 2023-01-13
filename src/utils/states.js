@@ -18,6 +18,7 @@ const states = proxy({
   showCompose: false,
   showSettings: false,
   showAccount: false,
+  showDrafts: false,
   composeCharacterCount: 0,
 });
 export default states;

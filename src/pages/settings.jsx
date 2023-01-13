@@ -184,6 +184,19 @@ function Settings({ onClose }) {
             </label>
           </div>
         </form>
+        <h2>Hidden features</h2>
+        <p>
+          <button
+            type="button"
+            class="light"
+            onClick={() => {
+              states.showDrafts = true;
+              states.showSettings = false;
+            }}
+          >
+            Unsent drafts
+          </button>
+        </p>
         <h2>About</h2>
         <p>
           <a href="https://github.com/cheeaun/phanpy" target="_blank">

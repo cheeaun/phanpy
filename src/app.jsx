@@ -11,6 +11,7 @@ import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
 import Compose from './components/compose';
+import Drafts from './components/drafts';
 import Loader from './components/loader';
 import Modal from './components/modal';
 import Home from './pages/home';
@@ -278,6 +279,17 @@ function App() {
           }}
         >
           <Account account={snapStates.showAccount} />
+        </Modal>
+      )}
+      {!!snapStates.showDrafts && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              states.showDrafts = false;
+            }
+          }}
+        >
+          <Drafts />
         </Modal>
       )}
     </>

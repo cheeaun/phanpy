@@ -1,6 +1,7 @@
 import './compose.css';
 
 import '@github/text-expander-element';
+import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -10,12 +11,14 @@ import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
+import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccount } from '../utils/store-utils';
+import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -81,7 +84,7 @@ function Compose({
 }) {
   console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
-  const UID = useRef(uid());
+  const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
 
   const currentAccount = getCurrentAccount();
@@ -178,7 +181,6 @@ function Compose({
     }
     if (draftStatus) {
       const {
-        uid,
         status,
         spoilerText,
         visibility,
@@ -187,7 +189,6 @@ function Compose({
         poll,
         mediaAttachments,
       } = draftStatus;
-      UID.current = uid;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -348,6 +349,72 @@ function Compose({
     },
   );
 
+  const prevBackgroundDraft = useRef({});
+  const draftKey = () => {
+    const ns = getCurrentAccountNS();
+    return `${ns}#${UID.current}`;
+  };
+  const saveUnsavedDraft = () => {
+    // Not enabling this for editing status
+    // I don't think this warrant a draft mode for a status that's already posted
+    // Maybe it could be a big edit change but it should be rare
+    if (editStatus) return;
+    const key = draftKey();
+    const backgroundDraft = {
+      key,
+      replyTo: replyToStatus
+        ? {
+            /* Smaller payload of replyToStatus. Reasons:
+              - No point storing whole thing
+              - Could have media attachments
+              - Could be deleted/edited later
+            */
+            id: replyToStatus.id,
+            account: {
+              id: replyToStatus.account.id,
+              username: replyToStatus.account.username,
+              acct: replyToStatus.account.acct,
+            },
+          }
+        : null,
+      draftStatus: {
+        uid: UID.current,
+        status: textareaRef.current.value,
+        spoilerText: spoilerTextRef.current.value,
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+      },
+    };
+    if (!equal(backgroundDraft, prevBackgroundDraft.current) && !canClose()) {
+      console.debug('not equal', backgroundDraft, prevBackgroundDraft.current);
+      db.drafts
+        .set(key, {
+          ...backgroundDraft,
+          state: 'unsaved',
+          updatedAt: Date.now(),
+        })
+        .then(() => {
+          console.debug('DRAFT saved', key, backgroundDraft);
+        })
+        .catch((e) => {
+          console.error('DRAFT failed', key, e);
+        });
+      prevBackgroundDraft.current = structuredClone(backgroundDraft);
+    }
+  };
+  useInterval(saveUnsavedDraft, 5000); // background save every 5s
+  useEffect(() => {
+    saveUnsavedDraft();
+    // If unmounted, means user discarded the draft
+    // Also means pop-out 🙈, but it's okay because the pop-out will persist the ID and re-create the draft
+    return () => {
+      db.drafts.del(draftKey());
+    };
+  }, []);
+
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
       <div class="compose-top">
@@ -383,7 +450,6 @@ function Compose({
                 // );
 
                 const newWin = openCompose({
-                  uid: UID.current,
                   editStatus,
                   replyToStatus,
                   draftStatus: {
@@ -473,7 +539,7 @@ function Compose({
                         mediaAttachments,
                       },
                     };
-                    window.opener.__COMPOSE__ = passData;
+                    window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
                     window.opener.__STATES__.showCompose = true;
                   },
                 });

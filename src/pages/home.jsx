@@ -7,7 +7,9 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
+import db from '../utils/db';
 import states, { saveStatus } from '../utils/states';
+import { getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 
@@ -180,6 +182,19 @@ function Home({ hidden }) {
       loadStatuses(true);
     }
   }, [reachTop]);
+
+  useEffect(() => {
+    (async () => {
+      const keys = await db.drafts.keys();
+      if (keys.length) {
+        const ns = getCurrentAccountNS();
+        const ownKeys = keys.filter((key) => key.startsWith(ns));
+        if (ownKeys.length) {
+          states.showDrafts = true;
+        }
+      }
+    })();
+  }, []);
 
   return (
     <div

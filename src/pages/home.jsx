@@ -433,7 +433,6 @@ function BoostsCarousel({ boosts }) {
     scrollableElement: carouselRef.current,
     direction: 'horizontal',
   });
-  console.log({ reachStart, reachEnd });
   return (
     <div class="boost-carousel">
       <header>

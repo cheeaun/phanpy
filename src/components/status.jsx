@@ -1134,16 +1134,15 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
               &bull;{' '}
             </>
           )}
-          <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-          {votersCount === 1 ? 'voter' : 'voters'}
-          {votersCount !== votesCount && (
+          <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
+          {votesCount === 1 ? '' : 's'}
+          {!!votersCount && votersCount !== votesCount && (
             <>
               {' '}
-              &bull; <span title={votesCount}>
-                {shortenNumber(votesCount)}
-              </span>{' '}
-              vote
-              {votesCount === 1 ? '' : 's'}
+              &bull;{' '}
+              <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
+              voter
+              {votersCount === 1 ? '' : 's'}
             </>
           )}{' '}
           &bull; {expired ? 'Ended' : 'Ending'}{' '}

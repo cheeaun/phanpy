@@ -258,7 +258,7 @@ function Home({ hidden }) {
       tabIndex="-1"
     >
       <button
-        hidden={scrollDirection === 'down' && !nearReachStart}
+        hidden={scrollDirection === 'end' && !nearReachStart}
         type="button"
         id="compose-button"
         onClick={(e) => {
@@ -277,7 +277,7 @@ function Home({ hidden }) {
       </button>
       <div class="timeline-deck deck">
         <header
-          hidden={scrollDirection === 'down' && !nearReachStart}
+          hidden={scrollDirection === 'end' && !nearReachStart}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -315,7 +315,7 @@ function Home({ hidden }) {
           </div>
         </header>
         {snapStates.homeNew.length > 0 &&
-          scrollDirection === 'up' &&
+          scrollDirection === 'start' &&
           !nearReachStart &&
           !nearReachEnd && (
             <button

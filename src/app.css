@@ -82,7 +82,7 @@ a.mention span {
   background-color: var(--bg-blur-color);
   background-image: linear-gradient(to bottom, var(--bg-color), transparent);
   backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--divider-color);
+  border-bottom: var(--hairline-width) solid var(--divider-color);
   z-index: 1;
   cursor: default;
   z-index: 10;
@@ -136,7 +136,7 @@ a.mention span {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid var(--divider-color);
+  border-bottom: var(--hairline-width) solid var(--divider-color);
 }
 .timeline.flat > li {
   border-bottom: none;

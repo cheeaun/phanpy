@@ -699,7 +699,7 @@ a.card:is(:hover, :focus) {
   padding-bottom: 16px;
   margin-left: calc(-50px - 16px);
   color: var(--text-insignificant-color);
-  border-top: 1px solid var(--outline-color);
+  border-top: var(--hairline-width) solid var(--outline-color);
   margin-top: 8px;
 }
 .status .action.has-count {

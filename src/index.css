@@ -1,5 +1,6 @@
 :root {
   text-size-adjust: none;
+  --hairline-width: 1px;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -36,6 +37,12 @@
   --comment-line-color: #e5e5e5;
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
+}
+
+@media (min-resolution: 2dppx) or (min-resolution: 192dpi) or (min-device-pixel-ratio: 2) {
+  :root {
+    --hairline-width: 0.5px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

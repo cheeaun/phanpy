@@ -43,6 +43,7 @@ const ICONS = {
   popin: ['mingcute:external-link-line', '180deg'],
   plus: 'mingcute:add-circle-line',
   'chevron-left': 'mingcute:left-line',
+  'chevron-right': 'mingcute:right-line',
   reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
   thread: 'mingcute:route-line',
   group: 'mingcute:group-line',

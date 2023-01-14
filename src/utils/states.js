@@ -1,10 +1,13 @@
-import { proxy } from 'valtio';
+import { proxy, subscribe } from 'valtio';
+
+import store from './store';
 
 const states = proxy({
   history: [],
   statuses: {},
   statusThreadNumber: {},
   home: [],
+  specialHome: [],
   homeNew: [],
   homeLastFetchTime: null,
   notifications: [],
@@ -20,8 +23,18 @@ const states = proxy({
   showAccount: false,
   showDrafts: false,
   composeCharacterCount: 0,
+  settings: {
+    boostsCarousel: store.local.get('settings:boostsCarousel') === '1' || true,
+  },
 });
 export default states;
+
+subscribe(states.settings, () => {
+  store.local.set(
+    'settings:boostsCarousel',
+    states.settings.boostsCarousel ? '1' : '0',
+  );
+});
 
 export function saveStatus(status, opts) {
   const { override, skipThreading } = Object.assign(

@@ -47,6 +47,55 @@ function Home({ hidden }) {
         reply: !!status.inReplyToAccountId,
       };
     });
+
+    {
+      // BOOSTS CAROUSEL
+      let specialHome = [];
+      let boostStash = [];
+      for (let i = 0; i < homeValues.length; i++) {
+        const status = homeValues[i];
+        if (status.reblog) {
+          boostStash.push(status);
+        } else {
+          specialHome.push(status);
+        }
+      }
+      // if boostStash is more than quarter of homeValues
+      if (boostStash.length > homeValues.length / 4) {
+        // if boostStash is more than 3 quarter of homeValues
+        const boostStashID = boostStash.map((status) => status.id);
+        if (boostStash.length > (homeValues.length * 3) / 4) {
+          // insert boost array at the end of specialHome list
+          specialHome = [
+            ...specialHome,
+            { id: boostStashID, boosts: boostStash },
+          ];
+        } else {
+          // insert boosts array in the middle of specialHome list
+          const half = Math.floor(specialHome.length / 2);
+          specialHome = [
+            ...specialHome.slice(0, half),
+            {
+              id: boostStashID,
+              boosts: boostStash,
+            },
+            ...specialHome.slice(half),
+          ];
+        }
+      } else {
+        // Untouched, this is fine
+        specialHome = homeValues;
+      }
+      console.log({
+        specialHome,
+      });
+      if (firstLoad) {
+        states.specialHome = specialHome;
+      } else {
+        states.specialHome.push(...specialHome);
+      }
+    }
+
     if (firstLoad) {
       states.home = homeValues;
     } else {
@@ -84,36 +133,35 @@ function Home({ hidden }) {
   useHotkeys('j', () => {
     // focus on next status after active status
     // Traverses .timeline li .status-link, focus on .status-link
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      scrollableRef.current.querySelectorAll(
+        '.status-link, .status-boost-link',
+      ),
+    );
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&
       activeStatusRect.bottom > 0
     ) {
-      const nextStatus = activeStatus.parentElement.nextElementSibling;
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      const nextStatus = allStatusLinks[activeStatusIndex + 1];
       if (nextStatus) {
-        const statusLink = nextStatus.querySelector('.status-link');
-        if (statusLink) {
-          statusLink.focus();
-        }
+        nextStatus.focus();
+        nextStatus.scrollIntoViewIfNeeded?.();
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
-      const statusLinks = document.querySelectorAll(
-        '.timeline li .status-link',
-      );
-      let topmostStatusLink;
-      for (const statusLink of statusLinks) {
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
         const statusLinkRect = statusLink.getBoundingClientRect();
-        if (statusLinkRect.top >= 44) {
-          // 44 is the magic number for header height, not real
-          topmostStatusLink = statusLink;
-          break;
-        }
-      }
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
       }
     }
   });
@@ -121,67 +169,68 @@ function Home({ hidden }) {
   useHotkeys('k', () => {
     // focus on previous status after active status
     // Traverses .timeline li .status-link, focus on .status-link
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      scrollableRef.current.querySelectorAll(
+        '.status-link, .status-boost-link',
+      ),
+    );
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&
       activeStatusRect.bottom > 0
     ) {
-      const prevStatus = activeStatus.parentElement.previousElementSibling;
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      const prevStatus = allStatusLinks[activeStatusIndex - 1];
       if (prevStatus) {
-        const statusLink = prevStatus.querySelector('.status-link');
-        if (statusLink) {
-          statusLink.focus();
-        }
+        prevStatus.focus();
+        prevStatus.scrollIntoViewIfNeeded?.();
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
-      const statusLinks = document.querySelectorAll(
-        '.timeline li .status-link',
-      );
-      let topmostStatusLink;
-      for (const statusLink of statusLinks) {
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
         const statusLinkRect = statusLink.getBoundingClientRect();
-        if (statusLinkRect.top >= 44) {
-          // 44 is the magic number for header height, not real
-          topmostStatusLink = statusLink;
-          break;
-        }
-      }
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
       }
     }
   });
 
   useHotkeys(['enter', 'o'], () => {
     // open active status
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     if (activeStatus) {
       activeStatus.click();
     }
   });
 
-  const { scrollDirection, reachTop, nearReachTop, nearReachBottom } =
+  const { scrollDirection, reachStart, nearReachStart, nearReachEnd } =
     useScroll({
       scrollableElement: scrollableRef.current,
-      distanceFromTop: 0.1,
-      distanceFromBottom: 0.15,
-      scrollThresholdUp: 44,
+      distanceFromStart: 0.1,
+      distanceFromEnd: 0.15,
+      scrollThresholdStart: 44,
     });
 
   useEffect(() => {
-    if (nearReachBottom && showMore) {
+    if (nearReachEnd && showMore) {
       loadStatuses();
     }
-  }, [nearReachBottom]);
+  }, [nearReachEnd]);
 
   useEffect(() => {
-    if (reachTop) {
+    if (reachStart) {
       loadStatuses(true);
     }
-  }, [reachTop]);
+  }, [reachStart]);
 
   useEffect(() => {
     (async () => {
@@ -196,6 +245,10 @@ function Home({ hidden }) {
     })();
   }, []);
 
+  const snapHome = snapStates.settings.boostsCarousel
+    ? snapStates.specialHome
+    : snapStates.home;
+
   return (
     <div
       id="home-page"
@@ -205,7 +258,7 @@ function Home({ hidden }) {
       tabIndex="-1"
     >
       <button
-        hidden={scrollDirection === 'down' && !nearReachTop}
+        hidden={scrollDirection === 'down' && !nearReachStart}
         type="button"
         id="compose-button"
         onClick={(e) => {
@@ -224,7 +277,7 @@ function Home({ hidden }) {
       </button>
       <div class="timeline-deck deck">
         <header
-          hidden={scrollDirection === 'down' && !nearReachTop}
+          hidden={scrollDirection === 'down' && !nearReachStart}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -263,8 +316,8 @@ function Home({ hidden }) {
         </header>
         {snapStates.homeNew.length > 0 &&
           scrollDirection === 'up' &&
-          !nearReachTop &&
-          !nearReachBottom && (
+          !nearReachStart &&
+          !nearReachEnd && (
             <button
               class="updates-button"
               type="button"
@@ -285,11 +338,18 @@ function Home({ hidden }) {
               <Icon icon="arrow-up" /> New posts
             </button>
           )}
-        {snapStates.home.length ? (
+        {snapHome.length ? (
           <>
             <ul class="timeline">
-              {snapStates.home.map(({ id: statusID, reblog }) => {
+              {snapHome.map(({ id: statusID, reblog, boosts }) => {
                 const actualStatusID = reblog || statusID;
+                if (boosts) {
+                  return (
+                    <li key={statusID}>
+                      <BoostsCarousel boosts={boosts} />
+                    </li>
+                  );
+                }
                 return (
                   <li key={statusID}>
                     <Link
@@ -363,6 +423,63 @@ function Home({ hidden }) {
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+function BoostsCarousel({ boosts }) {
+  const carouselRef = useRef();
+  const { reachStart, reachEnd } = useScroll({
+    scrollableElement: carouselRef.current,
+    direction: 'horizontal',
+  });
+  console.log({ reachStart, reachEnd });
+  return (
+    <div class="boost-carousel">
+      <header>
+        <h3>{boosts.length} Boosts</h3>
+        <span>
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachStart}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-left" />
+          </button>{' '}
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachEnd}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-right" />
+          </button>
+        </span>
+      </header>
+      <ul ref={carouselRef}>
+        {boosts.map((boost) => {
+          const { id: statusID, reblog } = boost;
+          const actualStatusID = reblog || statusID;
+          return (
+            <li>
+              <a class="status-boost-link" href={`#/s/${actualStatusID}`}>
+                <Status statusID={statusID} size="s" />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

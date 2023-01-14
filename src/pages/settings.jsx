@@ -1,6 +1,7 @@
 import './settings.css';
 
 import { useRef, useState } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
@@ -16,6 +17,7 @@ import store from '../utils/store';
 */
 
 function Settings({ onClose }) {
+  const snapStates = useSnapshot(states);
   // Accounts
   const accounts = store.local.getJSON('accounts');
   const currentAccount = store.session.get('currentAccount');
@@ -184,6 +186,17 @@ function Settings({ onClose }) {
             </label>
           </div>
         </form>
+        <h2>Settings</h2>
+        <label>
+          <input
+            type="checkbox"
+            checked={snapStates.settings.boostsCarousel}
+            onChange={(e) => {
+              states.settings.boostsCarousel = e.target.checked;
+            }}
+          />{' '}
+          Boosts carousel (experimental)
+        </label>
         <h2>Hidden features</h2>
         <p>
           <button

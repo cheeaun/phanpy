@@ -1,55 +1,83 @@
 import { useEffect, useState } from 'preact/hooks';
 
 export default function useScroll({
-  scrollableElement = window,
-  distanceFromTop = 0,
-  distanceFromBottom = 0,
-  scrollThresholdUp = 10,
-  scrollThresholdDown = 10,
+  scrollableElement,
+  distanceFromStart = 0,
+  distanceFromEnd = 0,
+  scrollThresholdStart = 10,
+  scrollThresholdEnd = 10,
+  direction = 'vertical',
 } = {}) {
   const [scrollDirection, setScrollDirection] = useState(null);
-  const [reachTop, setReachTop] = useState(false);
-  const [nearReachTop, setNearReachTop] = useState(false);
-  const [nearReachBottom, setNearReachBottom] = useState(false);
+  const [reachStart, setReachStart] = useState(false);
+  const [reachEnd, setReachEnd] = useState(false);
+  const [nearReachStart, setNearReachStart] = useState(false);
+  const [nearReachEnd, setNearReachEnd] = useState(false);
+  const isVertical = direction === 'vertical';
+
+  if (!scrollableElement) {
+    console.warn('Scrollable element is not defined');
+    scrollableElement = window;
+  }
 
   useEffect(() => {
-    let previousScrollTop = scrollableElement.scrollTop;
+    let previousScrollStart = isVertical
+      ? scrollableElement.scrollTop
+      : scrollableElement.scrollLeft;
 
     function onScroll() {
-      const { scrollTop, scrollHeight, clientHeight } = scrollableElement;
-      const scrollDistance = Math.abs(scrollTop - previousScrollTop);
-      const distanceFromTopPx =
-        scrollHeight * Math.min(1, Math.max(0, distanceFromTop));
-      const distanceFromBottomPx =
-        scrollHeight * Math.min(1, Math.max(0, distanceFromBottom));
+      const {
+        scrollTop,
+        scrollLeft,
+        scrollHeight,
+        scrollWidth,
+        clientHeight,
+        clientWidth,
+      } = scrollableElement;
+      const scrollStart = isVertical ? scrollTop : scrollLeft;
+      const scrollDimension = isVertical ? scrollHeight : scrollWidth;
+      const clientDimension = isVertical ? clientHeight : clientWidth;
+      const scrollDistance = Math.abs(scrollStart - previousScrollStart);
+      const distanceFromStartPx =
+        scrollDimension * Math.min(1, Math.max(0, distanceFromStart));
+      const distanceFromEndPx =
+        scrollDimension * Math.min(1, Math.max(0, distanceFromEnd));
 
       if (
         scrollDistance >=
-        (previousScrollTop < scrollTop
-          ? scrollThresholdDown
-          : scrollThresholdUp)
+        (previousScrollStart < scrollStart
+          ? scrollThresholdEnd
+          : scrollThresholdStart)
       ) {
-        setScrollDirection(previousScrollTop < scrollTop ? 'down' : 'up');
-        previousScrollTop = scrollTop;
+        setScrollDirection(previousScrollStart < scrollStart ? 'end' : 'start');
+        previousScrollStart = scrollStart;
       }
 
-      setReachTop(scrollTop === 0);
-      setNearReachTop(scrollTop <= distanceFromTopPx);
-      setNearReachBottom(
-        scrollTop + clientHeight >= scrollHeight - distanceFromBottomPx,
+      setReachStart(scrollStart === 0);
+      setReachEnd(scrollStart + clientDimension >= scrollDimension);
+      setNearReachStart(scrollStart <= distanceFromStartPx);
+      setNearReachEnd(
+        scrollStart + clientDimension >= scrollDimension - distanceFromEndPx,
       );
     }
 
     scrollableElement.addEventListener('scroll', onScroll, { passive: true });
+    scrollableElement.dispatchEvent(new Event('scroll'));
 
     return () => scrollableElement.removeEventListener('scroll', onScroll);
   }, [
     scrollableElement,
-    distanceFromTop,
-    distanceFromBottom,
-    scrollThresholdUp,
-    scrollThresholdDown,
+    distanceFromStart,
+    distanceFromEnd,
+    scrollThresholdStart,
+    scrollThresholdEnd,
   ]);
 
-  return { scrollDirection, reachTop, nearReachTop, nearReachBottom };
+  return {
+    scrollDirection,
+    reachStart,
+    reachEnd,
+    nearReachStart,
+    nearReachEnd,
+  };
 }

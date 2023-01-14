@@ -295,9 +295,9 @@ function StatusPage({ id }) {
     location.hash = closeLink;
   });
 
-  const { nearReachTop } = useScroll({
+  const { nearReachStart } = useScroll({
     scrollableElement: scrollableRef.current,
-    distanceFromTop: 0.1,
+    distanceFromStart: 0.1,
   });
 
   return (
@@ -367,7 +367,7 @@ function StatusPage({ id }) {
                       behavior: 'smooth',
                     });
                   }}
-                  hidden={!ancestors.length || nearReachTop}
+                  hidden={!ancestors.length || nearReachStart}
                 >
                   <Icon icon="arrow-up" />
                   <Icon icon="comment" />{' '}

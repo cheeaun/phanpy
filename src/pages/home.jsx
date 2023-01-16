@@ -139,7 +139,7 @@ function Home({ hidden }) {
 
   const scrollableRef = useRef();
 
-  useHotkeys('j', () => {
+  useHotkeys('j, shift+j', (_, handler) => {
     // focus on next status after active status
     // Traverses .timeline li .status-link, focus on .status-link
     const activeStatus = document.activeElement.closest(
@@ -157,7 +157,15 @@ function Home({ hidden }) {
       activeStatusRect.bottom > 0
     ) {
       const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      const nextStatus = allStatusLinks[activeStatusIndex + 1];
+      let nextStatus = allStatusLinks[activeStatusIndex + 1];
+      if (handler.shift) {
+        // get next status that's not .status-boost-link
+        nextStatus = allStatusLinks.find(
+          (statusLink, index) =>
+            index > activeStatusIndex &&
+            !statusLink.classList.contains('status-boost-link'),
+        );
+      }
       if (nextStatus) {
         nextStatus.focus();
         nextStatus.scrollIntoViewIfNeeded?.();
@@ -175,7 +183,7 @@ function Home({ hidden }) {
     }
   });
 
-  useHotkeys('k', () => {
+  useHotkeys('k. shift+k', () => {
     // focus on previous status after active status
     // Traverses .timeline li .status-link, focus on .status-link
     const activeStatus = document.activeElement.closest(
@@ -193,7 +201,15 @@ function Home({ hidden }) {
       activeStatusRect.bottom > 0
     ) {
       const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      const prevStatus = allStatusLinks[activeStatusIndex - 1];
+      let prevStatus = allStatusLinks[activeStatusIndex - 1];
+      if (handler.shift) {
+        // get prev status that's not .status-boost-link
+        prevStatus = allStatusLinks.find(
+          (statusLink, index) =>
+            index < activeStatusIndex &&
+            !statusLink.classList.contains('status-boost-link'),
+        );
+      }
       if (prevStatus) {
         prevStatus.focus();
         prevStatus.scrollIntoViewIfNeeded?.();

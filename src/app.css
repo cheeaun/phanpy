@@ -429,8 +429,8 @@ a.mention span {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 70vh;
-  max-height: 70dvh;
+  max-height: 65vh;
+  max-height: 65dvh;
   counter-increment: index;
   position: relative;
 }
@@ -997,5 +997,9 @@ meter.donut:is(.danger, .explode):after {
   }
   :is(.carousel-top-controls, .carousel-controls) {
     padding: 32px;
+  }
+  li:has(.boost-carousel) {
+    width: 95vw;
+    transform: translateX(calc(-50% + 20em));
   }
 }

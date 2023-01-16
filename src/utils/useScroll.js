@@ -2,8 +2,8 @@ import { useEffect, useState } from 'preact/hooks';
 
 export default function useScroll({
   scrollableElement,
-  distanceFromStart = 0,
-  distanceFromEnd = 0,
+  distanceFromStart = 1, // ratio of clientHeight/clientWidth
+  distanceFromEnd = 1, // ratio of clientHeight/clientWidth
   scrollThresholdStart = 10,
   scrollThresholdEnd = 10,
   direction = 'vertical',
@@ -16,8 +16,8 @@ export default function useScroll({
   const isVertical = direction === 'vertical';
 
   if (!scrollableElement) {
-    console.warn('Scrollable element is not defined');
-    scrollableElement = window;
+    // Better be explicit instead of auto-assign to window
+    return {};
   }
 
   useEffect(() => {
@@ -38,10 +38,8 @@ export default function useScroll({
       const scrollDimension = isVertical ? scrollHeight : scrollWidth;
       const clientDimension = isVertical ? clientHeight : clientWidth;
       const scrollDistance = Math.abs(scrollStart - previousScrollStart);
-      const distanceFromStartPx =
-        scrollDimension * Math.min(1, Math.max(0, distanceFromStart));
-      const distanceFromEndPx =
-        scrollDimension * Math.min(1, Math.max(0, distanceFromEnd));
+      const distanceFromStartPx = clientDimension * distanceFromStart;
+      const distanceFromEndPx = clientDimension * distanceFromEnd;
 
       if (
         scrollDistance >=
@@ -62,7 +60,6 @@ export default function useScroll({
     }
 
     scrollableElement.addEventListener('scroll', onScroll, { passive: true });
-    scrollableElement.dispatchEvent(new Event('scroll'));
 
     return () => scrollableElement.removeEventListener('scroll', onScroll);
   }, [
@@ -79,5 +76,10 @@ export default function useScroll({
     reachEnd,
     nearReachStart,
     nearReachEnd,
+    init: () => {
+      if (scrollableElement) {
+        scrollableElement.dispatchEvent(new Event('scroll'));
+      }
+    },
   };
 }

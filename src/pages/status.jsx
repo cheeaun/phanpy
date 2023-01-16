@@ -297,7 +297,7 @@ function StatusPage({ id }) {
 
   const { nearReachStart } = useScroll({
     scrollableElement: scrollableRef.current,
-    distanceFromStart: 0.1,
+    distanceFromStart: 0.5,
   });
 
   return (

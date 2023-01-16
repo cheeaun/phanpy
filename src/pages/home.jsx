@@ -48,8 +48,8 @@ function Home({ hidden }) {
       };
     });
 
-    {
-      // BOOSTS CAROUSEL
+    // BOOSTS CAROUSEL
+    if (snapStates.settings.boostsCarousel) {
       let specialHome = [];
       let boostStash = [];
       for (let i = 0; i < homeValues.length; i++) {
@@ -90,19 +90,22 @@ function Home({ hidden }) {
         specialHome,
       });
       if (firstLoad) {
-        states.specialHome = specialHome;
+        states.home = specialHome;
       } else {
-        states.specialHome.push(...specialHome);
+        states.home.push(...specialHome);
+      }
+    } else {
+      if (firstLoad) {
+        states.home = homeValues;
+      } else {
+        states.home.push(...homeValues);
       }
     }
 
-    if (firstLoad) {
-      states.home = homeValues;
-    } else {
-      states.home.push(...homeValues);
-    }
     states.homeLastFetchTime = Date.now();
-    return allStatuses;
+    return {
+      done: false,
+    };
   }
 
   const loadingStatuses = useRef(false);
@@ -212,19 +215,24 @@ function Home({ hidden }) {
     }
   });
 
-  const { scrollDirection, reachStart, nearReachStart, nearReachEnd } =
-    useScroll({
-      scrollableElement: scrollableRef.current,
-      distanceFromStart: 0.1,
-      distanceFromEnd: 0.15,
-      scrollThresholdStart: 44,
-    });
+  const {
+    scrollDirection,
+    reachStart,
+    nearReachStart,
+    nearReachEnd,
+    reachEnd,
+  } = useScroll({
+    scrollableElement: scrollableRef.current,
+    distanceFromStart: 1,
+    distanceFromEnd: 3,
+    scrollThresholdStart: 44,
+  });
 
   useEffect(() => {
-    if (nearReachEnd && showMore) {
+    if (nearReachEnd || (reachEnd && showMore)) {
       loadStatuses();
     }
-  }, [nearReachEnd]);
+  }, [nearReachEnd, reachEnd]);
 
   useEffect(() => {
     if (reachStart) {
@@ -244,10 +252,6 @@ function Home({ hidden }) {
       }
     })();
   }, []);
-
-  const snapHome = snapStates.settings.boostsCarousel
-    ? snapStates.specialHome
-    : snapStates.home;
 
   return (
     <div
@@ -322,10 +326,12 @@ function Home({ hidden }) {
               class="updates-button"
               type="button"
               onClick={() => {
-                const uniqueHomeNew = snapStates.homeNew.filter(
-                  (status) => !states.home.some((s) => s.id === status.id),
-                );
-                states.home.unshift(...uniqueHomeNew);
+                if (!snapStates.settings.boostsCarousel) {
+                  const uniqueHomeNew = snapStates.homeNew.filter(
+                    (status) => !states.home.some((s) => s.id === status.id),
+                  );
+                  states.home.unshift(...uniqueHomeNew);
+                }
                 loadStatuses(true);
                 states.homeNew = [];
 
@@ -338,10 +344,10 @@ function Home({ hidden }) {
               <Icon icon="arrow-up" /> New posts
             </button>
           )}
-        {snapHome.length ? (
+        {snapStates.home.length ? (
           <>
             <ul class="timeline">
-              {snapHome.map(({ id: statusID, reblog, boosts }) => {
+              {snapStates.home.map(({ id: statusID, reblog, boosts }) => {
                 const actualStatusID = reblog || statusID;
                 if (boosts) {
                   return (
@@ -429,10 +435,14 @@ function Home({ hidden }) {
 
 function BoostsCarousel({ boosts }) {
   const carouselRef = useRef();
-  const { reachStart, reachEnd } = useScroll({
+  const { reachStart, reachEnd, init } = useScroll({
     scrollableElement: carouselRef.current,
     direction: 'horizontal',
   });
+  useEffect(() => {
+    init?.();
+  }, []);
+
   return (
     <div class="boost-carousel">
       <header>

@@ -415,6 +415,62 @@ function Compose({
     };
   }, []);
 
+  useEffect(() => {
+    const handleItems = (e) => {
+      if (mediaAttachments.length >= maxMediaAttachments) {
+        alert(`You can only attach up to ${maxMediaAttachments} files.`);
+        return;
+      }
+      const { items } = e.clipboardData || e.dataTransfer;
+      const files = [];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.kind === 'file') {
+          const file = item.getAsFile();
+          if (file && supportedMimeTypes.includes(file.type)) {
+            files.push(file);
+          }
+        }
+      }
+      console.log({ files });
+      if (files.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Auto-cut-off files to avoid exceeding maxMediaAttachments
+        const max = maxMediaAttachments - mediaAttachments.length;
+        const allowedFiles = files.slice(0, max);
+        if (allowedFiles.length <= 0) {
+          alert(`You can only attach up to ${maxMediaAttachments} files.`);
+          return;
+        }
+        const mediaFiles = allowedFiles.map((file) => ({
+          file,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null,
+          description: null,
+        }));
+        setMediaAttachments([...mediaAttachments, ...mediaFiles]);
+      }
+    };
+    window.addEventListener('paste', handleItems);
+    const handleDragover = (e) => {
+      // Prevent default if there's files
+      if (e.dataTransfer.items.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    window.addEventListener('dragover', handleDragover);
+    window.addEventListener('drop', handleItems);
+    return () => {
+      window.removeEventListener('paste', handleItems);
+      window.removeEventListener('dragover', handleDragover);
+      window.removeEventListener('drop', handleItems);
+    };
+  }, [mediaAttachments]);
+
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
       <div class="compose-top">

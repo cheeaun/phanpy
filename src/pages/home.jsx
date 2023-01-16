@@ -52,16 +52,22 @@ function Home({ hidden }) {
     if (snapStates.settings.boostsCarousel) {
       let specialHome = [];
       let boostStash = [];
+      let serialBoosts = 0;
       for (let i = 0; i < homeValues.length; i++) {
         const status = homeValues[i];
         if (status.reblog) {
           boostStash.push(status);
+          serialBoosts++;
         } else {
           specialHome.push(status);
+          if (serialBoosts < 3) {
+            serialBoosts = 0;
+          }
         }
       }
       // if boostStash is more than quarter of homeValues
-      if (boostStash.length > homeValues.length / 4) {
+      // or if there are 3 or more boosts in a row
+      if (boostStash.length > homeValues.length / 4 || serialBoosts >= 3) {
         // if boostStash is more than 3 quarter of homeValues
         const boostStashID = boostStash.map((status) => status.id);
         if (boostStash.length > (homeValues.length * 3) / 4) {

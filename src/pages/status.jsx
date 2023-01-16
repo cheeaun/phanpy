@@ -38,7 +38,9 @@ function StatusPage({ id }) {
       // console.log('onScroll');
       if (!scrollableRef.current) return;
       const { scrollTop } = scrollableRef.current;
-      states.scrollPositions[id] = scrollTop;
+      if (uiState !== 'loading') {
+        states.scrollPositions[id] = scrollTop;
+      }
     }, 100);
     scrollableRef.current.addEventListener('scroll', onScroll, {
       passive: true,
@@ -47,7 +49,7 @@ function StatusPage({ id }) {
     return () => {
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
-  }, [id]);
+  }, [id, uiState !== 'loading']);
 
   const scrollOffsets = useRef();
   const cachedStatusesMap = useRef({});

@@ -32,6 +32,10 @@ a.mention span {
 a.mention span {
   color: var(--text-color);
 }
+a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
+  color: var(--link-visited-color);
+  text-decoration-color: var(--link-visited-color);
+}
 
 .deck-container {
   width: 100%;

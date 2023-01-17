@@ -5,9 +5,10 @@ export default function openCompose(opts) {
   const top = Math.max(0, (screenHeight - 450) / 2);
   const width = Math.min(screenWidth, 600);
   const height = Math.min(screenHeight, 450);
+  const winUID = opts.uid || Math.random();
   const newWin = window.open(
     url,
-    'compose' + Math.random(),
+    'compose' + winUID,
     `width=${width},height=${height},left=${left},top=${top}`,
   );
 

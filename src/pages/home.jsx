@@ -1,13 +1,15 @@
 import { Link } from 'preact-router/match';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Loader from '../components/loader';
 import Status from '../components/status';
-import states from '../utils/states';
+import db from '../utils/db';
+import states, { saveStatus } from '../utils/states';
+import { getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 
@@ -17,6 +19,8 @@ function Home({ hidden }) {
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
+
+  console.debug('RENDER Home');
 
   const homeIterator = useRef(
     masto.v1.timelines.listHome({
@@ -36,23 +40,78 @@ function Home({ hidden }) {
       return { done: true };
     }
     const homeValues = allStatuses.value.map((status) => {
-      states.statuses.set(status.id, status);
-      if (status.reblog) {
-        states.statuses.set(status.reblog.id, status.reblog);
-      }
+      saveStatus(status);
       return {
         id: status.id,
         reblog: status.reblog?.id,
         reply: !!status.inReplyToAccountId,
       };
     });
-    if (firstLoad) {
-      states.home = homeValues;
+
+    // BOOSTS CAROUSEL
+    if (snapStates.settings.boostsCarousel) {
+      let specialHome = [];
+      let boostStash = [];
+      let serialBoosts = 0;
+      for (let i = 0; i < homeValues.length; i++) {
+        const status = homeValues[i];
+        if (status.reblog) {
+          boostStash.push(status);
+          serialBoosts++;
+        } else {
+          specialHome.push(status);
+          if (serialBoosts < 3) {
+            serialBoosts = 0;
+          }
+        }
+      }
+      // if boostStash is more than quarter of homeValues
+      // or if there are 3 or more boosts in a row
+      if (boostStash.length > homeValues.length / 4 || serialBoosts >= 3) {
+        // if boostStash is more than 3 quarter of homeValues
+        const boostStashID = boostStash.map((status) => status.id);
+        if (boostStash.length > (homeValues.length * 3) / 4) {
+          // insert boost array at the end of specialHome list
+          specialHome = [
+            ...specialHome,
+            { id: boostStashID, boosts: boostStash },
+          ];
+        } else {
+          // insert boosts array in the middle of specialHome list
+          const half = Math.floor(specialHome.length / 2);
+          specialHome = [
+            ...specialHome.slice(0, half),
+            {
+              id: boostStashID,
+              boosts: boostStash,
+            },
+            ...specialHome.slice(half),
+          ];
+        }
+      } else {
+        // Untouched, this is fine
+        specialHome = homeValues;
+      }
+      console.log({
+        specialHome,
+      });
+      if (firstLoad) {
+        states.home = specialHome;
+      } else {
+        states.home.push(...specialHome);
+      }
     } else {
-      states.home.push(...homeValues);
+      if (firstLoad) {
+        states.home = homeValues;
+      } else {
+        states.home.push(...homeValues);
+      }
     }
+
     states.homeLastFetchTime = Date.now();
-    return allStatuses;
+    return {
+      done: false,
+    };
   }
 
   const loadingStatuses = useRef(false);
@@ -80,106 +139,141 @@ function Home({ hidden }) {
 
   const scrollableRef = useRef();
 
-  useHotkeys('j', () => {
+  useHotkeys('j, shift+j', (_, handler) => {
     // focus on next status after active status
     // Traverses .timeline li .status-link, focus on .status-link
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      scrollableRef.current.querySelectorAll(
+        '.status-link, .status-boost-link',
+      ),
+    );
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&
       activeStatusRect.bottom > 0
     ) {
-      const nextStatus = activeStatus.parentElement.nextElementSibling;
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      let nextStatus = allStatusLinks[activeStatusIndex + 1];
+      if (handler.shift) {
+        // get next status that's not .status-boost-link
+        nextStatus = allStatusLinks.find(
+          (statusLink, index) =>
+            index > activeStatusIndex &&
+            !statusLink.classList.contains('status-boost-link'),
+        );
+      }
       if (nextStatus) {
-        const statusLink = nextStatus.querySelector('.status-link');
-        if (statusLink) {
-          statusLink.focus();
-        }
+        nextStatus.focus();
+        nextStatus.scrollIntoViewIfNeeded?.();
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
-      const statusLinks = document.querySelectorAll(
-        '.timeline li .status-link',
-      );
-      let topmostStatusLink;
-      for (const statusLink of statusLinks) {
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
         const statusLinkRect = statusLink.getBoundingClientRect();
-        if (statusLinkRect.top >= 44) {
-          // 44 is the magic number for header height, not real
-          topmostStatusLink = statusLink;
-          break;
-        }
-      }
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
       }
     }
   });
 
-  useHotkeys('k', () => {
+  useHotkeys('k. shift+k', () => {
     // focus on previous status after active status
     // Traverses .timeline li .status-link, focus on .status-link
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      scrollableRef.current.querySelectorAll(
+        '.status-link, .status-boost-link',
+      ),
+    );
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&
       activeStatusRect.bottom > 0
     ) {
-      const prevStatus = activeStatus.parentElement.previousElementSibling;
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      let prevStatus = allStatusLinks[activeStatusIndex - 1];
+      if (handler.shift) {
+        // get prev status that's not .status-boost-link
+        prevStatus = allStatusLinks.find(
+          (statusLink, index) =>
+            index < activeStatusIndex &&
+            !statusLink.classList.contains('status-boost-link'),
+        );
+      }
       if (prevStatus) {
-        const statusLink = prevStatus.querySelector('.status-link');
-        if (statusLink) {
-          statusLink.focus();
-        }
+        prevStatus.focus();
+        prevStatus.scrollIntoViewIfNeeded?.();
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
-      const statusLinks = document.querySelectorAll(
-        '.timeline li .status-link',
-      );
-      let topmostStatusLink;
-      for (const statusLink of statusLinks) {
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
         const statusLinkRect = statusLink.getBoundingClientRect();
-        if (statusLinkRect.top >= 44) {
-          // 44 is the magic number for header height, not real
-          topmostStatusLink = statusLink;
-          break;
-        }
-      }
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
       }
     }
   });
 
   useHotkeys(['enter', 'o'], () => {
     // open active status
-    const activeStatus = document.activeElement.closest('.status-link');
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-boost-link',
+    );
     if (activeStatus) {
       activeStatus.click();
     }
   });
 
-  const { scrollDirection, reachTop, nearReachTop, nearReachBottom } =
-    useScroll({
-      scrollableElement: scrollableRef.current,
-      distanceFromTop: 0.1,
-      distanceFromBottom: 0.15,
-    });
+  const {
+    scrollDirection,
+    reachStart,
+    nearReachStart,
+    nearReachEnd,
+    reachEnd,
+  } = useScroll({
+    scrollableElement: scrollableRef.current,
+    distanceFromStart: 1,
+    distanceFromEnd: 3,
+    scrollThresholdStart: 44,
+  });
 
   useEffect(() => {
-    if (nearReachBottom && showMore) {
+    if (nearReachEnd || (reachEnd && showMore)) {
       loadStatuses();
     }
-  }, [nearReachBottom]);
+  }, [nearReachEnd, reachEnd]);
 
   useEffect(() => {
-    if (reachTop) {
+    if (reachStart) {
       loadStatuses(true);
     }
-  }, [reachTop]);
+  }, [reachStart]);
+
+  useEffect(() => {
+    (async () => {
+      const keys = await db.drafts.keys();
+      if (keys.length) {
+        const ns = getCurrentAccountNS();
+        const ownKeys = keys.filter((key) => key.startsWith(ns));
+        if (ownKeys.length) {
+          states.showDrafts = true;
+        }
+      }
+    })();
+  }, []);
 
   return (
     <div
@@ -190,7 +284,7 @@ function Home({ hidden }) {
       tabIndex="-1"
     >
       <button
-        hidden={scrollDirection === 'down' && !nearReachTop}
+        hidden={scrollDirection === 'end' && !nearReachStart}
         type="button"
         id="compose-button"
         onClick={(e) => {
@@ -209,7 +303,7 @@ function Home({ hidden }) {
       </button>
       <div class="timeline-deck deck">
         <header
-          hidden={scrollDirection === 'down' && !nearReachTop}
+          hidden={scrollDirection === 'end' && !nearReachStart}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -247,17 +341,19 @@ function Home({ hidden }) {
           </div>
         </header>
         {snapStates.homeNew.length > 0 &&
-          scrollDirection === 'up' &&
-          !nearReachTop &&
-          !nearReachBottom && (
+          scrollDirection === 'start' &&
+          !nearReachStart &&
+          !nearReachEnd && (
             <button
               class="updates-button"
               type="button"
               onClick={() => {
-                const uniqueHomeNew = snapStates.homeNew.filter(
-                  (status) => !states.home.some((s) => s.id === status.id),
-                );
-                states.home.unshift(...uniqueHomeNew);
+                if (!snapStates.settings.boostsCarousel) {
+                  const uniqueHomeNew = snapStates.homeNew.filter(
+                    (status) => !states.home.some((s) => s.id === status.id),
+                  );
+                  states.home.unshift(...uniqueHomeNew);
+                }
                 loadStatuses(true);
                 states.homeNew = [];
 
@@ -273,8 +369,15 @@ function Home({ hidden }) {
         {snapStates.home.length ? (
           <>
             <ul class="timeline">
-              {snapStates.home.map(({ id: statusID, reblog }) => {
+              {snapStates.home.map(({ id: statusID, reblog, boosts }) => {
                 const actualStatusID = reblog || statusID;
+                if (boosts) {
+                  return (
+                    <li key={statusID}>
+                      <BoostsCarousel boosts={boosts} />
+                    </li>
+                  );
+                }
                 return (
                   <li key={statusID}>
                     <Link
@@ -352,4 +455,64 @@ function Home({ hidden }) {
   );
 }
 
-export default Home;
+function BoostsCarousel({ boosts }) {
+  const carouselRef = useRef();
+  const { reachStart, reachEnd, init } = useScroll({
+    scrollableElement: carouselRef.current,
+    direction: 'horizontal',
+  });
+  useEffect(() => {
+    init?.();
+  }, []);
+
+  return (
+    <div class="boost-carousel">
+      <header>
+        <h3>{boosts.length} Boosts</h3>
+        <span>
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachStart}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-left" />
+          </button>{' '}
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachEnd}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-right" />
+          </button>
+        </span>
+      </header>
+      <ul ref={carouselRef}>
+        {boosts.map((boost) => {
+          const { id: statusID, reblog } = boost;
+          const actualStatusID = reblog || statusID;
+          return (
+            <li>
+              <a class="status-boost-link" href={`#/s/${actualStatusID}`}>
+                <Status statusID={statusID} size="s" />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export default memo(Home);

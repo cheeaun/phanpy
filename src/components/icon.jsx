@@ -1,4 +1,4 @@
-import 'iconify-icon';
+import { useEffect, useState } from 'preact/hooks';
 
 const SIZES = {
   s: 12,
@@ -30,7 +30,7 @@ const ICONS = {
   notification: 'mingcute:notification-line',
   follow: 'mingcute:user-follow-line',
   'follow-add': 'mingcute:user-add-line',
-  poll: 'mingcute:chart-bar-line',
+  poll: ['mingcute:chart-bar-line', '90deg'],
   pencil: 'mingcute:pencil-line',
   quill: 'mingcute:quill-pen-line',
   at: 'mingcute:at-line',
@@ -43,11 +43,14 @@ const ICONS = {
   popin: ['mingcute:external-link-line', '180deg'],
   plus: 'mingcute:add-circle-line',
   'chevron-left': 'mingcute:left-line',
+  'chevron-right': 'mingcute:right-line',
   reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
   thread: 'mingcute:route-line',
   group: 'mingcute:group-line',
   bot: 'mingcute:android-2-line',
 };
+
+const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');
 
 function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
   if (!icon) return null;
@@ -58,6 +61,16 @@ function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
   if (Array.isArray(iconName)) {
     [iconName, rotate, flip] = iconName;
   }
+
+  const [iconData, setIconData] = useState(null);
+  useEffect(async () => {
+    const name = iconName.replace('mingcute:', '');
+    const icon = await modules[
+      `/node_modules/@iconify-icons/mingcute/${name}.js`
+    ]();
+    setIconData(icon.default);
+  }, [iconName]);
+
   return (
     <div
       class={`icon ${className}`}
@@ -70,15 +83,19 @@ function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
         lineHeight: 0,
       }}
     >
-      <iconify-icon
-        width={iconSize}
-        height={iconSize}
-        icon={iconName}
-        rotate={rotate}
-        flip={flip}
-      >
-        {alt}
-      </iconify-icon>
+      {iconData && (
+        <svg
+          width={iconSize}
+          height={iconSize}
+          viewBox={`0 0 ${iconData.width} ${iconData.height}`}
+          dangerouslySetInnerHTML={{ __html: iconData.body }}
+          style={{
+            transform: `${rotate ? `rotate(${rotate})` : ''} ${
+              flip ? `scaleX(-1)` : ''
+            }`,
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 :root {
   text-size-adjust: none;
+  --hairline-width: 1px;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -16,6 +17,7 @@
   --link-light-color: #4169e199;
   --link-faded-color: #4169e155;
   --link-bg-hover-color: #f0f2f599;
+  --link-visited-color: mediumslateblue;
   --focus-ring-color: var(--link-color);
   --button-bg-color: var(--blue-color);
   --button-bg-blur-color: #4169e1aa;
@@ -24,6 +26,7 @@
   --reblog-color: var(--purple-color);
   --reblog-faded-color: #892be220;
   --reply-to-color: var(--orange-color);
+  --reply-to-text-color: #b36200;
   --favourite-color: var(--red-color);
   --reply-to-faded-color: #ffa6001a;
   --outline-color: rgba(128, 128, 128, 0.2);
@@ -37,12 +40,19 @@
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
 }
 
+@media (min-resolution: 2dppx) {
+  :root {
+    --hairline-width: 0.5px;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --blue-color: CornflowerBlue;
     --purple-color: mediumpurple;
     --green-color: lightgreen;
     --orange-color: orange;
+    --reply-to-text-color: var(--reply-to-color);
     --bg-color: #242526;
     --bg-faded-color: #18191a;
     --bg-blur-color: #0009;
@@ -231,6 +241,9 @@ select.plain {
   background-color: transparent;
 }
 
+pre {
+  tab-size: 2;
+}
 pre code,
 code {
   font-size: 90%;

@@ -1,19 +1,24 @@
 import './compose.css';
 
 import '@github/text-expander-element';
+import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
+import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -79,19 +84,16 @@ function Compose({
 }) {
   console.warn('RENDER COMPOSER');
   const [uiState, setUIState] = useState('default');
+  const UID = useRef(draftStatus?.uid || uid());
+  console.log('Compose UID', UID.current);
 
-  const accounts = store.local.getJSON('accounts');
-  const currentAccount = store.session.get('currentAccount');
-  const currentAccountInfo = accounts.find(
-    (a) => a.info.id === currentAccount,
-  ).info;
+  const currentAccount = getCurrentAccount();
+  const currentAccountInfo = currentAccount.info;
 
   const configuration = useMemo(() => {
     try {
       const instances = store.local.getJSON('instances');
-      const currentInstance = accounts
-        .find((a) => a.info.id === currentAccount)
-        .instanceURL.toLowerCase();
+      const currentInstance = currentAccount.instanceURL.toLowerCase();
       const config = instances[currentInstance].configuration;
       console.log(config);
       return config;
@@ -148,7 +150,7 @@ function Compose({
   };
   const focusTextarea = () => {
     setTimeout(() => {
-      console.log('focusing');
+      console.debug('FOCUS textarea');
       textareaRef.current?.focus();
     }, 300);
   };
@@ -269,7 +271,7 @@ function Compose({
     }
 
     // check if status contains only "@acct", if replying
-    const isSelf = replyToStatus?.account.id === currentAccount;
+    const isSelf = replyToStatus?.account.id === currentAccountInfo.id;
     const hasOnlyAcct =
       replyToStatus && value.trim() === `@${replyToStatus.account.acct}`;
     // TODO: check for mentions, or maybe just generic "@username<space>", including multiple mentions like "@username1<space>@username2<space>"
@@ -347,6 +349,128 @@ function Compose({
     },
   );
 
+  const prevBackgroundDraft = useRef({});
+  const draftKey = () => {
+    const ns = getCurrentAccountNS();
+    return `${ns}#${UID.current}`;
+  };
+  const saveUnsavedDraft = () => {
+    // Not enabling this for editing status
+    // I don't think this warrant a draft mode for a status that's already posted
+    // Maybe it could be a big edit change but it should be rare
+    if (editStatus) return;
+    const key = draftKey();
+    const backgroundDraft = {
+      key,
+      replyTo: replyToStatus
+        ? {
+            /* Smaller payload of replyToStatus. Reasons:
+              - No point storing whole thing
+              - Could have media attachments
+              - Could be deleted/edited later
+            */
+            id: replyToStatus.id,
+            account: {
+              id: replyToStatus.account.id,
+              username: replyToStatus.account.username,
+              acct: replyToStatus.account.acct,
+            },
+          }
+        : null,
+      draftStatus: {
+        uid: UID.current,
+        status: textareaRef.current.value,
+        spoilerText: spoilerTextRef.current.value,
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+      },
+    };
+    if (!equal(backgroundDraft, prevBackgroundDraft.current) && !canClose()) {
+      console.debug('not equal', backgroundDraft, prevBackgroundDraft.current);
+      db.drafts
+        .set(key, {
+          ...backgroundDraft,
+          state: 'unsaved',
+          updatedAt: Date.now(),
+        })
+        .then(() => {
+          console.debug('DRAFT saved', key, backgroundDraft);
+        })
+        .catch((e) => {
+          console.error('DRAFT failed', key, e);
+        });
+      prevBackgroundDraft.current = structuredClone(backgroundDraft);
+    }
+  };
+  useInterval(saveUnsavedDraft, 5000); // background save every 5s
+  useEffect(() => {
+    saveUnsavedDraft();
+    // If unmounted, means user discarded the draft
+    // Also means pop-out 🙈, but it's okay because the pop-out will persist the ID and re-create the draft
+    return () => {
+      db.drafts.del(draftKey());
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleItems = (e) => {
+      if (mediaAttachments.length >= maxMediaAttachments) {
+        alert(`You can only attach up to ${maxMediaAttachments} files.`);
+        return;
+      }
+      const { items } = e.clipboardData || e.dataTransfer;
+      const files = [];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.kind === 'file') {
+          const file = item.getAsFile();
+          if (file && supportedMimeTypes.includes(file.type)) {
+            files.push(file);
+          }
+        }
+      }
+      console.log({ files });
+      if (files.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Auto-cut-off files to avoid exceeding maxMediaAttachments
+        const max = maxMediaAttachments - mediaAttachments.length;
+        const allowedFiles = files.slice(0, max);
+        if (allowedFiles.length <= 0) {
+          alert(`You can only attach up to ${maxMediaAttachments} files.`);
+          return;
+        }
+        const mediaFiles = allowedFiles.map((file) => ({
+          file,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null,
+          description: null,
+        }));
+        setMediaAttachments([...mediaAttachments, ...mediaFiles]);
+      }
+    };
+    window.addEventListener('paste', handleItems);
+    const handleDragover = (e) => {
+      // Prevent default if there's files
+      if (e.dataTransfer.items.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    window.addEventListener('dragover', handleDragover);
+    window.addEventListener('drop', handleItems);
+    return () => {
+      window.removeEventListener('paste', handleItems);
+      window.removeEventListener('dragover', handleDragover);
+      window.removeEventListener('drop', handleItems);
+    };
+  }, [mediaAttachments]);
+
   return (
     <div id="compose-container" class={standalone ? 'standalone' : ''}>
       <div class="compose-top">
@@ -385,6 +509,7 @@ function Compose({
                   editStatus,
                   replyToStatus,
                   draftStatus: {
+                    uid: UID.current,
                     status: textareaRef.current.value,
                     spoilerText: spoilerTextRef.current.value,
                     visibility,
@@ -460,6 +585,7 @@ function Compose({
                       editStatus,
                       replyToStatus,
                       draftStatus: {
+                        uid: UID.current,
                         status: textareaRef.current.value,
                         spoilerText: spoilerTextRef.current.value,
                         visibility,
@@ -469,7 +595,7 @@ function Compose({
                         mediaAttachments,
                       },
                     };
-                    window.opener.__COMPOSE__ = passData;
+                    window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
                     window.opener.__STATES__.showCompose = true;
                   },
                 });
@@ -630,7 +756,9 @@ function Compose({
                   params,
                 );
               } else {
-                newStatus = await masto.v1.statuses.create(params);
+                newStatus = await masto.v1.statuses.create(params, {
+                  idempotencyKey: UID.current,
+                });
               }
               setUIState('default');
 
@@ -726,10 +854,11 @@ function Compose({
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
             {mediaAttachments.map((attachment, i) => {
-              const { id } = attachment;
+              const { id, file } = attachment;
+              const fileID = file?.size + file?.type + file?.name;
               return (
                 <MediaAttachment
-                  key={i + id}
+                  key={id || fileID || i}
                   attachment={attachment}
                   disabled={uiState === 'loading'}
                   onDescriptionChange={(value) => {
@@ -1190,7 +1319,7 @@ function MediaAttachment({
             }
           }}
         >
-          <div id="media-sheet" class="sheet">
+          <div id="media-sheet" class="sheet sheet-max">
             <header>
               <h2>
                 {

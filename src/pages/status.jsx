@@ -1,15 +1,8 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
-import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
@@ -21,9 +14,11 @@ import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { saveStatus, threadifyStatus } from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccount } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
+import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
@@ -32,7 +27,6 @@ function StatusPage({ id }) {
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
-  const userInitiated = useRef(true); // Initial open is user-initiated
   const heroStatusRef = useRef();
 
   const scrollableRef = useRef();
@@ -44,63 +38,63 @@ function StatusPage({ id }) {
       // console.log('onScroll');
       if (!scrollableRef.current) return;
       const { scrollTop } = scrollableRef.current;
-      states.scrollPositions.set(id, scrollTop);
+      if (uiState !== 'loading') {
+        states.scrollPositions[id] = scrollTop;
+      }
     }, 100);
     scrollableRef.current.addEventListener('scroll', onScroll, {
       passive: true,
     });
     onScroll();
     return () => {
+      onScroll.cancel();
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
-  }, [id]);
+  }, [id, uiState !== 'loading']);
 
+  const scrollOffsets = useRef();
+  const cachedStatusesMap = useRef({});
   const initContext = () => {
+    console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
 
-    const cachedStatuses = store.session.getJSON('statuses-' + id);
+    const cachedStatuses = cachedStatusesMap.current[id];
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
-        (s) => states.statuses.has(s.id),
+        (s) => states.statuses[s.id],
         // Some are not cached in the global state, so we need to filter them out
       );
       setStatuses(reallyCachedStatuses);
     } else {
-      const heroIndex = statuses.findIndex((s) => s.id === id);
-      if (heroIndex !== -1) {
-        // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
-        const slicedStatuses = statuses.slice(0, heroIndex + 1);
-        setStatuses(slicedStatuses);
-      } else {
-        // Case 3: Not cached and not in statuses, let's start from scratch
-        setStatuses([{ id }]);
-      }
+      // const heroIndex = statuses.findIndex((s) => s.id === id);
+      // if (heroIndex !== -1) {
+      //   // Case 2: It's in current statuses. Slice off all descendant statuses after the hero status to be safe
+      //   const slicedStatuses = statuses.slice(0, heroIndex + 1);
+      //   setStatuses(slicedStatuses);
+      // } else {
+      // Case 3: Not cached and not in statuses, let's start from scratch
+      setStatuses([{ id }]);
+      // }
     }
 
     (async () => {
       const heroFetch = () => masto.v1.statuses.fetch(id);
       const contextFetch = masto.v1.statuses.fetchContext(id);
 
-      const hasStatus = snapStates.statuses.has(id);
-      let heroStatus = snapStates.statuses.get(id);
+      const hasStatus = !!snapStates.statuses[id];
+      let heroStatus = snapStates.statuses[id];
       if (hasStatus) {
-        console.log('Hero status is cached');
-        // NOTE: This might conflict if the user interacts with the status before the fetch is done, e.g. favouriting it
-        // heroTimer = setTimeout(async () => {
-        //   try {
-        //     heroStatus = await heroFetch();
-        //     states.statuses.set(id, heroStatus);
-        //   } catch (e) {
-        //     // Silent fail if status is cached
-        //     console.error(e);
-        //   }
-        // }, 1000);
+        console.debug('Hero status is cached');
       } else {
         try {
           heroStatus = await heroFetch();
-          states.statuses.set(id, heroStatus);
+          saveStatus(heroStatus);
+          // Give time for context to appear
+          await new Promise((resolve) => {
+            setTimeout(resolve, 100);
+          });
         } catch (e) {
           console.error(e);
           setUIState('error');
@@ -113,11 +107,11 @@ function StatusPage({ id }) {
         const { ancestors, descendants } = context;
 
         ancestors.forEach((status) => {
-          states.statuses.set(status.id, status);
+          states.statuses[status.id] = status;
         });
         const nestedDescendants = [];
         descendants.forEach((status) => {
-          states.statuses.set(status.id, status);
+          states.statuses[status.id] = status;
           if (status.inReplyToAccountId === status.account.id) {
             // If replying to self, it's part of the thread, level 1
             nestedDescendants.push(status);
@@ -162,9 +156,18 @@ function StatusPage({ id }) {
         ];
 
         setUIState('default');
+        scrollOffsets.current = {
+          offsetTop: heroStatusRef.current?.offsetTop,
+          scrollTop: scrollableRef.current?.scrollTop,
+        };
         console.log({ allStatuses });
         setStatuses(allStatuses);
-        store.session.setJSON('statuses-' + id, allStatuses);
+        cachedStatusesMap.current[id] = allStatuses;
+
+        // Let's threadify this one
+        // Note that all non-hero statuses will trigger saveStatus which will threadify them too
+        // By right, at this point, all descendant statuses should be cached
+        threadifyStatus(heroStatus);
       } catch (e) {
         console.error(e);
         setUIState('error');
@@ -177,16 +180,42 @@ function StatusPage({ id }) {
   };
 
   useEffect(initContext, [id]);
+  useEffect(() => {
+    if (!statuses.length) return;
+    console.debug('STATUSES', statuses);
+    const scrollPosition = states.scrollPositions[id];
+    console.debug('scrollPosition', scrollPosition);
+    if (!!scrollPosition) {
+      console.debug('Case 1', {
+        scrollPosition,
+      });
+      scrollableRef.current.scrollTop = scrollPosition;
+    } else if (scrollOffsets.current) {
+      const newScrollOffsets = {
+        offsetTop: heroStatusRef.current?.offsetTop,
+        scrollTop: scrollableRef.current?.scrollTop,
+      };
+      const newScrollTop =
+        newScrollOffsets.offsetTop - scrollOffsets.current.offsetTop;
+      console.debug('Case 2', {
+        scrollOffsets: scrollOffsets.current,
+        newScrollOffsets,
+        newScrollTop,
+        statuses: [...statuses],
+      });
+      scrollableRef.current.scrollTop = newScrollTop;
+    }
+
+    // RESET
+    scrollOffsets.current = null;
+  }, [statuses]);
 
   useEffect(() => {
+    if (snapStates.reloadStatusPage <= 0) return;
     // Delete the cache for the context
     (async () => {
       try {
-        const accounts = store.local.getJSON('accounts') || [];
-        const currentAccount = store.session.get('currentAccount');
-        const account =
-          accounts.find((a) => a.info.id === currentAccount) || accounts[0];
-        const instanceURL = account.instanceURL;
+        const { instanceURL } = getCurrentAccount();
         const contextURL = `https://${instanceURL}/api/v1/statuses/${id}/context`;
         console.log('Clear cache', contextURL);
         const apiCache = await caches.open('api');
@@ -199,55 +228,16 @@ function StatusPage({ id }) {
     })();
   }, [snapStates.reloadStatusPage]);
 
-  const firstLoad = useRef(true);
+  useEffect(() => {
+    return () => {
+      // RESET
+      states.scrollPositions = {};
+      states.reloadStatusPage = 0;
+      cachedStatusesMap.current = {};
+    };
+  }, []);
 
-  useLayoutEffect(() => {
-    if (!statuses.length) return;
-    const isLoading = uiState === 'loading';
-    if (userInitiated.current) {
-      const hasAncestors = statuses.findIndex((s) => s.id === id) > 0; // Cannot use `ancestor` key because the hero state is dynamic
-      if (!isLoading && hasAncestors) {
-        // Case 1: User initiated, has ancestors, after statuses are loaded, SNAP to hero status
-        console.log('Case 1');
-        heroStatusRef.current?.scrollIntoView();
-      } else if (isLoading && statuses.length > 1) {
-        if (firstLoad.current) {
-          // Case 2.1: User initiated, first load, don't smooth scroll anything
-          console.log('Case 2.1');
-          heroStatusRef.current?.scrollIntoView();
-        } else {
-          // Case 2.2: User initiated, while statuses are loading, SMOOTH-SCROLL to hero status
-          console.log('Case 2.2');
-          heroStatusRef.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        }
-      }
-    } else {
-      const scrollPosition = states.scrollPositions.get(id);
-      if (scrollPosition && scrollableRef.current) {
-        // Case 3: Not user initiated (e.g. back/forward button), restore to saved scroll position
-        console.log('Case 3');
-        scrollableRef.current.scrollTop = scrollPosition;
-      }
-    }
-    console.log('No case', {
-      isLoading,
-      userInitiated: userInitiated.current,
-      statusesLength: statuses.length,
-      firstLoad: firstLoad.current,
-      // scrollPosition,
-    });
-
-    if (!isLoading) {
-      // Reset user initiated flag after statuses are loaded
-      userInitiated.current = false;
-      firstLoad.current = false;
-    }
-  }, [statuses, uiState]);
-
-  const heroStatus = snapStates.statuses.get(id);
+  const heroStatus = snapStates.statuses[id];
   const heroDisplayName = useMemo(() => {
     // Remove shortcodes from display name
     if (!heroStatus) return '';
@@ -293,6 +283,7 @@ function StatusPage({ id }) {
 
   const hasManyStatuses = statuses.length > LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
+  const ancestors = statuses.filter((s) => s.ancestor);
 
   const [heroInView, setHeroInView] = useState(true);
   const onView = useDebouncedCallback(setHeroInView, 100);
@@ -305,6 +296,11 @@ function StatusPage({ id }) {
 
   useHotkeys(['esc', 'backspace'], () => {
     location.hash = closeLink;
+  });
+
+  const { nearReachStart } = useScroll({
+    scrollableElement: scrollableRef.current,
+    distanceFromStart: 0.5,
   });
 
   return (
@@ -329,6 +325,10 @@ function StatusPage({ id }) {
                 block: 'start',
               });
             }
+          }}
+          onDblClick={(e) => {
+            // reload statuses
+            states.reloadStatusPage++;
           }}
         >
           {/* <div>
@@ -356,7 +356,29 @@ function StatusPage({ id }) {
                 </span>
               </span>
             ) : (
-              'Status'
+              <>
+                Status{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    // Scroll to top
+                    e.preventDefault();
+                    e.stopPropagation();
+                    scrollableRef.current.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
+                    });
+                  }}
+                  hidden={!ancestors.length || nearReachStart}
+                >
+                  <Icon icon="arrow-up" />
+                  <Icon icon="comment" />{' '}
+                  <span class="insignificant">
+                    {shortenNumber(ancestors.length)}
+                  </span>
+                </button>
+              </>
             )}
           </h1>
           <div class="header-side">
@@ -399,9 +421,6 @@ function StatusPage({ id }) {
                 status-link
               "
                       href={`#/s/${statusID}`}
-                      onClick={() => {
-                        userInitiated.current = true;
-                      }}
                     >
                       <Status
                         statusID={statusID}
@@ -424,9 +443,6 @@ function StatusPage({ id }) {
                       <SubComments
                         hasManyStatuses={hasManyStatuses}
                         replies={replies}
-                        onStatusLinkClick={() => {
-                          userInitiated.current = true;
-                        }}
                       />
                     )}
                   {uiState === 'loading' &&

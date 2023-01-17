@@ -31,3 +31,11 @@
 .hero-heading .insignificant {
   font-weight: normal;
 }
+
+.ancestors-indicator {
+  font-size: 70% !important;
+}
+.ancestors-indicator[hidden] {
+  opacity: 0;
+  pointer-events: none;
+}

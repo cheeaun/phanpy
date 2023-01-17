@@ -11,8 +11,15 @@ Phanpy
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
-🔗 **Production**: https://phanpy.social (`production` branch)<br>
-🔗 **Development**: https://dev.phanpy.social (`main` branch, may break more often)
+- 🏢 **Production**: https://phanpy.social
+  - `production` branch
+  - break less often
+  - slower fixes unless critical
+- 🏗️ **Development**: https://dev.phanpy.social
+  - `main` branch
+  - may see new cool stuff sooner
+  - may break more often
+  - may be fixed much faster too
 
 Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
 
@@ -35,6 +42,7 @@ Everything is designed and engineered for my own use case, following my taste an
 - **Status actions (reply, boost, favourite, bookmark, etc) are hidden by default**.<br>They only appear in individual status page. This is to reduce clutter and distraction. It may result in lower engagement, but we're not chasing numbers here.
 - **Boost is represented with the rocket icon**.<br>The green double arrow icon (retweet for Twitter) doesn't look right for the term "boost". Green rocket looks weird, so I use purple.
 - **Short usernames (`@username`) are displayed in timelines, instead of the full account username (`@username@instance`)**.<br>Despite the [guideline](https://docs.joinmastodon.org/api/guidelines/#username) mentioned that "Decentralization must be transparent to the user", I don't think we should shove it to the face every single time. There are also some [screen-reader-related accessibility concerns](https://twitter.com/lifeofablindgrl/status/1595864647554502656) with the full username, though this web app is unfortunately not accessible yet.
+- **No autoplay for video/GIF/whatever in timeline**.<br>The timeline is already a huge mess with lots of people, brands, news and media trying to grab your attention. Let's not make it worse. (Current exception now would be animated emojis.)
 - **Hash-based URLs**.<br>This web app is not meant to be a full-fledged replacement to Mastodon's existing front-end. There's no SEO, database, serverless or any long-running servers. I could be wrong one day.
 
 ## Development
@@ -47,6 +55,7 @@ Prerequisites: Node.js 18+
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [instances.social](https://instances.social/), save it to `src/data/instances.json`
   - requires `.env.dev` file with `INSTANCES_SOCIAL_SECRET_TOKEN` variable set
+- `npm run sourcemap` - Run `source-map-explorer` on the production build
 
 ## Tech stack
 
@@ -81,11 +90,13 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/)
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Cuckoo+](https://www.cuckoo.social/)
+- [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
-- [Elk](https://m.webtoo.ls/@elk)
+- [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
-- 
+- [Tooty](https://github.com/n1k0/tooty)
 - [More...](https://github.com/tleb/awesome-mastodon#clients)
 
 ## License

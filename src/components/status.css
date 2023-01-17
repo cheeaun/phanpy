@@ -149,7 +149,7 @@
   margin: 4px 0 0 0;
   gap: 4px;
   align-items: center;
-  color: var(--reply-to-color);
+  color: var(--reply-to-text-color);
   background: var(--bg-color);
   border: 1px solid var(--reply-to-color);
   border-radius: 4px;
@@ -187,7 +187,7 @@
   .spoiler
   ~ *:not(.media-container, .card),
 .status .content-container.has-spoiler .spoiler ~ .card .meta-container {
-  filter: blur(6px) invert(0.5);
+  filter: blur(5px) invert(0.5);
   /* filter: url(#spoiler); */
   text-rendering: optimizeSpeed;
   image-rendering: crisp-edges;
@@ -196,6 +196,8 @@
   pointer-events: none;
   user-select: none;
   contain: layout;
+  transform: scale(0.97);
+  transition: transform 0.1s ease-in-out;
 }
 .status .content-container.has-spoiler .spoiler ~ .media-container .media > *,
 .status .content-container.has-spoiler .spoiler ~ .card > img {
@@ -280,7 +282,8 @@
   display: none;
 }
 .status .content p {
-  margin-block: 0.75em;
+  /* 12px = 75% of 16px */
+  margin-block: min(0.75em, 12px);
 }
 .status .content p:first-child {
   margin-block-start: 0;
@@ -320,7 +323,7 @@
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
   min-height: 160px;
-  max-height: 50vh;
+  max-height: 60vh;
 }
 .status .media {
   border-radius: 8px;
@@ -330,6 +333,15 @@
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;
+}
+.status:not(.large) .media:only-child {
+  max-width: 480px;
+}
+.status.large .media:only-child {
+  display: inline-block;
+  min-width: 160px;
+  min-height: 160px;
+  width: fit-content;
 }
 .status .media:first-child:nth-last-child(3) {
   grid-area: span 2;
@@ -351,10 +363,15 @@
 .status .media:is(:hover, :focus) {
   border-color: var(--outline-hover-color);
 }
+.status .media:active {
+  filter: brightness(0.8);
+}
 .status .media :is(img, video) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.status .media {
   cursor: pointer;
 }
 @keyframes position-object {
@@ -371,7 +388,7 @@
     object-position: 50% 50%;
   }
 }
-.status:not(.large) .media img:hover {
+.status .media img:hover {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .status .media video {
@@ -379,12 +396,11 @@
   height: 100%;
   object-fit: contain;
 }
-.status .media-video,
-.status .media-gif {
+.status :is(.media-video, .media-audio, .media-gif) {
   position: relative;
   background-clip: padding-box;
 }
-.status .media-video[data-formatted-duration]:before {
+.status :is(.media-video, .media-audio)[data-formatted-duration]:before {
   pointer-events: none;
   content: '⏵';
   width: 70px;
@@ -396,28 +412,33 @@
   top: 50%;
   transform: translate(-50%, -50%);
   color: var(--text-insignificant-color);
-  background-color: var(--bg-blur-color);
+  background-color: var(--backdrop-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
   display: flex;
   place-content: center;
   place-items: center;
   border-radius: 70px;
+  transition: all 0.2s ease-in-out;
 }
-.status .media-video[data-formatted-duration]:hover:before {
+.status :is(.media-video, .media-audio)[data-formatted-duration]:hover:before {
   color: var(--text-color);
+  background-color: var(--bg-blur-color);
 }
-.status .media-video[data-formatted-duration]:after {
+.status :is(.media-video, .media-audio)[data-formatted-duration]:after {
   font-size: 12px;
   pointer-events: none;
   content: attr(data-formatted-duration);
   position: absolute;
   bottom: 8px;
-  left: 8px;
+  right: 8px;
   color: var(--bg-color);
   background-color: var(--text-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
   border-radius: 4px;
   padding: 0 4px;
+}
+.status .media-audio[data-formatted-duration]:after {
+  content: '♬ ' attr(data-formatted-duration);
 }
 .status .media-gif[data-label]:not(:hover):after {
   font-size: 12px;
@@ -426,7 +447,7 @@
   content: attr(data-label);
   position: absolute;
   bottom: 8px;
-  left: 8px;
+  right: 8px;
   color: var(--bg-faded-color);
   background-color: var(--text-insignificant-color);
   backdrop-filter: blur(6px) saturate(3) invert(0.2);
@@ -437,15 +458,34 @@
   object-fit: cover;
   pointer-events: none;
 }
+.status .media-contain {
+  min-width: 160px;
+  width: fit-content;
+}
 .status .media-contain video {
   object-fit: contain !important;
 }
-.status .media-audio {
+/* .status .media-audio {
   border: 0;
   min-height: 0;
 }
 .status .media-audio audio {
   width: 100%;
+} */
+.status .media-audio {
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at center center,
+      var(--bg-color),
+      var(--bg-faded-color)
+    ),
+    repeating-radial-gradient(
+      circle at center center,
+      transparent,
+      var(--bg-faded-color) 16px
+    );
+  background-blend-mode: multiply;
 }
 
 /* CARD */
@@ -459,29 +499,46 @@
   color: inherit;
   align-items: stretch;
   background-color: var(--bg-color);
-  max-height: 160px;
+  max-width: 480px;
+  /* max-height: 160px; */
 }
-.status.large .card.link.large {
+.status.large .card.large {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
 }
-.card .image {
+.card .card-image {
+  flex-shrink: 0;
+  width: 35%;
+  position: relative;
+  border-inline-end: 1px solid var(--outline-color);
+}
+.card .card-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* .card .image {
   width: 35%;
   height: auto;
   flex-grow: 1;
   border-inline-end: 1px solid var(--outline-color);
   object-fit: cover;
   aspect-ratio: 1 / 1;
+} */
+.status.large .card .card-image {
+  aspect-ratio: 1 / 1;
 }
-.status.large .card.link.large .image {
+.status.large .card.large .card-image {
+  flex-grow: 1;
   aspect-ratio: 1.91 / 1;
   width: 100%;
-  max-height: 50vh;
+  max-height: 40vh;
   border-inline-end: 0;
   border-block-end: 1px solid var(--outline-color);
 }
-.card:is(:hover, :focus) .image {
+.card:is(:hover, :focus) img {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {
@@ -493,8 +550,9 @@
   flex-grow: 1;
   align-self: center;
 }
-.card.large .meta-container {
+.status.large .card.large .meta-container {
   align-self: flex-start;
+  flex-grow: 0;
 }
 .card .title {
   line-height: 1.25;
@@ -564,7 +622,7 @@ a.card:is(:hover, :focus) {
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  background-color: var(--bg-blur-color);
+  background-color: var(--bg-faded-color);
   background-image: linear-gradient(
     to right,
     var(--link-faded-color),
@@ -572,9 +630,11 @@ a.card:is(:hover, :focus) {
     transparent var(--percentage),
     transparent
   );
+  background-repeat: no-repeat;
   border-radius: 8px;
-  border: 1px solid rgba(128, 128, 128, 0.1);
+  border: 1px solid var(--outline-color);
   align-items: center;
+  text-shadow: 0 1px var(--bg-blur-color);
 }
 .poll-label {
   width: 100%;
@@ -585,9 +645,11 @@ a.card:is(:hover, :focus) {
 .poll-option-votes {
   flex-shrink: 0;
   font-size: 90%;
+  opacity: 0.75;
 }
 .poll-option-leading .poll-option-votes {
   font-weight: bold;
+  opacity: 1;
 }
 .poll-vote-button {
   margin-top: 8px;
@@ -637,7 +699,7 @@ a.card:is(:hover, :focus) {
   padding-bottom: 16px;
   margin-left: calc(-50px - 16px);
   color: var(--text-insignificant-color);
-  border-top: 1px solid var(--outline-color);
+  border-top: var(--hairline-width) solid var(--outline-color);
   margin-top: 8px;
 }
 .status .action.has-count {
@@ -690,13 +752,13 @@ a.card:is(:hover, :focus) {
   border-color: var(--favourite-color);
 }
 @keyframes hearted {
-  20% {
+  15% {
     transform: scale(1.25) translateY(-1px);
   }
-  45% {
+  30% {
     transform: scale(1);
   }
-  70% {
+  45% {
     transform: scale(1.5) translateY(-2px);
   }
   100% {

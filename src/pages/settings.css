@@ -1,10 +1,26 @@
+#settings-container {
+  background-color: var(--bg-faded-color);
+}
+
 #settings-container h2 {
-  font-size: 0.9em;
+  font-size: 85%;
   text-transform: uppercase;
   color: var(--text-insignificant-color);
+  font-weight: normal;
 }
 #settings-container h2 ~ h2 {
   margin-top: 2em;
+}
+
+#settings-container :is(section, .section) {
+  background-color: var(--bg-color);
+  margin: 0 -16px;
+  padding: 8px 16px;
+  border-top: var(--hairline-width) solid var(--outline-color);
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+#settings-container :is(section, .section) > li + li {
+  border-top: var(--hairline-width) solid var(--outline-color);
 }
 
 #settings-container ul {
@@ -81,4 +97,11 @@
 }
 #settings-container .radio-group label:has(input:checked) input:checked + span {
   color: inherit;
+}
+
+@media (min-width: 40em) {
+  #settings-container :is(section, .section) {
+    margin-inline: 0;
+    border-radius: 8px;
+  }
 }

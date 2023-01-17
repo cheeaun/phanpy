@@ -251,7 +251,11 @@ function Status({
           {/* </span> */}{' '}
           {size !== 'l' &&
             (uri ? (
-              <a href={uri} target="_blank" class="time">
+              <a
+                href={`#/s/${id}
+              `}
+                class="time"
+              >
                 <Icon
                   icon={visibilityIconsMap[visibility]}
                   alt={visibility}

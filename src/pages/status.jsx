@@ -47,6 +47,7 @@ function StatusPage({ id }) {
     });
     onScroll();
     return () => {
+      onScroll.cancel();
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
   }, [id, uiState !== 'loading']);

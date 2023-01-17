@@ -1004,6 +1004,7 @@ meter.donut:is(.danger, .explode):after {
   }
   li:has(.boost-carousel) {
     width: 95vw;
+    max-width: calc(320px * 3.3);
     transform: translateX(calc(-50% + 20em));
   }
 }

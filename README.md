@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="design/logo-3.svg" width="128" height="128" alt="">
+  <img src="design/logo-4.svg" width="128" height="128" alt="">
 
 Phanpy
 ===

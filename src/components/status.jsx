@@ -355,13 +355,10 @@ function Status({
                 target.tagName.toLowerCase() === 'a' &&
                 target.classList.contains('u-url')
               ) {
-                e.preventDefault();
-                e.stopPropagation();
-                const username = (
+                const targetText = (
                   target.querySelector('span') || target
-                ).innerText
-                  .trim()
-                  .replace(/^@/, '');
+                ).innerText.trim();
+                const username = targetText.replace(/^@/, '');
                 const url = target.getAttribute('href');
                 const mention = mentions.find(
                   (mention) =>
@@ -370,8 +367,13 @@ function Status({
                     mention.url === url,
                 );
                 if (mention) {
+                  e.preventDefault();
+                  e.stopPropagation();
                   states.showAccount = mention.acct;
-                } else {
+                } else if (!/^http/i.test(targetText)) {
+                  console.log('mention not found', targetText);
+                  e.preventDefault();
+                  e.stopPropagation();
                   const href = target.getAttribute('href');
                   states.showAccount = href;
                 }
@@ -385,7 +387,9 @@ function Status({
                     .querySelectorAll('a.u-url[target="_blank"]')
                     .forEach((a) => {
                       // Remove target="_blank" from links
-                      a.removeAttribute('target');
+                      if (!/http/i.test(a.innerText.trim())) {
+                        a.removeAttribute('target');
+                      }
                     });
                 },
               }),

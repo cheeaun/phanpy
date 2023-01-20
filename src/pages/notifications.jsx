@@ -1,17 +1,17 @@
 import './notifications.css';
 
-import { Link } from 'preact-router/match';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
@@ -156,7 +156,7 @@ function Notification({ notification }) {
         {status && (
           <Link
             class={`status-link status-type-${type}`}
-            href={`#/s/${actualStatusID}`}
+            to={`/s/${actualStatusID}`}
           >
             <Status status={status} size="s" />
           </Link>
@@ -232,19 +232,19 @@ function Notifications() {
       states.notificationsNew = [];
     }
     const allNotifications = await notificationsIterator.current.next();
-    if (allNotifications.value <= 0) {
-      return { done: true };
-    }
-    const notificationsValues = allNotifications.value.map((notification) => {
-      if (notification.status) {
-        states.statuses[notification.status.id] = notification.status;
+    if (allNotifications.value?.length) {
+      const notificationsValues = allNotifications.value.map((notification) => {
+        saveStatus(notification.status, {
+          skipThreading: true,
+          override: false,
+        });
+        return notification;
+      });
+      if (firstLoad) {
+        states.notifications = notificationsValues;
+      } else {
+        states.notifications.push(...notificationsValues);
       }
-      return notification;
-    });
-    if (firstLoad) {
-      states.notifications = notificationsValues;
-    } else {
-      states.notifications.push(...notificationsValues);
     }
     states.notificationsLastFetchTime = Date.now();
     return allNotifications;
@@ -310,9 +310,9 @@ function Notifications() {
           }}
         >
           <div class="header-side">
-            <a href="#" class="button plain">
+            <Link to="/" class="button plain">
               <Icon icon="home" size="l" />
-            </a>
+            </Link>
           </div>
           <h1>Notifications</h1>
           <div class="header-side">

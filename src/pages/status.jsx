@@ -1,13 +1,14 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
-import { Link } from 'preact-router/match';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
+import Link from '../components/link';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
@@ -23,7 +24,9 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
 
-function StatusPage({ id }) {
+function StatusPage() {
+  const { id } = useParams();
+  const location = useLocation();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -270,10 +273,11 @@ function StatusPage({ id }) {
       : 'Status',
   );
 
-  const prevRoute = states.history.findLast((h) => {
-    return h === '/' || /notifications/i.test(h);
-  });
-  const closeLink = `#${prevRoute || '/'}`;
+  const closeLink = useMemo(() => {
+    const pathname = snapStates.prevLocation?.pathname;
+    if (!pathname || pathname.startsWith('/s/')) return '/';
+    return pathname;
+  }, []);
 
   const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
@@ -305,7 +309,7 @@ function StatusPage({ id }) {
 
   return (
     <div class="deck-backdrop">
-      <Link href={closeLink}></Link>
+      <Link to={closeLink}></Link>
       <div
         tabIndex="-1"
         ref={scrollableRef}
@@ -383,7 +387,7 @@ function StatusPage({ id }) {
           </h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
-            <Link class="button plain deck-close" href={closeLink}>
+            <Link class="button plain deck-close" to={closeLink}>
               <Icon icon="x" size="xl" />
             </Link>
           </div>
@@ -420,7 +424,7 @@ function StatusPage({ id }) {
                       class="
                 status-link
               "
-                      href={`#/s/${statusID}`}
+                      to={`/s/${statusID}`}
                     >
                       <Status
                         statusID={statusID}
@@ -551,7 +555,7 @@ function SubComments({
           <li key={r.id}>
             <Link
               class="status-link"
-              href={`#/s/${r.id}`}
+              to={`/s/${r.id}`}
               onClick={onStatusLinkClick}
             >
               <Status statusID={r.id} withinContext size="s" />

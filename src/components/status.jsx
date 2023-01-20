@@ -29,6 +29,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import Link from './link';
 import RelativeTime from './relative-time';
 
 function fetchAccount(id) {
@@ -251,18 +252,14 @@ function Status({
           {/* </span> */}{' '}
           {size !== 'l' &&
             (uri ? (
-              <a
-                href={`#/s/${id}
-              `}
-                class="time"
-              >
+              <Link to={`/s/${id}`} class="time">
                 <Icon
                   icon={visibilityIconsMap[visibility]}
                   alt={visibility}
                   size="s"
                 />{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
-              </a>
+              </Link>
             ) : (
               <span class="time">
                 <Icon

@@ -2,6 +2,7 @@ import './login.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import Link from '../components/link';
 import Loader from '../components/loader';
 import instancesListURL from '../data/instances.json?url';
 import { getAuthorizationURL, registerApplication } from '../utils/auth';
@@ -111,7 +112,7 @@ function Login() {
           </a>
         </p>
         <p>
-          <a href="/#">Go home</a>
+          <Link to="/">Go home</Link>
         </p>
       </form>
     </main>

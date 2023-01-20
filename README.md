@@ -62,6 +62,7 @@ Prerequisites: Node.js 18+
 - [Vite](https://vitejs.dev/) - Build tool
 - [Preact](https://preactjs.com/) - UI library
 - [Valtio](https://valtio.pmnd.rs/) - State management
+- [React Router](https://reactrouter.com/) - Routing
 - [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
 - [Iconify](https://iconify.design/) - Icon library
 - Vanilla CSS - *Yes, I'm old school.*

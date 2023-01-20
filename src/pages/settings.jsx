@@ -5,6 +5,7 @@ import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import states from '../utils/states';
@@ -124,9 +125,9 @@ function Settings({ onClose }) {
             </p>
           )}
           <p style={{ textAlign: 'end' }}>
-            <a href="/#/login" class="button" onClick={onClose}>
+            <Link to="/login" class="button" onClick={onClose}>
               Add new account
-            </a>
+            </Link>
           </p>
         </section>
         <h2>Settings</h2>

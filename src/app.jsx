@@ -1,19 +1,21 @@
 import './app.css';
 import 'toastify-js/src/toastify.css';
 
-import { createHashHistory } from 'history';
 import debounce from 'just-debounce-it';
 import { login } from 'masto';
-import Router, { route } from 'preact-router';
-import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'preact/hooks';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
+import Icon from './components/icon';
+import Link from './components/link';
 import Loader from './components/loader';
 import Modal from './components/modal';
+import Bookmarks from './pages/bookmarks';
 import Home from './pages/home';
 import Login from './pages/login';
 import Notifications from './pages/notifications';
@@ -24,14 +26,13 @@ import { getAccessToken } from './utils/auth';
 import states, { saveStatus } from './utils/states';
 import store from './utils/store';
 
-const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
-
 window.__STATES__ = states;
 
 function App() {
   const snapStates = useSnapshot(states);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     const theme = store.local.get('theme');
@@ -126,20 +127,22 @@ function App() {
     }
   }, []);
 
-  const [currentDeck, setCurrentDeck] = useState('home');
-  const [currentModal, setCurrentModal] = useState(null);
+  let location = useLocation();
+  const locationDeckMap = {
+    '/': 'home-page',
+    '/notifications': 'notifications-page',
+  };
   const focusDeck = () => {
-    if (currentModal) return;
     let timer = setTimeout(() => {
-      const page = document.getElementById(`${currentDeck}-page`);
-      console.debug('FOCUS', currentDeck, page);
+      const page = document.getElementById(locationDeckMap[location.pathname]);
+      console.debug('FOCUS', location.pathname, page);
       if (page) {
         page.focus();
       }
     }, 100);
     return () => clearTimeout(timer);
   };
-  useEffect(focusDeck, [currentDeck, currentModal]);
+  useEffect(focusDeck, [location]);
   useEffect(() => {
     if (
       !snapStates.showCompose &&
@@ -173,44 +176,66 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  const backgroundLocation = useMemo(() => {
+    const { prevLocation } = snapStates;
+
+    console.debug({ location, prevLocation });
+    const { pathname } = location;
+    const { pathname: prevPathname } = prevLocation || {};
+    console.debug({ prevPathname, pathname });
+    const isModalPage = /^\/s\//i.test(pathname);
+    return isModalPage ? prevLocation : null;
+  }, [location]);
+
+  const nonRootLocation = useMemo(() => {
+    const { pathname } = location;
+    return !/\/(login|welcome)$/.test(pathname);
+  }, [location]);
+
   return (
     <>
-      {isLoggedIn && currentDeck && (
-        <div class="decks">
-          {/* Home will never be unmounted */}
-          <Home hidden={currentDeck !== 'home'} />
-          {/* Notifications can be unmounted */}
-          {currentDeck === 'notifications' && <Notifications />}
-        </div>
-      )}
-      {!isLoggedIn && uiState === 'loading' && <Loader />}
-      <Router
-        history={createHashHistory()}
-        onChange={(e) => {
-          console.debug('ROUTER onChange', e);
-          // Special handling for Home and Notifications
-          const { url } = e;
-          if (/notifications/i.test(url)) {
-            setCurrentDeck('notifications');
-            setCurrentModal(null);
-          } else if (url === '/') {
-            setCurrentDeck('home');
-            document.title = `Home / ${CLIENT_NAME}`;
-            setCurrentModal(null);
-          } else if (/^\/s\//i.test(url)) {
-            setCurrentModal('status');
-          } else {
-            setCurrentModal(null);
-            setCurrentDeck(null);
+      <Routes location={nonRootLocation || location}>
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Home />
+            ) : uiState === 'loading' ? (
+              <Loader />
+            ) : (
+              <Welcome />
+            )
           }
-          states.history.push(url);
-        }}
-      >
-        {!isLoggedIn && uiState !== 'loading' && <Welcome path="/" />}
-        <Welcome path="/welcome" />
-        {isLoggedIn && <Status path="/s/:id" />}
-        <Login path="/login" />
-      </Router>
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<Welcome />} />
+      </Routes>
+      <Routes location={backgroundLocation || location}>
+        {isLoggedIn && (
+          <Route path="/notifications" element={<Notifications />} />
+        )}
+        {isLoggedIn && <Route path="/bookmarks" element={<Bookmarks />} />}
+      </Routes>
+      <Routes>
+        {isLoggedIn && <Route path="/s/:id" element={<Status />} />}
+      </Routes>
+      <nav id="tab-bar" hidden>
+        <li>
+          <Link to="/">
+            <Icon icon="home" alt="Home" size="xl" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/notifications">
+            <Icon icon="notification" alt="Notifications" size="xl" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/bookmarks">
+            <Icon icon="bookmark" alt="Bookmarks" size="xl" />
+          </Link>
+        </li>
+      </nav>
       {!!snapStates.showCompose && (
         <Modal>
           <Compose
@@ -244,7 +269,8 @@ function App() {
                     // destination: `/#/s/${newStatus.id}`,
                     onClick: () => {
                       toast.hideToast();
-                      route(`/s/${newStatus.id}`);
+                      states.prevLocation = location;
+                      navigate(`/s/${newStatus.id}`);
                     },
                   });
                   toast.showToast();

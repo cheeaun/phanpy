@@ -51,7 +51,7 @@ export default function useScroll({
         previousScrollStart = scrollStart;
       }
 
-      setReachStart(scrollStart === 0);
+      setReachStart(scrollStart <= 0);
       setReachEnd(scrollStart + clientDimension >= scrollDimension);
       setNearReachStart(scrollStart <= distanceFromStartPx);
       setNearReachEnd(

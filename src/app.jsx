@@ -3,7 +3,13 @@ import 'toastify-js/src/toastify.css';
 
 import debounce from 'just-debounce-it';
 import { login } from 'masto';
-import { useEffect, useLayoutEffect, useMemo, useState } from 'preact/hooks';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
@@ -176,15 +182,19 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  const backgroundLocation = useMemo(() => {
+  const backgroundLocation = useRef();
+  useEffect(() => {
     const { prevLocation } = snapStates;
-
-    console.debug({ location, prevLocation });
     const { pathname } = location;
     const { pathname: prevPathname } = prevLocation || {};
     console.debug({ prevPathname, pathname });
     const isModalPage = /^\/s\//i.test(pathname);
-    return isModalPage ? prevLocation : null;
+    if (isModalPage) {
+      if (!backgroundLocation.current)
+        backgroundLocation.current = prevLocation;
+    } else {
+      backgroundLocation.current = null;
+    }
   }, [location]);
 
   const nonRootLocation = useMemo(() => {
@@ -210,7 +220,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<Welcome />} />
       </Routes>
-      <Routes location={backgroundLocation || location}>
+      <Routes location={backgroundLocation.current || location}>
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}

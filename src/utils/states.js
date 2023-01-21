@@ -25,7 +25,7 @@ const states = proxy({
   composeCharacterCount: 0,
   settings: {
     boostsCarousel: store.local.get('settings:boostsCarousel')
-      ? store.local.get('settings:boostsCarousel')
+      ? store.local.get('settings:boostsCarousel') === '1'
       : true,
   },
 });

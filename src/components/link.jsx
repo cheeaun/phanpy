@@ -23,9 +23,9 @@ const Link = (props) => {
       href={`#${props.to}`}
       {...props}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
-      onClick={() => {
+      onClick={(e) => {
         if (routerLocation) states.prevLocation = routerLocation;
-        props.onClick?.();
+        props.onClick?.(e);
       }}
     />
   );

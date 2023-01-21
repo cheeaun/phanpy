@@ -420,12 +420,7 @@ function StatusPage() {
                       <Status statusID={statusID} withinContext size="l" />
                     </InView>
                   ) : (
-                    <Link
-                      class="
-                status-link
-              "
-                      to={`/s/${statusID}`}
-                    >
+                    <Link class="status-link" to={`/s/${statusID}`}>
                       <Status
                         statusID={statusID}
                         withinContext

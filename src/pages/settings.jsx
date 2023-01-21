@@ -1,6 +1,6 @@
 import './settings.css';
 
-import { useRef, useState } from 'preact/hooks';
+import { useReducer, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
@@ -27,6 +27,8 @@ function Settings({ onClose }) {
   const moreThanOneAccount = accounts.length > 1;
   const [currentDefault, setCurrentDefault] = useState(0);
 
+  const [_, reload] = useReducer((x) => x + 1, 0);
+
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
       <main>
@@ -40,14 +42,30 @@ function Settings({ onClose }) {
               const isCurrent = account.info.id === currentAccount;
               const isDefault = i === (currentDefault || 0);
               return (
-                <li>
+                <li key={i + account.id}>
                   <div>
                     {moreThanOneAccount && (
                       <span class={`current ${isCurrent ? 'is-current' : ''}`}>
                         <Icon icon="check-circle" alt="Current" />
                       </span>
                     )}
-                    <Avatar url={account.info.avatarStatic} size="xxl" />
+                    <Avatar
+                      url={account.info.avatarStatic}
+                      size="xxl"
+                      onDblClick={async () => {
+                        if (isCurrent) {
+                          try {
+                            const info = await masto.v1.accounts.fetch(
+                              account.info.id,
+                            );
+                            console.log('fetched account info', info);
+                            account.info = info;
+                            store.local.setJSON('accounts', accounts);
+                            reload();
+                          } catch (e) {}
+                        }
+                      }}
+                    />
                     <NameText
                       account={account.info}
                       showAcct

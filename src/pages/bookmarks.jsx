@@ -4,7 +4,6 @@ import Icon from '../components/Icon';
 import Link from '../components/link';
 import Loader from '../components/Loader';
 import Status from '../components/status';
-import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
@@ -15,21 +14,14 @@ function Bookmarks() {
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
 
-  const bookmarksIterator = useRef(masto.v1.bookmarks.list({ limit: LIMIT }));
+  const bookmarksIterator = useRef();
   async function fetchBookmarks(firstLoad) {
-    console.log('fetchBookmarks', firstLoad);
-    if (firstLoad) {
+    if (firstLoad || !bookmarksIterator.current) {
       bookmarksIterator.current = masto.v1.bookmarks.list({ limit: LIMIT });
     }
     const allBookmarks = await bookmarksIterator.current.next();
-    if (allBookmarks.value?.length) {
-      const bookmarksValue = allBookmarks.value.map((status) => {
-        saveStatus(status, {
-          skipThreading: true,
-          override: false,
-        });
-        return status;
-      });
+    const bookmarksValue = allBookmarks.value;
+    if (bookmarksValue?.length) {
       if (firstLoad) {
         setBookmarks(bookmarksValue);
       } else {
@@ -43,9 +35,7 @@ function Bookmarks() {
     setUIState('loading');
     (async () => {
       try {
-        console.log('loadBookmarks', firstLoad);
         const { done } = await fetchBookmarks(firstLoad);
-        console.log('loadBookmarks', firstLoad);
         setShowMore(!done);
         setUIState('default');
       } catch (e) {
@@ -78,6 +68,9 @@ function Bookmarks() {
               });
             }
           }}
+          onDblClick={(e) => {
+            loadBookmarks(true);
+          }}
         >
           <div class="header-side">
             <Link to="/" class="button plain">
@@ -85,7 +78,9 @@ function Bookmarks() {
             </Link>
           </div>
           <h1>Bookmarks</h1>
-          <div class="header-side"></div>{' '}
+          <div class="header-side">
+            <Loader hidden={uiState !== 'loading'} />
+          </div>
         </header>
         {!!bookmarks.length ? (
           <>
@@ -98,7 +93,6 @@ function Bookmarks() {
                 </li>
               ))}
             </ul>
-
             {showMore && (
               <button
                 type="button"
@@ -117,9 +111,13 @@ function Bookmarks() {
           )
         )}
         {uiState === 'loading' ? (
-          <div class="ui-state">
-            <Loader />
-          </div>
+          <ul class="timeline">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <li key={i}>
+                <Status skeleton />
+              </li>
+            ))}
+          </ul>
         ) : uiState === 'error' ? (
           <p class="ui-state">
             Unable to load bookmarks.

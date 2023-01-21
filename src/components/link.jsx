@@ -11,7 +11,10 @@ import states from '../utils/states';
 */
 
 const Link = (props) => {
-  const routerLocation = useLocation();
+  let routerLocation;
+  try {
+    routerLocation = useLocation();
+  } catch (e) {}
   let hash = (location.hash || '').replace(/^#/, '').trim();
   if (hash === '') hash = '/';
   const isActive = hash === props.to;
@@ -21,7 +24,7 @@ const Link = (props) => {
       {...props}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
       onClick={() => {
-        states.prevLocation = routerLocation;
+        if (routerLocation) states.prevLocation = routerLocation;
       }}
     />
   );

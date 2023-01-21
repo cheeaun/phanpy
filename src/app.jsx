@@ -182,20 +182,18 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  const backgroundLocation = useRef();
-  useEffect(() => {
-    const { prevLocation } = snapStates;
-    const { pathname } = location;
-    const { pathname: prevPathname } = prevLocation || {};
-    console.debug({ prevPathname, pathname });
-    const isModalPage = /^\/s\//i.test(pathname);
-    if (isModalPage) {
-      if (!backgroundLocation.current)
-        backgroundLocation.current = prevLocation;
-    } else {
-      backgroundLocation.current = null;
-    }
-  }, [location]);
+  const { prevLocation } = snapStates;
+  const backgroundLocation = useRef(prevLocation || null);
+  const isModalPage = /^\/s\//i.test(location.pathname);
+  if (isModalPage) {
+    if (!backgroundLocation.current) backgroundLocation.current = prevLocation;
+  } else {
+    backgroundLocation.current = null;
+  }
+  console.debug({
+    backgroundLocation: backgroundLocation.current,
+    location,
+  });
 
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;

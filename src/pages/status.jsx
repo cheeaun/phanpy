@@ -24,6 +24,10 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
 
+function resetScrollPosition(id) {
+  delete states.scrollPositions[id];
+}
+
 function StatusPage() {
   const { id } = useParams();
   const location = useLocation();
@@ -190,6 +194,7 @@ function StatusPage() {
     console.debug('scrollPosition', scrollPosition);
     if (!!scrollPosition) {
       console.debug('Case 1', {
+        id,
         scrollPosition,
       });
       scrollableRef.current.scrollTop = scrollPosition;
@@ -420,7 +425,13 @@ function StatusPage() {
                       <Status statusID={statusID} withinContext size="l" />
                     </InView>
                   ) : (
-                    <Link class="status-link" to={`/s/${statusID}`}>
+                    <Link
+                      class="status-link"
+                      to={`/s/${statusID}`}
+                      onClick={() => {
+                        resetScrollPosition(statusID);
+                      }}
+                    >
                       <Status
                         statusID={statusID}
                         withinContext
@@ -521,11 +532,7 @@ function StatusPage() {
   );
 }
 
-function SubComments({
-  hasManyStatuses,
-  replies,
-  onStatusLinkClick = () => {},
-}) {
+function SubComments({ hasManyStatuses, replies }) {
   // If less than or 2 replies and total number of characters of content from replies is less than 500
   let isBrief = false;
   if (replies.length <= 2) {
@@ -551,7 +558,9 @@ function SubComments({
             <Link
               class="status-link"
               to={`/s/${r.id}`}
-              onClick={onStatusLinkClick}
+              onClick={() => {
+                resetScrollPosition(r.id);
+              }}
             >
               <Status statusID={r.id} withinContext size="s" />
               {r.repliesCount > 0 && (

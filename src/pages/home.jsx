@@ -12,6 +12,7 @@ import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
+import store from '../utils/store';
 
 const LIMIT = 20;
 
@@ -37,13 +38,23 @@ function Home({ hidden }) {
     }
     const allStatuses = await homeIterator.current.next();
     if (allStatuses.value?.length) {
-      const homeValues = allStatuses.value.map((status) => {
-        saveStatus(status);
-        return {
-          id: status.id,
-          reblog: status.reblog?.id,
-          reply: !!status.inReplyToAccountId,
-        };
+      const filters = store.local.getJSON('filters');
+      const homeValues = allStatuses.value
+        .filter((status) => 
+          filters
+            .filter((f) => f.filterAction === 'hide')
+            .flatMap((f) => f.keywords)
+            .map((k) => k.keyword)
+            .map((word) => status.content.toLowerCase().includes(word.toLowerCase()))
+            .reduce((included, current) => included && !current, true) ?? true
+        )
+        .map((status) => {
+          saveStatus(status);
+          return {
+            id: status.id,
+            reblog: status.reblog?.id,
+            reply: !!status.inReplyToAccountId,
+          };
       });
 
       // BOOSTS CAROUSEL

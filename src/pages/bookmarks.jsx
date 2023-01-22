@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
 import Link from '../components/link';
-import Loader from '../components/Loader';
+import Loader from '../components/loader';
 import Status from '../components/status';
 import useTitle from '../utils/useTitle';
 

@@ -168,13 +168,6 @@ function App() {
         startStream();
         startVisibility();
 
-        // Collect filters
-        (async () => {
-          const filters = await masto.v2.filters.list();
-          console.log(filters);
-          store.local.setJSON('filters', filters);
-        })();
-
         // Collect instance info
         (async () => {
           const info = await masto.v1.instances.fetch();

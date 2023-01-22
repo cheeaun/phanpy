@@ -37,14 +37,13 @@ function Home({ hidden }) {
     }
     const allStatuses = await homeIterator.current.next();
     if (allStatuses.value?.length) {
-      const homeValues = allStatuses.value
-        .map((status) => {
-          saveStatus(status);
-          return {
-            id: status.id,
-            reblog: status.reblog?.id,
-            reply: !!status.inReplyToAccountId,
-          };
+      const homeValues = allStatuses.value.map((status) => {
+        saveStatus(status);
+        return {
+          id: status.id,
+          reblog: status.reblog?.id,
+          reply: !!status.inReplyToAccountId,
+        };
       });
 
       // BOOSTS CAROUSEL

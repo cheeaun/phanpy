@@ -324,6 +324,16 @@
   margin-bottom: 4px;
 }
 
+#compose-container .media-sensitive {
+  padding: 8px;
+  background-color: var(--bg-blur-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
+#compose-container .media-sensitive > * {
+  vertical-align: middle;
+}
+
 #compose-container form .poll {
   background-color: var(--bg-faded-color);
   border-radius: 8px;

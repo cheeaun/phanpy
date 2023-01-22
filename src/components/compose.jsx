@@ -876,6 +876,20 @@ function Compose({
                 />
               );
             })}
+            <label class="media-sensitive">
+              <input
+                name="sensitive"
+                type="checkbox"
+                checked={sensitive}
+                disabled={uiState === 'loading'}
+                onChange={(e) => {
+                  const sensitive = e.target.checked;
+                  setSensitive(sensitive);
+                }}
+              />{' '}
+              <span>Mark media as sensitive</span>{' '}
+              <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
+            </label>
           </div>
         )}
         {!!poll && (

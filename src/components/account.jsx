@@ -3,6 +3,7 @@ import './account.css';
 import { useEffect, useState } from 'preact/hooks';
 
 import enhanceContent from '../utils/enhance-content';
+import handleAccountLinks from '../utils/handle-account-links';
 import shortenNumber from '../utils/shorten-number';
 import store from '../utils/store';
 
@@ -27,12 +28,29 @@ function Account({ account }) {
           setInfo(info);
           setUIState('default');
         } catch (e) {
-          alert(e);
-          setUIState('error');
+          try {
+            const result = await masto.v2.search({
+              q: account,
+              type: 'accounts',
+              limit: 1,
+              resolve: true,
+            });
+            if (result.accounts.length) {
+              setInfo(result.accounts[0]);
+              setUIState('default');
+              return;
+            }
+            alert('Account not found');
+            setUIState('error');
+          } catch (err) {
+            alert(err);
+            console.error(err);
+            setUIState('error');
+          }
         }
       })();
     }
-  }, []);
+  }, [account]);
 
   const {
     acct,
@@ -138,6 +156,7 @@ function Account({ account }) {
             )}
             <div
               class="note"
+              onClick={handleAccountLinks()}
               dangerouslySetInnerHTML={{
                 __html: enhanceContent(note, { emojis }),
               }}

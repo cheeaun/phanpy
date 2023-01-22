@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import Icon from '../components/Icon';
+import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/Loader';
 import Status from '../components/status';

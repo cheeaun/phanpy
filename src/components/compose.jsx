@@ -45,6 +45,7 @@ const expiryOptions = {
   '30 minutes': 30 * 60,
   '1 hour': 60 * 60,
   '6 hours': 6 * 60 * 60,
+  '12 hours': 12 * 60 * 60,
   '1 day': 24 * 60 * 60,
   '3 days': 3 * 24 * 60 * 60,
   '7 days': 7 * 24 * 60 * 60,

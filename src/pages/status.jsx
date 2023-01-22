@@ -25,6 +25,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 40;
 
 function resetScrollPosition(id) {
+  delete cachedStatusesMap.current[id];
   delete states.scrollPositions[id];
 }
 

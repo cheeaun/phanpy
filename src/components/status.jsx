@@ -286,7 +286,7 @@ function Status({
             ) : (
               !!inReplyToId &&
               !!inReplyToAccount &&
-              (!!spoilerText ||
+              (!!spoilerText || filtered.length > 0 ||
                 !mentions.find((mention) => {
                   return mention.id === inReplyToAccountId;
                 })) && (
@@ -300,18 +300,18 @@ function Status({
         )}
         <div
           class={`content-container ${
-            sensitive || spoilerText ? 'has-spoiler' : ''
+            filtered.length > 0 || sensitive || spoilerText ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
           style={
             size === 'l' && {
               '--content-text-weight':
                 Math.round(
-                  (spoilerText.length + htmlContentLength(content)) / 140,
+                  ((spoilerText || (filtered[0] || {filter:{}}).filter.title || '').length + htmlContentLength(content)) / 140,
                 ) || 1,
             }
           }
         >
-          {!!spoilerText && sensitive && (
+          {(filtered.length > 0 || (!!spoilerText && sensitive)) && (
             <>
               <div
                 class="content"
@@ -319,7 +319,7 @@ function Status({
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
-                <p>{spoilerText}</p>
+                <p>{spoilerText || (filtered[0] || {filter:{}}).filter.title || ''}</p>
               </div>
               <button
                 class="light spoiler"
@@ -371,7 +371,7 @@ function Status({
               }}
             />
           )}
-          {!spoilerText && sensitive && !!mediaAttachments.length && (
+          {!spoilerText && (sensitive || filtered.length > 0) && !!mediaAttachments.length && (
             <button
               class="plain spoiler"
               type="button"
@@ -414,6 +414,7 @@ function Status({
           {!!card &&
             !sensitive &&
             !spoilerText &&
+            filtered.length === 0 &&
             !poll &&
             !mediaAttachments.length && <Card card={card} />}
         </div>

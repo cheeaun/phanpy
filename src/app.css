@@ -62,14 +62,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   scroll-padding-top: 3em;
 }
 
-.deck-container {
-  transition: transform 0.4s var(--timing-function);
-}
-.deck-container:has(~ .deck-backdrop) {
-  transition: transform 0.4s ease-out;
-  transform: translate3d(-5vw, 0, 0);
-}
-
 .deck {
   min-height: 100vh;
   min-height: 100dvh;
@@ -1001,6 +993,13 @@ meter.donut:is(.danger, .explode):after {
   }
   #app {
     display: flex;
+  }
+  .deck-container {
+    transition: transform 0.4s var(--timing-function);
+  }
+  .deck-container:has(~ .deck-backdrop) {
+    transition: transform 0.4s ease-out;
+    transform: translate3d(-5vw, 0, 0);
   }
   .deck-backdrop .deck {
     width: 50%;

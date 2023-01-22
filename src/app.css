@@ -625,10 +625,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   top: 0;
   top: env(safe-area-inset-top, 0);
 }
-.carousel-controls {
-  bottom: 0;
-  bottom: env(safe-area-inset-bottom, 0);
-}
 :is(.carousel-top-controls, .carousel-controls) {
   position: fixed;
   left: 0;
@@ -670,14 +666,15 @@ button.carousel-dot {
   font-weight: bold;
   backdrop-filter: none !important;
 }
-button.carousel-dot:is(:hover, :focus) button.carousel-dot.active,
-button.carousel-dot[disabled].active {
+button.carousel-dot[disabled] {
+  pointer-events: none;
+}
+button.carousel-dot:is(:hover, :focus, .active, [disabled].active) {
   color: var(--link-color) !important;
 }
-button.carousel-dot.active,
-button.carousel-dot[disabled].active {
+button.carousel-dot:is(.active, [disabled].active) {
   opacity: 1;
-  transform: scale(2) translateY(-0.5px);
+  transform: scale(2.2) translateY(-0.5px);
 }
 @media (hover: hover) {
   .carousel-top-controls {
@@ -685,7 +682,7 @@ button.carousel-dot[disabled].active {
     transition: transform 0.2s ease-in-out;
   }
   .carousel-controls {
-    transform: translateY(100%);
+    transform: scaleX(200%);
     transition: transform 0.2s ease-in-out;
   }
   :is(.carousel-top-controls, .carousel-controls)[hidden] {
@@ -1061,9 +1058,9 @@ meter.donut:is(.danger, .explode):after {
   .box {
     padding: 32px;
   }
-  :is(.carousel-top-controls, .carousel-controls) {
+  /* :is(.carousel-top-controls, .carousel-controls) {
     padding: 32px;
-  }
+  } */
   li:has(.boost-carousel) {
     width: 95vw;
     max-width: calc(320px * 3.3);

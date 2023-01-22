@@ -488,6 +488,60 @@
   background-blend-mode: multiply;
 }
 
+.carousel-item {
+  position: relative;
+}
+.carousel-item button.media-alt {
+  position: absolute;
+  bottom: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  left: 16px;
+  left: calc(16px + env(safe-area-inset-left));
+  text-align: left;
+  border-radius: 8px;
+  color: var(--text-color);
+  padding: 4px 8px 4px 4px;
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 4px 16px var(--outline-color);
+  max-width: min(40em, calc(100% - 32px));
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 90%;
+}
+.carousel-item button.media-alt .media-alt-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (min-width: 40em) {
+  .carousel-item button.media-alt .media-alt-desc {
+    white-space: normal;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.4;
+  }
+}
+.carousel-item button.media-alt[hidden] {
+  opacity: 0;
+}
+@media (hover: hover) {
+  .carousel-item button.media-alt {
+    transform: translateY(200%);
+    transition: transform 0.2s ease-in-out;
+  }
+  .carousel-item:hover button.media-alt {
+    transform: translateY(0);
+  }
+  .carousel-item button.media-alt[hidden] {
+    opacity: 1;
+  }
+}
+
 /* CARD */
 
 .card {

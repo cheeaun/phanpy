@@ -1320,6 +1320,8 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
 
   useHotkeys('esc', onClose, [onClose]);
 
+  const [showMediaAlt, setShowMediaAlt] = useState(false);
+
   return (
     <>
       <div
@@ -1362,25 +1364,26 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
                 }
               }}
             >
+              {!!media.description && (
+                <button
+                  type="button"
+                  class="plain2 media-alt"
+                  hidden={!showControls}
+                  onClick={() => {
+                    setShowMediaAlt(media.description);
+                  }}
+                >
+                  <span class="tag">ALT</span>{' '}
+                  <span class="media-alt-desc">{media.description}</span>
+                </button>
+              )}
               <Media media={media} showOriginal />
             </InView>
           );
         })}
       </div>
       <div class="carousel-top-controls" hidden={!showControls}>
-        <span />
         <span>
-          <a
-            href={
-              mediaAttachments[currentIndex]?.remoteUrl ||
-              mediaAttachments[currentIndex]?.url
-            }
-            target="_blank"
-            class="button carousel-button plain2"
-            title="Open original media in new window"
-          >
-            <Icon icon="popout" alt="Open original media in new window" />
-          </a>{' '}
           <button
             type="button"
             class="carousel-button plain2"
@@ -1389,24 +1392,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             <Icon icon="x" />
           </button>
         </span>
-      </div>
-      {mediaAttachments?.length > 1 && (
-        <div class="carousel-controls" hidden={!showControls}>
-          <button
-            type="button"
-            class="carousel-button plain2"
-            hidden={currentIndex === 0}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setCurrentIndex(
-                (currentIndex - 1 + mediaAttachments.length) %
-                  mediaAttachments.length,
-              );
-            }}
-          >
-            <Icon icon="arrow-left" />
-          </button>
+        {mediaAttachments?.length > 1 ? (
           <span class="carousel-dots">
             {mediaAttachments?.map((media, i) => (
               <button
@@ -1426,6 +1412,40 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               </button>
             ))}
           </span>
+        ) : (
+          <span />
+        )}
+        <span>
+          <a
+            href={
+              mediaAttachments[currentIndex]?.remoteUrl ||
+              mediaAttachments[currentIndex]?.url
+            }
+            target="_blank"
+            class="button carousel-button plain2"
+            title="Open original media in new window"
+          >
+            <Icon icon="popout" alt="Open original media in new window" />
+          </a>{' '}
+        </span>
+      </div>
+      {mediaAttachments?.length > 1 && (
+        <div class="carousel-controls" hidden={!showControls}>
+          <button
+            type="button"
+            class="carousel-button plain2"
+            hidden={currentIndex === 0}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentIndex(
+                (currentIndex - 1 + mediaAttachments.length) %
+                  mediaAttachments.length,
+              );
+            }}
+          >
+            <Icon icon="arrow-left" />
+          </button>
           <button
             type="button"
             class="carousel-button plain2"
@@ -1439,6 +1459,25 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             <Icon icon="arrow-right" />
           </button>
         </div>
+      )}
+      {!!showMediaAlt && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowMediaAlt(false);
+            }
+          }}
+        >
+          <div class="sheet">
+            <header>
+              <h2>Media description</h2>
+            </header>
+            <main>
+              <p>{showMediaAlt}</p>
+            </main>
+          </div>
+        </Modal>
       )}
     </>
   );

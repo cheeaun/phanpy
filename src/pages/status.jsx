@@ -16,7 +16,6 @@ import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus, threadifyStatus } from '../utils/states';
-import store from '../utils/store';
 import { getCurrentAccount } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
@@ -24,8 +23,9 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
 
+let cachedStatusesMap = {};
 function resetScrollPosition(id) {
-  delete cachedStatusesMap.current[id];
+  delete cachedStatusesMap[id];
   delete states.scrollPositions[id];
 }
 
@@ -61,13 +61,12 @@ function StatusPage() {
   }, [id, uiState !== 'loading']);
 
   const scrollOffsets = useRef();
-  const cachedStatusesMap = useRef({});
   const initContext = () => {
     console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
 
-    const cachedStatuses = cachedStatusesMap.current[id];
+    const cachedStatuses = cachedStatusesMap[id];
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
@@ -170,7 +169,7 @@ function StatusPage() {
         };
         console.log({ allStatuses });
         setStatuses(allStatuses);
-        cachedStatusesMap.current[id] = allStatuses;
+        cachedStatusesMap[id] = allStatuses;
 
         // Let's threadify this one
         // Note that all non-hero statuses will trigger saveStatus which will threadify them too
@@ -242,7 +241,7 @@ function StatusPage() {
       // RESET
       states.scrollPositions = {};
       states.reloadStatusPage = 0;
-      cachedStatusesMap.current = {};
+      cachedStatusesMap = {};
     };
   }, []);
 

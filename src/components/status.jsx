@@ -391,7 +391,7 @@ function Status({
           )}
           {!!mediaAttachments.length && (
             <div
-              class={`media-container ${
+              class={`media-container media-eq${mediaAttachments.length} ${
                 mediaAttachments.length > 2 ? 'media-gt2' : ''
               } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
             >

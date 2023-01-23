@@ -272,7 +272,7 @@ function Status({
               </span>
             ))}
         </div>
-        {!withinContext && size !== 's' && (
+        {!withinContext && (
           <>
             {inReplyToAccountId === status.account?.id ||
             !!snapStates.statusThreadNumber[id] ? (

@@ -79,12 +79,26 @@
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
 }
+
+@keyframes skeleton-breathe {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .status.skeleton {
   color: var(--outline-color);
+  animation: skeleton-breathe 6s linear infinite;
   user-select: none;
   pointer-events: none;
+  contain: layout;
+  text-rendering: optimizeSpeed;
 }
-
 .status.skeleton > .avatar {
   background-color: var(--outline-color);
 }

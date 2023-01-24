@@ -14,13 +14,14 @@
 
 #settings-container :is(section, .section) {
   background-color: var(--bg-color);
-  margin: 0 -16px;
+  margin: 0;
   padding: 8px 16px;
   border-top: var(--hairline-width) solid var(--outline-color);
   border-bottom: var(--hairline-width) solid var(--outline-color);
+  border-radius: 8px;
 }
-#settings-container :is(section, .section) > li + li {
-  border-top: var(--hairline-width) solid var(--outline-color);
+#settings-container :is(section, .section) > li:last-child {
+  border-bottom: none;
 }
 
 #settings-container ul {
@@ -29,11 +30,12 @@
   list-style: none;
 }
 #settings-container ul li {
-  padding: 8px 0;
+  padding: 8px 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
 }
 #settings-container ul li .current {
   margin-right: 8px;
@@ -44,14 +46,14 @@
   opacity: 1;
 }
 #settings-container ul li .current.is-current + .avatar {
-  box-shadow: 0 0 0 1.5px var(--green-color);
+  box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
 }
 #settings-container ul li > div {
   flex-grow: 1;
   max-width: 100%;
 }
 #settings-container ul li > div.actions {
-  flex-basis: min-content;
+  flex-basis: fit-content;
   margin-top: 8px;
 }
 #settings-container ul li > div:last-child {
@@ -97,11 +99,4 @@
 }
 #settings-container .radio-group label:has(input:checked) input:checked + span {
   color: inherit;
-}
-
-@media (min-width: 40em) {
-  #settings-container :is(section, .section) {
-    margin-inline: 0;
-    border-radius: 8px;
-  }
 }

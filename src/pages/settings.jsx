@@ -92,7 +92,7 @@ function Settings({ onClose }) {
                         <Icon icon="transfer" /> Switch
                       </button>
                     )}
-                    <div>
+                    <span>
                       {!isDefault && moreThanOneAccount && (
                         <button
                           type="button"
@@ -128,7 +128,7 @@ function Settings({ onClose }) {
                           </button>
                         </>
                       )}
-                    </div>
+                    </span>
                   </div>
                 </li>
               );

@@ -29,7 +29,7 @@
   padding: 0;
   list-style: none;
 }
-#settings-container ul li {
+#settings-container ul:not([role='menu']) > li {
   padding: 8px 0 16px;
   display: flex;
   justify-content: space-between;
@@ -37,26 +37,26 @@
   flex-wrap: wrap;
   border-bottom: var(--hairline-width) solid var(--outline-color);
 }
-#settings-container ul li .current {
+#settings-container ul:not([role='menu']) > li .current {
   margin-right: 8px;
   color: var(--green-color);
   opacity: 0.1;
 }
-#settings-container ul li .current.is-current {
+#settings-container ul:not([role='menu']) > li .current.is-current {
   opacity: 1;
 }
-#settings-container ul li .current.is-current + .avatar {
+#settings-container ul:not([role='menu']) > li .current.is-current + .avatar {
   box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
 }
-#settings-container ul li > div {
+#settings-container ul:not([role='menu']) > li > div {
   flex-grow: 1;
   max-width: 100%;
 }
-#settings-container ul li > div.actions {
+#settings-container ul:not([role='menu']) > li > div.actions {
   flex-basis: fit-content;
   margin-top: 8px;
 }
-#settings-container ul li > div:last-child {
+#settings-container ul:not([role='menu']) > li > div:last-child {
   text-align: right;
 }
 #settings-container div,

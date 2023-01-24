@@ -1,5 +1,6 @@
 import './status.css';
 
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
 import { memo } from 'preact/compat';
@@ -587,30 +588,32 @@ function Status({
                 />
               </div>
               {isSelf && (
-                <span class="menu-container">
-                  <button type="button" title="More" class="plain more-button">
-                    <Icon icon="more" size="l" alt="More" />
-                  </button>
-                  <menu>
-                    {isSelf && (
-                      <li>
-                        <button
-                          type="button"
-                          class="plain"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            states.showCompose = {
-                              editStatus: status,
-                            };
-                          }}
-                        >
-                          Edit&hellip;
-                        </button>
-                      </li>
-                    )}
-                  </menu>
-                </span>
+                <Menu
+                  align="end"
+                  menuButton={
+                    <div class="action">
+                      <button
+                        type="button"
+                        title="More"
+                        class="plain more-button"
+                      >
+                        <Icon icon="more" size="l" alt="More" />
+                      </button>
+                    </div>
+                  }
+                >
+                  {isSelf && (
+                    <MenuItem
+                      onClick={() => {
+                        states.showCompose = {
+                          editStatus: status,
+                        };
+                      }}
+                    >
+                      Edit&hellip;
+                    </MenuItem>
+                  )}
+                </Menu>
               )}
             </div>
           </>

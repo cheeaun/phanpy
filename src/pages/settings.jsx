@@ -1,5 +1,6 @@
 import './settings.css';
 
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useReducer, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -92,43 +93,45 @@ function Settings({ onClose }) {
                         <Icon icon="transfer" /> Switch
                       </button>
                     )}
-                    <span>
-                      {!isDefault && moreThanOneAccount && (
+                    <Menu
+                      align="end"
+                      menuButton={
                         <button
                           type="button"
-                          class="plain small"
-                          onClick={() => {
-                            // Move account to the top of the list
-                            accounts.splice(i, 1);
-                            accounts.unshift(account);
-                            store.local.setJSON('accounts', accounts);
-                            setCurrentDefault(i);
-                          }}
+                          title="More"
+                          class="plain more-button"
                         >
-                          Set as default
+                          <Icon icon="more" size="l" alt="More" />
                         </button>
-                      )}
-                      {isCurrent && (
-                        <>
-                          {' '}
-                          <button
-                            type="button"
-                            class="plain small"
-                            onClick={() => {
-                              const yes = confirm(
-                                'Are you sure you want to log out?',
-                              );
-                              if (!yes) return;
-                              accounts.splice(i, 1);
-                              store.local.setJSON('accounts', accounts);
-                              location.reload();
-                            }}
-                          >
-                            Log out
-                          </button>
-                        </>
-                      )}
-                    </span>
+                      }
+                    >
+                      <MenuItem
+                        disabled={isDefault || !moreThanOneAccount}
+                        onClick={() => {
+                          // Move account to the top of the list
+                          accounts.splice(i, 1);
+                          accounts.unshift(account);
+                          store.local.setJSON('accounts', accounts);
+                          setCurrentDefault(i);
+                        }}
+                      >
+                        Set as default
+                      </MenuItem>
+                      <MenuItem
+                        disabled={!isCurrent}
+                        onClick={() => {
+                          const yes = confirm(
+                            'Are you sure you want to log out?',
+                          );
+                          if (!yes) return;
+                          accounts.splice(i, 1);
+                          store.local.setJSON('accounts', accounts);
+                          location.reload();
+                        }}
+                      >
+                        Log out
+                      </MenuItem>
+                    </Menu>
                   </div>
                 </li>
               );

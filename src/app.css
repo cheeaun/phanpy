@@ -589,6 +589,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   scrollbar-width: none;
   overscroll-behavior: contain;
   touch-action: pan-x;
+  user-select: none;
 }
 .carousel::-webkit-scrollbar {
   display: none;

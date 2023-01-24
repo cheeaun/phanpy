@@ -180,7 +180,7 @@ function Home({ hidden }) {
     }
   });
 
-  useHotkeys('k. shift+k', () => {
+  useHotkeys('k, shift+k', (_, handler) => {
     // focus on previous status after active status
     // Traverses .timeline li .status-link, focus on .status-link
     const activeStatus = document.activeElement.closest(

@@ -365,9 +365,15 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
 }
-.status-link:is(:hover, :focus, .is-active) {
+.status-link:is(:focus, .is-active) {
   background-color: var(--link-bg-hover-color);
   outline-offset: -2px;
+}
+@media (hover: hover) {
+  .status-link:hover {
+    background-color: var(--link-bg-hover-color);
+    outline-offset: -2px;
+  }
 }
 .status-link:active:not(:has(:is(.media, button):active)) {
   filter: brightness(0.95);
@@ -468,8 +474,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overflow: hidden;
   box-shadow: 0 1px var(--bg-color);
 }
-.status-boost-link:is(:hover, :focus) {
+.status-boost-link::focus {
   background-color: var(--link-bg-hover-color);
+}
+@media (hover: hover) {
+  .status-boost-link:hover {
+    background-color: var(--link-bg-hover-color);
+  }
 }
 .status-boost-link:active:not(:has(:is(.media, button):active)) {
   filter: brightness(0.95);

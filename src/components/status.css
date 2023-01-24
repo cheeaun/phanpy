@@ -2,23 +2,23 @@
 
 .status-reblog {
   background: linear-gradient(
-    to bottom right,
+    160deg,
     var(--reblog-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .status-reply-to {
   background: linear-gradient(
-    to bottom right,
+    160deg,
     var(--reply-to-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .status-reblog .status-reply-to {
   background: linear-gradient(
-    to top left,
+    -20deg,
     var(--reply-to-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .visibility-direct {

@@ -498,7 +498,7 @@ function BoostsCarousel({ boosts }) {
           const { id: statusID, reblog } = boost;
           const actualStatusID = reblog || statusID;
           return (
-            <li>
+            <li key={statusID}>
               <Link class="status-boost-link" to={`/s/${actualStatusID}`}>
                 <Status statusID={statusID} size="s" />
               </Link>

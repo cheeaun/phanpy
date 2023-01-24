@@ -1446,7 +1446,13 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               <h2>Media description</h2>
             </header>
             <main>
-              <p>{showMediaAlt}</p>
+              <p
+                style={{
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {showMediaAlt}
+              </p>
             </main>
           </div>
         </Modal>

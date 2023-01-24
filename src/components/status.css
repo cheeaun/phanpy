@@ -326,38 +326,39 @@
   max-height: 60vh;
 }
 .status .media-container .media {
-  border-radius: 8px;
+  --media-radius: 16px;
+  border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
   border: 1px solid var(--outline-color);
 }
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {
-  border-radius: 8px 0 0 8px;
+  border-radius: var(--media-radius) 0 0 var(--media-radius);
 }
 .status .media-container.media-eq2 .media:last-of-type {
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--media-radius) var(--media-radius) 0;
 }
 .status .media-container.media-eq3 .media:first-of-type {
-  border-radius: 8px 0 0 8px;
+  border-radius: var(--media-radius) 0 0 var(--media-radius);
 }
 .status .media-container.media-eq3 .media:nth-of-type(2) {
-  border-radius: 0 8px 0 0;
+  border-radius: 0 var(--media-radius) 0 0;
 }
 .status .media-container.media-eq3 .media:last-of-type {
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 var(--media-radius) 0;
 }
 .status .media-container.media-eq4 .media:first-of-type {
-  border-radius: 8px 0 0 0;
+  border-radius: var(--media-radius) 0 0 0;
 }
 .status .media-container.media-eq4 .media:nth-of-type(2) {
-  border-radius: 0 8px 0 0;
+  border-radius: 0 var(--media-radius) 0 0;
 }
 .status .media-container.media-eq4 .media:nth-of-type(3) {
-  border-radius: 0 0 0 8px;
+  border-radius: 0 0 0 var(--media-radius);
 }
 .status .media-container.media-eq4 .media:last-of-type {
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 var(--media-radius) 0;
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;

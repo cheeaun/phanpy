@@ -1355,7 +1355,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
         <span>
           <button
             type="button"
-            class="carousel-button plain2"
+            class="carousel-button plain3"
             onClick={() => onClose()}
           >
             <Icon icon="x" />
@@ -1391,7 +1391,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               mediaAttachments[currentIndex]?.url
             }
             target="_blank"
-            class="button carousel-button plain2"
+            class="button carousel-button plain3"
             title="Open original media in new window"
           >
             <Icon icon="popout" alt="Open original media in new window" />
@@ -1402,7 +1402,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
         <div class="carousel-controls" hidden={!showControls}>
           <button
             type="button"
-            class="carousel-button plain2"
+            class="carousel-button plain3"
             hidden={currentIndex === 0}
             onClick={(e) => {
               e.preventDefault();
@@ -1417,7 +1417,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
           </button>
           <button
             type="button"
-            class="carousel-button plain2"
+            class="carousel-button plain3"
             hidden={currentIndex === mediaAttachments.length - 1}
             onClick={(e) => {
               e.preventDefault();

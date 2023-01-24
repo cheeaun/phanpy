@@ -162,6 +162,11 @@ button,
   color: var(--link-color);
   backdrop-filter: blur(12px) invert(0.25) brightness(1.5);
 }
+:is(button, .button).plain3 {
+  background-color: transparent;
+  color: var(--button-text-color);
+  backdrop-filter: blur(12px) invert(0.25);
+}
 :is(button, .button).light {
   background-color: var(--bg-faded-color);
   color: var(--text-color);

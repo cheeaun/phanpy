@@ -2,6 +2,7 @@ import './account.css';
 
 import { useEffect, useState } from 'preact/hooks';
 
+import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import handleAccountLinks from '../utils/handle-account-links';
 import shortenNumber from '../utils/shorten-number';
@@ -171,12 +172,16 @@ function Account({ account }) {
                     key={name}
                   >
                     <b>
-                      {name}{' '}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: emojifyText(name, emojis),
+                        }}
+                      />{' '}
                       {!!verifiedAt && <Icon icon="check-circle" size="s" />}
                     </b>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: value,
+                        __html: enhanceContent(value, { emojis }),
                       }}
                     />
                   </div>

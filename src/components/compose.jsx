@@ -949,6 +949,8 @@ function Compose({
                     return attachments.concat(mediaFiles);
                   });
                 }
+                // Reset
+                e.target.value = '';
               }}
             />
             <Icon icon="attachment" />

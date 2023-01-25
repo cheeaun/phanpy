@@ -664,6 +664,7 @@ button.carousel-dot {
   color: var(--text-insignificant-color) !important;
   font-weight: bold;
   backdrop-filter: none !important;
+  transition: all 0.2s;
 }
 button.carousel-dot[disabled] {
   pointer-events: none;

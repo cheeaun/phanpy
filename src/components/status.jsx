@@ -12,7 +12,6 @@ import {
   useState,
 } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { InView } from 'react-intersection-observer';
 import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
@@ -26,7 +25,6 @@ import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -1260,19 +1258,8 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
   const [currentIndex, setCurrentIndex] = useState(index);
   const carouselFocusItem = useRef(null);
   useLayoutEffect(() => {
-    carouselFocusItem.current?.node?.scrollIntoView();
+    carouselFocusItem.current?.scrollIntoView();
   }, []);
-  useLayoutEffect(() => {
-    carouselFocusItem.current?.node?.scrollIntoView({
-      behavior: 'smooth',
-    });
-  }, [currentIndex]);
-
-  const onSnap = useDebouncedCallback((inView, i) => {
-    if (inView) {
-      setCurrentIndex(i);
-    }
-  }, 100);
 
   const [showControls, setShowControls] = useState(true);
 
@@ -1293,6 +1280,24 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
   useHotkeys('esc', onClose, [onClose]);
 
   const [showMediaAlt, setShowMediaAlt] = useState(false);
+
+  useEffect(() => {
+    let handleScroll = () => {
+      const { clientWidth, scrollLeft } = carouselRef.current;
+      const index = Math.round(scrollLeft / clientWidth);
+      setCurrentIndex(index);
+    };
+    if (carouselRef.current) {
+      carouselRef.current.addEventListener('scroll', handleScroll, {
+        passive: true,
+      });
+    }
+    return () => {
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -1316,7 +1321,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             ? getBlurHashAverageColor(blurhash)
             : null;
           return (
-            <InView
+            <div
               class="carousel-item"
               style={{
                 '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
@@ -1326,10 +1331,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
               }}
               tabindex="0"
               key={media.id}
-              ref={i === currentIndex ? carouselFocusItem : null} // InView options
-              root={carouselRef.current}
-              threshold={1}
-              onChange={(inView) => onSnap(inView, i)}
+              ref={i === currentIndex ? carouselFocusItem : null}
               onClick={(e) => {
                 if (e.target !== e.currentTarget) {
                   setShowControls(!showControls);
@@ -1350,7 +1352,7 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
                 </button>
               )}
               <Media media={media} showOriginal />
-            </InView>
+            </div>
           );
         })}
       </div>
@@ -1377,7 +1379,10 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setCurrentIndex(i);
+                  carouselRef.current.scrollTo({
+                    left: carouselRef.current.clientWidth * i,
+                    behavior: 'smooth',
+                  });
                 }}
               >
                 &bull;
@@ -1410,10 +1415,10 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setCurrentIndex(
-                (currentIndex - 1 + mediaAttachments.length) %
-                  mediaAttachments.length,
-              );
+              carouselRef.current.scrollTo({
+                left: carouselRef.current.clientWidth * (currentIndex - 1),
+                behavior: 'smooth',
+              });
             }}
           >
             <Icon icon="arrow-left" />
@@ -1425,7 +1430,10 @@ function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setCurrentIndex((currentIndex + 1) % mediaAttachments.length);
+              carouselRef.current.scrollTo({
+                left: carouselRef.current.clientWidth * (currentIndex + 1),
+                behavior: 'smooth',
+              });
             }}
           >
             <Icon icon="arrow-right" />

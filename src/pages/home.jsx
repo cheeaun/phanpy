@@ -368,17 +368,6 @@ function Home({ hidden }) {
                 })}
                 {showMore && (
                   <>
-                    {/* <InView
-                    as="li"
-                    style={{
-                      height: '20vh',
-                    }}
-                    onChange={(inView) => {
-                      if (inView) loadStatuses();
-                    }}
-                    root={scrollableRef.current}
-                    rootMargin="100px 0px"
-                  > */}
                     <li
                       style={{
                         height: '20vh',
@@ -386,7 +375,6 @@ function Home({ hidden }) {
                     >
                       <Status skeleton />
                     </li>
-                    {/* </InView> */}
                     <li
                       style={{
                         height: '25vh',

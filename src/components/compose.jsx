@@ -783,6 +783,7 @@ function Compose({
             placeholder="Content warning"
             disabled={uiState === 'loading'}
             class="spoiler-text-field"
+            lang={language}
             style={{
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
@@ -847,6 +848,7 @@ function Compose({
           }
           required={mediaAttachments.length === 0}
           disabled={uiState === 'loading'}
+          lang={language}
           onInput={() => {
             updateCharCount();
           }}
@@ -862,6 +864,7 @@ function Compose({
                   key={id || fileID || i}
                   attachment={attachment}
                   disabled={uiState === 'loading'}
+                  lang={language}
                   onDescriptionChange={(value) => {
                     setMediaAttachments((attachments) => {
                       const newAttachments = [...attachments];
@@ -895,6 +898,7 @@ function Compose({
         )}
         {!!poll && (
           <Poll
+            lang={language}
             maxOptions={maxOptions}
             maxExpiration={maxExpiration}
             minExpiration={minExpiration}
@@ -1235,6 +1239,7 @@ function CharCountMeter({ maxCharacters = 500 }) {
 function MediaAttachment({
   attachment,
   disabled,
+  lang,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
@@ -1274,6 +1279,7 @@ function MediaAttachment({
         <textarea
           ref={textareaRef}
           value={description || ''}
+          lang={lang}
           placeholder={
             {
               image: 'Image description',
@@ -1368,6 +1374,7 @@ function MediaAttachment({
 }
 
 function Poll({
+  lang,
   poll,
   disabled,
   onInput = () => {},
@@ -1390,6 +1397,7 @@ function Poll({
               disabled={disabled}
               maxlength={maxCharactersPerOption}
               placeholder={`Choice ${i + 1}`}
+              lang={lang}
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

@@ -105,18 +105,20 @@ function Settings({ onClose }) {
                         </button>
                       }
                     >
-                      <MenuItem
-                        disabled={isDefault || !moreThanOneAccount}
-                        onClick={() => {
-                          // Move account to the top of the list
-                          accounts.splice(i, 1);
-                          accounts.unshift(account);
-                          store.local.setJSON('accounts', accounts);
-                          setCurrentDefault(i);
-                        }}
-                      >
-                        Set as default
-                      </MenuItem>
+                      {moreThanOneAccount && (
+                        <MenuItem
+                          disabled={isDefault}
+                          onClick={() => {
+                            // Move account to the top of the list
+                            accounts.splice(i, 1);
+                            accounts.unshift(account);
+                            store.local.setJSON('accounts', accounts);
+                            setCurrentDefault(i);
+                          }}
+                        >
+                          Set as default
+                        </MenuItem>
+                      )}
                       <MenuItem
                         disabled={!isCurrent}
                         onClick={() => {

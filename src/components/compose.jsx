@@ -780,7 +780,7 @@ function Compose({
             ref={spoilerTextRef}
             type="text"
             name="spoilerText"
-            placeholder="Spoiler text"
+            placeholder="Content warning"
             disabled={uiState === 'loading'}
             class="spoiler-text-field"
             style={{

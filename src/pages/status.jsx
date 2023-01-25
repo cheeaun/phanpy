@@ -1,6 +1,7 @@
 import './status.css';
 
 import debounce from 'just-debounce-it';
+import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -87,8 +88,13 @@ function StatusPage() {
     }
 
     (async () => {
-      const heroFetch = () => masto.v1.statuses.fetch(id);
-      const contextFetch = masto.v1.statuses.fetchContext(id);
+      const heroFetch = () =>
+        pRetry(() => masto.v1.statuses.fetch(id), {
+          retries: 3,
+        });
+      const contextFetch = pRetry(() => masto.v1.statuses.fetchContext(id), {
+        retries: 2,
+      });
 
       const hasStatus = !!snapStates.statuses[id];
       let heroStatus = snapStates.statuses[id];

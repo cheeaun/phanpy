@@ -816,6 +816,7 @@ button.carousel-dot:is(.active, [disabled].active) {
   box-shadow: 0 0 8px var(--bg-faded-color), 0 4px 8px var(--bg-faded-color),
     0 2px 4px var(--bg-faded-color);
   text-align: left;
+  animation: appear 0.15s ease-in-out;
 }
 .szh-menu .szh-menu__item {
   padding: 8px 16px !important;

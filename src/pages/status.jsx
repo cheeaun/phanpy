@@ -90,10 +90,10 @@ function StatusPage() {
     (async () => {
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.fetch(id), {
-          retries: 3,
+          retries: 4,
         });
       const contextFetch = pRetry(() => masto.v1.statuses.fetchContext(id), {
-        retries: 2,
+        retries: 8,
       });
 
       const hasStatus = !!snapStates.statuses[id];

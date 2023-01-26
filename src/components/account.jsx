@@ -41,10 +41,8 @@ function Account({ account }) {
               setUIState('default');
               return;
             }
-            alert('Account not found');
             setUIState('error');
           } catch (err) {
-            alert(err);
             console.error(err);
             setUIState('error');
           }
@@ -123,7 +121,17 @@ function Account({ account }) {
       id="account-container"
       class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
     >
-      {!info || uiState === 'loading' ? (
+      {uiState === 'error' && (
+        <div class="ui-state">
+          <p>Unable to load account.</p>
+          <p>
+            <a href={account} target="_blank">
+              Go to account page <Icon icon="external" />
+            </a>
+          </p>
+        </div>
+      )}
+      {uiState === 'loading' ? (
         <>
           <header>
             <Avatar size="xxxl" />
@@ -142,138 +150,141 @@ function Account({ account }) {
           </main>
         </>
       ) : (
-        <>
-          <header>
-            <Avatar url={avatar} size="xxxl" />
-            <NameText account={info} showAcct external />
-          </header>
-          <main tabIndex="-1">
-            {bot && (
-              <>
-                <span class="tag">
-                  <Icon icon="bot" /> Automated
-                </span>
-              </>
-            )}
-            <div
-              class="note"
-              onClick={handleAccountLinks()}
-              dangerouslySetInnerHTML={{
-                __html: enhanceContent(note, { emojis }),
-              }}
-            />
-            {fields?.length > 0 && (
-              <div class="profile-metadata">
-                {fields.map(({ name, value, verifiedAt }) => (
-                  <div
-                    class={`profile-field ${
-                      verifiedAt ? 'profile-verified' : ''
-                    }`}
-                    key={name}
-                  >
-                    <b>
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: emojifyText(name, emojis),
-                        }}
-                      />{' '}
-                      {!!verifiedAt && <Icon icon="check-circle" size="s" />}
-                    </b>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: enhanceContent(value, { emojis }),
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-            <p class="stats">
-              <span>
-                <b title={statusesCount}>{shortenNumber(statusesCount)}</b>{' '}
-                Posts
-              </span>
-              <span>
-                <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
-                Following
-              </span>
-              <span>
-                <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
-                Followers
-              </span>
-              {!!createdAt && (
-                <span>
-                  Joined:{' '}
-                  <b>
-                    <time datetime={createdAt}>
-                      {Intl.DateTimeFormat('en', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      }).format(new Date(createdAt))}
-                    </time>
-                  </b>
-                </span>
+        info && (
+          <>
+            <header>
+              <Avatar url={avatar} size="xxxl" />
+              <NameText account={info} showAcct external />
+            </header>
+            <main tabIndex="-1">
+              {bot && (
+                <>
+                  <span class="tag">
+                    <Icon icon="bot" /> Automated
+                  </span>
+                </>
               )}
-            </p>
-            <p class="actions">
-              {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
-              {relationshipUIState !== 'loading' && relationship && (
-                <button
-                  type="button"
-                  class={`${following || requested ? 'light swap' : ''}`}
-                  data-swap-state={following || requested ? 'danger' : ''}
-                  disabled={relationshipUIState === 'loading'}
-                  onClick={() => {
-                    setRelationshipUIState('loading');
-                    (async () => {
-                      try {
-                        let newRelationship;
-                        if (following || requested) {
-                          const yes = confirm(
-                            requested
-                              ? 'Are you sure that you want to withdraw follow request?'
-                              : 'Are you sure that you want to unfollow this account?',
-                          );
-                          if (yes) {
-                            newRelationship = await masto.v1.accounts.unfollow(
+              <div
+                class="note"
+                onClick={handleAccountLinks()}
+                dangerouslySetInnerHTML={{
+                  __html: enhanceContent(note, { emojis }),
+                }}
+              />
+              {fields?.length > 0 && (
+                <div class="profile-metadata">
+                  {fields.map(({ name, value, verifiedAt }) => (
+                    <div
+                      class={`profile-field ${
+                        verifiedAt ? 'profile-verified' : ''
+                      }`}
+                      key={name}
+                    >
+                      <b>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: emojifyText(name, emojis),
+                          }}
+                        />{' '}
+                        {!!verifiedAt && <Icon icon="check-circle" size="s" />}
+                      </b>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: enhanceContent(value, { emojis }),
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p class="stats">
+                <span>
+                  <b title={statusesCount}>{shortenNumber(statusesCount)}</b>{' '}
+                  Posts
+                </span>
+                <span>
+                  <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
+                  Following
+                </span>
+                <span>
+                  <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
+                  Followers
+                </span>
+                {!!createdAt && (
+                  <span>
+                    Joined:{' '}
+                    <b>
+                      <time datetime={createdAt}>
+                        {Intl.DateTimeFormat('en', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        }).format(new Date(createdAt))}
+                      </time>
+                    </b>
+                  </span>
+                )}
+              </p>
+              <p class="actions">
+                {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
+                {relationshipUIState !== 'loading' && relationship && (
+                  <button
+                    type="button"
+                    class={`${following || requested ? 'light swap' : ''}`}
+                    data-swap-state={following || requested ? 'danger' : ''}
+                    disabled={relationshipUIState === 'loading'}
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          let newRelationship;
+                          if (following || requested) {
+                            const yes = confirm(
+                              requested
+                                ? 'Are you sure that you want to withdraw follow request?'
+                                : 'Are you sure that you want to unfollow this account?',
+                            );
+                            if (yes) {
+                              newRelationship =
+                                await masto.v1.accounts.unfollow(id);
+                            }
+                          } else {
+                            newRelationship = await masto.v1.accounts.follow(
                               id,
                             );
                           }
-                        } else {
-                          newRelationship = await masto.v1.accounts.follow(id);
+                          if (newRelationship) setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                        } catch (e) {
+                          alert(e);
+                          setRelationshipUIState('error');
                         }
-                        if (newRelationship) setRelationship(newRelationship);
-                        setRelationshipUIState('default');
-                      } catch (e) {
-                        alert(e);
-                        setRelationshipUIState('error');
-                      }
-                    })();
-                  }}
-                >
-                  {following ? (
-                    <>
-                      <span>Following</span>
-                      <span>Unfollow…</span>
-                    </>
-                  ) : requested ? (
-                    <>
-                      <span>Requested</span>
-                      <span>Withdraw…</span>
-                    </>
-                  ) : locked ? (
-                    <>
-                      <Icon icon="lock" /> <span>Follow</span>
-                    </>
-                  ) : (
-                    'Follow'
-                  )}
-                </button>
-              )}
-            </p>
-          </main>
-        </>
+                      })();
+                    }}
+                  >
+                    {following ? (
+                      <>
+                        <span>Following</span>
+                        <span>Unfollow…</span>
+                      </>
+                    ) : requested ? (
+                      <>
+                        <span>Requested</span>
+                        <span>Withdraw…</span>
+                      </>
+                    ) : locked ? (
+                      <>
+                        <Icon icon="lock" /> <span>Follow</span>
+                      </>
+                    ) : (
+                      'Follow'
+                    )}
+                  </button>
+                )}
+              </p>
+            </main>
+          </>
+        )
       )}
     </div>
   );

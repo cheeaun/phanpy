@@ -918,6 +918,18 @@ meter.donut:is(.danger, .explode):after {
   flex-wrap: wrap;
   gap: 4px;
 }
+/* I'm just feeling bored, so having fun here */
+@media (hover: hover) {
+  .avatars-stack > * {
+    transition: transform 0.3s ease-in-out;
+  }
+  .avatars-stack:hover > *:nth-of-type(odd) {
+    transform: rotate(15deg);
+  }
+  .avatars-stack:hover > *:nth-of-type(even) {
+    transform: rotate(-15deg);
+  }
+}
 
 .deck-container {
   width: 100%;

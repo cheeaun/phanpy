@@ -210,7 +210,9 @@ function StatusPage() {
         scrollTop: scrollableRef.current?.scrollTop,
       };
       const newScrollTop =
-        newScrollOffsets.offsetTop - scrollOffsets.current.offsetTop;
+        newScrollOffsets.offsetTop -
+        scrollOffsets.current.offsetTop +
+        newScrollOffsets.scrollTop;
       console.debug('Case 2', {
         scrollOffsets: scrollOffsets.current,
         newScrollOffsets,
@@ -218,6 +220,11 @@ function StatusPage() {
         statuses: [...statuses],
       });
       scrollableRef.current.scrollTop = newScrollTop;
+    } else if (statuses.length === 1) {
+      console.debug('Case 3', {
+        id,
+      });
+      scrollableRef.current.scrollTop = 0;
     }
 
     // RESET

@@ -443,7 +443,7 @@ function startVisibility() {
             const newStatuses = await fetchHome;
             const hasOneAndReblog =
               newStatuses.length === 1 && newStatuses?.[0]?.reblog;
-            if (newStatuses.length && !inHome) {
+            if (newStatuses.length) {
               if (states.settings.boostsCarousel && hasOneAndReblog) {
                 // do nothing
               } else {

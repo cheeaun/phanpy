@@ -134,6 +134,8 @@ function App() {
   }, []);
 
   let location = useLocation();
+  states.currentLocation = location.pathname;
+
   const locationDeckMap = {
     '/': 'home-page',
     '/notifications': 'notifications-page',

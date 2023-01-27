@@ -3,11 +3,13 @@ import { proxy, subscribe } from 'valtio';
 import store from './store';
 
 const states = proxy({
-  history: [],
+  // history: [],
+  prevLocation: null,
+  currentLocation: null,
   statuses: {},
   statusThreadNumber: {},
   home: [],
-  specialHome: [],
+  // specialHome: [],
   homeNew: [],
   homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,

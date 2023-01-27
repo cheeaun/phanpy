@@ -365,7 +365,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
 }
-.status-link:is(:focus, .is-active) {
+:is(.status-link, .status-focus):is(:focus, .is-active) {
   background-color: var(--link-bg-hover-color);
   outline-offset: -2px;
 }

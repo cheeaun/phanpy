@@ -170,12 +170,24 @@ function App() {
 
         // Collect instance info
         (async () => {
-          const info = await masto.v1.instances.fetch();
+          // Request v2, fallback to v1 if fail
+          let info;
+          try {
+            info = await masto.v2.instance.fetch();
+          } catch (e) {}
+          if (!info) {
+            try {
+              info = await masto.v1.instances.fetch();
+            } catch (e) {}
+          }
+          if (!info) return;
           console.log(info);
           const { uri, domain } = info;
-          const instances = store.local.getJSON('instances') || {};
-          instances[(domain || uri).toLowerCase()] = info;
-          store.local.setJSON('instances', instances);
+          if (uri || domain) {
+            const instances = store.local.getJSON('instances') || {};
+            instances[(domain || uri).toLowerCase()] = info;
+            store.local.setJSON('instances', instances);
+          }
         })();
       });
       states.init = true;

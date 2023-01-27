@@ -429,10 +429,10 @@ function startVisibility() {
         console.log('visible', { lastHidden, diffMins });
         (async () => {
           try {
-            const firstStatusID = states.home[0]?.id;
-            const firstNotificationID = states.notifications[0]?.id;
+            const firstStatusID = states.homeLast?.id;
+            const firstNotificationID = states.notificationsLast?.id;
             const fetchHome = masto.v1.timelines.listHome({
-              limit: 1,
+              limit: 5,
               ...(firstStatusID && { sinceId: firstStatusID }),
             });
             const fetchNotifications = masto.v1.notifications.list({
@@ -441,10 +441,10 @@ function startVisibility() {
             });
 
             const newStatuses = await fetchHome;
-            const newStatus = newStatuses?.[0];
-            const inHome = newStatus?.id !== states.homeLast?.id;
+            const hasOneAndReblog =
+              newStatuses.length === 1 && newStatuses?.[0]?.reblog;
             if (newStatuses.length && !inHome) {
-              if (states.settings.boostsCarousel && newStatus.reblog) {
+              if (states.settings.boostsCarousel && hasOneAndReblog) {
                 // do nothing
               } else {
                 states.homeNew = newStatuses.map((status) => {

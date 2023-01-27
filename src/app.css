@@ -814,8 +814,7 @@ button.carousel-dot:is(.active, [disabled].active) {
   background-color: var(--bg-color) !important;
   border: 1px solid var(--outline-color) !important;
   border-radius: 8px;
-  box-shadow: 0 0 8px var(--bg-faded-color), 0 4px 8px var(--bg-faded-color),
-    0 2px 4px var(--bg-faded-color);
+  box-shadow: 0 3px 6px var(--drop-shadow-color);
   text-align: left;
   animation: appear 0.15s ease-in-out;
 }

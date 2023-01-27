@@ -6,6 +6,7 @@ import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import handleAccountLinks from '../utils/handle-account-links';
 import shortenNumber from '../utils/shorten-number';
+import states from '../utils/states';
 import store from '../utils/store';
 
 import Avatar from './avatar';
@@ -48,6 +49,8 @@ function Account({ account }) {
           }
         }
       })();
+    } else {
+      setInfo(account);
     }
   }, [account]);
 
@@ -76,6 +79,7 @@ function Account({ account }) {
 
   const [relationshipUIState, setRelationshipUIState] = useState('default');
   const [relationship, setRelationship] = useState(null);
+  const [familiarFollowers, setFamiliarFollowers] = useState([]);
   useEffect(() => {
     if (info) {
       const currentAccount = store.session.get('currentAccount');
@@ -84,14 +88,29 @@ function Account({ account }) {
         return;
       }
       setRelationshipUIState('loading');
+      setFamiliarFollowers([]);
+
       (async () => {
+        const fetchRelationships = masto.v1.accounts.fetchRelationships([id]);
+        const fetchFamiliarFollowers =
+          masto.v1.accounts.fetchFamiliarFollowers(id);
+
         try {
-          const relationships = await masto.v1.accounts.fetchRelationships([
-            id,
-          ]);
+          const relationships = await fetchRelationships;
           console.log('fetched relationship', relationships);
           if (relationships.length) {
-            setRelationship(relationships[0]);
+            const relationship = relationships[0];
+            setRelationship(relationship);
+
+            if (!relationship.following) {
+              try {
+                const followers = await fetchFamiliarFollowers;
+                console.log('fetched familiar followers', followers);
+                setFamiliarFollowers(followers[0].accounts.slice(0, 10));
+              } catch (e) {
+                console.error(e);
+              }
+            }
           }
           setRelationshipUIState('default');
         } catch (e) {
@@ -225,6 +244,29 @@ function Account({ account }) {
                   </span>
                 )}
               </p>
+              {familiarFollowers?.length > 0 && (
+                <p class="common-followers">
+                  Common followers{' '}
+                  <span class="ib">
+                    {familiarFollowers.map((follower) => (
+                      <a
+                        href={follower.url}
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          states.showAccount = follower;
+                        }}
+                      >
+                        <Avatar
+                          url={follower.avatarStatic}
+                          size="l"
+                          alt={`${follower.displayName} @${follower.acct}`}
+                        />
+                      </a>
+                    ))}
+                  </span>
+                </p>
+              )}
               <p class="actions">
                 {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
                 {relationshipUIState !== 'loading' && relationship && (

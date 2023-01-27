@@ -9,8 +9,10 @@ const states = proxy({
   home: [],
   specialHome: [],
   homeNew: [],
+  homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,
   notifications: [],
+  notificationLast: null, // Last item in 'notifications' list
   notificationsNew: [],
   notificationsLastFetchTime: null,
   accounts: {},

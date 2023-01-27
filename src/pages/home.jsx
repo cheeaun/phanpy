@@ -22,11 +22,7 @@ function Home({ hidden }) {
 
   console.debug('RENDER Home');
 
-  const homeIterator = useRef(
-    masto.v1.timelines.listHome({
-      limit: LIMIT,
-    }),
-  );
+  const homeIterator = useRef();
   async function fetchStatuses(firstLoad) {
     if (firstLoad) {
       // Reset iterator
@@ -94,12 +90,14 @@ function Home({ hidden }) {
           specialHome,
         });
         if (firstLoad) {
+          states.homeLast = specialHome[0];
           states.home = specialHome;
         } else {
           states.home.push(...specialHome);
         }
       } else {
         if (firstLoad) {
+          states.homeLast = homeValues[0];
           states.home = homeValues;
         } else {
           states.home.push(...homeValues);
@@ -272,6 +270,13 @@ function Home({ hidden }) {
     })();
   }, []);
 
+  // const showUpdatesButton = snapStates.homeNew.length > 0 && reachStart;
+  const [showUpdatesButton, setShowUpdatesButton] = useState(false);
+  useEffect(() => {
+    const isNewAndTop = snapStates.homeNew.length > 0 && reachStart;
+    setShowUpdatesButton(isNewAndTop);
+  }, [snapStates.homeNew.length]);
+
   return (
     <>
       <div
@@ -321,9 +326,10 @@ function Home({ hidden }) {
             </div>
           </header>
           {snapStates.homeNew.length > 0 &&
-            scrollDirection === 'start' &&
-            !nearReachStart &&
-            !nearReachEnd && (
+            ((scrollDirection === 'start' &&
+              !nearReachStart &&
+              !nearReachEnd) ||
+              showUpdatesButton) && (
               <button
                 class="updates-button"
                 type="button"

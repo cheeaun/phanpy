@@ -13,6 +13,7 @@ import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
+import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 /*
@@ -45,6 +46,228 @@ const contentText = {
 
 const LIMIT = 30; // 30 is the maximum limit :(
 
+function Notifications() {
+  useTitle('Notifications');
+  const snapStates = useSnapshot(states);
+  const [uiState, setUIState] = useState('default');
+  const [showMore, setShowMore] = useState(false);
+  const [onlyMentions, setOnlyMentions] = useState(false);
+  const scrollableRef = useRef();
+  const { nearReachEnd, reachStart } = useScroll({
+    scrollableElement: scrollableRef.current,
+  });
+
+  console.debug('RENDER Notifications');
+
+  const notificationsIterator = useRef();
+  async function fetchNotifications(firstLoad) {
+    if (firstLoad) {
+      // Reset iterator
+      notificationsIterator.current = masto.v1.notifications.list({
+        limit: LIMIT,
+      });
+      states.notificationsNew = [];
+    }
+    const allNotifications = await notificationsIterator.current.next();
+    if (allNotifications.value?.length) {
+      const notificationsValues = allNotifications.value.map((notification) => {
+        saveStatus(notification.status, {
+          skipThreading: true,
+          override: false,
+        });
+        return notification;
+      });
+
+      const groupedNotifications = groupNotifications(notificationsValues);
+
+      if (firstLoad) {
+        states.notificationLast = notificationsValues[0];
+        states.notifications = groupedNotifications;
+      } else {
+        states.notifications.push(...groupedNotifications);
+      }
+    }
+    states.notificationsLastFetchTime = Date.now();
+    return allNotifications;
+  }
+
+  const loadNotifications = (firstLoad) => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const { done } = await fetchNotifications(firstLoad);
+        setShowMore(!done);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+      }
+    })();
+  };
+
+  useEffect(() => {
+    loadNotifications(true);
+  }, []);
+  useEffect(() => {
+    if (reachStart) {
+      loadNotifications(true);
+    }
+  }, [reachStart]);
+
+  useEffect(() => {
+    if (nearReachEnd && showMore) {
+      loadNotifications();
+    }
+  }, [nearReachEnd, showMore]);
+
+  const todayDate = new Date();
+  const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);
+  let currentDay = new Date();
+  const showTodayEmpty = !snapStates.notifications.some(
+    (notification) =>
+      new Date(notification.createdAt).toDateString() ===
+      todayDate.toDateString(),
+  );
+
+  return (
+    <div
+      id="notifications-page"
+      class="deck-container"
+      ref={scrollableRef}
+      tabIndex="-1"
+    >
+      <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
+        <header
+          onClick={() => {
+            scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
+          <div class="header-side">
+            <Link to="/" class="button plain">
+              <Icon icon="home" size="l" />
+            </Link>
+          </div>
+          <h1>Notifications</h1>
+          <div class="header-side">
+            <Loader hidden={uiState !== 'loading'} />
+          </div>
+        </header>
+        {snapStates.notificationsNew.length > 0 && (
+          <button
+            class="updates-button"
+            type="button"
+            onClick={() => {
+              loadNotifications(true);
+              states.notificationsNew = [];
+
+              scrollableRef.current?.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="arrow-up" /> New notifications
+          </button>
+        )}
+        <div id="mentions-option">
+          <label>
+            <input
+              type="checkbox"
+              checked={onlyMentions}
+              onChange={(e) => {
+                setOnlyMentions(e.target.checked);
+              }}
+            />{' '}
+            Only mentions
+          </label>
+        </div>
+        <h2 class="timeline-header">Today</h2>
+        {showTodayEmpty && !!snapStates.notifications.length && (
+          <p class="ui-state insignificant">
+            {uiState === 'default' ? "You're all caught up." : <>&hellip;</>}
+          </p>
+        )}
+        {snapStates.notifications.length ? (
+          <>
+            {snapStates.notifications.map((notification) => {
+              if (onlyMentions && notification.type !== 'mention') {
+                return null;
+              }
+              const notificationDay = new Date(notification.createdAt);
+              const differentDay =
+                notificationDay.toDateString() !== currentDay.toDateString();
+              if (differentDay) {
+                currentDay = notificationDay;
+              }
+              // if notificationDay is yesterday, show "Yesterday"
+              // if notificationDay is before yesterday, show date
+              const heading =
+                notificationDay.toDateString() === yesterdayDate.toDateString()
+                  ? 'Yesterday'
+                  : Intl.DateTimeFormat('en', {
+                      // Show year if not current year
+                      year:
+                        currentDay.getFullYear() === todayDate.getFullYear()
+                          ? undefined
+                          : 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    }).format(currentDay);
+              return (
+                <>
+                  {differentDay && <h2 class="timeline-header">{heading}</h2>}
+                  <Notification
+                    notification={notification}
+                    key={notification.id}
+                  />
+                </>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            {uiState === 'loading' && (
+              <>
+                <ul class="timeline flat">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <li class="notification skeleton">
+                      <div class="notification-type">
+                        <Icon icon="notification" size="xl" />
+                      </div>
+                      <div class="notification-content">
+                        <p>███████████ ████</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {uiState === 'error' && (
+              <p class="ui-state">
+                Unable to load notifications
+                <br />
+                <br />
+                <button type="button" onClick={() => loadNotifications(true)}>
+                  Try again
+                </button>
+              </p>
+            )}
+          </>
+        )}
+        {showMore && (
+          <button
+            type="button"
+            class="plain block"
+            disabled={uiState === 'loading'}
+            onClick={() => loadNotifications()}
+            style={{ marginBlockEnd: '6em' }}
+          >
+            {uiState === 'loading' ? <Loader abrupt /> : <>Show more&hellip;</>}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
 function Notification({ notification }) {
   const { id, type, status, account, _accounts } = notification;
 
@@ -61,7 +284,7 @@ function Notification({ notification }) {
       : contentText[type];
 
   return (
-    <>
+    <div class={`notification ${type}`} tabIndex="0">
       <div
         class={`notification-type notification-${type}`}
         title={new Date(notification.createdAt).toLocaleString()}
@@ -137,11 +360,13 @@ function Notification({ notification }) {
                   <Avatar
                     url={account.avatarStatic}
                     size={
-                      _accounts.length < 30
-                        ? 'xl'
+                      _accounts.length <= 10
+                        ? 'xxl'
                         : _accounts.length < 100
-                        ? 'l'
+                        ? 'xl'
                         : _accounts.length < 1000
+                        ? 'l'
+                        : _accounts.length < 2000
                         ? 'm'
                         : 's' // My god, this person is popular!
                     }
@@ -160,264 +385,6 @@ function Notification({ notification }) {
           >
             <Status status={status} size="s" />
           </Link>
-        )}
-      </div>
-    </>
-  );
-}
-
-function NotificationsList({ notifications, emptyCopy }) {
-  if (!notifications.length && emptyCopy) {
-    return <p class="timeline-empty">{emptyCopy}</p>;
-  }
-
-  // Create new flat list of notifications
-  // Combine sibling notifications based on type and status id, ignore the id
-  // Concat all notification.account into an array of _accounts
-  const notificationsMap = {};
-  const cleanNotifications = [];
-  for (let i = 0, j = 0; i < notifications.length; i++) {
-    const notification = notifications[i];
-    // const cleanNotification = cleanNotifications[j];
-    const { status, account, type, created_at } = notification;
-    const createdAt = new Date(created_at).toLocaleDateString();
-    const key = `${status?.id}-${type}-${createdAt}`;
-    const mappedNotification = notificationsMap[key];
-    if (mappedNotification?.account) {
-      mappedNotification._accounts.push(account);
-    } else {
-      let n = (notificationsMap[key] = {
-        ...notification,
-        _accounts: [account],
-      });
-      cleanNotifications[j++] = n;
-    }
-  }
-  // console.log({ notifications, cleanNotifications });
-
-  return (
-    <ul class="timeline flat">
-      {cleanNotifications.map((notification, i) => {
-        const { id, type } = notification;
-        return (
-          <li key={id} class={`notification ${type}`} tabIndex="0">
-            <Notification notification={notification} />
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-function Notifications() {
-  useTitle('Notifications');
-  const snapStates = useSnapshot(states);
-  const [uiState, setUIState] = useState('default');
-  const [showMore, setShowMore] = useState(false);
-  const [onlyMentions, setOnlyMentions] = useState(false);
-
-  console.debug('RENDER Notifications');
-
-  const notificationsIterator = useRef(
-    masto.v1.notifications.list({
-      limit: LIMIT,
-    }),
-  );
-  async function fetchNotifications(firstLoad) {
-    if (firstLoad) {
-      // Reset iterator
-      notificationsIterator.current = masto.v1.notifications.list({
-        limit: LIMIT,
-      });
-      states.notificationsNew = [];
-    }
-    const allNotifications = await notificationsIterator.current.next();
-    if (allNotifications.value?.length) {
-      const notificationsValues = allNotifications.value.map((notification) => {
-        saveStatus(notification.status, {
-          skipThreading: true,
-          override: false,
-        });
-        return notification;
-      });
-      if (firstLoad) {
-        states.notifications = notificationsValues;
-      } else {
-        states.notifications.push(...notificationsValues);
-      }
-    }
-    states.notificationsLastFetchTime = Date.now();
-    return allNotifications;
-  }
-
-  const loadNotifications = (firstLoad) => {
-    setUIState('loading');
-    (async () => {
-      try {
-        const { done } = await fetchNotifications(firstLoad);
-        setShowMore(!done);
-        setUIState('default');
-      } catch (e) {
-        setUIState('error');
-      }
-    })();
-  };
-
-  useEffect(() => {
-    loadNotifications(true);
-  }, []);
-
-  const scrollableRef = useRef();
-
-  // Group notifications by today, yesterday, and older
-  const groupedNotifications = snapStates.notifications.reduce(
-    (acc, notification) => {
-      const date = new Date(notification.createdAt);
-      const today = new Date();
-      const yesterday = new Date();
-      yesterday.setDate(today.getDate() - 1);
-      if (
-        date.getDate() === today.getDate() &&
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear()
-      ) {
-        acc.today.push(notification);
-      } else if (
-        date.getDate() === yesterday.getDate() &&
-        date.getMonth() === yesterday.getMonth() &&
-        date.getFullYear() === yesterday.getFullYear()
-      ) {
-        acc.yesterday.push(notification);
-      } else {
-        acc.older.push(notification);
-      }
-      return acc;
-    },
-    { today: [], yesterday: [], older: [] },
-  );
-  // console.log(groupedNotifications);
-  return (
-    <div
-      id="notifications-page"
-      class="deck-container"
-      ref={scrollableRef}
-      tabIndex="-1"
-    >
-      <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
-        <header
-          onClick={() => {
-            scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          <div class="header-side">
-            <Link to="/" class="button plain">
-              <Icon icon="home" size="l" />
-            </Link>
-          </div>
-          <h1>Notifications</h1>
-          <div class="header-side">
-            <Loader hidden={uiState !== 'loading'} />
-          </div>
-        </header>
-        {snapStates.notificationsNew.length > 0 && (
-          <button
-            class="updates-button"
-            type="button"
-            onClick={() => {
-              const uniqueNotificationsNew = snapStates.notificationsNew.filter(
-                (notification) =>
-                  !snapStates.notifications.some(
-                    (n) => n.id === notification.id,
-                  ),
-              );
-              states.notifications.unshift(...uniqueNotificationsNew);
-              loadNotifications(true);
-              states.notificationsNew = [];
-
-              scrollableRef.current?.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              });
-            }}
-          >
-            <Icon icon="arrow-up" /> New notifications
-          </button>
-        )}
-        <div id="mentions-option">
-          <label>
-            <input
-              type="checkbox"
-              checked={onlyMentions}
-              onChange={(e) => {
-                setOnlyMentions(e.target.checked);
-              }}
-            />{' '}
-            Only mentions
-          </label>
-        </div>
-        {snapStates.notifications.length ? (
-          <>
-            <h2 class="timeline-header">Today</h2>
-            <NotificationsList
-              notifications={groupedNotifications.today}
-              emptyCopy="You're all caught up."
-            />
-            {groupedNotifications.yesterday.length > 0 && (
-              <>
-                <h2 class="timeline-header">Yesterday</h2>
-                <NotificationsList
-                  notifications={groupedNotifications.yesterday}
-                />
-              </>
-            )}
-            {groupedNotifications.older.length > 0 && (
-              <>
-                <h2 class="timeline-header">Older</h2>
-                <NotificationsList notifications={groupedNotifications.older} />
-              </>
-            )}
-            {showMore && (
-              <button
-                type="button"
-                class="plain block"
-                disabled={uiState === 'loading'}
-                onClick={() => loadNotifications()}
-                style={{ marginBlockEnd: '6em' }}
-              >
-                {uiState === 'loading' ? <Loader /> : <>Show more&hellip;</>}
-              </button>
-            )}
-          </>
-        ) : (
-          <>
-            {uiState === 'loading' && (
-              <>
-                <h2 class="timeline-header">Today</h2>
-                <ul class="timeline flat">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <li class="notification skeleton">
-                      <div class="notification-type">
-                        <Icon icon="notification" size="xl" />
-                      </div>
-                      <div class="notification-content">
-                        <p>███████████ ████</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-            {uiState === 'error' && (
-              <p class="ui-state">
-                Unable to load notifications
-                <br />
-                <br />
-                <button type="button" onClick={() => loadNotifications(true)}>
-                  Try again
-                </button>
-              </p>
-            )}
-          </>
         )}
       </div>
     </div>
@@ -468,6 +435,31 @@ function FollowRequestButtons({ accountID, onChange }) {
       <Loader hidden={uiState !== 'loading'} />
     </p>
   );
+}
+
+function groupNotifications(notifications) {
+  // Create new flat list of notifications
+  // Combine sibling notifications based on type and status id
+  // Concat all notification.account into an array of _accounts
+  const notificationsMap = {};
+  const cleanNotifications = [];
+  for (let i = 0, j = 0; i < notifications.length; i++) {
+    const notification = notifications[i];
+    const { status, account, type, created_at } = notification;
+    const createdAt = new Date(created_at).toLocaleDateString();
+    const key = `${status?.id}-${type}-${createdAt}`;
+    const mappedNotification = notificationsMap[key];
+    if (mappedNotification?.account) {
+      mappedNotification._accounts.push(account);
+    } else {
+      let n = (notificationsMap[key] = {
+        ...notification,
+        _accounts: [account],
+      });
+      cleanNotifications[j++] = n;
+    }
+  }
+  return cleanNotifications;
 }
 
 export default memo(Notifications);

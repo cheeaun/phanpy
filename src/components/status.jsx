@@ -785,6 +785,11 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
                 ${isGIF ? '' : 'controls'}
                 playsinline
                 loop="${loopable}"
+                ${
+                  isGIF
+                    ? 'ondblclick="this.paused ? this.play() : this.pause()"'
+                    : ''
+                }
               ></video>
             `,
             }}

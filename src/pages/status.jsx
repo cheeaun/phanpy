@@ -9,6 +9,7 @@ import { InView } from 'react-intersection-observer';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
+import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -24,6 +25,7 @@ import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
+const THREAD_LIMIT = 20;
 
 let cachedStatusesMap = {};
 function resetScrollPosition(id) {
@@ -164,8 +166,16 @@ function StatusPage() {
             thread: s.account.id === heroStatus.account.id,
             replies: s.__replies?.map((r) => ({
               id: r.id,
+              account: r.account,
               repliesCount: r.repliesCount,
               content: r.content,
+              replies: r.__replies?.map((r2) => ({
+                // Level 3
+                id: r2.id,
+                account: r2.account,
+                repliesCount: r2.repliesCount,
+                content: r2.content,
+              })),
             })),
           })),
         ];
@@ -305,7 +315,7 @@ function StatusPage() {
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > LIMIT;
+  const hasManyStatuses = statuses.length > THREAD_LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
   const ancestors = statuses.filter((s) => s.ancestor);
 
@@ -405,17 +415,6 @@ function StatusPage() {
       >
         <header
           class={`${heroInView ? 'inview' : ''}`}
-          onClick={(e) => {
-            if (
-              !/^(a|button)$/i.test(e.target.tagName) &&
-              heroStatusRef.current
-            ) {
-              heroStatusRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }
-          }}
           onDblClick={(e) => {
             // reload statuses
             states.reloadStatusPage++;
@@ -428,23 +427,34 @@ function StatusPage() {
           </div> */}
           <h1>
             {!heroInView && heroStatus && uiState !== 'loading' ? (
-              <span class="hero-heading">
-                {!!heroPointer && (
-                  <>
-                    <Icon
-                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
-                    />{' '}
-                  </>
-                )}
-                <NameText showAvatar account={heroStatus.account} short />{' '}
-                <span class="insignificant">
-                  &bull;{' '}
-                  <RelativeTime
-                    datetime={heroStatus.createdAt}
-                    format="micro"
+              <>
+                <span class="hero-heading">
+                  <NameText showAvatar account={heroStatus.account} short />{' '}
+                  <span class="insignificant">
+                    &bull;{' '}
+                    <RelativeTime
+                      datetime={heroStatus.createdAt}
+                      format="micro"
+                    />
+                  </span>
+                </span>{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    heroStatusRef.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                  }}
+                >
+                  <Icon
+                    icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
                   />
-                </span>
-              </span>
+                </button>
+              </>
             ) : (
               <>
                 Status{' '}
@@ -551,24 +561,22 @@ function StatusPage() {
                         withinContext
                         size={thread || ancestor ? 'm' : 's'}
                       />
-                      {replies?.length > LIMIT && (
+                      {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
                           <span title={replies.length}>
                             {shortenNumber(replies.length)}
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </Link>
                   )}
-                  {descendant &&
-                    replies?.length > 0 &&
-                    replies?.length <= LIMIT && (
-                      <SubComments
-                        hasManyStatuses={hasManyStatuses}
-                        replies={replies}
-                      />
-                    )}
+                  {descendant && replies?.length > 0 && (
+                    <SubComments
+                      hasManyStatuses={hasManyStatuses}
+                      replies={replies}
+                    />
+                  )}
                   {uiState === 'loading' &&
                     isHero &&
                     !!heroStatus?.repliesCount &&
@@ -658,13 +666,31 @@ function SubComments({ hasManyStatuses, replies }) {
     isBrief = totalLength < 500;
   }
 
+  // Get the first 3 accounts, unique by id
+  const accounts = replies
+    .map((r) => r.account)
+    .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
+    .slice(0, 5);
+
   const open = isBrief || !hasManyStatuses;
 
   return (
     <details class="replies" open={open}>
       <summary hidden={open}>
-        <span title={replies.length}>{shortenNumber(replies.length)}</span> repl
-        {replies.length === 1 ? 'y' : 'ies'}
+        <span class="avatars">
+          {accounts.map((a) => (
+            <Avatar
+              key={a.id}
+              url={a.avatarStatic}
+              title={`${a.displayName} @${a.username}`}
+            />
+          ))}
+        </span>
+        <span>
+          <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
+          repl
+          {replies.length === 1 ? 'y' : 'ies'}
+        </span>
       </summary>
       <ul>
         {replies.map((r) => (
@@ -677,15 +703,21 @@ function SubComments({ hasManyStatuses, replies }) {
               }}
             >
               <Status statusID={r.id} withinContext size="s" />
-              {r.repliesCount > 0 && (
+              {/* {r.repliesCount > 0 && (
                 <div class="replies-link">
                   <Icon icon="comment" />{' '}
                   <span title={r.repliesCount}>
                     {shortenNumber(r.repliesCount)}
                   </span>
                 </div>
-              )}
+              )} */}
             </Link>
+            {r.replies?.length && (
+              <SubComments
+                hasManyStatuses={hasManyStatuses}
+                replies={r.replies}
+              />
+            )}
           </li>
         ))}
       </ul>

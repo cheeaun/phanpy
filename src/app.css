@@ -148,17 +148,26 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: none;
 }
 
+.timeline.contextual {
+  --thread-start: 40px;
+  --line-start: 40px;
+  --line-width: 3px;
+  --line-end: calc(var(--line-start) + var(--line-width));
+  --line-margin-end: 16px;
+  --line-radius: 10px;
+  --line-diameter: calc(var(--line-radius) * 2);
+  --avatar-size: 50px;
+  --avatar-margin-start: 16px;
+  --avatar-margin-end: 12px;
+}
 .timeline.contextual > li {
-  --width: 3px;
-  --left: 40px;
-  --right: calc(var(--left) + var(--width));
   background-image: linear-gradient(
     to right,
     transparent,
-    transparent var(--left),
-    var(--comment-line-color) var(--left),
-    var(--comment-line-color) var(--right),
-    transparent var(--right),
+    transparent var(--line-start),
+    var(--comment-line-color) var(--line-start),
+    var(--comment-line-color) var(--line-end),
+    transparent var(--line-end),
     transparent
   );
   background-repeat: no-repeat;
@@ -184,41 +193,83 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   > .status-link
   + .replies
   > summary {
-  margin-left: calc(50px + 16px + 12px);
+  margin-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
+  .replies
+  > summary {
+  margin-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      var(--line-margin-end)
+  );
 }
 .timeline.contextual
   > li.descendant.thread
   > .status-link
   + .replies
   .status-link {
-  padding-left: calc(50px + 16px + 12px);
+  padding-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
+  .replies
+  .status-link {
+  padding-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      var(--line-margin-end)
+  );
 }
 .timeline.contextual
   > li.descendant:not(.thread)
   > .status-link
   + .replies
   > summary {
-  margin-left: calc(40px + 16px);
+  margin-left: calc(var(--thread-start) + var(--line-margin-end));
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
+  .replies
+  > summary {
+  margin-left: calc(
+    var(--thread-start) + var(--line-margin-end) + var(--line-margin-end)
+  );
 }
 .timeline.contextual
   > li.descendant:not(.thread)
   > .status-link
   + .replies
   .status-link {
-  padding-left: calc(40px + 16px);
+  padding-left: calc(var(--thread-start) + var(--line-margin-end));
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
+  .replies
+  .status-link {
+  --line-margin-end: 32px;
 }
 .timeline.contextual > li.descendant:not(.thread):before {
-  --radius: 10px;
-  --diameter: calc(var(--radius) * 2);
   content: '';
   position: absolute;
   top: 10px;
-  left: 40px;
-  width: var(--diameter);
-  height: var(--diameter);
-  border-radius: var(--radius);
+  left: var(--line-start);
+  width: var(--line-diameter);
+  height: var(--line-diameter);
+  border-radius: var(--line-radius);
   border-style: solid;
-  border-width: var(--width);
+  border-width: var(--line-width);
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
 }
@@ -230,7 +281,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   font-size: 90%;
 }
 .timeline.contextual > li.thread > .status-link .replies-link {
-  margin-left: calc(50px + 16px + 12px);
+  margin-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
 }
 .timeline.contextual > li .replies-link * {
   vertical-align: middle;
@@ -243,7 +296,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 0;
   list-style: none;
 }
-.timeline.contextual > li .replies summary {
+.timeline.contextual > li .replies > summary {
   padding: 8px 16px;
   background-color: var(--bg-faded-color);
   display: inline-block;
@@ -256,9 +309,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   user-select: none;
   box-shadow: 0 0 0 2px var(--bg-color);
   position: relative;
+  list-style: none;
 }
-.timeline.contextual > li .replies summary:active,
-.timeline.contextual > li .replies[open] summary {
+.timeline.contextual > li .replies > summary > * {
+  vertical-align: middle;
+}
+.timeline.contextual > li .replies > summary .avatars {
+  margin-right: 8px;
+}
+.timeline.contextual > li .replies > summary:active,
+.timeline.contextual > li .replies[open] > summary {
   color: var(--text-color);
   background-color: var(--comment-line-color);
   background-image: linear-gradient(
@@ -267,7 +327,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--bg-faded-color)
   );
 }
-.timeline.contextual > li .replies[open] summary {
+.timeline.contextual > li .replies[open] > summary {
   border-bottom-left-radius: 0;
 }
 .timeline.contextual > li .replies summary[hidden] {
@@ -277,43 +337,66 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
 }
 .timeline.contextual > li .replies li {
-  --width: 3px;
-  --left: calc(40px + 16px);
-  --right: calc(var(--left) + var(--width));
+  --line-start: calc(var(--thread-start) + var(--line-margin-end));
+  --line-end: calc(var(--line-start) + var(--line-width));
   background-image: linear-gradient(
     to right,
     transparent,
-    transparent var(--left),
-    var(--comment-line-color) var(--left),
-    var(--comment-line-color) var(--right),
-    transparent var(--right),
+    transparent var(--line-start),
+    var(--comment-line-color) var(--line-start),
+    var(--comment-line-color) var(--line-end),
+    transparent var(--line-end),
     transparent
   );
   background-repeat: no-repeat;
 }
+.timeline.contextual > li .replies .replies li {
+  --line-start: calc(
+    var(--thread-start) + var(--line-margin-end) + var(--line-margin-end)
+  );
+}
 .timeline.contextual > li.thread .replies li {
-  --left: calc(50px + 16px + 12px);
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
+}
+.timeline.contextual > li.thread .replies .replies li {
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      var(--line-margin-end)
+  );
 }
 .timeline.contextual > li .replies li:last-child {
   background-size: 100% 20px;
 }
 .timeline.contextual > li .replies li:before {
-  --radius: 10px;
-  --diameter: calc(var(--radius) * 2);
   content: '';
   position: absolute;
   top: 10px;
-  left: calc(40px + 16px);
-  width: var(--diameter);
-  height: var(--diameter);
-  border-radius: var(--radius);
+  left: var(--line-start);
+  width: var(--line-diameter);
+  height: var(--line-diameter);
+  border-radius: var(--line-radius);
   border-style: solid;
-  border-width: var(--width);
+  border-width: var(--line-width);
   border-color: transparent transparent var(--comment-line-color) transparent;
   transform: rotate(45deg);
 }
+.timeline.contextual > li .replies .replies li:before {
+  --line-start: calc(
+    var(--thread-start) + var(--line-margin-end) + var(--line-margin-end)
+  );
+}
 .timeline.contextual > li.thread .replies li:before {
-  left: calc(50px + 16px + 12px);
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
+}
+.timeline.contextual > li.thread .replies .replies li:before {
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      var(--line-margin-end)
+  );
 }
 .timeline.contextual.loading > li:not(.hero) {
   /* opacity: 0.5; */

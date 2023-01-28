@@ -1,5 +1,6 @@
 import './status.css';
 
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -472,6 +473,34 @@ function StatusPage() {
           </h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
+            <Menu
+              align="end"
+              portal={{
+                // Need this, else the menu click will cause scroll jump
+                target: scrollableRef.current,
+              }}
+              menuButton={
+                <button type="button" class="button plain4">
+                  <Icon icon="more" alt="Actions" size="xl" />
+                </button>
+              }
+            >
+              <MenuItem
+                onClick={() => {
+                  // Click all buttons with class .spoiler but not .spoiling
+                  const buttons = Array.from(
+                    scrollableRef.current.querySelectorAll(
+                      'button.spoiler:not(.spoiling)',
+                    ),
+                  );
+                  buttons.forEach((button) => {
+                    button.click();
+                  });
+                }}
+              >
+                <Icon icon="eye-open" /> <span>Show all sensitive content</span>
+              </MenuItem>
+            </Menu>
             <Link class="button plain deck-close" to={closeLink}>
               <Icon icon="x" size="xl" />
             </Link>

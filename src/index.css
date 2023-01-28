@@ -169,6 +169,13 @@ button,
   color: var(--button-text-color);
   backdrop-filter: blur(12px) invert(0.25);
 }
+:is(button, .button).plain4 {
+  background-color: transparent;
+  color: var(--text-insignificant-color);
+}
+:is(button, .button).plain4:not(:disabled, .disabled):is(:hover, :focus) {
+  color: var(--text-color);
+}
 :is(button, .button).light {
   background-color: var(--bg-faded-color);
   color: var(--text-color);

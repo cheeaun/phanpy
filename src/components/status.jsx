@@ -325,7 +325,7 @@ function Status({
                 <p>{spoilerText}</p>
               </div>
               <button
-                class="light spoiler"
+                class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
@@ -376,7 +376,7 @@ function Status({
           )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
             <button
-              class="plain spoiler"
+              class={`plain spoiler ${showSpoiler ? 'spoiling' : ''}`}
               type="button"
               onClick={(e) => {
                 e.preventDefault();

@@ -818,6 +818,9 @@ button.carousel-dot:is(.active, [disabled].active) {
 .szh-menu .szh-menu__item {
   padding: 8px 16px !important;
 }
+.szh-menu .szh-menu__item * {
+  vertical-align: middle;
+}
 .szh-menu
   .szh-menu__item:not(.szh-menu__item--disabled, .szh-menu__item--hover) {
   color: var(--text-color);

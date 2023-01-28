@@ -315,13 +315,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   left: calc(50px + 16px + 12px);
 }
 .timeline.contextual.loading > li:not(.hero) {
-  opacity: 0.5;
+  /* opacity: 0.5; */
   pointer-events: none;
-  /* background-image: none !important; */
 }
-/* .timeline.contextual.loading > li:not(.hero):before {
-  content: none !important;
-} */
 
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);

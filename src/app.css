@@ -115,6 +115,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 0;
   font-size: 1.2em;
   text-align: center;
+  white-space: nowrap;
 }
 .deck > header h1:first-child {
   text-align: left;
@@ -970,6 +971,24 @@ meter.donut:is(.danger, .explode):after {
   text-align: center;
   padding: 16px 0;
   display: block;
+}
+
+/* 404 */
+
+#not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  cursor: default;
+  color: var(--text-insignificant-color);
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    var(--bg-color) 25%,
+    var(--bg-faded-color)
+  );
+  text-shadow: 0 1px var(--bg-color);
 }
 
 @media (min-width: 40em) {

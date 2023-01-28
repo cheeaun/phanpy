@@ -2,7 +2,7 @@ import './app.css';
 import 'toastify-js/src/toastify.css';
 
 import debounce from 'just-debounce-it';
-import { login } from 'masto';
+import { createClient } from 'masto';
 import {
   useEffect,
   useLayoutEffect,
@@ -21,10 +21,15 @@ import Icon from './components/icon';
 import Link from './components/link';
 import Loader from './components/loader';
 import Modal from './components/modal';
+import NotFound from './pages/404';
 import Bookmarks from './pages/bookmarks';
+import Favourites from './pages/favourites';
+import Hashtags from './pages/hashtags';
 import Home from './pages/home';
+import Lists from './pages/lists';
 import Login from './pages/login';
 import Notifications from './pages/notifications';
+import Public from './pages/public';
 import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
@@ -74,11 +79,9 @@ function App() {
         const { access_token: accessToken } = tokenJSON;
         store.session.set('accessToken', accessToken);
 
-        window.masto = await login({
+        initMasto({
           url: `https://${instanceURL}`,
           accessToken,
-          disableVersionCheck: true,
-          timeout: 30_000,
         });
 
         const mastoAccount = await masto.v1.accounts.verifyCredentials();
@@ -112,22 +115,12 @@ function App() {
       const instanceURL = account.instanceURL;
       const accessToken = account.accessToken;
       store.session.set('currentAccount', account.info.id);
+      if (accessToken) setIsLoggedIn(true);
 
-      (async () => {
-        try {
-          setUIState('loading');
-          window.masto = await login({
-            url: `https://${instanceURL}`,
-            accessToken,
-            disableVersionCheck: true,
-            timeout: 30_000,
-          });
-          setIsLoggedIn(true);
-        } catch (e) {
-          setIsLoggedIn(false);
-        }
-        setUIState('default');
-      })();
+      initMasto({
+        url: `https://${instanceURL}`,
+        accessToken,
+      });
     } else {
       setUIState('default');
     }
@@ -164,34 +157,8 @@ function App() {
   useEffect(() => {
     // HACK: prevent this from running again due to HMR
     if (states.init) return;
-
     if (isLoggedIn) {
-      requestAnimationFrame(() => {
-        // startStream();
-        startVisibility();
-
-        // Collect instance info
-        (async () => {
-          // Request v2, fallback to v1 if fail
-          let info;
-          try {
-            info = await masto.v2.instance.fetch();
-          } catch (e) {}
-          if (!info) {
-            try {
-              info = await masto.v1.instances.fetch();
-            } catch (e) {}
-          }
-          if (!info) return;
-          console.log(info);
-          const { uri, domain } = info;
-          if (uri || domain) {
-            const instances = store.local.getJSON('instances') || {};
-            instances[(domain || uri).toLowerCase()] = info;
-            store.local.setJSON('instances', instances);
-          }
-        })();
-      });
+      requestAnimationFrame(startVisibility);
       states.init = true;
     }
   }, [isLoggedIn]);
@@ -211,7 +178,7 @@ function App() {
 
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/\/(login|welcome)$/.test(pathname);
+    return !/^\/(login|welcome|p)/.test(pathname);
   }, [location]);
 
   return (
@@ -236,7 +203,12 @@ function App() {
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}
-        {isLoggedIn && <Route path="/bookmarks" element={<Bookmarks />} />}
+        {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
+        {isLoggedIn && <Route path="/f" element={<Favourites />} />}
+        {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
+        {isLoggedIn && <Route path="/t/:hashtag" element={<Hashtags />} />}
+        <Route path="/p/l?/:instance" element={<Public />} />
+        {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>
         {isLoggedIn && <Route path="/s/:id" element={<Status />} />}
@@ -344,6 +316,50 @@ function App() {
   );
 }
 
+function initMasto(params) {
+  const clientParams = {
+    url: params.url || 'https://mastodon.social',
+    accessToken: params.accessToken || null,
+    disableVersionCheck: true,
+    timeout: 30_000,
+  };
+  window.masto = createClient(clientParams);
+
+  (async () => {
+    // Request v2, fallback to v1 if fail
+    let info;
+    try {
+      info = await masto.v2.instance.fetch();
+    } catch (e) {}
+    if (!info) {
+      try {
+        info = await masto.v1.instances.fetch();
+      } catch (e) {}
+    }
+    if (!info) return;
+    console.log(info);
+    const {
+      // v1
+      uri,
+      urls: { streamingApi } = {},
+      // v2
+      domain,
+      configuration: { urls: { streaming } = {} } = {},
+    } = info;
+    if (uri || domain) {
+      const instances = store.local.getJSON('instances') || {};
+      instances[(domain || uri).toLowerCase()] = info;
+      store.local.setJSON('instances', instances);
+    }
+    if (streamingApi || streaming) {
+      window.masto = createClient({
+        ...clientParams,
+        streamingApiUrl: streaming || streamingApi,
+      });
+    }
+  })();
+}
+
 let ws;
 async function startStream() {
   if (
@@ -417,18 +433,18 @@ async function startStream() {
   };
 }
 
+let lastHidden;
 function startVisibility() {
   const handleVisible = (visible) => {
     if (!visible) {
       const timestamp = Date.now();
-      store.session.set('lastHidden', timestamp);
+      lastHidden = timestamp;
     } else {
       const timestamp = Date.now();
-      const lastHidden = store.session.get('lastHidden');
       const diff = timestamp - lastHidden;
       const diffMins = Math.round(diff / 1000 / 60);
-      if (diffMins > 1) {
-        console.log('visible', { lastHidden, diffMins });
+      console.log(`visible: ${visible}`, { lastHidden, diffMins });
+      if (!lastHidden || diffMins > 1) {
         (async () => {
           try {
             const firstStatusID = states.homeLast?.id;
@@ -492,6 +508,7 @@ function startVisibility() {
     console.log('VISIBILITY: ' + (hidden ? 'hidden' : 'visible'));
   };
   document.addEventListener('visibilitychange', handleVisibilityChange);
+  requestAnimationFrame(handleVisibilityChange);
   return {
     stop: () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);

@@ -33,7 +33,11 @@ import Link from './link';
 import RelativeTime from './relative-time';
 
 function fetchAccount(id) {
-  return masto.v1.accounts.fetch(id);
+  try {
+    return masto.v1.accounts.fetch(id);
+  } catch (e) {
+    return Promise.reject(e);
+  }
 }
 const memFetchAccount = mem(fetchAccount);
 

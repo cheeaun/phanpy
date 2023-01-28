@@ -144,8 +144,8 @@ function StatusPage() {
               }
               parent.__replies.push(status);
             } else {
-              // If no parent, it's probably a reply to a reply to a reply, level 3
-              console.warn('[LEVEL 3] No parent found for', status);
+              // If no parent, something is wrong
+              console.warn('No parent found for', status);
             }
           }
         });
@@ -175,6 +175,13 @@ function StatusPage() {
                 account: r2.account,
                 repliesCount: r2.repliesCount,
                 content: r2.content,
+                replies: r2.__replies?.map((r3) => ({
+                  // Level 4
+                  id: r3.id,
+                  account: r3.account,
+                  repliesCount: r3.repliesCount,
+                  content: r3.content,
+                })),
               })),
             })),
           })),
@@ -703,14 +710,14 @@ function SubComments({ hasManyStatuses, replies }) {
               }}
             >
               <Status statusID={r.id} withinContext size="s" />
-              {/* {r.repliesCount > 0 && (
+              {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">
                   <Icon icon="comment" />{' '}
                   <span title={r.repliesCount}>
                     {shortenNumber(r.repliesCount)}
                   </span>
                 </div>
-              )} */}
+              )}
             </Link>
             {r.replies?.length && (
               <SubComments

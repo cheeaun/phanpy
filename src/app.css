@@ -212,6 +212,18 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   > li.descendant.thread
   > .status-link
   + .replies
+  .replies
+  .replies
+  > summary {
+  margin-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * 2)
+  );
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
   .status-link {
   padding-left: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
@@ -226,6 +238,18 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding-left: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       var(--line-margin-end)
+  );
+}
+.timeline.contextual
+  > li.descendant.thread
+  > .status-link
+  + .replies
+  .replies
+  .replies
+  .status-link {
+  padding-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * 2)
   );
 }
 .timeline.contextual
@@ -249,6 +273,17 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   > li.descendant:not(.thread)
   > .status-link
   + .replies
+  .replies
+  .replies
+  > summary {
+  margin-left: calc(
+    var(--thread-start) + var(--line-margin-end) + (var(--line-margin-end) * 2)
+  );
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
   .status-link {
   padding-left: calc(var(--thread-start) + var(--line-margin-end));
 }
@@ -258,7 +293,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   .replies
   .status-link {
-  --line-margin-end: 32px;
+  padding-left: calc(var(--thread-start) + (var(--line-margin-end) * 2));
+}
+.timeline.contextual
+  > li.descendant:not(.thread)
+  > .status-link
+  + .replies
+  .replies
+  .replies
+  .status-link {
+  padding-left: calc(var(--thread-start) + (var(--line-margin-end) * 3));
 }
 .timeline.contextual > li.descendant:not(.thread):before {
   content: '';
@@ -351,9 +395,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background-repeat: no-repeat;
 }
 .timeline.contextual > li .replies .replies li {
-  --line-start: calc(
-    var(--thread-start) + var(--line-margin-end) + var(--line-margin-end)
-  );
+  --line-start: calc(var(--thread-start) + (var(--line-margin-end) * 2));
+}
+.timeline.contextual > li .replies .replies .replies li {
+  --line-start: calc(var(--thread-start) + (var(--line-margin-end) * 3));
 }
 .timeline.contextual > li.thread .replies li {
   --line-start: calc(
@@ -364,6 +409,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       var(--line-margin-end)
+  );
+}
+.timeline.contextual > li.thread .replies .replies .replies li {
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * 2)
   );
 }
 .timeline.contextual > li .replies li:last-child {
@@ -387,6 +438,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--thread-start) + var(--line-margin-end) + var(--line-margin-end)
   );
 }
+.timeline.contextual > li .replies .replies .replies li:before {
+  --line-start: calc(
+    var(--thread-start) + var(--line-margin-end) + (var(--line-margin-end) * 2)
+  );
+}
 .timeline.contextual > li.thread .replies li:before {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
@@ -396,6 +452,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       var(--line-margin-end)
+  );
+}
+.timeline.contextual > li.thread .replies .replies .replies li:before {
+  --line-start: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * 2)
   );
 }
 .timeline.contextual.loading > li:not(.hero) {

@@ -20,6 +20,7 @@ import Drafts from './components/drafts';
 import Icon from './components/icon';
 import Link from './components/link';
 import Loader from './components/loader';
+import MediaModal from './components/media-modal';
 import Modal from './components/modal';
 import NotFound from './pages/404';
 import Bookmarks from './pages/bookmarks';
@@ -310,6 +311,27 @@ function App() {
           }}
         >
           <Drafts />
+        </Modal>
+      )}
+      {!!snapStates.showMediaModal && (
+        <Modal
+          onClick={(e) => {
+            if (
+              e.target === e.currentTarget ||
+              e.target.classList.contains('media')
+            ) {
+              states.showMediaModal = false;
+            }
+          }}
+        >
+          <MediaModal
+            mediaAttachments={snapStates.showMediaModal.mediaAttachments}
+            index={snapStates.showMediaModal.index}
+            statusID={snapStates.showMediaModal.statusID}
+            onClose={() => {
+              states.showMediaModal = false;
+            }}
+          />
         </Modal>
       )}
     </>

@@ -30,6 +30,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
+import Media from './media';
 import RelativeTime from './relative-time';
 
 function fetchAccount(id) {
@@ -150,8 +151,6 @@ function Status({
       console.log(status);
     }
   };
-
-  const [showMediaModal, setShowMediaModal] = useState(false);
 
   if (reblog) {
     return (
@@ -408,7 +407,11 @@ function Status({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setShowMediaModal(i);
+                      states.showMediaModal = {
+                        mediaAttachments,
+                        index: i,
+                        statusID: readOnly ? null : id,
+                      };
                     }}
                   />
                 ))}
@@ -621,17 +624,6 @@ function Status({
           </>
         )}
       </div>
-      {showMediaModal !== false && (
-        <Modal>
-          <Carousel
-            mediaAttachments={mediaAttachments}
-            index={showMediaModal}
-            onClose={() => {
-              setShowMediaModal(false);
-            }}
-          />
-        </Modal>
-      )}
       {!!showEdited && (
         <Modal
           onClick={(e) => {
@@ -652,198 +644,6 @@ function Status({
       )}
     </article>
   );
-}
-
-/*
-Media type
-===
-unknown = unsupported or unrecognized file type
-image = Static image
-gifv = Looping, soundless animation
-video = Video clip
-audio = Audio track
-*/
-
-function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
-  const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
-    media;
-  const { original, small, focus } = meta || {};
-
-  const width = showOriginal ? original?.width : small?.width;
-  const height = showOriginal ? original?.height : small?.height;
-  const mediaURL = showOriginal ? url : previewUrl;
-
-  const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
-
-  const videoRef = useRef();
-
-  let focalBackgroundPosition;
-  if (focus) {
-    // Convert focal point to CSS background position
-    // Formula from jquery-focuspoint
-    // x = -1, y = 1 => 0% 0%
-    // x = 0, y = 0 => 50% 50%
-    // x = 1, y = -1 => 100% 100%
-    const x = ((focus.x + 1) / 2) * 100;
-    const y = ((1 - focus.y) / 2) * 100;
-    focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
-  }
-
-  if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
-    // Note: type: unknown might not have width/height
-    return (
-      <div
-        class={`media media-image`}
-        onClick={onClick}
-        style={
-          showOriginal && {
-            backgroundImage: `url(${previewUrl})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            aspectRatio: `${width}/${height}`,
-            width,
-            height,
-            maxWidth: '100%',
-            maxHeight: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }
-        }
-      >
-        <img
-          src={mediaURL}
-          alt={description}
-          width={width}
-          height={height}
-          loading={showOriginal ? 'eager' : 'lazy'}
-          style={
-            !showOriginal && {
-              backgroundColor:
-                rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-              backgroundPosition: focalBackgroundPosition || 'center',
-            }
-          }
-        />
-      </div>
-    );
-  } else if (type === 'gifv' || type === 'video') {
-    const shortDuration = original.duration < 31;
-    const isGIF = type === 'gifv' && shortDuration;
-    // If GIF is too long, treat it as a video
-    const loopable = original.duration < 61;
-    const formattedDuration = formatDuration(original.duration);
-    const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
-    const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
-    return (
-      <div
-        class={`media media-${isGIF ? 'gif' : 'video'} ${
-          autoGIFAnimate ? 'media-contain' : ''
-        }`}
-        data-formatted-duration={formattedDuration}
-        data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
-        style={{
-          backgroundColor:
-            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-        }}
-        onClick={(e) => {
-          if (hoverAnimate) {
-            try {
-              videoRef.current.pause();
-            } catch (e) {}
-          }
-          onClick(e);
-        }}
-        onMouseEnter={() => {
-          if (hoverAnimate) {
-            try {
-              videoRef.current.play();
-            } catch (e) {}
-          }
-        }}
-        onMouseLeave={() => {
-          if (hoverAnimate) {
-            try {
-              videoRef.current.pause();
-            } catch (e) {}
-          }
-        }}
-      >
-        {showOriginal || autoGIFAnimate ? (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video
-                src="${url}"
-                poster="${previewUrl}"
-                width="${width}"
-                height="${height}"
-                preload="auto"
-                autoplay
-                muted="${isGIF}"
-                ${isGIF ? '' : 'controls'}
-                playsinline
-                loop="${loopable}"
-                ${
-                  isGIF
-                    ? 'ondblclick="this.paused ? this.play() : this.pause()"'
-                    : ''
-                }
-              ></video>
-            `,
-            }}
-          />
-        ) : isGIF ? (
-          <video
-            ref={videoRef}
-            src={url}
-            poster={previewUrl}
-            width={width}
-            height={height}
-            preload="auto"
-            // controls
-            playsinline
-            loop
-            muted
-          />
-        ) : (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            loading="lazy"
-          />
-        )}
-      </div>
-    );
-  } else if (type === 'audio') {
-    const formattedDuration = formatDuration(original.duration);
-    return (
-      <div
-        class="media media-audio"
-        data-formatted-duration={formattedDuration}
-        onClick={onClick}
-      >
-        {showOriginal ? (
-          <audio src={remoteUrl || url} preload="none" controls autoplay />
-        ) : previewUrl ? (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            loading="lazy"
-          />
-        ) : null}
-      </div>
-    );
-  }
 }
 
 function Card({ card }) {
@@ -1261,224 +1061,7 @@ function StatusButton({
   );
 }
 
-function Carousel({ mediaAttachments, index = 0, onClose = () => {} }) {
-  const carouselRef = useRef(null);
-
-  const [currentIndex, setCurrentIndex] = useState(index);
-  const carouselFocusItem = useRef(null);
-  useLayoutEffect(() => {
-    carouselFocusItem.current?.scrollIntoView();
-  }, []);
-
-  const [showControls, setShowControls] = useState(true);
-
-  useEffect(() => {
-    let handleSwipe = () => {
-      onClose();
-    };
-    if (carouselRef.current) {
-      carouselRef.current.addEventListener('swiped-down', handleSwipe);
-    }
-    return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('swiped-down', handleSwipe);
-      }
-    };
-  }, []);
-
-  useHotkeys('esc', onClose, [onClose]);
-
-  const [showMediaAlt, setShowMediaAlt] = useState(false);
-
-  useEffect(() => {
-    let handleScroll = () => {
-      const { clientWidth, scrollLeft } = carouselRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
-      setCurrentIndex(index);
-    };
-    if (carouselRef.current) {
-      carouselRef.current.addEventListener('scroll', handleScroll, {
-        passive: true,
-      });
-    }
-    return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
-  return (
-    <>
-      <div
-        ref={carouselRef}
-        tabIndex="-1"
-        data-swipe-threshold="44"
-        class="carousel"
-        onClick={(e) => {
-          if (
-            e.target.classList.contains('carousel-item') ||
-            e.target.classList.contains('media')
-          ) {
-            onClose();
-          }
-        }}
-      >
-        {mediaAttachments?.map((media, i) => {
-          const { blurhash } = media;
-          const rgbAverageColor = blurhash
-            ? getBlurHashAverageColor(blurhash)
-            : null;
-          return (
-            <div
-              class="carousel-item"
-              style={{
-                '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
-                '--average-color-alpha': `rgba(${rgbAverageColor?.join(
-                  ',',
-                )}, .5)`,
-              }}
-              tabindex="0"
-              key={media.id}
-              ref={i === currentIndex ? carouselFocusItem : null}
-              onClick={(e) => {
-                if (e.target !== e.currentTarget) {
-                  setShowControls(!showControls);
-                }
-              }}
-            >
-              {!!media.description && (
-                <button
-                  type="button"
-                  class="plain2 media-alt"
-                  hidden={!showControls}
-                  onClick={() => {
-                    setShowMediaAlt(media.description);
-                  }}
-                >
-                  <span class="tag">ALT</span>{' '}
-                  <span class="media-alt-desc">{media.description}</span>
-                </button>
-              )}
-              <Media media={media} showOriginal />
-            </div>
-          );
-        })}
-      </div>
-      <div class="carousel-top-controls" hidden={!showControls}>
-        <span>
-          <button
-            type="button"
-            class="carousel-button plain3"
-            onClick={() => onClose()}
-          >
-            <Icon icon="x" />
-          </button>
-        </span>
-        {mediaAttachments?.length > 1 ? (
-          <span class="carousel-dots">
-            {mediaAttachments?.map((media, i) => (
-              <button
-                key={media.id}
-                type="button"
-                disabled={i === currentIndex}
-                class={`plain carousel-dot ${
-                  i === currentIndex ? 'active' : ''
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * i,
-                    behavior: 'smooth',
-                  });
-                }}
-              >
-                &bull;
-              </button>
-            ))}
-          </span>
-        ) : (
-          <span />
-        )}
-        <span>
-          <a
-            href={
-              mediaAttachments[currentIndex]?.remoteUrl ||
-              mediaAttachments[currentIndex]?.url
-            }
-            target="_blank"
-            class="button carousel-button plain3"
-            title="Open original media in new window"
-          >
-            <Icon icon="popout" alt="Open original media in new window" />
-          </a>{' '}
-        </span>
-      </div>
-      {mediaAttachments?.length > 1 && (
-        <div class="carousel-controls" hidden={!showControls}>
-          <button
-            type="button"
-            class="carousel-button plain3"
-            hidden={currentIndex === 0}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              carouselRef.current.scrollTo({
-                left: carouselRef.current.clientWidth * (currentIndex - 1),
-                behavior: 'smooth',
-              });
-            }}
-          >
-            <Icon icon="arrow-left" />
-          </button>
-          <button
-            type="button"
-            class="carousel-button plain3"
-            hidden={currentIndex === mediaAttachments.length - 1}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              carouselRef.current.scrollTo({
-                left: carouselRef.current.clientWidth * (currentIndex + 1),
-                behavior: 'smooth',
-              });
-            }}
-          >
-            <Icon icon="arrow-right" />
-          </button>
-        </div>
-      )}
-      {!!showMediaAlt && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMediaAlt(false);
-            }
-          }}
-        >
-          <div class="sheet">
-            <header>
-              <h2>Media description</h2>
-            </header>
-            <main>
-              <p
-                style={{
-                  whiteSpace: 'pre-wrap',
-                }}
-              >
-                {showMediaAlt}
-              </p>
-            </main>
-          </div>
-        </Modal>
-      )}
-    </>
-  );
-}
-
-function formatDuration(time) {
+export function formatDuration(time) {
   if (!time) return;
   let hours = Math.floor(time / 3600);
   let minutes = Math.floor((time % 3600) / 60);

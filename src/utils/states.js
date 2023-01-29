@@ -26,6 +26,7 @@ const states = proxy({
   showSettings: false,
   showAccount: false,
   showDrafts: false,
+  showMediaModal: false,
   composeCharacterCount: 0,
   settings: {
     boostsCarousel: store.local.get('settings:boostsCarousel')

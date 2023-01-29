@@ -316,6 +316,9 @@ function StatusPage() {
     if (!pathname || pathname.startsWith('/s/')) return '/';
     return pathname;
   }, []);
+  const onClose = () => {
+    states.showMediaModal = false;
+  };
 
   const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
@@ -338,6 +341,7 @@ function StatusPage() {
 
   useHotkeys(['esc', 'backspace'], () => {
     // location.hash = closeLink;
+    onClose();
     navigate(closeLink);
   });
 
@@ -413,7 +417,7 @@ function StatusPage() {
 
   return (
     <div class="deck-backdrop">
-      <Link to={closeLink}></Link>
+      <Link to={closeLink} onClick={onClose}></Link>
       <div
         tabIndex="-1"
         ref={scrollableRef}
@@ -519,7 +523,11 @@ function StatusPage() {
                 <Icon icon="eye-open" /> <span>Show all sensitive content</span>
               </MenuItem>
             </Menu>
-            <Link class="button plain deck-close" to={closeLink}>
+            <Link
+              class="button plain deck-close"
+              to={closeLink}
+              onClick={onClose}
+            >
               <Icon icon="x" size="xl" />
             </Link>
           </div>

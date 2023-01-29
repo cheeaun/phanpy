@@ -732,6 +732,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overscroll-behavior: contain;
   touch-action: pan-x;
   user-select: none;
+  width: 100%;
 }
 .carousel::-webkit-scrollbar {
   display: none;
@@ -743,7 +744,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   height: 100dvh;
   background-color: var(--average-color-alpha);
@@ -756,7 +757,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .carousel > * :is(img, video) {
   width: auto;
-  max-width: 100vw;
+  max-width: 100%;
   height: auto;
   max-height: 100vh;
   max-height: 100dvh;
@@ -824,8 +825,8 @@ button.carousel-dot:is(.active, [disabled].active) {
     transition: transform 0.2s ease-in-out;
   }
   .carousel-controls {
-    transform: scaleX(200%);
-    transition: transform 0.2s ease-in-out;
+    transform: scale(0);
+    /* transition: transform 0.2s ease-in-out; */
   }
   :is(.carousel-top-controls, .carousel-controls)[hidden] {
     opacity: 1;
@@ -843,6 +844,28 @@ button.carousel-dot:is(.active, [disabled].active) {
   .carousel :is(img, video) {
     /* No need fade out if inside carousel */
     filter: none;
+  }
+}
+
+/* CAROUSEL + STATUS PAGE COMBO */
+
+@media (min-width: calc(40em + 350px)) {
+  #modal-container > div,
+  .status-deck {
+    transition: all 0.3s ease-in-out;
+  }
+  /* Don't do this if there's a modal sheet (.sheet) */
+  :has(#modal-container .carousel):has(.status-deck):not(:has(.sheet))
+    .status-deck {
+    width: 350px;
+    min-width: 0;
+  }
+  :has(#modal-container .carousel):has(.status-deck):not(:has(.sheet))
+    #modal-container
+    > div {
+    left: 0;
+    right: 350px;
+    width: auto;
   }
 }
 

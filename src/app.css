@@ -849,7 +849,14 @@ button.carousel-dot:is(.active, [disabled].active) {
 
 /* CAROUSEL + STATUS PAGE COMBO */
 
+.media-post-link .button-label {
+  display: none;
+}
+
 @media (min-width: calc(40em + 350px)) {
+  .media-post-link .button-label {
+    display: inline;
+  }
   #modal-container > div,
   .status-deck {
     transition: all 0.3s ease-in-out;

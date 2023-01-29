@@ -165,7 +165,7 @@ function MediaModal({
           {!isStatusLocation && (
             <Link
               to={`/s/${statusID}`}
-              class="button carousel-button plain3"
+              class="button carousel-button media-post-link plain3"
               onClick={() => {
                 // if small screen (not media query min-width 40em + 350px), run onClose
                 if (
@@ -175,7 +175,7 @@ function MediaModal({
                 }
               }}
             >
-              See post &raquo;
+              <span class="button-label">See post </span>&raquo;
             </Link>
           )}{' '}
           <a

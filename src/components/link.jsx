@@ -17,11 +17,12 @@ const Link = (props) => {
   } catch (e) {}
   let hash = (location.hash || '').replace(/^#/, '').trim();
   if (hash === '') hash = '/';
-  const isActive = hash === props.to;
+  const { to, ...restProps } = props;
+  const isActive = hash === to;
   return (
     <a
-      href={`#${props.to}`}
-      {...props}
+      href={`#${to}`}
+      {...restProps}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
       onClick={(e) => {
         if (routerLocation) states.prevLocation = routerLocation;

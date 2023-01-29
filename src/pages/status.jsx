@@ -308,6 +308,7 @@ function StatusPage() {
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
       : 'Status',
+    '/s/:id',
   );
 
   const closeLink = useMemo(() => {

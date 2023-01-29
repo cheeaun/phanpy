@@ -12,10 +12,12 @@ import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
+import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Home({ hidden }) {
+  useTitle('Home', '/');
   const snapStates = useSnapshot(states);
   const isHomeLocation = snapStates.currentLocation === '/';
   const [uiState, setUIState] = useState('default');

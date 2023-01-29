@@ -11,9 +11,10 @@ import store from '../utils/store';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import Link from './link';
 import NameText from './name-text';
 
-function Account({ account }) {
+function Account({ account, onClose }) {
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -217,21 +218,31 @@ function Account({ account }) {
                 </div>
               )}
               <p class="stats">
-                <span>
-                  <b title={statusesCount}>{shortenNumber(statusesCount)}</b>{' '}
+                <Link to={`/a/${id}`} onClick={onClose}>
                   Posts
-                </span>
+                  <br />
+                  <b title={statusesCount}>
+                    {shortenNumber(statusesCount)}
+                  </b>{' '}
+                </Link>
                 <span>
-                  <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
                   Following
+                  <br />
+                  <b title={followingCount}>
+                    {shortenNumber(followingCount)}
+                  </b>{' '}
                 </span>
                 <span>
-                  <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
                   Followers
+                  <br />
+                  <b title={followersCount}>
+                    {shortenNumber(followersCount)}
+                  </b>{' '}
                 </span>
                 {!!createdAt && (
                   <span>
-                    Joined:{' '}
+                    Joined
+                    <br />
                     <b>
                       <time datetime={createdAt}>
                         {Intl.DateTimeFormat('en', {

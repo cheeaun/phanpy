@@ -23,6 +23,7 @@ import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
 import NotFound from './pages/404';
+import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
 import Hashtags from './pages/hashtags';
@@ -208,6 +209,7 @@ function App() {
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
         {isLoggedIn && <Route path="/t/:hashtag" element={<Hashtags />} />}
+        {isLoggedIn && <Route path="/a/:id" element={<AccountStatuses />} />}
         <Route path="/p/l?/:instance" element={<Public />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
@@ -299,7 +301,12 @@ function App() {
             }
           }}
         >
-          <Account account={snapStates.showAccount} />
+          <Account
+            account={snapStates.showAccount}
+            onClose={() => {
+              states.showAccount = false;
+            }}
+          />
         </Modal>
       )}
       {!!snapStates.showDrafts && (

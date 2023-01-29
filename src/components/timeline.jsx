@@ -91,13 +91,17 @@ function Timeline({ title, id, emptyText, errorText, fetchItems = () => {} }) {
         {!!items.length ? (
           <>
             <ul class="timeline">
-              {items.map((status) => (
-                <li key={`timeline-${status.id}`}>
-                  <Link class="status-link" to={`/s/${status.id}`}>
-                    <Status status={status} />
-                  </Link>
-                </li>
-              ))}
+              {items.map((status) => {
+                const { id: statusID, reblog } = status;
+                const actualStatusID = reblog?.id || statusID;
+                return (
+                  <li key={`timeline-${statusID}`}>
+                    <Link class="status-link" to={`/s/${actualStatusID}`}>
+                      <Status status={status} />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             {showMore && (
               <button

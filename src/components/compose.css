@@ -199,21 +199,22 @@
 
 #compose-container text-expander {
   position: relative;
+  display: block;
 }
 #compose-container .text-expander-menu {
   color: var(--text-color);
   background-color: var(--bg-color);
   position: absolute;
-  margin: 0 0 0 -8px;
+  margin-top: 2em;
   padding: 0;
   list-style: none;
   border: 1px solid var(--outline-color);
-  /* box-shadow: 0 0 12px var(--outline-color); */
+  box-shadow: 0 4px 24px var(--drop-shadow-color);
   border-radius: 8px;
   overflow: hidden;
-  top: 0 !important;
   z-index: 100;
-  min-width: 50vw;
+  min-width: 10em;
+  max-width: 90vw;
 }
 #compose-container .text-expander-menu li {
   white-space: nowrap;
@@ -235,9 +236,15 @@
   width: 2.2em;
   height: 2.2em;
 }
-#compose-container .text-expander-menu li:is(:hover, :focus) {
+#compose-container .text-expander-menu li:is(:hover, :focus, [aria-selected]) {
   color: var(--bg-color);
   background-color: var(--link-color);
+}
+#compose-container
+  .text-expander-menu:hover
+  li[aria-selected]:not(:hover, :focus) {
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 #compose-container .media-attachments {

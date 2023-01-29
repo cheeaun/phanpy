@@ -63,6 +63,21 @@ const menu = document.createElement('ul');
 menu.role = 'listbox';
 menu.className = 'text-expander-menu';
 
+// Set IntersectionObserver on menu, reposition it because text-expander doesn't handle it
+const windowMargin = 16;
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const { left, width } = entry.boundingClientRect;
+      const { innerWidth } = window;
+      if (left + width > innerWidth) {
+        menu.style.left = innerWidth - width - windowMargin + 'px';
+      }
+    }
+  });
+});
+observer.observe(menu);
+
 const DEFAULT_LANG = 'en';
 
 // https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js

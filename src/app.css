@@ -1167,24 +1167,24 @@ meter.donut:is(.danger, .explode):after {
     background-color: transparent;
   }
   .timeline-deck > header {
-    min-height: 6em;
+    --margin-top: 16px;
+    min-height: 4em;
+    top: var(--margin-top);
     border-bottom: 0;
     background-color: var(--bg-faded-blur-color);
-    background-image: linear-gradient(
-      to bottom,
-      var(--bg-faded-color),
-      transparent 50%
-    );
+    background-image: none;
     border-bottom: 0;
-    mask-image: linear-gradient(
-      rgba(0, 0, 0, 1) 50%,
-      rgba(0, 0, 0, 0.7) 80%,
-      rgba(0, 0, 0, 0.5) 90%,
-      transparent
-    );
+    border-radius: 16px;
+    margin-inline: 16px;
+  }
+  .timeline-deck > header[hidden] {
+    transform: translate3d(0, calc((100% + var(--margin-top)) * -1), 0);
   }
   .deck > header h1 {
     font-size: 1.5em;
+  }
+  .updates-button {
+    margin-top: 24px;
   }
   .timeline-deck .timeline:not(.flat) > li {
     border: 1px solid var(--divider-color);

@@ -36,6 +36,12 @@ function Home({ hidden }) {
     }
     const allStatuses = await homeIterator.current.next();
     if (allStatuses.value?.length) {
+      // ENFORCE sort by datetime (Latest first)
+      allStatuses.value.sort((a, b) => {
+        const aDate = new Date(a.createdAt);
+        const bDate = new Date(b.createdAt);
+        return bDate - aDate;
+      });
       const homeValues = allStatuses.value.map((status) => {
         saveStatus(status);
         return {

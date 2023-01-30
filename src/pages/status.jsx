@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
@@ -20,7 +21,6 @@ import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus, threadifyStatus } from '../utils/states';
 import { getCurrentAccount } from '../utils/store-utils';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 

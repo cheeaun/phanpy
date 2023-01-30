@@ -1,6 +1,7 @@
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
@@ -10,7 +11,6 @@ import Status from '../components/status';
 import db from '../utils/db';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
@@ -119,23 +119,27 @@ function Home({ hidden }) {
   }
 
   const loadingStatuses = useRef(false);
-  const loadStatuses = useDebouncedCallback((firstLoad) => {
-    if (loadingStatuses.current) return;
-    loadingStatuses.current = true;
-    setUIState('loading');
-    (async () => {
-      try {
-        const { done } = await fetchStatuses(firstLoad);
-        setShowMore(!done);
-        setUIState('default');
-      } catch (e) {
-        console.warn(e);
-        setUIState('error');
-      } finally {
-        loadingStatuses.current = false;
-      }
-    })();
-  }, 1000);
+  const loadStatuses = useDebouncedCallback(
+    (firstLoad) => {
+      if (loadingStatuses.current) return;
+      loadingStatuses.current = true;
+      setUIState('loading');
+      (async () => {
+        try {
+          const { done } = await fetchStatuses(firstLoad);
+          setShowMore(!done);
+          setUIState('default');
+        } catch (e) {
+          console.warn(e);
+          setUIState('error');
+        } finally {
+          loadingStatuses.current = false;
+        }
+      })();
+    },
+    3000,
+    { leading: true, trailing: false },
+  );
 
   useEffect(() => {
     loadStatuses(true);

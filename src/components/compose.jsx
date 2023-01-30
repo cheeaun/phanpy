@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -17,7 +18,6 @@ import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 

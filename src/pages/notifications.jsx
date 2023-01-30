@@ -47,7 +47,7 @@ const contentText = {
 const LIMIT = 30; // 30 is the maximum limit :(
 
 function Notifications() {
-  useTitle('Notifications');
+  useTitle('Notifications', '/notifications');
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);

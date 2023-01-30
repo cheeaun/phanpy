@@ -100,7 +100,7 @@ And here I am. Building a Mastodon web client.
 - [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
 - [Tooty](https://github.com/n1k0/tooty)
-- [More...](https://github.com/tleb/awesome-mastodon#clients)
+- [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## License
 

@@ -377,7 +377,12 @@ function initMasto(params) {
     } = info;
     if (uri || domain) {
       const instances = store.local.getJSON('instances') || {};
-      instances[(domain || uri).toLowerCase()] = info;
+      instances[
+        (domain || uri)
+          .replace(/^https?:\/\//, '')
+          .replace(/\/+$/, '')
+          .toLowerCase()
+      ] = info;
       store.local.setJSON('instances', instances);
     }
     if (streamingApi || streaming) {

@@ -358,6 +358,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
   list-style: none;
 }
+.timeline.contextual > li .replies > summary::-webkit-details-marker {
+  display: none;
+}
 .timeline.contextual > li .replies > summary > * {
   vertical-align: middle;
 }

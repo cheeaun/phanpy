@@ -22,13 +22,16 @@ function MediaModal({
   useLayoutEffect(() => {
     carouselFocusItem.current?.scrollIntoView();
   }, []);
+  const prevStatusID = useRef(statusID);
   useEffect(() => {
     const scrollLeft = index * carouselRef.current.clientWidth;
+    const differentStatusID = prevStatusID.current !== statusID;
+    if (differentStatusID) prevStatusID.current = statusID;
     carouselRef.current.scrollTo({
       left: scrollLeft,
-      behavior: 'smooth',
+      behavior: differentStatusID ? 'auto' : 'smooth',
     });
-  }, [index]);
+  }, [index, statusID]);
 
   const [showControls, setShowControls] = useState(true);
 

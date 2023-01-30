@@ -34,6 +34,7 @@ function AccountStatuses() {
     <Timeline
       key={id}
       title={`${account?.acct ? '@' + account.acct : 'Posts'}`}
+      path="/a/:id"
       id="account_statuses"
       emptyText="Nothing to see here yet."
       errorText="Unable to load statuses"

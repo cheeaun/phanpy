@@ -8,9 +8,16 @@ import Link from './link';
 import Loader from './loader';
 import Status from './status';
 
-function Timeline({ title, id, emptyText, errorText, fetchItems = () => {} }) {
+function Timeline({
+  title,
+  path,
+  id,
+  emptyText,
+  errorText,
+  fetchItems = () => {},
+}) {
   if (title) {
-    useTitle(title);
+    useTitle(title, path);
   }
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');

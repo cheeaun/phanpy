@@ -60,7 +60,7 @@ function StatusPage() {
     });
     onScroll();
     return () => {
-      onScroll.cancel();
+      onScroll.flush();
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
   }, [id, uiState !== 'loading']);

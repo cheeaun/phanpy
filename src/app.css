@@ -6,6 +6,9 @@ body {
   color: var(--text-color);
   overflow-x: hidden;
 }
+body {
+  touch-action: pan-x pan-y;
+}
 
 #app {
   min-height: 100vh;

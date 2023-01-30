@@ -840,12 +840,6 @@ button.carousel-dot:is(.active, [disabled].active) {
     transform: translateY(0);
   }
 }
-@media (prefers-color-scheme: dark) {
-  .carousel :is(img, video) {
-    /* No need fade out if inside carousel */
-    filter: none;
-  }
-}
 
 /* CAROUSEL + STATUS PAGE COMBO */
 

@@ -524,8 +524,9 @@
 }
 .carousel-item button.media-alt {
   position: absolute;
-  bottom: 16px;
-  bottom: calc(16px + env(safe-area-inset-bottom));
+  --bottom: 16px;
+  bottom: var(--bottom);
+  bottom: calc(var(--bottom) + env(safe-area-inset-bottom));
   left: 16px;
   left: calc(16px + env(safe-area-inset-left));
   text-align: left;
@@ -562,11 +563,13 @@
 }
 @media (hover: hover) {
   .carousel-item button.media-alt {
-    transform: translateY(200%);
-    transition: transform 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(var(--bottom)) scale(0.95);
+    transition: all 0.2s ease-in-out;
   }
   .carousel-item:hover button.media-alt {
-    transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
   .carousel-item button.media-alt[hidden] {
     opacity: 1;

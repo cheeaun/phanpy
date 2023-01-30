@@ -44,6 +44,13 @@ function Welcome() {
         <a href="https://mastodon.social/@cheeaun" target="_blank">
           @cheeaun
         </a>
+        .{' '}
+        <a
+          href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
         .
       </p>
     </main>

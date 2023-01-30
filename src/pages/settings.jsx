@@ -272,7 +272,9 @@ function Settings({ onClose }) {
             >
               @phanpy
             </a>
-            .{' '}
+            .
+          </p>
+          <p>
             <a href="https://github.com/cheeaun/phanpy" target="_blank">
               Built
             </a>{' '}
@@ -286,6 +288,13 @@ function Settings({ onClose }) {
               }}
             >
               @cheeaun
+            </a>
+            .{' '}
+            <a
+              href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+              target="_blank"
+            >
+              Privacy Policy
             </a>
             .
           </p>

@@ -91,8 +91,7 @@ function Timeline({
               <Icon icon="home" size="l" />
             </Link>
           </div>
-          {uiState !== 'loading' &&
-            (titleComponent ? titleComponent : <h1>{title}</h1>)}
+          {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
           </div>

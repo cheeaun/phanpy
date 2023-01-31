@@ -1,6 +1,6 @@
 import states from './states';
 
-function handleAccountLinks(opts) {
+function handleContentLinks(opts) {
   const { mentions = [] } = opts || {};
   return (e) => {
     let { target } = e;
@@ -33,8 +33,16 @@ function handleAccountLinks(opts) {
         const href = target.getAttribute('href');
         states.showAccount = href;
       }
+    } else if (
+      target.tagName.toLowerCase() === 'a' &&
+      target.classList.contains('hashtag')
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      const tag = target.innerText.replace(/^#/, '').trim();
+      location.hash = `#/t/${tag}`;
     }
   };
 }
 
-export default handleAccountLinks;
+export default handleContentLinks;

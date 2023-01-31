@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks';
 
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
-import handleAccountLinks from '../utils/handle-account-links';
+import handleContentLinks from '../utils/handle-content-links';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -186,7 +186,7 @@ function Account({ account, onClose }) {
               )}
               <div
                 class="note"
-                onClick={handleAccountLinks()}
+                onClick={handleContentLinks()}
                 dangerouslySetInnerHTML={{
                   __html: enhanceContent(note, { emojis }),
                 }}

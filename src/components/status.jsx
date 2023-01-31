@@ -20,7 +20,7 @@ import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import enhanceContent from '../utils/enhance-content';
-import handleAccountLinks from '../utils/handle-account-links';
+import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
@@ -346,7 +346,7 @@ function Status({
             lang={language}
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleAccountLinks({ mentions })}
+            onClick={handleContentLinks({ mentions })}
             dangerouslySetInnerHTML={{
               __html: enhanceContent(content, {
                 emojis,

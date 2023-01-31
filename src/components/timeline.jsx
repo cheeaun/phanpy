@@ -10,6 +10,7 @@ import Status from './status';
 
 function Timeline({
   title,
+  titleComponent,
   path,
   id,
   emptyText,
@@ -90,7 +91,8 @@ function Timeline({
               <Icon icon="home" size="l" />
             </Link>
           </div>
-          <h1>{title}</h1>
+          {uiState !== 'loading' &&
+            (titleComponent ? titleComponent : <h1>{title}</h1>)}
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
           </div>

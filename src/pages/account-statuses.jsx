@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 
 import Timeline from '../components/timeline';
+import states from '../utils/states';
 
 const LIMIT = 20;
 
@@ -34,6 +35,19 @@ function AccountStatuses() {
     <Timeline
       key={id}
       title={`${account?.acct ? '@' + account.acct : 'Posts'}`}
+      titleComponent={
+        <h1
+          class="header-account"
+          onClick={() => {
+            states.showAccount = account;
+          }}
+        >
+          {account?.displayName}
+          <div>
+            <span>@{account?.acct}</span>
+          </div>
+        </h1>
+      }
       path="/a/:id"
       id="account_statuses"
       emptyText="Nothing to see here yet."

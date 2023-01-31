@@ -1170,6 +1170,17 @@ meter.donut:is(.danger, .explode):after {
   text-shadow: 0 1px var(--bg-color);
 }
 
+/* ACCOUNT STATUSES */
+
+.header-account {
+  font-size: 90% !important;
+  cursor: pointer;
+}
+.header-account div {
+  font-weight: normal;
+  color: var(--text-insignificant-color);
+}
+
 @media (min-width: 40em) {
   html,
   body {

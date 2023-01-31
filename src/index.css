@@ -273,11 +273,6 @@ code {
   }
 }
 
-details:not([open]) > summary ~ * {
-  /* HACK: allow JS know that this is invisible */
-  --invisible: 1;
-}
-
 [tabindex='-1'] {
   outline: 0;
 }

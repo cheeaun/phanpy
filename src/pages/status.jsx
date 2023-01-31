@@ -351,10 +351,13 @@ function StatusPage() {
     );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll('.status-link, .status-focus'),
-    ).filter((s) => {
-      return !getComputedStyle(s).getPropertyValue('--invisible');
-    });
+      // Select all statuses except those inside collapsed details/summary
+      // Hat-tip to @AmeliaBR@front-end.social
+      // https://front-end.social/@AmeliaBR/109784776146144471
+      scrollableRef.current.querySelectorAll(
+        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
+      ),
+    );
     console.log({ allStatusLinks });
     if (
       activeStatus &&
@@ -386,10 +389,10 @@ function StatusPage() {
     );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll('.status-link, .status-focus'),
-    ).filter((s) => {
-      return !getComputedStyle(s).getPropertyValue('--invisible');
-    });
+      scrollableRef.current.querySelectorAll(
+        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
+      ),
+    );
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&

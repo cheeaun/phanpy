@@ -445,9 +445,9 @@ function groupNotifications(notifications) {
   const cleanNotifications = [];
   for (let i = 0, j = 0; i < notifications.length; i++) {
     const notification = notifications[i];
-    const { status, account, type, created_at } = notification;
-    const createdAt = new Date(created_at).toLocaleDateString();
-    const key = `${status?.id}-${type}-${createdAt}`;
+    const { status, account, type, createdAt } = notification;
+    const date = new Date(createdAt).toLocaleDateString();
+    const key = `${status?.id}-${type}-${date}`;
     const mappedNotification = notificationsMap[key];
     if (mappedNotification?.account) {
       mappedNotification._accounts.push(account);

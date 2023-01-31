@@ -352,7 +352,9 @@ function StatusPage() {
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
       scrollableRef.current.querySelectorAll('.status-link, .status-focus'),
-    );
+    ).filter((s) => {
+      return !getComputedStyle(s).getPropertyValue('--invisible');
+    });
     console.log({ allStatusLinks });
     if (
       activeStatus &&
@@ -385,7 +387,9 @@ function StatusPage() {
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
       scrollableRef.current.querySelectorAll('.status-link, .status-focus'),
-    );
+    ).filter((s) => {
+      return !getComputedStyle(s).getPropertyValue('--invisible');
+    });
     if (
       activeStatus &&
       activeStatusRect.top < scrollableRef.current.clientHeight &&
@@ -406,6 +410,20 @@ function StatusPage() {
       if (topmostStatusLink) {
         topmostStatusLink.focus();
         topmostStatusLink.scrollIntoViewIfNeeded?.();
+      }
+    }
+  });
+
+  // NOTE: I'm not sure if 'x' is the best shortcut for this, might change it later
+  // IDEA: x is for expand
+  useHotkeys('x', () => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    if (activeStatus) {
+      const details = activeStatus.nextElementSibling;
+      if (details && details.tagName.toLowerCase() === 'details') {
+        details.open = !details.open;
       }
     }
   });

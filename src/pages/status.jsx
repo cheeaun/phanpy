@@ -671,22 +671,41 @@ function StatusPage() {
 }
 
 function SubComments({ hasManyStatuses, replies }) {
-  // If less than or 2 replies and total number of characters of content from replies is less than 500
+  // Set isBrief = true:
+  // - if less than or 2 replies
+  // - if replies have no sub-replies
+  // - if total number of characters of content from replies is less than 500
   let isBrief = false;
   if (replies.length <= 2) {
-    let totalLength = replies.reduce((acc, reply) => {
-      const { content } = reply;
-      const length = htmlContentLength(content);
-      return acc + length;
-    }, 0);
-    isBrief = totalLength < 500;
+    const containsSubReplies = replies.some(
+      (r) => r.repliesCount > 0 || r.replies?.length > 0,
+    );
+    if (!containsSubReplies) {
+      let totalLength = replies.reduce((acc, reply) => {
+        const { content } = reply;
+        const length = htmlContentLength(content);
+        return acc + length;
+      }, 0);
+      isBrief = totalLength < 500;
+    }
   }
+
+  // Total comments count, including sub-replies
+  const diveDeep = (replies) => {
+    return replies.reduce((acc, reply) => {
+      const { repliesCount, replies } = reply;
+      const count = replies?.length || repliesCount;
+      return acc + count + diveDeep(replies || []);
+    }, 0);
+  };
+  const totalComments = replies.length + diveDeep(replies);
+  const sameCount = replies.length === totalComments;
 
   // Get the first 3 accounts, unique by id
   const accounts = replies
     .map((r) => r.account)
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
-    .slice(0, 5);
+    .slice(0, 3);
 
   const open = isBrief || !hasManyStatuses;
 
@@ -707,6 +726,17 @@ function SubComments({ hasManyStatuses, replies }) {
           repl
           {replies.length === 1 ? 'y' : 'ies'}
         </span>
+        {!sameCount && totalComments > 1 && (
+          <>
+            {' '}
+            &middot;{' '}
+            <span>
+              <span title={totalComments}>{shortenNumber(totalComments)}</span>{' '}
+              comment
+              {totalComments === 1 ? '' : 's'}
+            </span>
+          </>
+        )}
       </summary>
       <ul>
         {replies.map((r) => (

@@ -151,7 +151,7 @@ function Notifications() {
             <Loader hidden={uiState !== 'loading'} />
           </div>
         </header>
-        {snapStates.notificationsNew.length > 0 && (
+        {snapStates.notificationsNew.length > 0 && uiState !== 'loading' && (
           <button
             class="updates-button"
             type="button"

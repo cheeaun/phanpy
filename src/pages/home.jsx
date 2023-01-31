@@ -357,6 +357,7 @@ function Home({ hidden }) {
             </div>
           </header>
           {snapStates.homeNew.length > 0 &&
+            uiState !== 'loading' &&
             ((scrollDirection === 'start' &&
               !nearReachStart &&
               !nearReachEnd) ||

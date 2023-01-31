@@ -1,6 +1,9 @@
 import './index.css';
 
+import '@szhsin/react-menu/dist/core.css';
+
 import { render } from 'preact';
+import { HashRouter } from 'react-router-dom';
 
 import { App } from './app';
 
@@ -8,7 +11,12 @@ if (import.meta.env.DEV) {
   import('preact/debug');
 }
 
-render(<App />, document.getElementById('app'));
+render(
+  <HashRouter>
+    <App />
+  </HashRouter>,
+  document.getElementById('app'),
+);
 
 // Clean up iconify localStorage
 // TODO: Remove this after few weeks?

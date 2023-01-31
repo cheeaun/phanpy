@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -17,7 +18,6 @@ import openCompose from '../utils/open-compose';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -45,6 +45,7 @@ const expiryOptions = {
   '30 minutes': 30 * 60,
   '1 hour': 60 * 60,
   '6 hours': 6 * 60 * 60,
+  '12 hours': 12 * 60 * 60,
   '1 day': 24 * 60 * 60,
   '3 days': 3 * 24 * 60 * 60,
   '7 days': 7 * 24 * 60 * 60,
@@ -61,6 +62,21 @@ const expiresInFromExpiresAt = (expiresAt) => {
 const menu = document.createElement('ul');
 menu.role = 'listbox';
 menu.className = 'text-expander-menu';
+
+// Set IntersectionObserver on menu, reposition it because text-expander doesn't handle it
+const windowMargin = 16;
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const { left, width } = entry.boundingClientRect;
+      const { innerWidth } = window;
+      if (left + width > innerWidth) {
+        menu.style.left = innerWidth - width - windowMargin + 'px';
+      }
+    }
+  });
+});
+observer.observe(menu);
 
 const DEFAULT_LANG = 'en';
 
@@ -779,9 +795,10 @@ function Compose({
             ref={spoilerTextRef}
             type="text"
             name="spoilerText"
-            placeholder="Spoiler text"
+            placeholder="Content warning"
             disabled={uiState === 'loading'}
             class="spoiler-text-field"
+            lang={language}
             style={{
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
@@ -846,6 +863,7 @@ function Compose({
           }
           required={mediaAttachments.length === 0}
           disabled={uiState === 'loading'}
+          lang={language}
           onInput={() => {
             updateCharCount();
           }}
@@ -861,6 +879,7 @@ function Compose({
                   key={id || fileID || i}
                   attachment={attachment}
                   disabled={uiState === 'loading'}
+                  lang={language}
                   onDescriptionChange={(value) => {
                     setMediaAttachments((attachments) => {
                       const newAttachments = [...attachments];
@@ -876,10 +895,25 @@ function Compose({
                 />
               );
             })}
+            <label class="media-sensitive">
+              <input
+                name="sensitive"
+                type="checkbox"
+                checked={sensitive}
+                disabled={uiState === 'loading'}
+                onChange={(e) => {
+                  const sensitive = e.target.checked;
+                  setSensitive(sensitive);
+                }}
+              />{' '}
+              <span>Mark media as sensitive</span>{' '}
+              <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
+            </label>
           </div>
         )}
         {!!poll && (
           <Poll
+            lang={language}
             maxOptions={maxOptions}
             maxExpiration={maxExpiration}
             minExpiration={minExpiration}
@@ -934,6 +968,8 @@ function Compose({
                     return attachments.concat(mediaFiles);
                   });
                 }
+                // Reset
+                e.target.value = '';
               }}
             />
             <Icon icon="attachment" />
@@ -1218,6 +1254,7 @@ function CharCountMeter({ maxCharacters = 500 }) {
 function MediaAttachment({
   attachment,
   disabled,
+  lang,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
@@ -1257,6 +1294,7 @@ function MediaAttachment({
         <textarea
           ref={textareaRef}
           value={description || ''}
+          lang={lang}
           placeholder={
             {
               image: 'Image description',
@@ -1351,6 +1389,7 @@ function MediaAttachment({
 }
 
 function Poll({
+  lang,
   poll,
   disabled,
   onInput = () => {},
@@ -1373,6 +1412,7 @@ function Poll({
               disabled={disabled}
               maxlength={maxCharactersPerOption}
               placeholder={`Choice ${i + 1}`}
+              lang={lang}
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

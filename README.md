@@ -21,6 +21,8 @@ This is an alternative web client for [Mastodon](https://joinmastodon.org/).
   - may break more often
   - may be fixed much faster too
 
+🐘 Follow [@phanpy on Mastodon](https://hachyderm.io/@phanpy) for updates ✨
+
 Everything is designed and engineered for my own use case, following my taste and vision. This is a personal side project for me to learn about Mastodon and experiment with new UI/UX ideas.
 
 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
@@ -62,6 +64,7 @@ Prerequisites: Node.js 18+
 - [Vite](https://vitejs.dev/) - Build tool
 - [Preact](https://preactjs.com/) - UI library
 - [Valtio](https://valtio.pmnd.rs/) - State management
+- [React Router](https://reactrouter.com/) - Routing
 - [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
 - [Iconify](https://iconify.design/) - Icon library
 - Vanilla CSS - *Yes, I'm old school.*
@@ -90,14 +93,14 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) → [Semaphore](https://semaphore.social/)
 - [Cuckoo+](https://www.cuckoo.social/)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/)
 - [Mastodeck](https://mastodeck.com/)
 - [Tooty](https://github.com/n1k0/tooty)
-- [More...](https://github.com/tleb/awesome-mastodon#clients)
+- [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## License
 

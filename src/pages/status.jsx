@@ -1,13 +1,18 @@
 import './status.css';
 
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
-import { Link } from 'preact-router/match';
+import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
+import Avatar from '../components/avatar';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
@@ -15,15 +20,23 @@ import Status from '../components/status';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus, threadifyStatus } from '../utils/states';
-import store from '../utils/store';
 import { getCurrentAccount } from '../utils/store-utils';
-import useDebouncedCallback from '../utils/useDebouncedCallback';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
+const THREAD_LIMIT = 20;
 
-function StatusPage({ id }) {
+let cachedStatusesMap = {};
+function resetScrollPosition(id) {
+  delete cachedStatusesMap[id];
+  delete states.scrollPositions[id];
+}
+
+function StatusPage() {
+  const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -47,19 +60,18 @@ function StatusPage({ id }) {
     });
     onScroll();
     return () => {
-      onScroll.cancel();
+      onScroll.flush();
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
   }, [id, uiState !== 'loading']);
 
   const scrollOffsets = useRef();
-  const cachedStatusesMap = useRef({});
   const initContext = () => {
     console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
 
-    const cachedStatuses = cachedStatusesMap.current[id];
+    const cachedStatuses = cachedStatusesMap[id];
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
@@ -80,8 +92,13 @@ function StatusPage({ id }) {
     }
 
     (async () => {
-      const heroFetch = () => masto.v1.statuses.fetch(id);
-      const contextFetch = masto.v1.statuses.fetchContext(id);
+      const heroFetch = () =>
+        pRetry(() => masto.v1.statuses.fetch(id), {
+          retries: 4,
+        });
+      const contextFetch = pRetry(() => masto.v1.statuses.fetchContext(id), {
+        retries: 8,
+      });
 
       const hasStatus = !!snapStates.statuses[id];
       let heroStatus = snapStates.statuses[id];
@@ -127,8 +144,8 @@ function StatusPage({ id }) {
               }
               parent.__replies.push(status);
             } else {
-              // If no parent, it's probably a reply to a reply to a reply, level 3
-              console.warn('[LEVEL 3] No parent found for', status);
+              // If no parent, something is wrong
+              console.warn('No parent found for', status);
             }
           }
         });
@@ -149,8 +166,23 @@ function StatusPage({ id }) {
             thread: s.account.id === heroStatus.account.id,
             replies: s.__replies?.map((r) => ({
               id: r.id,
+              account: r.account,
               repliesCount: r.repliesCount,
               content: r.content,
+              replies: r.__replies?.map((r2) => ({
+                // Level 3
+                id: r2.id,
+                account: r2.account,
+                repliesCount: r2.repliesCount,
+                content: r2.content,
+                replies: r2.__replies?.map((r3) => ({
+                  // Level 4
+                  id: r3.id,
+                  account: r3.account,
+                  repliesCount: r3.repliesCount,
+                  content: r3.content,
+                })),
+              })),
             })),
           })),
         ];
@@ -162,7 +194,7 @@ function StatusPage({ id }) {
         };
         console.log({ allStatuses });
         setStatuses(allStatuses);
-        cachedStatusesMap.current[id] = allStatuses;
+        cachedStatusesMap[id] = allStatuses;
 
         // Let's threadify this one
         // Note that all non-hero statuses will trigger saveStatus which will threadify them too
@@ -187,6 +219,7 @@ function StatusPage({ id }) {
     console.debug('scrollPosition', scrollPosition);
     if (!!scrollPosition) {
       console.debug('Case 1', {
+        id,
         scrollPosition,
       });
       scrollableRef.current.scrollTop = scrollPosition;
@@ -196,7 +229,9 @@ function StatusPage({ id }) {
         scrollTop: scrollableRef.current?.scrollTop,
       };
       const newScrollTop =
-        newScrollOffsets.offsetTop - scrollOffsets.current.offsetTop;
+        newScrollOffsets.offsetTop -
+        scrollOffsets.current.offsetTop +
+        newScrollOffsets.scrollTop;
       console.debug('Case 2', {
         scrollOffsets: scrollOffsets.current,
         newScrollOffsets,
@@ -204,6 +239,11 @@ function StatusPage({ id }) {
         statuses: [...statuses],
       });
       scrollableRef.current.scrollTop = newScrollTop;
+    } else if (statuses.length === 1) {
+      console.debug('Case 3', {
+        id,
+      });
+      scrollableRef.current.scrollTop = 0;
     }
 
     // RESET
@@ -233,7 +273,7 @@ function StatusPage({ id }) {
       // RESET
       states.scrollPositions = {};
       states.reloadStatusPage = 0;
-      cachedStatusesMap.current = {};
+      cachedStatusesMap = {};
     };
   }, []);
 
@@ -268,12 +308,17 @@ function StatusPage({ id }) {
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
       : 'Status',
+    '/s/:id',
   );
 
-  const prevRoute = states.history.findLast((h) => {
-    return h === '/' || /notifications/i.test(h);
-  });
-  const closeLink = `#${prevRoute || '/'}`;
+  const closeLink = useMemo(() => {
+    const pathname = snapStates.prevLocation?.pathname;
+    if (!pathname || pathname.startsWith('/s/')) return '/';
+    return pathname;
+  }, []);
+  const onClose = () => {
+    states.showMediaModal = false;
+  };
 
   const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
@@ -281,7 +326,7 @@ function StatusPage({ id }) {
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > LIMIT;
+  const hasManyStatuses = statuses.length > THREAD_LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
   const ancestors = statuses.filter((s) => s.ancestor);
 
@@ -295,17 +340,105 @@ function StatusPage({ id }) {
   }, [heroInView]);
 
   useHotkeys(['esc', 'backspace'], () => {
-    location.hash = closeLink;
+    // location.hash = closeLink;
+    onClose();
+    navigate(closeLink);
+  });
+
+  useHotkeys('j', () => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      // Select all statuses except those inside collapsed details/summary
+      // Hat-tip to @AmeliaBR@front-end.social
+      // https://front-end.social/@AmeliaBR/109784776146144471
+      scrollableRef.current.querySelectorAll(
+        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
+      ),
+    );
+    console.log({ allStatusLinks });
+    if (
+      activeStatus &&
+      activeStatusRect.top < scrollableRef.current.clientHeight &&
+      activeStatusRect.bottom > 0
+    ) {
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      let nextStatus = allStatusLinks[activeStatusIndex + 1];
+      if (nextStatus) {
+        nextStatus.focus();
+        nextStatus.scrollIntoViewIfNeeded?.();
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
+        const statusLinkRect = statusLink.getBoundingClientRect();
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
+      if (topmostStatusLink) {
+        topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
+      }
+    }
+  });
+
+  useHotkeys('k', () => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    const activeStatusRect = activeStatus?.getBoundingClientRect();
+    const allStatusLinks = Array.from(
+      scrollableRef.current.querySelectorAll(
+        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
+      ),
+    );
+    if (
+      activeStatus &&
+      activeStatusRect.top < scrollableRef.current.clientHeight &&
+      activeStatusRect.bottom > 0
+    ) {
+      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+      let prevStatus = allStatusLinks[activeStatusIndex - 1];
+      if (prevStatus) {
+        prevStatus.focus();
+        prevStatus.scrollIntoViewIfNeeded?.();
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const topmostStatusLink = allStatusLinks.find((statusLink) => {
+        const statusLinkRect = statusLink.getBoundingClientRect();
+        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+      });
+      if (topmostStatusLink) {
+        topmostStatusLink.focus();
+        topmostStatusLink.scrollIntoViewIfNeeded?.();
+      }
+    }
+  });
+
+  // NOTE: I'm not sure if 'x' is the best shortcut for this, might change it later
+  // IDEA: x is for expand
+  useHotkeys('x', () => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    if (activeStatus) {
+      const details = activeStatus.nextElementSibling;
+      if (details && details.tagName.toLowerCase() === 'details') {
+        details.open = !details.open;
+      }
+    }
   });
 
   const { nearReachStart } = useScroll({
     scrollableElement: scrollableRef.current,
-    distanceFromStart: 0.5,
+    distanceFromStart: 0.2,
   });
 
   return (
     <div class="deck-backdrop">
-      <Link href={closeLink}></Link>
+      <Link to={closeLink} onClick={onClose}></Link>
       <div
         tabIndex="-1"
         ref={scrollableRef}
@@ -315,17 +448,6 @@ function StatusPage({ id }) {
       >
         <header
           class={`${heroInView ? 'inview' : ''}`}
-          onClick={(e) => {
-            if (
-              !/^(a|button)$/i.test(e.target.tagName) &&
-              heroStatusRef.current
-            ) {
-              heroStatusRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }
-          }}
           onDblClick={(e) => {
             // reload statuses
             states.reloadStatusPage++;
@@ -338,23 +460,34 @@ function StatusPage({ id }) {
           </div> */}
           <h1>
             {!heroInView && heroStatus && uiState !== 'loading' ? (
-              <span class="hero-heading">
-                {!!heroPointer && (
-                  <>
-                    <Icon
-                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
-                    />{' '}
-                  </>
-                )}
-                <NameText showAvatar account={heroStatus.account} short />{' '}
-                <span class="insignificant">
-                  &bull;{' '}
-                  <RelativeTime
-                    datetime={heroStatus.createdAt}
-                    format="micro"
+              <>
+                <span class="hero-heading">
+                  <NameText showAvatar account={heroStatus.account} short />{' '}
+                  <span class="insignificant">
+                    &bull;{' '}
+                    <RelativeTime
+                      datetime={heroStatus.createdAt}
+                      format="micro"
+                    />
+                  </span>
+                </span>{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    heroStatusRef.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                  }}
+                >
+                  <Icon
+                    icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
                   />
-                </span>
-              </span>
+                </button>
+              </>
             ) : (
               <>
                 Status{' '}
@@ -383,7 +516,39 @@ function StatusPage({ id }) {
           </h1>
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
-            <Link class="button plain deck-close" href={closeLink}>
+            <Menu
+              align="end"
+              portal={{
+                // Need this, else the menu click will cause scroll jump
+                target: scrollableRef.current,
+              }}
+              menuButton={
+                <button type="button" class="button plain4">
+                  <Icon icon="more" alt="Actions" size="xl" />
+                </button>
+              }
+            >
+              <MenuItem
+                onClick={() => {
+                  // Click all buttons with class .spoiler but not .spoiling
+                  const buttons = Array.from(
+                    scrollableRef.current.querySelectorAll(
+                      'button.spoiler:not(.spoiling)',
+                    ),
+                  );
+                  buttons.forEach((button) => {
+                    button.click();
+                  });
+                }}
+              >
+                <Icon icon="eye-open" /> <span>Show all sensitive content</span>
+              </MenuItem>
+            </Menu>
+            <Link
+              class="button plain deck-close"
+              to={closeLink}
+              onClick={onClose}
+            >
               <Icon icon="x" size="xl" />
             </Link>
           </div>
@@ -412,39 +577,43 @@ function StatusPage({ id }) {
                   } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
                 >
                   {isHero ? (
-                    <InView threshold={0.1} onChange={onView}>
+                    <InView
+                      threshold={0.1}
+                      onChange={onView}
+                      class="status-focus"
+                      tabIndex={0}
+                    >
                       <Status statusID={statusID} withinContext size="l" />
                     </InView>
                   ) : (
                     <Link
-                      class="
-                status-link
-              "
-                      href={`#/s/${statusID}`}
+                      class="status-link"
+                      to={`/s/${statusID}`}
+                      onClick={() => {
+                        resetScrollPosition(statusID);
+                      }}
                     >
                       <Status
                         statusID={statusID}
                         withinContext
                         size={thread || ancestor ? 'm' : 's'}
                       />
-                      {replies?.length > LIMIT && (
+                      {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
                           <span title={replies.length}>
                             {shortenNumber(replies.length)}
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </Link>
                   )}
-                  {descendant &&
-                    replies?.length > 0 &&
-                    replies?.length <= LIMIT && (
-                      <SubComments
-                        hasManyStatuses={hasManyStatuses}
-                        replies={replies}
-                      />
-                    )}
+                  {descendant && replies?.length > 0 && (
+                    <SubComments
+                      hasManyStatuses={hasManyStatuses}
+                      replies={replies}
+                    />
+                  )}
                   {uiState === 'loading' &&
                     isHero &&
                     !!heroStatus?.repliesCount &&
@@ -522,40 +691,86 @@ function StatusPage({ id }) {
   );
 }
 
-function SubComments({
-  hasManyStatuses,
-  replies,
-  onStatusLinkClick = () => {},
-}) {
-  // If less than or 2 replies and total number of characters of content from replies is less than 500
+function SubComments({ hasManyStatuses, replies }) {
+  // Set isBrief = true:
+  // - if less than or 2 replies
+  // - if replies have no sub-replies
+  // - if total number of characters of content from replies is less than 500
   let isBrief = false;
   if (replies.length <= 2) {
-    let totalLength = replies.reduce((acc, reply) => {
-      const { content } = reply;
-      const length = htmlContentLength(content);
-      return acc + length;
-    }, 0);
-    isBrief = totalLength < 500;
+    const containsSubReplies = replies.some(
+      (r) => r.repliesCount > 0 || r.replies?.length > 0,
+    );
+    if (!containsSubReplies) {
+      let totalLength = replies.reduce((acc, reply) => {
+        const { content } = reply;
+        const length = htmlContentLength(content);
+        return acc + length;
+      }, 0);
+      isBrief = totalLength < 500;
+    }
   }
+
+  // Total comments count, including sub-replies
+  const diveDeep = (replies) => {
+    return replies.reduce((acc, reply) => {
+      const { repliesCount, replies } = reply;
+      const count = replies?.length || repliesCount;
+      return acc + count + diveDeep(replies || []);
+    }, 0);
+  };
+  const totalComments = replies.length + diveDeep(replies);
+  const sameCount = replies.length === totalComments;
+
+  // Get the first 3 accounts, unique by id
+  const accounts = replies
+    .map((r) => r.account)
+    .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
+    .slice(0, 3);
 
   const open = isBrief || !hasManyStatuses;
 
   return (
     <details class="replies" open={open}>
       <summary hidden={open}>
-        <span title={replies.length}>{shortenNumber(replies.length)}</span> repl
-        {replies.length === 1 ? 'y' : 'ies'}
+        <span class="avatars">
+          {accounts.map((a) => (
+            <Avatar
+              key={a.id}
+              url={a.avatarStatic}
+              title={`${a.displayName} @${a.username}`}
+            />
+          ))}
+        </span>
+        <span>
+          <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
+          repl
+          {replies.length === 1 ? 'y' : 'ies'}
+        </span>
+        {!sameCount && totalComments > 1 && (
+          <>
+            {' '}
+            &middot;{' '}
+            <span>
+              <span title={totalComments}>{shortenNumber(totalComments)}</span>{' '}
+              comment
+              {totalComments === 1 ? '' : 's'}
+            </span>
+          </>
+        )}
       </summary>
       <ul>
         {replies.map((r) => (
           <li key={r.id}>
             <Link
               class="status-link"
-              href={`#/s/${r.id}`}
-              onClick={onStatusLinkClick}
+              to={`/s/${r.id}`}
+              onClick={() => {
+                resetScrollPosition(r.id);
+              }}
             >
               <Status statusID={r.id} withinContext size="s" />
-              {r.repliesCount > 0 && (
+              {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">
                   <Icon icon="comment" />{' '}
                   <span title={r.repliesCount}>
@@ -564,6 +779,12 @@ function SubComments({
                 </div>
               )}
             </Link>
+            {r.replies?.length && (
+              <SubComments
+                hasManyStatuses={hasManyStatuses}
+                replies={r.replies}
+              />
+            )}
           </li>
         ))}
       </ul>

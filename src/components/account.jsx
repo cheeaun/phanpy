@@ -2,15 +2,19 @@ import './account.css';
 
 import { useEffect, useState } from 'preact/hooks';
 
+import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
+import handleContentLinks from '../utils/handle-content-links';
 import shortenNumber from '../utils/shorten-number';
+import states from '../utils/states';
 import store from '../utils/store';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import Link from './link';
 import NameText from './name-text';
 
-function Account({ account }) {
+function Account({ account, onClose }) {
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -27,12 +31,29 @@ function Account({ account }) {
           setInfo(info);
           setUIState('default');
         } catch (e) {
-          alert(e);
-          setUIState('error');
+          try {
+            const result = await masto.v2.search({
+              q: account,
+              type: 'accounts',
+              limit: 1,
+              resolve: true,
+            });
+            if (result.accounts.length) {
+              setInfo(result.accounts[0]);
+              setUIState('default');
+              return;
+            }
+            setUIState('error');
+          } catch (err) {
+            console.error(err);
+            setUIState('error');
+          }
         }
       })();
+    } else {
+      setInfo(account);
     }
-  }, []);
+  }, [account]);
 
   const {
     acct,
@@ -59,6 +80,7 @@ function Account({ account }) {
 
   const [relationshipUIState, setRelationshipUIState] = useState('default');
   const [relationship, setRelationship] = useState(null);
+  const [familiarFollowers, setFamiliarFollowers] = useState([]);
   useEffect(() => {
     if (info) {
       const currentAccount = store.session.get('currentAccount');
@@ -67,14 +89,29 @@ function Account({ account }) {
         return;
       }
       setRelationshipUIState('loading');
+      setFamiliarFollowers([]);
+
       (async () => {
+        const fetchRelationships = masto.v1.accounts.fetchRelationships([id]);
+        const fetchFamiliarFollowers =
+          masto.v1.accounts.fetchFamiliarFollowers(id);
+
         try {
-          const relationships = await masto.v1.accounts.fetchRelationships([
-            id,
-          ]);
+          const relationships = await fetchRelationships;
           console.log('fetched relationship', relationships);
           if (relationships.length) {
-            setRelationship(relationships[0]);
+            const relationship = relationships[0];
+            setRelationship(relationship);
+
+            if (!relationship.following) {
+              try {
+                const followers = await fetchFamiliarFollowers;
+                console.log('fetched familiar followers', followers);
+                setFamiliarFollowers(followers[0].accounts.slice(0, 10));
+              } catch (e) {
+                console.error(e);
+              }
+            }
           }
           setRelationshipUIState('default');
         } catch (e) {
@@ -104,7 +141,17 @@ function Account({ account }) {
       id="account-container"
       class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
     >
-      {!info || uiState === 'loading' ? (
+      {uiState === 'error' && (
+        <div class="ui-state">
+          <p>Unable to load account.</p>
+          <p>
+            <a href={account} target="_blank">
+              Go to account page <Icon icon="external" />
+            </a>
+          </p>
+        </div>
+      )}
+      {uiState === 'loading' ? (
         <>
           <header>
             <Avatar size="xxxl" />
@@ -123,133 +170,174 @@ function Account({ account }) {
           </main>
         </>
       ) : (
-        <>
-          <header>
-            <Avatar url={avatar} size="xxxl" />
-            <NameText account={info} showAcct external />
-          </header>
-          <main tabIndex="-1">
-            {bot && (
-              <>
-                <span class="tag">
-                  <Icon icon="bot" /> Automated
-                </span>
-              </>
-            )}
-            <div
-              class="note"
-              dangerouslySetInnerHTML={{
-                __html: enhanceContent(note, { emojis }),
-              }}
-            />
-            {fields?.length > 0 && (
-              <div class="profile-metadata">
-                {fields.map(({ name, value, verifiedAt }) => (
-                  <div
-                    class={`profile-field ${
-                      verifiedAt ? 'profile-verified' : ''
-                    }`}
-                    key={name}
-                  >
-                    <b>
-                      {name}{' '}
-                      {!!verifiedAt && <Icon icon="check-circle" size="s" />}
-                    </b>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: value,
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-            <p class="stats">
-              <span>
-                <b title={statusesCount}>{shortenNumber(statusesCount)}</b>{' '}
-                Posts
-              </span>
-              <span>
-                <b title={followingCount}>{shortenNumber(followingCount)}</b>{' '}
-                Following
-              </span>
-              <span>
-                <b title={followersCount}>{shortenNumber(followersCount)}</b>{' '}
-                Followers
-              </span>
-              {!!createdAt && (
-                <span>
-                  Joined:{' '}
-                  <b>
-                    <time datetime={createdAt}>
-                      {Intl.DateTimeFormat('en', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      }).format(new Date(createdAt))}
-                    </time>
-                  </b>
-                </span>
+        info && (
+          <>
+            <header>
+              <Avatar url={avatar} size="xxxl" />
+              <NameText account={info} showAcct external />
+            </header>
+            <main tabIndex="-1">
+              {bot && (
+                <>
+                  <span class="tag">
+                    <Icon icon="bot" /> Automated
+                  </span>
+                </>
               )}
-            </p>
-            <p class="actions">
-              {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
-              {relationshipUIState !== 'loading' && relationship && (
-                <button
-                  type="button"
-                  class={`${following || requested ? 'light swap' : ''}`}
-                  data-swap-state={following || requested ? 'danger' : ''}
-                  disabled={relationshipUIState === 'loading'}
-                  onClick={() => {
-                    setRelationshipUIState('loading');
-                    (async () => {
-                      try {
-                        let newRelationship;
-                        if (following || requested) {
-                          const yes = confirm(
-                            requested
-                              ? 'Are you sure that you want to withdraw follow request?'
-                              : 'Are you sure that you want to unfollow this account?',
-                          );
-                          if (yes) {
-                            newRelationship = await masto.v1.accounts.unfollow(
+              <div
+                class="note"
+                onClick={handleContentLinks()}
+                dangerouslySetInnerHTML={{
+                  __html: enhanceContent(note, { emojis }),
+                }}
+              />
+              {fields?.length > 0 && (
+                <div class="profile-metadata">
+                  {fields.map(({ name, value, verifiedAt }) => (
+                    <div
+                      class={`profile-field ${
+                        verifiedAt ? 'profile-verified' : ''
+                      }`}
+                      key={name}
+                    >
+                      <b>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: emojifyText(name, emojis),
+                          }}
+                        />{' '}
+                        {!!verifiedAt && <Icon icon="check-circle" size="s" />}
+                      </b>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: enhanceContent(value, { emojis }),
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p class="stats">
+                <Link to={`/a/${id}`} onClick={onClose}>
+                  Posts
+                  <br />
+                  <b title={statusesCount}>
+                    {shortenNumber(statusesCount)}
+                  </b>{' '}
+                </Link>
+                <span>
+                  Following
+                  <br />
+                  <b title={followingCount}>
+                    {shortenNumber(followingCount)}
+                  </b>{' '}
+                </span>
+                <span>
+                  Followers
+                  <br />
+                  <b title={followersCount}>
+                    {shortenNumber(followersCount)}
+                  </b>{' '}
+                </span>
+                {!!createdAt && (
+                  <span>
+                    Joined
+                    <br />
+                    <b>
+                      <time datetime={createdAt}>
+                        {Intl.DateTimeFormat('en', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        }).format(new Date(createdAt))}
+                      </time>
+                    </b>
+                  </span>
+                )}
+              </p>
+              {familiarFollowers?.length > 0 && (
+                <p class="common-followers">
+                  Common followers{' '}
+                  <span class="ib">
+                    {familiarFollowers.map((follower) => (
+                      <a
+                        href={follower.url}
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          states.showAccount = follower;
+                        }}
+                      >
+                        <Avatar
+                          url={follower.avatarStatic}
+                          size="l"
+                          alt={`${follower.displayName} @${follower.acct}`}
+                        />
+                      </a>
+                    ))}
+                  </span>
+                </p>
+              )}
+              <p class="actions">
+                {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
+                {relationshipUIState !== 'loading' && relationship && (
+                  <button
+                    type="button"
+                    class={`${following || requested ? 'light swap' : ''}`}
+                    data-swap-state={following || requested ? 'danger' : ''}
+                    disabled={relationshipUIState === 'loading'}
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          let newRelationship;
+                          if (following || requested) {
+                            const yes = confirm(
+                              requested
+                                ? 'Are you sure that you want to withdraw follow request?'
+                                : 'Are you sure that you want to unfollow this account?',
+                            );
+                            if (yes) {
+                              newRelationship =
+                                await masto.v1.accounts.unfollow(id);
+                            }
+                          } else {
+                            newRelationship = await masto.v1.accounts.follow(
                               id,
                             );
                           }
-                        } else {
-                          newRelationship = await masto.v1.accounts.follow(id);
+                          if (newRelationship) setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                        } catch (e) {
+                          alert(e);
+                          setRelationshipUIState('error');
                         }
-                        if (newRelationship) setRelationship(newRelationship);
-                        setRelationshipUIState('default');
-                      } catch (e) {
-                        alert(e);
-                        setRelationshipUIState('error');
-                      }
-                    })();
-                  }}
-                >
-                  {following ? (
-                    <>
-                      <span>Following</span>
-                      <span>Unfollow…</span>
-                    </>
-                  ) : requested ? (
-                    <>
-                      <span>Requested</span>
-                      <span>Withdraw…</span>
-                    </>
-                  ) : locked ? (
-                    <>
-                      <Icon icon="lock" /> <span>Follow</span>
-                    </>
-                  ) : (
-                    'Follow'
-                  )}
-                </button>
-              )}
-            </p>
-          </main>
-        </>
+                      })();
+                    }}
+                  >
+                    {following ? (
+                      <>
+                        <span>Following</span>
+                        <span>Unfollow…</span>
+                      </>
+                    ) : requested ? (
+                      <>
+                        <span>Requested</span>
+                        <span>Withdraw…</span>
+                      </>
+                    ) : locked ? (
+                      <>
+                        <Icon icon="lock" /> <span>Follow</span>
+                      </>
+                    ) : (
+                      'Follow'
+                    )}
+                  </button>
+                )}
+              </p>
+            </main>
+          </>
+        )
       )}
     </div>
   );

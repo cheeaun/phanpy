@@ -3,14 +3,18 @@ import { proxy, subscribe } from 'valtio';
 import store from './store';
 
 const states = proxy({
-  history: [],
+  // history: [],
+  prevLocation: null,
+  currentLocation: null,
   statuses: {},
   statusThreadNumber: {},
   home: [],
-  specialHome: [],
+  // specialHome: [],
   homeNew: [],
+  homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,
   notifications: [],
+  notificationLast: null, // Last item in 'notifications' list
   notificationsNew: [],
   notificationsLastFetchTime: null,
   accounts: {},
@@ -22,10 +26,11 @@ const states = proxy({
   showSettings: false,
   showAccount: false,
   showDrafts: false,
+  showMediaModal: false,
   composeCharacterCount: 0,
   settings: {
     boostsCarousel: store.local.get('settings:boostsCarousel')
-      ? store.local.get('settings:boostsCarousel')
+      ? store.local.get('settings:boostsCarousel') === '1'
       : true,
   },
 });

@@ -1,6 +1,7 @@
 import './welcome.css';
 
 import logo from '../assets/logo.svg';
+import Link from '../components/link';
 import useTitle from '../utils/useTitle';
 
 function Welcome() {
@@ -28,9 +29,9 @@ function Welcome() {
       <p>
         <big>
           <b>
-            <a href="#/login" class="button">
+            <Link to="/login" class="button">
               Log in
-            </a>
+            </Link>
           </b>
         </big>
       </p>
@@ -42,6 +43,13 @@ function Welcome() {
         by{' '}
         <a href="https://mastodon.social/@cheeaun" target="_blank">
           @cheeaun
+        </a>
+        .{' '}
+        <a
+          href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+          target="_blank"
+        >
+          Privacy Policy
         </a>
         .
       </p>

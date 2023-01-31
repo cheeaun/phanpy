@@ -2,7 +2,7 @@ import './index.css';
 
 import './app.css';
 
-import { login } from 'masto';
+import { createClient } from 'masto';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
@@ -14,12 +14,12 @@ if (window.opener) {
   console = window.opener.console;
 }
 
-(async () => {
+(() => {
   if (window.masto) return;
   console.warn('window.masto not found. Trying to log in...');
   try {
     const { instanceURL, accessToken } = getCurrentAccount();
-    window.masto = await login({
+    window.masto = createClient({
       url: `https://${instanceURL}`,
       accessToken,
       disableVersionCheck: true,

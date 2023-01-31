@@ -1,4 +1,5 @@
 function emojifyText(text, emojis = []) {
+  if (!text) return '';
   if (!emojis.length) return text;
   // Replace shortcodes in text with emoji
   // emojis = [{ shortcode: 'smile', url: 'https://example.com/emoji.png' }]

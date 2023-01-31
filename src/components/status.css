@@ -2,23 +2,23 @@
 
 .status-reblog {
   background: linear-gradient(
-    to bottom right,
+    160deg,
     var(--reblog-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .status-reply-to {
   background: linear-gradient(
-    to bottom right,
+    160deg,
     var(--reply-to-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .status-reblog .status-reply-to {
   background: linear-gradient(
-    to top left,
+    -20deg,
     var(--reply-to-faded-color),
-    transparent 160px
+    transparent min(160px, 50%)
   );
 }
 .visibility-direct {
@@ -79,12 +79,26 @@
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
 }
+
+@keyframes skeleton-breathe {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .status.skeleton {
   color: var(--outline-color);
+  animation: skeleton-breathe 6s linear infinite;
   user-select: none;
   pointer-events: none;
+  contain: layout;
+  text-rendering: optimizeSpeed;
 }
-
 .status.skeleton > .avatar {
   background-color: var(--outline-color);
 }
@@ -188,11 +202,8 @@
   ~ *:not(.media-container, .card),
 .status .content-container.has-spoiler .spoiler ~ .card .meta-container {
   filter: blur(5px) invert(0.5);
-  /* filter: url(#spoiler); */
-  text-rendering: optimizeSpeed;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
-  /* transform: translate3d(-5px, -5px, 0); */
   pointer-events: none;
   user-select: none;
   contain: layout;
@@ -206,15 +217,6 @@
   image-rendering: pixelated;
   animation: none !important;
 }
-/* @media (prefers-color-scheme: dark) {
-  .status
-    .content-container.has-spoiler
-    .spoiler
-    ~ *:not(.media-container, .card),
-  .status .content-container.has-spoiler .spoiler ~ .card .meta-container {
-    filter: url(#spoiler-dark);
-  }
-} */
 .status .content-container.show-spoiler .spoiler {
   border-style: dotted;
 }
@@ -325,11 +327,40 @@
   min-height: 160px;
   max-height: 60vh;
 }
-.status .media {
-  border-radius: 8px;
+.status .media-container .media {
+  --media-radius: 16px;
+  border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
   border: 1px solid var(--outline-color);
+}
+/* Special media borders */
+.status .media-container.media-eq2 .media:first-of-type {
+  border-radius: var(--media-radius) 0 0 var(--media-radius);
+}
+.status .media-container.media-eq2 .media:last-of-type {
+  border-radius: 0 var(--media-radius) var(--media-radius) 0;
+}
+.status .media-container.media-eq3 .media:first-of-type {
+  border-radius: var(--media-radius) 0 0 var(--media-radius);
+}
+.status .media-container.media-eq3 .media:nth-of-type(2) {
+  border-radius: 0 var(--media-radius) 0 0;
+}
+.status .media-container.media-eq3 .media:last-of-type {
+  border-radius: 0 0 var(--media-radius) 0;
+}
+.status .media-container.media-eq4 .media:first-of-type {
+  border-radius: var(--media-radius) 0 0 0;
+}
+.status .media-container.media-eq4 .media:nth-of-type(2) {
+  border-radius: 0 var(--media-radius) 0 0;
+}
+.status .media-container.media-eq4 .media:nth-of-type(3) {
+  border-radius: 0 0 0 var(--media-radius);
+}
+.status .media-container.media-eq4 .media:last-of-type {
+  border-radius: 0 0 var(--media-radius) 0;
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;
@@ -486,6 +517,63 @@
       var(--bg-faded-color) 16px
     );
   background-blend-mode: multiply;
+}
+
+.carousel-item {
+  position: relative;
+}
+.carousel-item button.media-alt {
+  position: absolute;
+  --bottom: 16px;
+  bottom: var(--bottom);
+  bottom: calc(var(--bottom) + env(safe-area-inset-bottom));
+  left: 16px;
+  left: calc(16px + env(safe-area-inset-left));
+  text-align: left;
+  border-radius: 8px;
+  color: var(--text-color);
+  padding: 4px 8px 4px 4px;
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 4px 16px var(--outline-color);
+  max-width: min(40em, calc(100% - 32px));
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 90%;
+}
+.carousel-item button.media-alt .media-alt-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+@media (min-width: 40em) {
+  .carousel-item button.media-alt .media-alt-desc {
+    white-space: normal;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+}
+.carousel-item button.media-alt[hidden] {
+  opacity: 0;
+}
+@media (hover: hover) {
+  .carousel-item button.media-alt {
+    opacity: 0;
+    transform: translateY(var(--bottom)) scale(0.95);
+    transition: all 0.2s ease-in-out;
+  }
+  .carousel-item:hover button.media-alt {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .carousel-item button.media-alt[hidden] {
+    opacity: 1;
+  }
 }
 
 /* CARD */

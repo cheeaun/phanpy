@@ -38,9 +38,9 @@
     filter: hue-rotate(0deg);
   }
   100% {
-    filter: hue-rotate(360deg);
+    filter: hue-rotate(-90deg);
   }
 }
 #welcome:hover h2 {
-  animation: psychedelic 60s infinite;
+  animation: psychedelic 10s infinite alternate;
 }

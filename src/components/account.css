@@ -20,10 +20,20 @@
 #account-container .stats {
   display: flex;
   flex-wrap: wrap;
-  column-gap: 16px;
-  row-gap: 4px;
+  justify-content: space-around;
+  gap: 16px;
   opacity: 0.75;
   font-size: 90%;
+  background-color: var(--bg-faded-color);
+  padding: 12px;
+  border-radius: 8px;
+  line-height: 1.25;
+}
+#account-container .stats > * {
+  text-align: center;
+}
+#account-container .stats a {
+  color: inherit;
 }
 
 #account-container .actions {
@@ -69,4 +79,13 @@
 }
 #account-container .profile-field p {
   margin: 0;
+}
+
+#account-container .common-followers {
+  border-top: 1px solid var(--outline-color);
+  border-bottom: 1px solid var(--outline-color);
+  padding: 8px 0;
+  font-size: 90%;
+  line-height: 1.5;
+  color: var(--text-insignificant-color);
 }

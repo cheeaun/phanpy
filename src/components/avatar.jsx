@@ -9,7 +9,7 @@ const SIZES = {
   xxxl: 64,
 };
 
-function Avatar({ url, size, alt = '' }) {
+function Avatar({ url, size, alt = '', ...props }) {
   size = SIZES[size] || size || SIZES.m;
   return (
     <span
@@ -19,6 +19,7 @@ function Avatar({ url, size, alt = '' }) {
         height: size,
       }}
       title={alt}
+      {...props}
     >
       {!!url && (
         <img src={url} width={size} height={size} alt={alt} loading="lazy" />

@@ -43,6 +43,14 @@ subscribe(states.settings, () => {
   );
 });
 
+export function hideAllModals() {
+  states.showCompose = false;
+  states.showSettings = false;
+  states.showAccount = false;
+  states.showDrafts = false;
+  states.showMediaModal = false;
+}
+
 export function saveStatus(status, opts) {
   const { override, skipThreading } = Object.assign(
     { override: true, skipThreading: false },

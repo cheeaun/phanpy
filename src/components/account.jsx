@@ -6,7 +6,7 @@ import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
 
 import Avatar from './avatar';
@@ -218,7 +218,12 @@ function Account({ account, onClose }) {
                 </div>
               )}
               <p class="stats">
-                <Link to={`/a/${id}`} onClick={onClose}>
+                <Link
+                  to={`/a/${id}`}
+                  onClick={() => {
+                    hideAllModals();
+                  }}
+                >
                   Posts
                   <br />
                   <b title={statusesCount}>

@@ -119,27 +119,27 @@ function Home({ hidden }) {
   }
 
   const loadingStatuses = useRef(false);
-  const loadStatuses = useDebouncedCallback(
-    (firstLoad) => {
-      if (loadingStatuses.current) return;
-      loadingStatuses.current = true;
-      setUIState('loading');
-      (async () => {
-        try {
-          const { done } = await fetchStatuses(firstLoad);
-          setShowMore(!done);
-          setUIState('default');
-        } catch (e) {
-          console.warn(e);
-          setUIState('error');
-        } finally {
-          loadingStatuses.current = false;
-        }
-      })();
-    },
-    3000,
-    { leading: true, trailing: false },
-  );
+  const loadStatuses = (firstLoad) => {
+    if (loadingStatuses.current) return;
+    loadingStatuses.current = true;
+    setUIState('loading');
+    (async () => {
+      try {
+        const { done } = await fetchStatuses(firstLoad);
+        setShowMore(!done);
+        setUIState('default');
+      } catch (e) {
+        console.warn(e);
+        setUIState('error');
+      } finally {
+        loadingStatuses.current = false;
+      }
+    })();
+  };
+  const debouncedLoadStatuses = useDebouncedCallback(loadStatuses, 3000, {
+    leading: true,
+    trailing: false,
+  });
 
   useEffect(() => {
     loadStatuses(true);
@@ -284,7 +284,7 @@ function Home({ hidden }) {
 
   useEffect(() => {
     if (reachStart) {
-      loadStatuses(true);
+      debouncedLoadStatuses(true);
     }
   }, [reachStart]);
 
@@ -324,7 +324,7 @@ function Home({ hidden }) {
               scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onDblClick={() => {
-              loadStatuses(true);
+              debouncedLoadStatuses(true);
             }}
           >
             <div class="header-side">
@@ -372,7 +372,7 @@ function Home({ hidden }) {
                     );
                     states.home.unshift(...uniqueHomeNew);
                   }
-                  loadStatuses(true);
+                  debouncedLoadStatuses(true);
                   states.homeNew = [];
 
                   scrollableRef.current?.scrollTo({
@@ -443,7 +443,7 @@ function Home({ hidden }) {
                   <button
                     type="button"
                     onClick={() => {
-                      loadStatuses(true);
+                      debouncedLoadStatuses(true);
                     }}
                   >
                     Try again

@@ -18,10 +18,10 @@ render(
   document.getElementById('app'),
 );
 
-// Clean up iconify localStorage
-// TODO: Remove this after few weeks?
+// Storage cleanup
 setTimeout(() => {
   try {
+    // Clean up iconify localStorage
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('iconify')) {
         localStorage.removeItem(key);
@@ -32,5 +32,8 @@ setTimeout(() => {
         sessionStorage.removeItem(key);
       }
     });
+
+    // Clean up old settings key
+    localStorage.removeItem('settings:boostsCarousel');
   } catch (e) {}
 }, 5000);

@@ -1,3 +1,5 @@
+import { getCurrentAccountNS } from './store-utils';
+
 const local = {
   get: (key) => {
     try {
@@ -84,4 +86,36 @@ const session = {
   },
 };
 
-export default { local, session };
+// Store with account namespace (id@domain.tld) <- uses id, not username
+const account = {
+  get: (key) => {
+    try {
+      return local.getJSON(key)[getCurrentAccountNS()];
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  },
+  set: (key, value) => {
+    try {
+      const data = local.getJSON(key) || {};
+      data[getCurrentAccountNS()] = value;
+      return local.setJSON(key, data);
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  },
+  del: (key) => {
+    try {
+      const data = local.getJSON(key) || {};
+      delete data[getCurrentAccountNS()];
+      return local.setJSON(key, data);
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  },
+};
+
+export default { local, session, account };

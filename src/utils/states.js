@@ -1,4 +1,5 @@
-import { proxy, subscribe } from 'valtio';
+import { proxy } from 'valtio';
+import { subscribeKey } from 'valtio/utils';
 
 import store from './store';
 
@@ -14,7 +15,7 @@ const states = proxy({
   homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,
   notifications: [],
-  notificationLast: null, // Last item in 'notifications' list
+  notificationsLast: store.account.get('notificationsLast') || null, // Last item in 'notifications' list
   notificationsNew: [],
   notificationsLastFetchTime: null,
   accounts: {},
@@ -27,20 +28,20 @@ const states = proxy({
   showAccount: false,
   showDrafts: false,
   showMediaModal: false,
-  composeCharacterCount: 0,
+  // Settings
   settings: {
-    boostsCarousel: store.local.get('settings:boostsCarousel')
-      ? store.local.get('settings:boostsCarousel') === '1'
-      : true,
+    boostsCarousel: store.account.get('settings-boostCarousel') ?? true,
   },
 });
+
 export default states;
 
-subscribe(states.settings, () => {
-  store.local.set(
-    'settings:boostsCarousel',
-    states.settings.boostsCarousel ? '1' : '0',
-  );
+subscribeKey(states, 'notificationsLast', (v) => {
+  console.log('CHANGE', v);
+  store.account.set('notificationsLast', states.notificationsLast);
+});
+subscribeKey(states, 'settings-boostCarousel', (v) => {
+  store.account.set('settings-boostCarousel', !!v);
 });
 
 export function hideAllModals() {

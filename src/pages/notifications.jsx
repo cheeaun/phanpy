@@ -81,7 +81,7 @@ function Notifications() {
       const groupedNotifications = groupNotifications(notificationsValues);
 
       if (firstLoad) {
-        states.notificationLast = notificationsValues[0];
+        states.notificationsLast = notificationsValues[0];
         states.notifications = groupedNotifications;
       } else {
         states.notifications.push(...groupedNotifications);

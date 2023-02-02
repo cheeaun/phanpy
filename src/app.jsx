@@ -214,7 +214,7 @@ function App() {
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>
-        {isLoggedIn && <Route path="/s/:id" element={<Status />} />}
+        <Route path="/s/:id" element={<Status />} />
       </Routes>
       <nav id="tab-bar" hidden>
         <li>
@@ -409,6 +409,7 @@ async function startStream() {
 
   const handleNewStatus = debounce((status) => {
     console.log('UPDATE', status);
+    if (document.visibilityState === 'hidden') return;
 
     const inHomeNew = states.homeNew.find((s) => s.id === status.id);
     const inHome = status.id === states.homeLast?.id;
@@ -444,7 +445,7 @@ async function startStream() {
     const inNotificationsNew = states.notificationsNew.find(
       (n) => n.id === notification.id,
     );
-    const inNotifications = notification.id === states.notificationLast?.id;
+    const inNotifications = notification.id === states.notificationsLast?.id;
     if (!inNotificationsNew && !inNotifications) {
       states.notificationsNew.unshift(notification);
     }
@@ -483,6 +484,7 @@ function startVisibility() {
           try {
             const firstStatusID = states.homeLast?.id;
             const firstNotificationID = states.notificationsLast?.id;
+            console.log({ states, firstNotificationID, firstStatusID });
             const fetchHome = masto.v1.timelines.listHome({
               limit: 5,
               ...(firstStatusID && { sinceId: firstStatusID }),
@@ -518,7 +520,7 @@ function startVisibility() {
                 (n) => n.id === notification.id,
               );
               const inNotifications =
-                notification.id === states.notificationLast?.id;
+                notification.id === states.notificationsLast?.id;
               if (!inNotificationsNew && !inNotifications) {
                 states.notificationsNew.unshift(notification);
               }

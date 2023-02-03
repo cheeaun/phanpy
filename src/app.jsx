@@ -26,6 +26,7 @@ import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
+import Following from './pages/following';
 import Hashtags from './pages/hashtags';
 import Home from './pages/home';
 import Lists from './pages/lists';
@@ -205,6 +206,7 @@ function App() {
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}
+        {isLoggedIn && <Route path="/l/f" element={<Following />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}

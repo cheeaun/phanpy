@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
 import states from '../utils/states';
+import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function AccountStatuses() {
+  const snapStates = useSnapshot(states);
   const { id } = useParams();
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
@@ -19,6 +22,7 @@ function AccountStatuses() {
   }
 
   const [account, setAccount] = useState({});
+  useTitle(`${account?.acct ? '@' + account.acct : 'Posts'}`, '/a/:id');
   useEffect(() => {
     (async () => {
       try {
@@ -48,11 +52,11 @@ function AccountStatuses() {
           </div>
         </h1>
       }
-      path="/a/:id"
       id="account_statuses"
       emptyText="Nothing to see here yet."
       errorText="Unable to load statuses"
       fetchItems={fetchAccountStatuses}
+      boostsCarousel={snapStates.settings.boostsCarousel}
     />
   );
 }

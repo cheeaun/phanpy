@@ -38,8 +38,14 @@ export default function useScroll({
       const scrollDimension = isVertical ? scrollHeight : scrollWidth;
       const clientDimension = isVertical ? clientHeight : clientWidth;
       const scrollDistance = Math.abs(scrollStart - previousScrollStart);
-      const distanceFromStartPx = clientDimension * distanceFromStart;
-      const distanceFromEndPx = clientDimension * distanceFromEnd;
+      const distanceFromStartPx = Math.min(
+        clientDimension * distanceFromStart,
+        scrollDimension,
+      );
+      const distanceFromEndPx = Math.min(
+        clientDimension * distanceFromEnd,
+        scrollDimension,
+      );
 
       if (
         scrollDistance >=

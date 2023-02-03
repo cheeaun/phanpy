@@ -2,6 +2,7 @@
 import { useMatch, useParams } from 'react-router-dom';
 
 import Timeline from '../components/timeline';
+import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
@@ -11,6 +12,8 @@ function Public() {
   const isLocal = !!useMatch('/p/l/:instance');
   const params = useParams();
   const { instance = '' } = params;
+  const title = `${instance} (${isLocal ? 'local' : 'federated'})`;
+  useTitle(title, `/p/${instance}`);
   async function fetchPublic(firstLoad) {
     const url = firstLoad
       ? `https://${instance}/api/v1/timelines/public?limit=${LIMIT}&local=${isLocal}`
@@ -37,7 +40,7 @@ function Public() {
   return (
     <Timeline
       key={instance + isLocal}
-      title={`${instance} (${isLocal ? 'local' : 'federated'})`}
+      title={title}
       id="public"
       emptyText="No one has posted anything yet."
       errorText="Unable to load posts"

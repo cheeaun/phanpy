@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 
 import Timeline from '../components/timeline';
+import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
@@ -18,6 +19,7 @@ function Lists() {
   }
 
   const [title, setTitle] = useState(`List ${id}`);
+  useTitle(title, `/l/${id}`);
   useEffect(() => {
     (async () => {
       try {
@@ -36,6 +38,7 @@ function Lists() {
       emptyText="Nothing yet."
       errorText="Unable to load posts."
       fetchItems={fetchLists}
+      boostsCarousel
     />
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useDebouncedCallback } from 'use-debounce';
 
 import useScroll from '../utils/useScroll';
-import useTitle from '../utils/useTitle';
 
 import Icon from './icon';
 import Link from './link';
@@ -11,45 +11,55 @@ import Status from './status';
 function Timeline({
   title,
   titleComponent,
-  path,
   id,
   emptyText,
   errorText,
+  boostsCarousel,
   fetchItems = () => {},
 }) {
-  if (title) {
-    useTitle(title, path);
-  }
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
   const scrollableRef = useRef(null);
-  const { nearReachEnd, reachStart } = useScroll({
+  const { nearReachEnd, reachStart, reachEnd } = useScroll({
     scrollableElement: scrollableRef.current,
+    distanceFromEnd: 1,
   });
 
-  const loadItems = (firstLoad) => {
-    setUIState('loading');
-    (async () => {
-      try {
-        const { done, value } = await fetchItems(firstLoad);
-        if (value?.length) {
-          if (firstLoad) {
-            setItems(value);
+  const loadItems = useDebouncedCallback(
+    (firstLoad) => {
+      if (uiState === 'loading') return;
+      setUIState('loading');
+      (async () => {
+        try {
+          let { done, value } = await fetchItems(firstLoad);
+          if (value?.length) {
+            if (boostsCarousel) {
+              value = groupBoosts(value);
+            }
+            console.log(value);
+            if (firstLoad) {
+              setItems(value);
+            } else {
+              setItems([...items, ...value]);
+            }
+            setShowMore(!done);
           } else {
-            setItems([...items, ...value]);
+            setShowMore(false);
           }
-          setShowMore(!done);
-        } else {
-          setShowMore(false);
+          setUIState('default');
+        } catch (e) {
+          console.error(e);
+          setUIState('error');
         }
-        setUIState('default');
-      } catch (e) {
-        console.error(e);
-        setUIState('error');
-      }
-    })();
-  };
+      })();
+    },
+    1500,
+    {
+      leading: true,
+      trailing: false,
+    },
+  );
 
   useEffect(() => {
     scrollableRef.current?.scrollTo({ top: 0 });
@@ -63,7 +73,7 @@ function Timeline({
   }, [reachStart]);
 
   useEffect(() => {
-    if (nearReachEnd && showMore) {
+    if (nearReachEnd || (reachEnd && showMore)) {
       loadItems();
     }
   }, [nearReachEnd, showMore]);
@@ -100,8 +110,15 @@ function Timeline({
           <>
             <ul class="timeline">
               {items.map((status) => {
-                const { id: statusID, reblog } = status;
+                const { id: statusID, reblog, boosts } = status;
                 const actualStatusID = reblog?.id || statusID;
+                if (boosts) {
+                  return (
+                    <li key={`timeline-${statusID}`}>
+                      <BoostsCarousel boosts={boosts} />
+                    </li>
+                  );
+                }
                 return (
                   <li key={`timeline-${statusID}`}>
                     <Link class="status-link" to={`/s/${actualStatusID}`}>
@@ -111,21 +128,19 @@ function Timeline({
                 );
               })}
             </ul>
-            {showMore && (
-              <button
-                type="button"
-                class="plain block"
-                disabled={uiState === 'loading'}
-                onClick={() => loadItems()}
-                style={{ marginBlockEnd: '6em' }}
-              >
-                {uiState === 'loading' ? (
-                  <Loader abrupt />
-                ) : (
-                  <>Show more&hellip;</>
-                )}
-              </button>
-            )}
+            {uiState === 'default' &&
+              (showMore ? (
+                <button
+                  type="button"
+                  class="plain block"
+                  onClick={() => loadItems()}
+                  style={{ marginBlockEnd: '6em' }}
+                >
+                  Show more&hellip;
+                </button>
+              ) : (
+                <p class="ui-state insignificant">The end.</p>
+              ))}
           </>
         ) : uiState === 'loading' ? (
           <ul class="timeline">
@@ -136,9 +151,9 @@ function Timeline({
             ))}
           </ul>
         ) : (
-          uiState !== 'loading' && <p class="ui-state">{emptyText}</p>
+          uiState !== 'error' && <p class="ui-state">{emptyText}</p>
         )}
-        {uiState === 'error' ? (
+        {uiState === 'error' && (
           <p class="ui-state">
             {errorText}
             <br />
@@ -150,12 +165,110 @@ function Timeline({
               Try again
             </button>
           </p>
-        ) : (
-          uiState !== 'loading' &&
-          !!items.length &&
-          !showMore && <p class="ui-state insignificant">The end.</p>
         )}
       </div>
+    </div>
+  );
+}
+
+function groupBoosts(values) {
+  let newValues = [];
+  let boostStash = [];
+  let serialBoosts = 0;
+  for (let i = 0; i < values.length; i++) {
+    const item = values[i];
+    if (item.reblog) {
+      boostStash.push(item);
+      serialBoosts++;
+    } else {
+      newValues.push(item);
+      if (serialBoosts < 3) {
+        serialBoosts = 0;
+      }
+    }
+  }
+  // if boostStash is more than quarter of values
+  // or if there are 3 or more boosts in a row
+  if (boostStash.length > values.length / 4 || serialBoosts >= 3) {
+    // if boostStash is more than 3 quarter of values
+    const boostStashID = boostStash.map((status) => status.id);
+    if (boostStash.length > (values.length * 3) / 4) {
+      // insert boost array at the end of specialHome list
+      newValues = [...newValues, { id: boostStashID, boosts: boostStash }];
+    } else {
+      // insert boosts array in the middle of specialHome list
+      const half = Math.floor(newValues.length / 2);
+      newValues = [
+        ...newValues.slice(0, half),
+        {
+          id: boostStashID,
+          boosts: boostStash,
+        },
+        ...newValues.slice(half),
+      ];
+    }
+    return newValues;
+  } else {
+    return values;
+  }
+}
+
+function BoostsCarousel({ boosts }) {
+  const carouselRef = useRef();
+  const { reachStart, reachEnd, init } = useScroll({
+    scrollableElement: carouselRef.current,
+    direction: 'horizontal',
+  });
+  useEffect(() => {
+    init?.();
+  }, []);
+
+  return (
+    <div class="boost-carousel">
+      <header>
+        <h3>{boosts.length} Boosts</h3>
+        <span>
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachStart}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-left" />
+          </button>{' '}
+          <button
+            type="button"
+            class="small plain2"
+            disabled={reachEnd}
+            onClick={() => {
+              carouselRef.current?.scrollBy({
+                left: Math.min(320, carouselRef.current?.offsetWidth),
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <Icon icon="chevron-right" />
+          </button>
+        </span>
+      </header>
+      <ul ref={carouselRef}>
+        {boosts.map((boost) => {
+          const { id: statusID, reblog } = boost;
+          const actualStatusID = reblog?.id || statusID;
+          return (
+            <li key={statusID}>
+              <Link class="status-boost-link" to={`/s/${actualStatusID}`}>
+                <Status status={boost} size="s" />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

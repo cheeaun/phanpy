@@ -118,28 +118,28 @@ function Home({ hidden }) {
     return allStatuses;
   }
 
-  const loadingStatuses = useRef(false);
-  const loadStatuses = (firstLoad) => {
-    if (loadingStatuses.current) return;
-    loadingStatuses.current = true;
-    setUIState('loading');
-    (async () => {
-      try {
-        const { done } = await fetchStatuses(firstLoad);
-        setShowMore(!done);
-        setUIState('default');
-      } catch (e) {
-        console.warn(e);
-        setUIState('error');
-      } finally {
-        loadingStatuses.current = false;
-      }
-    })();
-  };
-  const debouncedLoadStatuses = useDebouncedCallback(loadStatuses, 3000, {
-    leading: true,
-    trailing: false,
-  });
+  const loadStatuses = useDebouncedCallback(
+    (firstLoad) => {
+      if (uiState === 'loading') return;
+      setUIState('loading');
+      (async () => {
+        try {
+          const { done } = await fetchStatuses(firstLoad);
+          setShowMore(!done);
+          setUIState('default');
+        } catch (e) {
+          console.warn(e);
+          setUIState('error');
+        } finally {
+        }
+      })();
+    },
+    1500,
+    {
+      leading: true,
+      trailing: false,
+    },
+  );
 
   useEffect(() => {
     loadStatuses(true);
@@ -271,7 +271,6 @@ function Home({ hidden }) {
     reachEnd,
   } = useScroll({
     scrollableElement: scrollableRef.current,
-    distanceFromStart: 1,
     distanceFromEnd: 3,
     scrollThresholdStart: 44,
   });
@@ -284,7 +283,7 @@ function Home({ hidden }) {
 
   useEffect(() => {
     if (reachStart) {
-      debouncedLoadStatuses(true);
+      loadStatuses(true);
     }
   }, [reachStart]);
 
@@ -324,7 +323,7 @@ function Home({ hidden }) {
               scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onDblClick={() => {
-              debouncedLoadStatuses(true);
+              loadStatuses(true);
             }}
           >
             <div class="header-side">
@@ -372,7 +371,7 @@ function Home({ hidden }) {
                     );
                     states.home.unshift(...uniqueHomeNew);
                   }
-                  debouncedLoadStatuses(true);
+                  loadStatuses(true);
                   states.homeNew = [];
 
                   scrollableRef.current?.scrollTo({
@@ -404,7 +403,7 @@ function Home({ hidden }) {
                     </li>
                   );
                 })}
-                {showMore && (
+                {showMore && uiState === 'loading' && (
                   <>
                     <li
                       style={{
@@ -423,34 +422,45 @@ function Home({ hidden }) {
                   </>
                 )}
               </ul>
-            </>
-          ) : (
-            <>
-              {uiState === 'loading' && (
-                <ul class="timeline">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <li key={i}>
-                      <Status skeleton />
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {uiState === 'error' && (
-                <p class="ui-state">
-                  Unable to load statuses
-                  <br />
-                  <br />
+              {uiState === 'default' &&
+                (showMore ? (
                   <button
                     type="button"
-                    onClick={() => {
-                      debouncedLoadStatuses(true);
-                    }}
+                    class="plain block"
+                    onClick={() => loadStatuses()}
+                    style={{ marginBlockEnd: '6em' }}
                   >
-                    Try again
+                    Show more&hellip;
                   </button>
-                </p>
-              )}
+                ) : (
+                  <p class="ui-state insignificant">The end.</p>
+                ))}
             </>
+          ) : uiState === 'loading' ? (
+            <ul class="timeline">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <li key={i}>
+                  <Status skeleton />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            uiState !== 'error' && <p class="ui-state">Nothing to see here.</p>
+          )}
+          {uiState === 'error' && (
+            <p class="ui-state">
+              Unable to load statuses
+              <br />
+              <br />
+              <button
+                type="button"
+                onClick={() => {
+                  loadStatuses(true);
+                }}
+              >
+                Try again
+              </button>
+            </p>
           )}
         </div>
       </div>

@@ -1,10 +1,12 @@
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
+import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Favourites() {
+  useTitle('Favourites', '/f');
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
     if (firstLoad || !favouritesIterator.current) {

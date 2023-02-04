@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
+import emojifyText from '../utils/emojify-text';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -35,6 +36,8 @@ function AccountStatuses() {
     })();
   }, [id]);
 
+  const { displayName, acct, emojis } = account;
+
   return (
     <Timeline
       key={id}
@@ -46,9 +49,13 @@ function AccountStatuses() {
             states.showAccount = account;
           }}
         >
-          {account?.displayName}
+          <b
+            dangerouslySetInnerHTML={{
+              __html: emojifyText(displayName, emojis),
+            }}
+          />
           <div>
-            <span>@{account?.acct}</span>
+            <span>@{acct}</span>
           </div>
         </h1>
       }

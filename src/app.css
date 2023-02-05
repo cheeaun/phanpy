@@ -1110,12 +1110,12 @@ meter.donut:is(.danger, .explode):after {
   width: 100%;
   flex-grow: 1;
 }
-#home-page ~ .deck-container {
+:is(#home-page, #welcome) ~ .deck-container {
   z-index: 10;
   position: fixed;
   inset: 0;
 }
-#home-page:has(~ .deck-container) {
+:is(#home-page, #welcome):has(~ .deck-container) {
   display: block;
   position: absolute;
   user-select: none;

@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 
 import Timeline from '../components/timeline';
+import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Lists() {
+  const { masto } = api();
   const { id } = useParams();
   const listsIterator = useRef();
   async function fetchLists(firstLoad) {

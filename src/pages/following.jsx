@@ -2,12 +2,14 @@ import { useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
+import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Following() {
   useTitle('Following', '/l/f');
+  const { masto } = api();
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
   async function fetchHome(firstLoad) {

@@ -11,11 +11,12 @@ import Modal from './modal';
 function MediaModal({
   mediaAttachments,
   statusID,
+  instance,
   index = 0,
   onClose = () => {},
 }) {
   const carouselRef = useRef(null);
-  const isStatusLocation = useMatch('/s/:id');
+  const isStatusLocation = useMatch('/s/:instance?/:id');
 
   const [currentIndex, setCurrentIndex] = useState(index);
   const carouselFocusItem = useRef(null);
@@ -167,7 +168,7 @@ function MediaModal({
         <span>
           {!isStatusLocation && (
             <Link
-              to={`/s/${statusID}`}
+              to={instance ? `/s/${instance}/${statusID}` : `/s/${statusID}`}
               class="button carousel-button media-post-link plain3"
               onClick={() => {
                 // if small screen (not media query min-width 40em + 350px), run onClose

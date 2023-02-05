@@ -11,6 +11,7 @@ import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
+import { api } from '../utils/api';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useScroll from '../utils/useScroll';
@@ -48,6 +49,7 @@ const LIMIT = 30; // 30 is the maximum limit :(
 
 function Notifications() {
   useTitle('Notifications', '/notifications');
+  const { masto } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);

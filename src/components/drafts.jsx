@@ -2,6 +2,7 @@ import './drafts.css';
 
 import { useEffect, useMemo, useReducer, useState } from 'react';
 
+import { api } from '../utils/api';
 import db from '../utils/db';
 import states from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
@@ -10,6 +11,7 @@ import Icon from './icon';
 import Loader from './loader';
 
 function Drafts() {
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [drafts, setDrafts] = useState([]);
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);

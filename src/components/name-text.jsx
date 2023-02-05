@@ -5,7 +5,15 @@ import states from '../utils/states';
 
 import Avatar from './avatar';
 
-function NameText({ account, showAvatar, showAcct, short, external, onClick }) {
+function NameText({
+  account,
+  instance,
+  showAvatar,
+  showAcct,
+  short,
+  external,
+  onClick,
+}) {
   const { acct, avatar, avatarStatic, id, url, displayName, emojis } = account;
   let { username } = account;
 
@@ -34,7 +42,10 @@ function NameText({ account, showAvatar, showAcct, short, external, onClick }) {
         if (external) return;
         e.preventDefault();
         if (onClick) return onClick(e);
-        states.showAccount = account;
+        states.showAccount = {
+          account,
+          instance,
+        };
       }}
     >
       {showAvatar && (

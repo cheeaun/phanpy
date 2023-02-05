@@ -2,7 +2,6 @@ import './app.css';
 import 'toastify-js/src/toastify.css';
 
 import debounce from 'just-debounce-it';
-import { createClient } from 'masto';
 import {
   useEffect,
   useLayoutEffect,
@@ -36,9 +35,11 @@ import Public from './pages/public';
 import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
+import { api, initAccount, initClient, initInstance } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import states, { saveStatus } from './utils/states';
 import store from './utils/store';
+import { getCurrentAccount } from './utils/store-utils';
 
 window.__STATES__ = states;
 
@@ -54,13 +55,12 @@ function App() {
       document.documentElement.classList.add(`is-${theme}`);
       document
         .querySelector('meta[name="color-scheme"]')
-        .setAttribute('content', theme);
+        .setAttribute('content', theme === 'auto' ? 'dark light' : theme);
     }
   }, []);
 
   useEffect(() => {
     const instanceURL = store.local.get('instanceURL');
-    const accounts = store.local.getJSON('accounts') || [];
     const code = (window.location.search.match(/code=([^&]+)/) || [])[1];
 
     if (code) {
@@ -73,58 +73,31 @@ function App() {
 
       (async () => {
         setUIState('loading');
-        const tokenJSON = await getAccessToken({
+        const { access_token: accessToken } = await getAccessToken({
           instanceURL,
           client_id: clientID,
           client_secret: clientSecret,
           code,
         });
-        const { access_token: accessToken } = tokenJSON;
-        store.session.set('accessToken', accessToken);
 
-        initMasto({
-          url: `https://${instanceURL}`,
-          accessToken,
-        });
-
-        const mastoAccount = await masto.v1.accounts.verifyCredentials();
-
-        // console.log({ tokenJSON, mastoAccount });
-
-        let account = accounts.find((a) => a.info.id === mastoAccount.id);
-        if (account) {
-          account.info = mastoAccount;
-          account.instanceURL = instanceURL.toLowerCase();
-          account.accessToken = accessToken;
-        } else {
-          account = {
-            info: mastoAccount,
-            instanceURL,
-            accessToken,
-          };
-          accounts.push(account);
-        }
-
-        store.local.setJSON('accounts', accounts);
-        store.session.set('currentAccount', account.info.id);
+        const masto = initClient({ instance: instanceURL, accessToken });
+        await Promise.allSettled([
+          initInstance(masto),
+          initAccount(masto, instanceURL, accessToken),
+        ]);
 
         setIsLoggedIn(true);
         setUIState('default');
       })();
-    } else if (accounts.length) {
-      const currentAccount = store.session.get('currentAccount');
-      const account =
-        accounts.find((a) => a.info.id === currentAccount) || accounts[0];
-      const instanceURL = account.instanceURL;
-      const accessToken = account.accessToken;
-      store.session.set('currentAccount', account.info.id);
-      if (accessToken) setIsLoggedIn(true);
-
-      initMasto({
-        url: `https://${instanceURL}`,
-        accessToken,
-      });
     } else {
+      const account = getCurrentAccount();
+      if (account) {
+        store.session.set('currentAccount', account.info.id);
+        const { masto } = api({ account });
+        initInstance(masto);
+        setIsLoggedIn(true);
+      }
+
       setUIState('default');
     }
   }, []);
@@ -181,8 +154,10 @@ function App() {
 
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome|p)/.test(pathname);
+    return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
+
+  console.log('nonRootLocation', nonRootLocation, 'location', location);
 
   return (
     <>
@@ -210,13 +185,17 @@ function App() {
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
-        {isLoggedIn && <Route path="/t/:hashtag" element={<Hashtags />} />}
-        {isLoggedIn && <Route path="/a/:id" element={<AccountStatuses />} />}
+        {isLoggedIn && (
+          <Route path="/t/:instance?/:hashtag" element={<Hashtags />} />
+        )}
+        {isLoggedIn && (
+          <Route path="/a/:instance?/:id" element={<AccountStatuses />} />
+        )}
         <Route path="/p/l?/:instance" element={<Public />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>
-        <Route path="/s/:id" element={<Status />} />
+        <Route path="/s/:instance?/:id" element={<Status />} />
       </Routes>
       <nav id="tab-bar" hidden>
         <li>
@@ -304,7 +283,8 @@ function App() {
           }}
         >
           <Account
-            account={snapStates.showAccount}
+            account={snapStates.showAccount?.account || snapStates.showAccount}
+            instance={snapStates.showAccount?.instance}
             onClose={() => {
               states.showAccount = false;
             }}
@@ -335,6 +315,7 @@ function App() {
         >
           <MediaModal
             mediaAttachments={snapStates.showMediaModal.mediaAttachments}
+            instance={snapStates.showMediaModal.instance}
             index={snapStates.showMediaModal.index}
             statusID={snapStates.showMediaModal.statusID}
             onClose={() => {
@@ -347,57 +328,9 @@ function App() {
   );
 }
 
-function initMasto(params) {
-  const clientParams = {
-    url: params.url || 'https://mastodon.social',
-    accessToken: params.accessToken || null,
-    disableVersionCheck: true,
-    timeout: 30_000,
-  };
-  window.masto = createClient(clientParams);
-
-  (async () => {
-    // Request v2, fallback to v1 if fail
-    let info;
-    try {
-      info = await masto.v2.instance.fetch();
-    } catch (e) {}
-    if (!info) {
-      try {
-        info = await masto.v1.instances.fetch();
-      } catch (e) {}
-    }
-    if (!info) return;
-    console.log(info);
-    const {
-      // v1
-      uri,
-      urls: { streamingApi } = {},
-      // v2
-      domain,
-      configuration: { urls: { streaming } = {} } = {},
-    } = info;
-    if (uri || domain) {
-      const instances = store.local.getJSON('instances') || {};
-      instances[
-        (domain || uri)
-          .replace(/^https?:\/\//, '')
-          .replace(/\/+$/, '')
-          .toLowerCase()
-      ] = info;
-      store.local.setJSON('instances', instances);
-    }
-    if (streamingApi || streaming) {
-      window.masto = createClient({
-        ...clientParams,
-        streamingApiUrl: streaming || streamingApi,
-      });
-    }
-  })();
-}
-
 let ws;
 async function startStream() {
+  const { masto } = api();
   if (
     ws &&
     (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)
@@ -472,6 +405,7 @@ async function startStream() {
 
 let lastHidden;
 function startVisibility() {
+  const { masto } = api();
   const handleVisible = (visible) => {
     if (!visible) {
       const timestamp = Date.now();

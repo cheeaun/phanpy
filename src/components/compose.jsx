@@ -12,6 +12,7 @@ import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
+import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
@@ -99,6 +100,7 @@ function Compose({
   hasOpener,
 }) {
   console.warn('RENDER COMPOSER');
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
@@ -868,6 +870,9 @@ function Compose({
             updateCharCount();
           }}
           maxCharacters={maxCharacters}
+          performSearch={(params) => {
+            return masto.v2.search(params);
+          }}
         />
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
@@ -1031,7 +1036,7 @@ function Compose({
 
 const Textarea = forwardRef((props, ref) => {
   const [text, setText] = useState(ref.current?.value || '');
-  const { maxCharacters, ...textareaProps } = props;
+  const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
 
@@ -1087,7 +1092,7 @@ const Textarea = forwardRef((props, ref) => {
         }[key];
         provide(
           new Promise((resolve) => {
-            const searchResults = masto.v2.search({
+            const searchResults = performSearch({
               type,
               q: text,
               limit: 5,

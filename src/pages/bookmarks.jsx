@@ -1,12 +1,14 @@
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
+import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Bookmarks() {
   useTitle('Bookmarks', '/b');
+  const { masto } = api();
   const bookmarksIterator = useRef();
   async function fetchBookmarks(firstLoad) {
     if (firstLoad || !bookmarksIterator.current) {

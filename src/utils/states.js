@@ -1,6 +1,7 @@
 import { proxy } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
+import { api } from './api';
 import store from './store';
 
 const states = proxy({
@@ -76,6 +77,7 @@ export function saveStatus(status, opts) {
 }
 
 export function threadifyStatus(status) {
+  const { masto } = api();
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
   async function traverse(status, index = 0) {

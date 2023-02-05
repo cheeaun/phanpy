@@ -8,6 +8,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import Status from '../components/status';
+import { api } from '../utils/api';
 import db from '../utils/db';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
@@ -18,6 +19,7 @@ const LIMIT = 20;
 
 function Home({ hidden }) {
   useTitle('Home', '/');
+  const { masto } = api();
   const snapStates = useSnapshot(states);
   const isHomeLocation = snapStates.currentLocation === '/';
   const [uiState, setUIState] = useState('default');

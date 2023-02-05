@@ -2,6 +2,7 @@ import './account.css';
 
 import { useEffect, useState } from 'preact/hooks';
 
+import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
@@ -14,7 +15,8 @@ import Icon from './icon';
 import Link from './link';
 import NameText from './name-text';
 
-function Account({ account, onClose }) {
+function Account({ account, instance, onClose }) {
+  const { masto, authenticated } = api({ instance });
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -82,7 +84,7 @@ function Account({ account, onClose }) {
   const [relationship, setRelationship] = useState(null);
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
   useEffect(() => {
-    if (info) {
+    if (info && authenticated) {
       const currentAccount = store.session.get('currentAccount');
       if (currentAccount === id) {
         // It's myself!
@@ -120,7 +122,7 @@ function Account({ account, onClose }) {
         }
       })();
     }
-  }, [info]);
+  }, [info, authenticated]);
 
   const {
     following,
@@ -174,7 +176,7 @@ function Account({ account, onClose }) {
           <>
             <header>
               <Avatar url={avatar} size="xxxl" />
-              <NameText account={info} showAcct external />
+              <NameText account={info} instance={instance} showAcct external />
             </header>
             <main tabIndex="-1">
               {bot && (
@@ -186,7 +188,9 @@ function Account({ account, onClose }) {
               )}
               <div
                 class="note"
-                onClick={handleContentLinks()}
+                onClick={handleContentLinks({
+                  instance,
+                })}
                 dangerouslySetInnerHTML={{
                   __html: enhanceContent(note, { emojis }),
                 }}
@@ -270,7 +274,10 @@ function Account({ account, onClose }) {
                         rel="noopener noreferrer"
                         onClick={(e) => {
                           e.preventDefault();
-                          states.showAccount = follower;
+                          states.showAccount = {
+                            account: follower,
+                            instance,
+                          };
                         }}
                       >
                         <Avatar

@@ -6,7 +6,7 @@ import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
@@ -17,6 +17,7 @@ import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
+import { api } from '../utils/api';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus, threadifyStatus } from '../utils/states';
@@ -34,8 +35,8 @@ function resetScrollPosition(id) {
 }
 
 function StatusPage() {
-  const { id } = useParams();
-  const location = useLocation();
+  const { id, instance } = useParams();
+  const { masto } = api({ instance });
   const navigate = useNavigate();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
@@ -92,6 +93,7 @@ function StatusPage() {
     }
 
     (async () => {
+      console.log('MASTO V1 fetch', masto);
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.fetch(id), {
           retries: 4,
@@ -211,7 +213,7 @@ function StatusPage() {
     };
   };
 
-  useEffect(initContext, [id]);
+  useEffect(initContext, [id, masto]);
   useEffect(() => {
     if (!statuses.length) return;
     console.debug('STATUSES', statuses);
@@ -462,7 +464,12 @@ function StatusPage() {
             {!heroInView && heroStatus && uiState !== 'loading' ? (
               <>
                 <span class="hero-heading">
-                  <NameText showAvatar account={heroStatus.account} short />{' '}
+                  <NameText
+                    account={heroStatus.account}
+                    instance={instance}
+                    showAvatar
+                    short
+                  />{' '}
                   <span class="insignificant">
                     &bull;{' '}
                     <RelativeTime
@@ -583,18 +590,28 @@ function StatusPage() {
                       class="status-focus"
                       tabIndex={0}
                     >
-                      <Status statusID={statusID} withinContext size="l" />
+                      <Status
+                        statusID={statusID}
+                        instance={instance}
+                        withinContext
+                        size="l"
+                      />
                     </InView>
                   ) : (
                     <Link
                       class="status-link"
-                      to={`/s/${statusID}`}
+                      to={
+                        instance
+                          ? `/s/${instance}/${statusID}`
+                          : `/s/${statusID}`
+                      }
                       onClick={() => {
                         resetScrollPosition(statusID);
                       }}
                     >
                       <Status
                         statusID={statusID}
+                        instance={instance}
                         withinContext
                         size={thread || ancestor ? 'm' : 's'}
                       />
@@ -610,6 +627,7 @@ function StatusPage() {
                   )}
                   {descendant && replies?.length > 0 && (
                     <SubComments
+                      instance={instance}
                       hasManyStatuses={hasManyStatuses}
                       replies={replies}
                     />
@@ -691,7 +709,7 @@ function StatusPage() {
   );
 }
 
-function SubComments({ hasManyStatuses, replies }) {
+function SubComments({ hasManyStatuses, replies, instance }) {
   // Set isBrief = true:
   // - if less than or 2 replies
   // - if replies have no sub-replies
@@ -764,12 +782,17 @@ function SubComments({ hasManyStatuses, replies }) {
           <li key={r.id}>
             <Link
               class="status-link"
-              to={`/s/${r.id}`}
+              to={instance ? `/s/${instance}/${r.id}` : `/s/${r.id}`}
               onClick={() => {
                 resetScrollPosition(r.id);
               }}
             >
-              <Status statusID={r.id} withinContext size="s" />
+              <Status
+                statusID={r.id}
+                instance={instance}
+                withinContext
+                size="s"
+              />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">
                   <Icon icon="comment" />{' '}
@@ -781,6 +804,7 @@ function SubComments({ hasManyStatuses, replies }) {
             </Link>
             {r.replies?.length && (
               <SubComments
+                instance={instance}
                 hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
               />

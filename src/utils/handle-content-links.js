@@ -1,7 +1,7 @@
 import states from './states';
 
 function handleContentLinks(opts) {
-  const { mentions = [] } = opts || {};
+  const { mentions = [], instance } = opts || {};
   return (e) => {
     let { target } = e;
     if (target.parentNode.tagName.toLowerCase() === 'a') {
@@ -25,13 +25,19 @@ function handleContentLinks(opts) {
       if (mention) {
         e.preventDefault();
         e.stopPropagation();
-        states.showAccount = mention.acct;
+        states.showAccount = {
+          account: mention.acct,
+          instance,
+        };
       } else if (!/^http/i.test(targetText)) {
         console.log('mention not found', targetText);
         e.preventDefault();
         e.stopPropagation();
         const href = target.getAttribute('href');
-        states.showAccount = href;
+        states.showAccount = {
+          account: href,
+          instance,
+        };
       }
     } else if (
       target.tagName.toLowerCase() === 'a' &&
@@ -40,7 +46,9 @@ function handleContentLinks(opts) {
       e.preventDefault();
       e.stopPropagation();
       const tag = target.innerText.replace(/^#/, '').trim();
-      location.hash = `#/t/${tag}`;
+      const hashURL = instance ? `#/t/${instance}/${tag}` : `#/t/${tag}`;
+      console.log({ hashURL });
+      location.hash = hashURL;
     }
   };
 }

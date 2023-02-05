@@ -12,6 +12,7 @@ function Timeline({
   title,
   titleComponent,
   id,
+  instance,
   emptyText,
   errorText,
   boostsCarousel,
@@ -112,17 +113,20 @@ function Timeline({
               {items.map((status) => {
                 const { id: statusID, reblog, boosts } = status;
                 const actualStatusID = reblog?.id || statusID;
+                const url = instance
+                  ? `/s/${instance}/${actualStatusID}`
+                  : `/s/${actualStatusID}`;
                 if (boosts) {
                   return (
                     <li key={`timeline-${statusID}`}>
-                      <BoostsCarousel boosts={boosts} />
+                      <BoostsCarousel boosts={boosts} instance={instance} />
                     </li>
                   );
                 }
                 return (
                   <li key={`timeline-${statusID}`}>
-                    <Link class="status-link" to={`/s/${actualStatusID}`}>
-                      <Status status={status} />
+                    <Link class="status-link" to={url}>
+                      <Status status={status} instance={instance} />
                     </Link>
                   </li>
                 );
@@ -213,7 +217,7 @@ function groupBoosts(values) {
   }
 }
 
-function BoostsCarousel({ boosts }) {
+function BoostsCarousel({ boosts, instance }) {
   const carouselRef = useRef();
   const { reachStart, reachEnd, init } = useScroll({
     scrollableElement: carouselRef.current,
@@ -260,10 +264,13 @@ function BoostsCarousel({ boosts }) {
         {boosts.map((boost) => {
           const { id: statusID, reblog } = boost;
           const actualStatusID = reblog?.id || statusID;
+          const url = instance
+            ? `/s/${instance}/${actualStatusID}`
+            : `/s/${actualStatusID}`;
           return (
             <li key={statusID}>
-              <Link class="status-boost-link" to={`/s/${actualStatusID}`}>
-                <Status status={boost} size="s" />
+              <Link class="status-boost-link" to={url}>
+                <Status status={boost} instance={instance} size="s" />
               </Link>
             </li>
           );

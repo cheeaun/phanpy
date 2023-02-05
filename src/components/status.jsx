@@ -1,17 +1,9 @@
 import './status.css';
 
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { getBlurHashAverageColor } from 'fast-blurhash';
 import mem from 'mem';
 import { memo } from 'preact/compat';
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import 'swiped-events';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
@@ -19,6 +11,7 @@ import { useSnapshot } from 'valtio';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
+import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
@@ -33,7 +26,7 @@ import Link from './link';
 import Media from './media';
 import RelativeTime from './relative-time';
 
-function fetchAccount(id) {
+function fetchAccount(id, masto) {
   try {
     return masto.v1.accounts.fetch(id);
   } catch (e) {
@@ -45,6 +38,7 @@ const memFetchAccount = mem(fetchAccount);
 function Status({
   statusID,
   status,
+  instance,
   withinContext,
   size = 'm',
   skeleton,
@@ -65,6 +59,7 @@ function Status({
       </div>
     );
   }
+  const { masto, authenticated } = api({ instance });
 
   const snapStates = useSnapshot(states);
   if (!status) {
@@ -135,7 +130,7 @@ function Status({
     if (account) {
       setInReplyToAccount(account);
     } else {
-      memFetchAccount(inReplyToAccountId)
+      memFetchAccount(inReplyToAccountId, masto)
         .then((account) => {
           setInReplyToAccount(account);
           states.accounts[account.id] = account;
@@ -157,9 +152,10 @@ function Status({
       <div class="status-reblog" onMouseEnter={debugHover}>
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
-          <NameText account={status.account} showAvatar /> boosted
+          <NameText account={status.account} instance={instance} showAvatar />{' '}
+          boosted
         </div>
-        <Status status={reblog} size={size} />
+        <Status status={reblog} instance={instance} size={size} />
       </div>
     );
   }
@@ -198,6 +194,8 @@ function Status({
 
   const statusRef = useRef(null);
 
+  const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
+
   return (
     <article
       ref={statusRef}
@@ -229,7 +227,10 @@ function Status({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            states.showAccount = status.account;
+            states.showAccount = {
+              account: status.account,
+              instance,
+            };
           }}
         >
           <Avatar url={avatarStatic} size="xxl" />
@@ -240,6 +241,7 @@ function Status({
           {/* <span> */}
           <NameText
             account={status.account}
+            instance={instance}
             showAvatar={size === 's'}
             showAcct={size === 'l'}
           />
@@ -248,14 +250,23 @@ function Status({
                 {' '}
                 <span class="ib">
                   <Icon icon="arrow-right" class="arrow" />{' '}
-                  <NameText account={inReplyToAccount} short />
+                  <NameText account={inReplyToAccount} instance={instance} short />
                 </span>
               </>
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
             (uri ? (
-              <Link to={`/s/${id}`} class="time">
+              <Link
+                to={
+                  instance
+                    ? `
+                /s/${instance}/${id}
+              `
+                    : `/s/${id}`
+                }
+                class="time"
+              >
                 <Icon
                   icon={visibilityIconsMap[visibility]}
                   alt={visibility}
@@ -294,7 +305,11 @@ function Status({
                 })) && (
                 <div class="status-reply-badge">
                   <Icon icon="reply" />{' '}
-                  <NameText account={inReplyToAccount} short />
+                  <NameText
+                    account={inReplyToAccount}
+                    instance={instance}
+                    short
+                  />
                 </div>
               )
             )}
@@ -346,7 +361,7 @@ function Status({
             lang={language}
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleContentLinks({ mentions })}
+            onClick={handleContentLinks({ mentions, instance })}
             dangerouslySetInnerHTML={{
               __html: enhanceContent(content, {
                 emojis,
@@ -367,9 +382,27 @@ function Status({
             <Poll
               lang={language}
               poll={poll}
-              readOnly={readOnly}
+              readOnly={readOnly || !authenticated}
               onUpdate={(newPoll) => {
                 states.statuses[id].poll = newPoll;
+              }}
+              refresh={() => {
+                return masto.v1.polls
+                  .fetch(poll.id)
+                  .then((pollResponse) => {
+                    states.statuses[id].poll = pollResponse;
+                  })
+                  .catch((e) => {}); // Silently fail
+              }}
+              votePoll={(choices) => {
+                return masto.v1.polls
+                  .vote(poll.id, {
+                    choices,
+                  })
+                  .then((pollResponse) => {
+                    states.statuses[id].poll = pollResponse;
+                  })
+                  .catch((e) => {}); // Silently fail
               }}
             />
           )}
@@ -410,6 +443,7 @@ function Status({
                       states.showMediaModal = {
                         mediaAttachments,
                         index: i,
+                        instance,
                         statusID: readOnly ? null : id,
                       };
                     }}
@@ -477,6 +511,9 @@ function Status({
                   icon="comment"
                   count={repliesCount}
                   onClick={() => {
+                    if (!authenticated) {
+                      return alert(unauthInteractionErrorMessage);
+                    }
                     states.showCompose = {
                       replyToStatus: status,
                     };
@@ -494,6 +531,9 @@ function Status({
                     icon="rocket"
                     count={reblogsCount}
                     onClick={async () => {
+                      if (!authenticated) {
+                        return alert(unauthInteractionErrorMessage);
+                      }
                       try {
                         if (!reblogged) {
                           const yes = confirm(
@@ -536,6 +576,9 @@ function Status({
                   icon="heart"
                   count={favouritesCount}
                   onClick={async () => {
+                    if (!authenticated) {
+                      return alert(unauthInteractionErrorMessage);
+                    }
                     try {
                       // Optimistic
                       states.statuses[statusID] = {
@@ -569,6 +612,9 @@ function Status({
                   class="bookmark-button"
                   icon="bookmark"
                   onClick={async () => {
+                    if (!authenticated) {
+                      return alert(unauthInteractionErrorMessage);
+                    }
                     try {
                       // Optimistic
                       states.statuses[statusID] = {
@@ -635,6 +681,10 @@ function Status({
         >
           <EditedAtModal
             statusID={showEdited}
+            instance={instance}
+            fetchStatusHistory={() => {
+              return masto.v1.statuses.listHistory(showEdited);
+            }}
             onClose={() => {
               setShowEdited(false);
               statusRef.current?.focus();
@@ -742,7 +792,13 @@ function Card({ card }) {
   }
 }
 
-function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
+function Poll({
+  poll,
+  lang,
+  readOnly,
+  refresh = () => {},
+  votePoll = () => {},
+}) {
   const [uiState, setUIState] = useState('default');
 
   const {
@@ -768,12 +824,7 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
         timeout = setTimeout(() => {
           setUIState('loading');
           (async () => {
-            try {
-              const pollResponse = await masto.v1.polls.fetch(id);
-              onUpdate(pollResponse);
-            } catch (e) {
-              // Silent fail
-            }
+            await refresh();
             setUIState('default');
           })();
         }, ms);
@@ -847,19 +898,15 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-            const votes = [];
+            const choices = [];
             formData.forEach((value, key) => {
               if (key === 'poll') {
-                votes.push(value);
+                choices.push(value);
               }
             });
             console.log(votes);
             setUIState('loading');
-            const pollResponse = await masto.v1.polls.vote(id, {
-              choices: votes,
-            });
-            console.log(pollResponse);
-            onUpdate(pollResponse);
+            await votePoll(choices);
             setUIState('default');
           }}
         >
@@ -903,12 +950,7 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
                   e.preventDefault();
                   setUIState('loading');
                   (async () => {
-                    try {
-                      const pollResponse = await masto.v1.polls.fetch(id);
-                      onUpdate(pollResponse);
-                    } catch (e) {
-                      // Silent fail
-                    }
+                    await refresh();
                     setUIState('default');
                   })();
                 }}
@@ -937,7 +979,12 @@ function Poll({ poll, lang, readOnly, onUpdate = () => {} }) {
   );
 }
 
-function EditedAtModal({ statusID, onClose = () => {} }) {
+function EditedAtModal({
+  statusID,
+  instance,
+  fetchStatusHistory = () => {},
+  onClose = () => {},
+}) {
   const [uiState, setUIState] = useState('default');
   const [editHistory, setEditHistory] = useState([]);
 
@@ -945,7 +992,7 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
     setUIState('loading');
     (async () => {
       try {
-        const editHistory = await masto.v1.statuses.listHistory(statusID);
+        const editHistory = await fetchStatusHistory();
         console.log(editHistory);
         setEditHistory(editHistory);
         setUIState('default');
@@ -997,7 +1044,13 @@ function EditedAtModal({ statusID, onClose = () => {} }) {
                       }).format(createdAtDate)}
                     </time>
                   </h3>
-                  <Status status={status} size="s" withinContext readOnly />
+                  <Status
+                    status={status}
+                    instance={instance}
+                    size="s"
+                    withinContext
+                    readOnly
+                  />
                 </li>
               );
             })}

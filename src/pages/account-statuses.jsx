@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
+import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -11,7 +12,8 @@ const LIMIT = 20;
 
 function AccountStatuses() {
   const snapStates = useSnapshot(states);
-  const { id } = useParams();
+  const { id, instance } = useParams();
+  const { masto } = api({ instance });
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
     if (firstLoad || !accountStatusesIterator.current) {
@@ -46,7 +48,10 @@ function AccountStatuses() {
         <h1
           class="header-account"
           onClick={() => {
-            states.showAccount = account;
+            states.showAccount = {
+              account,
+              instance,
+            };
           }}
         >
           <b

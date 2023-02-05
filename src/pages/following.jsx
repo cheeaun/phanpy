@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;

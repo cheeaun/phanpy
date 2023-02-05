@@ -316,9 +316,9 @@ function Status({
           </>
         )}
         <div
-          class={`content-container ${
-            sensitive || spoilerText ? 'has-spoiler' : ''
-          } ${showSpoiler ? 'show-spoiler' : ''}`}
+          class={`content-container ${spoilerText ? 'has-spoiler' : ''} ${
+            showSpoiler ? 'show-spoiler' : ''
+          }`}
           style={
             size === 'l' && {
               '--content-text-weight':
@@ -328,7 +328,7 @@ function Status({
             }
           }
         >
-          {!!spoilerText && sensitive && (
+          {!!spoilerText && (
             <>
               <div
                 class="content"

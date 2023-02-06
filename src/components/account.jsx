@@ -38,7 +38,7 @@ function Account({ account, instance: propInstance, onClose }) {
               q: account,
               type: 'accounts',
               limit: 1,
-              resolve: true,
+              resolve: authenticated,
             });
             if (result.accounts.length) {
               setInfo(result.accounts[0]);

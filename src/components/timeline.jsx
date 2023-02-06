@@ -114,7 +114,7 @@ function Timeline({
                 const { id: statusID, reblog, boosts } = status;
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
-                  ? `/s/${instance}/${actualStatusID}`
+                  ? `/${instance}/s/${actualStatusID}`
                   : `/s/${actualStatusID}`;
                 if (boosts) {
                   return (
@@ -265,7 +265,7 @@ function BoostsCarousel({ boosts, instance }) {
           const { id: statusID, reblog } = boost;
           const actualStatusID = reblog?.id || statusID;
           const url = instance
-            ? `/s/${instance}/${actualStatusID}`
+            ? `/${instance}/s/${actualStatusID}`
             : `/s/${actualStatusID}`;
           return (
             <li key={statusID}>

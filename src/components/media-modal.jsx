@@ -171,7 +171,7 @@ function MediaModal({
         <span>
           {!isStatusLocation && (
             <Link
-              to={instance ? `/s/${instance}/${statusID}` : `/s/${statusID}`}
+              to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
               class="button carousel-button media-post-link plain3"
               onClick={() => {
                 // if small screen (not media query min-width 40em + 350px), run onClose

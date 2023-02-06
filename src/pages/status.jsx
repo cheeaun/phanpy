@@ -639,7 +639,7 @@ function StatusPage() {
                       class="status-link"
                       to={
                         instance
-                          ? `/s/${instance}/${statusID}`
+                          ? `/${instance}/s/${statusID}`
                           : `/s/${statusID}`
                       }
                       onClick={() => {
@@ -819,7 +819,7 @@ function SubComments({ hasManyStatuses, replies, instance }) {
           <li key={r.id}>
             <Link
               class="status-link"
-              to={instance ? `/s/${instance}/${r.id}` : `/s/${r.id}`}
+              to={instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`}
               onClick={() => {
                 resetScrollPosition(r.id);
               }}

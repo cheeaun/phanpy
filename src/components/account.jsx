@@ -223,7 +223,7 @@ function Account({ account, instance: propInstance, onClose }) {
               )}
               <p class="stats">
                 <Link
-                  to={`/a/${id}`}
+                  to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
                   onClick={() => {
                     hideAllModals();
                   }}

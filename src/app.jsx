@@ -185,17 +185,13 @@ function App() {
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
-        {isLoggedIn && (
-          <Route path="/t/:instance?/:hashtag" element={<Hashtags />} />
-        )}
-        {isLoggedIn && (
-          <Route path="/a/:instance?/:id" element={<AccountStatuses />} />
-        )}
-        <Route path="/p/l?/:instance" element={<Public />} />
+        <Route path="/:instance?/t/:hashtag" element={<Hashtags />} />
+        <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
+        <Route path="/:instance?/p/l?" element={<Public />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>
-        <Route path="/s/:instance?/:id" element={<Status />} />
+        <Route path="/:instance?/s/:id" element={<Status />} />
       </Routes>
       <nav id="tab-bar" hidden>
         <li>

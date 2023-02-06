@@ -235,6 +235,24 @@ function Timeline({
                   </li>
                 );
               })}
+              {showMore && uiState === 'loading' && (
+                <>
+                  <li
+                    style={{
+                      height: '20vh',
+                    }}
+                  >
+                    <Status skeleton />
+                  </li>
+                  <li
+                    style={{
+                      height: '25vh',
+                    }}
+                  >
+                    <Status skeleton />
+                  </li>
+                </>
+              )}
             </ul>
             {uiState === 'default' &&
               (showMore ? (

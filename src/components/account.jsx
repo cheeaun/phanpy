@@ -45,9 +45,11 @@ function Account({ account, instance: propInstance, onClose }) {
               setUIState('default');
               return;
             }
+            setInfo(null);
             setUIState('error');
           } catch (err) {
             console.error(err);
+            setInfo(null);
             setUIState('error');
           }
         }

@@ -40,7 +40,7 @@ function resetScrollPosition(id) {
 
 function StatusPage() {
   const { id, ...params } = useParams();
-  const { masto, instance } = api({ instance: params.instance });
+  const { masto, instance, authenticated } = api({ instance: params.instance });
   const navigate = useNavigate();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
@@ -559,6 +559,34 @@ function StatusPage() {
               >
                 <Icon icon="eye-open" /> <span>Show all sensitive content</span>
               </MenuItem>
+              {import.meta.env.DEV && !authenticated && (
+                <MenuItem
+                  onClick={() => {
+                    (async () => {
+                      try {
+                        const { masto } = api();
+                        const results = await masto.v2.search({
+                          q: heroStatus.url,
+                          type: 'statuses',
+                          resolve: true,
+                          limit: 1,
+                        });
+                        if (results.statuses.length) {
+                          const status = results.statuses[0];
+                          navigate(`/s/${status.id}`);
+                        } else {
+                          throw new Error('No results');
+                        }
+                      } catch (e) {
+                        alert('Error: ' + e);
+                        console.error(e);
+                      }
+                    })();
+                  }}
+                >
+                  See post in currently logged-in instance
+                </MenuItem>
+              )}
             </Menu>
             <Link
               class="button plain deck-close"

@@ -16,7 +16,10 @@ function MediaModal({
   onClose = () => {},
 }) {
   const carouselRef = useRef(null);
-  const isStatusLocation = useMatch('/s/:instance?/:id');
+  // NOTE: Optional path segment doesn't work yet
+  // https://github.com/remix-run/react-router/issues/10039
+  // const isStatusLocation = useMatch('/s/:instance?/:id');
+  const isStatusLocation = useMatch('/s/:instance/:id') || useMatch('/s/:id');
 
   const [currentIndex, setCurrentIndex] = useState(index);
   const carouselFocusItem = useRef(null);

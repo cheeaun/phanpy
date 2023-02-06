@@ -37,7 +37,7 @@ import Status from './pages/status';
 import Welcome from './pages/welcome';
 import { api, initAccount, initClient, initInstance } from './utils/api';
 import { getAccessToken } from './utils/auth';
-import states, { saveStatus } from './utils/states';
+import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 
@@ -330,7 +330,7 @@ function App() {
 
 let ws;
 async function startStream() {
-  const { masto } = api();
+  const { masto, instance } = api();
   if (
     ws &&
     (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)
@@ -361,17 +361,17 @@ async function startStream() {
       }
     }
 
-    saveStatus(status);
+    saveStatus(status, instance);
   }, 5000);
   stream.on('update', handleNewStatus);
   stream.on('status.update', (status) => {
     console.log('STATUS.UPDATE', status);
-    saveStatus(status);
+    saveStatus(status, instance);
   });
   stream.on('delete', (statusID) => {
     console.log('DELETE', statusID);
     // delete states.statuses[statusID];
-    const s = states.statuses[statusID];
+    const s = getStatus(statusID);
     if (s) s._deleted = true;
   });
   stream.on('notification', (notification) => {
@@ -385,7 +385,7 @@ async function startStream() {
       states.notificationsNew.unshift(notification);
     }
 
-    saveStatus(notification.status, { override: false });
+    saveStatus(notification.status, instance, { override: false });
   });
 
   stream.ws.onclose = () => {
@@ -405,7 +405,7 @@ async function startStream() {
 
 let lastHidden;
 function startVisibility() {
-  const { masto } = api();
+  const { masto, instance } = api();
   const handleVisible = (visible) => {
     if (!visible) {
       const timestamp = Date.now();
@@ -438,7 +438,7 @@ function startVisibility() {
                 // do nothing
               } else {
                 states.homeNew = newStatuses.map((status) => {
-                  saveStatus(status);
+                  saveStatus(status, instance);
                   return {
                     id: status.id,
                     reblog: status.reblog?.id,
@@ -461,7 +461,7 @@ function startVisibility() {
                 states.notificationsNew.unshift(notification);
               }
 
-              saveStatus(notification.status, { override: false });
+              saveStatus(notification.status, instance, { override: false });
             }
           } catch (e) {
             // Silently fail

@@ -15,8 +15,8 @@ import Icon from './icon';
 import Link from './link';
 import NameText from './name-text';
 
-function Account({ account, instance, onClose }) {
-  const { masto, authenticated } = api({ instance });
+function Account({ account, instance: propInstance, onClose }) {
+  const { masto, instance, authenticated } = api({ instance: propInstance });
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);

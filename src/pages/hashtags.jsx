@@ -8,9 +8,10 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Hashtags() {
-  const { hashtag, instance } = useParams();
-  useTitle(`#${hashtag}`, `/t/${hashtag}`);
-  const { masto } = api({ instance });
+  let { hashtag, ...params } = useParams();
+  const { masto, instance } = api({ instance: params.instance });
+  const title = instance ? `#${hashtag} on ${instance}` : `#${hashtag}`;
+  useTitle(title, `/t/:instance?/:hashtag`);
   const hashtagsIterator = useRef();
   async function fetchHashtags(firstLoad) {
     if (firstLoad || !hashtagsIterator.current) {
@@ -24,7 +25,7 @@ function Hashtags() {
   return (
     <Timeline
       key={hashtag}
-      title={instance ? `#${hashtag} on ${instance}` : `#${hashtag}`}
+      title={title}
       titleComponent={
         !!instance && (
           <h1 class="header-account">
@@ -34,6 +35,7 @@ function Hashtags() {
         )
       }
       id="hashtags"
+      instance={instance}
       emptyText="No one has posted anything with this tag yet."
       errorText="Unable to load posts with this tag"
       fetchItems={fetchHashtags}

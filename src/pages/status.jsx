@@ -20,7 +20,11 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states, { saveStatus, threadifyStatus } from '../utils/states';
+import states, {
+  saveStatus,
+  statusKey,
+  threadifyStatus,
+} from '../utils/states';
 import { getCurrentAccount } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
@@ -35,13 +39,14 @@ function resetScrollPosition(id) {
 }
 
 function StatusPage() {
-  const { id, instance } = useParams();
-  const { masto } = api({ instance });
+  const { id, ...params } = useParams();
+  const { masto, instance } = api({ instance: params.instance });
   const navigate = useNavigate();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
   const heroStatusRef = useRef();
+  const sKey = statusKey(id, instance);
 
   const scrollableRef = useRef();
   useEffect(() => {
@@ -76,7 +81,7 @@ function StatusPage() {
     if (cachedStatuses) {
       // Case 1: It's cached, let's restore them to make it snappy
       const reallyCachedStatuses = cachedStatuses.filter(
-        (s) => states.statuses[s.id],
+        (s) => states.statuses[sKey],
         // Some are not cached in the global state, so we need to filter them out
       );
       setStatuses(reallyCachedStatuses);
@@ -102,14 +107,14 @@ function StatusPage() {
         retries: 8,
       });
 
-      const hasStatus = !!snapStates.statuses[id];
-      let heroStatus = snapStates.statuses[id];
+      const hasStatus = !!snapStates.statuses[sKey];
+      let heroStatus = snapStates.statuses[sKey];
       if (hasStatus) {
         console.debug('Hero status is cached');
       } else {
         try {
           heroStatus = await heroFetch();
-          saveStatus(heroStatus);
+          saveStatus(heroStatus, instance);
           // Give time for context to appear
           await new Promise((resolve) => {
             setTimeout(resolve, 100);
@@ -126,11 +131,15 @@ function StatusPage() {
         const { ancestors, descendants } = context;
 
         ancestors.forEach((status) => {
-          states.statuses[status.id] = status;
+          saveStatus(status, instance, {
+            skipThreading: true,
+          });
         });
         const nestedDescendants = [];
         descendants.forEach((status) => {
-          states.statuses[status.id] = status;
+          saveStatus(status, instance, {
+            skipThreading: true,
+          });
           if (status.inReplyToAccountId === status.account.id) {
             // If replying to self, it's part of the thread, level 1
             nestedDescendants.push(status);
@@ -201,7 +210,7 @@ function StatusPage() {
         // Let's threadify this one
         // Note that all non-hero statuses will trigger saveStatus which will threadify them too
         // By right, at this point, all descendant statuses should be cached
-        threadifyStatus(heroStatus);
+        threadifyStatus(heroStatus, instance);
       } catch (e) {
         console.error(e);
         setUIState('error');
@@ -279,7 +288,7 @@ function StatusPage() {
     };
   }, []);
 
-  const heroStatus = snapStates.statuses[id];
+  const heroStatus = snapStates.statuses[sKey];
   const heroDisplayName = useMemo(() => {
     // Remove shortcodes from display name
     if (!heroStatus) return '';

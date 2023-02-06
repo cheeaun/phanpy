@@ -16,7 +16,7 @@ import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
-import states, { saveStatus } from '../utils/states';
+import states, { saveStatus, statusKey } from '../utils/states';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -38,7 +38,7 @@ const memFetchAccount = mem(fetchAccount);
 function Status({
   statusID,
   status,
-  instance,
+  instance: propInstance,
   withinContext,
   size = 'm',
   skeleton,
@@ -59,11 +59,12 @@ function Status({
       </div>
     );
   }
-  const { masto, authenticated } = api({ instance });
+  const { masto, instance, authenticated } = api({ instance: propInstance });
 
+  const sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
-    status = snapStates.statuses[statusID];
+    status = snapStates.statuses[sKey];
   }
   if (!status) {
     return null;
@@ -384,13 +385,13 @@ function Status({
               poll={poll}
               readOnly={readOnly || !authenticated}
               onUpdate={(newPoll) => {
-                states.statuses[id].poll = newPoll;
+                states.statuses[sKey].poll = newPoll;
               }}
               refresh={() => {
                 return masto.v1.polls
                   .fetch(poll.id)
                   .then((pollResponse) => {
-                    states.statuses[id].poll = pollResponse;
+                    states.statuses[sKey].poll = pollResponse;
                   })
                   .catch((e) => {}); // Silently fail
               }}
@@ -400,7 +401,7 @@ function Status({
                     choices,
                   })
                   .then((pollResponse) => {
-                    states.statuses[id].poll = pollResponse;
+                    states.statuses[sKey].poll = pollResponse;
                   })
                   .catch((e) => {}); // Silently fail
               }}
@@ -544,7 +545,7 @@ function Status({
                           }
                         }
                         // Optimistic
-                        states.statuses[id] = {
+                        states.statuses[sKey] = {
                           ...status,
                           reblogged: !reblogged,
                           reblogsCount: reblogsCount + (reblogged ? -1 : 1),
@@ -553,15 +554,15 @@ function Status({
                           const newStatus = await masto.v1.statuses.unreblog(
                             id,
                           );
-                          saveStatus(newStatus);
+                          saveStatus(newStatus, instance);
                         } else {
                           const newStatus = await masto.v1.statuses.reblog(id);
-                          saveStatus(newStatus);
+                          saveStatus(newStatus, instance);
                         }
                       } catch (e) {
                         console.error(e);
                         // Revert optimistism
-                        states.statuses[id] = status;
+                        states.statuses[sKey] = status;
                       }
                     }}
                   />
@@ -581,7 +582,7 @@ function Status({
                     }
                     try {
                       // Optimistic
-                      states.statuses[statusID] = {
+                      states.statuses[sKey] = {
                         ...status,
                         favourited: !favourited,
                         favouritesCount:
@@ -591,15 +592,15 @@ function Status({
                         const newStatus = await masto.v1.statuses.unfavourite(
                           id,
                         );
-                        saveStatus(newStatus);
+                        saveStatus(newStatus, instance);
                       } else {
                         const newStatus = await masto.v1.statuses.favourite(id);
-                        saveStatus(newStatus);
+                        saveStatus(newStatus, instance);
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses[statusID] = status;
+                      states.statuses[sKey] = status;
                     }
                   }}
                 />
@@ -617,7 +618,7 @@ function Status({
                     }
                     try {
                       // Optimistic
-                      states.statuses[statusID] = {
+                      states.statuses[sKey] = {
                         ...status,
                         bookmarked: !bookmarked,
                       };
@@ -625,15 +626,15 @@ function Status({
                         const newStatus = await masto.v1.statuses.unbookmark(
                           id,
                         );
-                        saveStatus(newStatus);
+                        saveStatus(newStatus, instance);
                       } else {
                         const newStatus = await masto.v1.statuses.bookmark(id);
-                        saveStatus(newStatus);
+                        saveStatus(newStatus, instance);
                       }
                     } catch (e) {
                       console.error(e);
                       // Revert optimistism
-                      states.statuses[statusID] = status;
+                      states.statuses[sKey] = status;
                     }
                   }}
                 />

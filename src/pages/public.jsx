@@ -10,10 +10,10 @@ const LIMIT = 20;
 
 function Public() {
   const isLocal = !!useMatch('/p/l/:instance');
-  const { instance } = useParams();
-  const { masto } = api({ instance });
+  const params = useParams();
+  const { masto, instance } = api({ instance: params.instance });
   const title = `${instance} (${isLocal ? 'local' : 'federated'})`;
-  useTitle(title, `/p/${instance}`);
+  useTitle(title, `/p/l?/:instance`);
 
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {

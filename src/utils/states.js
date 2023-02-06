@@ -53,22 +53,40 @@ export function hideAllModals() {
   states.showMediaModal = false;
 }
 
-export function saveStatus(status, opts) {
+export function statusKey(id, instance) {
+  return instance ? `${instance}/${id}` : id;
+}
+
+export function getStatus(statusID, instance) {
+  if (instance) {
+    const key = statusKey(statusID, instance);
+    return states.statuses[key];
+  }
+  return states.statuses[statusID];
+}
+
+export function saveStatus(status, instance, opts) {
+  if (typeof instance === 'object') {
+    opts = instance;
+    instance = null;
+  }
   const { override, skipThreading } = Object.assign(
     { override: true, skipThreading: false },
     opts,
   );
   if (!status) return;
-  if (!override && states.statuses[status.id]) return;
-  states.statuses[status.id] = status;
+  if (!override && getStatus(status.id)) return;
+  const key = statusKey(status.id, instance);
+  states.statuses[key] = status;
   if (status.reblog) {
-    states.statuses[status.reblog.id] = status.reblog;
+    const key = statusKey(status.reblog.id, instance);
+    states.statuses[key] = status.reblog;
   }
 
   // THREAD TRAVERSER
   if (!skipThreading) {
     requestAnimationFrame(() => {
-      threadifyStatus(status);
+      threadifyStatus(status, instance);
       if (status.reblog) {
         threadifyStatus(status.reblog);
       }
@@ -76,8 +94,8 @@ export function saveStatus(status, opts) {
   }
 }
 
-export function threadifyStatus(status) {
-  const { masto } = api();
+export function threadifyStatus(status, propInstance) {
+  const { masto, instance } = api({ instance: propInstance });
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
   async function traverse(status, index = 0) {
@@ -94,7 +112,7 @@ export function threadifyStatus(status) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
       await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
       prevStatus = await masto.v1.statuses.fetch(inReplyToId);
-      saveStatus(prevStatus, { skipThreading: true });
+      saveStatus(prevStatus, instance, { skipThreading: true });
     }
     // Prepend so that first status in thread will be index 0
     return [...(await traverse(prevStatus, ++index)), status];

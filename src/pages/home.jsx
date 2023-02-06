@@ -19,7 +19,7 @@ const LIMIT = 20;
 
 function Home({ hidden }) {
   useTitle('Home', '/');
-  const { masto } = api();
+  const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const isHomeLocation = snapStates.currentLocation === '/';
   const [uiState, setUIState] = useState('default');
@@ -45,7 +45,7 @@ function Home({ hidden }) {
         return bDate - aDate;
       });
       const homeValues = allStatuses.value.map((status) => {
-        saveStatus(status);
+        saveStatus(status, instance);
         return {
           id: status.id,
           reblog: status.reblog?.id,

@@ -21,7 +21,7 @@ function Lists() {
   }
 
   const [title, setTitle] = useState(`List ${id}`);
-  useTitle(title, `/l/${id}`);
+  useTitle(title, `/l/:id`);
   useEffect(() => {
     (async () => {
       try {

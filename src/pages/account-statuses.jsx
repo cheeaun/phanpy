@@ -12,8 +12,8 @@ const LIMIT = 20;
 
 function AccountStatuses() {
   const snapStates = useSnapshot(states);
-  const { id, instance } = useParams();
-  const { masto } = api({ instance });
+  const { id, ...params } = useParams();
+  const { masto, instance } = api({ instance: params.instance });
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
     if (firstLoad || !accountStatusesIterator.current) {
@@ -25,7 +25,10 @@ function AccountStatuses() {
   }
 
   const [account, setAccount] = useState({});
-  useTitle(`${account?.acct ? '@' + account.acct : 'Posts'}`, '/a/:id');
+  useTitle(
+    `${account?.acct ? '@' + account.acct : 'Posts'}`,
+    '/a/:instance?/:id',
+  );
   useEffect(() => {
     (async () => {
       try {
@@ -65,6 +68,7 @@ function AccountStatuses() {
         </h1>
       }
       id="account_statuses"
+      instance={instance}
       emptyText="Nothing to see here yet."
       errorText="Unable to load statuses"
       fetchItems={fetchAccountStatuses}

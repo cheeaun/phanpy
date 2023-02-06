@@ -1,6 +1,6 @@
 // EXPERIMENTAL: This is a work in progress and may not work as expected.
 import { useRef } from 'preact/hooks';
-import { useMatch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
@@ -8,8 +8,8 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Public() {
-  const isLocal = !!useMatch('/:instance/p/l');
+function Public({ local }) {
+  const isLocal = !!local;
   const params = useParams();
   const { masto, instance } = api({ instance: params.instance });
   const title = `${instance} (${isLocal ? 'local' : 'federated'})`;

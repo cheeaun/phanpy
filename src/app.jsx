@@ -185,7 +185,11 @@ function App() {
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
         <Route path="/:instance?/t/:hashtag" element={<Hashtags />} />
         <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
-        <Route path="/:instance?/p/l?" element={<Public />} />
+        <Route path="/:instance?/p">
+          <Route index element={<Public />} />
+          <Route path="l" element={<Public local />} />
+        </Route>
+        {/* <Route path="/:instance?/p/l?" element={<Public />} /> */}
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>

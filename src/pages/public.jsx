@@ -9,7 +9,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Public() {
-  const isLocal = !!useMatch('/p/l/:instance');
+  const isLocal = !!useMatch('/:instance/p/l');
   const params = useParams();
   const { masto, instance } = api({ instance: params.instance });
   const title = `${instance} (${isLocal ? 'local' : 'federated'})`;

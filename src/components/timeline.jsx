@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useDebouncedCallback } from 'use-debounce';
 
 import useScroll from '../utils/useScroll';
@@ -15,17 +16,14 @@ function Timeline({
   instance,
   emptyText,
   errorText,
+  useItemID, // use statusID instead of status object, assuming it's already in states
   boostsCarousel,
   fetchItems = () => {},
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
-  const scrollableRef = useRef(null);
-  const { nearReachEnd, reachStart, reachEnd } = useScroll({
-    scrollableElement: scrollableRef.current,
-    distanceFromEnd: 1,
-  });
+  const scrollableRef = useRef();
 
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
@@ -62,6 +60,99 @@ function Timeline({
     },
   );
 
+  const itemsSelector = '.timeline-item, .timeline-item-alt';
+
+  const jRef = useHotkeys('j, shift+j', (_, handler) => {
+    // focus on next status after active item
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let nextItem = allItems[activeItemIndex + 1];
+      if (handler.shift) {
+        // get next status that's not .timeline-item-alt
+        nextItem = allItems.find(
+          (item, index) =>
+            index > activeItemIndex &&
+            !item.classList.contains('timeline-item-alt'),
+        );
+      }
+      if (nextItem) {
+        nextItem.focus();
+        nextItem.scrollIntoViewIfNeeded?.();
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoViewIfNeeded?.();
+      }
+    }
+  });
+
+  const kRef = useHotkeys('k, shift+k', (_, handler) => {
+    // focus on previous status after active item
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let prevItem = allItems[activeItemIndex - 1];
+      if (handler.shift) {
+        // get prev status that's not .timeline-item-alt
+        prevItem = allItems.findLast(
+          (item, index) =>
+            index < activeItemIndex &&
+            !item.classList.contains('timeline-item-alt'),
+        );
+      }
+      if (prevItem) {
+        prevItem.focus();
+        prevItem.scrollIntoViewIfNeeded?.();
+      }
+    } else {
+      // If active status is not in viewport, get the topmost status-link in viewport
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoViewIfNeeded?.();
+      }
+    }
+  });
+
+  const oRef = useHotkeys(['enter', 'o'], () => {
+    // open active status
+    const activeItem = document.activeElement.closest(itemsSelector);
+    if (activeItem) {
+      activeItem.click();
+    }
+  });
+
+  const { nearReachEnd, reachStart, reachEnd } = useScroll({
+    scrollableElement: scrollableRef.current,
+    distanceFromEnd: 1,
+  });
+
   useEffect(() => {
     scrollableRef.current?.scrollTo({ top: 0 });
     loadItems(true);
@@ -83,7 +174,12 @@ function Timeline({
     <div
       id={`${id}-page`}
       class="deck-container"
-      ref={scrollableRef}
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
+      }}
       tabIndex="-1"
     >
       <div class="timeline-deck deck">
@@ -119,14 +215,22 @@ function Timeline({
                 if (boosts) {
                   return (
                     <li key={`timeline-${statusID}`}>
-                      <BoostsCarousel boosts={boosts} instance={instance} />
+                      <BoostsCarousel
+                        boosts={boosts}
+                        useItemID={useItemID}
+                        instance={instance}
+                      />
                     </li>
                   );
                 }
                 return (
                   <li key={`timeline-${statusID}`}>
-                    <Link class="status-link" to={url}>
-                      <Status status={status} instance={instance} />
+                    <Link class="status-link timeline-item" to={url}>
+                      {useItemID ? (
+                        <Status statusID={statusID} instance={instance} />
+                      ) : (
+                        <Status status={status} instance={instance} />
+                      )}
                     </Link>
                   </li>
                 );
@@ -217,7 +321,7 @@ function groupBoosts(values) {
   }
 }
 
-function BoostsCarousel({ boosts, instance }) {
+function BoostsCarousel({ boosts, useItemID, instance }) {
   const carouselRef = useRef();
   const { reachStart, reachEnd, init } = useScroll({
     scrollableElement: carouselRef.current,
@@ -269,8 +373,12 @@ function BoostsCarousel({ boosts, instance }) {
             : `/s/${actualStatusID}`;
           return (
             <li key={statusID}>
-              <Link class="status-boost-link" to={url}>
-                <Status status={boost} instance={instance} size="s" />
+              <Link class="status-boost-link timeline-item-alt" to={url}>
+                {useItemID ? (
+                  <Status statusID={statusID} instance={instance} size="s" />
+                ) : (
+                  <Status status={boost} instance={instance} size="s" />
+                )}
               </Link>
             </li>
           );

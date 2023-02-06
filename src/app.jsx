@@ -157,8 +157,6 @@ function App() {
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
-  console.log('nonRootLocation', nonRootLocation, 'location', location);
-
   return (
     <>
       <Routes location={nonRootLocation || location}>

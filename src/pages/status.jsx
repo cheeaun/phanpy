@@ -667,6 +667,7 @@ function StatusPage() {
                       instance={instance}
                       hasManyStatuses={hasManyStatuses}
                       replies={replies}
+                      hasParentThread={thread}
                     />
                   )}
                   {uiState === 'loading' &&
@@ -746,7 +747,7 @@ function StatusPage() {
   );
 }
 
-function SubComments({ hasManyStatuses, replies, instance }) {
+function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
   // Set isBrief = true:
   // - if less than or 2 replies
   // - if replies have no sub-replies
@@ -783,7 +784,7 @@ function SubComments({ hasManyStatuses, replies, instance }) {
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
     .slice(0, 3);
 
-  const open = isBrief || !hasManyStatuses;
+  const open = !hasParentThread && (isBrief || !hasManyStatuses);
 
   return (
     <details class="replies" open={open}>

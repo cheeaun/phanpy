@@ -83,6 +83,7 @@ export async function initInstance(client) {
   // This is a weird place to put this but here's updating the masto instance with the streaming API URL set in the configuration
   // Reason: Streaming WebSocket URL may change, unlike the standard API REST URLs
   if (streamingApi || streaming) {
+    console.log('🎏 Streaming API URL:', streaming || streamingApi);
     masto.config.props.streamingApiUrl = streaming || streamingApi;
   }
 }

@@ -294,7 +294,7 @@ function Home({ hidden }) {
       reachStart,
     );
     setShowUpdatesButton(isNewAndTop);
-  }, [snapStates.homeNew.length]);
+  }, [snapStates.homeNew.length, reachStart]);
 
   return (
     <>

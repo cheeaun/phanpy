@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useDebouncedCallback } from 'use-debounce';
 
+import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 
 import Icon from './icon';
@@ -19,14 +20,17 @@ function Timeline({
   useItemID, // use statusID instead of status object, assuming it's already in states
   boostsCarousel,
   fetchItems = () => {},
+  checkForUpdates = () => {},
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const scrollableRef = useRef();
 
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
+      setShowNew(false);
       if (uiState === 'loading') return;
       setUIState('loading');
       (async () => {
@@ -148,9 +152,16 @@ function Timeline({
     }
   });
 
-  const { nearReachEnd, reachStart, reachEnd } = useScroll({
+  const {
+    scrollDirection,
+    nearReachStart,
+    nearReachEnd,
+    reachStart,
+    reachEnd,
+  } = useScroll({
     scrollableElement: scrollableRef.current,
-    distanceFromEnd: 1,
+    distanceFromEnd: 2,
+    scrollThresholdStart: 44,
   });
 
   useEffect(() => {
@@ -170,6 +181,32 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
+  const lastHiddenTime = useRef();
+  usePageVisibility(
+    (visible) => {
+      if (visible) {
+        if (lastHiddenTime.current) {
+          const timeDiff = Date.now() - lastHiddenTime.current;
+          if (timeDiff > 1000 * 60) {
+            (async () => {
+              console.log('✨ Check updates');
+              const hasUpdate = await checkForUpdates();
+              if (hasUpdate) {
+                console.log('✨ Has new updates');
+                setShowNew(true);
+              }
+            })();
+          }
+        }
+      } else {
+        lastHiddenTime.current = Date.now();
+      }
+    },
+    [checkForUpdates],
+  );
+
+  const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+
   return (
     <div
       id={`${id}-page`}
@@ -184,6 +221,7 @@ function Timeline({
     >
       <div class="timeline-deck deck">
         <header
+          hidden={hiddenUI}
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               scrollableRef.current?.scrollTo({
@@ -202,6 +240,24 @@ function Timeline({
           <div class="header-side">
             <Loader hidden={uiState !== 'loading'} />
           </div>
+          {items.length > 0 &&
+            uiState !== 'loading' &&
+            !hiddenUI &&
+            showNew && (
+              <button
+                class="updates-button"
+                type="button"
+                onClick={() => {
+                  loadItems(true);
+                  scrollableRef.current?.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                  });
+                }}
+              >
+                <Icon icon="arrow-up" /> New posts
+              </button>
+            )}
         </header>
         {!!items.length ? (
           <>

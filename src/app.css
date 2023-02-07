@@ -701,9 +701,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .updates-button {
   position: absolute;
   z-index: 2;
+  top: 3em;
   animation: fade-from-top 0.3s ease-out;
   left: 50%;
-  margin-top: 8px;
+  margin-top: 16px;
   transform: translate(-50%, 0);
   font-size: 90%;
   background: linear-gradient(

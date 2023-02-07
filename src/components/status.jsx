@@ -317,9 +317,9 @@ function Status({
           </>
         )}
         <div
-          class={`content-container ${spoilerText ? 'has-spoiler' : ''} ${
-            showSpoiler ? 'show-spoiler' : ''
-          }`}
+          class={`content-container ${
+            spoilerText || sensitive ? 'has-spoiler' : ''
+          } ${showSpoiler ? 'show-spoiler' : ''}`}
           style={
             size === 'l' && {
               '--content-text-weight':

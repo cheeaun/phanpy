@@ -26,7 +26,7 @@ const ICONS = {
   'eye-open': 'mingcute:eye-2-line',
   message: 'mingcute:mail-line',
   comment: 'mingcute:chat-3-line',
-  home: 'mingcute:home-5-line',
+  home: 'mingcute:home-3-line',
   notification: 'mingcute:notification-line',
   follow: 'mingcute:user-follow-line',
   'follow-add': 'mingcute:user-add-line',

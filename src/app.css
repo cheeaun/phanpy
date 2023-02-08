@@ -906,7 +906,7 @@ button.carousel-dot:is(.active, [disabled].active) {
   transition: transform 0.3s ease-in-out;
 }
 #compose-button[hidden] .icon {
-  transform: rotate3d(0, 1, 0, 180deg);
+  transform: rotate3d(0, 0, 1, -25deg);
 }
 #compose-button:is(:hover, :focus) {
   background-color: var(--button-bg-color);

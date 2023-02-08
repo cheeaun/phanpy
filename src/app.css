@@ -1154,6 +1154,15 @@ meter.donut:is(.danger, .explode):after {
   text-align: center;
   padding: 16px 0;
   display: block;
+  color: var(--text-insignificant-color);
+}
+#tab-bar li a.is-active {
+  color: var(--link-color);
+  background-image: radial-gradient(
+    closest-side at 50% 50%,
+    var(--bg-blur-color),
+    transparent 75%
+  );
 }
 
 /* 404 */

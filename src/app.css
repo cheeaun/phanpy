@@ -84,43 +84,46 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .deck > header {
-  min-height: 3em;
   position: sticky;
   top: 0;
-  background-color: var(--bg-blur-color);
-  background-image: linear-gradient(to bottom, var(--bg-color), transparent);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: var(--hairline-width) solid var(--divider-color);
   z-index: 1;
   cursor: default;
   z-index: 10;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
   user-select: none;
   transition: transform 0.5s ease-in-out;
   user-select: none;
 }
 .deck > header[hidden] {
+  display: block;
   transform: translateY(-100%);
   pointer-events: none;
   user-select: none;
 }
-.deck > header > .header-side:last-of-type {
+.deck > header .header-grid {
+  background-color: var(--bg-blur-color);
+  background-image: linear-gradient(to bottom, var(--bg-color), transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: var(--hairline-width) solid var(--divider-color);
+  min-height: 3em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+.deck > header .header-grid > .header-side:last-of-type {
   text-align: right;
   grid-column: 3;
 }
-.deck > header :is(button, .button).plain {
+.deck > header .header-grid :is(button, .button).plain {
   backdrop-filter: none;
 }
-.deck > header h1 {
+.deck > header .header-grid h1 {
   margin: 0 8px;
   padding: 0;
   font-size: 1.2em;
   text-align: center;
   white-space: nowrap;
 }
-.deck > header h1:first-child {
+.deck > header .header-grid h1:first-child {
   text-align: left;
   padding-left: 8px;
 }
@@ -1211,14 +1214,16 @@ meter.donut:is(.danger, .explode):after {
   }
   .timeline-deck > header {
     --margin-top: 8px;
-    min-height: 4em;
     top: var(--margin-top);
-    border-bottom: 0;
-    background-color: var(--bg-faded-blur-color);
-    background-image: none;
+    margin-inline: 8px;
+  }
+  .timeline-deck > header .header-grid {
     border-bottom: 0;
     border-radius: 16px;
-    margin-inline: 8px;
+    background-color: var(--bg-faded-blur-color);
+    background-image: none;
+    border-radius: 16px;
+    min-height: 4em;
   }
   .timeline-deck > header[hidden] {
     transform: translate3d(0, calc((100% + var(--margin-top)) * -1), 0);

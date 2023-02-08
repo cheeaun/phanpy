@@ -143,14 +143,16 @@ function Notifications() {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         >
-          <div class="header-side">
-            <Link to="/" class="button plain">
-              <Icon icon="home" size="l" />
-            </Link>
-          </div>
-          <h1>Notifications</h1>
-          <div class="header-side">
-            <Loader hidden={uiState !== 'loading'} />
+          <div class="header-grid">
+            <div class="header-side">
+              <Link to="/" class="button plain">
+                <Icon icon="home" size="l" />
+              </Link>
+            </div>
+            <h1>Notifications</h1>
+            <div class="header-side">
+              <Loader hidden={uiState !== 'loading'} />
+            </div>
           </div>
         </header>
         {snapStates.notificationsNew.length > 0 && uiState !== 'loading' && (

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useDebouncedCallback } from 'use-debounce';
 
+import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 
@@ -21,11 +22,13 @@ function Timeline({
   boostsCarousel,
   fetchItems = () => {},
   checkForUpdates = () => {},
+  checkForUpdatesInterval = 60_000, // 1 minute
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
   const [showNew, setShowNew] = useState(false);
+  const [visible, setVisible] = useState(true);
   const scrollableRef = useRef();
 
   const loadItems = useDebouncedCallback(
@@ -185,24 +188,38 @@ function Timeline({
   usePageVisibility(
     (visible) => {
       if (visible) {
-        if (lastHiddenTime.current) {
-          const timeDiff = Date.now() - lastHiddenTime.current;
-          if (timeDiff > 1000 * 60) {
-            (async () => {
-              console.log('✨ Check updates');
-              const hasUpdate = await checkForUpdates();
-              if (hasUpdate) {
-                console.log('✨ Has new updates');
-                setShowNew(true);
-              }
-            })();
-          }
+        const timeDiff = Date.now() - lastHiddenTime.current;
+        if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
+          (async () => {
+            console.log('✨ Check updates');
+            const hasUpdate = await checkForUpdates();
+            if (hasUpdate) {
+              console.log('✨ Has new updates');
+              setShowNew(true);
+            }
+          })();
         }
       } else {
         lastHiddenTime.current = Date.now();
       }
+      setVisible(visible);
     },
     [checkForUpdates],
+  );
+
+  // checkForUpdates interval
+  useInterval(
+    () => {
+      (async () => {
+        console.log('✨ Check updates');
+        const hasUpdate = await checkForUpdates();
+        if (hasUpdate) {
+          console.log('✨ Has new updates');
+          setShowNew(true);
+        }
+      })();
+    },
+    visible && !showNew ? checkForUpdatesInterval : null,
   );
 
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;
@@ -231,14 +248,16 @@ function Timeline({
             }
           }}
         >
-          <div class="header-side">
-            <Link to="/" class="button plain">
-              <Icon icon="home" size="l" />
-            </Link>
-          </div>
-          {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
-          <div class="header-side">
-            <Loader hidden={uiState !== 'loading'} />
+          <div class="header-grid">
+            <div class="header-side">
+              <Link to="/" class="button plain">
+                <Icon icon="home" size="l" />
+              </Link>
+            </div>
+            {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
+            <div class="header-side">
+              <Loader hidden={uiState !== 'loading'} />
+            </div>
           </div>
           {items.length > 0 &&
             uiState !== 'loading' &&

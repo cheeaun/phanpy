@@ -469,132 +469,135 @@ function StatusPage() {
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-          <h1>
-            {!heroInView && heroStatus && uiState !== 'loading' ? (
-              <>
-                <span class="hero-heading">
-                  <NameText
-                    account={heroStatus.account}
-                    instance={instance}
-                    showAvatar
-                    short
-                  />{' '}
-                  <span class="insignificant">
-                    &bull;{' '}
-                    <RelativeTime
-                      datetime={heroStatus.createdAt}
-                      format="micro"
+          <div class="header-grid">
+            <h1>
+              {!heroInView && heroStatus && uiState !== 'loading' ? (
+                <>
+                  <span class="hero-heading">
+                    <NameText
+                      account={heroStatus.account}
+                      instance={instance}
+                      showAvatar
+                      short
+                    />{' '}
+                    <span class="insignificant">
+                      &bull;{' '}
+                      <RelativeTime
+                        datetime={heroStatus.createdAt}
+                        format="micro"
+                      />
+                    </span>
+                  </span>{' '}
+                  <button
+                    type="button"
+                    class="ancestors-indicator light small"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      heroStatusRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                    }}
+                  >
+                    <Icon
+                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
                     />
-                  </span>
-                </span>{' '}
-                <button
-                  type="button"
-                  class="ancestors-indicator light small"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    heroStatusRef.current.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'start',
-                    });
-                  }}
-                >
-                  <Icon
-                    icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
-                  />
-                </button>
-              </>
-            ) : (
-              <>
-                Status{' '}
-                <button
-                  type="button"
-                  class="ancestors-indicator light small"
-                  onClick={(e) => {
-                    // Scroll to top
-                    e.preventDefault();
-                    e.stopPropagation();
-                    scrollableRef.current.scrollTo({
-                      top: 0,
-                      behavior: 'smooth',
-                    });
-                  }}
-                  hidden={!ancestors.length || nearReachStart}
-                >
-                  <Icon icon="arrow-up" />
-                  <Icon icon="comment" />{' '}
-                  <span class="insignificant">
-                    {shortenNumber(ancestors.length)}
-                  </span>
-                </button>
-              </>
-            )}
-          </h1>
-          <div class="header-side">
-            <Loader hidden={uiState !== 'loading'} />
-            <Menu
-              align="end"
-              portal={{
-                // Need this, else the menu click will cause scroll jump
-                target: scrollableRef.current,
-              }}
-              menuButton={
-                <button type="button" class="button plain4">
-                  <Icon icon="more" alt="Actions" size="xl" />
-                </button>
-              }
-            >
-              <MenuItem
-                onClick={() => {
-                  // Click all buttons with class .spoiler but not .spoiling
-                  const buttons = Array.from(
-                    scrollableRef.current.querySelectorAll(
-                      'button.spoiler:not(.spoiling)',
-                    ),
-                  );
-                  buttons.forEach((button) => {
-                    button.click();
-                  });
+                  </button>
+                </>
+              ) : (
+                <>
+                  Status{' '}
+                  <button
+                    type="button"
+                    class="ancestors-indicator light small"
+                    onClick={(e) => {
+                      // Scroll to top
+                      e.preventDefault();
+                      e.stopPropagation();
+                      scrollableRef.current.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                      });
+                    }}
+                    hidden={!ancestors.length || nearReachStart}
+                  >
+                    <Icon icon="arrow-up" />
+                    <Icon icon="comment" />{' '}
+                    <span class="insignificant">
+                      {shortenNumber(ancestors.length)}
+                    </span>
+                  </button>
+                </>
+              )}
+            </h1>
+            <div class="header-side">
+              <Loader hidden={uiState !== 'loading'} />
+              <Menu
+                align="end"
+                portal={{
+                  // Need this, else the menu click will cause scroll jump
+                  target: scrollableRef.current,
                 }}
+                menuButton={
+                  <button type="button" class="button plain4">
+                    <Icon icon="more" alt="Actions" size="xl" />
+                  </button>
+                }
               >
-                <Icon icon="eye-open" /> <span>Show all sensitive content</span>
-              </MenuItem>
-              {import.meta.env.DEV && !authenticated && (
                 <MenuItem
                   onClick={() => {
-                    (async () => {
-                      try {
-                        const { masto } = api();
-                        const results = await masto.v2.search({
-                          q: heroStatus.url,
-                          type: 'statuses',
-                          resolve: true,
-                          limit: 1,
-                        });
-                        if (results.statuses.length) {
-                          const status = results.statuses[0];
-                          navigate(`/s/${status.id}`);
-                        } else {
-                          throw new Error('No results');
-                        }
-                      } catch (e) {
-                        alert('Error: ' + e);
-                        console.error(e);
-                      }
-                    })();
+                    // Click all buttons with class .spoiler but not .spoiling
+                    const buttons = Array.from(
+                      scrollableRef.current.querySelectorAll(
+                        'button.spoiler:not(.spoiling)',
+                      ),
+                    );
+                    buttons.forEach((button) => {
+                      button.click();
+                    });
                   }}
                 >
-                  See post in currently logged-in instance
+                  <Icon icon="eye-open" />{' '}
+                  <span>Show all sensitive content</span>
                 </MenuItem>
-              )}
-            </Menu>
-            <Link
-              class="button plain deck-close"
-              to={closeLink}
-              onClick={onClose}
-            >
-              <Icon icon="x" size="xl" />
-            </Link>
+                {import.meta.env.DEV && !authenticated && (
+                  <MenuItem
+                    onClick={() => {
+                      (async () => {
+                        try {
+                          const { masto } = api();
+                          const results = await masto.v2.search({
+                            q: heroStatus.url,
+                            type: 'statuses',
+                            resolve: true,
+                            limit: 1,
+                          });
+                          if (results.statuses.length) {
+                            const status = results.statuses[0];
+                            navigate(`/s/${status.id}`);
+                          } else {
+                            throw new Error('No results');
+                          }
+                        } catch (e) {
+                          alert('Error: ' + e);
+                          console.error(e);
+                        }
+                      })();
+                    }}
+                  >
+                    See post in currently logged-in instance
+                  </MenuItem>
+                )}
+              </Menu>
+              <Link
+                class="button plain deck-close"
+                to={closeLink}
+                onClick={onClose}
+              >
+                <Icon icon="x" size="xl" />
+              </Link>
+            </div>
           </div>
         </header>
         {!!statuses.length && heroStatus ? (

@@ -61,7 +61,8 @@ function Following() {
   }
 
   const ws = useRef();
-  async function streamUser() {
+  const streamUser = async () => {
+    console.log('🎏 Start streaming user', ws.current);
     if (
       ws.current &&
       (ws.current.readyState === WebSocket.CONNECTING ||
@@ -72,7 +73,8 @@ function Following() {
     }
     const stream = await masto.v1.stream.streamUser();
     ws.current = stream.ws;
-    console.log('🎏 Streaming user');
+    ws.current.__id = Math.random();
+    console.log('🎏 Streaming user', ws.current);
 
     stream.on('status.update', (status) => {
       console.log(`🔄 Status ${status.id} updated`);
@@ -86,14 +88,20 @@ function Following() {
       if (s) s._deleted = true;
     });
 
+    stream.ws.onclose = () => {
+      console.log('🎏 Streaming user closed');
+    };
+
     return stream;
-  }
+  };
   useEffect(() => {
-    streamUser();
+    let stream;
+    (async () => {
+      stream = await streamUser();
+    })();
     return () => {
-      if (ws.current) {
-        console.log('🎏 Closing streaming user');
-        ws.current.close();
+      if (stream) {
+        stream.ws.close();
         ws.current = null;
       }
     };

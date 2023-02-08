@@ -320,63 +320,66 @@ function Home({ hidden }) {
               loadStatuses(true);
             }}
           >
-            <div class="header-side">
-              <button
-                type="button"
-                class="plain"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  states.showSettings = true;
-                }}
-              >
-                <Icon icon="gear" size="l" alt="Settings" />
-              </button>
+            <div class="header-grid">
+              <div class="header-side">
+                <button
+                  type="button"
+                  class="plain"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    states.showSettings = true;
+                  }}
+                >
+                  <Icon icon="gear" size="l" alt="Settings" />
+                </button>
+              </div>
+              <h1>Home</h1>
+              <div class="header-side">
+                <Loader hidden={uiState !== 'loading'} />{' '}
+                <Link
+                  to="/notifications"
+                  class={`button plain ${
+                    snapStates.notificationsNew.length > 0 ? 'has-badge' : ''
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Icon icon="notification" size="l" alt="Notifications" />
+                </Link>
+              </div>
             </div>
-            <h1>Home</h1>
-            <div class="header-side">
-              <Loader hidden={uiState !== 'loading'} />{' '}
-              <Link
-                to="/notifications"
-                class={`button plain ${
-                  snapStates.notificationsNew.length > 0 ? 'has-badge' : ''
-                }`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <Icon icon="notification" size="l" alt="Notifications" />
-              </Link>
-            </div>
-          </header>
-          {snapStates.homeNew.length > 0 &&
-            uiState !== 'loading' &&
-            ((scrollDirection === 'start' &&
-              !nearReachStart &&
-              !nearReachEnd) ||
-              showUpdatesButton) && (
-              <button
-                class="updates-button"
-                type="button"
-                onClick={() => {
-                  if (!snapStates.settings.boostsCarousel) {
-                    const uniqueHomeNew = snapStates.homeNew.filter(
-                      (status) => !states.home.some((s) => s.id === status.id),
-                    );
-                    states.home.unshift(...uniqueHomeNew);
-                  }
-                  loadStatuses(true);
-                  states.homeNew = [];
+            {snapStates.homeNew.length > 0 &&
+              uiState !== 'loading' &&
+              ((scrollDirection === 'start' &&
+                !nearReachStart &&
+                !nearReachEnd) ||
+                showUpdatesButton) && (
+                <button
+                  class="updates-button"
+                  type="button"
+                  onClick={() => {
+                    if (!snapStates.settings.boostsCarousel) {
+                      const uniqueHomeNew = snapStates.homeNew.filter(
+                        (status) =>
+                          !states.home.some((s) => s.id === status.id),
+                      );
+                      states.home.unshift(...uniqueHomeNew);
+                    }
+                    loadStatuses(true);
+                    states.homeNew = [];
 
-                  scrollableRef.current?.scrollTo({
-                    top: 0,
-                    behavior: 'smooth',
-                  });
-                }}
-              >
-                <Icon icon="arrow-up" /> New posts
-              </button>
-            )}
+                    scrollableRef.current?.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
+                    });
+                  }}
+                >
+                  <Icon icon="arrow-up" /> New posts
+                </button>
+              )}
+          </header>
           {snapStates.home.length ? (
             <>
               <ul class="timeline">

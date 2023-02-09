@@ -9,7 +9,13 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  matchPath,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
 
@@ -28,6 +34,7 @@ import Favourites from './pages/favourites';
 import Following from './pages/following';
 import Hashtags from './pages/hashtags';
 import Home from './pages/home';
+import HomeV1 from './pages/home-v1';
 import Lists from './pages/lists';
 import Login from './pages/login';
 import Notifications from './pages/notifications';
@@ -132,14 +139,14 @@ function App() {
     }
   }, [snapStates.showCompose, snapStates.showSettings, snapStates.showAccount]);
 
-  useEffect(() => {
-    // HACK: prevent this from running again due to HMR
-    if (states.init) return;
-    if (isLoggedIn) {
-      requestAnimationFrame(startVisibility);
-      states.init = true;
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   // HACK: prevent this from running again due to HMR
+  //   if (states.init) return;
+  //   if (isLoggedIn) {
+  //     requestAnimationFrame(startVisibility);
+  //     states.init = true;
+  //   }
+  // }, [isLoggedIn]);
 
   const { prevLocation } = snapStates;
   const backgroundLocation = useRef(prevLocation || null);
@@ -184,6 +191,7 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
         )}
         {isLoggedIn && <Route path="/l/f" element={<Following />} />}
+        {isLoggedIn && <Route path="/homev1" element={<HomeV1 />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}

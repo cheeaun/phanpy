@@ -897,6 +897,7 @@ button.carousel-dot:is(.active, [disabled].active) {
     0 10px 36px -4px var(--button-bg-blur-color);
   transition: all 0.3s ease-in-out;
 }
+#home-page:has(header[hidden]) ~ #compose-button,
 #compose-button[hidden] {
   transform: translateY(200%);
   pointer-events: none;

@@ -23,6 +23,8 @@ function Timeline({
   fetchItems = () => {},
   checkForUpdates = () => {},
   checkForUpdatesInterval = 60_000, // 1 minute
+  headerStart,
+  headerEnd,
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -185,27 +187,24 @@ function Timeline({
   }, [nearReachEnd, showMore]);
 
   const lastHiddenTime = useRef();
-  usePageVisibility(
-    (visible) => {
-      if (visible) {
-        const timeDiff = Date.now() - lastHiddenTime.current;
-        if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
-          (async () => {
-            console.log('✨ Check updates');
-            const hasUpdate = await checkForUpdates();
-            if (hasUpdate) {
-              console.log('✨ Has new updates');
-              setShowNew(true);
-            }
-          })();
-        }
-      } else {
-        lastHiddenTime.current = Date.now();
+  usePageVisibility((visible) => {
+    if (visible) {
+      const timeDiff = Date.now() - lastHiddenTime.current;
+      if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
+        (async () => {
+          console.log('✨ Check updates');
+          const hasUpdate = await checkForUpdates();
+          if (hasUpdate) {
+            console.log('✨ Has new updates');
+            setShowNew(true);
+          }
+        })();
       }
-      setVisible(visible);
-    },
-    [checkForUpdates],
-  );
+    } else {
+      lastHiddenTime.current = Date.now();
+    }
+    setVisible(visible);
+  }, []);
 
   // checkForUpdates interval
   useInterval(
@@ -240,23 +239,31 @@ function Timeline({
         <header
           hidden={hiddenUI}
           onClick={(e) => {
-            if (e.target === e.currentTarget) {
+            if (!e.target.closest('a, button')) {
               scrollableRef.current?.scrollTo({
                 top: 0,
                 behavior: 'smooth',
               });
             }
           }}
+          onDblClick={(e) => {
+            if (!e.target.closest('a, button')) {
+              loadItems(true);
+            }
+          }}
         >
           <div class="header-grid">
             <div class="header-side">
-              <Link to="/" class="button plain">
-                <Icon icon="home" size="l" />
-              </Link>
+              {headerStart || (
+                <Link to="/" class="button plain">
+                  <Icon icon="home" size="l" />
+                </Link>
+              )}
             </div>
             {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
             <div class="header-side">
               <Loader hidden={uiState !== 'loading'} />
+              {!!headerEnd && headerEnd}
             </div>
           </div>
           {items.length > 0 &&

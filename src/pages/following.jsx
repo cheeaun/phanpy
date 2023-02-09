@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import Icon from '../components/icon';
+import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -9,7 +11,7 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Following() {
+function Following({ title, id, headerStart }) {
   useTitle('Following', '/l/f');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
@@ -50,8 +52,8 @@ function Following() {
         })
         .next();
       const { value } = results;
-      console.log('checkForUpdates', value);
-      if (value?.some((item) => !item.reblog)) {
+      console.log('checkForUpdates', latestItem.current, value);
+      if (value?.length && value.some((item) => !item.reblog)) {
         return true;
       }
       return false;
@@ -88,6 +90,17 @@ function Following() {
       if (s) s._deleted = true;
     });
 
+    stream.on('notification', (notification) => {
+      console.log('🔔 Notification', notification);
+      const inNotifications =
+        notification.id === snapStates.notificationsLast?.id;
+      if (inNotifications) return;
+      states.notificationsNew.unshift(notification);
+      saveStatus(notification.status, instance, {
+        override: false,
+      });
+    });
+
     stream.ws.onclose = () => {
       console.log('🎏 Streaming user closed');
     };
@@ -107,15 +120,31 @@ function Following() {
     };
   }, []);
 
+  const headerEnd = (
+    <Link
+      to="/notifications"
+      class={`button plain ${
+        snapStates.notificationsNew.length > 0 ? 'has-badge' : ''
+      }`}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <Icon icon="notification" size="l" alt="Notifications" />
+    </Link>
+  );
+
   return (
     <Timeline
-      title="Following"
-      id="following"
+      title={title || 'Following'}
+      id={id || 'following'}
       emptyText="Nothing to see here."
       errorText="Unable to load posts."
       fetchItems={fetchHome}
       checkForUpdates={checkForUpdates}
       useItemID
+      headerStart={headerStart}
+      headerEnd={headerEnd}
       boostsCarousel={snapStates.settings.boostsCarousel}
     />
   );

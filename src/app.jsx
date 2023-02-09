@@ -143,7 +143,9 @@ function App() {
 
   const { prevLocation } = snapStates;
   const backgroundLocation = useRef(prevLocation || null);
-  const isModalPage = /^\/s\//i.test(location.pathname);
+  const isModalPage =
+    matchPath('/:instance/s/:id', location.pathname) ||
+    matchPath('/s/:id', location.pathname);
   if (isModalPage) {
     if (!backgroundLocation.current) backgroundLocation.current = prevLocation;
   } else {

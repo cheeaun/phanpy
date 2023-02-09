@@ -100,6 +100,18 @@ export async function initAccount(client, instance, accessToken) {
   });
 }
 
+// Get preferences
+export async function initPreferences(client) {
+  try {
+    const masto = client;
+    const preferences = await masto.v1.preferences.fetch();
+    store.account.set('preferences', preferences);
+  } catch (e) {
+    // silently fail
+    console.error(e);
+  }
+}
+
 // Get the masto instance
 // If accountID is provided, get the masto instance for that account
 export function api({ instance, accessToken, accountID, account } = {}) {

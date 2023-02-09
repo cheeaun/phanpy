@@ -42,7 +42,13 @@ import Public from './pages/public';
 import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
-import { api, initAccount, initClient, initInstance } from './utils/api';
+import {
+  api,
+  initAccount,
+  initClient,
+  initInstance,
+  initPreferences,
+} from './utils/api';
 import { getAccessToken } from './utils/auth';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
@@ -92,6 +98,7 @@ function App() {
           initInstance(masto),
           initAccount(masto, instanceURL, accessToken),
         ]);
+        initPreferences(masto);
 
         setIsLoggedIn(true);
         setUIState('default');
@@ -101,6 +108,7 @@ function App() {
       if (account) {
         store.session.set('currentAccount', account.info.id);
         const { masto } = api({ account });
+        initPreferences(masto);
         (async () => {
           await initInstance(masto);
           setIsLoggedIn(true);

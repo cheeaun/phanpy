@@ -148,6 +148,8 @@ function Compose({
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
 
+  const prefs = store.account.get('preferences') || {};
+
   const customEmojis = useRef();
   useEffect(() => {
     (async () => {
@@ -194,7 +196,7 @@ function Compose({
       }
       focusTextarea();
       setVisibility(visibility);
-      setLanguage(language || DEFAULT_LANG);
+      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
     }
     if (draftStatus) {
@@ -217,7 +219,7 @@ function Compose({
       focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
-      setLanguage(language || DEFAULT_LANG);
+      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
       setPoll(composablePoll);
       setMediaAttachments(mediaAttachments);
@@ -243,7 +245,7 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language || DEFAULT_LANG);
+          setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
           setSensitive(sensitive);
           setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -256,6 +258,16 @@ function Compose({
       })();
     } else {
       focusTextarea();
+      console.log('Apply prefs', prefs);
+      if (prefs.postingDefaultVisibility) {
+        setVisibility(prefs.postingDefaultVisibility);
+      }
+      if (prefs.postingDefaultLanguage) {
+        setLanguage(prefs.postingDefaultLanguage);
+      }
+      if (prefs.postingDefaultSensitive) {
+        setSensitive(prefs.postingDefaultSensitive);
+      }
     }
   }, [draftStatus, editStatus, replyToStatus]);
 

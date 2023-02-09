@@ -6,7 +6,7 @@ import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
-import { useNavigate, useParams } from 'react-router-dom';
+import { matchPath, useNavigate, useParams } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
@@ -319,12 +319,18 @@ function StatusPage() {
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
       : 'Status',
-    '/s/:id',
+    '/:instance?/s/:id',
   );
 
   const closeLink = useMemo(() => {
     const pathname = snapStates.prevLocation?.pathname;
-    if (!pathname || pathname.startsWith('/s/')) return '/';
+    if (
+      !pathname ||
+      matchPath('/:instance/s/:id', pathname) ||
+      matchPath('/s/:id', pathname)
+    ) {
+      return '/';
+    }
     return pathname;
   }, []);
   const onClose = () => {
@@ -575,7 +581,11 @@ function StatusPage() {
                           });
                           if (results.statuses.length) {
                             const status = results.statuses[0];
-                            navigate(`/s/${status.id}`);
+                            navigate(
+                              instance
+                                ? `/${instance}/s/${status.id}`
+                                : `/s/${status.id}`,
+                            );
                           } else {
                             throw new Error('No results');
                           }

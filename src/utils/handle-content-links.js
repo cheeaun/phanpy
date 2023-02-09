@@ -46,7 +46,7 @@ function handleContentLinks(opts) {
       e.preventDefault();
       e.stopPropagation();
       const tag = target.innerText.replace(/^#/, '').trim();
-      const hashURL = instance ? `#/t/${instance}/${tag}` : `#/t/${tag}`;
+      const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
       console.log({ hashURL });
       location.hash = hashURL;
     }

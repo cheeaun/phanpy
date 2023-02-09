@@ -259,13 +259,7 @@ function Status({
           {size !== 'l' &&
             (uri ? (
               <Link
-                to={
-                  instance
-                    ? `
-                /s/${instance}/${id}
-              `
-                    : `/s/${id}`
-                }
+                to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                 class="time"
               >
                 <Icon

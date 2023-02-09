@@ -705,7 +705,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: absolute;
   z-index: 2;
   top: 3em;
-  animation: fade-from-top 0.3s ease-out;
+  animation: fade-from-top 0.3s var(--timing-function);
   left: 50%;
   margin-top: 16px;
   transform: translate(-50%, 0);

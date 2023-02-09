@@ -2,7 +2,7 @@ import store from './store';
 
 export function getAccount(id) {
   const accounts = store.local.getJSON('accounts') || [];
-  return accounts.find((a) => a.info.id === id);
+  return accounts.find((a) => a.info.id === id) || accounts[0];
 }
 
 export function getCurrentAccount() {

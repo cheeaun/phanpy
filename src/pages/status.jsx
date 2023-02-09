@@ -98,7 +98,6 @@ function StatusPage() {
     }
 
     (async () => {
-      console.log('MASTO V1 fetch', masto);
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.fetch(id), {
           retries: 4,

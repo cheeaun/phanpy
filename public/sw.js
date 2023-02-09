@@ -33,7 +33,7 @@ const imageRoute = new Route(
 );
 registerRoute(imageRoute);
 
-// Cache /instance because masto.js has to keep calling it while initializing
+// 1-day cache for /api/v1/instance and /api/v1/custom_emojis
 const apiExtendedRoute = new RegExpRoute(
   /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis)/,
   new StaleWhileRevalidate({

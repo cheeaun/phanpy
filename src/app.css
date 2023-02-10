@@ -996,15 +996,22 @@ button.carousel-dot:is(.active, [disabled].active) {
   box-shadow: 0 3px 6px var(--drop-shadow-color);
   text-align: left;
   animation: appear 0.15s ease-in-out;
+  width: 16em;
+  max-width: 90vw;
 }
 .szh-menu .szh-menu__item {
   padding: 8px 16px !important;
   transition: all 0.1s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .szh-menu .szh-menu__item * {
   vertical-align: middle;
 }
 .szh-menu .szh-menu__item a {
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: block;
   color: inherit;
   text-decoration: none;
@@ -1018,6 +1025,9 @@ button.carousel-dot:is(.active, [disabled].active) {
 .szh-menu .szh-menu__item--hover {
   color: var(--button-text-color);
   background-color: var(--button-bg-color);
+}
+.szh-menu__divider {
+  background-color: var(--divider-color);
 }
 
 /* DONUT METER */

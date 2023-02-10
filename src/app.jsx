@@ -119,9 +119,9 @@ function App() {
             setUIState('default');
           }
         })();
+      } else {
+        setUIState('default');
       }
-
-      setUIState('default');
     }
   }, []);
 

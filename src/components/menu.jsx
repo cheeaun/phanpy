@@ -14,6 +14,7 @@ function NavMenu(props) {
         target: document.body,
       }}
       {...props}
+      viewScroll="close"
       menuButton={
         <button type="button" class="button plain">
           <Icon icon="menu" size="l" />

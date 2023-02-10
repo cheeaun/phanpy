@@ -1,7 +1,9 @@
+import { FocusableItem, Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useDebouncedCallback } from 'use-debounce';
 
+import states from '../utils/states';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
@@ -254,7 +256,35 @@ function Timeline({
         >
           <div class="header-grid">
             <div class="header-side">
-              {headerStart || (
+              <Menu
+                menuButton={
+                  <button type="button" class="button plain">
+                    <Icon icon="menu" size="l" />
+                  </button>
+                }
+              >
+                <MenuLink to="/">
+                  <Icon icon="home" size="l" /> <span>Home</span>
+                </MenuLink>
+                <MenuLink to="/b">
+                  <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+                </MenuLink>
+                <MenuLink to="/f">
+                  <Icon icon="heart" size="l" /> <span>Favourites</span>
+                </MenuLink>
+                <MenuDivider />
+                <MenuItem
+                  onClick={() => {
+                    states.showSettings = true;
+                  }}
+                >
+                  <Icon icon="gear" size="l" alt="Settings" />{' '}
+                  <span>Settings</span>
+                </MenuItem>
+              </Menu>
+              {headerStart !== null && headerStart !== undefined ? (
+                headerStart
+              ) : (
                 <Link to="/" class="button plain">
                   <Icon icon="home" size="l" />
                 </Link>
@@ -376,6 +406,22 @@ function Timeline({
         )}
       </div>
     </div>
+  );
+}
+
+function MenuLink(props) {
+  return (
+    <FocusableItem>
+      {({ ref, closeMenu }) => (
+        <Link
+          {...props}
+          ref={ref}
+          onClick={({ detail }) =>
+            closeMenu(detail === 0 ? 'Enter' : undefined)
+          }
+        />
+      )}
+    </FocusableItem>
   );
 }
 

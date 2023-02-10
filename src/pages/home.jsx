@@ -24,23 +24,7 @@ function Home() {
 
   return (
     <>
-      <Following
-        title="Home"
-        id="home"
-        headerStart={
-          <button
-            type="button"
-            class="plain"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              states.showSettings = true;
-            }}
-          >
-            <Icon icon="gear" size="l" alt="Settings" />
-          </button>
-        }
-      />
+      <Following title="Home" path="/" id="home" headerStart={false} />
       <button
         // hidden={scrollDirection === 'end' && !nearReachStart}
         type="button"

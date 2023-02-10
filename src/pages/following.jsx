@@ -25,19 +25,19 @@ function Following({ title, path, id, headerStart }) {
     const results = await homeIterator.current.next();
     const { value } = results;
     if (value?.length) {
-      // ENFORCE sort by datetime (Latest first)
-      value.sort((a, b) => {
-        const aDate = new Date(a.createdAt);
-        const bDate = new Date(b.createdAt);
-        return bDate - aDate;
-      });
-
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
 
       value.forEach((item) => {
         saveStatus(item, instance);
+      });
+
+      // ENFORCE sort by datetime (Latest first)
+      value.sort((a, b) => {
+        const aDate = new Date(a.createdAt);
+        const bDate = new Date(b.createdAt);
+        return bDate - aDate;
       });
     }
     return results;

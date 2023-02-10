@@ -796,7 +796,8 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
     .slice(0, 3);
 
-  const open = !hasParentThread && (isBrief || !hasManyStatuses);
+  const open =
+    (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
 
   return (
     <details class="replies" open={open}>

@@ -16,7 +16,7 @@ import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
 import useInterval from '../utils/useInterval';
@@ -785,6 +785,9 @@ function Compose({
                   editStatus.id,
                   params,
                 );
+                saveStatus(newStatus, {
+                  skipThreading: true,
+                });
               } else {
                 newStatus = await masto.v1.statuses.create(params, {
                   idempotencyKey: UID.current,

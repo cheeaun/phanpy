@@ -1,47 +1,71 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { useParams } from 'react-router-dom';
+import './lists.css';
 
-import Timeline from '../components/timeline';
+import { useEffect, useState } from 'preact/hooks';
+
+import Icon from '../components/icon';
+import Link from '../components/link';
+import Loader from '../components/loader';
+import Menu from '../components/menu';
 import { api } from '../utils/api';
-import useTitle from '../utils/useTitle';
-
-const LIMIT = 20;
 
 function Lists() {
   const { masto } = api();
-  const { id } = useParams();
-  const listsIterator = useRef();
-  async function fetchLists(firstLoad) {
-    if (firstLoad || !listsIterator.current) {
-      listsIterator.current = masto.v1.timelines.listList(id, {
-        limit: LIMIT,
-      });
-    }
-    return await listsIterator.current.next();
-  }
+  const [uiState, setUiState] = useState('default');
 
-  const [title, setTitle] = useState(`List ${id}`);
-  useTitle(title, `/l/:id`);
+  const [lists, setLists] = useState([]);
   useEffect(() => {
+    setUiState('loading');
     (async () => {
       try {
-        const list = await masto.v1.lists.fetch(id);
-        setTitle(list.title);
+        const lists = await masto.v1.lists.list();
+        console.log(lists);
+        setLists(lists);
+        setUiState('default');
       } catch (e) {
         console.error(e);
+        setUiState('error');
       }
     })();
-  }, [id]);
+  }, []);
 
   return (
-    <Timeline
-      title={title}
-      id="lists"
-      emptyText="Nothing yet."
-      errorText="Unable to load posts."
-      fetchItems={fetchLists}
-      boostsCarousel
-    />
+    <div id="lists-page" class="deck-container">
+      <div class="timeline-deck deck">
+        <header>
+          <div class="header-grid">
+            <div class="header-side">
+              <Menu />
+              <Link to="/" class="button plain">
+                <Icon icon="home" size="l" />
+              </Link>
+            </div>
+            <h1>Lists</h1>
+            <div class="header-side" />
+          </div>
+        </header>
+        <main>
+          {lists.length > 0 ? (
+            <ul>
+              {lists.map((list) => (
+                <li>
+                  <Link to={`/l/${list.id}`}>
+                    <Icon icon="list" /> <span>{list.title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : uiState === 'loading' ? (
+            <p class="ui-state">
+              <Loader />
+            </p>
+          ) : uiState === 'error' ? (
+            <p class="ui-state">Unable to load lists.</p>
+          ) : (
+            <p class="ui-state">No lists yet.</p>
+          )}
+        </main>
+      </div>
+    </div>
   );
 }
 

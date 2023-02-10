@@ -12,15 +12,18 @@ import { api } from '../utils/api';
 
 function Search() {
   const { masto, instance, authenticated } = api();
+  const [uiState, setUiState] = useState('default');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchFieldRef = useRef();
   const q = searchParams.get('q');
   const [statusResults, setStatusResults] = useState([]);
   const [accountResults, setAccountResults] = useState([]);
+  const [hashtagResults, setHashtagResults] = useState([]);
   useEffect(() => {
     if (q) {
       searchFieldRef.current.value = q;
 
+      setUiState('loading');
       (async () => {
         const results = await masto.v2.search({
           q,
@@ -30,11 +33,11 @@ function Search() {
         console.log(results);
         setStatusResults(results.statuses);
         setAccountResults(results.accounts);
+        setHashtagResults(results.hashtags);
+        setUiState('default');
       })();
     }
   }, [q]);
-
-  console.log({ accountResults });
 
   return (
     <div id="search-page" class="deck-container">
@@ -65,35 +68,69 @@ function Search() {
           </div>
         </header>
         <main>
-          <h2 class="timeline-header">Accounts</h2>
-          {accountResults.length > 0 && (
-            <ul class="timeline flat accounts-list">
-              {accountResults.map((account) => (
-                <li>
-                  <Avatar url={account.avatar} size="xl" />
-                  <NameText account={account} instance={instance} showAcct />
-                </li>
-              ))}
-            </ul>
-          )}
-          <h2 class="timeline-header">Posts</h2>
-          {statusResults.length > 0 && (
-            <ul class="timeline">
-              {statusResults.map((status) => (
-                <li>
-                  <Link
-                    class="status-link"
-                    to={
-                      instance
-                        ? `/${instance}/s/${status.id}`
-                        : `/s/${status.id}`
-                    }
-                  >
-                    <Status status={status} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {!!q && uiState !== 'loading' ? (
+            <>
+              <h2 class="timeline-header">Accounts</h2>
+              {accountResults.length > 0 ? (
+                <ul class="timeline flat accounts-list">
+                  {accountResults.map((account) => (
+                    <li>
+                      <Avatar url={account.avatar} size="xl" />
+                      <NameText
+                        account={account}
+                        instance={instance}
+                        showAcct
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="ui-state">No accounts found.</p>
+              )}
+              <h2 class="timeline-header">Hashtags</h2>
+              {hashtagResults.length > 0 ? (
+                <ul>
+                  {hashtagResults.map((hashtag) => (
+                    <li>
+                      <Link
+                        to={
+                          instance
+                            ? `/${instance}/t/${hashtag.name}`
+                            : `/t/${hashtag.name}`
+                        }
+                      >
+                        #{hashtag.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="ui-state">No hashtags found.</p>
+              )}
+              <h2 class="timeline-header">Posts</h2>
+              {statusResults.length > 0 ? (
+                <ul class="timeline">
+                  {statusResults.map((status) => (
+                    <li>
+                      <Link
+                        class="status-link"
+                        to={
+                          instance
+                            ? `/${instance}/s/${status.id}`
+                            : `/s/${status.id}`
+                        }
+                      >
+                        <Status status={status} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="ui-state">No posts found.</p>
+              )}
+            </>
+          ) : (
+            <p class="ui-state">Enter your search term above to get started.</p>
           )}
         </main>
       </div>

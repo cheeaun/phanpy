@@ -35,6 +35,7 @@ import Following from './pages/following';
 import Hashtags from './pages/hashtags';
 import Home from './pages/home';
 import HomeV1 from './pages/home-v1';
+import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
 import Notifications from './pages/notifications';
@@ -209,7 +210,12 @@ function App() {
         {isLoggedIn && <Route path="/homev1" element={<HomeV1 />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
-        {isLoggedIn && <Route path="/l/:id" element={<Lists />} />}
+        {isLoggedIn && (
+          <Route path="/l">
+            <Route index element={<Lists />} />
+            <Route path=":id" element={<List />} />
+          </Route>
+        )}
         <Route path="/:instance?/t/:hashtag" element={<Hashtags />} />
         <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
         <Route path="/:instance?/p">

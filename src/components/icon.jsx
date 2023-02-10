@@ -49,6 +49,8 @@ const ICONS = {
   group: 'mingcute:group-line',
   bot: 'mingcute:android-2-line',
   menu: 'mingcute:rows-4-line',
+  list: 'mingcute:list-check-line',
+  search: 'mingcute:search-2-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

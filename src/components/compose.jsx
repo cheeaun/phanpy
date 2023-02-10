@@ -816,6 +816,7 @@ function Compose({
             disabled={uiState === 'loading'}
             class="spoiler-text-field"
             lang={language}
+            spellCheck="true"
             style={{
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
@@ -1433,6 +1434,7 @@ function Poll({
               maxlength={maxCharactersPerOption}
               placeholder={`Choice ${i + 1}`}
               lang={lang}
+              spellCheck="true"
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

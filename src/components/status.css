@@ -542,21 +542,14 @@
   font-size: 90%;
 }
 .carousel-item button.media-alt .media-alt-desc {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.4;
-}
-@media (min-width: 40em) {
-  .carousel-item button.media-alt .media-alt-desc {
-    white-space: normal;
-    display: -webkit-box;
-    display: box;
-    -webkit-box-orient: vertical;
-    box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
+  white-space: normal;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  line-height: 1.2;
 }
 .carousel-item button.media-alt[hidden] {
   opacity: 0;

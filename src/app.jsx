@@ -39,6 +39,7 @@ import Lists from './pages/lists';
 import Login from './pages/login';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
+import Search from './pages/search';
 import Settings from './pages/settings';
 import Status from './pages/status';
 import Welcome from './pages/welcome';
@@ -215,7 +216,7 @@ function App() {
           <Route index element={<Public />} />
           <Route path="l" element={<Public local />} />
         </Route>
-        {/* <Route path="/:instance?/p/l?" element={<Public />} /> */}
+        <Route path="/:instance?/search" element={<Search />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
       <Routes>

@@ -106,8 +106,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   min-height: 3em;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .deck > header .header-grid > .header-side:last-of-type {
   text-align: right;
@@ -121,7 +123,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 0;
   font-size: 1.2em;
   text-align: center;
-  white-space: nowrap;
 }
 .deck > header .header-grid h1:first-child {
   text-align: left;
@@ -1252,7 +1253,7 @@ meter.donut:is(.danger, .explode):after {
   .updates-button {
     margin-top: 24px;
   }
-  .timeline-deck .timeline:not(.flat) > li {
+  .timeline:not(.flat) > li {
     border: 1px solid var(--divider-color);
     margin: 16px 0;
     background-color: var(--bg-color);
@@ -1262,15 +1263,13 @@ meter.donut:is(.danger, .explode):after {
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
   }
-  .timeline-deck .timeline:not(.flat) > li:has(.status-link.is-active) {
+  .timeline:not(.flat) > li:has(.status-link.is-active) {
     transition: var(--back-transition);
     transform: translate3d(-2.5vw, 0, 0);
   }
-  .timeline-deck
-    .timeline:not(.flat)
+  .timeline:not(.flat)
     > li:not(:has(.boost-carousel)):has(+ li .status-link.is-active),
-  .timeline-deck
-    .timeline:not(.flat)
+  .timeline:not(.flat)
     > li:not(:has(.boost-carousel)):has(.status-link.is-active)
     + li {
     transition: var(--back-transition);

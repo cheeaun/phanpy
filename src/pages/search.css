@@ -1,0 +1,29 @@
+#search-page header input {
+  width: 100%;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--bg-faded-color);
+}
+#search-page header input:focus {
+  background-color: var(--bg-color);
+  outline: 2px solid var(--link-color);
+}
+
+#search-page ul.accounts-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+#search-page ul.accounts-list li {
+  flex-basis: 320px;
+  display: flex;
+  padding: 8px 16px;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (min-width: 40em) {
+  #search-page header input {
+    background-color: var(--bg-color);
+  }
+}

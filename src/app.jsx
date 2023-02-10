@@ -109,9 +109,15 @@ function App() {
         store.session.set('currentAccount', account.info.id);
         const { masto } = api({ account });
         initPreferences(masto);
+        setUIState('loading');
         (async () => {
-          await initInstance(masto);
-          setIsLoggedIn(true);
+          try {
+            await initInstance(masto);
+          } catch (e) {
+          } finally {
+            setIsLoggedIn(true);
+            setUIState('default');
+          }
         })();
       }
 

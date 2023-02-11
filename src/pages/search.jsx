@@ -143,7 +143,9 @@ function Search() {
               <Loader abrupt />
             </p>
           ) : (
-            <p class="ui-state">Enter your search term above to get started.</p>
+            <p class="ui-state">
+              Enter your search term or paste a URL above to get started.
+            </p>
           )}
         </main>
       </div>

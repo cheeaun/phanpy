@@ -11,6 +11,7 @@ import Menu from '../components/menu';
 import NameText from '../components/name-text';
 import Status from '../components/status';
 import { api } from '../utils/api';
+import useTitle from '../utils/useTitle';
 
 function Search() {
   const { masto, instance, authenticated } = api();
@@ -18,6 +19,8 @@ function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchFieldRef = useRef();
   const q = searchParams.get('q');
+  useTitle(q ? `Search: ${q}` : 'Search', `/search`);
+
   const [statusResults, setStatusResults] = useState([]);
   const [accountResults, setAccountResults] = useState([]);
   const [hashtagResults, setHashtagResults] = useState([]);

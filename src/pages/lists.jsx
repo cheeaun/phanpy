@@ -5,9 +5,11 @@ import Link from '../components/link';
 import Loader from '../components/loader';
 import Menu from '../components/menu';
 import { api } from '../utils/api';
+import useTitle from '../utils/useTitle';
 
 function Lists() {
   const { masto } = api();
+  useTitle(`Lists`, `/l`);
   const [uiState, setUiState] = useState('default');
 
   const [lists, setLists] = useState([]);

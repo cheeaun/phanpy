@@ -5,9 +5,11 @@ import Link from '../components/link';
 import Loader from '../components/loader';
 import Menu from '../components/menu';
 import { api } from '../utils/api';
+import useTitle from '../utils/useTitle';
 
 function FollowedHashtags() {
   const { masto, instance } = api();
+  useTitle(`Followed Hashtags`, `/ft`);
   const [uiState, setUiState] = useState('default');
 
   const [followedHashtags, setFollowedHashtags] = useState([]);

@@ -8,8 +8,22 @@ const { VITE_CLIENT_NAME: CLIENT_NAME } = import.meta.env;
 
 export default function useTitle(title, path) {
   const snapStates = useSnapshot(states);
+  const { currentLocation } = snapStates;
+  let paths = [];
+  // Workaround for matchPath not working for optional path segments
+  // https://github.com/remix-run/react-router/discussions/9862
+  if (/:\w+\?/.test(path)) {
+    paths.push(path.replace(/\?/g, ''));
+    paths.push(path.replace(/\/?:\w+\?/g, ''));
+  }
+  let matched = false;
+  if (paths.length) {
+    matched = paths.some((p) => matchPath(p, currentLocation));
+  } else {
+    matched = matchPath(path, currentLocation);
+  }
   useEffect(() => {
-    if (path && !matchPath(path, snapStates.currentLocation)) return;
+    if (path && !matched) return;
     document.title = title ? `${title} / ${CLIENT_NAME}` : CLIENT_NAME;
   }, [title, snapStates.currentLocation]);
 }

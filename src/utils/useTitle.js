@@ -19,7 +19,7 @@ export default function useTitle(title, path) {
   let matched = false;
   if (paths.length) {
     matched = paths.some((p) => matchPath(p, currentLocation));
-  } else {
+  } else if (path) {
     matched = matchPath(path, currentLocation);
   }
   console.debug({ paths, matched, currentLocation });

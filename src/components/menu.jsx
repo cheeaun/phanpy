@@ -41,9 +41,9 @@ function NavMenu(props) {
         <Icon icon="heart" size="l" /> <span>Favourites</span>
       </MenuLink>
       <MenuDivider />
-      {/* <MenuLink to={`/search`}>
+      <MenuLink to={`/search`}>
         <Icon icon="search" size="l" /> <span>Search</span>
-      </MenuLink> */}
+      </MenuLink>
       <MenuLink to={`/${instance}/p/l`}>
         <Icon icon="group" size="l" /> <span>Local</span>
       </MenuLink>

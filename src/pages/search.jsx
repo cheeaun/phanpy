@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
 import Avatar from '../components/avatar';
+import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import Menu from '../components/menu';
@@ -54,6 +55,8 @@ function Search() {
                 const { q } = e.target;
                 if (q.value) {
                   setSearchParams({ q: q.value });
+                } else {
+                  setSearchParams({});
                 }
               }}
             >
@@ -91,7 +94,7 @@ function Search() {
               )}
               <h2 class="timeline-header">Hashtags</h2>
               {hashtagResults.length > 0 ? (
-                <ul>
+                <ul class="link-list">
                   {hashtagResults.map((hashtag) => (
                     <li>
                       <Link
@@ -101,7 +104,8 @@ function Search() {
                             : `/t/${hashtag.name}`
                         }
                       >
-                        #{hashtag.name}
+                        <Icon icon="hashtag" />
+                        <span>{hashtag.name}</span>
                       </Link>
                     </li>
                   ))}

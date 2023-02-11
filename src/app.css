@@ -1223,26 +1223,46 @@ ul.link-list {
   list-style: none;
   padding: 16px;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 ul.link-list li {
   padding: 0;
   margin: 0;
 }
 ul.link-list li a {
+  --radius: 8px;
   display: block;
   background-color: var(--bg-faded-color);
-  border-radius: 8px;
   line-height: 1.25;
   padding: 12px;
   text-decoration: none;
   line-height: 1.4;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ul.link-list li:first-child a {
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+ul.link-list li:last-child a {
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+ul.link-list li a:is(:hover, :focus) {
+  color: var(--text-color);
+}
+ul.link-list li a:active {
+  filter: brightness(0.9);
 }
 ul.link-list li a * {
   vertical-align: middle;
+}
+ul.link-list li a .icon {
+  flex-shrink: 0;
 }
 
 @media (min-width: 40em) {

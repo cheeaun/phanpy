@@ -7,7 +7,7 @@ import Icon from './icon';
 import Link from './link';
 
 function NavMenu(props) {
-  const { instance } = api();
+  const { instance, authenticated } = api();
   return (
     <Menu
       portal={{
@@ -26,22 +26,26 @@ function NavMenu(props) {
       <MenuLink to="/">
         <Icon icon="home" size="l" /> <span>Home</span>
       </MenuLink>
-      <MenuLink to="/notifications">
-        <Icon icon="notification" size="l" /> <span>Notifications</span>
-      </MenuLink>
-      <MenuDivider />
-      <MenuLink to="/l">
-        <Icon icon="list" size="l" /> <span>Lists</span>
-      </MenuLink>
-      <MenuLink to="/ft">
-        <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
-      </MenuLink>
-      <MenuLink to="/b">
-        <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
-      </MenuLink>
-      <MenuLink to="/f">
-        <Icon icon="heart" size="l" /> <span>Favourites</span>
-      </MenuLink>
+      {authenticated && (
+        <>
+          <MenuLink to="/notifications">
+            <Icon icon="notification" size="l" /> <span>Notifications</span>
+          </MenuLink>
+          <MenuDivider />
+          <MenuLink to="/l">
+            <Icon icon="list" size="l" /> <span>Lists</span>
+          </MenuLink>
+          <MenuLink to="/ft">
+            <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
+          </MenuLink>
+          <MenuLink to="/b">
+            <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+          </MenuLink>
+          <MenuLink to="/f">
+            <Icon icon="heart" size="l" /> <span>Favourites</span>
+          </MenuLink>
+        </>
+      )}
       <MenuDivider />
       <MenuLink to={`/search`}>
         <Icon icon="search" size="l" /> <span>Search</span>
@@ -52,14 +56,18 @@ function NavMenu(props) {
       <MenuLink to={`/${instance}/p`}>
         <Icon icon="earth" size="l" /> <span>Federated</span>
       </MenuLink>
-      <MenuDivider />
-      <MenuItem
-        onClick={() => {
-          states.showSettings = true;
-        }}
-      >
-        <Icon icon="gear" size="l" alt="Settings" /> <span>Settings</span>
-      </MenuItem>
+      {authenticated && (
+        <>
+          <MenuDivider />
+          <MenuItem
+            onClick={() => {
+              states.showSettings = true;
+            }}
+          >
+            <Icon icon="gear" size="l" alt="Settings" /> <span>Settings</span>
+          </MenuItem>
+        </>
+      )}
     </Menu>
   );
 }

@@ -123,7 +123,7 @@ function MediaModal({
                     setShowMediaAlt(media.description);
                   }}
                 >
-                  <span class="tag">ALT</span>{' '}
+                  <Icon icon="info" />
                   <span class="media-alt-desc">{media.description}</span>
                 </button>
               )}

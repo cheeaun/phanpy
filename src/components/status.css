@@ -532,13 +532,13 @@
   text-align: left;
   border-radius: 8px;
   color: var(--text-color);
-  padding: 4px 8px 4px 4px;
+  padding: 4px 8px;
   border: 1px solid var(--outline-color);
   box-shadow: 0 4px 16px var(--outline-color);
   max-width: min(40em, calc(100% - 32px));
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   font-size: 90%;
 }
 .carousel-item button.media-alt .media-alt-desc {
@@ -550,7 +550,7 @@
   box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 .carousel-item button.media-alt[hidden] {
   opacity: 0;

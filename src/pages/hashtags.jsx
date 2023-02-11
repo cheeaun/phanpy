@@ -12,6 +12,8 @@ function Hashtags() {
   const { masto, instance } = api({ instance: params.instance });
   const title = instance ? `#${hashtag} on ${instance}` : `#${hashtag}`;
   useTitle(title, `/:instance?/t/:hashtag`);
+  const latestItem = useRef();
+
   const hashtagsIterator = useRef();
   async function fetchHashtags(firstLoad) {
     if (firstLoad || !hashtagsIterator.current) {
@@ -19,7 +21,32 @@ function Hashtags() {
         limit: LIMIT,
       });
     }
-    return await hashtagsIterator.current.next();
+    const results = await hashtagsIterator.current.next();
+    const { value } = results;
+    if (value?.length) {
+      if (firstLoad) {
+        latestItem.current = value[0].id;
+      }
+    }
+    return results;
+  }
+
+  async function checkForUpdates() {
+    try {
+      const results = await masto.v1.timelines
+        .listHashtag(hashtag, {
+          limit: 1,
+          since_id: latestItem.current,
+        })
+        .next();
+      const { value } = results;
+      if (value?.length) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
   }
 
   return (
@@ -39,6 +66,7 @@ function Hashtags() {
       emptyText="No one has posted anything with this tag yet."
       errorText="Unable to load posts with this tag"
       fetchItems={fetchHashtags}
+      checkForUpdates={checkForUpdates}
     />
   );
 }

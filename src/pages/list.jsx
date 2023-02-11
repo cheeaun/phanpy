@@ -12,6 +12,8 @@ const LIMIT = 20;
 function List() {
   const { masto } = api();
   const { id } = useParams();
+  const latestItem = useRef();
+
   const listIterator = useRef();
   async function fetchList(firstLoad) {
     if (firstLoad || !listIterator.current) {
@@ -19,7 +21,30 @@ function List() {
         limit: LIMIT,
       });
     }
-    return await listIterator.current.next();
+    const results = await listIterator.current.next();
+    const { value } = results;
+    if (value?.length) {
+      if (firstLoad) {
+        latestItem.current = value[0].id;
+      }
+    }
+    return results;
+  }
+
+  async function checkForUpdates() {
+    try {
+      const results = await masto.v1.timelines.listList(id, {
+        limit: 1,
+        since_id: latestItem.current,
+      });
+      const { value } = results;
+      if (value?.length) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
   }
 
   const [title, setTitle] = useState(`List`);
@@ -42,6 +67,7 @@ function List() {
       emptyText="Nothing yet."
       errorText="Unable to load posts."
       fetchItems={fetchList}
+      checkForUpdates={checkForUpdates}
       boostsCarousel
       headerStart={
         <Link to="/l" class="button plain">

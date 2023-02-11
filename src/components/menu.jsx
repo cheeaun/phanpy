@@ -14,7 +14,9 @@ function NavMenu(props) {
         target: document.body,
       }}
       {...props}
+      overflow="auto"
       viewScroll="close"
+      boundingBoxPadding="8 8 8 8"
       menuButton={
         <button type="button" class="button plain">
           <Icon icon="menu" size="l" />

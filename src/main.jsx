@@ -1,7 +1,5 @@
 import './index.css';
 
-import '@szhsin/react-menu/dist/core.css';
-
 import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 

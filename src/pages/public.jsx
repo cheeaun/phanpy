@@ -13,7 +13,7 @@ function Public({ local }) {
   const params = useParams();
   const { masto, instance } = api({ instance: params.instance });
   const title = `${instance} (${isLocal ? 'local' : 'federated'})`;
-  useTitle(title, `/p/l?/:instance`);
+  useTitle(title, `:instance?/p/l?`);
 
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {

@@ -11,7 +11,7 @@ function Hashtags() {
   let { hashtag, ...params } = useParams();
   const { masto, instance } = api({ instance: params.instance });
   const title = instance ? `#${hashtag} on ${instance}` : `#${hashtag}`;
-  useTitle(title, `/t/:instance?/:hashtag`);
+  useTitle(title, `/:instance?/t/:hashtag`);
   const hashtagsIterator = useRef();
   async function fetchHashtags(firstLoad) {
     if (firstLoad || !hashtagsIterator.current) {

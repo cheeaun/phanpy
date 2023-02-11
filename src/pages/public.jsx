@@ -69,6 +69,7 @@ function Public({ local }) {
       errorText="Unable to load posts"
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
+      headerStart={<></>}
     />
   );
 }

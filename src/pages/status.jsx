@@ -475,7 +475,7 @@ function StatusPage() {
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-          <div class="header-grid">
+          <div class="header-grid header-grid-2">
             <h1>
               {!heroInView && heroStatus && uiState !== 'loading' ? (
                 <>

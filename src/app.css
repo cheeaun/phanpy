@@ -127,10 +127,24 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   font-size: 1.2em;
   text-align: center;
 }
-.deck > header .header-grid h1:first-child {
+.deck > header .header-grid.header-grid-2 {
+  grid-template-columns: 1fr max-content;
+}
+.deck > header .header-grid-2 h1 {
   text-align: left;
   padding-left: 8px;
-  width: max-content;
+}
+.deck > header .header-grid h1:has(.ancestors-indicator) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  max-width: fit-content;
+}
+.deck > header .header-grid h1:has(.ancestors-indicator) .hero-heading {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .deck h2 {
   font-size: 1.45em;

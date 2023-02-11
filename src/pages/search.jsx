@@ -68,7 +68,7 @@ function Search() {
                 name="q"
                 type="search"
                 autofocus
-                placeholder="Search or paste URL"
+                placeholder="Search"
               />
             </form>
             <div class="header-side" />

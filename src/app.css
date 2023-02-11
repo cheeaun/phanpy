@@ -109,7 +109,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   min-height: 3em;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr max-content 1fr;
   align-items: center;
   text-overflow: ellipsis;
   white-space: nowrap;

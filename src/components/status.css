@@ -422,6 +422,9 @@
 .status .media img:hover {
   animation: position-object 5s ease-in-out 1s 5;
 }
+body:has(#modal-container .carousel) .status .media img:hover {
+  animation: none;
+}
 .status .media video {
   width: 100%;
   height: 100%;

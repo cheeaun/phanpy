@@ -255,11 +255,7 @@ function Timeline({
         >
           <div class="header-grid">
             <div class="header-side">
-              <Menu
-                portal={{
-                  target: scrollableRef.current,
-                }}
-              />
+              <Menu />
               {headerStart !== null && headerStart !== undefined ? (
                 headerStart
               ) : (

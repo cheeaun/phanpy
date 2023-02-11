@@ -1,6 +1,3 @@
-import '@szhsin/react-menu/dist/core.css';
-import 'toastify-js/src/toastify.css';
-
 import './app.css';
 
 import debounce from 'just-debounce-it';

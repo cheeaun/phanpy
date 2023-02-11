@@ -12,8 +12,8 @@ function Public({ local }) {
   const isLocal = !!local;
   const params = useParams();
   const { masto, instance } = api({ instance: params.instance });
-  const title = `${instance} (${isLocal ? 'local' : 'federated'})`;
-  useTitle(title, `:instance?/p/l?`);
+  const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
+  useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   const latestItem = useRef();
 
   const publicIterator = useRef();
@@ -59,8 +59,8 @@ function Public({ local }) {
       title={title}
       titleComponent={
         <h1 class="header-account">
-          <b>{instance}</b>
-          <div>{isLocal ? 'local' : 'federated'}</div>
+          <b>{isLocal ? 'Local timeline' : 'Federated timeline'}</b>
+          <div>{instance}</div>
         </h1>
       }
       id="public"

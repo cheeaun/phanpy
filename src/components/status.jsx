@@ -49,10 +49,10 @@ function Status({
       <div class="status skeleton">
         <Avatar size="xxl" />
         <div class="container">
-          <div class="meta">███ ████████████</div>
+          <div class="meta">███ ████████</div>
           <div class="content-container">
             <div class="content">
-              <p>████ ████████████</p>
+              <p>████ ████████</p>
             </div>
           </div>
         </div>

@@ -538,68 +538,71 @@ function StatusPage() {
               )}
             </h1>
             <div class="header-side">
-              <Loader hidden={uiState !== 'loading'} />
-              <Menu
-                align="end"
-                portal={{
-                  // Need this, else the menu click will cause scroll jump
-                  target: scrollableRef.current,
-                }}
-                menuButton={
-                  <button type="button" class="button plain4">
-                    <Icon icon="more" alt="Actions" size="xl" />
-                  </button>
-                }
-              >
-                <MenuItem
-                  onClick={() => {
-                    // Click all buttons with class .spoiler but not .spoiling
-                    const buttons = Array.from(
-                      scrollableRef.current.querySelectorAll(
-                        'button.spoiler:not(.spoiling)',
-                      ),
-                    );
-                    buttons.forEach((button) => {
-                      button.click();
-                    });
+              {uiState === 'loading' ? (
+                <Loader abrupt />
+              ) : (
+                <Menu
+                  align="end"
+                  portal={{
+                    // Need this, else the menu click will cause scroll jump
+                    target: scrollableRef.current,
                   }}
+                  menuButton={
+                    <button type="button" class="button plain4">
+                      <Icon icon="more" alt="Actions" size="xl" />
+                    </button>
+                  }
                 >
-                  <Icon icon="eye-open" />{' '}
-                  <span>Show all sensitive content</span>
-                </MenuItem>
-                {import.meta.env.DEV && !authenticated && (
                   <MenuItem
                     onClick={() => {
-                      (async () => {
-                        try {
-                          const { masto } = api();
-                          const results = await masto.v2.search({
-                            q: heroStatus.url,
-                            type: 'statuses',
-                            resolve: true,
-                            limit: 1,
-                          });
-                          if (results.statuses.length) {
-                            const status = results.statuses[0];
-                            navigate(
-                              instance
-                                ? `/${instance}/s/${status.id}`
-                                : `/s/${status.id}`,
-                            );
-                          } else {
-                            throw new Error('No results');
-                          }
-                        } catch (e) {
-                          alert('Error: ' + e);
-                          console.error(e);
-                        }
-                      })();
+                      // Click all buttons with class .spoiler but not .spoiling
+                      const buttons = Array.from(
+                        scrollableRef.current.querySelectorAll(
+                          'button.spoiler:not(.spoiling)',
+                        ),
+                      );
+                      buttons.forEach((button) => {
+                        button.click();
+                      });
                     }}
                   >
-                    See post in currently logged-in instance
+                    <Icon icon="eye-open" />{' '}
+                    <span>Show all sensitive content</span>
                   </MenuItem>
-                )}
-              </Menu>
+                  {import.meta.env.DEV && !authenticated && (
+                    <MenuItem
+                      onClick={() => {
+                        (async () => {
+                          try {
+                            const { masto } = api();
+                            const results = await masto.v2.search({
+                              q: heroStatus.url,
+                              type: 'statuses',
+                              resolve: true,
+                              limit: 1,
+                            });
+                            if (results.statuses.length) {
+                              const status = results.statuses[0];
+                              navigate(
+                                instance
+                                  ? `/${instance}/s/${status.id}`
+                                  : `/s/${status.id}`,
+                              );
+                            } else {
+                              throw new Error('No results');
+                            }
+                          } catch (e) {
+                            alert('Error: ' + e);
+                            console.error(e);
+                          }
+                        })();
+                      }}
+                    >
+                      See post in currently logged-in instance
+                    </MenuItem>
+                  )}
+                </Menu>
+              )}
               <Link
                 class="button plain deck-close"
                 to={closeLink}

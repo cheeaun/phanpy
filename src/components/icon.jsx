@@ -51,6 +51,7 @@ const ICONS = {
   menu: 'mingcute:rows-4-line',
   list: 'mingcute:list-check-line',
   search: 'mingcute:search-2-line',
+  hashtag: 'mingcute:hashtag-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

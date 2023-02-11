@@ -28,14 +28,17 @@ function NavMenu(props) {
         <Icon icon="notification" size="l" /> <span>Notifications</span>
       </MenuLink>
       <MenuDivider />
+      <MenuLink to="/l">
+        <Icon icon="list" size="l" /> <span>Lists</span>
+      </MenuLink>
+      <MenuLink to="/ft">
+        <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
+      </MenuLink>
       <MenuLink to="/b">
         <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
       </MenuLink>
       <MenuLink to="/f">
         <Icon icon="heart" size="l" /> <span>Favourites</span>
-      </MenuLink>
-      <MenuLink to="/l">
-        <Icon icon="list" size="l" /> <span>Lists</span>
       </MenuLink>
       <MenuDivider />
       {/* <MenuLink to={`/search`}>

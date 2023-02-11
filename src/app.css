@@ -1217,6 +1217,42 @@ meter.donut:is(.danger, .explode):after {
   color: var(--text-insignificant-color);
 }
 
+/* LINK LISTS? */
+
+ul.link-list {
+  list-style: none;
+  padding: 16px;
+  margin: 0;
+}
+ul.link-list li {
+  padding: 0;
+  margin: 0;
+}
+ul.link-list li a {
+  display: block;
+  background-color: var(--bg-faded-color);
+  border-radius: 8px;
+  line-height: 1.25;
+  padding: 12px;
+  text-decoration: none;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+ul.link-list li a * {
+  vertical-align: middle;
+}
+
+@media (min-width: 40em) {
+  ul.link-list li a {
+    background-color: var(--bg-color);
+  }
+}
+
+/* OTHERS */
+
 @media (min-width: 40em) {
   html,
   body {

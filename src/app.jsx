@@ -30,6 +30,7 @@ import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
+import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtags from './pages/hashtags';
 import Home from './pages/home';
@@ -215,6 +216,7 @@ function App() {
             <Route path=":id" element={<List />} />
           </Route>
         )}
+        {isLoggedIn && <Route path="/ft" element={<FollowedHashtags />} />}
         <Route path="/:instance?/t/:hashtag" element={<Hashtags />} />
         <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
         <Route path="/:instance?/p">

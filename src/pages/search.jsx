@@ -69,6 +69,11 @@ function Search() {
                 type="search"
                 autofocus
                 placeholder="Search"
+                onSearch={(e) => {
+                  if (!e.target.value) {
+                    setSearchParams({});
+                  }
+                }}
               />
             </form>
             <div class="header-side" />

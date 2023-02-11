@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import Avatar from '../components/avatar';
 import Link from '../components/link';
+import Loader from '../components/loader';
 import Menu from '../components/menu';
 import NameText from '../components/name-text';
 import Status from '../components/status';
@@ -81,6 +82,7 @@ function Search() {
                         instance={instance}
                         showAcct
                       />
+                      <br />
                     </li>
                   ))}
                 </ul>
@@ -129,6 +131,10 @@ function Search() {
                 <p class="ui-state">No posts found.</p>
               )}
             </>
+          ) : uiState === 'loading' ? (
+            <p class="ui-state">
+              <Loader abrupt />
+            </p>
           ) : (
             <p class="ui-state">Enter your search term above to get started.</p>
           )}

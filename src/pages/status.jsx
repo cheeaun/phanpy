@@ -287,7 +287,7 @@ function StatusPage() {
     };
   }, []);
 
-  const heroStatus = snapStates.statuses[sKey];
+  const heroStatus = snapStates.statuses[sKey] || snapStates.statuses[id];
   const heroDisplayName = useMemo(() => {
     // Remove shortcodes from display name
     if (!heroStatus) return '';

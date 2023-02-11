@@ -64,7 +64,7 @@ function Status({
   const sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
-    status = snapStates.statuses[sKey];
+    status = snapStates.statuses[sKey] || snapStates.statuses[statusID];
   }
   if (!status) {
     return null;

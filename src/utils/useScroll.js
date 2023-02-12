@@ -41,10 +41,12 @@ export default function useScroll({
       const distanceFromStartPx = Math.min(
         clientDimension * distanceFromStart,
         scrollDimension,
+        scrollStart,
       );
       const distanceFromEndPx = Math.min(
         clientDimension * distanceFromEnd,
         scrollDimension,
+        scrollDimension - scrollStart - clientDimension,
       );
 
       if (

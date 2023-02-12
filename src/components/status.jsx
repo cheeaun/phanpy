@@ -743,12 +743,7 @@ function Card({ card }) {
         </div>
         <div class="meta-container">
           <p class="meta domain">{domain}</p>
-          <p
-            class="title"
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-          />
+          <p class="title">{title}</p>
           <p class="meta">{description || providerName || authorName}</p>
         </div>
       </a>

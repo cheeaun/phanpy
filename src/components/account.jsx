@@ -10,10 +10,10 @@ import shortenNumber from '../utils/shorten-number';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
 
+import AccountBlock from './account-block';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
-import NameText from './name-text';
 
 function Account({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
@@ -158,8 +158,7 @@ function Account({ account, instance: propInstance, onClose }) {
       {uiState === 'loading' ? (
         <>
           <header>
-            <Avatar size="xxxl" />
-            ███ ████████████
+            <AccountBlock avatarSize="xxxl" skeleton />
           </header>
           <main>
             <div class="note">
@@ -177,8 +176,12 @@ function Account({ account, instance: propInstance, onClose }) {
         info && (
           <>
             <header>
-              <Avatar url={avatar} size="xxxl" />
-              <NameText account={info} instance={instance} showAcct external />
+              <AccountBlock
+                account={info}
+                instance={instance}
+                avatarSize="xxxl"
+                external
+              />
             </header>
             <main tabIndex="-1">
               {bot && (

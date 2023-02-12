@@ -3,6 +3,7 @@ import './search.css';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
+import AccountBlock from '../components/account-block';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -87,13 +88,7 @@ function Search() {
                 <ul class="timeline flat accounts-list">
                   {accountResults.map((account) => (
                     <li>
-                      <Avatar url={account.avatar} size="xl" />
-                      <NameText
-                        account={account}
-                        instance={instance}
-                        showAcct
-                      />
-                      <br />
+                      <AccountBlock account={account} instance={instance} />
                     </li>
                   ))}
                 </ul>

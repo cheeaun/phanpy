@@ -1,21 +1,22 @@
 import './search.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import AccountBlock from '../components/account-block';
-import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import Menu from '../components/menu';
-import NameText from '../components/name-text';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
 function Search() {
-  const { masto, instance, authenticated } = api();
+  const params = useParams();
+  const { masto, instance, authenticated } = api({
+    instance: params.instance,
+  });
   const [uiState, setUiState] = useState('default');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchFieldRef = useRef();
@@ -43,7 +44,7 @@ function Search() {
         setUiState('default');
       })();
     }
-  }, [q]);
+  }, [q, instance]);
 
   return (
     <div id="search-page" class="deck-container">

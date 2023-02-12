@@ -64,32 +64,34 @@ function Notifications() {
 
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
-    if (firstLoad) {
+    if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
       notificationsIterator.current = masto.v1.notifications.list({
         limit: LIMIT,
       });
-      states.notificationsNew = [];
     }
     const allNotifications = await notificationsIterator.current.next();
-    if (allNotifications.value?.length) {
-      const notificationsValues = allNotifications.value.map((notification) => {
+    const notifications = allNotifications.value;
+
+    if (notifications?.length) {
+      notifications.forEach((notification) => {
         saveStatus(notification.status, {
           skipThreading: true,
           override: false,
         });
-        return notification;
       });
 
-      const groupedNotifications = groupNotifications(notificationsValues);
+      const groupedNotifications = groupNotifications(notifications);
 
       if (firstLoad) {
-        states.notificationsLast = notificationsValues[0];
+        states.notificationsLast = notifications[0];
         states.notifications = groupedNotifications;
       } else {
         states.notifications.push(...groupedNotifications);
       }
     }
+
+    states.notificationsShowNew = false;
     states.notificationsLastFetchTime = Date.now();
     return allNotifications;
   }
@@ -161,14 +163,12 @@ function Notifications() {
             </div>
           </div>
         </header>
-        {snapStates.notificationsNew.length > 0 && uiState !== 'loading' && (
+        {snapStates.notificationsShowNew && uiState !== 'loading' && (
           <button
             class="updates-button"
             type="button"
             onClick={() => {
               loadNotifications(true);
-              states.notificationsNew = [];
-
               scrollableRef.current?.scrollTo({
                 top: 0,
                 behavior: 'smooth',

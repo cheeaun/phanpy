@@ -55,6 +55,7 @@ import { getAccessToken } from './utils/auth';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
+import usePageVisibility from './utils/usePageVisibility';
 
 window.__STATES__ = states;
 
@@ -110,6 +111,7 @@ function App() {
       if (account) {
         store.session.set('currentAccount', account.info.id);
         const { masto } = api({ account });
+        console.log('masto', masto);
         initPreferences(masto);
         setUIState('loading');
         (async () => {
@@ -163,6 +165,54 @@ function App() {
   //     states.init = true;
   //   }
   // }, [isLoggedIn]);
+
+  // Notifications service
+  // - WebSocket to receive notifications when page is visible
+  const [visible, setVisible] = useState(true);
+  usePageVisibility(setVisible);
+  const notificationStream = useRef();
+  useEffect(() => {
+    if (isLoggedIn && visible) {
+      const { masto } = api();
+      (async () => {
+        // 1. Get the latest notification
+        if (states.notificationsLast) {
+          const notificationsIterator = masto.v1.notifications.list({
+            limit: 1,
+            since_id: states.notificationsLast.id,
+          });
+          const { value: notifications } = await notificationsIterator.next();
+          if (notifications?.length) {
+            states.notificationsShowNew = true;
+          }
+        }
+
+        // 2. Start streaming
+        notificationStream.current = await masto.ws.stream(
+          '/api/v1/streaming',
+          {
+            stream: 'user:notification',
+          },
+        );
+        console.log('🎏 Streaming notification', notificationStream.current);
+
+        notificationStream.current.on('notification', (notification) => {
+          console.log('🔔🔔 Notification', notification);
+          states.notificationsShowNew = true;
+        });
+
+        notificationStream.current.ws.onclose = () => {
+          console.log('🔔🔔 Notification stream closed');
+        };
+      })();
+    }
+    return () => {
+      if (notificationStream.current) {
+        notificationStream.current.ws.close();
+        notificationStream.current = null;
+      }
+    };
+  }, [visible, isLoggedIn]);
 
   const { prevLocation } = snapStates;
   const backgroundLocation = useRef(prevLocation || null);
@@ -360,164 +410,164 @@ function App() {
   );
 }
 
-let ws;
-async function startStream() {
-  const { masto, instance } = api();
-  if (
-    ws &&
-    (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)
-  ) {
-    return;
-  }
+// let ws;
+// async function startStream() {
+//   const { masto, instance } = api();
+//   if (
+//     ws &&
+//     (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)
+//   ) {
+//     return;
+//   }
 
-  const stream = await masto.v1.stream.streamUser();
-  console.log('STREAM START', { stream });
-  ws = stream.ws;
+//   const stream = await masto.v1.stream.streamUser();
+//   console.log('STREAM START', { stream });
+//   ws = stream.ws;
 
-  const handleNewStatus = debounce((status) => {
-    console.log('UPDATE', status);
-    if (document.visibilityState === 'hidden') return;
+//   const handleNewStatus = debounce((status) => {
+//     console.log('UPDATE', status);
+//     if (document.visibilityState === 'hidden') return;
 
-    const inHomeNew = states.homeNew.find((s) => s.id === status.id);
-    const inHome = status.id === states.homeLast?.id;
-    if (!inHomeNew && !inHome) {
-      if (states.settings.boostsCarousel && status.reblog) {
-        // do nothing
-      } else {
-        states.homeNew.unshift({
-          id: status.id,
-          reblog: status.reblog?.id,
-          reply: !!status.inReplyToAccountId,
-        });
-        console.log('homeNew 1', [...states.homeNew]);
-      }
-    }
+//     const inHomeNew = states.homeNew.find((s) => s.id === status.id);
+//     const inHome = status.id === states.homeLast?.id;
+//     if (!inHomeNew && !inHome) {
+//       if (states.settings.boostsCarousel && status.reblog) {
+//         // do nothing
+//       } else {
+//         states.homeNew.unshift({
+//           id: status.id,
+//           reblog: status.reblog?.id,
+//           reply: !!status.inReplyToAccountId,
+//         });
+//         console.log('homeNew 1', [...states.homeNew]);
+//       }
+//     }
 
-    saveStatus(status, instance);
-  }, 5000);
-  stream.on('update', handleNewStatus);
-  stream.on('status.update', (status) => {
-    console.log('STATUS.UPDATE', status);
-    saveStatus(status, instance);
-  });
-  stream.on('delete', (statusID) => {
-    console.log('DELETE', statusID);
-    // delete states.statuses[statusID];
-    const s = getStatus(statusID);
-    if (s) s._deleted = true;
-  });
-  stream.on('notification', (notification) => {
-    console.log('NOTIFICATION', notification);
+//     saveStatus(status, instance);
+//   }, 5000);
+//   stream.on('update', handleNewStatus);
+//   stream.on('status.update', (status) => {
+//     console.log('STATUS.UPDATE', status);
+//     saveStatus(status, instance);
+//   });
+//   stream.on('delete', (statusID) => {
+//     console.log('DELETE', statusID);
+//     // delete states.statuses[statusID];
+//     const s = getStatus(statusID);
+//     if (s) s._deleted = true;
+//   });
+//   stream.on('notification', (notification) => {
+//     console.log('NOTIFICATION', notification);
 
-    const inNotificationsNew = states.notificationsNew.find(
-      (n) => n.id === notification.id,
-    );
-    const inNotifications = notification.id === states.notificationsLast?.id;
-    if (!inNotificationsNew && !inNotifications) {
-      states.notificationsNew.unshift(notification);
-    }
+//     const inNotificationsNew = states.notificationsNew.find(
+//       (n) => n.id === notification.id,
+//     );
+//     const inNotifications = notification.id === states.notificationsLast?.id;
+//     if (!inNotificationsNew && !inNotifications) {
+//       states.notificationsNew.unshift(notification);
+//     }
 
-    saveStatus(notification.status, instance, { override: false });
-  });
+//     saveStatus(notification.status, instance, { override: false });
+//   });
 
-  stream.ws.onclose = () => {
-    console.log('STREAM CLOSED!');
-    if (document.visibilityState !== 'hidden') {
-      startStream();
-    }
-  };
+//   stream.ws.onclose = () => {
+//     console.log('STREAM CLOSED!');
+//     if (document.visibilityState !== 'hidden') {
+//       startStream();
+//     }
+//   };
 
-  return {
-    stream,
-    stopStream: () => {
-      stream.ws.close();
-    },
-  };
-}
+//   return {
+//     stream,
+//     stopStream: () => {
+//       stream.ws.close();
+//     },
+//   };
+// }
 
-let lastHidden;
-function startVisibility() {
-  const { masto, instance } = api();
-  const handleVisible = (visible) => {
-    if (!visible) {
-      const timestamp = Date.now();
-      lastHidden = timestamp;
-    } else {
-      const timestamp = Date.now();
-      const diff = timestamp - lastHidden;
-      const diffMins = Math.round(diff / 1000 / 60);
-      console.log(`visible: ${visible}`, { lastHidden, diffMins });
-      if (!lastHidden || diffMins > 1) {
-        (async () => {
-          try {
-            const firstStatusID = states.homeLast?.id;
-            const firstNotificationID = states.notificationsLast?.id;
-            console.log({ states, firstNotificationID, firstStatusID });
-            const fetchHome = masto.v1.timelines.listHome({
-              limit: 5,
-              ...(firstStatusID && { sinceId: firstStatusID }),
-            });
-            const fetchNotifications = masto.v1.notifications.list({
-              limit: 1,
-              ...(firstNotificationID && { sinceId: firstNotificationID }),
-            });
+// let lastHidden;
+// function startVisibility() {
+//   const { masto, instance } = api();
+//   const handleVisible = (visible) => {
+//     if (!visible) {
+//       const timestamp = Date.now();
+//       lastHidden = timestamp;
+//     } else {
+//       const timestamp = Date.now();
+//       const diff = timestamp - lastHidden;
+//       const diffMins = Math.round(diff / 1000 / 60);
+//       console.log(`visible: ${visible}`, { lastHidden, diffMins });
+//       if (!lastHidden || diffMins > 1) {
+//         (async () => {
+//           try {
+//             const firstStatusID = states.homeLast?.id;
+//             const firstNotificationID = states.notificationsLast?.id;
+//             console.log({ states, firstNotificationID, firstStatusID });
+//             const fetchHome = masto.v1.timelines.listHome({
+//               limit: 5,
+//               ...(firstStatusID && { sinceId: firstStatusID }),
+//             });
+//             const fetchNotifications = masto.v1.notifications.list({
+//               limit: 1,
+//               ...(firstNotificationID && { sinceId: firstNotificationID }),
+//             });
 
-            const newStatuses = await fetchHome;
-            const hasOneAndReblog =
-              newStatuses.length === 1 && newStatuses?.[0]?.reblog;
-            if (newStatuses.length) {
-              if (states.settings.boostsCarousel && hasOneAndReblog) {
-                // do nothing
-              } else {
-                states.homeNew = newStatuses.map((status) => {
-                  saveStatus(status, instance);
-                  return {
-                    id: status.id,
-                    reblog: status.reblog?.id,
-                    reply: !!status.inReplyToAccountId,
-                  };
-                });
-                console.log('homeNew 2', [...states.homeNew]);
-              }
-            }
+//             const newStatuses = await fetchHome;
+//             const hasOneAndReblog =
+//               newStatuses.length === 1 && newStatuses?.[0]?.reblog;
+//             if (newStatuses.length) {
+//               if (states.settings.boostsCarousel && hasOneAndReblog) {
+//                 // do nothing
+//               } else {
+//                 states.homeNew = newStatuses.map((status) => {
+//                   saveStatus(status, instance);
+//                   return {
+//                     id: status.id,
+//                     reblog: status.reblog?.id,
+//                     reply: !!status.inReplyToAccountId,
+//                   };
+//                 });
+//                 console.log('homeNew 2', [...states.homeNew]);
+//               }
+//             }
 
-            const newNotifications = await fetchNotifications;
-            if (newNotifications.length) {
-              const notification = newNotifications[0];
-              const inNotificationsNew = states.notificationsNew.find(
-                (n) => n.id === notification.id,
-              );
-              const inNotifications =
-                notification.id === states.notificationsLast?.id;
-              if (!inNotificationsNew && !inNotifications) {
-                states.notificationsNew.unshift(notification);
-              }
+//             const newNotifications = await fetchNotifications;
+//             if (newNotifications.length) {
+//               const notification = newNotifications[0];
+//               const inNotificationsNew = states.notificationsNew.find(
+//                 (n) => n.id === notification.id,
+//               );
+//               const inNotifications =
+//                 notification.id === states.notificationsLast?.id;
+//               if (!inNotificationsNew && !inNotifications) {
+//                 states.notificationsNew.unshift(notification);
+//               }
 
-              saveStatus(notification.status, instance, { override: false });
-            }
-          } catch (e) {
-            // Silently fail
-            console.error(e);
-          } finally {
-            startStream();
-          }
-        })();
-      }
-    }
-  };
+//               saveStatus(notification.status, instance, { override: false });
+//             }
+//           } catch (e) {
+//             // Silently fail
+//             console.error(e);
+//           } finally {
+//             startStream();
+//           }
+//         })();
+//       }
+//     }
+//   };
 
-  const handleVisibilityChange = () => {
-    const hidden = document.visibilityState === 'hidden';
-    handleVisible(!hidden);
-    console.log('VISIBILITY: ' + (hidden ? 'hidden' : 'visible'));
-  };
-  document.addEventListener('visibilitychange', handleVisibilityChange);
-  requestAnimationFrame(handleVisibilityChange);
-  return {
-    stop: () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    },
-  };
-}
+//   const handleVisibilityChange = () => {
+//     const hidden = document.visibilityState === 'hidden';
+//     handleVisible(!hidden);
+//     console.log('VISIBILITY: ' + (hidden ? 'hidden' : 'visible'));
+//   };
+//   document.addEventListener('visibilitychange', handleVisibilityChange);
+//   requestAnimationFrame(handleVisibilityChange);
+//   return {
+//     stop: () => {
+//       document.removeEventListener('visibilitychange', handleVisibilityChange);
+//     },
+//   };
+// }
 
 export { App };

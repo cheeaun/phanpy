@@ -16,8 +16,9 @@ const states = proxy({
   homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,
   notifications: [],
-  notificationsLast: store.account.get('notificationsLast') || null, // Last item in 'notifications' list
+  notificationsLast: store.account.get('notificationsLast') || null, // Last read notification
   notificationsNew: [],
+  notificationsShowNew: false,
   notificationsLastFetchTime: null,
   accounts: {},
   reloadStatusPage: 0,

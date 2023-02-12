@@ -1,4 +1,5 @@
 import { FocusableItem, Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -7,6 +8,7 @@ import Icon from './icon';
 import Link from './link';
 
 function NavMenu(props) {
+  const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
   return (
     <Menu
@@ -30,6 +32,12 @@ function NavMenu(props) {
         <>
           <MenuLink to="/notifications">
             <Icon icon="notification" size="l" /> <span>Notifications</span>
+            {snapStates.notificationsShowNew && (
+              <sup title="New" style={{ opacity: 0.5 }}>
+                {' '}
+                &bull;
+              </sup>
+            )}
           </MenuLink>
           <MenuDivider />
           <MenuLink to="/l">

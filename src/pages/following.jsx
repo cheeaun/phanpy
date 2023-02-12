@@ -90,17 +90,6 @@ function Following({ title, path, id, headerStart }) {
       if (s) s._deleted = true;
     });
 
-    stream.on('notification', (notification) => {
-      console.log('🔔 Notification', notification);
-      const inNotifications =
-        notification.id === snapStates.notificationsLast?.id;
-      if (inNotifications) return;
-      states.notificationsNew.unshift(notification);
-      saveStatus(notification.status, instance, {
-        override: false,
-      });
-    });
-
     stream.ws.onclose = () => {
       console.log('🎏 Streaming user closed');
     };
@@ -124,7 +113,7 @@ function Following({ title, path, id, headerStart }) {
     <Link
       to="/notifications"
       class={`button plain ${
-        snapStates.notificationsNew.length > 0 ? 'has-badge' : ''
+        snapStates.notificationsShowNew ? 'has-badge' : ''
       }`}
       onClick={(e) => {
         e.stopPropagation();

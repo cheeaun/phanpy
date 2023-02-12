@@ -735,7 +735,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--button-bg-color)
   );
   backdrop-filter: blur(16px);
-  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
 }
 .updates-button .icon {
@@ -1121,7 +1121,7 @@ meter.donut:is(.danger, .explode):after {
   color: var(--button-text-color);
   border-radius: 10em;
   padding: 8px 16px;
-  box-shadow: 0 3px 8px -1px var(--bg-faded-blur-color),
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
 }
 .toastify-bottom {

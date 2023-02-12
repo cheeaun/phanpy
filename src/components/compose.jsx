@@ -3,7 +3,7 @@ import './compose.css';
 import '@github/text-expander-element';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
@@ -18,7 +18,12 @@ import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
+import {
+  getCurrentAccount,
+  getCurrentAccountNS,
+  getCurrentInstance,
+} from '../utils/store-utils';
+import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -108,22 +113,8 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const configuration = useMemo(() => {
-    try {
-      const instances = store.local.getJSON('instances');
-      const currentInstance = currentAccount.instanceURL.toLowerCase();
-      const config = instances[currentInstance].configuration;
-      console.log(config);
-      return config;
-    } catch (e) {
-      console.error(e);
-      alert('Failed to load instance configuration. Please try again.');
-      // Temporary fix for corrupted data
-      store.local.del('instances');
-      location.reload();
-      return {};
-    }
-  }, []);
+  const { configuration } = getCurrentInstance();
+  console.log('⚙️ Configuration', configuration);
 
   const {
     statuses: { maxCharacters, maxMediaAttachments, charactersReservedPerUrl },
@@ -771,7 +762,16 @@ function Compose({
                 // mediaIds: mediaAttachments.map((attachment) => attachment.id),
                 media_ids: mediaAttachments.map((attachment) => attachment.id),
               };
-              if (!editStatus) {
+              if (editStatus && supports('@mastodon/edit-media-attributes')) {
+                params.media_attributes = mediaAttachments.map((attachment) => {
+                  return {
+                    id: attachment.id,
+                    description: attachment.description,
+                    // focus
+                    // thumbnail
+                  };
+                });
+              } else if (!editStatus) {
                 params.visibility = visibility;
                 // params.inReplyToId = replyToStatus?.id || undefined;
                 params.in_reply_to_id = replyToStatus?.id || undefined;
@@ -1279,6 +1279,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
+  const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { url, type, id } = attachment;
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
@@ -1304,7 +1305,7 @@ function MediaAttachment({
 
   const descTextarea = (
     <>
-      {!!id ? (
+      {!!id && !supportsEdit ? (
         <div class="media-desc">
           <span class="tag">Uploaded</span>
           <p title={description}>

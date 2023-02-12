@@ -33,3 +33,21 @@ export function saveAccount(account) {
   store.local.setJSON('accounts', accounts);
   store.session.set('currentAccount', account.info.id);
 }
+
+let currentInstance = null;
+export function getCurrentInstance() {
+  if (currentInstance) return currentInstance;
+  try {
+    const account = getCurrentAccount();
+    const instances = store.local.getJSON('instances');
+    const instance = account.instanceURL.toLowerCase();
+    return (currentInstance = instances[instance]);
+  } catch (e) {
+    console.error(e);
+    alert('Failed to load instance configuration. Please try again.');
+    // Temporary fix for corrupted data
+    store.local.del('instances');
+    location.reload();
+    return {};
+  }
+}

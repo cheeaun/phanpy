@@ -1,3 +1,6 @@
+#search-page .deck > header .header-grid {
+  grid-template-columns: auto 1fr auto;
+}
 #search-page header input {
   width: 100%;
   padding: 8px 16px;
@@ -22,6 +25,17 @@
   padding: 8px 16px;
   gap: 8px;
   align-items: center;
+}
+
+ul.link-list.hashtag-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+ul.link-list.hashtag-list li a {
+  border-radius: var(--radius);
 }
 
 @media (min-width: 40em) {

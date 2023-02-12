@@ -97,7 +97,7 @@ function Search() {
               )}
               <h2 class="timeline-header">Hashtags</h2>
               {hashtagResults.length > 0 ? (
-                <ul class="link-list">
+                <ul class="link-list hashtag-list">
                   {hashtagResults.map((hashtag) => (
                     <li>
                       <Link

@@ -7,6 +7,8 @@ import Menu from '../components/menu';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
+const LIMIT = 200;
+
 function FollowedHashtags() {
   const { masto, instance } = api();
   useTitle(`Followed Hashtags`, `/ft`);
@@ -17,7 +19,15 @@ function FollowedHashtags() {
     setUiState('loading');
     (async () => {
       try {
-        const tags = await masto.v1.followedTags.list();
+        const iterator = masto.v1.followedTags.list({
+          limit: LIMIT,
+        });
+        const tags = [];
+        do {
+          const { value, done } = await iterator.next();
+          if (done || value?.length === 0) break;
+          tags.push(...value);
+        } while (true);
         console.log(tags);
         setFollowedHashtags(tags);
         setUiState('default');
@@ -60,7 +70,7 @@ function FollowedHashtags() {
             </ul>
           ) : uiState === 'loading' ? (
             <p class="ui-state">
-              <Loader />
+              <Loader abrupt />
             </p>
           ) : uiState === 'error' ? (
             <p class="ui-state">Unable to load followed hashtags.</p>

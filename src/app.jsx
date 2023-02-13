@@ -146,15 +146,26 @@ function App() {
     return () => clearTimeout(timer);
   };
   useEffect(focusDeck, [location]);
+  const showModal = useMemo(() => {
+    return (
+      snapStates.showCompose ||
+      snapStates.showSettings ||
+      snapStates.showAccount ||
+      snapStates.showDrafts ||
+      snapStates.showMediaModal
+    );
+  }, [
+    snapStates.showCompose,
+    snapStates.showSettings,
+    snapStates.showAccount,
+    snapStates.showDrafts,
+    snapStates.showMediaModal,
+  ]);
   useEffect(() => {
-    if (
-      !snapStates.showCompose &&
-      !snapStates.showSettings &&
-      !snapStates.showAccount
-    ) {
+    if (!showModal) {
       focusDeck();
     }
-  }, [snapStates.showCompose, snapStates.showSettings, snapStates.showAccount]);
+  }, [showModal]);
 
   // useEffect(() => {
   //   // HACK: prevent this from running again due to HMR

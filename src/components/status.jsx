@@ -656,7 +656,7 @@ function Status({
                         };
                       }}
                     >
-                      Edit&hellip;
+                      <Icon icon="pencil" /> <span>Edit&hellip;</span>
                     </MenuItem>
                   )}
                 </Menu>

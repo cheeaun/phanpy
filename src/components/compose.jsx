@@ -367,6 +367,8 @@ function Compose({
     },
     {
       enableOnFormTags: true,
+      // Use keyup because Esc keydown will close the confirm dialog on Safari
+      keyup: true,
     },
   );
 

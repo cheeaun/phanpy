@@ -145,17 +145,15 @@ function Notifications() {
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
           hidden={hiddenUI}
-          onClick={() => {
-            scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+          onClick={(e) => {
+            if (!e.target.closest('a, button')) {
+              scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+            }
           }}
         >
           <div class="header-grid">
             <div class="header-side">
-              <Menu
-                portal={{
-                  target: scrollableRef.current,
-                }}
-              />
+              <Menu />
               <Link to="/" class="button plain">
                 <Icon icon="home" size="l" />
               </Link>

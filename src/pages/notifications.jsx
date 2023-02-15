@@ -460,7 +460,9 @@ function groupNotifications(notifications) {
     const date = new Date(createdAt).toLocaleDateString();
     const key = `${status?.id}-${type}-${date}`;
     const mappedNotification = notificationsMap[key];
-    if (mappedNotification?.account) {
+    if (type === 'follow_request') {
+      cleanNotifications[j++] = notification;
+    } else if (mappedNotification?.account) {
       mappedNotification._accounts.push(account);
     } else {
       let n = (notificationsMap[key] = {

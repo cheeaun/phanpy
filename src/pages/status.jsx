@@ -583,11 +583,7 @@ function StatusPage() {
                             });
                             if (results.statuses.length) {
                               const status = results.statuses[0];
-                              navigate(
-                                instance
-                                  ? `/${instance}/s/${status.id}`
-                                  : `/s/${status.id}`,
-                              );
+                              navigate(`/s/${status.id}`);
                             } else {
                               throw new Error('No results');
                             }

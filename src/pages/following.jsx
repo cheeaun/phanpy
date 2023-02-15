@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
-import Icon from '../components/icon';
-import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -11,7 +9,7 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Following({ title, path, id, headerStart }) {
+function Following({ title, path, id, ...props }) {
   useTitle(title || 'Following', path, '/l/f');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
@@ -109,20 +107,6 @@ function Following({ title, path, id, headerStart }) {
     };
   }, []);
 
-  const headerEnd = (
-    <Link
-      to="/notifications"
-      class={`button plain ${
-        snapStates.notificationsShowNew ? 'has-badge' : ''
-      }`}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
-      <Icon icon="notification" size="l" alt="Notifications" />
-    </Link>
-  );
-
   return (
     <Timeline
       title={title || 'Following'}
@@ -132,9 +116,8 @@ function Following({ title, path, id, headerStart }) {
       fetchItems={fetchHome}
       checkForUpdates={checkForUpdates}
       useItemID
-      headerStart={headerStart}
-      headerEnd={headerEnd}
       boostsCarousel={snapStates.settings.boostsCarousel}
+      {...props}
     />
   );
 }

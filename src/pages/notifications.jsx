@@ -56,9 +56,11 @@ function Notifications() {
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
   const scrollableRef = useRef();
-  const { nearReachEnd, reachStart } = useScroll({
-    scrollableElement: scrollableRef.current,
-  });
+  const { nearReachEnd, scrollDirection, reachStart, nearReachStart } =
+    useScroll({
+      scrollableElement: scrollableRef.current,
+    });
+  const hiddenUI = scrollDirection === 'end' && !nearReachStart;
 
   console.debug('RENDER Notifications');
 
@@ -142,6 +144,7 @@ function Notifications() {
     >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
+          hidden={hiddenUI}
           onClick={() => {
             scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -162,22 +165,22 @@ function Notifications() {
               <Loader hidden={uiState !== 'loading'} />
             </div>
           </div>
+          {snapStates.notificationsShowNew && uiState !== 'loading' && (
+            <button
+              class="updates-button"
+              type="button"
+              onClick={() => {
+                loadNotifications(true);
+                scrollableRef.current?.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
+              }}
+            >
+              <Icon icon="arrow-up" /> New notifications
+            </button>
+          )}
         </header>
-        {snapStates.notificationsShowNew && uiState !== 'loading' && (
-          <button
-            class="updates-button"
-            type="button"
-            onClick={() => {
-              loadNotifications(true);
-              scrollableRef.current?.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              });
-            }}
-          >
-            <Icon icon="arrow-up" /> New notifications
-          </button>
-        )}
         <div id="mentions-option">
           <label>
             <input

@@ -1322,6 +1322,35 @@ ul.link-list li a .icon {
   }
 }
 
+/* COLUMNS */
+
+#columns {
+  display: flex;
+  width: 100vw;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+#columns::-webkit-scrollbar {
+  display: none;
+}
+#columns > * {
+  overscroll-behavior: auto;
+  scroll-snap-align: left;
+  scroll-snap-stop: always;
+  position: static !important;
+  opacity: 1 !important;
+  content-visibility: auto !important;
+  pointer-events: auto !important;
+  user-select: auto !important;
+  /* background-color: var(--bg-color); */
+  flex-basis: min(100vw, 480px);
+  flex-shrink: 0;
+}
+
 /* OTHERS */
 
 @media (min-width: 40em) {

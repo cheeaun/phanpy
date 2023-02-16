@@ -336,9 +336,14 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
                     name={name}
                     placeholder={placeholder}
                     required={type === 'text'}
+                    list={
+                      currentType === 'hashtag'
+                        ? 'followed-hashtags-datalist'
+                        : null
+                    }
                   />
                   {currentType === 'hashtag' && followedHashtags.length > 0 && (
-                    <datalist>
+                    <datalist id="followed-hashtags-datalist">
                       {followedHashtags.map((tag) => (
                         <option value={tag.name} />
                       ))}

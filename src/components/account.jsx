@@ -311,8 +311,8 @@ function Account({ account, instance: propInstance, onClose }) {
                           if (following || requested) {
                             const yes = confirm(
                               requested
-                                ? 'Are you sure that you want to withdraw follow request?'
-                                : 'Are you sure that you want to unfollow this account?',
+                                ? 'Withdraw follow request?'
+                                : `Unfollow @${info.acct || info.username}?`,
                             );
                             if (yes) {
                               newRelationship =

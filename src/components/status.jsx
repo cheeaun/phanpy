@@ -531,9 +531,7 @@ function Status({
                       }
                       try {
                         if (!reblogged) {
-                          const yes = confirm(
-                            'Are you sure that you want to boost this post?',
-                          );
+                          const yes = confirm('Boost this post?');
                           if (!yes) {
                             return;
                           }

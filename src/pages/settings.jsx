@@ -125,9 +125,7 @@ function Settings({ onClose }) {
                       <MenuItem
                         disabled={!isCurrent}
                         onClick={() => {
-                          const yes = confirm(
-                            'Are you sure you want to log out?',
-                          );
+                          const yes = confirm('Log out?');
                           if (!yes) return;
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);

@@ -103,9 +103,7 @@ function Drafts() {
                         onClick={() => {
                           (async () => {
                             try {
-                              const yes = confirm(
-                                'Are you sure you want to delete this draft?',
-                              );
+                              const yes = confirm('Delete this draft?');
                               if (yes) {
                                 await db.drafts.del(key);
                                 reload();
@@ -161,9 +159,7 @@ function Drafts() {
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   (async () => {
-                    const yes = confirm(
-                      'Are you sure you want to delete all drafts?',
-                    );
+                    const yes = confirm('Delete all drafts?');
                     if (yes) {
                       setUIState('loading');
                       try {

@@ -264,8 +264,7 @@ function Compose({
 
   const formRef = useRef();
 
-  const beforeUnloadCopy =
-    'You have unsaved changes. Are you sure you want to discard this post?';
+  const beforeUnloadCopy = 'You have unsaved changes. Discard this post?';
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 

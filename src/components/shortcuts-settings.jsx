@@ -317,7 +317,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
                 <p>
                   <label>
                     <span>List</span>
-                    <select name="id">
+                    <select name="id" required>
                       {lists.map((list) => (
                         <option value={list.id}>{list.title}</option>
                       ))}
@@ -331,7 +331,12 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
               <p>
                 <label>
                   <span>{text}</span>{' '}
-                  <input type={type} name={name} placeholder={placeholder} />
+                  <input
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                    required={type === 'text'}
+                  />
                   {currentType === 'hashtag' && followedHashtags.length > 0 && (
                     <datalist>
                       {followedHashtags.map((tag) => (

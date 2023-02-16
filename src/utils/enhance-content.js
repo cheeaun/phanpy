@@ -51,8 +51,9 @@ function enhanceContent(content, opts = {}) {
   codeBlocks.forEach((block) => {
     const nextParagraphs = [block];
     let hasCodeBlock = false;
-    do {
-      const next = block.nextElementSibling;
+    let currentBlock = block;
+    while (currentBlock.nextElementSibling) {
+      const next = currentBlock.nextElementSibling;
       if (next && next.tagName === 'P') {
         if (/```$/g.test(next.innerText)) {
           nextParagraphs.push(next);
@@ -64,7 +65,8 @@ function enhanceContent(content, opts = {}) {
       } else {
         break;
       }
-    } while (true);
+      currentBlock = next;
+    }
     if (hasCodeBlock) {
       const pre = document.createElement('pre');
       nextParagraphs.forEach((p) => {

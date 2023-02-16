@@ -43,6 +43,41 @@ function enhanceContent(content, opts = {}) {
     block.replaceWith(pre);
   });
 
+  // Convert multi-paragraph code blocks to <pre><code>code</code></pre>
+  const paragraphs = Array.from(dom.querySelectorAll('p'));
+  // Filter out paragraphs with ``` in beginning only
+  const codeBlocks = paragraphs.filter((p) => /^```/g.test(p.innerText));
+  // For each codeBlocks, get all paragraphs until the last paragraph with ``` at the end only
+  codeBlocks.forEach((block) => {
+    const nextParagraphs = [block];
+    let hasCodeBlock = false;
+    do {
+      const next = block.nextElementSibling;
+      if (next && next.tagName === 'P') {
+        if (/```$/g.test(next.innerText)) {
+          nextParagraphs.push(next);
+          hasCodeBlock = true;
+          break;
+        } else {
+          nextParagraphs.push(next);
+        }
+      } else {
+        break;
+      }
+    } while (true);
+    if (hasCodeBlock) {
+      const pre = document.createElement('pre');
+      nextParagraphs.forEach((p) => {
+        // Replace <br /> with newlines
+        p.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+      });
+      const codeText = nextParagraphs.map((p) => p.innerHTML).join('\n\n');
+      pre.innerHTML = `<code>${codeText}</code>`;
+      block.replaceWith(pre);
+      nextParagraphs.forEach((p) => p.remove());
+    }
+  });
+
   // INLINE CODE
   // ===========
   // Convert `code` to <code>code</code>

@@ -286,6 +286,8 @@
 .status .content p {
   /* 12px = 75% of 16px */
   margin-block: min(0.75em, 12px);
+  white-space: pre-wrap;
+  tab-size: 2;
 }
 .status .content p:first-child {
   margin-block-start: 0;
@@ -894,6 +896,7 @@ a.card:is(:hover, :focus) {
     transparent 160px
   );
   white-space: pre-wrap;
+  line-height: 1.2;
 }
 
 .status .content p code {

@@ -1,11 +1,11 @@
-import { FocusableItem, Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
 
 import Icon from './icon';
-import Link from './link';
+import MenuLink from './MenuLink';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
@@ -69,30 +69,22 @@ function NavMenu(props) {
           <MenuDivider />
           <MenuItem
             onClick={() => {
+              states.showShortcutsSettings = true;
+            }}
+          >
+            <Icon icon="shortcut" size="l" />{' '}
+            <span>Shortcuts Settings&hellip;</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
               states.showSettings = true;
             }}
           >
-            <Icon icon="gear" size="l" alt="Settings" /> <span>Settings</span>
+            <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
           </MenuItem>
         </>
       )}
     </Menu>
-  );
-}
-
-function MenuLink(props) {
-  return (
-    <FocusableItem>
-      {({ ref, closeMenu }) => (
-        <Link
-          {...props}
-          ref={ref}
-          onClick={({ detail }) =>
-            closeMenu(detail === 0 ? 'Enter' : undefined)
-          }
-        />
-      )}
-    </FocusableItem>
   );
 }
 

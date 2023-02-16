@@ -1,0 +1,39 @@
+#shortcuts-button {
+  position: fixed;
+  bottom: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: 16px;
+  left: max(16px, env(safe-area-inset-left));
+  padding: 16px;
+  background-color: var(--bg-faded-blur-color);
+  z-index: 101;
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
+  transition: all 0.3s ease-in-out;
+}
+#shortcuts-button .icon {
+  transform: translateY(2px); /* Balance the icon's vertical alignment */
+}
+#app:has(header[hidden]) #shortcuts-button,
+#shortcuts-button[hidden] {
+  transform: translateY(200%);
+  pointer-events: none;
+  user-select: none;
+}
+#shortcuts-button:is(:hover, :focus) {
+  background-color: var(--button-color);
+  filter: none;
+}
+#shortcuts-button:active {
+  filter: brightness(0.75);
+}
+
+@media (min-width: calc(40em + 56px + 8px)) {
+  #shortcuts-button {
+    right: 16px;
+    right: max(16px, env(safe-area-inset-right));
+    left: auto;
+    top: 16px;
+    top: max(16px, env(safe-area-inset-top));
+    bottom: auto;
+  }
+}

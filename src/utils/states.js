@@ -1,4 +1,4 @@
-import { proxy } from 'valtio';
+import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
@@ -30,6 +30,9 @@ const states = proxy({
   showAccount: false,
   showDrafts: false,
   showMediaModal: false,
+  showShortcutsSettings: false,
+  // Shortcuts
+  shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
   settings: {
     boostsCarousel: store.account.get('settings-boostCarousel') ?? true,
@@ -44,6 +47,12 @@ subscribeKey(states, 'notificationsLast', (v) => {
 });
 subscribeKey(states, 'settings-boostCarousel', (v) => {
   store.account.set('settings-boostCarousel', !!v);
+});
+subscribe(states, (v) => {
+  const [action, path, value] = v[0];
+  if (path?.[0] === 'shortcuts') {
+    store.account.set('shortcuts', states.shortcuts);
+  }
 });
 
 export function hideAllModals() {

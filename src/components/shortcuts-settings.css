@@ -1,0 +1,69 @@
+#shortcuts-settings-container .shortcuts-list {
+  line-height: 1.5;
+  padding: 0;
+  margin: 8px 0 0;
+  counter-reset: index;
+  border-radius: 8px;
+  overflow: hidden;
+}
+#shortcuts-settings-container .shortcuts-list li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 4px;
+  background-color: var(--bg-faded-color);
+}
+#shortcuts-settings-container .shortcuts-list li::before {
+  content: counter(index);
+  counter-increment: index;
+  display: inline-block;
+  width: 1.2em;
+  text-align: right;
+  margin-right: 8px;
+  color: var(--text-insignificant-color);
+  font-size: 90%;
+}
+#shortcuts-settings-container .shortcuts-list li .shortcut-text {
+  flex-grow: 1;
+}
+
+#shortcuts-settings-container form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 16px;
+  background-color: var(--bg-faded-color);
+  border-radius: 16px;
+}
+
+#shortcuts-settings-container form header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#shortcuts-settings-container form > * {
+  flex-basis: max(320px, 100%);
+  margin: 0;
+  padding: 0;
+}
+
+#shortcuts-settings-container form label {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+#shortcuts-settings-container form label > span:first-child {
+  flex-basis: 5em;
+  text-align: right;
+}
+#shortcuts-settings-container form :is(input[type='text'], select) {
+  flex-grow: 1;
+  flex-basis: 70%;
+  flex-shrink: 1;
+  /* width: calc(100% - 32px); */
+  min-width: 0;
+  max-width: 320px;
+}

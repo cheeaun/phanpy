@@ -25,6 +25,8 @@ import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
+import Shortcuts from './components/shortcuts';
+import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
@@ -146,25 +148,15 @@ function App() {
     return () => clearTimeout(timer);
   };
   useEffect(focusDeck, [location]);
-  const showModal = useMemo(() => {
-    return (
-      snapStates.showCompose ||
-      snapStates.showSettings ||
-      snapStates.showAccount ||
-      snapStates.showDrafts ||
-      snapStates.showMediaModal
-    );
-  }, [
-    snapStates.showCompose,
-    snapStates.showSettings,
-    snapStates.showAccount,
-    snapStates.showDrafts,
-    snapStates.showMediaModal,
-  ]);
+  const showModal =
+    snapStates.showCompose ||
+    snapStates.showSettings ||
+    snapStates.showAccount ||
+    snapStates.showDrafts ||
+    snapStates.showMediaModal ||
+    snapStates.showShortcutsSettings;
   useEffect(() => {
-    if (!showModal) {
-      focusDeck();
-    }
+    if (!showModal) focusDeck();
   }, [showModal]);
 
   // useEffect(() => {
@@ -306,6 +298,7 @@ function App() {
           </Link>
         </li>
       </nav>
+      <Shortcuts />
       {!!snapStates.showCompose && (
         <Modal>
           <Compose
@@ -414,6 +407,17 @@ function App() {
               states.showMediaModal = false;
             }}
           />
+        </Modal>
+      )}
+      {!!snapStates.showShortcutsSettings && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              states.showShortcutsSettings = false;
+            }
+          }}
+        >
+          <ShortcutsSettings />
         </Modal>
       )}
     </>

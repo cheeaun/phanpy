@@ -53,6 +53,9 @@ const ICONS = {
   search: 'mingcute:search-2-line',
   hashtag: 'mingcute:hashtag-line',
   info: 'mingcute:information-line',
+  shortcut: 'mingcute:lightning-line',
+  user: 'mingcute:user-4-line',
+  following: 'mingcute:walk-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

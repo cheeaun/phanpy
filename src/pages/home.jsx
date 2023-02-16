@@ -62,7 +62,7 @@ function Home() {
           }
         }}
       >
-        <Icon icon="quill" size="xxl" alt="Compose" />
+        <Icon icon="quill" size="xl" alt="Compose" />
       </button>
     </>
   );

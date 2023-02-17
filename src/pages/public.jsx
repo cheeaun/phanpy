@@ -1,7 +1,8 @@
 // EXPERIMENTAL: This is a work in progress and may not work as expected.
 import { useRef } from 'preact/hooks';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import Icon from '../components/icon';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
@@ -14,6 +15,7 @@ function Public({ local }) {
   const { masto, instance } = api({ instance: params.instance });
   const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
+  const navigate = useNavigate();
   const latestItem = useRef();
 
   const publicIterator = useRef();
@@ -70,6 +72,26 @@ function Public({ local }) {
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
       headerStart={<></>}
+      headerEnd={
+        <button
+          type="button"
+          class="plain"
+          onClick={() => {
+            const newInstance = prompt(
+              'Enter a new instance e.g. "mastodon.social"',
+            );
+            if (!/\./.test(newInstance)) {
+              alert('Invalid instance');
+              return;
+            }
+            if (newInstance) {
+              navigate(isLocal ? `/${newInstance}/p/l` : `/${newInstance}/p`);
+            }
+          }}
+        >
+          <Icon icon="transfer" alt="Switch instance" />
+        </button>
+      }
     />
   );
 }

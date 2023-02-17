@@ -895,7 +895,6 @@ function Poll({
                 choices.push(value);
               }
             });
-            console.log(votes);
             setUIState('loading');
             await votePoll(choices);
             setUIState('default');

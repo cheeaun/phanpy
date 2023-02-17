@@ -47,7 +47,7 @@ function Status({
   if (skeleton) {
     return (
       <div class="status skeleton">
-        <Avatar size={size} />
+        <Avatar size="xxl" />
         <div class="container">
           <div class="meta">███ ████████</div>
           <div class="content-container">

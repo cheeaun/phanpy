@@ -1,3 +1,6 @@
+/* Can't use this yet because custom-media doesn't propagate to other CSS files yet, in Vite */
+@custom-media --viewport-medium (min-width: 40em);
+
 :root {
   --main-width: 40em;
   text-size-adjust: none;

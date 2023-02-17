@@ -61,6 +61,7 @@ export function hideAllModals() {
   states.showAccount = false;
   states.showDrafts = false;
   states.showMediaModal = false;
+  states.showShortcutsSettings = false;
 }
 
 export function statusKey(id, instance) {

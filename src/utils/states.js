@@ -35,7 +35,7 @@ const states = proxy({
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
   settings: {
-    boostsCarousel: store.account.get('settings-boostCarousel') ?? true,
+    boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
   },
 });
 
@@ -45,8 +45,8 @@ subscribeKey(states, 'notificationsLast', (v) => {
   console.log('CHANGE', v);
   store.account.set('notificationsLast', states.notificationsLast);
 });
-subscribeKey(states, 'settings-boostCarousel', (v) => {
-  store.account.set('settings-boostCarousel', !!v);
+subscribeKey(states, 'settings-boostsCarousel', (v) => {
+  store.account.set('settings-boostsCarousel', !!v);
 });
 subscribe(states, (v) => {
   const [action, path, value] = v[0];

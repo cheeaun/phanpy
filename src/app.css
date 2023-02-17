@@ -1204,7 +1204,8 @@ meter.donut:is(.danger, .explode):after {
   user-select: none;
   pointer-events: none;
   opacity: 0;
-  content-visibility: hidden;
+  /* This causes scrollTop to be reset to 0 when the page is hidden */
+  /* content-visibility: hidden; */
 }
 
 /* TAB BAR */

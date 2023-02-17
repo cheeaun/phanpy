@@ -540,7 +540,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   padding: 4px 8px;
   border: 1px solid var(--outline-color);
   box-shadow: 0 4px 16px var(--outline-color);
-  max-width: min(40em, calc(100% - 32px));
+  max-width: min(var(--main-width), calc(100% - 32px));
   display: flex;
   align-items: center;
   gap: 8px;

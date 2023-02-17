@@ -952,7 +952,8 @@ a.card:is(:hover, :focus) {
   padding: 0;
 }
 
-#edit-history :is(ol, ol li) {
+#edit-history ol,
+#edit-history ol li {
   list-style: none;
   margin: 0;
   padding: 0;

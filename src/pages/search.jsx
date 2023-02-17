@@ -27,6 +27,7 @@ function Search() {
   const [accountResults, setAccountResults] = useState([]);
   const [hashtagResults, setHashtagResults] = useState([]);
   useEffect(() => {
+    searchFieldRef.current?.focus?.();
     if (q) {
       searchFieldRef.current.value = q;
 

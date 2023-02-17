@@ -293,19 +293,51 @@ function Timeline({
           <>
             <ul class="timeline">
               {items.map((status) => {
-                const { id: statusID, reblog, boosts } = status;
+                const { id: statusID, reblog, items, type } = status;
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
                   ? `/${instance}/s/${actualStatusID}`
                   : `/s/${actualStatusID}`;
-                if (boosts) {
+                let title = '';
+                if (type === 'boosts') {
+                  title = `${items.length} Boosts`;
+                } else if (type === 'pinned') {
+                  title = 'Pinned posts';
+                }
+                if (items) {
                   return (
                     <li key={`timeline-${statusID}`}>
-                      <BoostsCarousel
-                        boosts={boosts}
-                        useItemID={useItemID}
-                        instance={instance}
-                      />
+                      <StatusCarousel title={title} class={`${type}-carousel`}>
+                        {items.map((item) => {
+                          const { id: statusID, reblog } = item;
+                          const actualStatusID = reblog?.id || statusID;
+                          const url = instance
+                            ? `/${instance}/s/${actualStatusID}`
+                            : `/s/${actualStatusID}`;
+                          return (
+                            <li key={statusID}>
+                              <Link
+                                class="status-carousel-link timeline-item-alt"
+                                to={url}
+                              >
+                                {useItemID ? (
+                                  <Status
+                                    statusID={statusID}
+                                    instance={instance}
+                                    size="s"
+                                  />
+                                ) : (
+                                  <Status
+                                    status={item}
+                                    instance={instance}
+                                    size="s"
+                                  />
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </StatusCarousel>
                     </li>
                   );
                 }
@@ -406,7 +438,10 @@ function groupBoosts(values) {
     const boostStashID = boostStash.map((status) => status.id);
     if (boostStash.length > (values.length * 3) / 4) {
       // insert boost array at the end of specialHome list
-      newValues = [...newValues, { id: boostStashID, boosts: boostStash }];
+      newValues = [
+        ...newValues,
+        { id: boostStashID, items: boostStash, type: 'boosts' },
+      ];
     } else {
       // insert boosts array in the middle of specialHome list
       const half = Math.floor(newValues.length / 2);
@@ -414,7 +449,8 @@ function groupBoosts(values) {
         ...newValues.slice(0, half),
         {
           id: boostStashID,
-          boosts: boostStash,
+          items: boostStash,
+          type: 'boosts',
         },
         ...newValues.slice(half),
       ];
@@ -425,7 +461,7 @@ function groupBoosts(values) {
   }
 }
 
-function BoostsCarousel({ boosts, useItemID, instance }) {
+function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();
   const { reachStart, reachEnd, init } = useScroll({
     scrollableElement: carouselRef.current,
@@ -436,9 +472,9 @@ function BoostsCarousel({ boosts, useItemID, instance }) {
   }, []);
 
   return (
-    <div class="boost-carousel">
+    <div class={`status-carousel ${className}`}>
       <header>
-        <h3>{boosts.length} Boosts</h3>
+        <h3>{title}</h3>
         <span>
           <button
             type="button"
@@ -468,26 +504,7 @@ function BoostsCarousel({ boosts, useItemID, instance }) {
           </button>
         </span>
       </header>
-      <ul ref={carouselRef}>
-        {boosts.map((boost) => {
-          const { id: statusID, reblog } = boost;
-          const actualStatusID = reblog?.id || statusID;
-          const url = instance
-            ? `/${instance}/s/${actualStatusID}`
-            : `/s/${actualStatusID}`;
-          return (
-            <li key={statusID}>
-              <Link class="status-boost-link timeline-item-alt" to={url}>
-                {useItemID ? (
-                  <Status statusID={statusID} instance={instance} size="s" />
-                ) : (
-                  <Status status={boost} instance={instance} size="s" />
-                )}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <ul ref={carouselRef}>{children}</ul>
     </div>
   );
 }

@@ -27,7 +27,16 @@ function AccountStatuses() {
         pinnedStatuses.forEach((status) => {
           status._pinned = true;
         });
-        results.push(...pinnedStatuses);
+        if (pinnedStatuses.length > 1) {
+          const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);
+          results.push({
+            id: pinnedStatusesIds,
+            items: pinnedStatuses,
+            type: 'pinned',
+          });
+        } else {
+          results.push(...pinnedStatuses);
+        }
       }
     }
     if (firstLoad || !accountStatusesIterator.current) {

@@ -550,46 +550,44 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   filter: brightness(0.95);
 }
 
-.boost-carousel {
+.status-carousel {
+  --carousel-faded-color: var(--bg-faded-color);
   background: linear-gradient(
     to bottom right,
-    var(--reblog-faded-color),
+    var(--carousel-faded-color),
     transparent 150%
   );
   position: relative;
 }
-.boost-carousel:after {
+.status-carousel:after {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background-image: radial-gradient(
       ellipse 50% 32px at bottom center,
-      var(--reblog-faded-color),
+      var(--carousel-faded-color),
       transparent
     ),
     linear-gradient(to top, var(--bg-color), transparent 64px);
   background-repeat: no-repeat;
   background-position: bottom center;
 }
-.boost-carousel .status-reblog {
-  background-image: none;
-}
-.boost-carousel header {
+.status-carousel header {
   padding: 8px 16px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.boost-carousel h3 {
+.status-carousel h3 {
   margin: 0;
   padding: 0;
   font-size: 14px;
   text-transform: uppercase;
-  color: var(--reblog-color);
+  color: var(--carousel-color);
   text-shadow: 0 1px var(--bg-color);
 }
-.boost-carousel ul {
+.status-carousel ul {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -601,7 +599,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   align-items: flex-start;
   counter-reset: index;
 }
-.boost-carousel ul > li {
+.status-carousel ul > li {
   scroll-snap-align: center;
   scroll-snap-stop: always;
   flex-shrink: 0;
@@ -616,12 +614,19 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
-.boost-carousel ul > li:before {
+.status-carousel.boosts-carousel {
+  --carousel-color: var(--reblog-color);
+  --carousel-faded-color: var(--reblog-faded-color);
+}
+.status-carousel.boosts-carousel .status-reblog {
+  background-image: none;
+}
+.status-carousel.boosts-carousel ul > li:before {
   content: counter(index);
   position: absolute;
   left: 0;
   font-size: 10px;
-  color: var(--reblog-color);
+  color: var(--carousel-color);
   padding: 8px;
 }
 
@@ -630,7 +635,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   text-align: center;
 }
 
-.status-boost-link {
+.status-carousel-link {
   display: block;
   width: 100%;
   text-decoration-line: none;
@@ -645,15 +650,15 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overflow: hidden;
   box-shadow: 0 1px var(--bg-color);
 }
-.status-boost-link::focus {
+.status-carousel-link::focus {
   background-color: var(--link-bg-hover-color);
 }
 @media (hover: hover) {
-  .status-boost-link:hover {
+  .status-carousel-link:hover {
     background-color: var(--link-bg-hover-color);
   }
 }
-.status-boost-link:active:not(:has(:is(.media, button):active)) {
+.status-carousel-link:active:not(:has(:is(.media, button):active)) {
   filter: brightness(0.95);
 }
 
@@ -1417,9 +1422,9 @@ ul.link-list li a .icon {
     transform: translate3d(-2.5vw, 0, 0);
   }
   .timeline:not(.flat)
-    > li:not(:has(.boost-carousel)):has(+ li .status-link.is-active),
+    > li:not(:has(.status-carousel)):has(+ li .status-link.is-active),
   .timeline:not(.flat)
-    > li:not(:has(.boost-carousel)):has(.status-link.is-active)
+    > li:not(:has(.status-carousel)):has(.status-link.is-active)
     + li {
     transition: var(--back-transition);
     transform: translate3d(-1.25vw, 0, 0);
@@ -1430,7 +1435,7 @@ ul.link-list li a .icon {
   /* :is(.carousel-top-controls, .carousel-controls) {
     padding: 32px;
   } */
-  li:has(.boost-carousel) {
+  li:has(.status-carousel) {
     width: 95vw;
     max-width: calc(320px * 3.3);
     transform: translateX(calc(-50% + 20em));

@@ -17,6 +17,12 @@ import Link from './link';
 
 function Account({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
+  const {
+    masto: currentMasto,
+    instance: currentInstance,
+    authenticated: currentAuthenticated,
+  } = api();
+  const sameInstance = instance === currentInstance;
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -86,19 +92,44 @@ function Account({ account, instance: propInstance, onClose }) {
   const [relationship, setRelationship] = useState(null);
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
   useEffect(() => {
-    if (info && authenticated) {
+    if (info) {
       const currentAccount = store.session.get('currentAccount');
-      if (currentAccount === id) {
-        // It's myself!
-        return;
-      }
-      setRelationshipUIState('loading');
-      setFamiliarFollowers([]);
-
+      let accountID;
       (async () => {
-        const fetchRelationships = masto.v1.accounts.fetchRelationships([id]);
+        if (sameInstance && authenticated) {
+          accountID = id;
+        } else if (!sameInstance && currentAuthenticated) {
+          // Grab this account from my logged-in instance
+          const acctHasInstance = info.acct.includes('@');
+          try {
+            const results = await currentMasto.v2.search({
+              q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
+              type: 'accounts',
+              limit: 1,
+              resolve: true,
+            });
+            console.log('🥏 Fetched account from logged-in instance', results);
+            accountID = results.accounts[0].id;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        if (!accountID) return;
+
+        if (currentAccount === accountID) {
+          // It's myself!
+          return;
+        }
+
+        setRelationshipUIState('loading');
+        setFamiliarFollowers([]);
+
+        const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
+          accountID,
+        ]);
         const fetchFamiliarFollowers =
-          masto.v1.accounts.fetchFamiliarFollowers(id);
+          currentMasto.v1.accounts.fetchFamiliarFollowers(accountID);
 
         try {
           const relationships = await fetchRelationships;
@@ -316,12 +347,11 @@ function Account({ account, instance: propInstance, onClose }) {
                             );
                             if (yes) {
                               newRelationship =
-                                await masto.v1.accounts.unfollow(id);
+                                await currentMasto.v1.accounts.unfollow(id);
                             }
                           } else {
-                            newRelationship = await masto.v1.accounts.follow(
-                              id,
-                            );
+                            newRelationship =
+                              await currentMasto.v1.accounts.follow(id);
                           }
                           if (newRelationship) setRelationship(newRelationship);
                           setRelationshipUIState('default');

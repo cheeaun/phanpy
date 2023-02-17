@@ -35,3 +35,19 @@
   opacity: 0;
   pointer-events: none;
 }
+
+.status-deck footer {
+  position: sticky;
+  bottom: 0;
+  bottom: env(safe-area-inset-bottom);
+  font-size: 90%;
+  background-color: var(--bg-faded-blur-color);
+  backdrop-filter: blur(16px);
+  padding: 16px;
+  white-space: pre-wrap;
+  line-height: 1.2;
+}
+.status-deck footer > p:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}

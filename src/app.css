@@ -1020,7 +1020,7 @@ button.carousel-dot:is(.active, [disabled].active) {
   border-radius: 8px;
   box-shadow: 0 3px 6px var(--drop-shadow-color);
   text-align: left;
-  animation: appear 0.15s ease-in-out;
+  animation: appear-smooth 0.15s ease-in-out;
   width: 16em;
   max-width: 90vw;
   overflow: hidden;

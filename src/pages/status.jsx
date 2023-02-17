@@ -323,7 +323,9 @@ function StatusPage() {
 
   const closeLink = useMemo(() => {
     const { prevLocation } = snapStates;
-    const pathname = prevLocation?.pathname + (prevLocation?.search || '');
+    const pathname =
+      (prevLocation?.pathname || '') + (prevLocation?.search || '');
+    console.log('X', typeof pathname);
     if (
       !pathname ||
       matchPath('/:instance/s/:id', pathname) ||

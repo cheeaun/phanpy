@@ -735,6 +735,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transform: translate(-50%, 0);
   font-size: 90%;
   background-color: var(--button-bg-color);
+  background-image: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 50%
+  );
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
 }
@@ -1144,6 +1149,11 @@ meter.donut:is(.danger, .explode):after {
 
 :root .toastify {
   background-color: var(--button-bg-color);
+  background-image: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 50%
+  );
   color: var(--button-text-color);
   border-radius: 10em;
   padding: 8px 16px;

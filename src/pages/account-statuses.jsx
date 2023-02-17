@@ -16,12 +16,33 @@ function AccountStatuses() {
   const { masto, instance } = api({ instance: params.instance });
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
+    const results = [];
+    if (firstLoad) {
+      const { value: pinnedStatuses } = await masto.v1.accounts
+        .listStatuses(id, {
+          pinned: true,
+        })
+        .next();
+      if (pinnedStatuses?.length) {
+        pinnedStatuses.forEach((status) => {
+          status._pinned = true;
+        });
+        results.push(...pinnedStatuses);
+      }
+    }
     if (firstLoad || !accountStatusesIterator.current) {
       accountStatusesIterator.current = masto.v1.accounts.listStatuses(id, {
         limit: LIMIT,
       });
     }
-    return await accountStatusesIterator.current.next();
+    const { value, done } = await accountStatusesIterator.current.next();
+    if (value?.length) {
+      results.push(...value);
+    }
+    return {
+      value: results,
+      done,
+    };
   }
 
   const [account, setAccount] = useState({});

@@ -56,6 +56,7 @@ const ICONS = {
   shortcut: 'mingcute:lightning-line',
   user: 'mingcute:user-4-line',
   following: 'mingcute:walk-line',
+  pin: 'mingcute:pin-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

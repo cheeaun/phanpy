@@ -106,7 +106,9 @@ function Status({
     reblog,
     uri,
     emojis,
+    // Non-API props
     _deleted,
+    _pinned,
   } = status;
 
   console.debug('RENDER Status', id, status?.account.displayName);
@@ -203,7 +205,7 @@ function Status({
       tabindex="-1"
       class={`status ${
         !withinContext && inReplyToAccount ? 'status-reply-to' : ''
-      } visibility-${visibility} ${
+      } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
         {
           s: 'small',
           m: 'medium',
@@ -217,6 +219,7 @@ function Status({
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
           {favourited && <Icon class="favourite" icon="heart" size="s" />}
           {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
+          {_pinned && <Icon class="pin" icon="pin" size="s" />}
         </div>
       )}
       {size !== 's' && (

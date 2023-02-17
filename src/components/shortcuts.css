@@ -36,4 +36,8 @@
     top: max(16px, env(safe-area-inset-top));
     bottom: auto;
   }
+  #app:has(header[hidden]) #shortcuts-button,
+  #shortcuts-button[hidden] {
+    transform: translateY(-200%);
+  }
 }

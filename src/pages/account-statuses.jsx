@@ -71,12 +71,12 @@ function AccountStatuses() {
       titleComponent={
         <h1
           class="header-account"
-          onClick={() => {
-            states.showAccount = {
-              account,
-              instance,
-            };
-          }}
+          // onClick={() => {
+          //   states.showAccount = {
+          //     account,
+          //     instance,
+          //   };
+          // }}
         >
           <b
             dangerouslySetInnerHTML={{

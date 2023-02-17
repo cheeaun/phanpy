@@ -9,6 +9,7 @@
   z-index: 101;
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
   transition: all 0.3s ease-in-out;
+  border: var(--hairline-width) solid var(--bg-color);
 }
 #shortcuts-button .icon {
   transform: translateY(2px); /* Balance the icon's vertical alignment */
@@ -24,7 +25,8 @@
   filter: none;
 }
 #shortcuts-button:active {
-  filter: brightness(0.75);
+  transform: scale(0.95);
+  transition: none;
 }
 
 @media (min-width: calc(40em + 56px + 8px)) {

@@ -618,10 +618,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   font-size: calc(100% + 25% * max(2 - var(--content-text-weight), 0));
 }
 .status-carousel
-  .content-container[style*='content-text-weight:1']
+  .content-container:is(
+    [style*='content-text-weight:1'],
+    [style*='content-text-weight: 1']
+  )
   .media-container.media-eq1 {
   /* LOL, this is madness, reading a value from the style attribute */
   height: auto;
+  max-height: max(160px, 50vh);
 }
 .status-carousel.boosts-carousel {
   --carousel-color: var(--reblog-color);

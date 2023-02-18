@@ -10,6 +10,7 @@
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
   transition: all 0.3s ease-in-out;
   border: var(--hairline-width) solid var(--bg-color);
+  box-shadow: inset 0 -4px 16px -8px var(--button-bg-blur-color);
 }
 #shortcuts-button .icon {
   transform: translateY(2px); /* Balance the icon's vertical alignment */
@@ -21,7 +22,7 @@
   user-select: none;
 }
 #shortcuts-button:is(:hover, :focus) {
-  background-color: var(--button-color);
+  background-color: var(--bg-color);
   filter: none;
 }
 #shortcuts-button:active {

@@ -83,7 +83,7 @@ function Public({ local, ...props }) {
               'Enter a new instance e.g. "mastodon.social"',
             );
             if (!/\./.test(newInstance)) {
-              alert('Invalid instance');
+              if (newInstance) alert('Invalid instance');
               return;
             }
             if (newInstance) {

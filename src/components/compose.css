@@ -60,6 +60,11 @@
   animation: appear-up 1s ease-in-out;
   overflow: auto;
 }
+#compose-container .status-preview .hashtag {
+  /* Prevent hashtags from being clickable */
+  /* TODO: maybe use a different solution? */
+  pointer-events: none;
+}
 #compose-container.standalone .status-preview * {
   /*
     For standalone mode (new window), prevent interacting with the status preview for now

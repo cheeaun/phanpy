@@ -614,6 +614,15 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
+.status-carousel .content-container .content:only-child {
+  font-size: calc(100% + 25% * max(2 - var(--content-text-weight), 0));
+}
+.status-carousel
+  .content-container[style*='content-text-weight:1']
+  .media-container.media-eq1 {
+  /* LOL, this is madness, reading a value from the style attribute */
+  height: auto;
+}
 .status-carousel.boosts-carousel {
   --carousel-color: var(--reblog-color);
   --carousel-faded-color: var(--reblog-faded-color);

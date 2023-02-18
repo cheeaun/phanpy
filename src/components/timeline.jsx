@@ -325,12 +325,14 @@ function Timeline({
                                     statusID={statusID}
                                     instance={instance}
                                     size="s"
+                                    contentTextWeight
                                   />
                                 ) : (
                                   <Status
                                     status={item}
                                     instance={instance}
                                     size="s"
+                                    contentTextWeight
                                   />
                                 )}
                               </Link>

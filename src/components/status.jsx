@@ -43,6 +43,7 @@ function Status({
   size = 'm',
   skeleton,
   readOnly,
+  contentTextWeight,
 }) {
   if (skeleton) {
     return (
@@ -160,7 +161,12 @@ function Status({
           <NameText account={status.account} instance={instance} showAvatar />{' '}
           boosted
         </div>
-        <Status status={reblog} instance={instance} size={size} />
+        <Status
+          status={reblog}
+          instance={instance}
+          size={size}
+          contentTextWeight={contentTextWeight}
+        />
       </div>
     );
   }
@@ -320,7 +326,7 @@ function Status({
             spoilerText || sensitive ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
           style={
-            size === 'l' && {
+            (size === 'l' || contentTextWeight) && {
               '--content-text-weight':
                 Math.round(
                   (spoilerText.length + htmlContentLength(content)) / 140,

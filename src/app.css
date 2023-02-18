@@ -625,6 +625,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   .media-container.media-eq1 {
   /* LOL, this is madness, reading a value from the style attribute */
   height: auto;
+  min-height: 160px;
   max-height: max(160px, 50vh);
 }
 .status-carousel.boosts-carousel {

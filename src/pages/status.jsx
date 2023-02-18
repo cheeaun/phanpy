@@ -730,7 +730,7 @@ function StatusPage() {
             )}
           </>
         )}
-        {!sameInstance && (
+        {!sameInstance && uiState !== 'loading' && (
           <footer class="">
             <p>
               This post is from another instance (<b>{instance}</b>), different

@@ -258,7 +258,7 @@ function App() {
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}
-        {isLoggedIn && <Route path="/l/f" element={<Following />} />}
+        {isLoggedIn && <Route path="/following" element={<Following />} />}
         {isLoggedIn && <Route path="/homev1" element={<HomeV1 />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}

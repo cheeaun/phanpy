@@ -10,6 +10,15 @@ import MenuLink from './MenuLink';
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
+
+  // Home = Following
+  // But when in multi-column mode, Home becomes columns of anything
+  // User may choose pin or not to pin Following
+  // If user doesn't pin Following, we show it in the menu
+  const showFollowing =
+    snapStates.settings.shortcutsColumnsMode &&
+    !snapStates.shortcuts.find((pin) => pin.type === 'following');
+
   return (
     <Menu
       portal={{
@@ -30,6 +39,11 @@ function NavMenu(props) {
       </MenuLink>
       {authenticated && (
         <>
+          {showFollowing && (
+            <MenuLink to="/following">
+              <Icon icon="following" size="l" /> <span>Following</span>
+            </MenuLink>
+          )}
           <MenuLink to="/notifications">
             <Icon icon="notification" size="l" /> <span>Notifications</span>
             {snapStates.notificationsShowNew && (

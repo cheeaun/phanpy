@@ -10,7 +10,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
-  useTitle(title || 'Following', path, '/l/f');
+  useTitle(title || 'Following', path || '/following');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();

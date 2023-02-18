@@ -50,7 +50,7 @@ const LIMIT = 30; // 30 is the maximum limit :(
 
 function Notifications() {
   useTitle('Notifications', '/notifications');
-  const { masto } = api();
+  const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
@@ -227,6 +227,7 @@ function Notifications() {
                 <>
                   {differentDay && <h2 class="timeline-header">{heading}</h2>}
                   <Notification
+                    instance={instance}
                     notification={notification}
                     key={notification.id}
                   />
@@ -279,7 +280,7 @@ function Notifications() {
     </div>
   );
 }
-function Notification({ notification }) {
+function Notification({ notification, instance }) {
   const { id, type, status, account, _accounts } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
@@ -392,7 +393,11 @@ function Notification({ notification }) {
         {status && (
           <Link
             class={`status-link status-type-${type}`}
-            to={`/s/${actualStatusID}`}
+            to={
+              instance
+                ? `/${instance}/s/${actualStatusID}`
+                : `/s/${actualStatusID}`
+            }
           >
             <Status status={status} size="s" />
           </Link>
@@ -403,6 +408,7 @@ function Notification({ notification }) {
 }
 
 function FollowRequestButtons({ accountID, onChange }) {
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
   return (
     <p>

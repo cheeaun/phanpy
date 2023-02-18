@@ -8,7 +8,7 @@ const LIMIT = 20;
 
 function Bookmarks() {
   useTitle('Bookmarks', '/b');
-  const { masto } = api();
+  const { masto, instance } = api();
   const bookmarksIterator = useRef();
   async function fetchBookmarks(firstLoad) {
     if (firstLoad || !bookmarksIterator.current) {
@@ -23,6 +23,7 @@ function Bookmarks() {
       id="bookmarks"
       emptyText="No bookmarks yet. Go bookmark something!"
       errorText="Unable to load bookmarks"
+      instance={instance}
       fetchItems={fetchBookmarks}
     />
   );

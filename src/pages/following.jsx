@@ -113,6 +113,7 @@ function Following({ title, path, id, ...props }) {
       id={id || 'following'}
       emptyText="Nothing to see here."
       errorText="Unable to load posts."
+      instance={instance}
       fetchItems={fetchHome}
       checkForUpdates={checkForUpdates}
       useItemID

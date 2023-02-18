@@ -10,7 +10,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function List(props) {
-  const { masto } = api();
+  const { masto, instance } = api();
   const id = props?.id || useParams()?.id;
   const latestItem = useRef();
 
@@ -66,6 +66,7 @@ function List(props) {
       id="list"
       emptyText="Nothing yet."
       errorText="Unable to load posts."
+      instance={instance}
       fetchItems={fetchList}
       checkForUpdates={checkForUpdates}
       boostsCarousel

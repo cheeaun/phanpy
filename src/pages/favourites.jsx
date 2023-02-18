@@ -8,7 +8,7 @@ const LIMIT = 20;
 
 function Favourites() {
   useTitle('Favourites', '/f');
-  const { masto } = api();
+  const { masto, instance } = api();
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
     if (firstLoad || !favouritesIterator.current) {
@@ -23,6 +23,7 @@ function Favourites() {
       id="favourites"
       emptyText="No favourites yet. Go favourite something!"
       errorText="Unable to load favourites"
+      instance={instance}
       fetchItems={fetchFavourites}
     />
   );

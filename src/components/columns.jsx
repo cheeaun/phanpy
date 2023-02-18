@@ -9,8 +9,10 @@ import List from '../pages/list';
 import Notifications from '../pages/notifications';
 import Public from '../pages/public';
 import states from '../utils/states';
+import useTitle from '../utils/useTitle';
 
 function Columns() {
+  useTitle('Home', '/');
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 

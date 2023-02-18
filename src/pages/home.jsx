@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
+import { useEffect } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import Columns from '../components/columns';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import db from '../utils/db';
@@ -26,48 +26,10 @@ function Home() {
     })();
   }, []);
 
-  const { shortcuts } = snapStates;
-  const { shortcutsColumnsMode } = snapStates.settings || {};
-  const [shortcutsComponents, setShortcutsComponents] = useState([]);
-  useEffect(() => {
-    if (shortcutsColumnsMode) {
-      const componentsPromises = shortcuts.map((shortcut) => {
-        const { type, ...params } = shortcut;
-        // Uppercase type
-        return import(`./${type}`).then((module) => {
-          const { default: Component } = module;
-          return <Component {...params} />;
-        });
-      });
-      Promise.all(componentsPromises)
-        .then((components) => {
-          setShortcutsComponents(components);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [shortcutsColumnsMode, shortcuts]);
-
-  useHotkeys(
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    (e, handler) => {
-      try {
-        const index = parseInt(handler.keys[0], 10) - 1;
-        document.querySelectorAll('#columns > *')[index].focus();
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    {
-      enabled: shortcutsColumnsMode,
-    },
-  );
-
   return (
     <>
-      {shortcutsColumnsMode ? (
-        <div id="columns">{shortcutsComponents}</div>
+      {snapStates.settings.shortcutsColumnsMode ? (
+        <Columns />
       ) : (
         <Following
           title="Home"

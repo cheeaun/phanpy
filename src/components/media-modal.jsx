@@ -1,7 +1,6 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useMatch } from 'react-router-dom';
 
 import Icon from './icon';
 import Link from './link';
@@ -16,10 +15,6 @@ function MediaModal({
   onClose = () => {},
 }) {
   const carouselRef = useRef(null);
-  // NOTE: Optional path segment doesn't work yet
-  // https://github.com/remix-run/react-router/issues/10039
-  // const isStatusLocation = useMatch('/:instance?/s/:id');
-  const isStatusLocation = useMatch('/:instance/s/:id') || useMatch('/s/:id');
 
   const [currentIndex, setCurrentIndex] = useState(index);
   const carouselFocusItem = useRef(null);
@@ -169,22 +164,20 @@ function MediaModal({
           <span />
         )}
         <span>
-          {!isStatusLocation && (
-            <Link
-              to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
-              class="button carousel-button media-post-link plain3"
-              onClick={() => {
-                // if small screen (not media query min-width 40em + 350px), run onClose
-                if (
-                  !window.matchMedia('(min-width: calc(40em + 350px))').matches
-                ) {
-                  onClose();
-                }
-              }}
-            >
-              <span class="button-label">See post </span>&raquo;
-            </Link>
-          )}{' '}
+          <Link
+            to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
+            class="button carousel-button media-post-link plain3"
+            onClick={() => {
+              // if small screen (not media query min-width 40em + 350px), run onClose
+              if (
+                !window.matchMedia('(min-width: calc(40em + 350px))').matches
+              ) {
+                onClose();
+              }
+            }}
+          >
+            <span class="button-label">See post </span>&raquo;
+          </Link>{' '}
           <a
             href={
               mediaAttachments[currentIndex]?.remoteUrl ||

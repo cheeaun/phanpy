@@ -881,6 +881,9 @@ button.carousel-dot:is(.active, [disabled].active) {
 .media-post-link .button-label {
   display: none;
 }
+body:has(.status-deck) .media-post-link {
+  display: none;
+}
 
 @media (min-width: calc(40em + 350px)) {
   .media-post-link .button-label {

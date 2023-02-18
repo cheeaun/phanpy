@@ -7,8 +7,9 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Hashtags() {
+function Hashtags(props) {
   let { hashtag, ...params } = useParams();
+  if (props.hashtag) hashtag = props.hashtag;
   const { masto, instance } = api({ instance: params.instance });
   const title = instance ? `#${hashtag} on ${instance}` : `#${hashtag}`;
   useTitle(title, `/:instance?/t/:hashtag`);

@@ -16,15 +16,15 @@ const TYPES = [
   'notifications',
   'list',
   'public',
-  'search',
-  // NOTE: Hide for now, can't think of a good way to handle this
-  // 'account-statuses',
+  // NOTE: Hide for now
+  // 'search', // Search on Mastodon ain't great
+  // 'account-statuses', // Need @acct search first
   'bookmarks',
   'favourites',
   'hashtag',
 ];
 const TYPE_TEXT = {
-  following: 'Home',
+  following: 'Home / Following',
   notifications: 'Notifications',
   list: 'List',
   public: 'Public',
@@ -80,7 +80,7 @@ const TYPE_PARAMS = {
 };
 export const SHORTCUTS_META = {
   following: {
-    title: 'Home',
+    title: 'Home / Following',
     path: (_, index) => (index === 0 ? '/' : '/l/f'),
     icon: 'home',
   },
@@ -188,7 +188,24 @@ function ShortcutsSettings() {
           Specify a list of shortcuts that'll appear in the floating Shortcuts
           button.
         </p>
-        {snapStates.shortcuts.length > 0 ? (
+        <p>
+          <details>
+            <summary class="insignificant">
+              Experimental Multi-column mode
+            </summary>
+            <label>
+              <input
+                type="checkbox"
+                checked={snapStates.settings.shortcutsColumnsMode}
+                onChange={(e) => {
+                  states.settings.shortcutsColumnsMode = e.target.checked;
+                }}
+              />{' '}
+              Show shortcuts in multiple columns instead of the floating button.
+            </label>
+          </details>
+        </p>
+        {shortcuts.length > 0 ? (
           <ol class="shortcuts-list">
             {shortcuts.map((shortcut, i) => {
               const key = i + Object.values(shortcut);

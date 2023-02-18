@@ -9,10 +9,12 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Public({ local }) {
+function Public({ local, ...props }) {
   const isLocal = !!local;
   const params = useParams();
-  const { masto, instance } = api({ instance: params.instance });
+  const { masto, instance } = api({
+    instance: props?.instance || params.instance,
+  });
   const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   const navigate = useNavigate();

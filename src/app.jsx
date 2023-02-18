@@ -33,7 +33,7 @@ import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
-import Hashtags from './pages/hashtags';
+import Hashtag from './pages/hashtag';
 import Home from './pages/home';
 import HomeV1 from './pages/home-v1';
 import List from './pages/list';
@@ -269,7 +269,7 @@ function App() {
           </Route>
         )}
         {isLoggedIn && <Route path="/ft" element={<FollowedHashtags />} />}
-        <Route path="/:instance?/t/:hashtag" element={<Hashtags />} />
+        <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />
         <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
         <Route path="/:instance?/p">
           <Route index element={<Public />} />
@@ -298,7 +298,7 @@ function App() {
           </Link>
         </li>
       </nav>
-      <Shortcuts />
+      {!snapStates.settings.shortcutsColumnsMode && <Shortcuts />}
       {!!snapStates.showCompose && (
         <Modal>
           <Compose

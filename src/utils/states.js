@@ -35,6 +35,8 @@ const states = proxy({
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
   settings: {
+    shortcutsColumnsMode:
+      store.account.get('settings-shortcutsColumnsMode') ?? false,
     boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
   },
 });
@@ -45,11 +47,15 @@ subscribeKey(states, 'notificationsLast', (v) => {
   console.log('CHANGE', v);
   store.account.set('notificationsLast', states.notificationsLast);
 });
-subscribeKey(states, 'settings-boostsCarousel', (v) => {
-  store.account.set('settings-boostsCarousel', !!v);
-});
 subscribe(states, (v) => {
-  const [action, path, value] = v[0];
+  console.debug('STATES change', v);
+  const [action, path, value, prevValue] = v[0];
+  if (path.join('.') === 'settings.boostsCarousel') {
+    store.account.set('settings-boostsCarousel', !!value);
+  }
+  if (path.join('.') === 'settings.shortcutsColumnsMode') {
+    store.account.set('settings-shortcutsColumnsMode', !!value);
+  }
   if (path?.[0] === 'shortcuts') {
     store.account.set('shortcuts', states.shortcuts);
   }

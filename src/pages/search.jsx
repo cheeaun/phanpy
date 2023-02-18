@@ -12,7 +12,7 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
-function Search() {
+function Search(props) {
   const params = useParams();
   const { masto, instance, authenticated } = api({
     instance: params.instance,
@@ -20,7 +20,7 @@ function Search() {
   const [uiState, setUiState] = useState('default');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchFieldRef = useRef();
-  const q = searchParams.get('q');
+  const q = props?.query || searchParams.get('q');
   useTitle(q ? `Search: ${q}` : 'Search', `/search`);
 
   const [statusResults, setStatusResults] = useState([]);

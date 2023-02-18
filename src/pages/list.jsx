@@ -9,9 +9,9 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function List() {
+function List(props) {
   const { masto } = api();
-  const { id } = useParams();
+  const id = props?.id || useParams()?.id;
   const latestItem = useRef();
 
   const listIterator = useRef();

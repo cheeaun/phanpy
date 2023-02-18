@@ -9,6 +9,8 @@ import states from '../utils/states';
 import AsyncText from './AsyncText';
 import Icon from './icon';
 
+const SHORTCUTS_LIMIT = 9;
+
 const TYPES = [
   'following',
   'notifications',
@@ -134,6 +136,7 @@ export const SHORTCUTS_META = {
 function ShortcutsSettings() {
   const snapStates = useSnapshot(states);
   const { masto } = api();
+  const { shortcuts } = snapStates;
 
   const [lists, setLists] = useState([]);
   const [followedHashtags, setFollowedHashtags] = useState([]);
@@ -187,7 +190,7 @@ function ShortcutsSettings() {
         </p>
         {snapStates.shortcuts.length > 0 ? (
           <ol class="shortcuts-list">
-            {snapStates.shortcuts.map((shortcut, i) => {
+            {shortcuts.map((shortcut, i) => {
               const key = i + Object.values(shortcut);
               const { type } = shortcut;
               let { icon, title } = SHORTCUTS_META[type];
@@ -223,7 +226,7 @@ function ShortcutsSettings() {
                     <button
                       type="button"
                       class="plain small"
-                      disabled={i === snapStates.shortcuts.length - 1}
+                      disabled={i === shortcuts.length - 1}
                       onClick={() => {
                         const shortcutsArr = Array.from(states.shortcuts);
                         if (i < states.shortcuts.length - 1) {
@@ -257,6 +260,7 @@ function ShortcutsSettings() {
         )}
         <hr />
         <ShortcutForm
+          disabled={shortcuts.length >= SHORTCUTS_LIMIT}
           lists={lists}
           followedHashtags={followedHashtags}
           onSubmit={(data) => {
@@ -270,7 +274,7 @@ function ShortcutsSettings() {
 }
 
 export default ShortcutsSettings;
-function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
+function ShortcutForm({ type, lists, followedHashtags, onSubmit, disabled }) {
   const [currentType, setCurrentType] = useState(type);
   return (
     <>
@@ -292,12 +296,16 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
       >
         <header>
           <h3>Add a shortcut</h3>
-          <button type="submit">Add</button>
+          <button type="submit" disabled={disabled}>
+            Add
+          </button>
         </header>
         <p>
           <label>
             <span>Timeline</span>
             <select
+              required
+              disabled={disabled}
               onChange={(e) => {
                 setCurrentType(e.target.value);
               }}
@@ -317,7 +325,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
                 <p>
                   <label>
                     <span>List</span>
-                    <select name="id" required>
+                    <select name="id" required disabled={disabled}>
                       {lists.map((list) => (
                         <option value={list.id}>{list.title}</option>
                       ))}
@@ -336,6 +344,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
                     name={name}
                     placeholder={placeholder}
                     required={type === 'text'}
+                    disabled={disabled}
                     list={
                       currentType === 'hashtag'
                         ? 'followed-hashtags-datalist'
@@ -354,7 +363,6 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit }) {
             );
           },
         )}
-        <footer></footer>
       </form>
     </>
   );

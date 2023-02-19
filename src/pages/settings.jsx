@@ -129,7 +129,8 @@ function Settings({ onClose }) {
                           if (!yes) return;
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);
-                          location.reload();
+                          // location.reload();
+                          location.href = '/';
                         }}
                       >
                         Log out

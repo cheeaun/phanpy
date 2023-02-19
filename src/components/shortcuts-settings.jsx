@@ -210,6 +210,7 @@ function ShortcutsSettings() {
             {shortcuts.map((shortcut, i) => {
               const key = i + Object.values(shortcut);
               const { type } = shortcut;
+              if (!SHORTCUTS_META[type]) return null;
               let { icon, title } = SHORTCUTS_META[type];
               if (typeof title === 'function') {
                 title = title(shortcut);

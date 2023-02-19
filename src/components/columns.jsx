@@ -27,6 +27,7 @@ function Columns() {
       favourites: Favourites,
       hashtag: Hashtag,
     }[type];
+    if (!Component) return null;
     return <Component {...params} />;
   });
 

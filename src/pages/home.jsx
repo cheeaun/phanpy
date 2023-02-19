@@ -28,7 +28,8 @@ function Home() {
 
   return (
     <>
-      {snapStates.settings.shortcutsColumnsMode ? (
+      {snapStates.settings.shortcutsColumnsMode &&
+      !!snapStates.shortcuts?.length ? (
         <Columns />
       ) : (
         <Following

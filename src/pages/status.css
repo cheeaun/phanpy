@@ -36,21 +36,20 @@
   pointer-events: none;
 }
 
-.status-deck footer {
+.post-status-banner {
   position: sticky;
   bottom: 16px;
   bottom: max(16px, env(safe-area-inset-bottom));
   font-size: 90%;
-  background-color: var(--bg-faded-blur-color);
-  backdrop-filter: blur(16px);
+  background-color: var(--bg-faded-color);
   padding: 16px;
-  margin: 16px;
+  margin: 0 16px;
   border-radius: 16px;
   white-space: pre-wrap;
   line-height: 1.2;
   max-width: var(--main-width);
 }
-.status-deck footer > p:first-of-type {
+.post-status-banner > p:first-of-type {
   margin-top: 0;
   padding-top: 0;
 }

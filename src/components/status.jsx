@@ -60,7 +60,7 @@ function Status({
       </div>
     );
   }
-  const { masto, instance } = api({ instance: propInstance });
+  const { masto, instance, authenticated } = api({ instance: propInstance });
   const { instance: currentInstance } = api();
   const sameInstance = instance === currentInstance;
 
@@ -388,7 +388,7 @@ function Status({
             <Poll
               lang={language}
               poll={poll}
-              readOnly={readOnly || !sameInstance}
+              readOnly={readOnly || !sameInstance || !authenticated}
               onUpdate={(newPoll) => {
                 states.statuses[sKey].poll = newPoll;
               }}
@@ -517,7 +517,7 @@ function Status({
                   icon="comment"
                   count={repliesCount}
                   onClick={() => {
-                    if (!sameInstance) {
+                    if (!sameInstance || !authenticated) {
                       return alert(unauthInteractionErrorMessage);
                     }
                     states.showCompose = {
@@ -537,7 +537,7 @@ function Status({
                     icon="rocket"
                     count={reblogsCount}
                     onClick={async () => {
-                      if (!sameInstance) {
+                      if (!sameInstance || !authenticated) {
                         return alert(unauthInteractionErrorMessage);
                       }
                       try {
@@ -580,7 +580,7 @@ function Status({
                   icon="heart"
                   count={favouritesCount}
                   onClick={async () => {
-                    if (!sameInstance) {
+                    if (!sameInstance || !authenticated) {
                       return alert(unauthInteractionErrorMessage);
                     }
                     try {
@@ -616,7 +616,7 @@ function Status({
                   class="bookmark-button"
                   icon="bookmark"
                   onClick={async () => {
-                    if (!sameInstance) {
+                    if (!sameInstance || !authenticated) {
                       return alert(unauthInteractionErrorMessage);
                     }
                     try {

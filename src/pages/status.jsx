@@ -40,7 +40,7 @@ function resetScrollPosition(id) {
 
 function StatusPage() {
   const { id, ...params } = useParams();
-  const { masto, instance } = api({ instance: params.instance });
+  const { masto, instance, authenticated } = api({ instance: params.instance });
   const { masto: currentMasto, instance: currentInstance } = api();
   const sameInstance = instance === currentInstance;
   const navigate = useNavigate();
@@ -609,19 +609,70 @@ function StatusPage() {
                   } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
                 >
                   {isHero ? (
-                    <InView
-                      threshold={0.1}
-                      onChange={onView}
-                      class="status-focus"
-                      tabIndex={0}
-                    >
-                      <Status
-                        statusID={statusID}
-                        instance={instance}
-                        withinContext
-                        size="l"
-                      />
-                    </InView>
+                    <>
+                      <InView
+                        threshold={0.1}
+                        onChange={onView}
+                        class="status-focus"
+                        tabIndex={0}
+                      >
+                        <Status
+                          statusID={statusID}
+                          instance={instance}
+                          withinContext
+                          size="l"
+                        />
+                      </InView>
+                      {!sameInstance && uiState !== 'loading' && (
+                        <div class="post-status-banner">
+                          <p>
+                            This post is from another instance (
+                            <b>{instance}</b>). Interactions (reply, boost, etc)
+                            are not possible.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              (async () => {
+                                try {
+                                  const results = await currentMasto.v2.search({
+                                    q: heroStatus.url,
+                                    type: 'statuses',
+                                    resolve: true,
+                                    limit: 1,
+                                  });
+                                  if (results.statuses.length) {
+                                    const status = results.statuses[0];
+                                    navigate(`/s/${status.id}`);
+                                  } else {
+                                    throw new Error('No results');
+                                  }
+                                } catch (e) {
+                                  alert('Error: ' + e);
+                                  console.error(e);
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="transfer" /> Switch to my instance to
+                            enable interactions
+                          </button>
+                        </div>
+                      )}
+                      {sameInstance &&
+                        !authenticated &&
+                        uiState !== 'loading' && (
+                          <div class="post-status-banner">
+                            <p>
+                              You're not logged in. Interactions (reply, boost,
+                              etc) are not possible.
+                            </p>
+                            <Link to="/login" class="button">
+                              Log in
+                            </Link>
+                          </div>
+                        )}
+                    </>
                   ) : (
                     <Link
                       class="status-link"
@@ -729,40 +780,6 @@ function StatusPage() {
               </p>
             )}
           </>
-        )}
-        {!sameInstance && uiState !== 'loading' && (
-          <footer class="">
-            <p>
-              This post is from another instance (<b>{instance}</b>), different
-              from your current logged-in instance (<b>{currentInstance}</b>).
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                (async () => {
-                  try {
-                    const results = await currentMasto.v2.search({
-                      q: heroStatus.url,
-                      type: 'statuses',
-                      resolve: true,
-                      limit: 1,
-                    });
-                    if (results.statuses.length) {
-                      const status = results.statuses[0];
-                      navigate(`/s/${status.id}`);
-                    } else {
-                      throw new Error('No results');
-                    }
-                  } catch (e) {
-                    alert('Error: ' + e);
-                    console.error(e);
-                  }
-                })();
-              }}
-            >
-              <Icon icon="transfer" /> Switch to my instance
-            </button>
-          </footer>
         )}
       </div>
     </div>

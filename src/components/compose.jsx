@@ -189,31 +189,6 @@ function Compose({
       setVisibility(visibility);
       setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
-    }
-    if (draftStatus) {
-      const {
-        status,
-        spoilerText,
-        visibility,
-        language,
-        sensitive,
-        poll,
-        mediaAttachments,
-      } = draftStatus;
-      const composablePoll = !!poll?.options && {
-        ...poll,
-        options: poll.options.map((o) => o?.title || o),
-        expiresIn: poll?.expiresIn || expiresInFromExpiresAt(poll.expiresAt),
-      };
-      textareaRef.current.value = status;
-      oninputTextarea();
-      focusTextarea();
-      spoilerTextRef.current.value = spoilerText;
-      setVisibility(visibility);
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
-      setSensitive(sensitive);
-      setPoll(composablePoll);
-      setMediaAttachments(mediaAttachments);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
         editStatus;
@@ -259,6 +234,31 @@ function Compose({
       if (prefs.postingDefaultSensitive) {
         setSensitive(prefs.postingDefaultSensitive);
       }
+    }
+    if (draftStatus) {
+      const {
+        status,
+        spoilerText,
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+      } = draftStatus;
+      const composablePoll = !!poll?.options && {
+        ...poll,
+        options: poll.options.map((o) => o?.title || o),
+        expiresIn: poll?.expiresIn || expiresInFromExpiresAt(poll.expiresAt),
+      };
+      textareaRef.current.value = status;
+      oninputTextarea();
+      focusTextarea();
+      spoilerTextRef.current.value = spoilerText;
+      setVisibility(visibility);
+      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setSensitive(sensitive);
+      setPoll(composablePoll);
+      setMediaAttachments(mediaAttachments);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 

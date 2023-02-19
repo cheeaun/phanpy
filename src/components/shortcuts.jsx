@@ -54,6 +54,7 @@ function Shortcuts() {
       const { path } = formattedShortcuts[index];
       if (path) {
         navigate(path);
+        menuRef.current?.closeMenu?.();
       }
     }
   });

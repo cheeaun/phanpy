@@ -95,7 +95,9 @@ function Shortcuts() {
               <span class="menu-grow">
                 <AsyncText>{title}</AsyncText>
               </span>
-              <span class="menu-shortcut">{i + 1}</span>
+              <span class="menu-shortcut hide-until-focus-visible">
+                {i + 1}
+              </span>
             </MenuLink>
           );
         })}

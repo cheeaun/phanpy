@@ -299,6 +299,13 @@ code {
   color: var(--text-insignificant-color);
 }
 
+.hide-until-focus-visible {
+  display: none;
+}
+:has(:focus-visible) .hide-until-focus-visible {
+  display: initial;
+}
+
 /* KEYFRAMES */
 
 @keyframes appear {

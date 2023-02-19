@@ -2,6 +2,7 @@ import './welcome.css';
 
 import logo from '../assets/logo.svg';
 import Link from '../components/link';
+import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 function Welcome() {
@@ -41,7 +42,14 @@ function Welcome() {
           Built
         </a>{' '}
         by{' '}
-        <a href="https://mastodon.social/@cheeaun" target="_blank">
+        <a
+          href="https://mastodon.social/@cheeaun"
+          target="_blank"
+          onClick={(e) => {
+            e.preventDefault();
+            states.showAccount = 'cheeaun@mastodon.social';
+          }}
+        >
           @cheeaun
         </a>
         .{' '}

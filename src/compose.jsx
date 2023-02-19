@@ -2,35 +2,15 @@ import './index.css';
 
 import './app.css';
 
-import { createClient } from 'masto';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import Compose from './components/compose';
-import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 if (window.opener) {
   console = window.opener.console;
 }
-
-(() => {
-  if (window.masto) return;
-  console.warn('window.masto not found. Trying to log in...');
-  try {
-    const { instanceURL, accessToken } = getCurrentAccount();
-    window.masto = createClient({
-      url: `https://${instanceURL}`,
-      accessToken,
-      disableVersionCheck: true,
-      timeout: 30_000,
-    });
-    console.info('Logged in successfully.');
-  } catch (e) {
-    console.error(e);
-    alert('Failed to log in. Please try again.');
-  }
-})();
 
 function App() {
   const [uiState, setUIState] = useState('default');

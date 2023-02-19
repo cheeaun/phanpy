@@ -1,3 +1,4 @@
+import { forwardRef } from 'preact/compat';
 import { useLocation } from 'react-router-dom';
 
 import states from '../utils/states';
@@ -10,7 +11,7 @@ import states from '../utils/states';
    3. Not using <Link state/> because it modifies history.state that *persists* across page reloads. I don't need that, so using valtio's states instead.
 */
 
-const Link = (props) => {
+const Link = forwardRef((props, ref) => {
   let routerLocation;
   try {
     routerLocation = useLocation();
@@ -21,6 +22,7 @@ const Link = (props) => {
   const isActive = hash === to;
   return (
     <a
+      ref={ref}
       href={`#${to}`}
       {...restProps}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
@@ -30,6 +32,6 @@ const Link = (props) => {
       }}
     />
   );
-};
+});
 
 export default Link;

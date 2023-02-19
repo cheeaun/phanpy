@@ -1,22 +1,25 @@
-// useInterval with Preact
 import { useEffect, useRef } from 'preact/hooks';
 
-export default function useInterval(callback, delay) {
-  const savedCallback = useRef();
+const noop = () => {};
 
-  // Remember the latest callback.
+function useInterval(callback, delay, immediate) {
+  const savedCallback = useRef(noop);
+
   useEffect(() => {
     savedCallback.current = callback;
-  }, [callback]);
+  }, []);
 
-  // Set up the interval.
   useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
+    if (!immediate || delay === null || delay === false) return;
+    savedCallback.current();
+  }, [immediate]);
+
+  useEffect(() => {
+    if (delay === null || delay === false) return;
+    const tick = () => savedCallback.current();
+    const id = setInterval(tick, delay);
+    return () => clearInterval(id);
   }, [delay]);
 }
+
+export default useInterval;

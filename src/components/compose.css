@@ -1,5 +1,5 @@
 #compose-container {
-  width: 40em;
+  width: var(--main-width);
   max-width: 100vw;
   align-self: stretch;
   animation: fade-in 0.2s ease-out;
@@ -59,6 +59,11 @@
   border-bottom: 0;
   animation: appear-up 1s ease-in-out;
   overflow: auto;
+}
+#compose-container .status-preview .hashtag {
+  /* Prevent hashtags from being clickable */
+  /* TODO: maybe use a different solution? */
+  pointer-events: none;
 }
 #compose-container.standalone .status-preview * {
   /*
@@ -164,7 +169,7 @@
   left: -100vw !important;
 }
 #compose-container .toolbar-button select {
-  background-color: transparent;
+  background-color: inherit;
   border: 0;
   padding: 0 0 0 8px;
 }

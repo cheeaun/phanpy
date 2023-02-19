@@ -5,21 +5,31 @@ import states from '../utils/states';
 
 import Avatar from './avatar';
 
-function NameText({ account, showAvatar, showAcct, short, external, onClick }) {
+function NameText({
+  account,
+  instance,
+  showAvatar,
+  showAcct,
+  short,
+  external,
+  onClick,
+}) {
   const { acct, avatar, avatarStatic, id, url, displayName, emojis } = account;
   let { username } = account;
 
   const displayNameWithEmoji = emojifyText(displayName, emojis);
 
+  const trimmedUsername = username.toLowerCase().trim();
+  const trimmedDisplayName = (displayName || '').toLowerCase().trim();
+  const shortenedDisplayName = trimmedDisplayName
+    .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
+    .replace(/\s+/g, '') // E.g. "My name" === "myname"
+    .replace(/[^a-z0-9]/gi, ''); // Remove non-alphanumeric characters
+
   if (
     !short &&
-    username.toLowerCase().trim() ===
-      (displayName || '')
-        .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
-        .replace(/\s+/g, '') // E.g. "My name" === "myname"
-        .replace(/[^a-z0-9]/gi, '') // Remove non-alphanumeric characters
-        .toLowerCase()
-        .trim()
+    (trimmedUsername === trimmedDisplayName ||
+      trimmedUsername === shortenedDisplayName)
   ) {
     username = null;
   }
@@ -34,7 +44,10 @@ function NameText({ account, showAvatar, showAcct, short, external, onClick }) {
         if (external) return;
         e.preventDefault();
         if (onClick) return onClick(e);
-        states.showAccount = account;
+        states.showAccount = {
+          account,
+          instance,
+        };
       }}
     >
       {showAvatar && (

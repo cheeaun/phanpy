@@ -26,7 +26,7 @@ const ICONS = {
   'eye-open': 'mingcute:eye-2-line',
   message: 'mingcute:mail-line',
   comment: 'mingcute:chat-3-line',
-  home: 'mingcute:home-5-line',
+  home: 'mingcute:home-3-line',
   notification: 'mingcute:notification-line',
   follow: 'mingcute:user-follow-line',
   'follow-add': 'mingcute:user-add-line',
@@ -48,6 +48,15 @@ const ICONS = {
   thread: 'mingcute:route-line',
   group: 'mingcute:group-line',
   bot: 'mingcute:android-2-line',
+  menu: 'mingcute:rows-4-line',
+  list: 'mingcute:list-check-line',
+  search: 'mingcute:search-2-line',
+  hashtag: 'mingcute:hashtag-line',
+  info: 'mingcute:information-line',
+  shortcut: 'mingcute:lightning-line',
+  user: 'mingcute:user-4-line',
+  following: 'mingcute:walk-line',
+  pin: 'mingcute:pin-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

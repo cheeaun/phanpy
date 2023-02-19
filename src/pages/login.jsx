@@ -40,7 +40,9 @@ function Login() {
     const { elements } = e.target;
     let instanceURL = elements.instanceURL.value.toLowerCase();
     // Remove protocol from instance URL
-    instanceURL = instanceURL.replace(/(^\w+:|^)\/\//, '');
+    instanceURL = instanceURL.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+    // Remove @acct@ or acct@ from instance URL
+    instanceURL = instanceURL.replace(/^@?[^@]+@/, '');
     store.local.set('instanceURL', instanceURL);
 
     (async () => {

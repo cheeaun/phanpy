@@ -2,6 +2,7 @@ import './drafts.css';
 
 import { useEffect, useMemo, useReducer, useState } from 'react';
 
+import { api } from '../utils/api';
 import db from '../utils/db';
 import states from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
@@ -10,6 +11,7 @@ import Icon from './icon';
 import Loader from './loader';
 
 function Drafts() {
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [drafts, setDrafts] = useState([]);
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);
@@ -101,9 +103,7 @@ function Drafts() {
                         onClick={() => {
                           (async () => {
                             try {
-                              const yes = confirm(
-                                'Are you sure you want to delete this draft?',
-                              );
+                              const yes = confirm('Delete this draft?');
                               if (yes) {
                                 await db.drafts.del(key);
                                 reload();
@@ -159,9 +159,7 @@ function Drafts() {
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   (async () => {
-                    const yes = confirm(
-                      'Are you sure you want to delete all drafts?',
-                    );
+                    const yes = confirm('Delete all drafts?');
                     if (yes) {
                       setUIState('loading');
                       try {

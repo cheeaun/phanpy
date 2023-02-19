@@ -3,7 +3,7 @@ import './compose.css';
 import '@github/text-expander-element';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
@@ -12,12 +12,18 @@ import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
+import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import openCompose from '../utils/open-compose';
-import states from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccount, getCurrentAccountNS } from '../utils/store-utils';
+import {
+  getCurrentAccount,
+  getCurrentAccountNS,
+  getCurrentInstance,
+} from '../utils/store-utils';
+import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -99,6 +105,7 @@ function Compose({
   hasOpener,
 }) {
   console.warn('RENDER COMPOSER');
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
@@ -106,22 +113,8 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const configuration = useMemo(() => {
-    try {
-      const instances = store.local.getJSON('instances');
-      const currentInstance = currentAccount.instanceURL.toLowerCase();
-      const config = instances[currentInstance].configuration;
-      console.log(config);
-      return config;
-    } catch (e) {
-      console.error(e);
-      alert('Failed to load instance configuration. Please try again.');
-      // Temporary fix for corrupted data
-      store.local.del('instances');
-      location.reload();
-      return {};
-    }
-  }, []);
+  const { configuration } = getCurrentInstance();
+  console.log('⚙️ Configuration', configuration);
 
   const {
     statuses: { maxCharacters, maxMediaAttachments, charactersReservedPerUrl },
@@ -145,6 +138,8 @@ function Compose({
   );
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
+
+  const prefs = store.account.get('preferences') || {};
 
   const customEmojis = useRef();
   useEffect(() => {
@@ -192,7 +187,7 @@ function Compose({
       }
       focusTextarea();
       setVisibility(visibility);
-      setLanguage(language || DEFAULT_LANG);
+      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
     }
     if (draftStatus) {
@@ -215,7 +210,7 @@ function Compose({
       focusTextarea();
       spoilerTextRef.current.value = spoilerText;
       setVisibility(visibility);
-      setLanguage(language || DEFAULT_LANG);
+      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
       setPoll(composablePoll);
       setMediaAttachments(mediaAttachments);
@@ -241,7 +236,7 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language || DEFAULT_LANG);
+          setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
           setSensitive(sensitive);
           setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -254,13 +249,22 @@ function Compose({
       })();
     } else {
       focusTextarea();
+      console.log('Apply prefs', prefs);
+      if (prefs.postingDefaultVisibility) {
+        setVisibility(prefs.postingDefaultVisibility);
+      }
+      if (prefs.postingDefaultLanguage) {
+        setLanguage(prefs.postingDefaultLanguage);
+      }
+      if (prefs.postingDefaultSensitive) {
+        setSensitive(prefs.postingDefaultSensitive);
+      }
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
   const formRef = useRef();
 
-  const beforeUnloadCopy =
-    'You have unsaved changes. Are you sure you want to discard this post?';
+  const beforeUnloadCopy = 'You have unsaved changes. Discard this post?';
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
@@ -362,6 +366,8 @@ function Compose({
     },
     {
       enableOnFormTags: true,
+      // Use keyup because Esc keydown will close the confirm dialog on Safari
+      keyup: true,
     },
   );
 
@@ -757,7 +763,16 @@ function Compose({
                 // mediaIds: mediaAttachments.map((attachment) => attachment.id),
                 media_ids: mediaAttachments.map((attachment) => attachment.id),
               };
-              if (!editStatus) {
+              if (editStatus && supports('@mastodon/edit-media-attributes')) {
+                params.media_attributes = mediaAttachments.map((attachment) => {
+                  return {
+                    id: attachment.id,
+                    description: attachment.description,
+                    // focus
+                    // thumbnail
+                  };
+                });
+              } else if (!editStatus) {
                 params.visibility = visibility;
                 // params.inReplyToId = replyToStatus?.id || undefined;
                 params.in_reply_to_id = replyToStatus?.id || undefined;
@@ -771,6 +786,9 @@ function Compose({
                   editStatus.id,
                   params,
                 );
+                saveStatus(newStatus, {
+                  skipThreading: true,
+                });
               } else {
                 newStatus = await masto.v1.statuses.create(params, {
                   idempotencyKey: UID.current,
@@ -799,6 +817,7 @@ function Compose({
             disabled={uiState === 'loading'}
             class="spoiler-text-field"
             lang={language}
+            spellCheck="true"
             style={{
               opacity: sensitive ? 1 : 0,
               pointerEvents: sensitive ? 'auto' : 'none',
@@ -868,6 +887,9 @@ function Compose({
             updateCharCount();
           }}
           maxCharacters={maxCharacters}
+          performSearch={(params) => {
+            return masto.v2.search(params);
+          }}
         />
         {mediaAttachments.length > 0 && (
           <div class="media-attachments">
@@ -1031,7 +1053,7 @@ function Compose({
 
 const Textarea = forwardRef((props, ref) => {
   const [text, setText] = useState(ref.current?.value || '');
-  const { maxCharacters, ...textareaProps } = props;
+  const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
 
@@ -1087,7 +1109,7 @@ const Textarea = forwardRef((props, ref) => {
         }[key];
         provide(
           new Promise((resolve) => {
-            const searchResults = masto.v2.search({
+            const searchResults = performSearch({
               type,
               q: text,
               limit: 5,
@@ -1258,6 +1280,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
+  const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { url, type, id } = attachment;
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
@@ -1283,7 +1306,7 @@ function MediaAttachment({
 
   const descTextarea = (
     <>
-      {!!id ? (
+      {!!id && !supportsEdit ? (
         <div class="media-desc">
           <span class="tag">Uploaded</span>
           <p title={description}>
@@ -1413,6 +1436,7 @@ function Poll({
               maxlength={maxCharactersPerOption}
               placeholder={`Choice ${i + 1}`}
               lang={lang}
+              spellCheck="true"
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

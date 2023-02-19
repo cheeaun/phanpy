@@ -7,19 +7,29 @@ import Menu from '../components/menu';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
-function Lists() {
-  const { masto } = api();
-  useTitle(`Lists`, `/l`);
+const LIMIT = 200;
+
+function FollowedHashtags() {
+  const { masto, instance } = api();
+  useTitle(`Followed Hashtags`, `/ft`);
   const [uiState, setUiState] = useState('default');
 
-  const [lists, setLists] = useState([]);
+  const [followedHashtags, setFollowedHashtags] = useState([]);
   useEffect(() => {
     setUiState('loading');
     (async () => {
       try {
-        const lists = await masto.v1.lists.list();
-        console.log(lists);
-        setLists(lists);
+        const iterator = masto.v1.followedTags.list({
+          limit: LIMIT,
+        });
+        const tags = [];
+        do {
+          const { value, done } = await iterator.next();
+          if (done || value?.length === 0) break;
+          tags.push(...value);
+        } while (true);
+        console.log(tags);
+        setFollowedHashtags(tags);
         setUiState('default');
       } catch (e) {
         console.error(e);
@@ -29,7 +39,7 @@ function Lists() {
   }, []);
 
   return (
-    <div id="lists-page" class="deck-container">
+    <div id="followed-hashtags-page" class="deck-container">
       <div class="timeline-deck deck">
         <header>
           <div class="header-grid">
@@ -39,29 +49,33 @@ function Lists() {
                 <Icon icon="home" size="l" />
               </Link>
             </div>
-            <h1>Lists</h1>
+            <h1>Followed Hashtags</h1>
             <div class="header-side" />
           </div>
         </header>
         <main>
-          {lists.length > 0 ? (
+          {followedHashtags.length > 0 ? (
             <ul class="link-list">
-              {lists.map((list) => (
+              {followedHashtags.map((tag) => (
                 <li>
-                  <Link to={`/l/${list.id}`}>
-                    <Icon icon="list" /> <span>{list.title}</span>
+                  <Link
+                    to={
+                      instance ? `/${instance}/t/${tag.name}` : `/t/${tag.name}`
+                    }
+                  >
+                    <Icon icon="hashtag" /> <span>{tag.name}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           ) : uiState === 'loading' ? (
             <p class="ui-state">
-              <Loader />
+              <Loader abrupt />
             </p>
           ) : uiState === 'error' ? (
-            <p class="ui-state">Unable to load lists.</p>
+            <p class="ui-state">Unable to load followed hashtags.</p>
           ) : (
-            <p class="ui-state">No lists yet.</p>
+            <p class="ui-state">No hashtags followed yet.</p>
           )}
         </main>
       </div>
@@ -69,4 +83,4 @@ function Lists() {
   );
 }
 
-export default Lists;
+export default FollowedHashtags;

@@ -9,6 +9,7 @@ assignees: ''
 
 **Describe the bug**
 A clear and concise description of what the bug is.
+- Which site: [e.g. dev.phanpy.social OR phanpy.social]
 
 **To Reproduce**
 Steps to reproduce the behavior:

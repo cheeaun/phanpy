@@ -13,9 +13,9 @@ export default function openCompose(opts) {
   );
 
   if (newWin) {
-    if (masto) {
-      newWin.masto = masto;
-    }
+    // if (masto) {
+    //   newWin.masto = masto;
+    // }
 
     newWin.__COMPOSE__ = opts;
   }

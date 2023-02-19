@@ -1,0 +1,14 @@
+.account-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-color);
+  text-decoration: none;
+}
+.account-block:hover b {
+  text-decoration: underline;
+}
+
+.account-block.skeleton {
+  color: var(--bg-faded-color);
+}

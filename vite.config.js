@@ -30,7 +30,9 @@ export default defineConfig({
     preact(),
     splitVendorChunkPlugin(),
     VitePluginHtmlEnv(),
-    removeConsole(),
+    removeConsole({
+      includes: ['log', 'debug', 'info', 'warn', 'error'],
+    }),
     htmlPlugin({
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
     }),

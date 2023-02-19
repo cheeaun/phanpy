@@ -294,12 +294,12 @@ function Status({
         {!withinContext && (
           <>
             {inReplyToAccountId === status.account?.id ||
-            !!snapStates.statusThreadNumber[id] ? (
+            !!snapStates.statusThreadNumber[sKey] ? (
               <div class="status-thread-badge">
                 <Icon icon="thread" size="s" />
                 Thread
-                {snapStates.statusThreadNumber[id]
-                  ? ` ${snapStates.statusThreadNumber[id]}/X`
+                {snapStates.statusThreadNumber[sKey]
+                  ? ` ${snapStates.statusThreadNumber[sKey]}/X`
                   : ''}
               </div>
             ) : (

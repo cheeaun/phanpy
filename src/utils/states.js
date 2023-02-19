@@ -124,7 +124,8 @@ export function threadifyStatus(status, propInstance) {
       throw 'Not a thread';
       // Possibly thread of replies by multiple people?
     }
-    let prevStatus = states.statuses[inReplyToId];
+    const key = statusKey(inReplyToId, instance);
+    let prevStatus = states.statuses[key];
     if (!prevStatus) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
       await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
@@ -139,7 +140,8 @@ export function threadifyStatus(status, propInstance) {
       if (statuses.length > 1) {
         console.debug('THREAD', statuses);
         statuses.forEach((status, index) => {
-          states.statusThreadNumber[status.id] = index + 1;
+          const key = statusKey(status.id, instance);
+          states.statusThreadNumber[key] = index + 1;
         });
       }
     })

@@ -50,7 +50,7 @@ function Timeline({
             if (firstLoad) {
               setItems(value);
             } else {
-              setItems([...items, ...value]);
+              setItems((items) => [...items, ...value]);
             }
             setShowMore(!done);
           } else {

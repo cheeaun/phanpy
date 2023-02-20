@@ -62,13 +62,13 @@ function StatusPage() {
       if (uiState !== 'loading') {
         states.scrollPositions[id] = scrollTop;
       }
-    }, 100);
+    }, 50);
     scrollableRef.current.addEventListener('scroll', onScroll, {
       passive: true,
     });
     onScroll();
     return () => {
-      onScroll.flush();
+      onScroll.cancel();
       scrollableRef.current?.removeEventListener('scroll', onScroll);
     };
   }, [id, uiState !== 'loading']);

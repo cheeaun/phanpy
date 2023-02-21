@@ -40,8 +40,12 @@ function resetScrollPosition(id) {
 
 function StatusPage() {
   const { id, ...params } = useParams();
-  const { masto, instance, authenticated } = api({ instance: params.instance });
-  const { masto: currentMasto, instance: currentInstance } = api();
+  const { masto, instance } = api({ instance: params.instance });
+  const {
+    masto: currentMasto,
+    instance: currentInstance,
+    authenticated,
+  } = api();
   const sameInstance = instance === currentInstance;
   const navigate = useNavigate();
   const snapStates = useSnapshot(states);
@@ -622,55 +626,59 @@ function StatusPage() {
                           size="l"
                         />
                       </InView>
-                      {!sameInstance && uiState !== 'loading' && (
+                      {uiState !== 'loading' && !authenticated ? (
                         <div class="post-status-banner">
                           <p>
-                            This post is from another instance (
-                            <b>{instance}</b>). Interactions (reply, boost, etc)
-                            are not possible.
+                            You're not logged in. Interactions (reply, boost,
+                            etc) are not possible.
                           </p>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              (async () => {
-                                try {
-                                  const results = await currentMasto.v2.search({
-                                    q: heroStatus.url,
-                                    type: 'statuses',
-                                    resolve: true,
-                                    limit: 1,
-                                  });
-                                  if (results.statuses.length) {
-                                    const status = results.statuses[0];
-                                    navigate(`/s/${status.id}`);
-                                  } else {
-                                    throw new Error('No results');
-                                  }
-                                } catch (e) {
-                                  alert('Error: ' + e);
-                                  console.error(e);
-                                }
-                              })();
-                            }}
-                          >
-                            <Icon icon="transfer" /> Switch to my instance to
-                            enable interactions
-                          </button>
+                          <Link to="/login" class="button">
+                            Log in
+                          </Link>
                         </div>
-                      )}
-                      {sameInstance &&
-                        !authenticated &&
-                        uiState !== 'loading' && (
+                      ) : (
+                        !sameInstance && (
                           <div class="post-status-banner">
                             <p>
-                              You're not logged in. Interactions (reply, boost,
+                              This post is from another instance (
+                              <b>{instance}</b>). Interactions (reply, boost,
                               etc) are not possible.
                             </p>
-                            <Link to="/login" class="button">
-                              Log in
-                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                (async () => {
+                                  try {
+                                    const results =
+                                      await currentMasto.v2.search({
+                                        q: heroStatus.url,
+                                        type: 'statuses',
+                                        resolve: true,
+                                        limit: 1,
+                                      });
+                                    if (results.statuses.length) {
+                                      const status = results.statuses[0];
+                                      navigate(
+                                        currentInstance
+                                          ? `/${currentInstance}/s/${status.id}`
+                                          : `/s/${status.id}`,
+                                      );
+                                    } else {
+                                      throw new Error('No results');
+                                    }
+                                  } catch (e) {
+                                    alert('Error: ' + e);
+                                    console.error(e);
+                                  }
+                                })();
+                              }}
+                            >
+                              <Icon icon="transfer" /> Switch to my instance to
+                              enable interactions
+                            </button>
                           </div>
-                        )}
+                        )
+                      )}
                     </>
                   ) : (
                     <Link

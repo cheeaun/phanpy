@@ -1,6 +1,6 @@
 import './account.css';
 
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -17,12 +17,6 @@ import Link from './link';
 
 function Account({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
-  const {
-    masto: currentMasto,
-    instance: currentInstance,
-    authenticated: currentAuthenticated,
-  } = api();
-  const sameInstance = instance === currentInstance;
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -87,89 +81,6 @@ function Account({ account, instance: propInstance, onClose }) {
     url,
     username,
   } = info || {};
-
-  const [relationshipUIState, setRelationshipUIState] = useState('default');
-  const [relationship, setRelationship] = useState(null);
-  const [familiarFollowers, setFamiliarFollowers] = useState([]);
-  useEffect(() => {
-    if (info) {
-      const currentAccount = store.session.get('currentAccount');
-      let accountID;
-      (async () => {
-        if (sameInstance && authenticated) {
-          accountID = id;
-        } else if (!sameInstance && currentAuthenticated) {
-          // Grab this account from my logged-in instance
-          const acctHasInstance = info.acct.includes('@');
-          try {
-            const results = await currentMasto.v2.search({
-              q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
-              type: 'accounts',
-              limit: 1,
-              resolve: true,
-            });
-            console.log('🥏 Fetched account from logged-in instance', results);
-            accountID = results.accounts[0].id;
-          } catch (e) {
-            console.error(e);
-          }
-        }
-
-        if (!accountID) return;
-
-        if (currentAccount === accountID) {
-          // It's myself!
-          return;
-        }
-
-        setRelationshipUIState('loading');
-        setFamiliarFollowers([]);
-
-        const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
-          accountID,
-        ]);
-        const fetchFamiliarFollowers =
-          currentMasto.v1.accounts.fetchFamiliarFollowers(accountID);
-
-        try {
-          const relationships = await fetchRelationships;
-          console.log('fetched relationship', relationships);
-          if (relationships.length) {
-            const relationship = relationships[0];
-            setRelationship(relationship);
-
-            if (!relationship.following) {
-              try {
-                const followers = await fetchFamiliarFollowers;
-                console.log('fetched familiar followers', followers);
-                setFamiliarFollowers(followers[0].accounts.slice(0, 10));
-              } catch (e) {
-                console.error(e);
-              }
-            }
-          }
-          setRelationshipUIState('default');
-        } catch (e) {
-          console.error(e);
-          setRelationshipUIState('error');
-        }
-      })();
-    }
-  }, [info, authenticated]);
-
-  const {
-    following,
-    showingReblogs,
-    notifying,
-    followedBy,
-    blocking,
-    blockedBy,
-    muting,
-    mutingNotifications,
-    requested,
-    domainBlocking,
-    endorsed,
-  } = relationship || {};
 
   return (
     <div
@@ -300,93 +211,208 @@ function Account({ account, instance: propInstance, onClose }) {
                   </span>
                 )}
               </p>
-              {familiarFollowers?.length > 0 && (
-                <p class="common-followers">
-                  Common followers{' '}
-                  <span class="ib">
-                    {familiarFollowers.map((follower) => (
-                      <a
-                        href={follower.url}
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          states.showAccount = {
-                            account: follower,
-                            instance,
-                          };
-                        }}
-                      >
-                        <Avatar
-                          url={follower.avatarStatic}
-                          size="l"
-                          alt={`${follower.displayName} @${follower.acct}`}
-                        />
-                      </a>
-                    ))}
-                  </span>
-                </p>
-              )}
-              <p class="actions">
-                {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
-                {relationshipUIState !== 'loading' && relationship && (
-                  <button
-                    type="button"
-                    class={`${following || requested ? 'light swap' : ''}`}
-                    data-swap-state={following || requested ? 'danger' : ''}
-                    disabled={relationshipUIState === 'loading'}
-                    onClick={() => {
-                      setRelationshipUIState('loading');
-                      (async () => {
-                        try {
-                          let newRelationship;
-                          if (following || requested) {
-                            const yes = confirm(
-                              requested
-                                ? 'Withdraw follow request?'
-                                : `Unfollow @${info.acct || info.username}?`,
-                            );
-                            if (yes) {
-                              newRelationship =
-                                await currentMasto.v1.accounts.unfollow(id);
-                            }
-                          } else {
-                            newRelationship =
-                              await currentMasto.v1.accounts.follow(id);
-                          }
-                          if (newRelationship) setRelationship(newRelationship);
-                          setRelationshipUIState('default');
-                        } catch (e) {
-                          alert(e);
-                          setRelationshipUIState('error');
-                        }
-                      })();
-                    }}
-                  >
-                    {following ? (
-                      <>
-                        <span>Following</span>
-                        <span>Unfollow…</span>
-                      </>
-                    ) : requested ? (
-                      <>
-                        <span>Requested</span>
-                        <span>Withdraw…</span>
-                      </>
-                    ) : locked ? (
-                      <>
-                        <Icon icon="lock" /> <span>Follow</span>
-                      </>
-                    ) : (
-                      'Follow'
-                    )}
-                  </button>
-                )}
-              </p>
+              <RelatedActions
+                info={info}
+                instance={instance}
+                authenticated={authenticated}
+              />
             </main>
           </>
         )
       )}
     </div>
+  );
+}
+
+function RelatedActions({ info, instance, authenticated }) {
+  if (!info) return null;
+  const {
+    masto: currentMasto,
+    instance: currentInstance,
+    authenticated: currentAuthenticated,
+  } = api();
+  const sameInstance = instance === currentInstance;
+
+  const [relationshipUIState, setRelationshipUIState] = useState('default');
+  const [relationship, setRelationship] = useState(null);
+  const [familiarFollowers, setFamiliarFollowers] = useState([]);
+
+  const { id, locked } = info;
+  const accountID = useRef(id);
+
+  const {
+    following,
+    showingReblogs,
+    notifying,
+    followedBy,
+    blocking,
+    blockedBy,
+    muting,
+    mutingNotifications,
+    requested,
+    domainBlocking,
+    endorsed,
+  } = relationship || {};
+
+  useEffect(() => {
+    if (info) {
+      const currentAccount = store.session.get('currentAccount');
+      let currentID;
+      (async () => {
+        if (sameInstance && authenticated) {
+          currentID = id;
+        } else if (!sameInstance && currentAuthenticated) {
+          // Grab this account from my logged-in instance
+          const acctHasInstance = info.acct.includes('@');
+          try {
+            const results = await currentMasto.v2.search({
+              q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
+              type: 'accounts',
+              limit: 1,
+              resolve: true,
+            });
+            console.log('🥏 Fetched account from logged-in instance', results);
+            currentID = results.accounts[0].id;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        if (!currentID) return;
+
+        if (currentAccount === currentID) {
+          // It's myself!
+          return;
+        }
+
+        accountID.current = currentID;
+
+        setRelationshipUIState('loading');
+        setFamiliarFollowers([]);
+
+        const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
+          currentID,
+        ]);
+        const fetchFamiliarFollowers =
+          currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
+
+        try {
+          const relationships = await fetchRelationships;
+          console.log('fetched relationship', relationships);
+          if (relationships.length) {
+            const relationship = relationships[0];
+            setRelationship(relationship);
+
+            if (!relationship.following) {
+              try {
+                const followers = await fetchFamiliarFollowers;
+                console.log('fetched familiar followers', followers);
+                setFamiliarFollowers(followers[0].accounts.slice(0, 10));
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          }
+          setRelationshipUIState('default');
+        } catch (e) {
+          console.error(e);
+          setRelationshipUIState('error');
+        }
+      })();
+    }
+  }, [info, authenticated]);
+
+  return (
+    <>
+      {familiarFollowers?.length > 0 && (
+        <p class="common-followers">
+          Common followers{' '}
+          <span class="ib">
+            {familiarFollowers.map((follower) => (
+              <a
+                href={follower.url}
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.showAccount = {
+                    account: follower,
+                    instance,
+                  };
+                }}
+              >
+                <Avatar
+                  url={follower.avatarStatic}
+                  size="l"
+                  alt={`${follower.displayName} @${follower.acct}`}
+                />
+              </a>
+            ))}
+          </span>
+        </p>
+      )}
+      <p class="actions">
+        {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
+        {relationshipUIState !== 'loading' && relationship && (
+          <button
+            type="button"
+            class={`${following || requested ? 'light swap' : ''}`}
+            data-swap-state={following || requested ? 'danger' : ''}
+            disabled={relationshipUIState === 'loading'}
+            onClick={() => {
+              setRelationshipUIState('loading');
+
+              (async () => {
+                try {
+                  let newRelationship;
+
+                  if (following || requested) {
+                    const yes = confirm(
+                      requested
+                        ? 'Withdraw follow request?'
+                        : `Unfollow @${info.acct || info.username}?`,
+                    );
+
+                    if (yes) {
+                      newRelationship = await currentMasto.v1.accounts.unfollow(
+                        accountID.current,
+                      );
+                    }
+                  } else {
+                    newRelationship = await currentMasto.v1.accounts.follow(
+                      accountID.current,
+                    );
+                  }
+
+                  if (newRelationship) setRelationship(newRelationship);
+                  setRelationshipUIState('default');
+                } catch (e) {
+                  alert(e);
+                  setRelationshipUIState('error');
+                }
+              })();
+            }}
+          >
+            {following ? (
+              <>
+                <span>Following</span>
+                <span>Unfollow…</span>
+              </>
+            ) : requested ? (
+              <>
+                <span>Requested</span>
+                <span>Withdraw…</span>
+              </>
+            ) : locked ? (
+              <>
+                <Icon icon="lock" /> <span>Follow</span>
+              </>
+            ) : (
+              'Follow'
+            )}
+          </button>
+        )}
+      </p>
+    </>
   );
 }
 

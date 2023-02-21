@@ -79,7 +79,7 @@ function Status({
       avatar,
       avatarStatic,
       id: accountId,
-      url,
+      url: accountURL,
       displayName,
       username,
       emojis: accountEmojis,
@@ -108,6 +108,7 @@ function Status({
     mediaAttachments,
     reblog,
     uri,
+    url,
     emojis,
     // Non-API props
     _deleted,
@@ -128,7 +129,7 @@ function Status({
     (mention) => mention.id === inReplyToAccountId,
   );
   if (!inReplyToAccountRef && inReplyToAccountId === id) {
-    inReplyToAccountRef = { url, username, displayName };
+    inReplyToAccountRef = { url: accountURL, username, displayName };
   }
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
   if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
@@ -207,6 +208,9 @@ function Status({
 
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
 
+  const textWeight = () =>
+    Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
+
   return (
     <article
       ref={statusRef}
@@ -232,7 +236,7 @@ function Status({
       )}
       {size !== 's' && (
         <a
-          href={url}
+          href={accountURL}
           tabindex="-1"
           // target="_blank"
           title={`@${acct}`}
@@ -268,7 +272,7 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (uri ? (
+            (url ? (
               <Link
                 to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                 class="time"
@@ -325,12 +329,10 @@ function Status({
           class={`content-container ${
             spoilerText || sensitive ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
+          data-content-text-weight={contentTextWeight ? textWeight() : null}
           style={
             (size === 'l' || contentTextWeight) && {
-              '--content-text-weight':
-                Math.round(
-                  (spoilerText.length + htmlContentLength(content)) / 140,
-                ) || 1,
+              '--content-text-weight': textWeight(),
             }
           }
         >
@@ -467,7 +469,7 @@ function Status({
           <>
             <div class="extra-meta">
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
-              <a href={uri} target="_blank">
+              <a href={url} target="_blank">
                 <time class="created" datetime={createdAtDate.toISOString()}>
                   {Intl.DateTimeFormat('en', {
                     // Show year if not current year

@@ -79,7 +79,7 @@ function Status({
       avatar,
       avatarStatic,
       id: accountId,
-      url,
+      url: accountURL,
       displayName,
       username,
       emojis: accountEmojis,
@@ -108,6 +108,7 @@ function Status({
     mediaAttachments,
     reblog,
     uri,
+    url,
     emojis,
     // Non-API props
     _deleted,
@@ -128,7 +129,7 @@ function Status({
     (mention) => mention.id === inReplyToAccountId,
   );
   if (!inReplyToAccountRef && inReplyToAccountId === id) {
-    inReplyToAccountRef = { url, username, displayName };
+    inReplyToAccountRef = { url: accountURL, username, displayName };
   }
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
   if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
@@ -232,7 +233,7 @@ function Status({
       )}
       {size !== 's' && (
         <a
-          href={url}
+          href={accountURL}
           tabindex="-1"
           // target="_blank"
           title={`@${acct}`}
@@ -268,7 +269,7 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (uri ? (
+            (url ? (
               <Link
                 to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                 class="time"
@@ -467,7 +468,7 @@ function Status({
           <>
             <div class="extra-meta">
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
-              <a href={uri} target="_blank">
+              <a href={url} target="_blank">
                 <time class="created" datetime={createdAtDate.toISOString()}>
                   {Intl.DateTimeFormat('en', {
                     // Show year if not current year

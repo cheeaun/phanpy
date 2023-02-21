@@ -208,6 +208,9 @@ function Status({
 
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
 
+  const textWeight = () =>
+    Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
+
   return (
     <article
       ref={statusRef}
@@ -326,12 +329,10 @@ function Status({
           class={`content-container ${
             spoilerText || sensitive ? 'has-spoiler' : ''
           } ${showSpoiler ? 'show-spoiler' : ''}`}
+          data-content-text-weight={contentTextWeight ? textWeight() : null}
           style={
             (size === 'l' || contentTextWeight) && {
-              '--content-text-weight':
-                Math.round(
-                  (spoilerText.length + htmlContentLength(content)) / 140,
-                ) || 1,
+              '--content-text-weight': textWeight(),
             }
           }
         >

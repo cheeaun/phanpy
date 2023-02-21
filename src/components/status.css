@@ -590,7 +590,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
   max-width: 480px;
   /* max-height: 160px; */
 }
-.status.large .card.large {
+.status.large .card.large,
+.status-carousel .content-container[data-content-text-weight='1'] .card.large {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
@@ -618,7 +619,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .status.large .card .card-image {
   aspect-ratio: 1 / 1;
 }
-.status.large .card.large .card-image {
+.status.large .card.large .card-image,
+.status-carousel
+  .content-container[data-content-text-weight='1']
+  .card.large
+  .card-image {
   flex-grow: 1;
   aspect-ratio: 1.91 / 1;
   width: 100%;

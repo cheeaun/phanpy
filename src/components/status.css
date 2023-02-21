@@ -421,7 +421,8 @@
     object-position: 50% 50%;
   }
 }
-.status .media img:hover {
+.status .media img:is(:hover, :focus),
+a:focus-visible .status .media img {
   animation: position-object 5s ease-in-out 1s 5;
 }
 body:has(#modal-container .carousel) .status .media img:hover {
@@ -625,7 +626,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-inline-end: 0;
   border-block-end: 1px solid var(--outline-color);
 }
-.card:is(:hover, :focus) img {
+.card:is(:hover, :focus) img,
+a:focus-visible .card img {
   animation: position-object 5s ease-in-out 1s 5;
 }
 .card p {

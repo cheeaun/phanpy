@@ -368,6 +368,9 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit, disabled }) {
                         ? 'followed-hashtags-datalist'
                         : null
                     }
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck={false}
                   />
                   {currentType === 'hashtag' && followedHashtags.length > 0 && (
                     <datalist id="followed-hashtags-datalist">

@@ -115,6 +115,11 @@ export async function initPreferences(client) {
 // Get the masto instance
 // If accountID is provided, get the masto instance for that account
 export function api({ instance, accessToken, accountID, account } = {}) {
+  // Always lowercase and trim the instance
+  if (instance) {
+    instance = instance.toLowerCase().trim();
+  }
+
   // If instance and accessToken are provided, get the masto instance for that account
   if (instance && accessToken) {
     return {
@@ -131,7 +136,7 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     account = account || getAccount(accountID);
     if (account) {
       const accessToken = account.accessToken;
-      const instance = account.instanceURL;
+      const instance = account.instanceURL.toLowerCase().trim();
       return {
         masto:
           accountApis[instance]?.[accessToken] ||
@@ -155,12 +160,13 @@ export function api({ instance, accessToken, accountID, account } = {}) {
   }
 
   // If no instance is provided, get the masto instance for the current account
-  if (currentAccountApi)
+  if (currentAccountApi) {
     return {
       masto: currentAccountApi,
       authenticated: true,
       instance: currentAccountApi.__instance__,
     };
+  }
   const currentAccount = getCurrentAccount();
   if (currentAccount) {
     const { accessToken, instanceURL: instance } = currentAccount;

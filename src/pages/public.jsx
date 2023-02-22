@@ -79,7 +79,7 @@ function Public({ local, ...props }) {
           type="button"
           class="plain"
           onClick={() => {
-            const newInstance = prompt(
+            let newInstance = prompt(
               'Enter a new instance e.g. "mastodon.social"',
             );
             if (!/\./.test(newInstance)) {
@@ -87,6 +87,7 @@ function Public({ local, ...props }) {
               return;
             }
             if (newInstance) {
+              newInstance = newInstance.toLowerCase().trim();
               navigate(isLocal ? `/${newInstance}/p/l` : `/${newInstance}/p`);
             }
           }}

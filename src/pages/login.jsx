@@ -88,7 +88,7 @@ function Login() {
             autocorrect="off"
             autocapitalize="off"
             autocomplete="off"
-            spellcheck="false"
+            spellcheck={false}
           />
           <datalist id="instances-list">
             {instancesList.map((instance) => (

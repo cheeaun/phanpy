@@ -1486,6 +1486,7 @@ ul.link-list li a .icon {
     box-shadow: 0px 1px var(--bg-blur-color);
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
+    transform: translate3d(0, 0, 0);
   }
   .timeline:not(.flat) > li:has(.status-link.is-active) {
     transition: var(--back-transition);

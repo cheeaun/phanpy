@@ -85,8 +85,7 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular',
-    sans-serif;
+  font-family: ui-rounded, system-ui;
   font-size: 16px;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -267,8 +266,8 @@ pre {
 pre code,
 code {
   font-size: 90%;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
-    monospace;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
+    Menlo, Courier, monospace;
 }
 
 @media (prefers-color-scheme: dark) {

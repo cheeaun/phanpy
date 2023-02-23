@@ -90,12 +90,6 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-/* Safari-only: https://www.bram.us/2021/06/23/css-at-supports-rules-to-target-only-firefox-safari-chromium/#safari */
-@supports (background: -webkit-named-image(i)) {
-  body {
-    font-size: 17px;
-  }
-}
 
 a {
   color: var(--link-color);

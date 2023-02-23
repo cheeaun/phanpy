@@ -24,6 +24,7 @@ const states = proxy({
   reloadStatusPage: 0,
   spoilers: {},
   scrollPositions: {},
+  unfurledLinks: {},
   // Modals
   showCompose: false,
   showSettings: false,

@@ -1099,6 +1099,7 @@ body:has(.status-deck) .media-post-link {
   backdrop-filter: blur(8px) saturate(3);
   border: var(--hairline-width) solid var(--bg-color);
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
+  text-shadow: 0 var(--hairline-width) var(--bg-color), 0 0 8px var(--bg-color);
 }
 .glass-menu .szh-menu__item--hover {
   background-color: var(--button-bg-blur-color);

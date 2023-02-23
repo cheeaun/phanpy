@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
 
 import useInterval from '../utils/useInterval';
@@ -376,14 +377,22 @@ function Timeline({
             </ul>
             {uiState === 'default' &&
               (showMore ? (
-                <button
-                  type="button"
-                  class="plain block"
-                  onClick={() => loadItems()}
-                  style={{ marginBlockEnd: '6em' }}
+                <InView
+                  onChange={(inView) => {
+                    if (inView) {
+                      loadItems();
+                    }
+                  }}
                 >
-                  Show more&hellip;
-                </button>
+                  <button
+                    type="button"
+                    class="plain block"
+                    onClick={() => loadItems()}
+                    style={{ marginBlockEnd: '6em' }}
+                  >
+                    Show more&hellip;
+                  </button>
+                </InView>
               ) : (
                 <p class="ui-state insignificant">The end.</p>
               ))}

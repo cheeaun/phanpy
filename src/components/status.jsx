@@ -1180,9 +1180,13 @@ function isMastodonLinkMaybe(url) {
 }
 
 const denylistDomains = /(twitter|github)\.com/i;
+const failedUnfurls = {};
 
 function _unfurlMastodonLink(instance, url) {
   if (denylistDomains.test(url)) {
+    return;
+  }
+  if (failedUnfurls[url]) {
     return;
   }
   const instanceRegex = new RegExp(instance + '/');
@@ -1211,10 +1215,12 @@ function _unfurlMastodonLink(instance, url) {
         states.unfurledLinks[url] = result;
         return result;
       } else {
+        failedUnfurls[url] = true;
         throw new Error('No results');
       }
     })
     .catch((e) => {
+      failedUnfurls[url] = true;
       console.warn(e);
       // Silently fail
     });

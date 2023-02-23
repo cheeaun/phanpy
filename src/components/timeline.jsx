@@ -61,6 +61,8 @@ function Timeline({
         } catch (e) {
           console.error(e);
           setUIState('error');
+        } finally {
+          loadItems.cancel();
         }
       })();
     },

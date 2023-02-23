@@ -1,7 +1,7 @@
 import './shortcuts.css';
 
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useRef } from 'preact/hooks';
+import { useMemo, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -23,29 +23,33 @@ function Shortcuts() {
 
   const menuRef = useRef();
 
-  const formattedShortcuts = shortcuts
-    .map((pin, i) => {
-      const { type, ...data } = pin;
-      if (!SHORTCUTS_META[type]) return null;
-      let { path, title, icon } = SHORTCUTS_META[type];
+  const formattedShortcuts = useMemo(
+    () =>
+      shortcuts
+        .map((pin, i) => {
+          const { type, ...data } = pin;
+          if (!SHORTCUTS_META[type]) return null;
+          let { path, title, icon } = SHORTCUTS_META[type];
 
-      if (typeof path === 'function') {
-        path = path(data, i);
-      }
-      if (typeof title === 'function') {
-        title = title(data);
-      }
-      if (typeof icon === 'function') {
-        icon = icon(data);
-      }
+          if (typeof path === 'function') {
+            path = path(data, i);
+          }
+          if (typeof title === 'function') {
+            title = title(data);
+          }
+          if (typeof icon === 'function') {
+            icon = icon(data);
+          }
 
-      return {
-        path,
-        title,
-        icon,
-      };
-    })
-    .filter(Boolean);
+          return {
+            path,
+            title,
+            icon,
+          };
+        })
+        .filter(Boolean),
+    [shortcuts],
+  );
 
   const navigate = useNavigate();
   useHotkeys(['1', '2', '3', '4', '5', '6', '7', '8', '9'], (e, handler) => {

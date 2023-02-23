@@ -107,7 +107,7 @@ export function saveStatus(status, instance, opts) {
     requestAnimationFrame(() => {
       threadifyStatus(status, instance);
       if (status.reblog) {
-        threadifyStatus(status.reblog);
+        threadifyStatus(status.reblog, instance);
       }
     });
   }

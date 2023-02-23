@@ -275,7 +275,7 @@ function Timeline({
             !hiddenUI &&
             showNew && (
               <button
-                class="updates-button"
+                class="updates-button shiny-pill"
                 type="button"
                 onClick={() => {
                   loadItems(true);

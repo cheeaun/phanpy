@@ -4,13 +4,9 @@ function handleContentLinks(opts) {
   const { mentions = [], instance } = opts || {};
   return (e) => {
     let { target } = e;
-    if (target.parentNode.tagName.toLowerCase() === 'a') {
-      target = target.parentNode;
-    }
-    if (
-      target.tagName.toLowerCase() === 'a' &&
-      target.classList.contains('u-url')
-    ) {
+    target = target.closest('a');
+    if (!target) return;
+    if (target.classList.contains('u-url')) {
       const targetText = (
         target.querySelector('span') || target
       ).innerText.trim();
@@ -39,16 +35,17 @@ function handleContentLinks(opts) {
           instance,
         };
       }
-    } else if (
-      target.tagName.toLowerCase() === 'a' &&
-      target.classList.contains('hashtag')
-    ) {
+    } else if (target.classList.contains('hashtag')) {
       e.preventDefault();
       e.stopPropagation();
       const tag = target.innerText.replace(/^#/, '').trim();
       const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
       console.log({ hashURL });
       location.hash = hashURL;
+    } else if (states.unfurledLinks[target.href]?.url) {
+      e.preventDefault();
+      e.stopPropagation();
+      location.hash = `#${states.unfurledLinks[target.href].url}`;
     }
   };
 }

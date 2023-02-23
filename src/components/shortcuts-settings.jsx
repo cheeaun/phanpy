@@ -1,5 +1,6 @@
 import './shortcuts-settings.css';
 
+import mem from 'mem';
 import { useEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -90,10 +91,15 @@ export const SHORTCUTS_META = {
     icon: 'notification',
   },
   list: {
-    title: async ({ id }) => {
-      const list = await api().masto.v1.lists.fetch(id);
-      return list.title;
-    },
+    title: mem(
+      async ({ id }) => {
+        const list = await api().masto.v1.lists.fetch(id);
+        return list.title;
+      },
+      {
+        cacheKey: ([{ id }]) => id,
+      },
+    ),
     path: ({ id }) => `/l/${id}`,
     icon: 'list',
   },
@@ -109,10 +115,15 @@ export const SHORTCUTS_META = {
     icon: 'search',
   },
   'account-statuses': {
-    title: async ({ id }) => {
-      const account = await api().masto.v1.accounts.fetch(id);
-      return account.username || account.acct || account.displayName;
-    },
+    title: mem(
+      async ({ id }) => {
+        const account = await api().masto.v1.accounts.fetch(id);
+        return account.username || account.acct || account.displayName;
+      },
+      {
+        cacheKey: ([{ id }]) => id,
+      },
+    ),
     path: ({ id }) => `/a/${id}`,
     icon: 'user',
   },

@@ -1,6 +1,7 @@
 import './account.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -82,8 +83,11 @@ function Account({ account, instance: propInstance, onClose }) {
     username,
   } = info || {};
 
+  const escRef = useHotkeys('esc', onClose, [onClose]);
+
   return (
     <div
+      ref={escRef}
       id="account-container"
       class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
     >

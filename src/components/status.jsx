@@ -2,6 +2,7 @@ import './status.css';
 
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import mem from 'mem';
+import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import 'swiped-events';
@@ -25,6 +26,11 @@ import Icon from './icon';
 import Link from './link';
 import Media from './media';
 import RelativeTime from './relative-time';
+
+const throttle = pThrottle({
+  limit: 1,
+  interval: 1000,
+});
 
 function fetchAccount(id, masto) {
   try {
@@ -374,12 +380,24 @@ function Status({
               __html: enhanceContent(content, {
                 emojis,
                 postEnhanceDOM: (dom) => {
+                  // Remove target="_blank" from links
                   dom
                     .querySelectorAll('a.u-url[target="_blank"]')
                     .forEach((a) => {
-                      // Remove target="_blank" from links
                       if (!/http/i.test(a.innerText.trim())) {
                         a.removeAttribute('target');
+                      }
+                    });
+                  // Unfurl Mastodon links
+                  dom
+                    .querySelectorAll(
+                      'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                    )
+                    .forEach((a) => {
+                      if (isMastodonLinkMaybe(a.href)) {
+                        unfurlMastodonLink(currentInstance, a.href).then(() => {
+                          a.removeAttribute('target');
+                        });
                       }
                     });
                 },
@@ -463,7 +481,9 @@ function Status({
             !sensitive &&
             !spoilerText &&
             !poll &&
-            !mediaAttachments.length && <Card card={card} />}
+            !mediaAttachments.length && (
+              <Card card={card} instance={currentInstance} />
+            )}
         </div>
         {size === 'l' && (
           <>
@@ -702,7 +722,7 @@ function Status({
   );
 }
 
-function Card({ card }) {
+function Card({ card, instance }) {
   const {
     blurhash,
     title,
@@ -729,12 +749,38 @@ function Card({ card }) {
   const isLandscape = width / height >= 1.2;
   const size = isLandscape ? 'large' : '';
 
+  const [cardStatusURL, setCardStatusURL] = useState(null);
+  // const [cardStatusID, setCardStatusID] = useState(null);
+  useEffect(() => {
+    if (hasText && image && isMastodonLinkMaybe(url)) {
+      unfurlMastodonLink(instance, url).then((result) => {
+        if (!result) return;
+        const { id, url } = result;
+        setCardStatusURL('#' + url);
+
+        // NOTE: This is for quote post
+        // (async () => {
+        //   const { masto } = api({ instance });
+        //   const status = await masto.v1.statuses.fetch(id);
+        //   saveStatus(status, instance);
+        //   setCardStatusID(id);
+        // })();
+      });
+    }
+  }, [hasText, image]);
+
+  // if (cardStatusID) {
+  //   return (
+  //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
+  //   );
+  // }
+
   if (hasText && image) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
     return (
       <a
-        href={url}
-        target="_blank"
+        href={cardStatusURL || url}
+        target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
         class={`card link ${size}`}
       >
@@ -1128,5 +1174,58 @@ export function formatDuration(time) {
       .padStart(2, '0')}`;
   }
 }
+
+function isMastodonLinkMaybe(url) {
+  return /^https:\/\/.*\/\d+$/i.test(url);
+}
+
+const denylistDomains = /(twitter|github)\.com/i;
+const failedUnfurls = {};
+
+function _unfurlMastodonLink(instance, url) {
+  if (denylistDomains.test(url)) {
+    return;
+  }
+  if (failedUnfurls[url]) {
+    return;
+  }
+  const instanceRegex = new RegExp(instance + '/');
+  if (instanceRegex.test(states.unfurledLinks[url]?.url)) {
+    return Promise.resolve(states.unfurledLinks[url]);
+  }
+  console.debug('🦦 Unfurling URL', url);
+  const { masto } = api({ instance });
+  return masto.v2
+    .search({
+      q: url,
+      type: 'statuses',
+      resolve: true,
+      limit: 1,
+    })
+    .then((results) => {
+      if (results.statuses.length > 0) {
+        const status = results.statuses[0];
+        const { id } = status;
+        const statusURL = `/${instance}/s/${id}`;
+        const result = {
+          id,
+          url: statusURL,
+        };
+        console.debug('🦦 Unfurled URL', url, id, statusURL);
+        states.unfurledLinks[url] = result;
+        return result;
+      } else {
+        failedUnfurls[url] = true;
+        throw new Error('No results');
+      }
+    })
+    .catch((e) => {
+      failedUnfurls[url] = true;
+      console.warn(e);
+      // Silently fail
+    });
+}
+
+const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 export default memo(Status);

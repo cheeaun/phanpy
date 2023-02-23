@@ -16,7 +16,7 @@ audio = Audio track
 function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
-  const { original, small, focus } = meta || {};
+  const { original = {}, small, focus } = meta || {};
 
   const width = showOriginal ? original?.width : small?.width;
   const height = showOriginal ? original?.height : small?.height;

@@ -1,3 +1,4 @@
+import mem from 'mem';
 import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
@@ -130,7 +131,8 @@ export function threadifyStatus(status, propInstance) {
     if (!prevStatus) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
       await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
-      prevStatus = await masto.v1.statuses.fetch(inReplyToId);
+      // prevStatus = await masto.v1.statuses.fetch(inReplyToId);
+      prevStatus = await fetchStatus(inReplyToId, masto);
       saveStatus(prevStatus, instance, { skipThreading: true });
     }
     // Prepend so that first status in thread will be index 0
@@ -150,3 +152,7 @@ export function threadifyStatus(status, propInstance) {
       console.error(e, status);
     });
 }
+
+const fetchStatus = mem((statusID, masto) => {
+  return masto.v1.statuses.fetch(statusID);
+});

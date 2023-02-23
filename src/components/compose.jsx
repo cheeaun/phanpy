@@ -141,20 +141,6 @@ function Compose({
 
   const prefs = store.account.get('preferences') || {};
 
-  const customEmojis = useRef();
-  useEffect(() => {
-    (async () => {
-      try {
-        const emojis = await masto.v1.customEmojis.list();
-        console.log({ emojis });
-        customEmojis.current = emojis;
-      } catch (e) {
-        // silent fail
-        console.error(e);
-      }
-    })();
-  }, []);
-
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
     textareaRef.current.dispatchEvent(new Event('input'));
@@ -1056,6 +1042,20 @@ const Textarea = forwardRef((props, ref) => {
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
+
+  const customEmojis = useRef();
+  useEffect(() => {
+    (async () => {
+      try {
+        const emojis = await masto.v1.customEmojis.list();
+        console.log({ emojis });
+        customEmojis.current = emojis;
+      } catch (e) {
+        // silent fail
+        console.error(e);
+      }
+    })();
+  }, []);
 
   const textExpanderRef = useRef();
   const textExpanderTextRef = useRef('');

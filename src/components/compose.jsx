@@ -113,7 +113,8 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const { configuration } = getCurrentInstance();
+  const instance = getCurrentInstance();
+  const { configuration } = instance;
   console.log('⚙️ Configuration', configuration);
 
   const {
@@ -785,6 +786,7 @@ function Compose({
               // Close
               onClose({
                 newStatus,
+                instance,
               });
             } catch (e) {
               console.error(e);

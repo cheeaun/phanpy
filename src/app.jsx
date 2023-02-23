@@ -318,7 +318,7 @@ function App() {
               null
             }
             onClose={(results) => {
-              const { newStatus } = results || {};
+              const { newStatus, instance } = results || {};
               states.showCompose = false;
               window.__COMPOSE__ = null;
               if (newStatus) {
@@ -334,7 +334,11 @@ function App() {
                     onClick: () => {
                       toast.hideToast();
                       states.prevLocation = location;
-                      navigate(`/s/${newStatus.id}`);
+                      navigate(
+                        instance
+                          ? `/${instance}/s/${newStatus.id}`
+                          : `/s/${newStatus.id}`,
+                      );
                     },
                   });
                   toast.showToast();

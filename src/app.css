@@ -745,14 +745,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   margin-top: 16px;
   transform: translate(-50%, 0);
   font-size: 90%;
-  background-color: var(--button-bg-color);
-  background-image: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0) 50%
-  );
-  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
-    0 10px 36px -4px var(--button-bg-blur-color);
 }
 .updates-button .icon {
   vertical-align: top;
@@ -1161,20 +1153,26 @@ meter.donut:is(.danger, .explode):after {
   color: var(--red-color);
 }
 
-/* TOAST */
+/* SHINY PILL */
 
-:root .toastify {
+.shiny-pill {
+  color: var(--button-text-color);
+  text-shadow: 0 -1px var(--drop-shadow-color);
   background-color: var(--button-bg-color);
   background-image: linear-gradient(
     160deg,
     rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0) 50%
   );
-  color: var(--button-text-color);
-  border-radius: 10em;
-  padding: 8px 16px;
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
-    0 10px 36px -4px var(--button-bg-blur-color);
+    0 10px 36px -4px var(--button-bg-blur-color),
+    inset var(--hairline-width) var(--hairline-width) rgba(255, 255, 255, 0.5);
+}
+
+/* TOAST */
+
+:root .toastify {
+  padding: 8px 16px;
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);

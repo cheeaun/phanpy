@@ -325,6 +325,7 @@ function App() {
                 states.reloadStatusPage++;
                 setTimeout(() => {
                   const toast = Toastify({
+                    className: 'shiny-pill',
                     text: 'Status posted. Check it out.',
                     duration: 10_000, // 10 seconds
                     gravity: 'bottom',

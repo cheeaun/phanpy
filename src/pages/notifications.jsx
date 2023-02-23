@@ -165,7 +165,7 @@ function Notifications() {
           </div>
           {snapStates.notificationsShowNew && uiState !== 'loading' && (
             <button
-              class="updates-button"
+              class="updates-button shiny-pill"
               type="button"
               onClick={() => {
                 loadNotifications(true);

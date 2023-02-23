@@ -1221,7 +1221,7 @@ function _unfurlMastodonLink(instance, url) {
     })
     .catch((e) => {
       failedUnfurls[url] = true;
-      console.warn(e);
+      // console.warn(e);
       // Silently fail
     });
 }

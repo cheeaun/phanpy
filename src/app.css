@@ -897,12 +897,16 @@ body:has(.status-deck) .media-post-link {
     transition: all 0.3s ease-in-out;
   }
   /* Don't do this if there's a modal sheet (.sheet) */
-  :has(#modal-container .carousel):has(.status-deck):not(:has(.sheet))
+  :has(#modal-container .carousel):has(.status-deck):not(
+      :has(.sheet, #compose-container)
+    )
     .status-deck {
     width: 350px;
     min-width: 0;
   }
-  :has(#modal-container .carousel):has(.status-deck):not(:has(.sheet))
+  :has(#modal-container .carousel):has(.status-deck):not(
+      :has(.sheet, #compose-container)
+    )
     #modal-container
     > div {
     left: 0;

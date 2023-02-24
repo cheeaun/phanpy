@@ -105,7 +105,7 @@ function Compose({
   hasOpener,
 }) {
   console.warn('RENDER COMPOSER');
-  const { masto } = api();
+  const { masto, instance } = api();
   const [uiState, setUIState] = useState('default');
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
@@ -113,8 +113,7 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const instance = getCurrentInstance();
-  const { configuration } = instance;
+  const { configuration } = getCurrentInstance();
   console.log('⚙️ Configuration', configuration);
 
   const {
@@ -1040,6 +1039,7 @@ function Compose({
 }
 
 const Textarea = forwardRef((props, ref) => {
+  const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);

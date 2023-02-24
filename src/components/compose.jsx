@@ -1039,6 +1039,7 @@ function Compose({
 }
 
 const Textarea = forwardRef((props, ref) => {
+  const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);

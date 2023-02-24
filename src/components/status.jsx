@@ -951,6 +951,7 @@ function Poll({
                 choices.push(value);
               }
             });
+            if (!choices.length) return;
             setUIState('loading');
             await votePoll(choices);
             setUIState('default');

@@ -749,6 +749,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .updates-button .icon {
   vertical-align: top;
 }
+@media (pointer: coarse) {
+  .updates-button:after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+  }
+}
 
 /* BOX */
 

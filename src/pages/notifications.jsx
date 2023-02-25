@@ -77,9 +77,8 @@ function Notifications() {
 
     if (notifications?.length) {
       notifications.forEach((notification) => {
-        saveStatus(notification.status, {
+        saveStatus(notification.status, instance, {
           skipThreading: true,
-          override: false,
         });
       });
 

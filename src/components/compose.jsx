@@ -772,7 +772,7 @@ function Compose({
                   editStatus.id,
                   params,
                 );
-                saveStatus(newStatus, {
+                saveStatus(newStatus, instance, {
                   skipThreading: true,
                 });
               } else {

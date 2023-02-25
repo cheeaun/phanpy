@@ -175,7 +175,7 @@ function App() {
   const notificationStream = useRef();
   useEffect(() => {
     if (isLoggedIn && visible) {
-      const { masto } = api();
+      const { masto, instance } = api();
       (async () => {
         // 1. Get the latest notification
         if (states.notificationsLast) {
@@ -200,6 +200,11 @@ function App() {
 
         notificationStream.current.on('notification', (notification) => {
           console.log('🔔🔔 Notification', notification);
+          if (notification.status) {
+            saveStatus(notification.status, instance, {
+              skipThreading: true,
+            });
+          }
           states.notificationsShowNew = true;
         });
 

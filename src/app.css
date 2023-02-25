@@ -1093,6 +1093,8 @@ body:has(.status-deck) .media-post-link {
 }
 .szh-menu .szh-menu__item .menu-grow {
   flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .szh-menu .szh-menu__item .menu-shortcut {
   opacity: 0.5;

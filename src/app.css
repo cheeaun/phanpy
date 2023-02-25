@@ -1053,11 +1053,13 @@ body:has(.status-deck) .media-post-link {
   background-color: transparent;
 }
 .szh-menu .szh-menu__item {
+  display: block;
   padding: 8px 16px !important;
   transition: all 0.1s ease-in-out;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 .szh-menu .szh-menu__item * {
   vertical-align: middle;

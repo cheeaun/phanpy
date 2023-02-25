@@ -140,7 +140,7 @@ export const SHORTCUTS_META = {
   },
   hashtag: {
     title: ({ hashtag }) => hashtag,
-    path: ({ hashtag }) => `/t/${hashtag}`,
+    path: ({ hashtag }) => `/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',
   },
 };

@@ -75,7 +75,8 @@ const TYPE_PARAMS = {
       text: '#',
       name: 'hashtag',
       type: 'text',
-      placeholder: 'e.g PixelArt',
+      placeholder: 'e.g. PixelArt (Max 5, space-separated)',
+      pattern: '[^#]+',
     },
   ],
 };
@@ -314,7 +315,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit, disabled }) {
           const data = new FormData(e.target);
           const result = {};
           data.forEach((value, key) => {
-            result[key] = value;
+            result[key] = value?.trim();
           });
           if (!result.type) return;
           onSubmit(result);
@@ -348,7 +349,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit, disabled }) {
           </label>
         </p>
         {TYPE_PARAMS[currentType]?.map?.(
-          ({ text, name, type, placeholder }) => {
+          ({ text, name, type, placeholder, pattern }) => {
             if (currentType === 'list') {
               return (
                 <p>
@@ -382,6 +383,7 @@ function ShortcutForm({ type, lists, followedHashtags, onSubmit, disabled }) {
                     autocorrect="off"
                     autocapitalize="off"
                     spellcheck={false}
+                    pattern={pattern}
                   />
                   {currentType === 'hashtag' && followedHashtags.length > 0 && (
                     <datalist id="followed-hashtags-datalist">

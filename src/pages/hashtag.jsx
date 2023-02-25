@@ -1,17 +1,39 @@
-import { useRef } from 'preact/hooks';
-import { useParams } from 'react-router-dom';
+import {
+  FocusableItem,
+  Menu,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+} from '@szhsin/react-menu';
+import { useEffect, useRef, useState } from 'preact/hooks';
+import { useNavigate, useParams } from 'react-router-dom';
+import Toastify from 'toastify-js';
 
+import Icon from '../components/icon';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
+// Limit is 4 per "mode"
+// https://github.com/mastodon/mastodon/issues/15194
+// Hard-coded https://github.com/mastodon/mastodon/blob/19614ba2477f3d12468f5ec251ce1cc5f8c6210c/app/models/tag_feed.rb#L4
+const TAGS_LIMIT_PER_MODE = 4;
+const TOTAL_TAGS_LIMIT = TAGS_LIMIT_PER_MODE + 1;
+
 function Hashtags(props) {
+  const navigate = useNavigate();
   let { hashtag, ...params } = useParams();
   if (props.hashtag) hashtag = props.hashtag;
-  const { masto, instance } = api({ instance: params.instance });
-  const title = instance ? `#${hashtag} on ${instance}` : `#${hashtag}`;
+  let hashtags = hashtag.trim().split(/[\s+]+/);
+  hashtags.sort();
+  hashtag = hashtags[0];
+
+  const { masto, instance, authenticated } = api({ instance: params.instance });
+  const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
+  const title = instance ? `${hashtagTitle} on ${instance}` : hashtagTitle;
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 
@@ -20,6 +42,7 @@ function Hashtags(props) {
     if (firstLoad || !hashtagsIterator.current) {
       hashtagsIterator.current = masto.v1.timelines.listHashtag(hashtag, {
         limit: LIMIT,
+        any: hashtags.slice(1),
       });
     }
     const results = await hashtagsIterator.current.next();
@@ -37,6 +60,7 @@ function Hashtags(props) {
       const results = await masto.v1.timelines
         .listHashtag(hashtag, {
           limit: 1,
+          any: hashtags.slice(1),
           since_id: latestItem.current,
         })
         .next();
@@ -50,14 +74,31 @@ function Hashtags(props) {
     }
   }
 
+  const [followUIState, setFollowUIState] = useState('default');
+  const [info, setInfo] = useState();
+  // Get hashtag info
+  useEffect(() => {
+    (async () => {
+      try {
+        const info = await masto.v1.tags.fetch(hashtag);
+        console.log(info);
+        setInfo(info);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [hashtag]);
+
+  const reachLimit = hashtags.length >= TOTAL_TAGS_LIMIT;
+
   return (
     <Timeline
-      key={hashtag}
+      key={hashtagTitle}
       title={title}
       titleComponent={
         !!instance && (
           <h1 class="header-account">
-            <b>#{hashtag}</b>
+            <b>{hashtagTitle}</b>
             <div>{instance}</div>
           </h1>
         )
@@ -68,6 +109,189 @@ function Hashtags(props) {
       errorText="Unable to load posts with this tag"
       fetchItems={fetchHashtags}
       checkForUpdates={checkForUpdates}
+      headerEnd={
+        <Menu
+          portal={{
+            target: document.body,
+          }}
+          setDownOverflow
+          overflow="auto"
+          viewScroll="close"
+          position="anchor"
+          boundingBoxPadding="8 8 8 8"
+          menuButton={
+            <button type="button" class="plain">
+              <Icon icon="more" size="l" />
+            </button>
+          }
+        >
+          {!!info && hashtags.length === 1 && (
+            <>
+              <MenuItem
+                disabled={followUIState === 'loading' || !authenticated}
+                onClick={() => {
+                  setFollowUIState('loading');
+                  if (info.following) {
+                    const yes = confirm(`Unfollow #${hashtag}?`);
+                    if (!yes) {
+                      setFollowUIState('default');
+                      return;
+                    }
+                    masto.v1.tags
+                      .unfollow(hashtag)
+                      .then(() => {
+                        setInfo({ ...info, following: false });
+                        const toast = Toastify({
+                          className: 'shiny-pill',
+                          text: `Unfollowed #${hashtag}`,
+                          duration: 3000,
+                          gravity: 'bottom',
+                          position: 'center',
+                        });
+                        toast.showToast();
+                      })
+                      .catch((e) => {
+                        alert(e);
+                        console.error(e);
+                      })
+                      .finally(() => {
+                        setFollowUIState('default');
+                      });
+                  } else {
+                    masto.v1.tags
+                      .follow(hashtag)
+                      .then(() => {
+                        setInfo({ ...info, following: true });
+                        const toast = Toastify({
+                          className: 'shiny-pill',
+                          text: `Followed #${hashtag}`,
+                          duration: 3000,
+                          gravity: 'bottom',
+                          position: 'center',
+                        });
+                        toast.showToast();
+                      })
+                      .catch((e) => {
+                        alert(e);
+                        console.error(e);
+                      })
+                      .finally(() => {
+                        setFollowUIState('default');
+                      });
+                  }
+                }}
+              >
+                {info.following ? (
+                  <>
+                    <Icon icon="check-circle" /> <span>Following…</span>
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="plus" /> <span>Follow</span>
+                  </>
+                )}
+              </MenuItem>
+              <MenuDivider />
+            </>
+          )}
+          <FocusableItem className="menu-field" disabled={reachLimit}>
+            {({ ref }) => (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const newHashtag = e.target[0].value;
+                  // Use includes but need to be case insensitive
+                  if (
+                    newHashtag &&
+                    !hashtags.some(
+                      (t) => t.toLowerCase() === newHashtag.toLowerCase(),
+                    )
+                  ) {
+                    hashtags.push(newHashtag);
+                    hashtags.sort();
+                    navigate(
+                      instance
+                        ? `/${instance}/t/${hashtags.join('+')}`
+                        : `/t/${hashtags.join('+')}`,
+                    );
+                  }
+                }}
+              >
+                <Icon icon="hashtag" />
+                <input
+                  ref={ref}
+                  type="text"
+                  placeholder={
+                    reachLimit ? `Max ${TOTAL_TAGS_LIMIT} tags` : 'Add hashtag'
+                  }
+                  required
+                  // no spaces, no hashtags
+                  pattern="[^\s#]+"
+                  disabled={reachLimit}
+                />
+              </form>
+            )}
+          </FocusableItem>
+          <MenuGroup takeOverflow>
+            {hashtags.map((t, i) => (
+              <MenuItem
+                key={t}
+                onClick={(e) => {
+                  hashtags.splice(i, 1);
+                  hashtags.sort();
+                  navigate(
+                    instance
+                      ? `/${instance}/t/${hashtags.join('+')}`
+                      : `/t/${hashtags.join('+')}`,
+                  );
+                }}
+              >
+                <Icon icon="x" alt="Remove hashtag" class="danger-icon" />{' '}
+                <Icon icon="hashtag" />
+                <span>{t}</span>
+              </MenuItem>
+            ))}
+          </MenuGroup>
+          <MenuDivider />
+          <MenuItem
+            disabled={!authenticated}
+            onClick={() => {
+              const shortcut = {
+                type: 'hashtag',
+                hashtag: hashtags.join(' '),
+              };
+              // Check if already exists
+              const exists = states.shortcuts.some(
+                (s) =>
+                  s.type === shortcut.type &&
+                  s.hashtag
+                    .split(/[\s+]+/)
+                    .sort()
+                    .join(' ') ===
+                    shortcut.hashtag
+                      .split(/[\s+]+/)
+                      .sort()
+                      .join(' '),
+              );
+              if (exists) {
+                alert('This shortcut already exists');
+              } else {
+                states.shortcuts.push(shortcut);
+                const toast = Toastify({
+                  className: 'shiny-pill',
+                  text: `Hashtag shortcut added`,
+                  duration: 3000,
+                  gravity: 'bottom',
+                  position: 'center',
+                });
+                toast.showToast();
+              }
+            }}
+          >
+            <Icon icon="shortcut" /> <span>Add to Shorcuts</span>
+          </MenuItem>
+        </Menu>
+      }
     />
   );
 }

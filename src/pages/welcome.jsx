@@ -6,7 +6,7 @@ import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 function Welcome() {
-  useTitle();
+  useTitle(null, ['/', '/welcome']);
   return (
     <main id="welcome">
       <h1>

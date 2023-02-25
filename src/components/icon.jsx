@@ -37,7 +37,7 @@ const ICONS = {
   attachment: 'mingcute:attachment-line',
   upload: 'mingcute:upload-3-line',
   gear: 'mingcute:settings-3-line',
-  more: 'mingcute:more-1-line',
+  more: 'mingcute:more-3-line',
   external: 'mingcute:external-link-line',
   popout: 'mingcute:external-link-line',
   popin: ['mingcute:external-link-line', '180deg'],

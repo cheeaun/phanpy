@@ -7,6 +7,8 @@ export default function useScroll({
   scrollThresholdStart = 10,
   scrollThresholdEnd = 10,
   direction = 'vertical',
+  distanceFromStartPx: _distanceFromStartPx,
+  distanceFromEndPx: _distanceFromEndPx,
 } = {}) {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [reachStart, setReachStart] = useState(false);
@@ -38,16 +40,20 @@ export default function useScroll({
       const scrollDimension = isVertical ? scrollHeight : scrollWidth;
       const clientDimension = isVertical ? clientHeight : clientWidth;
       const scrollDistance = Math.abs(scrollStart - previousScrollStart);
-      const distanceFromStartPx = Math.min(
-        clientDimension * distanceFromStart,
-        scrollDimension,
-        scrollStart,
-      );
-      const distanceFromEndPx = Math.min(
-        clientDimension * distanceFromEnd,
-        scrollDimension,
-        scrollDimension - scrollStart - clientDimension,
-      );
+      const distanceFromStartPx =
+        _distanceFromStartPx ||
+        Math.min(
+          clientDimension * distanceFromStart,
+          scrollDimension,
+          scrollStart,
+        );
+      const distanceFromEndPx =
+        _distanceFromEndPx ||
+        Math.min(
+          clientDimension * distanceFromEnd,
+          scrollDimension,
+          scrollDimension - scrollStart - clientDimension,
+        );
 
       if (
         scrollDistance >=

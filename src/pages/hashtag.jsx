@@ -31,7 +31,8 @@ function Hashtags(props) {
   hashtags.sort();
   hashtag = hashtags[0];
 
-  const { masto, instance, authenticated } = api({ instance: params.instance });
+  const { masto, instance } = api({ instance: params.instance });
+  const { authenticated } = api();
   const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
   const title = instance ? `${hashtagTitle} on ${instance}` : hashtagTitle;
   useTitle(title, `/:instance?/t/:hashtag`);

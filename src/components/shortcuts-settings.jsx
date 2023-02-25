@@ -236,7 +236,7 @@ function ShortcutsSettings() {
                   <span class="shortcut-text">
                     <AsyncText>{title}</AsyncText>
                   </span>
-                  <span>
+                  <span class="shortcut-actions">
                     <button
                       type="button"
                       class="plain small"

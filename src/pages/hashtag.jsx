@@ -7,11 +7,11 @@ import {
 } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import Toastify from 'toastify-js';
 
 import Icon from '../components/icon';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -142,14 +142,7 @@ function Hashtags(props) {
                       .unfollow(hashtag)
                       .then(() => {
                         setInfo({ ...info, following: false });
-                        const toast = Toastify({
-                          className: 'shiny-pill',
-                          text: `Unfollowed #${hashtag}`,
-                          duration: 3000,
-                          gravity: 'bottom',
-                          position: 'center',
-                        });
-                        toast.showToast();
+                        showToast(`Unfollowed #${hashtag}`);
                       })
                       .catch((e) => {
                         alert(e);
@@ -163,14 +156,7 @@ function Hashtags(props) {
                       .follow(hashtag)
                       .then(() => {
                         setInfo({ ...info, following: true });
-                        const toast = Toastify({
-                          className: 'shiny-pill',
-                          text: `Followed #${hashtag}`,
-                          duration: 3000,
-                          gravity: 'bottom',
-                          position: 'center',
-                        });
-                        toast.showToast();
+                        showToast(`Followed #${hashtag}`);
                       })
                       .catch((e) => {
                         alert(e);
@@ -247,9 +233,11 @@ function Hashtags(props) {
                   );
                 }}
               >
-                <Icon icon="x" alt="Remove hashtag" class="danger-icon" />{' '}
-                <Icon icon="hashtag" />
-                <span>{t}</span>
+                <Icon icon="x" alt="Remove hashtag" class="danger-icon" />
+                <span>
+                  <span class="more-insignificant">#</span>
+                  {t}
+                </span>
               </MenuItem>
             ))}
           </MenuGroup>
@@ -278,14 +266,7 @@ function Hashtags(props) {
                 alert('This shortcut already exists');
               } else {
                 states.shortcuts.push(shortcut);
-                const toast = Toastify({
-                  className: 'shiny-pill',
-                  text: `Hashtag shortcut added`,
-                  duration: 3000,
-                  gravity: 'bottom',
-                  position: 'center',
-                });
-                toast.showToast();
+                showToast(`Hashtag shortcut added`);
               }
             }}
           >

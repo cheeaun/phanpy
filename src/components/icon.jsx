@@ -58,6 +58,9 @@ const ICONS = {
   following: 'mingcute:walk-line',
   pin: 'mingcute:pin-line',
   bus: 'mingcute:bus-2-line',
+  link: 'mingcute:link-2-line',
+  history: 'mingcute:history-line',
+  share: 'mingcute:share-2-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

@@ -14,7 +14,6 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
@@ -53,6 +52,7 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
+import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
@@ -328,26 +328,20 @@ function App() {
               window.__COMPOSE__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
-                setTimeout(() => {
-                  const toast = Toastify({
-                    className: 'shiny-pill',
-                    text: 'Status posted. Check it out.',
-                    duration: 10_000, // 10 seconds
-                    gravity: 'bottom',
-                    position: 'center',
-                    // destination: `/#/s/${newStatus.id}`,
-                    onClick: () => {
-                      toast.hideToast();
-                      states.prevLocation = location;
-                      navigate(
-                        instance
-                          ? `/${instance}/s/${newStatus.id}`
-                          : `/s/${newStatus.id}`,
-                      );
-                    },
-                  });
-                  toast.showToast();
-                }, 1000);
+                showToast({
+                  text: 'Status posted. Check it out.',
+                  delay: 1000,
+                  duration: 10_000, // 10 seconds
+                  onClick: (toast) => {
+                    toast.hideToast();
+                    states.prevLocation = location;
+                    navigate(
+                      instance
+                        ? `/${instance}/s/${newStatus.id}`
+                        : `/s/${newStatus.id}`,
+                    );
+                  },
+                });
               }
             }}
           />

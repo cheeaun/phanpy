@@ -104,7 +104,7 @@ function Hashtags(props) {
           </h1>
         )
       }
-      id="hashtags"
+      id="hashtag"
       instance={instance}
       emptyText="No one has posted anything with this tag yet."
       errorText="Unable to load posts with this tag"

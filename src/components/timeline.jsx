@@ -262,7 +262,7 @@ function Timeline({
               {headerStart !== null && headerStart !== undefined ? (
                 headerStart
               ) : (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain home-button">
                   <Icon icon="home" size="l" />
                 </Link>
               )}

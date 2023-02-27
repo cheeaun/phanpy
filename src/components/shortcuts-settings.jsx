@@ -82,16 +82,19 @@ const TYPE_PARAMS = {
 };
 export const SHORTCUTS_META = {
   following: {
-    title: 'Home / Following',
-    path: (_, index) => (index === 0 ? '/' : '/following'),
+    id: (_, index) => (index === 0 ? 'home' : 'following'),
+    title: (_, index) => (index === 0 ? 'Home' : 'Following'),
+    path: '/',
     icon: 'home',
   },
   notifications: {
+    id: 'notifications',
     title: 'Notifications',
     path: '/notifications',
     icon: 'notification',
   },
   list: {
+    id: 'list',
     title: mem(
       async ({ id }) => {
         const list = await api().masto.v1.lists.fetch(id);
@@ -105,17 +108,20 @@ export const SHORTCUTS_META = {
     icon: 'list',
   },
   public: {
+    id: 'public',
     title: ({ local, instance }) =>
       `${local ? 'Local' : 'Federated'} (${instance})`,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
   },
   search: {
+    id: 'search',
     title: ({ query }) => query,
     path: ({ query }) => `/search?q=${query}`,
     icon: 'search',
   },
   'account-statuses': {
+    id: 'account-statuses',
     title: mem(
       async ({ id }) => {
         const account = await api().masto.v1.accounts.fetch(id);
@@ -129,16 +135,19 @@ export const SHORTCUTS_META = {
     icon: 'user',
   },
   bookmarks: {
+    id: 'bookmarks',
     title: 'Bookmarks',
     path: '/b',
     icon: 'bookmark',
   },
   favourites: {
+    id: 'favourites',
     title: 'Favourites',
     path: '/f',
     icon: 'heart',
   },
   hashtag: {
+    id: 'hashtag',
     title: ({ hashtag }) => hashtag,
     path: ({ hashtag }) => `/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',
@@ -201,6 +210,21 @@ function ShortcutsSettings() {
           button.
         </p>
         <p>
+          <label>
+            View mode{' '}
+            <select
+              value={snapStates.settings.shortcutsViewMode || 'float-button'}
+              onChange={(e) => {
+                states.settings.shortcutsViewMode = e.target.value;
+              }}
+            >
+              <option value="float-button">Floating button</option>
+              <option value="multi-column">Multi-column</option>
+              <option value="tab-menu-bar">Tab/Menu bar </option>
+            </select>
+          </label>
+        </p>
+        {/* <p>
           <details>
             <summary class="insignificant">
               Experimental Multi-column mode
@@ -216,7 +240,7 @@ function ShortcutsSettings() {
               Show shortcuts in multiple columns instead of the floating button.
             </label>
           </details>
-        </p>
+        </p> */}
         {shortcuts.length > 0 ? (
           <ol class="shortcuts-list">
             {shortcuts.map((shortcut, i) => {

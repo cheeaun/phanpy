@@ -286,24 +286,10 @@ function App() {
       <Routes>
         <Route path="/:instance?/s/:id" element={<Status />} />
       </Routes>
-      <nav id="tab-bar" hidden>
-        <li>
-          <Link to="/">
-            <Icon icon="home" alt="Home" size="xl" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/notifications">
-            <Icon icon="notification" alt="Notifications" size="xl" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/bookmarks">
-            <Icon icon="bookmark" alt="Bookmarks" size="xl" />
-          </Link>
-        </li>
-      </nav>
-      {!snapStates.settings.shortcutsColumnsMode && <Shortcuts />}
+      {(!snapStates.settings.shortcutsColumnsMode ||
+        snapStates.settings.shortcutsViewMode !== 'multi-column') && (
+        <Shortcuts />
+      )}
       {!!snapStates.showCompose && (
         <Modal>
           <Compose

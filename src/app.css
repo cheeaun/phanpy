@@ -945,6 +945,7 @@ body:has(.status-deck) .media-post-link {
   transform: translateY(200%);
   pointer-events: none;
   user-select: none;
+  opacity: 0;
 }
 #compose-button .icon {
   transition: transform 0.3s ease-in-out;
@@ -962,6 +963,10 @@ body:has(.status-deck) .media-post-link {
 }
 #compose-button .icon {
   filter: drop-shadow(0 1px 2px var(--button-bg-color));
+}
+#app:has(#shortcuts .tab-bar) #compose-button {
+  bottom: calc(16px + 52px);
+  bottom: calc(max(16px, env(safe-area-inset-bottom)) + 52px);
 }
 
 /* SHEET */
@@ -1271,43 +1276,6 @@ meter.donut:is(.danger, .explode):after {
   opacity: 0;
   /* This causes scrollTop to be reset to 0 when the page is hidden */
   /* content-visibility: hidden; */
-}
-
-/* TAB BAR */
-
-#tab-bar:not([hidden]) {
-  position: fixed;
-  bottom: 16px;
-  bottom: max(16px, env(safe-area-inset-bottom));
-  width: calc(100% - 32px);
-  max-width: calc(var(--main-width) - 32px);
-  z-index: 100;
-  display: flex;
-  background-color: var(--bg-blur-color);
-  backdrop-filter: blur(16px) saturate(3);
-  border: var(--hairline-width) solid var(--outline-color);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px var(--outline-color);
-}
-#tab-bar li {
-  flex-grow: 1;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-#tab-bar li a {
-  text-align: center;
-  padding: 16px 0;
-  display: block;
-  color: var(--text-insignificant-color);
-}
-#tab-bar li a.is-active {
-  color: var(--link-color);
-  background-image: radial-gradient(
-    closest-side at 50% 50%,
-    var(--bg-blur-color),
-    transparent 75%
-  );
 }
 
 /* 404 */

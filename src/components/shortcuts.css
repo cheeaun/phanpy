@@ -44,3 +44,114 @@
     transform: translateY(-200%);
   }
 }
+
+/* TAB BAR */
+
+#shortcuts .tab-bar:not([hidden]) {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--bg-blur-color);
+  backdrop-filter: blur(16px) saturate(3);
+  border-top: var(--hairline-width) solid var(--outline-color);
+  box-shadow: 0 -8px 16px -8px var(--drop-shadow-color);
+  overflow: auto;
+  transition: all 0.3s ease-in-out;
+  padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+#shortcuts .tab-bar ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+#shortcuts .tab-bar li {
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+#shortcuts .tab-bar li a {
+  padding: 16px 0;
+  display: block;
+  color: var(--text-insignificant-color);
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px;
+  text-decoration: none;
+  text-shadow: 0 var(--hairline-width) var(--bg-color);
+  max-width: max(44px, 20vw);
+}
+#shortcuts .tab-bar li a:active {
+  transform: scale(0.95);
+  transition: none;
+}
+#shortcuts .tab-bar li a * {
+  pointer-events: none;
+}
+#shortcuts .tab-bar li a span {
+  width: 100%;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#shortcuts .tab-bar li a.is-active {
+  color: var(--link-color);
+  background-image: radial-gradient(
+    closest-side at 50% 50%,
+    var(--bg-color),
+    transparent
+  );
+}
+#app:has(header[hidden]) #shortcuts .tab-bar,
+shortcuts .tab-bar[hidden] {
+  transform: translateY(200%);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (min-width: calc(40em)) {
+  .timeline-deck {
+    margin-top: 44px;
+  }
+  .timeline-deck > header {
+    --margin-top: calc(44px + 8px);
+  }
+  #shortcuts .tab-bar:not([hidden]) {
+    top: 0;
+    bottom: auto;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 0
+      env(safe-area-inset-left);
+    background-color: var(--bg-faded-blur-color);
+    border: 0;
+    box-shadow: none;
+    border-bottom: var(--hairline-width) solid var(--bg-faded-color);
+  }
+  #shortcuts .tab-bar ul {
+    justify-content: center;
+  }
+  #shortcuts .tab-bar li {
+    flex-grow: 0;
+  }
+  #shortcuts .tab-bar li a {
+    padding: 0 16px;
+    flex-direction: row;
+    font-size: 14px;
+    height: 44px;
+    gap: 4px;
+  }
+  #app:has(header[hidden]) #shortcuts .tab-bar,
+  shortcuts .tab-bar[hidden] {
+    transform: translateY(-150%);
+    pointer-events: none;
+    user-select: none;
+  }
+}

@@ -11,7 +11,7 @@ import states from '../utils/states';
 
 import AsyncText from './AsyncText';
 import Icon from './icon';
-import Link from './Link';
+import Link from './link';
 import MenuLink from './MenuLink';
 
 function Shortcuts() {

@@ -47,7 +47,7 @@ const visibilityText = {
   public: 'Public',
   unlisted: 'Unlisted',
   private: 'Followers only',
-  direct: 'Mentioned people only',
+  direct: 'Direct',
 };
 
 function Status({

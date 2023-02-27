@@ -75,7 +75,6 @@
   display: flex;
 }
 #shortcuts .tab-bar li a {
-  padding: 16px 0;
   display: block;
   color: var(--text-insignificant-color);
   font-size: 10px;
@@ -86,7 +85,7 @@
   padding: 8px;
   text-decoration: none;
   text-shadow: 0 var(--hairline-width) var(--bg-color);
-  max-width: max(44px, 20vw);
+  width: 20vw;
 }
 #shortcuts .tab-bar li a:active {
   transform: scale(0.95);
@@ -143,6 +142,7 @@ shortcuts .tab-bar[hidden] {
   }
   #shortcuts .tab-bar li a {
     padding: 0 16px;
+    width: auto;
     flex-direction: row;
     font-size: 14px;
     height: 44px;

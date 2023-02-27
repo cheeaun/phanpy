@@ -61,6 +61,8 @@
   transition: all 0.3s ease-in-out;
   padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom)
     env(safe-area-inset-left);
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 #shortcuts .tab-bar ul {
   display: flex;

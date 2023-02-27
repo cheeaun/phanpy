@@ -966,7 +966,7 @@ body:has(.status-deck) .media-post-link {
 }
 #app:has(#shortcuts .tab-bar) #compose-button {
   bottom: calc(16px + 52px);
-  bottom: calc(max(16px, env(safe-area-inset-bottom)) + 52px);
+  bottom: calc(16px + env(safe-area-inset-bottom) + 52px);
 }
 
 /* SHEET */

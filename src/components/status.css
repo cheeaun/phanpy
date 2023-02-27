@@ -144,6 +144,15 @@
 .status > .container > .meta a.time:is(:hover, :focus) {
   text-decoration: underline;
 }
+.status > .container > .meta a.time {
+  position: relative;
+  overflow: visible;
+}
+.status > .container > .meta a.time:after {
+  content: '';
+  position: absolute;
+  inset: -16px;
+}
 .status > .container > .meta .reply-to {
   opacity: 0.5;
   font-size: smaller;

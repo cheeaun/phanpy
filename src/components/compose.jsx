@@ -5,6 +5,7 @@ import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { createRegexRenderer, RichTextarea } from 'rich-textarea';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useDebouncedCallback } from 'use-debounce';
@@ -1038,6 +1039,28 @@ function Compose({
   );
 }
 
+const HIGHLIGHT_REG = /(#|@|:)[\p{L}\p{M}\p{N}\p{Pc}_@\.]+:?/gu;
+const highlightRenderer = createRegexRenderer([
+  [
+    HIGHLIGHT_REG,
+    ({ value }) => {
+      const first = value[0];
+      const last = value[value.length - 1] === ':' ? ':' : '';
+      const rest = value.slice(1, last ? -1 : undefined);
+      return (
+        <>
+          <mark class="compose-highlight">{first}</mark>
+          {rest}
+          {last && <mark class="compose-highlight">{last}</mark>}
+        </>
+      );
+    },
+  ],
+  [urlRegexObj, (props) => <mark class="compose-link" {...props} />],
+]);
+
+const RICH_TEXTAREA = true;
+
 const Textarea = forwardRef((props, ref) => {
   const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
@@ -1216,33 +1239,39 @@ const Textarea = forwardRef((props, ref) => {
     };
   }, []);
 
+  const fieldProps = {
+    autoCapitalize: 'sentences',
+    autoComplete: 'on',
+    autoCorrect: 'on',
+    spellCheck: 'true',
+    dir: 'auto',
+    rows: '6',
+    cols: '50',
+    ...textareaProps,
+    ref,
+    name: 'status',
+    value: text,
+    onInput: (e) => {
+      const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
+      setText(value);
+      const offset = offsetHeight - clientHeight;
+      e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+      props.onInput?.(e);
+    },
+    style: {
+      width: '100%',
+      height: '4em',
+      '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
+    },
+  };
+
   return (
     <text-expander ref={textExpanderRef} keys="@ # :">
-      <textarea
-        autoCapitalize="sentences"
-        autoComplete="on"
-        autoCorrect="on"
-        spellCheck="true"
-        dir="auto"
-        rows="6"
-        cols="50"
-        {...textareaProps}
-        ref={ref}
-        name="status"
-        value={text}
-        onInput={(e) => {
-          const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
-          setText(value);
-          const offset = offsetHeight - clientHeight;
-          e.target.style.height = value ? scrollHeight + offset + 'px' : null;
-          props.onInput?.(e);
-        }}
-        style={{
-          width: '100%',
-          height: '4em',
-          '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
-        }}
-      />
+      {RICH_TEXTAREA ? (
+        <RichTextarea {...fieldProps}>{highlightRenderer}</RichTextarea>
+      ) : (
+        <textarea {...fieldProps} />
+      )}
     </text-expander>
   );
 });

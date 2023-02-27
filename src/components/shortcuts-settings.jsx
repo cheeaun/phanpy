@@ -82,7 +82,7 @@ const TYPE_PARAMS = {
 };
 export const SHORTCUTS_META = {
   following: {
-    id: (_, index) => (index === 0 ? 'home' : 'following'),
+    id: 'home',
     title: (_, index) => (index === 0 ? 'Home' : 'Following'),
     path: '/',
     icon: 'home',

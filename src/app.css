@@ -1044,6 +1044,8 @@ body:has(.status-deck) .media-post-link {
 
 .szh-menu-container:has(.szh-menu--state-open) {
   inset: 0;
+  inset: max(0, env(safe-area-inset-top)) max(0, env(safe-area-inset-right))
+    max(0, env(safe-area-inset-bottom)) max(0, env(safe-area-inset-left));
 }
 .szh-menu {
   padding: 8px 0;

@@ -75,6 +75,7 @@
   padding: 0;
   list-style: none;
   display: flex;
+  justify-content: center;
 }
 #shortcuts .tab-bar li a {
   display: block;
@@ -119,7 +120,7 @@ shortcuts .tab-bar[hidden] {
   user-select: none;
 }
 
-@media (min-width: calc(40em)) {
+@media (min-width: 40em) {
   #app:has(#shortcuts .tab-bar) .timeline-deck {
     margin-top: 44px;
   }
@@ -136,8 +137,13 @@ shortcuts .tab-bar[hidden] {
     box-shadow: none;
     border-bottom: var(--hairline-width) solid var(--bg-faded-color);
   }
-  #shortcuts .tab-bar ul {
-    justify-content: center;
+  #shortcuts .tab-bar ul:before {
+    content: '';
+    margin: auto;
+  }
+  #shortcuts .tab-bar ul:after {
+    content: '';
+    margin: auto;
   }
   #shortcuts .tab-bar li {
     flex-grow: 0;

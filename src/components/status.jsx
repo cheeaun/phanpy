@@ -339,6 +339,7 @@ function Status({
     }
   };
 
+  const menuInstanceRef = useRef();
   const StatusMenuItems = (
     <>
       {!isSizeLarge && (
@@ -559,22 +560,28 @@ function Status({
           {size !== 'l' &&
             (url ? (
               <Menu
+                instanceRef={menuInstanceRef}
                 portal={{
                   target:
                     document.querySelector('.status-deck') || document.body,
+                }}
+                containerProps={{
+                  onClick: () => {
+                    menuInstanceRef.current?.closeMenu?.();
+                  },
                 }}
                 align="end"
                 offsetY={4}
                 overflow="auto"
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
+                unmountOnClose
                 menuButton={
                   <Link
                     to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      console.log('click', e);
                     }}
                     class="time"
                   >

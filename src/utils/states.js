@@ -6,6 +6,7 @@ import { api } from './api';
 import store from './store';
 
 const states = proxy({
+  appVersion: {},
   // history: [],
   prevLocation: null,
   currentLocation: null,

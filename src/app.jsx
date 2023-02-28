@@ -19,8 +19,6 @@ import { useSnapshot } from 'valtio';
 import Account from './components/account';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
-import Icon from './components/icon';
-import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -56,6 +54,7 @@ import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
+import useInterval from './utils/useInterval';
 import usePageVisibility from './utils/usePageVisibility';
 
 window.__STATES__ = states;
@@ -240,6 +239,18 @@ function App() {
     const { pathname } = location;
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
+
+  useInterval(() => {
+    console.log('✨ Check app update');
+    fetch('./version.json')
+      .then((r) => r.json())
+      .then((info) => {
+        if (info) states.appVersion = info;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, visible && 1000 * 60 * 60); // 1 hour
 
   return (
     <>

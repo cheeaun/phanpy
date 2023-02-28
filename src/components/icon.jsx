@@ -61,6 +61,7 @@ const ICONS = {
   link: 'mingcute:link-2-line',
   history: 'mingcute:history-line',
   share: 'mingcute:share-2-line',
+  sparkles: 'mingcute:sparkles-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

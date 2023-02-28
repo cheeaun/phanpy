@@ -34,6 +34,27 @@ function NavMenu(props) {
         </button>
       }
     >
+      {!!snapStates.appVersion?.commitHash &&
+        __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+          <>
+            <MenuItem
+              onClick={() => {
+                const yes = confirm('Reload page now to update?');
+                if (yes) {
+                  (async () => {
+                    try {
+                      location.reload();
+                    } catch (e) {}
+                  })();
+                }
+              }}
+            >
+              <Icon icon="sparkles" size="l" />{' '}
+              <span>New update available…</span>
+            </MenuItem>
+            <MenuDivider />
+          </>
+        )}
       <MenuLink to="/">
         <Icon icon="home" size="l" /> <span>Home</span>
       </MenuLink>

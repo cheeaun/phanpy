@@ -646,7 +646,9 @@ function StatusPage() {
                             </p>
                             <button
                               type="button"
+                              disabled={uiState === 'loading'}
                               onClick={() => {
+                                setUIState('loading');
                                 (async () => {
                                   try {
                                     const results =
@@ -667,6 +669,7 @@ function StatusPage() {
                                       throw new Error('No results');
                                     }
                                   } catch (e) {
+                                    setUIState('default');
                                     alert('Error: ' + e);
                                     console.error(e);
                                   }

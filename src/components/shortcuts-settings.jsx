@@ -206,12 +206,8 @@ function ShortcutsSettings() {
       </header>
       <main>
         <p>
-          Specify a list of shortcuts that'll appear in the floating Shortcuts
-          button.
-        </p>
-        <p>
-          <label>
-            View mode{' '}
+          <label class="shortcuts-view-mode">
+            Specify a list of shortcuts that'll appear&nbsp;as:
             <select
               value={snapStates.settings.shortcutsViewMode || 'float-button'}
               onChange={(e) => {

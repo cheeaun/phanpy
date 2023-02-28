@@ -120,6 +120,12 @@ shortcuts .tab-bar[hidden] {
   user-select: none;
 }
 
+@media (max-width: calc(40em - 1px)) {
+  #app:has(#shortcuts .tab-bar) .deck-container {
+    padding-bottom: 52px;
+  }
+}
+
 @media (min-width: 40em) {
   #app:has(#shortcuts .tab-bar) .timeline-deck {
     margin-top: 44px;

@@ -58,7 +58,7 @@ function Notifications() {
   const scrollableRef = useRef();
   const { nearReachEnd, scrollDirection, reachStart, nearReachStart } =
     useScroll({
-      scrollableElement: scrollableRef.current,
+      scrollableRef,
     });
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 
 export default function useScroll({
-  scrollableElement,
+  scrollableRef,
   distanceFromStart = 1, // ratio of clientHeight/clientWidth
   distanceFromEnd = 1, // ratio of clientHeight/clientWidth
   scrollThresholdStart = 10,
@@ -17,12 +17,8 @@ export default function useScroll({
   const [nearReachEnd, setNearReachEnd] = useState(false);
   const isVertical = direction === 'vertical';
 
-  if (!scrollableElement) {
-    // Better be explicit instead of auto-assign to window
-    return {};
-  }
-
   useEffect(() => {
+    const scrollableElement = scrollableRef.current;
     let previousScrollStart = isVertical
       ? scrollableElement.scrollTop
       : scrollableElement.scrollLeft;
@@ -77,7 +73,6 @@ export default function useScroll({
 
     return () => scrollableElement.removeEventListener('scroll', onScroll);
   }, [
-    scrollableElement,
     distanceFromStart,
     distanceFromEnd,
     scrollThresholdStart,
@@ -91,8 +86,8 @@ export default function useScroll({
     nearReachStart,
     nearReachEnd,
     init: () => {
-      if (scrollableElement) {
-        scrollableElement.dispatchEvent(new Event('scroll'));
+      if (scrollableRef.current) {
+        scrollableRef.current.dispatchEvent(new Event('scroll'));
       }
     },
   };

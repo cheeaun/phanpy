@@ -168,7 +168,7 @@ function Timeline({
     reachStart,
     reachEnd,
   } = useScroll({
-    scrollableElement: scrollableRef.current,
+    scrollableRef,
     distanceFromEnd: 2,
     scrollThresholdStart: 44,
   });
@@ -477,7 +477,7 @@ function groupBoosts(values) {
 function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();
   const { reachStart, reachEnd, init } = useScroll({
-    scrollableElement: carouselRef.current,
+    scrollableRef: carouselRef,
     direction: 'horizontal',
   });
   useEffect(() => {

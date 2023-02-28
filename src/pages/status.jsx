@@ -456,7 +456,7 @@ function StatusPage() {
   });
 
   const { nearReachStart } = useScroll({
-    scrollableElement: scrollableRef.current,
+    scrollableRef,
     distanceFromStartPx: 16,
   });
 

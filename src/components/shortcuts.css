@@ -120,10 +120,10 @@ shortcuts .tab-bar[hidden] {
 }
 
 @media (min-width: calc(40em)) {
-  .timeline-deck {
+  #app:has(#shortcuts .tab-bar) .timeline-deck {
     margin-top: 44px;
   }
-  .timeline-deck > header {
+  #app:has(#shortcuts .tab-bar) .timeline-deck > header {
     --margin-top: calc(44px + 8px);
   }
   #shortcuts .tab-bar:not([hidden]) {

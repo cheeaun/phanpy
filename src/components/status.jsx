@@ -1388,8 +1388,41 @@ function _unfurlMastodonLink(instance, url) {
     return Promise.resolve(states.unfurledLinks[url]);
   }
   console.debug('🦦 Unfurling URL', url);
+
+  let remoteInstanceFetch;
+  const urlObj = new URL(url);
+  const domain = urlObj.hostname;
+  const path = urlObj.pathname;
+  // Regex /:username/:id, where username = @username or @username@domain, id = number
+  const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/(\d+)$/i;
+  const statusMatch = statusRegex.exec(path);
+  if (statusMatch) {
+    const id = statusMatch[3];
+    const { masto } = api({ instance: domain });
+    remoteInstanceFetch = masto.v1.statuses
+      .fetch(id)
+      .then((status) => {
+        if (status?.id) {
+          const statusURL = `/${domain}/s/${id}`;
+          const result = {
+            id,
+            url: statusURL,
+          };
+          console.debug('🦦 Unfurled URL', url, id, statusURL);
+          states.unfurledLinks[url] = result;
+          return result;
+        } else {
+          failedUnfurls[url] = true;
+          throw new Error('No results');
+        }
+      })
+      .catch((e) => {
+        failedUnfurls[url] = true;
+      });
+  }
+
   const { masto } = api({ instance });
-  return masto.v2
+  const mastoSearchFetch = masto.v2
     .search({
       q: url,
       type: 'statuses',
@@ -1418,6 +1451,8 @@ function _unfurlMastodonLink(instance, url) {
       // console.warn(e);
       // Silently fail
     });
+
+  return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
 }
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);

@@ -565,11 +565,11 @@ function Status({
                   target:
                     document.querySelector('.status-deck') || document.body,
                 }}
-                containerProps={{
-                  onClick: () => {
-                    menuInstanceRef.current?.closeMenu?.();
-                  },
-                }}
+                // containerProps={{
+                //   onClick: () => {
+                //     menuInstanceRef.current?.closeMenu?.();
+                //   },
+                // }}
                 align="end"
                 offsetY={4}
                 overflow="auto"

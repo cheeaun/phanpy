@@ -851,7 +851,6 @@ button.carousel-dot {
   backdrop-filter: blur(12px) invert(0.25);
 }
 button.carousel-dot {
-  color: var(--text-insignificant-color) !important;
   font-weight: bold;
   backdrop-filter: none !important;
   transition: all 0.2s;
@@ -859,8 +858,11 @@ button.carousel-dot {
 button.carousel-dot[disabled] {
   pointer-events: none;
 }
-button.carousel-dot:is(:hover, :focus, .active, [disabled].active) {
-  color: var(--button-text-color) !important;
+button.carousel-dot:not(.active) {
+  opacity: 0.5;
+}
+button.carousel-dot:not(.active):is(:hover, :focus) {
+  opacity: 1;
 }
 button.carousel-dot:is(.active, [disabled].active) {
   opacity: 1;

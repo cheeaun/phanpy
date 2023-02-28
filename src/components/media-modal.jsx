@@ -144,7 +144,7 @@ function MediaModal({
                 key={media.id}
                 type="button"
                 disabled={i === currentIndex}
-                class={`plain carousel-dot ${
+                class={`plain3 carousel-dot ${
                   i === currentIndex ? 'active' : ''
                 }`}
                 onClick={(e) => {

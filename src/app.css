@@ -1040,6 +1040,9 @@ body:has(.status-deck) .media-post-link {
 
 /* MENU POPUP */
 
+.szh-menu-container:has(.szh-menu--state-open) {
+  inset: 0;
+}
 .szh-menu {
   padding: 8px 0;
   margin: 0;

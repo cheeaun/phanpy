@@ -249,10 +249,10 @@ function ShortcutsSettings() {
               if (!SHORTCUTS_META[type]) return null;
               let { icon, title } = SHORTCUTS_META[type];
               if (typeof title === 'function') {
-                title = title(shortcut);
+                title = title(shortcut, i);
               }
               if (typeof icon === 'function') {
-                icon = icon(shortcut);
+                icon = icon(shortcut, i);
               }
               return (
                 <li key={key}>

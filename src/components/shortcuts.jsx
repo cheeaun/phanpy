@@ -33,16 +33,16 @@ function Shortcuts() {
           let { id, path, title, icon } = SHORTCUTS_META[type];
 
           if (typeof id === 'function') {
-            id = id(data);
+            id = id(data, i);
           }
           if (typeof path === 'function') {
             path = path(data, i);
           }
           if (typeof title === 'function') {
-            title = title(data);
+            title = title(data, i);
           }
           if (typeof icon === 'function') {
-            icon = icon(data);
+            icon = icon(data, i);
           }
 
           return {

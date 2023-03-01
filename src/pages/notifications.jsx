@@ -214,7 +214,7 @@ function Notifications() {
               const heading =
                 notificationDay.toDateString() === yesterdayDate.toDateString()
                   ? 'Yesterday'
-                  : niceDate(currentDay, {
+                  : niceDateTime(currentDay, {
                       hideTime: true,
                     });
               return (

@@ -579,14 +579,14 @@ function Status({
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
                 unmountOnClose
-                menuButton={
+                menuButton={({ open }) => (
                   <Link
                     to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                     }}
-                    class="time"
+                    class={`time ${open ? 'is-open' : ''}`}
                   >
                     <Icon
                       icon={visibilityIconsMap[visibility]}
@@ -595,7 +595,7 @@ function Status({
                     />{' '}
                     <RelativeTime datetime={createdAtDate} format="micro" />
                   </Link>
-                }
+                )}
               >
                 {StatusMenuItems}
               </Menu>

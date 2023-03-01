@@ -141,12 +141,17 @@
   margin-left: 4px;
   white-space: nowrap;
 }
-.status > .container > .meta a.time:is(:hover, :focus) {
-  text-decoration: underline;
-}
 .status > .container > .meta a.time {
   position: relative;
   overflow: visible;
+}
+.status > .container > .meta a.time:is(:hover, :focus) {
+  text-decoration: underline;
+}
+.status > .container > .meta a.time:active,
+.status > .container > .meta a.time.is-open {
+  text-decoration: none;
+  opacity: 1;
 }
 .status > .container > .meta a.time:after {
   content: '';

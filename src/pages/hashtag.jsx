@@ -186,7 +186,7 @@ function Hashtags(props) {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const newHashtag = e.target[0].value;
+                  const newHashtag = e.target[0].value?.trim?.();
                   // Use includes but need to be case insensitive
                   if (
                     newHashtag &&
@@ -212,8 +212,11 @@ function Hashtags(props) {
                     reachLimit ? `Max ${TOTAL_TAGS_LIMIT} tags` : 'Add hashtag'
                   }
                   required
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck={false}
                   // no spaces, no hashtags
-                  pattern="[^\s#]+"
+                  pattern="[^#][^\s#]+[^#]"
                   disabled={reachLimit}
                 />
               </form>

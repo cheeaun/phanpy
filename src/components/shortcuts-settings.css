@@ -40,39 +40,20 @@
   cursor: pointer;
 }
 
-#shortcuts-settings-container form {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 16px;
-  background-color: var(--bg-faded-color);
-  border-radius: 16px;
+#shortcut-settings-form form > * {
 }
 
-#shortcuts-settings-container form header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#shortcuts-settings-container form > * {
-  flex-basis: max(320px, 100%);
-  margin: 0;
-  padding: 0;
-}
-
-#shortcuts-settings-container form label {
+#shortcut-settings-form label {
   display: flex;
   flex-direction: row;
   gap: 8px;
   align-items: center;
 }
-#shortcuts-settings-container form label > span:first-child {
+#shortcut-settings-form label > span:first-child {
   flex-basis: 5em;
   text-align: right;
 }
-#shortcuts-settings-container form :is(input[type='text'], select) {
+#shortcut-settings-form :is(input[type='text'], select) {
   flex-grow: 1;
   flex-basis: 70%;
   flex-shrink: 1;

@@ -60,7 +60,7 @@
   animation: appear-up 1s ease-in-out;
   overflow: auto;
 }
-#compose-container .status-preview .hashtag {
+#compose-container .status-preview :is(.hashtag, .time) {
   /* Prevent hashtags from being clickable */
   /* TODO: maybe use a different solution? */
   pointer-events: none;

@@ -562,10 +562,13 @@ function Status({
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
-                  target:
-                    document.querySelector('.status-deck') || document.body,
+                  target: document.body,
                 }}
                 containerProps={{
+                  style: {
+                    // Higher than the backdrop
+                    zIndex: 1001,
+                  },
                   onClick: () => {
                     menuInstanceRef.current?.closeMenu?.();
                   },

@@ -310,10 +310,12 @@ function App() {
       <Routes>
         <Route path="/:instance?/s/:id" element={<Status />} />
       </Routes>
-      {!snapStates.settings.shortcutsColumnsMode &&
-        snapStates.settings.shortcutsViewMode !== 'multi-column' && (
-          <Shortcuts />
-        )}
+      <div>
+        {!snapStates.settings.shortcutsColumnsMode &&
+          snapStates.settings.shortcutsViewMode !== 'multi-column' && (
+            <Shortcuts />
+          )}
+      </div>
       {!!snapStates.showCompose && (
         <Modal>
           <Compose

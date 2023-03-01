@@ -7,6 +7,7 @@ import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
+import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
@@ -205,11 +206,9 @@ function Account({ account, instance: propInstance, onClose }) {
                     <br />
                     <b>
                       <time datetime={createdAt}>
-                        {Intl.DateTimeFormat('en', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        }).format(new Date(createdAt))}
+                        {niceDateTime(createdAt, {
+                          hideTime: true,
+                        })}
                       </time>
                     </b>
                   </span>

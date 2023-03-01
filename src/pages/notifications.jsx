@@ -13,6 +13,7 @@ import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import { api } from '../utils/api';
+import niceDateTime from '../utils/nice-date-time';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import useScroll from '../utils/useScroll';
@@ -213,15 +214,9 @@ function Notifications() {
               const heading =
                 notificationDay.toDateString() === yesterdayDate.toDateString()
                   ? 'Yesterday'
-                  : Intl.DateTimeFormat('en', {
-                      // Show year if not current year
-                      year:
-                        currentDay.getFullYear() === todayDate.getFullYear()
-                          ? undefined
-                          : 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    }).format(currentDay);
+                  : niceDate(currentDay, {
+                      hideTime: true,
+                    });
               return (
                 <>
                   {differentDay && <h2 class="timeline-header">{heading}</h2>}

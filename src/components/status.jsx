@@ -16,6 +16,7 @@ import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus, statusKey } from '../utils/states';
@@ -226,25 +227,8 @@ function Status({
   const textWeight = () =>
     Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
 
-  const locale = new Intl.DateTimeFormat().resolvedOptions().locale;
-  const createdDateText = Intl.DateTimeFormat(locale, {
-    // Show year if not current year
-    year: createdAtDate.getFullYear() === currentYear ? undefined : 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  }).format(createdAtDate);
-  const editedDateText =
-    editedAt &&
-    Intl.DateTimeFormat(locale, {
-      // Show year if not this year
-      year: editedAtDate.getFullYear() === currentYear ? undefined : 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-    }).format(editedAtDate);
+  const createdDateText = niceDateTime(createdAtDate);
+  const editedDateText = editedAt && niceDateTime(editedAtDate);
 
   const isSizeLarge = size === 'l';
   // TODO: if visibility = private, only can boost own statuses
@@ -1271,21 +1255,7 @@ function EditedAtModal({
               return (
                 <li key={createdAt} class="history-item">
                   <h3>
-                    <time>
-                      {Intl.DateTimeFormat('en', {
-                        // Show year if not current year
-                        year:
-                          createdAtDate.getFullYear() === currentYear
-                            ? undefined
-                            : 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        weekday: 'short',
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      }).format(createdAtDate)}
-                    </time>
+                    <time>{niceDate(createdAtDate)}</time>
                   </h3>
                   <Status
                     status={status}

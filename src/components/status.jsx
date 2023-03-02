@@ -1295,7 +1295,7 @@ function EditedAtModal({
               return (
                 <li key={createdAt} class="history-item">
                   <h3>
-                    <time>{niceDate(createdAtDate)}</time>
+                    <time>{niceDateTime(createdAtDate)}</time>
                   </h3>
                   <Status
                     status={status}

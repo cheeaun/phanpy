@@ -1,15 +1,18 @@
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useRef } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Public({ local, ...props }) {
+  const snapStates = useSnapshot(states);
   const isLocal = !!local;
   const params = useParams();
   const { masto, instance } = api({
@@ -74,6 +77,7 @@ function Public({ local, ...props }) {
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
       headerStart={<></>}
+      boostsCarousel={snapStates.settings.boostsCarousel}
       headerEnd={
         <Menu
           portal={{

@@ -1014,7 +1014,7 @@ function Compose({
               onChange={(e) => {
                 const { value } = e.target;
                 setLanguage(value || DEFAULT_LANG);
-                store.session.set('language', value);
+                store.session.set('currentLanguage', value || DEFAULT_LANG);
               }}
               disabled={uiState === 'loading'}
             >

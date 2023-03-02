@@ -38,6 +38,10 @@ Everything is designed and engineered for my own use case, following my taste an
 - 🌗 Light/dark/auto theme
 - 🔔 Grouped notifications
 - 🪺 Nested replies view
+- 📬 Unsent draft recovery
+- 🎠 Boosts Carousel™️
+- ⚡ Shortcuts™️ with view modes like multi-column or tab bar
+- #️⃣ Multi-hashtag timeline
 
 ## Design decisions
 

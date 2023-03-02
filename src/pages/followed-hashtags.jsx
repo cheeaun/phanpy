@@ -39,7 +39,7 @@ function FollowedHashtags() {
   }, []);
 
   return (
-    <div id="followed-hashtags-page" class="deck-container">
+    <div id="followed-hashtags-page" class="deck-container" tabIndex="-1">
       <div class="timeline-deck deck">
         <header>
           <div class="header-grid">

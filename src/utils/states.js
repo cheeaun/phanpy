@@ -6,6 +6,7 @@ import { api } from './api';
 import store from './store';
 
 const states = proxy({
+  appVersion: {},
   // history: [],
   prevLocation: null,
   currentLocation: null,
@@ -37,6 +38,7 @@ const states = proxy({
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
   settings: {
+    shortcutsViewMode: store.account.get('settings-shortcutsViewMode') ?? null,
     shortcutsColumnsMode:
       store.account.get('settings-shortcutsColumnsMode') ?? false,
     boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
@@ -57,6 +59,9 @@ subscribe(states, (v) => {
   }
   if (path.join('.') === 'settings.shortcutsColumnsMode') {
     store.account.set('settings-shortcutsColumnsMode', !!value);
+  }
+  if (path.join('.') === 'settings.shortcutsViewMode') {
+    store.account.set('settings-shortcutsViewMode', value);
   }
   if (path?.[0] === 'shortcuts') {
     store.account.set('shortcuts', states.shortcuts);

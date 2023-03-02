@@ -119,7 +119,8 @@ function Settings({ onClose }) {
                             setCurrentDefault(i);
                           }}
                         >
-                          Set as default
+                          <Icon icon="check-circle" />
+                          <span>Set as default</span>
                         </MenuItem>
                       )}
                       <MenuItem
@@ -133,7 +134,8 @@ function Settings({ onClose }) {
                           location.href = '/';
                         }}
                       >
-                        Log out
+                        <Icon icon="exit" />
+                        <span>Log out</span>
                       </MenuItem>
                     </Menu>
                   </div>
@@ -156,88 +158,90 @@ function Settings({ onClose }) {
           </p>
         </section>
         <h2>Settings</h2>
-        <ul class="section">
-          <li>
-            <div>
-              <label>Appearance</label>
-            </div>
-            <div>
-              <form
-                ref={themeFormRef}
-                onInput={(e) => {
-                  console.log(e);
-                  e.preventDefault();
-                  const formData = new FormData(themeFormRef.current);
-                  const theme = formData.get('theme');
-                  const html = document.documentElement;
+        <section>
+          <ul>
+            <li>
+              <div>
+                <label>Appearance</label>
+              </div>
+              <div>
+                <form
+                  ref={themeFormRef}
+                  onInput={(e) => {
+                    console.log(e);
+                    e.preventDefault();
+                    const formData = new FormData(themeFormRef.current);
+                    const theme = formData.get('theme');
+                    const html = document.documentElement;
 
-                  if (theme === 'auto') {
-                    html.classList.remove('is-light', 'is-dark');
-                  } else {
-                    html.classList.toggle('is-light', theme === 'light');
-                    html.classList.toggle('is-dark', theme === 'dark');
-                  }
-                  document
-                    .querySelector('meta[name="color-scheme"]')
-                    .setAttribute(
-                      'content',
-                      theme === 'auto' ? 'dark light' : theme,
-                    );
+                    if (theme === 'auto') {
+                      html.classList.remove('is-light', 'is-dark');
+                    } else {
+                      html.classList.toggle('is-light', theme === 'light');
+                      html.classList.toggle('is-dark', theme === 'dark');
+                    }
+                    document
+                      .querySelector('meta[name="color-scheme"]')
+                      .setAttribute(
+                        'content',
+                        theme === 'auto' ? 'dark light' : theme,
+                      );
 
-                  if (theme === 'auto') {
-                    store.local.del('theme');
-                  } else {
-                    store.local.set('theme', theme);
-                  }
-                }}
-              >
-                <div class="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="light"
-                      defaultChecked={currentTheme === 'light'}
-                    />
-                    <span>Light</span>
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="dark"
-                      defaultChecked={currentTheme === 'dark'}
-                    />
-                    <span>Dark</span>
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="auto"
-                      defaultChecked={
-                        currentTheme !== 'light' && currentTheme !== 'dark'
-                      }
-                    />
-                    <span>Auto</span>
-                  </label>
-                </div>
-              </form>
-            </div>
-          </li>
-          <li>
-            <label>
-              <input
-                type="checkbox"
-                checked={snapStates.settings.boostsCarousel}
-                onChange={(e) => {
-                  states.settings.boostsCarousel = e.target.checked;
-                }}
-              />{' '}
-              Boosts carousel (experimental)
-            </label>
-          </li>
-        </ul>
+                    if (theme === 'auto') {
+                      store.local.del('theme');
+                    } else {
+                      store.local.set('theme', theme);
+                    }
+                  }}
+                >
+                  <div class="radio-group">
+                    <label>
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="light"
+                        defaultChecked={currentTheme === 'light'}
+                      />
+                      <span>Light</span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="dark"
+                        defaultChecked={currentTheme === 'dark'}
+                      />
+                      <span>Dark</span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="auto"
+                        defaultChecked={
+                          currentTheme !== 'light' && currentTheme !== 'dark'
+                        }
+                      />
+                      <span>Auto</span>
+                    </label>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.boostsCarousel}
+                  onChange={(e) => {
+                    states.settings.boostsCarousel = e.target.checked;
+                  }}
+                />{' '}
+                Boosts carousel (experimental)
+              </label>
+            </li>
+          </ul>
+        </section>
         <h2>Hidden features</h2>
         <section>
           <div>

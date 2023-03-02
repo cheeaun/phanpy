@@ -141,8 +141,22 @@
   margin-left: 4px;
   white-space: nowrap;
 }
+.status > .container > .meta a.time {
+  position: relative;
+  overflow: visible;
+}
 .status > .container > .meta a.time:is(:hover, :focus) {
   text-decoration: underline;
+}
+.status > .container > .meta a.time:active,
+.status > .container > .meta a.time.is-open {
+  text-decoration: none;
+  opacity: 1;
+}
+.status > .container > .meta a.time:after {
+  content: '';
+  position: absolute;
+  inset: -16px;
 }
 .status > .container > .meta .reply-to {
   opacity: 0.5;
@@ -320,6 +334,11 @@
   grid-auto-rows: 1fr;
   gap: 2px;
   height: 160px;
+}
+.status .media-container.media-eq1 {
+  min-height: 44px;
+  height: auto;
+  max-height: 160px;
 }
 .status .media-container.media-gt2 {
   height: 200px;
@@ -644,7 +663,11 @@ a:focus-visible .card img {
   flex-grow: 1;
   align-self: center;
 }
-.status.large .card.large .meta-container {
+.status.large .card.large .meta-container,
+.status-carousel
+  .content-container[data-content-text-weight='1']
+  .card.large
+  .meta-container {
   align-self: flex-start;
   flex-grow: 0;
 }

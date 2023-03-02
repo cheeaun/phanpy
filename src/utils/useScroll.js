@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'preact/hooks';
 
 export default function useScroll({
-  scrollableElement,
+  scrollableRef,
   distanceFromStart = 1, // ratio of clientHeight/clientWidth
   distanceFromEnd = 1, // ratio of clientHeight/clientWidth
   scrollThresholdStart = 10,
   scrollThresholdEnd = 10,
   direction = 'vertical',
+  distanceFromStartPx: _distanceFromStartPx,
+  distanceFromEndPx: _distanceFromEndPx,
 } = {}) {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [reachStart, setReachStart] = useState(false);
@@ -15,12 +17,8 @@ export default function useScroll({
   const [nearReachEnd, setNearReachEnd] = useState(false);
   const isVertical = direction === 'vertical';
 
-  if (!scrollableElement) {
-    // Better be explicit instead of auto-assign to window
-    return {};
-  }
-
   useEffect(() => {
+    const scrollableElement = scrollableRef.current;
     let previousScrollStart = isVertical
       ? scrollableElement.scrollTop
       : scrollableElement.scrollLeft;
@@ -38,16 +36,20 @@ export default function useScroll({
       const scrollDimension = isVertical ? scrollHeight : scrollWidth;
       const clientDimension = isVertical ? clientHeight : clientWidth;
       const scrollDistance = Math.abs(scrollStart - previousScrollStart);
-      const distanceFromStartPx = Math.min(
-        clientDimension * distanceFromStart,
-        scrollDimension,
-        scrollStart,
-      );
-      const distanceFromEndPx = Math.min(
-        clientDimension * distanceFromEnd,
-        scrollDimension,
-        scrollDimension - scrollStart - clientDimension,
-      );
+      const distanceFromStartPx =
+        _distanceFromStartPx ||
+        Math.min(
+          clientDimension * distanceFromStart,
+          scrollDimension,
+          scrollStart,
+        );
+      const distanceFromEndPx =
+        _distanceFromEndPx ||
+        Math.min(
+          clientDimension * distanceFromEnd,
+          scrollDimension,
+          scrollDimension - scrollStart - clientDimension,
+        );
 
       if (
         scrollDistance >=
@@ -71,7 +73,6 @@ export default function useScroll({
 
     return () => scrollableElement.removeEventListener('scroll', onScroll);
   }, [
-    scrollableElement,
     distanceFromStart,
     distanceFromEnd,
     scrollThresholdStart,
@@ -85,8 +86,8 @@ export default function useScroll({
     nearReachStart,
     nearReachEnd,
     init: () => {
-      if (scrollableElement) {
-        scrollableElement.dispatchEvent(new Event('scroll'));
+      if (scrollableRef.current) {
+        scrollableRef.current.dispatchEvent(new Event('scroll'));
       }
     },
   };

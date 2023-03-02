@@ -84,6 +84,10 @@
   box-sizing: border-box;
 }
 
+html {
+  text-size-adjust: 100%;
+}
+
 body {
   font-family: ui-rounded, system-ui;
   font-size: 16px;
@@ -296,6 +300,9 @@ code {
 
 .insignificant {
   color: var(--text-insignificant-color);
+}
+.more-insignificant {
+  opacity: 0.5;
 }
 
 .hide-until-focus-visible {

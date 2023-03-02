@@ -28,7 +28,8 @@ function Home() {
 
   return (
     <>
-      {snapStates.settings.shortcutsColumnsMode &&
+      {(snapStates.settings.shortcutsColumnsMode ||
+        snapStates.settings.shortcutsViewMode === 'multi-column') &&
       !!snapStates.shortcuts?.length ? (
         <Columns />
       ) : (
@@ -40,7 +41,7 @@ function Home() {
           headerEnd={
             <Link
               to="/notifications"
-              class={`button plain ${
+              class={`button plain notifications-button ${
                 snapStates.notificationsShowNew ? 'has-badge' : ''
               }`}
               onClick={(e) => {

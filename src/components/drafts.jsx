@@ -4,6 +4,7 @@ import { useEffect, useMemo, useReducer, useState } from 'react';
 
 import { api } from '../utils/api';
 import db from '../utils/db';
+import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
@@ -67,7 +68,6 @@ function Drafts() {
             <ul class="drafts-list">
               {drafts.map((draft) => {
                 const { updatedAt, key, draftStatus, replyTo } = draft;
-                const currentYear = new Date().getFullYear();
                 const updatedAtDate = new Date(updatedAt);
                 return (
                   <li key={updatedAt}>
@@ -81,19 +81,7 @@ function Drafts() {
                               <br />
                             </>
                           )}
-                          {Intl.DateTimeFormat('en', {
-                            // Show year if not current year
-                            year:
-                              updatedAtDate.getFullYear() === currentYear
-                                ? undefined
-                                : 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            weekday: 'short',
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            second: '2-digit',
-                          }).format(updatedAtDate)}
+                          {niceDateTime(updatedAtDate)}
                         </time>
                       </b>
                       <button

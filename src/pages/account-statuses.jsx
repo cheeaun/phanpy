@@ -97,7 +97,7 @@ function AccountStatuses() {
           </div>
         </h1>
       }
-      id="account_statuses"
+      id="account-statuses"
       instance={instance}
       emptyText="Nothing to see here yet."
       errorText="Unable to load statuses"

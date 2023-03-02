@@ -1,6 +1,12 @@
 import './status.css';
 
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  Menu,
+  MenuDivider,
+  MenuHeader,
+  MenuItem,
+} from '@szhsin/react-menu';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
@@ -16,7 +22,9 @@ import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
+import showToast from '../utils/show-toast';
 import states, { saveStatus, statusKey } from '../utils/states';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
@@ -25,6 +33,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
+import MenuLink from './MenuLink';
 import RelativeTime from './relative-time';
 
 const throttle = pThrottle({
@@ -40,6 +49,13 @@ function fetchAccount(id, masto) {
   }
 }
 const memFetchAccount = mem(fetchAccount);
+
+const visibilityText = {
+  public: 'Public',
+  unlisted: 'Unlisted',
+  private: 'Followers only',
+  direct: 'Direct',
+};
 
 function Status({
   statusID,
@@ -180,8 +196,6 @@ function Status({
 
   const [showEdited, setShowEdited] = useState(false);
 
-  const currentYear = new Date().getFullYear();
-
   const spoilerContentRef = useRef(null);
   useResizeObserver({
     ref: spoilerContentRef,
@@ -217,6 +231,266 @@ function Status({
   const textWeight = () =>
     Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
 
+  const createdDateText = niceDateTime(createdAtDate);
+  const editedDateText = editedAt && niceDateTime(editedAtDate);
+
+  const isSizeLarge = size === 'l';
+  // TODO: if visibility = private, only can boost own statuses
+  const canBoost = authenticated && visibility !== 'direct';
+
+  const replyStatus = () => {
+    if (!sameInstance || !authenticated) {
+      return alert(unauthInteractionErrorMessage);
+    }
+    states.showCompose = {
+      replyToStatus: status,
+    };
+  };
+
+  const boostStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      return alert(unauthInteractionErrorMessage);
+    }
+    try {
+      if (!reblogged) {
+        const yes = confirm('Boost this post?');
+        if (!yes) {
+          return;
+        }
+      }
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+        reblogged: !reblogged,
+        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+      };
+      if (reblogged) {
+        const newStatus = await masto.v1.statuses.unreblog(id);
+        saveStatus(newStatus, instance);
+      } else {
+        const newStatus = await masto.v1.statuses.reblog(id);
+        saveStatus(newStatus, instance);
+      }
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+    }
+  };
+
+  const favouriteStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      return alert(unauthInteractionErrorMessage);
+    }
+    try {
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+        favourited: !favourited,
+        favouritesCount: favouritesCount + (favourited ? -1 : 1),
+      };
+      if (favourited) {
+        const newStatus = await masto.v1.statuses.unfavourite(id);
+        saveStatus(newStatus, instance);
+      } else {
+        const newStatus = await masto.v1.statuses.favourite(id);
+        saveStatus(newStatus, instance);
+      }
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+    }
+  };
+
+  const bookmarkStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      return alert(unauthInteractionErrorMessage);
+    }
+    try {
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+        bookmarked: !bookmarked,
+      };
+      if (bookmarked) {
+        const newStatus = await masto.v1.statuses.unbookmark(id);
+        saveStatus(newStatus, instance);
+      } else {
+        const newStatus = await masto.v1.statuses.bookmark(id);
+        saveStatus(newStatus, instance);
+      }
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+    }
+  };
+
+  const menuInstanceRef = useRef();
+  const StatusMenuItems = (
+    <>
+      {!isSizeLarge && (
+        <>
+          <MenuHeader>
+            <span class="ib">
+              <Icon icon={visibilityIconsMap[visibility]} size="s" />{' '}
+              <span>{visibilityText[visibility]}</span>
+            </span>{' '}
+            <span class="ib">
+              {repliesCount > 0 && (
+                <span>
+                  <Icon icon="reply" alt="Replies" size="s" />{' '}
+                  <span>{shortenNumber(repliesCount)}</span>
+                </span>
+              )}{' '}
+              {reblogsCount > 0 && (
+                <span>
+                  <Icon icon="rocket" alt="Boosts" size="s" />{' '}
+                  <span>{shortenNumber(reblogsCount)}</span>
+                </span>
+              )}{' '}
+              {favouritesCount > 0 && (
+                <span>
+                  <Icon icon="heart" alt="Favourites" size="s" />{' '}
+                  <span>{shortenNumber(favouritesCount)}</span>
+                </span>
+              )}
+            </span>
+            <br />
+            {createdDateText}
+          </MenuHeader>
+          <MenuLink to={instance ? `/${instance}/s/${id}` : `/s/${id}`}>
+            <Icon icon="arrow-right" />
+            View post and replies
+          </MenuLink>
+        </>
+      )}
+      {!!editedAt && (
+        <MenuItem
+          onClick={() => {
+            setShowEdited(id);
+          }}
+        >
+          <Icon icon="history" />
+          <span>
+            Show Edit History
+            <br />
+            <small class="more-insignificant">Edited: {editedDateText}</small>
+          </span>
+        </MenuItem>
+      )}
+      {(!isSizeLarge || !!editedAt) && <MenuDivider />}
+      {!isSizeLarge && (
+        <>
+          <MenuItem onClick={replyStatus}>
+            <Icon icon="reply" />
+            <span>Reply</span>
+          </MenuItem>
+          {canBoost && (
+            <MenuItem
+              onClick={async () => {
+                try {
+                  await boostStatus();
+                  if (!isSizeLarge)
+                    showToast(reblogged ? 'Unboosted' : 'Boosted');
+                } catch (e) {}
+              }}
+            >
+              <Icon icon="rocket" />
+              <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
+            </MenuItem>
+          )}
+          <MenuItem
+            onClick={() => {
+              try {
+                favouriteStatus();
+                if (!isSizeLarge)
+                  showToast(favourited ? 'Unfavourited' : 'Favourited');
+              } catch (e) {}
+            }}
+          >
+            <Icon icon="heart" />
+            <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              try {
+                bookmarkStatus();
+                if (!isSizeLarge)
+                  showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+              } catch (e) {}
+            }}
+          >
+            <Icon icon="bookmark" />
+            <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
+          </MenuItem>
+          <MenuDivider />
+        </>
+      )}
+      <MenuItem href={url} target="_blank">
+        <Icon icon="external" />
+        <span>Open link to post</span>
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          // Copy url to clipboard
+          try {
+            navigator.clipboard.writeText(url);
+            showToast('Link copied');
+          } catch (e) {
+            console.error(e);
+            showToast('Unable to copy link');
+          }
+        }}
+      >
+        <Icon icon="link" />
+        <span>Copy link to post</span>
+      </MenuItem>
+      {navigator?.share &&
+        navigator?.canShare?.({
+          url,
+        }) && (
+          <MenuItem
+            onClick={() => {
+              try {
+                navigator.share({
+                  url,
+                });
+              } catch (e) {
+                console.error(e);
+                alert("Sharing doesn't seem to work.");
+              }
+            }}
+          >
+            <Icon icon="share" />
+            <span>Share…</span>
+          </MenuItem>
+        )}
+      {isSelf && (
+        <>
+          <MenuDivider />
+          <MenuItem
+            onClick={() => {
+              states.showCompose = {
+                editStatus: status,
+              };
+            }}
+          >
+            <Icon icon="pencil" />
+            <span>Edit</span>
+          </MenuItem>
+        </>
+      )}
+    </>
+  );
+
+  const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+  const [contextMenuAnchorPoint, setContextMenuAnchorPoint] = useState({
+    x: 0,
+    y: 0,
+  });
+
   return (
     <article
       ref={statusRef}
@@ -231,7 +505,39 @@ function Status({
         }[size]
       }`}
       onMouseEnter={debugHover}
+      onContextMenu={(e) => {
+        if (size === 'l') return;
+        if (e.metaKey) return;
+        e.preventDefault();
+        setContextMenuAnchorPoint({
+          x: e.clientX,
+          y: e.clientY,
+        });
+        setIsContextMenuOpen(true);
+      }}
     >
+      {size !== 'l' && (
+        <ControlledMenu
+          state={isContextMenuOpen ? 'open' : undefined}
+          anchorPoint={contextMenuAnchorPoint}
+          direction="right"
+          onClose={() => setIsContextMenuOpen(false)}
+          portal={{
+            target: document.body,
+          }}
+          containerProps={{
+            style: {
+              // Higher than the backdrop
+              zIndex: 1001,
+            },
+          }}
+          overflow="auto"
+          boundingBoxPadding="8 8 8 8"
+          unmountOnClose
+        >
+          {StatusMenuItems}
+        </ControlledMenu>
+      )}
       {size !== 'l' && (
         <div class="status-badge">
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
@@ -265,7 +571,7 @@ function Status({
             account={status.account}
             instance={instance}
             showAvatar={size === 's'}
-            showAcct={size === 'l'}
+            showAcct={isSizeLarge}
           />
           {/* {inReplyToAccount && !withinContext && size !== 's' && (
               <>
@@ -279,22 +585,51 @@ function Status({
           {/* </span> */}{' '}
           {size !== 'l' &&
             (url ? (
-              <Link
-                to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                class="time"
+              <Menu
+                instanceRef={menuInstanceRef}
+                portal={{
+                  target: document.body,
+                }}
+                containerProps={{
+                  style: {
+                    // Higher than the backdrop
+                    zIndex: 1001,
+                  },
+                  onClick: () => {
+                    menuInstanceRef.current?.closeMenu?.();
+                  },
+                }}
+                align="end"
+                offsetY={4}
+                overflow="auto"
+                viewScroll="close"
+                boundingBoxPadding="8 8 8 8"
+                unmountOnClose
+                menuButton={({ open }) => (
+                  <Link
+                    to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    class={`time ${open ? 'is-open' : ''}`}
+                  >
+                    <Icon
+                      icon={visibilityIconsMap[visibility]}
+                      alt={visibilityText[visibility]}
+                      size="s"
+                    />{' '}
+                    <RelativeTime datetime={createdAtDate} format="micro" />
+                  </Link>
+                )}
               >
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={visibility}
-                  size="s"
-                />{' '}
-                <RelativeTime datetime={createdAtDate} format="micro" />
-              </Link>
+                {StatusMenuItems}
+              </Menu>
             ) : (
               <span class="time">
                 <Icon
                   icon={visibilityIconsMap[visibility]}
-                  alt={visibility}
+                  alt={visibilityText[visibility]}
                   size="s"
                 />{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
@@ -337,7 +672,7 @@ function Status({
           } ${showSpoiler ? 'show-spoiler' : ''}`}
           data-content-text-weight={contentTextWeight ? textWeight() : null}
           style={
-            (size === 'l' || contentTextWeight) && {
+            (isSizeLarge || contentTextWeight) && {
               '--content-text-weight': textWeight(),
             }
           }
@@ -457,12 +792,12 @@ function Status({
               } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
             >
               {mediaAttachments
-                .slice(0, size === 'l' ? undefined : 4)
+                .slice(0, isSizeLarge ? undefined : 4)
                 .map((media, i) => (
                   <Media
                     key={media.id}
                     media={media}
-                    autoAnimate={size === 'l'}
+                    autoAnimate={isSizeLarge}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -485,23 +820,13 @@ function Status({
               <Card card={card} instance={currentInstance} />
             )}
         </div>
-        {size === 'l' && (
+        {isSizeLarge && (
           <>
             <div class="extra-meta">
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
               <a href={url} target="_blank">
                 <time class="created" datetime={createdAtDate.toISOString()}>
-                  {Intl.DateTimeFormat('en', {
-                    // Show year if not current year
-                    year:
-                      createdAtDate.getFullYear() === currentYear
-                        ? undefined
-                        : 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                  }).format(createdAtDate)}
+                  {createdDateText}
                 </time>
               </a>
               {editedAt && (
@@ -515,17 +840,7 @@ function Status({
                       setShowEdited(id);
                     }}
                   >
-                    {Intl.DateTimeFormat('en', {
-                      // Show year if not this year
-                      year:
-                        editedAtDate.getFullYear() === currentYear
-                          ? undefined
-                          : 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                    }).format(editedAtDate)}
+                    {editedDateText}
                   </time>
                 </>
               )}
@@ -538,18 +853,10 @@ function Status({
                   class="reply-button"
                   icon="comment"
                   count={repliesCount}
-                  onClick={() => {
-                    if (!sameInstance || !authenticated) {
-                      return alert(unauthInteractionErrorMessage);
-                    }
-                    states.showCompose = {
-                      replyToStatus: status,
-                    };
-                  }}
+                  onClick={replyStatus}
                 />
               </div>
-              {/* TODO: if visibility = private, only can reblog own statuses */}
-              {visibility !== 'direct' && (
+              {canBoost && (
                 <div class="action has-count">
                   <StatusButton
                     checked={reblogged}
@@ -558,38 +865,7 @@ function Status({
                     class="reblog-button"
                     icon="rocket"
                     count={reblogsCount}
-                    onClick={async () => {
-                      if (!sameInstance || !authenticated) {
-                        return alert(unauthInteractionErrorMessage);
-                      }
-                      try {
-                        if (!reblogged) {
-                          const yes = confirm('Boost this post?');
-                          if (!yes) {
-                            return;
-                          }
-                        }
-                        // Optimistic
-                        states.statuses[sKey] = {
-                          ...status,
-                          reblogged: !reblogged,
-                          reblogsCount: reblogsCount + (reblogged ? -1 : 1),
-                        };
-                        if (reblogged) {
-                          const newStatus = await masto.v1.statuses.unreblog(
-                            id,
-                          );
-                          saveStatus(newStatus, instance);
-                        } else {
-                          const newStatus = await masto.v1.statuses.reblog(id);
-                          saveStatus(newStatus, instance);
-                        }
-                      } catch (e) {
-                        console.error(e);
-                        // Revert optimistism
-                        states.statuses[sKey] = status;
-                      }
-                    }}
+                    onClick={boostStatus}
                   />
                 </div>
               )}
@@ -601,33 +877,7 @@ function Status({
                   class="favourite-button"
                   icon="heart"
                   count={favouritesCount}
-                  onClick={async () => {
-                    if (!sameInstance || !authenticated) {
-                      return alert(unauthInteractionErrorMessage);
-                    }
-                    try {
-                      // Optimistic
-                      states.statuses[sKey] = {
-                        ...status,
-                        favourited: !favourited,
-                        favouritesCount:
-                          favouritesCount + (favourited ? -1 : 1),
-                      };
-                      if (favourited) {
-                        const newStatus = await masto.v1.statuses.unfavourite(
-                          id,
-                        );
-                        saveStatus(newStatus, instance);
-                      } else {
-                        const newStatus = await masto.v1.statuses.favourite(id);
-                        saveStatus(newStatus, instance);
-                      }
-                    } catch (e) {
-                      console.error(e);
-                      // Revert optimistism
-                      states.statuses[sKey] = status;
-                    }
-                  }}
+                  onClick={favouriteStatus}
                 />
               </div>
               <div class="action">
@@ -637,61 +887,33 @@ function Status({
                   alt={['Bookmark', 'Bookmarked']}
                   class="bookmark-button"
                   icon="bookmark"
-                  onClick={async () => {
-                    if (!sameInstance || !authenticated) {
-                      return alert(unauthInteractionErrorMessage);
-                    }
-                    try {
-                      // Optimistic
-                      states.statuses[sKey] = {
-                        ...status,
-                        bookmarked: !bookmarked,
-                      };
-                      if (bookmarked) {
-                        const newStatus = await masto.v1.statuses.unbookmark(
-                          id,
-                        );
-                        saveStatus(newStatus, instance);
-                      } else {
-                        const newStatus = await masto.v1.statuses.bookmark(id);
-                        saveStatus(newStatus, instance);
-                      }
-                    } catch (e) {
-                      console.error(e);
-                      // Revert optimistism
-                      states.statuses[sKey] = status;
-                    }
-                  }}
+                  onClick={bookmarkStatus}
                 />
               </div>
-              {isSelf && (
-                <Menu
-                  align="end"
-                  menuButton={
-                    <div class="action">
-                      <button
-                        type="button"
-                        title="More"
-                        class="plain more-button"
-                      >
-                        <Icon icon="more" size="l" alt="More" />
-                      </button>
-                    </div>
-                  }
-                >
-                  {isSelf && (
-                    <MenuItem
-                      onClick={() => {
-                        states.showCompose = {
-                          editStatus: status,
-                        };
-                      }}
+              <Menu
+                portal={{
+                  target:
+                    document.querySelector('.status-deck') || document.body,
+                }}
+                align="end"
+                offsetY={4}
+                overflow="auto"
+                viewScroll="close"
+                boundingBoxPadding="8 8 8 8"
+                menuButton={
+                  <div class="action">
+                    <button
+                      type="button"
+                      title="More"
+                      class="plain more-button"
                     >
-                      <Icon icon="pencil" /> <span>Edit&hellip;</span>
-                    </MenuItem>
-                  )}
-                </Menu>
-              )}
+                      <Icon icon="more" size="l" alt="More" />
+                    </button>
+                  </div>
+                }
+              >
+                {StatusMenuItems}
+              </Menu>
             </div>
           </>
         )}
@@ -951,6 +1173,7 @@ function Poll({
                 choices.push(value);
               }
             });
+            if (!choices.length) return;
             setUIState('loading');
             await votePoll(choices);
             setUIState('default');
@@ -1049,8 +1272,6 @@ function EditedAtModal({
     })();
   }, []);
 
-  const currentYear = new Date().getFullYear();
-
   return (
     <div id="edit-history" class="sheet">
       <header>
@@ -1074,21 +1295,7 @@ function EditedAtModal({
               return (
                 <li key={createdAt} class="history-item">
                   <h3>
-                    <time>
-                      {Intl.DateTimeFormat('en', {
-                        // Show year if not current year
-                        year:
-                          createdAtDate.getFullYear() === currentYear
-                            ? undefined
-                            : 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        weekday: 'short',
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      }).format(createdAtDate)}
-                    </time>
+                    <time>{niceDate(createdAtDate)}</time>
                   </h3>
                   <Status
                     status={status}
@@ -1194,8 +1401,41 @@ function _unfurlMastodonLink(instance, url) {
     return Promise.resolve(states.unfurledLinks[url]);
   }
   console.debug('🦦 Unfurling URL', url);
+
+  let remoteInstanceFetch;
+  const urlObj = new URL(url);
+  const domain = urlObj.hostname;
+  const path = urlObj.pathname;
+  // Regex /:username/:id, where username = @username or @username@domain, id = number
+  const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/(\d+)$/i;
+  const statusMatch = statusRegex.exec(path);
+  if (statusMatch) {
+    const id = statusMatch[3];
+    const { masto } = api({ instance: domain });
+    remoteInstanceFetch = masto.v1.statuses
+      .fetch(id)
+      .then((status) => {
+        if (status?.id) {
+          const statusURL = `/${domain}/s/${id}`;
+          const result = {
+            id,
+            url: statusURL,
+          };
+          console.debug('🦦 Unfurled URL', url, id, statusURL);
+          states.unfurledLinks[url] = result;
+          return result;
+        } else {
+          failedUnfurls[url] = true;
+          throw new Error('No results');
+        }
+      })
+      .catch((e) => {
+        failedUnfurls[url] = true;
+      });
+  }
+
   const { masto } = api({ instance });
-  return masto.v2
+  const mastoSearchFetch = masto.v2
     .search({
       q: url,
       type: 'statuses',
@@ -1224,6 +1464,8 @@ function _unfurlMastodonLink(instance, url) {
       // console.warn(e);
       // Silently fail
     });
+
+  return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
 }
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);

@@ -1,0 +1,26 @@
+import Toastify from 'toastify-js';
+
+function showToast(props) {
+  if (typeof props === 'string') {
+    props = { text: props };
+  }
+  const { onClick = () => {}, delay, ...rest } = props;
+  const toast = Toastify({
+    className: 'shiny-pill',
+    gravity: 'bottom',
+    position: 'center',
+    ...rest,
+    onClick: () => {
+      onClick(toast); // Pass in the object itself!
+    },
+  });
+  if (delay) {
+    setTimeout(() => {
+      toast.showToast();
+    }, delay);
+  } else {
+    toast.showToast();
+  }
+}
+
+export default showToast;

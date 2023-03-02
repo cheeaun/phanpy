@@ -14,14 +14,11 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import Toastify from 'toastify-js';
 import { useSnapshot } from 'valtio';
 
 import Account from './components/account';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
-import Icon from './components/icon';
-import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -53,9 +50,11 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
+import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
+import useInterval from './utils/useInterval';
 import usePageVisibility from './utils/usePageVisibility';
 
 window.__STATES__ = states;
@@ -139,11 +138,24 @@ function App() {
   };
   const focusDeck = () => {
     let timer = setTimeout(() => {
-      const page = document.getElementById(locationDeckMap[location.pathname]);
-      console.debug('FOCUS', location.pathname, page);
-      if (page) {
-        page.focus();
+      const columns = document.getElementById('columns');
+      if (columns) {
+        // Focus first column
+        columns.querySelector('.deck-container')?.focus?.();
+      } else {
+        // Focus last deck
+        const pages = document.querySelectorAll('.deck-container');
+        const page = pages[pages.length - 1]; // last one
+        if (page && page.tabIndex === -1) {
+          console.log('FOCUS', page);
+          page.focus();
+        }
       }
+      // const page = document.getElementById(locationDeckMap[location.pathname]);
+      // console.debug('FOCUS', location.pathname, page);
+      // if (page) {
+      //   page.focus();
+      // }
     }, 100);
     return () => clearTimeout(timer);
   };
@@ -175,7 +187,7 @@ function App() {
   const notificationStream = useRef();
   useEffect(() => {
     if (isLoggedIn && visible) {
-      const { masto } = api();
+      const { masto, instance } = api();
       (async () => {
         // 1. Get the latest notification
         if (states.notificationsLast) {
@@ -200,6 +212,11 @@ function App() {
 
         notificationStream.current.on('notification', (notification) => {
           console.log('🔔🔔 Notification', notification);
+          if (notification.status) {
+            saveStatus(notification.status, instance, {
+              skipThreading: true,
+            });
+          }
           states.notificationsShowNew = true;
         });
 
@@ -235,6 +252,18 @@ function App() {
     const { pathname } = location;
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
+
+  useInterval(() => {
+    console.log('✨ Check app update');
+    fetch('./version.json')
+      .then((r) => r.json())
+      .then((info) => {
+        if (info) states.appVersion = info;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, visible && 1000 * 60 * 60); // 1 hour
 
   return (
     <>
@@ -281,24 +310,12 @@ function App() {
       <Routes>
         <Route path="/:instance?/s/:id" element={<Status />} />
       </Routes>
-      <nav id="tab-bar" hidden>
-        <li>
-          <Link to="/">
-            <Icon icon="home" alt="Home" size="xl" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/notifications">
-            <Icon icon="notification" alt="Notifications" size="xl" />
-          </Link>
-        </li>
-        <li>
-          <Link to="/bookmarks">
-            <Icon icon="bookmark" alt="Bookmarks" size="xl" />
-          </Link>
-        </li>
-      </nav>
-      {!snapStates.settings.shortcutsColumnsMode && <Shortcuts />}
+      <div>
+        {!snapStates.settings.shortcutsColumnsMode &&
+          snapStates.settings.shortcutsViewMode !== 'multi-column' && (
+            <Shortcuts />
+          )}
+      </div>
       {!!snapStates.showCompose && (
         <Modal>
           <Compose
@@ -323,26 +340,20 @@ function App() {
               window.__COMPOSE__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
-                setTimeout(() => {
-                  const toast = Toastify({
-                    className: 'shiny-pill',
-                    text: 'Status posted. Check it out.',
-                    duration: 10_000, // 10 seconds
-                    gravity: 'bottom',
-                    position: 'center',
-                    // destination: `/#/s/${newStatus.id}`,
-                    onClick: () => {
-                      toast.hideToast();
-                      states.prevLocation = location;
-                      navigate(
-                        instance
-                          ? `/${instance}/s/${newStatus.id}`
-                          : `/s/${newStatus.id}`,
-                      );
-                    },
-                  });
-                  toast.showToast();
-                }, 1000);
+                showToast({
+                  text: 'Status posted. Check it out.',
+                  delay: 1000,
+                  duration: 10_000, // 10 seconds
+                  onClick: (toast) => {
+                    toast.hideToast();
+                    states.prevLocation = location;
+                    navigate(
+                      instance
+                        ? `/${instance}/s/${newStatus.id}`
+                        : `/s/${newStatus.id}`,
+                    );
+                  },
+                });
               }
             }}
           />

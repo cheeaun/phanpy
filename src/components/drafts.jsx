@@ -68,7 +68,6 @@ function Drafts() {
             <ul class="drafts-list">
               {drafts.map((draft) => {
                 const { updatedAt, key, draftStatus, replyTo } = draft;
-                const currentYear = new Date().getFullYear();
                 const updatedAtDate = new Date(updatedAt);
                 return (
                   <li key={updatedAt}>

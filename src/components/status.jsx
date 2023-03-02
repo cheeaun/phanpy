@@ -190,8 +190,6 @@ function Status({
 
   const [showEdited, setShowEdited] = useState(false);
 
-  const currentYear = new Date().getFullYear();
-
   const spoilerContentRef = useRef(null);
   useResizeObserver({
     ref: spoilerContentRef,
@@ -1229,8 +1227,6 @@ function EditedAtModal({
       }
     })();
   }, []);
-
-  const currentYear = new Date().getFullYear();
 
   return (
     <div id="edit-history" class="sheet">

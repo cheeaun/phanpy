@@ -506,6 +506,7 @@ function Status({
       }`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
+        if (size === 'l') return;
         if (e.metaKey) return;
         e.preventDefault();
         setContextMenuAnchorPoint({
@@ -515,20 +516,28 @@ function Status({
         setIsContextMenuOpen(true);
       }}
     >
-      <ControlledMenu
-        state={isContextMenuOpen ? 'open' : 'closed'}
-        anchorPoint={contextMenuAnchorPoint}
-        direction="right"
-        onClose={() => setIsContextMenuOpen(false)}
-        portal={{
-          target: document.body,
-        }}
-        overflow="auto"
-        boundingBoxPadding="8 8 8 8"
-        unmountOnClose
-      >
-        {StatusMenuItems}
-      </ControlledMenu>
+      {size !== 'l' && (
+        <ControlledMenu
+          state={isContextMenuOpen ? 'open' : undefined}
+          anchorPoint={contextMenuAnchorPoint}
+          direction="right"
+          onClose={() => setIsContextMenuOpen(false)}
+          portal={{
+            target: document.body,
+          }}
+          containerProps={{
+            style: {
+              // Higher than the backdrop
+              zIndex: 1001,
+            },
+          }}
+          overflow="auto"
+          boundingBoxPadding="8 8 8 8"
+          unmountOnClose
+        >
+          {StatusMenuItems}
+        </ControlledMenu>
+      )}
       {size !== 'l' && (
         <div class="status-badge">
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}

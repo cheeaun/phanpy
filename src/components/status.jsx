@@ -1,6 +1,12 @@
 import './status.css';
 
-import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  Menu,
+  MenuDivider,
+  MenuHeader,
+  MenuItem,
+} from '@szhsin/react-menu';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
@@ -479,6 +485,26 @@ function Status({
     </>
   );
 
+  const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+  const [contextMenuAnchorPoint, setContextMenuAnchorPoint] = useState({
+    x: 0,
+    y: 0,
+  });
+  useEffect(() => {
+    function openContextMenu(e) {
+      e.preventDefault();
+      setContextMenuAnchorPoint({
+        x: e.clientX,
+        y: e.clientY,
+      });
+      setIsContextMenuOpen(true);
+    }
+    statusRef.current.addEventListener('long-press', openContextMenu);
+    return () => {
+      statusRef.current.removeEventListener('long-press', openContextMenu);
+    };
+  }, []);
+
   return (
     <article
       ref={statusRef}
@@ -493,7 +519,30 @@ function Status({
         }[size]
       }`}
       onMouseEnter={debugHover}
+      onContextMenu={(e) => {
+        if (e.metaKey) return;
+        e.preventDefault();
+        setContextMenuAnchorPoint({
+          x: e.clientX,
+          y: e.clientY,
+        });
+        setIsContextMenuOpen(true);
+      }}
     >
+      <ControlledMenu
+        state={isContextMenuOpen ? 'open' : 'closed'}
+        anchorPoint={contextMenuAnchorPoint}
+        direction="right"
+        onClose={() => setIsContextMenuOpen(false)}
+        portal={{
+          target: document.body,
+        }}
+        overflow="auto"
+        boundingBoxPadding="8 8 8 8"
+        unmountOnClose
+      >
+        {StatusMenuItems}
+      </ControlledMenu>
       {size !== 'l' && (
         <div class="status-badge">
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}

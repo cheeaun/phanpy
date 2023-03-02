@@ -663,7 +663,11 @@ a:focus-visible .card img {
   flex-grow: 1;
   align-self: center;
 }
-.status.large .card.large .meta-container {
+.status.large .card.large .meta-container,
+.status-carousel
+  .content-container[data-content-text-weight='1']
+  .card.large
+  .meta-container {
   align-self: flex-start;
   flex-grow: 0;
 }

@@ -1,5 +1,6 @@
 import './compose.css';
 
+import { match } from '@formatjs/intl-localematcher';
 import '@github/text-expander-element';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
@@ -84,7 +85,11 @@ const observer = new IntersectionObserver((entries) => {
 });
 observer.observe(menu);
 
-const DEFAULT_LANG = 'en';
+const DEFAULT_LANG = match(
+  [new Intl.DateTimeFormat().resolvedOptions().locale, ...navigator.languages],
+  supportedLanguages.map((l) => l[0]),
+  'en',
+);
 
 // https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
 const urlRegexObj = new RegExp(urlRegex.source, urlRegex.flags);

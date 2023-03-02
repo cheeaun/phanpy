@@ -7,6 +7,7 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
+import 'long-press-event';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
@@ -499,9 +500,9 @@ function Status({
       });
       setIsContextMenuOpen(true);
     }
-    statusRef.current.addEventListener('long-press', openContextMenu);
+    statusRef.current?.addEventListener?.('long-press', openContextMenu);
     return () => {
-      statusRef.current.removeEventListener('long-press', openContextMenu);
+      statusRef.current?.removeEventListener?.('long-press', openContextMenu);
     };
   }, []);
 

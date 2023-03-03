@@ -1295,7 +1295,14 @@ function EditedAtModal({
               return (
                 <li key={createdAt} class="history-item">
                   <h3>
-                    <time>{niceDateTime(createdAtDate)}</time>
+                    <time>
+                      {niceDateTime(createdAtDate, {
+                        formatOpts: {
+                          weekday: 'short',
+                          second: 'numeric',
+                        },
+                      })}
+                    </time>
                   </h3>
                   <Status
                     status={status}

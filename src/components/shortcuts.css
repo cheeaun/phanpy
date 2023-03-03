@@ -172,7 +172,12 @@ shortcuts .tab-bar[hidden] {
     height: 44px;
     gap: 4px;
   }
-  #app:has(header[hidden]) #shortcuts .tab-bar,
+  #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(
+      header[hidden]
+    )
+    #shortcuts
+    .tab-bar,
+  #app:has(#home-page ~ .deck-container header[hidden]) #shortcuts .tab-bar,
   shortcuts .tab-bar[hidden] {
     transform: translateY(-150%);
     pointer-events: none;

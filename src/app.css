@@ -1258,13 +1258,13 @@ meter.donut:is(.danger, .explode):after {
 }
 /* I'm just feeling bored, so having fun here */
 @media (hover: hover) {
-  .avatars-stack > * {
+  .avatars-stack > * img {
     transition: transform 0.3s ease-in-out;
   }
-  .avatars-stack:hover > *:nth-of-type(odd) {
+  .avatars-stack:hover > *:nth-of-type(odd) img {
     transform: rotate(15deg);
   }
-  .avatars-stack:hover > *:nth-of-type(even) {
+  .avatars-stack:hover > *:nth-of-type(even) img {
     transform: rotate(-15deg);
   }
 }

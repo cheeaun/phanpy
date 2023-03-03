@@ -45,6 +45,18 @@ const contentText = {
   'poll-self': 'A poll you have created has ended.',
   'poll-voted': 'A poll you have voted in has ended.',
   update: 'A status you interacted with has been edited.',
+  'favourite+reblog': 'boosted & favourited your status.',
+};
+
+const NOTIFICATION_ICONS = {
+  mention: 'comment',
+  status: 'notification',
+  reblog: 'rocket',
+  follow: 'follow',
+  follow_request: 'follow-add',
+  favourite: 'heart',
+  poll: 'poll',
+  update: 'pencil',
 };
 
 const LIMIT = 30; // 30 is the maximum limit :(
@@ -275,7 +287,8 @@ function Notifications() {
   );
 }
 function Notification({ notification, instance }) {
-  const { id, type, status, account, _accounts } = notification;
+  const { id, status, account, _accounts } = notification;
+  let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
   const actualStatusID = status?.reblog?.id || status?.id;
@@ -283,6 +296,20 @@ function Notification({ notification, instance }) {
   const currentAccount = store.session.get('currentAccount');
   const isSelf = currentAccount === account?.id;
   const isVoted = status?.poll?.voted;
+
+  let favsCount = 0;
+  let reblogsCount = 0;
+  if (type === 'favourite+reblog') {
+    for (const account of _accounts) {
+      if (account._types?.includes('favourite')) {
+        favsCount++;
+      } else if (account._types?.includes('reblog')) {
+        reblogsCount++;
+      }
+    }
+    if (!reblogsCount && favsCount) type = 'favourite';
+    if (!favsCount && reblogsCount) type = 'reblog';
+  }
 
   const text =
     type === 'poll'
@@ -295,22 +322,18 @@ function Notification({ notification, instance }) {
         class={`notification-type notification-${type}`}
         title={new Date(notification.createdAt).toLocaleString()}
       >
-        <Icon
-          icon={
-            {
-              mention: 'comment',
-              status: 'notification',
-              reblog: 'rocket',
-              follow: 'follow',
-              follow_request: 'follow-add',
-              favourite: 'heart',
-              poll: 'poll',
-              update: 'pencil',
-            }[type] || 'notification'
-          }
-          size="xl"
-          alt={type}
-        />
+        {type === 'favourite+reblog' ? (
+          <>
+            <Icon icon="rocket" size="xl" alt={type} class="reblog-icon" />
+            <Icon icon="heart" size="xl" alt={type} class="favourite-icon" />
+          </>
+        ) : (
+          <Icon
+            icon={NOTIFICATION_ICONS[type] || 'notification'}
+            size="xl"
+            alt={type}
+          />
+        )}
       </div>
       <div class="notification-content">
         {type !== 'mention' && (
@@ -358,6 +381,7 @@ function Notification({ notification, instance }) {
                 <a
                   href={account.url}
                   rel="noopener noreferrer"
+                  class="account-avatar-stack"
                   onClick={(e) => {
                     e.preventDefault();
                     states.showAccount = account;
@@ -379,6 +403,17 @@ function Notification({ notification, instance }) {
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}
                   />
+                  {type === 'favourite+reblog' && (
+                    <div class="account-sub-icons">
+                      {account._types.map((type) => (
+                        <Icon
+                          icon={NOTIFICATION_ICONS[type]}
+                          size="s"
+                          class={`${type}-icon`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </a>{' '}
               </>
             ))}
@@ -458,15 +493,30 @@ function groupNotifications(notifications) {
     const notification = notifications[i];
     const { status, account, type, createdAt } = notification;
     const date = new Date(createdAt).toLocaleDateString();
-    const key = `${status?.id}-${type}-${date}`;
+    let virtualType = type;
+    if (type === 'favourite' || type === 'reblog') {
+      virtualType = 'favourite+reblog';
+    }
+    const key = `${status?.id}-${virtualType}-${date}`;
     const mappedNotification = notificationsMap[key];
-    if (type === 'follow_request') {
+    if (virtualType === 'follow_request') {
       cleanNotifications[j++] = notification;
     } else if (mappedNotification?.account) {
-      mappedNotification._accounts.push(account);
+      const mappedAccount = mappedNotification._accounts.find(
+        (a) => a.id === account.id,
+      );
+      if (mappedAccount) {
+        mappedAccount._types.push(type);
+        mappedAccount._types.sort().reverse();
+      } else {
+        account._types = [type];
+        mappedNotification._accounts.push(account);
+      }
     } else {
+      account._types = [type];
       let n = (notificationsMap[key] = {
         ...notification,
+        type: virtualType,
         _accounts: [account],
       });
       cleanNotifications[j++] = n;

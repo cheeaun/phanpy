@@ -20,6 +20,7 @@
   flex-shrink: 0;
   opacity: 0.75;
   color: var(--text-insignificant-color);
+  line-height: 0;
 }
 .notification-type.notification-mention {
   color: var(--reply-to-color);
@@ -32,6 +33,54 @@
 }
 .notification-type.notification-poll {
   color: var(--link-color);
+}
+
+.notification .reblog-icon {
+  color: var(--reblog-color);
+}
+.notification .favourite-icon {
+  color: var(--favourite-color);
+}
+
+.notification .account-avatar-stack {
+  position: relative;
+  text-align: center;
+}
+.notification .account-avatar-stack .account-sub-icons {
+  display: block;
+  width: fit-content;
+  margin: -0.25em auto 0;
+  line-height: 1;
+  background-color: var(--bg-blur-color);
+  /* background-image: linear-gradient(
+    to bottom,
+    var(--bg-color),
+    var(--bg-blur-color)
+  ); */
+  backdrop-filter: blur(16px) saturate(3);
+  padding: 2px 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: var(--hairline-width) solid var(--bg-color);
+  box-shadow: 0 1px var(--drop-shadow-color);
+}
+.notification .avatars-stack .account-avatar-stack .account-sub-icons .icon {
+  transition: transform 0.2s ease-out;
+}
+.notification
+  .avatars-stack:hover
+  .account-avatar-stack
+  .account-sub-icons
+  .icon {
+  transform: rotate(-15deg);
+}
+.notification
+  .avatars-stack:hover
+  .account-avatar-stack
+  .account-sub-icons
+  .icon
+  + .icon {
+  transform: rotate(15deg);
 }
 
 .notification .status-link {

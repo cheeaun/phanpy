@@ -15,7 +15,9 @@
 #shortcuts-button .icon {
   transform: translateY(2px); /* Balance the icon's vertical alignment */
 }
-#app:has(header[hidden]) #shortcuts-button,
+#app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(header[hidden])
+  #shortcuts-button,
+#app:has(#home-page ~ .deck-container header[hidden]) #shortcuts-button,
 #shortcuts-button[hidden] {
   transform: translateY(200%);
   pointer-events: none;
@@ -39,7 +41,11 @@
     top: max(16px, env(safe-area-inset-top));
     bottom: auto;
   }
-  #app:has(header[hidden]) #shortcuts-button,
+  #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(
+      header[hidden]
+    )
+    #shortcuts-button,
+  #app:has(#home-page ~ .deck-container header[hidden]) #shortcuts-button,
   #shortcuts-button[hidden] {
     transform: translateY(-200%);
   }
@@ -114,7 +120,10 @@
     transparent
   );
 }
-#app:has(header[hidden]) #shortcuts .tab-bar,
+#app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(header[hidden])
+  #shortcuts
+  .tab-bar,
+#app:has(#home-page ~ .deck-container header[hidden]) #shortcuts .tab-bar,
 shortcuts .tab-bar[hidden] {
   transform: translateY(200%);
   pointer-events: none;

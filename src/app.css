@@ -747,6 +747,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   margin-top: 16px;
   transform: translate(-50%, 0);
   font-size: 90%;
+  pointer-events: auto;
 }
 .updates-button .icon {
   vertical-align: top;

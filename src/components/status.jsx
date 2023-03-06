@@ -229,7 +229,10 @@ function Status({
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
 
   const textWeight = () =>
-    Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
+    Math.max(
+      Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1,
+      1,
+    );
 
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);

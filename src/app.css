@@ -1219,34 +1219,44 @@ meter.donut:is(.danger, .explode):after {
 
 /* SHINY PILL */
 
-.shiny-pill {
+:is(.shiny-pill, :root .toastify.shiny-pill) {
+  pointer-events: auto;
   color: var(--button-text-color);
   text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
   background-color: var(--button-bg-color);
   background-image: linear-gradient(
     160deg,
     rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0) 50%
+    rgba(0, 0, 0, 0.1)
   );
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color),
     inset var(--hairline-width) var(--hairline-width) rgba(255, 255, 255, 0.5);
+  transition: filter 0.3s;
+}
+:is(.shiny-pill, :root .toastify.shiny-pill):hover {
+  filter: brightness(1.2);
+}
+:is(.shiny-pill, :root .toastify.shiny-pill):active {
+  transition: none;
+  filter: brightness(0.9);
 }
 
 /* TOAST */
 
 :root .toastify {
+  user-select: none;
   padding: 8px 16px;
   border-radius: 999px;
+  pointer-events: none;
+  color: var(--button-text-color);
+  text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
+  background-color: var(--button-bg-blur-color);
+  background-image: none;
+  backdrop-filter: blur(16px);
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);
-}
-:root .toastify:hover {
-  filter: brightness(1.2);
-}
-:root .toastify:active {
-  filter: brightness(0.8);
 }
 
 /* AVATARS STACK */

@@ -1,6 +1,7 @@
 import './account-block.css';
 
 import emojifyText from '../utils/emojify-text';
+import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -12,6 +13,7 @@ function AccountBlock({
   instance,
   external,
   onClick,
+  showActivity = false,
 }) {
   if (skeleton) {
     return (
@@ -26,8 +28,17 @@ function AccountBlock({
     );
   }
 
-  const { acct, avatar, avatarStatic, displayName, username, emojis, url } =
-    account;
+  const {
+    acct,
+    avatar,
+    avatarStatic,
+    displayName,
+    username,
+    emojis,
+    url,
+    statusesCount,
+    lastStatusAt,
+  } = account;
   const displayNameWithEmoji = emojifyText(displayName, emojis);
 
   return (
@@ -58,6 +69,23 @@ function AccountBlock({
           <b>{username}</b>
         )}
         <br />@{acct}
+        {showActivity && (
+          <>
+            <br />
+            <small class="last-status-at insignificant">
+              Posts: {statusesCount}
+              {!!lastStatusAt && (
+                <>
+                  {' '}
+                  &middot; Last posted:{' '}
+                  {niceDateTime(lastStatusAt, {
+                    hideTime: true,
+                  })}
+                </>
+              )}
+            </small>
+          </>
+        )}
       </span>
     </a>
   );

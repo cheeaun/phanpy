@@ -20,6 +20,7 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
@@ -35,6 +36,7 @@ import Link from './link';
 import Media from './media';
 import MenuLink from './MenuLink';
 import RelativeTime from './relative-time';
+import TranslationBlock from './translation-block';
 
 const throttle = pThrottle({
   limit: 1,
@@ -66,6 +68,7 @@ function Status({
   skeleton,
   readOnly,
   contentTextWeight,
+  enableTranslate,
 }) {
   if (skeleton) {
     return (
@@ -193,6 +196,10 @@ function Status({
       </div>
     );
   }
+
+  const [forceTranslate, setForceTranslate] = useState(false);
+  const targetLanguage = getTranslateTargetLanguage(true);
+  if (!snapStates.settings.contentTranslation) enableTranslate = false;
 
   const [showEdited, setShowEdited] = useState(false);
 
@@ -450,6 +457,17 @@ function Status({
         <Icon icon="link" />
         <span>Copy link to post</span>
       </MenuItem>
+      {enableTranslate && (
+        <MenuItem
+          disabled={forceTranslate}
+          onClick={() => {
+            setForceTranslate(true);
+          }}
+        >
+          <Icon icon="translate" />
+          <span>Translate</span>
+        </MenuItem>
+      )}
       {navigator?.share &&
         navigator?.canShare?.({
           url,
@@ -768,6 +786,25 @@ function Status({
                   })
                   .catch((e) => {}); // Silently fail
               }}
+            />
+          )}
+          {((enableTranslate &&
+            !!content.trim() &&
+            language &&
+            language !== targetLanguage) ||
+            forceTranslate) && (
+            <TranslationBlock
+              forceTranslate={forceTranslate}
+              sourceLanguage={language}
+              text={
+                (spoilerText ? `${spoilerText}\n\n` : '') +
+                getHTMLText(content) +
+                (poll?.options?.length
+                  ? `\n\nPoll:\n${poll.options
+                      .map((option) => `- ${option.title}`)
+                      .join('\n')}`
+                  : '')
+              }
             />
           )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
@@ -1479,5 +1516,17 @@ function _unfurlMastodonLink(instance, url) {
 }
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
+
+const div = document.createElement('div');
+function getHTMLText(html) {
+  if (!html) return 0;
+  div.innerHTML = html
+    .replace(/<\/p>/g, '</p>\n\n')
+    .replace(/<\/li>/g, '</li>\n');
+  div.querySelectorAll('br').forEach((br) => {
+    br.replaceWith('\n');
+  });
+  return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
+}
 
 export default memo(Status);

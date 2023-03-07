@@ -1007,6 +1007,12 @@ body:has(.status-deck) .media-post-link {
 .sheet header :is(h1, h2, h3) {
   margin: 0;
 }
+.sheet header.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 8px;
+  align-items: center;
+}
 .sheet main {
   overflow: auto;
   overflow-x: hidden;

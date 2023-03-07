@@ -624,6 +624,7 @@ function StatusPage() {
                           instance={instance}
                           withinContext
                           size="l"
+                          enableTranslate
                         />
                       </InView>
                       {uiState !== 'loading' && !authenticated ? (
@@ -700,6 +701,7 @@ function StatusPage() {
                         instance={instance}
                         withinContext
                         size={thread || ancestor ? 'm' : 's'}
+                        enableTranslate
                       />
                       {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
@@ -880,6 +882,7 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
                 instance={instance}
                 withinContext
                 size="s"
+                enableTranslate
               />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">

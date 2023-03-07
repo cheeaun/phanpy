@@ -10,7 +10,10 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
+import targetLanguages from '../data/lingva-target-languages';
 import { api } from '../utils/api';
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
+import localeCode2Text from '../utils/localeCode2Text';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -32,6 +35,11 @@ function Settings({ onClose }) {
   const [currentDefault, setCurrentDefault] = useState(0);
 
   const [_, reload] = useReducer((x) => x + 1, 0);
+
+  const targetLanguage =
+    snapStates.settings.contentTranslationTargetLanguage || null;
+  const systemTargetLanguage = getTranslateTargetLanguage();
+  const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
 
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
@@ -239,6 +247,53 @@ function Settings({ onClose }) {
                 />{' '}
                 Boosts carousel (experimental)
               </label>
+            </li>
+            <li>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.contentTranslation}
+                  onChange={(e) => {
+                    states.settings.contentTranslation = e.target.checked;
+                  }}
+                />{' '}
+                Post translation (experimental)
+              </label>
+              {snapStates.settings.contentTranslation && (
+                <div class="sub-section">
+                  <label>
+                    Translate to{' '}
+                    <select
+                      value={targetLanguage}
+                      onChange={(e) => {
+                        states.settings.contentTranslationTargetLanguage =
+                          e.target.value || null;
+                      }}
+                    >
+                      <option value="">
+                        System language ({systemTargetLanguageText})
+                      </option>
+                      <option disabled>──────────</option>
+                      {targetLanguages.map((lang) => (
+                        <option value={lang.code}>{lang.name}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <p>
+                    <small>
+                      Note: This feature uses an external API to translate,
+                      powered by{' '}
+                      <a
+                        href="https://github.com/thedaviddelta/lingva-translate"
+                        target="_blank"
+                      >
+                        Lingva Translate
+                      </a>
+                      .
+                    </small>
+                  </p>
+                </div>
+              )}
             </li>
           </ul>
         </section>

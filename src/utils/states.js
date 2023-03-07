@@ -42,6 +42,10 @@ const states = proxy({
     shortcutsColumnsMode:
       store.account.get('settings-shortcutsColumnsMode') ?? false,
     boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
+    contentTranslation:
+      store.account.get('settings-contentTranslation') ?? true,
+    contentTranslationTargetLanguage:
+      store.account.get('settings-contentTranslationTargetLanguage') || null,
   },
 });
 
@@ -62,6 +66,12 @@ subscribe(states, (v) => {
   }
   if (path.join('.') === 'settings.shortcutsViewMode') {
     store.account.set('settings-shortcutsViewMode', value);
+  }
+  if (path.join('.') === 'settings.contentTranslation') {
+    store.account.set('settings-contentTranslation', !!value);
+  }
+  if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
+    store.account.set('settings-contentTranslationTargetLanguage', value);
   }
   if (path?.[0] === 'shortcuts') {
     store.account.set('shortcuts', states.shortcuts);

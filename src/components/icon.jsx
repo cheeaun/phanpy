@@ -63,6 +63,7 @@ const ICONS = {
   share: 'mingcute:share-2-line',
   sparkles: 'mingcute:sparkles-line',
   exit: 'mingcute:exit-line',
+  translate: 'mingcute:translate-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

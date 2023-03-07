@@ -1,0 +1,86 @@
+.status-translation-block {
+  margin: 8px 0 0;
+  padding: 0;
+  font-size: 90%;
+  border-radius: 8px;
+}
+.status-translation-block summary {
+  list-style: none;
+  display: inline-block;
+}
+.status-translation-block summary::-webkit-details-marker {
+  display: none;
+}
+.status-translation-block summary button {
+  border-radius: 8px;
+  border: 1px solid var(--outline-color);
+  padding: 8px;
+  background-color: var(--bg-color);
+  font-size: 12px;
+  color: var(--text-insignificant-color);
+}
+.status-translation-block summary button:is(:hover, :focus) {
+  color: var(--text-color);
+  filter: none !important;
+}
+.status-translation-block details:not([open]) .detected {
+  display: none;
+}
+/* .status-translation-block details summary button:active, */
+.status-translation-block details[open] summary button {
+  /* color: var(--text-color); */
+  /* background-color: var(--bg-faded-color); */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+  margin-bottom: -1px;
+  background-image: linear-gradient(
+    to top left,
+    var(--bg-color) 50%,
+    var(--bg-faded-blur-color)
+  );
+  box-shadow: inset 0 0 0 1px var(--bg-color);
+}
+.status-translation-block .translated-block {
+  border: 1px solid var(--outline-color);
+  line-height: 1.3;
+  border-radius: 0 8px 8px 8px;
+  margin: 0;
+  padding: 8px;
+  background-color: var(--bg-color);
+  background-image: linear-gradient(
+    to bottom right,
+    var(--bg-color),
+    var(--bg-faded-blur-color)
+  );
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 0 1px var(--bg-color),
+    0 1px 5px -2px var(--drop-shadow-color);
+  text-shadow: 0 1px var(--bg-color);
+}
+.status-translation-block .translated-block .translation-info * {
+  vertical-align: middle;
+}
+.status-translation-block .translated-source-select {
+  appearance: none;
+  display: inline-block;
+  margin: 0;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 8px;
+  background-color: var(--bg-faded-color);
+  color: inherit;
+  width: min-content;
+}
+.status-translation-block .translated-block output {
+  display: block;
+  margin-top: 1em;
+}
+.status-translation-block
+  .translated-block
+  output.translated-pronunciation-content {
+  opacity: 0.75;
+  padding-bottom: 1em;
+  border-top: var(--hairline-width) solid var(--bg-color);
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}

@@ -26,6 +26,7 @@ import Shortcuts from './components/shortcuts';
 import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
+import Accounts from './pages/accounts';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
@@ -163,6 +164,7 @@ function App() {
   const showModal =
     snapStates.showCompose ||
     snapStates.showSettings ||
+    snapStates.showAccounts ||
     snapStates.showAccount ||
     snapStates.showDrafts ||
     snapStates.showMediaModal ||
@@ -370,6 +372,21 @@ function App() {
           <Settings
             onClose={() => {
               states.showSettings = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showAccounts && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              states.showAccounts = false;
+            }
+          }}
+        >
+          <Accounts
+            onClose={() => {
+              states.showAccounts = false;
             }}
           />
         </Modal>

@@ -2,19 +2,16 @@
   background-color: var(--bg-faded-color);
 }
 
-#settings-container h2 {
+#settings-container main h3 {
   font-size: 85%;
   text-transform: uppercase;
   color: var(--text-insignificant-color);
   font-weight: normal;
 }
-#settings-container h2 ~ h2 {
-  margin-top: 2em;
-}
 
 #settings-container section {
   background-color: var(--bg-color);
-  margin: 0;
+  margin: 8px 0 0;
   padding: 8px 16px;
   border-top: var(--hairline-width) solid var(--outline-color);
   border-bottom: var(--hairline-width) solid var(--outline-color);
@@ -30,7 +27,7 @@
   list-style: none;
 }
 #settings-container section > ul > li {
-  padding: 8px 0 16px;
+  padding: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,6 +66,10 @@
 }
 #settings-container .avatar {
   margin-right: 8px;
+}
+
+#settings-container section select {
+  padding: 4px;
 }
 
 #settings-container .radio-group {

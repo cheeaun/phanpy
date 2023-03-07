@@ -31,6 +31,7 @@ const states = proxy({
   showCompose: false,
   showSettings: false,
   showAccount: false,
+  showAccounts: false,
   showDrafts: false,
   showMediaModal: false,
   showShortcutsSettings: false,
@@ -82,6 +83,7 @@ export function hideAllModals() {
   states.showCompose = false;
   states.showSettings = false;
   states.showAccount = false;
+  states.showAccounts = false;
   states.showDrafts = false;
   states.showMediaModal = false;
   states.showShortcutsSettings = false;

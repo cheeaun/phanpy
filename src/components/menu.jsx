@@ -104,6 +104,13 @@ function NavMenu(props) {
           <MenuDivider />
           <MenuItem
             onClick={() => {
+              states.showAccounts = true;
+            }}
+          >
+            <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
               states.showShortcutsSettings = true;
             }}
           >

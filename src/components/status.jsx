@@ -7,12 +7,12 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
-import 'long-press-event';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import 'swiped-events';
+import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
@@ -507,25 +507,27 @@ function Status({
     </>
   );
 
+  const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuAnchorPoint, setContextMenuAnchorPoint] = useState({
     x: 0,
     y: 0,
   });
-  useEffect(() => {
-    function openContextMenu(e) {
-      e.preventDefault();
+  const bindLongPress = useLongPress(
+    (e) => {
+      const { clientX, clientY } = e.touches?.[0] || e;
       setContextMenuAnchorPoint({
-        x: e.clientX,
-        y: e.clientY,
+        x: clientX,
+        y: clientY,
       });
       setIsContextMenuOpen(true);
-    }
-    statusRef.current?.addEventListener?.('long-press', openContextMenu);
-    return () => {
-      statusRef.current?.removeEventListener?.('long-press', openContextMenu);
-    };
-  }, []);
+    },
+    {
+      captureEvent: true,
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
 
   return (
     <article
@@ -551,9 +553,11 @@ function Status({
         });
         setIsContextMenuOpen(true);
       }}
+      {...bindLongPress()}
     >
       {size !== 'l' && (
         <ControlledMenu
+          ref={contextMenuRef}
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
@@ -565,6 +569,9 @@ function Status({
             style: {
               // Higher than the backdrop
               zIndex: 1001,
+            },
+            onClick: () => {
+              contextMenuRef.current?.closeMenu?.();
             },
           }}
           overflow="auto"

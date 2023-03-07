@@ -537,6 +537,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
+  -webkit-touch-callout: none;
 }
 :is(.status-link, .status-focus):is(:focus, .is-active) {
   background-color: var(--link-bg-hover-color);
@@ -1051,6 +1052,11 @@ body:has(.status-deck) .media-post-link {
 
 /* MENU POPUP */
 
+.szh-menu-container {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
 .szh-menu-container:has(.szh-menu--state-open) {
   inset: 0;
   inset: env(safe-area-inset-top) env(safe-area-inset-right)

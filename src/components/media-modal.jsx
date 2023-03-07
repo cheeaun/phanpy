@@ -250,31 +250,6 @@ function MediaModal({
           </div>
         </Modal>
       )}
-      {!!showMediaAlt && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMediaAlt(false);
-            }
-          }}
-        >
-          <div class="sheet">
-            <header>
-              <h2>Media description</h2>
-            </header>
-            <main>
-              <p
-                style={{
-                  whiteSpace: 'pre-wrap',
-                }}
-              >
-                {showMediaAlt}
-              </p>
-            </main>
-          </div>
-        </Modal>
-      )}
     </>
   );
 }

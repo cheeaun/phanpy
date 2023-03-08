@@ -348,12 +348,24 @@ function Compose({
   };
   useEffect(updateCharCount, []);
 
+  const escDownRef = useRef(false);
   useHotkeys(
     'esc',
     () => {
-      if (!standalone && confirmClose()) {
+      escDownRef.current = true;
+      // This won't be true if this event is already handled and not propagated 🤞
+    },
+    {
+      enableOnFormTags: true,
+    },
+  );
+  useHotkeys(
+    'esc',
+    () => {
+      if (!standalone && escDownRef.current && confirmClose()) {
         onClose();
       }
+      escDownRef.current = false;
     },
     {
       enableOnFormTags: true,

@@ -2,6 +2,7 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  --text-size: 16px;
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
@@ -90,7 +91,7 @@ html {
 
 body {
   font-family: ui-rounded, system-ui;
-  font-size: 16px;
+  font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;
 }

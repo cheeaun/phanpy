@@ -11,6 +11,9 @@ import localeCode2Text from '../utils/localeCode2Text';
 import states from '../utils/states';
 import store from '../utils/store';
 
+const DEFAULT_TEXT_SIZE = 16;
+const TEXT_SIZES = [16, 17, 18, 19, 20];
+
 function Settings({ onClose }) {
   const snapStates = useSnapshot(states);
   const currentTheme = store.local.get('theme') || 'auto';
@@ -19,6 +22,7 @@ function Settings({ onClose }) {
     snapStates.settings.contentTranslationTargetLanguage || null;
   const systemTargetLanguage = getTranslateTargetLanguage();
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
+  const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
@@ -94,6 +98,42 @@ function Settings({ onClose }) {
                     </label>
                   </div>
                 </form>
+              </div>
+            </li>
+            <li>
+              <div>
+                <label>Text size</label>
+              </div>
+              <div class="range-group">
+                <span style={{ fontSize: TEXT_SIZES[0] }}>A</span>{' '}
+                <input
+                  type="range"
+                  min={TEXT_SIZES[0]}
+                  max={TEXT_SIZES[TEXT_SIZES.length - 1]}
+                  step="1"
+                  value={currentTextSize}
+                  list="sizes"
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10);
+                    const html = document.documentElement;
+                    // set CSS variable
+                    html.style.setProperty('--text-size', `${value}px`);
+                    // save to local storage
+                    if (value === DEFAULT_TEXT_SIZE) {
+                      store.local.del('textSize');
+                    } else {
+                      store.local.set('textSize', e.target.value);
+                    }
+                  }}
+                />{' '}
+                <span style={{ fontSize: TEXT_SIZES[TEXT_SIZES.length - 1] }}>
+                  A
+                </span>
+                <datalist id="sizes">
+                  {TEXT_SIZES.map((size) => (
+                    <option value={size} />
+                  ))}
+                </datalist>
               </div>
             </li>
           </ul>

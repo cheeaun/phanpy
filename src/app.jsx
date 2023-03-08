@@ -74,6 +74,13 @@ function App() {
         .querySelector('meta[name="color-scheme"]')
         .setAttribute('content', theme === 'auto' ? 'dark light' : theme);
     }
+    const textSize = store.local.get('textSize');
+    if (textSize) {
+      document.documentElement.style.setProperty(
+        '--text-size',
+        `${textSize}px`,
+      );
+    }
   }, []);
 
   useEffect(() => {

@@ -105,3 +105,12 @@
 #settings-container .radio-group label:has(input:checked) input:checked + span {
   color: inherit;
 }
+
+#settings-container .range-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#settings-container .range-group input[type='range'] {
+  flex-grow: 1;
+}

@@ -303,7 +303,8 @@ function Notification({ notification, instance }) {
     for (const account of _accounts) {
       if (account._types?.includes('favourite')) {
         favsCount++;
-      } else if (account._types?.includes('reblog')) {
+      }
+      if (account._types?.includes('reblog')) {
         reblogsCount++;
       }
     }

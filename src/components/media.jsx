@@ -74,6 +74,10 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               backgroundPosition: focalBackgroundPosition || 'center',
             }
           }
+          onDblClick={() => {
+            // Open original image in new tab
+            window.open(url, '_blank');
+          }}
         />
       </div>
     );

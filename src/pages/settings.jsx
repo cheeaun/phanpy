@@ -216,56 +216,68 @@ function Settings({ onClose }) {
         </section>
         <h3>About</h3>
         <section>
-          <p>
+          <div
+            style={{
+              display: 'flex',
+              gap: 8,
+              lineHeight: 1.25,
+              alignItems: 'center',
+              marginTop: 8,
+            }}
+          >
             <img
               src={logo}
               alt=""
-              width="20"
-              height="20"
+              width="64"
+              height="64"
               style={{
                 aspectRatio: '1/1',
                 verticalAlign: 'middle',
+                background: '#b7cdf9',
+                borderRadius: 12,
               }}
-            />{' '}
-            <a
-              href="https://hachyderm.io/@phanpy"
-              // target="_blank"
-              onClick={(e) => {
-                e.preventDefault();
-                states.showAccount = 'phanpy@hachyderm.io';
-              }}
-            >
-              @phanpy
-            </a>
-            .
-          </p>
+            />
+            <div>
+              <b>Phanpy</b>{' '}
+              <a
+                href="https://hachyderm.io/@phanpy"
+                // target="_blank"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.showAccount = 'phanpy@hachyderm.io';
+                }}
+              >
+                @phanpy
+              </a>
+              <br />
+              <a href="https://github.com/cheeaun/phanpy" target="_blank">
+                Built
+              </a>{' '}
+              by{' '}
+              <a
+                href="https://mastodon.social/@cheeaun"
+                // target="_blank"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.showAccount = 'cheeaun@mastodon.social';
+                }}
+              >
+                @cheeaun
+              </a>
+            </div>
+          </div>
           <p>
-            <a href="https://github.com/cheeaun/phanpy" target="_blank">
-              Built
-            </a>{' '}
-            by{' '}
-            <a
-              href="https://mastodon.social/@cheeaun"
-              // target="_blank"
-              onClick={(e) => {
-                e.preventDefault();
-                states.showAccount = 'cheeaun@mastodon.social';
-              }}
-            >
-              @cheeaun
-            </a>
-            .{' '}
             <a
               href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
               target="_blank"
             >
               Privacy Policy
             </a>
-            .
           </p>
           {__BUILD_TIME__ && (
             <p>
-              Last build: <RelativeTime datetime={new Date(__BUILD_TIME__)} />{' '}
+              <span class="insignificant">Last build:</span>{' '}
+              <RelativeTime datetime={new Date(__BUILD_TIME__)} />{' '}
               {__COMMIT_HASH__ && (
                 <>
                   (

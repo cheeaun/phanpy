@@ -45,6 +45,9 @@
 #settings-container section > ul > li .current.is-current + .avatar {
   box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
 }
+#settings-container section > ul > li .avatar + .name-text {
+  vertical-align: middle;
+}
 #settings-container section > ul > li > div {
   flex-grow: 1;
   max-width: 100%;
@@ -60,8 +63,7 @@
   text-align: left !important;
   margin-top: 8px;
 }
-#settings-container div,
-#settings-container div > * {
+#settings-container div {
   vertical-align: middle;
 }
 #settings-container .avatar {

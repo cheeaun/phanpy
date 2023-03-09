@@ -68,7 +68,14 @@ const ICONS = {
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');
 
-function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
+function Icon({
+  icon,
+  size = 'm',
+  alt,
+  title,
+  class: className = '',
+  style = {},
+}) {
   if (!icon) return null;
 
   const iconSize = SIZES[size];
@@ -97,6 +104,7 @@ function Icon({ icon, size = 'm', alt, title, class: className = '' }) {
         display: 'inline-block',
         overflow: 'hidden',
         lineHeight: 0,
+        ...style,
       }}
     >
       {iconData && (

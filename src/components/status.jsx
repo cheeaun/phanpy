@@ -373,7 +373,7 @@ function Status({
           </MenuHeader>
           <MenuLink to={instance ? `/${instance}/s/${id}` : `/s/${id}`}>
             <Icon icon="arrow-right" />
-            View post and replies
+            <span>View post by @{username || acct}</span>
           </MenuLink>
         </>
       )}
@@ -408,7 +408,12 @@ function Status({
                 } catch (e) {}
               }}
             >
-              <Icon icon="rocket" />
+              <Icon
+                icon="rocket"
+                style={{
+                  color: reblogged && 'var(--reblog-color)',
+                }}
+              />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
             </MenuItem>
           )}
@@ -421,7 +426,12 @@ function Status({
               } catch (e) {}
             }}
           >
-            <Icon icon="heart" />
+            <Icon
+              icon="heart"
+              style={{
+                color: favourited && 'var(--favourite-color)',
+              }}
+            />
             <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
           </MenuItem>
           <MenuItem
@@ -433,62 +443,69 @@ function Status({
               } catch (e) {}
             }}
           >
-            <Icon icon="bookmark" />
+            <Icon
+              icon="bookmark"
+              style={{
+                color: bookmarked && 'var(--favourite-color)',
+              }}
+            />
             <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
           </MenuItem>
+          {enableTranslate && (
+            <MenuItem
+              disabled={forceTranslate}
+              onClick={() => {
+                setForceTranslate(true);
+              }}
+            >
+              <Icon icon="translate" />
+              <span>Translate</span>
+            </MenuItem>
+          )}
           <MenuDivider />
         </>
       )}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
-        <span>Open link to post</span>
+        <small class="menu-double-lines">{nicePostURL(url)}</small>
       </MenuItem>
-      <MenuItem
-        onClick={() => {
-          // Copy url to clipboard
-          try {
-            navigator.clipboard.writeText(url);
-            showToast('Link copied');
-          } catch (e) {
-            console.error(e);
-            showToast('Unable to copy link');
-          }
-        }}
-      >
-        <Icon icon="link" />
-        <span>Copy link to post</span>
-      </MenuItem>
-      {enableTranslate && (
+      <div class="menu-horizontal">
         <MenuItem
-          disabled={forceTranslate}
           onClick={() => {
-            setForceTranslate(true);
+            // Copy url to clipboard
+            try {
+              navigator.clipboard.writeText(url);
+              showToast('Link copied');
+            } catch (e) {
+              console.error(e);
+              showToast('Unable to copy link');
+            }
           }}
         >
-          <Icon icon="translate" />
-          <span>Translate</span>
+          <Icon icon="link" />
+          <span>Copy</span>
         </MenuItem>
-      )}
-      {navigator?.share &&
-        navigator?.canShare?.({
-          url,
-        }) && (
-          <MenuItem
-            onClick={() => {
-              try {
-                navigator.share({
-                  url,
-                });
-              } catch (e) {
-                console.error(e);
-                alert("Sharing doesn't seem to work.");
-              }
-            }}
-          >
-            <Icon icon="share" />
-            <span>Share…</span>
-          </MenuItem>
-        )}
+        {navigator?.share &&
+          navigator?.canShare?.({
+            url,
+          }) && (
+            <MenuItem
+              onClick={() => {
+                try {
+                  navigator.share({
+                    url,
+                  });
+                } catch (e) {
+                  console.error(e);
+                  alert("Sharing doesn't seem to work.");
+                }
+              }}
+            >
+              <Icon icon="share" />
+              <span>Share…</span>
+            </MenuItem>
+          )}
+      </div>
       {isSelf && (
         <>
           <MenuDivider />
@@ -546,6 +563,9 @@ function Status({
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
+        console.log('context menu', e);
+        const link = e.target.closest('a');
+        if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
         e.preventDefault();
         setContextMenuAnchorPoint({
           x: e.clientX,
@@ -1535,6 +1555,27 @@ function _unfurlMastodonLink(instance, url) {
     });
 
   return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+}
+
+function nicePostURL(url) {
+  const urlObj = new URL(url);
+  const { host, pathname } = urlObj;
+  const path = pathname.replace(/\/$/, '');
+  // split only first slash
+  const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
+  return (
+    <>
+      {host}
+      {username ? (
+        <>
+          /{username}
+          <span class="more-insignificant">/{restPath}</span>
+        </>
+      ) : (
+        <span class="more-insignificant">{path}</span>
+      )}
+    </>
+  );
 }
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);

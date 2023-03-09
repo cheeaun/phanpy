@@ -56,26 +56,28 @@ subscribeKey(states, 'notificationsLast', (v) => {
   console.log('CHANGE', v);
   store.account.set('notificationsLast', states.notificationsLast);
 });
-subscribe(states, (v) => {
-  console.debug('STATES change', v);
-  const [action, path, value, prevValue] = v[0];
-  if (path.join('.') === 'settings.boostsCarousel') {
-    store.account.set('settings-boostsCarousel', !!value);
-  }
-  if (path.join('.') === 'settings.shortcutsColumnsMode') {
-    store.account.set('settings-shortcutsColumnsMode', !!value);
-  }
-  if (path.join('.') === 'settings.shortcutsViewMode') {
-    store.account.set('settings-shortcutsViewMode', value);
-  }
-  if (path.join('.') === 'settings.contentTranslation') {
-    store.account.set('settings-contentTranslation', !!value);
-  }
-  if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
-    store.account.set('settings-contentTranslationTargetLanguage', value);
-  }
-  if (path?.[0] === 'shortcuts') {
-    store.account.set('shortcuts', states.shortcuts);
+subscribe(states, (changes) => {
+  console.debug('STATES change', changes);
+  for (const [action, path, value, prevValue] of changes) {
+    if (path.join('.') === 'settings.boostsCarousel') {
+      store.account.set('settings-boostsCarousel', !!value);
+    }
+    if (path.join('.') === 'settings.shortcutsColumnsMode') {
+      store.account.set('settings-shortcutsColumnsMode', !!value);
+    }
+    if (path.join('.') === 'settings.shortcutsViewMode') {
+      store.account.set('settings-shortcutsViewMode', value);
+    }
+    if (path.join('.') === 'settings.contentTranslation') {
+      store.account.set('settings-contentTranslation', !!value);
+    }
+    if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
+      console.log('SET', value);
+      store.account.set('settings-contentTranslationTargetLanguage', value);
+    }
+    if (path?.[0] === 'shortcuts') {
+      store.account.set('shortcuts', states.shortcuts);
+    }
   }
 });
 

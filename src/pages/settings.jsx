@@ -159,46 +159,55 @@ function Settings({ onClose }) {
                   type="checkbox"
                   checked={snapStates.settings.contentTranslation}
                   onChange={(e) => {
-                    states.settings.contentTranslation = e.target.checked;
+                    const { checked } = e.target;
+                    states.settings.contentTranslation = checked;
+                    if (!checked) {
+                      states.settings.contentTranslationTargetLanguage = null;
+                    }
                   }}
                 />{' '}
                 Post translation
               </label>
-              {snapStates.settings.contentTranslation && (
-                <div class="sub-section">
-                  <label>
-                    Translate to{' '}
-                    <select
-                      value={targetLanguage}
-                      onChange={(e) => {
-                        states.settings.contentTranslationTargetLanguage =
-                          e.target.value || null;
-                      }}
+              <div
+                class={`sub-section ${
+                  !snapStates.settings.contentTranslation
+                    ? 'more-insignificant'
+                    : ''
+                }`}
+              >
+                <label>
+                  Translate to{' '}
+                  <select
+                    value={targetLanguage || ''}
+                    disabled={!snapStates.settings.contentTranslation}
+                    onChange={(e) => {
+                      states.settings.contentTranslationTargetLanguage =
+                        e.target.value || null;
+                    }}
+                  >
+                    <option value="">
+                      System language ({systemTargetLanguageText})
+                    </option>
+                    <option disabled>──────────</option>
+                    {targetLanguages.map((lang) => (
+                      <option value={lang.code}>{lang.name}</option>
+                    ))}
+                  </select>
+                </label>
+                <p>
+                  <small>
+                    Note: This feature uses an external API to translate,
+                    powered by{' '}
+                    <a
+                      href="https://github.com/thedaviddelta/lingva-translate"
+                      target="_blank"
                     >
-                      <option value="">
-                        System language ({systemTargetLanguageText})
-                      </option>
-                      <option disabled>──────────</option>
-                      {targetLanguages.map((lang) => (
-                        <option value={lang.code}>{lang.name}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <p>
-                    <small>
-                      Note: This feature uses an external API to translate,
-                      powered by{' '}
-                      <a
-                        href="https://github.com/thedaviddelta/lingva-translate"
-                        target="_blank"
-                      >
-                        Lingva Translate
-                      </a>
-                      .
-                    </small>
-                  </p>
-                </div>
-              )}
+                      Lingva Translate
+                    </a>
+                    .
+                  </small>
+                </p>
+              </div>
             </li>
             <li>
               <button

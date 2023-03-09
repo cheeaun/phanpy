@@ -4,6 +4,9 @@ import mem from 'mem';
 import { useEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import floatingButtonUrl from '../assets/floating-button.svg';
+import multiColumnUrl from '../assets/multi-column.svg';
+import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 import { api } from '../utils/api';
 import states from '../utils/states';
 
@@ -208,9 +211,40 @@ function ShortcutsSettings() {
       </header>
       <main>
         <p>
-          <label class="shortcuts-view-mode">
-            Specify a list of shortcuts that'll appear&nbsp;as:
-            <select
+          Specify a list of shortcuts that'll appear&nbsp;as:
+          <div class="shortcuts-view-mode">
+            {[
+              {
+                value: 'float-button',
+                label: 'Floating button',
+                imgURL: floatingButtonUrl,
+              },
+              {
+                value: 'tab-menu-bar',
+                label: 'Tab/Menu bar',
+                imgURL: tabMenuBarUrl,
+              },
+              {
+                value: 'multi-column',
+                label: 'Multi-column',
+                imgURL: multiColumnUrl,
+              },
+            ].map(({ value, label, imgURL }) => (
+              <label>
+                <input
+                  type="radio"
+                  name="shortcuts-view-mode"
+                  value={value}
+                  checked={snapStates.settings.shortcutsViewMode === value}
+                  onChange={(e) => {
+                    states.settings.shortcutsViewMode = e.target.value;
+                  }}
+                />{' '}
+                <img src={imgURL} alt="" /> <span>{label}</span>
+              </label>
+            ))}
+          </div>
+          {/* <select
               value={snapStates.settings.shortcutsViewMode || 'float-button'}
               onChange={(e) => {
                 states.settings.shortcutsViewMode = e.target.value;
@@ -219,8 +253,7 @@ function ShortcutsSettings() {
               <option value="float-button">Floating button</option>
               <option value="multi-column">Multi-column</option>
               <option value="tab-menu-bar">Tab/Menu bar </option>
-            </select>
-          </label>
+            </select> */}
         </p>
         {/* <p>
           <details>

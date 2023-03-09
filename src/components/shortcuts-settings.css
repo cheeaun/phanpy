@@ -33,7 +33,55 @@
 #shortcuts-settings-container .shortcuts-view-mode {
   display: flex;
   align-items: center;
+  gap: 2px;
+  margin: 8px 0 0;
+}
+#shortcuts-settings-container .shortcuts-view-mode label {
+  border-radius: 4px;
+  background-color: var(--bg-faded-color);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  flex-grow: 1;
+  display: flex;
   gap: 8px;
+  flex-direction: column;
+  align-items: center;
+}
+#shortcuts-settings-container .shortcuts-view-mode label:first-child {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+#shortcuts-settings-container .shortcuts-view-mode label:last-child {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+#shortcuts-settings-container .shortcuts-view-mode label img {
+  max-height: 64px;
+}
+#shortcuts-settings-container .shortcuts-view-mode label span {
+  text-align: center;
+  font-size: 80%;
+}
+#shortcuts-settings-container .shortcuts-view-mode label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+#shortcuts-settings-container .shortcuts-view-mode label input ~ * {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+#shortcuts-settings-container .shortcuts-view-mode label:has(input:checked) {
+  box-shadow: inset 0 0 0 3px var(--link-color);
+}
+#shortcuts-settings-container
+  .shortcuts-view-mode
+  label
+  input:is(:hover, :active, :checked)
+  ~ * {
+  opacity: 1;
 }
 
 #shortcuts-settings-container summary {

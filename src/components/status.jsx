@@ -246,8 +246,15 @@ function Status({
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
   const isSizeLarge = size === 'l';
-  // TODO: if visibility = private, only can boost own statuses
-  const canBoost = authenticated && visibility !== 'direct';
+  // Can boost if:
+  // - authenticated AND
+  // - visibility != direct OR
+  // - visibility = private AND isSelf
+  let canBoost =
+    authenticated && visibility !== 'direct' && visibility !== 'private';
+  if (visibility === 'private' && isSelf) {
+    canBoost = true;
+  }
 
   const replyStatus = () => {
     if (!sameInstance || !authenticated) {

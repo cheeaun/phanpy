@@ -151,6 +151,8 @@ function App() {
         // Focus first column
         columns.querySelector('.deck-container')?.focus?.();
       } else {
+        const backDrop = document.querySelector('.deck-backdrop');
+        if (backDrop) return;
         // Focus last deck
         const pages = document.querySelectorAll('.deck-container');
         const page = pages[pages.length - 1]; // last one

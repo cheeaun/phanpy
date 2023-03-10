@@ -122,6 +122,9 @@ function Account({ account, instance: propInstance, onClose }) {
       ) : (
         info && (
           <>
+            {header && !/missing\.png$/.test(header) && (
+              <img src={header} alt="" class="header-banner" />
+            )}
             <header>
               <AccountBlock
                 account={info}

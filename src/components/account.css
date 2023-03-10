@@ -2,10 +2,55 @@
   color: var(--outline-color);
 }
 
+#account-container .header-banner {
+  pointer-events: none;
+  aspect-ratio: 6 / 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  /* mask fade out bottom of banner */
+  mask-image: linear-gradient(
+    to bottom,
+    hsl(0, 0%, 0%) 0%,
+    hsla(0, 0%, 0%, 0.987) 14%,
+    hsla(0, 0%, 0%, 0.951) 26.2%,
+    hsla(0, 0%, 0%, 0.896) 36.8%,
+    hsla(0, 0%, 0%, 0.825) 45.9%,
+    hsla(0, 0%, 0%, 0.741) 53.7%,
+    hsla(0, 0%, 0%, 0.648) 60.4%,
+    hsla(0, 0%, 0%, 0.55) 66.2%,
+    hsla(0, 0%, 0%, 0.45) 71.2%,
+    hsla(0, 0%, 0%, 0.352) 75.6%,
+    hsla(0, 0%, 0%, 0.259) 79.6%,
+    hsla(0, 0%, 0%, 0.175) 83.4%,
+    hsla(0, 0%, 0%, 0.104) 87.2%,
+    hsla(0, 0%, 0%, 0.049) 91.1%,
+    hsla(0, 0%, 0%, 0.013) 95.3%,
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  margin-bottom: -44px;
+}
+
+@media (min-height: 480px) {
+  #account-container .header-banner {
+    aspect-ratio: 3 / 1;
+  }
+}
+@media (min-height: 720px) {
+  #account-container .header-banner {
+    aspect-ratio: 16 / 9;
+  }
+}
+
 #account-container header {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
+  text-shadow: 0 0 24px var(--bg-color);
+}
+#account-container header .avatar {
+  box-shadow: 0 0 24px var(--bg-color);
 }
 
 #account-container .note {

@@ -123,7 +123,14 @@ function Account({ account, instance: propInstance, onClose }) {
         info && (
           <>
             {header && !/missing\.png$/.test(header) && (
-              <img src={header} alt="" class="header-banner" />
+              <img
+                src={header}
+                alt=""
+                class="header-banner"
+                onError={(e) => {
+                  e.target.src = headerStatic;
+                }}
+              />
             )}
             <header>
               <AccountBlock

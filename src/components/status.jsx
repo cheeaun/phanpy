@@ -1576,6 +1576,7 @@ function nicePostURL(url) {
       {username ? (
         <>
           /{username}
+          <wbr />
           <span class="more-insignificant">/{restPath}</span>
         </>
       ) : (

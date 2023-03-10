@@ -354,3 +354,18 @@ code {
     transform: translateY(0);
   }
 }
+
+@keyframes position-object {
+  0% {
+    object-position: 50% 50%;
+  }
+  25% {
+    object-position: 0% 0%;
+  }
+  75% {
+    object-position: 100% 100%;
+  }
+  100% {
+    object-position: 50% 50%;
+  }
+}

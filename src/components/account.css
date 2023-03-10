@@ -3,7 +3,7 @@
 }
 
 #account-container .header-banner {
-  pointer-events: none;
+  /* pointer-events: none; */
   aspect-ratio: 6 / 1;
   width: 100%;
   height: auto;
@@ -29,6 +29,9 @@
     hsla(0, 0%, 0%, 0) 100%
   );
   margin-bottom: -44px;
+}
+#account-container .header-banner:hover {
+  animation: position-object 5s ease-in-out 1s 5;
 }
 
 @media (min-height: 480px) {

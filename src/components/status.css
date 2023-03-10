@@ -426,20 +426,6 @@
 .status .media {
   cursor: pointer;
 }
-@keyframes position-object {
-  0% {
-    object-position: 50% 50%;
-  }
-  25% {
-    object-position: 0% 0%;
-  }
-  75% {
-    object-position: 100% 100%;
-  }
-  100% {
-    object-position: 50% 50%;
-  }
-}
 .status .media img:is(:hover, :focus),
 a:focus-visible .status .media img {
   animation: position-object 5s ease-in-out 1s 5;

@@ -429,7 +429,7 @@ function Notification({ notification, instance }) {
                 : `/s/${actualStatusID}`
             }
           >
-            <Status status={status} size="s" />
+            <Status statusID={actualStatusID} size="s" />
           </Link>
         )}
       </div>

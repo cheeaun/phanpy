@@ -1,6 +1,8 @@
+import { useEffect } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
+import states from '../utils/states';
 
 import AccountInfo from './account-info';
 
@@ -9,6 +11,12 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
   const isString = typeof account === 'string';
 
   const escRef = useHotkeys('esc', onClose, [onClose]);
+
+  useEffect(() => {
+    if (!isString) {
+      states.accounts[`${account.id}@${instance}`] = account;
+    }
+  }, [account]);
 
   return (
     <div

@@ -74,18 +74,18 @@ function AccountStatuses() {
 
   const { displayName, acct, emojis } = account || {};
 
-  const TimelineStart = useMemo(
-    () => (
+  const TimelineStart = useMemo(() => {
+    const cachedAccount = snapStates.accounts[`${id}@${instance}`];
+    return (
       <AccountInfo
         instance={instance}
-        account={id}
+        account={cachedAccount || id}
         fetchAccount={() => masto.v1.accounts.fetch(id)}
         authenticated={authenticated}
         standalone
       />
-    ),
-    [id, instance, authenticated],
-  );
+    );
+  }, [id, instance, authenticated]);
 
   return (
     <Timeline

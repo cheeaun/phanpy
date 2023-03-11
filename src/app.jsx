@@ -412,8 +412,11 @@ function App() {
           <AccountSheet
             account={snapStates.showAccount?.account || snapStates.showAccount}
             instance={snapStates.showAccount?.instance}
-            onClose={() => {
+            onClose={({ destination }) => {
               states.showAccount = false;
+              if (destination) {
+                states.showAccounts = false;
+              }
             }}
           />
         </Modal>

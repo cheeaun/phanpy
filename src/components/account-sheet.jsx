@@ -17,7 +17,9 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
       onClick={(e) => {
         const accountBlock = e.target.closest('.account-block');
         if (accountBlock) {
-          onClose();
+          onClose({
+            destination: 'account-statuses',
+          });
         }
       }}
     >

@@ -102,9 +102,21 @@ function AccountInfo({
               <p>███████████████ ███████████████</p>
             </div>
             <p class="stats">
-              <span>██ Posts</span>
-              <span>██ Following</span>
-              <span>██ Followers</span>
+              <span>
+                Posts
+                <br />
+                ██
+              </span>
+              <span>
+                Following
+                <br />
+                ██
+              </span>
+              <span>
+                Followers
+                <br />
+                ██
+              </span>
             </p>
           </main>
         </>

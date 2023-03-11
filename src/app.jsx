@@ -264,7 +264,9 @@ function App() {
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
-  useInterval(() => {
+  const lastCheckDate = useRef();
+  const checkForUpdates = () => {
+    lastCheckDate.current = Date.now();
     console.log('✨ Check app update');
     fetch('./version.json')
       .then((r) => r.json())
@@ -274,7 +276,21 @@ function App() {
       .catch((e) => {
         console.error(e);
       });
-  }, visible && 1000 * 60 * 60); // 1 hour
+  };
+  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
+  usePageVisibility((visible) => {
+    if (visible) {
+      if (!lastCheckDate.current) {
+        checkForUpdates();
+      } else {
+        const diff = Date.now() - lastCheckDate.current;
+        if (diff > 1000 * 60 * 60) {
+          // 1 hour
+          checkForUpdates();
+        }
+      }
+    }
+  });
 
   return (
     <>

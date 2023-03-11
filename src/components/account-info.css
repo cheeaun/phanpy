@@ -188,6 +188,11 @@
   left: -100%;
   pointer-events: none;
 }
+@media (prefers-color-scheme: dark) {
+  .timeline-start .account-container:before {
+    opacity: 0.25;
+  }
+}
 .timeline-start .account-container:hover:before {
   animation: shine 1s ease-in-out 1s;
 }

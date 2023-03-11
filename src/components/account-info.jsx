@@ -28,7 +28,10 @@ function AccountInfo({
   const [info, setInfo] = useState(isString ? null : account);
 
   useEffect(() => {
-    if (!isString) return;
+    if (!isString) {
+      setInfo(account);
+      return;
+    }
     setUIState('loading');
     (async () => {
       try {
@@ -41,7 +44,7 @@ function AccountInfo({
         setUIState('error');
       }
     })();
-  }, [isString, fetchAccount]);
+  }, [isString, account, fetchAccount]);
 
   const {
     acct,

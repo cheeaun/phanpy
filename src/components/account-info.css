@@ -147,8 +147,11 @@
 .timeline-start .account-container {
   border-bottom: 1px solid var(--outline-color);
 }
-.timeline-start .account-container :is(header, main) {
-  padding: 16px 16px 4px;
+.timeline-start .account-container header {
+  padding: 16px 16px 1px;
+}
+.timeline-start .account-container main {
+  padding: 1px 16px 1px;
 }
 .timeline-start .account-container .account-block .account-block-acct {
   opacity: 0.5;

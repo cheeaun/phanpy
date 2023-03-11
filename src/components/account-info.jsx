@@ -36,6 +36,7 @@ function AccountInfo({
     (async () => {
       try {
         const info = await fetchAccount();
+        states.accounts[`${info.id}@${instance}`] = info;
         setInfo(info);
         setUIState('default');
       } catch (e) {

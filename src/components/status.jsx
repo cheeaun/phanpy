@@ -458,20 +458,20 @@ function Status({
             />
             <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
           </MenuItem>
-          {enableTranslate && (
-            <MenuItem
-              disabled={forceTranslate}
-              onClick={() => {
-                setForceTranslate(true);
-              }}
-            >
-              <Icon icon="translate" />
-              <span>Translate</span>
-            </MenuItem>
-          )}
-          <MenuDivider />
         </>
       )}
+      {enableTranslate && (
+        <MenuItem
+          disabled={forceTranslate}
+          onClick={() => {
+            setForceTranslate(true);
+          }}
+        >
+          <Icon icon="translate" />
+          <span>Translate</span>
+        </MenuItem>
+      )}
+      {(!isSizeLarge || enableTranslate) && <MenuDivider />}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
         <small class="menu-double-lines">{nicePostURL(url)}</small>

@@ -1,7 +1,6 @@
-import './account.css';
+import './account-info.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -17,49 +16,32 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 
-function Account({ account, instance: propInstance, onClose }) {
-  const { masto, instance, authenticated } = api({ instance: propInstance });
+function AccountInfo({
+  account,
+  fetchAccount = () => {},
+  standalone,
+  instance,
+  authenticated,
+}) {
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
 
   useEffect(() => {
-    if (isString) {
-      setUIState('loading');
-      (async () => {
-        try {
-          const info = await masto.v1.accounts.lookup({
-            acct: account,
-            skip_webfinger: false,
-          });
-          setInfo(info);
-          setUIState('default');
-        } catch (e) {
-          try {
-            const result = await masto.v2.search({
-              q: account,
-              type: 'accounts',
-              limit: 1,
-              resolve: authenticated,
-            });
-            if (result.accounts.length) {
-              setInfo(result.accounts[0]);
-              setUIState('default');
-              return;
-            }
-            setInfo(null);
-            setUIState('error');
-          } catch (err) {
-            console.error(err);
-            setInfo(null);
-            setUIState('error');
-          }
-        }
-      })();
-    } else {
-      setInfo(account);
-    }
-  }, [account]);
+    if (!isString) return;
+    setUIState('loading');
+    (async () => {
+      try {
+        const info = await fetchAccount();
+        setInfo(info);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setInfo(null);
+        setUIState('error');
+      }
+    })();
+  }, [isString, fetchAccount]);
 
   const {
     acct,
@@ -84,13 +66,17 @@ function Account({ account, instance: propInstance, onClose }) {
     username,
   } = info || {};
 
-  const escRef = useHotkeys('esc', onClose, [onClose]);
+  const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
   return (
     <div
-      ref={escRef}
-      id="account-container"
-      class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
+      class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
+      style={{
+        '--header-color-1': headerCornerColors[0],
+        '--header-color-2': headerCornerColors[1],
+        '--header-color-3': headerCornerColors[2],
+        '--header-color-4': headerCornerColors[3],
+      }}
     >
       {uiState === 'error' && (
         <div class="ui-state">
@@ -128,7 +114,47 @@ function Account({ account, instance: propInstance, onClose }) {
                 alt=""
                 class="header-banner"
                 onError={(e) => {
-                  e.target.src = headerStatic;
+                  if (e.target.crossOrigin) {
+                    if (e.target.src !== headerStatic) {
+                      e.target.src = headerStatic;
+                    } else {
+                      e.target.removeAttribute('crossorigin');
+                      e.target.src = header;
+                    }
+                  } else if (e.target.src !== headerStatic) {
+                    e.target.src = headerStatic;
+                  } else {
+                    e.target.remove();
+                  }
+                }}
+                crossOrigin="anonymous"
+                onLoad={(e) => {
+                  try {
+                    // Get color from four corners of image
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = e.target.width;
+                    canvas.height = e.target.height;
+                    ctx.drawImage(e.target, 0, 0);
+                    const colors = [
+                      ctx.getImageData(0, 0, 1, 1).data,
+                      ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
+                      ctx.getImageData(0, e.target.height - 1, 1, 1).data,
+                      ctx.getImageData(
+                        e.target.width - 1,
+                        e.target.height - 1,
+                        1,
+                        1,
+                      ).data,
+                    ];
+                    const rgbColors = colors.map((color) => {
+                      return `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.3)`;
+                    });
+                    setHeaderCornerColors(rgbColors);
+                    console.log({ colors, rgbColors });
+                  } catch (e) {
+                    // Silently fail
+                  }
                 }}
               />
             )}
@@ -137,7 +163,8 @@ function Account({ account, instance: propInstance, onClose }) {
                 account={info}
                 instance={instance}
                 avatarSize="xxxl"
-                external
+                external={standalone}
+                internal={!standalone}
               />
             </header>
             <main tabIndex="-1">
@@ -429,4 +456,4 @@ function RelatedActions({ info, instance, authenticated }) {
   );
 }
 
-export default Account;
+export default AccountInfo;

@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
-import Account from './components/account';
+import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
 import Loader from './components/loader';
@@ -409,7 +409,7 @@ function App() {
             }
           }}
         >
-          <Account
+          <AccountSheet
             account={snapStates.showAccount?.account || snapStates.showAccount}
             instance={snapStates.showAccount?.instance}
             onClose={() => {

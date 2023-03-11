@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
+import AccountInfo from '../components/account-info';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -13,7 +14,7 @@ const LIMIT = 20;
 function AccountStatuses() {
   const snapStates = useSnapshot(states);
   const { id, ...params } = useParams();
-  const { masto, instance } = api({ instance: params.instance });
+  const { masto, instance, authenticated } = api({ instance: params.instance });
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
     const results = [];
@@ -27,7 +28,7 @@ function AccountStatuses() {
         pinnedStatuses.forEach((status) => {
           status._pinned = true;
         });
-        if (pinnedStatuses.length > 1) {
+        if (pinnedStatuses.length >= 3) {
           const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);
           results.push({
             id: pinnedStatusesIds,
@@ -54,7 +55,7 @@ function AccountStatuses() {
     };
   }
 
-  const [account, setAccount] = useState({});
+  const [account, setAccount] = useState();
   useTitle(
     `${account?.acct ? '@' + account.acct : 'Posts'}`,
     '/:instance?/a/:id',
@@ -71,7 +72,20 @@ function AccountStatuses() {
     })();
   }, [id]);
 
-  const { displayName, acct, emojis } = account;
+  const { displayName, acct, emojis } = account || {};
+
+  const TimelineStart = useMemo(
+    () => (
+      <AccountInfo
+        instance={instance}
+        account={id}
+        fetchAccount={() => masto.v1.accounts.fetch(id)}
+        authenticated={authenticated}
+        standalone
+      />
+    ),
+    [id, instance, authenticated],
+  );
 
   return (
     <Timeline
@@ -103,6 +117,7 @@ function AccountStatuses() {
       errorText="Unable to load statuses"
       fetchItems={fetchAccountStatuses}
       boostsCarousel={snapStates.settings.boostsCarousel}
+      timelineStart={TimelineStart}
     />
   );
 }

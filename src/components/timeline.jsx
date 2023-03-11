@@ -27,6 +27,7 @@ function Timeline({
   checkForUpdatesInterval = 60_000, // 1 minute
   headerStart,
   headerEnd,
+  timelineStart,
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -292,6 +293,7 @@ function Timeline({
               </button>
             )}
         </header>
+        {!!timelineStart && <div class="timeline-start">{timelineStart}</div>}
         {!!items.length ? (
           <>
             <ul class="timeline">

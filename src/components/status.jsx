@@ -1565,6 +1565,7 @@ function _unfurlMastodonLink(instance, url) {
 }
 
 function nicePostURL(url) {
+  if (!url) return;
   const urlObj = new URL(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');

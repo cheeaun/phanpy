@@ -227,18 +227,28 @@ function AccountInfo({
                 </div>
               )}
               <p class="stats">
-                <Link
-                  to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
-                  onClick={() => {
-                    hideAllModals();
-                  }}
-                >
-                  Posts
-                  <br />
-                  <b title={statusesCount}>
-                    {shortenNumber(statusesCount)}
-                  </b>{' '}
-                </Link>
+                {standalone ? (
+                  <span>
+                    Posts
+                    <br />
+                    <b title={statusesCount}>
+                      {shortenNumber(statusesCount)}
+                    </b>{' '}
+                  </span>
+                ) : (
+                  <Link
+                    to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
+                    onClick={() => {
+                      hideAllModals();
+                    }}
+                  >
+                    Posts
+                    <br />
+                    <b title={statusesCount}>
+                      {shortenNumber(statusesCount)}
+                    </b>{' '}
+                  </Link>
+                )}
                 <span>
                   Following
                   <br />

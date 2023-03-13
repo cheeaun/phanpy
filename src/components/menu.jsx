@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
+import { getCurrentAccount } from '../utils/store-utils';
 
 import Icon from './icon';
 import MenuLink from './MenuLink';
@@ -10,6 +11,7 @@ import MenuLink from './MenuLink';
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
+  const currentAccount = getCurrentAccount();
 
   // Home = Following
   // But when in multi-column mode, Home becomes columns of anything
@@ -102,6 +104,11 @@ function NavMenu(props) {
       {authenticated && (
         <>
           <MenuDivider />
+          {currentAccount?.info?.id && (
+            <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
+              <Icon icon="user" size="l" /> <span>Profile</span>
+            </MenuLink>
+          )}
           <MenuItem
             onClick={() => {
               states.showAccounts = true;

@@ -57,7 +57,9 @@ function AccountStatuses() {
 
   const [account, setAccount] = useState();
   useTitle(
-    `${account?.acct ? '@' + account.acct : 'Posts'}`,
+    `${account?.displayName ? account.displayName + ' ' : ''}@${
+      account?.acct ? account.acct : 'Account posts'
+    }`,
     '/:instance?/a/:id',
   );
   useEffect(() => {

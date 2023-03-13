@@ -40,7 +40,7 @@ function Avatar({ url, size, alt = '', ...props }) {
             e.target.src = url;
           }}
           onLoad={(e) => {
-            avatarRef.current.dataset.loaded = true;
+            if (avatarRef.current) avatarRef.current.dataset.loaded = true;
             try {
               // Check if image has alpha channel
               const canvas = document.createElement('canvas');

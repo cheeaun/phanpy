@@ -78,7 +78,7 @@ function StatusPage() {
   }, [id, uiState !== 'loading']);
 
   const scrollOffsets = useRef();
-  const initContext = () => {
+  const initContext = ({ reloadHero } = {}) => {
     console.debug('initContext', id);
     setUIState('loading');
     let heroTimer;
@@ -114,7 +114,7 @@ function StatusPage() {
 
       const hasStatus = !!snapStates.statuses[sKey];
       let heroStatus = snapStates.statuses[sKey];
-      if (hasStatus) {
+      if (hasStatus && !reloadHero) {
         console.debug('Hero status is cached');
       } else {
         try {
@@ -277,7 +277,9 @@ function StatusPage() {
         const apiCache = await caches.open('api');
         await apiCache.delete(contextURL, { ignoreVary: true });
 
-        return initContext();
+        return initContext({
+          reloadHero: true,
+        });
       } catch (e) {
         console.error(e);
       }

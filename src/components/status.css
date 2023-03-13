@@ -445,14 +445,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: relative;
   background-clip: padding-box;
 }
-.status :is(.media-video, .media-audio)[data-formatted-duration]:before {
+.status :is(.media-video, .media-audio)[data-formatted-duration] .media-play {
   pointer-events: none;
-  content: '⏵';
   width: 70px;
   height: 70px;
-  font-size: 50px;
   position: absolute;
-  text-indent: 3px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -465,7 +462,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 70px;
   transition: all 0.2s ease-in-out;
 }
-.status :is(.media-video, .media-audio)[data-formatted-duration]:hover:before {
+.status
+  :is(.media-video, .media-audio)[data-formatted-duration]:hover
+  .media-play {
   color: var(--text-color);
   background-color: var(--bg-blur-color);
 }

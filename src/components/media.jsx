@@ -1,6 +1,7 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useRef } from 'preact/hooks';
 
+import Icon from './icon';
 import { formatDuration } from './status';
 
 /*
@@ -165,13 +166,18 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             muted
           />
         ) : (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            loading="lazy"
-          />
+          <>
+            <img
+              src={previewUrl}
+              alt={description}
+              width={width}
+              height={height}
+              loading="lazy"
+            />
+            <div class="media-play">
+              <Icon icon="play" size="xxl" />
+            </div>
+          </>
         )}
       </div>
     );

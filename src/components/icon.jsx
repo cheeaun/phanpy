@@ -64,6 +64,7 @@ const ICONS = {
   sparkles: 'mingcute:sparkles-line',
   exit: 'mingcute:exit-line',
   translate: 'mingcute:translate-line',
+  play: 'mingcute:play-fill',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

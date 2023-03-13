@@ -56,12 +56,20 @@
   text-shadow: -8px 0 12px -6px var(--bg-color), 8px 0 12px -6px var(--bg-color),
     -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color);
+  animation: fade-in 0.5s both ease-in-out 0.1s;
 }
 .account-container header .avatar {
   /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color); */
   filter: drop-shadow(-8px 0 24px var(--header-color-3, --bg-color))
     drop-shadow(8px 0 24px var(--header-color-4, --bg-color));
+}
+
+.account-container main > *:first-child {
+  animation: fade-in 0.5s both ease-in-out 0.2s;
+}
+.account-container main > *:first-child ~ * {
+  animation: fade-in 0.5s both ease-in-out 0.3s;
 }
 
 .account-container .note {

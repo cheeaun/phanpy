@@ -152,17 +152,59 @@ function AccountInfo({
                     canvas.width = e.target.width;
                     canvas.height = e.target.height;
                     ctx.drawImage(e.target, 0, 0);
+                    // const colors = [
+                    //   ctx.getImageData(0, 0, 1, 1).data,
+                    //   ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
+                    //   ctx.getImageData(0, e.target.height - 1, 1, 1).data,
+                    //   ctx.getImageData(
+                    //     e.target.width - 1,
+                    //     e.target.height - 1,
+                    //     1,
+                    //     1,
+                    //   ).data,
+                    // ];
+                    // Get 10x10 pixels from corners, get average color from each
+                    const pixelDimension = 10;
                     const colors = [
-                      ctx.getImageData(0, 0, 1, 1).data,
-                      ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
-                      ctx.getImageData(0, e.target.height - 1, 1, 1).data,
+                      ctx.getImageData(0, 0, pixelDimension, pixelDimension)
+                        .data,
                       ctx.getImageData(
-                        e.target.width - 1,
-                        e.target.height - 1,
-                        1,
-                        1,
+                        e.target.width - pixelDimension,
+                        0,
+                        pixelDimension,
+                        pixelDimension,
                       ).data,
-                    ];
+                      ctx.getImageData(
+                        0,
+                        e.target.height - pixelDimension,
+                        pixelDimension,
+                        pixelDimension,
+                      ).data,
+                      ctx.getImageData(
+                        e.target.width - pixelDimension,
+                        e.target.height - pixelDimension,
+                        pixelDimension,
+                        pixelDimension,
+                      ).data,
+                    ].map((data) => {
+                      let r = 0;
+                      let g = 0;
+                      let b = 0;
+                      let a = 0;
+                      for (let i = 0; i < data.length; i += 4) {
+                        r += data[i];
+                        g += data[i + 1];
+                        b += data[i + 2];
+                        a += data[i + 3];
+                      }
+                      const dataLength = data.length / 4;
+                      return [
+                        r / dataLength,
+                        g / dataLength,
+                        b / dataLength,
+                        a / dataLength,
+                      ];
+                    });
                     const rgbColors = colors.map((color) => {
                       const [r, g, b, a] = lightenRGB(color);
                       return `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -488,9 +530,15 @@ function lightenRGB([r, g, b]) {
   const luminence = 0.2126 * r + 0.7152 * g + 0.0722 * b;
   console.log('luminence', luminence);
   // Follow this range
-  // luminence = 0, alpha = 0.05
+  // luminence = 0, alpha = 0.01
   // luminence = 220, alpha = 1
-  const alpha = Math.min(1, (luminence / 220) * 0.95 + 0.05);
+  let alpha;
+  if (luminence >= 220) {
+    alpha = 1;
+  } else {
+    alpha = (luminence / 255) * 0.99 + 0.01;
+  }
+  alpha = Math.min(1, alpha);
   return [r, g, b, alpha];
 }
 

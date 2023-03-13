@@ -43,8 +43,17 @@
 .account-container .header-banner:active {
   mask-image: none;
 }
-.account-container .header-banner:active + header {
-  opacity: 0.5 !important;
+.account-container .header-banner:active + header .avatar + * {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0 !important;
+}
+.account-container .header-banner:active + header .avatar {
+  transition: filter 0.3s ease-in-out;
+  filter: none !important;
+}
+.account-container .header-banner:active + header .avatar img {
+  transition: border-radius 0.3s ease-in-out;
+  border-radius: 8px;
 }
 
 @media (min-height: 480px) {

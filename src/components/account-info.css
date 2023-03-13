@@ -62,20 +62,24 @@
   text-shadow: -8px 0 12px -6px var(--bg-color), 8px 0 12px -6px var(--bg-color),
     -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color);
-  animation: fade-in 0.5s both ease-in-out 0.1s;
+  animation: fade-in 0.3s both ease-in-out 0.1s;
 }
 .account-container header .avatar {
   /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color); */
-  filter: drop-shadow(-8px 0 24px var(--header-color-3, --bg-color))
-    drop-shadow(8px 0 24px var(--header-color-4, --bg-color));
+  overflow: initial;
+  filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
+    drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
+}
+.account-container header .avatar:not(.has-alpha) img {
+  border-radius: 50%;
 }
 
 .account-container main > *:first-child {
-  animation: fade-in 0.5s both ease-in-out 0.2s;
+  animation: fade-in 0.3s both ease-in-out 0.15s;
 }
 .account-container main > *:first-child ~ * {
-  animation: fade-in 0.5s both ease-in-out 0.3s;
+  animation: fade-in 0.3s both ease-in-out 0.2s;
 }
 
 .account-container .note {
@@ -165,9 +169,13 @@
 }
 .timeline-start .account-container header {
   padding: 16px 16px 1px;
+  animation: none;
 }
 .timeline-start .account-container main {
   padding: 1px 16px 1px;
+}
+.timeline-start .account-container main > * {
+  animation: none;
 }
 .timeline-start .account-container .account-block .account-block-acct {
   opacity: 0.5;
@@ -245,5 +253,7 @@
   .timeline-start .account-container header .account-block .avatar {
     width: 112px !important;
     height: 112px !important;
+    filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
+      drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
   }
 }

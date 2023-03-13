@@ -529,14 +529,13 @@ function RelatedActions({ info, instance, authenticated }) {
 function lightenRGB([r, g, b]) {
   const luminence = 0.2126 * r + 0.7152 * g + 0.0722 * b;
   console.log('luminence', luminence);
-  // Follow this range
-  // luminence = 0, alpha = 0.01
-  // luminence = 220, alpha = 1
   let alpha;
   if (luminence >= 220) {
     alpha = 1;
+  } else if (luminence <= 50) {
+    alpha = 0.1;
   } else {
-    alpha = (luminence / 255) * 0.99 + 0.01;
+    alpha = luminence / 255;
   }
   alpha = Math.min(1, alpha);
   return [r, g, b, alpha];

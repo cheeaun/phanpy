@@ -298,7 +298,7 @@ function Timeline({
           <>
             <ul class="timeline">
               {items.map((status) => {
-                const { id: statusID, reblog, items, type } = status;
+                const { id: statusID, reblog, items, type, _pinned } = status;
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
                   ? `/${instance}/s/${actualStatusID}`
@@ -349,7 +349,7 @@ function Timeline({
                   );
                 }
                 return (
-                  <li key={`timeline-${statusID}`}>
+                  <li key={`timeline-${statusID + _pinned}`}>
                     <Link class="status-link timeline-item" to={url}>
                       {useItemID ? (
                         <Status statusID={statusID} instance={instance} />

@@ -36,8 +36,10 @@ function Avatar({ url, size, alt = '', ...props }) {
           loading="lazy"
           crossOrigin={alphaCache[url] === undefined ? 'anonymous' : undefined}
           onError={(e) => {
-            e.target.crossOrigin = null;
-            e.target.src = url;
+            if (e.target.crossOrigin) {
+              e.target.crossOrigin = null;
+              e.target.src = url;
+            }
           }}
           onLoad={(e) => {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;

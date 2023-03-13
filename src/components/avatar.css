@@ -16,3 +16,9 @@
   object-fit: cover;
   background-color: var(--img-bg-color);
 }
+
+.avatar.loaded,
+.avatar.loaded img {
+  box-shadow: none;
+  background-color: transparent;
+}

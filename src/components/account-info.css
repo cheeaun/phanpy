@@ -58,8 +58,10 @@
     8px 0 24px var(--header-color-4, --bg-color);
 }
 .account-container header .avatar {
-  box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
-    8px 0 24px var(--header-color-4, --bg-color);
+  /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
+    8px 0 24px var(--header-color-4, --bg-color); */
+  filter: drop-shadow(-8px 0 24px var(--header-color-3, --bg-color))
+    drop-shadow(8px 0 24px var(--header-color-4, --bg-color));
 }
 
 .account-container .note {
@@ -222,7 +224,7 @@
     font-size: 175%;
     margin-bottom: -8px;
     line-height: 1.1;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
     mix-blend-mode: multiply;
     gap: 12px;
   }

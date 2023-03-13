@@ -1,5 +1,7 @@
 import './avatar.css';
 
+import { useRef } from 'preact/hooks';
+
 const SIZES = {
   s: 16,
   m: 20,
@@ -11,8 +13,10 @@ const SIZES = {
 
 function Avatar({ url, size, alt = '', ...props }) {
   size = SIZES[size] || size || SIZES.m;
+  const avatarRef = useRef();
   return (
     <span
+      ref={avatarRef}
       class="avatar"
       style={{
         width: size,
@@ -22,7 +26,16 @@ function Avatar({ url, size, alt = '', ...props }) {
       {...props}
     >
       {!!url && (
-        <img src={url} width={size} height={size} alt={alt} loading="lazy" />
+        <img
+          src={url}
+          width={size}
+          height={size}
+          alt={alt}
+          loading="lazy"
+          onLoad={(e) => {
+            avatarRef.current.classList.add('loaded');
+          }}
+        />
       )}
     </span>
   );

@@ -164,7 +164,8 @@ function AccountInfo({
                       ).data,
                     ];
                     const rgbColors = colors.map((color) => {
-                      return `rgb(${color[0]}, ${color[1]}, ${color[2]}, 0.3)`;
+                      const [r, g, b, a] = lightenRGB(color);
+                      return `rgba(${r}, ${g}, ${b}, ${a})`;
                     });
                     setHeaderCornerColors(rgbColors);
                     console.log({ colors, rgbColors });
@@ -480,6 +481,17 @@ function RelatedActions({ info, instance, authenticated }) {
       </p>
     </>
   );
+}
+
+// Apply more alpha if high luminence
+function lightenRGB([r, g, b]) {
+  const luminence = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  console.log('luminence', luminence);
+  // Follow this range
+  // luminence = 0, alpha = 0.05
+  // luminence = 220, alpha = 1
+  const alpha = Math.min(1, (luminence / 220) * 0.95 + 0.05);
+  return [r, g, b, alpha];
 }
 
 export default AccountInfo;

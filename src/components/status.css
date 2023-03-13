@@ -251,6 +251,9 @@
   filter: none;
   image-rendering: auto;
 }
+.status .content a:not(.mention):not(:has(span)) {
+  color: inherit;
+}
 
 .timeline-deck .status .content {
   max-height: 50vh;

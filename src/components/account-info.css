@@ -40,6 +40,12 @@
 .account-container .header-banner:hover {
   animation: position-object 5s ease-in-out 1s 5;
 }
+.account-container .header-banner:active {
+  mask-image: none;
+}
+.account-container .header-banner:active + header {
+  opacity: 0.5 !important;
+}
 
 @media (min-height: 480px) {
   .account-container .header-banner {

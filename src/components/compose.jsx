@@ -502,7 +502,7 @@ function Compose({
         {currentAccountInfo?.avatarStatic && (
           <Avatar
             url={currentAccountInfo.avatarStatic}
-            size="l"
+            size="xl"
             alt={currentAccountInfo.username}
           />
         )}
@@ -831,7 +831,7 @@ function Compose({
             }}
           />
           <label
-            class="toolbar-button"
+            class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
             title="Content warning or sensitive media"
           >
             <input
@@ -854,7 +854,7 @@ function Compose({
           <label
             class={`toolbar-button ${
               visibility !== 'public' && !sensitive ? 'show-field' : ''
-            }`}
+            } ${visibility !== 'public' ? 'highlight' : ''}`}
             title={`Visibility: ${visibility}`}
           >
             <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />

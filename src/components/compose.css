@@ -31,6 +31,10 @@
   max-height: 50vh;
   resize: vertical;
   line-height: 1.4;
+  border-color: transparent;
+}
+#compose-container textarea:hover {
+  border-color: var(--divider-color);
 }
 
 @media (min-width: 40em) {
@@ -51,7 +55,7 @@
   }
 }
 #compose-container .status-preview {
-  border-radius: 8px 8px 0 0;
+  border-radius: 16px 16px 0 0;
   max-height: 160px;
   background-color: var(--bg-color);
   margin: 0 12px;
@@ -59,6 +63,7 @@
   border-bottom: 0;
   animation: appear-up 1s ease-in-out;
   overflow: auto;
+  box-shadow: 0 -3px 12px -3px var(--drop-shadow-color);
 }
 #compose-container .status-preview :is(.hashtag, .time) {
   /* Prevent hashtags from being clickable */
@@ -87,7 +92,7 @@
     transparent,
     var(--bg-faded-color)
   ); */
-  border-top: 1px solid var(--outline-color);
+  border-top: var(--hairline-width) solid var(--outline-color);
   backdrop-filter: blur(8px);
   text-shadow: 0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
@@ -105,14 +110,17 @@
 }
 
 #compose-container form {
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 4px 12px;
-  background-image: linear-gradient(var(--bg-color) 75%, transparent);
+  background-color: var(--bg-blur-color);
+  /* background-image: linear-gradient(var(--bg-color) 85%, transparent); */
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  --drop-shadow: 0 3px 6px -3px var(--drop-shadow-color);
+  box-shadow: var(--drop-shadow);
 }
 #compose-container .status-preview ~ form {
-  box-shadow: 0 -12px 12px -12px var(--divider-color);
+  box-shadow: var(--drop-shadow), 0 -3px 6px -3px var(--drop-shadow-color);
 }
 
 #compose-container .toolbar {
@@ -131,8 +139,8 @@
 }
 #compose-container .toolbar-button {
   display: inline-block;
-  color: var(--text-color);
-  background-color: var(--bg-faded-color);
+  color: var(--link-color);
+  background-color: var(--bg-blur-color);
   padding: 0 8px;
   border-radius: 8px;
   min-height: 2.4em;
@@ -150,9 +158,10 @@
   cursor: inherit;
   outline: 0;
 }
-#compose-container .toolbar-button:has([disabled]) {
+#compose-container .toolbar-button:has([disabled]),
+#compose-container .toolbar-button[disabled] {
   pointer-events: none;
-  background-color: var(--bg-faded-color);
+  background-color: transparent;
   opacity: 0.5;
 }
 #compose-container
@@ -186,8 +195,13 @@
   ) {
   cursor: pointer;
   filter: none;
-  border-color: var(--divider-color);
+  background-color: var(--bg-color);
+  border-color: var(--link-faded-color);
   outline: 0;
+}
+#compose-container .toolbar-button:not(:disabled).highlight {
+  border-color: var(--link-color);
+  box-shadow: inset 0 0 8px var(--link-faded-color);
 }
 #compose-container .toolbar-button:not(:disabled):active {
   filter: brightness(0.8);
@@ -427,6 +441,12 @@
   /* No popping in standalone mode */
   #compose-container .pop-button {
     display: none;
+  }
+}
+
+@media (min-width: 480px) {
+  #compose-container button[type='submit'] {
+    padding-inline: 24px;
   }
 }
 

@@ -57,9 +57,10 @@ function Avatar({ url, size, alt = '', ...props }) {
                 canvas.height,
               );
               const hasAlpha = allPixels.data.some((pixel, i) => {
-                return i % 4 === 3 && pixel !== 255;
+                return i % 4 === 3 && pixel <= 128;
               });
               if (hasAlpha) {
+                console.log('hasAlpha', hasAlpha, allPixels.data);
                 avatarRef.current.classList.add('has-alpha');
                 alphaCache[url] = true;
               }

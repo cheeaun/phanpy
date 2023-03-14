@@ -399,7 +399,7 @@ function Status({
         </MenuItem>
       )}
       {(!isSizeLarge || !!editedAt) && <MenuDivider />}
-      {!isSizeLarge && (
+      {!isSizeLarge && sameInstance && (
         <>
           <MenuItem onClick={replyStatus}>
             <Icon icon="reply" />
@@ -471,7 +471,7 @@ function Status({
           <span>Translate</span>
         </MenuItem>
       )}
-      {(!isSizeLarge || enableTranslate) && <MenuDivider />}
+      {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
         <small class="menu-double-lines">{nicePostURL(url)}</small>

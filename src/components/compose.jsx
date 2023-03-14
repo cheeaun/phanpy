@@ -699,6 +699,17 @@ function Compose({
           }
           // TODO: check for URLs and use `charactersReservedPerUrl` to calculate max characters
 
+          if (mediaAttachments.length > 0) {
+            // If there are media attachments, check if they have no descriptions
+            const noDescription = mediaAttachments.some(
+              (media) => !media.description?.trim(),
+            );
+            if (noDescription) {
+              const yes = confirm('Some media have no descriptions. Continue?');
+              if (!yes) return;
+            }
+          }
+
           // Post-cleanup
           spoilerText = (sensitive && spoilerText) || undefined;
           status = status === '' ? undefined : status;

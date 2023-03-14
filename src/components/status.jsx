@@ -570,7 +570,7 @@ function Status({
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
-        console.log('context menu', e);
+        // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
         e.preventDefault();
@@ -602,7 +602,7 @@ function Status({
             },
           }}
           overflow="auto"
-          boundingBoxPadding="8 8 8 8"
+          boundingBoxPadding={safeBoundingBoxPadding()}
           unmountOnClose
         >
           {StatusMenuItems}
@@ -1599,6 +1599,27 @@ function getHTMLText(html) {
     br.replaceWith('\n');
   });
   return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
+}
+
+const root = document.documentElement;
+const defaultBoundingBoxPadding = 8;
+function safeBoundingBoxPadding() {
+  // Get safe area inset variables from root
+  const style = getComputedStyle(root);
+  const safeAreaInsetTop = style.getPropertyValue('--sai-top');
+  const safeAreaInsetRight = style.getPropertyValue('--sai-right');
+  const safeAreaInsetBottom = style.getPropertyValue('--sai-bottom');
+  const safeAreaInsetLeft = style.getPropertyValue('--sai-left');
+  const str = [
+    safeAreaInsetTop,
+    safeAreaInsetRight,
+    safeAreaInsetBottom,
+    safeAreaInsetLeft,
+  ]
+    .map((v) => parseInt(v, 10) || defaultBoundingBoxPadding)
+    .join(' ');
+  // console.log(str);
+  return str;
 }
 
 export default memo(Status);

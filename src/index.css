@@ -2,6 +2,11 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  --sai-top: env(safe-area-inset-top);
+  --sai-right: env(safe-area-inset-right);
+  --sai-bottom: env(safe-area-inset-bottom);
+  --sai-left: env(safe-area-inset-left);
+
   --text-size: 16px;
   --main-width: 40em;
   text-size-adjust: none;

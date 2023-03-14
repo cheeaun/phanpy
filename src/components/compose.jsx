@@ -701,10 +701,10 @@ function Compose({
 
           if (mediaAttachments.length > 0) {
             // If there are media attachments, check if they have no descriptions
-            const noDescription = mediaAttachments.some(
-              (media) => !media.description?.trim(),
+            const hasNoDescriptions = mediaAttachments.some(
+              (media) => !media.description?.trim?.(),
             );
-            if (noDescription) {
+            if (hasNoDescriptions) {
               const yes = confirm('Some media have no descriptions. Continue?');
               if (!yes) return;
             }

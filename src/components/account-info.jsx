@@ -59,8 +59,8 @@ function AccountInfo({
     followersCount,
     followingCount,
     group,
-    header,
-    headerStatic,
+    // header,
+    // headerStatic,
     id,
     lastStatusAt,
     locked,
@@ -69,6 +69,17 @@ function AccountInfo({
     url,
     username,
   } = info || {};
+  let headerIsAvatar = false;
+  let { header, headerStatic } = info || {};
+  if (!header || /missing\.png$/.test(header)) {
+    if (avatar && !/missing\.png$/.test(avatar)) {
+      header = avatar;
+      headerIsAvatar = true;
+      if (avatarStatic && !/missing\.png$/.test(avatarStatic)) {
+        headerStatic = avatarStatic;
+      }
+    }
+  }
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
@@ -128,7 +139,9 @@ function AccountInfo({
               <img
                 src={header}
                 alt=""
-                class="header-banner"
+                class={`header-banner ${
+                  headerIsAvatar ? 'header-is-avatar' : ''
+                }`}
                 onError={(e) => {
                   if (e.target.crossOrigin) {
                     if (e.target.src !== headerStatic) {

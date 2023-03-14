@@ -60,7 +60,7 @@ function Avatar({ url, size, alt = '', ...props }) {
                 return i % 4 === 3 && pixel <= 128;
               });
               if (hasAlpha) {
-                console.log('hasAlpha', hasAlpha, allPixels.data);
+                // console.log('hasAlpha', hasAlpha, allPixels.data);
                 avatarRef.current.classList.add('has-alpha');
                 alphaCache[url] = true;
               }

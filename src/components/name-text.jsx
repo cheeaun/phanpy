@@ -52,7 +52,7 @@ function NameText({
     >
       {showAvatar && (
         <>
-          <Avatar url={avatar} />{' '}
+          <Avatar url={avatarStatic || avatar} />{' '}
         </>
       )}
       {displayName && !short ? (

@@ -639,7 +639,7 @@ function Status({
             };
           }}
         >
-          <Avatar url={avatarStatic} size="xxl" />
+          <Avatar url={avatarStatic || avatar} size="xxl" />
         </a>
       )}
       <div class="container">

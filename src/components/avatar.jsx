@@ -56,9 +56,12 @@ function Avatar({ url, size, alt = '', ...props }) {
                 canvas.width,
                 canvas.height,
               );
-              const hasAlpha = allPixels.data.some((pixel, i) => {
-                return i % 4 === 3 && pixel <= 128;
-              });
+              // At least 10% of pixels have alpha <= 128
+              const hasAlpha =
+                allPixels.data.filter((pixel, i) => i % 4 === 3 && pixel <= 128)
+                  .length /
+                  (allPixels.data.length / 4) >
+                0.1;
               if (hasAlpha) {
                 // console.log('hasAlpha', hasAlpha, allPixels.data);
                 avatarRef.current.classList.add('has-alpha');

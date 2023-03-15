@@ -1,0 +1,290 @@
+.account-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.account-container.skeleton {
+  color: var(--outline-color);
+}
+
+.account-container .header-banner {
+  /* pointer-events: none; */
+  aspect-ratio: 6 / 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  /* mask fade out bottom of banner */
+  mask-image: linear-gradient(
+    to bottom,
+    hsl(0, 0%, 0%) 0%,
+    hsla(0, 0%, 0%, 0.987) 14%,
+    hsla(0, 0%, 0%, 0.951) 26.2%,
+    hsla(0, 0%, 0%, 0.896) 36.8%,
+    hsla(0, 0%, 0%, 0.825) 45.9%,
+    hsla(0, 0%, 0%, 0.741) 53.7%,
+    hsla(0, 0%, 0%, 0.648) 60.4%,
+    hsla(0, 0%, 0%, 0.55) 66.2%,
+    hsla(0, 0%, 0%, 0.45) 71.2%,
+    hsla(0, 0%, 0%, 0.352) 75.6%,
+    hsla(0, 0%, 0%, 0.259) 79.6%,
+    hsla(0, 0%, 0%, 0.175) 83.4%,
+    hsla(0, 0%, 0%, 0.104) 87.2%,
+    hsla(0, 0%, 0%, 0.049) 91.1%,
+    hsla(0, 0%, 0%, 0.013) 95.3%,
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  margin-bottom: -44px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.account-container .header-banner.header-is-avatar {
+  mask-image: linear-gradient(
+    to bottom,
+    hsl(0, 0%, 0%) 0%,
+    hsla(0, 0%, 0%, 0.987) 8.1%,
+    hsla(0, 0%, 0%, 0.951) 15.5%,
+    hsla(0, 0%, 0%, 0.896) 22.5%,
+    hsla(0, 0%, 0%, 0.825) 29%,
+    hsla(0, 0%, 0%, 0.741) 35.3%,
+    hsla(0, 0%, 0%, 0.648) 41.2%,
+    hsla(0, 0%, 0%, 0.55) 47.1%,
+    hsla(0, 0%, 0%, 0.45) 52.9%,
+    hsla(0, 0%, 0%, 0.352) 58.8%,
+    hsla(0, 0%, 0%, 0.259) 64.7%,
+    hsla(0, 0%, 0%, 0.175) 71%,
+    hsla(0, 0%, 0%, 0.104) 77.5%,
+    hsla(0, 0%, 0%, 0.049) 84.5%,
+    hsla(0, 0%, 0%, 0.013) 91.9%,
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  filter: blur(32px) saturate(3) opacity(0.5);
+  pointer-events: none;
+}
+.account-container .header-banner:hover {
+  animation: position-object 5s ease-in-out 1s 5;
+}
+.account-container .header-banner:active {
+  mask-image: none;
+}
+.account-container .header-banner:active + header .avatar + * {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0 !important;
+}
+.account-container .header-banner:active + header .avatar {
+  transition: filter 0.3s ease-in-out;
+  filter: none !important;
+}
+.account-container .header-banner:active + header .avatar img {
+  transition: border-radius 0.3s ease-in-out;
+  border-radius: 8px;
+}
+
+@media (min-height: 480px) {
+  .account-container .header-banner:not(.header-is-avatar) {
+    aspect-ratio: 3 / 1;
+  }
+}
+
+.account-container header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: -8px 0 12px -6px var(--bg-color), 8px 0 12px -6px var(--bg-color),
+    -8px 0 24px var(--header-color-3, --bg-color),
+    8px 0 24px var(--header-color-4, --bg-color);
+  animation: fade-in 0.3s both ease-in-out 0.1s;
+}
+.account-container header .avatar {
+  /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
+    8px 0 24px var(--header-color-4, --bg-color); */
+  overflow: initial;
+  filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
+    drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
+}
+.account-container header .avatar:not(.has-alpha) img {
+  border-radius: 50%;
+}
+
+.account-container main > *:first-child {
+  animation: fade-in 0.3s both ease-in-out 0.15s;
+}
+.account-container main > *:first-child ~ * {
+  animation: fade-in 0.3s both ease-in-out 0.2s;
+}
+
+.account-container .note {
+  font-size: 95%;
+  line-height: 1.4;
+}
+.account-container .note:not(:has(p)):not(:empty) {
+  /* Some notes don't have <p> tags, so we need to add some padding */
+  padding: 1em 0;
+}
+
+.account-container .stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 16px;
+  opacity: 0.75;
+  font-size: 90%;
+  background-color: var(--bg-faded-color);
+  padding: 12px;
+  border-radius: 8px;
+  line-height: 1.25;
+}
+.account-container .stats > * {
+  text-align: center;
+}
+.account-container .stats a {
+  color: inherit;
+}
+
+.account-container .actions {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  min-height: 2.5em;
+}
+.account-container .actions button {
+  align-self: flex-end;
+}
+
+.account-container .profile-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.account-container .profile-field {
+  min-width: 0;
+  flex-grow: 1;
+  font-size: 90%;
+  background-color: var(--bg-faded-color);
+  padding: 12px;
+  border-radius: 8px;
+  filter: saturate(0.75);
+  line-height: 1.25;
+}
+
+.account-container :is(.note, .profile-field) .invisible {
+  display: none;
+}
+.account-container :is(.note, .profile-field) .ellipsis::after {
+  content: '…';
+}
+
+.account-container .profile-field b {
+  font-size: 90%;
+  color: var(--text-insignificant-color);
+  text-transform: uppercase;
+}
+.account-container .profile-field b .icon {
+  color: var(--green-color);
+}
+.account-container .profile-field p {
+  margin: 0;
+}
+
+.account-container .common-followers {
+  border-top: 1px solid var(--outline-color);
+  border-bottom: 1px solid var(--outline-color);
+  padding: 8px 0;
+  font-size: 90%;
+  line-height: 1.5;
+  color: var(--text-insignificant-color);
+}
+
+.timeline-start .account-container {
+  border-bottom: 1px solid var(--outline-color);
+}
+.timeline-start .account-container header {
+  padding: 16px 16px 1px;
+  animation: none;
+}
+.timeline-start .account-container main {
+  padding: 1px 16px 1px;
+}
+.timeline-start .account-container main > * {
+  animation: none;
+}
+.timeline-start .account-container .account-block .account-block-acct {
+  opacity: 0.5;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+.timeline-start .account-container {
+  position: relative;
+  overflow: hidden;
+}
+.timeline-start .account-container:before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100%;
+  pointer-events: none;
+}
+@media (prefers-color-scheme: dark) {
+  .timeline-start .account-container:before {
+    opacity: 0.25;
+  }
+}
+.timeline-start .account-container:hover:before {
+  animation: shine 1s ease-in-out 1s;
+}
+
+@media (min-width: 40em) {
+  .timeline-start .account-container {
+    --item-radius: 16px;
+    border: 1px solid var(--divider-color);
+    margin: 16px 0;
+    background-color: var(--bg-color);
+    border-radius: var(--item-radius);
+    overflow: hidden;
+    /* box-shadow: 0px 1px var(--bg-blur-color), 0 0 64px var(--bg-color); */
+    --shadow-offset: 16px;
+    --shadow-blur: 32px;
+    --shadow-spread: calc(var(--shadow-blur) * -0.75);
+    box-shadow: calc(var(--shadow-offset) * -1) var(--shadow-offset)
+        var(--shadow-blur) var(--shadow-spread)
+        var(--header-color-1, var(--drop-shadow-color)),
+      var(--shadow-offset) var(--shadow-offset) var(--shadow-blur)
+        var(--shadow-spread) var(--header-color-2, var(--drop-shadow-color));
+  }
+  .timeline-start .account-container .header-banner {
+    margin-bottom: -77px;
+  }
+  .timeline-start .account-container header .account-block {
+    font-size: 175%;
+    margin-bottom: -8px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    mix-blend-mode: multiply;
+    gap: 12px;
+  }
+  .timeline-start .account-container header .account-block .avatar {
+    width: 112px !important;
+    height: 112px !important;
+    filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
+      drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+  }
+}

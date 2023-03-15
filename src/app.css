@@ -74,8 +74,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   margin: auto;
   width: var(--main-width);
   max-width: 100%;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
   background-color: var(--bg-color);
 }
 .deck.contained {
@@ -537,6 +535,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
+  -webkit-touch-callout: none;
 }
 :is(.status-link, .status-focus):is(:focus, .is-active) {
   background-color: var(--link-bg-hover-color);
@@ -987,9 +986,9 @@ body:has(.status-deck) .media-post-link {
   width: 100%;
   max-width: calc(var(--main-width) - 50px - 16px);
   border-radius: 16px 16px 0 0;
-  box-shadow: 0 -1px 32px var(--divider-color);
+  box-shadow: 0 -1px 32px var(--drop-shadow-color);
   animation: slide-up 0.3s var(--timing-function);
-  border: 1px solid var(--outline-color);
+  /* border: 1px solid var(--outline-color); */
 }
 .sheet-max {
   width: 90vw;
@@ -1006,6 +1005,12 @@ body:has(.status-deck) .media-post-link {
 }
 .sheet header :is(h1, h2, h3) {
   margin: 0;
+}
+.sheet header.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 8px;
+  align-items: center;
 }
 .sheet main {
   overflow: auto;
@@ -1045,6 +1050,11 @@ body:has(.status-deck) .media-post-link {
 
 /* MENU POPUP */
 
+.szh-menu-container {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
 .szh-menu-container:has(.szh-menu--state-open) {
   inset: 0;
   inset: env(safe-area-inset-top) env(safe-area-inset-right)
@@ -1053,7 +1063,7 @@ body:has(.status-deck) .media-post-link {
 .szh-menu {
   padding: 8px 0;
   margin: 0;
-  font-size: 16px;
+  font-size: var(--text-size);
   background-color: var(--bg-color);
   border: 1px solid var(--outline-color);
   border-radius: 8px;
@@ -1088,10 +1098,16 @@ body:has(.status-deck) .media-post-link {
   line-height: 1;
   padding: 8px 16px !important;
   transition: all 0.1s ease-in-out;
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-decoration: none;
+}
+.szh-menu .szh-menu__item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.05;
 }
 .szh-menu .szh-menu__item * {
   vertical-align: middle;
@@ -1106,6 +1122,7 @@ body:has(.status-deck) .media-post-link {
   text-decoration: none;
   padding: 8px 16px !important;
   margin: -8px -16px !important;
+  align-items: center;
 }
 .szh-menu .szh-menu__item a.is-active {
   font-weight: bold;
@@ -1128,6 +1145,24 @@ body:has(.status-deck) .media-post-link {
   flex-grow: 1;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.szh-menu .menu-double-lines {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.szh-menu .menu-double-lines span {
+  white-space: normal;
+  line-height: inherit;
+  font-size: inherit;
+}
+.szh-menu .menu-horizontal {
+  display: flex;
+}
+.szh-menu .menu-horizontal .szh-menu__item {
+  flex: 1;
 }
 .szh-menu .szh-menu__item .menu-shortcut {
   opacity: 0.5;
@@ -1219,34 +1254,44 @@ meter.donut:is(.danger, .explode):after {
 
 /* SHINY PILL */
 
-.shiny-pill {
+:is(.shiny-pill, :root .toastify.shiny-pill) {
+  pointer-events: auto;
   color: var(--button-text-color);
   text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
   background-color: var(--button-bg-color);
   background-image: linear-gradient(
     160deg,
     rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0) 50%
+    rgba(0, 0, 0, 0.1)
   );
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color),
     inset var(--hairline-width) var(--hairline-width) rgba(255, 255, 255, 0.5);
+  transition: filter 0.3s;
+}
+:is(.shiny-pill, :root .toastify.shiny-pill):hover {
+  filter: brightness(1.2);
+}
+:is(.shiny-pill, :root .toastify.shiny-pill):active {
+  transition: none;
+  filter: brightness(0.9);
 }
 
 /* TOAST */
 
 :root .toastify {
+  user-select: none;
   padding: 8px 16px;
   border-radius: 999px;
+  pointer-events: none;
+  color: var(--button-text-color);
+  text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
+  background-color: var(--button-bg-blur-color);
+  background-image: none;
+  backdrop-filter: blur(16px);
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);
-}
-:root .toastify:hover {
-  filter: brightness(1.2);
-}
-:root .toastify:active {
-  filter: brightness(0.8);
 }
 
 /* AVATARS STACK */

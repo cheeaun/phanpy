@@ -1,6 +1,7 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useRef } from 'preact/hooks';
 
+import Icon from './icon';
 import { formatDuration } from './status';
 
 /*
@@ -74,6 +75,14 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               backgroundPosition: focalBackgroundPosition || 'center',
             }
           }
+          onDblClick={() => {
+            // Open original image in new tab
+            window.open(url, '_blank');
+          }}
+          onLoad={(e) => {
+            // Hide background image after image loads
+            e.target.parentElement.style.backgroundImage = 'none';
+          }}
         />
       </div>
     );
@@ -161,13 +170,18 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             muted
           />
         ) : (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            loading="lazy"
-          />
+          <>
+            <img
+              src={previewUrl}
+              alt={description}
+              width={width}
+              height={height}
+              loading="lazy"
+            />
+            <div class="media-play">
+              <Icon icon="play" size="xxl" />
+            </div>
+          </>
         )}
       </div>
     );

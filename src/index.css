@@ -2,6 +2,12 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  --sai-top: env(safe-area-inset-top);
+  --sai-right: env(safe-area-inset-right);
+  --sai-bottom: env(safe-area-inset-bottom);
+  --sai-left: env(safe-area-inset-left);
+
+  --text-size: 16px;
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
@@ -90,7 +96,7 @@ html {
 
 body {
   font-family: ui-rounded, system-ui;
-  font-size: 16px;
+  font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -351,5 +357,20 @@ code {
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes position-object {
+  0% {
+    object-position: 50% 50%;
+  }
+  25% {
+    object-position: 0% 0%;
+  }
+  75% {
+    object-position: 100% 100%;
+  }
+  100% {
+    object-position: 50% 50%;
   }
 }

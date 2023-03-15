@@ -1,6 +1,9 @@
 import './account-block.css';
 
+import { useNavigate } from 'react-router-dom';
+
 import emojifyText from '../utils/emojify-text';
+import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -11,7 +14,9 @@ function AccountBlock({
   avatarSize = 'xl',
   instance,
   external,
+  internal,
   onClick,
+  showActivity = false,
 }) {
   if (skeleton) {
     return (
@@ -20,15 +25,28 @@ function AccountBlock({
         <span>
           <b>████████</b>
           <br />
-          @██████
+          <span class="account-block-acct">@██████</span>
         </span>
       </div>
     );
   }
 
-  const { acct, avatar, avatarStatic, displayName, username, emojis, url } =
-    account;
+  const navigate = useNavigate();
+
+  const {
+    id,
+    acct,
+    avatar,
+    avatarStatic,
+    displayName,
+    username,
+    emojis,
+    url,
+    statusesCount,
+    lastStatusAt,
+  } = account;
   const displayNameWithEmoji = emojifyText(displayName, emojis);
+  const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
 
   return (
     <a
@@ -40,10 +58,14 @@ function AccountBlock({
         if (external) return;
         e.preventDefault();
         if (onClick) return onClick(e);
-        states.showAccount = {
-          account,
-          instance,
-        };
+        if (internal) {
+          navigate(`/${instance}/a/${id}`);
+        } else {
+          states.showAccount = {
+            account,
+            instance,
+          };
+        }
       }}
     >
       <Avatar url={avatar} size={avatarSize} />
@@ -57,7 +79,29 @@ function AccountBlock({
         ) : (
           <b>{username}</b>
         )}
-        <br />@{acct}
+        <br />
+        <span class="account-block-acct">
+          @{acct1}
+          <wbr />
+          {acct2}
+        </span>
+        {showActivity && (
+          <>
+            <br />
+            <small class="last-status-at insignificant">
+              Posts: {statusesCount}
+              {!!lastStatusAt && (
+                <>
+                  {' '}
+                  &middot; Last posted:{' '}
+                  {niceDateTime(lastStatusAt, {
+                    hideTime: true,
+                  })}
+                </>
+              )}
+            </small>
+          </>
+        )}
       </span>
     </a>
   );

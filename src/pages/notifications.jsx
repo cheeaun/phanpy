@@ -303,7 +303,8 @@ function Notification({ notification, instance }) {
     for (const account of _accounts) {
       if (account._types?.includes('favourite')) {
         favsCount++;
-      } else if (account._types?.includes('reblog')) {
+      }
+      if (account._types?.includes('reblog')) {
         reblogsCount++;
       }
     }
@@ -428,7 +429,7 @@ function Notification({ notification, instance }) {
                 : `/s/${actualStatusID}`
             }
           >
-            <Status status={status} size="s" />
+            <Status statusID={actualStatusID} size="s" />
           </Link>
         )}
       </div>

@@ -1,4 +1,4 @@
-function niceDateTime(date, { hideTime } = {}) {
+function niceDateTime(date, { hideTime, formatOpts } = {}) {
   if (!(date instanceof Date)) {
     date = new Date(date);
   }
@@ -12,6 +12,7 @@ function niceDateTime(date, { hideTime } = {}) {
     // Hide time if requested
     hour: hideTime ? undefined : 'numeric',
     minute: hideTime ? undefined : 'numeric',
+    ...formatOpts,
   }).format(date);
   return dateText;
 }

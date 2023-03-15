@@ -9,10 +9,19 @@
   flex-shrink: 0;
   vertical-align: middle;
 }
+.avatar.has-alpha {
+  border-radius: 0;
+}
 
 .avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   background-color: var(--img-bg-color);
+}
+
+.avatar[data-loaded],
+.avatar[data-loaded] img {
+  box-shadow: none;
+  background-color: transparent;
 }

@@ -12,6 +12,7 @@ import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import 'swiped-events';
+import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
@@ -20,6 +21,7 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
@@ -35,6 +37,7 @@ import Link from './link';
 import Media from './media';
 import MenuLink from './MenuLink';
 import RelativeTime from './relative-time';
+import TranslationBlock from './translation-block';
 
 const throttle = pThrottle({
   limit: 1,
@@ -66,6 +69,7 @@ function Status({
   skeleton,
   readOnly,
   contentTextWeight,
+  enableTranslate,
 }) {
   if (skeleton) {
     return (
@@ -194,6 +198,10 @@ function Status({
     );
   }
 
+  const [forceTranslate, setForceTranslate] = useState(false);
+  const targetLanguage = getTranslateTargetLanguage(true);
+  if (!snapStates.settings.contentTranslation) enableTranslate = false;
+
   const [showEdited, setShowEdited] = useState(false);
 
   const spoilerContentRef = useRef(null);
@@ -229,14 +237,24 @@ function Status({
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
 
   const textWeight = () =>
-    Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1;
+    Math.max(
+      Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1,
+      1,
+    );
 
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
   const isSizeLarge = size === 'l';
-  // TODO: if visibility = private, only can boost own statuses
-  const canBoost = authenticated && visibility !== 'direct';
+  // Can boost if:
+  // - authenticated AND
+  // - visibility != direct OR
+  // - visibility = private AND isSelf
+  let canBoost =
+    authenticated && visibility !== 'direct' && visibility !== 'private';
+  if (visibility === 'private' && isSelf) {
+    canBoost = true;
+  }
 
   const replyStatus = () => {
     if (!sameInstance || !authenticated) {
@@ -253,7 +271,15 @@ function Status({
     }
     try {
       if (!reblogged) {
-        const yes = confirm('Boost this post?');
+        // Check if media has no descriptions
+        const hasNoDescriptions = mediaAttachments.some(
+          (attachment) => !attachment.description?.trim?.(),
+        );
+        let confirmText = 'Boost this post?';
+        if (hasNoDescriptions) {
+          confirmText += '\n\n⚠️ Some media have no descriptions.';
+        }
+        const yes = confirm(confirmText);
         if (!yes) {
           return;
         }
@@ -362,7 +388,7 @@ function Status({
           </MenuHeader>
           <MenuLink to={instance ? `/${instance}/s/${id}` : `/s/${id}`}>
             <Icon icon="arrow-right" />
-            View post and replies
+            <span>View post by @{username || acct}</span>
           </MenuLink>
         </>
       )}
@@ -381,7 +407,7 @@ function Status({
         </MenuItem>
       )}
       {(!isSizeLarge || !!editedAt) && <MenuDivider />}
-      {!isSizeLarge && (
+      {!isSizeLarge && sameInstance && (
         <>
           <MenuItem onClick={replyStatus}>
             <Icon icon="reply" />
@@ -397,7 +423,12 @@ function Status({
                 } catch (e) {}
               }}
             >
-              <Icon icon="rocket" />
+              <Icon
+                icon="rocket"
+                style={{
+                  color: reblogged && 'var(--reblog-color)',
+                }}
+              />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
             </MenuItem>
           )}
@@ -410,7 +441,12 @@ function Status({
               } catch (e) {}
             }}
           >
-            <Icon icon="heart" />
+            <Icon
+              icon="heart"
+              style={{
+                color: favourited && 'var(--favourite-color)',
+              }}
+            />
             <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
           </MenuItem>
           <MenuItem
@@ -422,51 +458,69 @@ function Status({
               } catch (e) {}
             }}
           >
-            <Icon icon="bookmark" />
+            <Icon
+              icon="bookmark"
+              style={{
+                color: bookmarked && 'var(--favourite-color)',
+              }}
+            />
             <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
           </MenuItem>
-          <MenuDivider />
         </>
       )}
+      {enableTranslate && (
+        <MenuItem
+          disabled={forceTranslate}
+          onClick={() => {
+            setForceTranslate(true);
+          }}
+        >
+          <Icon icon="translate" />
+          <span>Translate</span>
+        </MenuItem>
+      )}
+      {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
-        <span>Open link to post</span>
+        <small class="menu-double-lines">{nicePostURL(url)}</small>
       </MenuItem>
-      <MenuItem
-        onClick={() => {
-          // Copy url to clipboard
-          try {
-            navigator.clipboard.writeText(url);
-            showToast('Link copied');
-          } catch (e) {
-            console.error(e);
-            showToast('Unable to copy link');
-          }
-        }}
-      >
-        <Icon icon="link" />
-        <span>Copy link to post</span>
-      </MenuItem>
-      {navigator?.share &&
-        navigator?.canShare?.({
-          url,
-        }) && (
-          <MenuItem
-            onClick={() => {
-              try {
-                navigator.share({
-                  url,
-                });
-              } catch (e) {
-                console.error(e);
-                alert("Sharing doesn't seem to work.");
-              }
-            }}
-          >
-            <Icon icon="share" />
-            <span>Share…</span>
-          </MenuItem>
-        )}
+      <div class="menu-horizontal">
+        <MenuItem
+          onClick={() => {
+            // Copy url to clipboard
+            try {
+              navigator.clipboard.writeText(url);
+              showToast('Link copied');
+            } catch (e) {
+              console.error(e);
+              showToast('Unable to copy link');
+            }
+          }}
+        >
+          <Icon icon="link" />
+          <span>Copy</span>
+        </MenuItem>
+        {navigator?.share &&
+          navigator?.canShare?.({
+            url,
+          }) && (
+            <MenuItem
+              onClick={() => {
+                try {
+                  navigator.share({
+                    url,
+                  });
+                } catch (e) {
+                  console.error(e);
+                  alert("Sharing doesn't seem to work.");
+                }
+              }}
+            >
+              <Icon icon="share" />
+              <span>Share…</span>
+            </MenuItem>
+          )}
+      </div>
       {isSelf && (
         <>
           <MenuDivider />
@@ -485,11 +539,27 @@ function Status({
     </>
   );
 
+  const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuAnchorPoint, setContextMenuAnchorPoint] = useState({
     x: 0,
     y: 0,
   });
+  const bindLongPress = useLongPress(
+    (e) => {
+      const { clientX, clientY } = e.touches?.[0] || e;
+      setContextMenuAnchorPoint({
+        x: clientX,
+        y: clientY,
+      });
+      setIsContextMenuOpen(true);
+    },
+    {
+      captureEvent: true,
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
 
   return (
     <article
@@ -508,6 +578,9 @@ function Status({
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
+        // console.log('context menu', e);
+        const link = e.target.closest('a');
+        if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
         e.preventDefault();
         setContextMenuAnchorPoint({
           x: e.clientX,
@@ -515,9 +588,11 @@ function Status({
         });
         setIsContextMenuOpen(true);
       }}
+      {...bindLongPress()}
     >
       {size !== 'l' && (
         <ControlledMenu
+          ref={contextMenuRef}
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
@@ -530,9 +605,12 @@ function Status({
               // Higher than the backdrop
               zIndex: 1001,
             },
+            onClick: () => {
+              contextMenuRef.current?.closeMenu?.();
+            },
           }}
           overflow="auto"
-          boundingBoxPadding="8 8 8 8"
+          boundingBoxPadding={safeBoundingBoxPadding()}
           unmountOnClose
         >
           {StatusMenuItems}
@@ -561,7 +639,7 @@ function Status({
             };
           }}
         >
-          <Avatar url={avatarStatic} size="xxl" />
+          <Avatar url={avatarStatic || avatar} size="xxl" />
         </a>
       )}
       <div class="container">
@@ -765,6 +843,25 @@ function Status({
                   })
                   .catch((e) => {}); // Silently fail
               }}
+            />
+          )}
+          {((enableTranslate &&
+            !!content.trim() &&
+            language &&
+            language !== targetLanguage) ||
+            forceTranslate) && (
+            <TranslationBlock
+              forceTranslate={forceTranslate}
+              sourceLanguage={language}
+              text={
+                (spoilerText ? `${spoilerText}\n\n` : '') +
+                getHTMLText(content) +
+                (poll?.options?.length
+                  ? `\n\nPoll:\n${poll.options
+                      .map((option) => `- ${option.title}`)
+                      .join('\n')}`
+                  : '')
+              }
             />
           )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
@@ -1295,7 +1392,14 @@ function EditedAtModal({
               return (
                 <li key={createdAt} class="history-item">
                   <h3>
-                    <time>{niceDateTime(createdAtDate)}</time>
+                    <time>
+                      {niceDateTime(createdAtDate, {
+                        formatOpts: {
+                          weekday: 'short',
+                          second: 'numeric',
+                        },
+                      })}
+                    </time>
                   </h3>
                   <Status
                     status={status}
@@ -1468,6 +1572,62 @@ function _unfurlMastodonLink(instance, url) {
   return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
 }
 
+function nicePostURL(url) {
+  if (!url) return;
+  const urlObj = new URL(url);
+  const { host, pathname } = urlObj;
+  const path = pathname.replace(/\/$/, '');
+  // split only first slash
+  const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
+  return (
+    <>
+      {host}
+      {username ? (
+        <>
+          /{username}
+          <wbr />
+          <span class="more-insignificant">/{restPath}</span>
+        </>
+      ) : (
+        <span class="more-insignificant">{path}</span>
+      )}
+    </>
+  );
+}
+
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
+
+const div = document.createElement('div');
+function getHTMLText(html) {
+  if (!html) return 0;
+  div.innerHTML = html
+    .replace(/<\/p>/g, '</p>\n\n')
+    .replace(/<\/li>/g, '</li>\n');
+  div.querySelectorAll('br').forEach((br) => {
+    br.replaceWith('\n');
+  });
+  return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
+}
+
+const root = document.documentElement;
+const defaultBoundingBoxPadding = 8;
+function safeBoundingBoxPadding() {
+  // Get safe area inset variables from root
+  const style = getComputedStyle(root);
+  const safeAreaInsetTop = style.getPropertyValue('--sai-top');
+  const safeAreaInsetRight = style.getPropertyValue('--sai-right');
+  const safeAreaInsetBottom = style.getPropertyValue('--sai-bottom');
+  const safeAreaInsetLeft = style.getPropertyValue('--sai-left');
+  const str = [
+    safeAreaInsetTop,
+    safeAreaInsetRight,
+    safeAreaInsetBottom,
+    safeAreaInsetLeft,
+  ]
+    .map((v) => parseInt(v, 10) || defaultBoundingBoxPadding)
+    .join(' ');
+  // console.log(str);
+  return str;
+}
 
 export default memo(Status);

@@ -348,12 +348,24 @@ function Compose({
   };
   useEffect(updateCharCount, []);
 
+  const escDownRef = useRef(false);
   useHotkeys(
     'esc',
     () => {
-      if (!standalone && confirmClose()) {
+      escDownRef.current = true;
+      // This won't be true if this event is already handled and not propagated 🤞
+    },
+    {
+      enableOnFormTags: true,
+    },
+  );
+  useHotkeys(
+    'esc',
+    () => {
+      if (!standalone && escDownRef.current && confirmClose()) {
         onClose();
       }
+      escDownRef.current = false;
     },
     {
       enableOnFormTags: true,
@@ -490,7 +502,7 @@ function Compose({
         {currentAccountInfo?.avatarStatic && (
           <Avatar
             url={currentAccountInfo.avatarStatic}
-            size="l"
+            size="xl"
             alt={currentAccountInfo.username}
           />
         )}
@@ -687,6 +699,17 @@ function Compose({
           }
           // TODO: check for URLs and use `charactersReservedPerUrl` to calculate max characters
 
+          if (mediaAttachments.length > 0) {
+            // If there are media attachments, check if they have no descriptions
+            const hasNoDescriptions = mediaAttachments.some(
+              (media) => !media.description?.trim?.(),
+            );
+            if (hasNoDescriptions) {
+              const yes = confirm('Some media have no descriptions. Continue?');
+              if (!yes) return;
+            }
+          }
+
           // Post-cleanup
           spoilerText = (sensitive && spoilerText) || undefined;
           status = status === '' ? undefined : status;
@@ -819,7 +842,7 @@ function Compose({
             }}
           />
           <label
-            class="toolbar-button"
+            class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
             title="Content warning or sensitive media"
           >
             <input
@@ -842,7 +865,7 @@ function Compose({
           <label
             class={`toolbar-button ${
               visibility !== 'public' && !sensitive ? 'show-field' : ''
-            }`}
+            } ${visibility !== 'public' ? 'highlight' : ''}`}
             title={`Visibility: ${visibility}`}
           >
             <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />

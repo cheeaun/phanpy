@@ -45,6 +45,9 @@ function handleContentLinks(opts) {
     } else if (states.unfurledLinks[target.href]?.url) {
       e.preventDefault();
       e.stopPropagation();
+      states.prevLocation = {
+        pathname: location.hash.replace(/^#/, ''),
+      };
       location.hash = `#${states.unfurledLinks[target.href].url}`;
     }
   };

@@ -1,7 +1,6 @@
-import './account.css';
+import './account-info.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -17,49 +16,36 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 
-function Account({ account, instance: propInstance, onClose }) {
-  const { masto, instance, authenticated } = api({ instance: propInstance });
+function AccountInfo({
+  account,
+  fetchAccount = () => {},
+  standalone,
+  instance,
+  authenticated,
+}) {
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
 
   useEffect(() => {
-    if (isString) {
-      setUIState('loading');
-      (async () => {
-        try {
-          const info = await masto.v1.accounts.lookup({
-            acct: account,
-            skip_webfinger: false,
-          });
-          setInfo(info);
-          setUIState('default');
-        } catch (e) {
-          try {
-            const result = await masto.v2.search({
-              q: account,
-              type: 'accounts',
-              limit: 1,
-              resolve: authenticated,
-            });
-            if (result.accounts.length) {
-              setInfo(result.accounts[0]);
-              setUIState('default');
-              return;
-            }
-            setInfo(null);
-            setUIState('error');
-          } catch (err) {
-            console.error(err);
-            setInfo(null);
-            setUIState('error');
-          }
-        }
-      })();
-    } else {
+    if (!isString) {
       setInfo(account);
+      return;
     }
-  }, [account]);
+    setUIState('loading');
+    (async () => {
+      try {
+        const info = await fetchAccount();
+        states.accounts[`${info.id}@${instance}`] = info;
+        setInfo(info);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setInfo(null);
+        setUIState('error');
+      }
+    })();
+  }, [isString, account, fetchAccount]);
 
   const {
     acct,
@@ -73,8 +59,8 @@ function Account({ account, instance: propInstance, onClose }) {
     followersCount,
     followingCount,
     group,
-    header,
-    headerStatic,
+    // header,
+    // headerStatic,
     id,
     lastStatusAt,
     locked,
@@ -83,14 +69,29 @@ function Account({ account, instance: propInstance, onClose }) {
     url,
     username,
   } = info || {};
+  let headerIsAvatar = false;
+  let { header, headerStatic } = info || {};
+  if (!header || /missing\.png$/.test(header)) {
+    if (avatar && !/missing\.png$/.test(avatar)) {
+      header = avatar;
+      headerIsAvatar = true;
+      if (avatarStatic && !/missing\.png$/.test(avatarStatic)) {
+        headerStatic = avatarStatic;
+      }
+    }
+  }
 
-  const escRef = useHotkeys('esc', onClose, [onClose]);
+  const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
   return (
     <div
-      ref={escRef}
-      id="account-container"
-      class={`sheet ${uiState === 'loading' ? 'skeleton' : ''}`}
+      class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
+      style={{
+        '--header-color-1': headerCornerColors[0],
+        '--header-color-2': headerCornerColors[1],
+        '--header-color-3': headerCornerColors[2],
+        '--header-color-4': headerCornerColors[3],
+      }}
     >
       {uiState === 'error' && (
         <div class="ui-state">
@@ -113,21 +114,129 @@ function Account({ account, instance: propInstance, onClose }) {
               <p>███████████████ ███████████████</p>
             </div>
             <p class="stats">
-              <span>██ Posts</span>
-              <span>██ Following</span>
-              <span>██ Followers</span>
+              <span>
+                Posts
+                <br />
+                ██
+              </span>
+              <span>
+                Following
+                <br />
+                ██
+              </span>
+              <span>
+                Followers
+                <br />
+                ██
+              </span>
             </p>
           </main>
         </>
       ) : (
         info && (
           <>
+            {header && !/missing\.png$/.test(header) && (
+              <img
+                src={header}
+                alt=""
+                class={`header-banner ${
+                  headerIsAvatar ? 'header-is-avatar' : ''
+                }`}
+                onError={(e) => {
+                  if (e.target.crossOrigin) {
+                    if (e.target.src !== headerStatic) {
+                      e.target.src = headerStatic;
+                    } else {
+                      e.target.removeAttribute('crossorigin');
+                      e.target.src = header;
+                    }
+                  } else if (e.target.src !== headerStatic) {
+                    e.target.src = headerStatic;
+                  } else {
+                    e.target.remove();
+                  }
+                }}
+                crossOrigin="anonymous"
+                onLoad={(e) => {
+                  try {
+                    // Get color from four corners of image
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = e.target.width;
+                    canvas.height = e.target.height;
+                    ctx.drawImage(e.target, 0, 0);
+                    // const colors = [
+                    //   ctx.getImageData(0, 0, 1, 1).data,
+                    //   ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
+                    //   ctx.getImageData(0, e.target.height - 1, 1, 1).data,
+                    //   ctx.getImageData(
+                    //     e.target.width - 1,
+                    //     e.target.height - 1,
+                    //     1,
+                    //     1,
+                    //   ).data,
+                    // ];
+                    // Get 10x10 pixels from corners, get average color from each
+                    const pixelDimension = 10;
+                    const colors = [
+                      ctx.getImageData(0, 0, pixelDimension, pixelDimension)
+                        .data,
+                      ctx.getImageData(
+                        e.target.width - pixelDimension,
+                        0,
+                        pixelDimension,
+                        pixelDimension,
+                      ).data,
+                      ctx.getImageData(
+                        0,
+                        e.target.height - pixelDimension,
+                        pixelDimension,
+                        pixelDimension,
+                      ).data,
+                      ctx.getImageData(
+                        e.target.width - pixelDimension,
+                        e.target.height - pixelDimension,
+                        pixelDimension,
+                        pixelDimension,
+                      ).data,
+                    ].map((data) => {
+                      let r = 0;
+                      let g = 0;
+                      let b = 0;
+                      let a = 0;
+                      for (let i = 0; i < data.length; i += 4) {
+                        r += data[i];
+                        g += data[i + 1];
+                        b += data[i + 2];
+                        a += data[i + 3];
+                      }
+                      const dataLength = data.length / 4;
+                      return [
+                        r / dataLength,
+                        g / dataLength,
+                        b / dataLength,
+                        a / dataLength,
+                      ];
+                    });
+                    const rgbColors = colors.map((color) => {
+                      const [r, g, b, a] = lightenRGB(color);
+                      return `rgba(${r}, ${g}, ${b}, ${a})`;
+                    });
+                    setHeaderCornerColors(rgbColors);
+                    console.log({ colors, rgbColors });
+                  } catch (e) {
+                    // Silently fail
+                  }
+                }}
+              />
+            )}
             <header>
               <AccountBlock
                 account={info}
                 instance={instance}
                 avatarSize="xxxl"
-                external
+                external={standalone}
+                internal={!standalone}
               />
             </header>
             <main tabIndex="-1">
@@ -174,18 +283,28 @@ function Account({ account, instance: propInstance, onClose }) {
                 </div>
               )}
               <p class="stats">
-                <Link
-                  to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
-                  onClick={() => {
-                    hideAllModals();
-                  }}
-                >
-                  Posts
-                  <br />
-                  <b title={statusesCount}>
-                    {shortenNumber(statusesCount)}
-                  </b>{' '}
-                </Link>
+                {standalone ? (
+                  <span>
+                    Posts
+                    <br />
+                    <b title={statusesCount}>
+                      {shortenNumber(statusesCount)}
+                    </b>{' '}
+                  </span>
+                ) : (
+                  <Link
+                    to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
+                    onClick={() => {
+                      hideAllModals();
+                    }}
+                  >
+                    Posts
+                    <br />
+                    <b title={statusesCount}>
+                      {shortenNumber(statusesCount)}
+                    </b>{' '}
+                  </Link>
+                )}
                 <span>
                   Following
                   <br />
@@ -419,4 +538,20 @@ function RelatedActions({ info, instance, authenticated }) {
   );
 }
 
-export default Account;
+// Apply more alpha if high luminence
+function lightenRGB([r, g, b]) {
+  const luminence = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  console.log('luminence', luminence);
+  let alpha;
+  if (luminence >= 220) {
+    alpha = 1;
+  } else if (luminence <= 50) {
+    alpha = 0.1;
+  } else {
+    alpha = luminence / 255;
+  }
+  alpha = Math.min(1, alpha);
+  return [r, g, b, alpha];
+}
+
+export default AccountInfo;

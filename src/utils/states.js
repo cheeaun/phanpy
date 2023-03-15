@@ -27,10 +27,12 @@ const states = proxy({
   spoilers: {},
   scrollPositions: {},
   unfurledLinks: {},
+  accounts: {},
   // Modals
   showCompose: false,
   showSettings: false,
   showAccount: false,
+  showAccounts: false,
   showDrafts: false,
   showMediaModal: false,
   showShortcutsSettings: false,
@@ -42,6 +44,10 @@ const states = proxy({
     shortcutsColumnsMode:
       store.account.get('settings-shortcutsColumnsMode') ?? false,
     boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
+    contentTranslation:
+      store.account.get('settings-contentTranslation') ?? true,
+    contentTranslationTargetLanguage:
+      store.account.get('settings-contentTranslationTargetLanguage') || null,
   },
 });
 
@@ -51,20 +57,28 @@ subscribeKey(states, 'notificationsLast', (v) => {
   console.log('CHANGE', v);
   store.account.set('notificationsLast', states.notificationsLast);
 });
-subscribe(states, (v) => {
-  console.debug('STATES change', v);
-  const [action, path, value, prevValue] = v[0];
-  if (path.join('.') === 'settings.boostsCarousel') {
-    store.account.set('settings-boostsCarousel', !!value);
-  }
-  if (path.join('.') === 'settings.shortcutsColumnsMode') {
-    store.account.set('settings-shortcutsColumnsMode', !!value);
-  }
-  if (path.join('.') === 'settings.shortcutsViewMode') {
-    store.account.set('settings-shortcutsViewMode', value);
-  }
-  if (path?.[0] === 'shortcuts') {
-    store.account.set('shortcuts', states.shortcuts);
+subscribe(states, (changes) => {
+  console.debug('STATES change', changes);
+  for (const [action, path, value, prevValue] of changes) {
+    if (path.join('.') === 'settings.boostsCarousel') {
+      store.account.set('settings-boostsCarousel', !!value);
+    }
+    if (path.join('.') === 'settings.shortcutsColumnsMode') {
+      store.account.set('settings-shortcutsColumnsMode', !!value);
+    }
+    if (path.join('.') === 'settings.shortcutsViewMode') {
+      store.account.set('settings-shortcutsViewMode', value);
+    }
+    if (path.join('.') === 'settings.contentTranslation') {
+      store.account.set('settings-contentTranslation', !!value);
+    }
+    if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
+      console.log('SET', value);
+      store.account.set('settings-contentTranslationTargetLanguage', value);
+    }
+    if (path?.[0] === 'shortcuts') {
+      store.account.set('shortcuts', states.shortcuts);
+    }
   }
 });
 
@@ -72,6 +86,7 @@ export function hideAllModals() {
   states.showCompose = false;
   states.showSettings = false;
   states.showAccount = false;
+  states.showAccounts = false;
   states.showDrafts = false;
   states.showMediaModal = false;
   states.showShortcutsSettings = false;

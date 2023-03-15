@@ -27,6 +27,7 @@ function Timeline({
   checkForUpdatesInterval = 60_000, // 1 minute
   headerStart,
   headerEnd,
+  timelineStart,
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -292,11 +293,12 @@ function Timeline({
               </button>
             )}
         </header>
+        {!!timelineStart && <div class="timeline-start">{timelineStart}</div>}
         {!!items.length ? (
           <>
             <ul class="timeline">
               {items.map((status) => {
-                const { id: statusID, reblog, items, type } = status;
+                const { id: statusID, reblog, items, type, _pinned } = status;
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
                   ? `/${instance}/s/${actualStatusID}`
@@ -347,7 +349,7 @@ function Timeline({
                   );
                 }
                 return (
-                  <li key={`timeline-${statusID}`}>
+                  <li key={`timeline-${statusID + _pinned}`}>
                     <Link class="status-link timeline-item" to={url}>
                       {useItemID ? (
                         <Status statusID={statusID} instance={instance} />

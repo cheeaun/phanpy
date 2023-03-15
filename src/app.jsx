@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
-import Account from './components/account';
+import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
 import Loader from './components/loader';
@@ -26,6 +26,7 @@ import Shortcuts from './components/shortcuts';
 import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
+import Accounts from './pages/accounts';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
@@ -72,6 +73,13 @@ function App() {
       document
         .querySelector('meta[name="color-scheme"]')
         .setAttribute('content', theme === 'auto' ? 'dark light' : theme);
+    }
+    const textSize = store.local.get('textSize');
+    if (textSize) {
+      document.documentElement.style.setProperty(
+        '--text-size',
+        `${textSize}px`,
+      );
     }
   }, []);
 
@@ -143,6 +151,8 @@ function App() {
         // Focus first column
         columns.querySelector('.deck-container')?.focus?.();
       } else {
+        const backDrop = document.querySelector('.deck-backdrop');
+        if (backDrop) return;
         // Focus last deck
         const pages = document.querySelectorAll('.deck-container');
         const page = pages[pages.length - 1]; // last one
@@ -163,6 +173,7 @@ function App() {
   const showModal =
     snapStates.showCompose ||
     snapStates.showSettings ||
+    snapStates.showAccounts ||
     snapStates.showAccount ||
     snapStates.showDrafts ||
     snapStates.showMediaModal ||
@@ -170,15 +181,6 @@ function App() {
   useEffect(() => {
     if (!showModal) focusDeck();
   }, [showModal]);
-
-  // useEffect(() => {
-  //   // HACK: prevent this from running again due to HMR
-  //   if (states.init) return;
-  //   if (isLoggedIn) {
-  //     requestAnimationFrame(startVisibility);
-  //     states.init = true;
-  //   }
-  // }, [isLoggedIn]);
 
   // Notifications service
   // - WebSocket to receive notifications when page is visible
@@ -253,7 +255,9 @@ function App() {
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
-  useInterval(() => {
+  const lastCheckDate = useRef();
+  const checkForUpdates = () => {
+    lastCheckDate.current = Date.now();
     console.log('✨ Check app update');
     fetch('./version.json')
       .then((r) => r.json())
@@ -263,7 +267,21 @@ function App() {
       .catch((e) => {
         console.error(e);
       });
-  }, visible && 1000 * 60 * 60); // 1 hour
+  };
+  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
+  usePageVisibility((visible) => {
+    if (visible) {
+      if (!lastCheckDate.current) {
+        checkForUpdates();
+      } else {
+        const diff = Date.now() - lastCheckDate.current;
+        if (diff > 1000 * 60 * 60) {
+          // 1 hour
+          checkForUpdates();
+        }
+      }
+    }
+  });
 
   return (
     <>
@@ -374,6 +392,21 @@ function App() {
           />
         </Modal>
       )}
+      {!!snapStates.showAccounts && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              states.showAccounts = false;
+            }
+          }}
+        >
+          <Accounts
+            onClose={() => {
+              states.showAccounts = false;
+            }}
+          />
+        </Modal>
+      )}
       {!!snapStates.showAccount && (
         <Modal
           class="light"
@@ -383,11 +416,14 @@ function App() {
             }
           }}
         >
-          <Account
+          <AccountSheet
             account={snapStates.showAccount?.account || snapStates.showAccount}
             instance={snapStates.showAccount?.instance}
-            onClose={() => {
+            onClose={({ destination }) => {
               states.showAccount = false;
+              if (destination) {
+                states.showAccounts = false;
+              }
             }}
           />
         </Modal>
@@ -439,165 +475,5 @@ function App() {
     </>
   );
 }
-
-// let ws;
-// async function startStream() {
-//   const { masto, instance } = api();
-//   if (
-//     ws &&
-//     (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.OPEN)
-//   ) {
-//     return;
-//   }
-
-//   const stream = await masto.v1.stream.streamUser();
-//   console.log('STREAM START', { stream });
-//   ws = stream.ws;
-
-//   const handleNewStatus = debounce((status) => {
-//     console.log('UPDATE', status);
-//     if (document.visibilityState === 'hidden') return;
-
-//     const inHomeNew = states.homeNew.find((s) => s.id === status.id);
-//     const inHome = status.id === states.homeLast?.id;
-//     if (!inHomeNew && !inHome) {
-//       if (states.settings.boostsCarousel && status.reblog) {
-//         // do nothing
-//       } else {
-//         states.homeNew.unshift({
-//           id: status.id,
-//           reblog: status.reblog?.id,
-//           reply: !!status.inReplyToAccountId,
-//         });
-//         console.log('homeNew 1', [...states.homeNew]);
-//       }
-//     }
-
-//     saveStatus(status, instance);
-//   }, 5000);
-//   stream.on('update', handleNewStatus);
-//   stream.on('status.update', (status) => {
-//     console.log('STATUS.UPDATE', status);
-//     saveStatus(status, instance);
-//   });
-//   stream.on('delete', (statusID) => {
-//     console.log('DELETE', statusID);
-//     // delete states.statuses[statusID];
-//     const s = getStatus(statusID);
-//     if (s) s._deleted = true;
-//   });
-//   stream.on('notification', (notification) => {
-//     console.log('NOTIFICATION', notification);
-
-//     const inNotificationsNew = states.notificationsNew.find(
-//       (n) => n.id === notification.id,
-//     );
-//     const inNotifications = notification.id === states.notificationsLast?.id;
-//     if (!inNotificationsNew && !inNotifications) {
-//       states.notificationsNew.unshift(notification);
-//     }
-
-//     saveStatus(notification.status, instance, { override: false });
-//   });
-
-//   stream.ws.onclose = () => {
-//     console.log('STREAM CLOSED!');
-//     if (document.visibilityState !== 'hidden') {
-//       startStream();
-//     }
-//   };
-
-//   return {
-//     stream,
-//     stopStream: () => {
-//       stream.ws.close();
-//     },
-//   };
-// }
-
-// let lastHidden;
-// function startVisibility() {
-//   const { masto, instance } = api();
-//   const handleVisible = (visible) => {
-//     if (!visible) {
-//       const timestamp = Date.now();
-//       lastHidden = timestamp;
-//     } else {
-//       const timestamp = Date.now();
-//       const diff = timestamp - lastHidden;
-//       const diffMins = Math.round(diff / 1000 / 60);
-//       console.log(`visible: ${visible}`, { lastHidden, diffMins });
-//       if (!lastHidden || diffMins > 1) {
-//         (async () => {
-//           try {
-//             const firstStatusID = states.homeLast?.id;
-//             const firstNotificationID = states.notificationsLast?.id;
-//             console.log({ states, firstNotificationID, firstStatusID });
-//             const fetchHome = masto.v1.timelines.listHome({
-//               limit: 5,
-//               ...(firstStatusID && { sinceId: firstStatusID }),
-//             });
-//             const fetchNotifications = masto.v1.notifications.list({
-//               limit: 1,
-//               ...(firstNotificationID && { sinceId: firstNotificationID }),
-//             });
-
-//             const newStatuses = await fetchHome;
-//             const hasOneAndReblog =
-//               newStatuses.length === 1 && newStatuses?.[0]?.reblog;
-//             if (newStatuses.length) {
-//               if (states.settings.boostsCarousel && hasOneAndReblog) {
-//                 // do nothing
-//               } else {
-//                 states.homeNew = newStatuses.map((status) => {
-//                   saveStatus(status, instance);
-//                   return {
-//                     id: status.id,
-//                     reblog: status.reblog?.id,
-//                     reply: !!status.inReplyToAccountId,
-//                   };
-//                 });
-//                 console.log('homeNew 2', [...states.homeNew]);
-//               }
-//             }
-
-//             const newNotifications = await fetchNotifications;
-//             if (newNotifications.length) {
-//               const notification = newNotifications[0];
-//               const inNotificationsNew = states.notificationsNew.find(
-//                 (n) => n.id === notification.id,
-//               );
-//               const inNotifications =
-//                 notification.id === states.notificationsLast?.id;
-//               if (!inNotificationsNew && !inNotifications) {
-//                 states.notificationsNew.unshift(notification);
-//               }
-
-//               saveStatus(notification.status, instance, { override: false });
-//             }
-//           } catch (e) {
-//             // Silently fail
-//             console.error(e);
-//           } finally {
-//             startStream();
-//           }
-//         })();
-//       }
-//     }
-//   };
-
-//   const handleVisibilityChange = () => {
-//     const hidden = document.visibilityState === 'hidden';
-//     handleVisible(!hidden);
-//     console.log('VISIBILITY: ' + (hidden ? 'hidden' : 'visible'));
-//   };
-//   document.addEventListener('visibilitychange', handleVisibilityChange);
-//   requestAnimationFrame(handleVisibilityChange);
-//   return {
-//     stop: () => {
-//       document.removeEventListener('visibilitychange', handleVisibilityChange);
-//     },
-//   };
-// }
 
 export { App };

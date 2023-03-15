@@ -79,6 +79,10 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             // Open original image in new tab
             window.open(url, '_blank');
           }}
+          onLoad={(e) => {
+            // Hide background image after image loads
+            e.target.parentElement.style.backgroundImage = 'none';
+          }}
         />
       </div>
     );

@@ -235,7 +235,11 @@ function ShortcutsSettings() {
                   type="radio"
                   name="shortcuts-view-mode"
                   value={value}
-                  checked={snapStates.settings.shortcutsViewMode === value}
+                  checked={
+                    snapStates.settings.shortcutsViewMode === value ||
+                    (value === 'float-button' &&
+                      !snapStates.settings.shortcutsViewMode)
+                  }
                   onChange={(e) => {
                     states.settings.shortcutsViewMode = e.target.value;
                   }}

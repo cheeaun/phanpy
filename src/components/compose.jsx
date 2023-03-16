@@ -633,7 +633,7 @@ function Compose({
       </div>
       {!!replyToStatus && (
         <div class="status-preview">
-          <Status status={replyToStatus} size="s" />
+          <Status status={replyToStatus} size="s" previewMode />
           <div class="status-preview-legend reply-to">
             Replying to @
             {replyToStatus.account.acct || replyToStatus.account.username}
@@ -643,7 +643,7 @@ function Compose({
       )}
       {!!editStatus && (
         <div class="status-preview">
-          <Status status={editStatus} size="s" />
+          <Status status={editStatus} size="s" previewMode />
           <div class="status-preview-legend">Editing source status</div>
         </div>
       )}

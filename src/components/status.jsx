@@ -70,6 +70,7 @@ function Status({
   readOnly,
   contentTextWeight,
   enableTranslate,
+  previewMode,
 }) {
   if (skeleton) {
     return (
@@ -578,6 +579,7 @@ function Status({
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
+        if (previewMode) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
@@ -662,7 +664,7 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (url ? (
+            (url && !previewMode ? (
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
@@ -788,7 +790,7 @@ function Status({
             lang={language}
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleContentLinks({ mentions, instance })}
+            onClick={handleContentLinks({ mentions, instance, previewMode })}
             dangerouslySetInnerHTML={{
               __html: enhanceContent(content, {
                 emojis,
@@ -801,6 +803,7 @@ function Status({
                         a.removeAttribute('target');
                       }
                     });
+                  if (previewMode) return;
                   // Unfurl Mastodon links
                   dom
                     .querySelectorAll(

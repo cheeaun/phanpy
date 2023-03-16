@@ -1,7 +1,7 @@
 import states from './states';
 
 function handleContentLinks(opts) {
-  const { mentions = [], instance } = opts || {};
+  const { mentions = [], instance, previewMode } = opts || {};
   return (e) => {
     let { target } = e;
     target = target.closest('a');
@@ -35,20 +35,22 @@ function handleContentLinks(opts) {
           instance,
         };
       }
-    } else if (target.classList.contains('hashtag')) {
-      e.preventDefault();
-      e.stopPropagation();
-      const tag = target.innerText.replace(/^#/, '').trim();
-      const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
-      console.log({ hashURL });
-      location.hash = hashURL;
-    } else if (states.unfurledLinks[target.href]?.url) {
-      e.preventDefault();
-      e.stopPropagation();
-      states.prevLocation = {
-        pathname: location.hash.replace(/^#/, ''),
-      };
-      location.hash = `#${states.unfurledLinks[target.href].url}`;
+    } else if (!previewMode) {
+      if (target.classList.contains('hashtag')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const tag = target.innerText.replace(/^#/, '').trim();
+        const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
+        console.log({ hashURL });
+        location.hash = hashURL;
+      } else if (states.unfurledLinks[target.href]?.url) {
+        e.preventDefault();
+        e.stopPropagation();
+        states.prevLocation = {
+          pathname: location.hash.replace(/^#/, ''),
+        };
+        location.hash = `#${states.unfurledLinks[target.href].url}`;
+      }
     }
   };
 }

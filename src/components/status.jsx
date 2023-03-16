@@ -70,6 +70,7 @@ function Status({
   readOnly,
   contentTextWeight,
   enableTranslate,
+  previewMode,
 }) {
   if (skeleton) {
     return (
@@ -210,10 +211,14 @@ function Status({
     onResize: () => {
       if (spoilerContentRef.current) {
         const { scrollHeight, clientHeight } = spoilerContentRef.current;
-        spoilerContentRef.current.classList.toggle(
-          'truncated',
-          scrollHeight > clientHeight,
-        );
+        if (scrollHeight < window.innerHeight * 0.4) {
+          spoilerContentRef.current.classList.remove('truncated');
+        } else {
+          spoilerContentRef.current.classList.toggle(
+            'truncated',
+            scrollHeight > clientHeight,
+          );
+        }
       }
     },
   });
@@ -223,10 +228,14 @@ function Status({
     onResize: () => {
       if (contentRef.current) {
         const { scrollHeight, clientHeight } = contentRef.current;
-        contentRef.current.classList.toggle(
-          'truncated',
-          scrollHeight > clientHeight,
-        );
+        if (scrollHeight < window.innerHeight * 0.4) {
+          contentRef.current.classList.remove('truncated');
+        } else {
+          contentRef.current.classList.toggle(
+            'truncated',
+            scrollHeight > clientHeight,
+          );
+        }
       }
     },
   });
@@ -578,6 +587,7 @@ function Status({
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
+        if (previewMode) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
@@ -662,7 +672,7 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (url ? (
+            (url && !previewMode ? (
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
@@ -788,7 +798,7 @@ function Status({
             lang={language}
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleContentLinks({ mentions, instance })}
+            onClick={handleContentLinks({ mentions, instance, previewMode })}
             dangerouslySetInnerHTML={{
               __html: enhanceContent(content, {
                 emojis,
@@ -801,6 +811,7 @@ function Status({
                         a.removeAttribute('target');
                       }
                     });
+                  if (previewMode) return;
                   // Unfurl Mastodon links
                   dom
                     .querySelectorAll(

@@ -211,10 +211,14 @@ function Status({
     onResize: () => {
       if (spoilerContentRef.current) {
         const { scrollHeight, clientHeight } = spoilerContentRef.current;
-        spoilerContentRef.current.classList.toggle(
-          'truncated',
-          scrollHeight > clientHeight,
-        );
+        if (scrollHeight < window.innerHeight * 0.4) {
+          spoilerContentRef.current.classList.remove('truncated');
+        } else {
+          spoilerContentRef.current.classList.toggle(
+            'truncated',
+            scrollHeight > clientHeight,
+          );
+        }
       }
     },
   });
@@ -224,10 +228,14 @@ function Status({
     onResize: () => {
       if (contentRef.current) {
         const { scrollHeight, clientHeight } = contentRef.current;
-        contentRef.current.classList.toggle(
-          'truncated',
-          scrollHeight > clientHeight,
-        );
+        if (scrollHeight < window.innerHeight * 0.4) {
+          contentRef.current.classList.remove('truncated');
+        } else {
+          contentRef.current.classList.toggle(
+            'truncated',
+            scrollHeight > clientHeight,
+          );
+        }
       }
     },
   });

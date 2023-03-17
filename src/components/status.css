@@ -747,6 +747,9 @@ a.card:is(:hover, :focus) {
   gap: 8px;
   cursor: pointer;
 }
+.poll-label input:is([type='radio'], [type='checkbox']) {
+  flex-shrink: 0;
+}
 .poll-option-votes {
   flex-shrink: 0;
   font-size: 90%;

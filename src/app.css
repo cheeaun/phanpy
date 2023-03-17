@@ -204,6 +204,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li:last-child {
   background-size: 100% 20px;
 }
+.timeline.contextual > li:only-child {
+  background-image: none;
+}
 .timeline.contextual > li.descendant {
   position: relative;
 }

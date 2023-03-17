@@ -27,7 +27,7 @@ import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
-import states, { saveStatus, statusKey } from '../utils/states';
+import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -543,6 +543,29 @@ function Status({
             <Icon icon="pencil" />
             <span>Edit</span>
           </MenuItem>
+          {isSizeLarge && (
+            <MenuItem
+              onClick={() => {
+                const yes = confirm('Delete this post?');
+                if (yes) {
+                  (async () => {
+                    try {
+                      await masto.v1.statuses.remove(id);
+                      const cachedStatus = getStatus(id, instance);
+                      cachedStatus._deleted = true;
+                      showToast('Deleted');
+                    } catch (e) {
+                      console.error(e);
+                      showToast('Unable to delete');
+                    }
+                  })();
+                }
+              }}
+            >
+              <Icon icon="trash" />
+              <span>Delete…</span>
+            </MenuItem>
+          )}
         </>
       )}
     </>
@@ -582,12 +605,13 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      }`}
+      } ${_deleted ? 'status-deleted' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
         if (previewMode) return;
+        if (_deleted) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
@@ -672,7 +696,9 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (url && !previewMode ? (
+            (_deleted ? (
+              <span class="status-deleted-tag">Deleted</span>
+            ) : url && !previewMode ? (
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
@@ -931,29 +957,41 @@ function Status({
         {isSizeLarge && (
           <>
             <div class="extra-meta">
-              <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
-              <a href={url} target="_blank">
-                <time class="created" datetime={createdAtDate.toISOString()}>
-                  {createdDateText}
-                </time>
-              </a>
-              {editedAt && (
+              {_deleted ? (
+                <span class="status-deleted-tag">Deleted</span>
+              ) : (
                 <>
-                  {' '}
-                  &bull; <Icon icon="pencil" alt="Edited" />{' '}
-                  <time
-                    class="edited"
-                    datetime={editedAtDate.toISOString()}
-                    onClick={() => {
-                      setShowEdited(id);
-                    }}
-                  >
-                    {editedDateText}
-                  </time>
+                  <Icon
+                    icon={visibilityIconsMap[visibility]}
+                    alt={visibility}
+                  />{' '}
+                  <a href={url} target="_blank">
+                    <time
+                      class="created"
+                      datetime={createdAtDate.toISOString()}
+                    >
+                      {createdDateText}
+                    </time>
+                  </a>
+                  {editedAt && (
+                    <>
+                      {' '}
+                      &bull; <Icon icon="pencil" alt="Edited" />{' '}
+                      <time
+                        class="edited"
+                        datetime={editedAtDate.toISOString()}
+                        onClick={() => {
+                          setShowEdited(id);
+                        }}
+                      >
+                        {editedDateText}
+                      </time>
+                    </>
+                  )}
                 </>
               )}
             </div>
-            <div class="actions">
+            <div class={`actions ${_deleted ? 'disabled' : ''}`}>
               <div class="action has-count">
                 <StatusButton
                   title="Reply"

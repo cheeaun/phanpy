@@ -810,6 +810,10 @@ a.card:is(:hover, :focus) {
   border-top: var(--hairline-width) solid var(--outline-color);
   margin-top: 8px;
 }
+.status.large .actions.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 .status .action.has-count {
   flex: 1;
 }
@@ -983,4 +987,15 @@ a.card:is(:hover, :focus) {
 #edit-history .history-item .status {
   border: 1px solid var(--outline-color);
   border-radius: 8px;
+}
+
+/* DELETED */
+
+.status-deleted {
+  opacity: 0.75;
+}
+.status-deleted-tag {
+  color: var(--text-insignificant-color);
+  text-transform: uppercase;
+  font-size: 80%;
 }

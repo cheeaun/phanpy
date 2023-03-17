@@ -2,6 +2,7 @@ import './account-info.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
@@ -359,7 +360,7 @@ function RelatedActions({ info, instance, authenticated }) {
   const [relationship, setRelationship] = useState(null);
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
 
-  const { id, locked } = info;
+  const { id, locked, lastStatusAt } = info;
   const accountID = useRef(id);
 
   const {
@@ -473,7 +474,13 @@ function RelatedActions({ info, instance, authenticated }) {
         </p>
       )}
       <p class="actions">
-        {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
+        {followedBy ? (
+          <span class="tag">Following you</span>
+        ) : (
+          <span class="insignificant">
+            Last status: <RelativeTime datetime={lastStatusAt} format="micro" />
+          </span>
+        )}{' '}
         {relationshipUIState !== 'loading' && relationship && (
           <button
             type="button"

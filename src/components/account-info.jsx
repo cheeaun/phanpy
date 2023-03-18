@@ -407,6 +407,7 @@ function RelatedActions({ info, instance, authenticated }) {
   } = relationship || {};
 
   const [currentInfo, setCurrentInfo] = useState(null);
+  const [isSelf, setIsSelf] = useState(false);
 
   useEffect(() => {
     if (info) {
@@ -439,6 +440,7 @@ function RelatedActions({ info, instance, authenticated }) {
 
         if (currentAccount === currentID) {
           // It's myself!
+          setIsSelf(true);
           return;
         }
 
@@ -543,7 +545,7 @@ function RelatedActions({ info, instance, authenticated }) {
               </button>
             }
           >
-            {currentAuthenticated && (
+            {currentAuthenticated && !isSelf && (
               <>
                 <MenuItem
                   onClick={() => {

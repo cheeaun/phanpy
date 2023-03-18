@@ -406,6 +406,8 @@ function RelatedActions({ info, instance, authenticated }) {
     endorsed,
   } = relationship || {};
 
+  const [currentInfo, setCurrentInfo] = useState(null);
+
   useEffect(() => {
     if (info) {
       const currentAccount = store.session.get('currentAccount');
@@ -424,7 +426,10 @@ function RelatedActions({ info, instance, authenticated }) {
               resolve: true,
             });
             console.log('🥏 Fetched account from logged-in instance', results);
-            currentID = results.accounts[0].id;
+            if (results.accounts.length) {
+              currentID = results.accounts[0].id;
+              setCurrentInfo(results.accounts[0]);
+            }
           } catch (e) {
             console.error(e);
           }
@@ -544,7 +549,7 @@ function RelatedActions({ info, instance, authenticated }) {
                   onClick={() => {
                     states.showCompose = {
                       draftStatus: {
-                        status: `@${acct} `,
+                        status: `@${currentInfo?.acct || acct} `,
                       },
                     };
                   }}
@@ -606,7 +611,9 @@ function RelatedActions({ info, instance, authenticated }) {
                       (async () => {
                         try {
                           const newRelationship =
-                            await currentMasto.v1.accounts.unmute(id);
+                            await currentMasto.v1.accounts.unmute(
+                              currentInfo?.id || id,
+                            );
                           console.log('unmuting', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
@@ -646,9 +653,12 @@ function RelatedActions({ info, instance, authenticated }) {
                             (async () => {
                               try {
                                 const newRelationship =
-                                  await currentMasto.v1.accounts.mute(id, {
-                                    duration,
-                                  });
+                                  await currentMasto.v1.accounts.mute(
+                                    currentInfo?.id || id,
+                                    {
+                                      duration,
+                                    },
+                                  );
                                 console.log('muting', newRelationship);
                                 setRelationship(newRelationship);
                                 setRelationshipUIState('default');
@@ -679,14 +689,18 @@ function RelatedActions({ info, instance, authenticated }) {
                       try {
                         if (blocking) {
                           const newRelationship =
-                            await currentMasto.v1.accounts.unblock(id);
+                            await currentMasto.v1.accounts.unblock(
+                              currentInfo?.id || id,
+                            );
                           console.log('unblocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
                           showToast(`Unblocked @${username}`);
                         } else {
                           const newRelationship =
-                            await currentMasto.v1.accounts.block(id);
+                            await currentMasto.v1.accounts.block(
+                              currentInfo?.id || id,
+                            );
                           console.log('blocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');

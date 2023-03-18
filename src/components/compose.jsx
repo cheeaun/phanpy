@@ -244,12 +244,12 @@ function Compose({
       textareaRef.current.value = status;
       oninputTextarea();
       focusTextarea();
-      spoilerTextRef.current.value = spoilerText;
-      setVisibility(visibility);
+      if (spoilerText) spoilerTextRef.current.value = spoilerText;
+      if (visibility) setVisibility(visibility);
       setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
-      setSensitive(sensitive);
-      setPoll(composablePoll);
-      setMediaAttachments(mediaAttachments);
+      if (sensitive !== null) setSensitive(sensitive);
+      if (composablePoll) setPoll(composablePoll);
+      if (mediaAttachments) setMediaAttachments(mediaAttachments);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -442,10 +442,6 @@ function Compose({
 
   useEffect(() => {
     const handleItems = (e) => {
-      if (mediaAttachments.length >= maxMediaAttachments) {
-        alert(`You can only attach up to ${maxMediaAttachments} files.`);
-        return;
-      }
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
       for (let i = 0; i < items.length; i++) {
@@ -456,6 +452,10 @@ function Compose({
             files.push(file);
           }
         }
+      }
+      if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
+        alert(`You can only attach up to ${maxMediaAttachments} files.`);
+        return;
       }
       console.log({ files });
       if (files.length > 0) {
@@ -895,7 +895,7 @@ function Compose({
               ? 'Edit your status'
               : 'What are you doing?'
           }
-          required={mediaAttachments.length === 0}
+          required={mediaAttachments?.length === 0}
           disabled={uiState === 'loading'}
           lang={language}
           onInput={() => {
@@ -906,7 +906,7 @@ function Compose({
             return masto.v2.search(params);
           }}
         />
-        {mediaAttachments.length > 0 && (
+        {mediaAttachments?.length > 0 && (
           <div class="media-attachments">
             {mediaAttachments.map((attachment, i) => {
               const { id, file } = attachment;

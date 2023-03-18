@@ -1077,8 +1077,10 @@ body:has(.status-deck) .media-post-link {
   max-width: 90vw;
   overflow: hidden;
 }
-.szh-menu__item--focusable {
-  background-color: transparent;
+.szh-menu[aria-label='Submenu'] {
+  background-color: var(--bg-blur-color);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 24px -3px var(--drop-shadow-color);
 }
 .szh-menu__header {
   margin: -8px 0 8px;
@@ -1098,13 +1100,16 @@ body:has(.status-deck) .media-post-link {
   display: flex;
   gap: 8px;
   align-items: center;
-  line-height: 1;
+  line-height: 1.1;
   padding: 8px 16px !important;
   transition: all 0.1s ease-in-out;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.szh-menu .szh-menu__item--focusable {
+  background-color: transparent;
 }
 .szh-menu .szh-menu__item span {
   white-space: nowrap;
@@ -1184,6 +1189,15 @@ body:has(.status-deck) .media-post-link {
 .szh-menu .szh-menu__item--hover .danger-icon {
   color: var(--red-color);
   opacity: 1;
+}
+
+.szh-menu .menu-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.szh-menu .menu-wrap > * {
+  flex-grow: 1;
+  flex-basis: 50%;
 }
 
 /* GLASS MENU */

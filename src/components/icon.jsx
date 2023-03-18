@@ -66,6 +66,12 @@ const ICONS = {
   translate: 'mingcute:translate-line',
   play: 'mingcute:play-fill',
   trash: 'mingcute:delete-2-line',
+  mute: 'mingcute:volume-mute-line',
+  unmute: 'mingcute:volume-line',
+  block: 'mingcute:forbid-circle-line',
+  unblock: ['mingcute:forbid-circle-line', '180deg'],
+  flag: 'mingcute:flag-4-line',
+  time: 'mingcute:time-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

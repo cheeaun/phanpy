@@ -7,6 +7,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import states from '../utils/states';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -48,6 +49,10 @@ function AccountStatuses() {
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
       results.push(...value);
+
+      value.forEach((item) => {
+        saveStatus(item, instance);
+      });
     }
     return {
       value: results,
@@ -118,6 +123,7 @@ function AccountStatuses() {
       emptyText="Nothing to see here yet."
       errorText="Unable to load statuses"
       fetchItems={fetchAccountStatuses}
+      useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
     />

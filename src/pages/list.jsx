@@ -5,6 +5,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -27,6 +28,10 @@ function List(props) {
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
+
+      value.forEach((item) => {
+        saveStatus(item, instance);
+      });
     }
     return results;
   }
@@ -69,6 +74,7 @@ function List(props) {
       instance={instance}
       fetchItems={fetchList}
       checkForUpdates={checkForUpdates}
+      useItemID
       boostsCarousel
       headerStart={
         <Link to="/l" class="button plain">

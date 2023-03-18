@@ -13,6 +13,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -52,6 +53,10 @@ function Hashtags(props) {
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
+
+      value.forEach((item) => {
+        saveStatus(item, instance);
+      });
     }
     return results;
   }
@@ -110,6 +115,7 @@ function Hashtags(props) {
       errorText="Unable to load posts with this tag"
       fetchItems={fetchHashtags}
       checkForUpdates={checkForUpdates}
+      useItemID
       headerEnd={
         <Menu
           portal={{

@@ -1,5 +1,6 @@
 import './status.css';
 
+import '@justinribeiro/lite-youtube';
 import {
   ControlledMenu,
   Menu,
@@ -1195,6 +1196,13 @@ function Card({ card, instance }) {
       </a>
     );
   } else if (type === 'video') {
+    if (/youtube/i.test(providerName)) {
+      // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
+      const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
+      if (videoID) {
+        return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+      }
+    }
     return (
       <div
         class="card video"

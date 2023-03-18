@@ -482,6 +482,7 @@ function RelatedActions({ info, instance, authenticated }) {
   }, [info, authenticated]);
 
   const loading = relationshipUIState === 'loading';
+  const menuInstanceRef = useRef(null);
 
   return (
     <>
@@ -521,6 +522,7 @@ function RelatedActions({ info, instance, authenticated }) {
         )}{' '}
         <span class="buttons">
           <Menu
+            instanceRef={menuInstanceRef}
             portal={{
               target: document.body,
             }}
@@ -528,6 +530,9 @@ function RelatedActions({ info, instance, authenticated }) {
               style: {
                 // Higher than the backdrop
                 zIndex: 1001,
+              },
+              onClick: () => {
+                menuInstanceRef.current?.closeMenu?.();
               },
             }}
             align="center"

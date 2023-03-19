@@ -204,6 +204,11 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             loading="lazy"
           />
         ) : null}
+        {!showOriginal && (
+          <div class="media-play">
+            <Icon icon="play" size="xxl" />
+          </div>
+        )}
       </div>
     );
   }

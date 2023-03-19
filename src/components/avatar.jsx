@@ -43,6 +43,7 @@ function Avatar({ url, size, alt = '', ...props }) {
           }}
           onLoad={(e) => {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
+            if (alphaCache[url] !== undefined) return;
             try {
               // Check if image has alpha channel
               const canvas = document.createElement('canvas');
@@ -65,8 +66,8 @@ function Avatar({ url, size, alt = '', ...props }) {
               if (hasAlpha) {
                 // console.log('hasAlpha', hasAlpha, allPixels.data);
                 avatarRef.current.classList.add('has-alpha');
-                alphaCache[url] = true;
               }
+              alphaCache[url] = hasAlpha;
             } catch (e) {
               // Ignore
             }

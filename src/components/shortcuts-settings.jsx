@@ -244,7 +244,8 @@ function ShortcutsSettings() {
                     states.settings.shortcutsViewMode = e.target.value;
                   }}
                 />{' '}
-                <img src={imgURL} alt="" /> <span>{label}</span>
+                <img src={imgURL} alt="" width="80" height="58" />{' '}
+                <span>{label}</span>
               </label>
             ))}
           </div>

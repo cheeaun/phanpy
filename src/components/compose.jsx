@@ -141,6 +141,7 @@ function Compose({
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
   );
+  const prevLanguage = useRef(language);
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
 
@@ -1032,7 +1033,11 @@ function Compose({
           {uiState !== 'loading' && (
             <CharCountMeter maxCharacters={maxCharacters} />
           )}
-          <label class="toolbar-button">
+          <label
+            class={`toolbar-button ${
+              language !== prevLanguage.current ? 'highlight' : ''
+            }`}
+          >
             <span class="icon-text">
               {supportedLanguagesMap[language]?.native}
             </span>

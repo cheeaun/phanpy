@@ -1,6 +1,6 @@
 import './status.css';
 
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -562,6 +562,16 @@ function StatusPage() {
                     </button>
                   }
                 >
+                  <MenuItem
+                    disabled={uiState === 'loading'}
+                    onClick={() => {
+                      states.reloadStatusPage++;
+                    }}
+                  >
+                    <Icon icon="refresh" />
+                    <span>Refresh</span>
+                  </MenuItem>
+                  <MenuDivider />
                   <MenuItem
                     onClick={() => {
                       // Click all buttons with class .spoiler but not .spoiling

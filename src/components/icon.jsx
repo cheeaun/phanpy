@@ -72,6 +72,7 @@ const ICONS = {
   unblock: ['mingcute:forbid-circle-line', '180deg'],
   flag: 'mingcute:flag-4-line',
   time: 'mingcute:time-line',
+  refresh: 'mingcute:refresh-2-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

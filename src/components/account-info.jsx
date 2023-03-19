@@ -515,10 +515,15 @@ function RelatedActions({ info, instance, authenticated }) {
       <p class="actions">
         {followedBy ? (
           <span class="tag">Following you</span>
-        ) : (
+        ) : !!lastStatusAt ? (
           <span class="insignificant">
-            Last status: <RelativeTime datetime={lastStatusAt} format="micro" />
+            Last status:{' '}
+            {niceDateTime(lastStatusAt, {
+              hideTime: true,
+            })}
           </span>
+        ) : (
+          <span />
         )}{' '}
         <span class="buttons">
           <Menu

@@ -318,7 +318,7 @@ function Notification({ notification, instance }) {
       : contentText[type];
 
   return (
-    <div class={`notification ${type}`} tabIndex="0">
+    <div class={`notification notification-${type}`} tabIndex="0">
       <div
         class={`notification-type notification-${type}`}
         title={new Date(notification.createdAt).toLocaleString()}

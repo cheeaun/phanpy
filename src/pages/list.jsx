@@ -5,6 +5,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { filteredItems } from '../utils/filters';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -23,12 +24,13 @@ function List(props) {
       });
     }
     const results = await listIterator.current.next();
-    const { value } = results;
+    let { value } = results;
     if (value?.length) {
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
 
+      value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -42,7 +44,8 @@ function List(props) {
         limit: 1,
         since_id: latestItem.current,
       });
-      const { value } = results;
+      let { value } = results;
+      value = filteredItems(value, 'home');
       if (value?.length) {
         return true;
       }
@@ -76,6 +79,7 @@ function List(props) {
       checkForUpdates={checkForUpdates}
       useItemID
       boostsCarousel
+      allowFilters
       headerStart={
         <Link to="/l" class="button plain">
           <Icon icon="list" size="l" />

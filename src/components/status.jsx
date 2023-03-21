@@ -29,6 +29,7 @@ import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -72,6 +73,7 @@ function Status({
   contentTextWeight,
   enableTranslate,
   previewMode,
+  allowFilters,
 }) {
   if (skeleton) {
     return (
@@ -141,9 +143,20 @@ function Status({
     // Non-API props
     _deleted,
     _pinned,
+    _filtered,
   } = status;
 
   console.debug('RENDER Status', id, status?.account.displayName);
+
+  if (allowFilters && size !== 'l' && _filtered) {
+    return (
+      <FilteredStatus
+        status={status}
+        filterInfo={_filtered}
+        instance={instance}
+      />
+    );
+  }
 
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
@@ -183,6 +196,7 @@ function Status({
   };
 
   if (reblog) {
+    // If has statusID, means useItemID (cached in states)
     return (
       <div class="status-reblog" onMouseEnter={debugHover}>
         <div class="status-pre-meta">
@@ -191,7 +205,8 @@ function Status({
           boosted
         </div>
         <Status
-          status={reblog}
+          status={statusID ? null : reblog}
+          statusID={statusID ? reblog.id : null}
           instance={instance}
           size={size}
           contentTextWeight={contentTextWeight}
@@ -1655,8 +1670,8 @@ function nicePostURL(url) {
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 const div = document.createElement('div');
-function getHTMLText(html) {
-  if (!html) return 0;
+export function getHTMLText(html) {
+  if (!html) return '';
   div.innerHTML = html
     .replace(/<\/p>/g, '</p>\n\n')
     .replace(/<\/li>/g, '</li>\n');
@@ -1685,6 +1700,96 @@ function safeBoundingBoxPadding() {
     .join(' ');
   // console.log(str);
   return str;
+}
+
+function FilteredStatus({ status, filterInfo, instance }) {
+  const {
+    account: { avatar, avatarStatic },
+    createdAt,
+    visibility,
+  } = status;
+  const filterTitleStr = filterInfo?.titlesStr || '';
+  const createdAtDate = new Date(createdAt);
+  const statusPeekText = statusPeek(status);
+
+  const [showPeek, setShowPeek] = useState(false);
+  const bindLongPress = useLongPress(
+    () => {
+      setShowPeek(true);
+    },
+    {
+      captureEvent: true,
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
+
+  return (
+    <div
+      title={statusPeekText}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setShowPeek(true);
+      }}
+      {...bindLongPress()}
+    >
+      <article class="status filtered" tabindex="-1">
+        <b
+          class="status-filtered-badge clickable"
+          title={filterTitleStr}
+          onClick={(e) => {
+            e.preventDefault();
+            setShowPeek(true);
+          }}
+        >
+          Filtered
+        </b>{' '}
+        <Avatar url={avatarStatic || avatar} />
+        <span class="status-filtered-info">
+          <span class="status-filtered-info-1">
+            <NameText account={status.account} instance={instance} />{' '}
+            <Icon
+              icon={visibilityIconsMap[visibility]}
+              alt={visibilityText[visibility]}
+              size="s"
+            />{' '}
+            <RelativeTime datetime={createdAtDate} format="micro" />
+          </span>
+          <span class="status-filtered-info-2">{statusPeekText}</span>
+        </span>
+      </article>
+      {!!showPeek && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowPeek(false);
+            }
+          }}
+        >
+          <div id="filtered-status-peek" class="sheet">
+            <main tabIndex="-1">
+              <p class="heading">
+                <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
+              </p>
+              <Link
+                class="status-link"
+                to={`/${instance}/s/${status.id}`}
+                onClick={() => {
+                  setShowPeek(false);
+                }}
+              >
+                <Status status={status} instance={instance} size="s" readOnly />
+                <button type="button" class="status-post-link plain3">
+                  See post &raquo;
+                </button>
+              </Link>
+            </main>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
 }
 
 export default memo(Status);

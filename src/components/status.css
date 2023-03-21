@@ -50,9 +50,11 @@
 .status-pre-meta .name-text {
   display: inline;
 }
-.status-pre-meta .icon {
-  color: var(--reblog-color);
+.status-pre-meta > * {
   vertical-align: middle;
+}
+.status-reblog .status-pre-meta .icon {
+  color: var(--reblog-color);
   margin-right: 4px;
 }
 
@@ -101,6 +103,52 @@
 }
 .status.skeleton > .avatar {
   background-color: var(--outline-color);
+}
+
+.status.filtered {
+  padding-block: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.status.filtered .status-filtered-info {
+  pointer-events: none;
+  flex-grow: 1;
+  font-size: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  mask-image: linear-gradient(to right, black 90%, transparent);
+  position: relative;
+}
+.status.filtered .avatar {
+  opacity: 0.5;
+  transition: opacity 0.7s ease-in;
+}
+.status.filtered:is(:hover, :focus, :active) .avatar {
+  opacity: 1;
+}
+.status.filtered :is(.status-filtered-info-1, .status-filtered-info-2) {
+  transition: all 0.2s ease-out;
+}
+.status.filtered:hover :is(.status-filtered-info-1, .status-filtered-info-2) {
+  transition-delay: 0.5s;
+}
+.status.filtered .status-filtered-info-1 {
+  opacity: 0.5;
+}
+.status.filtered:is(:hover, :focus, :active) .status-filtered-info-1 {
+  opacity: 0;
+}
+.status.filtered .status-filtered-info-2 {
+  opacity: 0;
+  transform: translateX(8px);
+  position: absolute;
+  left: 0;
+}
+.status.filtered:is(:hover, :focus, :active) .status-filtered-info-2 {
+  opacity: 0.75;
+  transform: translateX(0);
 }
 
 .status .container {
@@ -194,6 +242,27 @@
     var(--reply-to-faded-color) 4px
   );
   font-weight: bold;
+}
+.status-filtered-badge {
+  flex-shrink: 0;
+  display: inline-block;
+  color: var(--text-insignificant-color);
+  /* background: var(--bg-faded-color); */
+  /* border: var(--hairline-width) solid var(--bg-color); */
+  border: var(--hairline-width) dashed var(--text-insignificant-color);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.status-filtered-badge.clickable:hover {
+  cursor: pointer;
+  color: var(--text-color);
+  border-color: var(--text-color);
+  background: var(--bg-color);
 }
 
 .status.large .content-container {
@@ -1001,4 +1070,38 @@ a.card:is(:hover, :focus) {
   color: var(--text-insignificant-color);
   text-transform: uppercase;
   font-size: 80%;
+}
+
+/* FILTERED */
+
+#filtered-status-peek main > p:first-child {
+  margin-top: 0;
+}
+
+#filtered-status-peek main .heading {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#filtered-status-peek .status-link {
+  border-radius: 16px;
+  border: var(--hairline-width) dashed var(--text-insignificant-color);
+  max-height: 33vh;
+  max-height: 33dvh;
+  overflow: hidden;
+}
+#filtered-status-peek .status-link .status {
+  pointer-events: none;
+  font-size: 90%;
+  max-height: 33vh;
+  max-height: 33dvh;
+  overflow: hidden;
+  mask-image: linear-gradient(black 80%, transparent 95%);
+}
+#filtered-status-peek .status-post-link {
+  float: right;
+  position: sticky;
+  bottom: 8px;
+  right: 8px;
 }

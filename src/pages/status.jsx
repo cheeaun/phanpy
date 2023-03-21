@@ -25,6 +25,7 @@ import states, {
   statusKey,
   threadifyStatus,
 } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
@@ -306,15 +307,7 @@ function StatusPage() {
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';
-    const { spoilerText, content } = heroStatus;
-    let text;
-    if (spoilerText) {
-      text = spoilerText;
-    } else {
-      const div = document.createElement('div');
-      div.innerHTML = content;
-      text = div.innerText.trim();
-    }
+    let text = statusPeek(heroStatus);
     if (text.length > 64) {
       // "The title should ideally be less than 64 characters in length"
       // https://www.w3.org/Provider/Style/TITLE.html

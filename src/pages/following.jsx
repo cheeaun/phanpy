@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { filteredItems } from '../utils/filters';
 import states from '../utils/states';
 import { getStatus, saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -21,12 +22,14 @@ function Following({ title, path, id, ...props }) {
       homeIterator.current = masto.v1.timelines.listHome({ limit: LIMIT });
     }
     const results = await homeIterator.current.next();
-    const { value } = results;
+    let { value } = results;
     if (value?.length) {
       if (firstLoad) {
         latestItem.current = value[0].id;
+        console.log('First load', latestItem.current);
       }
 
+      value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -49,8 +52,9 @@ function Following({ title, path, id, ...props }) {
           since_id: latestItem.current,
         })
         .next();
-      const { value } = results;
+      let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
+      value = filteredItems(value, 'home');
       if (value?.length && value.some((item) => !item.reblog)) {
         return true;
       }
@@ -119,6 +123,7 @@ function Following({ title, path, id, ...props }) {
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       {...props}
+      allowFilters
     />
   );
 }

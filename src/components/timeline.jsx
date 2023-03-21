@@ -28,6 +28,7 @@ function Timeline({
   headerStart,
   headerEnd,
   timelineStart,
+  allowFilters,
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -310,6 +311,16 @@ function Timeline({
                   title = 'Pinned posts';
                 }
                 if (items) {
+                  // Here, we don't hide filtered posts, but we sort them last
+                  items.sort((a, b) => {
+                    if (a._filtered && !b._filtered) {
+                      return 1;
+                    }
+                    if (!a._filtered && b._filtered) {
+                      return -1;
+                    }
+                    return 0;
+                  });
                   return (
                     <li key={`timeline-${statusID}`}>
                       <StatusCarousel title={title} class={`${type}-carousel`}>
@@ -352,9 +363,17 @@ function Timeline({
                   <li key={`timeline-${statusID + _pinned}`}>
                     <Link class="status-link timeline-item" to={url}>
                       {useItemID ? (
-                        <Status statusID={statusID} instance={instance} />
+                        <Status
+                          statusID={statusID}
+                          instance={instance}
+                          allowFilters
+                        />
                       ) : (
-                        <Status status={status} instance={instance} />
+                        <Status
+                          status={status}
+                          instance={instance}
+                          allowFilters
+                        />
                       )}
                     </Link>
                   </li>

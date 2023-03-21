@@ -114,8 +114,11 @@ export function saveStatus(status, instance, opts) {
     opts,
   );
   if (!status) return;
-  if (!override && getStatus(status.id)) return;
+  const oldStatus = getStatus(status.id, instance);
+  if (!override && oldStatus) return;
   const key = statusKey(status.id, instance);
+  if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
+  if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
   states.statuses[key] = status;
   if (status.reblog) {
     const key = statusKey(status.reblog.id, instance);

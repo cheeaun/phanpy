@@ -87,7 +87,12 @@ function TranslationBlock({
   }, [forceTranslate]);
 
   return (
-    <div class="status-translation-block">
+    <div
+      class="status-translation-block"
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+    >
       <details ref={detailsRef}>
         <summary>
           <button

@@ -16,6 +16,7 @@ const alphaCache = {};
 function Avatar({ url, size, alt = '', ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
+  const isMissing = /missing\.png$/.test(url);
   return (
     <span
       ref={avatarRef}
@@ -34,7 +35,11 @@ function Avatar({ url, size, alt = '', ...props }) {
           height={size}
           alt={alt}
           loading="lazy"
-          crossOrigin={alphaCache[url] === undefined ? 'anonymous' : undefined}
+          crossOrigin={
+            alphaCache[url] === undefined && !isMissing
+              ? 'anonymous'
+              : undefined
+          }
           onError={(e) => {
             if (e.target.crossOrigin) {
               e.target.crossOrigin = null;
@@ -44,6 +49,7 @@ function Avatar({ url, size, alt = '', ...props }) {
           onLoad={(e) => {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
             if (alphaCache[url] !== undefined) return;
+            if (isMissing) return;
             try {
               // Check if image has alpha channel
               const canvas = document.createElement('canvas');

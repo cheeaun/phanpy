@@ -75,7 +75,8 @@ function Avatar({ url, size, alt = '', ...props }) {
               }
               alphaCache[url] = hasAlpha;
             } catch (e) {
-              // Ignore
+              // Silent fail
+              alphaCache[url] = false;
             }
           }}
         />

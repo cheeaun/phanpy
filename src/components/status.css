@@ -245,7 +245,6 @@
 }
 .status-filtered-badge {
   flex-shrink: 0;
-  display: inline-block;
   color: var(--text-insignificant-color);
   /* background: var(--bg-faded-color); */
   /* border: var(--hairline-width) solid var(--bg-color); */
@@ -257,12 +256,38 @@
   text-transform: uppercase;
   font-weight: bold;
   vertical-align: middle;
+  display: inline-block;
+}
+.status-filtered-badge.badge-meta {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  top: calc((9px + 2px) / 2 * -1);
+  min-width: 50px;
+  text-align: center;
 }
 .status-filtered-badge.clickable:hover {
   cursor: pointer;
   color: var(--text-color);
   border-color: var(--text-color);
   background: var(--bg-color);
+}
+.status-filtered-badge.badge-meta > span:first-child {
+  white-space: nowrap;
+}
+.status-filtered-badge.badge-meta > span + span {
+  display: block;
+  font-size: 9px;
+  font-weight: normal;
+  text-transform: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 2px);
+  left: 0;
+  text-align: center;
 }
 
 .status.large .content-container {

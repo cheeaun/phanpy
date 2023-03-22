@@ -1735,14 +1735,15 @@ function FilteredStatus({ status, filterInfo, instance }) {
     >
       <article class="status filtered" tabindex="-1">
         <b
-          class="status-filtered-badge clickable"
+          class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}
           onClick={(e) => {
             e.preventDefault();
             setShowPeek(true);
           }}
         >
-          Filtered
+          <span>Filtered</span>
+          <span>{filterTitleStr}</span>
         </b>{' '}
         <Avatar url={avatarStatic || avatar} />
         <span class="status-filtered-info">

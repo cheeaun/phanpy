@@ -86,6 +86,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     rollupOptions: {
+      treeshake: false,
       input: {
         main: resolve(__dirname, 'index.html'),
         compose: resolve(__dirname, 'compose/index.html'),

@@ -1479,6 +1479,7 @@ function EditedAtModal({
                     size="s"
                     withinContext
                     readOnly
+                    previewMode
                   />
                 </li>
               );

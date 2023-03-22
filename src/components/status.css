@@ -534,6 +534,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: inherit;
 }
 .status :is(.media-video, .media-audio, .media-gif) {
   position: relative;

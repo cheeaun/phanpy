@@ -1268,6 +1268,10 @@ meter.donut:is(.warning, .danger, .explode):after {
 meter.donut:is(.danger, .explode):after {
   color: var(--red-color);
 }
+meter.donut[hidden] {
+  display: inline-block;
+  visibility: hidden;
+}
 
 /* SHINY PILL */
 

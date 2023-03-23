@@ -30,8 +30,8 @@
 #compose-container textarea {
   width: 100%;
   max-width: 100%;
-  height: 4em;
-  min-height: 4em;
+  height: 5em;
+  min-height: 5em;
   max-height: 50vh;
   resize: vertical;
   line-height: 1.4;
@@ -135,6 +135,9 @@
   padding: 8px 0;
   gap: 8px;
 }
+#compose-container .toolbar.wrap {
+  flex-wrap: wrap;
+}
 #compose-container .toolbar.stretch {
   justify-content: stretch;
 }
@@ -145,7 +148,7 @@
 #compose-container .toolbar-button {
   display: inline-block;
   color: var(--link-color);
-  background-color: var(--bg-blur-color);
+  background-color: transparent;
   padding: 0 8px;
   border-radius: 8px;
   min-height: 2.4em;
@@ -269,6 +272,19 @@
   li[aria-selected]:not(:hover, :focus) {
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+
+#compose-container .form-visibility-direct {
+  --yellow-stripes: repeating-linear-gradient(
+    -45deg,
+    var(--reply-to-faded-color),
+    var(--reply-to-faded-color) 10px,
+    var(--reply-to-faded-color) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  /* diagonal stripes of yellow */
+  background-image: var(--yellow-stripes);
 }
 
 #compose-container .media-attachments {

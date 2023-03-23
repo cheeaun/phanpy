@@ -651,6 +651,7 @@ function Compose({
         )}
         <form
           ref={formRef}
+          class={`form-visibility-${visibility}`}
           style={{
             pointerEvents: uiState === 'loading' ? 'none' : 'auto',
             opacity: uiState === 'loading' ? 0.5 : 1,
@@ -975,7 +976,12 @@ function Compose({
               }}
             />
           )}
-          <div class="toolbar">
+          <div
+            class="toolbar wrap"
+            style={{
+              justifyContent: 'flex-end',
+            }}
+          >
             <label class="toolbar-button">
               <input
                 type="file"
@@ -1036,9 +1042,13 @@ function Compose({
               <Icon icon="poll" alt="Add poll" />
             </button>{' '}
             <div class="spacer" />
-            {uiState === 'loading' && <Loader abrupt />}{' '}
-            {uiState !== 'loading' && (
-              <CharCountMeter maxCharacters={maxCharacters} />
+            {uiState === 'loading' ? (
+              <Loader abrupt />
+            ) : (
+              <CharCountMeter
+                maxCharacters={maxCharacters}
+                hidden={uiState === 'loading'}
+              />
             )}
             <label
               class={`toolbar-button ${
@@ -1292,12 +1302,12 @@ const Textarea = forwardRef((props, ref) => {
   );
 });
 
-function CharCountMeter({ maxCharacters = 500 }) {
+function CharCountMeter({ maxCharacters = 500, hidden }) {
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
   const leftChars = maxCharacters - charCount;
-  if (charCount <= maxCharacters / 2) {
-    return null;
+  if (charCount <= maxCharacters / 2 || hidden) {
+    return <meter class="donut" hidden />;
   }
   return (
     <meter

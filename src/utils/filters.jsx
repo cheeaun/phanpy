@@ -13,8 +13,10 @@ export function filteredItem(item, filterContext, currentAccountID) {
     return new Date(filter.expiresAt) > new Date();
   });
   const isHidden = appliedFilters.some((f) => f.filter.filterAction === 'hide');
-  console.log({ isHidden, filtered, appliedFilters });
-  if (!isHidden) {
+  console.log({ isHidden, filtered, appliedFilters, item });
+  if (isHidden) return false;
+  const isWarn = appliedFilters.some((f) => f.filter.filterAction === 'warn');
+  if (isWarn) {
     const filterTitles = appliedFilters.map((f) => f.filter.title);
     item._filtered = {
       titles: filterTitles,
@@ -22,7 +24,7 @@ export function filteredItem(item, filterContext, currentAccountID) {
     };
     item._test = { test: 'test' };
   }
-  return !isHidden;
+  return isWarn;
 }
 export function filteredItems(items, filterContext) {
   if (!items?.length) return [];

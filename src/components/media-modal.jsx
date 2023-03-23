@@ -22,6 +22,17 @@ function MediaModal({
   const carouselFocusItem = useRef(null);
   useLayoutEffect(() => {
     carouselFocusItem.current?.scrollIntoView();
+
+    history.pushState({ mediaModal: true }, '');
+    const handlePopState = (e) => {
+      if (e.state?.mediaModal) {
+        onClose();
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
   const prevStatusID = useRef(statusID);
   useEffect(() => {

@@ -1,14 +1,18 @@
+#compose-container-outer {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: auto;
+  align-self: flex-start;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
 #compose-container {
+  margin: auto;
   width: var(--main-width);
   max-width: 100vw;
   align-self: stretch;
   animation: fade-in 0.2s ease-out;
-  max-height: 100vh;
-  overflow: auto;
-}
-#compose-container.standalone {
-  max-height: none;
-  margin: auto;
 }
 
 #compose-container .compose-top {
@@ -41,6 +45,7 @@
   #compose-container textarea {
     font-size: 150%;
     font-size: calc(100% + 50% / var(--text-weight));
+    max-height: 65vh;
   }
 }
 

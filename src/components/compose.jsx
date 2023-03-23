@@ -498,182 +498,183 @@ function Compose({
   }, [mediaAttachments]);
 
   return (
-    <div id="compose-container" class={standalone ? 'standalone' : ''}>
-      <div class="compose-top">
-        {currentAccountInfo?.avatarStatic && (
-          <Avatar
-            url={currentAccountInfo.avatarStatic}
-            size="xl"
-            alt={currentAccountInfo.username}
-          />
-        )}
-        {!standalone ? (
-          <span>
-            <button
-              type="button"
-              class="light pop-button"
-              disabled={uiState === 'loading'}
-              onClick={() => {
-                // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                // const containNonIDMediaAttachments =
-                //   mediaAttachments.length > 0 &&
-                //   mediaAttachments.some((media) => !media.id);
-                // if (containNonIDMediaAttachments) {
-                //   const yes = confirm(
-                //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                //   );
-                //   if (!yes) {
-                //     return;
-                //   }
-                // }
+    <div id="compose-container-outer">
+      <div id="compose-container" class={standalone ? 'standalone' : ''}>
+        <div class="compose-top">
+          {currentAccountInfo?.avatarStatic && (
+            <Avatar
+              url={currentAccountInfo.avatarStatic}
+              size="xl"
+              alt={currentAccountInfo.username}
+            />
+          )}
+          {!standalone ? (
+            <span>
+              <button
+                type="button"
+                class="light pop-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                  // const containNonIDMediaAttachments =
+                  //   mediaAttachments.length > 0 &&
+                  //   mediaAttachments.some((media) => !media.id);
+                  // if (containNonIDMediaAttachments) {
+                  //   const yes = confirm(
+                  //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                  //   );
+                  //   if (!yes) {
+                  //     return;
+                  //   }
+                  // }
 
-                // const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                //   (media) => media.id,
-                // );
+                  // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                  //   (media) => media.id,
+                  // );
 
-                const newWin = openCompose({
-                  editStatus,
-                  replyToStatus,
-                  draftStatus: {
-                    uid: UID.current,
-                    status: textareaRef.current.value,
-                    spoilerText: spoilerTextRef.current.value,
-                    visibility,
-                    language,
-                    sensitive,
-                    poll,
-                    mediaAttachments,
-                  },
-                });
+                  const newWin = openCompose({
+                    editStatus,
+                    replyToStatus,
+                    draftStatus: {
+                      uid: UID.current,
+                      status: textareaRef.current.value,
+                      spoilerText: spoilerTextRef.current.value,
+                      visibility,
+                      language,
+                      sensitive,
+                      poll,
+                      mediaAttachments,
+                    },
+                  });
 
-                if (!newWin) {
-                  alert('Looks like your browser is blocking popups.');
-                  return;
-                }
+                  if (!newWin) {
+                    alert('Looks like your browser is blocking popups.');
+                    return;
+                  }
 
-                onClose();
-              }}
-            >
-              <Icon icon="popout" alt="Pop out" />
-            </button>{' '}
-            <button
-              type="button"
-              class="light close-button"
-              disabled={uiState === 'loading'}
-              onClick={() => {
-                if (confirmClose()) {
                   onClose();
-                }
-              }}
-            >
-              <Icon icon="x" />
-            </button>
-          </span>
-        ) : (
-          hasOpener && (
-            <button
-              type="button"
-              class="light pop-button"
-              disabled={uiState === 'loading'}
-              onClick={() => {
-                // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                // const containNonIDMediaAttachments =
-                //   mediaAttachments.length > 0 &&
-                //   mediaAttachments.some((media) => !media.id);
-                // if (containNonIDMediaAttachments) {
-                //   const yes = confirm(
-                //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                //   );
-                //   if (!yes) {
-                //     return;
-                //   }
-                // }
+                }}
+              >
+                <Icon icon="popout" alt="Pop out" />
+              </button>{' '}
+              <button
+                type="button"
+                class="light close-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  if (confirmClose()) {
+                    onClose();
+                  }
+                }}
+              >
+                <Icon icon="x" />
+              </button>
+            </span>
+          ) : (
+            hasOpener && (
+              <button
+                type="button"
+                class="light pop-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                  // const containNonIDMediaAttachments =
+                  //   mediaAttachments.length > 0 &&
+                  //   mediaAttachments.some((media) => !media.id);
+                  // if (containNonIDMediaAttachments) {
+                  //   const yes = confirm(
+                  //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                  //   );
+                  //   if (!yes) {
+                  //     return;
+                  //   }
+                  // }
 
-                if (!window.opener) {
-                  alert('Looks like you closed the parent window.');
-                  return;
-                }
+                  if (!window.opener) {
+                    alert('Looks like you closed the parent window.');
+                    return;
+                  }
 
-                if (window.opener.__STATES__.showCompose) {
-                  const yes = confirm(
-                    'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
-                  );
-                  if (!yes) return;
-                }
+                  if (window.opener.__STATES__.showCompose) {
+                    const yes = confirm(
+                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
+                    );
+                    if (!yes) return;
+                  }
 
-                // const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                //   (media) => media.id,
-                // );
+                  // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                  //   (media) => media.id,
+                  // );
 
-                onClose({
-                  fn: () => {
-                    const passData = {
-                      editStatus,
-                      replyToStatus,
-                      draftStatus: {
-                        uid: UID.current,
-                        status: textareaRef.current.value,
-                        spoilerText: spoilerTextRef.current.value,
-                        visibility,
-                        language,
-                        sensitive,
-                        poll,
-                        mediaAttachments,
-                      },
-                    };
-                    window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
-                    window.opener.__STATES__.showCompose = true;
-                  },
-                });
-              }}
-            >
-              <Icon icon="popin" alt="Pop in" />
-            </button>
-          )
-        )}
-      </div>
-      {!!replyToStatus && (
-        <div class="status-preview">
-          <Status status={replyToStatus} size="s" previewMode />
-          <div class="status-preview-legend reply-to">
-            Replying to @
-            {replyToStatus.account.acct || replyToStatus.account.username}
-            &rsquo;s status
+                  onClose({
+                    fn: () => {
+                      const passData = {
+                        editStatus,
+                        replyToStatus,
+                        draftStatus: {
+                          uid: UID.current,
+                          status: textareaRef.current.value,
+                          spoilerText: spoilerTextRef.current.value,
+                          visibility,
+                          language,
+                          sensitive,
+                          poll,
+                          mediaAttachments,
+                        },
+                      };
+                      window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
+                      window.opener.__STATES__.showCompose = true;
+                    },
+                  });
+                }}
+              >
+                <Icon icon="popin" alt="Pop in" />
+              </button>
+            )
+          )}
+        </div>
+        {!!replyToStatus && (
+          <div class="status-preview">
+            <Status status={replyToStatus} size="s" previewMode />
+            <div class="status-preview-legend reply-to">
+              Replying to @
+              {replyToStatus.account.acct || replyToStatus.account.username}
+              &rsquo;s status
+            </div>
           </div>
-        </div>
-      )}
-      {!!editStatus && (
-        <div class="status-preview">
-          <Status status={editStatus} size="s" previewMode />
-          <div class="status-preview-legend">Editing source status</div>
-        </div>
-      )}
-      <form
-        ref={formRef}
-        style={{
-          pointerEvents: uiState === 'loading' ? 'none' : 'auto',
-          opacity: uiState === 'loading' ? 0.5 : 1,
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-            formRef.current.dispatchEvent(
-              new Event('submit', { cancelable: true }),
-            );
-          }
-        }}
-        onSubmit={(e) => {
-          e.preventDefault();
+        )}
+        {!!editStatus && (
+          <div class="status-preview">
+            <Status status={editStatus} size="s" previewMode />
+            <div class="status-preview-legend">Editing source status</div>
+          </div>
+        )}
+        <form
+          ref={formRef}
+          style={{
+            pointerEvents: uiState === 'loading' ? 'none' : 'auto',
+            opacity: uiState === 'loading' ? 0.5 : 1,
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              formRef.current.dispatchEvent(
+                new Event('submit', { cancelable: true }),
+              );
+            }
+          }}
+          onSubmit={(e) => {
+            e.preventDefault();
 
-          const formData = new FormData(e.target);
-          const entries = Object.fromEntries(formData.entries());
-          console.log('ENTRIES', entries);
-          let { status, visibility, sensitive, spoilerText } = entries;
+            const formData = new FormData(e.target);
+            const entries = Object.fromEntries(formData.entries());
+            console.log('ENTRIES', entries);
+            let { status, visibility, sensitive, spoilerText } = entries;
 
-          // Pre-cleanup
-          sensitive = sensitive === 'on'; // checkboxes return "on" if checked
+            // Pre-cleanup
+            sensitive = sensitive === 'on'; // checkboxes return "on" if checked
 
-          // Validation
-          /* Let the backend validate this
+            // Validation
+            /* Let the backend validate this
           if (stringLength(status) > maxCharacters) {
             alert(`Status is too long! Max characters: ${maxCharacters}`);
             return;
@@ -688,252 +689,170 @@ function Compose({
             return;
           }
           */
-          if (poll) {
-            if (poll.options.length < 2) {
-              alert('Poll must have at least 2 options');
-              return;
+            if (poll) {
+              if (poll.options.length < 2) {
+                alert('Poll must have at least 2 options');
+                return;
+              }
+              if (poll.options.some((option) => option === '')) {
+                alert('Some poll choices are empty');
+                return;
+              }
             }
-            if (poll.options.some((option) => option === '')) {
-              alert('Some poll choices are empty');
-              return;
+            // TODO: check for URLs and use `charactersReservedPerUrl` to calculate max characters
+
+            if (mediaAttachments.length > 0) {
+              // If there are media attachments, check if they have no descriptions
+              const hasNoDescriptions = mediaAttachments.some(
+                (media) => !media.description?.trim?.(),
+              );
+              if (hasNoDescriptions) {
+                const yes = confirm(
+                  'Some media have no descriptions. Continue?',
+                );
+                if (!yes) return;
+              }
             }
-          }
-          // TODO: check for URLs and use `charactersReservedPerUrl` to calculate max characters
 
-          if (mediaAttachments.length > 0) {
-            // If there are media attachments, check if they have no descriptions
-            const hasNoDescriptions = mediaAttachments.some(
-              (media) => !media.description?.trim?.(),
-            );
-            if (hasNoDescriptions) {
-              const yes = confirm('Some media have no descriptions. Continue?');
-              if (!yes) return;
-            }
-          }
+            // Post-cleanup
+            spoilerText = (sensitive && spoilerText) || undefined;
+            status = status === '' ? undefined : status;
 
-          // Post-cleanup
-          spoilerText = (sensitive && spoilerText) || undefined;
-          status = status === '' ? undefined : status;
-
-          setUIState('loading');
-          (async () => {
-            try {
-              console.log('MEDIA ATTACHMENTS', mediaAttachments);
-              if (mediaAttachments.length > 0) {
-                // Upload media attachments first
-                const mediaPromises = mediaAttachments.map((attachment) => {
-                  const { file, description, id } = attachment;
-                  console.log('UPLOADING', attachment);
-                  if (id) {
-                    // If already uploaded
-                    return attachment;
-                  } else {
-                    const params = removeNullUndefined({
-                      file,
-                      description,
-                    });
-                    return masto.v2.mediaAttachments
-                      .create(params)
-                      .then((res) => {
-                        if (res.id) {
-                          attachment.id = res.id;
-                        }
-                        return res;
+            setUIState('loading');
+            (async () => {
+              try {
+                console.log('MEDIA ATTACHMENTS', mediaAttachments);
+                if (mediaAttachments.length > 0) {
+                  // Upload media attachments first
+                  const mediaPromises = mediaAttachments.map((attachment) => {
+                    const { file, description, id } = attachment;
+                    console.log('UPLOADING', attachment);
+                    if (id) {
+                      // If already uploaded
+                      return attachment;
+                    } else {
+                      const params = removeNullUndefined({
+                        file,
+                        description,
                       });
-                  }
-                });
-                const results = await Promise.allSettled(mediaPromises);
-
-                // If any failed, return
-                if (
-                  results.some((result) => {
-                    return result.status === 'rejected' || !result.value?.id;
-                  })
-                ) {
-                  setUIState('error');
-                  // Alert all the reasons
-                  results.forEach((result) => {
-                    if (result.status === 'rejected') {
-                      console.error(result);
-                      alert(result.reason || `Attachment #${i} failed`);
+                      return masto.v2.mediaAttachments
+                        .create(params)
+                        .then((res) => {
+                          if (res.id) {
+                            attachment.id = res.id;
+                          }
+                          return res;
+                        });
                     }
                   });
-                  return;
+                  const results = await Promise.allSettled(mediaPromises);
+
+                  // If any failed, return
+                  if (
+                    results.some((result) => {
+                      return result.status === 'rejected' || !result.value?.id;
+                    })
+                  ) {
+                    setUIState('error');
+                    // Alert all the reasons
+                    results.forEach((result) => {
+                      if (result.status === 'rejected') {
+                        console.error(result);
+                        alert(result.reason || `Attachment #${i} failed`);
+                      }
+                    });
+                    return;
+                  }
+
+                  console.log({ results, mediaAttachments });
                 }
 
-                console.log({ results, mediaAttachments });
-              }
-
-              /* NOTE:
+                /* NOTE:
                 Using snakecase here because masto.js's `isObject` returns false for `params`, ONLY happens when opening in pop-out window. This is maybe due to `window.masto` variable being passed from the parent window. The check that failed is `x.constructor === Object`, so maybe the `Object` in new window is different than parent window's?
                 Code: https://github.com/neet/masto.js/blob/dd0d649067b6a2b6e60fbb0a96597c373a255b00/src/serializers/is-object.ts#L2
               */
-              let params = {
-                status,
-                // spoilerText,
-                spoiler_text: spoilerText,
-                language,
-                sensitive,
-                poll,
-                // mediaIds: mediaAttachments.map((attachment) => attachment.id),
-                media_ids: mediaAttachments.map((attachment) => attachment.id),
-              };
-              if (editStatus && supports('@mastodon/edit-media-attributes')) {
-                params.media_attributes = mediaAttachments.map((attachment) => {
-                  return {
-                    id: attachment.id,
-                    description: attachment.description,
-                    // focus
-                    // thumbnail
-                  };
-                });
-              } else if (!editStatus) {
-                params.visibility = visibility;
-                // params.inReplyToId = replyToStatus?.id || undefined;
-                params.in_reply_to_id = replyToStatus?.id || undefined;
-              }
-              params = removeNullUndefined(params);
-              console.log('POST', params);
-
-              let newStatus;
-              if (editStatus) {
-                newStatus = await masto.v1.statuses.update(
-                  editStatus.id,
-                  params,
-                );
-                saveStatus(newStatus, instance, {
-                  skipThreading: true,
-                });
-              } else {
-                newStatus = await masto.v1.statuses.create(params, {
-                  idempotencyKey: UID.current,
-                });
-              }
-              setUIState('default');
-
-              // Close
-              onClose({
-                newStatus,
-                instance,
-              });
-            } catch (e) {
-              console.error(e);
-              alert(e?.reason || e);
-              setUIState('error');
-            }
-          })();
-        }}
-      >
-        <div class="toolbar stretch">
-          <input
-            ref={spoilerTextRef}
-            type="text"
-            name="spoilerText"
-            placeholder="Content warning"
-            disabled={uiState === 'loading'}
-            class="spoiler-text-field"
-            lang={language}
-            spellCheck="true"
-            style={{
-              opacity: sensitive ? 1 : 0,
-              pointerEvents: sensitive ? 'auto' : 'none',
-            }}
-            onInput={() => {
-              updateCharCount();
-            }}
-          />
-          <label
-            class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
-            title="Content warning or sensitive media"
-          >
-            <input
-              name="sensitive"
-              type="checkbox"
-              checked={sensitive}
-              disabled={uiState === 'loading'}
-              onChange={(e) => {
-                const sensitive = e.target.checked;
-                setSensitive(sensitive);
-                if (sensitive) {
-                  spoilerTextRef.current?.focus();
-                } else {
-                  textareaRef.current?.focus();
+                let params = {
+                  status,
+                  // spoilerText,
+                  spoiler_text: spoilerText,
+                  language,
+                  sensitive,
+                  poll,
+                  // mediaIds: mediaAttachments.map((attachment) => attachment.id),
+                  media_ids: mediaAttachments.map(
+                    (attachment) => attachment.id,
+                  ),
+                };
+                if (editStatus && supports('@mastodon/edit-media-attributes')) {
+                  params.media_attributes = mediaAttachments.map(
+                    (attachment) => {
+                      return {
+                        id: attachment.id,
+                        description: attachment.description,
+                        // focus
+                        // thumbnail
+                      };
+                    },
+                  );
+                } else if (!editStatus) {
+                  params.visibility = visibility;
+                  // params.inReplyToId = replyToStatus?.id || undefined;
+                  params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
+                params = removeNullUndefined(params);
+                console.log('POST', params);
+
+                let newStatus;
+                if (editStatus) {
+                  newStatus = await masto.v1.statuses.update(
+                    editStatus.id,
+                    params,
+                  );
+                  saveStatus(newStatus, instance, {
+                    skipThreading: true,
+                  });
+                } else {
+                  newStatus = await masto.v1.statuses.create(params, {
+                    idempotencyKey: UID.current,
+                  });
+                }
+                setUIState('default');
+
+                // Close
+                onClose({
+                  newStatus,
+                  instance,
+                });
+              } catch (e) {
+                console.error(e);
+                alert(e?.reason || e);
+                setUIState('error');
+              }
+            })();
+          }}
+        >
+          <div class="toolbar stretch">
+            <input
+              ref={spoilerTextRef}
+              type="text"
+              name="spoilerText"
+              placeholder="Content warning"
+              disabled={uiState === 'loading'}
+              class="spoiler-text-field"
+              lang={language}
+              spellCheck="true"
+              style={{
+                opacity: sensitive ? 1 : 0,
+                pointerEvents: sensitive ? 'auto' : 'none',
+              }}
+              onInput={() => {
+                updateCharCount();
               }}
             />
-            <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
-          </label>{' '}
-          <label
-            class={`toolbar-button ${
-              visibility !== 'public' && !sensitive ? 'show-field' : ''
-            } ${visibility !== 'public' ? 'highlight' : ''}`}
-            title={`Visibility: ${visibility}`}
-          >
-            <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
-            <select
-              name="visibility"
-              value={visibility}
-              onChange={(e) => {
-                setVisibility(e.target.value);
-              }}
-              disabled={uiState === 'loading' || !!editStatus}
+            <label
+              class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
+              title="Content warning or sensitive media"
             >
-              <option value="public">
-                Public <Icon icon="earth" />
-              </option>
-              <option value="unlisted">Unlisted</option>
-              <option value="private">Followers only</option>
-              <option value="direct">Direct</option>
-            </select>
-          </label>{' '}
-        </div>
-        <Textarea
-          ref={textareaRef}
-          placeholder={
-            replyToStatus
-              ? 'Post your reply'
-              : editStatus
-              ? 'Edit your status'
-              : 'What are you doing?'
-          }
-          required={mediaAttachments?.length === 0}
-          disabled={uiState === 'loading'}
-          lang={language}
-          onInput={() => {
-            updateCharCount();
-          }}
-          maxCharacters={maxCharacters}
-          performSearch={(params) => {
-            return masto.v2.search(params);
-          }}
-        />
-        {mediaAttachments?.length > 0 && (
-          <div class="media-attachments">
-            {mediaAttachments.map((attachment, i) => {
-              const { id, file } = attachment;
-              const fileID = file?.size + file?.type + file?.name;
-              return (
-                <MediaAttachment
-                  key={id || fileID || i}
-                  attachment={attachment}
-                  disabled={uiState === 'loading'}
-                  lang={language}
-                  onDescriptionChange={(value) => {
-                    setMediaAttachments((attachments) => {
-                      const newAttachments = [...attachments];
-                      newAttachments[i].description = value;
-                      return newAttachments;
-                    });
-                  }}
-                  onRemove={() => {
-                    setMediaAttachments((attachments) => {
-                      return attachments.filter((_, j) => j !== i);
-                    });
-                  }}
-                />
-              );
-            })}
-            <label class="media-sensitive">
               <input
                 name="sensitive"
                 type="checkbox"
@@ -942,131 +861,224 @@ function Compose({
                 onChange={(e) => {
                   const sensitive = e.target.checked;
                   setSensitive(sensitive);
+                  if (sensitive) {
+                    spoilerTextRef.current?.focus();
+                  } else {
+                    textareaRef.current?.focus();
+                  }
                 }}
-              />{' '}
-              <span>Mark media as sensitive</span>{' '}
+              />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
-            </label>
+            </label>{' '}
+            <label
+              class={`toolbar-button ${
+                visibility !== 'public' && !sensitive ? 'show-field' : ''
+              } ${visibility !== 'public' ? 'highlight' : ''}`}
+              title={`Visibility: ${visibility}`}
+            >
+              <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
+              <select
+                name="visibility"
+                value={visibility}
+                onChange={(e) => {
+                  setVisibility(e.target.value);
+                }}
+                disabled={uiState === 'loading' || !!editStatus}
+              >
+                <option value="public">
+                  Public <Icon icon="earth" />
+                </option>
+                <option value="unlisted">Unlisted</option>
+                <option value="private">Followers only</option>
+                <option value="direct">Direct</option>
+              </select>
+            </label>{' '}
           </div>
-        )}
-        {!!poll && (
-          <Poll
-            lang={language}
-            maxOptions={maxOptions}
-            maxExpiration={maxExpiration}
-            minExpiration={minExpiration}
-            maxCharactersPerOption={maxCharactersPerOption}
-            poll={poll}
+          <Textarea
+            ref={textareaRef}
+            placeholder={
+              replyToStatus
+                ? 'Post your reply'
+                : editStatus
+                ? 'Edit your status'
+                : 'What are you doing?'
+            }
+            required={mediaAttachments?.length === 0}
             disabled={uiState === 'loading'}
-            onInput={(poll) => {
-              if (poll) {
-                const newPoll = { ...poll };
-                setPoll(newPoll);
-              } else {
-                setPoll(null);
-              }
+            lang={language}
+            onInput={() => {
+              updateCharCount();
+            }}
+            maxCharacters={maxCharacters}
+            performSearch={(params) => {
+              return masto.v2.search(params);
             }}
           />
-        )}
-        <div class="toolbar">
-          <label class="toolbar-button">
-            <input
-              type="file"
-              accept={supportedMimeTypes.join(',')}
-              multiple={mediaAttachments.length < maxMediaAttachments - 1}
-              disabled={
-                uiState === 'loading' ||
-                mediaAttachments.length >= maxMediaAttachments ||
-                !!poll
-              }
-              onChange={(e) => {
-                const files = e.target.files;
-                if (!files) return;
-
-                const mediaFiles = Array.from(files).map((file) => ({
-                  file,
-                  type: file.type,
-                  size: file.size,
-                  url: URL.createObjectURL(file),
-                  id: null, // indicate uploaded state
-                  description: null,
-                }));
-                console.log('MEDIA ATTACHMENTS', files, mediaFiles);
-
-                // Validate max media attachments
-                if (
-                  mediaAttachments.length + mediaFiles.length >
-                  maxMediaAttachments
-                ) {
-                  alert(
-                    `You can only attach up to ${maxMediaAttachments} files.`,
-                  );
+          {mediaAttachments?.length > 0 && (
+            <div class="media-attachments">
+              {mediaAttachments.map((attachment, i) => {
+                const { id, file } = attachment;
+                const fileID = file?.size + file?.type + file?.name;
+                return (
+                  <MediaAttachment
+                    key={id || fileID || i}
+                    attachment={attachment}
+                    disabled={uiState === 'loading'}
+                    lang={language}
+                    onDescriptionChange={(value) => {
+                      setMediaAttachments((attachments) => {
+                        const newAttachments = [...attachments];
+                        newAttachments[i].description = value;
+                        return newAttachments;
+                      });
+                    }}
+                    onRemove={() => {
+                      setMediaAttachments((attachments) => {
+                        return attachments.filter((_, j) => j !== i);
+                      });
+                    }}
+                  />
+                );
+              })}
+              <label class="media-sensitive">
+                <input
+                  name="sensitive"
+                  type="checkbox"
+                  checked={sensitive}
+                  disabled={uiState === 'loading'}
+                  onChange={(e) => {
+                    const sensitive = e.target.checked;
+                    setSensitive(sensitive);
+                  }}
+                />{' '}
+                <span>Mark media as sensitive</span>{' '}
+                <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
+              </label>
+            </div>
+          )}
+          {!!poll && (
+            <Poll
+              lang={language}
+              maxOptions={maxOptions}
+              maxExpiration={maxExpiration}
+              minExpiration={minExpiration}
+              maxCharactersPerOption={maxCharactersPerOption}
+              poll={poll}
+              disabled={uiState === 'loading'}
+              onInput={(poll) => {
+                if (poll) {
+                  const newPoll = { ...poll };
+                  setPoll(newPoll);
                 } else {
-                  setMediaAttachments((attachments) => {
-                    return attachments.concat(mediaFiles);
-                  });
+                  setPoll(null);
                 }
-                // Reset
-                e.target.value = '';
               }}
             />
-            <Icon icon="attachment" />
-          </label>{' '}
-          <button
-            type="button"
-            class="toolbar-button"
-            disabled={
-              uiState === 'loading' || !!poll || !!mediaAttachments.length
-            }
-            onClick={() => {
-              setPoll({
-                options: ['', ''],
-                expiresIn: 24 * 60 * 60, // 1 day
-                multiple: false,
-              });
-            }}
-          >
-            <Icon icon="poll" alt="Add poll" />
-          </button>{' '}
-          <div class="spacer" />
-          {uiState === 'loading' && <Loader abrupt />}{' '}
-          {uiState !== 'loading' && (
-            <CharCountMeter maxCharacters={maxCharacters} />
           )}
-          <label
-            class={`toolbar-button ${
-              language !== prevLanguage.current ? 'highlight' : ''
-            }`}
-          >
-            <span class="icon-text">
-              {supportedLanguagesMap[language]?.native}
-            </span>
-            <select
-              name="language"
-              value={language}
-              onChange={(e) => {
-                const { value } = e.target;
-                setLanguage(value || DEFAULT_LANG);
-                store.session.set('currentLanguage', value || DEFAULT_LANG);
+          <div class="toolbar">
+            <label class="toolbar-button">
+              <input
+                type="file"
+                accept={supportedMimeTypes.join(',')}
+                multiple={mediaAttachments.length < maxMediaAttachments - 1}
+                disabled={
+                  uiState === 'loading' ||
+                  mediaAttachments.length >= maxMediaAttachments ||
+                  !!poll
+                }
+                onChange={(e) => {
+                  const files = e.target.files;
+                  if (!files) return;
+
+                  const mediaFiles = Array.from(files).map((file) => ({
+                    file,
+                    type: file.type,
+                    size: file.size,
+                    url: URL.createObjectURL(file),
+                    id: null, // indicate uploaded state
+                    description: null,
+                  }));
+                  console.log('MEDIA ATTACHMENTS', files, mediaFiles);
+
+                  // Validate max media attachments
+                  if (
+                    mediaAttachments.length + mediaFiles.length >
+                    maxMediaAttachments
+                  ) {
+                    alert(
+                      `You can only attach up to ${maxMediaAttachments} files.`,
+                    );
+                  } else {
+                    setMediaAttachments((attachments) => {
+                      return attachments.concat(mediaFiles);
+                    });
+                  }
+                  // Reset
+                  e.target.value = '';
+                }}
+              />
+              <Icon icon="attachment" />
+            </label>{' '}
+            <button
+              type="button"
+              class="toolbar-button"
+              disabled={
+                uiState === 'loading' || !!poll || !!mediaAttachments.length
+              }
+              onClick={() => {
+                setPoll({
+                  options: ['', ''],
+                  expiresIn: 24 * 60 * 60, // 1 day
+                  multiple: false,
+                });
               }}
+            >
+              <Icon icon="poll" alt="Add poll" />
+            </button>{' '}
+            <div class="spacer" />
+            {uiState === 'loading' && <Loader abrupt />}{' '}
+            {uiState !== 'loading' && (
+              <CharCountMeter maxCharacters={maxCharacters} />
+            )}
+            <label
+              class={`toolbar-button ${
+                language !== prevLanguage.current ? 'highlight' : ''
+              }`}
+            >
+              <span class="icon-text">
+                {supportedLanguagesMap[language]?.native}
+              </span>
+              <select
+                name="language"
+                value={language}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setLanguage(value || DEFAULT_LANG);
+                  store.session.set('currentLanguage', value || DEFAULT_LANG);
+                }}
+                disabled={uiState === 'loading'}
+              >
+                {supportedLanguages
+                  .sort(([, commonA], [, commonB]) => {
+                    return commonA.localeCompare(commonB);
+                  })
+                  .map(([code, common, native]) => (
+                    <option value={code}>
+                      {common} ({native})
+                    </option>
+                  ))}
+              </select>
+            </label>{' '}
+            <button
+              type="submit"
+              class="large"
               disabled={uiState === 'loading'}
             >
-              {supportedLanguages
-                .sort(([, commonA], [, commonB]) => {
-                  return commonA.localeCompare(commonB);
-                })
-                .map(([code, common, native]) => (
-                  <option value={code}>
-                    {common} ({native})
-                  </option>
-                ))}
-            </select>
-          </label>{' '}
-          <button type="submit" class="large" disabled={uiState === 'loading'}>
-            {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
-          </button>
-        </div>
-      </form>
+              {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

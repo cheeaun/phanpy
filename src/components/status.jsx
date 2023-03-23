@@ -149,12 +149,21 @@ function Status({
 
   console.debug('RENDER Status', id, status?.account.displayName);
 
+  const debugHover = (e) => {
+    if (e.shiftKey) {
+      console.log(status);
+    }
+  };
+
   if (allowFilters && size !== 'l' && _filtered) {
     return (
       <FilteredStatus
         status={status}
         filterInfo={_filtered}
         instance={instance}
+        containerProps={{
+          onMouseEnter: debugHover,
+        }}
       />
     );
   }
@@ -189,12 +198,6 @@ function Status({
   }
 
   const showSpoiler = !!snapStates.spoilers[id] || false;
-
-  const debugHover = (e) => {
-    if (e.shiftKey) {
-      console.log(status);
-    }
-  };
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
@@ -1718,7 +1721,7 @@ function safeBoundingBoxPadding() {
   return str;
 }
 
-function FilteredStatus({ status, filterInfo, instance }) {
+function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
     account: { avatar, avatarStatic },
     createdAt,
@@ -1742,6 +1745,7 @@ function FilteredStatus({ status, filterInfo, instance }) {
 
   return (
     <div
+      {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {
         e.preventDefault();

@@ -1433,6 +1433,31 @@ ul.link-list li a .icon {
   }
 }
 
+/* NAV MENU BUTTON */
+
+.nav-menu-button.with-avatar {
+  position: relative;
+}
+.nav-menu-button:is(:hover, :focus):not(:active) {
+  filter: none !important;
+}
+.nav-menu-button .avatar {
+  transition: box-shadow 0.3s ease-out;
+}
+.nav-menu-button:is(:hover, :focus, .active) .avatar {
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-light-color);
+}
+.nav-menu-button.with-avatar .icon {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  background-color: var(--bg-color);
+  border-radius: 2px;
+}
+.nav-menu-button.with-avatar:hover:not(:active, .active) .icon {
+  transform: translateY(-1px);
+}
+
 /* COLUMNS */
 
 #columns {

@@ -366,13 +366,13 @@ function Timeline({
                         <Status
                           statusID={statusID}
                           instance={instance}
-                          allowFilters
+                          allowFilters={allowFilters}
                         />
                       ) : (
                         <Status
                           status={status}
                           instance={instance}
-                          allowFilters
+                          allowFilters={allowFilters}
                         />
                       )}
                     </Link>

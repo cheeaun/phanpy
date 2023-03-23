@@ -8,6 +8,7 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
+import { decodeBlurHash } from 'fast-blurhash';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
@@ -1159,18 +1160,32 @@ function Card({ card, instance }) {
   //   );
   // }
 
-  if (hasText && image) {
+  if (hasText && (image || (!type !== 'photo' && blurhash))) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
+    let blurhashImage;
+    if (!image) {
+      const w = 44;
+      const h = 44;
+      const blurhashPixels = decodeBlurHash(blurhash, w, h);
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.createImageData(w, h);
+      imageData.data.set(blurhashPixels);
+      ctx.putImageData(imageData, 0, 0);
+      blurhashImage = canvas.toDataURL();
+    }
     return (
       <a
         href={cardStatusURL || url}
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
-        class={`card link ${size}`}
+        class={`card link ${blurhashImage ? '' : size}`}
       >
         <div class="card-image">
           <img
-            src={image}
+            src={image || blurhashImage}
             width={width}
             height={height}
             loading="lazy"

@@ -1100,6 +1100,12 @@ a.card:is(:hover, :focus) {
 
 /* FILTERED */
 
+#filtered-status-peek {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+
 #filtered-status-peek main > p:first-child {
   margin-top: 0;
 }

@@ -193,24 +193,27 @@ function Timeline({
   }, [nearReachEnd, showMore]);
 
   const lastHiddenTime = useRef();
-  usePageVisibility((visible) => {
-    if (visible) {
-      const timeDiff = Date.now() - lastHiddenTime.current;
-      if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
-        (async () => {
-          console.log('✨ Check updates');
-          const hasUpdate = await checkForUpdates();
-          if (hasUpdate) {
-            console.log('✨ Has new updates');
-            setShowNew(true);
-          }
-        })();
+  usePageVisibility(
+    (visible) => {
+      if (visible) {
+        const timeDiff = Date.now() - lastHiddenTime.current;
+        if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
+          (async () => {
+            console.log('✨ Check updates');
+            const hasUpdate = await checkForUpdates();
+            if (hasUpdate) {
+              console.log('✨ Has new updates');
+              setShowNew(true);
+            }
+          })();
+        }
+      } else {
+        lastHiddenTime.current = Date.now();
       }
-    } else {
-      lastHiddenTime.current = Date.now();
-    }
-    setVisible(visible);
-  }, []);
+      setVisible(visible);
+    },
+    [checkForUpdates],
+  );
 
   // checkForUpdates interval
   useInterval(

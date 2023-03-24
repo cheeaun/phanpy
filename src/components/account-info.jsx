@@ -652,7 +652,11 @@ function RelatedActions({ info, instance, authenticated }) {
                       <>
                         <Icon icon="mute" />
                         <span class="menu-grow">Mute @{username}…</span>
-                        <span>
+                        <span
+                          style={{
+                            textOverflow: 'clip',
+                          }}
+                        >
                           <Icon icon="time" />
                           <Icon icon="chevron-right" />
                         </span>

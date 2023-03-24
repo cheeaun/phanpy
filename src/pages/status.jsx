@@ -1,6 +1,6 @@
 import './status.css';
 
-import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -322,6 +322,17 @@ function StatusPage() {
     '/:instance?/s/:id',
   );
 
+  const postInstance = useMemo(() => {
+    if (!heroStatus) return;
+    const { url } = heroStatus;
+    if (!url) return;
+    return new URL(url).hostname;
+  }, [heroStatus]);
+  const postSameInstance = useMemo(() => {
+    if (!postInstance) return;
+    return postInstance === instance;
+  }, [postInstance, instance]);
+
   const closeLink = useMemo(() => {
     const { prevLocation } = snapStates;
     const pathname =
@@ -564,7 +575,6 @@ function StatusPage() {
                     <Icon icon="refresh" />
                     <span>Refresh</span>
                   </MenuItem>
-                  <MenuDivider />
                   <MenuItem
                     onClick={() => {
                       // Click all buttons with class .spoiler but not .spoiling
@@ -580,6 +590,24 @@ function StatusPage() {
                   >
                     <Icon icon="eye-open" />{' '}
                     <span>Show all sensitive content</span>
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuHeader className="plain">Experimental</MenuHeader>
+                  <MenuItem
+                    disabled={postSameInstance}
+                    onClick={() => {
+                      const statusURL = getInstanceStatusURL(heroStatus.url);
+                      if (statusURL) {
+                        navigate(statusURL);
+                      } else {
+                        alert('Unable to switch');
+                      }
+                    }}
+                  >
+                    <Icon icon="transfer" />
+                    <small class="menu-double-lines">
+                      Switch to post's instance (<b>{postInstance}</b>)
+                    </small>
                   </MenuItem>
                 </Menu>
               )}
@@ -910,6 +938,16 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
       </ul>
     </details>
   );
+}
+
+function getInstanceStatusURL(url) {
+  // Regex /:username/:id, where username = @username or @username@domain, id = anything
+  const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/([^\/]+)\/?$/i;
+  const { hostname, pathname } = new URL(url);
+  const [, username, domain, id] = pathname.match(statusRegex) || [];
+  if (id) {
+    return `/${hostname}/s/${id}`;
+  }
 }
 
 export default StatusPage;

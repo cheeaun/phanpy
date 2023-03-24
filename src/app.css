@@ -1093,6 +1093,10 @@ body:has(.status-deck) .media-post-link {
   line-height: 1.2;
   /* border-bottom: 1px solid var(--outline-color); */
 }
+.szh-menu__header.plain {
+  margin-bottom: 0;
+  background-color: transparent;
+}
 .szh-menu__header * {
   vertical-align: middle;
 }
@@ -1155,11 +1159,11 @@ body:has(.status-deck) .media-post-link {
   overflow: hidden;
 }
 .szh-menu .menu-double-lines {
-  white-space: normal;
+  white-space: normal !important;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 .szh-menu .menu-double-lines span {
   white-space: normal;

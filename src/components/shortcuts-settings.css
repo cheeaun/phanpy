@@ -60,6 +60,11 @@
 #shortcuts-settings-container .shortcuts-view-mode label img {
   max-height: 64px;
 }
+@media (prefers-color-scheme: dark) {
+  #shortcuts-settings-container .shortcuts-view-mode label img {
+    filter: invert(0.9) hue-rotate(180deg);
+  }
+}
 #shortcuts-settings-container .shortcuts-view-mode label span {
   text-align: center;
   font-size: 80%;

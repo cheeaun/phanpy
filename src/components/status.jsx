@@ -1,5 +1,6 @@
 import './status.css';
 
+import { match } from '@formatjs/intl-localematcher';
 import '@justinribeiro/lite-youtube';
 import {
   ControlledMenu,
@@ -905,7 +906,8 @@ function Status({
           {((enableTranslate &&
             !!content.trim() &&
             language &&
-            language !== targetLanguage) ||
+            language !== targetLanguage &&
+            !match([language], [targetLanguage])) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate}

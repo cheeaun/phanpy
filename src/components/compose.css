@@ -523,3 +523,43 @@
     height: auto;
   }
 }
+
+#custom-emojis-sheet {
+  max-height: 50vh;
+  max-height: 50dvh;
+}
+#custom-emojis-sheet main {
+  mask-image: none;
+}
+#custom-emojis-sheet .custom-emojis-list .section-header {
+  font-size: 80%;
+  text-transform: uppercase;
+  color: var(--text-insignificant-color);
+  padding: 8px 0 4px;
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-blur-color);
+  backdrop-filter: blur(8px);
+}
+#custom-emojis-sheet .custom-emojis-list section {
+  display: flex;
+  flex-wrap: wrap;
+}
+#custom-emojis-sheet .custom-emojis-list button {
+  border-radius: 8px;
+  background-image: radial-gradient(
+    closest-side,
+    var(--img-bg-color),
+    transparent
+  );
+}
+#custom-emojis-sheet .custom-emojis-list button:is(:hover, :focus) {
+  filter: none;
+  background-color: var(--bg-faded-color);
+}
+#custom-emojis-sheet .custom-emojis-list button img {
+  transition: transform 0.1s ease-out;
+}
+#custom-emojis-sheet .custom-emojis-list button:is(:hover, :focus) img {
+  transform: scale(1.5);
+}

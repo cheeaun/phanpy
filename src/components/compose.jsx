@@ -4,7 +4,7 @@ import { match } from '@formatjs/intl-localematcher';
 import '@github/text-expander-element';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
@@ -497,6 +497,8 @@ function Compose({
     };
   }, [mediaAttachments]);
 
+  const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -982,65 +984,77 @@ function Compose({
               justifyContent: 'flex-end',
             }}
           >
-            <label class="toolbar-button">
-              <input
-                type="file"
-                accept={supportedMimeTypes.join(',')}
-                multiple={mediaAttachments.length < maxMediaAttachments - 1}
-                disabled={
-                  uiState === 'loading' ||
-                  mediaAttachments.length >= maxMediaAttachments ||
-                  !!poll
-                }
-                onChange={(e) => {
-                  const files = e.target.files;
-                  if (!files) return;
-
-                  const mediaFiles = Array.from(files).map((file) => ({
-                    file,
-                    type: file.type,
-                    size: file.size,
-                    url: URL.createObjectURL(file),
-                    id: null, // indicate uploaded state
-                    description: null,
-                  }));
-                  console.log('MEDIA ATTACHMENTS', files, mediaFiles);
-
-                  // Validate max media attachments
-                  if (
-                    mediaAttachments.length + mediaFiles.length >
-                    maxMediaAttachments
-                  ) {
-                    alert(
-                      `You can only attach up to ${maxMediaAttachments} files.`,
-                    );
-                  } else {
-                    setMediaAttachments((attachments) => {
-                      return attachments.concat(mediaFiles);
-                    });
+            <span>
+              <label class="toolbar-button">
+                <input
+                  type="file"
+                  accept={supportedMimeTypes.join(',')}
+                  multiple={mediaAttachments.length < maxMediaAttachments - 1}
+                  disabled={
+                    uiState === 'loading' ||
+                    mediaAttachments.length >= maxMediaAttachments ||
+                    !!poll
                   }
-                  // Reset
-                  e.target.value = '';
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (!files) return;
+
+                    const mediaFiles = Array.from(files).map((file) => ({
+                      file,
+                      type: file.type,
+                      size: file.size,
+                      url: URL.createObjectURL(file),
+                      id: null, // indicate uploaded state
+                      description: null,
+                    }));
+                    console.log('MEDIA ATTACHMENTS', files, mediaFiles);
+
+                    // Validate max media attachments
+                    if (
+                      mediaAttachments.length + mediaFiles.length >
+                      maxMediaAttachments
+                    ) {
+                      alert(
+                        `You can only attach up to ${maxMediaAttachments} files.`,
+                      );
+                    } else {
+                      setMediaAttachments((attachments) => {
+                        return attachments.concat(mediaFiles);
+                      });
+                    }
+                    // Reset
+                    e.target.value = '';
+                  }}
+                />
+                <Icon icon="attachment" />
+              </label>{' '}
+              <button
+                type="button"
+                class="toolbar-button"
+                disabled={
+                  uiState === 'loading' || !!poll || !!mediaAttachments.length
+                }
+                onClick={() => {
+                  setPoll({
+                    options: ['', ''],
+                    expiresIn: 24 * 60 * 60, // 1 day
+                    multiple: false,
+                  });
                 }}
-              />
-              <Icon icon="attachment" />
-            </label>{' '}
-            <button
-              type="button"
-              class="toolbar-button"
-              disabled={
-                uiState === 'loading' || !!poll || !!mediaAttachments.length
-              }
-              onClick={() => {
-                setPoll({
-                  options: ['', ''],
-                  expiresIn: 24 * 60 * 60, // 1 day
-                  multiple: false,
-                });
-              }}
-            >
-              <Icon icon="poll" alt="Add poll" />
-            </button>{' '}
+              >
+                <Icon icon="poll" alt="Add poll" />
+              </button>{' '}
+              <button
+                type="button"
+                class="toolbar-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  setShowEmoji2Picker(true);
+                }}
+              >
+                <Icon icon="emoji2" />
+              </button>
+            </span>
             <div class="spacer" />
             {uiState === 'loading' ? (
               <Loader abrupt />
@@ -1089,6 +1103,40 @@ function Compose({
           </div>
         </form>
       </div>
+      {showEmoji2Picker && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowEmoji2Picker(false);
+            }
+          }}
+        >
+          <CustomEmojisModal
+            masto={masto}
+            instance={instance}
+            onClose={() => {
+              setShowEmoji2Picker(false);
+            }}
+            onSelect={(emoji) => {
+              const emojiWithSpace = ` ${emoji} `;
+              const textarea = textareaRef.current;
+              if (!textarea) return;
+              const { selectionStart, selectionEnd } = textarea;
+              const text = textarea.value;
+              const newText =
+                text.slice(0, selectionStart) +
+                emojiWithSpace +
+                text.slice(selectionEnd);
+              textarea.value = newText;
+              textarea.selectionStart = textarea.selectionEnd =
+                selectionEnd + emojiWithSpace.length;
+              textarea.focus();
+              textarea.dispatchEvent(new Event('input'));
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
@@ -1287,6 +1335,7 @@ const Textarea = forwardRef((props, ref) => {
         value={text}
         onInput={(e) => {
           const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
+          console.log('textarea input', value);
           setText(value);
           const offset = offsetHeight - clientHeight;
           e.target.style.height = value ? scrollHeight + offset + 'px' : null;
@@ -1624,6 +1673,149 @@ function removeNullUndefined(obj) {
     }
   }
   return obj;
+}
+
+function CustomEmojisModal({
+  masto,
+  instance,
+  onClose = () => {},
+  onSelect = () => {},
+}) {
+  const [uiState, setUIState] = useState('default');
+  const customEmojisList = useRef([]);
+  const [customEmojis, setCustomEmojis] = useState({});
+  const recentlyUsedCustomEmojis = useMemo(
+    () => store.account.get('recentlyUsedCustomEmojis') || [],
+  );
+  useEffect(() => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const emojis = await masto.v1.customEmojis.list();
+        // Group emojis by category
+        const emojisCat = {
+          '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+            emojis.find((e) => e.shortcode === emoji.shortcode),
+          ),
+        };
+        const othersCat = [];
+        emojis.forEach((emoji) => {
+          if (!emoji.visibleInPicker) return;
+          customEmojisList.current?.push?.(emoji);
+          if (!emoji.category) {
+            othersCat.push(emoji);
+            return;
+          }
+          if (!emojisCat[emoji.category]) {
+            emojisCat[emoji.category] = [];
+          }
+          emojisCat[emoji.category].push(emoji);
+        });
+        if (othersCat.length) {
+          emojisCat['--others--'] = othersCat;
+        }
+        setCustomEmojis(emojisCat);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  return (
+    <div id="custom-emojis-sheet" class="sheet">
+      <header>
+        <b>Custom emojis</b>{' '}
+        {uiState === 'loading' ? (
+          <Loader />
+        ) : (
+          <small class="insignificant"> • {instance}</small>
+        )}
+      </header>
+      <main>
+        <div class="custom-emojis-list">
+          {uiState === 'error' && (
+            <div class="ui-state">
+              <p>Error loading custom emojis</p>
+            </div>
+          )}
+          {uiState === 'default' &&
+            Object.entries(customEmojis).map(
+              ([category, emojis]) =>
+                !!emojis?.length && (
+                  <>
+                    <div class="section-header">
+                      {{
+                        '--recent--': 'Recently used',
+                        '--others--': 'Others',
+                      }[category] || category}
+                    </div>
+                    <section>
+                      {emojis.map((emoji) => (
+                        <button
+                          key={emoji}
+                          type="button"
+                          class="plain4"
+                          onClick={() => {
+                            onClose();
+                            requestAnimationFrame(() => {
+                              onSelect(`:${emoji.shortcode}:`);
+                            });
+                            let recentlyUsedCustomEmojis =
+                              store.account.get('recentlyUsedCustomEmojis') ||
+                              [];
+                            const recentlyUsedEmojiIndex =
+                              recentlyUsedCustomEmojis.findIndex(
+                                (e) => e.shortcode === emoji.shortcode,
+                              );
+                            if (recentlyUsedEmojiIndex !== -1) {
+                              // Move emoji to index 0
+                              recentlyUsedCustomEmojis.splice(
+                                recentlyUsedEmojiIndex,
+                                1,
+                              );
+                              recentlyUsedCustomEmojis.unshift(emoji);
+                            } else {
+                              recentlyUsedCustomEmojis.unshift(emoji);
+                              // Remove unavailable ones
+                              recentlyUsedCustomEmojis =
+                                recentlyUsedCustomEmojis.filter((e) =>
+                                  customEmojisList.current?.find?.(
+                                    (emoji) => emoji.shortcode === e.shortcode,
+                                  ),
+                                );
+                              // Limit to 10
+                              recentlyUsedCustomEmojis =
+                                recentlyUsedCustomEmojis.slice(0, 10);
+                            }
+
+                            // Store back
+                            store.account.set(
+                              'recentlyUsedCustomEmojis',
+                              recentlyUsedCustomEmojis,
+                            );
+                          }}
+                          title={`:${emoji.shortcode}:`}
+                        >
+                          <img
+                            src={emoji.url || emoji.staticUrl}
+                            alt={emoji.shortcode}
+                            width="16"
+                            height="16"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </button>
+                      ))}
+                    </section>
+                  </>
+                ),
+            )}
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default Compose;

@@ -54,9 +54,12 @@ function Following({ title, path, id, ...props }) {
         .next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
-      value = filteredItems(value, 'home');
-      if (value?.length && value.some((item) => !item.reblog)) {
-        return true;
+      if (value?.length) {
+        latestItem.current = value[0].id;
+        value = filteredItems(value, 'home');
+        if (value.some((item) => !item.reblog)) {
+          return true;
+        }
       }
       return false;
     } catch (e) {

@@ -567,7 +567,9 @@ function TimelineStatusCompact({ status, instance }) {
             : ''}
         </div>
       )}
-      <div class="content-compact">{statusPeekText}</div>
+      <div class="content-compact" title={statusPeekText}>
+        {statusPeekText}
+      </div>
     </article>
   );
 }

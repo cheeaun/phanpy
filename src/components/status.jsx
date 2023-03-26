@@ -1728,10 +1728,12 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
     account: { avatar, avatarStatic },
     createdAt,
     visibility,
+    reblog,
   } = status;
+  const isReblog = !!reblog;
   const filterTitleStr = filterInfo?.titlesStr || '';
   const createdAtDate = new Date(createdAt);
-  const statusPeekText = statusPeek(status);
+  const statusPeekText = statusPeek(status.reblog || status);
 
   const [showPeek, setShowPeek] = useState(false);
   const bindLongPress = useLongPress(
@@ -1747,6 +1749,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
 
   return (
     <div
+      class={isReblog ? 'status-reblog' : ''}
       {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {
@@ -1776,9 +1779,22 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
               alt={visibilityText[visibility]}
               size="s"
             />{' '}
-            <RelativeTime datetime={createdAtDate} format="micro" />
+            {isReblog ? (
+              'boosted'
+            ) : (
+              <RelativeTime datetime={createdAtDate} format="micro" />
+            )}
           </span>
-          <span class="status-filtered-info-2">{statusPeekText}</span>
+          <span class="status-filtered-info-2">
+            {isReblog && (
+              <>
+                <Avatar
+                  url={reblog.account.avatarStatic || reblog.account.avatar}
+                />{' '}
+              </>
+            )}
+            {statusPeekText}
+          </span>
         </span>
       </article>
       {!!showPeek && (

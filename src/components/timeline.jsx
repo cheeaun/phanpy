@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
+import { useSnapshot } from 'valtio';
 
+import states, { statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
+import { groupBoosts, groupContext } from '../utils/timeline-utils';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
@@ -49,6 +53,7 @@ function Timeline({
             if (boostsCarousel) {
               value = groupBoosts(value);
             }
+            value = groupContext(value);
             console.log(value);
             if (firstLoad) {
               setItems(value);
@@ -313,54 +318,101 @@ function Timeline({
                 } else if (type === 'pinned') {
                   title = 'Pinned posts';
                 }
+                const isCarousel = type === 'boosts' || type === 'pinned';
                 if (items) {
-                  // Here, we don't hide filtered posts, but we sort them last
-                  items.sort((a, b) => {
-                    if (a._filtered && !b._filtered) {
-                      return 1;
-                    }
-                    if (!a._filtered && b._filtered) {
-                      return -1;
-                    }
-                    return 0;
+                  if (isCarousel) {
+                    // Here, we don't hide filtered posts, but we sort them last
+                    items.sort((a, b) => {
+                      if (a._filtered && !b._filtered) {
+                        return 1;
+                      }
+                      if (!a._filtered && b._filtered) {
+                        return -1;
+                      }
+                      return 0;
+                    });
+                    return (
+                      <li key={`timeline-${statusID}`}>
+                        <StatusCarousel
+                          title={title}
+                          class={`${type}-carousel`}
+                        >
+                          {items.map((item) => {
+                            const { id: statusID, reblog } = item;
+                            const actualStatusID = reblog?.id || statusID;
+                            const url = instance
+                              ? `/${instance}/s/${actualStatusID}`
+                              : `/s/${actualStatusID}`;
+                            return (
+                              <li key={statusID}>
+                                <Link
+                                  class="status-carousel-link timeline-item-alt"
+                                  to={url}
+                                >
+                                  {useItemID ? (
+                                    <Status
+                                      statusID={statusID}
+                                      instance={instance}
+                                      size="s"
+                                      contentTextWeight
+                                    />
+                                  ) : (
+                                    <Status
+                                      status={item}
+                                      instance={instance}
+                                      size="s"
+                                      contentTextWeight
+                                    />
+                                  )}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </StatusCarousel>
+                      </li>
+                    );
+                  }
+                  const manyItems = items.length > 3;
+                  return items.map((item, i) => {
+                    const { id: statusID } = item;
+                    const url = instance
+                      ? `/${instance}/s/${statusID}`
+                      : `/s/${statusID}`;
+                    const isMiddle = i > 0 && i < items.length - 1;
+                    return (
+                      <li
+                        key={`timeline-${statusID}`}
+                        class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
+                          i === 0
+                            ? 'start'
+                            : i === items.length - 1
+                            ? 'end'
+                            : 'middle'
+                        }`}
+                      >
+                        <Link class="status-link timeline-item" to={url}>
+                          {manyItems && isMiddle && type === 'thread' ? (
+                            <TimelineStatusCompact
+                              status={item}
+                              instance={instance}
+                            />
+                          ) : useItemID ? (
+                            <Status
+                              statusID={statusID}
+                              instance={instance}
+                              allowFilters={allowFilters}
+                            />
+                          ) : (
+                            <Status
+                              status={item}
+                              instance={instance}
+                              allowFilters={allowFilters}
+                            />
+                          )}
+                        </Link>
+                      </li>
+                    );
                   });
-                  return (
-                    <li key={`timeline-${statusID}`}>
-                      <StatusCarousel title={title} class={`${type}-carousel`}>
-                        {items.map((item) => {
-                          const { id: statusID, reblog } = item;
-                          const actualStatusID = reblog?.id || statusID;
-                          const url = instance
-                            ? `/${instance}/s/${actualStatusID}`
-                            : `/s/${actualStatusID}`;
-                          return (
-                            <li key={statusID}>
-                              <Link
-                                class="status-carousel-link timeline-item-alt"
-                                to={url}
-                              >
-                                {useItemID ? (
-                                  <Status
-                                    statusID={statusID}
-                                    instance={instance}
-                                    size="s"
-                                    contentTextWeight
-                                  />
-                                ) : (
-                                  <Status
-                                    status={item}
-                                    instance={instance}
-                                    size="s"
-                                    contentTextWeight
-                                  />
-                                )}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </StatusCarousel>
-                    </li>
-                  );
                 }
                 return (
                   <li key={`timeline-${statusID + _pinned}`}>
@@ -452,52 +504,6 @@ function Timeline({
   );
 }
 
-function groupBoosts(values) {
-  let newValues = [];
-  let boostStash = [];
-  let serialBoosts = 0;
-  for (let i = 0; i < values.length; i++) {
-    const item = values[i];
-    if (item.reblog) {
-      boostStash.push(item);
-      serialBoosts++;
-    } else {
-      newValues.push(item);
-      if (serialBoosts < 3) {
-        serialBoosts = 0;
-      }
-    }
-  }
-  // if boostStash is more than quarter of values
-  // or if there are 3 or more boosts in a row
-  if (boostStash.length > values.length / 4 || serialBoosts >= 3) {
-    // if boostStash is more than 3 quarter of values
-    const boostStashID = boostStash.map((status) => status.id);
-    if (boostStash.length > (values.length * 3) / 4) {
-      // insert boost array at the end of specialHome list
-      newValues = [
-        ...newValues,
-        { id: boostStashID, items: boostStash, type: 'boosts' },
-      ];
-    } else {
-      // insert boosts array in the middle of specialHome list
-      const half = Math.floor(newValues.length / 2);
-      newValues = [
-        ...newValues.slice(0, half),
-        {
-          id: boostStashID,
-          items: boostStash,
-          type: 'boosts',
-        },
-        ...newValues.slice(half),
-      ];
-    }
-    return newValues;
-  } else {
-    return values;
-  }
-}
-
 function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();
   const { reachStart, reachEnd, init } = useScroll({
@@ -543,6 +549,26 @@ function StatusCarousel({ title, class: className, children }) {
       </header>
       <ul ref={carouselRef}>{children}</ul>
     </div>
+  );
+}
+
+function TimelineStatusCompact({ status, instance }) {
+  const snapStates = useSnapshot(states);
+  const { id } = status;
+  const statusPeekText = statusPeek(status);
+  const sKey = statusKey(id, instance);
+  return (
+    <article class="status compact-thread" tabindex="-1">
+      {!!snapStates.statusThreadNumber[sKey] && (
+        <div class="status-thread-badge">
+          <Icon icon="thread" size="s" />
+          {snapStates.statusThreadNumber[sKey]
+            ? ` ${snapStates.statusThreadNumber[sKey]}/X`
+            : ''}
+        </div>
+      )}
+      <div class="content-compact">{statusPeekText}</div>
+    </article>
   );
 }
 

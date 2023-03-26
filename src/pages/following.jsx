@@ -6,6 +6,7 @@ import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states from '../utils/states';
 import { getStatus, saveStatus } from '../utils/states';
+import { dedupeBoosts } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -29,6 +30,7 @@ function Following({ title, path, id, ...props }) {
         console.log('First load', latestItem.current);
       }
 
+      value = dedupeBoosts(value, instance);
       value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
@@ -56,6 +58,7 @@ function Following({ title, path, id, ...props }) {
       console.log('checkForUpdates', latestItem.current, value);
       if (value?.length) {
         latestItem.current = value[0].id;
+        value = dedupeBoosts(value, instance);
         value = filteredItems(value, 'home');
         if (value.some((item) => !item.reblog)) {
           return true;

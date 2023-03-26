@@ -521,6 +521,48 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   margin-bottom: 3em;
 }
 
+.timeline:not(.flat) > li.timeline-item-container {
+  --line-start: 40px;
+  --line-width: 3px;
+  --line-end: calc(var(--line-start) + var(--line-width));
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    transparent var(--line-start),
+    var(--comment-line-color) var(--line-start),
+    var(--comment-line-color) var(--line-end),
+    transparent var(--line-end),
+    transparent
+  );
+  background-repeat: no-repeat;
+}
+.timeline:not(.flat) > li.timeline-item-container-start {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+  background-position: 0 16px;
+}
+.timeline:not(.flat) > li.timeline-item-container-middle {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  border-bottom: 0;
+  border-top: 0;
+}
+.timeline:not(.flat) > li.timeline-item-container-end {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  background-size: 100% 20px;
+}
+.timeline:not(.flat)
+  > li:is(.timeline-item-container-middle, .timeline-item-container-end)
+  .status {
+  background-image: none;
+}
+
 .status-loading {
   text-align: center;
   color: var(--text-insignificant-color);
@@ -1612,7 +1654,7 @@ ul.link-list li a .icon {
     --back-transition: transform 0.4s ease-out;
   }
   .timeline:not(.flat) > li > a {
-    border-radius: var(--item-radius);
+    border-radius: inherit;
   }
   .timeline:not(.flat) > li:not(:has(.status-carousel)) {
     transform: translate3d(0, 0, 0);
@@ -1623,6 +1665,7 @@ ul.link-list li a .icon {
   }
   .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(+ li .status-link.is-active),
+  .timeline:not(.flat) > li.timeline-item-container:has(.status-link.is-active),
   .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(.status-link.is-active)
     + li {

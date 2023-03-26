@@ -151,6 +151,26 @@
   transform: translateX(0);
 }
 
+.status.compact-thread {
+  display: flex;
+  gap: 8px;
+}
+.status.compact-thread .status-thread-badge {
+  flex-shrink: 0;
+  min-width: 50px;
+  justify-content: center;
+}
+.status.compact-thread .content-compact {
+  overflow: hidden;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 90%;
+}
+
 .status .container {
   flex-grow: 1;
   min-width: 0;

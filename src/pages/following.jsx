@@ -30,11 +30,11 @@ function Following({ title, path, id, ...props }) {
         console.log('First load', latestItem.current);
       }
 
-      value = dedupeBoosts(value, instance);
       value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
+      value = dedupeBoosts(value, instance);
 
       // ENFORCE sort by datetime (Latest first)
       value.sort((a, b) => {

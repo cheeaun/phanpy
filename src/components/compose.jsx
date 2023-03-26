@@ -1335,7 +1335,6 @@ const Textarea = forwardRef((props, ref) => {
         value={text}
         onInput={(e) => {
           const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
-          console.log('textarea input', value);
           setText(value);
           const offset = offsetHeight - clientHeight;
           e.target.style.height = value ? scrollHeight + offset + 'px' : null;

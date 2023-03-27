@@ -87,6 +87,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               width={width}
               height={height}
               loading="eager"
+              decoding="async"
               onLoad={(e) => {
                 setImageLoaded(true);
               }}

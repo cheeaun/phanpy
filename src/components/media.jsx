@@ -119,10 +119,6 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       >
         {showOriginal || autoGIFAnimate ? (
           <div
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
             dangerouslySetInnerHTML={{
               __html: `
               <video

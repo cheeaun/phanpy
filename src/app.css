@@ -829,7 +829,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .carousel::-webkit-scrollbar {
   display: none;
 }
-.carousel > * {
+.carousel .carousel-item {
   scroll-snap-align: center;
   scroll-snap-stop: always;
   flex-shrink: 0;
@@ -847,7 +847,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent 100%
   );
 }
-.carousel > * :is(img, video) {
+.carousel .carousel-item :is(img, video) {
   width: auto;
   max-width: 100%;
   height: auto;
@@ -855,9 +855,23 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   max-height: 100dvh;
   vertical-align: middle;
 }
-.carousel > * video {
+.carousel .carousel-item video {
   min-height: 80px;
   max-height: 80vh; /* prevent other UI elements from obscuring video */
+}
+.carousel .carousel-item .media {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  background-origin: content-box;
 }
 
 .carousel-top-controls {

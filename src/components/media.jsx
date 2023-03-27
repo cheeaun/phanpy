@@ -48,17 +48,6 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         style={
           showOriginal && {
             backgroundImage: `url(${previewUrl})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            aspectRatio: `${width}/${height}`,
-            width,
-            height,
-            maxWidth: '100%',
-            maxHeight: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
           }
         }
       >

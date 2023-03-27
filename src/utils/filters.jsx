@@ -22,7 +22,6 @@ export function filteredItem(item, filterContext, currentAccountID) {
       titles: filterTitles,
       titlesStr: filterTitles.join(' • '),
     };
-    item._test = { test: 'test' };
   }
   return isWarn;
 }

@@ -12,6 +12,7 @@ export function filteredItem(item, filterContext, currentAccountID) {
     if (!filter.expiresAt) return hasContext;
     return new Date(filter.expiresAt) > new Date();
   });
+  if (!appliedFilters.length) return true;
   const isHidden = appliedFilters.some((f) => f.filter.filterAction === 'hide');
   console.log({ isHidden, filtered, appliedFilters, item });
   if (isHidden) return false;

@@ -51,7 +51,11 @@ export function dedupeBoosts(items, instance) {
     if (!item.reblog) return true;
     const s = getStatus(item.reblog.id, instance);
     if (s) {
-      console.warn('🚫 Duplicate boost', item);
+      console.warn(
+        `🚫 Duplicate boost by ${item.account.displayName}`,
+        item,
+        s,
+      );
       return false;
     }
     const s2 = getStatus(item.id, instance);

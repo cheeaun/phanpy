@@ -1,5 +1,5 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useRef, useState } from 'preact/hooks';
+import { useCallback, useRef } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
@@ -51,8 +51,6 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     }
   }, []);
 
-  const [imageLoaded, setImageLoaded] = useState(false);
-
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height
     return (
@@ -60,15 +58,13 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         class={`media media-image`}
         onClick={onClick}
         style={
-          showOriginal &&
-          !imageLoaded && {
+          showOriginal && {
             backgroundImage: `url(${previewUrl})`,
           }
         }
       >
         {showOriginal ? (
           <QuickPinchZoom
-            enabled={imageLoaded}
             draggableUnZoomed={false}
             inertiaFriction={0.9}
             containerProps={{
@@ -89,7 +85,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               loading="eager"
               decoding="async"
               onLoad={(e) => {
-                setImageLoaded(true);
+                e.target.closest('.media-image').style.backgroundImage = '';
               }}
             />
           </QuickPinchZoom>
@@ -106,7 +102,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               backgroundPosition: focalBackgroundPosition || 'center',
             }}
             onLoad={(e) => {
-              setImageLoaded(true);
+              e.target.closest('.media-image').style.backgroundImage = '';
             }}
           />
         )}

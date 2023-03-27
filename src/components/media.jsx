@@ -86,6 +86,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               alt={description}
               width={width}
               height={height}
+              loading="eager"
               onLoad={(e) => {
                 setImageLoaded(true);
               }}

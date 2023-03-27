@@ -93,7 +93,8 @@ function MediaModal({
         onClick={(e) => {
           if (
             e.target.classList.contains('carousel-item') ||
-            e.target.classList.contains('media')
+            e.target.classList.contains('media') ||
+            e.target.classList.contains('media-zoom')
           ) {
             onClose();
           }

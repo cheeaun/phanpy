@@ -1,5 +1,6 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useRef } from 'preact/hooks';
+import { useCallback, useRef, useState } from 'preact/hooks';
+import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
 import { formatDuration } from './status';
@@ -39,6 +40,19 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
   }
 
+  const imgRef = useRef();
+  const onUpdate = useCallback(({ x, y, scale }) => {
+    const { current: img } = imgRef;
+
+    if (img) {
+      const value = make3dTransformValue({ x, y, scale });
+
+      img.style.setProperty('transform', value);
+    }
+  }, []);
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height
     return (
@@ -46,33 +60,55 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         class={`media media-image`}
         onClick={onClick}
         style={
-          showOriginal && {
+          showOriginal &&
+          !imageLoaded && {
             backgroundImage: `url(${previewUrl})`,
           }
         }
       >
-        <img
-          src={mediaURL}
-          alt={description}
-          width={width}
-          height={height}
-          loading={showOriginal ? 'eager' : 'lazy'}
-          style={
-            !showOriginal && {
+        {showOriginal ? (
+          <QuickPinchZoom
+            enabled={imageLoaded}
+            draggableUnZoomed={false}
+            inertiaFriction={0.9}
+            containerProps={{
+              className: 'media-zoom',
+              style: {
+                width: 'inherit',
+                height: 'inherit',
+              },
+            }}
+            onUpdate={onUpdate}
+          >
+            <img
+              ref={imgRef}
+              src={mediaURL}
+              alt={description}
+              width={width}
+              height={height}
+              loading="eager"
+              onLoad={(e) => {
+                setImageLoaded(true);
+              }}
+            />
+          </QuickPinchZoom>
+        ) : (
+          <img
+            src={mediaURL}
+            alt={description}
+            width={width}
+            height={height}
+            loading="lazy"
+            style={{
               backgroundColor:
                 rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
               backgroundPosition: focalBackgroundPosition || 'center',
-            }
-          }
-          onDblClick={() => {
-            // Open original image in new tab
-            window.open(url, '_blank');
-          }}
-          onLoad={(e) => {
-            // Hide background image after image loads
-            e.target.parentElement.style.backgroundImage = 'none';
-          }}
-        />
+            }}
+            onLoad={(e) => {
+              setImageLoaded(true);
+            }}
+          />
+        )}
       </div>
     );
   } else if (type === 'gifv' || type === 'video') {

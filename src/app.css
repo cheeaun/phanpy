@@ -660,6 +660,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
+@media (hover: hover) or (pointer: fine) {
+  .status-carousel ul > li {
+    scroll-snap-stop: normal;
+  }
+}
 .status-carousel .content-container .content:only-child {
   font-size: calc(100% + 25% * max(2 - var(--content-text-weight), 0));
 }

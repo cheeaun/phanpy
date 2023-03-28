@@ -6,6 +6,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
+import MenuLink from './menu-link';
 import Modal from './modal';
 import TranslationBlock from './translation-block';
 
@@ -178,6 +179,32 @@ function MediaModal({
           <span />
         )}
         <span>
+          <Menu
+            overflow="auto"
+            align="end"
+            position="anchor"
+            boundingBoxPadding="8 8 8 8"
+            offsetY={4}
+            menuClassName="glass-menu"
+            menuButton={
+              <button type="button" class="carousel-button plain3">
+                <Icon icon="more" alt="More" />
+              </button>
+            }
+          >
+            <MenuLink
+              href={
+                mediaAttachments[currentIndex]?.remoteUrl ||
+                mediaAttachments[currentIndex]?.url
+              }
+              class="carousel-button plain3"
+              target="_blank"
+              title="Open original media in new window"
+            >
+              <Icon icon="popout" />
+              <span>Open original media</span>
+            </MenuLink>
+          </Menu>{' '}
           <Link
             to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
             class="button carousel-button media-post-link plain3"
@@ -191,18 +218,7 @@ function MediaModal({
             }}
           >
             <span class="button-label">See post </span>&raquo;
-          </Link>{' '}
-          <a
-            href={
-              mediaAttachments[currentIndex]?.remoteUrl ||
-              mediaAttachments[currentIndex]?.url
-            }
-            target="_blank"
-            class="button carousel-button plain3"
-            title="Open original media in new window"
-          >
-            <Icon icon="popout" alt="Open original media in new window" />
-          </a>{' '}
+          </Link>
         </span>
       </div>
       {mediaAttachments?.length > 1 && (

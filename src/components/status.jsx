@@ -39,7 +39,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
-import MenuLink from './MenuLink';
+import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 

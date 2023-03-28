@@ -8,7 +8,7 @@ import store from '../utils/store';
 
 import Avatar from './avatar';
 import Icon from './icon';
-import MenuLink from './MenuLink';
+import MenuLink from './menu-link';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);

@@ -74,6 +74,9 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               style: {
                 width: 'inherit',
                 height: 'inherit',
+                justifyContent: 'inherit',
+                alignItems: 'inherit',
+                display: 'inherit',
               },
             }}
             onUpdate={onUpdate}
@@ -88,6 +91,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               decoding="async"
               onLoad={(e) => {
                 e.target.closest('.media-image').style.backgroundImage = '';
+                e.target.closest('.media-zoom').style.display = '';
               }}
             />
           </QuickPinchZoom>

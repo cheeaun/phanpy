@@ -33,6 +33,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 40;
 const THREAD_LIMIT = 20;
 
+let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
 function resetScrollPosition(id) {
   delete cachedStatusesMap[id];
@@ -293,6 +294,7 @@ function StatusPage() {
       states.scrollPositions = {};
       states.reloadStatusPage = 0;
       cachedStatusesMap = {};
+      cachedRepliesToggle = {};
     };
   }, []);
 
@@ -870,9 +872,18 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
 
   const open =
     (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
+  const openBefore = cachedRepliesToggle[replies[0].id];
 
   return (
-    <details class="replies" open={open}>
+    <details
+      class="replies"
+      open={openBefore || open}
+      onToggle={(e) => {
+        const { open } = e.target;
+        // use first reply as ID
+        cachedRepliesToggle[replies[0].id] = open;
+      }}
+    >
       <summary hidden={open}>
         <span class="avatars">
           {accounts.map((a) => (

@@ -40,21 +40,39 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
   }
 
-  const imgRef = useRef();
+  const mediaRef = useRef();
   const onUpdate = useCallback(({ x, y, scale }) => {
-    const { current: img } = imgRef;
+    const { current: media } = mediaRef;
 
-    if (img) {
+    if (media) {
       const value = make3dTransformValue({ x, y, scale });
 
-      img.style.setProperty('transform', value);
+      media.style.setProperty('transform', value);
 
-      img.closest('.media-zoom').style.touchAction = scale <= 1 ? 'pan-x' : '';
+      media.closest('.media-zoom').style.touchAction =
+        scale <= 1 ? 'pan-x' : '';
     }
   }, []);
 
+  const quickPinchZoomProps = {
+    draggableUnZoomed: false,
+    inertiaFriction: 0.9,
+    containerProps: {
+      className: 'media-zoom',
+      style: {
+        width: 'inherit',
+        height: 'inherit',
+        justifyContent: 'inherit',
+        alignItems: 'inherit',
+        // display: 'inherit',
+      },
+    },
+    onUpdate,
+  };
+
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height
+    quickPinchZoomProps.containerProps.style.display = 'inherit';
     return (
       <div
         class={`media media-image`}
@@ -66,23 +84,9 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         }
       >
         {showOriginal ? (
-          <QuickPinchZoom
-            draggableUnZoomed={false}
-            inertiaFriction={0.9}
-            containerProps={{
-              className: 'media-zoom',
-              style: {
-                width: 'inherit',
-                height: 'inherit',
-                justifyContent: 'inherit',
-                alignItems: 'inherit',
-                display: 'inherit',
-              },
-            }}
-            onUpdate={onUpdate}
-          >
+          <QuickPinchZoom {...quickPinchZoomProps}>
             <img
-              ref={imgRef}
+              ref={mediaRef}
               src={mediaURL}
               alt={description}
               width={width}
@@ -122,6 +126,23 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
     const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
+
+    const videoHTML = `
+    <video
+      src="${url}"
+      poster="${previewUrl}"
+      width="${width}"
+      height="${height}"
+      preload="auto"
+      autoplay
+      muted="${isGIF}"
+      ${isGIF ? '' : 'controls'}
+      playsinline
+      loop="${loopable}"
+      ${isGIF ? 'ondblclick="this.paused ? this.play() : this.pause()"' : ''}
+    ></video>
+  `;
+
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'} ${
@@ -157,29 +178,22 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         }}
       >
         {showOriginal || autoGIFAnimate ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video
-                src="${url}"
-                poster="${previewUrl}"
-                width="${width}"
-                height="${height}"
-                preload="auto"
-                autoplay
-                muted="${isGIF}"
-                ${isGIF ? '' : 'controls'}
-                playsinline
-                loop="${loopable}"
-                ${
-                  isGIF
-                    ? 'ondblclick="this.paused ? this.play() : this.pause()"'
-                    : ''
-                }
-              ></video>
-            `,
-            }}
-          />
+          isGIF ? (
+            <QuickPinchZoom {...quickPinchZoomProps}>
+              <div
+                ref={mediaRef}
+                dangerouslySetInnerHTML={{
+                  __html: videoHTML,
+                }}
+              />
+            </QuickPinchZoom>
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: videoHTML,
+              }}
+            />
+          )
         ) : isGIF ? (
           <video
             ref={videoRef}

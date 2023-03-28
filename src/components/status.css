@@ -67,6 +67,11 @@
   align-items: flex-start;
   position: relative;
 }
+@media (min-width: 40em) {
+  .status {
+    padding-bottom: 16px;
+  }
+}
 .status.large {
   --fade-in-out-bg: linear-gradient(
     to bottom,

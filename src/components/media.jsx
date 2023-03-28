@@ -48,6 +48,8 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       const value = make3dTransformValue({ x, y, scale });
 
       img.style.setProperty('transform', value);
+
+      img.closest('.media-zoom').style.touchAction = scale === 1 ? 'pan-x' : '';
     }
   }, []);
 

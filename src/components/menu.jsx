@@ -13,7 +13,7 @@ import MenuLink from './menu-link';
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
-  const accounts = store.local.getJSON('accounts');
+  const accounts = store.local.getJSON('accounts') || [];
   const currentAccount = accounts.find(
     (account) => account.info.id === store.session.get('currentAccount'),
   );

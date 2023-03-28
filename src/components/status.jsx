@@ -222,6 +222,8 @@ function Status({
 
   const [forceTranslate, setForceTranslate] = useState(false);
   const targetLanguage = getTranslateTargetLanguage(true);
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
 
   const [showEdited, setShowEdited] = useState(false);
@@ -907,7 +909,10 @@ function Status({
             !!content.trim() &&
             language &&
             language !== targetLanguage &&
-            !match([language], [targetLanguage])) ||
+            !match([language], [targetLanguage]) &&
+            !contentTranslationHideLanguages.find(
+              (l) => language === l || match([language], [l]),
+            )) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate}

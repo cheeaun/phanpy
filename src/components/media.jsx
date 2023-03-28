@@ -49,7 +49,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
 
       img.style.setProperty('transform', value);
 
-      img.closest('.media-zoom').style.touchAction = scale === 1 ? 'pan-x' : '';
+      img.closest('.media-zoom').style.touchAction = scale <= 1 ? 'pan-x' : '';
     }
   }, []);
 

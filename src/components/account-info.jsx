@@ -9,10 +9,10 @@ import {
 } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
+import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
@@ -24,6 +24,8 @@ import AccountBlock from './account-block';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
+import Modal from './modal';
+import TranslationBlock from './translation-block';
 
 const MUTE_DURATIONS = [
   1000 * 60 * 5, // 5 minutes
@@ -389,7 +391,7 @@ function RelatedActions({ info, instance, authenticated }) {
   const [relationship, setRelationship] = useState(null);
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
 
-  const { id, acct, url, username, locked, lastStatusAt } = info;
+  const { id, acct, url, username, locked, lastStatusAt, note, fields } = info;
   const accountID = useRef(id);
 
   const {
@@ -484,6 +486,8 @@ function RelatedActions({ info, instance, authenticated }) {
   const loading = relationshipUIState === 'loading';
   const menuInstanceRef = useRef(null);
 
+  const [showTranslatedBio, setShowTranslatedBio] = useState(false);
+
   return (
     <>
       {familiarFollowers?.length > 0 && (
@@ -570,6 +574,14 @@ function RelatedActions({ info, instance, authenticated }) {
                 >
                   <Icon icon="at" />
                   <span>Mention @{username}</span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setShowTranslatedBio(true);
+                  }}
+                >
+                  <Icon icon="translate" />
+                  <span>Translate bio</span>
                 </MenuItem>
                 <MenuDivider />
               </>
@@ -816,6 +828,18 @@ function RelatedActions({ info, instance, authenticated }) {
           )}
         </span>
       </p>
+      {!!showTranslatedBio && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowTranslatedBio(false);
+            }
+          }}
+        >
+          <TranslatedBioSheet note={note} fields={fields} />
+        </Modal>
+      )}
     </>
   );
 }
@@ -850,4 +874,30 @@ function niceAccountURL(url) {
   );
 }
 
+function TranslatedBioSheet({ note, fields }) {
+  const fieldsText =
+    fields
+      ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
+      .join('\n\n') || '';
+
+  const text = getHTMLText(note) + (fieldsText ? `\n\n${fieldsText}` : '');
+
+  return (
+    <div class="sheet">
+      <header>
+        <h2>Translated Bio</h2>
+      </header>
+      <main>
+        <p
+          style={{
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {text}
+        </p>
+        <TranslationBlock forceTranslate text={text} />
+      </main>
+    </div>
+  );
+}
 export default AccountInfo;

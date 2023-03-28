@@ -25,6 +25,7 @@ import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
+import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
@@ -1694,18 +1695,6 @@ function nicePostURL(url) {
 }
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
-
-const div = document.createElement('div');
-export function getHTMLText(html) {
-  if (!html) return '';
-  div.innerHTML = html
-    .replace(/<\/p>/g, '</p>\n\n')
-    .replace(/<\/li>/g, '</li>\n');
-  div.querySelectorAll('br').forEach((br) => {
-    br.replaceWith('\n');
-  });
-  return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
-}
 
 const root = document.documentElement;
 const defaultBoundingBoxPadding = 8;

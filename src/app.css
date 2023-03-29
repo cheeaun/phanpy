@@ -661,8 +661,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
 }
 @media (hover: hover) or (pointer: fine) {
-  .status-carousel ul > li {
-    scroll-snap-stop: normal;
+  .status-carousel ul {
+    scroll-snap-type: none;
   }
 }
 .status-carousel .content-container .content:only-child {

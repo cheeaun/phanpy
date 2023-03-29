@@ -1681,6 +1681,9 @@ ul.link-list li a .icon {
   .timeline:not(.flat) > li:not(:has(.status-carousel)) {
     transform: translate3d(0, 0, 0);
   }
+  .timeline:not(.flat) > li:has(.status-badge) {
+    border-top-right-radius: 8px;
+  }
   .timeline:not(.flat) > li:has(.status-link.is-active) {
     transition: var(--back-transition);
     transform: translate3d(-2.5vw, 0, 0);

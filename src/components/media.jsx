@@ -60,11 +60,12 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     containerProps: {
       className: 'media-zoom',
       style: {
-        width: 'inherit',
-        height: 'inherit',
-        justifyContent: 'inherit',
-        alignItems: 'inherit',
-        // display: 'inherit',
+        overflow: 'visible',
+        //   width: 'inherit',
+        //   height: 'inherit',
+        //   justifyContent: 'inherit',
+        //   alignItems: 'inherit',
+        //   display: 'inherit',
       },
     },
     onUpdate,

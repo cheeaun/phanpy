@@ -1309,53 +1309,64 @@ function Poll({
     roundPrecision = 2;
   }
 
+  const [showResults, setShowResults] = useState(false);
+  const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
+
   return (
     <div
       lang={lang}
       class={`poll ${readOnly ? 'read-only' : ''} ${
         uiState === 'loading' ? 'loading' : ''
       }`}
+      onDblClick={() => {
+        setShowResults(!showResults);
+      }}
     >
-      {voted || expired ? (
-        options.map((option, i) => {
-          const { title, votesCount: optionVotesCount } = option;
-          const percentage = pollVotesCount
-            ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                roundPrecision,
-              )
-            : 0;
-          // check if current poll choice is the leading one
-          const isLeading =
-            optionVotesCount > 0 &&
-            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
-          return (
-            <div
-              key={`${i}-${title}-${optionVotesCount}`}
-              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
-              style={{
-                '--percentage': `${percentage}%`,
-              }}
-            >
-              <div class="poll-option-title">
-                {title}
-                {voted && ownVotes.includes(i) && (
-                  <>
-                    {' '}
-                    <Icon icon="check-circle" />
-                  </>
-                )}
-              </div>
+      {(showResults && optionsHaveVoteCounts) || voted || expired ? (
+        <div class="poll-options">
+          {options.map((option, i) => {
+            const { title, votesCount: optionVotesCount } = option;
+            const percentage = pollVotesCount
+              ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
+                  roundPrecision,
+                )
+              : 0;
+            // check if current poll choice is the leading one
+            const isLeading =
+              optionVotesCount > 0 &&
+              optionVotesCount ===
+                Math.max(...options.map((o) => o.votesCount));
+            return (
               <div
-                class="poll-option-votes"
-                title={`${optionVotesCount} vote${
-                  optionVotesCount === 1 ? '' : 's'
+                key={`${i}-${title}-${optionVotesCount}`}
+                class={`poll-option poll-result ${
+                  isLeading ? 'poll-option-leading' : ''
                 }`}
+                style={{
+                  '--percentage': `${percentage}%`,
+                }}
               >
-                {percentage}%
+                <div class="poll-option-title">
+                  {title}
+                  {voted && ownVotes.includes(i) && (
+                    <>
+                      {' '}
+                      <Icon icon="check-circle" />
+                    </>
+                  )}
+                </div>
+                <div
+                  class="poll-option-votes"
+                  title={`${optionVotesCount} vote${
+                    optionVotesCount === 1 ? '' : 's'
+                  }`}
+                >
+                  {percentage}%
+                </div>
               </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       ) : (
         <form
           onSubmit={async (e) => {
@@ -1374,23 +1385,25 @@ function Poll({
             setUIState('default');
           }}
         >
-          {options.map((option, i) => {
-            const { title } = option;
-            return (
-              <div class="poll-option">
-                <label class="poll-label">
-                  <input
-                    type={multiple ? 'checkbox' : 'radio'}
-                    name="poll"
-                    value={i}
-                    disabled={uiState === 'loading'}
-                    readOnly={readOnly}
-                  />
-                  <span class="poll-option-title">{title}</span>
-                </label>
-              </div>
-            );
-          })}
+          <div class="poll-options">
+            {options.map((option, i) => {
+              const { title } = option;
+              return (
+                <div class="poll-option">
+                  <label class="poll-label">
+                    <input
+                      type={multiple ? 'checkbox' : 'radio'}
+                      name="poll"
+                      value={i}
+                      disabled={uiState === 'loading'}
+                      readOnly={readOnly}
+                    />
+                    <span class="poll-option-title">{title}</span>
+                  </label>
+                </div>
+              );
+            })}
+          </div>
           {!readOnly && (
             <button
               class="poll-vote-button"

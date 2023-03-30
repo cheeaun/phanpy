@@ -843,34 +843,48 @@ a.card:is(:hover, :focus) {
 .poll.read-only {
   pointer-events: none;
 }
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 16px;
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-faded-color);
+}
 .poll-option {
-  padding: 8px;
+  padding: 4px;
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  background-color: var(--bg-faded-color);
-  background-image: linear-gradient(
-    to right,
-    var(--link-faded-color),
-    var(--link-faded-color) var(--percentage),
-    transparent var(--percentage),
-    transparent
-  );
-  background-repeat: no-repeat;
-  /* border-radius: 8px; */
-  border: 1px solid var(--outline-color);
-  border-bottom: 0;
   align-items: center;
-  text-shadow: 0 1px var(--bg-blur-color);
+  position: relative;
 }
-.poll-option:first-child {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+.poll-option:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background-color: var(--link-faded-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+  mix-blend-mode: multiply;
 }
-.poll-option:last-of-type {
-  border-bottom: 1px solid var(--outline-color);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+.poll-option:first-child:after {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.poll-option:last-child:after {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.poll-option:hover:after {
+  opacity: 1;
+}
+.poll-option.poll-result:after {
+  width: var(--percentage);
+  opacity: 1;
 }
 .poll-label {
   width: 100%;
@@ -896,6 +910,9 @@ a.card:is(:hover, :focus) {
 .poll-meta {
   margin: 8px 0;
   font-size: 90%;
+}
+.poll-option-title {
+  text-shadow: 0 1px var(--bg-color);
 }
 .poll-option-title .icon {
   vertical-align: middle;

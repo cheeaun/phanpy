@@ -170,6 +170,16 @@ function StatusPage() {
 
         console.log({ ancestors, descendants, nestedDescendants });
 
+        function expandReplies(_replies) {
+          return _replies?.map((_r) => ({
+            id: _r.id,
+            account: _r.account,
+            repliesCount: _r.repliesCount,
+            content: _r.content,
+            replies: expandReplies(_r.__replies),
+          }));
+        }
+
         const allStatuses = [
           ...ancestors.map((s) => ({
             id: s.id,
@@ -182,26 +192,7 @@ function StatusPage() {
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
-            replies: s.__replies?.map((r) => ({
-              id: r.id,
-              account: r.account,
-              repliesCount: r.repliesCount,
-              content: r.content,
-              replies: r.__replies?.map((r2) => ({
-                // Level 3
-                id: r2.id,
-                account: r2.account,
-                repliesCount: r2.repliesCount,
-                content: r2.content,
-                replies: r2.__replies?.map((r3) => ({
-                  // Level 4
-                  id: r3.id,
-                  account: r3.account,
-                  repliesCount: r3.repliesCount,
-                  content: r3.content,
-                })),
-              })),
-            })),
+            replies: expandReplies(s.__replies),
           })),
         ];
 
@@ -754,6 +745,7 @@ function StatusPage() {
                       hasManyStatuses={hasManyStatuses}
                       replies={replies}
                       hasParentThread={thread}
+                      level={1}
                     />
                   )}
                   {uiState === 'loading' &&
@@ -833,7 +825,13 @@ function StatusPage() {
   );
 }
 
-function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
+function SubComments({
+  hasManyStatuses,
+  replies,
+  instance,
+  hasParentThread,
+  level,
+}) {
   // Set isBrief = true:
   // - if less than or 2 replies
   // - if replies have no sub-replies
@@ -883,8 +881,13 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
         // use first reply as ID
         cachedRepliesToggle[replies[0].id] = open;
       }}
+      style={{
+        '--comments-level': level,
+      }}
+      data-comments-level={level}
+      data-comments-level-overflow={level > 4}
     >
-      <summary hidden={open}>
+      <summary class="replies-summary" hidden={open}>
         <span class="avatars">
           {accounts.map((a) => (
             <Avatar
@@ -942,6 +945,7 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
                 instance={instance}
                 hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
+                level={level + 1}
               />
             )}
           </li>

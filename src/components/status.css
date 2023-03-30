@@ -851,7 +851,6 @@ a.card:is(:hover, :focus) {
   border-radius: 16px;
   border: 1px solid var(--outline-color);
   background-color: var(--bg-faded-color);
-  width: fit-content;
 }
 .poll-option {
   padding: 4px 8px;
@@ -860,6 +859,9 @@ a.card:is(:hover, :focus) {
   justify-content: space-between;
   align-items: center;
   position: relative;
+}
+.poll-option > * {
+  z-index: 1;
 }
 .poll-option:after {
   content: '';
@@ -870,7 +872,7 @@ a.card:is(:hover, :focus) {
   opacity: 0;
   pointer-events: none;
   transition: all 0.2s ease-in-out;
-  mix-blend-mode: multiply;
+  z-index: 0;
 }
 .poll-option:first-child:after {
   border-top-left-radius: 12px;
@@ -892,6 +894,7 @@ a.card:is(:hover, :focus) {
   display: flex;
   gap: 8px;
   cursor: pointer;
+  z-index: 1;
 }
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;

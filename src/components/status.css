@@ -851,9 +851,10 @@ a.card:is(:hover, :focus) {
   border-radius: 16px;
   border: 1px solid var(--outline-color);
   background-color: var(--bg-faded-color);
+  width: fit-content;
 }
 .poll-option {
-  padding: 4px;
+  padding: 4px 8px;
   display: flex;
   gap: 8px;
   justify-content: space-between;

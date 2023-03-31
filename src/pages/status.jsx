@@ -653,62 +653,63 @@ function StatusPage() {
                           enableTranslate
                         />
                       </InView>
-                      {uiState !== 'loading' && !authenticated ? (
-                        <div class="post-status-banner">
-                          <p>
-                            You're not logged in. Interactions (reply, boost,
-                            etc) are not possible.
-                          </p>
-                          <Link to="/login" class="button">
-                            Log in
-                          </Link>
-                        </div>
-                      ) : (
-                        !sameInstance && (
+                      {uiState !== 'loading' &&
+                        (!authenticated ? (
                           <div class="post-status-banner">
                             <p>
-                              This post is from another instance (
-                              <b>{instance}</b>). Interactions (reply, boost,
+                              You're not logged in. Interactions (reply, boost,
                               etc) are not possible.
                             </p>
-                            <button
-                              type="button"
-                              disabled={uiState === 'loading'}
-                              onClick={() => {
-                                setUIState('loading');
-                                (async () => {
-                                  try {
-                                    const results =
-                                      await currentMasto.v2.search({
-                                        q: heroStatus.url,
-                                        type: 'statuses',
-                                        resolve: true,
-                                        limit: 1,
-                                      });
-                                    if (results.statuses.length) {
-                                      const status = results.statuses[0];
-                                      navigate(
-                                        currentInstance
-                                          ? `/${currentInstance}/s/${status.id}`
-                                          : `/s/${status.id}`,
-                                      );
-                                    } else {
-                                      throw new Error('No results');
-                                    }
-                                  } catch (e) {
-                                    setUIState('default');
-                                    alert('Error: ' + e);
-                                    console.error(e);
-                                  }
-                                })();
-                              }}
-                            >
-                              <Icon icon="transfer" /> Switch to my instance to
-                              enable interactions
-                            </button>
+                            <Link to="/login" class="button">
+                              Log in
+                            </Link>
                           </div>
-                        )
-                      )}
+                        ) : (
+                          !sameInstance && (
+                            <div class="post-status-banner">
+                              <p>
+                                This post is from another instance (
+                                <b>{instance}</b>). Interactions (reply, boost,
+                                etc) are not possible.
+                              </p>
+                              <button
+                                type="button"
+                                disabled={uiState === 'loading'}
+                                onClick={() => {
+                                  setUIState('loading');
+                                  (async () => {
+                                    try {
+                                      const results =
+                                        await currentMasto.v2.search({
+                                          q: heroStatus.url,
+                                          type: 'statuses',
+                                          resolve: true,
+                                          limit: 1,
+                                        });
+                                      if (results.statuses.length) {
+                                        const status = results.statuses[0];
+                                        navigate(
+                                          currentInstance
+                                            ? `/${currentInstance}/s/${status.id}`
+                                            : `/s/${status.id}`,
+                                        );
+                                      } else {
+                                        throw new Error('No results');
+                                      }
+                                    } catch (e) {
+                                      setUIState('default');
+                                      alert('Error: ' + e);
+                                      console.error(e);
+                                    }
+                                  })();
+                                }}
+                              >
+                                <Icon icon="transfer" /> Switch to my instance
+                                to enable interactions
+                              </button>
+                            </div>
+                          )
+                        ))}
                     </>
                   ) : (
                     <Link

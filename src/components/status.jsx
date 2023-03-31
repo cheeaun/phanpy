@@ -1,5 +1,7 @@
 import './status.css';
 
+import { match } from '@formatjs/intl-localematcher';
+import '@justinribeiro/lite-youtube';
 import {
   ControlledMenu,
   Menu,
@@ -7,6 +9,7 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
+import { decodeBlurHash } from 'fast-blurhash';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
@@ -22,12 +25,14 @@ import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
+import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
-import states, { saveStatus, statusKey } from '../utils/states';
+import states, { getStatus, saveStatus, statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -35,7 +40,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
-import MenuLink from './MenuLink';
+import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
@@ -71,6 +76,7 @@ function Status({
   contentTextWeight,
   enableTranslate,
   previewMode,
+  allowFilters,
 }) {
   if (skeleton) {
     return (
@@ -140,9 +146,29 @@ function Status({
     // Non-API props
     _deleted,
     _pinned,
+    _filtered,
   } = status;
 
   console.debug('RENDER Status', id, status?.account.displayName);
+
+  const debugHover = (e) => {
+    if (e.shiftKey) {
+      console.log(status);
+    }
+  };
+
+  if (allowFilters && size !== 'l' && _filtered) {
+    return (
+      <FilteredStatus
+        status={status}
+        filterInfo={_filtered}
+        instance={instance}
+        containerProps={{
+          onMouseEnter: debugHover,
+        }}
+      />
+    );
+  }
 
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
@@ -175,13 +201,8 @@ function Status({
 
   const showSpoiler = !!snapStates.spoilers[id] || false;
 
-  const debugHover = (e) => {
-    if (e.shiftKey) {
-      console.log(status);
-    }
-  };
-
   if (reblog) {
+    // If has statusID, means useItemID (cached in states)
     return (
       <div class="status-reblog" onMouseEnter={debugHover}>
         <div class="status-pre-meta">
@@ -190,7 +211,8 @@ function Status({
           boosted
         </div>
         <Status
-          status={reblog}
+          status={statusID ? null : reblog}
+          statusID={statusID ? reblog.id : null}
           instance={instance}
           size={size}
           contentTextWeight={contentTextWeight}
@@ -201,6 +223,8 @@ function Status({
 
   const [forceTranslate, setForceTranslate] = useState(false);
   const targetLanguage = getTranslateTargetLanguage(true);
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
 
   const [showEdited, setShowEdited] = useState(false);
@@ -543,6 +567,29 @@ function Status({
             <Icon icon="pencil" />
             <span>Edit</span>
           </MenuItem>
+          {isSizeLarge && (
+            <MenuItem
+              onClick={() => {
+                const yes = confirm('Delete this post?');
+                if (yes) {
+                  (async () => {
+                    try {
+                      await masto.v1.statuses.remove(id);
+                      const cachedStatus = getStatus(id, instance);
+                      cachedStatus._deleted = true;
+                      showToast('Deleted');
+                    } catch (e) {
+                      console.error(e);
+                      showToast('Unable to delete');
+                    }
+                  })();
+                }
+              }}
+            >
+              <Icon icon="trash" />
+              <span>Delete…</span>
+            </MenuItem>
+          )}
         </>
       )}
     </>
@@ -582,12 +629,13 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      }`}
+      } ${_deleted ? 'status-deleted' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         if (size === 'l') return;
         if (e.metaKey) return;
         if (previewMode) return;
+        if (_deleted) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
@@ -672,7 +720,9 @@ function Status({
             )} */}
           {/* </span> */}{' '}
           {size !== 'l' &&
-            (url && !previewMode ? (
+            (_deleted ? (
+              <span class="status-deleted-tag">Deleted</span>
+            ) : url && !previewMode ? (
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
@@ -859,7 +909,11 @@ function Status({
           {((enableTranslate &&
             !!content.trim() &&
             language &&
-            language !== targetLanguage) ||
+            language !== targetLanguage &&
+            !match([language], [targetLanguage]) &&
+            !contentTranslationHideLanguages.find(
+              (l) => language === l || match([language], [l]),
+            )) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate}
@@ -931,29 +985,41 @@ function Status({
         {isSizeLarge && (
           <>
             <div class="extra-meta">
-              <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />{' '}
-              <a href={url} target="_blank">
-                <time class="created" datetime={createdAtDate.toISOString()}>
-                  {createdDateText}
-                </time>
-              </a>
-              {editedAt && (
+              {_deleted ? (
+                <span class="status-deleted-tag">Deleted</span>
+              ) : (
                 <>
-                  {' '}
-                  &bull; <Icon icon="pencil" alt="Edited" />{' '}
-                  <time
-                    class="edited"
-                    datetime={editedAtDate.toISOString()}
-                    onClick={() => {
-                      setShowEdited(id);
-                    }}
-                  >
-                    {editedDateText}
-                  </time>
+                  <Icon
+                    icon={visibilityIconsMap[visibility]}
+                    alt={visibility}
+                  />{' '}
+                  <a href={url} target="_blank">
+                    <time
+                      class="created"
+                      datetime={createdAtDate.toISOString()}
+                    >
+                      {createdDateText}
+                    </time>
+                  </a>
+                  {editedAt && (
+                    <>
+                      {' '}
+                      &bull; <Icon icon="pencil" alt="Edited" />{' '}
+                      <time
+                        class="edited"
+                        datetime={editedAtDate.toISOString()}
+                        onClick={() => {
+                          setShowEdited(id);
+                        }}
+                      >
+                        {editedDateText}
+                      </time>
+                    </>
+                  )}
                 </>
               )}
             </div>
-            <div class="actions">
+            <div class={`actions ${_deleted ? 'disabled' : ''}`}>
               <div class="action has-count">
                 <StatusButton
                   title="Reply"
@@ -1105,18 +1171,32 @@ function Card({ card, instance }) {
   //   );
   // }
 
-  if (hasText && image) {
+  if (hasText && (image || (!type !== 'photo' && blurhash))) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
+    let blurhashImage;
+    if (!image) {
+      const w = 44;
+      const h = 44;
+      const blurhashPixels = decodeBlurHash(blurhash, w, h);
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.createImageData(w, h);
+      imageData.data.set(blurhashPixels);
+      ctx.putImageData(imageData, 0, 0);
+      blurhashImage = canvas.toDataURL();
+    }
     return (
       <a
         href={cardStatusURL || url}
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
-        class={`card link ${size}`}
+        class={`card link ${blurhashImage ? '' : size}`}
       >
         <div class="card-image">
           <img
-            src={image}
+            src={image || blurhashImage}
             width={width}
             height={height}
             loading="lazy"
@@ -1157,6 +1237,13 @@ function Card({ card, instance }) {
       </a>
     );
   } else if (type === 'video') {
+    if (/youtube/i.test(providerName)) {
+      // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
+      const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
+      if (videoID) {
+        return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+      }
+    }
     return (
       <div
         class="card video"
@@ -1222,53 +1309,64 @@ function Poll({
     roundPrecision = 2;
   }
 
+  const [showResults, setShowResults] = useState(false);
+  const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
+
   return (
     <div
       lang={lang}
       class={`poll ${readOnly ? 'read-only' : ''} ${
         uiState === 'loading' ? 'loading' : ''
       }`}
+      onDblClick={() => {
+        setShowResults(!showResults);
+      }}
     >
-      {voted || expired ? (
-        options.map((option, i) => {
-          const { title, votesCount: optionVotesCount } = option;
-          const percentage = pollVotesCount
-            ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                roundPrecision,
-              )
-            : 0;
-          // check if current poll choice is the leading one
-          const isLeading =
-            optionVotesCount > 0 &&
-            optionVotesCount === Math.max(...options.map((o) => o.votesCount));
-          return (
-            <div
-              key={`${i}-${title}-${optionVotesCount}`}
-              class={`poll-option ${isLeading ? 'poll-option-leading' : ''}`}
-              style={{
-                '--percentage': `${percentage}%`,
-              }}
-            >
-              <div class="poll-option-title">
-                {title}
-                {voted && ownVotes.includes(i) && (
-                  <>
-                    {' '}
-                    <Icon icon="check-circle" />
-                  </>
-                )}
-              </div>
+      {(showResults && optionsHaveVoteCounts) || voted || expired ? (
+        <div class="poll-options">
+          {options.map((option, i) => {
+            const { title, votesCount: optionVotesCount } = option;
+            const percentage = pollVotesCount
+              ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
+                  roundPrecision,
+                )
+              : 0;
+            // check if current poll choice is the leading one
+            const isLeading =
+              optionVotesCount > 0 &&
+              optionVotesCount ===
+                Math.max(...options.map((o) => o.votesCount));
+            return (
               <div
-                class="poll-option-votes"
-                title={`${optionVotesCount} vote${
-                  optionVotesCount === 1 ? '' : 's'
+                key={`${i}-${title}-${optionVotesCount}`}
+                class={`poll-option poll-result ${
+                  isLeading ? 'poll-option-leading' : ''
                 }`}
+                style={{
+                  '--percentage': `${percentage}%`,
+                }}
               >
-                {percentage}%
+                <div class="poll-option-title">
+                  {title}
+                  {voted && ownVotes.includes(i) && (
+                    <>
+                      {' '}
+                      <Icon icon="check-circle" />
+                    </>
+                  )}
+                </div>
+                <div
+                  class="poll-option-votes"
+                  title={`${optionVotesCount} vote${
+                    optionVotesCount === 1 ? '' : 's'
+                  }`}
+                >
+                  {percentage}%
+                </div>
               </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       ) : (
         <form
           onSubmit={async (e) => {
@@ -1287,23 +1385,25 @@ function Poll({
             setUIState('default');
           }}
         >
-          {options.map((option, i) => {
-            const { title } = option;
-            return (
-              <div class="poll-option">
-                <label class="poll-label">
-                  <input
-                    type={multiple ? 'checkbox' : 'radio'}
-                    name="poll"
-                    value={i}
-                    disabled={uiState === 'loading'}
-                    readOnly={readOnly}
-                  />
-                  <span class="poll-option-title">{title}</span>
-                </label>
-              </div>
-            );
-          })}
+          <div class="poll-options">
+            {options.map((option, i) => {
+              const { title } = option;
+              return (
+                <div class="poll-option">
+                  <label class="poll-label">
+                    <input
+                      type={multiple ? 'checkbox' : 'radio'}
+                      name="poll"
+                      value={i}
+                      disabled={uiState === 'loading'}
+                      readOnly={readOnly}
+                    />
+                    <span class="poll-option-title">{title}</span>
+                  </label>
+                </div>
+              );
+            })}
+          </div>
           {!readOnly && (
             <button
               class="poll-vote-button"
@@ -1418,6 +1518,7 @@ function EditedAtModal({
                     size="s"
                     withinContext
                     readOnly
+                    previewMode
                   />
                 </li>
               );
@@ -1608,18 +1709,6 @@ function nicePostURL(url) {
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
-const div = document.createElement('div');
-function getHTMLText(html) {
-  if (!html) return 0;
-  div.innerHTML = html
-    .replace(/<\/p>/g, '</p>\n\n')
-    .replace(/<\/li>/g, '</li>\n');
-  div.querySelectorAll('br').forEach((br) => {
-    br.replaceWith('\n');
-  });
-  return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
-}
-
 const root = document.documentElement;
 const defaultBoundingBoxPadding = 8;
 function safeBoundingBoxPadding() {
@@ -1639,6 +1728,114 @@ function safeBoundingBoxPadding() {
     .join(' ');
   // console.log(str);
   return str;
+}
+
+function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
+  const {
+    account: { avatar, avatarStatic },
+    createdAt,
+    visibility,
+    reblog,
+  } = status;
+  const isReblog = !!reblog;
+  const filterTitleStr = filterInfo?.titlesStr || '';
+  const createdAtDate = new Date(createdAt);
+  const statusPeekText = statusPeek(status.reblog || status);
+
+  const [showPeek, setShowPeek] = useState(false);
+  const bindLongPress = useLongPress(
+    () => {
+      setShowPeek(true);
+    },
+    {
+      captureEvent: true,
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
+
+  return (
+    <div
+      class={isReblog ? 'status-reblog' : ''}
+      {...containerProps}
+      title={statusPeekText}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setShowPeek(true);
+      }}
+      {...bindLongPress()}
+    >
+      <article class="status filtered" tabindex="-1">
+        <b
+          class="status-filtered-badge clickable badge-meta"
+          title={filterTitleStr}
+          onClick={(e) => {
+            e.preventDefault();
+            setShowPeek(true);
+          }}
+        >
+          <span>Filtered</span>
+          <span>{filterTitleStr}</span>
+        </b>{' '}
+        <Avatar url={avatarStatic || avatar} />
+        <span class="status-filtered-info">
+          <span class="status-filtered-info-1">
+            <NameText account={status.account} instance={instance} />{' '}
+            <Icon
+              icon={visibilityIconsMap[visibility]}
+              alt={visibilityText[visibility]}
+              size="s"
+            />{' '}
+            {isReblog ? (
+              'boosted'
+            ) : (
+              <RelativeTime datetime={createdAtDate} format="micro" />
+            )}
+          </span>
+          <span class="status-filtered-info-2">
+            {isReblog && (
+              <>
+                <Avatar
+                  url={reblog.account.avatarStatic || reblog.account.avatar}
+                />{' '}
+              </>
+            )}
+            {statusPeekText}
+          </span>
+        </span>
+      </article>
+      {!!showPeek && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowPeek(false);
+            }
+          }}
+        >
+          <div id="filtered-status-peek" class="sheet">
+            <main tabIndex="-1">
+              <p class="heading">
+                <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
+              </p>
+              <Link
+                class="status-link"
+                to={`/${instance}/s/${status.id}`}
+                onClick={() => {
+                  setShowPeek(false);
+                }}
+              >
+                <Status status={status} instance={instance} size="s" readOnly />
+                <button type="button" class="status-post-link plain3">
+                  See post &raquo;
+                </button>
+              </Link>
+            </main>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
 }
 
 export default memo(Status);

@@ -1,6 +1,6 @@
 import './status.css';
 
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -25,6 +25,7 @@ import states, {
   statusKey,
   threadifyStatus,
 } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
@@ -32,6 +33,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 40;
 const THREAD_LIMIT = 20;
 
+let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
 function resetScrollPosition(id) {
   delete cachedStatusesMap[id];
@@ -168,6 +170,16 @@ function StatusPage() {
 
         console.log({ ancestors, descendants, nestedDescendants });
 
+        function expandReplies(_replies) {
+          return _replies?.map((_r) => ({
+            id: _r.id,
+            account: _r.account,
+            repliesCount: _r.repliesCount,
+            content: _r.content,
+            replies: expandReplies(_r.__replies),
+          }));
+        }
+
         const allStatuses = [
           ...ancestors.map((s) => ({
             id: s.id,
@@ -180,26 +192,7 @@ function StatusPage() {
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
-            replies: s.__replies?.map((r) => ({
-              id: r.id,
-              account: r.account,
-              repliesCount: r.repliesCount,
-              content: r.content,
-              replies: r.__replies?.map((r2) => ({
-                // Level 3
-                id: r2.id,
-                account: r2.account,
-                repliesCount: r2.repliesCount,
-                content: r2.content,
-                replies: r2.__replies?.map((r3) => ({
-                  // Level 4
-                  id: r3.id,
-                  account: r3.account,
-                  repliesCount: r3.repliesCount,
-                  content: r3.content,
-                })),
-              })),
-            })),
+            replies: expandReplies(s.__replies),
           })),
         ];
 
@@ -292,6 +285,7 @@ function StatusPage() {
       states.scrollPositions = {};
       states.reloadStatusPage = 0;
       cachedStatusesMap = {};
+      cachedRepliesToggle = {};
     };
   }, []);
 
@@ -306,15 +300,7 @@ function StatusPage() {
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';
-    const { spoilerText, content } = heroStatus;
-    let text;
-    if (spoilerText) {
-      text = spoilerText;
-    } else {
-      const div = document.createElement('div');
-      div.innerHTML = content;
-      text = div.innerText.trim();
-    }
+    let text = statusPeek(heroStatus);
     if (text.length > 64) {
       // "The title should ideally be less than 64 characters in length"
       // https://www.w3.org/Provider/Style/TITLE.html
@@ -328,6 +314,17 @@ function StatusPage() {
       : 'Status',
     '/:instance?/s/:id',
   );
+
+  const postInstance = useMemo(() => {
+    if (!heroStatus) return;
+    const { url } = heroStatus;
+    if (!url) return;
+    return new URL(url).hostname;
+  }, [heroStatus]);
+  const postSameInstance = useMemo(() => {
+    if (!postInstance) return;
+    return postInstance === instance;
+  }, [postInstance, instance]);
 
   const closeLink = useMemo(() => {
     const { prevLocation } = snapStates;
@@ -563,6 +560,15 @@ function StatusPage() {
                   }
                 >
                   <MenuItem
+                    disabled={uiState === 'loading'}
+                    onClick={() => {
+                      states.reloadStatusPage++;
+                    }}
+                  >
+                    <Icon icon="refresh" />
+                    <span>Refresh</span>
+                  </MenuItem>
+                  <MenuItem
                     onClick={() => {
                       // Click all buttons with class .spoiler but not .spoiling
                       const buttons = Array.from(
@@ -577,6 +583,24 @@ function StatusPage() {
                   >
                     <Icon icon="eye-open" />{' '}
                     <span>Show all sensitive content</span>
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuHeader className="plain">Experimental</MenuHeader>
+                  <MenuItem
+                    disabled={postSameInstance}
+                    onClick={() => {
+                      const statusURL = getInstanceStatusURL(heroStatus.url);
+                      if (statusURL) {
+                        navigate(statusURL);
+                      } else {
+                        alert('Unable to switch');
+                      }
+                    }}
+                  >
+                    <Icon icon="transfer" />
+                    <small class="menu-double-lines">
+                      Switch to post's instance (<b>{postInstance}</b>)
+                    </small>
                   </MenuItem>
                 </Menu>
               )}
@@ -721,6 +745,7 @@ function StatusPage() {
                       hasManyStatuses={hasManyStatuses}
                       replies={replies}
                       hasParentThread={thread}
+                      level={1}
                     />
                   )}
                   {uiState === 'loading' &&
@@ -800,7 +825,13 @@ function StatusPage() {
   );
 }
 
-function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
+function SubComments({
+  hasManyStatuses,
+  replies,
+  instance,
+  hasParentThread,
+  level,
+}) {
   // Set isBrief = true:
   // - if less than or 2 replies
   // - if replies have no sub-replies
@@ -839,10 +870,24 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
 
   const open =
     (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
+  const openBefore = cachedRepliesToggle[replies[0].id];
 
   return (
-    <details class="replies" open={open}>
-      <summary hidden={open}>
+    <details
+      class="replies"
+      open={openBefore || open}
+      onToggle={(e) => {
+        const { open } = e.target;
+        // use first reply as ID
+        cachedRepliesToggle[replies[0].id] = open;
+      }}
+      style={{
+        '--comments-level': level,
+      }}
+      data-comments-level={level}
+      data-comments-level-overflow={level > 4}
+    >
+      <summary class="replies-summary" hidden={open}>
         <span class="avatars">
           {accounts.map((a) => (
             <Avatar
@@ -900,6 +945,7 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
                 instance={instance}
                 hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
+                level={level + 1}
               />
             )}
           </li>
@@ -907,6 +953,16 @@ function SubComments({ hasManyStatuses, replies, instance, hasParentThread }) {
       </ul>
     </details>
   );
+}
+
+function getInstanceStatusURL(url) {
+  // Regex /:username/:id, where username = @username or @username@domain, id = anything
+  const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/([^\/]+)\/?$/i;
+  const { hostname, pathname } = new URL(url);
+  const [, username, domain, id] = pathname.match(statusRegex) || [];
+  if (id) {
+    return `/${hostname}/s/${id}`;
+  }
 }
 
 export default StatusPage;

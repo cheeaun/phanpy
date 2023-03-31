@@ -33,7 +33,6 @@ import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
 import Home from './pages/home';
-import HomeV1 from './pages/home-v1';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
@@ -140,10 +139,6 @@ function App() {
   let location = useLocation();
   states.currentLocation = location.pathname;
 
-  const locationDeckMap = {
-    '/': 'home-page',
-    '/notifications': 'notifications-page',
-  };
   const focusDeck = () => {
     let timer = setTimeout(() => {
       const columns = document.getElementById('columns');
@@ -161,11 +156,6 @@ function App() {
           page.focus();
         }
       }
-      // const page = document.getElementById(locationDeckMap[location.pathname]);
-      // console.debug('FOCUS', location.pathname, page);
-      // if (page) {
-      //   page.focus();
-      // }
     }, 100);
     return () => clearTimeout(timer);
   };
@@ -181,59 +171,6 @@ function App() {
   useEffect(() => {
     if (!showModal) focusDeck();
   }, [showModal]);
-
-  // Notifications service
-  // - WebSocket to receive notifications when page is visible
-  const [visible, setVisible] = useState(true);
-  usePageVisibility(setVisible);
-  const notificationStream = useRef();
-  useEffect(() => {
-    if (isLoggedIn && visible) {
-      const { masto, instance } = api();
-      (async () => {
-        // 1. Get the latest notification
-        if (states.notificationsLast) {
-          const notificationsIterator = masto.v1.notifications.list({
-            limit: 1,
-            since_id: states.notificationsLast.id,
-          });
-          const { value: notifications } = await notificationsIterator.next();
-          if (notifications?.length) {
-            states.notificationsShowNew = true;
-          }
-        }
-
-        // 2. Start streaming
-        notificationStream.current = await masto.ws.stream(
-          '/api/v1/streaming',
-          {
-            stream: 'user:notification',
-          },
-        );
-        console.log('🎏 Streaming notification', notificationStream.current);
-
-        notificationStream.current.on('notification', (notification) => {
-          console.log('🔔🔔 Notification', notification);
-          if (notification.status) {
-            saveStatus(notification.status, instance, {
-              skipThreading: true,
-            });
-          }
-          states.notificationsShowNew = true;
-        });
-
-        notificationStream.current.ws.onclose = () => {
-          console.log('🔔🔔 Notification stream closed');
-        };
-      })();
-    }
-    return () => {
-      if (notificationStream.current) {
-        notificationStream.current.ws.close();
-        notificationStream.current = null;
-      }
-    };
-  }, [visible, isLoggedIn]);
 
   const { prevLocation } = snapStates;
   const backgroundLocation = useRef(prevLocation || null);
@@ -254,34 +191,6 @@ function App() {
     const { pathname } = location;
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
-
-  const lastCheckDate = useRef();
-  const checkForUpdates = () => {
-    lastCheckDate.current = Date.now();
-    console.log('✨ Check app update');
-    fetch('./version.json')
-      .then((r) => r.json())
-      .then((info) => {
-        if (info) states.appVersion = info;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
-  usePageVisibility((visible) => {
-    if (visible) {
-      if (!lastCheckDate.current) {
-        checkForUpdates();
-      } else {
-        const diff = Date.now() - lastCheckDate.current;
-        if (diff > 1000 * 60 * 60) {
-          // 1 hour
-          checkForUpdates();
-        }
-      }
-    }
-  });
 
   return (
     <>
@@ -306,7 +215,6 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
         )}
         {isLoggedIn && <Route path="/following" element={<Following />} />}
-        {isLoggedIn && <Route path="/homev1" element={<HomeV1 />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
         {isLoggedIn && (
@@ -472,8 +380,95 @@ function App() {
           <ShortcutsSettings />
         </Modal>
       )}
+      <BackgroundService isLoggedIn={isLoggedIn} />
     </>
   );
+}
+
+function BackgroundService({ isLoggedIn }) {
+  // Notifications service
+  // - WebSocket to receive notifications when page is visible
+  const [visible, setVisible] = useState(true);
+  usePageVisibility(setVisible);
+  const notificationStream = useRef();
+  useEffect(() => {
+    if (isLoggedIn && visible) {
+      const { masto, instance } = api();
+      (async () => {
+        // 1. Get the latest notification
+        if (states.notificationsLast) {
+          const notificationsIterator = masto.v1.notifications.list({
+            limit: 1,
+            since_id: states.notificationsLast.id,
+          });
+          const { value: notifications } = await notificationsIterator.next();
+          if (notifications?.length) {
+            states.notificationsShowNew = true;
+          }
+        }
+
+        // 2. Start streaming
+        notificationStream.current = await masto.ws.stream(
+          '/api/v1/streaming',
+          {
+            stream: 'user:notification',
+          },
+        );
+        console.log('🎏 Streaming notification', notificationStream.current);
+
+        notificationStream.current.on('notification', (notification) => {
+          console.log('🔔🔔 Notification', notification);
+          if (notification.status) {
+            saveStatus(notification.status, instance, {
+              skipThreading: true,
+            });
+          }
+          states.notificationsShowNew = true;
+        });
+
+        notificationStream.current.ws.onclose = () => {
+          console.log('🔔🔔 Notification stream closed');
+        };
+      })();
+    }
+    return () => {
+      if (notificationStream.current) {
+        notificationStream.current.ws.close();
+        notificationStream.current = null;
+      }
+    };
+  }, [visible, isLoggedIn]);
+
+  // Check for updates service
+  const lastCheckDate = useRef();
+  const checkForUpdates = () => {
+    lastCheckDate.current = Date.now();
+    console.log('✨ Check app update');
+    fetch('./version.json')
+      .then((r) => r.json())
+      .then((info) => {
+        if (info) states.appVersion = info;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
+  usePageVisibility((visible) => {
+    if (visible) {
+      if (!lastCheckDate.current) {
+        checkForUpdates();
+      } else {
+        const diff = Date.now() - lastCheckDate.current;
+        if (diff > 1000 * 60 * 60) {
+          // 1 hour
+          checkForUpdates();
+        }
+      }
+    }
+  });
+
+  return null;
 }
 
 export { App };

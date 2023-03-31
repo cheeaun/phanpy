@@ -5,7 +5,6 @@ import { resolve } from 'path';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
-import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
 
@@ -31,7 +30,6 @@ export default defineConfig({
   plugins: [
     preact(),
     splitVendorChunkPlugin(),
-    VitePluginHtmlEnv(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
@@ -88,6 +86,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     rollupOptions: {
+      treeshake: false,
       input: {
         main: resolve(__dirname, 'index.html'),
         compose: resolve(__dirname, 'compose/index.html'),

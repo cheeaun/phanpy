@@ -123,3 +123,22 @@
 #settings-container .range-group input[type='range'] {
   flex-grow: 1;
 }
+
+#settings-container .checkbox-fields {
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-faded-color);
+  border-radius: 8px;
+  margin: 8px 0;
+  max-height: 6.5em;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 90%;
+}
+#settings-container .checkbox-fieldset label {
+  flex: 1 0 10em;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}

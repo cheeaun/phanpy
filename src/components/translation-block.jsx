@@ -87,7 +87,12 @@ function TranslationBlock({
   }, [forceTranslate]);
 
   return (
-    <div class="status-translation-block">
+    <div
+      class="status-translation-block"
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+    >
       <details ref={detailsRef}>
         <summary>
           <button
@@ -134,14 +139,20 @@ function TranslationBlock({
           ) : (
             !!translatedContent && (
               <>
-                {!!pronunciationContent && (
-                  <output class="translated-pronunciation-content">
-                    {pronunciationContent}
-                  </output>
-                )}
                 <output class="translated-content" lang={targetLang}>
                   {translatedContent}
                 </output>
+                {!!pronunciationContent && (
+                  <output
+                    class="translated-pronunciation-content"
+                    tabIndex={-1}
+                    onClick={(e) => {
+                      e.target.classList.toggle('expand');
+                    }}
+                  >
+                    {pronunciationContent}
+                  </output>
+                )}
               </>
             )
           )}

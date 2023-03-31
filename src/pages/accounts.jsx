@@ -1,6 +1,6 @@
 import './settings.css';
 
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer, useState } from 'preact/hooks';
 
 import Avatar from '../components/avatar';
@@ -25,11 +25,6 @@ function Accounts({ onClose }) {
     <div id="settings-container" class="sheet" tabIndex="-1">
       <header class="header-grid">
         <h2>Accounts</h2>
-        <div class="header-side">
-          <Link to="/login" class="button plain" onClick={onClose}>
-            <Icon icon="plus" /> <span>Account</span>
-          </Link>
-        </div>
       </header>
       <main>
         <section>
@@ -66,7 +61,12 @@ function Accounts({ onClose }) {
                       account={account.info}
                       showAcct
                       onClick={() => {
-                        states.showAccount = `${account.info.username}@${account.instanceURL}`;
+                        if (isCurrent) {
+                          states.showAccount = `${account.info.username}@${account.instanceURL}`;
+                        } else {
+                          store.session.set('currentAccount', account.info.id);
+                          location.reload();
+                        }
                       }}
                     />
                   </div>
@@ -75,18 +75,6 @@ function Accounts({ onClose }) {
                       <>
                         <span class="tag">Default</span>{' '}
                       </>
-                    )}
-                    {!isCurrent && (
-                      <button
-                        type="button"
-                        class="light"
-                        onClick={() => {
-                          store.session.set('currentAccount', account.info.id);
-                          location.reload();
-                        }}
-                      >
-                        <Icon icon="transfer" /> Switch
-                      </button>
                     )}
                     <Menu
                       align="end"
@@ -100,6 +88,15 @@ function Accounts({ onClose }) {
                         </button>
                       }
                     >
+                      <MenuItem
+                        onClick={() => {
+                          states.showAccount = `${account.info.username}@${account.instanceURL}`;
+                        }}
+                      >
+                        <Icon icon="user" />
+                        <span>View profile…</span>
+                      </MenuItem>
+                      <MenuDivider />
                       {moreThanOneAccount && (
                         <MenuItem
                           disabled={isDefault}
@@ -127,7 +124,7 @@ function Accounts({ onClose }) {
                         }}
                       >
                         <Icon icon="exit" />
-                        <span>Log out</span>
+                        <span>Log out…</span>
                       </MenuItem>
                     </Menu>
                   </div>
@@ -135,6 +132,11 @@ function Accounts({ onClose }) {
               );
             })}
           </ul>
+          <p>
+            <Link to="/login" class="button plain2" onClick={onClose}>
+              <Icon icon="plus" /> <span>Add an existing account</span>
+            </Link>
+          </p>
           {moreThanOneAccount && (
             <p>
               <small>

@@ -1,17 +1,23 @@
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
-import { getCurrentAccount } from '../utils/store-utils';
+import store from '../utils/store';
 
+import Avatar from './avatar';
 import Icon from './icon';
-import MenuLink from './MenuLink';
+import MenuLink from './menu-link';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
-  const currentAccount = getCurrentAccount();
+  const accounts = store.local.getJSON('accounts') || [];
+  const currentAccount = accounts.find(
+    (account) => account.info.id === store.session.get('currentAccount'),
+  );
+  const moreThanOneAccount = accounts.length > 1;
 
   // Home = Following
   // But when in multi-column mode, Home becomes columns of anything
@@ -20,6 +26,16 @@ function NavMenu(props) {
   const showFollowing =
     snapStates.settings.shortcutsColumnsMode &&
     !snapStates.shortcuts.find((pin) => pin.type === 'following');
+
+  const bindLongPress = useLongPress(
+    () => {
+      states.showAccounts = true;
+    },
+    {
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
 
   return (
     <Menu
@@ -30,11 +46,31 @@ function NavMenu(props) {
       overflow="auto"
       viewScroll="close"
       boundingBoxPadding="8 8 8 8"
-      menuButton={
-        <button type="button" class="button plain">
-          <Icon icon="menu" size="l" />
+      menuButton={({ open }) => (
+        <button
+          type="button"
+          class={`button plain nav-menu-button ${
+            moreThanOneAccount ? 'with-avatar' : ''
+          } ${open ? 'active' : ''}`}
+          style={{ position: 'relative' }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            states.showAccounts = true;
+          }}
+          {...bindLongPress()}
+        >
+          {moreThanOneAccount && (
+            <Avatar
+              url={
+                currentAccount?.info?.avatar ||
+                currentAccount?.info?.avatarStatic
+              }
+              size="l"
+            />
+          )}
+          <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
         </button>
-      }
+      )}
     >
       {!!snapStates.appVersion?.commitHash &&
         __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (

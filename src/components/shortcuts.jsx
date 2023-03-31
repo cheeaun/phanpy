@@ -12,7 +12,7 @@ import states from '../utils/states';
 import AsyncText from './AsyncText';
 import Icon from './icon';
 import Link from './link';
-import MenuLink from './MenuLink';
+import MenuLink from './menu-link';
 
 function Shortcuts() {
   const snapStates = useSnapshot(states);

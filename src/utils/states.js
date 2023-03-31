@@ -48,6 +48,8 @@ const states = proxy({
       store.account.get('settings-contentTranslation') ?? true,
     contentTranslationTargetLanguage:
       store.account.get('settings-contentTranslationTargetLanguage') || null,
+    contentTranslationHideLanguages:
+      store.account.get('settings-contentTranslationHideLanguages') || [],
   },
 });
 
@@ -75,6 +77,12 @@ subscribe(states, (changes) => {
     if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
       console.log('SET', value);
       store.account.set('settings-contentTranslationTargetLanguage', value);
+    }
+    if (/^settings\.contentTranslationHideLanguages/i.test(path.join('.'))) {
+      store.account.set(
+        'settings-contentTranslationHideLanguages',
+        states.settings.contentTranslationHideLanguages,
+      );
     }
     if (path?.[0] === 'shortcuts') {
       store.account.set('shortcuts', states.shortcuts);
@@ -114,8 +122,11 @@ export function saveStatus(status, instance, opts) {
     opts,
   );
   if (!status) return;
-  if (!override && getStatus(status.id)) return;
+  const oldStatus = getStatus(status.id, instance);
+  if (!override && oldStatus) return;
   const key = statusKey(status.id, instance);
+  if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
+  if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
   states.statuses[key] = status;
   if (status.reblog) {
     const key = statusKey(status.reblog.id, instance);

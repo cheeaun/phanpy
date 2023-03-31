@@ -1,5 +1,6 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useRef } from 'preact/hooks';
+import { useCallback, useRef } from 'preact/hooks';
+import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
 import { formatDuration } from './status';
@@ -39,8 +40,40 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
   }
 
+  const mediaRef = useRef();
+  const onUpdate = useCallback(({ x, y, scale }) => {
+    const { current: media } = mediaRef;
+
+    if (media) {
+      const value = make3dTransformValue({ x, y, scale });
+
+      media.style.setProperty('transform', value);
+
+      media.closest('.media-zoom').style.touchAction =
+        scale <= 1 ? 'pan-x' : '';
+    }
+  }, []);
+
+  const quickPinchZoomProps = {
+    draggableUnZoomed: false,
+    inertiaFriction: 0.9,
+    containerProps: {
+      className: 'media-zoom',
+      style: {
+        overflow: 'visible',
+        //   width: 'inherit',
+        //   height: 'inherit',
+        //   justifyContent: 'inherit',
+        //   alignItems: 'inherit',
+        //   display: 'inherit',
+      },
+    },
+    onUpdate,
+  };
+
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height
+    quickPinchZoomProps.containerProps.style.display = 'inherit';
     return (
       <div
         class={`media media-image`}
@@ -48,42 +81,42 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         style={
           showOriginal && {
             backgroundImage: `url(${previewUrl})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            aspectRatio: `${width}/${height}`,
-            width,
-            height,
-            maxWidth: '100%',
-            maxHeight: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
           }
         }
       >
-        <img
-          src={mediaURL}
-          alt={description}
-          width={width}
-          height={height}
-          loading={showOriginal ? 'eager' : 'lazy'}
-          style={
-            !showOriginal && {
+        {showOriginal ? (
+          <QuickPinchZoom {...quickPinchZoomProps}>
+            <img
+              ref={mediaRef}
+              src={mediaURL}
+              alt={description}
+              width={width}
+              height={height}
+              loading="eager"
+              decoding="async"
+              onLoad={(e) => {
+                e.target.closest('.media-image').style.backgroundImage = '';
+                e.target.closest('.media-zoom').style.display = '';
+              }}
+            />
+          </QuickPinchZoom>
+        ) : (
+          <img
+            src={mediaURL}
+            alt={description}
+            width={width}
+            height={height}
+            loading="lazy"
+            style={{
               backgroundColor:
                 rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
               backgroundPosition: focalBackgroundPosition || 'center',
-            }
-          }
-          onDblClick={() => {
-            // Open original image in new tab
-            window.open(url, '_blank');
-          }}
-          onLoad={(e) => {
-            // Hide background image after image loads
-            e.target.parentElement.style.backgroundImage = 'none';
-          }}
-        />
+            }}
+            onLoad={(e) => {
+              e.target.closest('.media-image').style.backgroundImage = '';
+            }}
+          />
+        )}
       </div>
     );
   } else if (type === 'gifv' || type === 'video') {
@@ -94,6 +127,23 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
     const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
+
+    const videoHTML = `
+    <video
+      src="${url}"
+      poster="${previewUrl}"
+      width="${width}"
+      height="${height}"
+      preload="auto"
+      autoplay
+      muted="${isGIF}"
+      ${isGIF ? '' : 'controls'}
+      playsinline
+      loop="${loopable}"
+      ${isGIF ? 'ondblclick="this.paused ? this.play() : this.pause()"' : ''}
+    ></video>
+  `;
+
     return (
       <div
         class={`media media-${isGIF ? 'gif' : 'video'} ${
@@ -129,33 +179,22 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         }}
       >
         {showOriginal || autoGIFAnimate ? (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video
-                src="${url}"
-                poster="${previewUrl}"
-                width="${width}"
-                height="${height}"
-                preload="auto"
-                autoplay
-                muted="${isGIF}"
-                ${isGIF ? '' : 'controls'}
-                playsinline
-                loop="${loopable}"
-                ${
-                  isGIF
-                    ? 'ondblclick="this.paused ? this.play() : this.pause()"'
-                    : ''
-                }
-              ></video>
-            `,
-            }}
-          />
+          isGIF ? (
+            <QuickPinchZoom {...quickPinchZoomProps}>
+              <div
+                ref={mediaRef}
+                dangerouslySetInnerHTML={{
+                  __html: videoHTML,
+                }}
+              />
+            </QuickPinchZoom>
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: videoHTML,
+              }}
+            />
+          )
         ) : isGIF ? (
           <video
             ref={videoRef}
@@ -204,6 +243,11 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             loading="lazy"
           />
         ) : null}
+        {!showOriginal && (
+          <div class="media-play">
+            <Icon icon="play" size="xxl" />
+          </div>
+        )}
       </div>
     );
   }

@@ -194,6 +194,50 @@ function Settings({ onClose }) {
                     ))}
                   </select>
                 </label>
+                <p class="checkbox-fieldset">
+                  <small>
+                    Hide "Translate" button for
+                    {snapStates.settings.contentTranslationHideLanguages
+                      .length > 0 && (
+                      <>
+                        {' '}
+                        (
+                        {
+                          snapStates.settings.contentTranslationHideLanguages
+                            .length
+                        }
+                        )
+                      </>
+                    )}
+                    :
+                  </small>
+                  <div class="checkbox-fields">
+                    {targetLanguages.map((lang) => (
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={snapStates.settings.contentTranslationHideLanguages.includes(
+                            lang.code,
+                          )}
+                          onChange={(e) => {
+                            const { checked } = e.target;
+                            if (checked) {
+                              states.settings.contentTranslationHideLanguages.push(
+                                lang.code,
+                              );
+                            } else {
+                              states.settings.contentTranslationHideLanguages =
+                                snapStates.settings.contentTranslationHideLanguages.filter(
+                                  (code) => code !== lang.code,
+                                );
+                            }
+                          }}
+                        />{' '}
+                        {lang.name}
+                      </label>
+                    ))}
+                  </div>
+                </p>
                 <p>
                   <small>
                     Note: This feature uses an external API to translate,

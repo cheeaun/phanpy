@@ -6,7 +6,9 @@ import { useSnapshot } from 'valtio';
 import Icon from '../components/icon';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { filteredItems } from '../utils/filters';
 import states from '../utils/states';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -32,11 +34,16 @@ function Public({ local, ...props }) {
       });
     }
     const results = await publicIterator.current.next();
-    const { value } = results;
+    let { value } = results;
     if (value?.length) {
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
+
+      value = filteredItems(value, 'public');
+      value.forEach((item) => {
+        saveStatus(item, instance);
+      });
     }
     return results;
   }
@@ -50,7 +57,8 @@ function Public({ local, ...props }) {
           since_id: latestItem.current,
         })
         .next();
-      const { value } = results;
+      let { value } = results;
+      value = filteredItems(value, 'public');
       if (value?.length) {
         return true;
       }
@@ -76,8 +84,10 @@ function Public({ local, ...props }) {
       errorText="Unable to load posts"
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
+      useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
+      allowFilters
       headerEnd={
         <Menu
           portal={{

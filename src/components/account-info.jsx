@@ -1,13 +1,22 @@
 import './account-info.css';
 
+import {
+  Menu,
+  MenuDivider,
+  MenuHeader,
+  MenuItem,
+  SubMenu,
+} from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
+import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
+import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
 
@@ -15,6 +24,29 @@ import AccountBlock from './account-block';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
+import Modal from './modal';
+import TranslationBlock from './translation-block';
+
+const MUTE_DURATIONS = [
+  1000 * 60 * 5, // 5 minutes
+  1000 * 60 * 30, // 30 minutes
+  1000 * 60 * 60, // 1 hour
+  1000 * 60 * 60 * 6, // 6 hours
+  1000 * 60 * 60 * 24, // 1 day
+  1000 * 60 * 60 * 24 * 3, // 3 days
+  1000 * 60 * 60 * 24 * 7, // 1 week
+  0, // forever
+];
+const MUTE_DURATIONS_LABELS = {
+  0: 'Forever',
+  300_000: '5 minutes',
+  1_800_000: '30 minutes',
+  3_600_000: '1 hour',
+  21_600_000: '6 hours',
+  86_400_000: '1 day',
+  259_200_000: '3 days',
+  604_800_000: '1 week',
+};
 
 function AccountInfo({
   account,
@@ -359,7 +391,7 @@ function RelatedActions({ info, instance, authenticated }) {
   const [relationship, setRelationship] = useState(null);
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
 
-  const { id, locked } = info;
+  const { id, acct, url, username, locked, lastStatusAt, note, fields } = info;
   const accountID = useRef(id);
 
   const {
@@ -375,6 +407,9 @@ function RelatedActions({ info, instance, authenticated }) {
     domainBlocking,
     endorsed,
   } = relationship || {};
+
+  const [currentInfo, setCurrentInfo] = useState(null);
+  const [isSelf, setIsSelf] = useState(false);
 
   useEffect(() => {
     if (info) {
@@ -394,7 +429,10 @@ function RelatedActions({ info, instance, authenticated }) {
               resolve: true,
             });
             console.log('🥏 Fetched account from logged-in instance', results);
-            currentID = results.accounts[0].id;
+            if (results.accounts.length) {
+              currentID = results.accounts[0].id;
+              setCurrentInfo(results.accounts[0]);
+            }
           } catch (e) {
             console.error(e);
           }
@@ -404,6 +442,7 @@ function RelatedActions({ info, instance, authenticated }) {
 
         if (currentAccount === currentID) {
           // It's myself!
+          setIsSelf(true);
           return;
         }
 
@@ -444,6 +483,11 @@ function RelatedActions({ info, instance, authenticated }) {
     }
   }, [info, authenticated]);
 
+  const loading = relationshipUIState === 'loading';
+  const menuInstanceRef = useRef(null);
+
+  const [showTranslatedBio, setShowTranslatedBio] = useState(false);
+
   return (
     <>
       {familiarFollowers?.length > 0 && (
@@ -473,67 +517,329 @@ function RelatedActions({ info, instance, authenticated }) {
         </p>
       )}
       <p class="actions">
-        {followedBy ? <span class="tag">Following you</span> : <span />}{' '}
-        {relationshipUIState !== 'loading' && relationship && (
-          <button
-            type="button"
-            class={`${following || requested ? 'light swap' : ''}`}
-            data-swap-state={following || requested ? 'danger' : ''}
-            disabled={relationshipUIState === 'loading'}
-            onClick={() => {
-              setRelationshipUIState('loading');
+        {followedBy ? (
+          <span class="tag">Following you</span>
+        ) : !!lastStatusAt ? (
+          <span class="insignificant">
+            Last status:{' '}
+            {niceDateTime(lastStatusAt, {
+              hideTime: true,
+            })}
+          </span>
+        ) : (
+          <span />
+        )}{' '}
+        <span class="buttons">
+          <Menu
+            instanceRef={menuInstanceRef}
+            portal={{
+              target: document.body,
+            }}
+            containerProps={{
+              style: {
+                // Higher than the backdrop
+                zIndex: 1001,
+              },
+              onClick: (e) => {
+                if (e.target === e.currentTarget) {
+                  menuInstanceRef.current?.closeMenu?.();
+                }
+              },
+            }}
+            align="center"
+            position="anchor"
+            overflow="auto"
+            boundingBoxPadding="8 8 8 8"
+            menuButton={
+              <button
+                type="button"
+                title="More"
+                class="plain"
+                disabled={loading}
+              >
+                <Icon icon="more" size="l" alt="More" />
+              </button>
+            }
+          >
+            {currentAuthenticated && !isSelf && (
+              <>
+                <MenuItem
+                  onClick={() => {
+                    states.showCompose = {
+                      draftStatus: {
+                        status: `@${currentInfo?.acct || acct} `,
+                      },
+                    };
+                  }}
+                >
+                  <Icon icon="at" />
+                  <span>Mention @{username}</span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setShowTranslatedBio(true);
+                  }}
+                >
+                  <Icon icon="translate" />
+                  <span>Translate bio</span>
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+            <MenuItem href={url} target="_blank">
+              <Icon icon="external" />
+              <small class="menu-double-lines">{niceAccountURL(url)}</small>
+            </MenuItem>
+            <div class="menu-horizontal">
+              <MenuItem
+                onClick={() => {
+                  // Copy url to clipboard
+                  try {
+                    navigator.clipboard.writeText(url);
+                    showToast('Link copied');
+                  } catch (e) {
+                    console.error(e);
+                    showToast('Unable to copy link');
+                  }
+                }}
+              >
+                <Icon icon="link" />
+                <span>Copy</span>
+              </MenuItem>
+              {navigator?.share &&
+                navigator?.canShare?.({
+                  url,
+                }) && (
+                  <MenuItem
+                    onClick={() => {
+                      try {
+                        navigator.share({
+                          url,
+                        });
+                      } catch (e) {
+                        console.error(e);
+                        alert("Sharing doesn't seem to work.");
+                      }
+                    }}
+                  >
+                    <Icon icon="share" />
+                    <span>Share…</span>
+                  </MenuItem>
+                )}
+            </div>
+            {!!relationship && (
+              <>
+                <MenuDivider />
+                {muting ? (
+                  <MenuItem
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          const newRelationship =
+                            await currentMasto.v1.accounts.unmute(
+                              currentInfo?.id || id,
+                            );
+                          console.log('unmuting', newRelationship);
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(`Unmuted @${username}`);
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="unmute" />
+                    <span>Unmute @{username}</span>
+                  </MenuItem>
+                ) : (
+                  <SubMenu
+                    openTrigger="clickOnly"
+                    direction="bottom"
+                    overflow="auto"
+                    offsetX={-16}
+                    label={
+                      <>
+                        <Icon icon="mute" />
+                        <span class="menu-grow">Mute @{username}…</span>
+                        <span
+                          style={{
+                            textOverflow: 'clip',
+                          }}
+                        >
+                          <Icon icon="time" />
+                          <Icon icon="chevron-right" />
+                        </span>
+                      </>
+                    }
+                  >
+                    <div class="menu-wrap">
+                      {MUTE_DURATIONS.map((duration) => (
+                        <MenuItem
+                          onClick={() => {
+                            setRelationshipUIState('loading');
+                            (async () => {
+                              try {
+                                const newRelationship =
+                                  await currentMasto.v1.accounts.mute(
+                                    currentInfo?.id || id,
+                                    {
+                                      duration,
+                                    },
+                                  );
+                                console.log('muting', newRelationship);
+                                setRelationship(newRelationship);
+                                setRelationshipUIState('default');
+                                showToast(
+                                  `Muted @${username} for ${MUTE_DURATIONS_LABELS[duration]}`,
+                                );
+                              } catch (e) {
+                                console.error(e);
+                                setRelationshipUIState('error');
+                                showToast(`Unable to mute @${username}`);
+                              }
+                            })();
+                          }}
+                        >
+                          {MUTE_DURATIONS_LABELS[duration]}
+                        </MenuItem>
+                      ))}
+                    </div>
+                  </SubMenu>
+                )}
+                <MenuItem
+                  onClick={() => {
+                    if (!blocking && !confirm(`Block @${username}?`)) {
+                      return;
+                    }
+                    setRelationshipUIState('loading');
+                    (async () => {
+                      try {
+                        if (blocking) {
+                          const newRelationship =
+                            await currentMasto.v1.accounts.unblock(
+                              currentInfo?.id || id,
+                            );
+                          console.log('unblocking', newRelationship);
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(`Unblocked @${username}`);
+                        } else {
+                          const newRelationship =
+                            await currentMasto.v1.accounts.block(
+                              currentInfo?.id || id,
+                            );
+                          console.log('blocking', newRelationship);
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(`Blocked @${username}`);
+                        }
+                      } catch (e) {
+                        console.error(e);
+                        setRelationshipUIState('error');
+                        if (blocking) {
+                          showToast(`Unable to unblock @${username}`);
+                        } else {
+                          showToast(`Unable to block @${username}`);
+                        }
+                      }
+                    })();
+                  }}
+                >
+                  {blocking ? (
+                    <>
+                      <Icon icon="unblock" />
+                      <span>Unblock @{username}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon="block" />
+                      <span>Block @{username}…</span>
+                    </>
+                  )}
+                </MenuItem>
+                {/* <MenuItem>
+                <Icon icon="flag" />
+                <span>Report @{username}…</span>
+              </MenuItem> */}
+              </>
+            )}
+          </Menu>
+          {!!relationship && (
+            <button
+              type="button"
+              class={`${following || requested ? 'light swap' : ''}`}
+              data-swap-state={following || requested ? 'danger' : ''}
+              disabled={loading}
+              onClick={() => {
+                setRelationshipUIState('loading');
+                (async () => {
+                  try {
+                    let newRelationship;
 
-              (async () => {
-                try {
-                  let newRelationship;
+                    if (following || requested) {
+                      const yes = confirm(
+                        requested
+                          ? 'Withdraw follow request?'
+                          : `Unfollow @${info.acct || info.username}?`,
+                      );
 
-                  if (following || requested) {
-                    const yes = confirm(
-                      requested
-                        ? 'Withdraw follow request?'
-                        : `Unfollow @${info.acct || info.username}?`,
-                    );
-
-                    if (yes) {
-                      newRelationship = await currentMasto.v1.accounts.unfollow(
+                      if (yes) {
+                        newRelationship =
+                          await currentMasto.v1.accounts.unfollow(
+                            accountID.current,
+                          );
+                      }
+                    } else {
+                      newRelationship = await currentMasto.v1.accounts.follow(
                         accountID.current,
                       );
                     }
-                  } else {
-                    newRelationship = await currentMasto.v1.accounts.follow(
-                      accountID.current,
-                    );
-                  }
 
-                  if (newRelationship) setRelationship(newRelationship);
-                  setRelationshipUIState('default');
-                } catch (e) {
-                  alert(e);
-                  setRelationshipUIState('error');
-                }
-              })();
-            }}
-          >
-            {following ? (
-              <>
-                <span>Following</span>
-                <span>Unfollow…</span>
-              </>
-            ) : requested ? (
-              <>
-                <span>Requested</span>
-                <span>Withdraw…</span>
-              </>
-            ) : locked ? (
-              <>
-                <Icon icon="lock" /> <span>Follow</span>
-              </>
-            ) : (
-              'Follow'
-            )}
-          </button>
-        )}
+                    if (newRelationship) setRelationship(newRelationship);
+                    setRelationshipUIState('default');
+                  } catch (e) {
+                    alert(e);
+                    setRelationshipUIState('error');
+                  }
+                })();
+              }}
+            >
+              {following ? (
+                <>
+                  <span>Following</span>
+                  <span>Unfollow…</span>
+                </>
+              ) : requested ? (
+                <>
+                  <span>Requested</span>
+                  <span>Withdraw…</span>
+                </>
+              ) : locked ? (
+                <>
+                  <Icon icon="lock" /> <span>Follow</span>
+                </>
+              ) : (
+                'Follow'
+              )}
+            </button>
+          )}
+        </span>
       </p>
+      {!!showTranslatedBio && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowTranslatedBio(false);
+            }
+          }}
+        >
+          <TranslatedBioSheet note={note} fields={fields} />
+        </Modal>
+      )}
     </>
   );
 }
@@ -554,4 +860,44 @@ function lightenRGB([r, g, b]) {
   return [r, g, b, alpha];
 }
 
+function niceAccountURL(url) {
+  if (!url) return;
+  const urlObj = new URL(url);
+  const { host, pathname } = urlObj;
+  const path = pathname.replace(/\/$/, '').replace(/^\//, '');
+  return (
+    <>
+      <span class="more-insignificant">{host}/</span>
+      <wbr />
+      <span>{path}</span>
+    </>
+  );
+}
+
+function TranslatedBioSheet({ note, fields }) {
+  const fieldsText =
+    fields
+      ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
+      .join('\n\n') || '';
+
+  const text = getHTMLText(note) + (fieldsText ? `\n\n${fieldsText}` : '');
+
+  return (
+    <div class="sheet">
+      <header>
+        <h2>Translated Bio</h2>
+      </header>
+      <main>
+        <p
+          style={{
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {text}
+        </p>
+        <TranslationBlock forceTranslate text={text} />
+      </main>
+    </div>
+  );
+}
 export default AccountInfo;

@@ -105,6 +105,8 @@ And here I am. Building a Mastodon web client.
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks (alpha)](https://alpha.trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)
+- [Litterbox](https://litterbox.koyu.space/)
+- [Statuzer](https://statuzer.com/)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## License

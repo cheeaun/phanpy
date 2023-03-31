@@ -139,14 +139,17 @@ function TranslationBlock({
           ) : (
             !!translatedContent && (
               <>
-                {!!pronunciationContent && (
-                  <output class="translated-pronunciation-content">
-                    {pronunciationContent}
-                  </output>
-                )}
                 <output class="translated-content" lang={targetLang}>
                   {translatedContent}
                 </output>
+                {!!pronunciationContent && (
+                  <output
+                    class="translated-pronunciation-content"
+                    tabIndex={-1}
+                  >
+                    {pronunciationContent}
+                  </output>
+                )}
               </>
             )
           )}

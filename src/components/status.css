@@ -32,6 +32,7 @@
   );
   /* diagonal stripes of yellow */
   background-image: var(--yellow-stripes);
+  background-attachment: fixed;
 }
 
 /* STATUS PRE META */
@@ -85,6 +86,7 @@
 }
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
+  background-attachment: local, fixed;
 }
 
 @keyframes skeleton-breathe {

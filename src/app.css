@@ -587,7 +587,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline:not(.flat)
   > li:is(.timeline-item-container-middle, .timeline-item-container-end)
-  .status {
+  .status-reply-to:not(.visibility-direct) {
   background-image: none;
 }
 

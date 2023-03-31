@@ -94,11 +94,11 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  mask-image: linear-gradient(to top, transparent, black 16px);
+  mask-image: linear-gradient(to bottom, black 3em, transparent);
 }
 .status-translation-block
   .translated-block
-  output.translated-pronunciation-content:is(:active, :focus) {
+  output.translated-pronunciation-content.expand {
   display: block;
   -webkit-line-clamp: unset;
   -webkit-box-orient: unset;

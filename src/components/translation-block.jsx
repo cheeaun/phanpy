@@ -146,6 +146,9 @@ function TranslationBlock({
                   <output
                     class="translated-pronunciation-content"
                     tabIndex={-1}
+                    onClick={(e) => {
+                      e.target.classList.toggle('expand');
+                    }}
                   >
                     {pronunciationContent}
                   </output>

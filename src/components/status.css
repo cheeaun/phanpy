@@ -986,6 +986,7 @@ a.card:is(:hover, :focus) {
 .status .action > button.plain {
   color: inherit;
   border: 1.5px solid transparent;
+  backdrop-filter: none;
 }
 .status .action > button.plain:is(:hover, :focus) {
   color: var(--link-color);

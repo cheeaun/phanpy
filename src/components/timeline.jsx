@@ -559,12 +559,16 @@ function TimelineStatusCompact({ status, instance }) {
   const sKey = statusKey(id, instance);
   return (
     <article class="status compact-thread" tabindex="-1">
-      {!!snapStates.statusThreadNumber[sKey] && (
+      {!!snapStates.statusThreadNumber[sKey] ? (
         <div class="status-thread-badge">
           <Icon icon="thread" size="s" />
           {snapStates.statusThreadNumber[sKey]
             ? ` ${snapStates.statusThreadNumber[sKey]}/X`
             : ''}
+        </div>
+      ) : (
+        <div class="status-thread-badge">
+          <Icon icon="thread" size="s" />
         </div>
       )}
       <div class="content-compact" title={statusPeekText}>

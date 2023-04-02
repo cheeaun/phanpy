@@ -835,6 +835,15 @@ a.card:is(:hover, :focus) {
 .poll {
   transition: opacity 0.2s ease-in-out;
   margin-top: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-faded-color);
+  background-image: linear-gradient(
+    to bottom,
+    var(--bg-color) 50%,
+    var(--bg-faded-color)
+  );
+  overflow: hidden;
 }
 .poll.loading {
   opacity: 0.5;
@@ -848,9 +857,6 @@ a.card:is(:hover, :focus) {
   flex-direction: column;
   gap: 4px;
   padding: 4px;
-  border-radius: 16px;
-  border: 1px solid var(--outline-color);
-  background-color: var(--bg-faded-color);
 }
 .poll-option {
   padding: 4px 8px;
@@ -877,10 +883,6 @@ a.card:is(:hover, :focus) {
 .poll-option:first-child:after {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-}
-.poll-option:last-child:after {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
 }
 .poll-option:hover:after {
   opacity: 1;
@@ -910,10 +912,11 @@ a.card:is(:hover, :focus) {
   opacity: 1;
 }
 .poll-vote-button {
-  margin-top: 8px;
+  margin: 8px 8px 0 12px;
+  padding-inline: 24px;
 }
 .poll-meta {
-  margin: 8px 0;
+  margin: 8px 16px;
   font-size: 90%;
 }
 .poll-option-title {

@@ -1709,7 +1709,10 @@ ul.link-list li a .icon {
   .timeline:not(.flat) > li:not(:has(.status-carousel)) {
     transform: translate3d(0, 0, 0);
   }
-  .timeline:not(.flat) > li:has(.status-badge) {
+  .timeline:not(.flat)
+    > li:not(.timeline-item-container-end, .timeline-item-container-middle):has(
+      .status-badge:not(:empty)
+    ) {
     border-top-right-radius: 8px;
   }
   .timeline:not(.flat) > li:has(.status-link.is-active) {

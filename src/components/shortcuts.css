@@ -131,16 +131,16 @@ shortcuts .tab-bar[hidden] {
 }
 
 @media (max-width: calc(40em - 1px)) {
-  #app:has(#shortcuts .tab-bar) .deck-container {
+  #app[data-shortcuts-view-mode='tab-menu-bar'] .deck-container {
     padding-bottom: 52px;
   }
 }
 
 @media (min-width: 40em) {
-  #app:has(#shortcuts .tab-bar) .timeline-deck {
+  #app[data-shortcuts-view-mode='tab-menu-bar'] .timeline-deck {
     margin-top: 44px;
   }
-  #app:has(#shortcuts .tab-bar) .timeline-deck > header {
+  #app[data-shortcuts-view-mode='tab-menu-bar'] .timeline-deck > header {
     --margin-top: calc(44px + 8px);
   }
   #shortcuts .tab-bar:not([hidden]) {

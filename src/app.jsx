@@ -192,6 +192,14 @@ function App() {
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
+  // Change #app classname based on snapStates.settings.shortcutsViewMode
+  useEffect(() => {
+    const $app = document.getElementById('app');
+    if ($app) {
+      $app.dataset.shortcutsViewMode = snapStates.settings.shortcutsViewMode;
+    }
+  }, [snapStates.settings.shortcutsViewMode]);
+
   return (
     <>
       <Routes location={nonRootLocation || location}>

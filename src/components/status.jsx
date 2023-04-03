@@ -1279,24 +1279,26 @@ function Poll({
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
 
   // Update poll at point of expiry
-  useEffect(() => {
-    let timeout;
-    if (!expired && expiresAtDate) {
-      const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
-      if (ms > 0) {
-        timeout = setTimeout(() => {
-          setUIState('loading');
-          (async () => {
-            await refresh();
-            setUIState('default');
-          })();
-        }, ms);
-      }
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [expired, expiresAtDate]);
+  // NOTE: Disable this because setTimeout runs immediately if delay is too large
+  // https://stackoverflow.com/a/56718027/20838
+  // useEffect(() => {
+  //   let timeout;
+  //   if (!expired && expiresAtDate) {
+  //     const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
+  //     if (ms > 0) {
+  //       timeout = setTimeout(() => {
+  //         setUIState('loading');
+  //         (async () => {
+  //           // await refresh();
+  //           setUIState('default');
+  //         })();
+  //       }, ms);
+  //     }
+  //   }
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // }, [expired, expiresAtDate]);
 
   const pollVotesCount = votersCount || votesCount;
   let roundPrecision = 0;

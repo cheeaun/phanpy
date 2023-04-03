@@ -1030,19 +1030,18 @@ function Status({
                   onClick={replyStatus}
                 />
               </div>
-              {canBoost && (
-                <div class="action has-count">
-                  <StatusButton
-                    checked={reblogged}
-                    title={['Boost', 'Unboost']}
-                    alt={['Boost', 'Boosted']}
-                    class="reblog-button"
-                    icon="rocket"
-                    count={reblogsCount}
-                    onClick={boostStatus}
-                  />
-                </div>
-              )}
+              <div class="action has-count">
+                <StatusButton
+                  checked={reblogged}
+                  title={['Boost', 'Unboost']}
+                  alt={['Boost', 'Boosted']}
+                  class="reblog-button"
+                  icon="rocket"
+                  count={reblogsCount}
+                  onClick={boostStatus}
+                  disabled={!canBoost}
+                />
+              </div>
               <div class="action has-count">
                 <StatusButton
                   checked={favourited}

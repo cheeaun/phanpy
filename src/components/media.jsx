@@ -179,7 +179,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
         }}
       >
         {showOriginal || autoGIFAnimate ? (
-          isGIF ? (
+          isGIF && showOriginal ? (
             <QuickPinchZoom {...quickPinchZoomProps}>
               <div
                 ref={mediaRef}
@@ -190,6 +190,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             </QuickPinchZoom>
           ) : (
             <div
+              class="video-container"
               dangerouslySetInnerHTML={{
                 __html: videoHTML,
               }}

@@ -21,7 +21,6 @@ function AccountStatuses() {
   const excludeReplies = !searchParams.get('replies');
   const tagged = searchParams.get('tagged');
   const media = !!searchParams.get('media');
-  console.log({ excludeReplies });
   const { masto, instance, authenticated } = api({ instance: params.instance });
   const accountStatusesIterator = useRef();
   async function fetchAccountStatuses(firstLoad) {
@@ -100,8 +99,10 @@ function AccountStatuses() {
 
   const { displayName, acct, emojis } = account || {};
 
+  const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
     const cachedAccount = snapStates.accounts[`${id}@${instance}`];
+    const filtered = !excludeReplies || tagged || media;
     return (
       <>
         <AccountInfo
@@ -111,8 +112,18 @@ function AccountStatuses() {
           authenticated={authenticated}
           standalone
         />
-        <div class="filter-bar">
-          <Icon icon="filter" class="insignificant" size="l" />
+        <div class="filter-bar" ref={filterBarRef}>
+          {filtered ? (
+            <Link
+              to={`/${instance}/a/${id}`}
+              class="insignificant filter-clear"
+              title="Clear filters"
+            >
+              <Icon icon="x" size="l" />
+            </Link>
+          ) : (
+            <Icon icon="filter" class="insignificant" size="l" />
+          )}
           <Link
             to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
             class={excludeReplies ? '' : 'is-active'}
@@ -156,6 +167,20 @@ function AccountStatuses() {
     tagged,
     media,
   ]);
+
+  useEffect(() => {
+    // Focus on .is-active
+    const active = filterBarRef.current?.querySelector('.is-active');
+    if (active) {
+      console.log('active', active, active.offsetLeft);
+      filterBarRef.current.scrollTo({
+        behavior: 'smooth',
+        left:
+          active.offsetLeft -
+          (filterBarRef.current.offsetWidth - active.offsetWidth) / 2,
+      });
+    }
+  }, [featuredTags, tagged, media, excludeReplies]);
 
   return (
     <Timeline

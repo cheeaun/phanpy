@@ -1663,7 +1663,7 @@ ul.link-list li a .icon {
     background-color: transparent;
   }
 }
-.filter-bar > a {
+.filter-bar > a:not(.filter-clear) {
   padding: 8px 16px;
   border-radius: 999px;
   background-color: var(--bg-color);

@@ -74,6 +74,7 @@ const ICONS = {
   time: 'mingcute:time-line',
   refresh: 'mingcute:refresh-2-line',
   emoji2: 'mingcute:emoji-2-line',
+  filter: 'mingcute:filter-2-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

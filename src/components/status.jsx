@@ -300,7 +300,8 @@ function Status({
 
   const boostStatus = async () => {
     if (!sameInstance || !authenticated) {
-      return alert(unauthInteractionErrorMessage);
+      alert(unauthInteractionErrorMessage);
+      return false;
     }
     try {
       if (!reblogged) {
@@ -314,7 +315,7 @@ function Status({
         }
         const yes = confirm(confirmText);
         if (!yes) {
-          return;
+          return false;
         }
       }
       // Optimistic
@@ -326,14 +327,17 @@ function Status({
       if (reblogged) {
         const newStatus = await masto.v1.statuses.unreblog(id);
         saveStatus(newStatus, instance);
+        return true;
       } else {
         const newStatus = await masto.v1.statuses.reblog(id);
         saveStatus(newStatus, instance);
+        return true;
       }
     } catch (e) {
       console.error(e);
       // Revert optimistism
       states.statuses[sKey] = status;
+      return false;
     }
   };
 
@@ -450,9 +454,10 @@ function Status({
             <MenuItem
               onClick={async () => {
                 try {
-                  await boostStatus();
-                  if (!isSizeLarge)
+                  const done = await boostStatus();
+                  if (!isSizeLarge && done) {
                     showToast(reblogged ? 'Unboosted' : 'Boosted');
+                  }
                 } catch (e) {}
               }}
             >

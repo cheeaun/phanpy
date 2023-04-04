@@ -19,6 +19,7 @@ function AccountStatuses() {
   const { id, ...params } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const excludeReplies = !searchParams.get('replies');
+  const excludeBoosts = !!searchParams.get('boosts');
   const tagged = searchParams.get('tagged');
   const media = !!searchParams.get('media');
   const { masto, instance, authenticated } = api({ instance: params.instance });
@@ -52,6 +53,7 @@ function AccountStatuses() {
       accountStatusesIterator.current = masto.v1.accounts.listStatuses(id, {
         limit: LIMIT,
         exclude_replies: excludeReplies,
+        exclude_reblogs: excludeBoosts,
         only_media: media,
         tagged,
       });
@@ -102,7 +104,7 @@ function AccountStatuses() {
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
     const cachedAccount = snapStates.accounts[`${id}@${instance}`];
-    const filtered = !excludeReplies || tagged || media;
+    const filtered = !excludeReplies || excludeBoosts || tagged || media;
     return (
       <>
         <AccountInfo
@@ -129,6 +131,12 @@ function AccountStatuses() {
             class={excludeReplies ? '' : 'is-active'}
           >
             + Replies
+          </Link>
+          <Link
+            to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
+            class={!excludeBoosts ? '' : 'is-active'}
+          >
+            - Boosts
           </Link>
           <Link
             to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
@@ -163,6 +171,7 @@ function AccountStatuses() {
     instance,
     authenticated,
     excludeReplies,
+    excludeBoosts,
     featuredTags,
     tagged,
     media,
@@ -180,7 +189,7 @@ function AccountStatuses() {
           (filterBarRef.current.offsetWidth - active.offsetWidth) / 2,
       });
     }
-  }, [featuredTags, tagged, media, excludeReplies]);
+  }, [featuredTags, tagged, media, excludeReplies, excludeBoosts]);
 
   return (
     <Timeline
@@ -214,7 +223,7 @@ function AccountStatuses() {
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
-      refresh={excludeReplies + tagged + media}
+      refresh={excludeReplies + excludeBoosts + tagged + media}
     />
   );
 }

@@ -28,6 +28,7 @@ function FollowedHashtags() {
           if (done || value?.length === 0) break;
           tags.push(...value);
         } while (true);
+        tags.sort((a, b) => a.name.localeCompare(b.name));
         console.log(tags);
         setFollowedHashtags(tags);
         setUiState('default');

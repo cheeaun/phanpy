@@ -41,6 +41,7 @@ import Public from './pages/public';
 import Search from './pages/search';
 import Settings from './pages/settings';
 import Status from './pages/status';
+import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import {
   api,
@@ -238,6 +239,7 @@ function App() {
           <Route index element={<Public />} />
           <Route path="l" element={<Public local />} />
         </Route>
+        <Route path="/:instance?/trending" element={<Trending />} />
         <Route path="/:instance?/search" element={<Search />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>

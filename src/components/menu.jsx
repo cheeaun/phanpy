@@ -137,6 +137,9 @@ function NavMenu(props) {
       <MenuLink to={`/${instance}/p`}>
         <Icon icon="earth" size="l" /> <span>Federated</span>
       </MenuLink>
+      <MenuLink to={`/${instance}/trending`}>
+        <Icon icon="chart" size="l" /> <span>Trending</span>
+      </MenuLink>
       {authenticated && (
         <>
           <MenuDivider />

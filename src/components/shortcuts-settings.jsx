@@ -27,6 +27,7 @@ const TYPES = [
   'bookmarks',
   'favourites',
   'hashtag',
+  'trending',
 ];
 const TYPE_TEXT = {
   following: 'Home / Following',
@@ -38,6 +39,7 @@ const TYPE_TEXT = {
   bookmarks: 'Bookmarks',
   favourites: 'Favourites',
   hashtag: 'Hashtag',
+  trending: 'Trending',
 };
 const TYPE_PARAMS = {
   list: [
@@ -52,6 +54,14 @@ const TYPE_PARAMS = {
       name: 'local',
       type: 'checkbox',
     },
+    {
+      text: 'Instance',
+      name: 'instance',
+      type: 'text',
+      placeholder: 'e.g. mastodon.social',
+    },
+  ],
+  trending: [
     {
       text: 'Instance',
       name: 'instance',
@@ -117,6 +127,12 @@ export const SHORTCUTS_META = {
       `${local ? 'Local' : 'Federated'} (${instance})`,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
+  },
+  trending: {
+    id: 'trending',
+    title: 'Trending',
+    path: ({ instance }) => `/${instance}/trending`,
+    icon: 'chart',
   },
   search: {
     id: 'search',

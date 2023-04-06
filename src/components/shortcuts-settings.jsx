@@ -33,7 +33,7 @@ const TYPE_TEXT = {
   following: 'Home / Following',
   notifications: 'Notifications',
   list: 'List',
-  public: 'Public',
+  public: 'Public (Local / Federated)',
   search: 'Search',
   'account-statuses': 'Account',
   bookmarks: 'Bookmarks',

@@ -51,12 +51,14 @@ function Trending(props) {
       const results = await masto.v1.trends
         .listStatuses({
           limit: 1,
-          since_id: latestItem.current,
+          // NOT SUPPORTED
+          // since_id: latestItem.current,
         })
         .next();
       let { value } = results;
       value = filteredItems(value, 'public');
-      if (value?.length) {
+      if (value?.length && value[0].id !== latestItem.current) {
+        latestItem.current = value[0].id;
         return true;
       }
       return false;
@@ -81,6 +83,7 @@ function Trending(props) {
       errorText="Unable to load posts"
       fetchItems={fetchTrend}
       checkForUpdates={checkForUpdates}
+      checkForUpdatesInterval={5 * 60 * 1000} // 5 minutes
       useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}

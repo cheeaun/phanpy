@@ -211,7 +211,7 @@ function Timeline({
             console.log('✨ Check updates');
             const hasUpdate = await checkForUpdates();
             if (hasUpdate) {
-              console.log('✨ Has new updates');
+              console.log('✨ Has new updates', id);
               setShowNew(true);
             }
           })();
@@ -231,7 +231,7 @@ function Timeline({
         console.log('✨ Check updates');
         const hasUpdate = await checkForUpdates();
         if (hasUpdate) {
-          console.log('✨ Has new updates');
+          console.log('✨ Has new updates', id);
           setShowNew(true);
         }
       })();

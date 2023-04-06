@@ -14,11 +14,13 @@ import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import 'swiped-events';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
+import AccountBlock from '../components/account-block';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
@@ -228,6 +230,7 @@ function Status({
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
 
   const [showEdited, setShowEdited] = useState(false);
+  const [showReactions, setShowReactions] = useState(false);
 
   const spoilerContentRef = useRef(null);
   useResizeObserver({
@@ -444,6 +447,14 @@ function Status({
         </MenuItem>
       )}
       {(!isSizeLarge || !!editedAt) && <MenuDivider />}
+      {isSizeLarge && (
+        <MenuItem onClick={() => setShowReactions(true)}>
+          <Icon icon="react" />
+          <span>
+            Boosted/Favourited by<span class="more-insignificant">…</span>
+          </span>
+        </MenuItem>
+      )}
       {!isSizeLarge && sameInstance && (
         <>
           <MenuItem onClick={replyStatus}>
@@ -1123,6 +1134,18 @@ function Status({
           />
         </Modal>
       )}
+      {showReactions && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowReactions(false);
+            }
+          }}
+        >
+          <ReactionsModal statusID={id} instance={instance} />
+        </Modal>
+      )}
     </article>
   );
 }
@@ -1535,6 +1558,147 @@ function EditedAtModal({
               );
             })}
           </ol>
+        )}
+      </main>
+    </div>
+  );
+}
+
+const REACTIONS_LIMIT = 80;
+function ReactionsModal({ statusID, instance }) {
+  const { masto } = api({ instance });
+  const [uiState, setUIState] = useState('default');
+  const [accounts, setAccounts] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+
+  const reblogIterator = useRef();
+  const favouriteIterator = useRef();
+
+  async function fetchAccounts(firstLoad) {
+    setShowMore(false);
+    setUIState('loading');
+    (async () => {
+      try {
+        if (firstLoad) {
+          reblogIterator.current = masto.v1.statuses.listRebloggedBy(statusID, {
+            limit: REACTIONS_LIMIT,
+          });
+          favouriteIterator.current = masto.v1.statuses.listFavouritedBy(
+            statusID,
+            {
+              limit: REACTIONS_LIMIT,
+            },
+          );
+        }
+        const [{ value: reblogResults }, { value: favouriteResults }] =
+          await Promise.allSettled([
+            reblogIterator.current.next(),
+            favouriteIterator.current.next(),
+          ]);
+        if (reblogResults.value?.length || favouriteResults.value?.length) {
+          if (reblogResults.value?.length) {
+            for (const account of reblogResults.value) {
+              const theAccount = accounts.find((a) => a.id === account.id);
+              if (!theAccount) {
+                accounts.push({
+                  ...account,
+                  _types: ['reblog'],
+                });
+              } else {
+                theAccount._types.push('reblog');
+              }
+            }
+          }
+          if (favouriteResults.value?.length) {
+            for (const account of favouriteResults.value) {
+              const theAccount = accounts.find((a) => a.id === account.id);
+              if (!theAccount) {
+                accounts.push({
+                  ...account,
+                  _types: ['favourite'],
+                });
+              } else {
+                theAccount._types.push('favourite');
+              }
+            }
+          }
+          setAccounts(accounts);
+          setShowMore(!reblogResults.done || !favouriteResults.done);
+        } else {
+          setShowMore(false);
+        }
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      }
+    })();
+  }
+
+  useEffect(() => {
+    fetchAccounts(true);
+  }, []);
+
+  return (
+    <div id="reactions-container" class="sheet">
+      <header>
+        <h2>Boosted/Favourited by…</h2>
+      </header>
+      <main>
+        {accounts.length > 0 ? (
+          <>
+            <ul class="reactions-list">
+              {accounts.map((account) => {
+                const { _types } = account;
+                return (
+                  <li key={account.id + _types}>
+                    <div class="reactions-block">
+                      {_types.map((type) => (
+                        <Icon
+                          icon={
+                            {
+                              reblog: 'rocket',
+                              favourite: 'heart',
+                            }[type]
+                          }
+                          class={`${type}-icon`}
+                        />
+                      ))}
+                    </div>
+                    <AccountBlock account={account} instance={instance} />
+                  </li>
+                );
+              })}
+            </ul>
+            {uiState === 'default' &&
+              (showMore ? (
+                <InView
+                  onChange={(inView) => {
+                    if (inView) {
+                      fetchAccounts();
+                    }
+                  }}
+                >
+                  <button
+                    type="button"
+                    class="plain block"
+                    onClick={() => fetchAccounts()}
+                  >
+                    Show more&hellip;
+                  </button>
+                </InView>
+              ) : (
+                <p class="ui-state insignificant">The end.</p>
+              ))}
+          </>
+        ) : uiState === 'loading' ? (
+          <p class="ui-state">
+            <Loader abrupt />
+          </p>
+        ) : uiState === 'error' ? (
+          <p class="ui-state">Unable to load accounts</p>
+        ) : (
+          <p class="ui-state insignificant">No one yet.</p>
         )}
       </main>
     </div>

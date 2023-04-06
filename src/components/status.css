@@ -1222,3 +1222,41 @@ a.card:is(:hover, :focus) {
   bottom: 8px;
   right: 8px;
 }
+
+/* REACTIONS */
+
+#reactions-container main ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 1.5em;
+  row-gap: 16px;
+}
+#reactions-container main ul li {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 16em;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+#reactions-container main ul li .account-block-acct {
+  font-size: 80%;
+  color: var(--text-insignificant-color);
+  display: block;
+}
+#reactions-container .reactions-block {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+#reactions-container .reactions-block .favourite-icon {
+  color: var(--favourite-color);
+}
+#reactions-container .reactions-block .reblog-icon {
+  color: var(--reblog-color);
+}

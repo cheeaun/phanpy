@@ -208,7 +208,7 @@ function Status({
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
           <NameText account={status.account} instance={instance} showAvatar />{' '}
-          boosted
+          <span>boosted</span>
         </div>
         <Status
           status={statusID ? null : reblog}

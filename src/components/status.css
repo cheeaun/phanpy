@@ -37,7 +37,6 @@
 /* STATUS PRE META */
 
 .status-pre-meta {
-  line-height: 1.4;
   padding: 8px 16px 0;
   opacity: 0.75;
   font-size: smaller;
@@ -48,7 +47,9 @@
   margin-bottom: -8px;
 }
 .status-pre-meta .name-text {
-  display: inline;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
 }
 .status-pre-meta > * {
   vertical-align: middle;

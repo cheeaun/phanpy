@@ -173,7 +173,7 @@ function List(props) {
   );
 }
 
-const MEMBERS_LIMIT = 10;
+const MEMBERS_LIMIT = 40;
 function ListManageMembers({ listID }) {
   // Show list of members with [Remove] button
   // API only returns 40 members at a time, so this need to be paginated with infinite scroll

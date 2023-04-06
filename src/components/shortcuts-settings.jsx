@@ -18,16 +18,17 @@ const SHORTCUTS_LIMIT = 9;
 
 const TYPES = [
   'following',
+  'mentions',
   'notifications',
   'list',
   'public',
+  'trending',
   // NOTE: Hide for now
   // 'search', // Search on Mastodon ain't great
   // 'account-statuses', // Need @acct search first
+  'hashtag',
   'bookmarks',
   'favourites',
-  'hashtag',
-  'trending',
 ];
 const TYPE_TEXT = {
   following: 'Home / Following',
@@ -40,6 +41,7 @@ const TYPE_TEXT = {
   favourites: 'Favourites',
   hashtag: 'Hashtag',
   trending: 'Trending',
+  mentions: 'Mentions',
 };
 const TYPE_PARAMS = {
   list: [
@@ -100,6 +102,12 @@ export const SHORTCUTS_META = {
     title: (_, index) => (index === 0 ? 'Home' : 'Following'),
     path: '/',
     icon: 'home',
+  },
+  mentions: {
+    id: 'mentions',
+    title: 'Mentions',
+    path: '/mentions',
+    icon: 'at',
   },
   notifications: {
     id: 'notifications',

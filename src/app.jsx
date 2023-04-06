@@ -36,6 +36,7 @@ import Home from './pages/home';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
+import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
 import Search from './pages/search';
@@ -223,6 +224,7 @@ function App() {
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}
+        {isLoggedIn && <Route path="/mentions" element={<Mentions />} />}
         {isLoggedIn && <Route path="/following" element={<Following />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}

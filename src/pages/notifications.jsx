@@ -167,7 +167,7 @@ function Notifications() {
             <div class="header-side">
               <Menu />
               <Link to="/" class="button plain">
-                <Icon icon="home" size="l" />
+                <Icon icon="home" size="l" alt="Home" />
               </Link>
             </div>
             <h1>Notifications</h1>

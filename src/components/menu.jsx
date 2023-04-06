@@ -103,6 +103,9 @@ function NavMenu(props) {
               <Icon icon="following" size="l" /> <span>Following</span>
             </MenuLink>
           )}
+          <MenuLink to="/mentions">
+            <Icon icon="at" size="l" /> <span>Mentions</span>
+          </MenuLink>
           <MenuLink to="/notifications">
             <Icon icon="notification" size="l" /> <span>Notifications</span>
             {snapStates.notificationsShowNew && (

@@ -62,7 +62,7 @@ const visibilityText = {
   public: 'Public',
   unlisted: 'Unlisted',
   private: 'Followers only',
-  direct: 'Direct',
+  direct: 'Private mention',
 };
 
 function Status({
@@ -779,6 +779,11 @@ function Status({
               </span>
             ))}
         </div>
+        {visibility === 'direct' && (
+          <>
+            <div class="status-direct-badge">Private mention</div>{' '}
+          </>
+        )}
         {!withinContext && (
           <>
             {inReplyToAccountId === status.account?.id ||

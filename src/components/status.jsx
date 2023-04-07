@@ -1670,8 +1670,8 @@ function ReactionsModal({ statusID, instance }) {
                 );
               })}
             </ul>
-            {uiState === 'default' &&
-              (showMore ? (
+            {uiState === 'default' ? (
+              showMore ? (
                 <InView
                   onChange={(inView) => {
                     if (inView) {
@@ -1689,7 +1689,14 @@ function ReactionsModal({ statusID, instance }) {
                 </InView>
               ) : (
                 <p class="ui-state insignificant">The end.</p>
-              ))}
+              )
+            ) : (
+              uiState === 'loading' && (
+                <p class="ui-state">
+                  <Loader abrupt />
+                </p>
+              )
+            )}
           </>
         ) : uiState === 'loading' ? (
           <p class="ui-state">

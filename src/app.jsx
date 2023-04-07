@@ -146,7 +146,7 @@ function App() {
       const columns = document.getElementById('columns');
       if (columns) {
         // Focus first column
-        columns.querySelector('.deck-container')?.focus?.();
+        // columns.querySelector('.deck-container')?.focus?.();
       } else {
         const backDrop = document.querySelector('.deck-backdrop');
         if (backDrop) return;

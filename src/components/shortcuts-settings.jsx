@@ -18,26 +18,30 @@ const SHORTCUTS_LIMIT = 9;
 
 const TYPES = [
   'following',
+  'mentions',
   'notifications',
   'list',
   'public',
+  'trending',
   // NOTE: Hide for now
   // 'search', // Search on Mastodon ain't great
   // 'account-statuses', // Need @acct search first
+  'hashtag',
   'bookmarks',
   'favourites',
-  'hashtag',
 ];
 const TYPE_TEXT = {
   following: 'Home / Following',
   notifications: 'Notifications',
   list: 'List',
-  public: 'Public',
+  public: 'Public (Local / Federated)',
   search: 'Search',
   'account-statuses': 'Account',
   bookmarks: 'Bookmarks',
   favourites: 'Favourites',
   hashtag: 'Hashtag',
+  trending: 'Trending',
+  mentions: 'Mentions',
 };
 const TYPE_PARAMS = {
   list: [
@@ -52,6 +56,14 @@ const TYPE_PARAMS = {
       name: 'local',
       type: 'checkbox',
     },
+    {
+      text: 'Instance',
+      name: 'instance',
+      type: 'text',
+      placeholder: 'e.g. mastodon.social',
+    },
+  ],
+  trending: [
     {
       text: 'Instance',
       name: 'instance',
@@ -91,6 +103,12 @@ export const SHORTCUTS_META = {
     path: '/',
     icon: 'home',
   },
+  mentions: {
+    id: 'mentions',
+    title: 'Mentions',
+    path: '/mentions',
+    icon: 'at',
+  },
   notifications: {
     id: 'notifications',
     title: 'Notifications',
@@ -117,6 +135,12 @@ export const SHORTCUTS_META = {
       `${local ? 'Local' : 'Federated'} (${instance})`,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
+  },
+  trending: {
+    id: 'trending',
+    title: 'Trending',
+    path: ({ instance }) => `/${instance}/trending`,
+    icon: 'chart',
   },
   search: {
     id: 'search',

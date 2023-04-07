@@ -1,8 +1,15 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { useParams } from 'react-router-dom';
+import './lists.css';
 
+import { Menu, MenuItem } from '@szhsin/react-menu';
+import { useEffect, useRef, useState } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
 import Link from '../components/link';
+import ListAddEdit from '../components/list-add-edit';
+import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
@@ -14,7 +21,9 @@ const LIMIT = 20;
 function List(props) {
   const { masto, instance } = api();
   const id = props?.id || useParams()?.id;
+  const navigate = useNavigate();
   const latestItem = useRef();
+  // const [reloadCount, reload] = useReducer((c) => c + 1, 0);
 
   const listIterator = useRef();
   async function fetchList(firstLoad) {
@@ -55,37 +64,231 @@ function List(props) {
     }
   }
 
-  const [title, setTitle] = useState(`List`);
-  useTitle(title, `/l/:id`);
+  const [list, setList] = useState({ title: 'List' });
+  // const [title, setTitle] = useState(`List`);
+  useTitle(list.title, `/l/:id`);
   useEffect(() => {
     (async () => {
       try {
         const list = await masto.v1.lists.fetch(id);
-        setTitle(list.title);
+        setList(list);
+        // setTitle(list.title);
       } catch (e) {
         console.error(e);
       }
     })();
   }, [id]);
 
+  const [showListAddEditModal, setShowListAddEditModal] = useState(false);
+  const [showManageMembersModal, setShowManageMembersModal] = useState(false);
+
   return (
-    <Timeline
-      title={title}
-      id="list"
-      emptyText="Nothing yet."
-      errorText="Unable to load posts."
-      instance={instance}
-      fetchItems={fetchList}
-      checkForUpdates={checkForUpdates}
-      useItemID
-      boostsCarousel
-      allowFilters
-      headerStart={
-        <Link to="/l" class="button plain">
-          <Icon icon="list" size="l" />
-        </Link>
+    <>
+      <Timeline
+        title={list.title}
+        id="list"
+        emptyText="Nothing yet."
+        errorText="Unable to load posts."
+        instance={instance}
+        fetchItems={fetchList}
+        checkForUpdates={checkForUpdates}
+        useItemID
+        boostsCarousel
+        allowFilters
+        // refresh={reloadCount}
+        headerStart={
+          <Link to="/l" class="button plain">
+            <Icon icon="list" size="l" />
+          </Link>
+        }
+        headerEnd={
+          <Menu
+            portal={{
+              target: document.body,
+            }}
+            setDownOverflow
+            overflow="auto"
+            viewScroll="close"
+            position="anchor"
+            boundingBoxPadding="8 8 8 8"
+            menuButton={
+              <button type="button" class="plain">
+                <Icon icon="more" size="l" />
+              </button>
+            }
+          >
+            <MenuItem
+              onClick={() =>
+                setShowListAddEditModal({
+                  list,
+                })
+              }
+            >
+              <Icon icon="pencil" size="l" />
+              <span>Edit</span>
+            </MenuItem>
+            <MenuItem onClick={() => setShowManageMembersModal(true)}>
+              <Icon icon="group" size="l" />
+              <span>Manage members</span>
+            </MenuItem>
+          </Menu>
+        }
+      />
+      {showListAddEditModal && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowListAddEditModal(false);
+            }
+          }}
+        >
+          <ListAddEdit
+            list={showListAddEditModal?.list}
+            onClose={(result) => {
+              if (result.state === 'success' && result.list) {
+                setList(result.list);
+                // reload();
+              } else if (result.state === 'deleted') {
+                navigate('/l');
+              }
+              setShowListAddEditModal(false);
+            }}
+          />
+        </Modal>
+      )}
+      {showManageMembersModal && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowManageMembersModal(false);
+            }
+          }}
+        >
+          <ListManageMembers listID={id} />
+        </Modal>
+      )}
+    </>
+  );
+}
+
+const MEMBERS_LIMIT = 40;
+function ListManageMembers({ listID }) {
+  // Show list of members with [Remove] button
+  // API only returns 40 members at a time, so this need to be paginated with infinite scroll
+  // Show [Add] button after removing a member
+  const { masto, instance } = api();
+  const [members, setMembers] = useState([]);
+  const [uiState, setUIState] = useState('default');
+  const [showMore, setShowMore] = useState(false);
+
+  const membersIterator = useRef();
+
+  async function fetchMembers(firstLoad) {
+    setShowMore(false);
+    setUIState('loading');
+    (async () => {
+      try {
+        if (firstLoad || !membersIterator.current) {
+          membersIterator.current = masto.v1.lists.listAccounts(listID, {
+            limit: MEMBERS_LIMIT,
+          });
+        }
+        const results = await membersIterator.current.next();
+        let { done, value } = results;
+        if (value?.length) {
+          if (firstLoad) {
+            setMembers(value);
+          } else {
+            setMembers(members.concat(value));
+          }
+          setShowMore(!done);
+        } else {
+          setShowMore(false);
+        }
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
       }
-    />
+    })();
+  }
+
+  useEffect(() => {
+    fetchMembers(true);
+  }, []);
+
+  return (
+    <div class="sheet" id="list-manage-members-container">
+      <header>
+        <h2>Manage members</h2>
+      </header>
+      <main>
+        <ul>
+          {members.map((member) => (
+            <li key={member.id}>
+              <AccountBlock account={member} instance={instance} />
+              <RemoveAddButton account={member} listID={listID} />
+            </li>
+          ))}
+          {showMore && uiState === 'default' && (
+            <InView as="li" onChange={(inView) => inView && fetchMembers()}>
+              <button type="button" class="light block" onClick={fetchMembers}>
+                Show more&hellip;
+              </button>
+            </InView>
+          )}
+        </ul>
+      </main>
+    </div>
+  );
+}
+
+function RemoveAddButton({ account, listID }) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('default');
+  const [removed, setRemoved] = useState(false);
+
+  return (
+    <button
+      type="button"
+      class={`light ${removed ? '' : 'danger'}`}
+      disabled={uiState === 'loading'}
+      onClick={() => {
+        if (removed) {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.lists.addAccount(listID, {
+                accountIds: [account.id],
+              });
+              setUIState('default');
+              setRemoved(false);
+            } catch (e) {
+              setUIState('error');
+            }
+          })();
+        } else {
+          const yes = confirm(`Remove ${account.username} from this list?`);
+          if (!yes) return;
+          setUIState('loading');
+
+          (async () => {
+            try {
+              await masto.v1.lists.removeAccount(listID, {
+                accountIds: [account.id],
+              });
+              setUIState('default');
+              setRemoved(true);
+            } catch (e) {
+              setUIState('error');
+            }
+          })();
+        }
+      }}
+    >
+      {removed ? 'Add' : 'Remove…'}
+    </button>
   );
 }
 

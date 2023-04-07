@@ -1,0 +1,33 @@
+.list-form {
+  padding: 8px 0;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.list-form-row :is(input, select) {
+  width: 100%;
+}
+
+.list-form-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+.list-form-footer button[type='submit'] {
+  padding-inline: 24px;
+}
+
+#list-manage-members-container ul {
+  display: block;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+#list-manage-members-container ul li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}

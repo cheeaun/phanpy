@@ -33,6 +33,7 @@ function Timeline({
   headerEnd,
   timelineStart,
   allowFilters,
+  refresh,
 }) {
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -184,6 +185,9 @@ function Timeline({
     scrollableRef.current?.scrollTo({ top: 0 });
     loadItems(true);
   }, []);
+  useEffect(() => {
+    loadItems(true);
+  }, [refresh]);
 
   useEffect(() => {
     if (reachStart) {
@@ -207,7 +211,7 @@ function Timeline({
             console.log('✨ Check updates');
             const hasUpdate = await checkForUpdates();
             if (hasUpdate) {
-              console.log('✨ Has new updates');
+              console.log('✨ Has new updates', id);
               setShowNew(true);
             }
           })();
@@ -227,7 +231,7 @@ function Timeline({
         console.log('✨ Check updates');
         const hasUpdate = await checkForUpdates();
         if (hasUpdate) {
-          console.log('✨ Has new updates');
+          console.log('✨ Has new updates', id);
           setShowNew(true);
         }
       })();

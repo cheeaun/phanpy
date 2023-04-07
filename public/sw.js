@@ -39,7 +39,7 @@ registerRoute(imageRoute);
 // - /api/v1/preferences
 // - /api/v1/lists/:id
 const apiExtendedRoute = new RegExpRoute(
-  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+)/,
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+)$/,
   new StaleWhileRevalidate({
     cacheName: 'api-extended',
     plugins: [

@@ -37,7 +37,6 @@
 /* STATUS PRE META */
 
 .status-pre-meta {
-  line-height: 1.4;
   padding: 8px 16px 0;
   opacity: 0.75;
   font-size: smaller;
@@ -48,7 +47,9 @@
   margin-bottom: -8px;
 }
 .status-pre-meta .name-text {
-  display: inline;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
 }
 .status-pre-meta > * {
   vertical-align: middle;
@@ -239,16 +240,18 @@
 
 .status-reply-badge {
   display: inline-flex;
-  margin-left: 4px;
+  margin: 2px 0 2px 4px;
   gap: 4px;
   align-items: center;
+  vertical-align: middle;
 }
 .status-reply-badge .icon {
   color: var(--reply-to-color);
 }
 .status-thread-badge {
+  vertical-align: middle;
   display: inline-flex;
-  margin: 4px 0 0 0;
+  margin: 2px 0;
   gap: 4px;
   align-items: center;
   color: var(--reply-to-text-color);
@@ -268,6 +271,24 @@
     var(--reply-to-faded-color) 4px
   );
   font-weight: bold;
+}
+.status-direct-badge {
+  vertical-align: middle;
+  display: inline-flex;
+  margin: 2px 0;
+  gap: 4px;
+  align-items: center;
+  color: var(--reply-to-text-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--reply-to-text-color);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.75;
+  font-weight: bold;
+  box-shadow: inset 0 0 0 1px var(--reply-to-color);
 }
 .status-filtered-badge {
   flex-shrink: 0;
@@ -556,6 +577,7 @@ a:focus-visible .status .media img {
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
 }
+.status .media .video-container,
 .status .media video {
   width: 100%;
   height: 100%;
@@ -667,14 +689,16 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 8px;
   color: var(--text-color);
   padding: 4px 8px;
-  border: 1px solid var(--outline-color);
-  box-shadow: 0 4px 16px var(--outline-color);
+  background-color: var(--bg-blur-color);
+  border: var(--hairline-width) solid var(--bg-blur-color);
+  box-shadow: 0 4px 16px var(--drop-shadow-color);
   max-width: min(var(--main-width), calc(100% - 32px));
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 90%;
   z-index: 1;
+  text-shadow: 0 var(--hairline-width) var(--bg-color);
 }
 .carousel-item button.media-alt .media-alt-desc {
   overflow: hidden;
@@ -1199,4 +1223,42 @@ a.card:is(:hover, :focus) {
   position: sticky;
   bottom: 8px;
   right: 8px;
+}
+
+/* REACTIONS */
+
+#reactions-container main ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 1.5em;
+  row-gap: 16px;
+}
+#reactions-container main ul li {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 16em;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+#reactions-container main ul li .account-block-acct {
+  font-size: 80%;
+  color: var(--text-insignificant-color);
+  display: block;
+}
+#reactions-container .reactions-block {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+#reactions-container .reactions-block .favourite-icon {
+  color: var(--favourite-color);
+}
+#reactions-container .reactions-block .reblog-icon {
+  color: var(--reblog-color);
 }

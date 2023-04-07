@@ -893,7 +893,7 @@ function Compose({
                 </option>
                 <option value="unlisted">Unlisted</option>
                 <option value="private">Followers only</option>
-                <option value="direct">Direct</option>
+                <option value="direct">Private mention</option>
               </select>
             </label>{' '}
           </div>

@@ -18,7 +18,10 @@ export function groupBoosts(values) {
   }
   // if boostStash is more than quarter of values
   // or if there are 3 or more boosts in a row
-  if (boostStash.length > values.length / 4 || serialBoosts >= 3) {
+  if (
+    values.length > 10 &&
+    (boostStash.length > values.length / 4 || serialBoosts >= 3)
+  ) {
     // if boostStash is more than 3 quarter of values
     const boostStashID = boostStash.map((status) => status.id);
     if (boostStash.length > (values.length * 3) / 4) {

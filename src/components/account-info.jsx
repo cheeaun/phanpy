@@ -1,13 +1,7 @@
 import './account-info.css';
 
-import {
-  Menu,
-  MenuDivider,
-  MenuHeader,
-  MenuItem,
-  SubMenu,
-} from '@szhsin/react-menu';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
+import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
@@ -24,6 +18,8 @@ import AccountBlock from './account-block';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
+import ListAddEdit from './list-add-edit';
+import Loader from './loader';
 import Modal from './modal';
 import TranslationBlock from './translation-block';
 
@@ -487,6 +483,7 @@ function RelatedActions({ info, instance, authenticated }) {
   const menuInstanceRef = useRef(null);
 
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
+  const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
 
   return (
     <>
@@ -583,6 +580,17 @@ function RelatedActions({ info, instance, authenticated }) {
                   <Icon icon="translate" />
                   <span>Translate bio</span>
                 </MenuItem>
+                {/* Add/remove from lists is only possible if following the account */}
+                {following && (
+                  <MenuItem
+                    onClick={() => {
+                      setShowAddRemoveLists(true);
+                    }}
+                  >
+                    <Icon icon="list" />
+                    <span>Add/remove from Lists</span>
+                  </MenuItem>
+                )}
                 <MenuDivider />
               </>
             )}
@@ -840,6 +848,18 @@ function RelatedActions({ info, instance, authenticated }) {
           <TranslatedBioSheet note={note} fields={fields} />
         </Modal>
       )}
+      {!!showAddRemoveLists && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowAddRemoveLists(false);
+            }
+          }}
+        >
+          <AddRemoveListsSheet accountID={accountID.current} />
+        </Modal>
+      )}
     </>
   );
 }
@@ -900,4 +920,127 @@ function TranslatedBioSheet({ note, fields }) {
     </div>
   );
 }
+
+function AddRemoveListsSheet({ accountID }) {
+  const { masto } = api();
+  const [uiState, setUiState] = useState('default');
+  const [lists, setLists] = useState([]);
+  const [listsContainingAccount, setListsContainingAccount] = useState([]);
+  const [reloadCount, reload] = useReducer((c) => c + 1, 0);
+
+  useEffect(() => {
+    setUiState('loading');
+    (async () => {
+      try {
+        const lists = await masto.v1.lists.list();
+        const listsContainingAccount = await masto.v1.accounts.listLists(
+          accountID,
+        );
+        console.log({ lists, listsContainingAccount });
+        setLists(lists);
+        setListsContainingAccount(listsContainingAccount);
+        setUiState('default');
+      } catch (e) {
+        console.error(e);
+        setUiState('error');
+      }
+    })();
+  }, [reloadCount]);
+
+  const [showListAddEditModal, setShowListAddEditModal] = useState(false);
+
+  return (
+    <div class="sheet" id="list-add-remove-container">
+      <header>
+        <h2>Add/Remove from Lists</h2>
+      </header>
+      <main>
+        {lists.length > 0 ? (
+          <ul class="list-add-remove">
+            {lists.map((list) => {
+              const inList = listsContainingAccount.some(
+                (l) => l.id === list.id,
+              );
+              return (
+                <li>
+                  <button
+                    type="button"
+                    class={`light ${inList ? 'checked' : ''}`}
+                    disabled={uiState === 'loading'}
+                    onClick={() => {
+                      setUiState('loading');
+                      (async () => {
+                        try {
+                          if (inList) {
+                            await masto.v1.lists.removeAccount(list.id, {
+                              accountIds: [accountID],
+                            });
+                          } else {
+                            await masto.v1.lists.addAccount(list.id, {
+                              accountIds: [accountID],
+                            });
+                          }
+                          // setUiState('default');
+                          reload();
+                        } catch (e) {
+                          console.error(e);
+                          setUiState('error');
+                          alert(
+                            inList
+                              ? 'Unable to remove from list.'
+                              : 'Unable to add to list.',
+                          );
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="check-circle" />
+                    <span>{list.title}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : uiState === 'loading' ? (
+          <p class="ui-state">
+            <Loader abrupt />
+          </p>
+        ) : uiState === 'error' ? (
+          <p class="ui-state">Unable to load lists.</p>
+        ) : (
+          <p class="ui-state">No lists.</p>
+        )}
+        <button
+          type="button"
+          class="plain2"
+          onClick={() => setShowListAddEditModal(true)}
+          disabled={uiState !== 'default'}
+        >
+          <Icon icon="plus" size="l" /> <span>New list</span>
+        </button>
+      </main>
+      {showListAddEditModal && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowListAddEditModal(false);
+            }
+          }}
+        >
+          <ListAddEdit
+            list={showListAddEditModal?.list}
+            onClose={(result) => {
+              if (result.state === 'success') {
+                reload();
+              }
+              setShowListAddEditModal(false);
+            }}
+          />
+        </Modal>
+      )}
+    </div>
+  );
+}
+
 export default AccountInfo;

@@ -27,6 +27,9 @@ export default defineConfig({
     __BUILD_TIME__: JSON.stringify(now),
     __COMMIT_HASH__: JSON.stringify(commitHash),
   },
+  server: {
+    host: true,
+  },
   plugins: [
     preact(),
     splitVendorChunkPlugin(),

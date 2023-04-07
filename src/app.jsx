@@ -36,11 +36,13 @@ import Home from './pages/home';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
+import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
 import Search from './pages/search';
 import Settings from './pages/settings';
 import Status from './pages/status';
+import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import {
   api,
@@ -144,7 +146,7 @@ function App() {
       const columns = document.getElementById('columns');
       if (columns) {
         // Focus first column
-        columns.querySelector('.deck-container')?.focus?.();
+        // columns.querySelector('.deck-container')?.focus?.();
       } else {
         const backDrop = document.querySelector('.deck-backdrop');
         if (backDrop) return;
@@ -222,6 +224,7 @@ function App() {
         {isLoggedIn && (
           <Route path="/notifications" element={<Notifications />} />
         )}
+        {isLoggedIn && <Route path="/mentions" element={<Mentions />} />}
         {isLoggedIn && <Route path="/following" element={<Following />} />}
         {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
         {isLoggedIn && <Route path="/f" element={<Favourites />} />}
@@ -238,6 +241,7 @@ function App() {
           <Route index element={<Public />} />
           <Route path="l" element={<Public local />} />
         </Route>
+        <Route path="/:instance?/trending" element={<Trending />} />
         <Route path="/:instance?/search" element={<Search />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>

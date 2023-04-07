@@ -689,14 +689,16 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 8px;
   color: var(--text-color);
   padding: 4px 8px;
-  border: 1px solid var(--outline-color);
-  box-shadow: 0 4px 16px var(--outline-color);
+  background-color: var(--bg-blur-color);
+  border: var(--hairline-width) solid var(--bg-blur-color);
+  box-shadow: 0 4px 16px var(--drop-shadow-color);
   max-width: min(var(--main-width), calc(100% - 32px));
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 90%;
   z-index: 1;
+  text-shadow: 0 var(--hairline-width) var(--bg-color);
 }
 .carousel-item button.media-alt .media-alt-desc {
   overflow: hidden;

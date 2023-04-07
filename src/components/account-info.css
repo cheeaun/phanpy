@@ -269,13 +269,19 @@
   list-style: none;
 }
 #list-add-remove-container .list-add-remove button {
+  border-radius: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
+  text-align: start;
 }
 #list-add-remove-container .list-add-remove button .icon {
   opacity: 0.15;
+}
+#list-add-remove-container .list-add-remove button.checked {
+  border-color: var(--green-color);
+  font-weight: bold;
 }
 #list-add-remove-container .list-add-remove button.checked .icon {
   opacity: 1;

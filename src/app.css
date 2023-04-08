@@ -376,6 +376,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding-bottom: 12px;
   font-size: 90%;
 }
+.timeline.contextual > li.ancestor .replies-link {
+  margin-left: calc(
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+  );
+}
 .timeline.contextual > li.thread > .status-link .replies-link {
   margin-left: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)

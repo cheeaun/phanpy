@@ -510,7 +510,7 @@ function Status({
             <Icon
               icon="bookmark"
               style={{
-                color: bookmarked && 'var(--favourite-color)',
+                color: bookmarked && 'var(--link-color)',
               }}
             />
             <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>

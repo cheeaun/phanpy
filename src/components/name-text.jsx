@@ -36,7 +36,7 @@ function NameText({
 
   return (
     <a
-      class={`name-text ${short ? 'short' : ''}`}
+      class={`name-text ${showAcct ? 'show-acct' : ''} ${short ? 'short' : ''}`}
       href={url}
       target={external ? '_blank' : null}
       title={`@${acct}`}

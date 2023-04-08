@@ -1,6 +1,11 @@
 .name-text {
   color: inherit;
   text-decoration: none;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.name-text.show-acct {
   display: inline-block;
 }
 a.name-text:is(:hover, :focus) b,

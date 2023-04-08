@@ -94,6 +94,13 @@ const TYPE_PARAMS = {
       placeholder: 'e.g. PixelArt (Max 5, space-separated)',
       pattern: '[^#]+',
     },
+    {
+      text: 'Instance',
+      name: 'instance',
+      type: 'text',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
+    },
   ],
 };
 export const SHORTCUTS_META = {
@@ -131,14 +138,15 @@ export const SHORTCUTS_META = {
   },
   public: {
     id: 'public',
-    title: ({ local, instance }) =>
-      `${local ? 'Local' : 'Federated'} (${instance})`,
+    title: ({ local }) => (local ? 'Local' : 'Federated'),
+    subtitle: ({ instance }) => instance,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
   },
   trending: {
     id: 'trending',
     title: 'Trending',
+    subtitle: ({ instance }) => instance,
     path: ({ instance }) => `/${instance}/trending`,
     icon: 'chart',
   },
@@ -177,6 +185,7 @@ export const SHORTCUTS_META = {
   hashtag: {
     id: 'hashtag',
     title: ({ hashtag }) => hashtag,
+    subtitle: ({ instance }) => instance,
     path: ({ hashtag }) => `/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',
   },
@@ -307,9 +316,12 @@ function ShortcutsSettings() {
               const key = i + Object.values(shortcut);
               const { type } = shortcut;
               if (!SHORTCUTS_META[type]) return null;
-              let { icon, title } = SHORTCUTS_META[type];
+              let { icon, title, subtitle } = SHORTCUTS_META[type];
               if (typeof title === 'function') {
                 title = title(shortcut, i);
+              }
+              if (typeof subtitle === 'function') {
+                subtitle = subtitle(shortcut, i);
               }
               if (typeof icon === 'function') {
                 icon = icon(shortcut, i);
@@ -319,6 +331,12 @@ function ShortcutsSettings() {
                   <Icon icon={icon} />
                   <span class="shortcut-text">
                     <AsyncText>{title}</AsyncText>
+                    {subtitle && (
+                      <>
+                        {' '}
+                        <small class="ib insignificant">{subtitle}</small>
+                      </>
+                    )}
                   </span>
                   <span class="shortcut-actions">
                     <button
@@ -468,13 +486,17 @@ function ShortcutForm({
             </label>
           </p>
           {TYPE_PARAMS[currentType]?.map?.(
-            ({ text, name, type, placeholder, pattern }) => {
+            ({ text, name, type, placeholder, pattern, notRequired }) => {
               if (currentType === 'list') {
                 return (
                   <p>
                     <label>
                       <span>List</span>
-                      <select name="id" required disabled={disabled}>
+                      <select
+                        name="id"
+                        required={!notRequired}
+                        disabled={disabled}
+                      >
                         {lists.map((list) => (
                           <option value={list.id}>{list.title}</option>
                         ))}
@@ -492,7 +514,7 @@ function ShortcutForm({
                       type={type}
                       name={name}
                       placeholder={placeholder}
-                      required={type === 'text'}
+                      required={type === 'text' && !notRequired}
                       disabled={disabled}
                       list={
                         currentType === 'hashtag'

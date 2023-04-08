@@ -260,6 +260,7 @@ function Hashtags(props) {
               const shortcut = {
                 type: 'hashtag',
                 hashtag: hashtags.join(' '),
+                instance,
               };
               // Check if already exists
               const exists = states.shortcuts.some(
@@ -272,7 +273,8 @@ function Hashtags(props) {
                     shortcut.hashtag
                       .split(/[\s+]+/)
                       .sort()
-                      .join(' '),
+                      .join(' ') &&
+                  (s.instance ? s.instance === shortcut.instance : true),
               );
               if (exists) {
                 alert('This shortcut already exists');

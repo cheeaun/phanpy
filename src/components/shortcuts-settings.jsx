@@ -471,10 +471,14 @@ function ShortcutForm({
     if (editMode && currentType && TYPE_PARAMS[currentType]) {
       // Populate form
       const form = formRef.current;
-      TYPE_PARAMS[currentType].forEach(({ name }) => {
+      TYPE_PARAMS[currentType].forEach(({ name, type }) => {
         const input = form.querySelector(`[name="${name}"]`);
         if (input && shortcut[name]) {
-          input.value = shortcut[name];
+          if (type === 'checkbox') {
+            input.checked = shortcut[name] === 'on' ? true : false;
+          } else {
+            input.value = shortcut[name];
+          }
         }
       });
     }

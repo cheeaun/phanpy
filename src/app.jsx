@@ -384,6 +384,7 @@ function App() {
       )}
       {!!snapStates.showShortcutsSettings && (
         <Modal
+          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               states.showShortcutsSettings = false;

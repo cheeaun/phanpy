@@ -186,7 +186,8 @@ export const SHORTCUTS_META = {
     id: 'hashtag',
     title: ({ hashtag }) => hashtag,
     subtitle: ({ instance }) => instance,
-    path: ({ hashtag }) => `/t/${hashtag.split(/\s+/).join('+')}`,
+    path: ({ hashtag, instance }) =>
+      `${instance ? `/${instance}` : ''}/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',
   },
 };

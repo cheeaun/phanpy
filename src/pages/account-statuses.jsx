@@ -8,6 +8,7 @@ import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
+import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -128,18 +129,33 @@ function AccountStatuses() {
           )}
           <Link
             to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
+            onClick={() => {
+              if (excludeReplies) {
+                showToast('Showing post with replies');
+              }
+            }}
             class={excludeReplies ? '' : 'is-active'}
           >
             + Replies
           </Link>
           <Link
             to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
+            onClick={() => {
+              if (!excludeBoosts) {
+                showToast('Showing posts without boosts');
+              }
+            }}
             class={!excludeBoosts ? '' : 'is-active'}
           >
             - Boosts
           </Link>
           <Link
             to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
+            onClick={() => {
+              if (!media) {
+                showToast('Showing posts with media');
+              }
+            }}
             class={media ? 'is-active' : ''}
           >
             Media
@@ -151,6 +167,11 @@ function AccountStatuses() {
                   ? ''
                   : `?tagged=${encodeURIComponent(tag.name)}`
               }`}
+              onClick={() => {
+                if (tagged !== tag.name) {
+                  showToast(`Showing posts tagged with #${tag.name}`);
+                }
+              }}
               class={tagged === tag.name ? 'is-active' : ''}
             >
               <span>

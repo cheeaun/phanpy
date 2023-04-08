@@ -142,6 +142,9 @@ function StatusPage() {
             skipThreading: true,
           });
         });
+        const ancestorsIsThread = ancestors.every(
+          (s) => s.account.id === heroStatus.account.id,
+        );
         const nestedDescendants = [];
         descendants.forEach((status) => {
           saveStatus(status, instance, {
@@ -184,6 +187,7 @@ function StatusPage() {
           ...ancestors.map((s) => ({
             id: s.id,
             ancestor: true,
+            isThread: ancestorsIsThread,
             accountID: s.account.id,
             repliesCount: s.repliesCount,
           })),
@@ -625,6 +629,7 @@ function StatusPage() {
               const {
                 id: statusID,
                 ancestor,
+                isThread,
                 descendant,
                 thread,
                 replies,
@@ -731,7 +736,7 @@ function StatusPage() {
                         size={thread || ancestor ? 'm' : 's'}
                         enableTranslate
                       />
-                      {ancestor && !!repliesCount && (
+                      {ancestor && isThread && !!repliesCount && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
                           <span title={repliesCount}>

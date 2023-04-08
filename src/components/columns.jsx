@@ -17,6 +17,7 @@ function Columns() {
   const { shortcuts } = snapStates;
 
   const components = shortcuts.map((shortcut) => {
+    if (!shortcut) return null;
     const { type, ...params } = shortcut;
     const Component = {
       following: Following,

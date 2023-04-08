@@ -1,7 +1,7 @@
 import './shortcuts-settings.css';
 
 import mem from 'mem';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import floatingButtonUrl from '../assets/floating-button.svg';
@@ -312,7 +312,7 @@ function ShortcutsSettings() {
         </p> */}
         {shortcuts.length > 0 ? (
           <ol class="shortcuts-list">
-            {shortcuts.map((shortcut, i) => {
+            {shortcuts.filter(Boolean).map((shortcut, i) => {
               const key = i + Object.values(shortcut);
               const { type } = shortcut;
               if (!SHORTCUTS_META[type]) return null;
@@ -375,11 +375,23 @@ function ShortcutsSettings() {
                       type="button"
                       class="plain small"
                       onClick={() => {
+                        setShowForm({
+                          shortcut,
+                          shortcutIndex: i,
+                        });
+                      }}
+                    >
+                      <Icon icon="pencil" alt="Edit" />
+                    </button>
+                    {/* <button
+                      type="button"
+                      class="plain small"
+                      onClick={() => {
                         states.shortcuts.splice(i, 1);
                       }}
                     >
                       <Icon icon="x" alt="Remove" />
-                    </button>
+                    </button> */}
                   </span>
                 </li>
               );
@@ -420,12 +432,18 @@ function ShortcutsSettings() {
           }}
         >
           <ShortcutForm
+            shortcut={showForm.shortcut}
+            shortcutIndex={showForm.shortcutIndex}
             disabled={shortcuts.length >= SHORTCUTS_LIMIT}
             lists={lists}
             followedHashtags={followedHashtags}
-            onSubmit={(data) => {
-              console.log('onSubmit', data);
-              states.shortcuts.push(data);
+            onSubmit={({ result, mode }) => {
+              console.log('onSubmit', result);
+              if (mode === 'edit') {
+                states.shortcuts[showForm.shortcutIndex] = result;
+              } else {
+                states.shortcuts.push(result);
+              }
             }}
             onClose={() => setShowForm(false)}
           />
@@ -436,21 +454,40 @@ function ShortcutsSettings() {
 }
 
 function ShortcutForm({
-  type,
   lists,
   followedHashtags,
   onSubmit,
   disabled,
+  shortcut,
+  shortcutIndex,
   onClose = () => {},
 }) {
-  const [currentType, setCurrentType] = useState(type);
+  console.log('shortcut', shortcut);
+  const editMode = !!shortcut;
+  const [currentType, setCurrentType] = useState(shortcut?.type || null);
+
+  const formRef = useRef();
+  useEffect(() => {
+    if (editMode && currentType && TYPE_PARAMS[currentType]) {
+      // Populate form
+      const form = formRef.current;
+      TYPE_PARAMS[currentType].forEach(({ name }) => {
+        const input = form.querySelector(`[name="${name}"]`);
+        if (input && shortcut[name]) {
+          input.value = shortcut[name];
+        }
+      });
+    }
+  }, [editMode, currentType]);
+
   return (
     <div id="shortcut-settings-form" class="sheet">
       <header>
-        <h2>Add shortcut</h2>
+        <h2>{editMode ? 'Edit' : 'Add'} shortcut</h2>
       </header>
       <main tabindex="-1">
         <form
+          ref={formRef}
           onSubmit={(e) => {
             // Construct a nice object from form
             e.preventDefault();
@@ -459,8 +496,12 @@ function ShortcutForm({
             data.forEach((value, key) => {
               result[key] = value?.trim();
             });
+            console.log('result', result);
             if (!result.type) return;
-            onSubmit(result);
+            onSubmit({
+              result,
+              mode: editMode ? 'edit' : 'add',
+            });
             // Reset
             e.target.reset();
             setCurrentType(null);
@@ -476,6 +517,7 @@ function ShortcutForm({
                 onChange={(e) => {
                   setCurrentType(e.target.value);
                 }}
+                defaultValue={editMode ? shortcut.type : undefined}
                 name="type"
               >
                 <option></option>
@@ -539,9 +581,23 @@ function ShortcutForm({
               );
             },
           )}
-          <button type="submit" class="block" disabled={disabled}>
-            Add
-          </button>
+          <footer>
+            <button type="submit" class="block" disabled={disabled}>
+              {editMode ? 'Save' : 'Add'}
+            </button>
+            {editMode && (
+              <button
+                type="button"
+                class="light danger"
+                onClick={() => {
+                  states.shortcuts.splice(shortcutIndex, 1);
+                  onClose();
+                }}
+              >
+                Remove
+              </button>
+            )}
+          </footer>
         </form>
       </main>
     </div>

@@ -185,6 +185,7 @@ function StatusPage() {
             id: s.id,
             ancestor: true,
             accountID: s.account.id,
+            repliesCount: s.repliesCount,
           })),
           { id, accountID: heroStatus.account.id },
           ...nestedDescendants.map((s) => ({
@@ -627,6 +628,7 @@ function StatusPage() {
                 descendant,
                 thread,
                 replies,
+                repliesCount,
               } = status;
               const isHero = statusID === id;
               return (
@@ -729,6 +731,14 @@ function StatusPage() {
                         size={thread || ancestor ? 'm' : 's'}
                         enableTranslate
                       />
+                      {ancestor && !!repliesCount && (
+                        <div class="replies-link">
+                          <Icon icon="comment" />{' '}
+                          <span title={repliesCount}>
+                            {shortenNumber(repliesCount)}
+                          </span>
+                        </div>
+                      )}{' '}
                       {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Flow+Circular&family=Noto+Emoji&display=swap');
+
+.status-pre-meta,
+.status .container {
+  font-family: 'Flow Circular', 'Noto Emoji', cursive;
+}
+
+.status :is(img, video, audio),
+.avatar {
+  filter: invert(0.5);
+  background-color: #000 !important;
+}

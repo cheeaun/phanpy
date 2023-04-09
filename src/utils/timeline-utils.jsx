@@ -1,4 +1,4 @@
-import { getStatus } from './states';
+import store from './store';
 
 export function groupBoosts(values) {
   let newValues = [];
@@ -50,24 +50,32 @@ export function groupBoosts(values) {
 }
 
 export function dedupeBoosts(items, instance) {
-  return items.filter((item) => {
+  const boostedStatusIDs = store.account.get('boostedStatusIDs') || {};
+  const filteredItems = items.filter((item) => {
     if (!item.reblog) return true;
-    const s = getStatus(item.reblog.id, instance);
-    if (s) {
+    const statusKey = `${instance}-${item.reblog.id}`;
+    const boosterID = boostedStatusIDs[statusKey];
+    if (boosterID && boosterID !== item.id) {
       console.warn(
         `🚫 Duplicate boost by ${item.account.displayName}`,
         item,
-        s,
+        item.reblog,
       );
       return false;
-    }
-    const s2 = getStatus(item.id, instance);
-    if (s2) {
-      console.warn('🚫 Re-boosted boost', item);
-      return false;
+    } else {
+      boostedStatusIDs[statusKey] = item.id;
     }
     return true;
   });
+  // Limit to 50
+  const keys = Object.keys(boostedStatusIDs);
+  if (keys.length > 50) {
+    keys.slice(0, keys.length - 50).forEach((key) => {
+      delete boostedStatusIDs[key];
+    });
+  }
+  store.account.set('boostedStatusIDs', boostedStatusIDs);
+  return filteredItems;
 }
 
 export function groupContext(items) {

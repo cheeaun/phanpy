@@ -383,6 +383,10 @@ function Timeline({
                       ? `/${instance}/s/${statusID}`
                       : `/s/${statusID}`;
                     const isMiddle = i > 0 && i < items.length - 1;
+                    const isSpoiler = item.sensitive && !!item.spoilerText;
+                    const showCompact =
+                      (isSpoiler && i > 0) ||
+                      (manyItems && isMiddle && type === 'thread');
                     return (
                       <li
                         key={`timeline-${statusID}`}
@@ -395,7 +399,7 @@ function Timeline({
                         }`}
                       >
                         <Link class="status-link timeline-item" to={url}>
-                          {manyItems && isMiddle && type === 'thread' ? (
+                          {showCompact ? (
                             <TimelineStatusCompact
                               status={item}
                               instance={instance}

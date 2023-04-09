@@ -462,12 +462,13 @@ function Status({
       )}
       {!isSizeLarge && sameInstance && (
         <>
-          <MenuItem onClick={replyStatus}>
-            <Icon icon="reply" />
-            <span>Reply</span>
-          </MenuItem>
-          {canBoost && (
+          <div class="menu-horizontal">
+            <MenuItem onClick={replyStatus}>
+              <Icon icon="reply" />
+              <span>Reply</span>
+            </MenuItem>
             <MenuItem
+              disabled={!canBoost}
               onClick={async () => {
                 try {
                   const done = await boostStatus();
@@ -485,41 +486,43 @@ function Status({
               />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
             </MenuItem>
-          )}
-          <MenuItem
-            onClick={() => {
-              try {
-                favouriteStatus();
-                if (!isSizeLarge)
-                  showToast(favourited ? 'Unfavourited' : 'Favourited');
-              } catch (e) {}
-            }}
-          >
-            <Icon
-              icon="heart"
-              style={{
-                color: favourited && 'var(--favourite-color)',
+          </div>
+          <div class="menu-horizontal">
+            <MenuItem
+              onClick={() => {
+                try {
+                  favouriteStatus();
+                  if (!isSizeLarge)
+                    showToast(favourited ? 'Unfavourited' : 'Favourited');
+                } catch (e) {}
               }}
-            />
-            <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              try {
-                bookmarkStatus();
-                if (!isSizeLarge)
-                  showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
-              } catch (e) {}
-            }}
-          >
-            <Icon
-              icon="bookmark"
-              style={{
-                color: bookmarked && 'var(--link-color)',
+            >
+              <Icon
+                icon="heart"
+                style={{
+                  color: favourited && 'var(--favourite-color)',
+                }}
+              />
+              <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                try {
+                  bookmarkStatus();
+                  if (!isSizeLarge)
+                    showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+                } catch (e) {}
               }}
-            />
-            <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
-          </MenuItem>
+            >
+              <Icon
+                icon="bookmark"
+                style={{
+                  color: bookmarked && 'var(--link-color)',
+                }}
+              />
+              <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
+            </MenuItem>
+          </div>
         </>
       )}
       {enableTranslate && (
@@ -609,7 +612,7 @@ function Status({
         </MenuItem>
       )}
       {isSelf && (
-        <>
+        <div class="menu-horizontal">
           <MenuItem
             onClick={() => {
               states.showCompose = {
@@ -643,7 +646,7 @@ function Status({
               <span>Delete…</span>
             </MenuItem>
           )}
-        </>
+        </div>
       )}
     </>
   );

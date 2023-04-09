@@ -1273,6 +1273,18 @@ body:has(.status-deck) .media-post-link {
 .szh-menu .menu-horizontal .szh-menu__item {
   flex: 1;
 }
+.szh-menu .menu-horizontal .szh-menu__item:not(:only-child):first-child {
+  padding-right: 4px !important;
+}
+.szh-menu
+  .menu-horizontal
+  .szh-menu__item:not(:only-child):not(:first-child):not(:last-child) {
+  padding-left: 8px !important;
+  padding-right: 4px !important;
+}
+.szh-menu .menu-horizontal .szh-menu__item:not(:only-child):last-child {
+  padding-left: 8px !important;
+}
 .szh-menu .szh-menu__item .menu-shortcut {
   opacity: 0.5;
   font-weight: normal;

@@ -175,10 +175,12 @@ function Status({
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
+  const currentAccount = useMemo(() => {
+    return store.session.get('currentAccount');
+  }, []);
   const isSelf = useMemo(() => {
-    const currentAccount = store.session.get('currentAccount');
     return currentAccount && currentAccount === accountId;
-  }, [accountId]);
+  }, [accountId, currentAccount]);
 
   let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,
@@ -200,6 +202,9 @@ function Status({
         .catch((e) => {});
     }
   }
+  const mentionSelf =
+    inReplyToAccountId === currentAccount ||
+    mentions?.find((mention) => mention.id === currentAccount);
 
   const showSpoiler = !!snapStates.spoilers[id] || false;
 
@@ -570,9 +575,41 @@ function Status({
             </MenuItem>
           )}
       </div>
+      {(isSelf || mentionSelf) && <MenuDivider />}
+      {(isSelf || mentionSelf) && (
+        <MenuItem
+          onClick={async () => {
+            try {
+              const newStatus = await masto.v1.statuses[
+                muted ? 'unmute' : 'mute'
+              ](id);
+              saveStatus(newStatus, instance);
+              showToast(muted ? 'Conversation unmuted' : 'Conversation muted');
+            } catch (e) {
+              console.error(e);
+              showToast(
+                muted
+                  ? 'Unable to unmute conversation'
+                  : 'Unable to mute conversation',
+              );
+            }
+          }}
+        >
+          {muted ? (
+            <>
+              <Icon icon="unmute" />
+              <span>Unmute conversation</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="mute" />
+              <span>Mute conversation</span>
+            </>
+          )}
+        </MenuItem>
+      )}
       {isSelf && (
         <>
-          <MenuDivider />
           <MenuItem
             onClick={() => {
               states.showCompose = {

@@ -1,5 +1,5 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useRef } from 'preact/hooks';
+import { useCallback, useRef, useState } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
@@ -54,7 +54,9 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     }
   }, []);
 
+  const [pinchZoomEnabled, setPinchZoomEnabled] = useState(false);
   const quickPinchZoomProps = {
+    enabled: pinchZoomEnabled,
     draggableUnZoomed: false,
     inertiaFriction: 0.9,
     containerProps: {
@@ -97,6 +99,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
               onLoad={(e) => {
                 e.target.closest('.media-image').style.backgroundImage = '';
                 e.target.closest('.media-zoom').style.display = '';
+                setPinchZoomEnabled(true);
               }}
             />
           </QuickPinchZoom>
@@ -180,7 +183,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
       >
         {showOriginal || autoGIFAnimate ? (
           isGIF && showOriginal ? (
-            <QuickPinchZoom {...quickPinchZoomProps}>
+            <QuickPinchZoom {...quickPinchZoomProps} enabled>
               <div
                 ref={mediaRef}
                 dangerouslySetInnerHTML={{

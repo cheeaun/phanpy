@@ -6,6 +6,7 @@ import Favourites from '../pages/favourites';
 import Following from '../pages/following';
 import Hashtag from '../pages/hashtag';
 import List from '../pages/list';
+import Mentions from '../pages/mentions';
 import Notifications from '../pages/notifications';
 import Public from '../pages/public';
 import states from '../utils/states';
@@ -27,6 +28,7 @@ function Columns() {
       bookmarks: Bookmarks,
       favourites: Favourites,
       hashtag: Hashtag,
+      mentions: Mentions,
     }[type];
     if (!Component) return null;
     return <Component {...params} />;

@@ -399,9 +399,31 @@ function ShortcutsSettings() {
             })}
           </ol>
         ) : (
-          <p class="ui-state insignificant">
-            No shortcuts yet. Add one from the form below.
-          </p>
+          <div class="ui-state insignificant">
+            <p>No shortcuts yet. Add one from the form below.</p>
+            <p>
+              Not sure what to add?
+              <br />
+              Try adding{' '}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.shortcuts = [
+                    {
+                      type: 'following',
+                    },
+                    {
+                      type: 'notifications',
+                    },
+                  ];
+                }}
+              >
+                Home / Following and Notifications
+              </a>{' '}
+              first.
+            </p>
+          </div>
         )}
         <p
           style={{

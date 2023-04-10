@@ -12,6 +12,9 @@
 .avatar.has-alpha {
   border-radius: 0;
 }
+.avatar:not(.has-alpha).squircle {
+  border-radius: 12px;
+}
 
 .avatar img {
   width: 100%;

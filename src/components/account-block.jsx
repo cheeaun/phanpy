@@ -44,6 +44,7 @@ function AccountBlock({
     url,
     statusesCount,
     lastStatusAt,
+    bot,
   } = account;
   const displayNameWithEmoji = emojifyText(displayName, emojis);
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
@@ -68,7 +69,7 @@ function AccountBlock({
         }
       }}
     >
-      <Avatar url={avatar} size={avatarSize} />
+      <Avatar url={avatar} size={avatarSize} squircle={bot} />
       <span>
         {displayName ? (
           <b

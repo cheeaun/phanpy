@@ -403,6 +403,7 @@ function Notification({ notification, instance }) {
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}
+                    squircle={account?.bot}
                   />
                   {type === 'favourite+reblog' && (
                     <div class="account-sub-icons">

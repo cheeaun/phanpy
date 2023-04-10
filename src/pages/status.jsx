@@ -909,6 +909,7 @@ function SubComments({
               key={a.id}
               url={a.avatarStatic}
               title={`${a.displayName} @${a.username}`}
+              squircle={a?.bot}
             />
           ))}
         </span>

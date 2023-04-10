@@ -507,6 +507,7 @@ function RelatedActions({ info, instance, authenticated }) {
                   url={follower.avatarStatic}
                   size="l"
                   alt={`${follower.displayName} @${follower.acct}`}
+                  squircle={follower?.bot}
                 />
               </a>
             ))}

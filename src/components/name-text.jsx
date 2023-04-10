@@ -14,7 +14,8 @@ function NameText({
   external,
   onClick,
 }) {
-  const { acct, avatar, avatarStatic, id, url, displayName, emojis } = account;
+  const { acct, avatar, avatarStatic, id, url, displayName, emojis, bot } =
+    account;
   let { username } = account;
 
   const displayNameWithEmoji = emojifyText(displayName, emojis);
@@ -52,7 +53,7 @@ function NameText({
     >
       {showAvatar && (
         <>
-          <Avatar url={avatarStatic || avatar} />{' '}
+          <Avatar url={avatarStatic || avatar} squircle={bot} />{' '}
         </>
       )}
       {displayName && !short ? (

@@ -67,6 +67,7 @@ function NavMenu(props) {
                 currentAccount?.info?.avatarStatic
               }
               size="l"
+              squircle={currentAccount?.info?.bot}
             />
           )}
           <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />

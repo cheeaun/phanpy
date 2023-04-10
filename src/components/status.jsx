@@ -118,6 +118,7 @@ function Status({
       displayName,
       username,
       emojis: accountEmojis,
+      bot,
     },
     id,
     repliesCount,
@@ -753,7 +754,7 @@ function Status({
             };
           }}
         >
-          <Avatar url={avatarStatic || avatar} size="xxl" />
+          <Avatar url={avatarStatic || avatar} size="xxl" squircle={bot} />
         </a>
       )}
       <div class="container">
@@ -1957,7 +1958,7 @@ function safeBoundingBoxPadding() {
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
-    account: { avatar, avatarStatic },
+    account: { avatar, avatarStatic, bot },
     createdAt,
     visibility,
     reblog,
@@ -2002,7 +2003,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
           <span>Filtered</span>
           <span>{filterTitleStr}</span>
         </b>{' '}
-        <Avatar url={avatarStatic || avatar} />
+        <Avatar url={avatarStatic || avatar} squircle={bot} />
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
             <NameText account={status.account} instance={instance} />{' '}
@@ -2022,6 +2023,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
               <>
                 <Avatar
                   url={reblog.account.avatarStatic || reblog.account.avatar}
+                  squircle={bot}
                 />{' '}
               </>
             )}

@@ -508,6 +508,7 @@ function Compose({
               url={currentAccountInfo.avatarStatic}
               size="xl"
               alt={currentAccountInfo.username}
+              squircle={currentAccountInfo?.bot}
             />
           )}
           {!standalone ? (

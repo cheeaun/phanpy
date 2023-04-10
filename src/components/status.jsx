@@ -881,6 +881,7 @@ function Status({
               <div
                 class="content"
                 lang={language}
+                dir="auto"
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
@@ -907,6 +908,7 @@ function Status({
           <div
             class="content"
             lang={language}
+            dir="auto"
             ref={contentRef}
             data-read-more={readMoreText}
             onClick={handleContentLinks({ mentions, instance, previewMode })}
@@ -1389,6 +1391,7 @@ function Poll({
   return (
     <div
       lang={lang}
+      dir="auto"
       class={`poll ${readOnly ? 'read-only' : ''} ${
         uiState === 'loading' ? 'loading' : ''
       }`}

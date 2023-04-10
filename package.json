@@ -59,7 +59,11 @@
   "postcss": {
     "plugins": {
       "postcss-dark-theme-class": {},
-      "postcss-preset-env": {}
+      "postcss-preset-env": {
+        "features": {
+          "logical-properties-and-values": false
+        }
+      }
     }
   },
   "browserslist": [

@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Flow+Circular&family=Noto+Emoji&display=swap');
-
-.status-pre-meta,
-.status {
-  font-family: 'Flow Circular', 'Noto Emoji', cursive;
+body.cloak .name-text,
+body.cloak .status .content-container,
+body.cloak .account-container :is(header, main > *:not(.actions)) {
+  text-decoration-thickness: 1.1em;
+  text-decoration-line: line-through;
+  text-rendering: optimizeSpeed;
 }
 
-.status :is(img, video, audio),
-.avatar {
-  filter: invert(0.5);
+body.cloak .status :is(img, video, audio),
+body.cloak .avatar,
+body.cloak .emoji,
+body.cloak .header-banner {
+  filter: contrast(0) !important;
   background-color: #000 !important;
 }

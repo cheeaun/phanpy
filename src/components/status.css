@@ -1005,11 +1005,11 @@ a.card:is(:hover, :focus) {
   border: 1.5px solid transparent;
   backdrop-filter: none;
 }
-.status .action > button.plain:is(:hover, :focus) {
+.status .action > button.plain:not(:disabled):is(:hover, :focus) {
   color: var(--link-color);
   background-color: var(--button-plain-bg-hover-color);
 }
-.status .action > button.plain.reblog-button:is(:hover, :focus) {
+.status .action > button.plain.reblog-button:not(:disabled):is(:hover, :focus) {
   color: var(--reblog-color);
 }
 .status .action > button.plain.reblog-button.checked {

@@ -271,6 +271,7 @@ function Timeline({
               loadItems(true);
             }
           }}
+          class={uiState === 'loading' ? 'loading' : ''}
         >
           <div class="header-grid">
             <div class="header-side">
@@ -285,7 +286,7 @@ function Timeline({
             </div>
             {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
             <div class="header-side">
-              <Loader hidden={uiState !== 'loading'} />
+              {/* <Loader hidden={uiState !== 'loading'} /> */}
               {!!headerEnd && headerEnd}
             </div>
           </div>

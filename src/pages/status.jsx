@@ -554,7 +554,9 @@ function StatusThread({ closeLink = '/' }) {
       } ${initialPageState.current === 'status' ? 'slide-in' : ''}`}
     >
       <header
-        class={`${heroInView ? 'inview' : ''}`}
+        class={`${heroInView ? 'inview' : ''} ${
+          uiState === 'loading' ? 'loading' : ''
+        }`}
         onDblClick={(e) => {
           // reload statuses
           states.reloadStatusPage++;
@@ -628,66 +630,61 @@ function StatusThread({ closeLink = '/' }) {
             )}
           </h1>
           <div class="header-side">
-            {uiState === 'loading' ? (
-              <Loader abrupt />
-            ) : (
-              <Menu
-                align="end"
-                portal={{
-                  // Need this, else the menu click will cause scroll jump
-                  target: scrollableRef.current,
+            <Menu
+              align="end"
+              portal={{
+                // Need this, else the menu click will cause scroll jump
+                target: scrollableRef.current,
+              }}
+              menuButton={
+                <button type="button" class="button plain4">
+                  <Icon icon="more" alt="Actions" size="xl" />
+                </button>
+              }
+            >
+              <MenuItem
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  states.reloadStatusPage++;
                 }}
-                menuButton={
-                  <button type="button" class="button plain4">
-                    <Icon icon="more" alt="Actions" size="xl" />
-                  </button>
-                }
               >
-                <MenuItem
-                  disabled={uiState === 'loading'}
-                  onClick={() => {
-                    states.reloadStatusPage++;
-                  }}
-                >
-                  <Icon icon="refresh" />
-                  <span>Refresh</span>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    // Click all buttons with class .spoiler but not .spoiling
-                    const buttons = Array.from(
-                      scrollableRef.current.querySelectorAll(
-                        'button.spoiler:not(.spoiling)',
-                      ),
-                    );
-                    buttons.forEach((button) => {
-                      button.click();
-                    });
-                  }}
-                >
-                  <Icon icon="eye-open" />{' '}
-                  <span>Show all sensitive content</span>
-                </MenuItem>
-                <MenuDivider />
-                <MenuHeader className="plain">Experimental</MenuHeader>
-                <MenuItem
-                  disabled={postSameInstance}
-                  onClick={() => {
-                    const statusURL = getInstanceStatusURL(heroStatus.url);
-                    if (statusURL) {
-                      location.hash = statusURL;
-                    } else {
-                      alert('Unable to switch');
-                    }
-                  }}
-                >
-                  <Icon icon="transfer" />
-                  <small class="menu-double-lines">
-                    Switch to post's instance (<b>{postInstance}</b>)
-                  </small>
-                </MenuItem>
-              </Menu>
-            )}
+                <Icon icon="refresh" />
+                <span>Refresh</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  // Click all buttons with class .spoiler but not .spoiling
+                  const buttons = Array.from(
+                    scrollableRef.current.querySelectorAll(
+                      'button.spoiler:not(.spoiling)',
+                    ),
+                  );
+                  buttons.forEach((button) => {
+                    button.click();
+                  });
+                }}
+              >
+                <Icon icon="eye-open" /> <span>Show all sensitive content</span>
+              </MenuItem>
+              <MenuDivider />
+              <MenuHeader className="plain">Experimental</MenuHeader>
+              <MenuItem
+                disabled={postSameInstance}
+                onClick={() => {
+                  const statusURL = getInstanceStatusURL(heroStatus.url);
+                  if (statusURL) {
+                    location.hash = statusURL;
+                  } else {
+                    alert('Unable to switch');
+                  }
+                }}
+              >
+                <Icon icon="transfer" />
+                <small class="menu-double-lines">
+                  Switch to post's instance (<b>{postInstance}</b>)
+                </small>
+              </MenuItem>
+            </Menu>
             <Link class="button plain deck-close" to={closeLink}>
               <Icon icon="x" size="xl" />
             </Link>

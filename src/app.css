@@ -154,6 +154,36 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding-bottom: 80dvh !important;
 }
 
+@keyframes indeterminate-bar {
+  0% {
+    transform: translateX(-50%);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(50%);
+    opacity: 0.25;
+  }
+}
+.deck > header.loading:after {
+  pointer-events: none;
+  content: '';
+  display: block;
+  height: 4px;
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  left: 25%;
+  background-image: radial-gradient(
+    ellipse farthest-side at bottom,
+    var(--link-color),
+    transparent
+  );
+  animation: indeterminate-bar 1s ease-in-out infinite alternate;
+}
+
 .timeline {
   margin: 0 auto;
   padding: 0;

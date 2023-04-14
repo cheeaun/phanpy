@@ -15,6 +15,21 @@ function enhanceContent(content, opts = {}) {
     link.setAttribute('target', '_blank');
   });
 
+  // Spanify un-spanned mentions
+  const mentionLinks = Array.from(dom.querySelectorAll('a[href].mention'));
+  mentionLinks.forEach((link) => {
+    if (link.querySelector('*')) {
+      return;
+    }
+    const text = link.innerText;
+    // If text looks like @username@domain, then it's a mention
+    if (/^@[^@]+@[^@]+$/g.test(text)) {
+      // Only show @username
+      const username = text.split('@')[1];
+      link.innerHTML = `@<span>${username}</span>`;
+    }
+  });
+
   // EMOJIS
   // ======
   // Convert :shortcode: to <img />

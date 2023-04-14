@@ -402,7 +402,7 @@ function ShortcutsSettings() {
           </ol>
         ) : (
           <div class="ui-state insignificant">
-            <p>No shortcuts yet. Add one from the form below.</p>
+            <p>No shortcuts yet. Tap on the Add shortcut button.</p>
             <p>
               Not sure what to add?
               <br />

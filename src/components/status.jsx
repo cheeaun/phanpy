@@ -25,6 +25,7 @@ import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
+import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
@@ -1351,6 +1352,7 @@ function Poll({
     voted,
     votersCount,
     votesCount,
+    emojis,
   } = poll;
 
   const expiresAtDate = !!expiresAt && new Date(expiresAt);
@@ -1426,7 +1428,11 @@ function Poll({
                 }}
               >
                 <div class="poll-option-title">
-                  {title}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: emojifyText(title, emojis),
+                    }}
+                  />
                   {voted && ownVotes.includes(i) && (
                     <>
                       {' '}
@@ -1477,7 +1483,12 @@ function Poll({
                       disabled={uiState === 'loading'}
                       readOnly={readOnly}
                     />
-                    <span class="poll-option-title">{title}</span>
+                    <span
+                      class="poll-option-title"
+                      dangerouslySetInnerHTML={{
+                        __html: emojifyText(title, emojis),
+                      }}
+                    />
                   </label>
                 </div>
               );

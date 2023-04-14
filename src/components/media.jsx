@@ -24,6 +24,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
   const width = showOriginal ? original?.width : small?.width;
   const height = showOriginal ? original?.height : small?.height;
   const mediaURL = showOriginal ? url : previewUrl;
+  const orientation = width >= height ? 'landscape' : 'portrait';
 
   const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
 
@@ -97,6 +98,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               alt={description}
               width={width}
               height={height}
+              data-orientation={orientation}
               loading="eager"
               decoding="async"
               onLoad={(e) => {
@@ -112,6 +114,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             alt={description}
             width={width}
             height={height}
+            data-orientation={orientation}
             loading="lazy"
             style={{
               backgroundColor:
@@ -140,6 +143,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
       poster="${previewUrl}"
       width="${width}"
       height="${height}"
+      data-orientation="${orientation}"
       preload="auto"
       autoplay
       muted="${isGIF}"
@@ -209,6 +213,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             poster={previewUrl}
             width={width}
             height={height}
+            data-orientation={orientation}
             preload="auto"
             // controls
             playsinline
@@ -222,6 +227,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               alt={description}
               width={width}
               height={height}
+              data-orientation={orientation}
               loading="lazy"
             />
             <div class="media-play">
@@ -247,6 +253,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             alt={description}
             width={width}
             height={height}
+            data-orientation={orientation}
             loading="lazy"
           />
         ) : null}

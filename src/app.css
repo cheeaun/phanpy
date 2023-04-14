@@ -599,10 +599,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-loading {
   text-align: center;
   color: var(--text-insignificant-color);
+  max-width: var(--main-width);
 }
 .status-error {
   text-align: center;
   color: var(--text-insignificant-color);
+  max-width: var(--main-width);
 }
 
 .status-link {

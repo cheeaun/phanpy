@@ -33,6 +33,27 @@ const imageRoute = new Route(
 );
 registerRoute(imageRoute);
 
+const iconsRoute = new Route(
+  ({ request, sameOrigin }) => {
+    const isIcon = request.url.includes('/icons/');
+    return sameOrigin && isIcon;
+  },
+  new CacheFirst({
+    cacheName: 'icons',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
+        purgeOnQuotaError: true,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(iconsRoute);
+
 // 1-day cache for
 // - /api/v1/instance
 // - /api/v1/custom_emojis

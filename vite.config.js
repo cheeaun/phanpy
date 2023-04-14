@@ -94,6 +94,15 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         compose: resolve(__dirname, 'compose/index.html'),
       },
+      output: {
+        chunkFileNames: (chunkInfo) => {
+          const { facadeModuleId } = chunkInfo;
+          if (facadeModuleId && facadeModuleId.includes('icon')) {
+            return 'assets/icons/[name]-[hash].js';
+          }
+          return 'assets/[name]-[hash].js';
+        },
+      },
     },
   },
 });

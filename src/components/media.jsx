@@ -49,7 +49,11 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     if (media) {
       const value = make3dTransformValue({ x, y, scale });
 
-      media.style.setProperty('transform', value);
+      if (scale === 1) {
+        media.style.removeProperty('transform');
+      } else {
+        media.style.setProperty('transform', value);
+      }
 
       media.closest('.media-zoom').style.touchAction =
         scale <= 1 ? 'pan-x' : '';

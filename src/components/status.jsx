@@ -888,7 +888,11 @@ function Status({
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
-                <p>{spoilerText}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: emojifyText(spoilerText, emojis),
+                  }}
+                />
               </div>
               <button
                 class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}

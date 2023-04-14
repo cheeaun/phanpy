@@ -60,7 +60,8 @@ const TYPE_PARAMS = {
       text: 'Instance',
       name: 'instance',
       type: 'text',
-      placeholder: 'e.g. mastodon.social',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
     },
   ],
   trending: [
@@ -68,7 +69,8 @@ const TYPE_PARAMS = {
       text: 'Instance',
       name: 'instance',
       type: 'text',
-      placeholder: 'e.g. mastodon.social',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
     },
   ],
   search: [

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import { SHORTCUTS_META } from '../components/shortcuts-settings';
+import { api } from '../utils/api';
 import states from '../utils/states';
 
 import AsyncText from './AsyncText';
@@ -15,6 +16,7 @@ import Link from './link';
 import MenuLink from './menu-link';
 
 function Shortcuts() {
+  const { instance } = api();
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 
@@ -36,7 +38,13 @@ function Shortcuts() {
             id = id(data, i);
           }
           if (typeof path === 'function') {
-            path = path(data, i);
+            path = path(
+              {
+                ...data,
+                instance: data.instance || instance,
+              },
+              i,
+            );
           }
           if (typeof title === 'function') {
             title = title(data, i);

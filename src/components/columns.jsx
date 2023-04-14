@@ -9,6 +9,7 @@ import List from '../pages/list';
 import Mentions from '../pages/mentions';
 import Notifications from '../pages/notifications';
 import Public from '../pages/public';
+import Trending from '../pages/trending';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -29,6 +30,7 @@ function Columns() {
       favourites: Favourites,
       hashtag: Hashtag,
       mentions: Mentions,
+      trending: Trending,
     }[type];
     if (!Component) return null;
     return <Component {...params} />;

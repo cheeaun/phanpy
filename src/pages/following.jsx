@@ -18,6 +18,8 @@ function Following({ title, path, id, ...props }) {
   const homeIterator = useRef();
   const latestItem = useRef();
 
+  console.debug('RENDER Following', title, id);
+
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
       homeIterator.current = masto.v1.timelines.listHome({ limit: LIMIT });

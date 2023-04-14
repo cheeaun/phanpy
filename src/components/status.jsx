@@ -79,6 +79,7 @@ function Status({
   enableTranslate,
   previewMode,
   allowFilters,
+  onMediaClick,
 }) {
   if (skeleton) {
     return (
@@ -1024,16 +1025,16 @@ function Status({
                     key={media.id}
                     media={media}
                     autoAnimate={isSizeLarge}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      states.showMediaModal = {
-                        mediaAttachments,
-                        index: i,
-                        instance,
-                        statusID: readOnly ? null : id,
-                      };
-                    }}
+                    to={`/${instance}/s/${id}?${
+                      withinContext ? 'media' : 'media-only'
+                    }=${i + 1}`}
+                    onClick={
+                      onMediaClick
+                        ? (e) => {
+                            onMediaClick(e, i, media);
+                          }
+                        : undefined
+                    }
                   />
                 ))}
             </div>

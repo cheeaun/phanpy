@@ -6,7 +6,7 @@ import pRetry from 'p-retry';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
-import { matchPath, useNavigate, useParams } from 'react-router-dom';
+import { matchPath, useParams, useSearchParams } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
@@ -14,6 +14,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import MediaModal from '../components/media-modal';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
@@ -21,6 +22,7 @@ import { api } from '../utils/api';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, {
+  getStatus,
   saveStatus,
   statusKey,
   threadifyStatus,
@@ -43,13 +45,97 @@ function resetScrollPosition(id) {
 function StatusPage() {
   const { id, ...params } = useParams();
   const { masto, instance } = api({ instance: params.instance });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const mediaParam = searchParams.get('media');
+  const mediaOnlyParam = searchParams.get('media-only');
+  const mediaIndex = parseInt(mediaParam || mediaOnlyParam, 10);
+  let showMedia = mediaIndex > 0;
+  const mediaStatusID = searchParams.get('mediaStatusID');
+  const mediaStatus = getStatus(mediaStatusID, instance);
+  if (mediaStatusID && !mediaStatus) {
+    showMedia = false;
+  }
+  const showMediaOnly = showMedia && !!mediaOnlyParam;
+
+  const sKey = statusKey(id, instance);
+  const [heroStatus, setHeroStatus] = useState(states.statuses[sKey]);
+
+  const closeLink = useMemo(() => {
+    const { prevLocation } = states;
+    const pathname =
+      (prevLocation?.pathname || '') + (prevLocation?.search || '');
+    const matchStatusPath =
+      matchPath('/:instance/s/:id', pathname) || matchPath('/s/:id', pathname);
+    if (!pathname || matchStatusPath) {
+      return '/';
+    }
+    return pathname;
+  }, []);
+
+  useEffect(() => {
+    if (!heroStatus && showMedia) {
+      (async () => {
+        try {
+          const status = await masto.v1.statuses.fetch(id);
+          saveStatus(status, instance);
+          setHeroStatus(status);
+        } catch (err) {
+          console.error(err);
+          alert('Unable to load status.');
+          location.hash = closeLink;
+        }
+      })();
+    }
+  }, []);
+
+  const mediaAttachments = mediaStatusID
+    ? mediaStatus?.mediaAttachments
+    : heroStatus?.mediaAttachments;
+
+  return (
+    <div class="deck-backdrop">
+      {showMedia ? (
+        mediaAttachments?.length ? (
+          <MediaModal
+            mediaAttachments={mediaAttachments}
+            statusID={mediaStatusID || id}
+            instance={instance}
+            index={mediaIndex - 1}
+            onClose={() => {
+              if (showMediaOnly) {
+                location.hash = closeLink;
+              } else {
+                searchParams.delete('media');
+                searchParams.delete('mediaStatusID');
+                setSearchParams(searchParams);
+              }
+            }}
+          />
+        ) : (
+          <div class="deck-loader">
+            <Loader />
+          </div>
+        )
+      ) : (
+        <Link to={closeLink} />
+      )}
+      {!showMediaOnly && <StatusThread closeLink={closeLink} />}
+    </div>
+  );
+}
+
+function StatusThread({ closeLink = '/' }) {
+  const { id, ...params } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const mediaParam = searchParams.get('media');
+  const showMedia = parseInt(mediaParam, 10) > 0;
+  const { masto, instance } = api({ instance: params.instance });
   const {
     masto: currentMasto,
     instance: currentInstance,
     authenticated,
   } = api();
   const sameInstance = instance === currentInstance;
-  const navigate = useNavigate();
   const snapStates = useSnapshot(states);
   const [statuses, setStatuses] = useState([]);
   const [uiState, setUIState] = useState('default');
@@ -69,7 +155,7 @@ function StatusPage() {
         states.scrollPositions[id] = scrollTop;
       }
     }, 50);
-    scrollableRef.current.addEventListener('scroll', onScroll, {
+    scrollableRef.current?.addEventListener('scroll', onScroll, {
       passive: true,
     });
     onScroll();
@@ -331,23 +417,6 @@ function StatusPage() {
     return postInstance === instance;
   }, [postInstance, instance]);
 
-  const closeLink = useMemo(() => {
-    const { prevLocation } = snapStates;
-    const pathname =
-      (prevLocation?.pathname || '') + (prevLocation?.search || '');
-    if (
-      !pathname ||
-      matchPath('/:instance/s/:id', pathname) ||
-      matchPath('/s/:id', pathname)
-    ) {
-      return '/';
-    }
-    return pathname;
-  }, []);
-  const onClose = () => {
-    states.showMediaModal = false;
-  };
-
   const [limit, setLimit] = useState(LIMIT);
   const showMore = useMemo(() => {
     // return number of statuses to show
@@ -367,10 +436,20 @@ function StatusPage() {
     return top > 0 ? 'down' : 'up';
   }, [heroInView]);
 
-  useHotkeys(['esc', 'backspace'], () => {
-    // location.hash = closeLink;
-    onClose();
-    navigate(closeLink);
+  useHotkeys(
+    'esc',
+    () => {
+      location.hash = closeLink;
+    },
+    {
+      // If media is open, esc to close media first
+      // Else close the status page
+      enabled: !showMedia,
+    },
+  );
+  // For backspace, will always close both media and status page
+  useHotkeys('backspace', () => {
+    location.hash = closeLink;
   });
 
   useHotkeys('j', () => {
@@ -464,287 +543,286 @@ function StatusPage() {
     distanceFromStartPx: 16,
   });
 
+  const initialPageState = useRef(showMedia ? 'media+status' : 'status');
+
   return (
-    <div class="deck-backdrop">
-      <Link to={closeLink} onClick={onClose}></Link>
-      <div
-        tabIndex="-1"
-        ref={scrollableRef}
-        class={`status-deck deck contained ${
-          statuses.length > 1 ? 'padded-bottom' : ''
-        }`}
+    <div
+      tabIndex="-1"
+      ref={scrollableRef}
+      class={`status-deck deck contained ${
+        statuses.length > 1 ? 'padded-bottom' : ''
+      } ${initialPageState.current === 'status' ? 'slide-in' : ''}`}
+    >
+      <header
+        class={`${heroInView ? 'inview' : ''}`}
+        onDblClick={(e) => {
+          // reload statuses
+          states.reloadStatusPage++;
+        }}
       >
-        <header
-          class={`${heroInView ? 'inview' : ''}`}
-          onDblClick={(e) => {
-            // reload statuses
-            states.reloadStatusPage++;
-          }}
-        >
-          {/* <div>
+        {/* <div>
             <Link class="button plain deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-          <div class="header-grid header-grid-2">
-            <h1>
-              {!heroInView && heroStatus && uiState !== 'loading' ? (
-                <>
-                  <span class="hero-heading">
-                    <NameText
-                      account={heroStatus.account}
-                      instance={instance}
-                      showAvatar
-                      short
-                    />{' '}
-                    <span class="insignificant">
-                      &bull;{' '}
-                      <RelativeTime
-                        datetime={heroStatus.createdAt}
-                        format="micro"
-                      />
-                    </span>
-                  </span>{' '}
-                  <button
-                    type="button"
-                    class="ancestors-indicator light small"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      heroStatusRef.current.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      });
-                    }}
-                  >
-                    <Icon
-                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
+        <div class="header-grid header-grid-2">
+          <h1>
+            {!heroInView && heroStatus && uiState !== 'loading' ? (
+              <>
+                <span class="hero-heading">
+                  <NameText
+                    account={heroStatus.account}
+                    instance={instance}
+                    showAvatar
+                    short
+                  />{' '}
+                  <span class="insignificant">
+                    &bull;{' '}
+                    <RelativeTime
+                      datetime={heroStatus.createdAt}
+                      format="micro"
                     />
-                  </button>
-                </>
-              ) : (
-                <>
-                  Status{' '}
-                  <button
-                    type="button"
-                    class="ancestors-indicator light small"
-                    onClick={(e) => {
-                      // Scroll to top
-                      e.preventDefault();
-                      e.stopPropagation();
-                      scrollableRef.current.scrollTo({
-                        top: 0,
-                        behavior: 'smooth',
-                      });
-                    }}
-                    hidden={!ancestors.length || nearReachStart}
-                  >
-                    <Icon icon="arrow-up" />
-                    <Icon icon="comment" />{' '}
-                    <span class="insignificant">
-                      {shortenNumber(ancestors.length)}
-                    </span>
-                  </button>
-                </>
-              )}
-            </h1>
-            <div class="header-side">
-              {uiState === 'loading' ? (
-                <Loader abrupt />
-              ) : (
-                <Menu
-                  align="end"
-                  portal={{
-                    // Need this, else the menu click will cause scroll jump
-                    target: scrollableRef.current,
+                  </span>
+                </span>{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    heroStatusRef.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
                   }}
-                  menuButton={
-                    <button type="button" class="button plain4">
-                      <Icon icon="more" alt="Actions" size="xl" />
-                    </button>
-                  }
                 >
-                  <MenuItem
-                    disabled={uiState === 'loading'}
-                    onClick={() => {
-                      states.reloadStatusPage++;
-                    }}
-                  >
-                    <Icon icon="refresh" />
-                    <span>Refresh</span>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      // Click all buttons with class .spoiler but not .spoiling
-                      const buttons = Array.from(
-                        scrollableRef.current.querySelectorAll(
-                          'button.spoiler:not(.spoiling)',
-                        ),
-                      );
-                      buttons.forEach((button) => {
-                        button.click();
-                      });
-                    }}
-                  >
-                    <Icon icon="eye-open" />{' '}
-                    <span>Show all sensitive content</span>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuHeader className="plain">Experimental</MenuHeader>
-                  <MenuItem
-                    disabled={postSameInstance}
-                    onClick={() => {
-                      const statusURL = getInstanceStatusURL(heroStatus.url);
-                      if (statusURL) {
-                        navigate(statusURL);
-                      } else {
-                        alert('Unable to switch');
-                      }
-                    }}
-                  >
-                    <Icon icon="transfer" />
-                    <small class="menu-double-lines">
-                      Switch to post's instance (<b>{postInstance}</b>)
-                    </small>
-                  </MenuItem>
-                </Menu>
-              )}
-              <Link
-                class="button plain deck-close"
-                to={closeLink}
-                onClick={onClose}
+                  <Icon
+                    icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
+                  />
+                </button>
+              </>
+            ) : (
+              <>
+                Status{' '}
+                <button
+                  type="button"
+                  class="ancestors-indicator light small"
+                  onClick={(e) => {
+                    // Scroll to top
+                    e.preventDefault();
+                    e.stopPropagation();
+                    scrollableRef.current.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
+                    });
+                  }}
+                  hidden={!ancestors.length || nearReachStart}
+                >
+                  <Icon icon="arrow-up" />
+                  <Icon icon="comment" />{' '}
+                  <span class="insignificant">
+                    {shortenNumber(ancestors.length)}
+                  </span>
+                </button>
+              </>
+            )}
+          </h1>
+          <div class="header-side">
+            {uiState === 'loading' ? (
+              <Loader abrupt />
+            ) : (
+              <Menu
+                align="end"
+                portal={{
+                  // Need this, else the menu click will cause scroll jump
+                  target: scrollableRef.current,
+                }}
+                menuButton={
+                  <button type="button" class="button plain4">
+                    <Icon icon="more" alt="Actions" size="xl" />
+                  </button>
+                }
               >
-                <Icon icon="x" size="xl" />
-              </Link>
-            </div>
-          </div>
-        </header>
-        {!!statuses.length && heroStatus ? (
-          <ul
-            class={`timeline flat contextual grow ${
-              uiState === 'loading' ? 'loading' : ''
-            }`}
-          >
-            {statuses.slice(0, limit).map((status) => {
-              const {
-                id: statusID,
-                ancestor,
-                isThread,
-                descendant,
-                thread,
-                replies,
-                repliesCount,
-              } = status;
-              const isHero = statusID === id;
-              return (
-                <li
-                  key={statusID}
-                  ref={isHero ? heroStatusRef : null}
-                  class={`${ancestor ? 'ancestor' : ''} ${
-                    descendant ? 'descendant' : ''
-                  } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
+                <MenuItem
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    states.reloadStatusPage++;
+                  }}
                 >
-                  {isHero ? (
-                    <>
-                      <InView
-                        threshold={0.1}
-                        onChange={onView}
-                        class="status-focus"
-                        tabIndex={0}
-                      >
-                        <Status
-                          statusID={statusID}
-                          instance={instance}
-                          withinContext
-                          size="l"
-                          enableTranslate
-                        />
-                      </InView>
-                      {uiState !== 'loading' && !authenticated ? (
-                        <div class="post-status-banner">
-                          <p>
-                            You're not logged in. Interactions (reply, boost,
-                            etc) are not possible.
-                          </p>
-                          <Link to="/login" class="button">
-                            Log in
-                          </Link>
-                        </div>
-                      ) : (
-                        !sameInstance && (
-                          <div class="post-status-banner">
-                            <p>
-                              This post is from another instance (
-                              <b>{instance}</b>). Interactions (reply, boost,
-                              etc) are not possible.
-                            </p>
-                            <button
-                              type="button"
-                              disabled={uiState === 'loading'}
-                              onClick={() => {
-                                setUIState('loading');
-                                (async () => {
-                                  try {
-                                    const results =
-                                      await currentMasto.v2.search({
-                                        q: heroStatus.url,
-                                        type: 'statuses',
-                                        resolve: true,
-                                        limit: 1,
-                                      });
-                                    if (results.statuses.length) {
-                                      const status = results.statuses[0];
-                                      navigate(
-                                        currentInstance
-                                          ? `/${currentInstance}/s/${status.id}`
-                                          : `/s/${status.id}`,
-                                      );
-                                    } else {
-                                      throw new Error('No results');
-                                    }
-                                  } catch (e) {
-                                    setUIState('default');
-                                    alert('Error: ' + e);
-                                    console.error(e);
-                                  }
-                                })();
-                              }}
-                            >
-                              <Icon icon="transfer" /> Switch to my instance to
-                              enable interactions
-                            </button>
-                          </div>
-                        )
-                      )}
-                    </>
-                  ) : (
-                    <Link
-                      class="status-link"
-                      to={
-                        instance
-                          ? `/${instance}/s/${statusID}`
-                          : `/s/${statusID}`
-                      }
-                      onClick={() => {
-                        resetScrollPosition(statusID);
-                      }}
+                  <Icon icon="refresh" />
+                  <span>Refresh</span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    // Click all buttons with class .spoiler but not .spoiling
+                    const buttons = Array.from(
+                      scrollableRef.current.querySelectorAll(
+                        'button.spoiler:not(.spoiling)',
+                      ),
+                    );
+                    buttons.forEach((button) => {
+                      button.click();
+                    });
+                  }}
+                >
+                  <Icon icon="eye-open" />{' '}
+                  <span>Show all sensitive content</span>
+                </MenuItem>
+                <MenuDivider />
+                <MenuHeader className="plain">Experimental</MenuHeader>
+                <MenuItem
+                  disabled={postSameInstance}
+                  onClick={() => {
+                    const statusURL = getInstanceStatusURL(heroStatus.url);
+                    if (statusURL) {
+                      location.hash = statusURL;
+                    } else {
+                      alert('Unable to switch');
+                    }
+                  }}
+                >
+                  <Icon icon="transfer" />
+                  <small class="menu-double-lines">
+                    Switch to post's instance (<b>{postInstance}</b>)
+                  </small>
+                </MenuItem>
+              </Menu>
+            )}
+            <Link class="button plain deck-close" to={closeLink}>
+              <Icon icon="x" size="xl" />
+            </Link>
+          </div>
+        </div>
+      </header>
+      {!!statuses.length && heroStatus ? (
+        <ul
+          class={`timeline flat contextual grow ${
+            uiState === 'loading' ? 'loading' : ''
+          }`}
+        >
+          {statuses.slice(0, limit).map((status) => {
+            const {
+              id: statusID,
+              ancestor,
+              isThread,
+              descendant,
+              thread,
+              replies,
+              repliesCount,
+            } = status;
+            const isHero = statusID === id;
+            return (
+              <li
+                key={statusID}
+                ref={isHero ? heroStatusRef : null}
+                class={`${ancestor ? 'ancestor' : ''} ${
+                  descendant ? 'descendant' : ''
+                } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
+              >
+                {isHero ? (
+                  <>
+                    <InView
+                      threshold={0.1}
+                      onChange={onView}
+                      class="status-focus"
+                      tabIndex={0}
                     >
                       <Status
                         statusID={statusID}
                         instance={instance}
                         withinContext
-                        size={thread || ancestor ? 'm' : 's'}
+                        size="l"
                         enableTranslate
                       />
-                      {ancestor && isThread && !!repliesCount && (
-                        <div class="replies-link">
-                          <Icon icon="comment" />{' '}
-                          <span title={repliesCount}>
-                            {shortenNumber(repliesCount)}
-                          </span>
+                    </InView>
+                    {uiState !== 'loading' && !authenticated ? (
+                      <div class="post-status-banner">
+                        <p>
+                          You're not logged in. Interactions (reply, boost, etc)
+                          are not possible.
+                        </p>
+                        <Link to="/login" class="button">
+                          Log in
+                        </Link>
+                      </div>
+                    ) : (
+                      !sameInstance && (
+                        <div class="post-status-banner">
+                          <p>
+                            This post is from another instance (
+                            <b>{instance}</b>). Interactions (reply, boost, etc)
+                            are not possible.
+                          </p>
+                          <button
+                            type="button"
+                            disabled={uiState === 'loading'}
+                            onClick={() => {
+                              setUIState('loading');
+                              (async () => {
+                                try {
+                                  const results = await currentMasto.v2.search({
+                                    q: heroStatus.url,
+                                    type: 'statuses',
+                                    resolve: true,
+                                    limit: 1,
+                                  });
+                                  if (results.statuses.length) {
+                                    const status = results.statuses[0];
+                                    location.hash = currentInstance
+                                      ? `/${currentInstance}/s/${status.id}`
+                                      : `/s/${status.id}`;
+                                  } else {
+                                    throw new Error('No results');
+                                  }
+                                } catch (e) {
+                                  setUIState('default');
+                                  alert('Error: ' + e);
+                                  console.error(e);
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="transfer" /> Switch to my instance to
+                            enable interactions
+                          </button>
                         </div>
-                      )}{' '}
-                      {/* {replies?.length > LIMIT && (
+                      )
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    class="status-link"
+                    to={
+                      instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
+                    }
+                    onClick={() => {
+                      resetScrollPosition(statusID);
+                    }}
+                  >
+                    <Status
+                      statusID={statusID}
+                      instance={instance}
+                      withinContext
+                      size={thread || ancestor ? 'm' : 's'}
+                      enableTranslate
+                      onMediaClick={(e, i) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSearchParams({
+                          media: i + 1,
+                          mediaStatusID: statusID,
+                        });
+                      }}
+                    />
+                    {ancestor && isThread && repliesCount > 1 && (
+                      <div class="replies-link">
+                        <Icon icon="comment" />{' '}
+                        <span title={repliesCount}>
+                          {shortenNumber(repliesCount)}
+                        </span>
+                      </div>
+                    )}{' '}
+                    {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
                           <span title={replies.length}>
@@ -752,90 +830,89 @@ function StatusPage() {
                           </span>
                         </div>
                       )} */}
-                    </Link>
+                  </Link>
+                )}
+                {descendant && replies?.length > 0 && (
+                  <SubComments
+                    instance={instance}
+                    hasManyStatuses={hasManyStatuses}
+                    replies={replies}
+                    hasParentThread={thread}
+                    level={1}
+                  />
+                )}
+                {uiState === 'loading' &&
+                  isHero &&
+                  !!heroStatus?.repliesCount &&
+                  !hasDescendants && (
+                    <div class="status-loading">
+                      <Loader />
+                    </div>
                   )}
-                  {descendant && replies?.length > 0 && (
-                    <SubComments
-                      instance={instance}
-                      hasManyStatuses={hasManyStatuses}
-                      replies={replies}
-                      hasParentThread={thread}
-                      level={1}
-                    />
+                {uiState === 'error' &&
+                  isHero &&
+                  !!heroStatus?.repliesCount &&
+                  !hasDescendants && (
+                    <div class="status-error">
+                      Unable to load replies.
+                      <br />
+                      <button
+                        type="button"
+                        class="plain"
+                        onClick={() => {
+                          states.reloadStatusPage++;
+                        }}
+                      >
+                        Try again
+                      </button>
+                    </div>
                   )}
-                  {uiState === 'loading' &&
-                    isHero &&
-                    !!heroStatus?.repliesCount &&
-                    !hasDescendants && (
-                      <div class="status-loading">
-                        <Loader />
-                      </div>
-                    )}
-                  {uiState === 'error' &&
-                    isHero &&
-                    !!heroStatus?.repliesCount &&
-                    !hasDescendants && (
-                      <div class="status-error">
-                        Unable to load replies.
-                        <br />
-                        <button
-                          type="button"
-                          class="plain"
-                          onClick={() => {
-                            states.reloadStatusPage++;
-                          }}
-                        >
-                          Try again
-                        </button>
-                      </div>
-                    )}
-                </li>
-              );
-            })}
-            {showMore > 0 && (
-              <li>
-                <button
-                  type="button"
-                  class="plain block"
-                  disabled={uiState === 'loading'}
-                  onClick={() => setLimit((l) => l + LIMIT)}
-                  style={{ marginBlockEnd: '6em' }}
-                >
-                  Show more&hellip;{' '}
-                  <span class="tag">
-                    {showMore > LIMIT ? `${LIMIT}+` : showMore}
-                  </span>
-                </button>
               </li>
-            )}
-          </ul>
-        ) : (
-          <>
-            {uiState === 'loading' && (
-              <ul class="timeline flat contextual grow loading">
-                <li>
-                  <Status skeleton size="l" />
-                </li>
-              </ul>
-            )}
-            {uiState === 'error' && (
-              <p class="ui-state">
-                Unable to load status
-                <br />
-                <br />
-                <button
-                  type="button"
-                  onClick={() => {
-                    states.reloadStatusPage++;
-                  }}
-                >
-                  Try again
-                </button>
-              </p>
-            )}
-          </>
-        )}
-      </div>
+            );
+          })}
+          {showMore > 0 && (
+            <li>
+              <button
+                type="button"
+                class="plain block"
+                disabled={uiState === 'loading'}
+                onClick={() => setLimit((l) => l + LIMIT)}
+                style={{ marginBlockEnd: '6em' }}
+              >
+                Show more&hellip;{' '}
+                <span class="tag">
+                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                </span>
+              </button>
+            </li>
+          )}
+        </ul>
+      ) : (
+        <>
+          {uiState === 'loading' && (
+            <ul class="timeline flat contextual grow loading">
+              <li>
+                <Status skeleton size="l" />
+              </li>
+            </ul>
+          )}
+          {uiState === 'error' && (
+            <p class="ui-state">
+              Unable to load status
+              <br />
+              <br />
+              <button
+                type="button"
+                onClick={() => {
+                  states.reloadStatusPage++;
+                }}
+              >
+                Try again
+              </button>
+            </p>
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -847,6 +924,7 @@ function SubComments({
   hasParentThread,
   level,
 }) {
+  const [searchParams, setSearchParams] = useSearchParams();
   // Set isBrief = true:
   // - if less than or 2 replies
   // - if replies have no sub-replies
@@ -946,6 +1024,14 @@ function SubComments({
                 withinContext
                 size="s"
                 enableTranslate
+                onMediaClick={(e, i) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSearchParams({
+                    media: i + 1,
+                    mediaStatusID: r.id,
+                  });
+                }}
               />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">

@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
+import Link from './link';
 import { formatDuration } from './status';
 
 /*
@@ -15,7 +16,7 @@ video = Video clip
 audio = Audio track
 */
 
-function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
+function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
   const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
     media;
   const { original = {}, small, focus } = meta || {};
@@ -73,11 +74,13 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
     onUpdate,
   };
 
+  const Parent = to ? (props) => <Link to={to} {...props} /> : 'div';
+
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
     return (
-      <div
+      <Parent
         class={`media media-image`}
         onClick={onClick}
         style={
@@ -120,7 +123,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             }}
           />
         )}
-      </div>
+      </Parent>
     );
   } else if (type === 'gifv' || type === 'video') {
     const shortDuration = original.duration < 31;
@@ -148,7 +151,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
   `;
 
     return (
-      <div
+      <Parent
         class={`media media-${isGIF ? 'gif' : 'video'} ${
           autoGIFAnimate ? 'media-contain' : ''
         }`}
@@ -226,12 +229,12 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             </div>
           </>
         )}
-      </div>
+      </Parent>
     );
   } else if (type === 'audio') {
     const formattedDuration = formatDuration(original.duration);
     return (
-      <div
+      <Parent
         class="media media-audio"
         data-formatted-duration={formattedDuration}
         onClick={onClick}
@@ -252,7 +255,7 @@ function Media({ media, showOriginal, autoAnimate, onClick = () => {} }) {
             <Icon icon="play" size="xxl" />
           </div>
         )}
-      </div>
+      </Parent>
     );
   }
 }

@@ -42,6 +42,8 @@ function Timeline({
   const [visible, setVisible] = useState(true);
   const scrollableRef = useRef();
 
+  console.debug('RENDER Timeline', id, refresh);
+
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);

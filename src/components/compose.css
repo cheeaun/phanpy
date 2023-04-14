@@ -73,9 +73,7 @@
 #compose-container .status-preview:has(.status-badge) {
   border-top-right-radius: 8px;
 }
-#compose-container .status-preview :is(.hashtag, .time) {
-  /* Prevent hashtags from being clickable */
-  /* TODO: maybe use a different solution? */
+#compose-container .status-preview :is(.content-container, .time) {
   pointer-events: none;
 }
 #compose-container.standalone .status-preview * {

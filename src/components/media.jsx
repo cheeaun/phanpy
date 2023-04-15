@@ -56,7 +56,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
       }
 
       media.closest('.media-zoom').style.touchAction =
-        scale <= 1 ? 'pan-x' : '';
+        scale <= 1.01 ? 'pan-x' : '';
     }
   }, []);
 

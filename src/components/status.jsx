@@ -670,6 +670,7 @@ function Status({
       setIsContextMenuOpen(true);
     },
     {
+      threshold: 500,
       captureEvent: true,
       detect: 'touch',
       cancelOnMovement: true,

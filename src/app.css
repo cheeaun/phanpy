@@ -53,6 +53,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overscroll-behavior: contain;
   scroll-behavior: smooth;
   background-color: var(--bg-color);
+  /* This `transform` fixes carousel blocking vertical scrolling for pointer devices on iPad */
+  transform: translateZ(0);
 }
 .deck-container[hidden] {
   display: block;

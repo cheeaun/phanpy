@@ -804,14 +804,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   flex-grow: 1;
   /* backdrop-filter: saturate(0.75); */
 }
-.deck-backdrop > .deck-loader {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(24px);
-  background-image: radial-gradient(closest-side, var(--bg-color), transparent);
-}
 @keyframes slide-in {
   0% {
     transform: translate3d(100%, 0, 0);
@@ -901,6 +893,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background-color: var(--backdrop-color);
   backdrop-filter: blur(24px);
   animation: appear 0.3s var(--timing-function) both;
+}
+.media-modal-container.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(
+    closest-side,
+    var(--bg-blur-color),
+    transparent
+  );
 }
 
 .carousel {

@@ -86,7 +86,7 @@ function StatusPage() {
         }
       })();
     }
-  }, []);
+  }, [showMedia]);
 
   const mediaAttachments = mediaStatusID
     ? mediaStatus?.mediaAttachments
@@ -112,8 +112,8 @@ function StatusPage() {
             }}
           />
         ) : (
-          <div class="deck-loader">
-            <Loader />
+          <div class="media-modal-container loading">
+            <Loader abrupt />
           </div>
         )
       ) : (

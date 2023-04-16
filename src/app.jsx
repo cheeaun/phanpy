@@ -249,7 +249,8 @@ function App() {
         <Route path="/:instance?/s/:id" element={<Status />} />
       </Routes>
       <div>
-        {!snapStates.settings.shortcutsColumnsMode &&
+        {isLoggedIn &&
+          !snapStates.settings.shortcutsColumnsMode &&
           snapStates.settings.shortcutsViewMode !== 'multi-column' && (
             <Shortcuts />
           )}

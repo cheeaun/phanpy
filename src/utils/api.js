@@ -93,6 +93,8 @@ export async function initAccount(client, instance, accessToken) {
   const masto = client;
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
+  store.session.set('currentAccount', mastoAccount.id);
+
   saveAccount({
     info: mastoAccount,
     instanceURL: instance.toLowerCase(),

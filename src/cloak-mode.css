@@ -4,6 +4,7 @@ body.cloak .account-container :is(header, main > *:not(.actions)) {
   text-decoration-thickness: 1.1em;
   text-decoration-line: line-through;
   text-rendering: optimizeSpeed;
+  filter: opacity(0.5);
 }
 
 body.cloak .status :is(img, video, audio),

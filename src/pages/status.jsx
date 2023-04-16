@@ -3,7 +3,13 @@ import './status.css';
 import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { matchPath, useParams, useSearchParams } from 'react-router-dom';
@@ -129,6 +135,7 @@ function StatusThread({ closeLink = '/' }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const showMedia = parseInt(mediaParam, 10) > 0;
+  const [viewMode, setViewMode] = useState(searchParams.get('view'));
   const { masto, instance } = api({ instance: params.instance });
   const {
     masto: currentMasto,
@@ -545,13 +552,24 @@ function StatusThread({ closeLink = '/' }) {
 
   const initialPageState = useRef(showMedia ? 'media+status' : 'status');
 
+  const handleMediaClick = useCallback((e, i, media, status) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSearchParams({
+      media: i + 1,
+      mediaStatusID: status.id,
+    });
+  }, []);
+
   return (
     <div
       tabIndex="-1"
       ref={scrollableRef}
       class={`status-deck deck contained ${
         statuses.length > 1 ? 'padded-bottom' : ''
-      } ${initialPageState.current === 'status' ? 'slide-in' : ''}`}
+      } ${initialPageState.current === 'status' ? 'slide-in' : ''} ${
+        viewMode ? `deck-view-${viewMode}` : ''
+      }`}
     >
       <header
         class={`${heroInView ? 'inview' : ''} ${
@@ -650,6 +668,30 @@ function StatusThread({ closeLink = '/' }) {
               >
                 <Icon icon="refresh" />
                 <span>Refresh</span>
+              </MenuItem>
+              <MenuItem
+                className="menu-switch-view"
+                onClick={() => {
+                  setViewMode(viewMode === 'full' ? null : 'full');
+                  if (viewMode === 'full') {
+                    searchParams.delete('view');
+                  } else {
+                    searchParams.set('view', 'full');
+                  }
+                  setSearchParams(searchParams);
+                }}
+              >
+                <Icon
+                  icon={
+                    {
+                      '': 'layout5',
+                      full: 'layout4',
+                    }[viewMode || '']
+                  }
+                />
+                <span>
+                  Switch to {viewMode === 'full' ? 'Side Peek' : 'Full'} view
+                </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -802,14 +844,7 @@ function StatusThread({ closeLink = '/' }) {
                       withinContext
                       size={thread || ancestor ? 'm' : 's'}
                       enableTranslate
-                      onMediaClick={(e, i) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setSearchParams({
-                          media: i + 1,
-                          mediaStatusID: statusID,
-                        });
-                      }}
+                      onMediaClick={handleMediaClick}
                     />
                     {ancestor && isThread && repliesCount > 1 && (
                       <div class="replies-link">
@@ -962,6 +997,15 @@ function SubComments({
     (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
   const openBefore = cachedRepliesToggle[replies[0].id];
 
+  const handleMediaClick = useCallback((e, i, media, status) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSearchParams({
+      media: i + 1,
+      mediaStatusID: status.id,
+    });
+  }, []);
+
   return (
     <details
       class="replies"
@@ -1021,14 +1065,7 @@ function SubComments({
                 withinContext
                 size="s"
                 enableTranslate
-                onMediaClick={(e, i) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setSearchParams({
-                    media: i + 1,
-                    mediaStatusID: r.id,
-                  });
-                }}
+                onMediaClick={handleMediaClick}
               />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">

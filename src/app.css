@@ -826,6 +826,29 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-backdrop .deck .status {
   max-width: var(--main-width);
 }
+.deck-backdrop .deck.deck-view-full .menu-switch-view {
+  display: none;
+}
+@media (min-width: 40em) {
+  .deck-backdrop .deck.deck-view-full .menu-switch-view {
+    display: flex;
+  }
+  .deck-backdrop .deck.deck-view-full {
+    min-width: 100%;
+    background-image: radial-gradient(
+      circle,
+      transparent 30em,
+      var(--bg-faded-color)
+    );
+  }
+  .deck-backdrop .deck.deck-view-full > * {
+    max-width: calc(var(--main-width) + 32px);
+    margin: 0 auto;
+  }
+  .deck-backdrop .deck.deck-view-full .status {
+    max-width: 100%;
+  }
+}
 
 .deck-close {
   color: var(--text-insignificant-color) !important;
@@ -1096,7 +1119,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
     width: 100%;
     flex-grow: 0;
   }
-  .deck-backdrop .media-modal-container + .status-deck {
+  .deck-backdrop .media-modal-container + .status-deck:not(.deck-view-full) {
     /* display: block; */
     /* width: 350px; */
     min-width: 350px;

@@ -1037,7 +1037,7 @@ function Status({
                     onClick={
                       onMediaClick
                         ? (e) => {
-                            onMediaClick(e, i, media);
+                            onMediaClick(e, i, media, status);
                           }
                         : undefined
                     }

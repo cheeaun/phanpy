@@ -389,6 +389,19 @@
   color: inherit;
 }
 
+.status.compact-thread .spoiler-badge {
+  font-size: smaller;
+  color: var(--button-bg-color);
+  border: 1px dashed var(--button-bg-color);
+  padding: 2px 4px;
+  border-radius: 16px;
+  display: inline-flex;
+  margin: 4px;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-faded-color);
+}
+
 .timeline-deck .status .content {
   max-height: 50vh;
   max-height: 50dvh;

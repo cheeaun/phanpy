@@ -584,6 +584,14 @@ function TimelineStatusCompact({ status, instance }) {
       )}
       <div class="content-compact" title={statusPeekText}>
         {statusPeekText}
+        {status.sensitive && status.spoilerText && (
+          <>
+            {' '}
+            <span class="spoiler-badge">
+              <Icon icon="eye-close" size="s" />
+            </span>
+          </>
+        )}
       </div>
     </article>
   );

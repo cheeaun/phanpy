@@ -732,7 +732,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
-@media (hover: hover) or (pointer: fine) {
+@media (hover: hover) or (pointer: fine) or (min-width: 40em) {
   .status-carousel ul {
     scroll-snap-type: none;
   }

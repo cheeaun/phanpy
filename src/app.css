@@ -185,6 +185,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   );
   animation: indeterminate-bar 1s ease-in-out infinite alternate;
 }
+@media (min-width: 40em) {
+  .deck > header.loading:after {
+    height: 8px;
+  }
+}
 
 .timeline {
   margin: 0 auto;

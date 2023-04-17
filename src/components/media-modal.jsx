@@ -84,6 +84,13 @@ function MediaModal({
     };
   }, []);
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      carouselRef.current?.focus?.();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div class="media-modal-container">
       <div

@@ -1009,6 +1009,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 :is(.carousel-top-controls, .carousel-controls)[hidden] {
   opacity: 0;
 }
+.carousel-controls {
+  top: 45%;
+}
 
 :is(.button, button).carousel-button,
 button.carousel-dot {

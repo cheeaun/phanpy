@@ -251,6 +251,13 @@ function StatusThread({ closeLink = '/' }) {
           } else if (status.inReplyToId === heroStatus.id) {
             // If replying to the hero status, it's a reply, level 1
             nestedDescendants.push(status);
+          } else if (
+            !status.inReplyToAccountId &&
+            nestedDescendants.find((s) => s.id === status.inReplyToId) &&
+            status.account.id === heroStatus.account.id
+          ) {
+            // If replying to hero's own statuses, it's part of the thread, level 1
+            nestedDescendants.push(status);
           } else {
             // If replying to someone else, it's a reply to a reply, level 2
             const parent = descendants.find((s) => s.id === status.inReplyToId);

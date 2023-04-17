@@ -70,7 +70,7 @@
   overflow: auto;
   box-shadow: 0 -3px 12px -3px var(--drop-shadow-color);
 }
-#compose-container .status-preview:has(.status-badge) {
+#compose-container .status-preview:has(.status-badge:not(:empty)) {
   border-top-right-radius: 8px;
 }
 #compose-container .status-preview :is(.content-container, .time) {

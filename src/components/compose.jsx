@@ -1084,7 +1084,24 @@ function Compose({
                 disabled={uiState === 'loading'}
               >
                 {supportedLanguages
-                  .sort(([, commonA], [, commonB]) => {
+                  .sort(([codeA, commonA], [codeB, commonB]) => {
+                    const { contentTranslationHideLanguages = [] } =
+                      states.settings;
+                    // Sort codes that same as language, prevLanguage, DEFAULT_LANGUAGE and all the ones in states.settings.contentTranslationHideLanguages, to the top
+                    if (
+                      codeA === language ||
+                      codeA === prevLanguage ||
+                      codeA === DEFAULT_LANG ||
+                      contentTranslationHideLanguages?.includes(codeA)
+                    )
+                      return -1;
+                    if (
+                      codeB === language ||
+                      codeB === prevLanguage ||
+                      codeB === DEFAULT_LANG ||
+                      contentTranslationHideLanguages?.includes(codeB)
+                    )
+                      return 1;
                     return commonA.localeCompare(commonB);
                   })
                   .map(([code, common, native]) => (

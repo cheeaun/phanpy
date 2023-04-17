@@ -820,7 +820,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background-color: var(--bg-color);
   box-shadow: -1px 0 var(--bg-color);
 }
-.deck-backdrop .deck.slide-in {
+.deck-backdrop .deck.slide-in:not(.deck-view-full) {
   animation: slide-in 0.5s var(--timing-function);
 }
 .deck-backdrop .deck .status {

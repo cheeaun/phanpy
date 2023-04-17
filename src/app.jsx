@@ -19,7 +19,6 @@ import { useSnapshot } from 'valtio';
 import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
-import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -34,6 +33,7 @@ import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
 import Home from './pages/home';
+import HttpRoute from './pages/HttpRoute';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
@@ -53,7 +53,6 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
-import getInstanceStatusURL from './utils/get-instance-status-url';
 import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
@@ -489,30 +488,6 @@ function BackgroundService({ isLoggedIn }) {
   });
 
   return null;
-}
-
-function HttpRoute() {
-  const location = useLocation();
-  const url = location.pathname.replace(/^\//, '');
-  const statusURL = getInstanceStatusURL(url);
-  if (statusURL) {
-    window.location.hash = statusURL + '?view=full';
-    return null;
-  }
-  return (
-    <div class="ui-state" tabIndex="-1">
-      <h2>Unable to process URL</h2>
-      <p>
-        <a href={url} target="_blank">
-          {url}
-        </a>
-      </p>
-      <hr />
-      <p>
-        <Link to="/">Go home</Link>
-      </p>
-    </div>
-  );
 }
 
 export { App };

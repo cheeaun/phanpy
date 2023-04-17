@@ -141,14 +141,14 @@ export const SHORTCUTS_META = {
   public: {
     id: 'public',
     title: ({ local }) => (local ? 'Local' : 'Federated'),
-    subtitle: ({ instance }) => instance,
+    subtitle: ({ instance }) => instance || api().instance,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
   },
   trending: {
     id: 'trending',
     title: 'Trending',
-    subtitle: ({ instance }) => instance,
+    subtitle: ({ instance }) => instance || api().instance,
     path: ({ instance }) => `/${instance}/trending`,
     icon: 'chart',
   },
@@ -187,7 +187,7 @@ export const SHORTCUTS_META = {
   hashtag: {
     id: 'hashtag',
     title: ({ hashtag }) => hashtag,
-    subtitle: ({ instance }) => instance,
+    subtitle: ({ instance }) => instance || api().instance,
     path: ({ hashtag, instance }) =>
       `${instance ? `/${instance}` : ''}/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',

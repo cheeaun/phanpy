@@ -38,6 +38,8 @@ import { getCurrentAccount } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
+import getInstanceStatusURL from './../utils/get-instance-status-url';
+
 const LIMIT = 40;
 const THREAD_LIMIT = 20;
 
@@ -1089,21 +1091,6 @@ function SubComments({
       </ul>
     </details>
   );
-}
-
-const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/([^\/]+)\/?$/i;
-const statusNoteRegex = /\/notes\/([^\/]+)\/?$/i;
-function getInstanceStatusURL(url) {
-  // Regex /:username/:id, where username = @username or @username@domain, id = anything
-  const { hostname, pathname } = new URL(url);
-  const [, username, domain, id] = pathname.match(statusRegex) || [];
-  if (id) {
-    return `/${hostname}/s/${id}`;
-  }
-  const [, noteId] = pathname.match(statusNoteRegex) || [];
-  if (noteId) {
-    return `/${hostname}/s/${noteId}`;
-  }
 }
 
 export default StatusPage;

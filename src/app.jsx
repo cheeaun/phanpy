@@ -19,6 +19,7 @@ import { useSnapshot } from 'valtio';
 import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
+import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -52,6 +53,7 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
+import getInstanceStatusURL from './utils/get-instance-status-url';
 import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
@@ -188,6 +190,10 @@ function App() {
     backgroundLocation: backgroundLocation.current,
     location,
   });
+
+  if (/\/https?:/.test(location.pathname)) {
+    return <HttpRoute />;
+  }
 
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
@@ -483,6 +489,30 @@ function BackgroundService({ isLoggedIn }) {
   });
 
   return null;
+}
+
+function HttpRoute() {
+  const location = useLocation();
+  const url = location.pathname.replace(/^\//, '');
+  const statusURL = getInstanceStatusURL(url);
+  if (statusURL) {
+    window.location.hash = statusURL + '?view=full';
+    return null;
+  }
+  return (
+    <div class="ui-state" tabIndex="-1">
+      <h2>Unable to process URL</h2>
+      <p>
+        <a href={url} target="_blank">
+          {url}
+        </a>
+      </p>
+      <hr />
+      <p>
+        <Link to="/">Go home</Link>
+      </p>
+    </div>
+  );
 }
 
 export { App };

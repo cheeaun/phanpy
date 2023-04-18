@@ -466,10 +466,6 @@ function Status({
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-horizontal">
-            <MenuItem onClick={replyStatus}>
-              <Icon icon="reply" />
-              <span>Reply</span>
-            </MenuItem>
             <MenuItem
               disabled={!canBoost}
               onClick={async () => {
@@ -489,8 +485,6 @@ function Status({
               />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
             </MenuItem>
-          </div>
-          <div class="menu-horizontal">
             <MenuItem
               onClick={() => {
                 try {
@@ -507,6 +501,12 @@ function Status({
                 }}
               />
               <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
+            </MenuItem>
+          </div>
+          <div class="menu-horizontal">
+            <MenuItem onClick={replyStatus}>
+              <Icon icon="reply" />
+              <span>Reply</span>
             </MenuItem>
             <MenuItem
               onClick={() => {

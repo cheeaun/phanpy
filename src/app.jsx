@@ -13,6 +13,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -250,9 +251,11 @@ function App() {
         <Route path="/:instance?/search" element={<Search />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
-      <Routes>
-        <Route path="/:instance?/s/:id" element={<Status />} />
-      </Routes>
+      {uiState === 'default' && (
+        <Routes>
+          <Route path="/:instance?/s/:id" element={<StatusRoute />} />
+        </Routes>
+      )}
       <div>
         {isLoggedIn &&
           !snapStates.settings.shortcutsColumnsMode &&
@@ -488,6 +491,12 @@ function BackgroundService({ isLoggedIn }) {
   });
 
   return null;
+}
+
+function StatusRoute() {
+  const params = useParams();
+  const { id, instance } = params;
+  return <Status id={id} instance={instance} />;
 }
 
 export { App };

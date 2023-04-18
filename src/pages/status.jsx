@@ -3,6 +3,7 @@ import './status.css';
 import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
+import { memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,
@@ -50,8 +51,8 @@ function resetScrollPosition(id) {
   delete states.scrollPositions[id];
 }
 
-function StatusPage() {
-  const { id, ...params } = useParams();
+function StatusPage(params) {
+  const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
@@ -127,18 +128,23 @@ function StatusPage() {
       ) : (
         <Link to={closeLink} />
       )}
-      {!showMediaOnly && <StatusThread closeLink={closeLink} />}
+      {!showMediaOnly && (
+        <StatusThread
+          id={id}
+          instance={params.instance}
+          closeLink={closeLink}
+        />
+      )}
     </div>
   );
 }
 
-function StatusThread({ closeLink = '/' }) {
-  const { id, ...params } = useParams();
+function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const showMedia = parseInt(mediaParam, 10) > 0;
   const [viewMode, setViewMode] = useState(searchParams.get('view'));
-  const { masto, instance } = api({ instance: params.instance });
+  const { masto, instance } = api({ instance: propInstance });
   const {
     masto: currentMasto,
     instance: currentInstance,
@@ -308,6 +314,13 @@ function StatusThread({ closeLink = '/' }) {
           offsetTop: heroStatusRef.current?.offsetTop,
           scrollTop: scrollableRef.current?.scrollTop,
         };
+
+        // Set limit to hero's index
+        const heroLimit = allStatuses.findIndex((s) => s.id === id);
+        if (heroLimit >= limit) {
+          setLimit(heroLimit + 1);
+        }
+
         console.log({ allStatuses });
         setStatuses(allStatuses);
         cachedStatusesMap[id] = allStatuses;
@@ -1100,4 +1113,4 @@ function SubComments({
   );
 }
 
-export default StatusPage;
+export default memo(StatusPage);

@@ -199,7 +199,7 @@ function App() {
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
-  // Change #app classname based on snapStates.settings.shortcutsViewMode
+  // Change #app dataset based on snapStates.settings.shortcutsViewMode
   useEffect(() => {
     const $app = document.getElementById('app');
     if ($app) {

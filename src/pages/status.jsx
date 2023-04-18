@@ -695,6 +695,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 className="menu-switch-view"
                 onClick={() => {
                   setViewMode(viewMode === 'full' ? null : 'full');
+                  searchParams.delete('media');
+                  searchParams.delete('media-only');
                   if (viewMode === 'full') {
                     searchParams.delete('view');
                   } else {

@@ -22,5 +22,32 @@
 
 #login input {
   display: block;
-  width: 100%;
+  width: 15em;
+  margin: 0 auto;
+  max-width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+#instances-suggestions {
+  margin: 0.2em 0 0;
+  padding: 0;
+  list-style: none;
+  width: 90vw;
+  max-width: 40em;
+  overflow: auto;
+  white-space: nowrap;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 1.2em,
+    black calc(100% - 5em),
+    transparent
+  );
+  animation: fade-in 0.2s ease-in-out;
+  height: 2.5em;
+}
+#instances-suggestions li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }

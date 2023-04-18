@@ -14,6 +14,9 @@ function Login() {
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
+  const [instanceText, setInstanceText] = useState(
+    cachedInstanceURL?.toLowerCase() || '',
+  );
 
   const [instancesList, setInstancesList] = useState([]);
   useEffect(() => {
@@ -29,20 +32,13 @@ function Login() {
     })();
   }, []);
 
-  useEffect(() => {
-    if (cachedInstanceURL) {
-      instanceURLRef.current.value = cachedInstanceURL.toLowerCase();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (cachedInstanceURL) {
+  //     instanceURLRef.current.value = cachedInstanceURL.toLowerCase();
+  //   }
+  // }, []);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const { elements } = e.target;
-    let instanceURL = elements.instanceURL.value.toLowerCase();
-    // Remove protocol from instance URL
-    instanceURL = instanceURL.replace(/^https?:\/\//, '').replace(/\/+$/, '');
-    // Remove @acct@ or acct@ from instance URL
-    instanceURL = instanceURL.replace(/^@?[^@]+@/, '');
+  const submitInstance = (instanceURL) => {
     store.local.set('instanceURL', instanceURL);
 
     (async () => {
@@ -71,6 +67,22 @@ function Login() {
     })();
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const { elements } = e.target;
+    let instanceURL = elements.instanceURL.value.toLowerCase();
+    // Remove protocol from instance URL
+    instanceURL = instanceURL.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+    // Remove @acct@ or acct@ from instance URL
+    instanceURL = instanceURL.replace(/^@?[^@]+@/, '');
+    if (!/\./.test(instanceURL)) {
+      instanceURL = instancesList.find((instance) =>
+        instance.includes(instanceURL),
+      );
+    }
+    submitInstance(instanceURL);
+  };
+
   return (
     <main id="login" style={{ textAlign: 'center' }}>
       <form onSubmit={onSubmit}>
@@ -78,34 +90,57 @@ function Login() {
         <label>
           <p>Instance</p>
           <input
+            value={instanceText}
             required
             type="text"
             class="large"
             id="instanceURL"
             ref={instanceURLRef}
             disabled={uiState === 'loading'}
-            list="instances-list"
+            // list="instances-list"
             autocorrect="off"
             autocapitalize="off"
             autocomplete="off"
             spellcheck={false}
+            placeholder="instance domain"
+            onInput={(e) => {
+              setInstanceText(e.target.value);
+            }}
           />
-          <datalist id="instances-list">
+          <ul id="instances-suggestions">
+            {instancesList
+              .filter((instance) => instance.includes(instanceText))
+              .slice(0, 10)
+              .map((instance) => (
+                <li>
+                  <button
+                    type="button"
+                    class="plain4"
+                    onClick={() => {
+                      submitInstance(instance);
+                    }}
+                  >
+                    {instance}
+                  </button>
+                </li>
+              ))}
+          </ul>
+          {/* <datalist id="instances-list">
             {instancesList.map((instance) => (
               <option value={instance} />
             ))}
-          </datalist>
+          </datalist> */}
         </label>
         {uiState === 'error' && (
           <p class="error">
             Failed to log in. Please try again or another instance.
           </p>
         )}
-        <p>
+        <div>
           <button class="large" disabled={uiState === 'loading'}>
             Log in
           </button>{' '}
-        </p>
+        </div>
         <Loader hidden={uiState !== 'loading'} />
         <hr />
         <p>

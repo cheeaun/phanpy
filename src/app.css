@@ -1719,6 +1719,9 @@ ul.link-list li a .icon {
   box-shadow: -1px 0 var(--bg-color), -2px 0 var(--drop-shadow-color),
     -3px 0 var(--bg-color);
 }
+#columns:has(> :nth-child(3)) > *:nth-child(even) {
+  background-color: var(--bg-blur-color);
+}
 #columns .header-grid input {
   pointer-events: none;
 }

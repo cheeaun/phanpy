@@ -1335,6 +1335,22 @@ function Card({ card, instance }) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
+  } else if (hasText && !image) {
+    const domain = new URL(url).hostname.replace(/^www\./, '');
+    return (
+      <a
+        href={cardStatusURL || url}
+        target={cardStatusURL ? null : '_blank'}
+        rel="nofollow noopener noreferrer"
+        class={`card link no-image`}
+      >
+        <div class="meta-container">
+          <p class="meta domain">{domain}</p>
+          <p class="title">{title}</p>
+          <p class="meta">{description || providerName || authorName}</p>
+        </div>
+      </a>
+    );
   }
 }
 

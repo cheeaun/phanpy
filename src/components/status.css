@@ -841,6 +841,10 @@ a:focus-visible .card img {
   -webkit-line-clamp: 2;
   line-clamp: 2;
 }
+.card.no-image :is(.title, .meta) {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
 .card .meta.domain {
   opacity: 1;
   color: var(--link-color);

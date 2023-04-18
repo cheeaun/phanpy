@@ -1820,6 +1820,7 @@ ul.link-list li a .icon {
   }
   #columns .timeline-deck > header[hidden] {
     transform: none;
+    pointer-events: auto;
   }
   #columns li:has(.status-carousel) {
     width: auto;

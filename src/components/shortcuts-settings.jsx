@@ -459,7 +459,6 @@ function ShortcutsSettings() {
           <ShortcutForm
             shortcut={showForm.shortcut}
             shortcutIndex={showForm.shortcutIndex}
-            disabled={shortcuts.length >= SHORTCUTS_LIMIT}
             lists={lists}
             followedHashtags={followedHashtags}
             onSubmit={({ result, mode }) => {

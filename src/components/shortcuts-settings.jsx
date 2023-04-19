@@ -523,6 +523,14 @@ function ShortcutForm({
             const result = {};
             data.forEach((value, key) => {
               result[key] = value?.trim();
+              if (key === 'instance') {
+                // Remove protocol and trailing slash
+                result[key] = result[key]
+                  .replace(/^https?:\/\//, '')
+                  .replace(/\/+$/, '');
+                // Remove @acct@ or acct@ from instance URL
+                result[key] = result[key].replace(/^@?[^@]+@/, '');
+              }
             });
             console.log('result', result);
             if (!result.type) return;

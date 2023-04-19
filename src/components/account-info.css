@@ -138,7 +138,7 @@
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 16px;
   line-height: 1.25;
 }
 .account-container .stats > * {
@@ -165,7 +165,9 @@
 .account-container .profile-metadata {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 2px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 .account-container .profile-field {
   min-width: 0;
@@ -173,7 +175,7 @@
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 4px;
   filter: saturate(0.75);
   line-height: 1.25;
 }

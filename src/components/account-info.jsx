@@ -518,12 +518,12 @@ function RelatedActions({ info, instance, authenticated }) {
         {followedBy ? (
           <span class="tag">Following you</span>
         ) : !!lastStatusAt ? (
-          <span class="insignificant">
+          <small class="insignificant">
             Last status:{' '}
             {niceDateTime(lastStatusAt, {
               hideTime: true,
             })}
-          </span>
+          </small>
         ) : (
           <span />
         )}{' '}

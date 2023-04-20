@@ -714,7 +714,10 @@ function Status({
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
-          onClose={() => setIsContextMenuOpen(false)}
+          onClose={() => {
+            setIsContextMenuOpen(false);
+            statusRef.current?.focus?.();
+          }}
           portal={{
             target: document.body,
           }}

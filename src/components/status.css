@@ -686,6 +686,26 @@ body:has(#modal-container .carousel) .status .media img:hover {
   background-blend-mode: multiply;
 }
 
+.status:not(.large) .hashtag-stuffing {
+  opacity: 0.75;
+  transition: opacity 0.2s ease-in-out;
+}
+.status:not(.large) .hashtag-stuffing:is(:hover, :focus, :focus-within) {
+  opacity: 1;
+}
+.status:not(.large) .hashtag-stuffing {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.status:not(.large) .hashtag-stuffing:first-child {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
 .carousel-item {
   position: relative;
 }

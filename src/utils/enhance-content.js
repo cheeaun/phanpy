@@ -136,6 +136,35 @@ function enhanceContent(content, opts = {}) {
     node.replaceWith(...nodes);
   });
 
+  // HASHTAG STUFFING
+  // ================
+  // Get the <p> that contains a lot of hashtags, add a class to it
+  const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
+    (p) => {
+      for (let i = 0; i < p.childNodes.length; i++) {
+        const node = p.childNodes[i];
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim();
+          if (text !== '') {
+            return false;
+          }
+        } else if (node.tagName === 'A') {
+          const linkText = node.textContent.trim();
+          if (!linkText || !linkText.startsWith('#')) {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
+      return true;
+    },
+  );
+  if (hashtagStuffedParagraph) {
+    hashtagStuffedParagraph.classList.add('hashtag-stuffing');
+  }
+
   if (postEnhanceDOM) {
     postEnhanceDOM(dom); // mutate dom
   }

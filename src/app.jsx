@@ -365,7 +365,7 @@ function App() {
             }
           }}
         >
-          <Drafts />
+          <Drafts onClose={() => (states.showDrafts = false)} />
         </Modal>
       )}
       {!!snapStates.showMediaModal && (
@@ -399,7 +399,9 @@ function App() {
             }
           }}
         >
-          <ShortcutsSettings />
+          <ShortcutsSettings
+            onClose={() => (states.showShortcutsSettings = false)}
+          />
         </Modal>
       )}
       <BackgroundService isLoggedIn={isLoggedIn} />

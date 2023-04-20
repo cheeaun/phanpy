@@ -194,7 +194,7 @@ export const SHORTCUTS_META = {
   },
 };
 
-function ShortcutsSettings() {
+function ShortcutsSettings({ onClose }) {
   const snapStates = useSnapshot(states);
   const { masto } = api();
   const { shortcuts } = snapStates;
@@ -231,6 +231,11 @@ function ShortcutsSettings() {
 
   return (
     <div id="shortcuts-settings-container" class="sheet" tabindex="-1">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>
           <Icon icon="shortcut" /> Shortcuts{' '}
@@ -484,7 +489,7 @@ function ShortcutForm({
   disabled,
   shortcut,
   shortcutIndex,
-  onClose = () => {},
+  onClose,
 }) {
   console.log('shortcut', shortcut);
   const editMode = !!shortcut;
@@ -510,6 +515,11 @@ function ShortcutForm({
 
   return (
     <div id="shortcut-settings-form" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>{editMode ? 'Edit' : 'Add'} shortcut</h2>
       </header>
@@ -541,7 +551,7 @@ function ShortcutForm({
             // Reset
             e.target.reset();
             setCurrentType(null);
-            onClose();
+            onClose?.();
           }}
         >
           <p>
@@ -627,7 +637,7 @@ function ShortcutForm({
                 class="light danger"
                 onClick={() => {
                   states.shortcuts.splice(shortcutIndex, 1);
-                  onClose();
+                  onClose?.();
                 }}
               >
                 Remove

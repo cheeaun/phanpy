@@ -275,17 +275,25 @@ function MediaModal({
             }
           }}
         >
-          <MediaAltModal alt={showMediaAlt} />
+          <MediaAltModal
+            alt={showMediaAlt}
+            onClose={() => setShowMediaAlt(false)}
+          />
         </Modal>
       )}
     </div>
   );
 }
 
-function MediaAltModal({ alt }) {
+function MediaAltModal({ alt, onClose }) {
   const [forceTranslate, setForceTranslate] = useState(false);
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close outer" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header class="header-grid">
         <h2>Media description</h2>
         <div class="header-side">

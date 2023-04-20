@@ -11,7 +11,7 @@ import { getCurrentAccountNS } from '../utils/store-utils';
 import Icon from './icon';
 import Loader from './loader';
 
-function Drafts() {
+function Drafts({ onClose }) {
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [drafts, setDrafts] = useState([]);
@@ -51,6 +51,11 @@ function Drafts() {
 
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>
           Unsent drafts <Loader abrupt hidden={uiState !== 'loading'} />

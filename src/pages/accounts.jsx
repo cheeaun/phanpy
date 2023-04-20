@@ -23,6 +23,11 @@ function Accounts({ onClose }) {
 
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header class="header-grid">
         <h2>Accounts</h2>
       </header>

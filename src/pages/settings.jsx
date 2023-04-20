@@ -4,6 +4,7 @@ import { useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
+import Icon from '../components/icon';
 import RelativeTime from '../components/relative-time';
 import targetLanguages from '../data/lingva-target-languages';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
@@ -26,6 +27,11 @@ function Settings({ onClose }) {
 
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Settings</h2>
       </header>

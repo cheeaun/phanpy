@@ -1504,6 +1504,15 @@ function MediaAttachment({
           }}
         >
           <div id="media-sheet" class="sheet sheet-max">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => {
+                setShowModal(false);
+              }}
+            >
+              <Icon icon="x" />
+            </button>
             <header>
               <h2>
                 {
@@ -1742,6 +1751,11 @@ function CustomEmojisModal({
 
   return (
     <div id="custom-emojis-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <b>Custom emojis</b>{' '}
         {uiState === 'loading' ? (

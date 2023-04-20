@@ -1207,6 +1207,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   box-shadow: 0 -1px 32px var(--drop-shadow-color);
   animation: slide-up 0.3s var(--timing-function);
   /* border: 1px solid var(--outline-color); */
+  position: relative;
 }
 .sheet-max {
   width: 90vw;
@@ -1215,11 +1216,51 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   height: 90vh;
   height: 90dvh;
 }
+.sheet .sheet-close {
+  position: absolute;
+  border-radius: 0;
+  padding: 0;
+  right: env(safe-area-inset-right);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  background-color: transparent;
+  background-image: radial-gradient(
+    circle,
+    var(--close-button-bg-color) 0px 14px,
+    transparent 14px
+  );
+  color: var(--close-button-color);
+}
+.sheet .sheet-close.outer {
+  margin-top: -44px;
+  background-image: radial-gradient(
+    circle,
+    var(--bg-faded-color) 0px 14px,
+    transparent 14px
+  );
+}
+.sheet .sheet-close:is(:hover, :focus) {
+  color: var(--close-button-hover-color);
+}
+.sheet .sheet-close:active {
+  background-image: radial-gradient(
+    circle,
+    var(--close-button-bg-active-color) 0px 14px,
+    transparent 14px
+  );
+}
 .sheet header {
   padding: 16px 16px 8px;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
   user-select: none;
+}
+.sheet .sheet-close:not(.outer) + header {
+  padding-right: max(44px, env(safe-area-inset-right));
 }
 .sheet header :is(h1, h2, h3) {
   margin: 0;

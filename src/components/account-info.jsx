@@ -846,7 +846,11 @@ function RelatedActions({ info, instance, authenticated }) {
             }
           }}
         >
-          <TranslatedBioSheet note={note} fields={fields} />
+          <TranslatedBioSheet
+            note={note}
+            fields={fields}
+            onClose={() => setShowTranslatedBio(false)}
+          />
         </Modal>
       )}
       {!!showAddRemoveLists && (
@@ -858,7 +862,10 @@ function RelatedActions({ info, instance, authenticated }) {
             }
           }}
         >
-          <AddRemoveListsSheet accountID={accountID.current} />
+          <AddRemoveListsSheet
+            accountID={accountID.current}
+            onClose={() => setShowAddRemoveLists(false)}
+          />
         </Modal>
       )}
     </>
@@ -895,7 +902,7 @@ function niceAccountURL(url) {
   );
 }
 
-function TranslatedBioSheet({ note, fields }) {
+function TranslatedBioSheet({ note, fields, onClose }) {
   const fieldsText =
     fields
       ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
@@ -905,8 +912,13 @@ function TranslatedBioSheet({ note, fields }) {
 
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
-        <h2>Translated Bio</h2>
+        x<h2>Translated Bio</h2>
       </header>
       <main>
         <p
@@ -922,7 +934,7 @@ function TranslatedBioSheet({ note, fields }) {
   );
 }
 
-function AddRemoveListsSheet({ accountID }) {
+function AddRemoveListsSheet({ accountID, onClose }) {
   const { masto } = api();
   const [uiState, setUiState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -952,6 +964,11 @@ function AddRemoveListsSheet({ accountID }) {
 
   return (
     <div class="sheet" id="list-add-remove-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Add/Remove from Lists</h2>
       </header>

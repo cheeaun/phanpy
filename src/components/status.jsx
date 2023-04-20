@@ -1193,7 +1193,11 @@ function Status({
             }
           }}
         >
-          <ReactionsModal statusID={id} instance={instance} />
+          <ReactionsModal
+            statusID={id}
+            instance={instance}
+            onClose={() => setShowReactions(false)}
+          />
         </Modal>
       )}
     </article>
@@ -1571,7 +1575,7 @@ function EditedAtModal({
   statusID,
   instance,
   fetchStatusHistory = () => {},
-  onClose = () => {},
+  onClose,
 }) {
   const [uiState, setUIState] = useState('default');
   const [editHistory, setEditHistory] = useState([]);
@@ -1593,10 +1597,12 @@ function EditedAtModal({
 
   return (
     <div id="edit-history" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
-        {/* <button type="button" class="close-button plain large" onClick={onClose}>
-        <Icon icon="x" alt="Close" />
-      </button> */}
         <h2>Edit History</h2>
         {uiState === 'error' && <p>Failed to load history</p>}
         {uiState === 'loading' && (
@@ -1642,7 +1648,7 @@ function EditedAtModal({
 }
 
 const REACTIONS_LIMIT = 80;
-function ReactionsModal({ statusID, instance }) {
+function ReactionsModal({ statusID, instance, onClose }) {
   const { masto } = api({ instance });
   const [uiState, setUIState] = useState('default');
   const [accounts, setAccounts] = useState([]);
@@ -1718,6 +1724,11 @@ function ReactionsModal({ statusID, instance }) {
 
   return (
     <div id="reactions-container" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Boosted/Favourited by…</h2>
       </header>
@@ -2074,10 +2085,17 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
           }}
         >
           <div id="filtered-status-peek" class="sheet">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => setShowPeek(false)}
+            >
+              <Icon icon="x" />
+            </button>
+            <header>
+              <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
+            </header>
             <main tabIndex="-1">
-              <p class="heading">
-                <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
-              </p>
               <Link
                 class="status-link"
                 to={`/${instance}/s/${status.id}`}

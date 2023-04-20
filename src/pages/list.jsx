@@ -166,7 +166,10 @@ function List(props) {
             }
           }}
         >
-          <ListManageMembers listID={id} />
+          <ListManageMembers
+            listID={id}
+            onClose={() => setShowManageMembersModal(false)}
+          />
         </Modal>
       )}
     </>
@@ -174,7 +177,7 @@ function List(props) {
 }
 
 const MEMBERS_LIMIT = 40;
-function ListManageMembers({ listID }) {
+function ListManageMembers({ listID, onClose }) {
   // Show list of members with [Remove] button
   // API only returns 40 members at a time, so this need to be paginated with infinite scroll
   // Show [Add] button after removing a member
@@ -220,6 +223,11 @@ function ListManageMembers({ listID }) {
 
   return (
     <div class="sheet" id="list-manage-members-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Manage members</h2>
       </header>

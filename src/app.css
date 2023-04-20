@@ -1760,7 +1760,12 @@ ul.link-list li a .icon {
   box-shadow: -1px 0 var(--bg-color), -2px 0 var(--drop-shadow-color),
     -3px 0 var(--bg-color);
 }
-#columns:has(> :nth-child(3)) > *:nth-child(even) {
+#columns:has(> :nth-child(3)) > *:nth-child(even),
+#columns:has(> :nth-child(3))
+  > *:nth-child(even)
+  .timeline-deck
+  > header
+  .header-grid {
   background-color: var(--bg-blur-color);
 }
 #columns .header-grid input {
@@ -1778,7 +1783,7 @@ ul.link-list li a .icon {
   #columns {
     /* gap: 16px; */
     /* padding: 0 16px; */
-    background-color: var(--bg-blur-color);
+    /* background-color: var(--bg-faded-color); */
     height: 100vh;
     height: 100dvh;
     justify-content: stretch;
@@ -1790,17 +1795,17 @@ ul.link-list li a .icon {
     /* border-radius: 16px; */
     /* box-shadow: -4px 0 16px -8px var(--drop-shadow-color); */
     height: unset;
-    background-color: var(--bg-faded-blur-color);
-    backdrop-filter: blur(16px) saturate(3);
+    /* background-color: var(--bg-faded-blur-color); */
+    /* backdrop-filter: blur(16px) saturate(3); */
     /* background-image: linear-gradient(
       160deg,
       transparent 20%,
       var(--bg-color),
       transparent 75%
     ); */
-    position: sticky;
-    left: 0;
-    transition: all 0.3s ease-out;
+    /* position: sticky;
+    left: 0; */
+    /* transition: all 0.3s ease-out; */
   }
   /* #columns > *:nth-child(2) {
     left: 5%;

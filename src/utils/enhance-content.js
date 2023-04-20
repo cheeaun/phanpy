@@ -10,23 +10,31 @@ function enhanceContent(content, opts = {}) {
 
   // Add target="_blank" to all links with no target="_blank"
   // E.g. `note` in `account`
-  const links = Array.from(dom.querySelectorAll('a:not([target="_blank"])'));
-  links.forEach((link) => {
+  const noTargetBlankLinks = Array.from(
+    dom.querySelectorAll('a:not([target="_blank"])'),
+  );
+  noTargetBlankLinks.forEach((link) => {
     link.setAttribute('target', '_blank');
   });
 
   // Spanify un-spanned mentions
-  const mentionLinks = Array.from(dom.querySelectorAll('a[href].mention'));
-  mentionLinks.forEach((link) => {
-    if (link.querySelector('*')) {
-      return;
-    }
-    const text = link.innerText;
+  const notMentionLinks = Array.from(
+    dom.querySelectorAll('a[href]:not(.mention)'),
+  );
+  notMentionLinks.forEach((link) => {
+    const text = link.innerText.trim();
+    const hasChildren = link.querySelector('*');
     // If text looks like @username@domain, then it's a mention
-    if (/^@[^@]+@[^@]+$/g.test(text)) {
+    if (/^@[^@]+(@[^@]+)?$/g.test(text)) {
       // Only show @username
       const username = text.split('@')[1];
-      link.innerHTML = `@<span>${username}</span>`;
+      if (!hasChildren) link.innerHTML = `@<span>${username}</span>`;
+      link.classList.add('mention');
+    }
+    // If text looks like #hashtag, then it's a hashtag
+    if (/^#[^#]+$/g.test(text)) {
+      if (!hasChildren) link.innerHTML = `#<span>${text}</span>`;
+      link.classList.add('mention', 'hashtag');
     }
   });
 

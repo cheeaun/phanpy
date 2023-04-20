@@ -488,7 +488,7 @@
   height: auto;
   max-height: 160px;
 } */
-.status:not(.large)
+.status:not(.large):not(.status-carousel .status)
   .media-container.media-eq1:has([data-orientation='portrait']) {
   width: 85%;
   min-width: 160px;
@@ -496,7 +496,7 @@
 }
 .status .media-container.media-gt2 {
   /* height: 200px; */
-  max-height: max(200px, 50vh);
+  max-height: max(200px, 40vh);
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;

@@ -487,33 +487,35 @@ function RelatedActions({ info, instance, authenticated }) {
 
   return (
     <>
-      {familiarFollowers?.length > 0 && (
-        <p class="common-followers">
-          Common followers{' '}
-          <span class="ib">
-            {familiarFollowers.map((follower) => (
-              <a
-                href={follower.url}
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  states.showAccount = {
-                    account: follower,
-                    instance,
-                  };
-                }}
-              >
-                <Avatar
-                  url={follower.avatarStatic}
-                  size="l"
-                  alt={`${follower.displayName} @${follower.acct}`}
-                  squircle={follower?.bot}
-                />
-              </a>
-            ))}
-          </span>
-        </p>
-      )}
+      <div class="common-followers" hidden={!familiarFollowers?.length}>
+        <div class="common-followers-inner">
+          <p>
+            Common followers{' '}
+            <span class="ib">
+              {familiarFollowers.map((follower) => (
+                <a
+                  href={follower.url}
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = {
+                      account: follower,
+                      instance,
+                    };
+                  }}
+                >
+                  <Avatar
+                    url={follower.avatarStatic}
+                    size="l"
+                    alt={`${follower.displayName} @${follower.acct}`}
+                    squircle={follower?.bot}
+                  />
+                </a>
+              ))}
+            </span>
+          </p>
+        </div>
+      </div>
       <p class="actions">
         {followedBy ? (
           <span class="tag">Following you</span>

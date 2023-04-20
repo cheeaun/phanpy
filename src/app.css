@@ -920,8 +920,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .media-modal-container {
   position: relative;
   width: 100%;
-  background-color: var(--backdrop-color);
-  backdrop-filter: blur(24px);
+  background-color: var(--backdrop-solid-color);
   animation: appear 0.3s var(--timing-function) both;
 }
 .media-modal-container.loading {

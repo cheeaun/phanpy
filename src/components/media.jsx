@@ -165,10 +165,10 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         }`}
         data-formatted-duration={formattedDuration}
         data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
-        style={{
-          backgroundColor:
-            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-        }}
+        // style={{
+        //   backgroundColor:
+        //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+        // }}
         onClick={(e) => {
           if (hoverAnimate) {
             try {

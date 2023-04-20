@@ -831,11 +831,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-backdrop .deck .status {
   max-width: var(--main-width);
 }
-.deck-backdrop .deck.deck-view-full .menu-switch-view {
+.deck-backdrop .deck .menu-switch-view {
   display: none;
 }
 @media (min-width: 40em) {
-  .deck-backdrop .deck.deck-view-full .menu-switch-view {
+  .deck-backdrop .deck .menu-switch-view {
     display: flex;
   }
   .deck-backdrop .deck.deck-view-full {

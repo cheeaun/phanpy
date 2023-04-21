@@ -1,3 +1,4 @@
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -212,6 +213,14 @@ function AccountStatuses() {
     }
   }, [featuredTags, tagged, media, excludeReplies, excludeBoosts]);
 
+  const accountInstance = useMemo(() => {
+    if (!account?.url) return null;
+    const domain = new URL(account.url).hostname;
+    return domain;
+  }, [account]);
+  const sameInstance = instance === accountInstance;
+  const allowSwitch = !!account && !sameInstance;
+
   return (
     <Timeline
       key={id}
@@ -245,6 +254,49 @@ function AccountStatuses() {
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
       refresh={excludeReplies + excludeBoosts + tagged + media}
+      headerEnd={
+        <Menu
+          portal={{
+            target: document.body,
+          }}
+          // setDownOverflow
+          overflow="auto"
+          viewScroll="close"
+          position="anchor"
+          boundingBoxPadding="8 8 8 8"
+          menuButton={
+            <button type="button" class="plain">
+              <Icon icon="more" size="l" />
+            </button>
+          }
+        >
+          <MenuItem
+            disabled={!allowSwitch}
+            onClick={() => {
+              (async () => {
+                try {
+                  const { masto } = api({
+                    instance: accountInstance,
+                  });
+                  const acc = await masto.v1.accounts.lookup({
+                    acct: account.acct,
+                  });
+                  const { id } = acc;
+                  location.hash = `/${accountInstance}/a/${id}`;
+                } catch (e) {
+                  console.error(e);
+                  alert('Unable to fetch account info');
+                }
+              })();
+            }}
+          >
+            <Icon icon="transfer" />{' '}
+            <small class="menu-double-lines">
+              Switch to account's instance (<b>{accountInstance}</b>)
+            </small>
+          </MenuItem>
+        </Menu>
+      }
     />
   );
 }

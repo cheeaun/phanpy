@@ -4,6 +4,7 @@ import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
@@ -13,12 +14,13 @@ import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function List(props) {
+  const snapStates = useSnapshot(states);
   const { masto, instance } = api();
   const id = props?.id || useParams()?.id;
   const navigate = useNavigate();
@@ -93,7 +95,7 @@ function List(props) {
         fetchItems={fetchList}
         checkForUpdates={checkForUpdates}
         useItemID
-        boostsCarousel
+        boostsCarousel={snapStates.settings.boostsCarousel}
         allowFilters
         // refresh={reloadCount}
         headerStart={

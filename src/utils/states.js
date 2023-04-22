@@ -27,6 +27,7 @@ const states = proxy({
   spoilers: {},
   scrollPositions: {},
   unfurledLinks: {},
+  statusQuotes: {},
   accounts: {},
   // Modals
   showCompose: false,

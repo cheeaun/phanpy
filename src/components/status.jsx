@@ -24,6 +24,7 @@ import AccountBlock from '../components/account-block';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
+import Poll from '../components/poll';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
@@ -31,6 +32,7 @@ import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -81,6 +83,7 @@ function Status({
   previewMode,
   allowFilters,
   onMediaClick,
+  quoted,
 }) {
   if (skeleton) {
     return (
@@ -689,7 +692,7 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      } ${_deleted ? 'status-deleted' : ''}`}
+      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         if (size === 'l') return;
@@ -922,36 +925,50 @@ function Status({
             dir="auto"
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleContentLinks({ mentions, instance, previewMode })}
-            dangerouslySetInnerHTML={{
-              __html: enhanceContent(content, {
-                emojis,
-                postEnhanceDOM: (dom) => {
-                  // Remove target="_blank" from links
-                  dom
-                    .querySelectorAll('a.u-url[target="_blank"]')
-                    .forEach((a) => {
-                      if (!/http/i.test(a.innerText.trim())) {
-                        a.removeAttribute('target');
-                      }
-                    });
-                  if (previewMode) return;
-                  // Unfurl Mastodon links
-                  dom
-                    .querySelectorAll(
-                      'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                    )
-                    .forEach((a) => {
-                      if (isMastodonLinkMaybe(a.href)) {
-                        unfurlMastodonLink(currentInstance, a.href).then(() => {
+          >
+            <div
+              onClick={handleContentLinks({ mentions, instance, previewMode })}
+              dangerouslySetInnerHTML={{
+                __html: enhanceContent(content, {
+                  emojis,
+                  postEnhanceDOM: (dom) => {
+                    // Remove target="_blank" from links
+                    dom
+                      .querySelectorAll('a.u-url[target="_blank"]')
+                      .forEach((a) => {
+                        if (!/http/i.test(a.innerText.trim())) {
                           a.removeAttribute('target');
-                        });
-                      }
-                    });
-                },
-              }),
-            }}
-          />
+                        }
+                      });
+                    if (previewMode) return;
+                    // Unfurl Mastodon links
+                    dom
+                      .querySelectorAll(
+                        'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                      )
+                      .forEach((a, i) => {
+                        if (isMastodonLinkMaybe(a.href)) {
+                          unfurlMastodonLink(currentInstance, a.href).then(
+                            (result) => {
+                              if (!result) return;
+                              console.log('TAG', result);
+                              a.removeAttribute('target');
+                              if (!Array.isArray(states.statusQuotes[sKey])) {
+                                states.statusQuotes[sKey] = [];
+                              }
+                              if (!states.statusQuotes[sKey][i]) {
+                                states.statusQuotes[sKey].splice(i, 0, result);
+                              }
+                            },
+                          );
+                        }
+                      });
+                  },
+                }),
+              }}
+            />
+            <QuoteStatuses id={id} instance={instance} />
+          </div>
           {!!poll && (
             <Poll
               lang={language}
@@ -1208,6 +1225,7 @@ function Status({
 }
 
 function Card({ card, instance }) {
+  const snapStates = useSnapshot(states);
   const {
     blurhash,
     title,
@@ -1259,6 +1277,8 @@ function Card({ card, instance }) {
   //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
   //   );
   // }
+
+  if (snapStates.unfurledLinks[url]) return null;
 
   if (hasText && (image || (!type !== 'photo' && blurhash))) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
@@ -1359,219 +1379,6 @@ function Card({ card, instance }) {
       </a>
     );
   }
-}
-
-function Poll({
-  poll,
-  lang,
-  readOnly,
-  refresh = () => {},
-  votePoll = () => {},
-}) {
-  const [uiState, setUIState] = useState('default');
-
-  const {
-    expired,
-    expiresAt,
-    id,
-    multiple,
-    options,
-    ownVotes,
-    voted,
-    votersCount,
-    votesCount,
-    emojis,
-  } = poll;
-
-  const expiresAtDate = !!expiresAt && new Date(expiresAt);
-
-  // Update poll at point of expiry
-  // NOTE: Disable this because setTimeout runs immediately if delay is too large
-  // https://stackoverflow.com/a/56718027/20838
-  // useEffect(() => {
-  //   let timeout;
-  //   if (!expired && expiresAtDate) {
-  //     const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
-  //     if (ms > 0) {
-  //       timeout = setTimeout(() => {
-  //         setUIState('loading');
-  //         (async () => {
-  //           // await refresh();
-  //           setUIState('default');
-  //         })();
-  //       }, ms);
-  //     }
-  //   }
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  // }, [expired, expiresAtDate]);
-
-  const pollVotesCount = votersCount || votesCount;
-  let roundPrecision = 0;
-  if (pollVotesCount <= 1000) {
-    roundPrecision = 0;
-  } else if (pollVotesCount <= 10000) {
-    roundPrecision = 1;
-  } else if (pollVotesCount <= 100000) {
-    roundPrecision = 2;
-  }
-
-  const [showResults, setShowResults] = useState(false);
-  const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
-
-  return (
-    <div
-      lang={lang}
-      dir="auto"
-      class={`poll ${readOnly ? 'read-only' : ''} ${
-        uiState === 'loading' ? 'loading' : ''
-      }`}
-      onDblClick={() => {
-        setShowResults(!showResults);
-      }}
-    >
-      {(showResults && optionsHaveVoteCounts) || voted || expired ? (
-        <div class="poll-options">
-          {options.map((option, i) => {
-            const { title, votesCount: optionVotesCount } = option;
-            const percentage = pollVotesCount
-              ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                  roundPrecision,
-                )
-              : 0;
-            // check if current poll choice is the leading one
-            const isLeading =
-              optionVotesCount > 0 &&
-              optionVotesCount ===
-                Math.max(...options.map((o) => o.votesCount));
-            return (
-              <div
-                key={`${i}-${title}-${optionVotesCount}`}
-                class={`poll-option poll-result ${
-                  isLeading ? 'poll-option-leading' : ''
-                }`}
-                style={{
-                  '--percentage': `${percentage}%`,
-                }}
-              >
-                <div class="poll-option-title">
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: emojifyText(title, emojis),
-                    }}
-                  />
-                  {voted && ownVotes.includes(i) && (
-                    <>
-                      {' '}
-                      <Icon icon="check-circle" />
-                    </>
-                  )}
-                </div>
-                <div
-                  class="poll-option-votes"
-                  title={`${optionVotesCount} vote${
-                    optionVotesCount === 1 ? '' : 's'
-                  }`}
-                >
-                  {percentage}%
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const choices = [];
-            formData.forEach((value, key) => {
-              if (key === 'poll') {
-                choices.push(value);
-              }
-            });
-            if (!choices.length) return;
-            setUIState('loading');
-            await votePoll(choices);
-            setUIState('default');
-          }}
-        >
-          <div class="poll-options">
-            {options.map((option, i) => {
-              const { title } = option;
-              return (
-                <div class="poll-option">
-                  <label class="poll-label">
-                    <input
-                      type={multiple ? 'checkbox' : 'radio'}
-                      name="poll"
-                      value={i}
-                      disabled={uiState === 'loading'}
-                      readOnly={readOnly}
-                    />
-                    <span
-                      class="poll-option-title"
-                      dangerouslySetInnerHTML={{
-                        __html: emojifyText(title, emojis),
-                      }}
-                    />
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          {!readOnly && (
-            <button
-              class="poll-vote-button"
-              type="submit"
-              disabled={uiState === 'loading'}
-            >
-              Vote
-            </button>
-          )}
-        </form>
-      )}
-      {!readOnly && (
-        <p class="poll-meta">
-          {!expired && (
-            <>
-              <button
-                type="button"
-                class="textual"
-                disabled={uiState === 'loading'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setUIState('loading');
-                  (async () => {
-                    await refresh();
-                    setUIState('default');
-                  })();
-                }}
-              >
-                Refresh
-              </button>{' '}
-              &bull;{' '}
-            </>
-          )}
-          <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
-          {votesCount === 1 ? '' : 's'}
-          {!!votersCount && votersCount !== votesCount && (
-            <>
-              {' '}
-              &bull;{' '}
-              <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-              voter
-              {votersCount === 1 ? '' : 's'}
-            </>
-          )}{' '}
-          &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
-        </p>
-      )}
-    </div>
-  );
 }
 
 function EditedAtModal({
@@ -1871,10 +1678,6 @@ export function formatDuration(time) {
   }
 }
 
-function isMastodonLinkMaybe(url) {
-  return /^https:\/\/.*\/\d+$/i.test(url);
-}
-
 const denylistDomains = /(twitter|github)\.com/i;
 const failedUnfurls = {};
 
@@ -1908,10 +1711,14 @@ function _unfurlMastodonLink(instance, url) {
           const statusURL = `/${domain}/s/${id}`;
           const result = {
             id,
+            instance: domain,
             url: statusURL,
           };
           console.debug('🦦 Unfurled URL', url, id, statusURL);
           states.unfurledLinks[url] = result;
+          saveStatus(status, domain, {
+            skipThreading: true,
+          });
           return result;
         } else {
           failedUnfurls[url] = true;
@@ -1938,10 +1745,14 @@ function _unfurlMastodonLink(instance, url) {
         const statusURL = `/${instance}/s/${id}`;
         const result = {
           id,
+          instance,
           url: statusURL,
         };
         console.debug('🦦 Unfurled URL', url, id, statusURL);
         states.unfurledLinks[url] = result;
+        saveStatus(status, instance, {
+          skipThreading: true,
+        });
         return result;
       } else {
         failedUnfurls[url] = true;
@@ -2118,5 +1929,30 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
     </div>
   );
 }
+
+const QuoteStatuses = memo(({ id, instance }) => {
+  const snapStates = useSnapshot(states);
+  const sKey = statusKey(id, instance);
+  const quotes = snapStates.statusQuotes[sKey];
+
+  if (!quotes?.length) return;
+
+  return quotes.map((q) => {
+    return (
+      <Link
+        to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+        class="status-card-link"
+      >
+        <Status
+          statusID={q.id}
+          instance={q.instance}
+          size="s"
+          quoted
+          previewMode
+        />
+      </Link>
+    );
+  });
+});
 
 export default memo(Status);

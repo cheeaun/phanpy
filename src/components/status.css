@@ -60,6 +60,7 @@
   line-height: 1.4;
   align-items: flex-start;
   position: relative;
+  font-size: var(--text-size);
 }
 .status.large {
   --fade-in-out-bg: linear-gradient(
@@ -74,6 +75,51 @@
 }
 .status.large.visibility-direct {
   background-image: var(--fade-in-out-bg), var(--yellow-stripes);
+}
+
+.status-card-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.status-card-link:is(:hover, :focus) .status-card {
+  border-color: var(--outline-hover-color);
+  box-shadow: inset 0 0 0 4px var(--bg-faded-blur-color);
+}
+.status-card-link:is(:active) .status-card {
+  background-color: var(--bg-faded-color);
+}
+.status-card {
+  font-size: calc(var(--text-size) * 0.9);
+  margin: 1em 0 0;
+  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-color);
+  /* box-shadow: inset 0 0 0 2px var(--bg-faded-color); */
+}
+.status-card:has(.status-badge:not(:empty)) {
+  border-top-right-radius: 8px;
+}
+.status-card > * {
+  pointer-events: none;
+}
+.status-card :is(.content, .poll, .media-container) {
+  max-height: 160px !important;
+  overflow: hidden;
+}
+.status.small .status-card :is(.content, .poll, .media-container) {
+  max-height: 80px !important;
+}
+.status-card :is(.content, .poll) {
+  font-size: inherit !important;
+  mask-image: linear-gradient(to bottom, #000 80px, transparent);
+}
+.status.small .status-card :is(.content, .poll) {
+  mask-image: linear-gradient(to bottom, #000 40px, transparent);
+}
+.status-card .card {
+  display: none;
 }
 
 @keyframes skeleton-breathe {
@@ -170,7 +216,7 @@
   flex-grow: 1;
   min-width: 0;
 }
-.status:not(.small) .container {
+.status:not(.small) > .container {
   padding-left: 12px;
 }
 
@@ -325,7 +371,7 @@
   text-align: center;
 }
 
-.status.large .content-container {
+.status.large > .container > .content-container {
   margin-left: calc(-50px - 16px);
   padding-top: 10px;
   padding-bottom: 10px;
@@ -460,7 +506,7 @@
 .status .content .ellipsis::after {
   content: '…';
 }
-.status.large .content {
+.status.large .content:not(.content .content) {
   font-size: 150%;
   font-size: min(calc(100% + 50% / var(--content-text-weight)), 150%);
 }

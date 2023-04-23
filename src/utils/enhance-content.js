@@ -163,6 +163,7 @@ function enhanceContent(content, opts = {}) {
   );
   if (hashtagStuffedParagraph) {
     hashtagStuffedParagraph.classList.add('hashtag-stuffing');
+    hashtagStuffedParagraph.title = hashtagStuffedParagraph.innerText;
   }
 
   if (postEnhanceDOM) {

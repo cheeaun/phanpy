@@ -18,9 +18,7 @@ function enhanceContent(content, opts = {}) {
   });
 
   // Spanify un-spanned mentions
-  const notMentionLinks = Array.from(
-    dom.querySelectorAll('a[href]:not(.mention)'),
-  );
+  const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
   notMentionLinks.forEach((link) => {
     const text = link.innerText.trim();
     const hasChildren = link.querySelector('*');
@@ -33,7 +31,7 @@ function enhanceContent(content, opts = {}) {
     }
     // If text looks like #hashtag, then it's a hashtag
     if (/^#[^#]+$/g.test(text)) {
-      if (!hasChildren) link.innerHTML = `#<span>${text}</span>`;
+      if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
       link.classList.add('mention', 'hashtag');
     }
   });

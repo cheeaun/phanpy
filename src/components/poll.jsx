@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks';
 import emojifyText from '../utils/emojify-text';
 import shortenNumber from '../utils/shorten-number';
 
+import Icon from './icon';
 import RelativeTime from './relative-time';
 
 export default function Poll({

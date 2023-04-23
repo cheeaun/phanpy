@@ -268,8 +268,17 @@ function Settings({ onClose }) {
                     states.settings.cloakMode = e.target.checked;
                   }}
                 />{' '}
-                Cloak mode
+                Cloak mode{' '}
+                <span class="insignificant">
+                  (<samp>Text</samp> → <samp>████</samp>)
+                </span>
               </label>
+              <div class="sub-section insignificant">
+                <small>
+                  Replace text as blocks, useful when taking screenshots, for
+                  privacy reasons.
+                </small>
+              </div>
             </li>
             <li>
               <button

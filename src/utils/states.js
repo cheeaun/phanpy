@@ -51,6 +51,7 @@ const states = proxy({
       store.account.get('settings-contentTranslationTargetLanguage') || null,
     contentTranslationHideLanguages:
       store.account.get('settings-contentTranslationHideLanguages') || [],
+    cloakMode: store.account.get('settings-cloakMode') ?? false,
   },
 });
 
@@ -87,6 +88,9 @@ subscribe(states, (changes) => {
     }
     if (path?.[0] === 'shortcuts') {
       store.account.set('shortcuts', states.shortcuts);
+    }
+    if (path.join('.') === 'settings.cloakMode') {
+      store.account.set('settings-cloakMode', !!value);
     }
   }
 });

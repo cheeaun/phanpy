@@ -260,6 +260,18 @@ function Settings({ onClose }) {
               </div>
             </li>
             <li>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.cloakMode}
+                  onChange={(e) => {
+                    states.settings.cloakMode = e.target.checked;
+                  }}
+                />{' '}
+                Cloak mode
+              </label>
+            </li>
+            <li>
               <button
                 type="button"
                 class="light"

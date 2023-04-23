@@ -208,6 +208,12 @@ function App() {
     }
   }, [snapStates.settings.shortcutsViewMode]);
 
+  // Add/Remove cloak class to body
+  useEffect(() => {
+    const $body = document.body;
+    $body.classList.toggle('cloak', snapStates.settings.cloakMode);
+  }, [snapStates.settings.cloakMode]);
+
   return (
     <>
       <Routes location={nonRootLocation || location}>

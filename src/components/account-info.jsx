@@ -490,7 +490,7 @@ function RelatedActions({ info, instance, authenticated }) {
       <div class="common-followers" hidden={!familiarFollowers?.length}>
         <div class="common-followers-inner">
           <p>
-            Common followers{' '}
+            Also followed by{' '}
             <span class="ib">
               {familiarFollowers.map((follower) => (
                 <a

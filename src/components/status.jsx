@@ -951,7 +951,6 @@ function Status({
                           unfurlMastodonLink(currentInstance, a.href).then(
                             (result) => {
                               if (!result) return;
-                              console.log('TAG', result);
                               a.removeAttribute('target');
                               if (!Array.isArray(states.statusQuotes[sKey])) {
                                 states.statusQuotes[sKey] = [];
@@ -1069,7 +1068,8 @@ function Status({
             !sensitive &&
             !spoilerText &&
             !poll &&
-            !mediaAttachments.length && (
+            !mediaAttachments.length &&
+            !snapStates.statusQuotes[sKey] && (
               <Card card={card} instance={currentInstance} />
             )}
         </div>
@@ -1765,7 +1765,11 @@ function _unfurlMastodonLink(instance, url) {
       // Silently fail
     });
 
-  return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+  if (remoteInstanceFetch) {
+    return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+  } else {
+    return mastoSearchFetch;
+  }
 }
 
 function nicePostURL(url) {

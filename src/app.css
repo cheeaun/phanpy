@@ -239,7 +239,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transition: opacity 0.3s ease-in-out;
 }
 .timeline.contextual > li:first-child {
-  background-position: 0 16px;
+  background-position: 0 calc(16px + var(--avatar-size));
 }
 .timeline.contextual > li:last-child {
   background-size: 100% 20px;
@@ -595,6 +595,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline:not(.flat) > li.timeline-item-container {
+  --avatar-size: 50px;
   --line-start: 40px;
   --line-width: 3px;
   --line-end: calc(var(--line-start) + var(--line-width));
@@ -614,7 +615,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: 0;
-  background-position: 0 16px;
+  background-position: 0 calc(16px + var(--avatar-size));
 }
 .timeline:not(.flat) > li.timeline-item-container-middle {
   margin-top: 0;
@@ -628,7 +629,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-top: 0;
-  background-size: 100% 20px;
+  background-size: 100% 16px;
 }
 .timeline:not(.flat)
   > li:is(.timeline-item-container-middle, .timeline-item-container-end)

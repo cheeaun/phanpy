@@ -139,6 +139,7 @@ function enhanceContent(content, opts = {}) {
   // Get the <p> that contains a lot of hashtags, add a class to it
   const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
     (p) => {
+      let hashtagCount = 0;
       for (let i = 0; i < p.childNodes.length; i++) {
         const node = p.childNodes[i];
 
@@ -151,12 +152,15 @@ function enhanceContent(content, opts = {}) {
           const linkText = node.textContent.trim();
           if (!linkText || !linkText.startsWith('#')) {
             return false;
+          } else {
+            hashtagCount++;
           }
         } else {
           return false;
         }
       }
-      return true;
+      // Only consider "stuffing" if there are more than 3 hashtags
+      return hashtagCount > 3;
     },
   );
   if (hashtagStuffedParagraph) {

@@ -1394,6 +1394,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   padding: 8px 16px !important;
   margin: -8px -16px !important;
   align-items: center;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 .szh-menu .szh-menu__item a.is-active {
   font-weight: bold;

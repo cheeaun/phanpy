@@ -673,7 +673,7 @@ function Status({
       setIsContextMenuOpen(true);
     },
     {
-      threshold: 1000,
+      threshold: 600,
       captureEvent: true,
       detect: 'touch',
       cancelOnMovement: true,
@@ -1836,7 +1836,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       setShowPeek(true);
     },
     {
-      threshold: 1000,
+      threshold: 600,
       captureEvent: true,
       detect: 'touch',
       cancelOnMovement: true,

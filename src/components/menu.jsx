@@ -33,6 +33,7 @@ function NavMenu(props) {
       states.showAccounts = true;
     },
     {
+      threshold: 1000,
       detect: 'touch',
       cancelOnMovement: true,
     },

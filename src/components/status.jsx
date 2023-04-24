@@ -719,7 +719,8 @@ function Status({
           direction="right"
           onClose={() => {
             setIsContextMenuOpen(false);
-            statusRef.current?.focus?.();
+            // statusRef.current?.focus?.();
+            statusRef.current?.closest('[tabindex]')?.focus?.();
           }}
           portal={{
             target: document.body,

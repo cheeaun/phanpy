@@ -1,5 +1,5 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useRef, useState } from 'preact/hooks';
+import { useCallback, useMemo, useRef, useState } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
@@ -79,7 +79,10 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     onUpdate,
   };
 
-  const Parent = to ? (props) => <Link to={to} {...props} /> : 'div';
+  const Parent = useMemo(
+    () => (to ? (props) => <Link to={to} {...props} /> : 'div'),
+    [to],
+  );
 
   if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
     // Note: type: unknown might not have width/height

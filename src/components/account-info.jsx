@@ -920,7 +920,7 @@ function TranslatedBioSheet({ note, fields, onClose }) {
         </button>
       )}
       <header>
-        x<h2>Translated Bio</h2>
+        <h2>Translated Bio</h2>
       </header>
       <main>
         <p

@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 import emojifyText from '../utils/emojify-text';
 import shortenNumber from '../utils/shorten-number';
@@ -61,8 +61,22 @@ export default function Poll({
 
   const [showResults, setShowResults] = useState(false);
   const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
+
+  const pollRef = useRef();
+  useEffect(() => {
+    const handleSwipe = () => {
+      console.log('swiped left');
+      setShowResults(!showResults);
+    };
+    pollRef.current?.addEventListener?.('swiped-left', handleSwipe);
+    return () => {
+      pollRef.current?.removeEventListener?.('swiped-left', handleSwipe);
+    };
+  }, [showResults]);
+
   return (
     <div
+      ref={pollRef}
       lang={lang}
       dir="auto"
       class={`poll ${readOnly ? 'read-only' : ''} ${

@@ -15,6 +15,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
+import 'swiped-events';
 import { useSnapshot } from 'valtio';
 
 import AccountSheet from './components/account-sheet';

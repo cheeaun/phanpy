@@ -15,7 +15,6 @@ import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
-import 'swiped-events';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';

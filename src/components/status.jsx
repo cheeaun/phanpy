@@ -942,25 +942,25 @@ function Status({
                       });
                     if (previewMode) return;
                     // Unfurl Mastodon links
-                    dom
-                      .querySelectorAll(
+                    Array.from(
+                      dom.querySelectorAll(
                         'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                      )
+                      ),
+                    )
+                      .filter((a) => isMastodonLinkMaybe(a.href))
                       .forEach((a, i) => {
-                        if (isMastodonLinkMaybe(a.href)) {
-                          unfurlMastodonLink(currentInstance, a.href).then(
-                            (result) => {
-                              if (!result) return;
-                              a.removeAttribute('target');
-                              if (!Array.isArray(states.statusQuotes[sKey])) {
-                                states.statusQuotes[sKey] = [];
-                              }
-                              if (!states.statusQuotes[sKey][i]) {
-                                states.statusQuotes[sKey].splice(i, 0, result);
-                              }
-                            },
-                          );
-                        }
+                        unfurlMastodonLink(currentInstance, a.href).then(
+                          (result) => {
+                            if (!result) return;
+                            a.removeAttribute('target');
+                            if (!Array.isArray(states.statusQuotes[sKey])) {
+                              states.statusQuotes[sKey] = [];
+                            }
+                            if (!states.statusQuotes[sKey][i]) {
+                              states.statusQuotes[sKey].splice(i, 0, result);
+                            }
+                          },
+                        );
                       });
                   },
                 }),
@@ -1946,6 +1946,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   return quotes.map((q) => {
     return (
       <Link
+        key={q.instance + q.id}
         to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
         class="status-card-link"
       >

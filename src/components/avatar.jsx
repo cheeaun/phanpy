@@ -13,14 +13,16 @@ const SIZES = {
 
 const alphaCache = {};
 
-function Avatar({ url, size, alt = '', ...props }) {
+function Avatar({ url, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
   const isMissing = /missing\.png$/.test(url);
   return (
     <span
       ref={avatarRef}
-      class={`avatar ${alphaCache[url] ? 'has-alpha' : ''}`}
+      class={`avatar ${squircle ? 'squircle' : ''} ${
+        alphaCache[url] ? 'has-alpha' : ''
+      }`}
       style={{
         width: size,
         height: size,

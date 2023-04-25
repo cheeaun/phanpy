@@ -13,7 +13,9 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from 'react-router-dom';
+import 'swiped-events';
 import { useSnapshot } from 'valtio';
 
 import AccountSheet from './components/account-sheet';
@@ -33,6 +35,7 @@ import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
 import Home from './pages/home';
+import HttpRoute from './pages/HttpRoute';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
@@ -189,18 +192,28 @@ function App() {
     location,
   });
 
+  if (/\/https?:/.test(location.pathname)) {
+    return <HttpRoute />;
+  }
+
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
     return !/^\/(login|welcome)/.test(pathname);
   }, [location]);
 
-  // Change #app classname based on snapStates.settings.shortcutsViewMode
+  // Change #app dataset based on snapStates.settings.shortcutsViewMode
   useEffect(() => {
     const $app = document.getElementById('app');
     if ($app) {
       $app.dataset.shortcutsViewMode = snapStates.settings.shortcutsViewMode;
     }
   }, [snapStates.settings.shortcutsViewMode]);
+
+  // Add/Remove cloak class to body
+  useEffect(() => {
+    const $body = document.body;
+    $body.classList.toggle('cloak', snapStates.settings.cloakMode);
+  }, [snapStates.settings.cloakMode]);
 
   return (
     <>
@@ -245,11 +258,14 @@ function App() {
         <Route path="/:instance?/search" element={<Search />} />
         {/* <Route path="/:anything" element={<NotFound />} /> */}
       </Routes>
-      <Routes>
-        <Route path="/:instance?/s/:id" element={<Status />} />
-      </Routes>
+      {uiState === 'default' && (
+        <Routes>
+          <Route path="/:instance?/s/:id" element={<StatusRoute />} />
+        </Routes>
+      )}
       <div>
-        {!snapStates.settings.shortcutsColumnsMode &&
+        {isLoggedIn &&
+          !snapStates.settings.shortcutsColumnsMode &&
           snapStates.settings.shortcutsViewMode !== 'multi-column' && (
             <Shortcuts />
           )}
@@ -356,7 +372,7 @@ function App() {
             }
           }}
         >
-          <Drafts />
+          <Drafts onClose={() => (states.showDrafts = false)} />
         </Modal>
       )}
       {!!snapStates.showMediaModal && (
@@ -383,13 +399,16 @@ function App() {
       )}
       {!!snapStates.showShortcutsSettings && (
         <Modal
+          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               states.showShortcutsSettings = false;
             }
           }}
         >
-          <ShortcutsSettings />
+          <ShortcutsSettings
+            onClose={() => (states.showShortcutsSettings = false)}
+          />
         </Modal>
       )}
       <BackgroundService isLoggedIn={isLoggedIn} />
@@ -481,6 +500,12 @@ function BackgroundService({ isLoggedIn }) {
   });
 
   return null;
+}
+
+function StatusRoute() {
+  const params = useParams();
+  const { id, instance } = params;
+  return <Status id={id} instance={instance} />;
 }
 
 export { App };

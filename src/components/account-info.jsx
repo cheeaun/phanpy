@@ -487,42 +487,45 @@ function RelatedActions({ info, instance, authenticated }) {
 
   return (
     <>
-      {familiarFollowers?.length > 0 && (
-        <p class="common-followers">
-          Common followers{' '}
-          <span class="ib">
-            {familiarFollowers.map((follower) => (
-              <a
-                href={follower.url}
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  states.showAccount = {
-                    account: follower,
-                    instance,
-                  };
-                }}
-              >
-                <Avatar
-                  url={follower.avatarStatic}
-                  size="l"
-                  alt={`${follower.displayName} @${follower.acct}`}
-                />
-              </a>
-            ))}
-          </span>
-        </p>
-      )}
+      <div class="common-followers" hidden={!familiarFollowers?.length}>
+        <div class="common-followers-inner">
+          <p>
+            Also followed by{' '}
+            <span class="ib">
+              {familiarFollowers.map((follower) => (
+                <a
+                  href={follower.url}
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = {
+                      account: follower,
+                      instance,
+                    };
+                  }}
+                >
+                  <Avatar
+                    url={follower.avatarStatic}
+                    size="l"
+                    alt={`${follower.displayName} @${follower.acct}`}
+                    squircle={follower?.bot}
+                  />
+                </a>
+              ))}
+            </span>
+          </p>
+        </div>
+      </div>
       <p class="actions">
         {followedBy ? (
           <span class="tag">Following you</span>
         ) : !!lastStatusAt ? (
-          <span class="insignificant">
+          <small class="insignificant">
             Last status:{' '}
             {niceDateTime(lastStatusAt, {
               hideTime: true,
             })}
-          </span>
+          </small>
         ) : (
           <span />
         )}{' '}
@@ -845,7 +848,11 @@ function RelatedActions({ info, instance, authenticated }) {
             }
           }}
         >
-          <TranslatedBioSheet note={note} fields={fields} />
+          <TranslatedBioSheet
+            note={note}
+            fields={fields}
+            onClose={() => setShowTranslatedBio(false)}
+          />
         </Modal>
       )}
       {!!showAddRemoveLists && (
@@ -857,7 +864,10 @@ function RelatedActions({ info, instance, authenticated }) {
             }
           }}
         >
-          <AddRemoveListsSheet accountID={accountID.current} />
+          <AddRemoveListsSheet
+            accountID={accountID.current}
+            onClose={() => setShowAddRemoveLists(false)}
+          />
         </Modal>
       )}
     </>
@@ -894,7 +904,7 @@ function niceAccountURL(url) {
   );
 }
 
-function TranslatedBioSheet({ note, fields }) {
+function TranslatedBioSheet({ note, fields, onClose }) {
   const fieldsText =
     fields
       ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
@@ -904,6 +914,11 @@ function TranslatedBioSheet({ note, fields }) {
 
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Translated Bio</h2>
       </header>
@@ -921,7 +936,7 @@ function TranslatedBioSheet({ note, fields }) {
   );
 }
 
-function AddRemoveListsSheet({ accountID }) {
+function AddRemoveListsSheet({ accountID, onClose }) {
   const { masto } = api();
   const [uiState, setUiState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -951,6 +966,11 @@ function AddRemoveListsSheet({ accountID }) {
 
   return (
     <div class="sheet" id="list-add-remove-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Add/Remove from Lists</h2>
       </header>

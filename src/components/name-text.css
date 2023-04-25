@@ -1,6 +1,9 @@
 .name-text {
   color: inherit;
   text-decoration: none;
+  display: inline;
+}
+.name-text.show-acct {
   display: inline-block;
 }
 a.name-text:is(:hover, :focus) b,
@@ -15,4 +18,5 @@ a.name-text.short:is(:hover, :focus) i {
 
 .name-text .avatar {
   vertical-align: middle;
+  transform: translateY(-0.1em);
 }

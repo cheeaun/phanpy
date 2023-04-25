@@ -19,6 +19,7 @@ export default function useScroll({
 
   useEffect(() => {
     const scrollableElement = scrollableRef.current;
+    if (!scrollableElement) return {};
     let previousScrollStart = isVertical
       ? scrollableElement.scrollTop
       : scrollableElement.scrollLeft;

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import { SHORTCUTS_META } from '../components/shortcuts-settings';
+import { api } from '../utils/api';
 import states from '../utils/states';
 
 import AsyncText from './AsyncText';
@@ -15,6 +16,7 @@ import Link from './link';
 import MenuLink from './menu-link';
 
 function Shortcuts() {
+  const { instance } = api();
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 
@@ -30,16 +32,25 @@ function Shortcuts() {
         .map((pin, i) => {
           const { type, ...data } = pin;
           if (!SHORTCUTS_META[type]) return null;
-          let { id, path, title, icon } = SHORTCUTS_META[type];
+          let { id, path, title, subtitle, icon } = SHORTCUTS_META[type];
 
           if (typeof id === 'function') {
             id = id(data, i);
           }
           if (typeof path === 'function') {
-            path = path(data, i);
+            path = path(
+              {
+                ...data,
+                instance: data.instance || instance,
+              },
+              i,
+            );
           }
           if (typeof title === 'function') {
             title = title(data, i);
+          }
+          if (typeof subtitle === 'function') {
+            subtitle = subtitle(data, i);
           }
           if (typeof icon === 'function') {
             icon = icon(data, i);
@@ -49,6 +60,7 @@ function Shortcuts() {
             id,
             path,
             title,
+            subtitle,
             icon,
           };
         })
@@ -73,35 +85,44 @@ function Shortcuts() {
       {snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? (
         <nav class="tab-bar">
           <ul>
-            {formattedShortcuts.map(({ id, path, title, icon }, i) => {
-              return (
-                <li key={i + title}>
-                  <Link
-                    to={path}
-                    onClick={(e) => {
-                      if (e.target.classList.contains('is-active')) {
-                        e.preventDefault();
-                        const page = document.getElementById(`${id}-page`);
-                        console.log(id, page);
-                        if (page) {
-                          page.scrollTop = 0;
-                          const updatesButton =
-                            page.querySelector('.updates-button');
-                          if (updatesButton) {
-                            updatesButton.click();
+            {formattedShortcuts.map(
+              ({ id, path, title, subtitle, icon }, i) => {
+                return (
+                  <li key={i + title}>
+                    <Link
+                      class={subtitle ? 'has-subtitle' : ''}
+                      to={path}
+                      onClick={(e) => {
+                        if (e.target.classList.contains('is-active')) {
+                          e.preventDefault();
+                          const page = document.getElementById(`${id}-page`);
+                          console.log(id, page);
+                          if (page) {
+                            page.scrollTop = 0;
+                            const updatesButton =
+                              page.querySelector('.updates-button');
+                            if (updatesButton) {
+                              updatesButton.click();
+                            }
                           }
                         }
-                      }
-                    }}
-                  >
-                    <Icon icon={icon} size="xl" alt={title} />
-                    <span>
-                      <AsyncText>{title}</AsyncText>
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
+                      }}
+                    >
+                      <Icon icon={icon} size="xl" alt={title} />
+                      <span>
+                        <AsyncText>{title}</AsyncText>
+                        {subtitle && (
+                          <>
+                            <br />
+                            <small>{subtitle}</small>
+                          </>
+                        )}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              },
+            )}
           </ul>
         </nav>
       ) : (
@@ -132,12 +153,20 @@ function Shortcuts() {
             </button>
           }
         >
-          {formattedShortcuts.map(({ path, title, icon }, i) => {
+          {formattedShortcuts.map(({ path, title, subtitle, icon }, i) => {
             return (
               <MenuLink to={path} key={i + title} class="glass-menu-item">
                 <Icon icon={icon} size="l" />{' '}
                 <span class="menu-grow">
-                  <AsyncText>{title}</AsyncText>
+                  <span>
+                    <AsyncText>{title}</AsyncText>
+                  </span>
+                  {subtitle && (
+                    <>
+                      {' '}
+                      <small class="more-insignificant">{subtitle}</small>
+                    </>
+                  )}
                 </span>
                 <span class="menu-shortcut hide-until-focus-visible">
                   {i + 1}

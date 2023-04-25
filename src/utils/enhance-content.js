@@ -10,9 +10,30 @@ function enhanceContent(content, opts = {}) {
 
   // Add target="_blank" to all links with no target="_blank"
   // E.g. `note` in `account`
-  const links = Array.from(dom.querySelectorAll('a:not([target="_blank"])'));
-  links.forEach((link) => {
+  const noTargetBlankLinks = Array.from(
+    dom.querySelectorAll('a:not([target="_blank"])'),
+  );
+  noTargetBlankLinks.forEach((link) => {
     link.setAttribute('target', '_blank');
+  });
+
+  // Spanify un-spanned mentions
+  const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
+  notMentionLinks.forEach((link) => {
+    const text = link.innerText.trim();
+    const hasChildren = link.querySelector('*');
+    // If text looks like @username@domain, then it's a mention
+    if (/^@[^@]+(@[^@]+)?$/g.test(text)) {
+      // Only show @username
+      const username = text.split('@')[1];
+      if (!hasChildren) link.innerHTML = `@<span>${username}</span>`;
+      link.classList.add('mention');
+    }
+    // If text looks like #hashtag, then it's a hashtag
+    if (/^#[^#]+$/g.test(text)) {
+      if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
+      link.classList.add('mention', 'hashtag');
+    }
   });
 
   // EMOJIS
@@ -112,6 +133,40 @@ function enhanceContent(content, opts = {}) {
     const nodes = Array.from(fauxDiv.childNodes);
     node.replaceWith(...nodes);
   });
+
+  // HASHTAG STUFFING
+  // ================
+  // Get the <p> that contains a lot of hashtags, add a class to it
+  const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
+    (p) => {
+      let hashtagCount = 0;
+      for (let i = 0; i < p.childNodes.length; i++) {
+        const node = p.childNodes[i];
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim();
+          if (text !== '') {
+            return false;
+          }
+        } else if (node.tagName === 'A') {
+          const linkText = node.textContent.trim();
+          if (!linkText || !linkText.startsWith('#')) {
+            return false;
+          } else {
+            hashtagCount++;
+          }
+        } else {
+          return false;
+        }
+      }
+      // Only consider "stuffing" if there are more than 3 hashtags
+      return hashtagCount > 3;
+    },
+  );
+  if (hashtagStuffedParagraph) {
+    hashtagStuffedParagraph.classList.add('hashtag-stuffing');
+    hashtagStuffedParagraph.title = hashtagStuffedParagraph.innerText;
+  }
 
   if (postEnhanceDOM) {
     postEnhanceDOM(dom); // mutate dom

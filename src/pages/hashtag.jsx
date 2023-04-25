@@ -32,8 +32,10 @@ function Hashtags(props) {
   hashtags.sort();
   hashtag = hashtags[0];
 
-  const { masto, instance } = api({ instance: params.instance });
-  const { authenticated } = api();
+  const { masto, instance, authenticated } = api({
+    instance: props?.instance || params.instance,
+  });
+  const { authenticated: currentAuthenticated } = api();
   const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
   const title = instance ? `${hashtagTitle} on ${instance}` : hashtagTitle;
   useTitle(title, `/:instance?/t/:hashtag`);
@@ -99,7 +101,7 @@ function Hashtags(props) {
 
   return (
     <Timeline
-      key={hashtagTitle}
+      key={instance + hashtagTitle}
       title={title}
       titleComponent={
         !!instance && (
@@ -232,6 +234,7 @@ function Hashtags(props) {
             {hashtags.map((t, i) => (
               <MenuItem
                 key={t}
+                disabled={hashtags.length === 1}
                 onClick={(e) => {
                   hashtags.splice(i, 1);
                   hashtags.sort();
@@ -252,11 +255,12 @@ function Hashtags(props) {
           </MenuGroup>
           <MenuDivider />
           <MenuItem
-            disabled={!authenticated}
+            disabled={!currentAuthenticated}
             onClick={() => {
               const shortcut = {
                 type: 'hashtag',
                 hashtag: hashtags.join(' '),
+                instance,
               };
               // Check if already exists
               const exists = states.shortcuts.some(
@@ -269,7 +273,8 @@ function Hashtags(props) {
                     shortcut.hashtag
                       .split(/[\s+]+/)
                       .sort()
-                      .join(' '),
+                      .join(' ') &&
+                  (s.instance ? s.instance === shortcut.instance : true),
               );
               if (exists) {
                 alert('This shortcut already exists');
@@ -280,6 +285,23 @@ function Hashtags(props) {
             }}
           >
             <Icon icon="shortcut" /> <span>Add to Shorcuts</span>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              let newInstance = prompt(
+                'Enter a new instance e.g. "mastodon.social"',
+              );
+              if (!/\./.test(newInstance)) {
+                if (newInstance) alert('Invalid instance');
+                return;
+              }
+              if (newInstance) {
+                newInstance = newInstance.toLowerCase().trim();
+                navigate(`/${newInstance}/t/${hashtags.join('+')}`);
+              }
+            }}
+          >
+            <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
         </Menu>
       }

@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 
-function ListAddEdit({ list, onClose = () => {} }) {
+import Icon from './icon';
+
+function ListAddEdit({ list, onClose }) {
   const { masto } = api();
   const [uiState, setUiState] = useState('default');
   const editMode = !!list;
@@ -16,6 +18,11 @@ function ListAddEdit({ list, onClose = () => {} }) {
   }, [editMode]);
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}{' '}
       <header>
         <h2>{editMode ? 'Edit list' : 'New list'}</h2>
       </header>
@@ -52,7 +59,7 @@ function ListAddEdit({ list, onClose = () => {} }) {
 
                 console.log(listResult);
                 setUiState('default');
-                onClose({
+                onClose?.({
                   state: 'success',
                   list: listResult,
                 });
@@ -109,7 +116,7 @@ function ListAddEdit({ list, onClose = () => {} }) {
                     try {
                       await masto.v1.lists.remove(list.id);
                       setUiState('default');
-                      onClose({
+                      onClose?.({
                         state: 'deleted',
                       });
                     } catch (e) {

@@ -5,6 +5,7 @@ import { api } from '../utils/api';
 import states from '../utils/states';
 
 import AccountInfo from './account-info';
+import Icon from './icon';
 
 function AccountSheet({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
@@ -31,6 +32,11 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
         }
       }}
     >
+      {!!onClose && (
+        <button type="button" class="sheet-close outer" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <AccountInfo
         instance={instance}
         authenticated={authenticated}

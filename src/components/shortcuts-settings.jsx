@@ -1,7 +1,7 @@
 import './shortcuts-settings.css';
 
 import mem from 'mem';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import floatingButtonUrl from '../assets/floating-button.svg';
@@ -60,7 +60,8 @@ const TYPE_PARAMS = {
       text: 'Instance',
       name: 'instance',
       type: 'text',
-      placeholder: 'e.g. mastodon.social',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
     },
   ],
   trending: [
@@ -68,7 +69,8 @@ const TYPE_PARAMS = {
       text: 'Instance',
       name: 'instance',
       type: 'text',
-      placeholder: 'e.g. mastodon.social',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
     },
   ],
   search: [
@@ -93,6 +95,13 @@ const TYPE_PARAMS = {
       type: 'text',
       placeholder: 'e.g. PixelArt (Max 5, space-separated)',
       pattern: '[^#]+',
+    },
+    {
+      text: 'Instance',
+      name: 'instance',
+      type: 'text',
+      placeholder: 'Optional, e.g. mastodon.social',
+      notRequired: true,
     },
   ],
 };
@@ -131,14 +140,15 @@ export const SHORTCUTS_META = {
   },
   public: {
     id: 'public',
-    title: ({ local, instance }) =>
-      `${local ? 'Local' : 'Federated'} (${instance})`,
+    title: ({ local }) => (local ? 'Local' : 'Federated'),
+    subtitle: ({ instance }) => instance || api().instance,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'group' : 'earth'),
   },
   trending: {
     id: 'trending',
     title: 'Trending',
+    subtitle: ({ instance }) => instance || api().instance,
     path: ({ instance }) => `/${instance}/trending`,
     icon: 'chart',
   },
@@ -177,12 +187,14 @@ export const SHORTCUTS_META = {
   hashtag: {
     id: 'hashtag',
     title: ({ hashtag }) => hashtag,
-    path: ({ hashtag }) => `/t/${hashtag.split(/\s+/).join('+')}`,
+    subtitle: ({ instance }) => instance || api().instance,
+    path: ({ hashtag, instance }) =>
+      `${instance ? `/${instance}` : ''}/t/${hashtag.split(/\s+/).join('+')}`,
     icon: 'hashtag',
   },
 };
 
-function ShortcutsSettings() {
+function ShortcutsSettings({ onClose }) {
   const snapStates = useSnapshot(states);
   const { masto } = api();
   const { shortcuts } = snapStates;
@@ -219,6 +231,11 @@ function ShortcutsSettings() {
 
   return (
     <div id="shortcuts-settings-container" class="sheet" tabindex="-1">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>
           <Icon icon="shortcut" /> Shortcuts{' '}
@@ -303,13 +320,16 @@ function ShortcutsSettings() {
         </p> */}
         {shortcuts.length > 0 ? (
           <ol class="shortcuts-list">
-            {shortcuts.map((shortcut, i) => {
+            {shortcuts.filter(Boolean).map((shortcut, i) => {
               const key = i + Object.values(shortcut);
               const { type } = shortcut;
               if (!SHORTCUTS_META[type]) return null;
-              let { icon, title } = SHORTCUTS_META[type];
+              let { icon, title, subtitle } = SHORTCUTS_META[type];
               if (typeof title === 'function') {
                 title = title(shortcut, i);
+              }
+              if (typeof subtitle === 'function') {
+                subtitle = subtitle(shortcut, i);
               }
               if (typeof icon === 'function') {
                 icon = icon(shortcut, i);
@@ -319,6 +339,12 @@ function ShortcutsSettings() {
                   <Icon icon={icon} />
                   <span class="shortcut-text">
                     <AsyncText>{title}</AsyncText>
+                    {subtitle && (
+                      <>
+                        {' '}
+                        <small class="ib insignificant">{subtitle}</small>
+                      </>
+                    )}
                   </span>
                   <span class="shortcut-actions">
                     <button
@@ -357,20 +383,54 @@ function ShortcutsSettings() {
                       type="button"
                       class="plain small"
                       onClick={() => {
+                        setShowForm({
+                          shortcut,
+                          shortcutIndex: i,
+                        });
+                      }}
+                    >
+                      <Icon icon="pencil" alt="Edit" />
+                    </button>
+                    {/* <button
+                      type="button"
+                      class="plain small"
+                      onClick={() => {
                         states.shortcuts.splice(i, 1);
                       }}
                     >
                       <Icon icon="x" alt="Remove" />
-                    </button>
+                    </button> */}
                   </span>
                 </li>
               );
             })}
           </ol>
         ) : (
-          <p class="ui-state insignificant">
-            No shortcuts yet. Add one from the form below.
-          </p>
+          <div class="ui-state insignificant">
+            <p>No shortcuts yet. Tap on the Add shortcut button.</p>
+            <p>
+              Not sure what to add?
+              <br />
+              Try adding{' '}
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.shortcuts = [
+                    {
+                      type: 'following',
+                    },
+                    {
+                      type: 'notifications',
+                    },
+                  ];
+                }}
+              >
+                Home / Following and Notifications
+              </a>{' '}
+              first.
+            </p>
+          </div>
         )}
         <p
           style={{
@@ -402,12 +462,17 @@ function ShortcutsSettings() {
           }}
         >
           <ShortcutForm
-            disabled={shortcuts.length >= SHORTCUTS_LIMIT}
+            shortcut={showForm.shortcut}
+            shortcutIndex={showForm.shortcutIndex}
             lists={lists}
             followedHashtags={followedHashtags}
-            onSubmit={(data) => {
-              console.log('onSubmit', data);
-              states.shortcuts.push(data);
+            onSubmit={({ result, mode }) => {
+              console.log('onSubmit', result);
+              if (mode === 'edit') {
+                states.shortcuts[showForm.shortcutIndex] = result;
+              } else {
+                states.shortcuts.push(result);
+              }
             }}
             onClose={() => setShowForm(false)}
           />
@@ -418,21 +483,49 @@ function ShortcutsSettings() {
 }
 
 function ShortcutForm({
-  type,
   lists,
   followedHashtags,
   onSubmit,
   disabled,
-  onClose = () => {},
+  shortcut,
+  shortcutIndex,
+  onClose,
 }) {
-  const [currentType, setCurrentType] = useState(type);
+  console.log('shortcut', shortcut);
+  const editMode = !!shortcut;
+  const [currentType, setCurrentType] = useState(shortcut?.type || null);
+
+  const formRef = useRef();
+  useEffect(() => {
+    if (editMode && currentType && TYPE_PARAMS[currentType]) {
+      // Populate form
+      const form = formRef.current;
+      TYPE_PARAMS[currentType].forEach(({ name, type }) => {
+        const input = form.querySelector(`[name="${name}"]`);
+        if (input && shortcut[name]) {
+          if (type === 'checkbox') {
+            input.checked = shortcut[name] === 'on' ? true : false;
+          } else {
+            input.value = shortcut[name];
+          }
+        }
+      });
+    }
+  }, [editMode, currentType]);
+
   return (
     <div id="shortcut-settings-form" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
-        <h2>Add shortcut</h2>
+        <h2>{editMode ? 'Edit' : 'Add'} shortcut</h2>
       </header>
       <main tabindex="-1">
         <form
+          ref={formRef}
           onSubmit={(e) => {
             // Construct a nice object from form
             e.preventDefault();
@@ -440,13 +533,25 @@ function ShortcutForm({
             const result = {};
             data.forEach((value, key) => {
               result[key] = value?.trim();
+              if (key === 'instance') {
+                // Remove protocol and trailing slash
+                result[key] = result[key]
+                  .replace(/^https?:\/\//, '')
+                  .replace(/\/+$/, '');
+                // Remove @acct@ or acct@ from instance URL
+                result[key] = result[key].replace(/^@?[^@]+@/, '');
+              }
             });
+            console.log('result', result);
             if (!result.type) return;
-            onSubmit(result);
+            onSubmit({
+              result,
+              mode: editMode ? 'edit' : 'add',
+            });
             // Reset
             e.target.reset();
             setCurrentType(null);
-            onClose();
+            onClose?.();
           }}
         >
           <p>
@@ -458,6 +563,7 @@ function ShortcutForm({
                 onChange={(e) => {
                   setCurrentType(e.target.value);
                 }}
+                defaultValue={editMode ? shortcut.type : undefined}
                 name="type"
               >
                 <option></option>
@@ -468,13 +574,17 @@ function ShortcutForm({
             </label>
           </p>
           {TYPE_PARAMS[currentType]?.map?.(
-            ({ text, name, type, placeholder, pattern }) => {
+            ({ text, name, type, placeholder, pattern, notRequired }) => {
               if (currentType === 'list') {
                 return (
                   <p>
                     <label>
                       <span>List</span>
-                      <select name="id" required disabled={disabled}>
+                      <select
+                        name="id"
+                        required={!notRequired}
+                        disabled={disabled}
+                      >
                         {lists.map((list) => (
                           <option value={list.id}>{list.title}</option>
                         ))}
@@ -492,7 +602,7 @@ function ShortcutForm({
                       type={type}
                       name={name}
                       placeholder={placeholder}
-                      required={type === 'text'}
+                      required={type === 'text' && !notRequired}
                       disabled={disabled}
                       list={
                         currentType === 'hashtag'
@@ -517,9 +627,23 @@ function ShortcutForm({
               );
             },
           )}
-          <button type="submit" class="block" disabled={disabled}>
-            Add
-          </button>
+          <footer>
+            <button type="submit" class="block" disabled={disabled}>
+              {editMode ? 'Save' : 'Add'}
+            </button>
+            {editMode && (
+              <button
+                type="button"
+                class="light danger"
+                onClick={() => {
+                  states.shortcuts.splice(shortcutIndex, 1);
+                  onClose?.();
+                }}
+              >
+                Remove
+              </button>
+            )}
+          </footer>
         </form>
       </main>
     </div>

@@ -110,7 +110,7 @@
     drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
 }
 .account-container header .avatar:not(.has-alpha) img {
-  border-radius: 50%;
+  border-radius: inherit;
 }
 
 .account-container main > *:first-child {
@@ -138,7 +138,7 @@
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 16px;
   line-height: 1.25;
 }
 .account-container .stats > * {
@@ -165,7 +165,9 @@
 .account-container .profile-metadata {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 2px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 .account-container .profile-field {
   min-width: 0;
@@ -173,7 +175,7 @@
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 4px;
   filter: saturate(0.75);
   line-height: 1.25;
 }
@@ -198,12 +200,23 @@
 }
 
 .account-container .common-followers {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.5s ease-in-out;
+}
+.account-container .common-followers[hidden] {
+  grid-template-rows: 0fr;
+}
+.account-container .common-followers > .common-followers-inner {
+  overflow: hidden;
+}
+.account-container .common-followers p {
+  font-size: 90%;
+  color: var(--text-insignificant-color);
   border-top: 1px solid var(--outline-color);
   border-bottom: 1px solid var(--outline-color);
   padding: 8px 0;
-  font-size: 90%;
-  line-height: 1.5;
-  color: var(--text-insignificant-color);
+  margin: 0;
 }
 
 .timeline-start .account-container {

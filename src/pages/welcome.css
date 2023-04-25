@@ -44,3 +44,45 @@
 #welcome:hover h2 {
   animation: psychedelic 10s infinite alternate;
 }
+
+#why-container summary {
+  font-weight: bold;
+  margin: 16px 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+#why-container[open] summary {
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+#why-container .sections section {
+  text-align: start;
+  max-width: 480px;
+  background-color: var(--bg-color);
+  border-radius: 30px;
+  border: 1px solid var(--bg-color);
+  font-weight: 600;
+  font-size: 106.25%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--outline-color),
+    0 4px 16px -8px var(--drop-shadow-color);
+  margin-bottom: 16px;
+}
+#why-container .sections section h4 {
+  margin: 0;
+  padding: 30px 30px 0;
+  font-size: 111.765%;
+  color: var(--blue-color);
+  font-weight: 600;
+}
+#why-container .sections section p {
+  margin-inline: 30px;
+  margin-bottom: 30px;
+}
+#why-container .sections section img {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid var(--outline-color);
+}

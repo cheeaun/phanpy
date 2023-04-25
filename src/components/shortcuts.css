@@ -134,6 +134,14 @@ shortcuts .tab-bar[hidden] {
   #app[data-shortcuts-view-mode='tab-menu-bar'] .deck-container {
     padding-bottom: 52px;
   }
+  #shortcuts .tab-bar li a.has-subtitle .icon,
+  #shortcuts .tab-bar li a.has-subtitle .icon svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  #shortcuts .tab-bar li a span {
+    line-height: 1;
+  }
 }
 
 @media (min-width: 40em) {
@@ -171,6 +179,10 @@ shortcuts .tab-bar[hidden] {
     font-size: 14px;
     height: 44px;
     gap: 4px;
+  }
+  #shortcuts .tab-bar li a span {
+    text-align: left;
+    line-height: 1;
   }
   #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(
       header[hidden]

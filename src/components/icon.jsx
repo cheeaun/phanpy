@@ -77,6 +77,8 @@ const ICONS = {
   filter: 'mingcute:filter-2-line',
   chart: 'mingcute:chart-line-line',
   react: 'mingcute:react-line',
+  layout4: 'mingcute:layout-4-line',
+  layout5: 'mingcute:layout-5-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

@@ -24,7 +24,8 @@ function NavMenu(props) {
   // User may choose pin or not to pin Following
   // If user doesn't pin Following, we show it in the menu
   const showFollowing =
-    snapStates.settings.shortcutsColumnsMode &&
+    (snapStates.settings.shortcutsColumnsMode ||
+      snapStates.settings.shortcutsViewMode === 'multi-column') &&
     !snapStates.shortcuts.find((pin) => pin.type === 'following');
 
   const bindLongPress = useLongPress(
@@ -32,6 +33,7 @@ function NavMenu(props) {
       states.showAccounts = true;
     },
     {
+      threshold: 600,
       detect: 'touch',
       cancelOnMovement: true,
     },
@@ -66,6 +68,7 @@ function NavMenu(props) {
                 currentAccount?.info?.avatarStatic
               }
               size="l"
+              squircle={currentAccount?.info?.bot}
             />
           )}
           <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />

@@ -15,7 +15,6 @@ import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
-import 'swiped-events';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
@@ -24,12 +23,15 @@ import AccountBlock from '../components/account-block';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
+import Poll from '../components/poll';
 import { api } from '../utils/api';
+import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -79,6 +81,8 @@ function Status({
   enableTranslate,
   previewMode,
   allowFilters,
+  onMediaClick,
+  quoted,
 }) {
   if (skeleton) {
     return (
@@ -118,6 +122,7 @@ function Status({
       displayName,
       username,
       emojis: accountEmojis,
+      bot,
     },
     id,
     repliesCount,
@@ -151,7 +156,7 @@ function Status({
     _filtered,
   } = status;
 
-  console.debug('RENDER Status', id, status?.account.displayName);
+  console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -175,10 +180,12 @@ function Status({
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
+  const currentAccount = useMemo(() => {
+    return store.session.get('currentAccount');
+  }, []);
   const isSelf = useMemo(() => {
-    const currentAccount = store.session.get('currentAccount');
     return currentAccount && currentAccount === accountId;
-  }, [accountId]);
+  }, [accountId, currentAccount]);
 
   let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,
@@ -200,6 +207,9 @@ function Status({
         .catch((e) => {});
     }
   }
+  const mentionSelf =
+    inReplyToAccountId === currentAccount ||
+    mentions?.find((mention) => mention.id === currentAccount);
 
   const showSpoiler = !!snapStates.spoilers[id] || false;
 
@@ -457,12 +467,9 @@ function Status({
       )}
       {!isSizeLarge && sameInstance && (
         <>
-          <MenuItem onClick={replyStatus}>
-            <Icon icon="reply" />
-            <span>Reply</span>
-          </MenuItem>
-          {canBoost && (
+          <div class="menu-horizontal">
             <MenuItem
+              disabled={!canBoost}
               onClick={async () => {
                 try {
                   const done = await boostStatus();
@@ -480,41 +487,47 @@ function Status({
               />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
             </MenuItem>
-          )}
-          <MenuItem
-            onClick={() => {
-              try {
-                favouriteStatus();
-                if (!isSizeLarge)
-                  showToast(favourited ? 'Unfavourited' : 'Favourited');
-              } catch (e) {}
-            }}
-          >
-            <Icon
-              icon="heart"
-              style={{
-                color: favourited && 'var(--favourite-color)',
+            <MenuItem
+              onClick={() => {
+                try {
+                  favouriteStatus();
+                  if (!isSizeLarge)
+                    showToast(favourited ? 'Unfavourited' : 'Favourited');
+                } catch (e) {}
               }}
-            />
-            <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              try {
-                bookmarkStatus();
-                if (!isSizeLarge)
-                  showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
-              } catch (e) {}
-            }}
-          >
-            <Icon
-              icon="bookmark"
-              style={{
-                color: bookmarked && 'var(--favourite-color)',
+            >
+              <Icon
+                icon="heart"
+                style={{
+                  color: favourited && 'var(--favourite-color)',
+                }}
+              />
+              <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
+            </MenuItem>
+          </div>
+          <div class="menu-horizontal">
+            <MenuItem onClick={replyStatus}>
+              <Icon icon="reply" />
+              <span>Reply</span>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                try {
+                  bookmarkStatus();
+                  if (!isSizeLarge)
+                    showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+                } catch (e) {}
               }}
-            />
-            <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
-          </MenuItem>
+            >
+              <Icon
+                icon="bookmark"
+                style={{
+                  color: bookmarked && 'var(--link-color)',
+                }}
+              />
+              <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
+            </MenuItem>
+          </div>
         </>
       )}
       {enableTranslate && (
@@ -570,9 +583,41 @@ function Status({
             </MenuItem>
           )}
       </div>
+      {(isSelf || mentionSelf) && <MenuDivider />}
+      {(isSelf || mentionSelf) && (
+        <MenuItem
+          onClick={async () => {
+            try {
+              const newStatus = await masto.v1.statuses[
+                muted ? 'unmute' : 'mute'
+              ](id);
+              saveStatus(newStatus, instance);
+              showToast(muted ? 'Conversation unmuted' : 'Conversation muted');
+            } catch (e) {
+              console.error(e);
+              showToast(
+                muted
+                  ? 'Unable to unmute conversation'
+                  : 'Unable to mute conversation',
+              );
+            }
+          }}
+        >
+          {muted ? (
+            <>
+              <Icon icon="unmute" />
+              <span>Unmute conversation</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="mute" />
+              <span>Mute conversation</span>
+            </>
+          )}
+        </MenuItem>
+      )}
       {isSelf && (
-        <>
-          <MenuDivider />
+        <div class="menu-horizontal">
           <MenuItem
             onClick={() => {
               states.showCompose = {
@@ -606,7 +651,7 @@ function Status({
               <span>Delete…</span>
             </MenuItem>
           )}
-        </>
+        </div>
       )}
     </>
   );
@@ -627,6 +672,7 @@ function Status({
       setIsContextMenuOpen(true);
     },
     {
+      threshold: 600,
       captureEvent: true,
       detect: 'touch',
       cancelOnMovement: true,
@@ -645,7 +691,7 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      } ${_deleted ? 'status-deleted' : ''}`}
+      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         if (size === 'l') return;
@@ -670,7 +716,11 @@ function Status({
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
-          onClose={() => setIsContextMenuOpen(false)}
+          onClose={() => {
+            setIsContextMenuOpen(false);
+            // statusRef.current?.focus?.();
+            statusRef.current?.closest('[tabindex]')?.focus?.();
+          }}
           portal={{
             target: document.body,
           }}
@@ -713,7 +763,7 @@ function Status({
             };
           }}
         >
-          <Avatar url={avatarStatic || avatar} size="xxl" />
+          <Avatar url={avatarStatic || avatar} size="xxl" squircle={bot} />
         </a>
       )}
       <div class="container">
@@ -841,10 +891,15 @@ function Status({
               <div
                 class="content"
                 lang={language}
+                dir="auto"
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
-                <p>{spoilerText}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: emojifyText(spoilerText, emojis),
+                  }}
+                />
               </div>
               <button
                 class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}
@@ -867,38 +922,52 @@ function Status({
           <div
             class="content"
             lang={language}
+            dir="auto"
             ref={contentRef}
             data-read-more={readMoreText}
-            onClick={handleContentLinks({ mentions, instance, previewMode })}
-            dangerouslySetInnerHTML={{
-              __html: enhanceContent(content, {
-                emojis,
-                postEnhanceDOM: (dom) => {
-                  // Remove target="_blank" from links
-                  dom
-                    .querySelectorAll('a.u-url[target="_blank"]')
-                    .forEach((a) => {
-                      if (!/http/i.test(a.innerText.trim())) {
-                        a.removeAttribute('target');
-                      }
-                    });
-                  if (previewMode) return;
-                  // Unfurl Mastodon links
-                  dom
-                    .querySelectorAll(
-                      'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                    )
-                    .forEach((a) => {
-                      if (isMastodonLinkMaybe(a.href)) {
-                        unfurlMastodonLink(currentInstance, a.href).then(() => {
+          >
+            <div
+              onClick={handleContentLinks({ mentions, instance, previewMode })}
+              dangerouslySetInnerHTML={{
+                __html: enhanceContent(content, {
+                  emojis,
+                  postEnhanceDOM: (dom) => {
+                    // Remove target="_blank" from links
+                    dom
+                      .querySelectorAll('a.u-url[target="_blank"]')
+                      .forEach((a) => {
+                        if (!/http/i.test(a.innerText.trim())) {
                           a.removeAttribute('target');
-                        });
-                      }
-                    });
-                },
-              }),
-            }}
-          />
+                        }
+                      });
+                    if (previewMode) return;
+                    // Unfurl Mastodon links
+                    Array.from(
+                      dom.querySelectorAll(
+                        'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                      ),
+                    )
+                      .filter((a) => isMastodonLinkMaybe(a.href))
+                      .forEach((a, i) => {
+                        unfurlMastodonLink(currentInstance, a.href).then(
+                          (result) => {
+                            if (!result) return;
+                            a.removeAttribute('target');
+                            if (!Array.isArray(states.statusQuotes[sKey])) {
+                              states.statusQuotes[sKey] = [];
+                            }
+                            if (!states.statusQuotes[sKey][i]) {
+                              states.statusQuotes[sKey].splice(i, 0, result);
+                            }
+                          },
+                        );
+                      });
+                  },
+                }),
+              }}
+            />
+            <QuoteStatuses id={id} instance={instance} level={quoted} />
+          </div>
           {!!poll && (
             <Poll
               lang={language}
@@ -981,16 +1050,16 @@ function Status({
                     key={media.id}
                     media={media}
                     autoAnimate={isSizeLarge}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      states.showMediaModal = {
-                        mediaAttachments,
-                        index: i,
-                        instance,
-                        statusID: readOnly ? null : id,
-                      };
-                    }}
+                    to={`/${instance}/s/${id}?${
+                      withinContext ? 'media' : 'media-only'
+                    }=${i + 1}`}
+                    onClick={
+                      onMediaClick
+                        ? (e) => {
+                            onMediaClick(e, i, media, status);
+                          }
+                        : undefined
+                    }
                   />
                 ))}
             </div>
@@ -999,7 +1068,8 @@ function Status({
             !sensitive &&
             !spoilerText &&
             !poll &&
-            !mediaAttachments.length && (
+            !mediaAttachments.length &&
+            !snapStates.statusQuotes[sKey] && (
               <Card card={card} instance={currentInstance} />
             )}
         </div>
@@ -1143,7 +1213,11 @@ function Status({
             }
           }}
         >
-          <ReactionsModal statusID={id} instance={instance} />
+          <ReactionsModal
+            statusID={id}
+            instance={instance}
+            onClose={() => setShowReactions(false)}
+          />
         </Modal>
       )}
     </article>
@@ -1151,6 +1225,7 @@ function Status({
 }
 
 function Card({ card, instance }) {
+  const snapStates = useSnapshot(states);
   const {
     blurhash,
     title,
@@ -1202,6 +1277,8 @@ function Card({ card, instance }) {
   //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
   //   );
   // }
+
+  if (snapStates.unfurledLinks[url]) return null;
 
   if (hasText && (image || (!type !== 'photo' && blurhash))) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
@@ -1285,216 +1362,30 @@ function Card({ card, instance }) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
-  }
-}
-
-function Poll({
-  poll,
-  lang,
-  readOnly,
-  refresh = () => {},
-  votePoll = () => {},
-}) {
-  const [uiState, setUIState] = useState('default');
-
-  const {
-    expired,
-    expiresAt,
-    id,
-    multiple,
-    options,
-    ownVotes,
-    voted,
-    votersCount,
-    votesCount,
-  } = poll;
-
-  const expiresAtDate = !!expiresAt && new Date(expiresAt);
-
-  // Update poll at point of expiry
-  // NOTE: Disable this because setTimeout runs immediately if delay is too large
-  // https://stackoverflow.com/a/56718027/20838
-  // useEffect(() => {
-  //   let timeout;
-  //   if (!expired && expiresAtDate) {
-  //     const ms = expiresAtDate.getTime() - Date.now() + 1; // +1 to give it a little buffer
-  //     if (ms > 0) {
-  //       timeout = setTimeout(() => {
-  //         setUIState('loading');
-  //         (async () => {
-  //           // await refresh();
-  //           setUIState('default');
-  //         })();
-  //       }, ms);
-  //     }
-  //   }
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  // }, [expired, expiresAtDate]);
-
-  const pollVotesCount = votersCount || votesCount;
-  let roundPrecision = 0;
-  if (pollVotesCount <= 1000) {
-    roundPrecision = 0;
-  } else if (pollVotesCount <= 10000) {
-    roundPrecision = 1;
-  } else if (pollVotesCount <= 100000) {
-    roundPrecision = 2;
-  }
-
-  const [showResults, setShowResults] = useState(false);
-  const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
-
-  return (
-    <div
-      lang={lang}
-      class={`poll ${readOnly ? 'read-only' : ''} ${
-        uiState === 'loading' ? 'loading' : ''
-      }`}
-      onDblClick={() => {
-        setShowResults(!showResults);
-      }}
-    >
-      {(showResults && optionsHaveVoteCounts) || voted || expired ? (
-        <div class="poll-options">
-          {options.map((option, i) => {
-            const { title, votesCount: optionVotesCount } = option;
-            const percentage = pollVotesCount
-              ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                  roundPrecision,
-                )
-              : 0;
-            // check if current poll choice is the leading one
-            const isLeading =
-              optionVotesCount > 0 &&
-              optionVotesCount ===
-                Math.max(...options.map((o) => o.votesCount));
-            return (
-              <div
-                key={`${i}-${title}-${optionVotesCount}`}
-                class={`poll-option poll-result ${
-                  isLeading ? 'poll-option-leading' : ''
-                }`}
-                style={{
-                  '--percentage': `${percentage}%`,
-                }}
-              >
-                <div class="poll-option-title">
-                  {title}
-                  {voted && ownVotes.includes(i) && (
-                    <>
-                      {' '}
-                      <Icon icon="check-circle" />
-                    </>
-                  )}
-                </div>
-                <div
-                  class="poll-option-votes"
-                  title={`${optionVotesCount} vote${
-                    optionVotesCount === 1 ? '' : 's'
-                  }`}
-                >
-                  {percentage}%
-                </div>
-              </div>
-            );
-          })}
+  } else if (hasText && !image) {
+    const domain = new URL(url).hostname.replace(/^www\./, '');
+    return (
+      <a
+        href={cardStatusURL || url}
+        target={cardStatusURL ? null : '_blank'}
+        rel="nofollow noopener noreferrer"
+        class={`card link no-image`}
+      >
+        <div class="meta-container">
+          <p class="meta domain">{domain}</p>
+          <p class="title">{title}</p>
+          <p class="meta">{description || providerName || authorName}</p>
         </div>
-      ) : (
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const choices = [];
-            formData.forEach((value, key) => {
-              if (key === 'poll') {
-                choices.push(value);
-              }
-            });
-            if (!choices.length) return;
-            setUIState('loading');
-            await votePoll(choices);
-            setUIState('default');
-          }}
-        >
-          <div class="poll-options">
-            {options.map((option, i) => {
-              const { title } = option;
-              return (
-                <div class="poll-option">
-                  <label class="poll-label">
-                    <input
-                      type={multiple ? 'checkbox' : 'radio'}
-                      name="poll"
-                      value={i}
-                      disabled={uiState === 'loading'}
-                      readOnly={readOnly}
-                    />
-                    <span class="poll-option-title">{title}</span>
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          {!readOnly && (
-            <button
-              class="poll-vote-button"
-              type="submit"
-              disabled={uiState === 'loading'}
-            >
-              Vote
-            </button>
-          )}
-        </form>
-      )}
-      {!readOnly && (
-        <p class="poll-meta">
-          {!expired && (
-            <>
-              <button
-                type="button"
-                class="textual"
-                disabled={uiState === 'loading'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setUIState('loading');
-                  (async () => {
-                    await refresh();
-                    setUIState('default');
-                  })();
-                }}
-              >
-                Refresh
-              </button>{' '}
-              &bull;{' '}
-            </>
-          )}
-          <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
-          {votesCount === 1 ? '' : 's'}
-          {!!votersCount && votersCount !== votesCount && (
-            <>
-              {' '}
-              &bull;{' '}
-              <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-              voter
-              {votersCount === 1 ? '' : 's'}
-            </>
-          )}{' '}
-          &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
-        </p>
-      )}
-    </div>
-  );
+      </a>
+    );
+  }
 }
 
 function EditedAtModal({
   statusID,
   instance,
   fetchStatusHistory = () => {},
-  onClose = () => {},
+  onClose,
 }) {
   const [uiState, setUIState] = useState('default');
   const [editHistory, setEditHistory] = useState([]);
@@ -1516,10 +1407,12 @@ function EditedAtModal({
 
   return (
     <div id="edit-history" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
-        {/* <button type="button" class="close-button plain large" onClick={onClose}>
-        <Icon icon="x" alt="Close" />
-      </button> */}
         <h2>Edit History</h2>
         {uiState === 'error' && <p>Failed to load history</p>}
         {uiState === 'loading' && (
@@ -1565,7 +1458,7 @@ function EditedAtModal({
 }
 
 const REACTIONS_LIMIT = 80;
-function ReactionsModal({ statusID, instance }) {
+function ReactionsModal({ statusID, instance, onClose }) {
   const { masto } = api({ instance });
   const [uiState, setUIState] = useState('default');
   const [accounts, setAccounts] = useState([]);
@@ -1641,6 +1534,11 @@ function ReactionsModal({ statusID, instance }) {
 
   return (
     <div id="reactions-container" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <h2>Boosted/Favourited by…</h2>
       </header>
@@ -1780,10 +1678,6 @@ export function formatDuration(time) {
   }
 }
 
-function isMastodonLinkMaybe(url) {
-  return /^https:\/\/.*\/\d+$/i.test(url);
-}
-
 const denylistDomains = /(twitter|github)\.com/i;
 const failedUnfurls = {};
 
@@ -1817,10 +1711,14 @@ function _unfurlMastodonLink(instance, url) {
           const statusURL = `/${domain}/s/${id}`;
           const result = {
             id,
+            instance: domain,
             url: statusURL,
           };
           console.debug('🦦 Unfurled URL', url, id, statusURL);
           states.unfurledLinks[url] = result;
+          saveStatus(status, domain, {
+            skipThreading: true,
+          });
           return result;
         } else {
           failedUnfurls[url] = true;
@@ -1847,10 +1745,14 @@ function _unfurlMastodonLink(instance, url) {
         const statusURL = `/${instance}/s/${id}`;
         const result = {
           id,
+          instance,
           url: statusURL,
         };
         console.debug('🦦 Unfurled URL', url, id, statusURL);
         states.unfurledLinks[url] = result;
+        saveStatus(status, instance, {
+          skipThreading: true,
+        });
         return result;
       } else {
         failedUnfurls[url] = true;
@@ -1863,7 +1765,11 @@ function _unfurlMastodonLink(instance, url) {
       // Silently fail
     });
 
-  return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+  if (remoteInstanceFetch) {
+    return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+  } else {
+    return mastoSearchFetch;
+  }
 }
 
 function nicePostURL(url) {
@@ -1914,7 +1820,7 @@ function safeBoundingBoxPadding() {
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
-    account: { avatar, avatarStatic },
+    account: { avatar, avatarStatic, bot },
     createdAt,
     visibility,
     reblog,
@@ -1930,6 +1836,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       setShowPeek(true);
     },
     {
+      threshold: 600,
       captureEvent: true,
       detect: 'touch',
       cancelOnMovement: true,
@@ -1959,7 +1866,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
           <span>Filtered</span>
           <span>{filterTitleStr}</span>
         </b>{' '}
-        <Avatar url={avatarStatic || avatar} />
+        <Avatar url={avatarStatic || avatar} squircle={bot} />
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
             <NameText account={status.account} instance={instance} />{' '}
@@ -1979,6 +1886,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
               <>
                 <Avatar
                   url={reblog.account.avatarStatic || reblog.account.avatar}
+                  squircle={bot}
                 />{' '}
               </>
             )}
@@ -1996,10 +1904,17 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
           }}
         >
           <div id="filtered-status-peek" class="sheet">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => setShowPeek(false)}
+            >
+              <Icon icon="x" />
+            </button>
+            <header>
+              <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
+            </header>
             <main tabIndex="-1">
-              <p class="heading">
-                <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
-              </p>
               <Link
                 class="status-link"
                 to={`/${instance}/s/${status.id}`}
@@ -2019,5 +1934,32 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
     </div>
   );
 }
+
+const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
+  const snapStates = useSnapshot(states);
+  const sKey = statusKey(id, instance);
+  const quotes = snapStates.statusQuotes[sKey];
+
+  if (!quotes?.length) return;
+  if (level > 2) return;
+
+  return quotes.map((q) => {
+    return (
+      <Link
+        key={q.instance + q.id}
+        to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+        class="status-card-link"
+      >
+        <Status
+          statusID={q.id}
+          instance={q.instance}
+          size="s"
+          quoted={level + 1}
+          previewMode
+        />
+      </Link>
+    );
+  });
+});
 
 export default memo(Status);

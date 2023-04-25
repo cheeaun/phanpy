@@ -6,8 +6,10 @@ import Favourites from '../pages/favourites';
 import Following from '../pages/following';
 import Hashtag from '../pages/hashtag';
 import List from '../pages/list';
+import Mentions from '../pages/mentions';
 import Notifications from '../pages/notifications';
 import Public from '../pages/public';
+import Trending from '../pages/trending';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -17,6 +19,7 @@ function Columns() {
   const { shortcuts } = snapStates;
 
   const components = shortcuts.map((shortcut) => {
+    if (!shortcut) return null;
     const { type, ...params } = shortcut;
     const Component = {
       following: Following,
@@ -26,6 +29,8 @@ function Columns() {
       bookmarks: Bookmarks,
       favourites: Favourites,
       hashtag: Hashtag,
+      mentions: Mentions,
+      trending: Trending,
     }[type];
     if (!Component) return null;
     return <Component {...params} />;

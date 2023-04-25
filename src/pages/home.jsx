@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useEffect } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -75,4 +76,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);

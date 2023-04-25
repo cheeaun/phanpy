@@ -42,6 +42,8 @@ function Timeline({
   const [visible, setVisible] = useState(true);
   const scrollableRef = useRef();
 
+  console.debug('RENDER Timeline', id, refresh);
+
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);
@@ -269,6 +271,7 @@ function Timeline({
               loadItems(true);
             }
           }}
+          class={uiState === 'loading' ? 'loading' : ''}
         >
           <div class="header-grid">
             <div class="header-side">
@@ -283,7 +286,7 @@ function Timeline({
             </div>
             {title && (titleComponent ? titleComponent : <h1>{title}</h1>)}
             <div class="header-side">
-              <Loader hidden={uiState !== 'loading'} />
+              {/* <Loader hidden={uiState !== 'loading'} /> */}
               {!!headerEnd && headerEnd}
             </div>
           </div>
@@ -383,6 +386,10 @@ function Timeline({
                       ? `/${instance}/s/${statusID}`
                       : `/s/${statusID}`;
                     const isMiddle = i > 0 && i < items.length - 1;
+                    const isSpoiler = item.sensitive && !!item.spoilerText;
+                    const showCompact =
+                      (isSpoiler && i > 0) ||
+                      (manyItems && isMiddle && type === 'thread');
                     return (
                       <li
                         key={`timeline-${statusID}`}
@@ -395,7 +402,7 @@ function Timeline({
                         }`}
                       >
                         <Link class="status-link timeline-item" to={url}>
-                          {manyItems && isMiddle && type === 'thread' ? (
+                          {showCompact ? (
                             <TimelineStatusCompact
                               status={item}
                               instance={instance}
@@ -577,6 +584,14 @@ function TimelineStatusCompact({ status, instance }) {
       )}
       <div class="content-compact" title={statusPeekText}>
         {statusPeekText}
+        {status.sensitive && status.spoilerText && (
+          <>
+            {' '}
+            <span class="spoiler-badge">
+              <Icon icon="eye-close" size="s" />
+            </span>
+          </>
+        )}
       </div>
     </article>
   );

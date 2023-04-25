@@ -1,0 +1,21 @@
+body.cloak .name-text,
+body.cloak .name-text *,
+body.cloak .status .content-container,
+body.cloak .status .content-container *,
+body.cloak .account-container :is(header, main > *:not(.actions)),
+body.cloak .account-container :is(header, main > *:not(.actions)) *,
+body.cloak .header-account,
+body.cloak .account-block {
+  text-decoration-thickness: 1.1em;
+  text-decoration-line: line-through;
+  text-rendering: optimizeSpeed;
+  filter: opacity(0.5);
+}
+
+body.cloak .status :is(img, video, audio),
+body.cloak .avatar,
+body.cloak .emoji,
+body.cloak .header-banner {
+  filter: contrast(0) !important;
+  background-color: #000 !important;
+}

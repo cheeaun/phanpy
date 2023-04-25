@@ -43,10 +43,15 @@
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.05);
+  --backdrop-solid-color: #ccc;
   --img-bg-color: rgba(128, 128, 128, 0.2);
   --loader-color: #1c1e2199;
   --comment-line-color: #e5e5e5;
   --drop-shadow-color: rgba(0, 0, 0, 0.15);
+  --close-button-bg-color: rgba(0, 0, 0, 0.1);
+  --close-button-bg-active-color: rgba(0, 0, 0, 0.2);
+  --close-button-color: rgba(0, 0, 0, 0.5);
+  --close-button-hover-color: rgba(0, 0, 0, 1);
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
 }
@@ -78,9 +83,14 @@
     --divider-color: rgba(255, 255, 255, 0.1);
     --bg-blur-color: #24252699;
     --backdrop-color: rgba(0, 0, 0, 0.5);
+    --backdrop-solid-color: #333;
     --loader-color: #f0f2f599;
     --comment-line-color: #565656;
     --drop-shadow-color: rgba(0, 0, 0, 0.5);
+    --close-button-bg-color: rgba(255, 255, 255, 0.2);
+    --close-button-bg-active-color: rgba(255, 255, 255, 0.15);
+    --close-button-color: rgba(255, 255, 255, 0.5);
+    --close-button-hover-color: rgba(255, 255, 255, 1);
   }
 }
 
@@ -88,6 +98,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+[dir] {
+  text-align: start;
 }
 
 html {

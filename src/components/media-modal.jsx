@@ -24,16 +24,16 @@ function MediaModal({
   useLayoutEffect(() => {
     carouselFocusItem.current?.scrollIntoView();
 
-    history.pushState({ mediaModal: true }, '');
-    const handlePopState = (e) => {
-      if (e.state?.mediaModal) {
-        onClose();
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
+    // history.pushState({ mediaModal: true }, '');
+    // const handlePopState = (e) => {
+    //   if (e.state?.mediaModal) {
+    //     onClose();
+    //   }
+    // };
+    // window.addEventListener('popstate', handlePopState);
+    // return () => {
+    //   window.removeEventListener('popstate', handlePopState);
+    // };
   }, []);
   const prevStatusID = useRef(statusID);
   useEffect(() => {
@@ -84,8 +84,15 @@ function MediaModal({
     };
   }, []);
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      carouselRef.current?.focus?.();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <>
+    <div class="media-modal-container">
       <div
         ref={carouselRef}
         tabIndex="-1"
@@ -206,7 +213,11 @@ function MediaModal({
             </MenuLink>
           </Menu>{' '}
           <Link
-            to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
+            to={`${instance ? `/${instance}` : ''}/s/${statusID}${
+              window.matchMedia('(min-width: calc(40em + 350px))').matches
+                ? `?media=${currentIndex + 1}`
+                : ''
+            }`}
             class="button carousel-button media-post-link plain3"
             onClick={() => {
               // if small screen (not media query min-width 40em + 350px), run onClose
@@ -264,17 +275,25 @@ function MediaModal({
             }
           }}
         >
-          <MediaAltModal alt={showMediaAlt} />
+          <MediaAltModal
+            alt={showMediaAlt}
+            onClose={() => setShowMediaAlt(false)}
+          />
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 
-function MediaAltModal({ alt }) {
+function MediaAltModal({ alt, onClose }) {
   const [forceTranslate, setForceTranslate] = useState(false);
   return (
     <div class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close outer" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header class="header-grid">
         <h2>Media description</h2>
         <div class="header-side">

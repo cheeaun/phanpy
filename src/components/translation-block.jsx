@@ -43,7 +43,7 @@ function TranslationBlock({
           return {
             provider: 'lingva',
             content: res.translation,
-            detectedSourceLanguage: res.info.detectedSource,
+            detectedSourceLanguage: res.info?.detectedSource,
             info: res.info,
           };
         });
@@ -139,7 +139,7 @@ function TranslationBlock({
           ) : (
             !!translatedContent && (
               <>
-                <output class="translated-content" lang={targetLang}>
+                <output class="translated-content" lang={targetLang} dir="auto">
                   {translatedContent}
                 </output>
                 {!!pronunciationContent && (

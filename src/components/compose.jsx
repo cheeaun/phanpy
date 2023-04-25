@@ -508,6 +508,7 @@ function Compose({
               url={currentAccountInfo.avatarStatic}
               size="xl"
               alt={currentAccountInfo.username}
+              squircle={currentAccountInfo?.bot}
             />
           )}
           {!standalone ? (
@@ -1083,7 +1084,24 @@ function Compose({
                 disabled={uiState === 'loading'}
               >
                 {supportedLanguages
-                  .sort(([, commonA], [, commonB]) => {
+                  .sort(([codeA, commonA], [codeB, commonB]) => {
+                    const { contentTranslationHideLanguages = [] } =
+                      states.settings;
+                    // Sort codes that same as language, prevLanguage, DEFAULT_LANGUAGE and all the ones in states.settings.contentTranslationHideLanguages, to the top
+                    if (
+                      codeA === language ||
+                      codeA === prevLanguage ||
+                      codeA === DEFAULT_LANG ||
+                      contentTranslationHideLanguages?.includes(codeA)
+                    )
+                      return -1;
+                    if (
+                      codeB === language ||
+                      codeB === prevLanguage ||
+                      codeB === DEFAULT_LANG ||
+                      contentTranslationHideLanguages?.includes(codeB)
+                    )
+                      return 1;
                     return commonA.localeCompare(commonB);
                   })
                   .map(([code, common, native]) => (
@@ -1486,6 +1504,15 @@ function MediaAttachment({
           }}
         >
           <div id="media-sheet" class="sheet sheet-max">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => {
+                setShowModal(false);
+              }}
+            >
+              <Icon icon="x" />
+            </button>
             <header>
               <h2>
                 {
@@ -1724,6 +1751,11 @@ function CustomEmojisModal({
 
   return (
     <div id="custom-emojis-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
       <header>
         <b>Custom emojis</b>{' '}
         {uiState === 'loading' ? (

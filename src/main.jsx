@@ -1,5 +1,7 @@
 import './index.css';
 
+import './cloak-mode.css';
+
 import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 
@@ -35,3 +37,7 @@ setTimeout(() => {
     localStorage.removeItem('settings:boostsCarousel');
   } catch (e) {}
 }, 5000);
+
+window.__CLOAK__ = () => {
+  document.body.classList.toggle('cloak');
+};

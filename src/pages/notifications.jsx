@@ -162,6 +162,7 @@ function Notifications() {
               scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }
           }}
+          class={uiState === 'loading' ? 'loading' : ''}
         >
           <div class="header-grid">
             <div class="header-side">
@@ -172,7 +173,7 @@ function Notifications() {
             </div>
             <h1>Notifications</h1>
             <div class="header-side">
-              <Loader hidden={uiState !== 'loading'} />
+              {/* <Loader hidden={uiState !== 'loading'} /> */}
             </div>
           </div>
           {snapStates.notificationsShowNew && uiState !== 'loading' && (
@@ -403,6 +404,7 @@ function Notification({ notification, instance }) {
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}
+                    squircle={account?.bot}
                   />
                   {type === 'favourite+reblog' && (
                     <div class="account-sub-icons">

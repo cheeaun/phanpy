@@ -43,7 +43,7 @@ function TranslationBlock({
           return {
             provider: 'lingva',
             content: res.translation,
-            detectedSourceLanguage: res.info.detectedSource,
+            detectedSourceLanguage: res.info?.detectedSource,
             info: res.info,
           };
         });

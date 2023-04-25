@@ -157,7 +157,7 @@ function Status({
     _filtered,
   } = status;
 
-  console.debug('RENDER Status', id, status?.account.displayName);
+  console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -967,7 +967,7 @@ function Status({
                 }),
               }}
             />
-            <QuoteStatuses id={id} instance={instance} />
+            <QuoteStatuses id={id} instance={instance} level={quoted} />
           </div>
           {!!poll && (
             <Poll
@@ -1936,12 +1936,13 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   );
 }
 
-const QuoteStatuses = memo(({ id, instance }) => {
+const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
 
   if (!quotes?.length) return;
+  if (level > 2) return;
 
   return quotes.map((q) => {
     return (
@@ -1953,7 +1954,7 @@ const QuoteStatuses = memo(({ id, instance }) => {
           statusID={q.id}
           instance={q.instance}
           size="s"
-          quoted
+          quoted={level + 1}
           previewMode
         />
       </Link>

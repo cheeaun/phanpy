@@ -48,6 +48,7 @@ function NavMenu(props) {
       overflow="auto"
       viewScroll="close"
       boundingBoxPadding="8 8 8 8"
+      unmountOnClose
       menuButton={({ open }) => (
         <button
           type="button"

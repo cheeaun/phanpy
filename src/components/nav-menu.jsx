@@ -1,4 +1,11 @@
-import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  MenuDivider,
+  MenuItem,
+  useClick,
+  useMenuState,
+} from '@szhsin/react-menu';
+import { useRef } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -39,147 +46,162 @@ function NavMenu(props) {
     },
   );
 
+  const buttonRef = useRef();
+  const [menuState, toggleMenu] = useMenuState();
+  const anchorProps = useClick(menuState.state, toggleMenu);
+
   return (
-    <Menu
-      portal={{
-        target: document.body,
-      }}
-      {...props}
-      overflow="auto"
-      viewScroll="close"
-      boundingBoxPadding="8 8 8 8"
-      unmountOnClose
-      menuButton={({ open }) => (
-        <button
-          type="button"
-          class={`button plain nav-menu-button ${
-            moreThanOneAccount ? 'with-avatar' : ''
-          } ${open ? 'active' : ''}`}
-          style={{ position: 'relative' }}
-          onContextMenu={(e) => {
-            e.preventDefault();
-            states.showAccounts = true;
-          }}
-          {...bindLongPress()}
-        >
-          {moreThanOneAccount && (
-            <Avatar
-              url={
-                currentAccount?.info?.avatar ||
-                currentAccount?.info?.avatarStatic
-              }
-              size="l"
-              squircle={currentAccount?.info?.bot}
-            />
+    <>
+      <button
+        ref={buttonRef}
+        type="button"
+        class={`button plain nav-menu-button ${
+          moreThanOneAccount ? 'with-avatar' : ''
+        } ${open ? 'active' : ''}`}
+        style={{ position: 'relative' }}
+        {...anchorProps}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          states.showAccounts = true;
+        }}
+        {...bindLongPress()}
+      >
+        {moreThanOneAccount && (
+          <Avatar
+            url={
+              currentAccount?.info?.avatar || currentAccount?.info?.avatarStatic
+            }
+            size="l"
+            squircle={currentAccount?.info?.bot}
+          />
+        )}
+        <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
+      </button>
+      <ControlledMenu
+        {...menuState}
+        anchorRef={buttonRef}
+        onClose={() => {
+          toggleMenu(false);
+        }}
+        containerProps={{
+          onClick: () => {
+            toggleMenu(false);
+          },
+        }}
+        portal={{
+          target: document.body,
+        }}
+        {...props}
+        overflow="auto"
+        viewScroll="close"
+        boundingBoxPadding="8 8 8 8"
+        unmountOnClose
+      >
+        {!!snapStates.appVersion?.commitHash &&
+          __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+            <>
+              <MenuItem
+                onClick={() => {
+                  const yes = confirm('Reload page now to update?');
+                  if (yes) {
+                    (async () => {
+                      try {
+                        location.reload();
+                      } catch (e) {}
+                    })();
+                  }
+                }}
+              >
+                <Icon icon="sparkles" size="l" />{' '}
+                <span>New update available…</span>
+              </MenuItem>
+              <MenuDivider />
+            </>
           )}
-          <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
-        </button>
-      )}
-    >
-      {!!snapStates.appVersion?.commitHash &&
-        __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+        <MenuLink to="/">
+          <Icon icon="home" size="l" /> <span>Home</span>
+        </MenuLink>
+        {authenticated && (
           <>
-            <MenuItem
-              onClick={() => {
-                const yes = confirm('Reload page now to update?');
-                if (yes) {
-                  (async () => {
-                    try {
-                      location.reload();
-                    } catch (e) {}
-                  })();
-                }
-              }}
-            >
-              <Icon icon="sparkles" size="l" />{' '}
-              <span>New update available…</span>
-            </MenuItem>
+            {showFollowing && (
+              <MenuLink to="/following">
+                <Icon icon="following" size="l" /> <span>Following</span>
+              </MenuLink>
+            )}
+            <MenuLink to="/mentions">
+              <Icon icon="at" size="l" /> <span>Mentions</span>
+            </MenuLink>
+            <MenuLink to="/notifications">
+              <Icon icon="notification" size="l" /> <span>Notifications</span>
+              {snapStates.notificationsShowNew && (
+                <sup title="New" style={{ opacity: 0.5 }}>
+                  {' '}
+                  &bull;
+                </sup>
+              )}
+            </MenuLink>
             <MenuDivider />
+            <MenuLink to="/l">
+              <Icon icon="list" size="l" /> <span>Lists</span>
+            </MenuLink>
+            <MenuLink to="/ft">
+              <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
+            </MenuLink>
+            <MenuLink to="/b">
+              <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+            </MenuLink>
+            <MenuLink to="/f">
+              <Icon icon="heart" size="l" /> <span>Favourites</span>
+            </MenuLink>
           </>
         )}
-      <MenuLink to="/">
-        <Icon icon="home" size="l" /> <span>Home</span>
-      </MenuLink>
-      {authenticated && (
-        <>
-          {showFollowing && (
-            <MenuLink to="/following">
-              <Icon icon="following" size="l" /> <span>Following</span>
-            </MenuLink>
-          )}
-          <MenuLink to="/mentions">
-            <Icon icon="at" size="l" /> <span>Mentions</span>
-          </MenuLink>
-          <MenuLink to="/notifications">
-            <Icon icon="notification" size="l" /> <span>Notifications</span>
-            {snapStates.notificationsShowNew && (
-              <sup title="New" style={{ opacity: 0.5 }}>
-                {' '}
-                &bull;
-              </sup>
+        <MenuDivider />
+        <MenuLink to={`/search`}>
+          <Icon icon="search" size="l" /> <span>Search</span>
+        </MenuLink>
+        <MenuLink to={`/${instance}/p/l`}>
+          <Icon icon="group" size="l" /> <span>Local</span>
+        </MenuLink>
+        <MenuLink to={`/${instance}/p`}>
+          <Icon icon="earth" size="l" /> <span>Federated</span>
+        </MenuLink>
+        <MenuLink to={`/${instance}/trending`}>
+          <Icon icon="chart" size="l" /> <span>Trending</span>
+        </MenuLink>
+        {authenticated && (
+          <>
+            <MenuDivider />
+            {currentAccount?.info?.id && (
+              <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
+                <Icon icon="user" size="l" /> <span>Profile</span>
+              </MenuLink>
             )}
-          </MenuLink>
-          <MenuDivider />
-          <MenuLink to="/l">
-            <Icon icon="list" size="l" /> <span>Lists</span>
-          </MenuLink>
-          <MenuLink to="/ft">
-            <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
-          </MenuLink>
-          <MenuLink to="/b">
-            <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
-          </MenuLink>
-          <MenuLink to="/f">
-            <Icon icon="heart" size="l" /> <span>Favourites</span>
-          </MenuLink>
-        </>
-      )}
-      <MenuDivider />
-      <MenuLink to={`/search`}>
-        <Icon icon="search" size="l" /> <span>Search</span>
-      </MenuLink>
-      <MenuLink to={`/${instance}/p/l`}>
-        <Icon icon="group" size="l" /> <span>Local</span>
-      </MenuLink>
-      <MenuLink to={`/${instance}/p`}>
-        <Icon icon="earth" size="l" /> <span>Federated</span>
-      </MenuLink>
-      <MenuLink to={`/${instance}/trending`}>
-        <Icon icon="chart" size="l" /> <span>Trending</span>
-      </MenuLink>
-      {authenticated && (
-        <>
-          <MenuDivider />
-          {currentAccount?.info?.id && (
-            <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
-              <Icon icon="user" size="l" /> <span>Profile</span>
-            </MenuLink>
-          )}
-          <MenuItem
-            onClick={() => {
-              states.showAccounts = true;
-            }}
-          >
-            <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              states.showShortcutsSettings = true;
-            }}
-          >
-            <Icon icon="shortcut" size="l" />{' '}
-            <span>Shortcuts Settings&hellip;</span>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              states.showSettings = true;
-            }}
-          >
-            <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
-          </MenuItem>
-        </>
-      )}
-    </Menu>
+            <MenuItem
+              onClick={() => {
+                states.showAccounts = true;
+              }}
+            >
+              <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                states.showShortcutsSettings = true;
+              }}
+            >
+              <Icon icon="shortcut" size="l" />{' '}
+              <span>Shortcuts Settings&hellip;</span>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                states.showSettings = true;
+              }}
+            >
+              <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+            </MenuItem>
+          </>
+        )}
+      </ControlledMenu>
+    </>
   );
 }
 

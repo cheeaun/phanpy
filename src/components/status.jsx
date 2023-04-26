@@ -679,6 +679,8 @@ function Status({
     },
   );
 
+  const showContextMenu = size !== 'l' && !previewMode && !_deleted;
+
   return (
     <article
       ref={statusRef}
@@ -694,10 +696,8 @@ function Status({
       } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
-        if (size === 'l') return;
+        if (!showContextMenu) return;
         if (e.metaKey) return;
-        if (previewMode) return;
-        if (_deleted) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
@@ -708,9 +708,9 @@ function Status({
         });
         setIsContextMenuOpen(true);
       }}
-      {...bindLongPress()}
+      {...(showContextMenu ? bindLongPress() : {})}
     >
-      {size !== 'l' && (
+      {showContextMenu && (
         <ControlledMenu
           ref={contextMenuRef}
           state={isContextMenuOpen ? 'open' : undefined}

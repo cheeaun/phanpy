@@ -6,8 +6,8 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
 import Loader from '../components/loader';
-import Menu from '../components/menu';
 import Modal from '../components/modal';
+import NavMenu from '../components/nav-menu';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
 
@@ -41,7 +41,7 @@ function Lists() {
         <header>
           <div class="header-grid">
             <div class="header-side">
-              <Menu />
+              <NavMenu />
               <Link to="/" class="button plain">
                 <Icon icon="home" size="l" />
               </Link>

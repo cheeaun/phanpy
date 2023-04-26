@@ -8,8 +8,8 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
-import Menu from '../components/menu';
 import NameText from '../components/name-text';
+import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import { api } from '../utils/api';
@@ -166,7 +166,7 @@ function Notifications() {
         >
           <div class="header-grid">
             <div class="header-side">
-              <Menu />
+              <NavMenu />
               <Link to="/" class="button plain">
                 <Icon icon="home" size="l" alt="Home" />
               </Link>

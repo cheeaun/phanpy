@@ -14,7 +14,7 @@ import useScroll from '../utils/useScroll';
 import Icon from './icon';
 import Link from './link';
 import Loader from './loader';
-import Menu from './menu';
+import NavMenu from './nav-menu';
 import Status from './status';
 
 function Timeline({
@@ -275,7 +275,7 @@ function Timeline({
         >
           <div class="header-grid">
             <div class="header-side">
-              <Menu />
+              <NavMenu />
               {headerStart !== null && headerStart !== undefined ? (
                 headerStart
               ) : (

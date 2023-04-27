@@ -211,7 +211,7 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const showSpoiler = !!snapStates.spoilers[id] || false;
+  const showSpoiler = previewMode || !!snapStates.spoilers[id] || false;
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
@@ -679,7 +679,7 @@ function Status({
     },
   );
 
-  const showContextMenu = size !== 'l' && !previewMode && !_deleted;
+  const showContextMenu = size !== 'l' && !previewMode && !_deleted && !quoted;
 
   return (
     <article
@@ -788,7 +788,7 @@ function Status({
           {size !== 'l' &&
             (_deleted ? (
               <span class="status-deleted-tag">Deleted</span>
-            ) : url && !previewMode ? (
+            ) : url && !previewMode && !quoted ? (
               <Menu
                 instanceRef={menuInstanceRef}
                 portal={{
@@ -1955,7 +1955,6 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
           instance={q.instance}
           size="s"
           quoted={level + 1}
-          previewMode
         />
       </Link>
     );

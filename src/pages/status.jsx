@@ -68,6 +68,11 @@ function StatusPage(params) {
 
   const sKey = statusKey(id, instance);
   const [heroStatus, setHeroStatus] = useState(states.statuses[sKey]);
+  useEffect(() => {
+    if (states.statuses[sKey]) {
+      setHeroStatus(states.statuses[sKey]);
+    }
+  }, [sKey]);
 
   const closeLink = useMemo(() => {
     const { prevLocation } = states;

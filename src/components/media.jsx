@@ -17,13 +17,24 @@ audio = Audio track
 */
 
 function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
-  const { blurhash, description, meta, previewUrl, remoteUrl, url, type } =
-    media;
+  const {
+    blurhash,
+    description,
+    meta,
+    previewRemoteUrl,
+    previewUrl,
+    remoteUrl,
+    url,
+    type,
+  } = media;
   const { original = {}, small, focus } = meta || {};
 
   const width = showOriginal ? original?.width : small?.width;
   const height = showOriginal ? original?.height : small?.height;
-  const mediaURL = showOriginal ? url : previewUrl;
+  const mediaURL = showOriginal ? url : previewUrl || url;
+  const remoteMediaURL = showOriginal
+    ? remoteUrl
+    : previewRemoteUrl || remoteUrl;
   const orientation = width >= height ? 'landscape' : 'portrait';
 
   const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -113,6 +124,12 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
                 e.target.closest('.media-zoom').style.display = '';
                 setPinchZoomEnabled(true);
               }}
+              onError={(e) => {
+                const { src } = e.target;
+                if (src === mediaURL) {
+                  e.target.src = remoteMediaURL;
+                }
+              }}
             />
           </QuickPinchZoom>
         ) : (
@@ -130,6 +147,12 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             }}
             onLoad={(e) => {
               e.target.closest('.media-image').style.backgroundImage = '';
+            }}
+            onError={(e) => {
+              const { src } = e.target;
+              if (src === mediaURL) {
+                e.target.src = remoteMediaURL;
+              }
             }}
           />
         )}

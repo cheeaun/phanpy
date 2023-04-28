@@ -54,28 +54,33 @@ function TranslationBlock({
 
   const translate = async () => {
     setUIState('loading');
-    const { content, detectedSourceLanguage, provider, ...props } =
-      await onTranslate(apiSourceLang.current, targetLang);
-    if (content) {
-      if (detectedSourceLanguage) {
-        const detectedLangText = localeCode2Text(detectedSourceLanguage);
-        setDetectedLang(detectedLangText);
-      }
-      if (provider === 'lingva') {
-        const pronunciation = props?.info?.pronunciation?.query;
-        if (pronunciation) {
-          setPronunciationContent(pronunciation);
+    try {
+      const { content, detectedSourceLanguage, provider, ...props } =
+        await onTranslate(apiSourceLang.current, targetLang);
+      if (content) {
+        if (detectedSourceLanguage) {
+          const detectedLangText = localeCode2Text(detectedSourceLanguage);
+          setDetectedLang(detectedLangText);
         }
+        if (provider === 'lingva') {
+          const pronunciation = props?.info?.pronunciation?.query;
+          if (pronunciation) {
+            setPronunciationContent(pronunciation);
+          }
+        }
+        setTranslatedContent(content);
+        setUIState('default');
+        detailsRef.current.open = true;
+        detailsRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      } else {
+        console.error(result);
+        setUIState('error');
       }
-      setTranslatedContent(content);
-      setUIState('default');
-      detailsRef.current.open = true;
-      detailsRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      });
-    } else {
-      console.error(result);
+    } catch (e) {
+      console.error(e);
       setUIState('error');
     }
   };

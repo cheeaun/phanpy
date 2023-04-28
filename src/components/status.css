@@ -508,6 +508,12 @@
 .status .content p:last-child {
   margin-block-end: 0;
 }
+.status .content blockquote {
+  margin-block: min(0.75em, 12px);
+  margin-inline: 0;
+  padding: 0 0 0 8px;
+  border-left: 4px solid var(--link-faded-color);
+}
 .status .content .invisible {
   display: none;
 }

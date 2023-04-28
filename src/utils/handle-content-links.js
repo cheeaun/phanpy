@@ -6,7 +6,9 @@ function handleContentLinks(opts) {
     let { target } = e;
     target = target.closest('a');
     if (!target) return;
-    if (target.classList.contains('u-url')) {
+    const prevText = target.previousSibling?.textContent;
+    const textBeforeLinkIsAt = prevText?.endsWith('@');
+    if (target.classList.contains('u-url') || textBeforeLinkIsAt) {
       const targetText = (
         target.querySelector('span') || target
       ).innerText.trim();
@@ -36,7 +38,8 @@ function handleContentLinks(opts) {
         };
       }
     } else if (!previewMode) {
-      if (target.classList.contains('hashtag')) {
+      const textBeforeLinkIsHash = prevText?.endsWith('#');
+      if (target.classList.contains('hashtag') || textBeforeLinkIsHash) {
         e.preventDefault();
         e.stopPropagation();
         const tag = target.innerText.replace(/^#/, '').trim();

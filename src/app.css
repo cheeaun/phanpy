@@ -1378,7 +1378,6 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.05;
 }
 /* .szh-menu .szh-menu__item * {
   vertical-align: middle;
@@ -1751,6 +1750,8 @@ ul.link-list li a .icon {
   /* scrollbar-width: none; */
   overscroll-behavior: contain;
   overscroll-behavior-x: contain;
+  /* This `transform` fixes horizontal scrolling for pointer devices on iPad */
+  transform: translateZ(0);
 }
 /* #columns::-webkit-scrollbar {
   display: none;

@@ -84,6 +84,9 @@ function NavMenu(props) {
           toggleMenu(false);
         }}
         containerProps={{
+          style: {
+            zIndex: 10,
+          },
           onClick: () => {
             toggleMenu(false);
           },

@@ -521,7 +521,7 @@ function RelatedActions({ info, instance, authenticated }) {
           <span class="tag">Following you</span>
         ) : !!lastStatusAt ? (
           <small class="insignificant">
-            Last status:{' '}
+            Last post:{' '}
             {niceDateTime(lastStatusAt, {
               hideTime: true,
             })}

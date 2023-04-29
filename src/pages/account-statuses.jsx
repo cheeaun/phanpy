@@ -248,7 +248,7 @@ function AccountStatuses() {
       id="account-statuses"
       instance={instance}
       emptyText="Nothing to see here yet."
-      errorText="Unable to load statuses"
+      errorText="Unable to load posts"
       fetchItems={fetchAccountStatuses}
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}

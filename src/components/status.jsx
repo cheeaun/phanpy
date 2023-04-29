@@ -280,7 +280,7 @@ function Status({
 
   const statusRef = useRef(null);
 
-  const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this status from another instance.`;
+  const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
   const textWeight = () =>
     Math.max(

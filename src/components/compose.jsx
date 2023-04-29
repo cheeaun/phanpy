@@ -642,14 +642,14 @@ function Compose({
             <div class="status-preview-legend reply-to">
               Replying to @
               {replyToStatus.account.acct || replyToStatus.account.username}
-              &rsquo;s status
+              &rsquo;s post
             </div>
           </div>
         )}
         {!!editStatus && (
           <div class="status-preview">
             <Status status={editStatus} size="s" previewMode />
-            <div class="status-preview-legend">Editing source status</div>
+            <div class="status-preview-legend">Editing source post</div>
           </div>
         )}
         <form
@@ -904,7 +904,7 @@ function Compose({
               replyToStatus
                 ? 'Post your reply'
                 : editStatus
-                ? 'Edit your status'
+                ? 'Edit your post'
                 : 'What are you doing?'
             }
             required={mediaAttachments?.length === 0}

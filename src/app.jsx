@@ -295,7 +295,7 @@ function App() {
               if (newStatus) {
                 states.reloadStatusPage++;
                 showToast({
-                  text: 'Status posted. Check it out.',
+                  text: 'Post published. Check it out.',
                   delay: 1000,
                   duration: 10_000, // 10 seconds
                   onClick: (toast) => {

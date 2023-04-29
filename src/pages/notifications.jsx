@@ -35,17 +35,17 @@ admin.report = A new report has been filed
 */
 
 const contentText = {
-  mention: 'mentioned you in their status.',
-  status: 'posted a status.',
-  reblog: 'boosted your status.',
+  mention: 'mentioned you in their post.',
+  status: 'published a post.',
+  reblog: 'boosted your post.',
   follow: 'followed you.',
   follow_request: 'requested to follow you.',
-  favourite: 'favourited your status.',
+  favourite: 'favourited your post.',
   poll: 'A poll you have voted in or created has ended.',
   'poll-self': 'A poll you have created has ended.',
   'poll-voted': 'A poll you have voted in has ended.',
-  update: 'A status you interacted with has been edited.',
-  'favourite+reblog': 'boosted & favourited your status.',
+  update: 'A post you interacted with has been edited.',
+  'favourite+reblog': 'boosted & favourited your post.',
 };
 
 const NOTIFICATION_ICONS = {

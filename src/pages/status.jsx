@@ -95,7 +95,7 @@ function StatusPage(params) {
           setHeroStatus(status);
         } catch (err) {
           console.error(err);
-          alert('Unable to load status.');
+          alert('Unable to load post.');
           location.hash = closeLink;
         }
       })();
@@ -650,7 +650,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               </>
             ) : (
               <>
-                Status{' '}
+                Post{' '}
                 <button
                   type="button"
                   class="ancestors-indicator light small"
@@ -959,7 +959,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           )}
           {uiState === 'error' && (
             <p class="ui-state">
-              Unable to load status
+              Unable to load post
               <br />
               <br />
               <button

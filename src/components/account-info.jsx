@@ -778,6 +778,9 @@ function RelatedActions({ info, instance, authenticated }) {
               </>
             )}
           </Menu>
+          {!relationship && relationshipUIState === 'loading' && (
+            <Loader abrupt />
+          )}
           {!!relationship && (
             <button
               type="button"

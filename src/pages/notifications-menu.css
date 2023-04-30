@@ -1,0 +1,51 @@
+@keyframes bell {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(5deg);
+  }
+  66% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.notifications-button.open {
+  animation: bell 0.3s ease-out both;
+  transform-origin: 50% 0;
+}
+
+.notifications-menu {
+  width: 23em;
+  font-size: 90%;
+  padding: 0;
+  height: 40em;
+  overflow: auto;
+}
+.notifications-menu header {
+  padding: 16px;
+  margin: 0;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+.notifications-menu header h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+.notifications-menu .notification {
+  animation: appear-smooth 0.3s ease-out 0.1s both;
+}
+.notifications-menu footer {
+  animation: slide-up 0.3s ease-out 0.2s both;
+  position: sticky;
+  bottom: 0;
+  border-top: var(--hairline-width) solid var(--outline-color);
+  background-color: var(--bg-blur-color);
+  backdrop-filter: blur(16px);
+  padding: 16px;
+  gap: 8px;
+  display: flex;
+  justify-content: space-between;
+}

@@ -169,34 +169,36 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       <header>
         <h2>Notifications</h2>
       </header>
-      {snapStates.notifications.length ? (
-        <>
-          {snapStates.notifications
-            .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
-            .map((notification) => (
-              <Notification
-                key={notification.id}
-                instance={instance}
-                notification={notification}
-              />
-            ))}
-        </>
-      ) : uiState === 'loading' ? (
-        <div class="ui-state">
-          <Loader abrupt />
-        </div>
-      ) : (
-        uiState === 'error' && (
+      <main>
+        {snapStates.notifications.length ? (
+          <>
+            {snapStates.notifications
+              .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
+              .map((notification) => (
+                <Notification
+                  key={notification.id}
+                  instance={instance}
+                  notification={notification}
+                />
+              ))}
+          </>
+        ) : uiState === 'loading' ? (
           <div class="ui-state">
-            <p>Unable to fetch notifications.</p>
-            <p>
-              <button type="button" onClick={loadNotifications}>
-                Try again
-              </button>
-            </p>
+            <Loader abrupt />
           </div>
-        )
-      )}
+        ) : (
+          uiState === 'error' && (
+            <div class="ui-state">
+              <p>Unable to fetch notifications.</p>
+              <p>
+                <button type="button" onClick={loadNotifications}>
+                  Try again
+                </button>
+              </p>
+            </div>
+          )
+        )}
+      </main>
       <footer>
         <Link to="/mentions" class="button plain">
           <Icon icon="at" /> <span>Mentions</span>

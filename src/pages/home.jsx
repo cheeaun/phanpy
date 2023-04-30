@@ -34,9 +34,6 @@ function Home() {
     })();
   }, []);
 
-  const notificationLinkRef = useRef();
-  const [menuState, setMenuState] = useState(undefined);
-
   return (
     <>
       {(snapStates.settings.shortcutsColumnsMode ||
@@ -49,34 +46,7 @@ function Home() {
           path="/"
           id="home"
           headerStart={false}
-          headerEnd={
-            <>
-              <Link
-                ref={notificationLinkRef}
-                to="/notifications"
-                class={`button plain notifications-button ${
-                  snapStates.notificationsShowNew ? 'has-badge' : ''
-                } ${menuState}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (window.matchMedia('(min-width: calc(40em))').matches) {
-                    e.preventDefault();
-                    setMenuState((state) => {
-                      console.log('state', state, !state ? 'open' : undefined);
-                      return !state ? 'open' : undefined;
-                    });
-                  }
-                }}
-              >
-                <Icon icon="notification" size="l" alt="Notifications" />
-              </Link>
-              <NotificationsMenu
-                state={menuState}
-                anchorRef={notificationLinkRef}
-                onClose={() => setMenuState(undefined)}
-              />
-            </>
-          }
+          headerEnd={<NotificationsLink />}
         />
       )}
       <button
@@ -97,6 +67,37 @@ function Home() {
       >
         <Icon icon="quill" size="xl" alt="Compose" />
       </button>
+    </>
+  );
+}
+
+function NotificationsLink() {
+  const snapStates = useSnapshot(states);
+  const notificationLinkRef = useRef();
+  const [menuState, setMenuState] = useState(undefined);
+  return (
+    <>
+      <Link
+        ref={notificationLinkRef}
+        to="/notifications"
+        class={`button plain notifications-button ${
+          snapStates.notificationsShowNew ? 'has-badge' : ''
+        } ${menuState}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (window.matchMedia('(min-width: calc(40em))').matches) {
+            e.preventDefault();
+            setMenuState((state) => (!state ? 'open' : undefined));
+          }
+        }}
+      >
+        <Icon icon="notification" size="l" alt="Notifications" />
+      </Link>
+      <NotificationsMenu
+        state={menuState}
+        anchorRef={notificationLinkRef}
+        onClose={() => setMenuState(undefined)}
+      />
     </>
   );
 }
@@ -147,8 +148,8 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
   }
 
   useEffect(() => {
-    loadNotifications();
-  }, []);
+    if (state === 'open') loadNotifications();
+  }, [state]);
 
   return (
     <ControlledMenu

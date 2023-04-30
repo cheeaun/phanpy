@@ -35,7 +35,7 @@ function Home() {
   }, []);
 
   const notificationLinkRef = useRef();
-  const [menuState, setMenuState] = useState('closed');
+  const [menuState, setMenuState] = useState(undefined);
 
   return (
     <>
@@ -61,9 +61,10 @@ function Home() {
                   e.stopPropagation();
                   if (window.matchMedia('(min-width: calc(40em))').matches) {
                     e.preventDefault();
-                    setMenuState((state) =>
-                      state === 'closed' ? 'open' : 'closed',
-                    );
+                    setMenuState((state) => {
+                      console.log('state', state, !state ? 'open' : undefined);
+                      return !state ? 'open' : undefined;
+                    });
                   }
                 }}
               >
@@ -72,7 +73,7 @@ function Home() {
               <NotificationsMenu
                 state={menuState}
                 anchorRef={notificationLinkRef}
-                onClose={() => setMenuState('closed')}
+                onClose={() => setMenuState(undefined)}
               />
             </>
           }
@@ -163,7 +164,6 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       position="anchor"
       align="center"
       boundingBoxPadding="8 8 8 8"
-      unmountOnClose
     >
       <header>
         <h2>Notifications</h2>

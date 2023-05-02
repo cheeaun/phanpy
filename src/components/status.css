@@ -1035,11 +1035,13 @@ a.card:is(:hover, :focus) {
 }
 .poll-vote-button {
   margin: 8px 8px 0 12px;
-  padding-inline: 24px;
+  /* padding-inline: 24px; */
+  min-width: 160px;
 }
 .poll-meta {
   margin: 8px 16px;
   font-size: 90%;
+  user-select: none;
 }
 .poll-option-title {
   text-shadow: 0 1px var(--bg-color);

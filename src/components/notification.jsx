@@ -79,6 +79,11 @@ function Notification({ notification, instance }) {
       ? contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll']
       : contentText[type];
 
+  if (type === 'mention' && !status) {
+    // Could be deleted
+    return null;
+  }
+
   return (
     <div class={`notification notification-${type}`} tabIndex="0">
       <div

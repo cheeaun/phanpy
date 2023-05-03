@@ -79,6 +79,7 @@ function Status({
   readOnly,
   contentTextWeight,
   enableTranslate,
+  forceTranslate: _forceTranslate,
   previewMode,
   allowFilters,
   onMediaClick,
@@ -233,7 +234,7 @@ function Status({
     );
   }
 
-  const [forceTranslate, setForceTranslate] = useState(false);
+  const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   const targetLanguage = getTranslateTargetLanguage(true);
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
@@ -403,6 +404,14 @@ function Status({
     }
   };
 
+  const differentLanguage =
+    language &&
+    language !== targetLanguage &&
+    !match([language], [targetLanguage]) &&
+    !contentTranslationHideLanguages.find(
+      (l) => language === l || match([language], [l]),
+    );
+
   const menuInstanceRef = useRef();
   const StatusMenuItems = (
     <>
@@ -530,7 +539,7 @@ function Status({
           </div>
         </>
       )}
-      {enableTranslate && (
+      {enableTranslate ? (
         <MenuItem
           disabled={forceTranslate}
           onClick={() => {
@@ -540,6 +549,15 @@ function Status({
           <Icon icon="translate" />
           <span>Translate</span>
         </MenuItem>
+      ) : (
+        (!language || differentLanguage) && (
+          <MenuLink
+            to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+          >
+            <Icon icon="translate" />
+            <span>Translate</span>
+          </MenuLink>
+        )
       )}
       {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
       <MenuItem href={url} target="_blank">
@@ -996,14 +1014,7 @@ function Status({
               }}
             />
           )}
-          {((enableTranslate &&
-            !!content.trim() &&
-            language &&
-            language !== targetLanguage &&
-            !match([language], [targetLanguage]) &&
-            !contentTranslationHideLanguages.find(
-              (l) => language === l || match([language], [l]),
-            )) ||
+          {((enableTranslate && !!content.trim() && differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate}

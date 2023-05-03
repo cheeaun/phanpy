@@ -149,6 +149,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const mediaParam = searchParams.get('media');
   const showMedia = parseInt(mediaParam, 10) > 0;
   const [viewMode, setViewMode] = useState(searchParams.get('view'));
+  const translate = !!parseInt(searchParams.get('translate'));
   const { masto, instance } = api({ instance: propInstance });
   const {
     masto: currentMasto,
@@ -801,6 +802,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                         withinContext
                         size="l"
                         enableTranslate
+                        forceTranslate={translate}
                       />
                     </InView>
                     {uiState !== 'loading' && !authenticated ? (

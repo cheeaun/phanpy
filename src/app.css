@@ -709,7 +709,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   color: var(--carousel-color);
   text-shadow: 0 1px var(--bg-color);
 }
-.status-carousel ul {
+.status-carousel > ul {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -721,7 +721,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   align-items: flex-start;
   counter-reset: index;
 }
-.status-carousel ul > li {
+.status-carousel > ul > li {
   scroll-snap-align: center;
   scroll-snap-stop: always;
   flex-shrink: 0;
@@ -736,11 +736,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
-.status-carousel ul > li:is(:empty, :has(> a:empty)) {
+.status-carousel > ul > li:is(:empty, :has(> a:empty)) {
   display: none;
 }
 @media (hover: hover) or (pointer: fine) or (min-width: 40em) {
-  .status-carousel ul {
+  .status-carousel > ul {
     scroll-snap-type: none;
   }
 }
@@ -762,7 +762,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel.boosts-carousel .status-reblog {
   background-image: none;
 }
-.status-carousel.boosts-carousel ul > li:before {
+.status-carousel.boosts-carousel > ul > li:before {
   content: counter(index);
   position: absolute;
   left: 0;

@@ -484,7 +484,7 @@ function BackgroundService({ isLoggedIn }) {
         console.error(e);
       });
   };
-  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
+  useInterval(checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
   usePageVisibility((visible) => {
     if (visible) {
       if (!lastCheckDate.current) {

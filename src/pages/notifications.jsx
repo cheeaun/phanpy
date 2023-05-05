@@ -1,7 +1,7 @@
 import './notifications.css';
 
 import { memo } from 'preact/compat';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
@@ -95,6 +95,33 @@ function Notifications() {
     }
   }, [nearReachEnd, showMore]);
 
+  const isHovering = useRef(false);
+  const loadUpdates = useCallback(() => {
+    console.log('✨ Load updates', {
+      autoRefresh: snapStates.settings.autoRefresh,
+      scrollTop: scrollableRef.current?.scrollTop === 0,
+      isHovering: isHovering.current,
+      inBackground: inBackground(),
+      notificationsShowNew: snapStates.notificationsShowNew,
+      uiState,
+    });
+    if (
+      snapStates.settings.autoRefresh &&
+      scrollableRef.current?.scrollTop === 0 &&
+      !isHovering.current &&
+      !inBackground() &&
+      snapStates.notificationsShowNew &&
+      uiState !== 'loading'
+    ) {
+      loadNotifications(true);
+    }
+  }, [
+    snapStates.notificationsShowNew,
+    snapStates.settings.autoRefresh,
+    uiState,
+  ]);
+  useEffect(loadUpdates, [snapStates.notificationsShowNew]);
+
   const todayDate = new Date();
   const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);
   let currentDay = new Date();
@@ -110,6 +137,14 @@ function Notifications() {
       class="deck-container"
       ref={scrollableRef}
       tabIndex="-1"
+      onPointerEnter={() => {
+        console.log('👆 Pointer enter');
+        isHovering.current = true;
+      }}
+      onPointerLeave={() => {
+        console.log('👇 Pointer leave');
+        isHovering.current = false;
+      }}
     >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
@@ -243,6 +278,10 @@ function Notifications() {
       </div>
     </div>
   );
+}
+
+function inBackground() {
+  return !!document.querySelector('.deck-backdrop, #modal-container > *');
 }
 
 export default memo(Notifications);

@@ -151,6 +151,18 @@ function Settings({ onClose }) {
               <label>
                 <input
                   type="checkbox"
+                  checked={snapStates.settings.autoRefresh}
+                  onChange={(e) => {
+                    states.settings.autoRefresh = e.target.checked;
+                  }}
+                />{' '}
+                Auto refresh timeline posts
+              </label>
+            </li>
+            <li>
+              <label>
+                <input
+                  type="checkbox"
                   checked={snapStates.settings.boostsCarousel}
                   onChange={(e) => {
                     states.settings.boostsCarousel = e.target.checked;

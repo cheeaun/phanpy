@@ -49,7 +49,7 @@ function Home() {
           headerEnd={<NotificationsLink />}
         />
       )}
-      <button
+      {/* <button
         // hidden={scrollDirection === 'end' && !nearReachStart}
         type="button"
         id="compose-button"
@@ -66,7 +66,7 @@ function Home() {
         }}
       >
         <Icon icon="quill" size="xl" alt="Compose" />
-      </button>
+      </button> */}
     </>
   );
 }

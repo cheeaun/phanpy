@@ -152,3 +152,41 @@
   color: var(--text-color);
   background-color: var(--bg-color);
 }
+
+.follow-requests {
+  padding-block-end: 16px;
+}
+.follow-requests ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 50vh;
+  max-height: 50dvh;
+  overflow: auto;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+.follow-requests ul li {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+  justify-content: space-between;
+  column-gap: 16px;
+  row-gap: 4px;
+  flex-wrap: wrap;
+}
+.follow-requests ul li:last-child {
+  border-bottom: none;
+}
+.follow-requests ul li .follow-request-buttons {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.follow-requests ul li .follow-request-buttons .loader-container {
+  order: -1;
+}

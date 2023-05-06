@@ -2,6 +2,7 @@ import states from '../utils/states';
 import store from '../utils/store';
 
 import Avatar from './avatar';
+import FollowRequestButtons from './follow-request-buttons';
 import Icon from './icon';
 import Link from './link';
 import NameText from './name-text';
@@ -202,53 +203,6 @@ function Notification({ notification, instance }) {
         )}
       </div>
     </div>
-  );
-}
-
-function FollowRequestButtons({ accountID, onChange }) {
-  const { masto } = api();
-  const [uiState, setUIState] = useState('default');
-  return (
-    <p>
-      <button
-        type="button"
-        disabled={uiState === 'loading'}
-        onClick={() => {
-          setUIState('loading');
-          (async () => {
-            try {
-              await masto.v1.followRequests.authorize(accountID);
-              onChange();
-            } catch (e) {
-              console.error(e);
-              setUIState('default');
-            }
-          })();
-        }}
-      >
-        Accept
-      </button>{' '}
-      <button
-        type="button"
-        disabled={uiState === 'loading'}
-        class="light danger"
-        onClick={() => {
-          setUIState('loading');
-          (async () => {
-            try {
-              await masto.v1.followRequests.reject(accountID);
-              onChange();
-            } catch (e) {
-              console.error(e);
-              setUIState('default');
-            }
-          })();
-        }}
-      >
-        Reject
-      </button>
-      <Loader hidden={uiState !== 'loading'} />
-    </p>
   );
 }
 

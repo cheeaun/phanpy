@@ -135,11 +135,20 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     return allNotifications;
   }
 
+  const [hasFollowRequests, setHasFollowRequests] = useState(false);
+  function fetchFollowRequests() {
+    return masto.v1.followRequests.list({
+      limit: 1,
+    });
+  }
+
   function loadNotifications() {
     setUIState('loading');
     (async () => {
       try {
         await fetchNotifications();
+        const followRequests = await fetchFollowRequests();
+        setHasFollowRequests(!!followRequests?.length);
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -204,7 +213,15 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
           <Icon icon="at" /> <span>Mentions</span>
         </Link>
         <Link to="/notifications" class="button plain2">
-          <b>See all</b> <Icon icon="arrow-right" />
+          {hasFollowRequests ? (
+            <>
+              <span class="tag collapsed">New</span>{' '}
+              <span>Follow Requests</span>
+            </>
+          ) : (
+            <b>See all</b>
+          )}{' '}
+          <Icon icon="arrow-right" />
         </Link>
       </footer>
     </ControlledMenu>

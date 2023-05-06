@@ -4,6 +4,8 @@ import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import AccountBlock from '../components/account-block';
+import FollowRequestButtons from '../components/follow-request-buttons';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -31,6 +33,7 @@ function Notifications() {
       scrollableRef,
     });
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+  const [followRequests, setFollowRequests] = useState([]);
 
   console.debug('RENDER Notifications');
 
@@ -67,12 +70,39 @@ function Notifications() {
     return allNotifications;
   }
 
+  async function fetchFollowRequests() {
+    const followRequests = await masto.v1.followRequests.list({
+      limit: 80,
+    });
+    // Note: no pagination here yet because this better be on a separate page. Should be rare use-case???
+    return followRequests;
+  }
+
+  const loadFollowRequests = () => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const requests = await fetchFollowRequests();
+        setFollowRequests(requests);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+      }
+    })();
+  };
+
   const loadNotifications = (firstLoad) => {
     setUIState('loading');
     (async () => {
       try {
         const { done } = await fetchNotifications(firstLoad);
         setShowMore(!done);
+
+        if (firstLoad) {
+          const requests = await fetchFollowRequests();
+          setFollowRequests(requests);
+        }
+
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -184,6 +214,24 @@ function Notifications() {
             </button>
           )}
         </header>
+        {followRequests.length > 0 && (
+          <div class="follow-requests">
+            <h2 class="timeline-header">Follow requests</h2>
+            <ul>
+              {followRequests.map((account) => (
+                <li>
+                  <AccountBlock account={account} />
+                  <FollowRequestButtons
+                    accountID={account.id}
+                    onChange={() => {
+                      loadFollowRequests();
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div id="mentions-option">
           <label>
             <input

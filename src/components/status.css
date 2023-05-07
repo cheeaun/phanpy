@@ -514,8 +514,8 @@
   padding: 0 0 0 8px;
   border-left: 4px solid var(--link-faded-color);
 }
-.status .content > ul,
-.status .content > div > ul {
+.status .content > :is(ul, ol),
+.status .content > div > :is(ul, ol) {
   margin-block: min(0.75em, 12px);
   margin-inline: 0;
   padding-inline-start: 1em;

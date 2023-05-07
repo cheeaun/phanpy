@@ -986,6 +986,7 @@ function SubComments({
   instance,
   hasParentThread,
   level,
+  previousOpen,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   // Set isBrief = true:
@@ -1025,7 +1026,9 @@ function SubComments({
     .slice(0, 3);
 
   const open =
-    (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
+    !previousOpen &&
+    (!hasParentThread || replies.length === 1) &&
+    (isBrief || !hasManyStatuses);
   const openBefore = cachedRepliesToggle[replies[0].id];
 
   const handleMediaClick = useCallback((e, i, media, status) => {
@@ -1113,6 +1116,7 @@ function SubComments({
                 hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
                 level={level + 1}
+                previousOpen={open}
               />
             )}
           </li>

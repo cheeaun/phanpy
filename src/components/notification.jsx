@@ -49,7 +49,7 @@ const contentText = {
   'favourite+reblog': 'boosted & favourited your post.',
 };
 
-function Notification({ notification, instance }) {
+function Notification({ notification, instance, reload }) {
   const { id, status, account, _accounts } = notification;
   let { type } = notification;
 
@@ -137,7 +137,7 @@ function Notification({ notification, instance }) {
               <FollowRequestButtons
                 accountID={account.id}
                 onChange={() => {
-                  loadNotifications(true);
+                  reload();
                 }}
               />
             )}

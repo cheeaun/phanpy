@@ -285,6 +285,7 @@ function Notifications() {
                     accountID={account.id}
                     onChange={() => {
                       loadFollowRequests();
+                      loadNotifications(true);
                     }}
                   />
                 </li>
@@ -337,6 +338,10 @@ function Notifications() {
                     instance={instance}
                     notification={notification}
                     key={notification.id}
+                    reload={() => {
+                      loadNotifications(true);
+                      loadFollowRequests();
+                    }}
                   />
                 </>
               );

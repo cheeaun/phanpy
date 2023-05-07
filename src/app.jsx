@@ -266,23 +266,25 @@ function App() {
         </Routes>
       )}
       <div>
-        <button
-          type="button"
-          id="compose-button"
-          onClick={(e) => {
-            if (e.shiftKey) {
-              const newWin = openCompose();
-              if (!newWin) {
-                alert('Looks like your browser is blocking popups.');
+        {isLoggedIn && (
+          <button
+            type="button"
+            id="compose-button"
+            onClick={(e) => {
+              if (e.shiftKey) {
+                const newWin = openCompose();
+                if (!newWin) {
+                  alert('Looks like your browser is blocking popups.');
+                  states.showCompose = true;
+                }
+              } else {
                 states.showCompose = true;
               }
-            } else {
-              states.showCompose = true;
-            }
-          }}
-        >
-          <Icon icon="quill" size="xl" alt="Compose" />
-        </button>
+            }}
+          >
+            <Icon icon="quill" size="xl" alt="Compose" />
+          </button>
+        )}
         {isLoggedIn &&
           !snapStates.settings.shortcutsColumnsMode &&
           snapStates.settings.shortcutsViewMode !== 'multi-column' && (

@@ -1040,8 +1040,22 @@ function SubComments({
     });
   }, []);
 
+  const detailsRef = useRef();
+  useEffect(() => {
+    function handleScroll(e) {
+      e.target.dataset.scrollLeft = e.target.scrollLeft;
+    }
+    detailsRef.current?.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
+    return () => {
+      detailsRef.current?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <details
+      ref={detailsRef}
       class="replies"
       open={openBefore || open}
       onToggle={(e) => {

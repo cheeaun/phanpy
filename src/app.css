@@ -256,6 +256,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li.descendant:not(.thread) > .status-link {
   padding-left: 40px;
 }
+.timeline.contextual .replies[data-scroll-left]:not([data-scroll-left='0']) {
+  background-color: var(--bg-color);
+  box-shadow: inset 0 -3px var(--comment-line-color),
+    inset 0 3px var(--comment-line-color);
+}
 .timeline.contextual .replies[data-comments-level='4'] {
   overflow: auto;
 }
@@ -272,7 +277,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   .replies[data-comments-level='4']
   .replies[data-comments-level-overflow='true']
   .status {
-  min-width: min(15em, 75vw);
+  min-width: min(20em, 80vw);
 }
 .timeline.contextual
   > li.descendant.thread

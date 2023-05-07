@@ -12,9 +12,13 @@ import Loader from '../components/loader';
 import NavMenu from '../components/nav-menu';
 import Notification from '../components/notification';
 import { api } from '../utils/api';
+import enhanceContent from '../utils/enhance-content';
 import groupNotifications from '../utils/group-notifications';
+import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
+import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
+import { getCurrentInstance } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
@@ -34,6 +38,7 @@ function Notifications() {
     });
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;
   const [followRequests, setFollowRequests] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
   console.debug('RENDER Notifications');
 
@@ -70,12 +75,11 @@ function Notifications() {
     return allNotifications;
   }
 
-  async function fetchFollowRequests() {
-    const followRequests = await masto.v1.followRequests.list({
+  function fetchFollowRequests() {
+    // Note: no pagination here yet because this better be on a separate page. Should be rare use-case???
+    return masto.v1.followRequests.list({
       limit: 80,
     });
-    // Note: no pagination here yet because this better be on a separate page. Should be rare use-case???
-    return followRequests;
   }
 
   const loadFollowRequests = () => {
@@ -91,16 +95,30 @@ function Notifications() {
     })();
   };
 
+  function fetchAnnouncements() {
+    return masto.v1.announcements.list();
+  }
+
   const loadNotifications = (firstLoad) => {
     setUIState('loading');
     (async () => {
       try {
+        const fetchFollowRequestsPromise = fetchFollowRequests();
+        const fetchAnnouncementsPromise = fetchAnnouncements();
         const { done } = await fetchNotifications(firstLoad);
         setShowMore(!done);
 
         if (firstLoad) {
-          const requests = await fetchFollowRequests();
+          const requests = await fetchFollowRequestsPromise;
           setFollowRequests(requests);
+          const announcements = await fetchAnnouncementsPromise;
+          announcements.sort((a, b) => {
+            // Sort by updatedAt first, then createdAt
+            const aDate = new Date(a.updatedAt || a.createdAt);
+            const bDate = new Date(b.updatedAt || b.createdAt);
+            return bDate - aDate;
+          });
+          setAnnouncements(announcements);
         }
 
         setUIState('default');
@@ -161,6 +179,8 @@ function Notifications() {
       todayDate.toDateString(),
   );
 
+  const announcementsListRef = useRef();
+
   return (
     <div
       id="notifications-page"
@@ -214,6 +234,46 @@ function Notifications() {
             </button>
           )}
         </header>
+        {announcements.length > 0 && (
+          <details class="announcements">
+            <summary>
+              <span>
+                <Icon icon="announce" class="announcement-icon" size="l" />{' '}
+                <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
+                <small class="insignificant">{instance}</small>
+              </span>
+              {announcements.length > 1 && (
+                <span class="announcements-nav-buttons">
+                  {announcements.map((announcement, index) => (
+                    <button
+                      type="button"
+                      class="plain2 small"
+                      onClick={() => {
+                        announcementsListRef.current?.children[
+                          index
+                        ].scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </span>
+              )}
+            </summary>
+            <ul
+              class={`announcements-list-${
+                announcements.length > 1 ? 'multiple' : 'single'
+              }`}
+              ref={announcementsListRef}
+            >
+              {announcements.map((announcement) => (
+                <li>
+                  <AnnouncementBlock announcement={announcement} />
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
         {followRequests.length > 0 && (
           <div class="follow-requests">
             <h2 class="timeline-header">Follow requests</h2>
@@ -330,6 +390,80 @@ function Notifications() {
 
 function inBackground() {
   return !!document.querySelector('.deck-backdrop, #modal-container > *');
+}
+
+function AnnouncementBlock({ announcement }) {
+  const { instance } = api();
+  const { contact } = getCurrentInstance();
+  const contactAccount = contact?.account;
+  const {
+    id,
+    content,
+    startsAt,
+    endsAt,
+    published,
+    allDay,
+    publishedAt,
+    updatedAt,
+    read,
+    mentions,
+    statuses,
+    tags,
+    emojis,
+    reactions,
+  } = announcement;
+
+  const publishedAtDate = new Date(publishedAt);
+  const publishedDateText = niceDateTime(publishedAtDate);
+  const updatedAtDate = new Date(updatedAt);
+  const updatedAtText = niceDateTime(updatedAtDate);
+
+  return (
+    <div class="announcement-block">
+      <AccountBlock account={contactAccount} />
+      <div
+        class="announcement-content"
+        onClick={handleContentLinks({ mentions, instance })}
+        dangerouslySetInnerHTML={{
+          __html: enhanceContent(content, {
+            emojis,
+          }),
+        }}
+      />
+      <p class="insignificant">
+        <time datetime={publishedAtDate.toISOString()}>
+          {niceDateTime(publishedAtDate)}
+        </time>
+        {updatedAt && updatedAtText !== publishedDateText && (
+          <>
+            {' '}
+            &bull;{' '}
+            <span class="ib">
+              Updated{' '}
+              <time datetime={updatedAtDate.toISOString()}>
+                {niceDateTime(updatedAtDate)}
+              </time>
+            </span>
+          </>
+        )}
+      </p>
+      <div class="announcement-reactions" hidden>
+        {reactions.map((reaction) => {
+          const { name, count, me, staticUrl, url } = reaction;
+          return (
+            <button type="button" class={`plain4 small ${me ? 'reacted' : ''}`}>
+              {url || staticUrl ? (
+                <img src={url || staticUrl} alt={name} width="16" height="16" />
+              ) : (
+                <span>{name}</span>
+              )}{' '}
+              <span class="count">{shortenNumber(count)}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default memo(Notifications);

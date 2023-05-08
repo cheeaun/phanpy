@@ -42,6 +42,7 @@ import useTitle from '../utils/useTitle';
 import getInstanceStatusURL from './../utils/get-instance-status-url';
 
 const LIMIT = 40;
+const MAX_WEIGHT = 5;
 
 let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
@@ -595,11 +596,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     });
   }, []);
 
-  const totalWeight = useMemo(() => {
-    return statuses.reduce((acc, status) => {
-      return acc + status.weight;
-    }, 0);
-  }, [id, statuses?.length]);
+  const totalWeight = statuses?.length;
 
   return (
     <div
@@ -1014,7 +1011,7 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
     .slice(0, 3);
 
   let open = false;
-  if (accWeight < 5) {
+  if (accWeight <= MAX_WEIGHT) {
     open = true;
   } else if (!hasParentThread && totalComments === 1) {
     const shortReply = calcStatusWeight(replies[0]) < 2;

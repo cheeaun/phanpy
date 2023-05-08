@@ -1025,10 +1025,17 @@ function SubComments({
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
     .slice(0, 3);
 
-  const open =
-    !previousOpen &&
-    (!hasParentThread || replies.length === 1) &&
-    (isBrief || !hasManyStatuses);
+  let open = false;
+  // const open =
+  //   !previousOpen &&
+  //   (!hasParentThread || totalComments === 1) &&
+  //   (isBrief || !hasManyStatuses);
+  if (hasParentThread) {
+    open = totalComments === 1;
+  } else {
+    open = isBrief;
+  }
+  if (!previousOpen && !open) open = true;
   const openBefore = cachedRepliesToggle[replies[0].id];
 
   const handleMediaClick = useCallback((e, i, media, status) => {

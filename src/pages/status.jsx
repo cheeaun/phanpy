@@ -42,7 +42,6 @@ import useTitle from '../utils/useTitle';
 import getInstanceStatusURL from './../utils/get-instance-status-url';
 
 const LIMIT = 40;
-const THREAD_LIMIT = 20;
 
 let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
@@ -293,6 +292,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             account: _r.account,
             repliesCount: _r.repliesCount,
             content: _r.content,
+            weight: calcStatusWeight(_r),
             replies: expandReplies(_r.__replies),
           }));
         }
@@ -304,13 +304,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             isThread: ancestorsIsThread,
             accountID: s.account.id,
             repliesCount: s.repliesCount,
+            weight: calcStatusWeight(s),
           })),
-          { id, accountID: heroStatus.account.id },
+          {
+            id,
+            accountID: heroStatus.account.id,
+            weight: calcStatusWeight(heroStatus),
+          },
           ...nestedDescendants.map((s) => ({
             id: s.id,
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
+            weight: calcStatusWeight(s),
             replies: expandReplies(s.__replies),
           })),
         ];
@@ -412,6 +418,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       states.reloadStatusPage = 0;
       cachedStatusesMap = {};
       cachedRepliesToggle = {};
+      statusWeightCache.clear();
     };
   }, []);
 
@@ -458,7 +465,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > THREAD_LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
   const ancestors = statuses.filter((s) => s.ancestor);
 
@@ -588,6 +594,12 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       mediaStatusID: status.id,
     });
   }, []);
+
+  const totalWeight = useMemo(() => {
+    return statuses.reduce((acc, status) => {
+      return acc + status.weight;
+    }, 0);
+  }, [id, statuses?.length]);
 
   return (
     <div
@@ -778,6 +790,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               thread,
               replies,
               repliesCount,
+              weight,
             } = status;
             const isHero = statusID === id;
             return (
@@ -898,10 +911,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 {descendant && replies?.length > 0 && (
                   <SubComments
                     instance={instance}
-                    hasManyStatuses={hasManyStatuses}
                     replies={replies}
                     hasParentThread={thread}
                     level={1}
+                    accWeight={totalWeight}
                   />
                 )}
                 {uiState === 'loading' &&
@@ -980,33 +993,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   );
 }
 
-function SubComments({
-  hasManyStatuses,
-  replies,
-  instance,
-  hasParentThread,
-  level,
-  previousOpen,
-}) {
+function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  // Set isBrief = true:
-  // - if less than or 2 replies
-  // - if replies have no sub-replies
-  // - if total number of characters of content from replies is less than 500
-  let isBrief = false;
-  if (replies.length <= 2) {
-    const containsSubReplies = replies.some(
-      (r) => r.repliesCount > 0 || r.replies?.length > 0,
-    );
-    if (!containsSubReplies) {
-      let totalLength = replies.reduce((acc, reply) => {
-        const { content } = reply;
-        const length = htmlContentLength(content);
-        return acc + length;
-      }, 0);
-      isBrief = totalLength < 500;
-    }
-  }
 
   // Total comments count, including sub-replies
   const diveDeep = (replies) => {
@@ -1026,16 +1014,12 @@ function SubComments({
     .slice(0, 3);
 
   let open = false;
-  // const open =
-  //   !previousOpen &&
-  //   (!hasParentThread || totalComments === 1) &&
-  //   (isBrief || !hasManyStatuses);
-  if (hasParentThread) {
-    open = totalComments === 1;
-  } else {
-    open = isBrief;
+  if (accWeight < 5) {
+    open = true;
+  } else if (!hasParentThread && totalComments === 1) {
+    const shortReply = calcStatusWeight(replies[0]) < 2;
+    if (shortReply) open = true;
   }
-  if (!previousOpen && !open) open = true;
   const openBefore = cachedRepliesToggle[replies[0].id];
 
   const handleMediaClick = useCallback((e, i, media, status) => {
@@ -1059,6 +1043,12 @@ function SubComments({
       detailsRef.current?.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const totalWeight = useMemo(() => {
+    return replies?.reduce((acc, reply) => {
+      return acc + reply?.weight;
+    }, 0);
+  }, [replies?.length]);
 
   return (
     <details
@@ -1134,10 +1124,9 @@ function SubComments({
             {r.replies?.length && (
               <SubComments
                 instance={instance}
-                hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
                 level={level + 1}
-                previousOpen={open}
+                accWeight={!open ? totalWeight : accWeight + totalWeight}
               />
             )}
           </li>
@@ -1145,6 +1134,28 @@ function SubComments({
       </ul>
     </details>
   );
+}
+
+const MEDIA_VIRTUAL_LENGTH = 140;
+const POLL_VIRTUAL_LENGTH = 35;
+const CARD_VIRTUAL_LENGTH = 70;
+const WEIGHT_SEGMENT = 140;
+const statusWeightCache = new Map();
+function calcStatusWeight(status) {
+  const cachedWeight = statusWeightCache.get(status.id);
+  if (cachedWeight) return cachedWeight;
+  const { spoilerText, content, mediaAttachments, poll, card } = status;
+  const length = htmlContentLength(spoilerText + content);
+  const mediaLength = mediaAttachments?.length ? MEDIA_VIRTUAL_LENGTH : 0;
+  const pollLength = (poll?.options?.length || 0) * POLL_VIRTUAL_LENGTH;
+  const cardLength =
+    card && (mediaAttachments?.length || poll?.options?.length)
+      ? 0
+      : CARD_VIRTUAL_LENGTH;
+  const totalLength = length + mediaLength + pollLength + cardLength;
+  const weight = totalLength / WEIGHT_SEGMENT;
+  statusWeightCache.set(status.id, weight);
+  return weight;
 }
 
 export default memo(StatusPage);

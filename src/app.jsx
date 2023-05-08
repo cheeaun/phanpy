@@ -265,32 +265,30 @@ function App() {
           <Route path="/:instance?/s/:id" element={<StatusRoute />} />
         </Routes>
       )}
-      <div>
-        {isLoggedIn && (
-          <button
-            type="button"
-            id="compose-button"
-            onClick={(e) => {
-              if (e.shiftKey) {
-                const newWin = openCompose();
-                if (!newWin) {
-                  alert('Looks like your browser is blocking popups.');
-                  states.showCompose = true;
-                }
-              } else {
+      {isLoggedIn && (
+        <button
+          type="button"
+          id="compose-button"
+          onClick={(e) => {
+            if (e.shiftKey) {
+              const newWin = openCompose();
+              if (!newWin) {
+                alert('Looks like your browser is blocking popups.');
                 states.showCompose = true;
               }
-            }}
-          >
-            <Icon icon="quill" size="xl" alt="Compose" />
-          </button>
+            } else {
+              states.showCompose = true;
+            }
+          }}
+        >
+          <Icon icon="quill" size="xl" alt="Compose" />
+        </button>
+      )}
+      {isLoggedIn &&
+        !snapStates.settings.shortcutsColumnsMode &&
+        snapStates.settings.shortcutsViewMode !== 'multi-column' && (
+          <Shortcuts />
         )}
-        {isLoggedIn &&
-          !snapStates.settings.shortcutsColumnsMode &&
-          snapStates.settings.shortcutsViewMode !== 'multi-column' && (
-            <Shortcuts />
-          )}
-      </div>
       {!!snapStates.showCompose && (
         <Modal>
           <Compose

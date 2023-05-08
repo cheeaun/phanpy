@@ -437,7 +437,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies {
   margin-top: -12px;
 }
-.timeline.contextual > li .replies :is(ul, li) {
+.timeline.contextual > li .replies :is(ul, li):not(.content *) {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -483,10 +483,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies .replies-summary[hidden] {
   display: none;
 }
-.timeline.contextual > li .replies li {
+.timeline.contextual > li .replies li:not(.content li) {
   position: relative;
 }
-.timeline.contextual > li .replies li {
+.timeline.contextual > li .replies li:not(.content li) {
   --line-start: calc(
     var(--thread-start) + var(--line-margin-end) * var(--comments-level)
   );
@@ -508,7 +508,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies .replies .replies li {
   --line-start: calc(var(--thread-start) + (var(--line-margin-end) * 3));
 } */
-.timeline.contextual > li.thread .replies li {
+.timeline.contextual > li.thread .replies li:not(.content li) {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       (var(--line-margin-end) * (var(--comments-level) - 1))

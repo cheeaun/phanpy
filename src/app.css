@@ -526,10 +526,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       (var(--line-margin-end) * 2)
   );
 } */
-.timeline.contextual > li .replies li:last-child {
+.timeline.contextual > li .replies li:not(.content li):last-child {
   background-size: 100% 20px;
 }
-.timeline.contextual > li .replies li:before {
+.timeline.contextual > li .replies li:not(.content li):before {
   content: '';
   position: absolute;
   top: 10px;
@@ -552,7 +552,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--thread-start) + var(--line-margin-end) + (var(--line-margin-end) * 2)
   );
 } */
-.timeline.contextual > li.thread .replies li:before {
+.timeline.contextual > li.thread .replies li:not(.content li):before {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       (var(--line-margin-end) * (var(--comments-level) - 1))

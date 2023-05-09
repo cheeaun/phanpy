@@ -48,7 +48,7 @@ export function initClient({ instance, accessToken }) {
 
 // Get the instance information
 // The config is needed for composing
-export async function initInstance(client) {
+export async function initInstance(client, instance) {
   const masto = client;
   // Request v2, fallback to v1 if fail
   let info;
@@ -70,16 +70,19 @@ export async function initInstance(client) {
     domain,
     configuration: { urls: { streaming } = {} } = {},
   } = info;
+  const instances = store.local.getJSON('instances') || {};
   if (uri || domain) {
-    const instances = store.local.getJSON('instances') || {};
     instances[
       (domain || uri)
         .replace(/^https?:\/\//, '')
         .replace(/\/+$/, '')
         .toLowerCase()
     ] = info;
-    store.local.setJSON('instances', instances);
   }
+  if (instance) {
+    instances[instance.toLowerCase()] = info;
+  }
+  store.local.setJSON('instances', instances);
   // This is a weird place to put this but here's updating the masto instance with the streaming API URL set in the configuration
   // Reason: Streaming WebSocket URL may change, unlike the standard API REST URLs
   if (streamingApi || streaming) {

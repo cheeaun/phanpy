@@ -112,7 +112,7 @@ function App() {
 
         const masto = initClient({ instance: instanceURL, accessToken });
         await Promise.allSettled([
-          initInstance(masto),
+          initInstance(masto, instanceURL),
           initAccount(masto, instanceURL, accessToken),
         ]);
         initPreferences(masto);
@@ -124,13 +124,13 @@ function App() {
       const account = getCurrentAccount();
       if (account) {
         store.session.set('currentAccount', account.info.id);
-        const { masto } = api({ account });
+        const { masto, instance } = api({ account });
         console.log('masto', masto);
         initPreferences(masto);
         setUIState('loading');
         (async () => {
           try {
-            await initInstance(masto);
+            await initInstance(masto, instance);
           } catch (e) {
           } finally {
             setIsLoggedIn(true);

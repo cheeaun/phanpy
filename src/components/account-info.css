@@ -199,17 +199,6 @@
   margin: 0;
 }
 
-.account-container .common-followers {
-  display: grid;
-  grid-template-rows: 1fr;
-  transition: grid-template-rows 0.5s ease-in-out;
-}
-.account-container .common-followers[hidden] {
-  grid-template-rows: 0fr;
-}
-.account-container .common-followers > .common-followers-inner {
-  overflow: hidden;
-}
 .account-container .common-followers p {
   font-size: 90%;
   color: var(--text-insignificant-color);

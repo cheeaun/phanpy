@@ -235,44 +235,48 @@ function Notifications() {
           )}
         </header>
         {announcements.length > 0 && (
-          <details class="announcements">
-            <summary>
-              <span>
-                <Icon icon="announce" class="announcement-icon" size="l" />{' '}
-                <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
-                <small class="insignificant">{instance}</small>
-              </span>
-              {announcements.length > 1 && (
-                <span class="announcements-nav-buttons">
-                  {announcements.map((announcement, index) => (
-                    <button
-                      type="button"
-                      class="plain2 small"
-                      onClick={() => {
-                        announcementsListRef.current?.children[
-                          index
-                        ].scrollIntoView({ behavior: 'smooth' });
-                      }}
-                    >
-                      {index + 1}
-                    </button>
+          <div class="shazam-container">
+            <div class="shazam-container-inner">
+              <details class="announcements">
+                <summary>
+                  <span>
+                    <Icon icon="announce" class="announcement-icon" size="l" />{' '}
+                    <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
+                    <small class="insignificant">{instance}</small>
+                  </span>
+                  {announcements.length > 1 && (
+                    <span class="announcements-nav-buttons">
+                      {announcements.map((announcement, index) => (
+                        <button
+                          type="button"
+                          class="plain2 small"
+                          onClick={() => {
+                            announcementsListRef.current?.children[
+                              index
+                            ].scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      ))}
+                    </span>
+                  )}
+                </summary>
+                <ul
+                  class={`announcements-list-${
+                    announcements.length > 1 ? 'multiple' : 'single'
+                  }`}
+                  ref={announcementsListRef}
+                >
+                  {announcements.map((announcement) => (
+                    <li>
+                      <AnnouncementBlock announcement={announcement} />
+                    </li>
                   ))}
-                </span>
-              )}
-            </summary>
-            <ul
-              class={`announcements-list-${
-                announcements.length > 1 ? 'multiple' : 'single'
-              }`}
-              ref={announcementsListRef}
-            >
-              {announcements.map((announcement) => (
-                <li>
-                  <AnnouncementBlock announcement={announcement} />
-                </li>
-              ))}
-            </ul>
-          </details>
+                </ul>
+              </details>
+            </div>
+          </div>
         )}
         {followRequests.length > 0 && (
           <div class="follow-requests">

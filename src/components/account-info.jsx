@@ -487,8 +487,11 @@ function RelatedActions({ info, instance, authenticated }) {
 
   return (
     <>
-      <div class="common-followers" hidden={!familiarFollowers?.length}>
-        <div class="common-followers-inner">
+      <div
+        class="common-followers shazam-container no-animation"
+        hidden={!familiarFollowers?.length}
+      >
+        <div class="shazam-container-inner">
           <p>
             Also followed by{' '}
             <span class="ib">

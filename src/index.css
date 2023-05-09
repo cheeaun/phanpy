@@ -391,3 +391,26 @@ code {
     object-position: 50% 50%;
   }
 }
+
+@keyframes shazam {
+  0% {
+    grid-template-rows: 0fr;
+  }
+  100% {
+    grid-template-rows: 1fr;
+  }
+}
+.shazam-container {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.5s ease-in-out;
+}
+.shazam-container:not(.no-animation) {
+  animation: shazam 0.5s ease-in-out both !important;
+}
+.shazam-container[hidden] {
+  grid-template-rows: 0fr;
+}
+.shazam-container-inner {
+  overflow: hidden;
+}

@@ -596,8 +596,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     });
   }, []);
 
-  const totalWeight = statuses?.length;
-
   return (
     <div
       tabIndex="-1"
@@ -911,7 +909,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     replies={replies}
                     hasParentThread={thread}
                     level={1}
-                    accWeight={totalWeight}
+                    accWeight={weight}
                   />
                 )}
                 {uiState === 'loading' &&
@@ -1010,8 +1008,14 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
     .slice(0, 3);
 
+  const totalWeight = useMemo(() => {
+    return replies?.reduce((acc, reply) => {
+      return acc + reply?.weight;
+    }, accWeight);
+  }, [accWeight, replies?.length]);
+
   let open = false;
-  if (accWeight <= MAX_WEIGHT) {
+  if (totalWeight <= MAX_WEIGHT) {
     open = true;
   } else if (!hasParentThread && totalComments === 1) {
     const shortReply = calcStatusWeight(replies[0]) < 2;
@@ -1040,12 +1044,6 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
       detailsRef.current?.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  const totalWeight = useMemo(() => {
-    return replies?.reduce((acc, reply) => {
-      return acc + reply?.weight;
-    }, 0);
-  }, [replies?.length]);
 
   return (
     <details
@@ -1123,7 +1121,7 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
                 instance={instance}
                 replies={r.replies}
                 level={level + 1}
-                accWeight={!open ? totalWeight : accWeight + totalWeight}
+                accWeight={!open ? r.weight : totalWeight}
               />
             )}
           </li>

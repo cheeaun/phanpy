@@ -122,6 +122,8 @@ export function groupContext(items) {
       if (!a.inReplyToId && !b.inReplyToId) {
         return new Date(a.createdAt) - new Date(b.createdAt);
       }
+      if (a.inReplyToId === b.id) return 1;
+      if (b.inReplyToId === a.id) return -1;
       if (!a.inReplyToId) return -1;
       if (!b.inReplyToId) return 1;
       return new Date(a.createdAt) - new Date(b.createdAt);

@@ -42,6 +42,7 @@ import useTitle from '../utils/useTitle';
 import getInstanceStatusURL from './../utils/get-instance-status-url';
 
 const LIMIT = 40;
+const SUBCOMMENTS_OPEN_ALL_LIMIT = 10;
 const MAX_WEIGHT = 5;
 
 let cachedRepliesToggle = {};
@@ -162,6 +163,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [uiState, setUIState] = useState('default');
   const heroStatusRef = useRef();
   const sKey = statusKey(id, instance);
+  const totalDescendants = useRef(0);
 
   const scrollableRef = useRef();
   useEffect(() => {
@@ -243,6 +245,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       try {
         const context = await contextFetch;
         const { ancestors, descendants } = context;
+
+        totalDescendants.current = descendants?.length || 0;
 
         ancestors.forEach((status) => {
           saveStatus(status, instance, {
@@ -910,6 +914,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     hasParentThread={thread}
                     level={1}
                     accWeight={weight}
+                    openAll={
+                      totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT
+                    }
                   />
                 )}
                 {uiState === 'loading' &&
@@ -988,7 +995,14 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   );
 }
 
-function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
+function SubComments({
+  replies,
+  instance,
+  hasParentThread,
+  level,
+  accWeight,
+  openAll,
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Total comments count, including sub-replies
@@ -1015,7 +1029,9 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
   }, [accWeight, replies?.length]);
 
   let open = false;
-  if (totalWeight <= MAX_WEIGHT) {
+  if (openAll) {
+    open = true;
+  } else if (totalWeight <= MAX_WEIGHT) {
     open = true;
   } else if (!hasParentThread && totalComments === 1) {
     const shortReply = calcStatusWeight(replies[0]) < 2;
@@ -1122,6 +1138,7 @@ function SubComments({ replies, instance, hasParentThread, level, accWeight }) {
                 replies={r.replies}
                 level={level + 1}
                 accWeight={!open ? r.weight : totalWeight}
+                openAll={openAll}
               />
             )}
           </li>

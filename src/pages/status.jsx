@@ -42,7 +42,8 @@ import useTitle from '../utils/useTitle';
 import getInstanceStatusURL from './../utils/get-instance-status-url';
 
 const LIMIT = 40;
-const THREAD_LIMIT = 20;
+const SUBCOMMENTS_OPEN_ALL_LIMIT = 10;
+const MAX_WEIGHT = 5;
 
 let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
@@ -95,7 +96,7 @@ function StatusPage(params) {
           setHeroStatus(status);
         } catch (err) {
           console.error(err);
-          alert('Unable to load status.');
+          alert('Unable to load post.');
           location.hash = closeLink;
         }
       })();
@@ -149,6 +150,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const mediaParam = searchParams.get('media');
   const showMedia = parseInt(mediaParam, 10) > 0;
   const [viewMode, setViewMode] = useState(searchParams.get('view'));
+  const translate = !!parseInt(searchParams.get('translate'));
   const { masto, instance } = api({ instance: propInstance });
   const {
     masto: currentMasto,
@@ -161,6 +163,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [uiState, setUIState] = useState('default');
   const heroStatusRef = useRef();
   const sKey = statusKey(id, instance);
+  const totalDescendants = useRef(0);
 
   const scrollableRef = useRef();
   useEffect(() => {
@@ -243,6 +246,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const context = await contextFetch;
         const { ancestors, descendants } = context;
 
+        totalDescendants.current = descendants?.length || 0;
+
         ancestors.forEach((status) => {
           saveStatus(status, instance, {
             skipThreading: true,
@@ -292,6 +297,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             account: _r.account,
             repliesCount: _r.repliesCount,
             content: _r.content,
+            weight: calcStatusWeight(_r),
             replies: expandReplies(_r.__replies),
           }));
         }
@@ -303,13 +309,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             isThread: ancestorsIsThread,
             accountID: s.account.id,
             repliesCount: s.repliesCount,
+            weight: calcStatusWeight(s),
           })),
-          { id, accountID: heroStatus.account.id },
+          {
+            id,
+            accountID: heroStatus.account.id,
+            weight: calcStatusWeight(heroStatus),
+          },
           ...nestedDescendants.map((s) => ({
             id: s.id,
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
+            weight: calcStatusWeight(s),
             replies: expandReplies(s.__replies),
           })),
         ];
@@ -411,6 +423,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       states.reloadStatusPage = 0;
       cachedStatusesMap = {};
       cachedRepliesToggle = {};
+      statusWeightCache.clear();
     };
   }, []);
 
@@ -457,7 +470,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     return statuses.length - limit;
   }, [statuses.length, limit]);
 
-  const hasManyStatuses = statuses.length > THREAD_LIMIT;
   const hasDescendants = statuses.some((s) => s.descendant);
   const ancestors = statuses.filter((s) => s.ancestor);
 
@@ -650,7 +662,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               </>
             ) : (
               <>
-                Status{' '}
+                Post{' '}
                 <button
                   type="button"
                   class="ancestors-indicator light small"
@@ -777,6 +789,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               thread,
               replies,
               repliesCount,
+              weight,
             } = status;
             const isHero = statusID === id;
             return (
@@ -801,6 +814,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                         withinContext
                         size="l"
                         enableTranslate
+                        forceTranslate={translate}
                       />
                     </InView>
                     {uiState !== 'loading' && !authenticated ? (
@@ -896,10 +910,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 {descendant && replies?.length > 0 && (
                   <SubComments
                     instance={instance}
-                    hasManyStatuses={hasManyStatuses}
                     replies={replies}
                     hasParentThread={thread}
                     level={1}
+                    accWeight={weight}
+                    openAll={
+                      totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT
+                    }
                   />
                 )}
                 {uiState === 'loading' &&
@@ -959,7 +976,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           )}
           {uiState === 'error' && (
             <p class="ui-state">
-              Unable to load status
+              Unable to load post
               <br />
               <br />
               <button
@@ -979,31 +996,14 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 }
 
 function SubComments({
-  hasManyStatuses,
   replies,
   instance,
   hasParentThread,
   level,
+  accWeight,
+  openAll,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  // Set isBrief = true:
-  // - if less than or 2 replies
-  // - if replies have no sub-replies
-  // - if total number of characters of content from replies is less than 500
-  let isBrief = false;
-  if (replies.length <= 2) {
-    const containsSubReplies = replies.some(
-      (r) => r.repliesCount > 0 || r.replies?.length > 0,
-    );
-    if (!containsSubReplies) {
-      let totalLength = replies.reduce((acc, reply) => {
-        const { content } = reply;
-        const length = htmlContentLength(content);
-        return acc + length;
-      }, 0);
-      isBrief = totalLength < 500;
-    }
-  }
 
   // Total comments count, including sub-replies
   const diveDeep = (replies) => {
@@ -1022,8 +1022,21 @@ function SubComments({
     .filter((a, i, arr) => arr.findIndex((b) => b.id === a.id) === i)
     .slice(0, 3);
 
-  const open =
-    (!hasParentThread || replies.length === 1) && (isBrief || !hasManyStatuses);
+  const totalWeight = useMemo(() => {
+    return replies?.reduce((acc, reply) => {
+      return acc + reply?.weight;
+    }, accWeight);
+  }, [accWeight, replies?.length]);
+
+  let open = false;
+  if (openAll) {
+    open = true;
+  } else if (totalWeight <= MAX_WEIGHT) {
+    open = true;
+  } else if (!hasParentThread && totalComments === 1) {
+    const shortReply = calcStatusWeight(replies[0]) < 2;
+    if (shortReply) open = true;
+  }
   const openBefore = cachedRepliesToggle[replies[0].id];
 
   const handleMediaClick = useCallback((e, i, media, status) => {
@@ -1035,8 +1048,22 @@ function SubComments({
     });
   }, []);
 
+  const detailsRef = useRef();
+  useEffect(() => {
+    function handleScroll(e) {
+      e.target.dataset.scrollLeft = e.target.scrollLeft;
+    }
+    detailsRef.current?.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
+    return () => {
+      detailsRef.current?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <details
+      ref={detailsRef}
       class="replies"
       open={openBefore || open}
       onToggle={(e) => {
@@ -1108,9 +1135,10 @@ function SubComments({
             {r.replies?.length && (
               <SubComments
                 instance={instance}
-                hasManyStatuses={hasManyStatuses}
                 replies={r.replies}
                 level={level + 1}
+                accWeight={!open ? r.weight : totalWeight}
+                openAll={openAll}
               />
             )}
           </li>
@@ -1118,6 +1146,28 @@ function SubComments({
       </ul>
     </details>
   );
+}
+
+const MEDIA_VIRTUAL_LENGTH = 140;
+const POLL_VIRTUAL_LENGTH = 35;
+const CARD_VIRTUAL_LENGTH = 70;
+const WEIGHT_SEGMENT = 140;
+const statusWeightCache = new Map();
+function calcStatusWeight(status) {
+  const cachedWeight = statusWeightCache.get(status.id);
+  if (cachedWeight) return cachedWeight;
+  const { spoilerText, content, mediaAttachments, poll, card } = status;
+  const length = htmlContentLength(spoilerText + content);
+  const mediaLength = mediaAttachments?.length ? MEDIA_VIRTUAL_LENGTH : 0;
+  const pollLength = (poll?.options?.length || 0) * POLL_VIRTUAL_LENGTH;
+  const cardLength =
+    card && (mediaAttachments?.length || poll?.options?.length)
+      ? 0
+      : CARD_VIRTUAL_LENGTH;
+  const totalLength = length + mediaLength + pollLength + cardLength;
+  const weight = totalLength / WEIGHT_SEGMENT;
+  statusWeightCache.set(status.id, weight);
+  return weight;
 }
 
 export default memo(StatusPage);

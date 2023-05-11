@@ -97,6 +97,39 @@ export function groupContext(items) {
       contexts[contextIndex++] = [item, repliedItem];
     }
   });
+
+  // Check for cross-item contexts
+  // Merge contexts into one if they have a common item (same id)
+  for (let i = 0; i < contexts.length; i++) {
+    for (let j = i + 1; j < contexts.length; j++) {
+      const commonItem = contexts[i].find((t) => contexts[j].includes(t));
+      if (commonItem) {
+        contexts[i] = [...contexts[i], ...contexts[j]];
+        // Remove duplicate items
+        contexts[i] = contexts[i].filter(
+          (item, index, self) =>
+            self.findIndex((t) => t.id === item.id) === index,
+        );
+        contexts.splice(j, 1);
+        j--;
+      }
+    }
+  }
+
+  // Sort items by checking inReplyToId
+  contexts.forEach((context) => {
+    context.sort((a, b) => {
+      if (!a.inReplyToId && !b.inReplyToId) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      if (a.inReplyToId === b.id) return 1;
+      if (b.inReplyToId === a.id) return -1;
+      if (!a.inReplyToId) return -1;
+      if (!b.inReplyToId) return 1;
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    });
+  });
+
   if (contexts.length) console.log('🧵 Contexts', contexts);
 
   const newItems = [];

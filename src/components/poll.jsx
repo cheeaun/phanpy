@@ -87,54 +87,67 @@ export default function Poll({
       }}
     >
       {(showResults && optionsHaveVoteCounts) || voted || expired ? (
-        <div class="poll-options">
-          {options.map((option, i) => {
-            const { title, votesCount: optionVotesCount } = option;
-            const percentage = pollVotesCount
-              ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                  roundPrecision,
-                )
-              : 0; // check if current poll choice is the leading one
+        <>
+          <div class="poll-options">
+            {options.map((option, i) => {
+              const { title, votesCount: optionVotesCount } = option;
+              const percentage = pollVotesCount
+                ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
+                    roundPrecision,
+                  )
+                : 0; // check if current poll choice is the leading one
 
-            const isLeading =
-              optionVotesCount > 0 &&
-              optionVotesCount ===
-                Math.max(...options.map((o) => o.votesCount));
-            return (
-              <div
-                key={`${i}-${title}-${optionVotesCount}`}
-                class={`poll-option poll-result ${
-                  isLeading ? 'poll-option-leading' : ''
-                }`}
-                style={{
-                  '--percentage': `${percentage}%`,
-                }}
-              >
-                <div class="poll-option-title">
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: emojifyText(title, emojis),
-                    }}
-                  />
-                  {voted && ownVotes.includes(i) && (
-                    <>
-                      {' '}
-                      <Icon icon="check-circle" />
-                    </>
-                  )}
-                </div>
+              const isLeading =
+                optionVotesCount > 0 &&
+                optionVotesCount ===
+                  Math.max(...options.map((o) => o.votesCount));
+              return (
                 <div
-                  class="poll-option-votes"
-                  title={`${optionVotesCount} vote${
-                    optionVotesCount === 1 ? '' : 's'
+                  key={`${i}-${title}-${optionVotesCount}`}
+                  class={`poll-option poll-result ${
+                    isLeading ? 'poll-option-leading' : ''
                   }`}
+                  style={{
+                    '--percentage': `${percentage}%`,
+                  }}
                 >
-                  {percentage}%
+                  <div class="poll-option-title">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: emojifyText(title, emojis),
+                      }}
+                    />
+                    {voted && ownVotes.includes(i) && (
+                      <>
+                        {' '}
+                        <Icon icon="check-circle" />
+                      </>
+                    )}
+                  </div>
+                  <div
+                    class="poll-option-votes"
+                    title={`${optionVotesCount} vote${
+                      optionVotesCount === 1 ? '' : 's'
+                    }`}
+                  >
+                    {percentage}%
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+          {!expired && !voted && (
+            <button
+              class="poll-vote-button plain2"
+              disabled={uiState === 'loading'}
+              onClick={() => {
+                setShowResults(false);
+              }}
+            >
+              <Icon icon="arrow-left" /> Hide results
+            </button>
+          )}
+        </>
       ) : (
         <form
           onSubmit={async (e) => {

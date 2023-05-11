@@ -2,6 +2,7 @@ body.cloak .name-text,
 body.cloak .name-text *,
 body.cloak .status .content-container,
 body.cloak .status .content-container *,
+body.cloak .status .content-compact,
 body.cloak .account-container :is(header, main > *:not(.actions)),
 body.cloak .account-container :is(header, main > *:not(.actions)) *,
 body.cloak .header-account,
@@ -10,6 +11,11 @@ body.cloak .account-block {
   text-decoration-line: line-through;
   text-rendering: optimizeSpeed;
   filter: opacity(0.5);
+}
+body.cloak .name-text *,
+body.cloak .status .content-container *,
+body.cloak .account-container :is(header, main > *:not(.actions)) * {
+  filter: none;
 }
 
 body.cloak .status :is(img, video, audio),

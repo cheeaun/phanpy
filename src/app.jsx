@@ -21,6 +21,7 @@ import { useSnapshot } from 'valtio';
 import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
+import Icon from './components/icon';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -55,6 +56,7 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
+import openCompose from './utils/open-compose';
 import showToast from './utils/show-toast';
 import states, { getStatus, saveStatus } from './utils/states';
 import store from './utils/store';
@@ -110,7 +112,7 @@ function App() {
 
         const masto = initClient({ instance: instanceURL, accessToken });
         await Promise.allSettled([
-          initInstance(masto),
+          initInstance(masto, instanceURL),
           initAccount(masto, instanceURL, accessToken),
         ]);
         initPreferences(masto);
@@ -122,13 +124,13 @@ function App() {
       const account = getCurrentAccount();
       if (account) {
         store.session.set('currentAccount', account.info.id);
-        const { masto } = api({ account });
+        const { masto, instance } = api({ account });
         console.log('masto', masto);
         initPreferences(masto);
         setUIState('loading');
         (async () => {
           try {
-            await initInstance(masto);
+            await initInstance(masto, instance);
           } catch (e) {
           } finally {
             setIsLoggedIn(true);
@@ -263,13 +265,30 @@ function App() {
           <Route path="/:instance?/s/:id" element={<StatusRoute />} />
         </Routes>
       )}
-      <div>
-        {isLoggedIn &&
-          !snapStates.settings.shortcutsColumnsMode &&
-          snapStates.settings.shortcutsViewMode !== 'multi-column' && (
-            <Shortcuts />
-          )}
-      </div>
+      {isLoggedIn && (
+        <button
+          type="button"
+          id="compose-button"
+          onClick={(e) => {
+            if (e.shiftKey) {
+              const newWin = openCompose();
+              if (!newWin) {
+                alert('Looks like your browser is blocking popups.');
+                states.showCompose = true;
+              }
+            } else {
+              states.showCompose = true;
+            }
+          }}
+        >
+          <Icon icon="quill" size="xl" alt="Compose" />
+        </button>
+      )}
+      {isLoggedIn &&
+        !snapStates.settings.shortcutsColumnsMode &&
+        snapStates.settings.shortcutsViewMode !== 'multi-column' && (
+          <Shortcuts />
+        )}
       {!!snapStates.showCompose && (
         <Modal>
           <Compose
@@ -295,7 +314,7 @@ function App() {
               if (newStatus) {
                 states.reloadStatusPage++;
                 showToast({
-                  text: 'Status posted. Check it out.',
+                  text: 'Post published. Check it out.',
                   delay: 1000,
                   duration: 10_000, // 10 seconds
                   onClick: (toast) => {
@@ -484,7 +503,7 @@ function BackgroundService({ isLoggedIn }) {
         console.error(e);
       });
   };
-  useInterval(() => checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
+  useInterval(checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
   usePageVisibility((visible) => {
     if (visible) {
       if (!lastCheckDate.current) {

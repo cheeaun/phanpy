@@ -3,6 +3,7 @@
   padding: 16px !important;
   gap: 12px;
   animation: appear 0.2s ease-out;
+  clear: both;
 }
 .notification.notification-mention {
   margin-top: 16px;
@@ -151,4 +152,177 @@
 #mentions-option label:has(:checked) {
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+
+/* FOLLOW REQUESTS */
+
+.follow-requests {
+  padding-block-end: 16px;
+}
+.follow-requests ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 50vh;
+  max-height: 50dvh;
+  overflow: auto;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+.follow-requests ul li {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+  justify-content: space-between;
+  column-gap: 16px;
+  row-gap: 4px;
+  flex-wrap: wrap;
+}
+.follow-requests ul li:last-child {
+  border-bottom: none;
+}
+.follow-requests ul li .follow-request-buttons {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.follow-requests ul li .follow-request-buttons .loader-container {
+  order: -1;
+}
+
+/* ANNOUNCEMENTS */
+
+.announcements {
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-blur-color);
+  border-radius: 16px;
+  margin: 8px;
+  overflow: hidden;
+}
+.announcements summary {
+  list-style: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  flex-wrap: wrap;
+}
+.announcements summary .announcement-icon {
+  color: var(--red-color);
+}
+.announcements[open] summary {
+  background-color: var(--bg-faded-color);
+}
+.announcements summary > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-25deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.announcements summary .announcements-nav-buttons {
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  display: none;
+}
+.announcements[open] summary .announcements-nav-buttons {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+.announcements summary:hover .announcement-icon {
+  animation: wiggle 0.5s 1;
+}
+.announcements:not([open]):hover {
+  background-color: var(--bg-faded-color);
+}
+.announcements[open] summary {
+  color: var(--text-color);
+}
+.announcements summary::-webkit-details-marker {
+  display: none;
+}
+.announcements > ul {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 8px;
+  gap: 8px;
+  background-color: var(--bg-faded-color);
+}
+.announcements > ul > li {
+  background-color: var(--bg-color);
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  flex-shrink: 0;
+  display: flex;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px -4px var(--drop-shadow-color);
+}
+.announcements > ul.announcements-list-multiple > li {
+  width: calc(100% - 16px);
+}
+.announcements > ul > li:last-child {
+  border-right: none;
+}
+.announcements .announcement-block {
+  padding: 16px;
+  max-height: 50vh;
+  max-height: 50dvh;
+  overflow: auto;
+  mask-image: linear-gradient(
+    to top,
+    transparent 1px,
+    black 48px,
+    black calc(100% - 16px),
+    transparent calc(100% - 1px)
+  );
+}
+.announcements .announcement-content {
+  line-height: 1.4;
+}
+.announcements .announcement-content p {
+  margin-block: min(0.75em, 12px);
+  white-space: pre-wrap;
+  tab-size: 2;
+}
+.announcements .announcement-reactions:not(:hidden) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.announcements .announcement-reactions button.reacted {
+  color: var(--text-color);
+  background-color: var(--link-faded-color);
 }

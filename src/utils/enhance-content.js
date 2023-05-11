@@ -41,7 +41,10 @@ function enhanceContent(content, opts = {}) {
   // Convert :shortcode: to <img />
   let textNodes = extractTextNodes(dom);
   textNodes.forEach((node) => {
-    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    let html = node.nodeValue
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
     if (emojis) {
       html = emojifyText(html, emojis);
     }
@@ -106,7 +109,10 @@ function enhanceContent(content, opts = {}) {
   // Convert `code` to <code>code</code>
   textNodes = extractTextNodes(dom);
   textNodes.forEach((node) => {
-    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    let html = node.nodeValue
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
     if (/`[^`]+`/g.test(html)) {
       html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
     }
@@ -122,7 +128,10 @@ function enhanceContent(content, opts = {}) {
     rejectFilter: ['A'],
   });
   textNodes.forEach((node) => {
-    let html = node.nodeValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    let html = node.nodeValue
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
     if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
       html = html.replaceAll(
         /(@([a-zA-Z0-9_]+)@twitter\.com)/g,

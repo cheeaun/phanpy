@@ -79,6 +79,7 @@ const ICONS = {
   react: 'mingcute:react-line',
   layout4: 'mingcute:layout-4-line',
   layout5: 'mingcute:layout-5-line',
+  announce: 'mingcute:announcement-line',
 };
 
 const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');

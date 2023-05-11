@@ -43,3 +43,61 @@ ul.link-list.hashtag-list li a {
     background-color: var(--bg-color);
   }
 }
+
+.search-popover-container {
+  position: relative;
+}
+.search-popover {
+  position: absolute;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  /* right: 8px; */
+  background-color: var(--bg-color);
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 4px 24px var(--drop-shadow-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  animation: appear-smooth 0.2s ease-out;
+  overflow: hidden;
+}
+.search-popover[hidden] {
+  display: none;
+}
+.search-popover-item {
+  text-decoration: none;
+  padding: 8px 16px 8px 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.search-popover-item[hidden] {
+  display: none;
+}
+.search-popover-item:is(:hover, :focus, .focus) {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+}
+.search-popover-item :is(mark, q) {
+  background-color: var(--bg-faded-blur-color);
+  color: inherit;
+}
+.search-popover-item:is(:hover, :focus, .focus) :is(mark, q) {
+  background-color: var(--button-bg-color);
+}
+.search-popover:hover .search-popover-item.focus:not(:hover, :focus),
+.search-popover:hover
+  .search-popover-item.focus:not(:hover, :focus)
+  :is(mark, q) {
+  background-color: unset;
+  color: unset;
+}
+.search-popover-item > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-popover-item:is(:hover, :focus, .focus) > .icon {
+  opacity: 1;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
@@ -35,6 +35,7 @@ function Timeline({
   allowFilters,
   refresh,
 }) {
+  const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('default');
   const [showMore, setShowMore] = useState(false);
@@ -203,41 +204,51 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
+  const isHovering = useRef(false);
+  const loadOrCheckUpdates = useCallback(
+    async ({ disableHoverCheck = false } = {}) => {
+      console.log('✨ Load or check updates', snapStates.settings.autoRefresh);
+      if (
+        snapStates.settings.autoRefresh &&
+        scrollableRef.current.scrollTop === 0 &&
+        (disableHoverCheck || !isHovering.current) &&
+        !inBackground()
+      ) {
+        console.log('✨ Load updates', snapStates.settings.autoRefresh);
+        loadItems(true);
+      } else {
+        console.log('✨ Check updates', snapStates.settings.autoRefresh);
+        const hasUpdate = await checkForUpdates();
+        if (hasUpdate) {
+          console.log('✨ Has new updates', id);
+          setShowNew(true);
+        }
+      }
+    },
+    [id, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
+  );
+
   const lastHiddenTime = useRef();
   usePageVisibility(
     (visible) => {
       if (visible) {
         const timeDiff = Date.now() - lastHiddenTime.current;
         if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
-          (async () => {
-            console.log('✨ Check updates');
-            const hasUpdate = await checkForUpdates();
-            if (hasUpdate) {
-              console.log('✨ Has new updates', id);
-              setShowNew(true);
-            }
-          })();
+          loadOrCheckUpdates({
+            disableHoverCheck: true,
+          });
         }
       } else {
         lastHiddenTime.current = Date.now();
       }
       setVisible(visible);
     },
-    [checkForUpdates],
+    [checkForUpdates, loadOrCheckUpdates, snapStates.settings.autoRefresh],
   );
 
   // checkForUpdates interval
   useInterval(
-    () => {
-      (async () => {
-        console.log('✨ Check updates');
-        const hasUpdate = await checkForUpdates();
-        if (hasUpdate) {
-          console.log('✨ Has new updates', id);
-          setShowNew(true);
-        }
-      })();
-    },
+    loadOrCheckUpdates,
     visible && !showNew ? checkForUpdatesInterval : null,
   );
 
@@ -254,6 +265,12 @@ function Timeline({
         oRef.current = node;
       }}
       tabIndex="-1"
+      onPointerEnter={(e) => {
+        isHovering.current = true;
+      }}
+      onPointerLeave={() => {
+        isHovering.current = false;
+      }}
     >
       <div class="timeline-deck deck">
         <header
@@ -595,6 +612,10 @@ function TimelineStatusCompact({ status, instance }) {
       </div>
     </article>
   );
+}
+
+function inBackground() {
+  return !!document.querySelector('.deck-backdrop, #modal-container > *');
 }
 
 export default Timeline;

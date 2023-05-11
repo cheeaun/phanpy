@@ -256,6 +256,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li.descendant:not(.thread) > .status-link {
   padding-left: 40px;
 }
+.timeline.contextual .replies[data-scroll-left]:not([data-scroll-left='0']) {
+  background-color: var(--bg-color);
+  box-shadow: inset 0 -3px var(--comment-line-color),
+    inset 0 3px var(--comment-line-color);
+}
 .timeline.contextual .replies[data-comments-level='4'] {
   overflow: auto;
 }
@@ -272,7 +277,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   .replies[data-comments-level='4']
   .replies[data-comments-level-overflow='true']
   .status {
-  min-width: min(15em, 75vw);
+  min-width: min(20em, 80vw);
 }
 .timeline.contextual
   > li.descendant.thread
@@ -432,7 +437,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies {
   margin-top: -12px;
 }
-.timeline.contextual > li .replies :is(ul, li) {
+.timeline.contextual > li .replies :is(ul, li):not(.content *) {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -478,10 +483,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies .replies-summary[hidden] {
   display: none;
 }
-.timeline.contextual > li .replies li {
+.timeline.contextual > li .replies li:not(.content li) {
   position: relative;
 }
-.timeline.contextual > li .replies li {
+.timeline.contextual > li .replies li:not(.content li) {
   --line-start: calc(
     var(--thread-start) + var(--line-margin-end) * var(--comments-level)
   );
@@ -503,7 +508,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual > li .replies .replies .replies li {
   --line-start: calc(var(--thread-start) + (var(--line-margin-end) * 3));
 } */
-.timeline.contextual > li.thread .replies li {
+.timeline.contextual > li.thread .replies li:not(.content li) {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       (var(--line-margin-end) * (var(--comments-level) - 1))
@@ -521,10 +526,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       (var(--line-margin-end) * 2)
   );
 } */
-.timeline.contextual > li .replies li:last-child {
+.timeline.contextual > li .replies li:not(.content li):last-child {
   background-size: 100% 20px;
 }
-.timeline.contextual > li .replies li:before {
+.timeline.contextual > li .replies li:not(.content li):before {
   content: '';
   position: absolute;
   top: 10px;
@@ -547,7 +552,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--thread-start) + var(--line-margin-end) + (var(--line-margin-end) * 2)
   );
 } */
-.timeline.contextual > li.thread .replies li:before {
+.timeline.contextual > li.thread .replies li:not(.content li):before {
   --line-start: calc(
     var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
       (var(--line-margin-end) * (var(--comments-level) - 1))
@@ -709,7 +714,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   color: var(--carousel-color);
   text-shadow: 0 1px var(--bg-color);
 }
-.status-carousel ul {
+.status-carousel > ul {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -721,7 +726,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   align-items: flex-start;
   counter-reset: index;
 }
-.status-carousel ul > li {
+.status-carousel > ul > li {
   scroll-snap-align: center;
   scroll-snap-stop: always;
   flex-shrink: 0;
@@ -736,8 +741,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   counter-increment: index;
   position: relative;
 }
+.status-carousel > ul > li:is(:empty, :has(> a:empty)) {
+  display: none;
+}
 @media (hover: hover) or (pointer: fine) or (min-width: 40em) {
-  .status-carousel ul {
+  .status-carousel > ul {
     scroll-snap-type: none;
   }
 }
@@ -759,7 +767,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel.boosts-carousel .status-reblog {
   background-image: none;
 }
-.status-carousel.boosts-carousel ul > li:before {
+.status-carousel.boosts-carousel > ul > li:before {
   content: counter(index);
   position: absolute;
   left: 0;
@@ -1158,12 +1166,12 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   padding: 16px;
   background-color: var(--button-bg-blur-color);
   backdrop-filter: blur(16px);
-  z-index: 1;
+  z-index: 10;
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
   transition: all 0.3s ease-in-out;
 }
-#home-page:has(header[hidden]) ~ #compose-button,
+.deck-container:has(header[hidden]) ~ #compose-button,
 #compose-button[hidden] {
   transform: translateY(200%);
   pointer-events: none;
@@ -1308,6 +1316,9 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 }
 .tag .icon {
   vertical-align: middle;
+}
+.tag.collapsed {
+  margin: 0;
 }
 
 /* MENU POPUP */
@@ -1896,6 +1907,9 @@ ul.link-list li a .icon {
     transparent
   );
   align-items: center;
+}
+.filter-bar.centered {
+  justify-content: center;
 }
 @media (min-width: 40em) {
   .filter-bar {

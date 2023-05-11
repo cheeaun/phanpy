@@ -41,6 +41,7 @@ const states = proxy({
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
   settings: {
+    autoRefresh: store.account.get('settings-autoRefresh') ?? false,
     shortcutsViewMode: store.account.get('settings-shortcutsViewMode') ?? null,
     shortcutsColumnsMode:
       store.account.get('settings-shortcutsColumnsMode') ?? false,
@@ -64,6 +65,9 @@ subscribeKey(states, 'notificationsLast', (v) => {
 subscribe(states, (changes) => {
   console.debug('STATES change', changes);
   for (const [action, path, value, prevValue] of changes) {
+    if (path.join('.') === 'settings.autoRefresh') {
+      store.account.set('settings-autoRefresh', !!value);
+    }
     if (path.join('.') === 'settings.boostsCarousel') {
       store.account.set('settings-boostsCarousel', !!value);
     }

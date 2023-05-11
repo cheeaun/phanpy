@@ -97,6 +97,8 @@ function NavMenu(props) {
         {...props}
         overflow="auto"
         viewScroll="close"
+        position="anchor"
+        align="center"
         boundingBoxPadding="8 8 8 8"
         unmountOnClose
       >

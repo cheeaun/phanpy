@@ -1,13 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks';
 
-const noop = () => {};
-
-function useInterval(callback, delay, immediate) {
-  const savedCallback = useRef(noop);
-
+function useInterval(fn, delay, deps, immediate) {
+  const savedCallback = useRef(fn);
   useEffect(() => {
-    savedCallback.current = callback;
-  }, []);
+    savedCallback.current = fn;
+  }, [deps]);
 
   useEffect(() => {
     if (!immediate || delay === null || delay === false) return;

@@ -1,63 +1,26 @@
 import './notifications.css';
 
 import { memo } from 'preact/compat';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
-import Avatar from '../components/avatar';
+import AccountBlock from '../components/account-block';
+import FollowRequestButtons from '../components/follow-request-buttons';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
-import NameText from '../components/name-text';
 import NavMenu from '../components/nav-menu';
-import RelativeTime from '../components/relative-time';
-import Status from '../components/status';
+import Notification from '../components/notification';
 import { api } from '../utils/api';
+import enhanceContent from '../utils/enhance-content';
+import groupNotifications from '../utils/group-notifications';
+import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
+import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
-import store from '../utils/store';
+import { getCurrentInstance } from '../utils/store-utils';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
-
-/*
-Notification types
-==================
-mention = Someone mentioned you in their status
-status = Someone you enabled notifications for has posted a status
-reblog = Someone boosted one of your statuses
-follow = Someone followed you
-follow_request = Someone requested to follow you
-favourite = Someone favourited one of your statuses
-poll = A poll you have voted in or created has ended
-update = A status you interacted with has been edited
-admin.sign_up = Someone signed up (optionally sent to admins)
-admin.report = A new report has been filed
-*/
-
-const contentText = {
-  mention: 'mentioned you in their status.',
-  status: 'posted a status.',
-  reblog: 'boosted your status.',
-  follow: 'followed you.',
-  follow_request: 'requested to follow you.',
-  favourite: 'favourited your status.',
-  poll: 'A poll you have voted in or created has ended.',
-  'poll-self': 'A poll you have created has ended.',
-  'poll-voted': 'A poll you have voted in has ended.',
-  update: 'A status you interacted with has been edited.',
-  'favourite+reblog': 'boosted & favourited your status.',
-};
-
-const NOTIFICATION_ICONS = {
-  mention: 'comment',
-  status: 'notification',
-  reblog: 'rocket',
-  follow: 'follow',
-  follow_request: 'follow-add',
-  favourite: 'heart',
-  poll: 'poll',
-  update: 'pencil',
-};
 
 const LIMIT = 30; // 30 is the maximum limit :(
 
@@ -74,6 +37,8 @@ function Notifications() {
       scrollableRef,
     });
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+  const [followRequests, setFollowRequests] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
   console.debug('RENDER Notifications');
 
@@ -110,12 +75,52 @@ function Notifications() {
     return allNotifications;
   }
 
+  function fetchFollowRequests() {
+    // Note: no pagination here yet because this better be on a separate page. Should be rare use-case???
+    return masto.v1.followRequests.list({
+      limit: 80,
+    });
+  }
+
+  const loadFollowRequests = () => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const requests = await fetchFollowRequests();
+        setFollowRequests(requests);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+      }
+    })();
+  };
+
+  function fetchAnnouncements() {
+    return masto.v1.announcements.list();
+  }
+
   const loadNotifications = (firstLoad) => {
     setUIState('loading');
     (async () => {
       try {
+        const fetchFollowRequestsPromise = fetchFollowRequests();
+        const fetchAnnouncementsPromise = fetchAnnouncements();
         const { done } = await fetchNotifications(firstLoad);
         setShowMore(!done);
+
+        if (firstLoad) {
+          const requests = await fetchFollowRequestsPromise;
+          setFollowRequests(requests);
+          const announcements = await fetchAnnouncementsPromise;
+          announcements.sort((a, b) => {
+            // Sort by updatedAt first, then createdAt
+            const aDate = new Date(a.updatedAt || a.createdAt);
+            const bDate = new Date(b.updatedAt || b.createdAt);
+            return bDate - aDate;
+          });
+          setAnnouncements(announcements);
+        }
+
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -138,6 +143,33 @@ function Notifications() {
     }
   }, [nearReachEnd, showMore]);
 
+  const isHovering = useRef(false);
+  const loadUpdates = useCallback(() => {
+    console.log('✨ Load updates', {
+      autoRefresh: snapStates.settings.autoRefresh,
+      scrollTop: scrollableRef.current?.scrollTop === 0,
+      isHovering: isHovering.current,
+      inBackground: inBackground(),
+      notificationsShowNew: snapStates.notificationsShowNew,
+      uiState,
+    });
+    if (
+      snapStates.settings.autoRefresh &&
+      scrollableRef.current?.scrollTop === 0 &&
+      !isHovering.current &&
+      !inBackground() &&
+      snapStates.notificationsShowNew &&
+      uiState !== 'loading'
+    ) {
+      loadNotifications(true);
+    }
+  }, [
+    snapStates.notificationsShowNew,
+    snapStates.settings.autoRefresh,
+    uiState,
+  ]);
+  useEffect(loadUpdates, [snapStates.notificationsShowNew]);
+
   const todayDate = new Date();
   const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);
   let currentDay = new Date();
@@ -147,12 +179,22 @@ function Notifications() {
       todayDate.toDateString(),
   );
 
+  const announcementsListRef = useRef();
+
   return (
     <div
       id="notifications-page"
       class="deck-container"
       ref={scrollableRef}
       tabIndex="-1"
+      onPointerEnter={() => {
+        console.log('👆 Pointer enter');
+        isHovering.current = true;
+      }}
+      onPointerLeave={() => {
+        console.log('👇 Pointer leave');
+        isHovering.current = false;
+      }}
     >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header
@@ -192,6 +234,69 @@ function Notifications() {
             </button>
           )}
         </header>
+        {announcements.length > 0 && (
+          <div class="shazam-container">
+            <div class="shazam-container-inner">
+              <details class="announcements">
+                <summary>
+                  <span>
+                    <Icon icon="announce" class="announcement-icon" size="l" />{' '}
+                    <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
+                    <small class="insignificant">{instance}</small>
+                  </span>
+                  {announcements.length > 1 && (
+                    <span class="announcements-nav-buttons">
+                      {announcements.map((announcement, index) => (
+                        <button
+                          type="button"
+                          class="plain2 small"
+                          onClick={() => {
+                            announcementsListRef.current?.children[
+                              index
+                            ].scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      ))}
+                    </span>
+                  )}
+                </summary>
+                <ul
+                  class={`announcements-list-${
+                    announcements.length > 1 ? 'multiple' : 'single'
+                  }`}
+                  ref={announcementsListRef}
+                >
+                  {announcements.map((announcement) => (
+                    <li>
+                      <AnnouncementBlock announcement={announcement} />
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </div>
+          </div>
+        )}
+        {followRequests.length > 0 && (
+          <div class="follow-requests">
+            <h2 class="timeline-header">Follow requests</h2>
+            <ul>
+              {followRequests.map((account) => (
+                <li>
+                  <AccountBlock account={account} />
+                  <FollowRequestButtons
+                    accountID={account.id}
+                    onChange={() => {
+                      loadFollowRequests();
+                      loadNotifications(true);
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div id="mentions-option">
           <label>
             <input
@@ -237,6 +342,10 @@ function Notifications() {
                     instance={instance}
                     notification={notification}
                     key={notification.id}
+                    reload={() => {
+                      loadNotifications(true);
+                      loadFollowRequests();
+                    }}
                   />
                 </>
               );
@@ -287,245 +396,83 @@ function Notifications() {
     </div>
   );
 }
-function Notification({ notification, instance }) {
-  const { id, status, account, _accounts } = notification;
-  let { type } = notification;
 
-  // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
-  const actualStatusID = status?.reblog?.id || status?.id;
+function inBackground() {
+  return !!document.querySelector('.deck-backdrop, #modal-container > *');
+}
 
-  const currentAccount = store.session.get('currentAccount');
-  const isSelf = currentAccount === account?.id;
-  const isVoted = status?.poll?.voted;
+function AnnouncementBlock({ announcement }) {
+  const { instance } = api();
+  const { contact } = getCurrentInstance();
+  const contactAccount = contact?.account;
+  const {
+    id,
+    content,
+    startsAt,
+    endsAt,
+    published,
+    allDay,
+    publishedAt,
+    updatedAt,
+    read,
+    mentions,
+    statuses,
+    tags,
+    emojis,
+    reactions,
+  } = announcement;
 
-  let favsCount = 0;
-  let reblogsCount = 0;
-  if (type === 'favourite+reblog') {
-    for (const account of _accounts) {
-      if (account._types?.includes('favourite')) {
-        favsCount++;
-      }
-      if (account._types?.includes('reblog')) {
-        reblogsCount++;
-      }
-    }
-    if (!reblogsCount && favsCount) type = 'favourite';
-    if (!favsCount && reblogsCount) type = 'reblog';
-  }
-
-  const text =
-    type === 'poll'
-      ? contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll']
-      : contentText[type];
+  const publishedAtDate = new Date(publishedAt);
+  const publishedDateText = niceDateTime(publishedAtDate);
+  const updatedAtDate = new Date(updatedAt);
+  const updatedAtText = niceDateTime(updatedAtDate);
 
   return (
-    <div class={`notification notification-${type}`} tabIndex="0">
+    <div class="announcement-block">
+      <AccountBlock account={contactAccount} />
       <div
-        class={`notification-type notification-${type}`}
-        title={new Date(notification.createdAt).toLocaleString()}
-      >
-        {type === 'favourite+reblog' ? (
+        class="announcement-content"
+        onClick={handleContentLinks({ mentions, instance })}
+        dangerouslySetInnerHTML={{
+          __html: enhanceContent(content, {
+            emojis,
+          }),
+        }}
+      />
+      <p class="insignificant">
+        <time datetime={publishedAtDate.toISOString()}>
+          {niceDateTime(publishedAtDate)}
+        </time>
+        {updatedAt && updatedAtText !== publishedDateText && (
           <>
-            <Icon icon="rocket" size="xl" alt={type} class="reblog-icon" />
-            <Icon icon="heart" size="xl" alt={type} class="favourite-icon" />
-          </>
-        ) : (
-          <Icon
-            icon={NOTIFICATION_ICONS[type] || 'notification'}
-            size="xl"
-            alt={type}
-          />
-        )}
-      </div>
-      <div class="notification-content">
-        {type !== 'mention' && (
-          <>
-            <p>
-              {!/poll|update/i.test(type) && (
-                <>
-                  {_accounts?.length > 1 ? (
-                    <>
-                      <b>{_accounts.length} people</b>{' '}
-                    </>
-                  ) : (
-                    <>
-                      <NameText account={account} showAvatar />{' '}
-                    </>
-                  )}
-                </>
-              )}
-              {text}
-              {type === 'mention' && (
-                <span class="insignificant">
-                  {' '}
-                  •{' '}
-                  <RelativeTime
-                    datetime={notification.createdAt}
-                    format="micro"
-                  />
-                </span>
-              )}
-            </p>
-            {type === 'follow_request' && (
-              <FollowRequestButtons
-                accountID={account.id}
-                onChange={() => {
-                  loadNotifications(true);
-                }}
-              />
-            )}
+            {' '}
+            &bull;{' '}
+            <span class="ib">
+              Updated{' '}
+              <time datetime={updatedAtDate.toISOString()}>
+                {niceDateTime(updatedAtDate)}
+              </time>
+            </span>
           </>
         )}
-        {_accounts?.length > 1 && (
-          <p class="avatars-stack">
-            {_accounts.map((account, i) => (
-              <>
-                <a
-                  href={account.url}
-                  rel="noopener noreferrer"
-                  class="account-avatar-stack"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    states.showAccount = account;
-                  }}
-                >
-                  <Avatar
-                    url={account.avatarStatic}
-                    size={
-                      _accounts.length <= 10
-                        ? 'xxl'
-                        : _accounts.length < 100
-                        ? 'xl'
-                        : _accounts.length < 1000
-                        ? 'l'
-                        : _accounts.length < 2000
-                        ? 'm'
-                        : 's' // My god, this person is popular!
-                    }
-                    key={account.id}
-                    alt={`${account.displayName} @${account.acct}`}
-                    squircle={account?.bot}
-                  />
-                  {type === 'favourite+reblog' && (
-                    <div class="account-sub-icons">
-                      {account._types.map((type) => (
-                        <Icon
-                          icon={NOTIFICATION_ICONS[type]}
-                          size="s"
-                          class={`${type}-icon`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </a>{' '}
-              </>
-            ))}
-          </p>
-        )}
-        {status && (
-          <Link
-            class={`status-link status-type-${type}`}
-            to={
-              instance
-                ? `/${instance}/s/${actualStatusID}`
-                : `/s/${actualStatusID}`
-            }
-          >
-            <Status statusID={actualStatusID} size="s" />
-          </Link>
-        )}
+      </p>
+      <div class="announcement-reactions" hidden>
+        {reactions.map((reaction) => {
+          const { name, count, me, staticUrl, url } = reaction;
+          return (
+            <button type="button" class={`plain4 small ${me ? 'reacted' : ''}`}>
+              {url || staticUrl ? (
+                <img src={url || staticUrl} alt={name} width="16" height="16" />
+              ) : (
+                <span>{name}</span>
+              )}{' '}
+              <span class="count">{shortenNumber(count)}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
-}
-
-function FollowRequestButtons({ accountID, onChange }) {
-  const { masto } = api();
-  const [uiState, setUIState] = useState('default');
-  return (
-    <p>
-      <button
-        type="button"
-        disabled={uiState === 'loading'}
-        onClick={() => {
-          setUIState('loading');
-          (async () => {
-            try {
-              await masto.v1.followRequests.authorize(accountID);
-              onChange();
-            } catch (e) {
-              console.error(e);
-              setUIState('default');
-            }
-          })();
-        }}
-      >
-        Accept
-      </button>{' '}
-      <button
-        type="button"
-        disabled={uiState === 'loading'}
-        class="light danger"
-        onClick={() => {
-          setUIState('loading');
-          (async () => {
-            try {
-              await masto.v1.followRequests.reject(accountID);
-              onChange();
-            } catch (e) {
-              console.error(e);
-              setUIState('default');
-            }
-          })();
-        }}
-      >
-        Reject
-      </button>
-      <Loader hidden={uiState !== 'loading'} />
-    </p>
-  );
-}
-
-function groupNotifications(notifications) {
-  // Create new flat list of notifications
-  // Combine sibling notifications based on type and status id
-  // Concat all notification.account into an array of _accounts
-  const notificationsMap = {};
-  const cleanNotifications = [];
-  for (let i = 0, j = 0; i < notifications.length; i++) {
-    const notification = notifications[i];
-    const { status, account, type, createdAt } = notification;
-    const date = new Date(createdAt).toLocaleDateString();
-    let virtualType = type;
-    if (type === 'favourite' || type === 'reblog') {
-      virtualType = 'favourite+reblog';
-    }
-    const key = `${status?.id}-${virtualType}-${date}`;
-    const mappedNotification = notificationsMap[key];
-    if (virtualType === 'follow_request') {
-      cleanNotifications[j++] = notification;
-    } else if (mappedNotification?.account) {
-      const mappedAccount = mappedNotification._accounts.find(
-        (a) => a.id === account.id,
-      );
-      if (mappedAccount) {
-        mappedAccount._types.push(type);
-        mappedAccount._types.sort().reverse();
-      } else {
-        account._types = [type];
-        mappedNotification._accounts.push(account);
-      }
-    } else {
-      account._types = [type];
-      let n = (notificationsMap[key] = {
-        ...notification,
-        type: virtualType,
-        _accounts: [account],
-      });
-      cleanNotifications[j++] = n;
-    }
-  }
-  return cleanNotifications;
 }
 
 export default memo(Notifications);

@@ -119,9 +119,12 @@ export function groupContext(items) {
   // Sort items by checking inReplyToId
   contexts.forEach((context) => {
     context.sort((a, b) => {
-      if (a.inReplyToId === b.id) return 1;
-      if (b.inReplyToId === a.id) return -1;
-      return 0;
+      if (!a.inReplyToId && !b.inReplyToId) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      if (!a.inReplyToId) return -1;
+      if (!b.inReplyToId) return 1;
+      return new Date(a.createdAt) - new Date(b.createdAt);
     });
   });
 

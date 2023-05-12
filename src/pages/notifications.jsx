@@ -253,7 +253,10 @@ function Notifications() {
                           onClick={() => {
                             announcementsListRef.current?.children[
                               index
-                            ].scrollIntoView({ behavior: 'smooth' });
+                            ].scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'nearest',
+                            });
                           }}
                         >
                           {index + 1}

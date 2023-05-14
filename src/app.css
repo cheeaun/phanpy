@@ -1328,6 +1328,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   -webkit-touch-callout: none;
   -webkit-user-drag: none;
 }
+body > .szh-menu-container {
+  position: fixed !important;
+  z-index: 10;
+}
 .szh-menu-container:has(.szh-menu--state-open) {
   inset: 0;
   inset: env(safe-area-inset-top) env(safe-area-inset-right)

@@ -87,6 +87,7 @@ function List(props) {
   return (
     <>
       <Timeline
+        key={id}
         title={list.title}
         id="list"
         emptyText="Nothing yet."

@@ -45,7 +45,10 @@ function Following({ title, path, id, ...props }) {
         return bDate - aDate;
       });
     }
-    return results;
+    return {
+      ...results,
+      value,
+    };
   }
 
   async function checkForUpdates() {

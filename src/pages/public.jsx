@@ -45,7 +45,10 @@ function Public({ local, ...props }) {
         saveStatus(item, instance);
       });
     }
-    return results;
+    return {
+      ...results,
+      value,
+    };
   }
 
   async function checkForUpdates() {

@@ -965,7 +965,12 @@ function Status({
                         'a[href]:not(.u-url):not(.mention):not(.hashtag)',
                       ),
                     )
-                      .filter((a) => isMastodonLinkMaybe(a.href))
+                      .filter((a) => {
+                        const url = a.href;
+                        const isPostItself =
+                          url === status.url || url === status.uri;
+                        return !isPostItself && isMastodonLinkMaybe(url);
+                      })
                       .forEach((a, i) => {
                         unfurlMastodonLink(currentInstance, a.href).then(
                           (result) => {
@@ -1076,6 +1081,9 @@ function Status({
             </div>
           )}
           {!!card &&
+            card?.url !== status.url &&
+            card?.url !== status.uri &&
+            /^https/i.test(card?.url) &&
             !sensitive &&
             !spoilerText &&
             !poll &&

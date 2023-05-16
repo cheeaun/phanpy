@@ -138,6 +138,12 @@ And here I am. Building a Mastodon web client.
 - [Statuzer](https://statuzer.com/)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
+## 💁‍♂️ Notice to all other social media client developers
+
+Please, please copy the UI ideas and experiments from this app. I think some of them are pretty good and it would be great if more apps have them.
+
+If you're not a developer, please tell your favourite social media client developers about this app and ask them to copy the UI ideas and experiments.
+
 ## License
 
 [MIT](https://cheeaun.mit-license.org/).

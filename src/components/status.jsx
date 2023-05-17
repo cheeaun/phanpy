@@ -18,6 +18,7 @@ import { InView } from 'react-intersection-observer';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
+import { snapshot } from 'valtio/vanilla';
 
 import AccountBlock from '../components/account-block';
 import Loader from '../components/loader';
@@ -1701,6 +1702,7 @@ const denylistDomains = /(twitter|github)\.com/i;
 const failedUnfurls = {};
 
 function _unfurlMastodonLink(instance, url) {
+  const snapStates = snapshot(states);
   if (denylistDomains.test(url)) {
     return;
   }
@@ -1708,8 +1710,8 @@ function _unfurlMastodonLink(instance, url) {
     return;
   }
   const instanceRegex = new RegExp(instance + '/');
-  if (instanceRegex.test(states.unfurledLinks[url]?.url)) {
-    return Promise.resolve(states.unfurledLinks[url]);
+  if (instanceRegex.test(snapStates.unfurledLinks[url]?.url)) {
+    return Promise.resolve(snapStates.unfurledLinks[url]);
   }
   console.debug('🦦 Unfurling URL', url);
 
@@ -1723,30 +1725,16 @@ function _unfurlMastodonLink(instance, url) {
   if (statusMatch) {
     const id = statusMatch[3];
     const { masto } = api({ instance: domain });
-    remoteInstanceFetch = masto.v1.statuses
-      .fetch(id)
-      .then((status) => {
-        if (status?.id) {
-          const statusURL = `/${domain}/s/${id}`;
-          const result = {
-            id,
-            instance: domain,
-            url: statusURL,
-          };
-          console.debug('🦦 Unfurled URL', url, id, statusURL);
-          states.unfurledLinks[url] = result;
-          saveStatus(status, domain, {
-            skipThreading: true,
-          });
-          return result;
-        } else {
-          failedUnfurls[url] = true;
-          throw new Error('No results');
-        }
-      })
-      .catch((e) => {
-        failedUnfurls[url] = true;
-      });
+    remoteInstanceFetch = masto.v1.statuses.fetch(id).then((status) => {
+      if (status?.id) {
+        return {
+          status,
+          instance: domain,
+        };
+      } else {
+        throw new Error('No results');
+      }
+    });
   }
 
   const { masto } = api({ instance });
@@ -1760,34 +1748,41 @@ function _unfurlMastodonLink(instance, url) {
     .then((results) => {
       if (results.statuses.length > 0) {
         const status = results.statuses[0];
-        const { id } = status;
-        const statusURL = `/${instance}/s/${id}`;
-        const result = {
-          id,
+        return {
+          status,
           instance,
-          url: statusURL,
         };
-        console.debug('🦦 Unfurled URL', url, id, statusURL);
-        states.unfurledLinks[url] = result;
-        saveStatus(status, instance, {
-          skipThreading: true,
-        });
-        return result;
       } else {
-        failedUnfurls[url] = true;
         throw new Error('No results');
       }
-    })
-    .catch((e) => {
-      failedUnfurls[url] = true;
-      // console.warn(e);
-      // Silently fail
     });
 
+  function handleFulfill(result) {
+    const { status, instance } = result;
+    const { id } = status;
+    const url = `/${instance}/s/${id}`;
+    console.debug('🦦 Unfurled URL', url, id, url);
+    const data = {
+      id,
+      instance,
+      url,
+    };
+    states.unfurledLinks[url] = data;
+    saveStatus(status, instance, {
+      skipThreading: true,
+    });
+    return data;
+  }
+  function handleCatch(e) {
+    failedUnfurls[url] = true;
+  }
+
   if (remoteInstanceFetch) {
-    return Promise.any([remoteInstanceFetch, mastoSearchFetch]);
+    return Promise.any([remoteInstanceFetch, mastoSearchFetch])
+      .then(handleFulfill)
+      .catch(handleCatch);
   } else {
-    return mastoSearchFetch;
+    return mastoSearchFetch.then(handleFulfill).catch(handleCatch);
   }
 }
 
@@ -1814,7 +1809,11 @@ function nicePostURL(url) {
   );
 }
 
-const unfurlMastodonLink = throttle(_unfurlMastodonLink);
+const unfurlMastodonLink = throttle(
+  mem(_unfurlMastodonLink, {
+    cacheKey: (instance, url) => `${instance}:${url}`,
+  }),
+);
 
 const root = document.documentElement;
 const defaultBoundingBoxPadding = 8;
@@ -1958,11 +1957,14 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
+  const uniqueQuotes = quotes?.filter(
+    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
+  );
 
-  if (!quotes?.length) return;
+  if (!uniqueQuotes?.length) return;
   if (level > 2) return;
 
-  return quotes.map((q) => {
+  return uniqueQuotes.map((q) => {
     return (
       <Link
         key={q.instance + q.id}

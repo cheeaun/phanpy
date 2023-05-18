@@ -493,7 +493,7 @@ function RelatedActions({ info, instance, authenticated }) {
       >
         <div class="shazam-container-inner">
           <p>
-            Also followed by{' '}
+            Followed by{' '}
             <span class="ib">
               {familiarFollowers.map((follower) => (
                 <a

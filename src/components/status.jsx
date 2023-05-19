@@ -105,10 +105,11 @@ function Status({
   const { instance: currentInstance } = api();
   const sameInstance = instance === currentInstance;
 
-  const sKey = statusKey(statusID, instance);
+  let sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
     status = snapStates.statuses[sKey] || snapStates.statuses[statusID];
+    sKey = statusKey(status?.id, instance);
   }
   if (!status) {
     return null;
@@ -977,6 +978,7 @@ function Status({
                           (result) => {
                             if (!result) return;
                             a.removeAttribute('target');
+                            if (!sKey) return;
                             if (!Array.isArray(states.statusQuotes[sKey])) {
                               states.statusQuotes[sKey] = [];
                             }
@@ -1954,6 +1956,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
 }
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
+  if (!id || !instance) return;
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];

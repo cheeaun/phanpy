@@ -110,6 +110,7 @@ export function hideAllModals() {
 }
 
 export function statusKey(id, instance) {
+  if (!id) return;
   return instance ? `${instance}/${id}` : id;
 }
 

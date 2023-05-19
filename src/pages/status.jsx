@@ -271,7 +271,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
           if (
             status.inReplyToId &&
-            !descendants.find((s) => s.id === status.inReplyToId)
+            !descendants.find((s) => s.id === status.inReplyToId) &&
+            status.inReplyToId !== heroStatus.id
           ) {
             missingStatuses.add(status.inReplyToId);
           }

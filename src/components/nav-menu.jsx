@@ -1,11 +1,5 @@
-import {
-  ControlledMenu,
-  MenuDivider,
-  MenuItem,
-  useClick,
-  useMenuState,
-} from '@szhsin/react-menu';
-import { useRef } from 'preact/hooks';
+import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -47,8 +41,7 @@ function NavMenu(props) {
   );
 
   const buttonRef = useRef();
-  const [menuState, toggleMenu] = useMenuState();
-  const anchorProps = useClick(menuState.state, toggleMenu);
+  const [menuState, setMenuState] = useState(undefined);
 
   return (
     <>
@@ -59,7 +52,9 @@ function NavMenu(props) {
           moreThanOneAccount ? 'with-avatar' : ''
         } ${open ? 'active' : ''}`}
         style={{ position: 'relative' }}
-        {...anchorProps}
+        onClick={() => {
+          setMenuState((state) => (!state ? 'open' : undefined));
+        }}
         onContextMenu={(e) => {
           e.preventDefault();
           states.showAccounts = true;
@@ -78,17 +73,17 @@ function NavMenu(props) {
         <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
       </button>
       <ControlledMenu
-        {...menuState}
+        state={menuState}
         anchorRef={buttonRef}
         onClose={() => {
-          toggleMenu(false);
+          setMenuState(undefined);
         }}
         containerProps={{
           style: {
             zIndex: 10,
           },
           onClick: () => {
-            toggleMenu(false);
+            setMenuState(undefined);
           },
         }}
         portal={{

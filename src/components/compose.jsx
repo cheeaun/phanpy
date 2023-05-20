@@ -1,6 +1,5 @@
 import './compose.css';
 
-import { match } from '@formatjs/intl-localematcher';
 import '@github/text-expander-element';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
@@ -16,6 +15,7 @@ import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import localeMatch from '../utils/locale-match';
 import openCompose from '../utils/open-compose';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
@@ -85,7 +85,7 @@ const observer = new IntersectionObserver((entries) => {
 });
 observer.observe(menu);
 
-const DEFAULT_LANG = match(
+const DEFAULT_LANG = localeMatch(
   [new Intl.DateTimeFormat().resolvedOptions().locale, ...navigator.languages],
   supportedLanguages.map((l) => l[0]),
   'en',

@@ -1,6 +1,5 @@
 import './status.css';
 
-import { match } from '@formatjs/intl-localematcher';
 import '@justinribeiro/lite-youtube';
 import {
   ControlledMenu,
@@ -33,6 +32,7 @@ import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
+import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -409,9 +409,9 @@ function Status({
   const differentLanguage =
     language &&
     language !== targetLanguage &&
-    !match([language], [targetLanguage]) &&
+    !localeMatch([language], [targetLanguage]) &&
     !contentTranslationHideLanguages.find(
-      (l) => language === l || match([language], [l]),
+      (l) => language === l || localeMatch([language], [l]),
     );
 
   const menuInstanceRef = useRef();

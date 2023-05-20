@@ -1,3 +1,5 @@
+import './nav-menu.css';
+
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
@@ -73,6 +75,7 @@ function NavMenu(props) {
         <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
       </button>
       <ControlledMenu
+        menuClassName="nav-menu"
         state={menuState}
         anchorRef={buttonRef}
         onClose={() => {
@@ -97,109 +100,113 @@ function NavMenu(props) {
         boundingBoxPadding="8 8 8 8"
         unmountOnClose
       >
-        {!!snapStates.appVersion?.commitHash &&
-          __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+        <section>
+          {!!snapStates.appVersion?.commitHash &&
+            __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+              <>
+                <MenuItem
+                  onClick={() => {
+                    const yes = confirm('Reload page now to update?');
+                    if (yes) {
+                      (async () => {
+                        try {
+                          location.reload();
+                        } catch (e) {}
+                      })();
+                    }
+                  }}
+                >
+                  <Icon icon="sparkles" size="l" />{' '}
+                  <span>New update available…</span>
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+          <MenuLink to="/">
+            <Icon icon="home" size="l" /> <span>Home</span>
+          </MenuLink>
+          {authenticated && (
             <>
-              <MenuItem
-                onClick={() => {
-                  const yes = confirm('Reload page now to update?');
-                  if (yes) {
-                    (async () => {
-                      try {
-                        location.reload();
-                      } catch (e) {}
-                    })();
-                  }
-                }}
-              >
-                <Icon icon="sparkles" size="l" />{' '}
-                <span>New update available…</span>
-              </MenuItem>
+              {showFollowing && (
+                <MenuLink to="/following">
+                  <Icon icon="following" size="l" /> <span>Following</span>
+                </MenuLink>
+              )}
+              <MenuLink to="/mentions">
+                <Icon icon="at" size="l" /> <span>Mentions</span>
+              </MenuLink>
+              <MenuLink to="/notifications">
+                <Icon icon="notification" size="l" /> <span>Notifications</span>
+                {snapStates.notificationsShowNew && (
+                  <sup title="New" style={{ opacity: 0.5 }}>
+                    {' '}
+                    &bull;
+                  </sup>
+                )}
+              </MenuLink>
               <MenuDivider />
+              <MenuLink to="/l">
+                <Icon icon="list" size="l" /> <span>Lists</span>
+              </MenuLink>
+              <MenuLink to="/ft">
+                <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
+              </MenuLink>
+              <MenuLink to="/b">
+                <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+              </MenuLink>
+              <MenuLink to="/f">
+                <Icon icon="heart" size="l" /> <span>Favourites</span>
+              </MenuLink>
             </>
           )}
-        <MenuLink to="/">
-          <Icon icon="home" size="l" /> <span>Home</span>
-        </MenuLink>
-        {authenticated && (
-          <>
-            {showFollowing && (
-              <MenuLink to="/following">
-                <Icon icon="following" size="l" /> <span>Following</span>
-              </MenuLink>
-            )}
-            <MenuLink to="/mentions">
-              <Icon icon="at" size="l" /> <span>Mentions</span>
-            </MenuLink>
-            <MenuLink to="/notifications">
-              <Icon icon="notification" size="l" /> <span>Notifications</span>
-              {snapStates.notificationsShowNew && (
-                <sup title="New" style={{ opacity: 0.5 }}>
-                  {' '}
-                  &bull;
-                </sup>
+          <MenuDivider />
+          <MenuLink to={`/search`}>
+            <Icon icon="search" size="l" /> <span>Search</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/p/l`}>
+            <Icon icon="group" size="l" /> <span>Local</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/p`}>
+            <Icon icon="earth" size="l" /> <span>Federated</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/trending`}>
+            <Icon icon="chart" size="l" /> <span>Trending</span>
+          </MenuLink>
+        </section>
+        <section>
+          {authenticated && (
+            <>
+              <MenuDivider />
+              {currentAccount?.info?.id && (
+                <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
+                  <Icon icon="user" size="l" /> <span>Profile</span>
+                </MenuLink>
               )}
-            </MenuLink>
-            <MenuDivider />
-            <MenuLink to="/l">
-              <Icon icon="list" size="l" /> <span>Lists</span>
-            </MenuLink>
-            <MenuLink to="/ft">
-              <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
-            </MenuLink>
-            <MenuLink to="/b">
-              <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
-            </MenuLink>
-            <MenuLink to="/f">
-              <Icon icon="heart" size="l" /> <span>Favourites</span>
-            </MenuLink>
-          </>
-        )}
-        <MenuDivider />
-        <MenuLink to={`/search`}>
-          <Icon icon="search" size="l" /> <span>Search</span>
-        </MenuLink>
-        <MenuLink to={`/${instance}/p/l`}>
-          <Icon icon="group" size="l" /> <span>Local</span>
-        </MenuLink>
-        <MenuLink to={`/${instance}/p`}>
-          <Icon icon="earth" size="l" /> <span>Federated</span>
-        </MenuLink>
-        <MenuLink to={`/${instance}/trending`}>
-          <Icon icon="chart" size="l" /> <span>Trending</span>
-        </MenuLink>
-        {authenticated && (
-          <>
-            <MenuDivider />
-            {currentAccount?.info?.id && (
-              <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
-                <Icon icon="user" size="l" /> <span>Profile</span>
-              </MenuLink>
-            )}
-            <MenuItem
-              onClick={() => {
-                states.showAccounts = true;
-              }}
-            >
-              <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                states.showShortcutsSettings = true;
-              }}
-            >
-              <Icon icon="shortcut" size="l" />{' '}
-              <span>Shortcuts Settings&hellip;</span>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                states.showSettings = true;
-              }}
-            >
-              <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
-            </MenuItem>
-          </>
-        )}
+              <MenuItem
+                onClick={() => {
+                  states.showAccounts = true;
+                }}
+              >
+                <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showShortcutsSettings = true;
+                }}
+              >
+                <Icon icon="shortcut" size="l" />{' '}
+                <span>Shortcuts Settings&hellip;</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showSettings = true;
+                }}
+              >
+                <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+              </MenuItem>
+            </>
+          )}
+        </section>
       </ControlledMenu>
     </>
   );

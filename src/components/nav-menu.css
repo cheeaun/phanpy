@@ -1,0 +1,26 @@
+@media (min-width: 23em) {
+  .nav-menu {
+    display: flex;
+    width: auto;
+    padding: 0;
+    /* 1px background image */
+    background-image: linear-gradient(
+      to right,
+      var(--divider-color),
+      var(--divider-color)
+    );
+    background-size: 1px 1px;
+    background-repeat: repeat-y;
+    background-position: center;
+  }
+  .nav-menu section {
+    width: 50%;
+    padding: 8px 0;
+  }
+  .nav-menu section:last-child > .szh-menu__divider:first-child {
+    display: none;
+  }
+  .nav-menu .szh-menu__item span {
+    white-space: normal;
+  }
+}

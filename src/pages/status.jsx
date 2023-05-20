@@ -610,14 +610,17 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
   const initialPageState = useRef(showMedia ? 'media+status' : 'status');
 
-  const handleMediaClick = useCallback((e, i, media, status) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSearchParams({
-      media: i + 1,
-      mediaStatusID: status.id,
-    });
-  }, []);
+  const handleMediaClick = useCallback(
+    (e, i, media, status) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setSearchParams({
+        media: i + 1,
+        mediaStatusID: status.id,
+      });
+    },
+    [id],
+  );
 
   return (
     <div

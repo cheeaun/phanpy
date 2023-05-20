@@ -1104,7 +1104,7 @@ function Status({
                 <>
                   <Icon
                     icon={visibilityIconsMap[visibility]}
-                    alt={visibility}
+                    alt={visibilityText[visibility]}
                   />{' '}
                   <a href={url} target="_blank">
                     <time

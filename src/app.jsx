@@ -91,7 +91,9 @@ function App() {
 
   useEffect(() => {
     const instanceURL = store.local.get('instanceURL');
-    const code = (window.location.search.match(/code=([^&]+)/) || [])[1];
+    const code = decodeURIComponent(
+      (window.location.search.match(/code=([^&]+)/) || [, ''])[1],
+    );
 
     if (code) {
       console.log({ code });

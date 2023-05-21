@@ -15,7 +15,12 @@
         var(--divider-color) 1px,
         transparent 1px
       ),
-      linear-gradient(to bottom, var(--bg-blur-color), transparent);
+      linear-gradient(to bottom, var(--bg-blur-color), transparent),
+      url(../assets/phanpy-bg.svg);
+    background-repeat: no-repeat;
+    /* background-size: auto, auto, 200%; */
+    background-position: 0 0, 0 0, 2em 90%;
+    background-blend-mode: normal, normal, overlay;
     box-shadow: inset 0 0 1px var(--bg-color);
   }
   .nav-menu section:last-child > .szh-menu__divider:first-child {

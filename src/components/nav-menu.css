@@ -6,6 +6,7 @@
   }
   .nav-menu section {
     padding: 8px 0;
+    width: 50%;
   }
   .nav-menu section:last-child {
     background-color: var(--bg-faded-color);
@@ -20,7 +21,7 @@
   .nav-menu section:last-child > .szh-menu__divider:first-child {
     display: none;
   }
-  .nav-menu section:last-child .szh-menu__item span {
+  .nav-menu .szh-menu__item span {
     white-space: normal;
   }
 }

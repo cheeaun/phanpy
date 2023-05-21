@@ -103,14 +103,11 @@ function Notifications() {
     setUIState('loading');
     (async () => {
       try {
+        const fetchNotificationsPromise = fetchNotifications(firstLoad);
         const fetchFollowRequestsPromise = fetchFollowRequests();
         const fetchAnnouncementsPromise = fetchAnnouncements();
-        const { done } = await fetchNotifications(firstLoad);
-        setShowMore(!done);
 
         if (firstLoad) {
-          const requests = await fetchFollowRequestsPromise;
-          setFollowRequests(requests);
           const announcements = await fetchAnnouncementsPromise;
           announcements.sort((a, b) => {
             // Sort by updatedAt first, then createdAt
@@ -119,7 +116,12 @@ function Notifications() {
             return bDate - aDate;
           });
           setAnnouncements(announcements);
+          const requests = await fetchFollowRequestsPromise;
+          setFollowRequests(requests);
         }
+
+        const { done } = await fetchNotificationsPromise;
+        setShowMore(!done);
 
         setUIState('default');
       } catch (e) {

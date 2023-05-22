@@ -1,6 +1,5 @@
 import './status.css';
 
-import { match } from '@formatjs/intl-localematcher';
 import '@justinribeiro/lite-youtube';
 import {
   ControlledMenu,
@@ -33,6 +32,7 @@ import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
+import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -105,10 +105,11 @@ function Status({
   const { instance: currentInstance } = api();
   const sameInstance = instance === currentInstance;
 
-  const sKey = statusKey(statusID, instance);
+  let sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
     status = snapStates.statuses[sKey] || snapStates.statuses[statusID];
+    sKey = statusKey(status?.id, instance);
   }
   if (!status) {
     return null;
@@ -408,9 +409,9 @@ function Status({
   const differentLanguage =
     language &&
     language !== targetLanguage &&
-    !match([language], [targetLanguage]) &&
+    !localeMatch([language], [targetLanguage]) &&
     !contentTranslationHideLanguages.find(
-      (l) => language === l || match([language], [l]),
+      (l) => language === l || localeMatch([language], [l]),
     );
 
   const menuInstanceRef = useRef();
@@ -977,6 +978,7 @@ function Status({
                           (result) => {
                             if (!result) return;
                             a.removeAttribute('target');
+                            if (!sKey) return;
                             if (!Array.isArray(states.statusQuotes[sKey])) {
                               states.statusQuotes[sKey] = [];
                             }
@@ -1102,7 +1104,7 @@ function Status({
                 <>
                   <Icon
                     icon={visibilityIconsMap[visibility]}
-                    alt={visibility}
+                    alt={visibilityText[visibility]}
                   />{' '}
                   <a href={url} target="_blank">
                     <time
@@ -1954,6 +1956,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
 }
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
+  if (!id || !instance) return;
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];

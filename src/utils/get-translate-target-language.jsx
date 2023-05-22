@@ -1,7 +1,6 @@
-import { match } from '@formatjs/intl-localematcher';
-
 import translationTargetLanguages from '../data/lingva-target-languages';
 
+import localeMatch from './locale-match';
 import states from './states';
 
 function getTranslateTargetLanguage(fromSettings = false) {
@@ -11,7 +10,7 @@ function getTranslateTargetLanguage(fromSettings = false) {
       return contentTranslationTargetLanguage;
     }
   }
-  return match(
+  return localeMatch(
     [
       new Intl.DateTimeFormat().resolvedOptions().locale,
       ...navigator.languages,

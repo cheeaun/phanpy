@@ -59,8 +59,9 @@ registerRoute(iconsRoute);
 // - /api/v1/custom_emojis
 // - /api/v1/preferences
 // - /api/v1/lists/:id
+// - /api/v1/announcements
 const apiExtendedRoute = new RegExpRoute(
-  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+)$/,
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+|announcements)$/,
   new StaleWhileRevalidate({
     cacheName: 'api-extended',
     plugins: [

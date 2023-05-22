@@ -248,10 +248,17 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
         totalDescendants.current = descendants?.length || 0;
 
+        const missingStatuses = new Set();
         ancestors.forEach((status) => {
           saveStatus(status, instance, {
             skipThreading: true,
           });
+          if (
+            status.inReplyToId &&
+            !ancestors.find((s) => s.id === status.inReplyToId)
+          ) {
+            missingStatuses.add(status.inReplyToId);
+          }
         });
         const ancestorsIsThread = ancestors.every(
           (s) => s.account.id === heroStatus.account.id,
@@ -261,6 +268,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           saveStatus(status, instance, {
             skipThreading: true,
           });
+
+          if (
+            status.inReplyToId &&
+            !descendants.find((s) => s.id === status.inReplyToId) &&
+            status.inReplyToId !== heroStatus.id
+          ) {
+            missingStatuses.add(status.inReplyToId);
+          }
+
           if (status.inReplyToAccountId === status.account.id) {
             // If replying to self, it's part of the thread, level 1
             nestedDescendants.push(status);
@@ -290,6 +306,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         });
 
         console.log({ ancestors, descendants, nestedDescendants });
+        if (missingStatuses.size) {
+          console.error('Missing statuses', [...missingStatuses]);
+        }
 
         function expandReplies(_replies) {
           return _replies?.map((_r) => ({
@@ -591,14 +610,17 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
   const initialPageState = useRef(showMedia ? 'media+status' : 'status');
 
-  const handleMediaClick = useCallback((e, i, media, status) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSearchParams({
-      media: i + 1,
-      mediaStatusID: status.id,
-    });
-  }, []);
+  const handleMediaClick = useCallback(
+    (e, i, media, status) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setSearchParams({
+        media: i + 1,
+        mediaStatusID: status.id,
+      });
+    },
+    [id],
+  );
 
   return (
     <div

@@ -262,10 +262,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     inset 0 3px var(--comment-line-color);
 }
 .timeline.contextual .replies[data-comments-level='4'] {
-  overflow: auto;
+  overflow-x: auto;
 }
 .timeline.contextual .replies[data-comments-level='4']:has(.replies) {
-  overflow: auto;
+  overflow-x: auto;
   mask-image: linear-gradient(to left, transparent, black 32px);
 }
 .timeline.contextual

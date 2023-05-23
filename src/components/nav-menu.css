@@ -3,6 +3,7 @@
     display: flex;
     width: auto;
     padding: 0;
+    min-width: 22em;
   }
   .nav-menu section {
     padding: 8px 0;
@@ -39,5 +40,11 @@
   }
   .nav-menu .szh-menu__item span {
     white-space: normal;
+  }
+}
+
+@media (min-width: 40em) {
+  .nav-menu {
+    width: 28em;
   }
 }

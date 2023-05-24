@@ -337,6 +337,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           },
           ...nestedDescendants.map((s) => ({
             id: s.id,
+            account: s.account,
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
@@ -974,15 +975,27 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             <li>
               <button
                 type="button"
-                class="plain block"
+                class="plain block show-more"
                 disabled={uiState === 'loading'}
                 onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
               >
-                Show more&hellip;{' '}
-                <span class="tag">
-                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
-                </span>
+                <div class="ib">
+                  {/* show avatars for first 5 statuses */}
+                  {statuses.slice(limit, limit + 5).map((status) => (
+                    <Avatar
+                      key={status.id}
+                      url={status.account.avatarStatic}
+                      // title={`${status.avatar.displayName} (@${status.avatar.acct})`}
+                    />
+                  ))}
+                </div>{' '}
+                <div class="ib">
+                  Show more&hellip;{' '}
+                  <span class="tag">
+                    {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                  </span>
+                </div>
               </button>
             </li>
           )}

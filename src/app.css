@@ -642,6 +642,34 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background-image: none;
 }
 
+.timeline .show-more {
+  padding-left: calc(var(--line-end) + var(--line-margin-end)) !important;
+  text-align: left;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  position: relative;
+  border-radius: 0;
+  padding-block: 16px !important;
+}
+.timeline .show-more:hover {
+  filter: none !important;
+  color: var(--text-color) !important;
+  background-color: var(--bg-faded-blur-color) !important;
+}
+.timeline .show-more:before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: var(--line-start);
+  width: var(--line-diameter);
+  height: var(--line-diameter);
+  border-radius: var(--line-radius);
+  border-style: solid;
+  border-width: var(--line-width);
+  border-color: transparent transparent var(--comment-line-color) transparent;
+  transform: rotate(45deg);
+}
+
 .status-loading {
   text-align: center;
   color: var(--text-insignificant-color);

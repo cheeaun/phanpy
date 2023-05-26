@@ -55,6 +55,7 @@ function resetScrollPosition(id) {
 function StatusPage(params) {
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
+  const snapStates = useSnapshot(states);
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const mediaOnlyParam = searchParams.get('media-only');
@@ -117,12 +118,16 @@ function StatusPage(params) {
             instance={instance}
             index={mediaIndex - 1}
             onClose={() => {
-              if (showMediaOnly) {
-                location.hash = closeLink;
+              if (snapStates.prevLocation) {
+                history.back();
               } else {
-                searchParams.delete('media');
-                searchParams.delete('mediaStatusID');
-                setSearchParams(searchParams);
+                if (showMediaOnly) {
+                  location.hash = closeLink;
+                } else {
+                  searchParams.delete('media');
+                  searchParams.delete('mediaStatusID');
+                  setSearchParams(searchParams);
+                }
               }
             }}
           />

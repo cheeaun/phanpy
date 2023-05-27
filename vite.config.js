@@ -9,8 +9,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
 
 const { NODE_ENV } = process.env;
-const { VITE_CLIENT_NAME: CLIENT_NAME, VITE_APP_ERROR_LOGGING: ERROR_LOGGING } =
-  loadEnv('production', process.cwd());
+const {
+  VITE_CLIENT_NAME: CLIENT_NAME,
+  VITE_CLIENT_ID: CLIENT_ID,
+  VITE_APP_ERROR_LOGGING: ERROR_LOGGING,
+} = loadEnv('production', process.cwd());
 
 const now = new Date();
 const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
@@ -51,6 +54,7 @@ export default defineConfig({
     ]),
     VitePWA({
       manifest: {
+        id: CLIENT_ID,
         name: CLIENT_NAME,
         short_name: CLIENT_NAME,
         description: 'Minimalistic opinionated Mastodon web client',

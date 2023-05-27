@@ -816,9 +816,14 @@ function Compose({
                     skipThreading: true,
                   });
                 } else {
-                  newStatus = await masto.v1.statuses.create(params, {
-                    idempotencyKey: UID.current,
-                  });
+                  try {
+                    newStatus = await masto.v1.statuses.create(params, {
+                      idempotencyKey: UID.current,
+                    });
+                  } catch (_) {
+                    // If idempotency key fails, try again without it
+                    newStatus = await masto.v1.statuses.create(params);
+                  }
                 }
                 setUIState('default');
 

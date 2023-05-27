@@ -55,6 +55,7 @@ function resetScrollPosition(id) {
 function StatusPage(params) {
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
+  const snapStates = useSnapshot(states);
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const mediaOnlyParam = searchParams.get('media-only');
@@ -117,12 +118,16 @@ function StatusPage(params) {
             instance={instance}
             index={mediaIndex - 1}
             onClose={() => {
-              if (showMediaOnly) {
-                location.hash = closeLink;
+              if (snapStates.prevLocation) {
+                history.back();
               } else {
-                searchParams.delete('media');
-                searchParams.delete('mediaStatusID');
-                setSearchParams(searchParams);
+                if (showMediaOnly) {
+                  location.hash = closeLink;
+                } else {
+                  searchParams.delete('media');
+                  searchParams.delete('mediaStatusID');
+                  setSearchParams(searchParams);
+                }
               }
             }}
           />
@@ -337,6 +342,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           },
           ...nestedDescendants.map((s) => ({
             id: s.id,
+            account: s.account,
             accountID: s.account.id,
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
@@ -974,15 +980,27 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             <li>
               <button
                 type="button"
-                class="plain block"
+                class="plain block show-more"
                 disabled={uiState === 'loading'}
                 onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
               >
-                Show more&hellip;{' '}
-                <span class="tag">
-                  {showMore > LIMIT ? `${LIMIT}+` : showMore}
-                </span>
+                <div class="ib">
+                  {/* show avatars for first 5 statuses */}
+                  {statuses.slice(limit, limit + 5).map((status) => (
+                    <Avatar
+                      key={status.id}
+                      url={status.account.avatarStatic}
+                      // title={`${status.avatar.displayName} (@${status.avatar.acct})`}
+                    />
+                  ))}
+                </div>{' '}
+                <div class="ib">
+                  Show more&hellip;{' '}
+                  <span class="tag">
+                    {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                  </span>
+                </div>
               </button>
             </li>
           )}

@@ -53,6 +53,7 @@ function Mentions(props) {
     }
     const results = await conversationsIterator.current.next();
     let { value } = results;
+    value = value?.filter((item) => item.lastStatus);
     if (value?.length) {
       if (firstLoad) {
         latestConversationItem.current = value[0].lastStatus.id;

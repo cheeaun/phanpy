@@ -4,7 +4,7 @@ const { INSTANCES_SOCIAL_SECRET_TOKEN } = process.env;
 
 const params = new URLSearchParams({
   count: 0,
-  min_users: 1_000,
+  min_users: 500,
   sort_by: 'active_users',
   sort_order: 'desc',
 });

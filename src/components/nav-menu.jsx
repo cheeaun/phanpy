@@ -1,7 +1,7 @@
 import './nav-menu.css';
 
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
-import { useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -16,11 +16,18 @@ import MenuLink from './menu-link';
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { instance, authenticated } = api();
-  const accounts = store.local.getJSON('accounts') || [];
-  const currentAccount = accounts.find(
-    (account) => account.info.id === store.session.get('currentAccount'),
-  );
-  const moreThanOneAccount = accounts.length > 1;
+
+  const [currentAccount, setCurrentAccount] = useState();
+  const [moreThanOneAccount, setMoreThanOneAccount] = useState(false);
+
+  useEffect(() => {
+    const accounts = store.local.getJSON('accounts') || [];
+    const acc = accounts.find(
+      (account) => account.info.id === store.session.get('currentAccount'),
+    );
+    if (acc) setCurrentAccount(acc);
+    setMoreThanOneAccount(accounts.length > 1);
+  }, []);
 
   // Home = Following
   // But when in multi-column mode, Home becomes columns of anything

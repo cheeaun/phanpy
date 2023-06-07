@@ -118,7 +118,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               height={height}
               data-orientation={orientation}
               loading="eager"
-              decoding="async"
+              decoding="sync"
               onLoad={(e) => {
                 e.target.closest('.media-image').style.backgroundImage = '';
                 e.target.closest('.media-zoom').style.display = '';

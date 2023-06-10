@@ -74,6 +74,15 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
 
+### Filtered posts
+
+- "Hide completely"-filtered posts will be hidden, with no UI to reveal it.
+- "Hide with a warning"-filtered posts will be partially hidden, showing the filter name and author name.
+  - Content can be partially revealed by hovering over the post, with tooltip showing the post text.
+  - Clicking it will open the Post page.
+  - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
+  - On boosts carousel, they are not partially hidden, but sorted to the end of the carousel.
+
 ## Development
 
 Prerequisites: Node.js 18+

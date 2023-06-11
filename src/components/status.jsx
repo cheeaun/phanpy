@@ -1819,7 +1819,7 @@ const unfurlMastodonLink = throttle(
 
 const root = document.documentElement;
 const defaultBoundingBoxPadding = 8;
-function safeBoundingBoxPadding() {
+function _safeBoundingBoxPadding() {
   // Get safe area inset variables from root
   const style = getComputedStyle(root);
   const safeAreaInsetTop = style.getPropertyValue('--sai-top');
@@ -1837,6 +1837,9 @@ function safeBoundingBoxPadding() {
   // console.log(str);
   return str;
 }
+const safeBoundingBoxPadding = mem(_safeBoundingBoxPadding, {
+  maxAge: 10_000, // 10 seconds
+});
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

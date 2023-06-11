@@ -7,174 +7,193 @@ function enhanceContent(content, opts = {}) {
   let enhancedContent = content;
   const dom = document.createElement('div');
   dom.innerHTML = enhancedContent;
+  const hasLink = /<a/i.test(enhancedContent);
+  const hasCodeBlock = enhancedContent.indexOf('```') !== -1;
 
   // Add target="_blank" to all links with no target="_blank"
   // E.g. `note` in `account`
-  const noTargetBlankLinks = Array.from(
-    dom.querySelectorAll('a:not([target="_blank"])'),
-  );
-  noTargetBlankLinks.forEach((link) => {
-    link.setAttribute('target', '_blank');
-  });
+  if (hasLink) {
+    const noTargetBlankLinks = Array.from(
+      dom.querySelectorAll('a:not([target="_blank"])'),
+    );
+    noTargetBlankLinks.forEach((link) => {
+      link.setAttribute('target', '_blank');
+    });
+  }
 
   // Spanify un-spanned mentions
-  const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
-  notMentionLinks.forEach((link) => {
-    const text = link.innerText.trim();
-    const hasChildren = link.querySelector('*');
-    // If text looks like @username@domain, then it's a mention
-    if (/^@[^@]+(@[^@]+)?$/g.test(text)) {
-      // Only show @username
-      const username = text.split('@')[1];
-      if (!hasChildren) link.innerHTML = `@<span>${username}</span>`;
-      link.classList.add('mention');
-    }
-    // If text looks like #hashtag, then it's a hashtag
-    if (/^#[^#]+$/g.test(text)) {
-      if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
-      link.classList.add('mention', 'hashtag');
-    }
-  });
+  if (hasLink) {
+    const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
+    notMentionLinks.forEach((link) => {
+      const text = link.innerText.trim();
+      const hasChildren = link.querySelector('*');
+      // If text looks like @username@domain, then it's a mention
+      if (/^@[^@]+(@[^@]+)?$/g.test(text)) {
+        // Only show @username
+        const username = text.split('@')[1];
+        if (!hasChildren) link.innerHTML = `@<span>${username}</span>`;
+        link.classList.add('mention');
+      }
+      // If text looks like #hashtag, then it's a hashtag
+      if (/^#[^#]+$/g.test(text)) {
+        if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
+        link.classList.add('mention', 'hashtag');
+      }
+    });
+  }
 
   // EMOJIS
   // ======
   // Convert :shortcode: to <img />
-  let textNodes = extractTextNodes(dom);
-  textNodes.forEach((node) => {
-    let html = node.nodeValue
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-    if (emojis) {
-      html = emojifyText(html, emojis);
-    }
-    fauxDiv.innerHTML = html;
-    const nodes = Array.from(fauxDiv.childNodes);
-    node.replaceWith(...nodes);
-  });
+  let textNodes;
+  if (enhancedContent.indexOf(':') !== -1) {
+    textNodes = extractTextNodes(dom);
+    textNodes.forEach((node) => {
+      let html = node.nodeValue
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      if (emojis) {
+        html = emojifyText(html, emojis);
+      }
+      fauxDiv.innerHTML = html;
+      const nodes = Array.from(fauxDiv.childNodes);
+      node.replaceWith(...nodes);
+    });
+  }
 
   // CODE BLOCKS
   // ===========
   // Convert ```code``` to <pre><code>code</code></pre>
-  const blocks = Array.from(dom.querySelectorAll('p')).filter((p) =>
-    /^```[^]+```$/g.test(p.innerText.trim()),
-  );
-  blocks.forEach((block) => {
-    const pre = document.createElement('pre');
-    // Replace <br /> with newlines
-    block.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
-    pre.innerHTML = `<code>${block.innerHTML.trim()}</code>`;
-    block.replaceWith(pre);
-  });
+  if (hasCodeBlock) {
+    const blocks = Array.from(dom.querySelectorAll('p')).filter((p) =>
+      /^```[^]+```$/g.test(p.innerText.trim()),
+    );
+    blocks.forEach((block) => {
+      const pre = document.createElement('pre');
+      // Replace <br /> with newlines
+      block.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+      pre.innerHTML = `<code>${block.innerHTML.trim()}</code>`;
+      block.replaceWith(pre);
+    });
+  }
 
   // Convert multi-paragraph code blocks to <pre><code>code</code></pre>
-  const paragraphs = Array.from(dom.querySelectorAll('p'));
-  // Filter out paragraphs with ``` in beginning only
-  const codeBlocks = paragraphs.filter((p) => /^```/g.test(p.innerText));
-  // For each codeBlocks, get all paragraphs until the last paragraph with ``` at the end only
-  codeBlocks.forEach((block) => {
-    const nextParagraphs = [block];
-    let hasCodeBlock = false;
-    let currentBlock = block;
-    while (currentBlock.nextElementSibling) {
-      const next = currentBlock.nextElementSibling;
-      if (next && next.tagName === 'P') {
-        if (/```$/g.test(next.innerText)) {
-          nextParagraphs.push(next);
-          hasCodeBlock = true;
-          break;
+  if (hasCodeBlock) {
+    const paragraphs = Array.from(dom.querySelectorAll('p'));
+    // Filter out paragraphs with ``` in beginning only
+    const codeBlocks = paragraphs.filter((p) => /^```/g.test(p.innerText));
+    // For each codeBlocks, get all paragraphs until the last paragraph with ``` at the end only
+    codeBlocks.forEach((block) => {
+      const nextParagraphs = [block];
+      let hasCodeBlock = false;
+      let currentBlock = block;
+      while (currentBlock.nextElementSibling) {
+        const next = currentBlock.nextElementSibling;
+        if (next && next.tagName === 'P') {
+          if (/```$/g.test(next.innerText)) {
+            nextParagraphs.push(next);
+            hasCodeBlock = true;
+            break;
+          } else {
+            nextParagraphs.push(next);
+          }
         } else {
-          nextParagraphs.push(next);
+          break;
         }
-      } else {
-        break;
+        currentBlock = next;
       }
-      currentBlock = next;
-    }
-    if (hasCodeBlock) {
-      const pre = document.createElement('pre');
-      nextParagraphs.forEach((p) => {
-        // Replace <br /> with newlines
-        p.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
-      });
-      const codeText = nextParagraphs.map((p) => p.innerHTML).join('\n\n');
-      pre.innerHTML = `<code>${codeText}</code>`;
-      block.replaceWith(pre);
-      nextParagraphs.forEach((p) => p.remove());
-    }
-  });
+      if (hasCodeBlock) {
+        const pre = document.createElement('pre');
+        nextParagraphs.forEach((p) => {
+          // Replace <br /> with newlines
+          p.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+        });
+        const codeText = nextParagraphs.map((p) => p.innerHTML).join('\n\n');
+        pre.innerHTML = `<code>${codeText}</code>`;
+        block.replaceWith(pre);
+        nextParagraphs.forEach((p) => p.remove());
+      }
+    });
+  }
 
   // INLINE CODE
   // ===========
   // Convert `code` to <code>code</code>
-  textNodes = extractTextNodes(dom);
-  textNodes.forEach((node) => {
-    let html = node.nodeValue
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-    if (/`[^`]+`/g.test(html)) {
-      html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
-    }
-    fauxDiv.innerHTML = html;
-    const nodes = Array.from(fauxDiv.childNodes);
-    node.replaceWith(...nodes);
-  });
+  if (enhancedContent.indexOf('`') !== -1) {
+    textNodes = extractTextNodes(dom);
+    textNodes.forEach((node) => {
+      let html = node.nodeValue
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      if (/`[^`]+`/g.test(html)) {
+        html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
+      }
+      fauxDiv.innerHTML = html;
+      const nodes = Array.from(fauxDiv.childNodes);
+      node.replaceWith(...nodes);
+    });
+  }
 
   // TWITTER USERNAMES
   // =================
   // Convert @username@twitter.com to <a href="https://twitter.com/username">@username@twitter.com</a>
-  textNodes = extractTextNodes(dom, {
-    rejectFilter: ['A'],
-  });
-  textNodes.forEach((node) => {
-    let html = node.nodeValue
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-    if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
-      html = html.replaceAll(
-        /(@([a-zA-Z0-9_]+)@twitter\.com)/g,
-        '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
-      );
-    }
-    fauxDiv.innerHTML = html;
-    const nodes = Array.from(fauxDiv.childNodes);
-    node.replaceWith(...nodes);
-  });
+  if (/twitter\.com/i.test(enhancedContent)) {
+    textNodes = extractTextNodes(dom, {
+      rejectFilter: ['A'],
+    });
+    textNodes.forEach((node) => {
+      let html = node.nodeValue
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
+        html = html.replaceAll(
+          /(@([a-zA-Z0-9_]+)@twitter\.com)/g,
+          '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+        );
+      }
+      fauxDiv.innerHTML = html;
+      const nodes = Array.from(fauxDiv.childNodes);
+      node.replaceWith(...nodes);
+    });
+  }
 
   // HASHTAG STUFFING
   // ================
   // Get the <p> that contains a lot of hashtags, add a class to it
-  const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
-    (p) => {
-      let hashtagCount = 0;
-      for (let i = 0; i < p.childNodes.length; i++) {
-        const node = p.childNodes[i];
+  if (enhancedContent.indexOf('#') !== -1) {
+    const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
+      (p) => {
+        let hashtagCount = 0;
+        for (let i = 0; i < p.childNodes.length; i++) {
+          const node = p.childNodes[i];
 
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.textContent.trim();
-          if (text !== '') {
-            return false;
-          }
-        } else if (node.tagName === 'A') {
-          const linkText = node.textContent.trim();
-          if (!linkText || !linkText.startsWith('#')) {
-            return false;
+          if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent.trim();
+            if (text !== '') {
+              return false;
+            }
+          } else if (node.tagName === 'A') {
+            const linkText = node.textContent.trim();
+            if (!linkText || !linkText.startsWith('#')) {
+              return false;
+            } else {
+              hashtagCount++;
+            }
           } else {
-            hashtagCount++;
+            return false;
           }
-        } else {
-          return false;
         }
-      }
-      // Only consider "stuffing" if there are more than 3 hashtags
-      return hashtagCount > 3;
-    },
-  );
-  if (hashtagStuffedParagraph) {
-    hashtagStuffedParagraph.classList.add('hashtag-stuffing');
-    hashtagStuffedParagraph.title = hashtagStuffedParagraph.innerText;
+        // Only consider "stuffing" if there are more than 3 hashtags
+        return hashtagCount > 3;
+      },
+    );
+    if (hashtagStuffedParagraph) {
+      hashtagStuffedParagraph.classList.add('hashtag-stuffing');
+      hashtagStuffedParagraph.title = hashtagStuffedParagraph.innerText;
+    }
   }
 
   if (postEnhanceDOM) {

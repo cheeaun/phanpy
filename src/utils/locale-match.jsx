@@ -1,6 +1,7 @@
 import { match } from '@formatjs/intl-localematcher';
+import mem from 'mem';
 
-function localeMatch(...args) {
+function _localeMatch(...args) {
   // Wrap in try/catch because localeMatcher throws on invalid locales
   try {
     return match(...args);
@@ -8,5 +9,8 @@ function localeMatch(...args) {
     return false;
   }
 }
+const localeMatch = mem(_localeMatch, {
+  cacheKey: (args) => args.join(),
+});
 
 export default localeMatch;

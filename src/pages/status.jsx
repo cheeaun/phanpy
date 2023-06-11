@@ -386,7 +386,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   useEffect(() => {
     if (!statuses.length) return;
     console.debug('STATUSES', statuses);
-    const scrollPosition = states.scrollPositions[id];
+    const scrollPosition = snapStates.scrollPositions[id];
     console.debug('scrollPosition', scrollPosition);
     if (!!scrollPosition) {
       console.debug('Case 1', {

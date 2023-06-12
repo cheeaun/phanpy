@@ -1,3 +1,7 @@
+body.cloak a {
+  text-decoration-color: var(--link-color);
+}
+
 body.cloak .name-text,
 body.cloak .name-text *,
 body.cloak .status .content-container,
@@ -24,4 +28,12 @@ body.cloak .emoji,
 body.cloak .header-banner {
   filter: contrast(0) !important;
   background-color: #000 !important;
+}
+
+/* SPECIAL CASES */
+
+@supports (display: -webkit-box) {
+  body.cloak .card :is(.title, .meta) {
+    background-color: var(--text-color) !important;
+  }
 }

@@ -275,6 +275,13 @@ function AccountInfo({
                   </span>
                 </>
               )}
+              {group && (
+                <>
+                  <span class="tag">
+                    <Icon icon="group" /> Group
+                  </span>
+                </>
+              )}
               <div
                 class="note"
                 onClick={handleContentLinks({
@@ -673,7 +680,7 @@ function RelatedActions({ info, instance, authenticated }) {
                     openTrigger="clickOnly"
                     direction="bottom"
                     overflow="auto"
-                    shift={-16}
+                    shift={16}
                     label={
                       <>
                         <Icon icon="mute" />

@@ -673,7 +673,7 @@ function RelatedActions({ info, instance, authenticated }) {
                     openTrigger="clickOnly"
                     direction="bottom"
                     overflow="auto"
-                    offsetX={-16}
+                    shift={-16}
                     label={
                       <>
                         <Icon icon="mute" />

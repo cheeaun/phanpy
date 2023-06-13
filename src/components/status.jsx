@@ -34,6 +34,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
@@ -824,7 +825,7 @@ function Status({
                   },
                 }}
                 align="end"
-                offsetY={4}
+                gap={4}
                 overflow="auto"
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
@@ -1182,7 +1183,7 @@ function Status({
                     document.querySelector('.status-deck') || document.body,
                 }}
                 align="end"
-                offsetY={4}
+                gap={4}
                 overflow="auto"
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
@@ -1816,30 +1817,6 @@ const unfurlMastodonLink = throttle(
     cacheKey: (instance, url) => `${instance}:${url}`,
   }),
 );
-
-const root = document.documentElement;
-const defaultBoundingBoxPadding = 8;
-function _safeBoundingBoxPadding() {
-  // Get safe area inset variables from root
-  const style = getComputedStyle(root);
-  const safeAreaInsetTop = style.getPropertyValue('--sai-top');
-  const safeAreaInsetRight = style.getPropertyValue('--sai-right');
-  const safeAreaInsetBottom = style.getPropertyValue('--sai-bottom');
-  const safeAreaInsetLeft = style.getPropertyValue('--sai-left');
-  const str = [
-    safeAreaInsetTop,
-    safeAreaInsetRight,
-    safeAreaInsetBottom,
-    safeAreaInsetLeft,
-  ]
-    .map((v) => parseInt(v, 10) || defaultBoundingBoxPadding)
-    .join(' ');
-  // console.log(str);
-  return str;
-}
-const safeBoundingBoxPadding = mem(_safeBoundingBoxPadding, {
-  maxAge: 10_000, // 10 seconds
-});
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

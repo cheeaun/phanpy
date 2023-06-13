@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
+import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
@@ -92,15 +93,12 @@ function Public({ local, ...props }) {
       boostsCarousel={snapStates.settings.boostsCarousel}
       allowFilters
       headerEnd={
-        <Menu
-          portal={{
-            target: document.body,
-          }}
+        <Menu2
+          portal
           // setDownOverflow
           overflow="auto"
           viewScroll="close"
           position="anchor"
-          boundingBoxPadding="8 8 8 8"
           menuButton={
             <button type="button" class="plain">
               <Icon icon="more" size="l" />
@@ -136,7 +134,7 @@ function Public({ local, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
-        </Menu>
+        </Menu2>
       }
     />
   );

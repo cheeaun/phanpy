@@ -191,7 +191,7 @@ function MediaModal({
             align="end"
             position="anchor"
             boundingBoxPadding="8 8 8 8"
-            offsetY={4}
+            gap={4}
             menuClassName="glass-menu"
             menuButton={
               <button type="button" class="carousel-button plain3">

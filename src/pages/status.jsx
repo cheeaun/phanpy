@@ -7,6 +7,7 @@ import { memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -1089,7 +1090,7 @@ function SubComments({
   }, []);
 
   const detailsRef = useRef();
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleScroll(e) {
       e.target.dataset.scrollLeft = e.target.scrollLeft;
     }

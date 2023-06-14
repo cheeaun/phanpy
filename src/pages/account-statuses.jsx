@@ -4,11 +4,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import AccountInfo from '../components/account-info';
+import EmojiText from '../components/emoji-text';
 import Icon from '../components/icon';
 import Link from '../components/link';
+import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
-import emojifyText from '../utils/emojify-text';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
@@ -235,11 +236,9 @@ function AccountStatuses() {
           //   };
           // }}
         >
-          <b
-            dangerouslySetInnerHTML={{
-              __html: emojifyText(displayName, emojis),
-            }}
-          />
+          <b>
+            <EmojiText text={displayName} emojis={emojis} />
+          </b>
           <div>
             <span>@{acct}</span>
           </div>
@@ -255,15 +254,12 @@ function AccountStatuses() {
       timelineStart={TimelineStart}
       refresh={excludeReplies + excludeBoosts + tagged + media}
       headerEnd={
-        <Menu
-          portal={{
-            target: document.body,
-          }}
+        <Menu2
+          portal
           // setDownOverflow
           overflow="auto"
           viewScroll="close"
           position="anchor"
-          boundingBoxPadding="8 8 8 8"
           menuButton={
             <button type="button" class="plain">
               <Icon icon="more" size="l" />
@@ -295,7 +291,7 @@ function AccountStatuses() {
               Switch to account's instance (<b>{accountInstance}</b>)
             </small>
           </MenuItem>
-        </Menu>
+        </Menu2>
       }
     />
   );

@@ -132,7 +132,7 @@ function Shortcuts() {
           viewScroll="close"
           boundingBoxPadding="8 8 8 8"
           menuClassName="glass-menu shortcuts-menu"
-          offsetY={8}
+          gap={8}
           position="anchor"
           menuButton={
             <button

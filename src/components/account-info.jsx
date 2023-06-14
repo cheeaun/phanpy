@@ -4,7 +4,6 @@ import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
-import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -16,6 +15,7 @@ import store from '../utils/store';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
+import EmojiText from './emoji-text';
 import Icon from './icon';
 import Link from './link';
 import ListAddEdit from './list-add-edit';
@@ -186,6 +186,7 @@ function AccountInfo({
                 }}
                 crossOrigin="anonymous"
                 onLoad={(e) => {
+                  e.target.classList.add('loaded');
                   try {
                     // Get color from four corners of image
                     const canvas = document.createElement('canvas');
@@ -275,6 +276,13 @@ function AccountInfo({
                   </span>
                 </>
               )}
+              {group && (
+                <>
+                  <span class="tag">
+                    <Icon icon="group" /> Group
+                  </span>
+                </>
+              )}
               <div
                 class="note"
                 onClick={handleContentLinks({
@@ -294,11 +302,7 @@ function AccountInfo({
                       key={name}
                     >
                       <b>
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: emojifyText(name, emojis),
-                          }}
-                        />{' '}
+                        <EmojiText text={name} emojis={emojis} />{' '}
                         {!!verifiedAt && <Icon icon="check-circle" size="s" />}
                       </b>
                       <p
@@ -673,7 +677,7 @@ function RelatedActions({ info, instance, authenticated }) {
                     openTrigger="clickOnly"
                     direction="bottom"
                     overflow="auto"
-                    offsetX={-16}
+                    shift={16}
                     label={
                       <>
                         <Icon icon="mute" />

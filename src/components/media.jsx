@@ -1,5 +1,11 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 import Icon from './icon';
@@ -95,16 +101,33 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     [to],
   );
 
-  if (type === 'image' || (type === 'unknown' && previewUrl && url)) {
+  const isImage = type === 'image' || (type === 'unknown' && previewUrl);
+
+  const parentRef = useRef();
+  const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
+  useLayoutEffect(() => {
+    if (!isImage) return;
+    if (!showOriginal) return;
+    if (!parentRef.current) return;
+    const { offsetWidth, offsetHeight } = parentRef.current;
+    const smaller = width < offsetWidth && height < offsetHeight;
+    if (smaller) setImageSmallerThanParent(smaller);
+  }, [width, height]);
+
+  if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
     return (
       <Parent
+        ref={parentRef}
         class={`media media-image`}
         onClick={onClick}
         style={
           showOriginal && {
             backgroundImage: `url(${previewUrl})`,
+            backgroundSize: imageSmallerThanParent
+              ? `${width}px ${height}px`
+              : undefined,
           }
         }
       >

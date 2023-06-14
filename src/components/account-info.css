@@ -38,6 +38,11 @@
   margin-bottom: -44px;
   user-select: none;
   -webkit-user-drag: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+.account-container .header-banner.loaded {
+  opacity: 1;
 }
 .sheet .account-container .header-banner {
   border-top-left-radius: 16px;

@@ -186,6 +186,7 @@ function AccountInfo({
                 }}
                 crossOrigin="anonymous"
                 onLoad={(e) => {
+                  e.target.classList.add('loaded');
                   try {
                     // Get color from four corners of image
                     const canvas = document.createElement('canvas');

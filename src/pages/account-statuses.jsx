@@ -4,12 +4,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import AccountInfo from '../components/account-info';
+import EmojiText from '../components/emoji-text';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
-import emojifyText from '../utils/emojify-text';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
@@ -236,11 +236,9 @@ function AccountStatuses() {
           //   };
           // }}
         >
-          <b
-            dangerouslySetInnerHTML={{
-              __html: emojifyText(displayName, emojis),
-            }}
-          />
+          <b>
+            <EmojiText text={displayName} emojis={emojis} />
+          </b>
           <div>
             <span>@{acct}</span>
           </div>

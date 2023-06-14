@@ -26,12 +26,12 @@ import { useSnapshot } from 'valtio';
 import { snapshot } from 'valtio/vanilla';
 
 import AccountBlock from '../components/account-block';
+import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
 import { api } from '../utils/api';
-import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
@@ -926,11 +926,9 @@ function Status({
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: emojifyText(spoilerText, emojis),
-                  }}
-                />
+                <p>
+                  <EmojiText text={spoilerText} emojis={emojis} />
+                </p>
               </div>
               <button
                 class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}

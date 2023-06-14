@@ -1,9 +1,9 @@
 import './name-text.css';
 
-import emojifyText from '../utils/emojify-text';
 import states from '../utils/states';
 
 import Avatar from './avatar';
+import EmojiText from './emoji-text';
 
 function NameText({
   account,
@@ -17,8 +17,6 @@ function NameText({
   const { acct, avatar, avatarStatic, id, url, displayName, emojis, bot } =
     account;
   let { username } = account;
-
-  const displayNameWithEmoji = emojifyText(displayName, emojis);
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
@@ -58,11 +56,9 @@ function NameText({
       )}
       {displayName && !short ? (
         <>
-          <b
-            dangerouslySetInnerHTML={{
-              __html: displayNameWithEmoji,
-            }}
-          />
+          <b>
+            <EmojiText text={displayName} emojis={emojis} />
+          </b>
           {!showAcct && username && (
             <>
               {' '}

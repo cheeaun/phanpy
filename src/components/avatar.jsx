@@ -42,6 +42,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
           height={size}
           alt={alt}
           loading="lazy"
+          decoding="async"
           crossOrigin={
             alphaCache[url] === undefined && !isMissing
               ? 'anonymous'

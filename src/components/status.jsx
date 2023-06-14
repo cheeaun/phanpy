@@ -12,7 +12,13 @@ import { decodeBlurHash } from 'fast-blurhash';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
@@ -286,11 +292,15 @@ function Status({
 
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
-  const textWeight = () =>
-    Math.max(
-      Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1,
-      1,
-    );
+  const textWeight = useCallback(
+    () =>
+      Math.max(
+        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
+          1,
+        1,
+      ),
+    [spoilerText, content],
+  );
 
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);

@@ -3,7 +3,8 @@ import mem from 'mem';
 const root = document.documentElement;
 const style = getComputedStyle(root);
 const defaultBoundingBoxPadding = 8;
-function _safeBoundingBoxPadding() {
+function _safeBoundingBoxPadding(paddings = []) {
+  // paddings = [top, right, bottom, left]
   // Get safe area inset variables from root
   const safeAreaInsetTop = style.getPropertyValue('--sai-top');
   const safeAreaInsetRight = style.getPropertyValue('--sai-right');
@@ -15,7 +16,10 @@ function _safeBoundingBoxPadding() {
     safeAreaInsetBottom,
     safeAreaInsetLeft,
   ]
-    .map((v) => parseInt(v, 10) || defaultBoundingBoxPadding)
+    .map(
+      (v, i) =>
+        (parseInt(v, 10) || defaultBoundingBoxPadding) + (paddings[i] || 0),
+    )
     .join(' ');
   // console.log(str);
   return str;

@@ -12,7 +12,13 @@ import { decodeBlurHash } from 'fast-blurhash';
 import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
@@ -20,12 +26,12 @@ import { useSnapshot } from 'valtio';
 import { snapshot } from 'valtio/vanilla';
 
 import AccountBlock from '../components/account-block';
+import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
 import { api } from '../utils/api';
-import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
@@ -34,6 +40,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
@@ -285,11 +292,15 @@ function Status({
 
   const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
-  const textWeight = () =>
-    Math.max(
-      Math.round((spoilerText.length + htmlContentLength(content)) / 140) || 1,
-      1,
-    );
+  const textWeight = useCallback(
+    () =>
+      Math.max(
+        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
+          1,
+        1,
+      ),
+    [spoilerText, content],
+  );
 
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
@@ -824,7 +835,7 @@ function Status({
                   },
                 }}
                 align="end"
-                offsetY={4}
+                gap={4}
                 overflow="auto"
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
@@ -915,11 +926,9 @@ function Status({
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: emojifyText(spoilerText, emojis),
-                  }}
-                />
+                <p>
+                  <EmojiText text={spoilerText} emojis={emojis} />
+                </p>
               </div>
               <button
                 class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}
@@ -1182,7 +1191,7 @@ function Status({
                     document.querySelector('.status-deck') || document.body,
                 }}
                 align="end"
-                offsetY={4}
+                gap={4}
                 overflow="auto"
                 viewScroll="close"
                 boundingBoxPadding="8 8 8 8"
@@ -1816,27 +1825,6 @@ const unfurlMastodonLink = throttle(
     cacheKey: (instance, url) => `${instance}:${url}`,
   }),
 );
-
-const root = document.documentElement;
-const defaultBoundingBoxPadding = 8;
-function safeBoundingBoxPadding() {
-  // Get safe area inset variables from root
-  const style = getComputedStyle(root);
-  const safeAreaInsetTop = style.getPropertyValue('--sai-top');
-  const safeAreaInsetRight = style.getPropertyValue('--sai-right');
-  const safeAreaInsetBottom = style.getPropertyValue('--sai-bottom');
-  const safeAreaInsetLeft = style.getPropertyValue('--sai-left');
-  const str = [
-    safeAreaInsetTop,
-    safeAreaInsetRight,
-    safeAreaInsetBottom,
-    safeAreaInsetLeft,
-  ]
-    .map((v) => parseInt(v, 10) || defaultBoundingBoxPadding)
-    .join(' ');
-  // console.log(str);
-  return str;
-}
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

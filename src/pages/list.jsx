@@ -10,6 +10,7 @@ import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
+import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
@@ -108,15 +109,12 @@ function List(props) {
           </Link>
         }
         headerEnd={
-          <Menu
-            portal={{
-              target: document.body,
-            }}
+          <Menu2
+            portal
             setDownOverflow
             overflow="auto"
             viewScroll="close"
             position="anchor"
-            boundingBoxPadding="8 8 8 8"
             menuButton={
               <button type="button" class="plain">
                 <Icon icon="more" size="l" />
@@ -137,7 +135,7 @@ function List(props) {
               <Icon icon="group" size="l" />
               <span>Manage members</span>
             </MenuItem>
-          </Menu>
+          </Menu2>
         }
       />
       {showListAddEditModal && (

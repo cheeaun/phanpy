@@ -641,6 +641,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   .status-reply-to:not(.visibility-direct):not(.status-card) {
   background-image: none;
 }
+.timeline:not(.flat)
+  > li.timeline-item-diff-author
+  > .status-link
+  > .status
+  > a
+  > .avatar {
+  transform: scale(0.8);
+  filter: drop-shadow(0 0 16px var(--bg-color))
+    drop-shadow(0 0 8px var(--bg-color)) drop-shadow(0 0 8px var(--bg-color));
+}
 
 .timeline .show-more {
   padding-left: calc(var(--line-end) + var(--line-margin-end)) !important;

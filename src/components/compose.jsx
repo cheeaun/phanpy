@@ -1415,7 +1415,7 @@ function MediaAttachment({
   const suffixType = type.split('/')[0];
   const debouncedOnDescriptionChange = useDebouncedCallback(
     onDescriptionChange,
-    500,
+    250,
   );
 
   const [showModal, setShowModal] = useState(false);

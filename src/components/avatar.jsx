@@ -13,6 +13,11 @@ const SIZES = {
 
 const alphaCache = {};
 
+const canvas = window.OffscreenCanvas
+  ? new OffscreenCanvas(1, 1)
+  : document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
 function Avatar({ url, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
@@ -37,6 +42,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
           height={size}
           alt={alt}
           loading="lazy"
+          decoding="async"
           crossOrigin={
             alphaCache[url] === undefined && !isMissing
               ? 'anonymous'
@@ -54,17 +60,11 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
             if (isMissing) return;
             try {
               // Check if image has alpha channel
-              const canvas = document.createElement('canvas');
-              const ctx = canvas.getContext('2d');
-              canvas.width = e.target.width;
-              canvas.height = e.target.height;
+              const { width, height } = e.target;
+              if (canvas.width !== width) canvas.width = width;
+              if (canvas.height !== height) canvas.height = height;
               ctx.drawImage(e.target, 0, 0);
-              const allPixels = ctx.getImageData(
-                0,
-                0,
-                canvas.width,
-                canvas.height,
-              );
+              const allPixels = ctx.getImageData(0, 0, width, height);
               // At least 10% of pixels have alpha <= 128
               const hasAlpha =
                 allPixels.data.filter((pixel, i) => i % 4 === 3 && pixel <= 128)
@@ -76,6 +76,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
                 avatarRef.current.classList.add('has-alpha');
               }
               alphaCache[url] = hasAlpha;
+              ctx.clearRect(0, 0, width, height);
             } catch (e) {
               // Silent fail
               alphaCache[url] = false;

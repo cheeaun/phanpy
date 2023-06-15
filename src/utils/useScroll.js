@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useLayoutEffect, useState } from 'preact/hooks';
 
 export default function useScroll({
   scrollableRef,
@@ -17,7 +17,7 @@ export default function useScroll({
   const [nearReachEnd, setNearReachEnd] = useState(false);
   const isVertical = direction === 'vertical';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const scrollableElement = scrollableRef.current;
     if (!scrollableElement) return {};
     let previousScrollStart = isVertical

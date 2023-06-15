@@ -2,11 +2,11 @@ import './account-block.css';
 
 import { useNavigate } from 'react-router-dom';
 
-import emojifyText from '../utils/emojify-text';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 
 import Avatar from './avatar';
+import EmojiText from './emoji-text';
 
 function AccountBlock({
   skeleton,
@@ -46,7 +46,6 @@ function AccountBlock({
     lastStatusAt,
     bot,
   } = account;
-  const displayNameWithEmoji = emojifyText(displayName, emojis);
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
 
   return (
@@ -72,11 +71,9 @@ function AccountBlock({
       <Avatar url={avatar} size={avatarSize} squircle={bot} />
       <span>
         {displayName ? (
-          <b
-            dangerouslySetInnerHTML={{
-              __html: displayNameWithEmoji,
-            }}
-          />
+          <b>
+            <EmojiText text={displayName} emojis={emojis} />
+          </b>
         ) : (
           <b>{username}</b>
         )}

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import emojifyText from '../utils/emojify-text';
 import shortenNumber from '../utils/shorten-number';
 
+import EmojiText from './emoji-text';
 import Icon from './icon';
 import RelativeTime from './relative-time';
 
@@ -112,11 +112,9 @@ export default function Poll({
                   }}
                 >
                   <div class="poll-option-title">
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: emojifyText(title, emojis),
-                      }}
-                    />
+                    <span>
+                      <EmojiText text={title} emojis={emojis} />
+                    </span>
                     {voted && ownVotes.includes(i) && (
                       <>
                         {' '}
@@ -179,12 +177,9 @@ export default function Poll({
                       disabled={uiState === 'loading'}
                       readOnly={readOnly}
                     />
-                    <span
-                      class="poll-option-title"
-                      dangerouslySetInnerHTML={{
-                        __html: emojifyText(title, emojis),
-                      }}
-                    />
+                    <span class="poll-option-title">
+                      <EmojiText text={title} emojis={emojis} />
+                    </span>
                   </label>
                 </div>
               );

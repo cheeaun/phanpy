@@ -130,6 +130,16 @@ export function groupContext(items) {
     });
   });
 
+  // Tag items that has different author than first post's author
+  contexts.forEach((context) => {
+    const firstItemAccountID = context[0].account.id;
+    context.forEach((item) => {
+      if (item.account.id !== firstItemAccountID) {
+        item._differentAuthor = true;
+      }
+    });
+  });
+
   if (contexts.length) console.log('🧵 Contexts', contexts);
 
   const newItems = [];

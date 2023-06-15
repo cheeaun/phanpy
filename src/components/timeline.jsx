@@ -398,7 +398,7 @@ function Timeline({
                   }
                   const manyItems = items.length > 3;
                   return items.map((item, i) => {
-                    const { id: statusID } = item;
+                    const { id: statusID, _differentAuthor } = item;
                     const url = instance
                       ? `/${instance}/s/${statusID}`
                       : `/s/${statusID}`;
@@ -416,6 +416,8 @@ function Timeline({
                             : i === items.length - 1
                             ? 'end'
                             : 'middle'
+                        } ${
+                          _differentAuthor ? 'timeline-item-diff-author' : ''
                         }`}
                       >
                         <Link class="status-link timeline-item" to={url}>

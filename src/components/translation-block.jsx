@@ -114,7 +114,7 @@ function TranslationBlock({
             <span>
               {uiState === 'loading'
                 ? 'Translating…'
-                : sourceLanguage && !detectedLang
+                : sourceLanguage && sourceLangText && !detectedLang
                 ? `Translate from ${sourceLangText}`
                 : `Translate`}
             </span>

@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
+import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
@@ -122,15 +123,12 @@ function Hashtags(props) {
       checkForUpdates={checkForUpdates}
       useItemID
       headerEnd={
-        <Menu
-          portal={{
-            target: document.body,
-          }}
+        <Menu2
+          portal
           setDownOverflow
           overflow="auto"
           viewScroll="close"
           position="anchor"
-          boundingBoxPadding="8 8 8 8"
           menuButton={
             <button type="button" class="plain">
               <Icon icon="more" size="l" />
@@ -306,7 +304,7 @@ function Hashtags(props) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
-        </Menu>
+        </Menu2>
       }
     />
   );

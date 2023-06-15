@@ -693,9 +693,13 @@ function Status({
     x: 0,
     y: 0,
   });
-  const bindLongPress = useLongPress(
+  const bindLongPressContext = useLongPress(
     (e) => {
       const { clientX, clientY } = e.touches?.[0] || e;
+      // link detection copied from onContextMenu because here it works
+      const link = e.target.closest('a');
+      if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+      e.preventDefault();
       setContextMenuAnchorPoint({
         x: clientX,
         y: clientY,
@@ -706,7 +710,7 @@ function Status({
       threshold: 600,
       captureEvent: true,
       detect: 'touch',
-      cancelOnMovement: true,
+      cancelOnMovement: 4, // true allows movement of up to 25 pixels
     },
   );
 
@@ -727,6 +731,7 @@ function Status({
       } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
+        // FIXME: this code isn't getting called on Chrome at all?
         if (!showContextMenu) return;
         if (e.metaKey) return;
         // console.log('context menu', e);
@@ -739,7 +744,7 @@ function Status({
         });
         setIsContextMenuOpen(true);
       }}
-      {...(showContextMenu ? bindLongPress() : {})}
+      {...(showContextMenu ? bindLongPressContext() : {})}
     >
       {showContextMenu && (
         <ControlledMenu
@@ -1839,7 +1844,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const statusPeekText = statusPeek(status.reblog || status);
 
   const [showPeek, setShowPeek] = useState(false);
-  const bindLongPress = useLongPress(
+  const bindLongPressPeek = useLongPress(
     () => {
       setShowPeek(true);
     },
@@ -1847,7 +1852,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       threshold: 600,
       captureEvent: true,
       detect: 'touch',
-      cancelOnMovement: true,
+      cancelOnMovement: 4, // true allows movement of up to 25 pixels
     },
   );
 
@@ -1860,7 +1865,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
         e.preventDefault();
         setShowPeek(true);
       }}
-      {...bindLongPress()}
+      {...bindLongPressPeek()}
     >
       <article class="status filtered" tabindex="-1">
         <b

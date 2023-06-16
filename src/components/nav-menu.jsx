@@ -6,6 +6,7 @@ import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
+import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -51,6 +52,13 @@ function NavMenu(props) {
 
   const buttonRef = useRef();
   const [menuState, setMenuState] = useState(undefined);
+
+  const boundingBoxPadding = safeBoundingBoxPadding([
+    0,
+    0,
+    snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? 50 : 0,
+    0,
+  ]);
 
   return (
     <>
@@ -104,7 +112,7 @@ function NavMenu(props) {
         viewScroll="close"
         position="anchor"
         align="center"
-        boundingBoxPadding="8 8 8 8"
+        boundingBoxPadding={boundingBoxPadding}
         unmountOnClose
       >
         <section>

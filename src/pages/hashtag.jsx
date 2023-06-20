@@ -42,15 +42,25 @@ function Hashtags(props) {
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 
-  const hashtagsIterator = useRef();
+  // const hashtagsIterator = useRef();
+  const maxID = useRef(undefined);
   async function fetchHashtags(firstLoad) {
-    if (firstLoad || !hashtagsIterator.current) {
-      hashtagsIterator.current = masto.v1.timelines.listHashtag(hashtag, {
+    // if (firstLoad || !hashtagsIterator.current) {
+    //   hashtagsIterator.current = masto.v1.timelines.listHashtag(hashtag, {
+    //     limit: LIMIT,
+    //     any: hashtags.slice(1),
+    //   });
+    // }
+    // const results = await hashtagsIterator.current.next();
+
+    // NOTE: Temporary fix for listHashtag not persisting `any` in subsequent calls.
+    const results = await masto.v1.timelines
+      .listHashtag(hashtag, {
         limit: LIMIT,
         any: hashtags.slice(1),
-      });
-    }
-    const results = await hashtagsIterator.current.next();
+        maxId: firstLoad ? undefined : maxID.current,
+      })
+      .next();
     const { value } = results;
     if (value?.length) {
       if (firstLoad) {
@@ -60,6 +70,8 @@ function Hashtags(props) {
       value.forEach((item) => {
         saveStatus(item, instance);
       });
+
+      maxID.current = value[value.length - 1].id;
     }
     return {
       ...results,

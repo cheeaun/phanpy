@@ -189,7 +189,7 @@ function NavMenu(props) {
           </MenuLink>
         </section>
         <section>
-          {authenticated && (
+          {authenticated ? (
             <>
               <MenuDivider />
               {currentAccount?.info?.id && (
@@ -219,6 +219,13 @@ function NavMenu(props) {
               >
                 <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
               </MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuDivider />
+              <MenuLink to="/login">
+                <Icon icon="user" size="l" /> <span>Log in</span>
+              </MenuLink>
             </>
           )}
         </section>

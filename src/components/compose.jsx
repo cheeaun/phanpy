@@ -217,14 +217,14 @@ function Compose({
     } else {
       focusTextarea();
       console.log('Apply prefs', prefs);
-      if (prefs.postingDefaultVisibility) {
-        setVisibility(prefs.postingDefaultVisibility);
+      if (prefs['posting:default:visibility']) {
+        setVisibility(prefs['posting:default:visibility']);
       }
-      if (prefs.postingDefaultLanguage) {
-        setLanguage(prefs.postingDefaultLanguage);
+      if (prefs['posting:default:language']) {
+        setLanguage(prefs['posting:default:language']);
       }
-      if (prefs.postingDefaultSensitive) {
-        setSensitive(prefs.postingDefaultSensitive);
+      if (prefs['posting:default:sensitive']) {
+        setSensitive(prefs['posting:default:sensitive']);
       }
     }
     if (draftStatus) {

@@ -524,18 +524,22 @@ function RelatedActions({ info, instance, authenticated }) {
         </div>
       </div>
       <p class="actions">
-        {followedBy ? (
-          <span class="tag">Following you</span>
-        ) : !!lastStatusAt ? (
-          <small class="insignificant">
-            Last post:{' '}
-            {niceDateTime(lastStatusAt, {
-              hideTime: true,
-            })}
-          </small>
-        ) : (
-          <span />
-        )}{' '}
+        <span>
+          {followedBy ? (
+            <span class="tag">Following you</span>
+          ) : !!lastStatusAt ? (
+            <small class="insignificant">
+              Last post:{' '}
+              {niceDateTime(lastStatusAt, {
+                hideTime: true,
+              })}
+            </small>
+          ) : (
+            <span />
+          )}
+          {muting && <span class="tag danger">Muted</span>}
+          {blocking && <span class="tag danger">Blocked</span>}
+        </span>{' '}
         <span class="buttons">
           <Menu
             instanceRef={menuInstanceRef}

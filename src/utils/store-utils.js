@@ -34,6 +34,25 @@ export function saveAccount(account) {
   store.session.set('currentAccount', account.info.id);
 }
 
+export function updateAccount(accountInfo) {
+  // Only update if displayName or avatar or avatar_static is different
+  const accounts = store.local.getJSON('accounts') || [];
+  const acc = accounts.find((a) => a.info.id === accountInfo.id);
+  if (acc) {
+    if (
+      acc.info.displayName !== accountInfo.displayName ||
+      acc.info.avatar !== accountInfo.avatar ||
+      acc.info.avatar_static !== accountInfo.avatar_static
+    ) {
+      acc.info = {
+        ...acc.info,
+        ...accountInfo,
+      };
+      store.local.setJSON('accounts', accounts);
+    }
+  }
+}
+
 let currentInstance = null;
 export function getCurrentInstance() {
   if (currentInstance) return currentInstance;

@@ -12,6 +12,8 @@ import Icon from './icon';
 import Link from './link';
 import { formatDuration } from './status';
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent); // https://stackoverflow.com/a/23522755
+
 /*
 Media type
 ===
@@ -117,6 +119,19 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
+
+    useLayoutEffect(() => {
+      if (!isSafari) return;
+      (async () => {
+        try {
+          await fetch(mediaURL, { cache: 'reload', mode: 'no-cors' });
+          mediaRef.current.src = mediaURL;
+        } catch (e) {
+          // Ignore
+        }
+      })();
+    }, [mediaURL]);
+
     return (
       <Parent
         ref={parentRef}

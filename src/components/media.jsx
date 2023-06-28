@@ -124,7 +124,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
       if (!isSafari) return;
       (async () => {
         try {
-          await fetch(mediaURL, { cache: 'reload', mode: 'no-cors' });
+          await fetch(mediaURL, { mode: 'no-cors' });
           mediaRef.current.src = mediaURL;
         } catch (e) {
           // Ignore

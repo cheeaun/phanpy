@@ -119,7 +119,10 @@ function StatusPage(params) {
             instance={instance}
             index={mediaIndex - 1}
             onClose={() => {
-              if (snapStates.prevLocation) {
+              if (
+                !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
+                snapStates.prevLocation
+              ) {
                 history.back();
               } else {
                 if (showMediaOnly) {

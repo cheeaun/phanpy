@@ -122,6 +122,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
 
     useLayoutEffect(() => {
       if (!isSafari) return;
+      if (!showOriginal) return;
       (async () => {
         try {
           await fetch(mediaURL, { mode: 'no-cors' });
@@ -185,6 +186,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             }}
             onLoad={(e) => {
               e.target.closest('.media-image').style.backgroundImage = '';
+              e.target.dataset.loaded = true;
             }}
             onError={(e) => {
               const { src } = e.target;

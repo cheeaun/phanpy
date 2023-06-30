@@ -119,7 +119,10 @@ function StatusPage(params) {
             instance={instance}
             index={mediaIndex - 1}
             onClose={() => {
-              if (snapStates.prevLocation) {
+              if (
+                !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
+                snapStates.prevLocation
+              ) {
                 history.back();
               } else {
                 if (showMediaOnly) {
@@ -638,6 +641,14 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       } ${initialPageState.current === 'status' ? 'slide-in' : ''} ${
         viewMode ? `deck-view-${viewMode}` : ''
       }`}
+      onAnimationEnd={(e) => {
+        // Fix the bounce effect when switching viewMode
+        // `slide-in` animation kicks in when switching viewMode
+        if (initialPageState.current === 'status') {
+          // e.target.classList.remove('slide-in');
+          initialPageState.current = null;
+        }
+      }}
     >
       <header
         class={`${heroInView ? 'inview' : ''} ${

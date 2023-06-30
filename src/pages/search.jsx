@@ -1,7 +1,14 @@
 import './search.css';
 
 import { forwardRef } from 'preact/compat';
-import { useEffect, useImperativeHandle, useRef, useState } from 'preact/hooks';
+import {
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import AccountBlock from '../components/account-block';
@@ -12,6 +19,9 @@ import NavMenu from '../components/nav-menu';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
+
+const SHORT_LIMIT = 5;
+const LIMIT = 40;
 
 function Search(props) {
   const params = useParams();
@@ -40,35 +50,78 @@ function Search(props) {
     `/search`,
   );
 
+  const [showMore, setShowMore] = useState(false);
+  const offsetRef = useRef(0);
+  useEffect(() => {
+    offsetRef.current = 0;
+  }, [type]);
+
+  const scrollableRef = useRef();
+  useLayoutEffect(() => {
+    scrollableRef.current?.scrollTo?.(0, 0);
+  }, [q, type]);
+
   const [statusResults, setStatusResults] = useState([]);
   const [accountResults, setAccountResults] = useState([]);
   const [hashtagResults, setHashtagResults] = useState([]);
+
+  function loadResults(firstLoad) {
+    setUiState('loading');
+    if (firstLoad && !type) {
+      setStatusResults(statusResults.slice(0, SHORT_LIMIT));
+      setAccountResults(accountResults.slice(0, SHORT_LIMIT));
+      setHashtagResults(hashtagResults.slice(0, SHORT_LIMIT));
+    }
+
+    (async () => {
+      const params = {
+        q,
+        resolve: authenticated,
+        limit: SHORT_LIMIT,
+      };
+      if (type) {
+        params.limit = LIMIT;
+        params.type = type;
+        params.offset = offsetRef.current;
+      }
+      try {
+        const results = await masto.v2.search(params);
+        console.log(results);
+        if (type && !firstLoad) {
+          if (type === 'statuses') {
+            setStatusResults((prev) => [...prev, ...results.statuses]);
+          } else if (type === 'accounts') {
+            setAccountResults((prev) => [...prev, ...results.accounts]);
+          } else if (type === 'hashtags') {
+            setHashtagResults((prev) => [...prev, ...results.hashtags]);
+          }
+          offsetRef.current = offsetRef.current + LIMIT;
+          setShowMore(!!results[type]?.length);
+        } else {
+          setStatusResults(results.statuses);
+          setAccountResults(results.accounts);
+          setHashtagResults(results.hashtags);
+        }
+        setUiState('default');
+      } catch (err) {
+        console.error(err);
+        setUiState('error');
+      }
+    })();
+  }
+
   useEffect(() => {
     // searchFieldRef.current?.focus?.();
     // searchFormRef.current?.focus?.();
     if (q) {
       // searchFieldRef.current.value = q;
       searchFormRef.current?.setValue?.(q);
-
-      setUiState('loading');
-      (async () => {
-        const results = await masto.v2.search({
-          q,
-          limit: type ? 40 : 5,
-          resolve: authenticated,
-          type,
-        });
-        console.log(results);
-        setStatusResults(results.statuses);
-        setAccountResults(results.accounts);
-        setHashtagResults(results.hashtags);
-        setUiState('default');
-      })();
+      loadResults(true);
     }
   }, [q, type, instance]);
 
   return (
-    <div id="search-page" class="deck-container">
+    <div id="search-page" class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
         <header>
           <div class="header-grid">
@@ -110,7 +163,7 @@ function Search(props) {
                 ))}
             </div>
           )}
-          {!!q && uiState !== 'loading' ? (
+          {!!q ? (
             <>
               {(!type || type === 'accounts') && (
                 <>
@@ -121,7 +174,7 @@ function Search(props) {
                     <>
                       <ul class="timeline flat accounts-list">
                         {accountResults.map((account) => (
-                          <li>
+                          <li key={account.id}>
                             <AccountBlock
                               account={account}
                               instance={instance}
@@ -141,7 +194,14 @@ function Search(props) {
                       )}
                     </>
                   ) : (
-                    <p class="ui-state">No accounts found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No accounts found.</p>
+                    ))
                   )}
                 </>
               )}
@@ -154,7 +214,7 @@ function Search(props) {
                     <>
                       <ul class="link-list hashtag-list">
                         {hashtagResults.map((hashtag) => (
-                          <li>
+                          <li key={hashtag.name}>
                             <Link
                               to={
                                 instance
@@ -180,7 +240,14 @@ function Search(props) {
                       )}
                     </>
                   ) : (
-                    <p class="ui-state">No hashtags found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No hashtags found.</p>
+                    ))
                   )}
                 </>
               )}
@@ -193,7 +260,7 @@ function Search(props) {
                     <>
                       <ul class="timeline">
                         {statusResults.map((status) => (
-                          <li>
+                          <li key={status.id}>
                             <Link
                               class="status-link"
                               to={
@@ -219,10 +286,50 @@ function Search(props) {
                       )}
                     </>
                   ) : (
-                    <p class="ui-state">No posts found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No posts found.</p>
+                    ))
                   )}
                 </>
               )}
+              {!!type &&
+                (uiState === 'default' ? (
+                  showMore ? (
+                    <InView
+                      onChange={(inView) => {
+                        if (inView) {
+                          loadResults();
+                        }
+                      }}
+                    >
+                      <button
+                        type="button"
+                        class="plain block"
+                        onClick={() => loadResults()}
+                        style={{ marginBlockEnd: '6em' }}
+                      >
+                        Show more&hellip;
+                      </button>
+                    </InView>
+                  ) : (
+                    <p class="ui-state insignificant">The end.</p>
+                  )
+                ) : (
+                  !!(
+                    hashtagResults.length ||
+                    accountResults.length ||
+                    statusResults.length
+                  ) && (
+                    <p class="ui-state">
+                      <Loader abrupt />
+                    </p>
+                  )
+                ))}
             </>
           ) : uiState === 'loading' ? (
             <p class="ui-state">

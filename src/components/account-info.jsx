@@ -12,6 +12,7 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
+import { updateAccount } from '../utils/store-utils';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
@@ -483,6 +484,12 @@ function RelatedActions({ info, instance, authenticated }) {
     }
   }, [info, authenticated]);
 
+  useEffect(() => {
+    if (info && isSelf) {
+      updateAccount(info);
+    }
+  }, [info, isSelf]);
+
   const loading = relationshipUIState === 'loading';
   const menuInstanceRef = useRef(null);
 
@@ -524,18 +531,22 @@ function RelatedActions({ info, instance, authenticated }) {
         </div>
       </div>
       <p class="actions">
-        {followedBy ? (
-          <span class="tag">Following you</span>
-        ) : !!lastStatusAt ? (
-          <small class="insignificant">
-            Last post:{' '}
-            {niceDateTime(lastStatusAt, {
-              hideTime: true,
-            })}
-          </small>
-        ) : (
-          <span />
-        )}{' '}
+        <span>
+          {followedBy ? (
+            <span class="tag">Following you</span>
+          ) : !!lastStatusAt ? (
+            <small class="insignificant">
+              Last post:{' '}
+              {niceDateTime(lastStatusAt, {
+                hideTime: true,
+              })}
+            </small>
+          ) : (
+            <span />
+          )}
+          {muting && <span class="tag danger">Muted</span>}
+          {blocking && <span class="tag danger">Blocked</span>}
+        </span>{' '}
         <span class="buttons">
           <Menu
             instanceRef={menuInstanceRef}

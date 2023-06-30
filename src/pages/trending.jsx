@@ -1,9 +1,10 @@
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useRef } from 'preact/hooks';
+import { useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
+import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
@@ -25,12 +26,23 @@ function Trending(props) {
   const navigate = useNavigate();
   const latestItem = useRef();
 
+  const [hashtags, setHashtags] = useState([]);
   const trendIterator = useRef();
   async function fetchTrend(firstLoad) {
     if (firstLoad || !trendIterator.current) {
       trendIterator.current = masto.v1.trends.listStatuses({
         limit: LIMIT,
       });
+
+      // Get hashtags
+      try {
+        const iterator = masto.v1.trends.listTags();
+        const { value: tags } = await iterator.next();
+        console.log(tags);
+        setHashtags(tags);
+      } catch (e) {
+        console.error(e);
+      }
     }
     const results = await trendIterator.current.next();
     let { value } = results;
@@ -71,6 +83,28 @@ function Trending(props) {
     }
   }
 
+  const TimelineStart = useMemo(() => {
+    if (!hashtags.length) return null;
+    return (
+      <div class="filter-bar">
+        <Icon icon="chart" class="insignificant" size="l" />
+        {hashtags.map((tag, i) => {
+          const { name, history } = tag;
+          const total = history.reduce((acc, cur) => acc + +cur.uses, 0);
+          return (
+            <Link to={`/${instance}/t/${name}`}>
+              <span>
+                <span class="more-insignificant">#</span>
+                {name}
+              </span>
+              <span class="filter-count">{total.toLocaleString()}</span>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }, [hashtags]);
+
   return (
     <Timeline
       key={instance}
@@ -92,6 +126,7 @@ function Trending(props) {
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
       allowFilters
+      timelineStart={TimelineStart}
       headerEnd={
         <Menu2
           portal

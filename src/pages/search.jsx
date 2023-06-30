@@ -87,7 +87,7 @@ function Search(props) {
       try {
         const results = await masto.v2.search(params);
         console.log(results);
-        if (type) {
+        if (type && !firstLoad) {
           if (type === 'statuses') {
             setStatusResults((prev) => [...prev, ...results.statuses]);
           } else if (type === 'accounts') {
@@ -174,7 +174,7 @@ function Search(props) {
                     <>
                       <ul class="timeline flat accounts-list">
                         {accountResults.map((account) => (
-                          <li>
+                          <li key={account.id}>
                             <AccountBlock
                               account={account}
                               instance={instance}
@@ -193,12 +193,15 @@ function Search(props) {
                         </div>
                       )}
                     </>
-                  ) : uiState === 'loading' ? (
-                    <p class="ui-state">
-                      <Loader abrupt />
-                    </p>
                   ) : (
-                    <p class="ui-state">No accounts found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No accounts found.</p>
+                    ))
                   )}
                 </>
               )}
@@ -211,7 +214,7 @@ function Search(props) {
                     <>
                       <ul class="link-list hashtag-list">
                         {hashtagResults.map((hashtag) => (
-                          <li>
+                          <li key={hashtag.name}>
                             <Link
                               to={
                                 instance
@@ -236,12 +239,15 @@ function Search(props) {
                         </div>
                       )}
                     </>
-                  ) : uiState === 'loading' ? (
-                    <p class="ui-state">
-                      <Loader abrupt />
-                    </p>
                   ) : (
-                    <p class="ui-state">No hashtags found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No hashtags found.</p>
+                    ))
                   )}
                 </>
               )}
@@ -254,7 +260,7 @@ function Search(props) {
                     <>
                       <ul class="timeline">
                         {statusResults.map((status) => (
-                          <li>
+                          <li key={status.id}>
                             <Link
                               class="status-link"
                               to={
@@ -279,12 +285,15 @@ function Search(props) {
                         </div>
                       )}
                     </>
-                  ) : uiState === 'loading' ? (
-                    <p class="ui-state">
-                      <Loader abrupt />
-                    </p>
                   ) : (
-                    <p class="ui-state">No posts found.</p>
+                    !type &&
+                    (uiState === 'loading' ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      <p class="ui-state">No posts found.</p>
+                    ))
                   )}
                 </>
               )}

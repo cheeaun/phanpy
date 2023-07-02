@@ -178,6 +178,7 @@ function Search(props) {
                             <AccountBlock
                               account={account}
                               instance={instance}
+                              showStats
                             />
                           </li>
                         ))}

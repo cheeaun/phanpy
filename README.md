@@ -140,6 +140,7 @@ And here I am. Building a Mastodon web client.
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/)
+  - Fork https://elk.fedified.com/
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks (alpha)](https://alpha.trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)

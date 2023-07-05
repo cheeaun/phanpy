@@ -53,7 +53,7 @@ function Timeline({
       (async () => {
         try {
           let { done, value } = await fetchItems(firstLoad);
-          if (value?.length) {
+          if (Array.isArray(value)) {
             if (boostsCarousel) {
               value = groupBoosts(value);
             }

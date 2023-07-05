@@ -8,11 +8,12 @@ import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
+const emptySearchParams = new URLSearchParams();
 
-function Mentions(props) {
+function Mentions({ columnMode, ...props }) {
   useTitle('Mentions', '/mentions');
   const { masto, instance } = api();
-  const [searchParams] = useSearchParams();
+  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const type = props?.type || searchParams.get('type');
 
   const mentionsIterator = useRef();

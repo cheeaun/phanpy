@@ -14,16 +14,16 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Public({ local, ...props }) {
+function Public({ local, columnMode, ...props }) {
   const snapStates = useSnapshot(states);
   const isLocal = !!local;
-  const params = useParams();
+  const params = columnMode ? {} : useParams();
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
   const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const latestItem = useRef();
 
   const publicIterator = useRef();
@@ -128,7 +128,10 @@ function Public({ local, ...props }) {
               }
               if (newInstance) {
                 newInstance = newInstance.toLowerCase().trim();
-                navigate(isLocal ? `/${newInstance}/p/l` : `/${newInstance}/p`);
+                // navigate(isLocal ? `/${newInstance}/p/l` : `/${newInstance}/p`);
+                location.hash = isLocal
+                  ? `/${newInstance}/p/l`
+                  : `/${newInstance}/p`;
               }
             }}
           >

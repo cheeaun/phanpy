@@ -24,7 +24,7 @@ function List(props) {
   const snapStates = useSnapshot(states);
   const { masto, instance } = api();
   const id = props?.id || useParams()?.id;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const latestItem = useRef();
   // const [reloadCount, reload] = useReducer((c) => c + 1, 0);
 
@@ -154,7 +154,8 @@ function List(props) {
                 setList(result.list);
                 // reload();
               } else if (result.state === 'deleted') {
-                navigate('/l');
+                // navigate('/l');
+                location.hash = '/l';
               }
               setShowListAddEditModal(false);
             }}

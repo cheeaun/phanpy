@@ -286,20 +286,40 @@ function Notifications() {
         {followRequests.length > 0 && (
           <div class="follow-requests">
             <h2 class="timeline-header">Follow requests</h2>
-            <ul>
-              {followRequests.map((account) => (
-                <li>
-                  <AccountBlock account={account} />
-                  <FollowRequestButtons
-                    accountID={account.id}
-                    onChange={() => {
-                      loadFollowRequests();
-                      loadNotifications(true);
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
+            {followRequests.length > 5 ? (
+              <details>
+                <summary>{followRequests.length} follow requests</summary>
+                <ul>
+                  {followRequests.map((account) => (
+                    <li>
+                      <AccountBlock account={account} />
+                      <FollowRequestButtons
+                        accountID={account.id}
+                        onChange={() => {
+                          loadFollowRequests();
+                          loadNotifications(true);
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <ul>
+                {followRequests.map((account) => (
+                  <li>
+                    <AccountBlock account={account} />
+                    <FollowRequestButtons
+                      accountID={account.id}
+                      onChange={() => {
+                        loadFollowRequests();
+                        loadNotifications(true);
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
         <div id="mentions-option">

@@ -59,6 +59,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   /* This `transform` fixes carousel blocking vertical scrolling for pointer devices on iPad */
   transform: translateZ(0);
 }
+
+@media (hover: hover) {
+  .deck-container {
+    overscroll-behavior: auto;
+  }
+}
 .deck-container[hidden] {
   display: block;
   position: absolute;
@@ -87,6 +93,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   height: 100vh;
   height: 100dvh;
   overscroll-behavior: contain;
+}
+@media (hover: hover) {
+  .deck.contained {
+    overscroll-behavior: auto;
+  }
 }
 
 .deck > header {

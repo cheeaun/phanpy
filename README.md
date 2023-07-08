@@ -142,7 +142,7 @@ And here I am. Building a Mastodon web client.
 - [Elk](https://elk.zone/)
   - Fork https://elk.fedified.com/
 - [Mastodeck](https://mastodeck.com/)
-- [Trunks (alpha)](https://alpha.trunks.social/)
+- [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)

@@ -1,5 +1,7 @@
+const { locale } = Intl.NumberFormat().resolvedOptions();
+
 export default function shortenNumber(num) {
-  return Intl.NumberFormat('en-US', {
+  return Intl.NumberFormat(locale, {
     notation: 'compact',
   }).format(num);
 }

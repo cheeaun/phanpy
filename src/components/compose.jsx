@@ -178,7 +178,11 @@ function Compose({
         oninputTextarea();
       }
       focusTextarea();
-      setVisibility(visibility);
+      setVisibility(
+        visibility === 'public' && prefs['posting:default:visibility']
+          ? prefs['posting:default:visibility']
+          : visibility,
+      );
       setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
       setSensitive(sensitive);
     } else if (editStatus) {

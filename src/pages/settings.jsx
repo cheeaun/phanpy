@@ -1,6 +1,6 @@
 import './settings.css';
 
-import { useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';

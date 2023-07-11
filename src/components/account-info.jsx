@@ -295,12 +295,12 @@ function AccountInfo({
               />
               {fields?.length > 0 && (
                 <div class="profile-metadata">
-                  {fields.map(({ name, value, verifiedAt }) => (
+                  {fields.map(({ name, value, verifiedAt }, i) => (
                     <div
                       class={`profile-field ${
                         verifiedAt ? 'profile-verified' : ''
                       }`}
-                      key={name}
+                      key={name + i}
                     >
                       <b>
                         <EmojiText text={name} emojis={emojis} />{' '}

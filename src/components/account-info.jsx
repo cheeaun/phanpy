@@ -316,6 +316,20 @@ function AccountInfo({
                 </div>
               )}
               <p class="stats">
+                <span>
+                  Followers
+                  <br />
+                  <b title={followersCount}>
+                    {shortenNumber(followersCount)}
+                  </b>{' '}
+                </span>
+                <span>
+                  Following
+                  <br />
+                  <b title={followingCount}>
+                    {shortenNumber(followingCount)}
+                  </b>{' '}
+                </span>
                 {standalone ? (
                   <span>
                     Posts
@@ -338,20 +352,6 @@ function AccountInfo({
                     </b>{' '}
                   </Link>
                 )}
-                <span>
-                  Following
-                  <br />
-                  <b title={followingCount}>
-                    {shortenNumber(followingCount)}
-                  </b>{' '}
-                </span>
-                <span>
-                  Followers
-                  <br />
-                  <b title={followersCount}>
-                    {shortenNumber(followersCount)}
-                  </b>{' '}
-                </span>
                 {!!createdAt && (
                   <span>
                     Joined

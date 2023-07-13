@@ -103,7 +103,7 @@ function Search(props) {
           setHashtagResults(results.hashtags);
           if (type) {
             offsetRef.current = LIMIT;
-            setShowMore(results[type]?.length >= LIMIT);
+            setShowMore(!!results[type]?.length);
           }
         }
         setUiState('default');

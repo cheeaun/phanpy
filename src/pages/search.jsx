@@ -101,6 +101,10 @@ function Search(props) {
           setStatusResults(results.statuses);
           setAccountResults(results.accounts);
           setHashtagResults(results.hashtags);
+          if (type) {
+            offsetRef.current = LIMIT;
+            setShowMore(results[type]?.length >= LIMIT);
+          }
         }
         setUiState('default');
       } catch (err) {

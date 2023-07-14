@@ -316,54 +316,50 @@ function AccountInfo({
                 </div>
               )}
               <p class="stats">
-                <span>
-                  Followers
-                  <br />
-                  <b title={followersCount}>
+                <div>
+                  <span title={followersCount}>
                     {shortenNumber(followersCount)}
-                  </b>{' '}
-                </span>
-                <span>
+                  </span>{' '}
+                  Followers
+                </div>
+                <div class="insignificant">
+                  <span title={followingCount}>
+                    {shortenNumber(followingCount)}
+                  </span>{' '}
                   Following
                   <br />
-                  <b title={followingCount}>
-                    {shortenNumber(followingCount)}
-                  </b>{' '}
-                </span>
+                </div>
                 {standalone ? (
-                  <span>
-                    Posts
-                    <br />
-                    <b title={statusesCount}>
+                  <div class="insignificant">
+                    <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
-                    </b>{' '}
-                  </span>
+                    </span>{' '}
+                    Posts
+                  </div>
                 ) : (
                   <Link
+                    class="insignificant"
                     to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
                     onClick={() => {
                       hideAllModals();
                     }}
                   >
-                    Posts
-                    <br />
-                    <b title={statusesCount}>
+                    <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
-                    </b>{' '}
+                    </span>{' '}
+                    Posts
                   </Link>
                 )}
                 {!!createdAt && (
-                  <span>
+                  <div class="insignificant">
                     Joined
                     <br />
-                    <b>
-                      <time datetime={createdAt}>
-                        {niceDateTime(createdAt, {
-                          hideTime: true,
-                        })}
-                      </time>
-                    </b>
-                  </span>
+                    <time datetime={createdAt}>
+                      {niceDateTime(createdAt, {
+                        hideTime: true,
+                      })}
+                    </time>
+                  </div>
                 )}
               </p>
               <RelatedActions

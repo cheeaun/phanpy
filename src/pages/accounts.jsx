@@ -63,7 +63,16 @@ function Accounts({ onClose }) {
                       }}
                     />
                     <NameText
-                      account={account.info}
+                      account={
+                        moreThanOneAccount
+                          ? {
+                              ...account.info,
+                              acct: /@/.test(account.info.acct)
+                                ? account.info.acct
+                                : `${account.info.acct}@${account.instanceURL}`,
+                            }
+                          : account.info
+                      }
                       showAcct
                       onClick={() => {
                         if (isCurrent) {

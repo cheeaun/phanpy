@@ -31,7 +31,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   border-bottom: var(--hairline-width) solid var(--outline-color);
 }
 #settings-container section > ul > li .current {
@@ -49,8 +49,8 @@
   vertical-align: middle;
 }
 #settings-container section > ul > li > div {
-  flex-grow: 1;
-  max-width: 100%;
+  display: flex;
+  align-items: center;
 }
 #settings-container section > ul > li > div.actions {
   flex-basis: fit-content;

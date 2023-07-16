@@ -1,0 +1,56 @@
+#accounts-container {
+  background-color: var(--bg-faded-color);
+}
+
+#accounts-container section {
+  background-color: var(--bg-color);
+  margin: 8px 0 0;
+  padding: 8px 16px;
+  border-top: var(--hairline-width) solid var(--outline-color);
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+  border-radius: 8px;
+}
+#accounts-container section ul > li:last-child {
+  border-bottom: none;
+}
+
+#accounts-container section > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#accounts-container section > ul > li {
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+
+#accounts-container section > ul > li .current {
+  margin-right: 8px;
+  color: var(--green-color);
+  opacity: 0.1;
+}
+#accounts-container section > ul > li .current.is-current {
+  opacity: 1;
+}
+#accounts-container section > ul > li .current.is-current + .avatar {
+  box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
+}
+#accounts-container section > ul > li .avatar + .name-text {
+  vertical-align: middle;
+}
+#accounts-container section > ul > li > div.actions {
+  flex-basis: fit-content;
+  margin-top: 8px;
+}
+
+#accounts-container .avatar {
+  margin-right: 8px;
+}
+
+#accounts-container .accounts-list li div {
+  display: flex;
+  align-items: center;
+}

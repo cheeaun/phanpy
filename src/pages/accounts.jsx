@@ -1,4 +1,4 @@
-import './settings.css';
+import './accounts.css';
 
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer, useState } from 'preact/hooks';
@@ -22,7 +22,7 @@ function Accounts({ onClose }) {
   const [_, reload] = useReducer((x) => x + 1, 0);
 
   return (
-    <div id="settings-container" class="sheet" tabIndex="-1">
+    <div id="accounts-container" class="sheet" tabIndex="-1">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
           <Icon icon="x" />

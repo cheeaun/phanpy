@@ -198,6 +198,9 @@
   line-height: 1.25;
   flex-shrink: 0;
 }
+.timeline-start .account-container .profile-field {
+  flex-shrink: 1;
+}
 
 .account-container :is(.note, .profile-field) .invisible {
   display: none;

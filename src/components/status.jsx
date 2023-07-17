@@ -28,6 +28,7 @@ import { snapshot } from 'valtio/vanilla';
 import AccountBlock from '../components/account-block';
 import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
+import MenuConfirm from '../components/menu-confirm';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
@@ -325,6 +326,12 @@ function Status({
     };
   };
 
+  // Check if media has no descriptions
+  const mediaNoDesc = useMemo(() => {
+    return mediaAttachments.some(
+      (attachment) => !attachment.description?.trim?.(),
+    );
+  }, [mediaAttachments]);
   const boostStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -332,12 +339,8 @@ function Status({
     }
     try {
       if (!reblogged) {
-        // Check if media has no descriptions
-        const hasNoDescriptions = mediaAttachments.some(
-          (attachment) => !attachment.description?.trim?.(),
-        );
         let confirmText = 'Boost this post?';
-        if (hasNoDescriptions) {
+        if (mediaNoDesc) {
           confirmText += '\n\n⚠️ Some media have no descriptions.';
         }
         const yes = confirm(confirmText);
@@ -345,6 +348,34 @@ function Status({
           return false;
         }
       }
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+        reblogged: !reblogged,
+        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+      };
+      if (reblogged) {
+        const newStatus = await masto.v1.statuses.unreblog(id);
+        saveStatus(newStatus, instance);
+        return true;
+      } else {
+        const newStatus = await masto.v1.statuses.reblog(id);
+        saveStatus(newStatus, instance);
+        return true;
+      }
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+      return false;
+    }
+  };
+  const confirmBoostStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      alert(unauthInteractionErrorMessage);
+      return false;
+    }
+    try {
       // Optimistic
       states.statuses[sKey] = {
         ...status,
@@ -490,11 +521,27 @@ function Status({
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-horizontal">
-            <MenuItem
+            <MenuConfirm
+              subMenu
+              confirmLabel={
+                <>
+                  <Icon icon="rocket" />
+                  <span>Unboost?</span>
+                </>
+              }
+              menuFooter={
+                mediaNoDesc &&
+                !reblogged && (
+                  <div class="footer">
+                    <Icon icon="alert" />
+                    Some media have no descriptions.
+                  </div>
+                )
+              }
               disabled={!canBoost}
               onClick={async () => {
                 try {
-                  const done = await boostStatus();
+                  const done = await confirmBoostStatus();
                   if (!isSizeLarge && done) {
                     showToast(reblogged ? 'Unboosted' : 'Boosted');
                   }
@@ -508,7 +555,7 @@ function Status({
                 }}
               />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
-            </MenuItem>
+            </MenuConfirm>
             <MenuItem
               onClick={() => {
                 try {
@@ -660,27 +707,35 @@ function Status({
             <span>Edit</span>
           </MenuItem>
           {isSizeLarge && (
-            <MenuItem
+            <MenuConfirm
+              subMenu
+              confirmLabel={
+                <>
+                  <Icon icon="trash" />
+                  <span>Delete this post?</span>
+                </>
+              }
+              menuItemClassName="danger"
               onClick={() => {
-                const yes = confirm('Delete this post?');
-                if (yes) {
-                  (async () => {
-                    try {
-                      await masto.v1.statuses.remove(id);
-                      const cachedStatus = getStatus(id, instance);
-                      cachedStatus._deleted = true;
-                      showToast('Deleted');
-                    } catch (e) {
-                      console.error(e);
-                      showToast('Unable to delete');
-                    }
-                  })();
-                }
+                // const yes = confirm('Delete this post?');
+                // if (yes) {
+                (async () => {
+                  try {
+                    await masto.v1.statuses.remove(id);
+                    const cachedStatus = getStatus(id, instance);
+                    cachedStatus._deleted = true;
+                    showToast('Deleted');
+                  } catch (e) {
+                    console.error(e);
+                    showToast('Unable to delete');
+                  }
+                })();
+                // }
               }}
             >
               <Icon icon="trash" />
               <span>Delete…</span>
-            </MenuItem>
+            </MenuConfirm>
           )}
         </div>
       )}
@@ -1157,7 +1212,7 @@ function Status({
                   onClick={replyStatus}
                 />
               </div>
-              <div class="action has-count">
+              {/* <div class="action has-count">
                 <StatusButton
                   checked={reblogged}
                   title={['Boost', 'Unboost']}
@@ -1168,7 +1223,45 @@ function Status({
                   onClick={boostStatus}
                   disabled={!canBoost}
                 />
-              </div>
+              </div> */}
+              <Menu
+                portal={{
+                  target:
+                    document.querySelector('.status-deck') || document.body,
+                }}
+                align="start"
+                gap={4}
+                overflow="auto"
+                viewScroll="close"
+                boundingBoxPadding="8 8 8 8"
+                shift={-8}
+                menuClassName="menu-emphasized"
+                menuButton={({ open }) => (
+                  <div class="action has-count">
+                    <StatusButton
+                      checked={reblogged}
+                      title={['Boost', 'Unboost']}
+                      alt={['Boost', 'Boosted']}
+                      class="reblog-button"
+                      icon="rocket"
+                      count={reblogsCount}
+                      // onClick={boostStatus}
+                      disabled={open || !canBoost}
+                    />
+                  </div>
+                )}
+              >
+                <MenuItem onClick={confirmBoostStatus}>
+                  <Icon icon="rocket" />
+                  <span>Boost to everyone?</span>
+                </MenuItem>
+                {mediaNoDesc && (
+                  <div class="footer">
+                    <Icon icon="alert" />
+                    Some media have no descriptions.
+                  </div>
+                )}
+              </Menu>
               <div class="action has-count">
                 <StatusButton
                   checked={favourited}
@@ -1682,6 +1775,7 @@ function StatusButton({
       title={buttonTitle}
       class={`plain ${className} ${checked ? 'checked' : ''}`}
       onClick={(e) => {
+        if (!onClick) return;
         e.preventDefault();
         e.stopPropagation();
         onClick(e);

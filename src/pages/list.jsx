@@ -11,6 +11,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
 import Menu2 from '../components/menu2';
+import MenuConfirm from '../components/menu-confirm';
 import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
@@ -263,10 +264,11 @@ function RemoveAddButton({ account, listID }) {
   const [removed, setRemoved] = useState(false);
 
   return (
-    <button
-      type="button"
-      class={`light ${removed ? '' : 'danger'}`}
-      disabled={uiState === 'loading'}
+    <MenuConfirm
+      confirm={!removed}
+      confirmLabel={<span>Remove @{account.username} from list?</span>}
+      align="end"
+      menuItemClassName="danger"
       onClick={() => {
         if (removed) {
           setUIState('loading');
@@ -282,8 +284,8 @@ function RemoveAddButton({ account, listID }) {
             }
           })();
         } else {
-          const yes = confirm(`Remove ${account.username} from this list?`);
-          if (!yes) return;
+          // const yes = confirm(`Remove ${account.username} from this list?`);
+          // if (!yes) return;
           setUIState('loading');
 
           (async () => {
@@ -300,8 +302,14 @@ function RemoveAddButton({ account, listID }) {
         }
       }}
     >
-      {removed ? 'Add' : 'Remove…'}
-    </button>
+      <button
+        type="button"
+        class={`light ${removed ? '' : 'danger'}`}
+        disabled={uiState === 'loading'}
+      >
+        {removed ? 'Add' : 'Remove…'}
+      </button>
+    </MenuConfirm>
   );
 }
 

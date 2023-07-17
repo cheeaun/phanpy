@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { api } from '../utils/api';
 
 import Icon from './icon';
+import MenuConfirm from './menu-confirm';
 
 function ListAddEdit({ list, onClose }) {
   const { masto } = api();
@@ -103,13 +104,14 @@ function ListAddEdit({ list, onClose }) {
               {editMode ? 'Save' : 'Create'}
             </button>
             {editMode && (
-              <button
-                type="button"
-                class="light danger"
+              <MenuConfirm
                 disabled={uiState === 'loading'}
+                align="end"
+                menuItemClassName="danger"
+                confirmLabel="Delete this list?"
                 onClick={() => {
-                  const yes = confirm('Delete this list?');
-                  if (!yes) return;
+                  // const yes = confirm('Delete this list?');
+                  // if (!yes) return;
                   setUiState('loading');
 
                   (async () => {
@@ -127,8 +129,14 @@ function ListAddEdit({ list, onClose }) {
                   })();
                 }}
               >
-                Delete…
-              </button>
+                <button
+                  type="button"
+                  class="light danger"
+                  disabled={uiState === 'loading'}
+                >
+                  Delete…
+                </button>
+              </MenuConfirm>
             )}
           </div>
         </form>

@@ -6,6 +6,7 @@ import { useReducer, useState } from 'preact/hooks';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
+import MenuConfirm from '../components/menu-confirm';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -126,11 +127,19 @@ function Accounts({ onClose }) {
                           <span>Set as default</span>
                         </MenuItem>
                       )}
-                      <MenuItem
+                      <MenuConfirm
+                        subMenu
+                        confirmLabel={
+                          <>
+                            <Icon icon="exit" />
+                            <span>Log out @{account.info.acct}?</span>
+                          </>
+                        }
                         disabled={!isCurrent}
+                        menuItemClassName="danger"
                         onClick={() => {
-                          const yes = confirm('Log out?');
-                          if (!yes) return;
+                          // const yes = confirm('Log out?');
+                          // if (!yes) return;
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);
                           // location.reload();
@@ -139,7 +148,7 @@ function Accounts({ onClose }) {
                       >
                         <Icon icon="exit" />
                         <span>Log out…</span>
-                      </MenuItem>
+                      </MenuConfirm>
                     </Menu>
                   </div>
                 </li>

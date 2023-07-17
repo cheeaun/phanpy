@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
 import Menu2 from '../components/menu2';
+import MenuConfirm from '../components/menu-confirm';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
@@ -149,16 +150,19 @@ function Hashtags({ columnMode, ...props }) {
         >
           {!!info && hashtags.length === 1 && (
             <>
-              <MenuItem
+              <MenuConfirm
+                subMenu
+                confirm={info.following}
+                confirmLabel={`Unfollow #${hashtag}?`}
                 disabled={followUIState === 'loading' || !authenticated}
                 onClick={() => {
                   setFollowUIState('loading');
                   if (info.following) {
-                    const yes = confirm(`Unfollow #${hashtag}?`);
-                    if (!yes) {
-                      setFollowUIState('default');
-                      return;
-                    }
+                    // const yes = confirm(`Unfollow #${hashtag}?`);
+                    // if (!yes) {
+                    //   setFollowUIState('default');
+                    //   return;
+                    // }
                     masto.v1.tags
                       .unfollow(hashtag)
                       .then(() => {
@@ -198,7 +202,7 @@ function Hashtags({ columnMode, ...props }) {
                     <Icon icon="plus" /> <span>Follow</span>
                   </>
                 )}
-              </MenuItem>
+              </MenuConfirm>
               <MenuDivider />
             </>
           )}

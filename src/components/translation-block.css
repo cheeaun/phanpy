@@ -105,3 +105,22 @@
   overflow: visible;
   mask-image: none;
 }
+
+/* MINI */
+
+.status-translation-block-mini {
+  display: flex;
+  margin: 8px 0 0;
+  padding: 8px 0 0;
+  font-size: 90%;
+  border-top: var(--hairline-width) solid var(--outline-color);
+  color: var(--text-insignificant-color);
+  gap: 8px;
+  transition: color 0.3s ease-in-out;
+}
+.status-translation-block-mini .icon {
+  margin-top: 2px;
+}
+.status:is(:hover, :active) .status-translation-block-mini {
+  color: var(--text-color);
+}

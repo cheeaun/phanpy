@@ -57,6 +57,7 @@ import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
+const INLINE_TRASNSLATE_LIMIT = 140;
 const throttle = pThrottle({
   limit: 1,
   interval: 1000,
@@ -244,11 +245,23 @@ function Status({
     );
   }
 
+  const isSizeLarge = size === 'l';
+
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   const targetLanguage = getTranslateTargetLanguage(true);
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
+  const inlineTranslate = useMemo(() => {
+    return (
+      !isSizeLarge &&
+      !spoilerText &&
+      !poll &&
+      !mediaAttachments?.length &&
+      content?.length > 0 &&
+      content?.length <= INLINE_TRASNSLATE_LIMIT
+    );
+  }, [isSizeLarge, content, spoilerText, poll, mediaAttachments]);
 
   const [showEdited, setShowEdited] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -306,7 +319,6 @@ function Status({
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
-  const isSizeLarge = size === 'l';
   // Can boost if:
   // - authenticated AND
   // - visibility != direct OR
@@ -1091,10 +1103,13 @@ function Status({
               }}
             />
           )}
-          {((enableTranslate && !!content.trim() && differentLanguage) ||
+          {(((enableTranslate || inlineTranslate) &&
+            !!content.trim() &&
+            differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
-              forceTranslate={forceTranslate}
+              forceTranslate={forceTranslate || inlineTranslate}
+              mini={inlineTranslate}
               sourceLanguage={language}
               text={
                 (spoilerText ? `${spoilerText}\n\n` : '') +

@@ -1,5 +1,6 @@
 import './translation-block.css';
 
+import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import sourceLanguages from '../data/lingva-source-languages';
@@ -9,11 +10,41 @@ import localeCode2Text from '../utils/localeCode2Text';
 import Icon from './icon';
 import Loader from './loader';
 
+const throttle = pThrottle({
+  limit: 1,
+  interval: 2000,
+});
+
+function lingvaTranslate(text, source, target) {
+  console.log('TRANSLATE', text, source, target);
+  // Using another API instance instead of lingva.ml because of this bug (slashes don't work):
+  // https://github.com/thedaviddelta/lingva-translate/issues/68
+  return fetch(
+    `https://lingva.garudalinux.org/api/v1/${source}/${target}/${encodeURIComponent(
+      text,
+    )}`,
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      return {
+        provider: 'lingva',
+        content: res.translation,
+        detectedSourceLanguage: res.info?.detectedSource,
+        info: res.info,
+      };
+    });
+  // return masto.v1.statuses.translate(id, {
+  //   lang: DEFAULT_LANG,
+  // });
+}
+const throttledLingvaTranslate = throttle(lingvaTranslate);
+
 function TranslationBlock({
   forceTranslate,
   sourceLanguage,
   onTranslate,
   text = '',
+  mini,
 }) {
   const targetLang = getTranslateTargetLanguage(true);
   const [uiState, setUIState] = useState('default');
@@ -28,35 +59,15 @@ function TranslationBlock({
   const targetLangText = localeCode2Text(targetLang);
   const apiSourceLang = useRef('auto');
 
-  if (!onTranslate)
-    onTranslate = (source, target) => {
-      console.log('TRANSLATE', source, target, text);
-      // Using another API instance instead of lingva.ml because of this bug (slashes don't work):
-      // https://github.com/thedaviddelta/lingva-translate/issues/68
-      return fetch(
-        `https://lingva.garudalinux.org/api/v1/${source}/${target}/${encodeURIComponent(
-          text,
-        )}`,
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          return {
-            provider: 'lingva',
-            content: res.translation,
-            detectedSourceLanguage: res.info?.detectedSource,
-            info: res.info,
-          };
-        });
-      // return masto.v1.statuses.translate(id, {
-      //   lang: DEFAULT_LANG,
-      // });
-    };
+  if (!onTranslate) {
+    onTranslate = mini ? throttledLingvaTranslate : lingvaTranslate;
+  }
 
   const translate = async () => {
     setUIState('loading');
     try {
       const { content, detectedSourceLanguage, provider, ...props } =
-        await onTranslate(apiSourceLang.current, targetLang);
+        await onTranslate(text, apiSourceLang.current, targetLang);
       if (content) {
         if (detectedSourceLanguage) {
           const detectedLangText = localeCode2Text(detectedSourceLanguage);
@@ -70,11 +81,13 @@ function TranslationBlock({
         }
         setTranslatedContent(content);
         setUIState('default');
-        detailsRef.current.open = true;
-        detailsRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-        });
+        if (!mini) {
+          detailsRef.current.open = true;
+          detailsRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       } else {
         console.error(result);
         setUIState('error');
@@ -90,6 +103,23 @@ function TranslationBlock({
       translate();
     }
   }, [forceTranslate]);
+
+  if (mini) {
+    if (!!translatedContent && detectedLang !== targetLangText) {
+      return (
+        <div class="status-translation-block-mini">
+          <Icon
+            icon="translate"
+            alt={`Auto-translated from ${sourceLangText}`}
+          />
+          <output lang={targetLang} dir="auto">
+            {translatedContent}
+          </output>
+        </div>
+      );
+    }
+    return null;
+  }
 
   return (
     <div

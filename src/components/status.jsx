@@ -538,7 +538,7 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="rocket" />
-                  <span>Unboost?</span>
+                  <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
                 </>
               }
               menuFooter={
@@ -1239,44 +1239,38 @@ function Status({
                   disabled={!canBoost}
                 />
               </div> */}
-              <Menu
-                portal={{
-                  target:
-                    document.querySelector('.status-deck') || document.body,
-                }}
-                align="start"
-                gap={4}
-                overflow="auto"
-                viewScroll="close"
-                boundingBoxPadding="8 8 8 8"
-                shift={-8}
-                menuClassName="menu-emphasized"
-                menuButton={({ open }) => (
-                  <div class="action has-count">
-                    <StatusButton
-                      checked={reblogged}
-                      title={['Boost', 'Unboost']}
-                      alt={['Boost', 'Boosted']}
-                      class="reblog-button"
-                      icon="rocket"
-                      count={reblogsCount}
-                      // onClick={boostStatus}
-                      disabled={open || !canBoost}
-                    />
-                  </div>
-                )}
+              <MenuConfirm
+                disabled={!canBoost}
+                onClick={confirmBoostStatus}
+                confirmLabel={
+                  <>
+                    <Icon icon="rocket" />
+                    <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                  </>
+                }
+                menuFooter={
+                  mediaNoDesc &&
+                  !reblogged && (
+                    <div class="footer">
+                      <Icon icon="alert" />
+                      Some media have no descriptions.
+                    </div>
+                  )
+                }
               >
-                <MenuItem onClick={confirmBoostStatus}>
-                  <Icon icon="rocket" />
-                  <span>Boost to everyone?</span>
-                </MenuItem>
-                {mediaNoDesc && (
-                  <div class="footer">
-                    <Icon icon="alert" />
-                    Some media have no descriptions.
-                  </div>
-                )}
-              </Menu>
+                <div class="action has-count">
+                  <StatusButton
+                    checked={reblogged}
+                    title={['Boost', 'Unboost']}
+                    alt={['Boost', 'Boosted']}
+                    class="reblog-button"
+                    icon="rocket"
+                    count={reblogsCount}
+                    // onClick={boostStatus}
+                    disabled={!canBoost}
+                  />
+                </div>
+              </MenuConfirm>
               <div class="action has-count">
                 <StatusButton
                   checked={favourited}

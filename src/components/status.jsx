@@ -1836,7 +1836,12 @@ function _unfurlMastodonLink(instance, url) {
   console.debug('🦦 Unfurling URL', url);
 
   let remoteInstanceFetch;
-  const urlObj = new URL(url);
+  let theURL = url;
+  if (/\/\/elk\.[^\/]+\/[^.]+\.[^.]+/i.test(theURL)) {
+    // E.g. https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+    theURL = theURL.replace(/elk\.[^\/]+\//i, '');
+  }
+  const urlObj = new URL(theURL);
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   // Regex /:username/:id, where username = @username or @username@domain, id = number

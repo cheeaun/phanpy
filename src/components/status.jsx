@@ -1880,12 +1880,12 @@ function _unfurlMastodonLink(instance, url) {
   function handleFulfill(result) {
     const { status, instance } = result;
     const { id } = status;
-    const url = `/${instance}/s/${id}`;
-    console.debug('🦦 Unfurled URL', url, id, url);
+    const selfURL = `/${instance}/s/${id}`;
+    console.debug('🦦 Unfurled URL', url, id, selfURL);
     const data = {
       id,
       instance,
-      url,
+      url: selfURL,
     };
     states.unfurledLinks[url] = data;
     saveStatus(status, instance, {

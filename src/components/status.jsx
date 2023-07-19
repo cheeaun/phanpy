@@ -902,8 +902,9 @@ function Status({
                     // Higher than the backdrop
                     zIndex: 1001,
                   },
-                  onClick: () => {
-                    menuInstanceRef.current?.closeMenu?.();
+                  onClick: (e) => {
+                    if (e.target === e.currentTarget)
+                      menuInstanceRef.current?.closeMenu?.();
                   },
                 }}
                 align="end"

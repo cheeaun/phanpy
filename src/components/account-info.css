@@ -197,6 +197,10 @@
   filter: saturate(0.75);
   line-height: 1.25;
   flex-shrink: 0;
+  max-width: calc(100% - 12px - 2em);
+}
+.account-container .profile-field:only-child {
+  max-width: 100%;
 }
 .timeline-start .account-container .profile-field {
   flex-shrink: 1;

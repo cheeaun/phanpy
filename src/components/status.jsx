@@ -1115,7 +1115,8 @@ function Status({
             />
           )}
           {((enableTranslate && !!content.trim() && differentLanguage) ||
-            forceTranslate) && (
+            forceTranslate ||
+            inlineTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}
               mini={!isSizeLarge}

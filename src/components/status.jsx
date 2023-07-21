@@ -253,20 +253,22 @@ function Status({
     snapStates.settings.contentTranslationHideLanguages || [];
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
+    const contentLength = htmlContentLength(content);
     return (
       !readOnly &&
+      (!withinContext || isSizeLarge) &&
       !previewMode &&
-      !withinContext &&
       !spoilerText &&
       !poll &&
       !mediaAttachments?.length &&
-      content?.length > 0 &&
-      content?.length <= INLINE_TRANSLATE_LIMIT
+      contentLength > 0 &&
+      contentLength <= INLINE_TRANSLATE_LIMIT
     );
   }, [
     readOnly,
-    previewMode,
     withinContext,
+    isSizeLarge,
+    previewMode,
     spoilerText,
     poll,
     mediaAttachments,

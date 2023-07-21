@@ -254,7 +254,6 @@ function Status({
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
     return (
-      !isSizeLarge &&
       !spoilerText &&
       !poll &&
       !mediaAttachments?.length &&
@@ -1110,7 +1109,7 @@ function Status({
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}
-              mini={inlineTranslate}
+              mini={!isSizeLarge}
               sourceLanguage={language}
               text={
                 (spoilerText ? `${spoilerText}\n\n` : '') +

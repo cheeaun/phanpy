@@ -1121,7 +1121,7 @@ function Status({
             inlineTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}
-              mini={!isSizeLarge}
+              mini={!isSizeLarge && !withinContext}
               sourceLanguage={language}
               text={
                 (spoilerText ? `${spoilerText}\n\n` : '') +

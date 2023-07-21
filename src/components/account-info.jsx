@@ -21,6 +21,7 @@ import Icon from './icon';
 import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
+import MenuConfirm from './menu-confirm';
 import Modal from './modal';
 import TranslationBlock from './translation-block';
 
@@ -295,12 +296,12 @@ function AccountInfo({
               />
               {fields?.length > 0 && (
                 <div class="profile-metadata">
-                  {fields.map(({ name, value, verifiedAt }) => (
+                  {fields.map(({ name, value, verifiedAt }, i) => (
                     <div
                       class={`profile-field ${
                         verifiedAt ? 'profile-verified' : ''
                       }`}
-                      key={name}
+                      key={name + i}
                     >
                       <b>
                         <EmojiText text={name} emojis={emojis} />{' '}
@@ -316,54 +317,50 @@ function AccountInfo({
                 </div>
               )}
               <p class="stats">
+                <div>
+                  <span title={followersCount}>
+                    {shortenNumber(followersCount)}
+                  </span>{' '}
+                  Followers
+                </div>
+                <div class="insignificant">
+                  <span title={followingCount}>
+                    {shortenNumber(followingCount)}
+                  </span>{' '}
+                  Following
+                  <br />
+                </div>
                 {standalone ? (
-                  <span>
-                    Posts
-                    <br />
-                    <b title={statusesCount}>
+                  <div class="insignificant">
+                    <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
-                    </b>{' '}
-                  </span>
+                    </span>{' '}
+                    Posts
+                  </div>
                 ) : (
                   <Link
+                    class="insignificant"
                     to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
                     onClick={() => {
                       hideAllModals();
                     }}
                   >
-                    Posts
-                    <br />
-                    <b title={statusesCount}>
+                    <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
-                    </b>{' '}
+                    </span>{' '}
+                    Posts
                   </Link>
                 )}
-                <span>
-                  Following
-                  <br />
-                  <b title={followingCount}>
-                    {shortenNumber(followingCount)}
-                  </b>{' '}
-                </span>
-                <span>
-                  Followers
-                  <br />
-                  <b title={followersCount}>
-                    {shortenNumber(followersCount)}
-                  </b>{' '}
-                </span>
                 {!!createdAt && (
-                  <span>
+                  <div class="insignificant">
                     Joined
                     <br />
-                    <b>
-                      <time datetime={createdAt}>
-                        {niceDateTime(createdAt, {
-                          hideTime: true,
-                        })}
-                      </time>
-                    </b>
-                  </span>
+                    <time datetime={createdAt}>
+                      {niceDateTime(createdAt, {
+                        hideTime: true,
+                      })}
+                    </time>
+                  </div>
                 )}
               </p>
               <RelatedActions
@@ -738,11 +735,20 @@ function RelatedActions({ info, instance, authenticated }) {
                     </div>
                   </SubMenu>
                 )}
-                <MenuItem
+                <MenuConfirm
+                  subMenu
+                  confirm={!blocking}
+                  confirmLabel={
+                    <>
+                      <Icon icon="block" />
+                      <span>Block @{username}?</span>
+                    </>
+                  }
+                  menuItemClassName="danger"
                   onClick={() => {
-                    if (!blocking && !confirm(`Block @${username}?`)) {
-                      return;
-                    }
+                    // if (!blocking && !confirm(`Block @${username}?`)) {
+                    //   return;
+                    // }
                     setRelationshipUIState('loading');
                     (async () => {
                       try {
@@ -788,7 +794,7 @@ function RelatedActions({ info, instance, authenticated }) {
                       <span>Block @{username}…</span>
                     </>
                   )}
-                </MenuItem>
+                </MenuConfirm>
                 {/* <MenuItem>
                 <Icon icon="flag" />
                 <span>Report @{username}…</span>
@@ -800,10 +806,17 @@ function RelatedActions({ info, instance, authenticated }) {
             <Loader abrupt />
           )}
           {!!relationship && (
-            <button
-              type="button"
-              class={`${following || requested ? 'light swap' : ''}`}
-              data-swap-state={following || requested ? 'danger' : ''}
+            <MenuConfirm
+              confirm={following || requested}
+              confirmLabel={
+                <span>
+                  {requested
+                    ? 'Withdraw follow request?'
+                    : `Unfollow @${info.acct || info.username}?`}
+                </span>
+              }
+              menuItemClassName="danger"
+              align="end"
               disabled={loading}
               onClick={() => {
                 setRelationshipUIState('loading');
@@ -812,18 +825,17 @@ function RelatedActions({ info, instance, authenticated }) {
                     let newRelationship;
 
                     if (following || requested) {
-                      const yes = confirm(
-                        requested
-                          ? 'Withdraw follow request?'
-                          : `Unfollow @${info.acct || info.username}?`,
-                      );
+                      // const yes = confirm(
+                      //   requested
+                      //     ? 'Withdraw follow request?'
+                      //     : `Unfollow @${info.acct || info.username}?`,
+                      // );
 
-                      if (yes) {
-                        newRelationship =
-                          await currentMasto.v1.accounts.unfollow(
-                            accountID.current,
-                          );
-                      }
+                      // if (yes) {
+                      newRelationship = await currentMasto.v1.accounts.unfollow(
+                        accountID.current,
+                      );
+                      // }
                     } else {
                       newRelationship = await currentMasto.v1.accounts.follow(
                         accountID.current,
@@ -839,24 +851,31 @@ function RelatedActions({ info, instance, authenticated }) {
                 })();
               }}
             >
-              {following ? (
-                <>
-                  <span>Following</span>
-                  <span>Unfollow…</span>
-                </>
-              ) : requested ? (
-                <>
-                  <span>Requested</span>
-                  <span>Withdraw…</span>
-                </>
-              ) : locked ? (
-                <>
-                  <Icon icon="lock" /> <span>Follow</span>
-                </>
-              ) : (
-                'Follow'
-              )}
-            </button>
+              <button
+                type="button"
+                class={`${following || requested ? 'light swap' : ''}`}
+                data-swap-state={following || requested ? 'danger' : ''}
+                disabled={loading}
+              >
+                {following ? (
+                  <>
+                    <span>Following</span>
+                    <span>Unfollow…</span>
+                  </>
+                ) : requested ? (
+                  <>
+                    <span>Requested</span>
+                    <span>Withdraw…</span>
+                  </>
+                ) : locked ? (
+                  <>
+                    <Icon icon="lock" /> <span>Follow</span>
+                  </>
+                ) : (
+                  'Follow'
+                )}
+              </button>
+            </MenuConfirm>
           )}
         </span>
       </p>

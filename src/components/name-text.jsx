@@ -17,6 +17,7 @@ function NameText({
   const { acct, avatar, avatarStatic, id, url, displayName, emojis, bot } =
     account;
   let { username } = account;
+  const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
@@ -74,7 +75,10 @@ function NameText({
       {showAcct && (
         <>
           <br />
-          <i>@{acct}</i>
+          <i>
+            @{acct1}
+            <span class="ib">{acct2}</span>
+          </i>
         </>
       )}
     </a>

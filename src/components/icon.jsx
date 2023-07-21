@@ -9,80 +9,86 @@ const SIZES = {
 };
 
 const ICONS = {
-  x: 'mingcute:close-line',
-  heart: 'mingcute:heart-line',
-  bookmark: 'mingcute:bookmark-line',
-  'check-circle': 'mingcute:check-circle-line',
-  transfer: 'mingcute:transfer-4-line',
-  rocket: 'mingcute:rocket-line',
-  'arrow-left': 'mingcute:arrow-left-line',
-  'arrow-right': 'mingcute:arrow-right-line',
-  'arrow-up': 'mingcute:arrow-up-line',
-  'arrow-down': 'mingcute:arrow-down-line',
-  earth: 'mingcute:earth-line',
-  lock: 'mingcute:lock-line',
-  unlock: 'mingcute:unlock-line',
-  'eye-close': 'mingcute:eye-close-line',
-  'eye-open': 'mingcute:eye-2-line',
-  message: 'mingcute:mail-line',
-  comment: 'mingcute:chat-3-line',
-  home: 'mingcute:home-3-line',
-  notification: 'mingcute:notification-line',
-  follow: 'mingcute:user-follow-line',
-  'follow-add': 'mingcute:user-add-line',
-  poll: ['mingcute:chart-bar-line', '90deg'],
-  pencil: 'mingcute:pencil-line',
-  quill: 'mingcute:quill-pen-line',
-  at: 'mingcute:at-line',
-  attachment: 'mingcute:attachment-line',
-  upload: 'mingcute:upload-3-line',
-  gear: 'mingcute:settings-3-line',
-  more: 'mingcute:more-3-line',
-  external: 'mingcute:external-link-line',
-  popout: 'mingcute:external-link-line',
-  popin: ['mingcute:external-link-line', '180deg'],
-  plus: 'mingcute:add-circle-line',
-  'chevron-left': 'mingcute:left-line',
-  'chevron-right': 'mingcute:right-line',
-  reply: ['mingcute:share-forward-line', '180deg', 'horizontal'],
-  thread: 'mingcute:route-line',
-  group: 'mingcute:group-line',
-  bot: 'mingcute:android-2-line',
-  menu: 'mingcute:rows-4-line',
-  list: 'mingcute:list-check-line',
-  search: 'mingcute:search-2-line',
-  hashtag: 'mingcute:hashtag-line',
-  info: 'mingcute:information-line',
-  shortcut: 'mingcute:lightning-line',
-  user: 'mingcute:user-4-line',
-  following: 'mingcute:walk-line',
-  pin: 'mingcute:pin-line',
-  bus: 'mingcute:bus-2-line',
-  link: 'mingcute:link-2-line',
-  history: 'mingcute:history-line',
-  share: 'mingcute:share-2-line',
-  sparkles: 'mingcute:sparkles-line',
-  exit: 'mingcute:exit-line',
-  translate: 'mingcute:translate-line',
-  play: 'mingcute:play-fill',
-  trash: 'mingcute:delete-2-line',
-  mute: 'mingcute:volume-mute-line',
-  unmute: 'mingcute:volume-line',
-  block: 'mingcute:forbid-circle-line',
-  unblock: ['mingcute:forbid-circle-line', '180deg'],
-  flag: 'mingcute:flag-4-line',
-  time: 'mingcute:time-line',
-  refresh: 'mingcute:refresh-2-line',
-  emoji2: 'mingcute:emoji-2-line',
-  filter: 'mingcute:filter-2-line',
-  chart: 'mingcute:chart-line-line',
-  react: 'mingcute:react-line',
-  layout4: 'mingcute:layout-4-line',
-  layout5: 'mingcute:layout-5-line',
-  announce: 'mingcute:announcement-line',
+  x: () => import('@iconify-icons/mingcute/close-line'),
+  heart: () => import('@iconify-icons/mingcute/heart-line'),
+  bookmark: () => import('@iconify-icons/mingcute/bookmark-line'),
+  'check-circle': () => import('@iconify-icons/mingcute/check-circle-line'),
+  transfer: () => import('@iconify-icons/mingcute/transfer-4-line'),
+  rocket: () => import('@iconify-icons/mingcute/rocket-line'),
+  'arrow-left': () => import('@iconify-icons/mingcute/arrow-left-line'),
+  'arrow-right': () => import('@iconify-icons/mingcute/arrow-right-line'),
+  'arrow-up': () => import('@iconify-icons/mingcute/arrow-up-line'),
+  'arrow-down': () => import('@iconify-icons/mingcute/arrow-down-line'),
+  earth: () => import('@iconify-icons/mingcute/earth-line'),
+  lock: () => import('@iconify-icons/mingcute/lock-line'),
+  unlock: () => import('@iconify-icons/mingcute/unlock-line'),
+  'eye-close': () => import('@iconify-icons/mingcute/eye-close-line'),
+  'eye-open': () => import('@iconify-icons/mingcute/eye-2-line'),
+  message: () => import('@iconify-icons/mingcute/mail-line'),
+  comment: () => import('@iconify-icons/mingcute/chat-3-line'),
+  home: () => import('@iconify-icons/mingcute/home-3-line'),
+  notification: () => import('@iconify-icons/mingcute/notification-line'),
+  follow: () => import('@iconify-icons/mingcute/user-follow-line'),
+  'follow-add': () => import('@iconify-icons/mingcute/user-add-line'),
+  poll: [() => import('@iconify-icons/mingcute/chart-bar-line'), '90deg'],
+  pencil: () => import('@iconify-icons/mingcute/pencil-line'),
+  quill: () => import('@iconify-icons/mingcute/quill-pen-line'),
+  at: () => import('@iconify-icons/mingcute/at-line'),
+  attachment: () => import('@iconify-icons/mingcute/attachment-line'),
+  upload: () => import('@iconify-icons/mingcute/upload-3-line'),
+  gear: () => import('@iconify-icons/mingcute/settings-3-line'),
+  more: () => import('@iconify-icons/mingcute/more-3-line'),
+  external: () => import('@iconify-icons/mingcute/external-link-line'),
+  popout: () => import('@iconify-icons/mingcute/external-link-line'),
+  popin: [() => import('@iconify-icons/mingcute/external-link-line'), '180deg'],
+  plus: () => import('@iconify-icons/mingcute/add-circle-line'),
+  'chevron-left': () => import('@iconify-icons/mingcute/left-line'),
+  'chevron-right': () => import('@iconify-icons/mingcute/right-line'),
+  reply: [
+    () => import('@iconify-icons/mingcute/share-forward-line'),
+    '180deg',
+    'horizontal',
+  ],
+  thread: () => import('@iconify-icons/mingcute/route-line'),
+  group: () => import('@iconify-icons/mingcute/group-line'),
+  bot: () => import('@iconify-icons/mingcute/android-2-line'),
+  menu: () => import('@iconify-icons/mingcute/rows-4-line'),
+  list: () => import('@iconify-icons/mingcute/list-check-line'),
+  search: () => import('@iconify-icons/mingcute/search-2-line'),
+  hashtag: () => import('@iconify-icons/mingcute/hashtag-line'),
+  info: () => import('@iconify-icons/mingcute/information-line'),
+  shortcut: () => import('@iconify-icons/mingcute/lightning-line'),
+  user: () => import('@iconify-icons/mingcute/user-4-line'),
+  following: () => import('@iconify-icons/mingcute/walk-line'),
+  pin: () => import('@iconify-icons/mingcute/pin-line'),
+  bus: () => import('@iconify-icons/mingcute/bus-2-line'),
+  link: () => import('@iconify-icons/mingcute/link-2-line'),
+  history: () => import('@iconify-icons/mingcute/history-line'),
+  share: () => import('@iconify-icons/mingcute/share-2-line'),
+  sparkles: () => import('@iconify-icons/mingcute/sparkles-line'),
+  exit: () => import('@iconify-icons/mingcute/exit-line'),
+  translate: () => import('@iconify-icons/mingcute/translate-line'),
+  play: () => import('@iconify-icons/mingcute/play-fill'),
+  trash: () => import('@iconify-icons/mingcute/delete-2-line'),
+  mute: () => import('@iconify-icons/mingcute/volume-mute-line'),
+  unmute: () => import('@iconify-icons/mingcute/volume-line'),
+  block: () => import('@iconify-icons/mingcute/forbid-circle-line'),
+  unblock: [
+    () => import('@iconify-icons/mingcute/forbid-circle-line'),
+    '180deg',
+  ],
+  flag: () => import('@iconify-icons/mingcute/flag-4-line'),
+  time: () => import('@iconify-icons/mingcute/time-line'),
+  refresh: () => import('@iconify-icons/mingcute/refresh-2-line'),
+  emoji2: () => import('@iconify-icons/mingcute/emoji-2-line'),
+  filter: () => import('@iconify-icons/mingcute/filter-2-line'),
+  chart: () => import('@iconify-icons/mingcute/chart-line-line'),
+  react: () => import('@iconify-icons/mingcute/react-line'),
+  layout4: () => import('@iconify-icons/mingcute/layout-4-line'),
+  layout5: () => import('@iconify-icons/mingcute/layout-5-line'),
+  announce: () => import('@iconify-icons/mingcute/announcement-line'),
+  alert: () => import('@iconify-icons/mingcute/alert-line'),
 };
-
-const modules = import.meta.glob('/node_modules/@iconify-icons/mingcute/*.js');
 
 function Icon({
   icon,
@@ -95,20 +101,17 @@ function Icon({
   if (!icon) return null;
 
   const iconSize = SIZES[size];
-  let iconName = ICONS[icon];
+  let iconBlock = ICONS[icon];
   let rotate, flip;
-  if (Array.isArray(iconName)) {
-    [iconName, rotate, flip] = iconName;
+  if (Array.isArray(iconBlock)) {
+    [iconBlock, rotate, flip] = iconBlock;
   }
 
   const [iconData, setIconData] = useState(null);
   useEffect(async () => {
-    const name = iconName.replace('mingcute:', '');
-    const icon = await modules[
-      `/node_modules/@iconify-icons/mingcute/${name}.js`
-    ]();
+    const icon = await iconBlock();
     setIconData(icon.default);
-  }, [iconName]);
+  }, [iconBlock]);
 
   return (
     <div

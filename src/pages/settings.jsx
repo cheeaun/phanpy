@@ -1,12 +1,13 @@
 import './settings.css';
 
-import { useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 import Icon from '../components/icon';
 import RelativeTime from '../components/relative-time';
 import targetLanguages from '../data/lingva-target-languages';
+import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import states from '../utils/states';
@@ -24,6 +25,23 @@ function Settings({ onClose }) {
   const systemTargetLanguage = getTranslateTargetLanguage();
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
+
+  const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
+  // Get preferences every time Settings is opened
+  // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
+  // useEffect(() => {
+  //   const { masto } = api();
+  //   (async () => {
+  //     try {
+  //       const preferences = await masto.v1.preferences.fetch();
+  //       setPrefs(preferences);
+  //       store.account.set('preferences', preferences);
+  //     } catch (e) {
+  //       // Silently fail
+  //       console.error(e);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <div id="settings-container" class="sheet" tabIndex="-1">
@@ -140,6 +158,50 @@ function Settings({ onClose }) {
                     <option value={size} />
                   ))}
                 </datalist>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <h3>Posting</h3>
+        <section>
+          <ul>
+            <li>
+              <div>
+                <label for="posting-privacy-field">Default visibility</label>
+              </div>
+              <div>
+                <select
+                  id="posting-privacy-field"
+                  value={prefs['posting:default:visibility'] || 'public'}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    const { masto } = api();
+                    (async () => {
+                      try {
+                        await masto.v1.accounts.updateCredentials({
+                          source: {
+                            privacy: value,
+                          },
+                        });
+                        setPrefs({
+                          ...prefs,
+                          'posting:default:visibility': value,
+                        });
+                        store.account.set('preferences', {
+                          ...prefs,
+                          'posting:default:visibility': value,
+                        });
+                      } catch (e) {
+                        alert('Failed to update posting privacy');
+                        console.error(e);
+                      }
+                    })();
+                  }}
+                >
+                  <option value="public">Public</option>
+                  <option value="unlisted">Unlisted</option>
+                  <option value="private">Followers only</option>
+                </select>
               </div>
             </li>
           </ul>

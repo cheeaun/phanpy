@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'preact/hooks';
+import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
 import Link from '../components/link';
@@ -8,12 +8,14 @@ import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
+const emptySearchParams = new URLSearchParams();
 
-function Mentions(props) {
+function Mentions({ columnMode, ...props }) {
   useTitle('Mentions', '/mentions');
   const { masto, instance } = api();
-  const [searchParams] = useSearchParams();
-  const type = props?.type || searchParams.get('type');
+  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
+  const [stateType, setStateType] = useState(null);
+  const type = props?.type || searchParams.get('type') || stateType;
 
   const mentionsIterator = useRef();
   const latestItem = useRef();
@@ -126,12 +128,27 @@ function Mentions(props) {
   const TimelineStart = useMemo(() => {
     return (
       <div class="filter-bar centered">
-        <Link to="/mentions" class={!type ? 'is-active' : ''}>
+        <Link
+          to="/mentions"
+          class={!type ? 'is-active' : ''}
+          onClick={(e) => {
+            if (columnMode) {
+              e.preventDefault();
+              setStateType(null);
+            }
+          }}
+        >
           All
         </Link>
         <Link
           to="/mentions?type=private"
           class={type === 'private' ? 'is-active' : ''}
+          onClick={(e) => {
+            if (columnMode) {
+              e.preventDefault();
+              setStateType('private');
+            }
+          }}
         >
           Private
         </Link>

@@ -1,5 +1,6 @@
 import './notifications.css';
 
+import { useIdle } from '@uidotdev/usehooks';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -146,6 +147,8 @@ function Notifications() {
   }, [nearReachEnd, showMore]);
 
   const isHovering = useRef(false);
+  const idle = useIdle(5000);
+  console.debug('🧘‍♀️ IDLE', idle);
   const loadUpdates = useCallback(() => {
     console.log('✨ Load updates', {
       autoRefresh: snapStates.settings.autoRefresh,
@@ -158,7 +161,7 @@ function Notifications() {
     if (
       snapStates.settings.autoRefresh &&
       scrollableRef.current?.scrollTop === 0 &&
-      !isHovering.current &&
+      (!isHovering.current || idle) &&
       !inBackground() &&
       snapStates.notificationsShowNew &&
       uiState !== 'loading'
@@ -166,6 +169,7 @@ function Notifications() {
       loadNotifications(true);
     }
   }, [
+    idle,
     snapStates.notificationsShowNew,
     snapStates.settings.autoRefresh,
     uiState,
@@ -286,20 +290,40 @@ function Notifications() {
         {followRequests.length > 0 && (
           <div class="follow-requests">
             <h2 class="timeline-header">Follow requests</h2>
-            <ul>
-              {followRequests.map((account) => (
-                <li>
-                  <AccountBlock account={account} />
-                  <FollowRequestButtons
-                    accountID={account.id}
-                    onChange={() => {
-                      loadFollowRequests();
-                      loadNotifications(true);
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
+            {followRequests.length > 5 ? (
+              <details>
+                <summary>{followRequests.length} follow requests</summary>
+                <ul>
+                  {followRequests.map((account) => (
+                    <li>
+                      <AccountBlock account={account} />
+                      <FollowRequestButtons
+                        accountID={account.id}
+                        onChange={() => {
+                          loadFollowRequests();
+                          loadNotifications(true);
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <ul>
+                {followRequests.map((account) => (
+                  <li>
+                    <AccountBlock account={account} />
+                    <FollowRequestButtons
+                      accountID={account.id}
+                      onChange={() => {
+                        loadFollowRequests();
+                        loadNotifications(true);
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
         <div id="mentions-option">

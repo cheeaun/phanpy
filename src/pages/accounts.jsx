@@ -1,4 +1,4 @@
-import './settings.css';
+import './accounts.css';
 
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer, useState } from 'preact/hooks';
@@ -6,6 +6,7 @@ import { useReducer, useState } from 'preact/hooks';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
+import MenuConfirm from '../components/menu-confirm';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -22,7 +23,7 @@ function Accounts({ onClose }) {
   const [_, reload] = useReducer((x) => x + 1, 0);
 
   return (
-    <div id="settings-container" class="sheet" tabIndex="-1">
+    <div id="accounts-container" class="sheet" tabIndex="-1">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
           <Icon icon="x" />
@@ -63,7 +64,16 @@ function Accounts({ onClose }) {
                       }}
                     />
                     <NameText
-                      account={account.info}
+                      account={
+                        moreThanOneAccount
+                          ? {
+                              ...account.info,
+                              acct: /@/.test(account.info.acct)
+                                ? account.info.acct
+                                : `${account.info.acct}@${account.instanceURL}`,
+                            }
+                          : account.info
+                      }
                       showAcct
                       onClick={() => {
                         if (isCurrent) {
@@ -117,11 +127,19 @@ function Accounts({ onClose }) {
                           <span>Set as default</span>
                         </MenuItem>
                       )}
-                      <MenuItem
+                      <MenuConfirm
+                        subMenu
+                        confirmLabel={
+                          <>
+                            <Icon icon="exit" />
+                            <span>Log out @{account.info.acct}?</span>
+                          </>
+                        }
                         disabled={!isCurrent}
+                        menuItemClassName="danger"
                         onClick={() => {
-                          const yes = confirm('Log out?');
-                          if (!yes) return;
+                          // const yes = confirm('Log out?');
+                          // if (!yes) return;
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);
                           // location.reload();
@@ -130,7 +148,7 @@ function Accounts({ onClose }) {
                       >
                         <Icon icon="exit" />
                         <span>Log out…</span>
-                      </MenuItem>
+                      </MenuConfirm>
                     </Menu>
                   </div>
                 </li>

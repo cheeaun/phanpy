@@ -34,28 +34,6 @@
   flex-wrap: wrap;
   border-bottom: var(--hairline-width) solid var(--outline-color);
 }
-#settings-container section > ul > li .current {
-  margin-right: 8px;
-  color: var(--green-color);
-  opacity: 0.1;
-}
-#settings-container section > ul > li .current.is-current {
-  opacity: 1;
-}
-#settings-container section > ul > li .current.is-current + .avatar {
-  box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
-}
-#settings-container section > ul > li .avatar + .name-text {
-  vertical-align: middle;
-}
-#settings-container section > ul > li > div {
-  flex-grow: 1;
-  max-width: 100%;
-}
-#settings-container section > ul > li > div.actions {
-  flex-basis: fit-content;
-  margin-top: 8px;
-}
 #settings-container section > ul > li > div:last-child {
   text-align: right;
 }
@@ -67,14 +45,19 @@
 #settings-container section > ul > li .sub-section p {
   margin-block: 0.5em;
 }
+#settings-container section > ul > li .sub-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#settings-container section > ul > li .sub-section ul li {
+  line-height: 1.6;
+}
 #settings-container section > ul > li .sub-section p:last-child {
   margin-block-end: 0;
 }
 #settings-container div {
   vertical-align: middle;
-}
-#settings-container .avatar {
-  margin-right: 8px;
 }
 
 #settings-container section select {

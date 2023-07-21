@@ -2,11 +2,14 @@ import './account-block.css';
 
 import { useNavigate } from 'react-router-dom';
 
+import enhanceContent from '../utils/enhance-content';
 import niceDateTime from '../utils/nice-date-time';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
+import Icon from './icon';
 
 function AccountBlock({
   skeleton,
@@ -17,6 +20,7 @@ function AccountBlock({
   internal,
   onClick,
   showActivity = false,
+  showStats = false,
 }) {
   if (skeleton) {
     return (
@@ -45,8 +49,12 @@ function AccountBlock({
     statusesCount,
     lastStatusAt,
     bot,
+    fields,
+    note,
   } = account;
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+
+  const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
 
   return (
     <a
@@ -99,6 +107,33 @@ function AccountBlock({
               )}
             </small>
           </>
+        )}
+        {showStats && (
+          <div class="account-block-stats">
+            <div
+              class="short-desc"
+              dangerouslySetInnerHTML={{
+                __html: enhanceContent(note, { emojis }),
+              }}
+            />
+            {bot && (
+              <>
+                <span class="tag">
+                  <Icon icon="bot" /> Automated
+                </span>
+              </>
+            )}
+            {!!verifiedField && (
+              <span class="verified-field ib">
+                <Icon icon="check-circle" size="s" />{' '}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: enhanceContent(verifiedField.value, { emojis }),
+                  }}
+                />
+              </span>
+            )}
+          </div>
         )}
       </span>
     </a>

@@ -10,6 +10,7 @@ import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Icon from './icon';
 import Loader from './loader';
+import MenuConfirm from './menu-confirm';
 
 function Drafts({ onClose }) {
   const { masto } = api();
@@ -89,26 +90,33 @@ function Drafts({ onClose }) {
                           {niceDateTime(updatedAtDate)}
                         </time>
                       </b>
-                      <button
-                        type="button"
-                        class="small light"
+                      <MenuConfirm
+                        confirmLabel={<span>Delete this draft?</span>}
+                        menuItemClassName="danger"
+                        align="end"
                         disabled={uiState === 'loading'}
                         onClick={() => {
                           (async () => {
                             try {
-                              const yes = confirm('Delete this draft?');
-                              if (yes) {
-                                await db.drafts.del(key);
-                                reload();
-                              }
+                              // const yes = confirm('Delete this draft?');
+                              // if (yes) {
+                              await db.drafts.del(key);
+                              reload();
+                              // }
                             } catch (e) {
                               alert('Error deleting draft! Please try again.');
                             }
                           })();
                         }}
                       >
-                        Delete&hellip;
-                      </button>
+                        <button
+                          type="button"
+                          class="small light"
+                          disabled={uiState === 'loading'}
+                        >
+                          Delete&hellip;
+                        </button>
+                      </MenuConfirm>
                     </div>
                     <button
                       type="button"
@@ -145,15 +153,16 @@ function Drafts({ onClose }) {
                 );
               })}
             </ul>
-            <p>
-              <button
-                type="button"
-                class="light danger"
-                disabled={uiState === 'loading'}
-                onClick={() => {
-                  (async () => {
-                    const yes = confirm('Delete all drafts?');
-                    if (yes) {
+            {drafts.length > 1 && (
+              <p>
+                <MenuConfirm
+                  confirmLabel={<span>Delete all drafts?</span>}
+                  menuItemClassName="danger"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    (async () => {
+                      // const yes = confirm('Delete all drafts?');
+                      // if (yes) {
                       setUIState('loading');
                       try {
                         await db.drafts.delMany(
@@ -166,13 +175,20 @@ function Drafts({ onClose }) {
                         alert('Error deleting drafts! Please try again.');
                         setUIState('error');
                       }
-                    }
-                  })();
-                }}
-              >
-                Delete all drafts&hellip;
-              </button>
-            </p>
+                      // }
+                    })();
+                  }}
+                >
+                  <button
+                    type="button"
+                    class="light danger"
+                    disabled={uiState === 'loading'}
+                  >
+                    Delete all&hellip;
+                  </button>
+                </MenuConfirm>
+              </p>
+            )}
           </>
         ) : (
           <p>No drafts found.</p>

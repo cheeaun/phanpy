@@ -1,4 +1,4 @@
-import { useEffect } from 'preact/hooks';
+import { useLayoutEffect } from 'preact/hooks';
 import { matchPath } from 'react-router-dom';
 import { subscribeKey } from 'valtio/utils';
 
@@ -23,13 +23,13 @@ export default function useTitle(title, path) {
     } else if (path) {
       matched = matchPath(path, currentLocation);
     }
-    console.log('setTitle', { title, path, currentLocation, paths, matched });
+    console.debug('setTitle', { title, path, currentLocation, paths, matched });
     if (matched) {
       document.title = title ? `${title} / ${CLIENT_NAME}` : CLIENT_NAME;
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTitle();
     return subscribeKey(states, 'currentLocation', setTitle);
   }, [title, path]);

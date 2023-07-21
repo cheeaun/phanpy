@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
 import Menu2 from '../components/menu2';
+import MenuConfirm from '../components/menu-confirm';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
@@ -25,9 +26,9 @@ const LIMIT = 20;
 const TAGS_LIMIT_PER_MODE = 4;
 const TOTAL_TAGS_LIMIT = TAGS_LIMIT_PER_MODE + 1;
 
-function Hashtags(props) {
-  const navigate = useNavigate();
-  let { hashtag, ...params } = useParams();
+function Hashtags({ columnMode, ...props }) {
+  // const navigate = useNavigate();
+  let { hashtag, ...params } = columnMode ? {} : useParams();
   if (props.hashtag) hashtag = props.hashtag;
   let hashtags = hashtag.trim().split(/[\s+]+/);
   hashtags.sort();
@@ -149,16 +150,19 @@ function Hashtags(props) {
         >
           {!!info && hashtags.length === 1 && (
             <>
-              <MenuItem
+              <MenuConfirm
+                subMenu
+                confirm={info.following}
+                confirmLabel={`Unfollow #${hashtag}?`}
                 disabled={followUIState === 'loading' || !authenticated}
                 onClick={() => {
                   setFollowUIState('loading');
                   if (info.following) {
-                    const yes = confirm(`Unfollow #${hashtag}?`);
-                    if (!yes) {
-                      setFollowUIState('default');
-                      return;
-                    }
+                    // const yes = confirm(`Unfollow #${hashtag}?`);
+                    // if (!yes) {
+                    //   setFollowUIState('default');
+                    //   return;
+                    // }
                     masto.v1.tags
                       .unfollow(hashtag)
                       .then(() => {
@@ -198,7 +202,7 @@ function Hashtags(props) {
                     <Icon icon="plus" /> <span>Follow</span>
                   </>
                 )}
-              </MenuItem>
+              </MenuConfirm>
               <MenuDivider />
             </>
           )}
@@ -217,11 +221,14 @@ function Hashtags(props) {
                   ) {
                     hashtags.push(newHashtag);
                     hashtags.sort();
-                    navigate(
-                      instance
-                        ? `/${instance}/t/${hashtags.join('+')}`
-                        : `/t/${hashtags.join('+')}`,
-                    );
+                    // navigate(
+                    //   instance
+                    //     ? `/${instance}/t/${hashtags.join('+')}`
+                    //     : `/t/${hashtags.join('+')}`,
+                    // );
+                    location.hash = instance
+                      ? `/${instance}/t/${hashtags.join('+')}`
+                      : `/t/${hashtags.join('+')}`;
                   }
                 }}
               >

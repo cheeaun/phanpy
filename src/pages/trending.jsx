@@ -15,15 +15,15 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Trending(props) {
+function Trending({ columnMode, ...props }) {
   const snapStates = useSnapshot(states);
-  const params = useParams();
+  const params = columnMode ? {} : useParams();
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
   const title = `Trending (${instance})`;
   useTitle(title, `/:instance?/trending`);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const latestItem = useRef();
 
   const [hashtags, setHashtags] = useState([]);
@@ -151,7 +151,8 @@ function Trending(props) {
               }
               if (newInstance) {
                 newInstance = newInstance.toLowerCase().trim();
-                navigate(`/${newInstance}/trending`);
+                // navigate(`/${newInstance}/trending`);
+                location.hash = `/${newInstance}/trending`;
               }
             }}
           >

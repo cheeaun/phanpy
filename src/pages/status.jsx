@@ -666,6 +666,17 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           </div> */}
         <div class="header-grid header-grid-2">
           <h1>
+            {!!/\/s\//i.test(snapStates.prevLocation?.pathname) && (
+              <button
+                type="button"
+                class="plain deck-back"
+                onClick={() => {
+                  history.back();
+                }}
+              >
+                <Icon icon="chevron-left" size="xl" />
+              </button>
+            )}
             {!heroInView && heroStatus && uiState !== 'loading' ? (
               <>
                 <span class="hero-heading">

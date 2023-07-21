@@ -28,6 +28,7 @@ import { snapshot } from 'valtio/vanilla';
 import AccountBlock from '../components/account-block';
 import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
+import MenuConfirm from '../components/menu-confirm';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
@@ -56,6 +57,7 @@ import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
+const INLINE_TRASNSLATE_LIMIT = 140;
 const throttle = pThrottle({
   limit: 1,
   interval: 1000,
@@ -243,11 +245,23 @@ function Status({
     );
   }
 
+  const isSizeLarge = size === 'l';
+
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   const targetLanguage = getTranslateTargetLanguage(true);
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
+  const inlineTranslate = useMemo(() => {
+    return (
+      !isSizeLarge &&
+      !spoilerText &&
+      !poll &&
+      !mediaAttachments?.length &&
+      content?.length > 0 &&
+      content?.length <= INLINE_TRASNSLATE_LIMIT
+    );
+  }, [isSizeLarge, content, spoilerText, poll, mediaAttachments]);
 
   const [showEdited, setShowEdited] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -305,7 +319,6 @@ function Status({
   const createdDateText = niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
-  const isSizeLarge = size === 'l';
   // Can boost if:
   // - authenticated AND
   // - visibility != direct OR
@@ -325,6 +338,12 @@ function Status({
     };
   };
 
+  // Check if media has no descriptions
+  const mediaNoDesc = useMemo(() => {
+    return mediaAttachments.some(
+      (attachment) => !attachment.description?.trim?.(),
+    );
+  }, [mediaAttachments]);
   const boostStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -332,12 +351,8 @@ function Status({
     }
     try {
       if (!reblogged) {
-        // Check if media has no descriptions
-        const hasNoDescriptions = mediaAttachments.some(
-          (attachment) => !attachment.description?.trim?.(),
-        );
         let confirmText = 'Boost this post?';
-        if (hasNoDescriptions) {
+        if (mediaNoDesc) {
           confirmText += '\n\n⚠️ Some media have no descriptions.';
         }
         const yes = confirm(confirmText);
@@ -345,6 +360,34 @@ function Status({
           return false;
         }
       }
+      // Optimistic
+      states.statuses[sKey] = {
+        ...status,
+        reblogged: !reblogged,
+        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+      };
+      if (reblogged) {
+        const newStatus = await masto.v1.statuses.unreblog(id);
+        saveStatus(newStatus, instance);
+        return true;
+      } else {
+        const newStatus = await masto.v1.statuses.reblog(id);
+        saveStatus(newStatus, instance);
+        return true;
+      }
+    } catch (e) {
+      console.error(e);
+      // Revert optimistism
+      states.statuses[sKey] = status;
+      return false;
+    }
+  };
+  const confirmBoostStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      alert(unauthInteractionErrorMessage);
+      return false;
+    }
+    try {
       // Optimistic
       states.statuses[sKey] = {
         ...status,
@@ -490,11 +533,27 @@ function Status({
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-horizontal">
-            <MenuItem
+            <MenuConfirm
+              subMenu
+              confirmLabel={
+                <>
+                  <Icon icon="rocket" />
+                  <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                </>
+              }
+              menuFooter={
+                mediaNoDesc &&
+                !reblogged && (
+                  <div class="footer">
+                    <Icon icon="alert" />
+                    Some media have no descriptions.
+                  </div>
+                )
+              }
               disabled={!canBoost}
               onClick={async () => {
                 try {
-                  const done = await boostStatus();
+                  const done = await confirmBoostStatus();
                   if (!isSizeLarge && done) {
                     showToast(reblogged ? 'Unboosted' : 'Boosted');
                   }
@@ -508,7 +567,7 @@ function Status({
                 }}
               />
               <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
-            </MenuItem>
+            </MenuConfirm>
             <MenuItem
               onClick={() => {
                 try {
@@ -660,27 +719,35 @@ function Status({
             <span>Edit</span>
           </MenuItem>
           {isSizeLarge && (
-            <MenuItem
+            <MenuConfirm
+              subMenu
+              confirmLabel={
+                <>
+                  <Icon icon="trash" />
+                  <span>Delete this post?</span>
+                </>
+              }
+              menuItemClassName="danger"
               onClick={() => {
-                const yes = confirm('Delete this post?');
-                if (yes) {
-                  (async () => {
-                    try {
-                      await masto.v1.statuses.remove(id);
-                      const cachedStatus = getStatus(id, instance);
-                      cachedStatus._deleted = true;
-                      showToast('Deleted');
-                    } catch (e) {
-                      console.error(e);
-                      showToast('Unable to delete');
-                    }
-                  })();
-                }
+                // const yes = confirm('Delete this post?');
+                // if (yes) {
+                (async () => {
+                  try {
+                    await masto.v1.statuses.remove(id);
+                    const cachedStatus = getStatus(id, instance);
+                    cachedStatus._deleted = true;
+                    showToast('Deleted');
+                  } catch (e) {
+                    console.error(e);
+                    showToast('Unable to delete');
+                  }
+                })();
+                // }
               }}
             >
               <Icon icon="trash" />
               <span>Delete…</span>
-            </MenuItem>
+            </MenuConfirm>
           )}
         </div>
       )}
@@ -835,8 +902,9 @@ function Status({
                     // Higher than the backdrop
                     zIndex: 1001,
                   },
-                  onClick: () => {
-                    menuInstanceRef.current?.closeMenu?.();
+                  onClick: (e) => {
+                    if (e.target === e.currentTarget)
+                      menuInstanceRef.current?.closeMenu?.();
                   },
                 }}
                 align="end"
@@ -1036,10 +1104,13 @@ function Status({
               }}
             />
           )}
-          {((enableTranslate && !!content.trim() && differentLanguage) ||
+          {(((enableTranslate || inlineTranslate) &&
+            !!content.trim() &&
+            differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
-              forceTranslate={forceTranslate}
+              forceTranslate={forceTranslate || inlineTranslate}
+              mini={inlineTranslate}
               sourceLanguage={language}
               text={
                 (spoilerText ? `${spoilerText}\n\n` : '') +
@@ -1157,7 +1228,7 @@ function Status({
                   onClick={replyStatus}
                 />
               </div>
-              <div class="action has-count">
+              {/* <div class="action has-count">
                 <StatusButton
                   checked={reblogged}
                   title={['Boost', 'Unboost']}
@@ -1168,7 +1239,39 @@ function Status({
                   onClick={boostStatus}
                   disabled={!canBoost}
                 />
-              </div>
+              </div> */}
+              <MenuConfirm
+                disabled={!canBoost}
+                onClick={confirmBoostStatus}
+                confirmLabel={
+                  <>
+                    <Icon icon="rocket" />
+                    <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                  </>
+                }
+                menuFooter={
+                  mediaNoDesc &&
+                  !reblogged && (
+                    <div class="footer">
+                      <Icon icon="alert" />
+                      Some media have no descriptions.
+                    </div>
+                  )
+                }
+              >
+                <div class="action has-count">
+                  <StatusButton
+                    checked={reblogged}
+                    title={['Boost', 'Unboost']}
+                    alt={['Boost', 'Boosted']}
+                    class="reblog-button"
+                    icon="rocket"
+                    count={reblogsCount}
+                    // onClick={boostStatus}
+                    disabled={!canBoost}
+                  />
+                </div>
+              </MenuConfirm>
               <div class="action has-count">
                 <StatusButton
                   checked={favourited}
@@ -1682,6 +1785,7 @@ function StatusButton({
       title={buttonTitle}
       class={`plain ${className} ${checked ? 'checked' : ''}`}
       onClick={(e) => {
+        if (!onClick) return;
         e.preventDefault();
         e.stopPropagation();
         onClick(e);
@@ -1732,7 +1836,12 @@ function _unfurlMastodonLink(instance, url) {
   console.debug('🦦 Unfurling URL', url);
 
   let remoteInstanceFetch;
-  const urlObj = new URL(url);
+  let theURL = url;
+  if (/\/\/elk\.[^\/]+\/[^.]+\.[^.]+/i.test(theURL)) {
+    // E.g. https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+    theURL = theURL.replace(/elk\.[^\/]+\//i, '');
+  }
+  const urlObj = new URL(theURL);
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   // Regex /:username/:id, where username = @username or @username@domain, id = number
@@ -1776,12 +1885,12 @@ function _unfurlMastodonLink(instance, url) {
   function handleFulfill(result) {
     const { status, instance } = result;
     const { id } = status;
-    const url = `/${instance}/s/${id}`;
-    console.debug('🦦 Unfurled URL', url, id, url);
+    const selfURL = `/${instance}/s/${id}`;
+    console.debug('🦦 Unfurled URL', url, id, selfURL);
     const data = {
       id,
       instance,
-      url,
+      url: selfURL,
     };
     states.unfurledLinks[url] = data;
     saveStatus(status, instance, {

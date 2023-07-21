@@ -18,6 +18,8 @@ function Columns() {
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 
+  console.debug('RENDER Columns', shortcuts);
+
   const components = shortcuts.map((shortcut) => {
     if (!shortcut) return null;
     const { type, ...params } = shortcut;
@@ -33,7 +35,9 @@ function Columns() {
       trending: Trending,
     }[type];
     if (!Component) return null;
-    return <Component {...params} />;
+    return (
+      <Component key={type + JSON.stringify(params)} {...params} columnMode />
+    );
   });
 
   useHotkeys(['1', '2', '3', '4', '5', '6', '7', '8', '9'], (e, handler) => {

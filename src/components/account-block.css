@@ -12,3 +12,45 @@
 .account-block.skeleton {
   color: var(--bg-faded-color);
 }
+
+.account-block .short-desc {
+  max-height: 1.2em; /* just in case clamping ain't working */
+}
+.account-block .short-desc,
+.account-block .short-desc > * {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.account-block .short-desc > * + * {
+  display: none;
+}
+.account-block .short-desc * {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  pointer-events: none;
+}
+
+.account-block .verified-field {
+  color: var(--green-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.account-block .verified-field .icon {
+}
+.account-block .verified-field .invisible {
+  display: none;
+}
+
+.account-block .account-block-stats {
+  margin-top: 2px;
+  font-size: 0.9em;
+  color: var(--text-insignificant-color);
+}
+.account-block .account-block-stats a {
+  color: inherit;
+  text-decoration: none;
+}

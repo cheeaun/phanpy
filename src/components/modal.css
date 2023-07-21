@@ -12,6 +12,13 @@
   backdrop-filter: blur(24px);
   animation: appear 0.5s var(--timing-function) both;
 }
+#modal-container > div .sheet {
+  transition: transform 0.3s var(--timing-function);
+  transform-origin: center bottom;
+}
+#modal-container > div:has(~ div) .sheet {
+  transform: scale(0.975);
+}
 
 #modal-container > .light {
   backdrop-filter: saturate(0.75);

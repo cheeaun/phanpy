@@ -59,6 +59,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   /* This `transform` fixes carousel blocking vertical scrolling for pointer devices on iPad */
   transform: translateZ(0);
 }
+
+@media (hover: hover) {
+  .deck-container {
+    overscroll-behavior: auto;
+  }
+}
 .deck-container[hidden] {
   display: block;
   position: absolute;
@@ -87,6 +93,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   height: 100vh;
   height: 100dvh;
   overscroll-behavior: contain;
+}
+@media (hover: hover) {
+  .deck.contained {
+    overscroll-behavior: auto;
+  }
 }
 
 .deck > header {
@@ -1390,7 +1401,7 @@ body > .szh-menu-container {
   animation: appear-smooth 0.15s ease-in-out;
   width: 16em;
   max-width: 90vw;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .szh-menu[aria-label='Submenu'] {
   background-color: var(--bg-blur-color);
@@ -1407,6 +1418,7 @@ body > .szh-menu-container {
   text-shadow: 0 1px 0 var(--bg-color);
   line-height: 1.2;
   /* border-bottom: 1px solid var(--outline-color); */
+  border-radius: 8px 8px 0 0;
 }
 .szh-menu__header.plain {
   margin-bottom: 0;
@@ -1414,6 +1426,28 @@ body > .szh-menu-container {
 }
 .szh-menu__header * {
   vertical-align: middle;
+}
+.szh-menu.menu-emphasized {
+  border-color: var(--outline-hover-color);
+  box-shadow: 0 3px 16px -3px var(--drop-shadow-color),
+    0 3px 32px var(--drop-shadow-color), 0 3px 48px var(--drop-shadow-color);
+  background-color: var(--bg-color);
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  width: auto;
+}
+.szh-menu .footer {
+  margin: 8px 0 -8px;
+  padding: 8px 16px;
+  color: var(--text-insignificant-color);
+  font-size: 90%;
+  background-color: var(--bg-faded-color);
+  text-shadow: 0 1px 0 var(--bg-color);
+  line-height: 1.2;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 0 0 8px 8px;
 }
 .szh-menu .szh-menu__item {
   display: flex;
@@ -1487,21 +1521,26 @@ body > .szh-menu-container {
   font-size: inherit;
 }
 .szh-menu .menu-horizontal {
-  display: flex;
+  display: grid;
+  /* two columns only */
+  grid-template-columns: repeat(2, 1fr);
 }
-.szh-menu .menu-horizontal .szh-menu__item {
-  flex: 1;
-}
-.szh-menu .menu-horizontal .szh-menu__item:not(:only-child):first-child {
+.szh-menu .menu-horizontal > .szh-menu__item:not(:only-child):first-child,
+.szh-menu .menu-horizontal > *:not(:only-child):first-child .szh-menu__item {
   padding-right: 4px !important;
 }
 .szh-menu
   .menu-horizontal
-  .szh-menu__item:not(:only-child):not(:first-child):not(:last-child) {
+  > .szh-menu__item:not(:only-child):not(:first-child):not(:last-child),
+.szh-menu
+  .menu-horizontal
+  > *:not(:only-child):not(:first-child):not(:last-child)
+  .szh-menu__item {
   padding-left: 8px !important;
   padding-right: 4px !important;
 }
-.szh-menu .menu-horizontal .szh-menu__item:not(:only-child):last-child {
+.szh-menu .menu-horizontal > .szh-menu__item:not(:only-child):last-child,
+.szh-menu .menu-horizontal > *:not(:only-child):last-child .szh-menu__item {
   padding-left: 8px !important;
 }
 .szh-menu .szh-menu__item .menu-shortcut {
@@ -1520,6 +1559,19 @@ body > .szh-menu-container {
 }
 .szh-menu .szh-menu__item--hover .danger-icon {
   color: var(--red-color);
+  opacity: 1;
+}
+.szh-menu
+  .szh-menu__item:not(.szh-menu__item--disabled):not(
+    .szh-menu__item--hover
+  ).danger {
+  color: var(--red-color);
+}
+.szh-menu
+  .szh-menu__item:not(.szh-menu__item--disabled):not(
+    .szh-menu__item--hover
+  ).danger
+  .icon {
   opacity: 1;
 }
 
@@ -1645,6 +1697,24 @@ meter.donut[hidden] {
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);
+}
+
+/* TOAST - ALERT */
+
+:root .toastify.alert {
+  z-index: 1001;
+  box-shadow: 0 8px 32px var(--text-insignificant-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  pointer-events: auto;
+  padding: 16px 32px;
+  font-size: max(calc(16px * 1.1), var(--text-size));
+  text-align: center;
+  line-height: 1.25;
+}
+:root .toastify.alert:is(:hover, :active) {
+  background-color: var(--bg-faded-color);
 }
 
 /* AVATARS STACK */

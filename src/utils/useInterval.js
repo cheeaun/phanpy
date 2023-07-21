@@ -4,7 +4,7 @@ function useInterval(fn, delay, deps, immediate) {
   const savedCallback = useRef(fn);
   useEffect(() => {
     savedCallback.current = fn;
-  }, [deps]);
+  }, [fn, deps]);
 
   useEffect(() => {
     if (!immediate || delay === null || delay === false) return;

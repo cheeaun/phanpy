@@ -54,7 +54,7 @@ function Search(props) {
   const offsetRef = useRef(0);
   useEffect(() => {
     offsetRef.current = 0;
-  }, [type]);
+  }, [q, type]);
 
   const scrollableRef = useRef();
   useLayoutEffect(() => {
@@ -64,6 +64,16 @@ function Search(props) {
   const [statusResults, setStatusResults] = useState([]);
   const [accountResults, setAccountResults] = useState([]);
   const [hashtagResults, setHashtagResults] = useState([]);
+  useEffect(() => {
+    setStatusResults([]);
+    setAccountResults([]);
+    setHashtagResults([]);
+  }, [q]);
+  const setTypeResultsFunc = {
+    statuses: setStatusResults,
+    accounts: setAccountResults,
+    hashtags: setHashtagResults,
+  };
 
   function loadResults(firstLoad) {
     setUiState('loading');
@@ -87,20 +97,24 @@ function Search(props) {
       try {
         const results = await masto.v2.search(params);
         console.log(results);
-        if (type && !firstLoad) {
-          if (type === 'statuses') {
-            setStatusResults((prev) => [...prev, ...results.statuses]);
-          } else if (type === 'accounts') {
-            setAccountResults((prev) => [...prev, ...results.accounts]);
-          } else if (type === 'hashtags') {
-            setHashtagResults((prev) => [...prev, ...results.hashtags]);
+        if (type) {
+          if (firstLoad) {
+            setTypeResultsFunc[type](results[type]);
+            const length = results[type]?.length;
+            offsetRef.current = LIMIT;
+            setShowMore(!!length);
+          } else {
+            setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
+            const length = results[type]?.length;
+            offsetRef.current = offsetRef.current + LIMIT;
+            setShowMore(!!length);
           }
-          offsetRef.current = offsetRef.current + LIMIT;
-          setShowMore(!!results[type]?.length);
         } else {
           setStatusResults(results.statuses);
           setAccountResults(results.accounts);
           setHashtagResults(results.hashtags);
+          offsetRef.current = 0;
+          setShowMore(false);
         }
         setUiState('default');
       } catch (err) {
@@ -178,6 +192,7 @@ function Search(props) {
                             <AccountBlock
                               account={account}
                               instance={instance}
+                              showStats
                             />
                           </li>
                         ))}
@@ -320,11 +335,7 @@ function Search(props) {
                     <p class="ui-state insignificant">The end.</p>
                   )
                 ) : (
-                  !!(
-                    hashtagResults.length ||
-                    accountResults.length ||
-                    statusResults.length
-                  ) && (
+                  uiState === 'loading' && (
                     <p class="ui-state">
                       <Loader abrupt />
                     </p>
@@ -352,7 +363,8 @@ const SearchForm = forwardRef((props, ref) => {
   const { instance } = api();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
-  const [query, setQuery] = useState(searchParams.q || '');
+  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const type = searchParams.get('type');
   const formRef = useRef(null);
 
   const searchFieldRef = useRef(null);
@@ -373,9 +385,11 @@ const SearchForm = forwardRef((props, ref) => {
         e.preventDefault();
 
         if (query) {
-          setSearchParams({
+          const params = {
             q: query,
-          });
+          };
+          if (type) params.type = type; // Preserve type
+          setSearchParams(params);
         } else {
           setSearchParams({});
         }

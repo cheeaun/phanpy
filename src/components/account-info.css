@@ -136,20 +136,29 @@
 
 .account-container .stats {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 16px;
+  /* flex-wrap: wrap; */
+  column-gap: 24px;
+  row-gap: 8px;
   opacity: 0.75;
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
   border-radius: 16px;
   line-height: 1.25;
+  overflow-x: auto;
+  justify-content: flex-start;
+  position: relative;
+}
+.timeline-start .account-container .stats {
+  flex-wrap: wrap;
 }
 .account-container .stats > * {
-  text-align: center;
+  /* text-align: center; */
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5em;
 }
-.account-container .stats a {
+.account-container .stats a:hover {
   color: inherit;
 }
 
@@ -169,10 +178,14 @@
 
 .account-container .profile-metadata {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 2px;
   border-radius: 16px;
   overflow: hidden;
+  overflow-x: auto;
+}
+.timeline-start .account-container .profile-metadata {
+  flex-wrap: wrap;
 }
 .account-container .profile-field {
   min-width: 0;
@@ -183,6 +196,14 @@
   border-radius: 4px;
   filter: saturate(0.75);
   line-height: 1.25;
+  flex-shrink: 0;
+  max-width: calc(100% - 12px - 2em);
+}
+.account-container .profile-field:only-child {
+  max-width: 100%;
+}
+.timeline-start .account-container .profile-field {
+  flex-shrink: 1;
 }
 
 .account-container :is(.note, .profile-field) .invisible {

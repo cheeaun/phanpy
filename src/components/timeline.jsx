@@ -1,3 +1,4 @@
+import { useIdle } from '@uidotdev/usehooks';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -53,7 +54,7 @@ function Timeline({
       (async () => {
         try {
           let { done, value } = await fetchItems(firstLoad);
-          if (value?.length) {
+          if (Array.isArray(value)) {
             if (boostsCarousel) {
               value = groupBoosts(value);
             }
@@ -205,13 +206,21 @@ function Timeline({
   }, [nearReachEnd, showMore]);
 
   const isHovering = useRef(false);
+  const idle = useIdle(5000);
+  console.debug('🧘‍♀️ IDLE', idle);
   const loadOrCheckUpdates = useCallback(
     async ({ disableHoverCheck = false } = {}) => {
-      console.log('✨ Load or check updates', snapStates.settings.autoRefresh);
+      console.log('✨ Load or check updates', {
+        autoRefresh: snapStates.settings.autoRefresh,
+        scrollTop: scrollableRef.current.scrollTop,
+        disableHoverCheck,
+        idle,
+        inBackground: inBackground(),
+      });
       if (
         snapStates.settings.autoRefresh &&
         scrollableRef.current.scrollTop === 0 &&
-        (disableHoverCheck || !isHovering.current) &&
+        (disableHoverCheck || idle) &&
         !inBackground()
       ) {
         console.log('✨ Load updates', snapStates.settings.autoRefresh);
@@ -225,7 +234,7 @@ function Timeline({
         }
       }
     },
-    [id, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
+    [id, idle, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
   );
 
   const lastHiddenTime = useRef();

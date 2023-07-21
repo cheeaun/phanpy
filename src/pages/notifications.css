@@ -159,6 +159,17 @@
 .follow-requests {
   padding-block-end: 16px;
 }
+.follow-requests summary {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.follow-requests summary::marker,
+.follow-requests summary::-webkit-details-marker {
+  color: var(--text-insignificant-color);
+}
+.follow-requests details[open] summary {
+  color: var(--text-insignificant-color);
+}
 .follow-requests ul {
   list-style: none;
   padding: 0;
@@ -167,6 +178,9 @@
   max-height: 50dvh;
   overflow: auto;
   border-bottom: var(--hairline-width) solid var(--outline-color);
+}
+.follow-requests summary + ul {
+  border-top: var(--hairline-width) solid var(--outline-color);
 }
 .follow-requests ul li {
   display: flex;

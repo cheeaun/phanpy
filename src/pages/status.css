@@ -1,6 +1,3 @@
-.status-deck header h1 {
-  grid-column: 1 / 3;
-}
 .status-deck header {
   white-space: nowrap;
 }
@@ -10,6 +7,9 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.status-deck header h1 .deck-back {
+  margin-left: -16px;
 }
 
 .status-deck header.inview h1 {

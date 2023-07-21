@@ -57,7 +57,7 @@ import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
-const INLINE_TRASNSLATE_LIMIT = 140;
+const INLINE_TRANSLATE_LIMIT = 140;
 const throttle = pThrottle({
   limit: 1,
   interval: 1000,
@@ -254,13 +254,24 @@ function Status({
   if (!snapStates.settings.contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
     return (
+      !readOnly &&
+      !previewMode &&
+      !withinContext &&
       !spoilerText &&
       !poll &&
       !mediaAttachments?.length &&
       content?.length > 0 &&
-      content?.length <= INLINE_TRASNSLATE_LIMIT
+      content?.length <= INLINE_TRANSLATE_LIMIT
     );
-  }, [isSizeLarge, content, spoilerText, poll, mediaAttachments]);
+  }, [
+    readOnly,
+    previewMode,
+    withinContext,
+    spoilerText,
+    poll,
+    mediaAttachments,
+    content,
+  ]);
 
   const [showEdited, setShowEdited] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -1103,9 +1114,7 @@ function Status({
               }}
             />
           )}
-          {(((enableTranslate || inlineTranslate) &&
-            !!content.trim() &&
-            differentLanguage) ||
+          {((enableTranslate && !!content.trim() && differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}

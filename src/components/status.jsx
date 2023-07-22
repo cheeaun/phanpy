@@ -260,6 +260,7 @@ function Status({
       !previewMode &&
       !spoilerText &&
       !poll &&
+      !card &&
       !mediaAttachments?.length &&
       contentLength > 0 &&
       contentLength <= INLINE_TRANSLATE_LIMIT
@@ -271,6 +272,7 @@ function Status({
     previewMode,
     spoilerText,
     poll,
+    card,
     mediaAttachments,
     content,
   ]);

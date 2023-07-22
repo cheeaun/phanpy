@@ -116,7 +116,11 @@ function TranslationBlock({
             icon="translate"
             alt={`Auto-translated from ${sourceLangText}`}
           />
-          <output lang={targetLang} dir="auto">
+          <output
+            lang={targetLang}
+            dir="auto"
+            title={pronunciationContent || ''}
+          >
             {translatedContent}
           </output>
         </div>

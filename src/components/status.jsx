@@ -251,26 +251,37 @@ function Status({
   const targetLanguage = getTranslateTargetLanguage(true);
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
-  if (!snapStates.settings.contentTranslation) enableTranslate = false;
+  const { contentTranslation, contentTranslationAutoInline } =
+    snapStates.settings;
+  if (!contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
+    if (
+      !contentTranslation ||
+      !contentTranslationAutoInline ||
+      readOnly ||
+      (withinContext && !isSizeLarge) ||
+      previewMode ||
+      spoilerText ||
+      sensitive ||
+      poll ||
+      card ||
+      mediaAttachments?.length
+    ) {
+      return false;
+    }
     const contentLength = htmlContentLength(content);
-    return (
-      !readOnly &&
-      (!withinContext || isSizeLarge) &&
-      !previewMode &&
-      !spoilerText &&
-      !poll &&
-      !mediaAttachments?.length &&
-      contentLength > 0 &&
-      contentLength <= INLINE_TRANSLATE_LIMIT
-    );
+    return contentLength > 0 && contentLength <= INLINE_TRANSLATE_LIMIT;
   }, [
+    contentTranslation,
+    contentTranslationAutoInline,
     readOnly,
     withinContext,
     isSizeLarge,
     previewMode,
     spoilerText,
+    sensitive,
     poll,
+    card,
     mediaAttachments,
     content,
   ]);
@@ -1116,9 +1127,8 @@ function Status({
               }}
             />
           )}
-          {((enableTranslate && !!content.trim() && differentLanguage) ||
-            forceTranslate ||
-            inlineTranslate) && (
+          {(((enableTranslate || inlineTranslate) && !!content.trim() && differentLanguage) ||
+            forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}
               mini={!isSizeLarge && !withinContext}

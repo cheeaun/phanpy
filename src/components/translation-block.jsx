@@ -81,7 +81,7 @@ function TranslationBlock({
         }
         setTranslatedContent(content);
         setUIState('default');
-        if (!mini) {
+        if (!mini && content.trim() !== text.trim()) {
           detailsRef.current.open = true;
           detailsRef.current.scrollIntoView({
             behavior: 'smooth',
@@ -105,14 +105,22 @@ function TranslationBlock({
   }, [forceTranslate]);
 
   if (mini) {
-    if (!!translatedContent && detectedLang !== targetLangText) {
+    if (
+      !!translatedContent &&
+      translatedContent.trim() !== text.trim() &&
+      detectedLang !== targetLangText
+    ) {
       return (
         <div class="status-translation-block-mini">
           <Icon
             icon="translate"
             alt={`Auto-translated from ${sourceLangText}`}
           />
-          <output lang={targetLang} dir="auto">
+          <output
+            lang={targetLang}
+            dir="auto"
+            title={pronunciationContent || ''}
+          >
             {translatedContent}
           </output>
         </div>

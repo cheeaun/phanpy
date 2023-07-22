@@ -52,6 +52,8 @@ const states = proxy({
       store.account.get('settings-contentTranslationTargetLanguage') || null,
     contentTranslationHideLanguages:
       store.account.get('settings-contentTranslationHideLanguages') || [],
+    contentTranslationAutoInline:
+      store.account.get('settings-contentTranslationAutoInline') ?? false,
     cloakMode: store.account.get('settings-cloakMode') ?? false,
   },
 });
@@ -79,6 +81,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.contentTranslation') {
       store.account.set('settings-contentTranslation', !!value);
+    }
+    if (path.join('.') === 'settings.contentTranslationAutoInline') {
+      store.account.set('settings-contentTranslationAutoInline', !!value);
     }
     if (path.join('.') === 'settings.contentTranslationTargetLanguage') {
       console.log('SET', value);

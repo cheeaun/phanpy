@@ -255,42 +255,43 @@ function Settings({ onClose }) {
                     : ''
                 }`}
               >
-                <label>
-                  Translate to{' '}
-                  <select
-                    value={targetLanguage || ''}
-                    disabled={!snapStates.settings.contentTranslation}
-                    onChange={(e) => {
-                      states.settings.contentTranslationTargetLanguage =
-                        e.target.value || null;
-                    }}
-                  >
-                    <option value="">
-                      System language ({systemTargetLanguageText})
-                    </option>
-                    <option disabled>──────────</option>
-                    {targetLanguages.map((lang) => (
-                      <option value={lang.code}>{lang.name}</option>
-                    ))}
-                  </select>
-                </label>
+                <div>
+                  <label>
+                    Translate to{' '}
+                    <select
+                      value={targetLanguage || ''}
+                      disabled={!snapStates.settings.contentTranslation}
+                      onChange={(e) => {
+                        states.settings.contentTranslationTargetLanguage =
+                          e.target.value || null;
+                      }}
+                    >
+                      <option value="">
+                        System language ({systemTargetLanguageText})
+                      </option>
+                      <option disabled>──────────</option>
+                      {targetLanguages.map((lang) => (
+                        <option value={lang.code}>{lang.name}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <hr />
                 <p class="checkbox-fieldset">
-                  <small>
-                    Hide "Translate" button for
-                    {snapStates.settings.contentTranslationHideLanguages
-                      .length > 0 && (
-                      <>
-                        {' '}
-                        (
-                        {
-                          snapStates.settings.contentTranslationHideLanguages
-                            .length
-                        }
-                        )
-                      </>
-                    )}
-                    :
-                  </small>
+                  Hide "Translate" button for
+                  {snapStates.settings.contentTranslationHideLanguages.length >
+                    0 && (
+                    <>
+                      {' '}
+                      (
+                      {
+                        snapStates.settings.contentTranslationHideLanguages
+                          .length
+                      }
+                      )
+                    </>
+                  )}
+                  :
                   <div class="checkbox-fields">
                     {targetLanguages.map((lang) => (
                       <label>
@@ -318,7 +319,7 @@ function Settings({ onClose }) {
                     ))}
                   </div>
                 </p>
-                <p>
+                <p class="insignificant">
                   <small>
                     Note: This feature uses an external API to translate,
                     powered by{' '}
@@ -331,6 +332,28 @@ function Settings({ onClose }) {
                     .
                   </small>
                 </p>
+                <hr />
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.contentTranslationAutoInline}
+                      disabled={!snapStates.settings.contentTranslation}
+                      onChange={(e) => {
+                        states.settings.contentTranslationAutoInline =
+                          e.target.checked;
+                      }}
+                    />{' '}
+                    Auto inline translation
+                  </label>
+                  <p class="insignificant">
+                    <small>
+                      Automatically show translation for posts in timeline. Only
+                      works for <b>short</b> posts without content warning,
+                      media and poll.
+                    </small>
+                  </p>
+                </div>
               </div>
             </li>
             <li>

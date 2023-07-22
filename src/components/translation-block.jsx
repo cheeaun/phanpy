@@ -105,7 +105,11 @@ function TranslationBlock({
   }, [forceTranslate]);
 
   if (mini) {
-    if (!!translatedContent && detectedLang !== targetLangText) {
+    if (
+      !!translatedContent &&
+      translatedContent.trim() !== text.trim() &&
+      detectedLang !== targetLangText
+    ) {
       return (
         <div class="status-translation-block-mini">
           <Icon

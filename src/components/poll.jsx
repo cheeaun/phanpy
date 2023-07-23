@@ -196,44 +196,43 @@ export default function Poll({
           )}
         </form>
       )}
-      {!readOnly && (
-        <p class="poll-meta">
-          {!expired && (
-            <>
-              <button
-                type="button"
-                class="textual"
-                disabled={uiState === 'loading'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setUIState('loading');
+      <p class="poll-meta">
+        {!expired && !readOnly && (
+          <>
+            <button
+              type="button"
+              class="textual"
+              disabled={uiState === 'loading'}
+              onClick={(e) => {
+                e.preventDefault();
+                setUIState('loading');
 
-                  (async () => {
-                    await refresh();
-                    setUIState('default');
-                  })();
-                }}
-              >
-                Refresh
-              </button>{' '}
-              &bull;{' '}
-            </>
-          )}
-          <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
-          {votesCount === 1 ? '' : 's'}
-          {!!votersCount && votersCount !== votesCount && (
-            <>
-              {' '}
-              &bull;{' '}
-              <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-              voter
-              {votersCount === 1 ? '' : 's'}
-            </>
-          )}{' '}
-          &bull; {expired ? 'Ended' : 'Ending'}{' '}
-          {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
-        </p>
-      )}
+                (async () => {
+                  await refresh();
+                  setUIState('default');
+                })();
+              }}
+            >
+              Refresh
+            </button>{' '}
+            &bull;{' '}
+          </>
+        )}
+        <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
+        {votesCount === 1 ? '' : 's'}
+        {!!votersCount && votersCount !== votesCount && (
+          <>
+            {' '}
+            &bull; <span title={votersCount}>
+              {shortenNumber(votersCount)}
+            </span>{' '}
+            voter
+            {votersCount === 1 ? '' : 's'}
+          </>
+        )}{' '}
+        &bull; {expired ? 'Ended' : 'Ending'}{' '}
+        {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
+      </p>{' '}
     </div>
   );
 }

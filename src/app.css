@@ -2000,7 +2000,7 @@ ul.link-list li a .icon {
     transform: none;
     pointer-events: auto;
   }
-  #columns li:has(.status-carousel) {
+  #columns li.timeline-item-carousel {
     width: auto;
     transform: none;
   }
@@ -2159,7 +2159,7 @@ ul.link-list li a .icon {
   /* :is(.carousel-top-controls, .carousel-controls) {
     padding: 32px;
   } */
-  li:has(.status-carousel) {
+  li.timeline-item-carousel {
     width: 95vw;
     max-width: calc(320px * 3.3);
     transform: translateX(calc(-50% + 20em));

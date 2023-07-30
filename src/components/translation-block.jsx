@@ -111,18 +111,22 @@ function TranslationBlock({
       detectedLang !== targetLangText
     ) {
       return (
-        <div class="status-translation-block-mini">
-          <Icon
-            icon="translate"
-            alt={`Auto-translated from ${sourceLangText}`}
-          />
-          <output
-            lang={targetLang}
-            dir="auto"
-            title={pronunciationContent || ''}
-          >
-            {translatedContent}
-          </output>
+        <div class="shazam-container">
+          <div class="shazam-container-inner">
+            <div class="status-translation-block-mini">
+              <Icon
+                icon="translate"
+                alt={`Auto-translated from ${sourceLangText}`}
+              />
+              <output
+                lang={targetLang}
+                dir="auto"
+                title={pronunciationContent || ''}
+              >
+                {translatedContent}
+              </output>
+            </div>
+          </div>
         </div>
       );
     }

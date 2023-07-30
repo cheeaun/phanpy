@@ -365,7 +365,10 @@ function Timeline({
                       return 0;
                     });
                     return (
-                      <li key={`timeline-${statusID}`}>
+                      <li
+                        key={`timeline-${statusID}`}
+                        class="timeline-item-carousel"
+                      >
                         <StatusCarousel
                           title={title}
                           class={`${type}-carousel`}

@@ -116,6 +116,12 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     if (smaller) setImageSmallerThanParent(smaller);
   }, [width, height]);
 
+  const mediaStyles = {
+    '--width': `${width}px`,
+    '--height': `${height}px`,
+    aspectRatio: `${width} / ${height}`,
+  };
+
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
@@ -138,13 +144,16 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         ref={parentRef}
         class={`media media-image`}
         onClick={onClick}
+        data-orientation={orientation}
         style={
-          showOriginal && {
-            backgroundImage: `url(${previewUrl})`,
-            backgroundSize: imageSmallerThanParent
-              ? `${width}px ${height}px`
-              : undefined,
-          }
+          showOriginal
+            ? {
+                backgroundImage: `url(${previewUrl})`,
+                backgroundSize: imageSmallerThanParent
+                  ? `${width}px ${height}px`
+                  : undefined,
+              }
+            : mediaStyles
         }
       >
         {showOriginal ? (
@@ -183,6 +192,13 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               backgroundColor:
                 rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
               backgroundPosition: focalBackgroundPosition || 'center',
+              // Duration based on width or height in pixels
+              // 100px per second (rough estimate)
+              // Clamp between 5s and 120s
+              '--anim-duration': `${Math.min(
+                Math.max(Math.max(width, height) / 100, 5),
+                120,
+              )}s`,
             }}
             onLoad={(e) => {
               e.target.closest('.media-image').style.backgroundImage = '';
@@ -229,12 +245,14 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         class={`media media-${isGIF ? 'gif' : 'video'} ${
           autoGIFAnimate ? 'media-contain' : ''
         }`}
+        data-orientation={orientation}
         data-formatted-duration={formattedDuration}
         data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
         // style={{
         //   backgroundColor:
         //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         // }}
+        style={!showOriginal && mediaStyles}
         onClick={(e) => {
           if (hoverAnimate) {
             try {
@@ -314,6 +332,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         class="media media-audio"
         data-formatted-duration={formattedDuration}
         onClick={onClick}
+        style={!showOriginal && mediaStyles}
       >
         {showOriginal ? (
           <audio src={remoteUrl || url} preload="none" controls autoplay />

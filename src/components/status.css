@@ -87,6 +87,7 @@
 }
 .status-card-link:is(:hover, :focus) .status-card img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 .status-card-link:is(:active) .status-card {
   background-color: var(--bg-faded-color);
@@ -556,11 +557,11 @@
   height: auto;
   max-height: max(160px, 33vh);
 }
-/* .status .media-container.media-eq1 {
-  min-height: 44px;
-  height: auto;
-  max-height: 160px;
-} */
+.status .media-container.media-eq1 {
+  display: flex;
+  /* min-height: 0 !important; */
+  max-height: none !important;
+}
 .status:not(.large):not(.status-carousel .status)
   .media-container.media-eq1:has([data-orientation='portrait']) {
   width: 85%;
@@ -578,38 +579,76 @@
 }
 .status .media-container .media {
   --media-radius: 16px;
+  --media-radius-inner: 4px;
   border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
   border: 1px solid var(--outline-color);
 }
+.status .media-container:not(.media-eq1) .media {
+  aspect-ratio: auto !important;
+}
+.status .media-container.media-eq1 .media {
+  display: block;
+  max-width: 100% !important;
+  min-width: 44px;
+  width: auto;
+  min-height: 44px;
+  /* width: min(var(--width), 100%); */
+  max-height: min(var(--height), 33vh);
+}
+.status .media-container.media-eq1 .media[data-orientation='portrait'] {
+  width: auto;
+  height: min(var(--height), 45vh);
+  max-height: none;
+}
+.status.large .media-container.media-eq1 {
+  max-height: min(var(--height), 60vh);
+}
+.status.large .media-container.media-eq1 .media[data-orientation='portrait'] {
+  height: min(var(--height), 60vh);
+}
+.status-carousel .status .media-container.media-eq1 .media {
+  width: min(var(--width), 100%);
+  height: auto;
+  max-height: 60vh;
+}
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 var(--media-radius);
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq2 .media:last-of-type {
-  border-radius: 0 var(--media-radius) var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 var(--media-radius);
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq3 .media:nth-of-type(2) {
-  border-radius: 0 var(--media-radius) 0 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:last-of-type {
-  border-radius: 0 0 var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 0;
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(2) {
-  border-radius: 0 var(--media-radius) 0 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(3) {
-  border-radius: 0 0 0 var(--media-radius);
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq4 .media:last-of-type {
-  border-radius: 0 0 var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;
@@ -657,6 +696,7 @@
 .status .media img:is(:hover, :focus),
 a:focus-visible .status .media img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
@@ -891,6 +931,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .card:is(:hover, :focus) img,
 a:focus-visible .card img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 .card p {
   margin: 0;

@@ -94,6 +94,7 @@ function Status({
   allowFilters,
   onMediaClick,
   quoted,
+  onStatusLinkClick = () => {},
 }) {
   if (skeleton) {
     return (
@@ -526,7 +527,10 @@ function Status({
             <br />
             {createdDateText}
           </MenuHeader>
-          <MenuLink to={instance ? `/${instance}/s/${id}` : `/s/${id}`}>
+          <MenuLink
+            to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+            onClick={onStatusLinkClick}
+          >
             <Icon icon="arrow-right" />
             <span>View post by @{username || acct}</span>
           </MenuLink>
@@ -944,6 +948,7 @@ function Status({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      onStatusLinkClick?.();
                     }}
                     class={`time ${open ? 'is-open' : ''}`}
                   >

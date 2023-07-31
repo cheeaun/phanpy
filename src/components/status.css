@@ -574,7 +574,7 @@
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
-  min-height: 160px;
+  /* min-height: 160px; */
   max-height: 60vh;
 }
 .status .media-container .media {
@@ -661,7 +661,7 @@
 .status:not(.large) .media:only-child {
   max-width: 480px;
 }
-.status.large .media:only-child {
+.status.large .media-container:not(.media-eq1) .media:only-child {
   display: inline-block;
   min-width: 160px;
   min-height: 160px;

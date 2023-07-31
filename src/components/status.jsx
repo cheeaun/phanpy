@@ -172,7 +172,9 @@ function Status({
 
   const debugHover = (e) => {
     if (e.shiftKey) {
-      console.log(status);
+      console.log({
+        ...status,
+      });
     }
   };
 
@@ -1127,7 +1129,9 @@ function Status({
               }}
             />
           )}
-          {(((enableTranslate || inlineTranslate) && !!content.trim() && differentLanguage) ||
+          {(((enableTranslate || inlineTranslate) &&
+            !!content.trim() &&
+            differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}

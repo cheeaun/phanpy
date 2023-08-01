@@ -717,6 +717,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   animation: appear 0.2s ease-out;
   -webkit-touch-callout: none;
 }
+@media (pointer: coarse) {
+  .status-focus {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+}
 :is(.status-link, .status-focus):is(:focus, .is-active) {
   background-color: var(--link-bg-hover-color);
   outline-offset: -2px;

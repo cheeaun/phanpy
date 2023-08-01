@@ -600,6 +600,12 @@
   width: auto;
   min-height: 44px;
   /* width: min(var(--width), 100%); */
+  /* max-height: min(var(--height), 33vh); */
+  height: min(160px, var(--height), 33vh);
+}
+.status .media-container.media-eq1 .media.media-fixed-width {
+  width: min(var(--width), 100%);
+  height: auto;
   max-height: min(var(--height), 33vh);
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {
@@ -694,6 +700,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  vertical-align: middle;
 }
 .status .media {
   cursor: pointer;

@@ -121,6 +121,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     '--height': `${height}px`,
     aspectRatio: `${width} / ${height}`,
   };
+  const fixedWidth = width > height * 2;
 
   if (isImage) {
     // Note: type: unknown might not have width/height
@@ -142,7 +143,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     return (
       <Parent
         ref={parentRef}
-        class={`media media-image`}
+        class={`media media-image ${fixedWidth ? 'media-fixed-width' : ''}`}
         onClick={onClick}
         data-orientation={orientation}
         style={
@@ -244,7 +245,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
       <Parent
         class={`media media-${isGIF ? 'gif' : 'video'} ${
           autoGIFAnimate ? 'media-contain' : ''
-        }`}
+        } ${fixedWidth ? 'media-fixed-width' : ''}`}
         data-orientation={orientation}
         data-formatted-duration={formattedDuration}
         data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}

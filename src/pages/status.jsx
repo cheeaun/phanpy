@@ -845,7 +845,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             const isHero = statusID === id;
             const StatusParent = useCallback(
               (props) =>
-                isThread || thread ? (
+                isThread || thread || ancestor ? (
                   <Link
                     class="status-link"
                     to={

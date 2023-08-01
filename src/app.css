@@ -718,7 +718,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   -webkit-touch-callout: none;
 }
 @media (pointer: coarse) {
-  .status-focus {
+  .status-focus:not(.hero .status-focus) {
+    /* Only the hero doesn't have context menu */
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;

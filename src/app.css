@@ -719,6 +719,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 @media (pointer: coarse) {
   .status-focus {
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
   }
@@ -2075,6 +2076,12 @@ ul.link-list li a .icon {
   margin: -4px -8px -4px 0;
   background-color: var(--bg-faded-color);
   border-radius: 999px;
+}
+
+/* NOTIFICATION PEEK */
+
+.notification-peek .notification {
+  padding-inline: 0 !important;
 }
 
 /* OTHERS */

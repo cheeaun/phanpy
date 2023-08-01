@@ -2181,6 +2181,6 @@ ul.link-list li a .icon {
   li.timeline-item-carousel {
     width: 95vw;
     max-width: calc(320px * 3.3);
-    transform: translateX(calc(-50% + 20em));
+    transform: translateX(calc(-50% + var(--main-width)/2));
   }
 }

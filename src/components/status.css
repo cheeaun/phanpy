@@ -599,8 +599,8 @@
   min-width: 44px;
   /* width: auto; */
   min-height: 44px;
-  /* width: min(var(--width), 100%); */
-  width: min(fit-content, 100%);
+  --aspectWidth: calc(--width / --height * max(160px, 33vh));
+  width: min(var(--aspectWidth), var(--width), 100%);
   max-height: min(var(--height), 33vh);
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {

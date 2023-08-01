@@ -116,9 +116,12 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     if (smaller) setImageSmallerThanParent(smaller);
   }, [width, height]);
 
+  const maxAspectHeight = window.innerHeight * 0.33;
   const mediaStyles = {
     '--width': `${width}px`,
     '--height': `${height}px`,
+    // Calculate '--aspectWidth' based on aspect ratio calculated from '--width' and '--height', max height has to be 160px
+    '--aspectWidth': `${(width / height) * Math.max(160, maxAspectHeight)}px`,
     aspectRatio: `${width} / ${height}`,
   };
 

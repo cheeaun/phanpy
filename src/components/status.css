@@ -599,7 +599,8 @@
   min-width: 44px;
   /* width: auto; */
   min-height: 44px;
-  --aspectWidth: calc(--width / --height * max(160px, 33vh));
+  /* --maxAspectHeight: max(160px, 33vh);
+  --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
   width: min(var(--aspectWidth), var(--width), 100%);
   max-height: min(var(--height), 33vh);
 }

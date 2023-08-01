@@ -176,6 +176,7 @@ function MediaModal({
                     left: carouselRef.current.clientWidth * i,
                     behavior: 'smooth',
                   });
+                  carouselRef.current.focus();
                 }}
               >
                 &bull;
@@ -245,6 +246,7 @@ function MediaModal({
                 left: carouselRef.current.clientWidth * (currentIndex - 1),
                 behavior: 'smooth',
               });
+              carouselRef.current.focus();
             }}
           >
             <Icon icon="arrow-left" />
@@ -260,6 +262,7 @@ function MediaModal({
                 left: carouselRef.current.clientWidth * (currentIndex + 1),
                 behavior: 'smooth',
               });
+              carouselRef.current.focus();
             }}
           >
             <Icon icon="arrow-right" />
@@ -272,6 +275,7 @@ function MediaModal({
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowMediaAlt(false);
+              carouselRef.current.focus();
             }
           }}
         >

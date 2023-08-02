@@ -618,16 +618,21 @@
   max-height: min(var(--height), 33vh);
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {
-  width: auto;
+  /* width: auto;
   height: min(var(--height), 45vh);
-  max-height: none;
+  max-height: none; */
+  max-height: min(var(--height), 45vh);
 }
 .status.large .media-container.media-eq1 {
   max-height: min(var(--height), 60vh);
 }
-.status.large .media-container.media-eq1 .media[data-orientation='portrait'] {
-  height: min(var(--height), 60vh);
+.status.large .media-container.media-eq1 .media {
+  width: min(var(--width), 100%);
+  max-height: min(var(--height), 80vh);
 }
+/* .status.large .media-container.media-eq1 .media[data-orientation='portrait'] {
+  height: min(var(--height), 60vh);
+} */
 .status-carousel .status .media-container.media-eq1 .media {
   width: min(var(--width), 100%);
   height: auto;

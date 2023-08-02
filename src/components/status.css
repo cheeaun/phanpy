@@ -626,7 +626,9 @@
 .status.large .media-container.media-eq1 {
   max-height: min(var(--height), 60vh);
 }
-.status.large .media-container.media-eq1 .media {
+.status.large
+  .media-container:not(.status-card .media-container).media-eq1
+  .media {
   width: min(var(--width), 100%);
   max-height: min(var(--height), 80vh);
 }

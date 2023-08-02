@@ -843,24 +843,24 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               weight,
             } = status;
             const isHero = statusID === id;
-            const StatusParent = useCallback(
-              (props) =>
-                isThread || thread || ancestor ? (
-                  <Link
-                    class="status-link"
-                    to={
-                      instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
-                    }
-                    onClick={() => {
-                      resetScrollPosition(statusID);
-                    }}
-                    {...props}
-                  />
-                ) : (
-                  <div class="status-focus" tabIndex={0} {...props} />
-                ),
-              [isThread, thread],
-            );
+            // const StatusParent = useCallback(
+            //   (props) =>
+            //     isThread || thread || ancestor ? (
+            //       <Link
+            //         class="status-link"
+            //         to={
+            //           instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
+            //         }
+            //         onClick={() => {
+            //           resetScrollPosition(statusID);
+            //         }}
+            //         {...props}
+            //       />
+            //     ) : (
+            //       <div class="status-focus" tabIndex={0} {...props} />
+            //     ),
+            //   [isThread, thread],
+            // );
             return (
               <li
                 key={statusID}
@@ -941,7 +941,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     )}
                   </>
                 ) : (
-                  <StatusParent>
+                  // <StatusParent>
+                  <Link
+                    class="status-link"
+                    to={
+                      instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
+                    }
+                    onClick={() => {
+                      resetScrollPosition(statusID);
+                    }}
+                  >
                     <Status
                       statusID={statusID}
                       instance={instance}
@@ -969,7 +978,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                           </span>
                         </div>
                       )} */}
-                  </StatusParent>
+                    {/* </StatusParent> */}
+                  </Link>
                 )}
                 {descendant && replies?.length > 0 && (
                   <SubComments
@@ -1184,14 +1194,14 @@ function SubComments({
       <ul>
         {replies.map((r) => (
           <li key={r.id}>
-            {/* <Link
+            <Link
               class="status-link"
               to={instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`}
               onClick={() => {
                 resetScrollPosition(r.id);
               }}
-            > */}
-            <div class="status-focus" tabIndex={0}>
+            >
+              {/* <div class="status-focus" tabIndex={0}> */}
               <Status
                 statusID={r.id}
                 instance={instance}
@@ -1208,8 +1218,8 @@ function SubComments({
                   </span>
                 </div>
               )}
-            </div>
-            {/* </Link> */}
+              {/* </div> */}
+            </Link>
             {r.replies?.length && (
               <SubComments
                 instance={instance}

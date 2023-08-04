@@ -1541,7 +1541,9 @@ function Card({ card, instance }) {
         class={`card link no-image`}
       >
         <div class="meta-container">
-          <p class="meta domain">{domain}</p>
+          <p class="meta domain">
+            <Icon icon="link" size="s" /> <span>{domain}</span>
+          </p>
           <p class="title">{title}</p>
           <p class="meta">{description || providerName || authorName}</p>
         </div>

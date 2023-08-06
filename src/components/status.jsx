@@ -848,10 +848,12 @@ function Status({
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
-          onClose={() => {
+          onClose={(e) => {
             setIsContextMenuOpen(false);
             // statusRef.current?.focus?.();
-            statusRef.current?.closest('[tabindex]')?.focus?.();
+            if (e?.reason === 'click') {
+              statusRef.current?.closest('[tabindex]')?.focus?.();
+            }
           }}
           portal={{
             target: document.body,

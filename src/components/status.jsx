@@ -94,6 +94,7 @@ function Status({
   allowFilters,
   onMediaClick,
   quoted,
+  onStatusLinkClick = () => {},
 }) {
   if (skeleton) {
     return (
@@ -172,7 +173,9 @@ function Status({
 
   const debugHover = (e) => {
     if (e.shiftKey) {
-      console.log(status);
+      console.log({
+        ...status,
+      });
     }
   };
 
@@ -524,7 +527,10 @@ function Status({
             <br />
             {createdDateText}
           </MenuHeader>
-          <MenuLink to={instance ? `/${instance}/s/${id}` : `/s/${id}`}>
+          <MenuLink
+            to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+            onClick={onStatusLinkClick}
+          >
             <Icon icon="arrow-right" />
             <span>View post by @{username || acct}</span>
           </MenuLink>
@@ -942,6 +948,7 @@ function Status({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      onStatusLinkClick?.();
                     }}
                     class={`time ${open ? 'is-open' : ''}`}
                   >
@@ -1127,7 +1134,9 @@ function Status({
               }}
             />
           )}
-          {(((enableTranslate || inlineTranslate) && !!content.trim() && differentLanguage) ||
+          {(((enableTranslate || inlineTranslate) &&
+            !!content.trim() &&
+            differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock
               forceTranslate={forceTranslate || inlineTranslate}
@@ -1440,7 +1449,7 @@ function Card({ card, instance }) {
 
   if (snapStates.unfurledLinks[url]) return null;
 
-  if (hasText && (image || (!type !== 'photo' && blurhash))) {
+  if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = new URL(url).hostname.replace(/^www\./, '');
     let blurhashImage;
     if (!image) {
@@ -1532,7 +1541,9 @@ function Card({ card, instance }) {
         class={`card link no-image`}
       >
         <div class="meta-container">
-          <p class="meta domain">{domain}</p>
+          <p class="meta domain">
+            <Icon icon="link" size="s" /> <span>{domain}</span>
+          </p>
           <p class="title">{title}</p>
           <p class="meta">{description || providerName || authorName}</p>
         </div>

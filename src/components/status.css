@@ -87,6 +87,7 @@
 }
 .status-card-link:is(:hover, :focus) .status-card img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 .status-card-link:is(:active) .status-card {
   background-color: var(--bg-faded-color);
@@ -394,10 +395,14 @@
   align-items: center;
 }
 .status
-  .content-container.has-spoiler
+  .content-container.has-spoiler:not(.show-spoiler)
   .spoiler
   ~ *:not(.media-container, .card),
-.status .content-container.has-spoiler .spoiler ~ .card .meta-container {
+.status
+  .content-container.has-spoiler:not(.show-spoiler)
+  .spoiler
+  ~ .card
+  .meta-container {
   filter: blur(5px) invert(0.5);
   image-rendering: crisp-edges;
   image-rendering: pixelated;
@@ -407,8 +412,17 @@
   transform: scale(0.97);
   transition: transform 0.1s ease-in-out;
 }
-.status .content-container.has-spoiler .spoiler ~ .media-container .media > *,
-.status .content-container.has-spoiler .spoiler ~ .card > img {
+.status
+  .content-container.has-spoiler:not(.show-spoiler)
+  .spoiler
+  ~ .media-container
+  .media
+  > *,
+.status
+  .content-container.has-spoiler:not(.show-spoiler)
+  .spoiler
+  ~ .card
+  > img {
   filter: blur(32px);
   image-rendering: crisp-edges;
   image-rendering: pixelated;
@@ -417,7 +431,7 @@
 .status .content-container.show-spoiler .spoiler {
   border-style: dotted;
 }
-.status
+/* .status
   .content-container.show-spoiler
   .spoiler
   ~ *:not(.media-container, .card),
@@ -433,7 +447,7 @@
 .status .content-container.show-spoiler .spoiler ~ .card > img {
   filter: none;
   image-rendering: auto;
-}
+} */
 /* .status .content a:not(.mention):not(:has(span)) {
   color: inherit;
 } */
@@ -556,11 +570,11 @@
   height: auto;
   max-height: max(160px, 33vh);
 }
-/* .status .media-container.media-eq1 {
-  min-height: 44px;
-  height: auto;
-  max-height: 160px;
-} */
+.status .media-container.media-eq1 {
+  display: flex;
+  /* min-height: 0 !important; */
+  max-height: none !important;
+}
 .status:not(.large):not(.status-carousel .status)
   .media-container.media-eq1:has([data-orientation='portrait']) {
   width: 85%;
@@ -573,43 +587,95 @@
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
-  min-height: 160px;
+  /* min-height: 160px; */
   max-height: 60vh;
 }
 .status .media-container .media {
   --media-radius: 16px;
+  --media-radius-inner: 4px;
   border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
   border: 1px solid var(--outline-color);
 }
+.status .media-container:not(.media-eq1) .media {
+  aspect-ratio: auto !important;
+}
+.status .media-container.media-eq1 {
+  width: auto !important;
+  max-width: 100%;
+  display: block;
+}
+.status .media-container.media-eq1 .media {
+  display: inline-block;
+  max-width: 100% !important;
+  min-width: 44px;
+  /* width: auto; */
+  min-height: 44px;
+  /* --maxAspectHeight: max(160px, 33vh);
+  --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
+  width: min(var(--aspectWidth), var(--width), 100%);
+  max-height: min(var(--height), 33vh);
+}
+.status .media-container.media-eq1 .media[data-orientation='portrait'] {
+  /* width: auto;
+  height: min(var(--height), 45vh);
+  max-height: none; */
+  max-height: min(var(--height), 45vh);
+}
+.status.large .media-container.media-eq1 {
+  max-height: min(var(--height), 60vh);
+}
+.status.large
+  .media-container:not(.status-card .media-container).media-eq1
+  .media {
+  width: min(var(--width), 100%);
+  max-height: min(var(--height), 80vh);
+}
+/* .status.large .media-container.media-eq1 .media[data-orientation='portrait'] {
+  height: min(var(--height), 60vh);
+} */
+.status-carousel .status .media-container.media-eq1 .media {
+  width: min(var(--width), 100%);
+  height: auto;
+  max-height: 60vh;
+}
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 var(--media-radius);
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq2 .media:last-of-type {
-  border-radius: 0 var(--media-radius) var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 var(--media-radius);
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq3 .media:nth-of-type(2) {
-  border-radius: 0 var(--media-radius) 0 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:last-of-type {
-  border-radius: 0 0 var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:first-of-type {
-  border-radius: var(--media-radius) 0 0 0;
+  border-radius: var(--media-radius) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(2) {
-  border-radius: 0 var(--media-radius) 0 0;
+  border-radius: var(--media-radius-inner) var(--media-radius)
+    var(--media-radius-inner) var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(3) {
-  border-radius: 0 0 0 var(--media-radius);
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius-inner) var(--media-radius);
 }
 .status .media-container.media-eq4 .media:last-of-type {
-  border-radius: 0 0 var(--media-radius) 0;
+  border-radius: var(--media-radius-inner) var(--media-radius-inner)
+    var(--media-radius) var(--media-radius-inner);
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;
@@ -617,7 +683,7 @@
 .status:not(.large) .media:only-child {
   max-width: 480px;
 }
-.status.large .media:only-child {
+.status.large .media-container:not(.media-eq1) .media:only-child {
   display: inline-block;
   min-width: 160px;
   min-height: 160px;
@@ -650,6 +716,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  vertical-align: middle;
 }
 .status .media {
   cursor: pointer;
@@ -657,6 +724,7 @@
 .status .media img:is(:hover, :focus),
 a:focus-visible .status .media img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
@@ -891,6 +959,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .card:is(:hover, :focus) img,
 a:focus-visible .card img {
   animation: position-object 5s ease-in-out 1s 5;
+  animation-duration: var(--anim-duration, 5s);
 }
 .card p {
   margin: 0;
@@ -945,6 +1014,9 @@ a:focus-visible .card img {
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
+}
+.card .meta.domain * {
+  vertical-align: middle;
 }
 a.card {
   text-decoration: none;

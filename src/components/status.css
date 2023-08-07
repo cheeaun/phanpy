@@ -591,12 +591,13 @@
   max-height: 60vh;
 }
 .status .media-container .media {
+  --media-border-width: 1px;
   --media-radius: 16px;
   --media-radius-inner: 4px;
   border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
-  border: 1px solid var(--outline-color);
+  border: var(--media-border-width) solid var(--outline-color);
 }
 .status .media-container:not(.media-eq1) .media {
   aspect-ratio: auto !important;
@@ -734,7 +735,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: inherit;
+  border-radius: calc(var(--media-radius) - var(--media-border-width));
 }
 .status :is(.media-video, .media-audio, .media-gif) {
   position: relative;

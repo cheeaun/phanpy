@@ -115,6 +115,14 @@ body {
   overflow-wrap: break-word;
 }
 
+/* Prevent pull-to-refresh on Chrome PWA */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+}
+
 a {
   color: var(--link-color);
   text-decoration-color: var(--link-faded-color);

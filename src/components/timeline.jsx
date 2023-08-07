@@ -65,6 +65,7 @@ function Timeline({
             } else {
               setItems((items) => [...items, ...value]);
             }
+            if (!value.length) done = true;
             setShowMore(!done);
           } else {
             setShowMore(false);

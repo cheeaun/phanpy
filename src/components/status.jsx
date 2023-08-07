@@ -136,6 +136,7 @@ function Status({
       username,
       emojis: accountEmojis,
       bot,
+      group,
     },
     id,
     repliesCount,
@@ -230,6 +231,25 @@ function Status({
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
+
+    if (group) {
+      return (
+        <div class="status-group" onMouseEnter={debugHover}>
+          <div class="status-pre-meta">
+            <Icon icon="group" size="l" alt="Group" />{' '}
+            <NameText account={status.account} instance={instance} showAvatar />
+          </div>
+          <Status
+            status={statusID ? null : reblog}
+            statusID={statusID ? reblog.id : null}
+            instance={instance}
+            size={size}
+            contentTextWeight={contentTextWeight}
+          />
+        </div>
+      );
+    }
+
     return (
       <div class="status-reblog" onMouseEnter={debugHover}>
         <div class="status-pre-meta">

@@ -9,17 +9,21 @@ function EmojiText({ text, emojis }) {
   const elements = text.split(regex).map((word) => {
     const emoji = emojis.find((e) => e.shortcode === word);
     if (emoji) {
+      const { url, staticUrl } = emoji;
       return (
-        <img
-          key={word}
-          src={emoji.url}
-          alt={word}
-          class="shortcode-emoji emoji"
-          width="12"
-          height="12"
-          loading="lazy"
-          decoding="async"
-        />
+        <picture>
+          <source srcset={staticUrl} media="(prefers-reduced-motion: reduce)" />
+          <img
+            key={word}
+            src={url}
+            alt={word}
+            class="shortcode-emoji emoji"
+            width="12"
+            height="12"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       );
     }
     return word;

@@ -39,7 +39,7 @@ function NameText({
       class={`name-text ${showAcct ? 'show-acct' : ''} ${short ? 'short' : ''}`}
       href={url}
       target={external ? '_blank' : null}
-      title={`@${acct}`}
+      title={`${displayName ? `${displayName} ` : ''}@${acct}`}
       onClick={(e) => {
         if (external) return;
         e.preventDefault();

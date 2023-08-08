@@ -1996,7 +1996,7 @@ const unfurlMastodonLink = throttle(
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
-    account: { avatar, avatarStatic, bot },
+    account: { avatar, avatarStatic, bot, group },
     createdAt,
     visibility,
     reblog,
@@ -2021,7 +2021,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
 
   return (
     <div
-      class={isReblog ? 'status-reblog' : ''}
+      class={isReblog ? (group ? 'status-group' : 'status-reblog') : ''}
       {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {

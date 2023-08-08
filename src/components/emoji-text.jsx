@@ -2,41 +2,29 @@ function EmojiText({ text, emojis }) {
   if (!text) return '';
   if (!emojis?.length) return text;
   if (text.indexOf(':') === -1) return text;
-
-  const components = [];
-  let lastIndex = 0;
-
-  emojis.forEach((shortcodeObj) => {
-    const { shortcode, staticUrl, url } = shortcodeObj;
-    const regex = new RegExp(`:${shortcode}:`, 'g');
-    let match;
-
-    while ((match = regex.exec(text))) {
-      const beforeText = text.substring(lastIndex, match.index);
-      if (beforeText) {
-        components.push(beforeText);
-      }
-      components.push(
+  const regex = new RegExp(
+    `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+    'g',
+  );
+  const elements = text.split(regex).map((word) => {
+    const emoji = emojis.find((e) => e.shortcode === word);
+    if (emoji) {
+      return (
         <img
-          src={url}
-          alt={shortcode}
+          key={word}
+          src={emoji.url}
+          alt={word}
           class="shortcode-emoji emoji"
           width="12"
           height="12"
           loading="lazy"
           decoding="async"
-        />,
+        />
       );
-      lastIndex = match.index + match[0].length;
     }
+    return word;
   });
-
-  const afterText = text.substring(lastIndex);
-  if (afterText) {
-    components.push(afterText);
-  }
-
-  return components;
+  return elements;
 }
 
 export default EmojiText;

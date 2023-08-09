@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
+import supports from '../utils/supports';
 
 import Icon from './icon';
 import MenuConfirm from './menu-confirm';
@@ -11,12 +12,18 @@ function ListAddEdit({ list, onClose }) {
   const editMode = !!list;
   const nameFieldRef = useRef();
   const repliesPolicyFieldRef = useRef();
+  const exclusiveFieldRef = useRef();
   useEffect(() => {
     if (editMode) {
       nameFieldRef.current.value = list.title;
       repliesPolicyFieldRef.current.value = list.repliesPolicy;
+      if (exclusiveFieldRef.current) {
+        exclusiveFieldRef.current.checked = list.exclusive;
+      }
     }
   }, [editMode]);
+  const supportsExclusive = supports('@mastodon/list-exclusive');
+
   return (
     <div class="sheet">
       {!!onClose && (
@@ -36,9 +43,11 @@ function ListAddEdit({ list, onClose }) {
             const formData = new FormData(e.target);
             const title = formData.get('title');
             const repliesPolicy = formData.get('replies_policy');
+            const exclusive = formData.get('exclusive') === 'on';
             console.log({
               title,
               repliesPolicy,
+              exclusive,
             });
             setUiState('loading');
 
@@ -50,11 +59,13 @@ function ListAddEdit({ list, onClose }) {
                   listResult = await masto.v1.lists.update(list.id, {
                     title,
                     replies_policy: repliesPolicy,
+                    exclusive,
                   });
                 } else {
                   listResult = await masto.v1.lists.create({
                     title,
                     replies_policy: repliesPolicy,
+                    exclusive,
                   });
                 }
 
@@ -99,6 +110,19 @@ function ListAddEdit({ list, onClose }) {
               <option value="none">Don't show replies</option>
             </select>
           </div>
+          {supportsExclusive && (
+            <div class="list-form-row">
+              <label class="label-block">
+                <input
+                  ref={exclusiveFieldRef}
+                  type="checkbox"
+                  name="exclusive"
+                  disabled={uiState === 'loading'}
+                />{' '}
+                Hide posts on this list from Home/Following
+              </label>
+            </div>
+          )}
           <div class="list-form-footer">
             <button type="submit" disabled={uiState === 'loading'}>
               {editMode ? 'Save' : 'Create'}

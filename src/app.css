@@ -814,14 +814,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel .content-container .content:only-child {
   font-size: calc(100% + 25% * max(2 - var(--content-text-weight), 0));
 }
-.status-carousel
+/* .status-carousel
   .content-container[data-content-text-weight='1']
   .media-container.media-eq1 {
-  /* LOL, this is madness, reading a value from the style attribute */
+  /* LOL, this is madness, reading a value from the style attribute * /
   height: auto;
   min-height: 160px;
   max-height: max(160px, 50vh);
-}
+} */
 .status-carousel.boosts-carousel {
   --carousel-color: var(--reblog-color);
   --carousel-faded-color: var(--reblog-faded-color);
@@ -2181,6 +2181,6 @@ ul.link-list li a .icon {
   li.timeline-item-carousel {
     width: 95vw;
     max-width: calc(320px * 3.3);
-    transform: translateX(calc(-50% + var(--main-width)/2));
+    transform: translateX(calc(-50% + var(--main-width) / 2));
   }
 }

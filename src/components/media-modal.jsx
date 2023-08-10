@@ -180,7 +180,7 @@ function MediaModal({
                   carouselRef.current.focus();
                 }}
               >
-                &bull;
+                <Icon icon="round" size="s" />
               </button>
             ))}
           </span>

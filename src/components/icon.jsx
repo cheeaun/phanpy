@@ -88,6 +88,7 @@ const ICONS = {
   layout5: () => import('@iconify-icons/mingcute/layout-5-line'),
   announce: () => import('@iconify-icons/mingcute/announcement-line'),
   alert: () => import('@iconify-icons/mingcute/alert-line'),
+  round: () => import('@iconify-icons/mingcute/round-fill'),
 };
 
 function Icon({

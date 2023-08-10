@@ -1111,22 +1111,27 @@ button.carousel-dot {
   backdrop-filter: blur(12px) invert(0.25);
 }
 button.carousel-dot {
-  font-weight: bold;
   backdrop-filter: none !important;
-  transition: all 0.2s;
 }
 button.carousel-dot[disabled] {
   pointer-events: none;
 }
-button.carousel-dot:not(.active) {
+button.carousel-dot .icon {
+  transition: all 0.2s;
+  transform: scale(0.5);
+}
+button.carousel-dot:not(.active) .icon {
   opacity: 0.5;
 }
-button.carousel-dot:not(.active):is(:hover, :focus) {
+button.carousel-dot:not(.active):is(:hover, :focus) .icon {
   opacity: 1;
 }
 button.carousel-dot:is(.active, [disabled].active) {
   opacity: 1;
-  transform: scale(2.2) translateY(-0.5px);
+}
+button.carousel-dot:is(.active, [disabled].active) .icon {
+  opacity: 1;
+  transform: scale(1);
 }
 @media (hover: hover) {
   .carousel-top-controls {

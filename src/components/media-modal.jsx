@@ -44,6 +44,7 @@ function MediaModal({
       left: scrollLeft,
       behavior: differentStatusID ? 'auto' : 'smooth',
     });
+    carouselRef.current.focus();
   }, [index, statusID]);
 
   const [showControls, setShowControls] = useState(true);
@@ -95,7 +96,7 @@ function MediaModal({
     <div class="media-modal-container">
       <div
         ref={carouselRef}
-        tabIndex="-1"
+        tabIndex="0"
         data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {

@@ -13,6 +13,7 @@ const ICONS = {
   heart: () => import('@iconify-icons/mingcute/heart-line'),
   bookmark: () => import('@iconify-icons/mingcute/bookmark-line'),
   'check-circle': () => import('@iconify-icons/mingcute/check-circle-line'),
+  'x-circle': () => import('@iconify-icons/mingcute/close-circle-line'),
   transfer: () => import('@iconify-icons/mingcute/transfer-4-line'),
   rocket: () => import('@iconify-icons/mingcute/rocket-line'),
   'arrow-left': () => import('@iconify-icons/mingcute/arrow-left-line'),

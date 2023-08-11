@@ -137,7 +137,7 @@ function Notification({ notification, instance, reload }) {
               <FollowRequestButtons
                 accountID={account.id}
                 onChange={() => {
-                  reload();
+                  // reload();
                 }}
               />
             )}

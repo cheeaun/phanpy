@@ -8,7 +8,7 @@ const SIZES = {
   xxl: 32,
 };
 
-const ICONS = {
+export const ICONS = {
   x: () => import('@iconify-icons/mingcute/close-line'),
   heart: () => import('@iconify-icons/mingcute/heart-line'),
   bookmark: () => import('@iconify-icons/mingcute/bookmark-line'),

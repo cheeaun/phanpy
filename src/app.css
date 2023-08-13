@@ -1641,27 +1641,35 @@ meter.donut::-moz-meter-bar {
 
 meter.donut {
   position: relative;
-  width: 24px;
-  height: 24px;
+  --dimension: 24px;
+  --border-width: 2px;
+  --middle-circle-radius: calc(var(--dimension) / 2 - var(--border-width));
+  width: var(--dimension);
+  height: var(--dimension);
   border-radius: 50%;
   --fill: calc(var(--percentage) * 1%);
   --color: var(--link-color);
   --middle-circle: radial-gradient(
     circle at 50% 50%,
-    var(--bg-faded-color) 10px,
-    transparent 10px
+    var(--bg-color) var(--middle-circle-radius),
+    transparent var(--middle-circle-radius)
   );
   background-image: var(--middle-circle),
-    conic-gradient(var(--color) var(--fill), var(--bg-faded-blur-color) 0);
+    conic-gradient(var(--color) var(--fill), var(--outline-color) 0);
+  transform: scale(0.7);
+  transition: transform 0.2s ease-in-out;
 }
 meter.donut.warning {
   --color: var(--orange-color);
+  transform: scale(1);
 }
 meter.donut.danger {
   --color: var(--red-color);
+  transform: scale(1);
 }
 meter.donut.explode {
   background-image: none;
+  transform: scale(1);
 }
 meter.donut:is(.warning, .danger, .explode):after {
   content: attr(data-left);

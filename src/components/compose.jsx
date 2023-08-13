@@ -1381,7 +1381,7 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
   const leftChars = maxCharacters - charCount;
-  if (charCount <= maxCharacters / 2 || hidden) {
+  if (hidden) {
     return <meter class="donut" hidden />;
   }
   return (
@@ -1398,6 +1398,7 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
       value={charCount}
       max={maxCharacters}
       data-left={leftChars}
+      title={`${leftChars}/${maxCharacters}`}
       style={{
         '--percentage': (charCount / maxCharacters) * 100,
       }}

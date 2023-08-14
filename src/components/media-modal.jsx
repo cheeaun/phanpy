@@ -245,7 +245,9 @@ function MediaModal({
                 left: carouselRef.current.clientWidth * (currentIndex - 1),
                 behavior: 'smooth',
               });
-              carouselRef.current.focus();
+              setTimeout(() => {
+                carouselRef.current.focus();
+              }, 100);
             }}
           >
             <Icon icon="arrow-left" />
@@ -261,7 +263,9 @@ function MediaModal({
                 left: carouselRef.current.clientWidth * (currentIndex + 1),
                 behavior: 'smooth',
               });
-              carouselRef.current.focus();
+              setTimeout(() => {
+                carouselRef.current.focus();
+              }, 100);
             }}
           >
             <Icon icon="arrow-right" />

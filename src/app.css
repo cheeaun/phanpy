@@ -1097,6 +1097,25 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 button.carousel-dot {
   pointer-events: auto;
   font-weight: bold;
+  color: var(--text-color);
+  background-color: var(--bg-faded-blur-color);
+  border: var(--hairline-width) solid var(--outline-color);
+  box-shadow: 0 4px 32px var(--drop-shadow-color);
+  transition: all 0.2s ease-out;
+}
+button.carousel-dot {
+  background-color: transparent;
+}
+.carousel-controls :is(.button, button).carousel-button {
+  background-color: var(--bg-blur-color);
+}
+.carousel-controls
+  :is(.button, button).carousel-button:is(:hover, :focus):not(:active) {
+  background-color: var(--bg-color);
+  transform: scale(1.2);
+}
+.carousel-controls :is(.button, button).carousel-button:active {
+  transition-duration: 0s;
 }
 .carousel-top-controls .szh-menu-container {
   pointer-events: auto;
@@ -1108,10 +1127,15 @@ button.carousel-dot {
 }
 .carousel-dots {
   border-radius: 999px;
-  backdrop-filter: blur(12px) invert(0.25);
+  background-color: var(--bg-faded-blur-color);
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 4px 32px var(--drop-shadow-color);
+  /* backdrop-filter: blur(12px) invert(0.25); */
 }
 button.carousel-dot {
   backdrop-filter: none !important;
+  border: none;
+  box-shadow: none;
 }
 button.carousel-dot[disabled] {
   pointer-events: none;

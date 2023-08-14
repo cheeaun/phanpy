@@ -246,8 +246,10 @@ function MediaModal({
                 behavior: 'smooth',
               });
               setTimeout(() => {
-                carouselRef.current.focus();
-              }, 100);
+                // Delay is needed for Safari, the focus stops it from scrolling
+                // 1000 is hypothetical
+                carouselRef.current?.focus();
+              }, 1000);
             }}
           >
             <Icon icon="arrow-left" />
@@ -264,8 +266,10 @@ function MediaModal({
                 behavior: 'smooth',
               });
               setTimeout(() => {
-                carouselRef.current.focus();
-              }, 100);
+                // Delay is needed for Safari, the focus stops it from scrolling
+                // 1000 is hypothetical
+                carouselRef.current?.focus();
+              }, 1000);
             }}
           >
             <Icon icon="arrow-right" />

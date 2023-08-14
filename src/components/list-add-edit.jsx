@@ -8,7 +8,7 @@ import MenuConfirm from './menu-confirm';
 
 function ListAddEdit({ list, onClose }) {
   const { masto } = api();
-  const [uiState, setUiState] = useState('default');
+  const [uiState, setUIState] = useState('default');
   const editMode = !!list;
   const nameFieldRef = useRef();
   const repliesPolicyFieldRef = useRef();
@@ -49,7 +49,7 @@ function ListAddEdit({ list, onClose }) {
               repliesPolicy,
               exclusive,
             });
-            setUiState('loading');
+            setUIState('loading');
 
             (async () => {
               try {
@@ -70,14 +70,14 @@ function ListAddEdit({ list, onClose }) {
                 }
 
                 console.log(listResult);
-                setUiState('default');
+                setUIState('default');
                 onClose?.({
                   state: 'success',
                   list: listResult,
                 });
               } catch (e) {
                 console.error(e);
-                setUiState('error');
+                setUIState('error');
                 alert(
                   editMode ? 'Unable to edit list.' : 'Unable to create list.',
                 );
@@ -136,18 +136,18 @@ function ListAddEdit({ list, onClose }) {
                 onClick={() => {
                   // const yes = confirm('Delete this list?');
                   // if (!yes) return;
-                  setUiState('loading');
+                  setUIState('loading');
 
                   (async () => {
                     try {
                       await masto.v1.lists.remove(list.id);
-                      setUiState('default');
+                      setUIState('default');
                       onClose?.({
                         state: 'deleted',
                       });
                     } catch (e) {
                       console.error(e);
-                      setUiState('error');
+                      setUIState('error');
                       alert('Unable to delete list.');
                     }
                   })();

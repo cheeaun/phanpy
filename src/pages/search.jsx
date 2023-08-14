@@ -28,7 +28,7 @@ function Search(props) {
   const { masto, instance, authenticated } = api({
     instance: params.instance,
   });
-  const [uiState, setUiState] = useState('default');
+  const [uiState, setUIState] = useState('default');
   const [searchParams] = useSearchParams();
   const searchFormRef = useRef();
   const q = props?.query || searchParams.get('q');
@@ -76,7 +76,7 @@ function Search(props) {
   };
 
   function loadResults(firstLoad) {
-    setUiState('loading');
+    setUIState('loading');
     if (firstLoad && !type) {
       setStatusResults(statusResults.slice(0, SHORT_LIMIT));
       setAccountResults(accountResults.slice(0, SHORT_LIMIT));
@@ -116,10 +116,10 @@ function Search(props) {
           offsetRef.current = 0;
           setShowMore(false);
         }
-        setUiState('default');
+        setUIState('default');
       } catch (err) {
         console.error(err);
-        setUiState('error');
+        setUIState('error');
       }
     })();
   }

@@ -14,21 +14,21 @@ import useTitle from '../utils/useTitle';
 function Lists() {
   const { masto } = api();
   useTitle(`Lists`, `/l`);
-  const [uiState, setUiState] = useState('default');
+  const [uiState, setUIState] = useState('default');
 
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);
   const [lists, setLists] = useState([]);
   useEffect(() => {
-    setUiState('loading');
+    setUIState('loading');
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
         console.log(lists);
         setLists(lists);
-        setUiState('default');
+        setUIState('default');
       } catch (e) {
         console.error(e);
-        setUiState('error');
+        setUIState('error');
       }
     })();
   }, [reloadCount]);

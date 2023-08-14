@@ -12,11 +12,11 @@ const LIMIT = 200;
 function FollowedHashtags() {
   const { masto, instance } = api();
   useTitle(`Followed Hashtags`, `/ft`);
-  const [uiState, setUiState] = useState('default');
+  const [uiState, setUIState] = useState('default');
 
   const [followedHashtags, setFollowedHashtags] = useState([]);
   useEffect(() => {
-    setUiState('loading');
+    setUIState('loading');
     (async () => {
       try {
         const iterator = masto.v1.followedTags.list({
@@ -31,10 +31,10 @@ function FollowedHashtags() {
         tags.sort((a, b) => a.name.localeCompare(b.name));
         console.log(tags);
         setFollowedHashtags(tags);
-        setUiState('default');
+        setUIState('default');
       } catch (e) {
         console.error(e);
-        setUiState('error');
+        setUIState('error');
       }
     })();
   }, []);

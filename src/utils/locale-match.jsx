@@ -6,7 +6,8 @@ function _localeMatch(...args) {
   try {
     return match(...args);
   } catch (e) {
-    return false;
+    const defaultLocale = args[2];
+    return defaultLocale || false;
   }
 }
 const localeMatch = mem(_localeMatch, {

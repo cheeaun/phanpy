@@ -1112,10 +1112,6 @@ button.carousel-dot {
 .carousel-controls
   :is(.button, button).carousel-button:is(:hover, :focus):not(:active) {
   background-color: var(--bg-color);
-  transform: scale(1.2);
-}
-.carousel-controls :is(.button, button).carousel-button:active {
-  transition-duration: 0s;
 }
 .carousel-top-controls .szh-menu-container {
   pointer-events: auto;
@@ -1166,6 +1162,14 @@ button.carousel-dot:is(.active, [disabled].active) .icon {
     transform: scale(0);
     /* transition: transform 0.2s ease-in-out; */
   }
+  .carousel-controls
+    :is(.button, button).carousel-button:is(:hover, :focus):not(:active) {
+    transform: scale(1.2);
+  }
+  .carousel-controls :is(.button, button).carousel-button:active {
+    transition-duration: 0s;
+  }
+
   :is(.carousel-top-controls, .carousel-controls)[hidden] {
     opacity: 1;
   }

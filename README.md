@@ -74,6 +74,16 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
 
+### Hashtag stuffing collapsing
+
+![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
+
+- Any paragraphs, except the first one, with more than 3 hashtags will be collapsed.
+- If there are text around or between the hashtags, they will not be collapsed.
+- Collapsed hashtags will be a single line with `...` at the end.
+- They are also slightly faded out to reduce visual noise.
+- Opening the post view will reveal the hashtags uncollapsed.
+
 ### Filtered posts
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.

@@ -241,15 +241,11 @@ function MediaModal({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              carouselRef.current.focus();
               carouselRef.current.scrollTo({
                 left: carouselRef.current.clientWidth * (currentIndex - 1),
                 behavior: 'smooth',
               });
-              setTimeout(() => {
-                // Delay is needed for Safari, the focus stops it from scrolling
-                // 1000 is hypothetical
-                carouselRef.current?.focus();
-              }, 1000);
             }}
           >
             <Icon icon="arrow-left" />
@@ -261,15 +257,11 @@ function MediaModal({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              carouselRef.current.focus();
               carouselRef.current.scrollTo({
                 left: carouselRef.current.clientWidth * (currentIndex + 1),
                 behavior: 'smooth',
               });
-              setTimeout(() => {
-                // Delay is needed for Safari, the focus stops it from scrolling
-                // 1000 is hypothetical
-                carouselRef.current?.focus();
-              }, 1000);
             }}
           >
             <Icon icon="arrow-right" />

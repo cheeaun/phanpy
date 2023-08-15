@@ -7,7 +7,7 @@ Phanpy
 **Minimalistic opinionated Mastodon web client.**
 </div>
 
-<br>
+![Fancy screenshot](readme-assets/fancy-screenshot.jpg)
 
 **🗣️ Pronunciation**: [`/fænpi/`](https://ythi.net/how-do-you-pronounce/phanpy/english/) ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
 

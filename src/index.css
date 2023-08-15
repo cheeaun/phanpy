@@ -11,6 +11,8 @@
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
+  --monospace-font: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
+    Menlo, Courier, monospace;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -288,6 +290,11 @@ button.large {
   padding: 12px;
 }
 
+:is(input[type='text'], textarea, select).block {
+  display: block;
+  width: 100%;
+}
+
 button.small {
   font-size: 90%;
   padding: 4px 8px;
@@ -304,8 +311,7 @@ pre {
 pre code,
 code {
   font-size: 90%;
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
+  font-family: var(--monospace-font);
 }
 
 @media (prefers-color-scheme: dark) {

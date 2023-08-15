@@ -90,6 +90,11 @@ export const ICONS = {
   announce: () => import('@iconify-icons/mingcute/announcement-line'),
   alert: () => import('@iconify-icons/mingcute/alert-line'),
   round: () => import('@iconify-icons/mingcute/round-fill'),
+  'arrow-up-circle': () =>
+    import('@iconify-icons/mingcute/arrow-up-circle-line'),
+  'arrow-down-circle': () =>
+    import('@iconify-icons/mingcute/arrow-down-circle-line'),
+  clipboard: () => import('@iconify-icons/mingcute/clipboard-line'),
 };
 
 function Icon({

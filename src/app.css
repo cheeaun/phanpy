@@ -1417,6 +1417,11 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 .tag.collapsed {
   margin: 0;
 }
+.tag.insignificant {
+  border: 1px solid var(--outline-color);
+  color: var(--text-insignificant-color);
+  background-color: var(--bg-faded-color);
+}
 .tag.danger {
   background-color: var(--red-color);
 }

@@ -725,8 +725,7 @@ function ImportExport({ shortcuts, onClose }) {
       )}
       <header>
         <h2>
-          Import/Export{' '}
-          <small class="ib insignificant">Shortcuts settings</small>
+          Import/Export <small class="ib insignificant">Shortcuts</small>
         </h2>
       </header>
       <main tabindex="-1">
@@ -739,7 +738,7 @@ function ImportExport({ shortcuts, onClose }) {
             <input
               type="text"
               name="import"
-              placeholder="Paste settings here"
+              placeholder="Paste shortcuts here"
               class="block"
               onInput={(e) => {
                 setImportShortcutStr(e.target.value);
@@ -796,7 +795,7 @@ function ImportExport({ shortcuts, onClose }) {
                   ))}
                 </ol>
                 <p>
-                  <small>* Exists in current settings</small>
+                  <small>* Exists in current shortcuts</small>
                   <br />
                   <small>
                     ⚠️ List may not work if it's from a different account.
@@ -813,10 +812,10 @@ function ImportExport({ shortcuts, onClose }) {
             {hasCurrentSettings && (
               <>
                 <MenuConfirm
-                  confirmLabel="Append these shortcuts to current settings?"
+                  confirmLabel="Append to current shortcuts?"
                   menuFooter={
                     <div class="footer">
-                      Only shortcuts that don’t exist in current settings will
+                      Only shortcuts that don’t exist in current shortcuts will
                       be appended.
                     </div>
                   }
@@ -851,8 +850,8 @@ function ImportExport({ shortcuts, onClose }) {
                     states.shortcuts = newShortcuts;
                     showToast(
                       exceededLimit
-                        ? `Shortcuts settings imported. Exceeded max ${SHORTCUTS_LIMIT}, so the rest are not imported.`
-                        : 'Shortcuts settings imported',
+                        ? `Shortcuts imported. Exceeded max ${SHORTCUTS_LIMIT}, so the rest are not imported.`
+                        : 'Shortcuts imported',
                     );
                     onClose?.();
                   }}
@@ -870,13 +869,13 @@ function ImportExport({ shortcuts, onClose }) {
             <MenuConfirm
               confirmLabel={
                 hasCurrentSettings
-                  ? 'Override current settings?'
-                  : 'Import settings?'
+                  ? 'Override current shortcuts?'
+                  : 'Import shortcuts?'
               }
               menuItemClassName={hasCurrentSettings ? 'danger' : undefined}
               onClick={() => {
                 states.shortcuts = parsedImportShortcutStr;
-                showToast('Shortcuts settings imported');
+                showToast('Shortcuts imported');
                 onClose?.();
               }}
             >
@@ -906,10 +905,10 @@ function ImportExport({ shortcuts, onClose }) {
                 // Copy url to clipboard
                 try {
                   navigator.clipboard.writeText(e.target.value);
-                  showToast('Shortcuts settings copied');
+                  showToast('Shortcuts copied');
                 } catch (e) {
                   console.error(e);
-                  showToast('Unable to copy shortcuts settings');
+                  showToast('Unable to copy shortcuts');
                 }
               }}
             />
@@ -959,7 +958,7 @@ function ImportExport({ shortcuts, onClose }) {
           </p>
           <details>
             <summary class="insignificant">
-              <small>Raw Shortcuts settings JSON</small>
+              <small>Raw Shortcuts JSON</small>
             </summary>
             <textarea style={{ width: '100%' }} rows={10} readOnly>
               {JSON.stringify(shortcuts.filter(Boolean), null, 2)}

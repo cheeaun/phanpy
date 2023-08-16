@@ -680,11 +680,13 @@ function ShortcutForm({
 }
 
 function ImportExport({ shortcuts, onClose }) {
-  const shortcutsStr = useMemo(
-    () =>
-      compressToEncodedURIComponent(JSON.stringify(shortcuts.filter(Boolean))),
-    [shortcuts],
-  );
+  const shortcutsStr = useMemo(() => {
+    if (!shortcuts) return '';
+    if (!shortcuts.filter(Boolean).length) return '';
+    return compressToEncodedURIComponent(
+      JSON.stringify(shortcuts.filter(Boolean)),
+    );
+  }, [shortcuts]);
   const [importShortcutStr, setImportShortcutStr] = useState('');
   const [importUIState, setImportUIState] = useState('default');
   const parsedImportShortcutStr = useMemo(() => {
@@ -901,6 +903,7 @@ function ImportExport({ shortcuts, onClose }) {
               value={shortcutsStr}
               readOnly
               onClick={(e) => {
+                if (!e.target.value) return;
                 e.target.select();
                 // Copy url to clipboard
                 try {
@@ -917,6 +920,7 @@ function ImportExport({ shortcuts, onClose }) {
             <button
               type="button"
               class="plain2"
+              disabled={!shortcutsStr}
               onClick={() => {
                 try {
                   navigator.clipboard.writeText(shortcutsStr);
@@ -936,6 +940,7 @@ function ImportExport({ shortcuts, onClose }) {
                 <button
                   type="button"
                   class="plain2"
+                  disabled={!shortcutsStr}
                   onClick={() => {
                     try {
                       navigator.share({
@@ -956,14 +961,16 @@ function ImportExport({ shortcuts, onClose }) {
               </small>
             )}
           </p>
-          <details>
-            <summary class="insignificant">
-              <small>Raw Shortcuts JSON</small>
-            </summary>
-            <textarea style={{ width: '100%' }} rows={10} readOnly>
-              {JSON.stringify(shortcuts.filter(Boolean), null, 2)}
-            </textarea>
-          </details>
+          {!!shortcutsStr && (
+            <details>
+              <summary class="insignificant">
+                <small>Raw Shortcuts JSON</small>
+              </summary>
+              <textarea style={{ width: '100%' }} rows={10} readOnly>
+                {JSON.stringify(shortcuts.filter(Boolean), null, 2)}
+              </textarea>
+            </details>
+          )}
         </section>
       </main>
     </div>

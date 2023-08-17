@@ -483,7 +483,10 @@
   overflow: hidden;
   position: relative;
 }
-.timeline-deck .status-reblog .status .content {
+.timeline-deck
+  .status-reblog:not(.status-carousel .status-reblog)
+  .status
+  .content {
   /* Deprioritise long-form boosts */
   max-height: 40vh;
   max-height: 40dvh;

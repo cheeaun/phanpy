@@ -144,21 +144,16 @@ function AccountInfo({
               <p>███████████████ ███████████████</p>
             </div>
             <p class="stats">
-              <span>
-                Posts
-                <br />
-                ██
-              </span>
-              <span>
-                Following
-                <br />
-                ██
-              </span>
-              <span>
-                Followers
-                <br />
-                ██
-              </span>
+              <div>
+                <span>██</span> Followers
+              </div>
+              <div>
+                <span>██</span> Following
+              </div>
+              <div>
+                <span>██</span> Posts
+              </div>
+              <div>Joined ██</div>
             </p>
           </main>
         </>
@@ -353,8 +348,7 @@ function AccountInfo({
                 )}
                 {!!createdAt && (
                   <div class="insignificant">
-                    Joined
-                    <br />
+                    Joined{' '}
                     <time datetime={createdAt}>
                       {niceDateTime(createdAt, {
                         hideTime: true,

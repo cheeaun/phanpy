@@ -1169,7 +1169,16 @@ function Status({
                 getHTMLText(content) +
                 (poll?.options?.length
                   ? `\n\nPoll:\n${poll.options
-                      .map((option) => `- ${option.title}`)
+                      .map(
+                        (option) =>
+                          `- ${option.title}${
+                            option.votesCount >= 0
+                              ? ` (${option.votesCount} vote${
+                                  option.votesCount !== 1 ? 's' : ''
+                                })`
+                              : ''
+                          }`,
+                      )
                       .join('\n')}`
                   : '')
               }

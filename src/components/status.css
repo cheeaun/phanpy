@@ -525,6 +525,13 @@
 .timeline-deck .status .content.truncated ~ .card {
   display: none;
 }
+.status .content a:not(.mention, .has-url-text) {
+  color: var(--link-text-color);
+}
+.status .content a:not(.mention, .has-url-text):is(:hover, :focus) {
+  color: var(--text-color);
+  text-decoration-color: var(--link-color);
+}
 .status .content p {
   /* 12px = 75% of 16px */
   margin-block: min(0.75em, 12px);

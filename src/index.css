@@ -30,6 +30,11 @@
   --link-faded-color: #4169e155;
   --link-bg-hover-color: #f0f2f599;
   --link-visited-color: mediumslateblue;
+  --link-text-color: color-mix(
+    in lch,
+    var(--link-color) 60%,
+    var(--text-color) 40%
+  );
   --focus-ring-color: var(--link-color);
   --button-bg-color: var(--blue-color);
   --button-bg-blur-color: #4169e1aa;

@@ -21,6 +21,16 @@ function enhanceContent(content, opts = {}) {
     });
   }
 
+  // Add 'has-url-text' to all links that contains a url
+  if (hasLink) {
+    const links = Array.from(dom.querySelectorAll('a[href]'));
+    links.forEach((link) => {
+      if (/^https?:\/\//i.test(link.textContent.trim())) {
+        link.classList.add('has-url-text');
+      }
+    });
+  }
+
   // Spanify un-spanned mentions
   if (hasLink) {
     const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));

@@ -1,8 +1,9 @@
 import './loader.css';
 
-function Loader({ abrupt, hidden }) {
+function Loader({ abrupt, hidden, ...props }) {
   return (
     <div
+      {...props}
       class={`loader-container ${abrupt ? 'abrupt' : ''} ${
         hidden ? 'hidden' : ''
       }`}

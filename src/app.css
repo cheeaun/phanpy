@@ -1805,12 +1805,12 @@ meter.donut[hidden] {
   width: 100%;
   flex-grow: 1;
 }
-:is(#home-page, #welcome, #columns) ~ .deck-container {
+:is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {
   z-index: 10;
   position: fixed;
   inset: 0;
 }
-:is(#home-page, #welcome, #columns):has(~ .deck-container) {
+:is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
   display: block;
   position: absolute;
   user-select: none;

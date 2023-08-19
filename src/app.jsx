@@ -241,7 +241,7 @@ function App() {
             isLoggedIn ? (
               <Home />
             ) : uiState === 'loading' ? (
-              <Loader />
+              <Loader id="loader-root" />
             ) : (
               <Welcome />
             )

@@ -766,15 +766,16 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .status :is(.media-video, .media-audio)[data-formatted-duration] .media-play {
   pointer-events: none;
-  width: 70px;
-  height: 70px;
+  width: 44px;
+  height: 44px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: var(--text-insignificant-color);
-  background-color: var(--bg-faded-blur-color);
-  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  color: var(--text-color);
+  background-color: var(--bg-blur-color);
+  /* backdrop-filter: blur(6px) saturate(3) invert(0.2); */
+  box-shadow: 0 0 16px var(--drop-shadow-color);
   display: flex;
   place-content: center;
   place-items: center;
@@ -782,10 +783,12 @@ body:has(#modal-container .carousel) .status .media img:hover {
   transition: all 0.2s ease-in-out;
 }
 .status
-  :is(.media-video, .media-audio)[data-formatted-duration]:hover
+  :is(.media-video, .media-audio)[data-formatted-duration]:hover:not(:active)
   .media-play {
-  color: var(--text-color);
-  background-color: var(--bg-blur-color);
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 16px var(--drop-shadow-color),
+    0 0 8px var(--drop-shadow-color);
 }
 .status :is(.media-video, .media-audio)[data-formatted-duration]:after {
   font-size: 12px;

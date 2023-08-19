@@ -1081,6 +1081,7 @@ function Status({
             data-read-more={readMoreText}
           >
             <div
+              class="inner-content"
               onClick={handleContentLinks({ mentions, instance, previewMode })}
               dangerouslySetInnerHTML={{
                 __html: enhanceContent(content, {

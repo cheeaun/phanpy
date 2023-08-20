@@ -39,14 +39,17 @@ const contentText = {
   mention: 'mentioned you in their post.',
   status: 'published a post.',
   reblog: 'boosted your post.',
+  reblog_reply: 'boosted your reply.',
   follow: 'followed you.',
   follow_request: 'requested to follow you.',
   favourite: 'favourited your post.',
+  favourite_reply: 'favourited your reply.',
   poll: 'A poll you have voted in or created has ended.',
   'poll-self': 'A poll you have created has ended.',
   'poll-voted': 'A poll you have voted in has ended.',
   update: 'A post you interacted with has been edited.',
   'favourite+reblog': 'boosted & favourited your post.',
+  'favourite+reblog_reply': 'boosted & favourited your reply.',
 };
 
 function Notification({ notification, instance, reload }) {
@@ -59,6 +62,10 @@ function Notification({ notification, instance, reload }) {
   const currentAccount = store.session.get('currentAccount');
   const isSelf = currentAccount === account?.id;
   const isVoted = status?.poll?.voted;
+  const isReplyToOthers =
+    !!status?.inReplyToAccountId &&
+    status?.inReplyToAccountId !== currentAccount &&
+    status?.account?.id === currentAccount;
 
   let favsCount = 0;
   let reblogsCount = 0;
@@ -75,10 +82,20 @@ function Notification({ notification, instance, reload }) {
     if (!favsCount && reblogsCount) type = 'reblog';
   }
 
-  const text =
-    type === 'poll'
-      ? contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll']
-      : contentText[type];
+  let text;
+  if (type === 'poll') {
+    text = contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll'];
+  } else if (
+    type === 'reblog' ||
+    type === 'favourite' ||
+    type === 'favourite+reblog'
+  ) {
+    text =
+      contentText[isReplyToOthers ? `${type}_reply` : type] ||
+      contentText[type];
+  } else {
+    text = contentText[type];
+  }
 
   if (type === 'mention' && !status) {
     // Could be deleted

@@ -78,9 +78,11 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
 
-- Any paragraphs, except the first one, with more than 3 hashtags will be collapsed.
+- First paragraph of post content with more than 3 hashtags will be collapsed to max 3 lines.
+- Subsequent paragraphs after first paragraph with more than 3 hashtags will be collapsed to 1 line.
+- Adjacent paragraphs with more than 1 hashtag after collapsed paragraphs will be collapsed to 1 line.
 - If there are text around or between the hashtags, they will not be collapsed.
-- Collapsed hashtags will be a single line with `...` at the end.
+- Collapsed hashtags will be appended with `...` at the end.
 - They are also slightly faded out to reduce visual noise.
 - Opening the post view will reveal the hashtags uncollapsed.
 

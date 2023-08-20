@@ -1,33 +1,36 @@
-body.cloak a {
-  text-decoration-color: var(--link-color);
-}
+body.cloak,
+.cloak {
+  a {
+    text-decoration-color: var(--link-color);
+  }
 
-body.cloak .name-text,
-body.cloak .name-text *,
-body.cloak .status .content-container,
-body.cloak .status .content-container *,
-body.cloak .status .content-compact,
-body.cloak .account-container :is(header, main > *:not(.actions)),
-body.cloak .account-container :is(header, main > *:not(.actions)) *,
-body.cloak .header-account,
-body.cloak .account-block {
-  text-decoration-thickness: 1.1em;
-  text-decoration-line: line-through;
-  text-rendering: optimizeSpeed;
-  filter: opacity(0.5);
-}
-body.cloak .name-text *,
-body.cloak .status .content-container *,
-body.cloak .account-container :is(header, main > *:not(.actions)) * {
-  filter: none;
-}
+  .name-text,
+  .name-text *,
+  .status .content-container,
+  .status .content-container *,
+  .status .content-compact,
+  .account-container :is(header, main > *:not(.actions)),
+  .account-container :is(header, main > *:not(.actions)) *,
+  .header-account,
+  .account-block {
+    text-decoration-thickness: 1.1em;
+    text-decoration-line: line-through;
+    text-rendering: optimizeSpeed;
+    filter: opacity(0.5);
+  }
+  .name-text *,
+  .status .content-container *,
+  .account-container :is(header, main > *:not(.actions)) * {
+    filter: none;
+  }
 
-body.cloak .status :is(img, video, audio),
-body.cloak .avatar,
-body.cloak .emoji,
-body.cloak .header-banner {
-  filter: contrast(0) !important;
-  background-color: #000 !important;
+  .status :is(img, video, audio),
+  .avatar,
+  .emoji,
+  .header-banner {
+    filter: contrast(0) !important;
+    background-color: #000 !important;
+  }
 }
 
 /* SPECIAL CASES */

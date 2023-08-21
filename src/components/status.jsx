@@ -514,6 +514,9 @@ function Status({
       (l) => language === l || localeMatch([language], [l]),
     );
 
+  const rtlLanguages = ["ar","fa","he","dv"];
+  const textDirection = rtlLanguages.includes(language) ? "rtl" : "auto";
+
   const menuInstanceRef = useRef();
   const StatusMenuItems = (
     <>
@@ -1047,7 +1050,7 @@ function Status({
               <div
                 class="content"
                 lang={language}
-                dir="auto"
+                dir={textDirection}
                 ref={spoilerContentRef}
                 data-read-more={readMoreText}
               >
@@ -1076,7 +1079,7 @@ function Status({
           <div
             class="content"
             lang={language}
-            dir="auto"
+            dir={textDirection}
             ref={contentRef}
             data-read-more={readMoreText}
           >

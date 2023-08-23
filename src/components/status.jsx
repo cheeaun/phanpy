@@ -1045,7 +1045,7 @@ function Status({
           {!!spoilerText && (
             <>
               <div
-                class="content"
+                class="content spoiler-content"
                 lang={language}
                 dir="auto"
                 ref={spoilerContentRef}
@@ -1073,14 +1073,10 @@ function Status({
               </button>
             </>
           )}
-          <div
-            class="content"
-            lang={language}
-            dir="auto"
-            ref={contentRef}
-            data-read-more={readMoreText}
-          >
+          <div class="content" ref={contentRef} data-read-more={readMoreText}>
             <div
+              lang={language}
+              dir="auto"
               class="inner-content"
               onClick={handleContentLinks({ mentions, instance, previewMode })}
               dangerouslySetInnerHTML={{

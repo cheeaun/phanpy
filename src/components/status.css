@@ -535,6 +535,13 @@
   color: var(--text-color);
   text-decoration-color: var(--link-color);
 }
+.status .content :is(.h-card, .mention) {
+  unicode-bidi: isolate;
+}
+.status .spoiler-content > *,
+.status .content .inner-content > * {
+  unicode-bidi: plaintext;
+}
 .status .content p {
   /* 12px = 75% of 16px */
   margin-block: min(0.75em, 12px);

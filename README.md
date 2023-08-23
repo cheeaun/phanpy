@@ -147,7 +147,9 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) → [Semaphore](https://semaphore.social/)
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+  - [Semaphore](https://semaphore.social/)
+  - [Enafore](https://pinafore.easrng.net/)
 - [Cuckoo+](https://www.cuckoo.social/)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
@@ -158,6 +160,7 @@ And here I am. Building a Mastodon web client.
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)
+- [Tusked](https://tusked.app/)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

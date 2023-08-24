@@ -136,6 +136,7 @@ function Status({
       username,
       emojis: accountEmojis,
       bot,
+      group,
     },
     id,
     repliesCount,
@@ -230,6 +231,25 @@ function Status({
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
+
+    if (group) {
+      return (
+        <div class="status-group" onMouseEnter={debugHover}>
+          <div class="status-pre-meta">
+            <Icon icon="group" size="l" alt="Group" />{' '}
+            <NameText account={status.account} instance={instance} showAvatar />
+          </div>
+          <Status
+            status={statusID ? null : reblog}
+            statusID={statusID ? reblog.id : null}
+            instance={instance}
+            size={size}
+            contentTextWeight={contentTextWeight}
+          />
+        </div>
+      );
+    }
+
     return (
       <div class="status-reblog" onMouseEnter={debugHover}>
         <div class="status-pre-meta">
@@ -848,10 +868,12 @@ function Status({
           state={isContextMenuOpen ? 'open' : undefined}
           anchorPoint={contextMenuAnchorPoint}
           direction="right"
-          onClose={() => {
+          onClose={(e) => {
             setIsContextMenuOpen(false);
             // statusRef.current?.focus?.();
-            statusRef.current?.closest('[tabindex]')?.focus?.();
+            if (e?.reason === 'click') {
+              statusRef.current?.closest('[tabindex]')?.focus?.();
+            }
           }}
           portal={{
             target: document.body,
@@ -1023,7 +1045,7 @@ function Status({
           {!!spoilerText && (
             <>
               <div
-                class="content"
+                class="content spoiler-content"
                 lang={language}
                 dir="auto"
                 ref={spoilerContentRef}
@@ -1051,14 +1073,11 @@ function Status({
               </button>
             </>
           )}
-          <div
-            class="content"
-            lang={language}
-            dir="auto"
-            ref={contentRef}
-            data-read-more={readMoreText}
-          >
+          <div class="content" ref={contentRef} data-read-more={readMoreText}>
             <div
+              lang={language}
+              dir="auto"
+              class="inner-content"
               onClick={handleContentLinks({ mentions, instance, previewMode })}
               dangerouslySetInnerHTML={{
                 __html: enhanceContent(content, {
@@ -1147,7 +1166,16 @@ function Status({
                 getHTMLText(content) +
                 (poll?.options?.length
                   ? `\n\nPoll:\n${poll.options
-                      .map((option) => `- ${option.title}`)
+                      .map(
+                        (option) =>
+                          `- ${option.title}${
+                            option.votesCount >= 0
+                              ? ` (${option.votesCount} vote${
+                                  option.votesCount !== 1 ? 's' : ''
+                                })`
+                              : ''
+                          }`,
+                      )
                       .join('\n')}`
                   : '')
               }
@@ -1974,7 +2002,7 @@ const unfurlMastodonLink = throttle(
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
-    account: { avatar, avatarStatic, bot },
+    account: { avatar, avatarStatic, bot, group },
     createdAt,
     visibility,
     reblog,
@@ -1999,7 +2027,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
 
   return (
     <div
-      class={isReblog ? 'status-reblog' : ''}
+      class={isReblog ? (group ? 'status-group' : 'status-reblog') : ''}
       {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {

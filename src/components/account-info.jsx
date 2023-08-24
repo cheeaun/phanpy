@@ -144,21 +144,16 @@ function AccountInfo({
               <p>███████████████ ███████████████</p>
             </div>
             <p class="stats">
-              <span>
-                Posts
-                <br />
-                ██
-              </span>
-              <span>
-                Following
-                <br />
-                ██
-              </span>
-              <span>
-                Followers
-                <br />
-                ██
-              </span>
+              <div>
+                <span>██</span> Followers
+              </div>
+              <div>
+                <span>██</span> Following
+              </div>
+              <div>
+                <span>██</span> Posts
+              </div>
+              <div>Joined ██</div>
             </p>
           </main>
         </>
@@ -353,8 +348,7 @@ function AccountInfo({
                 )}
                 {!!createdAt && (
                   <div class="insignificant">
-                    Joined
-                    <br />
+                    Joined{' '}
                     <time datetime={createdAt}>
                       {niceDateTime(createdAt, {
                         hideTime: true,
@@ -978,13 +972,13 @@ function TranslatedBioSheet({ note, fields, onClose }) {
 
 function AddRemoveListsSheet({ accountID, onClose }) {
   const { masto } = api();
-  const [uiState, setUiState] = useState('default');
+  const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
   const [listsContainingAccount, setListsContainingAccount] = useState([]);
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);
 
   useEffect(() => {
-    setUiState('loading');
+    setUIState('loading');
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
@@ -994,10 +988,10 @@ function AddRemoveListsSheet({ accountID, onClose }) {
         console.log({ lists, listsContainingAccount });
         setLists(lists);
         setListsContainingAccount(listsContainingAccount);
-        setUiState('default');
+        setUIState('default');
       } catch (e) {
         console.error(e);
-        setUiState('error');
+        setUIState('error');
       }
     })();
   }, [reloadCount]);
@@ -1028,7 +1022,7 @@ function AddRemoveListsSheet({ accountID, onClose }) {
                     class={`light ${inList ? 'checked' : ''}`}
                     disabled={uiState === 'loading'}
                     onClick={() => {
-                      setUiState('loading');
+                      setUIState('loading');
                       (async () => {
                         try {
                           if (inList) {
@@ -1040,11 +1034,11 @@ function AddRemoveListsSheet({ accountID, onClose }) {
                               accountIds: [accountID],
                             });
                           }
-                          // setUiState('default');
+                          // setUIState('default');
                           reload();
                         } catch (e) {
                           console.error(e);
-                          setUiState('error');
+                          setUIState('error');
                           alert(
                             inList
                               ? 'Unable to remove from list.'

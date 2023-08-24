@@ -5,8 +5,15 @@
   flex-direction: column;
 }
 
-.list-form-row :is(input, select) {
+.list-form-row :is(input[type='text'], select) {
   width: 100%;
+  appearance: none;
+}
+
+.list-form-row .label-block {
+  display: flex;
+  padding: 8px 0;
+  gap: 4px;
 }
 
 .list-form-footer {

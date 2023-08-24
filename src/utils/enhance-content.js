@@ -21,6 +21,16 @@ function enhanceContent(content, opts = {}) {
     });
   }
 
+  // Add 'has-url-text' to all links that contains a url
+  if (hasLink) {
+    const links = Array.from(dom.querySelectorAll('a[href]'));
+    links.forEach((link) => {
+      if (/^https?:\/\//i.test(link.textContent.trim())) {
+        link.classList.add('has-url-text');
+      }
+    });
+  }
+
   // Spanify un-spanned mentions
   if (hasLink) {
     const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
@@ -164,35 +174,49 @@ function enhanceContent(content, opts = {}) {
   // ================
   // Get the <p> that contains a lot of hashtags, add a class to it
   if (enhancedContent.indexOf('#') !== -1) {
-    const hashtagStuffedParagraph = Array.from(dom.querySelectorAll('p')).find(
-      (p) => {
-        let hashtagCount = 0;
-        for (let i = 0; i < p.childNodes.length; i++) {
-          const node = p.childNodes[i];
+    let prevIndex = null;
+    const hashtagStuffedParagraphs = Array.from(
+      dom.querySelectorAll('p'),
+    ).filter((p, index) => {
+      let hashtagCount = 0;
+      for (let i = 0; i < p.childNodes.length; i++) {
+        const node = p.childNodes[i];
 
-          if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.trim();
-            if (text !== '') {
-              return false;
-            }
-          } else if (node.tagName === 'A') {
-            const linkText = node.textContent.trim();
-            if (!linkText || !linkText.startsWith('#')) {
-              return false;
-            } else {
-              hashtagCount++;
-            }
-          } else {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim();
+          if (text !== '') {
             return false;
           }
+        } else if (node.tagName === 'BR') {
+          // Ignore <br />
+        } else if (node.tagName === 'A') {
+          const linkText = node.textContent.trim();
+          if (!linkText || !linkText.startsWith('#')) {
+            return false;
+          } else {
+            hashtagCount++;
+          }
+        } else {
+          return false;
         }
-        // Only consider "stuffing" if there are more than 3 hashtags
-        return hashtagCount > 3;
-      },
-    );
-    if (hashtagStuffedParagraph) {
-      hashtagStuffedParagraph.classList.add('hashtag-stuffing');
-      hashtagStuffedParagraph.title = hashtagStuffedParagraph.innerText;
+      }
+      // Only consider "stuffing" if:
+      // - there are more than 3 hashtags
+      // - there are more than 1 hashtag in adjacent paragraphs
+      if (hashtagCount > 3) {
+        prevIndex = index;
+        return true;
+      }
+      if (hashtagCount > 1 && prevIndex && index === prevIndex + 1) {
+        prevIndex = index;
+        return true;
+      }
+    });
+    if (hashtagStuffedParagraphs?.length) {
+      hashtagStuffedParagraphs.forEach((p) => {
+        p.classList.add('hashtag-stuffing');
+        p.title = p.innerText;
+      });
     }
   }
 

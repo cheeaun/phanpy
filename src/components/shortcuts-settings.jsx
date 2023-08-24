@@ -1,17 +1,23 @@
 import './shortcuts-settings.css';
 
+import {
+  compressToEncodedURIComponent,
+  decompressFromEncodedURIComponent,
+} from 'lz-string';
 import mem from 'mem';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import floatingButtonUrl from '../assets/floating-button.svg';
 import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 import { api } from '../utils/api';
+import showToast from '../utils/show-toast';
 import states from '../utils/states';
 
 import AsyncText from './AsyncText';
 import Icon from './icon';
+import MenuConfirm from './menu-confirm';
 import Modal from './modal';
 
 const SHORTCUTS_LIMIT = 9;
@@ -202,6 +208,7 @@ function ShortcutsSettings({ onClose }) {
   const [lists, setLists] = useState([]);
   const [followedHashtags, setFollowedHashtags] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -432,6 +439,10 @@ function ShortcutsSettings({ onClose }) {
             </p>
           </div>
         )}
+        <p class="insignificant">
+          {shortcuts.length >= SHORTCUTS_LIMIT &&
+            `Max ${SHORTCUTS_LIMIT} shortcuts`}
+        </p>
         <p
           style={{
             display: 'flex',
@@ -439,10 +450,13 @@ function ShortcutsSettings({ onClose }) {
             alignItems: 'center',
           }}
         >
-          <span class="insignificant">
-            {shortcuts.length >= SHORTCUTS_LIMIT &&
-              `Max ${SHORTCUTS_LIMIT} shortcuts`}
-          </span>
+          <button
+            type="button"
+            class="light"
+            onClick={() => setShowImportExport(true)}
+          >
+            Import/export
+          </button>
           <button
             type="button"
             disabled={shortcuts.length >= SHORTCUTS_LIMIT}
@@ -475,6 +489,21 @@ function ShortcutsSettings({ onClose }) {
               }
             }}
             onClose={() => setShowForm(false)}
+          />
+        </Modal>
+      )}
+      {showImportExport && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowImportExport(false);
+            }
+          }}
+        >
+          <ImportExport
+            shortcuts={shortcuts}
+            onClose={() => setShowImportExport(false)}
           />
         </Modal>
       )}
@@ -645,6 +674,304 @@ function ShortcutForm({
             )}
           </footer>
         </form>
+      </main>
+    </div>
+  );
+}
+
+function ImportExport({ shortcuts, onClose }) {
+  const shortcutsStr = useMemo(() => {
+    if (!shortcuts) return '';
+    if (!shortcuts.filter(Boolean).length) return '';
+    return compressToEncodedURIComponent(
+      JSON.stringify(shortcuts.filter(Boolean)),
+    );
+  }, [shortcuts]);
+  const [importShortcutStr, setImportShortcutStr] = useState('');
+  const [importUIState, setImportUIState] = useState('default');
+  const parsedImportShortcutStr = useMemo(() => {
+    if (!importShortcutStr) {
+      setImportUIState('default');
+      return null;
+    }
+    try {
+      const parsed = JSON.parse(
+        decompressFromEncodedURIComponent(importShortcutStr),
+      );
+      // Very basic validation, I know
+      if (!Array.isArray(parsed)) throw new Error('Not an array');
+      setImportUIState('default');
+      return parsed;
+    } catch (err) {
+      // Fallback to JSON string parsing
+      // There's a chance that someone might want to import a JSON string instead of the compressed version
+      try {
+        const parsed = JSON.parse(importShortcutStr);
+        if (!Array.isArray(parsed)) throw new Error('Not an array');
+        setImportUIState('default');
+        return parsed;
+      } catch (err) {
+        setImportUIState('error');
+        return null;
+      }
+    }
+  }, [importShortcutStr]);
+  const hasCurrentSettings = states.shortcuts.length > 0;
+
+  return (
+    <div id="import-export-container" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <h2>
+          Import/Export <small class="ib insignificant">Shortcuts</small>
+        </h2>
+      </header>
+      <main tabindex="-1">
+        <section>
+          <h3>
+            <Icon icon="arrow-down-circle" size="l" class="insignificant" />{' '}
+            <span>Import</span>
+          </h3>
+          <p>
+            <input
+              type="text"
+              name="import"
+              placeholder="Paste shortcuts here"
+              class="block"
+              onInput={(e) => {
+                setImportShortcutStr(e.target.value);
+              }}
+            />
+          </p>
+          {!!parsedImportShortcutStr &&
+            Array.isArray(parsedImportShortcutStr) && (
+              <>
+                <p>
+                  <b>{parsedImportShortcutStr.length}</b> shortcut
+                  {parsedImportShortcutStr.length > 1 ? 's' : ''}{' '}
+                  <small class="insignificant">
+                    ({importShortcutStr.length} characters)
+                  </small>
+                </p>
+                <ol class="import-settings-list">
+                  {parsedImportShortcutStr.map((shortcut) => (
+                    <li>
+                      <span
+                        style={{
+                          opacity: shortcuts.some((s) =>
+                            // Compare all properties
+                            Object.keys(s).every(
+                              (key) => s[key] === shortcut[key],
+                            ),
+                          )
+                            ? 1
+                            : 0,
+                        }}
+                      >
+                        *
+                      </span>
+                      <span>
+                        {TYPE_TEXT[shortcut.type]}
+                        {shortcut.type === 'list' && ' ⚠️'}{' '}
+                        {TYPE_PARAMS[shortcut.type]?.map?.(
+                          ({ text, name, type }) =>
+                            shortcut[name] ? (
+                              <>
+                                <span class="tag collapsed insignificant">
+                                  {text}:{' '}
+                                  {type === 'checkbox'
+                                    ? shortcut[name] === 'on'
+                                      ? '✅'
+                                      : '❌'
+                                    : shortcut[name]}
+                                </span>{' '}
+                              </>
+                            ) : null,
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <p>
+                  <small>* Exists in current shortcuts</small>
+                  <br />
+                  <small>
+                    ⚠️ List may not work if it's from a different account.
+                  </small>
+                </p>
+              </>
+            )}
+          {importUIState === 'error' && (
+            <p class="error">
+              <small>⚠️ Invalid settings format</small>
+            </p>
+          )}
+          <p>
+            {hasCurrentSettings && (
+              <>
+                <MenuConfirm
+                  confirmLabel="Append to current shortcuts?"
+                  menuFooter={
+                    <div class="footer">
+                      Only shortcuts that don’t exist in current shortcuts will
+                      be appended.
+                    </div>
+                  }
+                  onClick={() => {
+                    // states.shortcuts = [
+                    //   ...states.shortcuts,
+                    //   ...parsedImportShortcutStr,
+                    // ];
+                    // Append non-unique shortcuts only
+                    const nonUniqueShortcuts = parsedImportShortcutStr.filter(
+                      (shortcut) =>
+                        !states.shortcuts.some((s) =>
+                          // Compare all properties
+                          Object.keys(s).every(
+                            (key) => s[key] === shortcut[key],
+                          ),
+                        ),
+                    );
+                    if (!nonUniqueShortcuts.length) {
+                      showToast('No new shortcuts to import');
+                      return;
+                    }
+                    let newShortcuts = [
+                      ...states.shortcuts,
+                      ...nonUniqueShortcuts,
+                    ];
+                    const exceededLimit = newShortcuts.length > SHORTCUTS_LIMIT;
+                    if (exceededLimit) {
+                      // If exceeded, trim it
+                      newShortcuts = newShortcuts.slice(0, SHORTCUTS_LIMIT);
+                    }
+                    states.shortcuts = newShortcuts;
+                    showToast(
+                      exceededLimit
+                        ? `Shortcuts imported. Exceeded max ${SHORTCUTS_LIMIT}, so the rest are not imported.`
+                        : 'Shortcuts imported',
+                    );
+                    onClose?.();
+                  }}
+                >
+                  <button
+                    type="button"
+                    class="plain2"
+                    disabled={!parsedImportShortcutStr}
+                  >
+                    Import & append…
+                  </button>
+                </MenuConfirm>{' '}
+              </>
+            )}
+            <MenuConfirm
+              confirmLabel={
+                hasCurrentSettings
+                  ? 'Override current shortcuts?'
+                  : 'Import shortcuts?'
+              }
+              menuItemClassName={hasCurrentSettings ? 'danger' : undefined}
+              onClick={() => {
+                states.shortcuts = parsedImportShortcutStr;
+                showToast('Shortcuts imported');
+                onClose?.();
+              }}
+            >
+              <button
+                type="button"
+                class="plain2"
+                disabled={!parsedImportShortcutStr}
+              >
+                {hasCurrentSettings ? 'or override…' : 'Import…'}
+              </button>
+            </MenuConfirm>
+          </p>
+        </section>
+        <section>
+          <h3>
+            <Icon icon="arrow-up-circle" size="l" class="insignificant" />{' '}
+            <span>Export</span>
+          </h3>
+          <p>
+            <input
+              style={{ width: '100%' }}
+              type="text"
+              value={shortcutsStr}
+              readOnly
+              onClick={(e) => {
+                if (!e.target.value) return;
+                e.target.select();
+                // Copy url to clipboard
+                try {
+                  navigator.clipboard.writeText(e.target.value);
+                  showToast('Shortcuts copied');
+                } catch (e) {
+                  console.error(e);
+                  showToast('Unable to copy shortcuts');
+                }
+              }}
+            />
+          </p>
+          <p>
+            <button
+              type="button"
+              class="plain2"
+              disabled={!shortcutsStr}
+              onClick={() => {
+                try {
+                  navigator.clipboard.writeText(shortcutsStr);
+                  showToast('Shortcut settings copied');
+                } catch (e) {
+                  console.error(e);
+                  showToast('Unable to copy shortcut settings');
+                }
+              }}
+            >
+              <Icon icon="clipboard" /> <span>Copy</span>
+            </button>{' '}
+            {navigator?.share &&
+              navigator?.canShare?.({
+                text: shortcutsStr,
+              }) && (
+                <button
+                  type="button"
+                  class="plain2"
+                  disabled={!shortcutsStr}
+                  onClick={() => {
+                    try {
+                      navigator.share({
+                        text: shortcutsStr,
+                      });
+                    } catch (e) {
+                      console.error(e);
+                      alert("Sharing doesn't seem to work.");
+                    }
+                  }}
+                >
+                  <Icon icon="share" /> <span>Share</span>
+                </button>
+              )}{' '}
+            {shortcutsStr.length > 0 && (
+              <small class="insignificant">
+                {shortcutsStr.length} characters
+              </small>
+            )}
+          </p>
+          {!!shortcutsStr && (
+            <details>
+              <summary class="insignificant">
+                <small>Raw Shortcuts JSON</small>
+              </summary>
+              <textarea style={{ width: '100%' }} rows={10} readOnly>
+                {JSON.stringify(shortcuts.filter(Boolean), null, 2)}
+              </textarea>
+            </details>
+          )}
+        </section>
       </main>
     </div>
   );

@@ -44,6 +44,7 @@ function MediaModal({
       left: scrollLeft,
       behavior: differentStatusID ? 'auto' : 'smooth',
     });
+    carouselRef.current.focus();
   }, [index, statusID]);
 
   const [showControls, setShowControls] = useState(true);
@@ -95,7 +96,7 @@ function MediaModal({
     <div class="media-modal-container">
       <div
         ref={carouselRef}
-        tabIndex="-1"
+        tabIndex="0"
         data-swipe-threshold="44"
         class="carousel"
         onClick={(e) => {
@@ -134,7 +135,7 @@ function MediaModal({
               {!!media.description && (
                 <button
                   type="button"
-                  class="plain2 media-alt"
+                  class="media-alt"
                   hidden={!showControls}
                   onClick={() => {
                     setShowMediaAlt(media.description);
@@ -153,7 +154,7 @@ function MediaModal({
         <span>
           <button
             type="button"
-            class="carousel-button plain3"
+            class="carousel-button"
             onClick={() => onClose()}
           >
             <Icon icon="x" />
@@ -166,9 +167,7 @@ function MediaModal({
                 key={media.id}
                 type="button"
                 disabled={i === currentIndex}
-                class={`plain3 carousel-dot ${
-                  i === currentIndex ? 'active' : ''
-                }`}
+                class={`carousel-dot ${i === currentIndex ? 'active' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -179,7 +178,7 @@ function MediaModal({
                   carouselRef.current.focus();
                 }}
               >
-                &bull;
+                <Icon icon="round" size="s" />
               </button>
             ))}
           </span>
@@ -195,7 +194,7 @@ function MediaModal({
             gap={4}
             menuClassName="glass-menu"
             menuButton={
-              <button type="button" class="carousel-button plain3">
+              <button type="button" class="carousel-button">
                 <Icon icon="more" alt="More" />
               </button>
             }
@@ -205,7 +204,7 @@ function MediaModal({
                 mediaAttachments[currentIndex]?.remoteUrl ||
                 mediaAttachments[currentIndex]?.url
               }
-              class="carousel-button plain3"
+              class="carousel-button"
               target="_blank"
               title="Open original media in new window"
             >
@@ -219,7 +218,7 @@ function MediaModal({
                 ? `?media=${currentIndex + 1}`
                 : ''
             }`}
-            class="button carousel-button media-post-link plain3"
+            class="button carousel-button media-post-link"
             // onClick={() => {
             //   // if small screen (not media query min-width 40em + 350px), run onClose
             //   if (
@@ -237,32 +236,32 @@ function MediaModal({
         <div class="carousel-controls" hidden={!showControls}>
           <button
             type="button"
-            class="carousel-button plain3"
+            class="carousel-button"
             hidden={currentIndex === 0}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              carouselRef.current.focus();
               carouselRef.current.scrollTo({
                 left: carouselRef.current.clientWidth * (currentIndex - 1),
                 behavior: 'smooth',
               });
-              carouselRef.current.focus();
             }}
           >
             <Icon icon="arrow-left" />
           </button>
           <button
             type="button"
-            class="carousel-button plain3"
+            class="carousel-button"
             hidden={currentIndex === mediaAttachments.length - 1}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              carouselRef.current.focus();
               carouselRef.current.scrollTo({
                 left: carouselRef.current.clientWidth * (currentIndex + 1),
                 behavior: 'smooth',
               });
-              carouselRef.current.focus();
             }}
           >
             <Icon icon="arrow-right" />

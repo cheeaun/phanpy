@@ -6,7 +6,7 @@ export function groupBoosts(values) {
   let serialBoosts = 0;
   for (let i = 0; i < values.length; i++) {
     const item = values[i];
-    if (item.reblog) {
+    if (item.reblog && !item.account?.group) {
       boostStash.push(item);
       serialBoosts++;
     } else {

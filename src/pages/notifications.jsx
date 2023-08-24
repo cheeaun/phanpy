@@ -49,6 +49,7 @@ function Notifications() {
       // Reset iterator
       notificationsIterator.current = masto.v1.notifications.list({
         limit: LIMIT,
+        excludeTypes: ['follow_request'],
       });
     }
     const allNotifications = await notificationsIterator.current.next();
@@ -295,13 +296,13 @@ function Notifications() {
                 <summary>{followRequests.length} follow requests</summary>
                 <ul>
                   {followRequests.map((account) => (
-                    <li>
+                    <li key={account.id}>
                       <AccountBlock account={account} />
                       <FollowRequestButtons
                         accountID={account.id}
                         onChange={() => {
-                          loadFollowRequests();
-                          loadNotifications(true);
+                          // loadFollowRequests();
+                          // loadNotifications(true);
                         }}
                       />
                     </li>
@@ -311,13 +312,13 @@ function Notifications() {
             ) : (
               <ul>
                 {followRequests.map((account) => (
-                  <li>
+                  <li key={account.id}>
                     <AccountBlock account={account} />
                     <FollowRequestButtons
                       accountID={account.id}
                       onChange={() => {
-                        loadFollowRequests();
-                        loadNotifications(true);
+                        // loadFollowRequests();
+                        // loadNotifications(true);
                       }}
                     />
                   </li>

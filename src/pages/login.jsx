@@ -83,6 +83,24 @@ function Login() {
     submitInstance(instanceURL);
   };
 
+  const instancesSuggestions = instanceText
+    ? instancesList
+        .filter((instance) => instance.includes(instanceText))
+        .sort((a, b) => {
+          // Move text that starts with instanceText to the start
+          const aStartsWith = a
+            .toLowerCase()
+            .startsWith(instanceText.toLowerCase());
+          const bStartsWith = b
+            .toLowerCase()
+            .startsWith(instanceText.toLowerCase());
+          if (aStartsWith && !bStartsWith) return -1;
+          if (!aStartsWith && bStartsWith) return 1;
+          return 0;
+        })
+        .slice(0, 10)
+    : [];
+
   return (
     <main id="login" style={{ textAlign: 'center' }}>
       <form onSubmit={onSubmit}>
@@ -107,11 +125,9 @@ function Login() {
               setInstanceText(e.target.value);
             }}
           />
-          <ul id="instances-suggestions">
-            {instancesList
-              .filter((instance) => instance.includes(instanceText))
-              .slice(0, 10)
-              .map((instance) => (
+          {instancesSuggestions?.length > 0 ? (
+            <ul id="instances-suggestions">
+              {instancesSuggestions.map((instance) => (
                 <li>
                   <button
                     type="button"
@@ -124,7 +140,10 @@ function Login() {
                   </button>
                 </li>
               ))}
-          </ul>
+            </ul>
+          ) : (
+            <div id="instances-eg">e.g. &ldquo;mastodon.social&rsquo;</div>
+          )}
           {/* <datalist id="instances-list">
             {instancesList.map((instance) => (
               <option value={instance} />

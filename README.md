@@ -7,7 +7,7 @@ Phanpy
 **Minimalistic opinionated Mastodon web client.**
 </div>
 
-<br>
+![Fancy screenshot](readme-assets/fancy-screenshot.jpg)
 
 **🗣️ Pronunciation**: [`/fænpi/`](https://ythi.net/how-do-you-pronounce/phanpy/english/) ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
 
@@ -74,6 +74,18 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
 
+### Hashtag stuffing collapsing
+
+![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
+
+- First paragraph of post content with more than 3 hashtags will be collapsed to max 3 lines.
+- Subsequent paragraphs after first paragraph with more than 3 hashtags will be collapsed to 1 line.
+- Adjacent paragraphs with more than 1 hashtag after collapsed paragraphs will be collapsed to 1 line.
+- If there are text around or between the hashtags, they will not be collapsed.
+- Collapsed hashtags will be appended with `...` at the end.
+- They are also slightly faded out to reduce visual noise.
+- Opening the post view will reveal the hashtags uncollapsed.
+
 ### Filtered posts
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.
@@ -135,7 +147,9 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) → [Semaphore](https://semaphore.social/)
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+  - [Semaphore](https://semaphore.social/)
+  - [Enafore](https://pinafore.easrng.net/)
 - [Cuckoo+](https://www.cuckoo.social/)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
@@ -146,6 +160,7 @@ And here I am. Building a Mastodon web client.
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)
+- [Tusked](https://tusked.app/)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

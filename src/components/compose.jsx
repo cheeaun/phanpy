@@ -854,6 +854,7 @@ function Compose({
               class="spoiler-text-field"
               lang={language}
               spellCheck="true"
+              dir="auto"
               style={{
                 opacity: sensitive ? 1 : 0,
                 pointerEvents: sensitive ? 'auto' : 'none',
@@ -1381,7 +1382,7 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   const snapStates = useSnapshot(states);
   const charCount = snapStates.composerCharacterCount;
   const leftChars = maxCharacters - charCount;
-  if (charCount <= maxCharacters / 2 || hidden) {
+  if (hidden) {
     return <meter class="donut" hidden />;
   }
   return (
@@ -1398,6 +1399,7 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
       value={charCount}
       max={maxCharacters}
       data-left={leftChars}
+      title={`${leftChars}/${maxCharacters}`}
       style={{
         '--percentage': (charCount / maxCharacters) * 100,
       }}
@@ -1578,6 +1580,7 @@ function Poll({
               placeholder={`Choice ${i + 1}`}
               lang={lang}
               spellCheck="true"
+              dir="auto"
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

@@ -326,7 +326,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               loading="lazy"
             />
             <div class="media-play">
-              <Icon icon="play" size="xxl" />
+              <Icon icon="play" size="xl" />
             </div>
           </>
         )}
@@ -355,7 +355,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         ) : null}
         {!showOriginal && (
           <div class="media-play">
-            <Icon icon="play" size="xxl" />
+            <Icon icon="play" size="xl" />
           </div>
         )}
       </Parent>

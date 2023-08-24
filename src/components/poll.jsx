@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
 
@@ -62,29 +62,13 @@ export default function Poll({
   const [showResults, setShowResults] = useState(false);
   const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
 
-  const pollRef = useRef();
-  useEffect(() => {
-    const handleSwipe = () => {
-      console.log('swiped left');
-      setShowResults(!showResults);
-    };
-    pollRef.current?.addEventListener?.('swiped-left', handleSwipe);
-    return () => {
-      pollRef.current?.removeEventListener?.('swiped-left', handleSwipe);
-    };
-  }, [showResults]);
-
   return (
     <div
-      ref={pollRef}
       lang={lang}
       dir="auto"
       class={`poll ${readOnly ? 'read-only' : ''} ${
         uiState === 'loading' ? 'loading' : ''
       }`}
-      onDblClick={() => {
-        setShowResults(!showResults);
-      }}
     >
       {(showResults && optionsHaveVoteCounts) || voted || expired ? (
         <>
@@ -138,11 +122,12 @@ export default function Poll({
             <button
               class="poll-vote-button plain2"
               disabled={uiState === 'loading'}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setShowResults(false);
               }}
             >
-              <Icon icon="arrow-left" /> Hide results
+              <Icon icon="arrow-left" size="s" /> Hide results
             </button>
           )}
         </>
@@ -198,26 +183,43 @@ export default function Poll({
       )}
       <p class="poll-meta">
         {!expired && !readOnly && (
-          <>
-            <button
-              type="button"
-              class="textual"
-              disabled={uiState === 'loading'}
-              onClick={(e) => {
-                e.preventDefault();
-                setUIState('loading');
+          <button
+            type="button"
+            class="plain small"
+            disabled={uiState === 'loading'}
+            style={{
+              marginLeft: -8,
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              setUIState('loading');
 
-                (async () => {
-                  await refresh();
-                  setUIState('default');
-                })();
-              }}
-            >
-              Refresh
-            </button>{' '}
-            &bull;{' '}
-          </>
+              (async () => {
+                await refresh();
+                setUIState('default');
+              })();
+            }}
+          >
+            <Icon icon="refresh" alt="Refresh" />
+          </button>
         )}
+        {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
+          <button
+            type="button"
+            class="plain small"
+            disabled={uiState === 'loading'}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowResults(!showResults);
+            }}
+          >
+            <Icon
+              icon={showResults ? 'eye-open' : 'eye-close'}
+              alt={showResults ? 'Hide results' : 'Show results'}
+            />{' '}
+          </button>
+        )}
+        {!expired && !readOnly && ' '}
         <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
         {votesCount === 1 ? '' : 's'}
         {!!votersCount && votersCount !== votesCount && (

@@ -8,11 +8,12 @@ const SIZES = {
   xxl: 32,
 };
 
-const ICONS = {
+export const ICONS = {
   x: () => import('@iconify-icons/mingcute/close-line'),
   heart: () => import('@iconify-icons/mingcute/heart-line'),
   bookmark: () => import('@iconify-icons/mingcute/bookmark-line'),
   'check-circle': () => import('@iconify-icons/mingcute/check-circle-line'),
+  'x-circle': () => import('@iconify-icons/mingcute/close-circle-line'),
   transfer: () => import('@iconify-icons/mingcute/transfer-4-line'),
   rocket: () => import('@iconify-icons/mingcute/rocket-line'),
   'arrow-left': () => import('@iconify-icons/mingcute/arrow-left-line'),
@@ -88,6 +89,12 @@ const ICONS = {
   layout5: () => import('@iconify-icons/mingcute/layout-5-line'),
   announce: () => import('@iconify-icons/mingcute/announcement-line'),
   alert: () => import('@iconify-icons/mingcute/alert-line'),
+  round: () => import('@iconify-icons/mingcute/round-fill'),
+  'arrow-up-circle': () =>
+    import('@iconify-icons/mingcute/arrow-up-circle-line'),
+  'arrow-down-circle': () =>
+    import('@iconify-icons/mingcute/arrow-down-circle-line'),
+  clipboard: () => import('@iconify-icons/mingcute/clipboard-line'),
 };
 
 function Icon({

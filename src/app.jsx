@@ -21,7 +21,7 @@ import { useSnapshot } from 'valtio';
 import AccountSheet from './components/account-sheet';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
-import Icon from './components/icon';
+import Icon, { ICONS } from './components/icon';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -65,6 +65,19 @@ import useInterval from './utils/useInterval';
 import usePageVisibility from './utils/usePageVisibility';
 
 window.__STATES__ = states;
+
+// Preload icons
+// There's probably a better way to do this
+// Related: https://github.com/vitejs/vite/issues/10600
+setTimeout(() => {
+  for (const icon in ICONS) {
+    if (Array.isArray(ICONS[icon])) {
+      ICONS[icon][0]?.();
+    } else {
+      ICONS[icon]?.();
+    }
+  }
+}, 5000);
 
 function App() {
   const snapStates = useSnapshot(states);
@@ -228,7 +241,7 @@ function App() {
             isLoggedIn ? (
               <Home />
             ) : uiState === 'loading' ? (
-              <Loader />
+              <Loader id="loader-root" />
             ) : (
               <Welcome />
             )

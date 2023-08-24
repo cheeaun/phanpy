@@ -126,3 +126,52 @@
   display: flex;
   gap: 16px;
 }
+
+/* Import/Export */
+
+#import-export-container input[type='text'] {
+  font-family: var(--monospace-font);
+}
+#import-export-container section {
+  margin: 8px 0;
+  background-color: var(--bg-faded-color);
+  border-radius: 16px;
+  padding: 8px;
+}
+#import-export-container section h3 {
+  margin: 0 0 8px;
+}
+#import-export-container section h3 * {
+  vertical-align: middle;
+}
+#import-export-container section p {
+  margin: 8px 0;
+}
+#import-export-container section details > summary {
+  cursor: pointer;
+}
+#import-export-container .import-settings-list {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 8px 0 0;
+  padding: 0;
+  counter-reset: index;
+}
+#import-export-container .import-settings-list li {
+  background-color: var(--bg-blur-color);
+  margin: 0 0 2px;
+  padding: 8px 4px;
+  display: flex;
+  gap: 4px;
+}
+#import-export-container .import-settings-list li::before {
+  content: counter(index);
+  counter-increment: index;
+  display: inline-block;
+  width: 1.2em;
+  text-align: right;
+  margin-right: 8px;
+  color: var(--text-insignificant-color);
+  font-size: 90%;
+  flex-shrink: 0;
+}

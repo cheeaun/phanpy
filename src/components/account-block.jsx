@@ -51,6 +51,7 @@ function AccountBlock({
     bot,
     fields,
     note,
+    group,
   } = account;
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
 
@@ -120,6 +121,13 @@ function AccountBlock({
               <>
                 <span class="tag">
                   <Icon icon="bot" /> Automated
+                </span>
+              </>
+            )}
+            {!!group && (
+              <>
+                <span class="tag">
+                  <Icon icon="group" /> Group
                 </span>
               </>
             )}

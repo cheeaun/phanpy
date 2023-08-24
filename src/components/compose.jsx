@@ -854,6 +854,7 @@ function Compose({
               class="spoiler-text-field"
               lang={language}
               spellCheck="true"
+              dir="auto"
               style={{
                 opacity: sensitive ? 1 : 0,
                 pointerEvents: sensitive ? 'auto' : 'none',
@@ -1579,6 +1580,7 @@ function Poll({
               placeholder={`Choice ${i + 1}`}
               lang={lang}
               spellCheck="true"
+              dir="auto"
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

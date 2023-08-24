@@ -402,6 +402,7 @@ const SearchForm = forwardRef((props, ref) => {
         type="search"
         // autofocus
         placeholder="Search"
+        dir="auto"
         onSearch={(e) => {
           if (!e.target.value) {
             setSearchParams({});

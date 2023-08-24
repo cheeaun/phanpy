@@ -95,6 +95,7 @@ function ListAddEdit({ list, onClose }) {
                 name="title"
                 required
                 disabled={uiState === 'loading'}
+                dir="auto"
               />
             </label>
           </div>

@@ -57,7 +57,7 @@ const contentText = {
 };
 
 function Notification({ notification, instance, reload }) {
-  const { id, status, account, _accounts } = notification;
+  const { id, status, account, _accounts, _statuses } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update

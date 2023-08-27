@@ -336,6 +336,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             ancestor: true,
             isThread: ancestorsIsThread,
             accountID: s.account.id,
+            account: s.account,
             repliesCount: s.repliesCount,
             weight: calcStatusWeight(s),
           })),
@@ -705,6 +706,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       block: 'start',
                     });
                   }}
+                  title="Go to main post"
                 >
                   <Icon
                     icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
@@ -727,12 +729,31 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     });
                   }}
                   hidden={!ancestors.length || nearReachStart}
+                  title={`${ancestors.length} posts above ‒ Go to top`}
                 >
                   <Icon icon="arrow-up" />
-                  <Icon icon="comment" />{' '}
-                  <span class="insignificant">
-                    {shortenNumber(ancestors.length)}
-                  </span>
+                  {ancestors
+                    .filter(
+                      (a, i, arr) =>
+                        arr.findIndex((b) => b.accountID === a.accountID) === i,
+                    )
+                    .slice(0, 3)
+                    .map((ancestor) => (
+                      <Avatar
+                        key={ancestor.account.id}
+                        url={ancestor.account.avatar}
+                        alt={ancestor.account.displayName}
+                      />
+                    ))}
+                  {/* <Icon icon="comment" />{' '} */}
+                  {ancestors.length > 3 && (
+                    <>
+                      {' '}
+                      <span class="insignificant">
+                        {shortenNumber(ancestors.length)}
+                      </span>
+                    </>
+                  )}
                 </button>
               </>
             )}

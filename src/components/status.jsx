@@ -1434,6 +1434,7 @@ function Card({ card, instance }) {
     url,
     type,
     embedUrl,
+    language,
   } = card;
 
   /* type
@@ -1497,6 +1498,7 @@ function Card({ card, instance }) {
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
         class={`card link ${blurhashImage ? '' : size}`}
+        lang={language}
       >
         <div class="card-image">
           <img
@@ -1565,6 +1567,7 @@ function Card({ card, instance }) {
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
         class={`card link no-image`}
+        lang={language}
       >
         <div class="meta-container">
           <p class="meta domain">

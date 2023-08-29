@@ -1170,9 +1170,7 @@ function Status({
                         (option) =>
                           `- ${option.title}${
                             option.votesCount >= 0
-                              ? ` (${option.votesCount} vote${
-                                  option.votesCount !== 1 ? 's' : ''
-                                })`
+                              ? ` (${option.votesCount})`
                               : ''
                           }`,
                       )

@@ -390,7 +390,7 @@ function App() {
           <AccountSheet
             account={snapStates.showAccount?.account || snapStates.showAccount}
             instance={snapStates.showAccount?.instance}
-            onClose={({ destination }) => {
+            onClose={({ destination } = {}) => {
               states.showAccount = false;
               if (destination) {
                 states.showAccounts = false;

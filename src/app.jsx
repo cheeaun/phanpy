@@ -58,7 +58,7 @@ import {
 import { getAccessToken } from './utils/auth';
 import openCompose from './utils/open-compose';
 import showToast from './utils/show-toast';
-import states, { getStatus, saveStatus } from './utils/states';
+import states, { initStates, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 import useInterval from './utils/useInterval';
@@ -130,6 +130,7 @@ function App() {
           initInstance(masto, instanceURL),
           initAccount(masto, instanceURL, accessToken),
         ]);
+        initStates();
         initPreferences(masto);
 
         setIsLoggedIn(true);

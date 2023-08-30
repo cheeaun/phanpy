@@ -60,6 +60,30 @@ const states = proxy({
 
 export default states;
 
+export function initStates() {
+  // init all account based states
+  // all keys that uses store.account.get() should be initialized here
+  states.notificationsLast = store.account.get('notificationsLast') || null;
+  states.shortcuts = store.account.get('shortcuts') ?? [];
+  states.settings.autoRefresh =
+    store.account.get('settings-autoRefresh') ?? false;
+  states.settings.shortcutsViewMode =
+    store.account.get('settings-shortcutsViewMode') ?? null;
+  states.settings.shortcutsColumnsMode =
+    store.account.get('settings-shortcutsColumnsMode') ?? false;
+  states.settings.boostsCarousel =
+    store.account.get('settings-boostsCarousel') ?? true;
+  states.settings.contentTranslation =
+    store.account.get('settings-contentTranslation') ?? true;
+  states.settings.contentTranslationTargetLanguage =
+    store.account.get('settings-contentTranslationTargetLanguage') || null;
+  states.settings.contentTranslationHideLanguages =
+    store.account.get('settings-contentTranslationHideLanguages') || [];
+  states.settings.contentTranslationAutoInline =
+    store.account.get('settings-contentTranslationAutoInline') ?? false;
+  states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
+}
+
 subscribeKey(states, 'notificationsLast', (v) => {
   console.log('CHANGE', v);
   store.account.set('notificationsLast', states.notificationsLast);

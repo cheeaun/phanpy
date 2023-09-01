@@ -194,6 +194,12 @@ function Notifications({ columnMode }) {
 
   const announcementsListRef = useRef();
 
+  useLayoutEffect(() => {
+    if (navigator.clearAppBadge) {
+      navigator.clearAppBadge();
+    }
+  }, []);
+
   useEffect(() => {
     if (notificationID) {
       states.routeNotification = {

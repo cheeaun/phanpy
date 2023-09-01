@@ -4,8 +4,8 @@ const { VITE_CLIENT_NAME: CLIENT_NAME, VITE_WEBSITE: WEBSITE } = import.meta
 export async function registerApplication({ instanceURL }) {
   const registrationParams = new URLSearchParams({
     client_name: CLIENT_NAME,
-    redirect_uris: location.origin,
     scopes: 'read write follow',
+    redirect_uris: location.origin + location.pathname,
     website: WEBSITE,
   });
   const registrationResponse = await fetch(
@@ -27,7 +27,7 @@ export async function getAuthorizationURL({ instanceURL, client_id }) {
   const authorizationParams = new URLSearchParams({
     client_id,
     scope: 'read write follow',
-    redirect_uri: location.origin,
+    redirect_uri: location.origin + location.pathname,
     // redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
     response_type: 'code',
   });
@@ -44,7 +44,7 @@ export async function getAccessToken({
   const params = new URLSearchParams({
     client_id,
     client_secret,
-    redirect_uri: location.origin,
+    redirect_uri: location.origin + location.pathname,
     grant_type: 'authorization_code',
     code,
     scope: 'read write follow',

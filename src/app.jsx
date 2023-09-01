@@ -58,7 +58,7 @@ import {
 import { getAccessToken } from './utils/auth';
 import openCompose from './utils/open-compose';
 import showToast from './utils/show-toast';
-import states, { getStatus, saveStatus } from './utils/states';
+import states, { initStates, saveStatus } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 import useInterval from './utils/useInterval';
@@ -111,7 +111,7 @@ function App() {
     if (code) {
       console.log({ code });
       // Clear the code from the URL
-      window.history.replaceState({}, document.title, '/');
+      window.history.replaceState({}, document.title, location.pathname || '/');
 
       const clientID = store.session.get('clientID');
       const clientSecret = store.session.get('clientSecret');
@@ -130,6 +130,7 @@ function App() {
           initInstance(masto, instanceURL),
           initAccount(masto, instanceURL, accessToken),
         ]);
+        initStates();
         initPreferences(masto);
 
         setIsLoggedIn(true);
@@ -389,7 +390,7 @@ function App() {
           <AccountSheet
             account={snapStates.showAccount?.account || snapStates.showAccount}
             instance={snapStates.showAccount?.instance}
-            onClose={({ destination }) => {
+            onClose={({ destination } = {}) => {
               states.showAccount = false;
               if (destination) {
                 states.showAccounts = false;

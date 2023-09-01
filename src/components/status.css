@@ -121,11 +121,14 @@
 .status-card > * {
   pointer-events: none;
 }
-.status-card :is(.content, .poll, .media-container) {
+.status-card:not(.status-carousel .status)
+  :is(.content, .poll, .media-container) {
   max-height: 160px !important;
   overflow: hidden;
 }
-.status.small .status-card :is(.content, .poll, .media-container) {
+.status.small:not(.status-carousel .status)
+  .status-card
+  :is(.content, .poll, .media-container) {
   max-height: 80px !important;
 }
 .status-card :is(.content, .poll) {

@@ -143,7 +143,7 @@ function Accounts({ onClose }) {
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);
                           // location.reload();
-                          location.href = '/';
+                          location.href = location.pathname || '/';
                         }}
                       >
                         <Icon icon="exit" />

@@ -39,21 +39,25 @@ const contentText = {
   mention: 'mentioned you in their post.',
   status: 'published a post.',
   reblog: 'boosted your post.',
+  'reblog+account': (count) => `boosted ${count} of your posts.`,
   reblog_reply: 'boosted your reply.',
   follow: 'followed you.',
   follow_request: 'requested to follow you.',
   favourite: 'favourited your post.',
+  'favourite+account': (count) => `favourited ${count} of your posts.`,
   favourite_reply: 'favourited your reply.',
   poll: 'A poll you have voted in or created has ended.',
   'poll-self': 'A poll you have created has ended.',
   'poll-voted': 'A poll you have voted in has ended.',
   update: 'A post you interacted with has been edited.',
   'favourite+reblog': 'boosted & favourited your post.',
+  'favourite+reblog+account': (count) =>
+    `boosted & favourited ${count} of your posts.`,
   'favourite+reblog_reply': 'boosted & favourited your reply.',
 };
 
 function Notification({ notification, instance, reload }) {
-  const { id, status, account, _accounts } = notification;
+  const { id, status, account, _accounts, _statuses } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
@@ -90,11 +94,18 @@ function Notification({ notification, instance, reload }) {
     type === 'favourite' ||
     type === 'favourite+reblog'
   ) {
-    text =
-      contentText[isReplyToOthers ? `${type}_reply` : type] ||
-      contentText[type];
+    if (_statuses?.length > 1) {
+      text = contentText[`${type}+account`];
+    } else if (isReplyToOthers) {
+      text = contentText[`${type}_reply`];
+    } else {
+      text = contentText[type];
+    }
   } else {
     text = contentText[type];
+  }
+  if (typeof text === 'function') {
+    text = text(_statuses?.length || _accounts?.length);
   }
 
   if (type === 'mention' && !status) {
@@ -206,7 +217,23 @@ function Notification({ notification, instance, reload }) {
             ))}
           </p>
         )}
-        {status && (
+        {_statuses?.length > 1 && (
+          <ul class="notification-group-statuses">
+            {_statuses.map((status) => (
+              <li key={status.id}>
+                <Link
+                  class={`status-link status-type-${type}`}
+                  to={
+                    instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
+                  }
+                >
+                  <Status status={status} size="s" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        {status && (!_statuses?.length || _statuses?.length <= 1) && (
           <Link
             class={`status-link status-type-${type}`}
             to={

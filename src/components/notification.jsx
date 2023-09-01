@@ -56,12 +56,13 @@ const contentText = {
   'favourite+reblog_reply': 'boosted & favourited your reply.',
 };
 
-function Notification({ notification, instance, reload }) {
+function Notification({ notification, instance, reload, isStatic }) {
   const { id, status, account, _accounts, _statuses } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
-  const actualStatusID = status?.reblog?.id || status?.id;
+  const actualStatus = status?.reblog || status;
+  const actualStatusID = actualStatus?.id;
 
   const currentAccount = store.session.get('currentAccount');
   const isSelf = currentAccount === account?.id;
@@ -242,7 +243,11 @@ function Notification({ notification, instance, reload }) {
                 : `/s/${actualStatusID}`
             }
           >
-            <Status statusID={actualStatusID} size="s" />
+            {isStatic ? (
+              <Status status={actualStatus} size="s" />
+            ) : (
+              <Status statusID={actualStatusID} size="s" />
+            )}
           </Link>
         )}
       </div>

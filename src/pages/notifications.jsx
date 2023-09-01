@@ -3,6 +3,7 @@ import './notifications.css';
 import { useIdle } from '@uidotdev/usehooks';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import AccountBlock from '../components/account-block';
@@ -17,6 +18,7 @@ import enhanceContent from '../utils/enhance-content';
 import groupNotifications from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
+import { getRegistration } from '../utils/push-notifications';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentInstance } from '../utils/store-utils';
@@ -24,12 +26,16 @@ import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 30; // 30 is the maximum limit :(
+const emptySearchParams = new URLSearchParams();
 
-function Notifications() {
+function Notifications({ columnMode }) {
   useTitle('Notifications', '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
+  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
+  const notificationID = searchParams.get('id');
+  const notificationAccessToken = searchParams.get('access_token');
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
   const scrollableRef = useRef();
@@ -187,6 +193,31 @@ function Notifications() {
   );
 
   const announcementsListRef = useRef();
+
+  useEffect(() => {
+    if (notificationID) {
+      states.routeNotification = {
+        id: notificationID,
+        accessToken: atob(notificationAccessToken),
+      };
+    }
+  }, [notificationID, notificationAccessToken]);
+
+  useEffect(() => {
+    if (uiState === 'default') {
+      (async () => {
+        const registration = await getRegistration();
+        if (registration) {
+          const notifications = await registration.getNotifications();
+          console.log('🔔 Push notifications', notifications);
+          // Close all notifications?
+          // notifications.forEach((notification) => {
+          //   notification.close();
+          // });
+        }
+      })();
+    }
+  }, [uiState]);
 
   return (
     <div

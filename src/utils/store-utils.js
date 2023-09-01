@@ -5,6 +5,11 @@ export function getAccount(id) {
   return accounts.find((a) => a.info.id === id) || accounts[0];
 }
 
+export function getAccountByAccessToken(accessToken) {
+  const accounts = store.local.getJSON('accounts') || [];
+  return accounts.find((a) => a.accessToken === accessToken);
+}
+
 export function getCurrentAccount() {
   const currentAccount = store.session.get('currentAccount');
   const account = getAccount(currentAccount);
@@ -27,6 +32,7 @@ export function saveAccount(account) {
     acc.info = account.info;
     acc.instanceURL = account.instanceURL;
     acc.accessToken = account.accessToken;
+    acc.vapidKey = account.vapidKey;
   } else {
     accounts.push(account);
   }

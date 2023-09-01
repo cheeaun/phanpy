@@ -5,11 +5,18 @@ import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
 import targetLanguages from '../data/lingva-target-languages';
 import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
+import {
+  initSubscription,
+  isPushSupported,
+  removeSubscription,
+  updateSubscription,
+} from '../utils/push-notifications';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -391,6 +398,7 @@ function Settings({ onClose }) {
             </li>
           </ul>
         </section>
+        <PushNotificationsSection onClose={onClose} />
         <h3>About</h3>
         <section>
           <div
@@ -472,6 +480,246 @@ function Settings({ onClose }) {
         </section>
       </main>
     </div>
+  );
+}
+
+function PushNotificationsSection({ onClose }) {
+  if (!isPushSupported()) return null;
+
+  const { instance } = api();
+  const [uiState, setUIState] = useState('default');
+  const pushFormRef = useRef();
+  const [allowNofitications, setAllowNotifications] = useState(false);
+  const [needRelogin, setNeedRelogin] = useState(false);
+  const previousPolicyRef = useRef();
+  useEffect(() => {
+    (async () => {
+      setUIState('loading');
+      try {
+        const { subscription, backendSubscription } = await initSubscription();
+        if (
+          backendSubscription?.policy &&
+          backendSubscription.policy !== 'none'
+        ) {
+          setAllowNotifications(true);
+          const { alerts, policy } = backendSubscription;
+          previousPolicyRef.current = policy;
+          const { elements } = pushFormRef.current;
+          const policyEl = elements.namedItem(policy);
+          if (policyEl) policyEl.value = policy;
+          // alerts is {}, iterate it
+          Object.keys(alerts).forEach((alert) => {
+            const el = elements.namedItem(alert);
+            if (el?.type === 'checkbox') {
+              el.checked = true;
+            }
+          });
+        }
+        setUIState('default');
+      } catch (err) {
+        console.warn(err);
+        if (/outside.*authorized/i.test(err.message)) {
+          setNeedRelogin(true);
+        } else {
+          alert(err?.message || err);
+        }
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  const isLoading = uiState === 'loading';
+
+  return (
+    <form
+      ref={pushFormRef}
+      onChange={() => {
+        const values = Object.fromEntries(new FormData(pushFormRef.current));
+        const allowNofitications = !!values['policy-allow'];
+        const params = {
+          policy: values.policy,
+          data: {
+            alerts: {
+              mention: !!values.mention,
+              favourite: !!values.favourite,
+              reblog: !!values.reblog,
+              follow: !!values.follow,
+              follow_request: !!values.followRequest,
+              poll: !!values.poll,
+              update: !!values.update,
+              status: !!values.status,
+            },
+          },
+        };
+
+        let alertsCount = 0;
+        // Remove false values from data.alerts
+        // API defaults to false anyway
+        Object.keys(params.data.alerts).forEach((key) => {
+          if (!params.data.alerts[key]) {
+            delete params.data.alerts[key];
+          } else {
+            alertsCount++;
+          }
+        });
+        const policyChanged = previousPolicyRef.current !== params.policy;
+
+        console.log('PN Form', { values, allowNofitications, params });
+
+        if (allowNofitications && alertsCount > 0) {
+          if (policyChanged) {
+            console.debug('Policy changed.');
+            removeSubscription()
+              .then(() => {
+                updateSubscription(params);
+              })
+              .catch((err) => {
+                console.warn(err);
+                alert('Failed to update subscription. Please try again.');
+              });
+          } else {
+            updateSubscription(params).catch((err) => {
+              console.warn(err);
+              alert('Failed to update subscription. Please try again.');
+            });
+          }
+        } else {
+          removeSubscription().catch((err) => {
+            console.warn(err);
+            alert('Failed to remove subscription. Please try again.');
+          });
+        }
+      }}
+    >
+      <h3>Push Notifications (beta)</h3>
+      <section>
+        <ul>
+          <li>
+            <label>
+              <input
+                type="checkbox"
+                disabled={isLoading || needRelogin}
+                name="policy-allow"
+                checked={allowNofitications}
+                onChange={async (e) => {
+                  const { checked } = e.target;
+                  if (checked) {
+                    // Request permission
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                      setAllowNotifications(true);
+                    } else {
+                      setAllowNotifications(false);
+                      if (permission === 'denied') {
+                        alert(
+                          'Push notifications are blocked. Please enable them in your browser settings.',
+                        );
+                      }
+                    }
+                  } else {
+                    setAllowNotifications(false);
+                  }
+                }}
+              />{' '}
+              Allow from{' '}
+              <select
+                name="policy"
+                disabled={isLoading || needRelogin || !allowNofitications}
+              >
+                {[
+                  {
+                    value: 'all',
+                    label: 'anyone',
+                  },
+                  {
+                    value: 'followed',
+                    label: 'people I follow',
+                  },
+                  {
+                    value: 'follower',
+                    label: 'followers',
+                  },
+                ].map((type) => (
+                  <option value={type.value}>{type.label}</option>
+                ))}
+              </select>
+            </label>
+            <div
+              class="shazam-container no-animation"
+              style={{
+                width: '100%',
+              }}
+              hidden={!allowNofitications}
+            >
+              <div class="shazam-container-inner">
+                <div class="sub-section">
+                  <ul>
+                    {[
+                      {
+                        value: 'mention',
+                        label: 'Mentions',
+                      },
+                      {
+                        value: 'favourite',
+                        label: 'Favourites',
+                      },
+                      {
+                        value: 'reblog',
+                        label: 'Boosts',
+                      },
+                      {
+                        value: 'follow',
+                        label: 'Follows',
+                      },
+                      {
+                        value: 'followRequest',
+                        label: 'Follow requests',
+                      },
+                      {
+                        value: 'poll',
+                        label: 'Polls',
+                      },
+                      {
+                        value: 'update',
+                        label: 'Post edits',
+                      },
+                      {
+                        value: 'status',
+                        label: 'New posts',
+                      },
+                    ].map((alert) => (
+                      <li>
+                        <label>
+                          <input type="checkbox" name={alert.value} />{' '}
+                          {alert.label}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {needRelogin && (
+              <div class="sub-section">
+                <p>
+                  Push permission was not granted since your last login. You'll
+                  need to{' '}
+                  <Link to={`/login?instance=${instance}`} onClick={onClose}>
+                    <b>log in</b> again to grant push permission
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+          </li>
+        </ul>
+      </section>
+      <p class="section-postnote">
+        <small>
+          NOTE: Push notifications only works for <b>one account</b>.
+        </small>
+      </p>
+    </form>
   );
 }
 

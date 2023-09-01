@@ -29,6 +29,7 @@ const states = proxy({
   unfurledLinks: {},
   statusQuotes: {},
   accounts: {},
+  routeNotification: null,
   // Modals
   showCompose: false,
   showSettings: false,

@@ -1,7 +1,12 @@
 import { createClient } from 'masto';
 
 import store from './store';
-import { getAccount, getCurrentAccount, saveAccount } from './store-utils';
+import {
+  getAccount,
+  getAccountByAccessToken,
+  getCurrentAccount,
+  saveAccount,
+} from './store-utils';
 
 // Default *fallback* instance
 const DEFAULT_INSTANCE = 'mastodon.social';
@@ -18,6 +23,7 @@ const apis = {};
 // Just in case if I need this one day.
 // E.g. accountApis['mastodon.social']['ACCESS_TOKEN']
 const accountApis = {};
+window.__ACCOUNT_APIS__ = accountApis;
 
 // Current account masto instance
 let currentAccountApi;
@@ -92,7 +98,7 @@ export async function initInstance(client, instance) {
 }
 
 // Get the account information and store it
-export async function initAccount(client, instance, accessToken) {
+export async function initAccount(client, instance, accessToken, vapidKey) {
   const masto = client;
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
@@ -102,6 +108,7 @@ export async function initAccount(client, instance, accessToken) {
     info: mastoAccount,
     instanceURL: instance.toLowerCase(),
     accessToken,
+    vapidKey,
   });
 }
 
@@ -134,6 +141,35 @@ export function api({ instance, accessToken, accountID, account } = {}) {
       authenticated: true,
       instance,
     };
+  }
+
+  if (accessToken) {
+    // If only accessToken is provided, get the masto instance for that accessToken
+    console.log('X 1', accountApis);
+    for (const instance in accountApis) {
+      if (accountApis[instance][accessToken]) {
+        console.log('X 2', accountApis, instance, accessToken);
+        return {
+          masto: accountApis[instance][accessToken],
+          authenticated: true,
+          instance,
+        };
+      } else {
+        console.log('X 3', accountApis, instance, accessToken);
+        const account = getAccountByAccessToken(accessToken);
+        if (account) {
+          const accessToken = account.accessToken;
+          const instance = account.instanceURL.toLowerCase().trim();
+          return {
+            masto: initClient({ instance, accessToken }),
+            authenticated: true,
+            instance,
+          };
+        } else {
+          throw new Error(`Access token ${accessToken} not found`);
+        }
+      }
+    }
   }
 
   // If account is provided, get the masto instance for that account

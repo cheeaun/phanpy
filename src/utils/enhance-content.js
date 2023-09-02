@@ -120,7 +120,7 @@ function enhanceContent(content, opts = {}) {
           p.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
         });
         const codeText = nextParagraphs.map((p) => p.innerHTML).join('\n\n');
-        pre.innerHTML = `<code>${codeText}</code>`;
+        pre.innerHTML = `<code tabindex="0">${codeText}</code>`;
         block.replaceWith(pre);
         nextParagraphs.forEach((p) => p.remove());
       }

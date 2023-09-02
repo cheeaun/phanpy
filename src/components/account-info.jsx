@@ -98,6 +98,7 @@ function AccountInfo({
     statusesCount,
     url,
     username,
+    memorial,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -266,19 +267,16 @@ function AccountInfo({
               />
             </header>
             <main tabIndex="-1">
-              {bot && (
-                <>
-                  <span class="tag">
-                    <Icon icon="bot" /> Automated
-                  </span>
-                </>
+              {!!memorial && <span class="tag">In Memoriam</span>}
+              {!!bot && (
+                <span class="tag">
+                  <Icon icon="bot" /> Automated
+                </span>
               )}
-              {group && (
-                <>
-                  <span class="tag">
-                    <Icon icon="group" /> Group
-                  </span>
-                </>
+              {!!group && (
+                <span class="tag">
+                  <Icon icon="group" /> Group
+                </span>
               )}
               <div
                 class="note"

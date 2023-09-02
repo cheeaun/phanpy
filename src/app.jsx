@@ -13,20 +13,19 @@ import {
   Routes,
   useLocation,
   useNavigate,
-  useParams,
 } from 'react-router-dom';
 import 'swiped-events';
 import { useSnapshot } from 'valtio';
 
 import AccountSheet from './components/account-sheet';
+import BackgroundService from './components/background-service';
 import Compose from './components/compose';
 import Drafts from './components/drafts';
 import Icon, { ICONS } from './components/icon';
-import Link from './components/link';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
-import Notification from './components/notification';
+import NotificationService from './components/notification-service';
 import Shortcuts from './components/shortcuts';
 import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
@@ -38,7 +37,7 @@ import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
 import Home from './pages/home';
-import HttpRoute from './pages/HttpRoute';
+import HttpRoute from './pages/http-route';
 import List from './pages/list';
 import Lists from './pages/lists';
 import Login from './pages/login';
@@ -47,7 +46,7 @@ import Notifications from './pages/notifications';
 import Public from './pages/public';
 import Search from './pages/search';
 import Settings from './pages/settings';
-import Status from './pages/status';
+import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import {
@@ -60,15 +59,10 @@ import {
 import { getAccessToken } from './utils/auth';
 import openCompose from './utils/open-compose';
 import showToast from './utils/show-toast';
-import states, { initStates, saveStatus } from './utils/states';
+import states, { initStates } from './utils/states';
 import store from './utils/store';
-import {
-  getAccountByAccessToken,
-  getCurrentAccount,
-} from './utils/store-utils';
+import { getCurrentAccount } from './utils/store-utils';
 import './utils/toast-alert';
-import useInterval from './utils/useInterval';
-import usePageVisibility from './utils/usePageVisibility';
 
 window.__STATES__ = states;
 
@@ -457,258 +451,6 @@ function App() {
       <BackgroundService isLoggedIn={isLoggedIn} />
     </>
   );
-}
-
-function BackgroundService({ isLoggedIn }) {
-  // Notifications service
-  // - WebSocket to receive notifications when page is visible
-  const [visible, setVisible] = useState(true);
-  usePageVisibility(setVisible);
-  const notificationStream = useRef();
-  useEffect(() => {
-    if (isLoggedIn && visible) {
-      const { masto, instance } = api();
-      (async () => {
-        // 1. Get the latest notification
-        if (states.notificationsLast) {
-          const notificationsIterator = masto.v1.notifications.list({
-            limit: 1,
-            since_id: states.notificationsLast.id,
-          });
-          const { value: notifications } = await notificationsIterator.next();
-          if (notifications?.length) {
-            states.notificationsShowNew = true;
-          }
-        }
-
-        // 2. Start streaming
-        notificationStream.current = await masto.ws.stream(
-          '/api/v1/streaming',
-          {
-            stream: 'user:notification',
-          },
-        );
-        console.log('🎏 Streaming notification', notificationStream.current);
-
-        notificationStream.current.on('notification', (notification) => {
-          console.log('🔔🔔 Notification', notification);
-          if (notification.status) {
-            saveStatus(notification.status, instance, {
-              skipThreading: true,
-            });
-          }
-          states.notificationsShowNew = true;
-        });
-
-        notificationStream.current.ws.onclose = () => {
-          console.log('🔔🔔 Notification stream closed');
-        };
-      })();
-    }
-    return () => {
-      if (notificationStream.current) {
-        notificationStream.current.ws.close();
-        notificationStream.current = null;
-      }
-    };
-  }, [visible, isLoggedIn]);
-
-  // Check for updates service
-  const lastCheckDate = useRef();
-  const checkForUpdates = () => {
-    lastCheckDate.current = Date.now();
-    console.log('✨ Check app update');
-    fetch('./version.json')
-      .then((r) => r.json())
-      .then((info) => {
-        if (info) states.appVersion = info;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-  useInterval(checkForUpdates, visible && 1000 * 60 * 30); // 30 minutes
-  usePageVisibility((visible) => {
-    if (visible) {
-      if (!lastCheckDate.current) {
-        checkForUpdates();
-      } else {
-        const diff = Date.now() - lastCheckDate.current;
-        if (diff > 1000 * 60 * 60) {
-          // 1 hour
-          checkForUpdates();
-        }
-      }
-    }
-  });
-
-  return null;
-}
-
-function NotificationService() {
-  if (!('serviceWorker' in navigator)) return null;
-
-  const snapStates = useSnapshot(states);
-  const { routeNotification } = snapStates;
-
-  console.log('🛎️ Notification service', routeNotification);
-
-  const { id, accessToken } = routeNotification || {};
-  const [showNotificationSheet, setShowNotificationSheet] = useState(false);
-
-  useLayoutEffect(() => {
-    if (!id || !accessToken) return;
-    const { instance: currentInstance } = api();
-    const { masto, instance } = api({
-      accessToken,
-    });
-    console.log('API', { accessToken, currentInstance, instance });
-    const sameInstance = currentInstance === instance;
-    const account = accessToken
-      ? getAccountByAccessToken(accessToken)
-      : getCurrentAccount();
-    (async () => {
-      const notification = await masto.v1.notifications.fetch(id);
-      if (notification && account) {
-        console.log('🛎️ Notification', { id, notification, account });
-        const accountInstance = account.instanceURL;
-        const { type, status, account: notificationAccount } = notification;
-        const hasModal = !!document.querySelector('#modal-container > *');
-        const isFollow = type === 'follow' && !!notificationAccount?.id;
-        const hasAccount = !!notificationAccount?.id;
-        const hasStatus = !!status?.id;
-        if (isFollow && sameInstance) {
-          // Show account sheet, can handle different instances
-          states.showAccount = {
-            account: notificationAccount,
-            instance: accountInstance,
-          };
-        } else if (hasModal || !sameInstance || (hasAccount && hasStatus)) {
-          // Show sheet of notification, if
-          // - there is a modal open
-          // - the notification is from another instance
-          // - the notification has both account and status, gives choice for users to go to account or status
-          setShowNotificationSheet({
-            id,
-            account,
-            notification,
-            sameInstance,
-          });
-        } else {
-          if (hasStatus) {
-            // Go to status page
-            location.hash = `/${currentInstance}/s/${status.id}`;
-          } else if (isFollow) {
-            // Go to profile page
-            location.hash = `/${currentInstance}/a/${notificationAccount.id}`;
-          } else {
-            // Go to notifications page
-            location.hash = '/notifications';
-          }
-        }
-      } else {
-        console.warn(
-          '🛎️ Notification not found',
-          notificationID,
-          notificationAccessToken,
-        );
-      }
-    })();
-  }, [id, accessToken]);
-
-  useLayoutEffect(() => {
-    // Listen to message from service worker
-    const handleMessage = (event) => {
-      console.log('💥💥💥 Message event', event);
-      const { type, id, accessToken } = event?.data || {};
-      if (type === 'notification') {
-        states.routeNotification = {
-          id,
-          accessToken,
-        };
-      }
-    };
-    console.log('👂👂👂 Listen to message');
-    navigator.serviceWorker.addEventListener('message', handleMessage);
-    return () => {
-      console.log('👂👂👂 Remove listen to message');
-      navigator.serviceWorker.removeEventListener('message', handleMessage);
-    };
-  }, []);
-
-  const onClose = () => {
-    setShowNotificationSheet(false);
-    states.routeNotification = null;
-
-    // If url is #/notifications?id=123, go to #/notifications
-    if (/\/notifications\?id=/i.test(location.hash)) {
-      location.hash = '/notifications';
-    }
-  };
-
-  if (showNotificationSheet) {
-    const { id, account, notification, sameInstance } = showNotificationSheet;
-    return (
-      <Modal
-        class="light"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            onClose();
-          }
-        }}
-      >
-        <div class="sheet" tabIndex="-1">
-          <button type="button" class="sheet-close" onClick={onClose}>
-            <Icon icon="x" />
-          </button>
-          <header>
-            <b>Notification</b>
-          </header>
-          <main>
-            {!sameInstance && (
-              <p>This notification is from your other account.</p>
-            )}
-            <div
-              class="notification-peek"
-              // style={{
-              //   pointerEvents: sameInstance ? '' : 'none',
-              // }}
-              onClick={(e) => {
-                const { target } = e;
-                // If button or links
-                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
-                  onClose();
-                }
-              }}
-            >
-              <Notification
-                instance={account.instanceURL}
-                notification={notification}
-                isStatic
-              />
-            </div>
-            <div
-              style={{
-                textAlign: 'end',
-              }}
-            >
-              <Link to="/notifications" class="button light">
-                <span>View all notifications</span> <Icon icon="arrow-right" />
-              </Link>
-            </div>
-          </main>
-        </div>
-      </Modal>
-    );
-  }
-
-  return null;
-}
-
-function StatusRoute() {
-  const params = useParams();
-  const { id, instance } = params;
-  return <Status id={id} instance={instance} />;
 }
 
 export { App };

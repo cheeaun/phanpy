@@ -109,7 +109,7 @@ Prerequisites: Node.js 18+
 
 ## Self-hosting
 
-This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` and serve the `dist` folder.
+This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` (after `npm install`) and serve the `dist` folder.
 
 Try search for "how to self-host static sites" as there are many ways to do it.
 

@@ -125,13 +125,11 @@ function Search(props) {
   }
 
   useEffect(() => {
-    // searchFieldRef.current?.focus?.();
-    // searchFormRef.current?.focus?.();
     if (q) {
-      // searchFieldRef.current.value = q;
       searchFormRef.current?.setValue?.(q);
       loadResults(true);
     }
+    searchFormRef.current?.focus?.();
   }, [q, type, instance]);
 
   return (

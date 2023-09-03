@@ -7,6 +7,7 @@ import {
   getAccountByAccessToken,
   getCurrentAccount,
 } from '../utils/store-utils';
+import usePageVisibility from '../utils/usePageVisibility';
 
 import Icon from './icon';
 import Link from './link';
@@ -103,6 +104,13 @@ export default function NotificationService() {
       navigator.serviceWorker.removeEventListener('message', handleMessage);
     };
   }, []);
+
+  usePageVisibility((visible) => {
+    if (visible && navigator?.clearAppBadge) {
+      console.log('🔰 Clear app badge');
+      navigator.clearAppBadge();
+    }
+  });
 
   const onClose = () => {
     setShowNotificationSheet(false);

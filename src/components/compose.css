@@ -25,6 +25,15 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  white-space: nowrap;
+}
+#compose-container .compose-top .account-block {
+  text-align: start;
+  pointer-events: none;
+  overflow: hidden;
+  color: var(--text-insignificant-color);
+  line-height: 1.1;
+  font-size: 90%;
 }
 
 #compose-container textarea {

@@ -28,7 +28,8 @@ import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
-import Avatar from './avatar';
+import AccountBlock from './account-block';
+// import Avatar from './avatar';
 import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
@@ -508,11 +509,16 @@ function Compose({
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
         <div class="compose-top">
           {currentAccountInfo?.avatarStatic && (
-            <Avatar
-              url={currentAccountInfo.avatarStatic}
-              size="xl"
-              alt={currentAccountInfo.username}
-              squircle={currentAccountInfo?.bot}
+            // <Avatar
+            //   url={currentAccountInfo.avatarStatic}
+            //   size="xl"
+            //   alt={currentAccountInfo.username}
+            //   squircle={currentAccountInfo?.bot}
+            // />
+            <AccountBlock
+              account={currentAccountInfo}
+              accountInstance={currentAccount.instanceURL}
+              hideDisplayName
             />
           )}
           {!standalone ? (

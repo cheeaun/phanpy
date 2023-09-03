@@ -1,7 +1,6 @@
 import './account-block.css';
 
-import { useNavigate } from 'react-router-dom';
-
+// import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
@@ -21,6 +20,8 @@ function AccountBlock({
   onClick,
   showActivity = false,
   showStats = false,
+  accountInstance,
+  hideDisplayName = false,
 }) {
   if (skeleton) {
     return (
@@ -35,7 +36,7 @@ function AccountBlock({
     );
   }
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const {
     id,
@@ -53,7 +54,10 @@ function AccountBlock({
     note,
     group,
   } = account;
-  const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+  let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+  if (accountInstance) {
+    acct2 = `@${accountInstance}`;
+  }
 
   const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
 
@@ -68,7 +72,8 @@ function AccountBlock({
         e.preventDefault();
         if (onClick) return onClick(e);
         if (internal) {
-          navigate(`/${instance}/a/${id}`);
+          // navigate(`/${instance}/a/${id}`);
+          location.hash = `/${instance}/a/${id}`;
         } else {
           states.showAccount = {
             account,
@@ -79,14 +84,18 @@ function AccountBlock({
     >
       <Avatar url={avatar} size={avatarSize} squircle={bot} />
       <span>
-        {displayName ? (
-          <b>
-            <EmojiText text={displayName} emojis={emojis} />
-          </b>
-        ) : (
-          <b>{username}</b>
+        {!hideDisplayName && (
+          <>
+            {displayName ? (
+              <b>
+                <EmojiText text={displayName} emojis={emojis} />
+              </b>
+            ) : (
+              <b>{username}</b>
+            )}
+            <br />
+          </>
         )}
-        <br />
         <span class="account-block-acct">
           @{acct1}
           <wbr />

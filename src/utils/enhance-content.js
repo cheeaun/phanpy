@@ -33,15 +33,26 @@ function enhanceContent(content, opts = {}) {
 
   // Spanify un-spanned mentions
   if (hasLink) {
-    const notMentionLinks = Array.from(dom.querySelectorAll('a[href]'));
-    notMentionLinks.forEach((link) => {
+    const links = Array.from(dom.querySelectorAll('a[href]'));
+    const usernames = [];
+    links.forEach((link) => {
       const text = link.innerText.trim();
       const hasChildren = link.querySelector('*');
       // If text looks like @username@domain, then it's a mention
       if (/^@[^@]+(@[^@]+)?$/g.test(text)) {
         // Only show @username
-        const username = text.split('@')[1];
-        if (!hasChildren) link.innerHTML = `@<span>${username}</span>`;
+        const [_, username, domain] = text.split('@');
+        if (!hasChildren) {
+          if (
+            !usernames.find(([u]) => u === username) ||
+            usernames.find(([u, d]) => u === username && d === domain)
+          ) {
+            link.innerHTML = `@<span>${username}</span>`;
+            usernames.push([username, domain]);
+          } else {
+            link.innerHTML = `@<span>${username}@${domain}</span>`;
+          }
+        }
         link.classList.add('mention');
       }
       // If text looks like #hashtag, then it's a hashtag

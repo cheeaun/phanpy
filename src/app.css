@@ -747,6 +747,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent 150%
   );
   position: relative;
+  container-type: inline-size;
 }
 .status-carousel:after {
   content: '';
@@ -806,7 +807,18 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel > ul > li:is(:empty, :has(> a:empty)) {
   display: none;
 }
-@media (hover: hover) or (pointer: fine) or (min-width: 40em) {
+/*
+  Assume that browsers that do support inline-size property also support container queries.
+  https://www.smashingmagazine.com/2021/05/css-container-queries-use-cases-migration-strategies/#progressive-enhancement-polyfills
+*/
+@supports not (contain: inline-size) {
+  @media (hover: hover) or (pointer: fine) or (min-width: 40em) {
+    .status-carousel > ul {
+      scroll-snap-type: none;
+    }
+  }
+}
+@container (min-width: 640px) {
   .status-carousel > ul {
     scroll-snap-type: none;
   }

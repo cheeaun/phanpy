@@ -837,7 +837,9 @@ function Status({
       ref={statusRef}
       tabindex="-1"
       class={`status ${
-        !withinContext && inReplyToAccount ? 'status-reply-to' : ''
+        !withinContext && inReplyToId && inReplyToAccount
+          ? 'status-reply-to'
+          : ''
       } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
         {
           s: 'small',
@@ -1003,7 +1005,7 @@ function Status({
         )}
         {!withinContext && (
           <>
-            {inReplyToAccountId === status.account?.id ||
+            {(!!inReplyToId && inReplyToAccountId === status.account?.id) ||
             !!snapStates.statusThreadNumber[sKey] ? (
               <div class="status-thread-badge">
                 <Icon icon="thread" size="s" />

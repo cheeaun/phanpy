@@ -168,7 +168,7 @@ export default function NotificationService() {
                 textAlign: 'end',
               }}
             >
-              <Link to="/notifications" class="button light">
+              <Link to="/notifications" class="button light" onClick={onClose}>
                 <span>View all notifications</span> <Icon icon="arrow-right" />
               </Link>
             </div>

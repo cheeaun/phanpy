@@ -8,7 +8,11 @@ function handleContentLinks(opts) {
     if (!target) return;
     const prevText = target.previousSibling?.textContent;
     const textBeforeLinkIsAt = prevText?.endsWith('@');
-    if (target.classList.contains('u-url') || textBeforeLinkIsAt) {
+    const textStartsWithAt = target.innerText.startsWith('@');
+    if (
+      (target.classList.contains('u-url') && textStartsWithAt) ||
+      (textBeforeLinkIsAt && !textStartsWithAt)
+    ) {
       const targetText = (
         target.querySelector('span') || target
       ).innerText.trim();

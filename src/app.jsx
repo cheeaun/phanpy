@@ -26,6 +26,7 @@ import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
 import NotificationService from './components/notification-service';
+import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
 import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
@@ -449,6 +450,7 @@ function App() {
       )}
       <NotificationService />
       <BackgroundService isLoggedIn={isLoggedIn} />
+      <SearchCommand onClose={focusDeck} />
     </>
   );
 }

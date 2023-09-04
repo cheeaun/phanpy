@@ -163,7 +163,6 @@ const SearchForm = forwardRef((props, ref) => {
                 if (focusItem) {
                   e.preventDefault();
                   focusItem.click();
-                  props?.onSubmit?.(e);
                 }
                 setSearchMenuOpen(false);
               }
@@ -221,7 +220,14 @@ const SearchForm = forwardRef((props, ref) => {
               return 0;
             })
             .map(({ label, to, hidden, type }) => (
-              <Link to={to} class="search-popover-item" hidden={hidden}>
+              <Link
+                to={to}
+                class="search-popover-item"
+                hidden={hidden}
+                onClick={(e) => {
+                  props?.onSubmit?.(e);
+                }}
+              >
                 <Icon
                   icon={type === 'link' ? 'arrow-right' : 'search'}
                   class="more-insignificant"

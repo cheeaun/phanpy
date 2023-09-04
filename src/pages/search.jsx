@@ -153,22 +153,26 @@ function Search(props) {
         <main>
           {!!q && (
             <div class="filter-bar">
-              {!!type && <Link to={`/search${q ? `?q=${q}` : ''}`}>‹ All</Link>}
+              {!!type && (
+                <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
+                  ‹ All
+                </Link>
+              )}
               {[
                 {
                   label: 'Accounts',
                   type: 'accounts',
-                  to: `/search?q=${q}&type=accounts`,
+                  to: `/search?q=${encodeURIComponent(q)}&type=accounts`,
                 },
                 {
                   label: 'Hashtags',
                   type: 'hashtags',
-                  to: `/search?q=${q}&type=hashtags`,
+                  to: `/search?q=${encodeURIComponent(q)}&type=hashtags`,
                 },
                 {
                   label: 'Posts',
                   type: 'statuses',
-                  to: `/search?q=${q}&type=statuses`,
+                  to: `/search?q=${encodeURIComponent(q)}&type=statuses`,
                 },
               ]
                 .sort((a, b) => {

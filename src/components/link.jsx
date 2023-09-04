@@ -19,7 +19,8 @@ const Link = forwardRef((props, ref) => {
   let hash = (location.hash || '').replace(/^#/, '').trim();
   if (hash === '') hash = '/';
   const { to, ...restProps } = props;
-  const isActive = decodeURIComponent(hash) === to;
+  // TODO: maybe better pass hash into URL to deconstruct the pathname and search, then decodeURIComponent them
+  const isActive = hash === to || decodeURIComponent(hash) === to;
   return (
     <a
       ref={ref}

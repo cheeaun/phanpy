@@ -165,6 +165,7 @@ const SearchForm = forwardRef((props, ref) => {
                   focusItem.click();
                 }
                 setSearchMenuOpen(false);
+                props?.onSubmit?.(e);
               }
               break;
           }

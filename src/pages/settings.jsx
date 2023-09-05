@@ -716,7 +716,7 @@ function PushNotificationsSection({ onClose }) {
       </section>
       <p class="section-postnote">
         <small>
-          NOTE: Push notifications only works for <b>one account</b>.
+          NOTE: Push notifications only work for <b>one account</b>.
         </small>
       </p>
     </form>

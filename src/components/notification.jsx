@@ -18,6 +18,8 @@ const NOTIFICATION_ICONS = {
   favourite: 'heart',
   poll: 'poll',
   update: 'pencil',
+  'admin.signup': 'account-edit',
+  'admin.report': 'account-warning',
 };
 
 /*
@@ -54,6 +56,8 @@ const contentText = {
   'favourite+reblog+account': (count) =>
     `boosted & favourited ${count} of your posts.`,
   'favourite+reblog_reply': 'boosted & favourited your reply.',
+  'admin.signup': 'signed up.',
+  'admin.report': 'reported a post.',
 };
 
 function Notification({ notification, instance, reload, isStatic }) {
@@ -102,9 +106,14 @@ function Notification({ notification, instance, reload, isStatic }) {
     } else {
       text = contentText[type];
     }
-  } else {
+  } else if (contentText[type]) {
     text = contentText[type];
+  } else {
+    // Anticipate unhandled notification types, possibly from Mastodon forks or non-Mastodon instances
+    // This surfaces the error to the user, hoping that users will report it
+    text = `[Unknown notification type: ${type}]`;
   }
+
   if (typeof text === 'function') {
     text = text(_statuses?.length || _accounts?.length);
   }
@@ -114,11 +123,14 @@ function Notification({ notification, instance, reload, isStatic }) {
     return null;
   }
 
+  const formattedCreatedAt =
+    notification.createdAt && new Date(notification.createdAt).toLocaleString();
+
   return (
     <div class={`notification notification-${type}`} tabIndex="0">
       <div
         class={`notification-type notification-${type}`}
-        title={new Date(notification.createdAt).toLocaleString()}
+        title={formattedCreatedAt}
       >
         {type === 'favourite+reblog' ? (
           <>

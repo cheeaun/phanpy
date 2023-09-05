@@ -95,6 +95,8 @@ export const ICONS = {
   'arrow-down-circle': () =>
     import('@iconify-icons/mingcute/arrow-down-circle-line'),
   clipboard: () => import('@iconify-icons/mingcute/clipboard-line'),
+  'account-edit': () => import('@iconify-icons/mingcute/user-edit-line'),
+  'account-warning': () => import('@iconify-icons/mingcute/user-warning-line'),
 };
 
 function Icon({

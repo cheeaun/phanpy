@@ -97,6 +97,7 @@ export const ICONS = {
   clipboard: () => import('@iconify-icons/mingcute/clipboard-line'),
   'account-edit': () => import('@iconify-icons/mingcute/user-edit-line'),
   'account-warning': () => import('@iconify-icons/mingcute/user-warning-line'),
+  keyboard: () => import('@iconify-icons/mingcute/keyboard-line'),
 };
 
 function Icon({

@@ -206,6 +206,14 @@ function NavMenu(props) {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  states.showKeyboardShortcutsHelp = true;
+                }}
+              >
+                <Icon icon="keyboard" size="l" />{' '}
+                <span>Keyboard shortcuts</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
                   states.showShortcutsSettings = true;
                 }}
               >

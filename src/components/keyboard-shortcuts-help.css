@@ -1,0 +1,22 @@
+#keyboard-shortcuts-help-container {
+  table {
+    th {
+      font-weight: normal;
+      text-align: start;
+      padding: 0.25em 0;
+      line-height: 1;
+    }
+    td {
+      padding: 0.25em 1em;
+    }
+  }
+
+  kbd {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0.3em;
+    line-height: 1;
+    border: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
+  }
+}

@@ -23,6 +23,7 @@ import Compose from './components/compose';
 import ComposeButton from './components/compose-button';
 import Drafts from './components/drafts';
 import { ICONS } from './components/icon';
+import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import MediaModal from './components/media-modal';
 import Modal from './components/modal';
@@ -192,7 +193,8 @@ function App() {
     snapStates.showAccount ||
     snapStates.showDrafts ||
     snapStates.showMediaModal ||
-    snapStates.showShortcutsSettings;
+    snapStates.showShortcutsSettings ||
+    snapStates.showKeyboardShortcutsHelp;
   useEffect(() => {
     if (!showModal) focusDeck();
   }, [showModal]);
@@ -433,6 +435,7 @@ function App() {
       <NotificationService />
       <BackgroundService isLoggedIn={isLoggedIn} />
       <SearchCommand onClose={focusDeck} />
+      <KeyboardShortcutsHelp />
     </>
   );
 }

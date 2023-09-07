@@ -206,15 +206,17 @@ function Notifications({ columnMode }) {
   useEffect(() => {
     if (uiState === 'default') {
       (async () => {
-        const registration = await getRegistration();
-        if (registration) {
-          const notifications = await registration.getNotifications();
-          console.log('🔔 Push notifications', notifications);
-          // Close all notifications?
-          // notifications.forEach((notification) => {
-          //   notification.close();
-          // });
-        }
+        try {
+          const registration = await getRegistration();
+          if (registration?.getNotifications) {
+            const notifications = await registration.getNotifications();
+            console.log('🔔 Push notifications', notifications);
+            // Close all notifications?
+            // notifications.forEach((notification) => {
+            //   notification.close();
+            // });
+          }
+        } catch (e) {}
       })();
     }
   }, [uiState]);

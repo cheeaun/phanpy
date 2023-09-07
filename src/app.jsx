@@ -185,7 +185,7 @@ function App() {
     }, 100);
     return () => clearTimeout(timer);
   };
-  useEffect(focusDeck, [location]);
+  useEffect(focusDeck, [location, isLoggedIn]);
   const showModal =
     snapStates.showCompose ||
     snapStates.showSettings ||

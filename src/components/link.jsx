@@ -19,7 +19,18 @@ const Link = forwardRef((props, ref) => {
   let hash = (location.hash || '').replace(/^#/, '').trim();
   if (hash === '') hash = '/';
   const { to, ...restProps } = props;
-  // TODO: maybe better pass hash into URL to deconstruct the pathname and search, then decodeURIComponent them
+
+  // Handle encodeURIComponent of searchParams values
+  if (!!hash && hash !== '/') {
+    const parsedHash = new URL(hash, location.origin); // Fake base URL
+    if (parsedHash.searchParams.size) {
+      const searchParamsStr = Array.from(parsedHash.searchParams.entries())
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&');
+      hash = parsedHash.pathname + '?' + searchParamsStr;
+    }
+  }
+
   const isActive = hash === to || decodeURIComponent(hash) === to;
   return (
     <a

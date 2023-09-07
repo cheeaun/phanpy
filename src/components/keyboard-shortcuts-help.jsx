@@ -85,23 +85,6 @@ export default function KeyboardShortcutsHelp() {
                   ),
                 },
                 {
-                  action: 'Search',
-                  keys: <kbd>/</kbd>,
-                },
-                {
-                  action: 'Compose new post',
-                  keys: <kbd>c</kbd>,
-                },
-                {
-                  action: 'Send post',
-                  keys: (
-                    <>
-                      <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or <kbd>⌘</kbd> +{' '}
-                      <kbd>Enter</kbd>
-                    </>
-                  ),
-                },
-                {
                   action: 'Open post details',
                   keys: (
                     <>
@@ -120,6 +103,31 @@ export default function KeyboardShortcutsHelp() {
                       <kbd>Esc</kbd> or <kbd>Backspace</kbd>
                     </>
                   ),
+                },
+                {
+                  action: 'Focus column in multi-column mode',
+                  keys: (
+                    <>
+                      <kbd>1</kbd> to <kbd>9</kbd>
+                    </>
+                  ),
+                },
+                {
+                  action: 'Compose new post',
+                  keys: <kbd>c</kbd>,
+                },
+                {
+                  action: 'Send post',
+                  keys: (
+                    <>
+                      <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or <kbd>⌘</kbd> +{' '}
+                      <kbd>Enter</kbd>
+                    </>
+                  ),
+                },
+                {
+                  action: 'Search',
+                  keys: <kbd>/</kbd>,
                 },
               ].map(({ action, keys }) => (
                 <tr key={action}>

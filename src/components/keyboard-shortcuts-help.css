@@ -1,5 +1,9 @@
 #keyboard-shortcuts-help-container {
   table {
+    tr > * {
+      border-top: 1px solid var(--outline-color);
+      vertical-align: middle;
+    }
     th {
       font-weight: normal;
       text-align: start;

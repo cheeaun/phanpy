@@ -769,7 +769,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .status .media video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: scale-down;
   /* border-radius: calc(var(--media-radius) - var(--media-border-width)); */
   border-radius: inherit;
 }
@@ -842,7 +842,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   width: fit-content;
 }
 .status .media-contain video {
-  object-fit: contain !important;
+  object-fit: scale-down !important;
 }
 /* .status .media-audio {
   border: 0;
@@ -1395,7 +1395,7 @@ a.card:is(:hover, :focus) {
   width: 1.2em;
   height: 1.2em;
   vertical-align: text-bottom;
-  object-fit: contain;
+  object-fit: scale-down;
 }
 
 /* EDIT HISTORY */

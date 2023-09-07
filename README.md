@@ -125,6 +125,14 @@ Try search for "how to self-host static sites" as there are many ways to do it.
 
 Some of these may change in the future. The front-end world is ever-changing.
 
+## Costs
+
+Costs involved in running and developing this web app:
+
+- Domain name (.social): **USD$23.18/year** (USD$6.87 1st year)
+- Hosting: Free
+- Development, design, maintenance: "Free" (My precious time)
+
 ## Mascot
 
 [Phanpy](https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)) is a Ground-type Pokémon.

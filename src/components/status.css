@@ -601,7 +601,7 @@
   grid-auto-rows: 1fr;
   gap: 2px;
   /* height: 160px; */
-  min-height: 44px;
+  min-height: 88px;
   height: auto;
   max-height: max(160px, 33vh);
 }
@@ -645,9 +645,9 @@
 .status .media-container.media-eq1 .media {
   display: inline-block;
   max-width: 100% !important;
-  min-width: 44px;
+  min-width: 88px;
   /* width: auto; */
-  min-height: 44px;
+  min-height: 88px;
   /* --maxAspectHeight: max(160px, 33vh);
   --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
   width: min(var(--aspectWidth), var(--width), 100%);

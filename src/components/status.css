@@ -748,6 +748,7 @@
 }
 .status .media:active {
   filter: brightness(0.8);
+  transform: scale(0.99);
 }
 .status .media :is(img, video) {
   width: 100%;

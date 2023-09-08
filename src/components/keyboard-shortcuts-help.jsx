@@ -129,6 +129,26 @@ export default function KeyboardShortcutsHelp() {
                   action: 'Search',
                   keys: <kbd>/</kbd>,
                 },
+                {
+                  action: 'Reply',
+                  keys: <kbd>r</kbd>,
+                },
+                {
+                  action: 'Favourite',
+                  keys: <kbd>f</kbd>,
+                },
+                {
+                  action: 'Boost',
+                  keys: (
+                    <>
+                      <kbd>Shift</kbd> + <kbd>b</kbd>
+                    </>
+                  ),
+                },
+                {
+                  action: 'Bookmark',
+                  keys: <kbd>d</kbd>,
+                },
               ].map(({ action, keys }) => (
                 <tr key={action}>
                   <th>{action}</th>

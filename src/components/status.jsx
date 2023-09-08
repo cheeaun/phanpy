@@ -19,6 +19,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useLongPress } from 'use-long-press';
 import useResizeObserver from 'use-resize-observer';
@@ -621,8 +622,9 @@ function Status({
               onClick={() => {
                 try {
                   favouriteStatus();
-                  if (!isSizeLarge)
+                  if (!isSizeLarge) {
                     showToast(favourited ? 'Unfavourited' : 'Favourited');
+                  }
                 } catch (e) {}
               }}
             >
@@ -644,8 +646,9 @@ function Status({
               onClick={() => {
                 try {
                   bookmarkStatus();
-                  if (!isSizeLarge)
+                  if (!isSizeLarge) {
                     showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+                  }
                 } catch (e) {}
               }}
             >
@@ -832,9 +835,72 @@ function Status({
 
   const showContextMenu = size !== 'l' && !previewMode && !_deleted && !quoted;
 
+  const hotkeysEnabled = !readOnly && !previewMode;
+  const rRef = useHotkeys('r', replyStatus, {
+    enabled: hotkeysEnabled,
+  });
+  const fRef = useHotkeys(
+    'f',
+    () => {
+      try {
+        favouriteStatus();
+        if (!isSizeLarge) {
+          showToast(favourited ? 'Unfavourited' : 'Favourited');
+        }
+      } catch (e) {}
+    },
+    {
+      enabled: hotkeysEnabled,
+    },
+  );
+  const dRef = useHotkeys(
+    'd',
+    () => {
+      try {
+        bookmarkStatus();
+        if (!isSizeLarge) {
+          showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+        }
+      } catch (e) {}
+    },
+    {
+      enabled: hotkeysEnabled,
+    },
+  );
+  const bRef = useHotkeys(
+    'shift+b',
+    () => {
+      (async () => {
+        try {
+          const done = await confirmBoostStatus();
+          if (!isSizeLarge && done) {
+            showToast(reblogged ? 'Unboosted' : 'Boosted');
+          }
+        } catch (e) {}
+      })();
+    },
+    {
+      enabled: hotkeysEnabled && canBoost,
+    },
+  );
+
   return (
     <article
-      ref={statusRef}
+      ref={(node) => {
+        statusRef.current = node;
+        // Use parent node if it's in focus
+        // Use case: <a><status /></a>
+        // When navigating (j/k), the <a> is focused instead of <status />
+        // Hotkey binding doesn't bubble up thus this hack
+        const nodeRef =
+          node?.closest?.(
+            '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
+          ) || node;
+        rRef.current = nodeRef;
+        fRef.current = nodeRef;
+        dRef.current = nodeRef;
+        bRef.current = nodeRef;
+      }}
       tabindex="-1"
       class={`status ${
         !withinContext && inReplyToId && inReplyToAccount

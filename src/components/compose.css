@@ -34,6 +34,10 @@
   color: var(--text-insignificant-color);
   line-height: 1.1;
   font-size: 90%;
+  background-color: var(--bg-faded-blur-color);
+  backdrop-filter: blur(16px);
+  padding-inline-end: 1em;
+  border-radius: 9999px;
 }
 
 #compose-container textarea {

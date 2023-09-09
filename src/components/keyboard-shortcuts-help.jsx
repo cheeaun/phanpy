@@ -1,5 +1,6 @@
 import './keyboard-shortcuts-help.css';
 
+import { memo } from 'preact/compat';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -8,7 +9,7 @@ import states from '../utils/states';
 import Icon from './icon';
 import Modal from './modal';
 
-export default function KeyboardShortcutsHelp() {
+export default memo(function KeyboardShortcutsHelp() {
   const snapStates = useSnapshot(states);
 
   function onClose() {
@@ -161,4 +162,4 @@ export default function KeyboardShortcutsHelp() {
       </Modal>
     )
   );
-}
+});

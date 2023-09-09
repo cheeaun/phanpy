@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useLayoutEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -14,7 +15,7 @@ import Link from './link';
 import Modal from './modal';
 import Notification from './notification';
 
-export default function NotificationService() {
+export default memo(function NotificationService() {
   if (!('serviceWorker' in navigator)) return null;
 
   const snapStates = useSnapshot(states);
@@ -179,4 +180,4 @@ export default function NotificationService() {
   }
 
   return null;
-}
+});

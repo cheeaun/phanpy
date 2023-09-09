@@ -2227,13 +2227,30 @@ ul.link-list li a .icon {
     transform: translate3d(-2.5vw, 0, 0);
   }
   .timeline:not(.flat)
+    > li.timeline-item-container:has(.status-link.is-active) {
+    border-top-left-radius: var(--item-radius);
+    border-bottom-left-radius: var(--item-radius);
+  }
+  .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(+ li .status-link.is-active),
-  .timeline:not(.flat) > li.timeline-item-container:has(.status-link.is-active),
   .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(.status-link.is-active)
     + li {
     transition: var(--back-transition);
     transform: translate3d(-1.25vw, 0, 0);
+  }
+  .timeline:not(.flat)
+    > li.timeline-item-container:not(:has(.status-carousel)):has(
+      + li .status-link.is-active
+    ) {
+    border-top-left-radius: var(--item-radius);
+  }
+  .timeline:not(.flat)
+    > li.timeline-item-container:not(:has(.status-carousel)):has(
+      .status-link.is-active
+    )
+    + li.timeline-item-container {
+    border-bottom-left-radius: var(--item-radius);
   }
   .box {
     padding: 32px;

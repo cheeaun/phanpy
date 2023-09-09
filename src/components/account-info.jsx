@@ -188,7 +188,9 @@ function AccountInfo({
                   try {
                     // Get color from four corners of image
                     const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
+                    const ctx = canvas.getContext('2d', {
+                      willReadFrequently: true,
+                    });
                     canvas.width = e.target.width;
                     canvas.height = e.target.height;
                     ctx.drawImage(e.target, 0, 0);

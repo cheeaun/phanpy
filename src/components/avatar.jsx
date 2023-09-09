@@ -16,7 +16,9 @@ const alphaCache = {};
 const canvas = window.OffscreenCanvas
   ? new OffscreenCanvas(1, 1)
   : document.createElement('canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', {
+  willReadFrequently: true,
+});
 
 function Avatar({ url, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;

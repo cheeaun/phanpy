@@ -21,7 +21,7 @@ const Link = forwardRef((props, ref) => {
   const { to, ...restProps } = props;
 
   // Handle encodeURIComponent of searchParams values
-  if (!!hash && hash !== '/') {
+  if (!!hash && hash !== '/' && hash.includes('?')) {
     const parsedHash = new URL(hash, location.origin); // Fake base URL
     if (parsedHash.searchParams.size) {
       const searchParamsStr = Array.from(parsedHash.searchParams.entries())

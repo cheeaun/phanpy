@@ -1,5 +1,7 @@
 import './name-text.css';
 
+import { memo } from 'preact/compat';
+
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -43,6 +45,7 @@ function NameText({
       onClick={(e) => {
         if (external) return;
         e.preventDefault();
+        e.stopPropagation();
         if (onClick) return onClick(e);
         states.showAccount = {
           account,
@@ -85,4 +88,4 @@ function NameText({
   );
 }
 
-export default NameText;
+export default memo(NameText);

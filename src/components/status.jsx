@@ -550,7 +550,9 @@ function Status({
           </MenuHeader>
           <MenuLink
             to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-            onClick={onStatusLinkClick}
+            onClick={(e) => {
+              onStatusLinkClick(e, status);
+            }}
           >
             <Icon icon="arrow-right" />
             <span>View post by @{username || acct}</span>
@@ -1038,7 +1040,7 @@ function Status({
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      onStatusLinkClick?.();
+                      onStatusLinkClick?.(e, status);
                     }}
                     class={`time ${open ? 'is-open' : ''}`}
                   >

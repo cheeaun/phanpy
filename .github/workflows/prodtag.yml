@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: production
-      - run: git tag -a "'{date +%d/%m/%Y} ({git rev-parse --short HEAD})'" $(git rev-parse HEAD)
+      - run: git tag -a "'{date +%Y.%m.%d}.{git rev-parse --short HEAD}'" $(git rev-parse HEAD)
       - run: git push

@@ -1370,8 +1370,12 @@ const Textarea = forwardRef((props, ref) => {
         onInput={(e) => {
           const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
           setText(value);
-          const offset = offsetHeight - clientHeight;
-          e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+          if (offsetHeight < window.innerHeight) {
+            // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
+            // No idea why it does that, will re-investigate in far future
+            const offset = offsetHeight - clientHeight;
+            e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+          }
           props.onInput?.(e);
         }}
         style={{

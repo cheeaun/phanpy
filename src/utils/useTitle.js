@@ -30,7 +30,8 @@ export default function useTitle(title, path) {
   }
 
   useLayoutEffect(() => {
+    const unsub = subscribeKey(states, 'currentLocation', setTitle);
     setTitle();
-    return subscribeKey(states, 'currentLocation', setTitle);
+    return unsub;
   }, [title, path]);
 }

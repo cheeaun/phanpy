@@ -110,6 +110,23 @@ function StatusPage(params) {
     ? mediaStatus?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
+  const handleMediaClose = useCallback(() => {
+    if (
+      !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
+      snapStates.prevLocation
+    ) {
+      history.back();
+    } else {
+      if (showMediaOnly) {
+        location.hash = closeLink;
+      } else {
+        searchParams.delete('media');
+        searchParams.delete('mediaStatusID');
+        setSearchParams(searchParams);
+      }
+    }
+  }, [showMediaOnly, closeLink, snapStates.prevLocation]);
+
   return (
     <div class="deck-backdrop">
       {showMedia ? (
@@ -119,22 +136,7 @@ function StatusPage(params) {
             statusID={mediaStatusID || id}
             instance={instance}
             index={mediaIndex - 1}
-            onClose={() => {
-              if (
-                !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
-                snapStates.prevLocation
-              ) {
-                history.back();
-              } else {
-                if (showMediaOnly) {
-                  location.hash = closeLink;
-                } else {
-                  searchParams.delete('media');
-                  searchParams.delete('mediaStatusID');
-                  setSearchParams(searchParams);
-                }
-              }
-            }}
+            onClose={handleMediaClose}
           />
         ) : (
           <div class="media-modal-container loading">

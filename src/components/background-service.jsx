@@ -24,7 +24,20 @@ export default memo(function BackgroundService({ isLoggedIn }) {
           });
           const { value: notifications } = await notificationsIterator.next();
           if (notifications?.length) {
-            states.notificationsShowNew = true;
+            let lastReadId;
+            try {
+              const markers = await masto.v1.markers.fetch({
+                timeline: 'notifications',
+              });
+              lastReadId = markers?.notifications?.lastReadId;
+            } catch (e) {}
+            if (lastReadId) {
+              if (notifications[0].id !== lastReadId) {
+                states.notificationsShowNew = true;
+              }
+            } else {
+              states.notificationsShowNew = true;
+            }
           }
         }
 

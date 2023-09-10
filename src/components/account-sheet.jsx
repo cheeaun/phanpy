@@ -58,6 +58,18 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               if (result.accounts.length) {
                 return result.accounts[0];
+              } else if (/https?:\/\/[^/]+\/@/.test(account)) {
+                const accountURL = new URL(account);
+                const acct = accountURL.pathname.replace(/^\//, '');
+                const result = await masto.v2.search({
+                  q: acct,
+                  type: 'accounts',
+                  limit: 1,
+                  resolve: authenticated,
+                });
+                if (result.accounts.length) {
+                  return result.accounts[0];
+                }
               }
             }
           } else {

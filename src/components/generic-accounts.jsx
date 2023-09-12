@@ -29,6 +29,7 @@ export default function GenericAccounts({ onClose = () => {} }) {
 
   const loadAccounts = (firstLoad) => {
     if (!fetchAccounts) return;
+    setAccounts([]);
     setUIState('loading');
     (async () => {
       try {
@@ -57,7 +58,7 @@ export default function GenericAccounts({ onClose = () => {} }) {
     } else {
       loadAccounts(true);
     }
-  }, [staticAccounts]);
+  }, [staticAccounts, fetchAccounts]);
 
   return (
     <div id="generic-accounts-container" class="sheet" tabindex="-1">

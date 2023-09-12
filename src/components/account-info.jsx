@@ -170,6 +170,9 @@ function AccountInfo({
     return results;
   }
 
+  const LinkOrDiv = standalone ? 'div' : Link;
+  const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
+
   return (
     <div
       class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
@@ -368,9 +371,11 @@ function AccountInfo({
                 </div>
               )}
               <p class="stats">
-                <div
+                <LinkOrDiv
                   tabIndex={0}
+                  to={accountLink}
                   onClick={() => {
+                    states.showAccount = false;
                     states.showGenericAccounts = {
                       heading: 'Followers',
                       fetchAccounts: fetchFollowers,
@@ -381,11 +386,13 @@ function AccountInfo({
                     {shortenNumber(followersCount)}
                   </span>{' '}
                   Followers
-                </div>
-                <div
+                </LinkOrDiv>
+                <LinkOrDiv
                   class="insignificant"
                   tabIndex={0}
+                  to={accountLink}
                   onClick={() => {
+                    states.showAccount = false;
                     states.showGenericAccounts = {
                       heading: 'Following',
                       fetchAccounts: fetchFollowing,
@@ -397,28 +404,23 @@ function AccountInfo({
                   </span>{' '}
                   Following
                   <br />
-                </div>
-                {standalone ? (
-                  <div class="insignificant">
-                    <span title={statusesCount}>
-                      {shortenNumber(statusesCount)}
-                    </span>{' '}
-                    Posts
-                  </div>
-                ) : (
-                  <Link
-                    class="insignificant"
-                    to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
-                    onClick={() => {
-                      hideAllModals();
-                    }}
-                  >
-                    <span title={statusesCount}>
-                      {shortenNumber(statusesCount)}
-                    </span>{' '}
-                    Posts
-                  </Link>
-                )}
+                </LinkOrDiv>
+                <LinkOrDiv
+                  class="insignificant"
+                  to={accountLink}
+                  onClick={
+                    standalone
+                      ? undefined
+                      : () => {
+                          hideAllModals();
+                        }
+                  }
+                >
+                  <span title={statusesCount}>
+                    {shortenNumber(statusesCount)}
+                  </span>{' '}
+                  Posts
+                </LinkOrDiv>
                 {!!createdAt && (
                   <div class="insignificant">
                     Joined{' '}

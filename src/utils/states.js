@@ -139,6 +139,7 @@ export function hideAllModals() {
   states.showMediaModal = false;
   states.showShortcutsSettings = false;
   states.showKeyboardShortcutsHelp = false;
+  staets.showGenericAccounts = false;
 }
 
 export function statusKey(id, instance) {

@@ -39,6 +39,10 @@ const Link = forwardRef((props, ref) => {
       {...restProps}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
       onClick={(e) => {
+        if (e.currentTarget?.parentNode?.closest('a')) {
+          // If this <a> is nested inside another <a>
+          e.stopPropagation();
+        }
         if (routerLocation) states.prevLocation = routerLocation;
         props.onClick?.(e);
       }}

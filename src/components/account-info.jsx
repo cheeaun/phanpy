@@ -144,7 +144,7 @@ function AccountInfo({
             ),
         ),
       ];
-    } else {
+    } else if (value?.length) {
       newValue = value.filter(
         (account) =>
           !familiarFollowersCache.current.some(

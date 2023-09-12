@@ -29,7 +29,7 @@ export default function GenericAccounts({ onClose = () => {} }) {
 
   const loadAccounts = (firstLoad) => {
     if (!fetchAccounts) return;
-    setAccounts([]);
+    if (firstLoad) setAccounts([]);
     setUIState('loading');
     (async () => {
       try {

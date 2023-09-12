@@ -1,3 +1,4 @@
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -169,7 +170,10 @@ function Notification({ notification, instance, reload, isStatic }) {
                   {_accounts?.length > 1 ? (
                     <>
                       <b tabIndex="0" onClick={handleOpenGenericAccounts}>
-                        {_accounts.length} people
+                        <span title={_accounts.length}>
+                          {shortenNumber(_accounts.length)}
+                        </span>{' '}
+                        people
                       </b>{' '}
                     </>
                   ) : (
@@ -203,7 +207,7 @@ function Notification({ notification, instance, reload, isStatic }) {
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
-            {_accounts.map((account, i) => (
+            {_accounts.slice(0, 50).map((account, i) => (
               <>
                 <a
                   href={account.url}
@@ -219,11 +223,11 @@ function Notification({ notification, instance, reload, isStatic }) {
                     size={
                       _accounts.length <= 10
                         ? 'xxl'
-                        : _accounts.length < 100
+                        : _accounts.length < 20
                         ? 'xl'
-                        : _accounts.length < 1000
+                        : _accounts.length < 30
                         ? 'l'
-                        : _accounts.length < 2000
+                        : _accounts.length < 40
                         ? 'm'
                         : 's' // My god, this person is popular!
                     }

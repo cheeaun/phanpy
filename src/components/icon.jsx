@@ -45,6 +45,7 @@ export const ICONS = {
   plus: () => import('@iconify-icons/mingcute/add-circle-line'),
   'chevron-left': () => import('@iconify-icons/mingcute/left-line'),
   'chevron-right': () => import('@iconify-icons/mingcute/right-line'),
+  'chevron-down': () => import('@iconify-icons/mingcute/down-line'),
   reply: [
     () => import('@iconify-icons/mingcute/share-forward-line'),
     '180deg',

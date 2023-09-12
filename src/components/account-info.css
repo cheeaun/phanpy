@@ -148,6 +148,12 @@
   overflow-x: auto;
   justify-content: flex-start;
   position: relative;
+
+  [tabindex='0']:is(:hover, :focus) {
+    color: var(--text-color);
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 .timeline-start .account-container .stats {
   flex-wrap: wrap;

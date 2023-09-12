@@ -7,33 +7,21 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import {
-  matchPath,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
 import { useSnapshot } from 'valtio';
 
-import AccountSheet from './components/account-sheet';
 import BackgroundService from './components/background-service';
-import Compose from './components/compose';
 import ComposeButton from './components/compose-button';
-import Drafts from './components/drafts';
 import { ICONS } from './components/icon';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
-import MediaModal from './components/media-modal';
-import Modal from './components/modal';
+import Modals from './components/modals';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
-import ShortcutsSettings from './components/shortcuts-settings';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
-import Accounts from './pages/accounts';
 import Bookmarks from './pages/bookmarks';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
@@ -48,7 +36,6 @@ import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
 import Search from './pages/search';
-import Settings from './pages/settings';
 import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
 import Welcome from './pages/welcome';
@@ -60,7 +47,7 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
-import showToast from './utils/show-toast';
+import focusDeck from './utils/focus-deck';
 import states, { initStates } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
@@ -85,7 +72,6 @@ function App() {
   const snapStates = useSnapshot(states);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
-  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     const theme = store.local.get('theme');
@@ -165,41 +151,9 @@ function App() {
   let location = useLocation();
   states.currentLocation = location.pathname;
 
-  const focusDeck = () => {
-    let timer = setTimeout(() => {
-      const columns = document.getElementById('columns');
-      if (columns) {
-        // Focus first column
-        // columns.querySelector('.deck-container')?.focus?.();
-      } else {
-        const backDrop = document.querySelector('.deck-backdrop');
-        if (backDrop) return;
-        // Focus last deck
-        const pages = document.querySelectorAll('.deck-container');
-        const page = pages[pages.length - 1]; // last one
-        if (page && page.tabIndex === -1) {
-          console.log('FOCUS', page);
-          page.focus();
-        }
-      }
-    }, 100);
-    return () => clearTimeout(timer);
-  };
   useEffect(focusDeck, [location, isLoggedIn]);
-  const showModal =
-    snapStates.showCompose ||
-    snapStates.showSettings ||
-    snapStates.showAccounts ||
-    snapStates.showAccount ||
-    snapStates.showDrafts ||
-    snapStates.showMediaModal ||
-    snapStates.showShortcutsSettings ||
-    snapStates.showKeyboardShortcutsHelp;
-  useEffect(() => {
-    if (!showModal) focusDeck();
-  }, [showModal]);
 
-  const { prevLocation } = snapStates;
+  const prevLocation = snapStates.prevLocation;
   const backgroundLocation = useRef(prevLocation || null);
   const isModalPage = useMemo(() => {
     return (
@@ -294,147 +248,7 @@ function App() {
         snapStates.settings.shortcutsViewMode !== 'multi-column' && (
           <Shortcuts />
         )}
-      {!!snapStates.showCompose && (
-        <Modal>
-          <Compose
-            replyToStatus={
-              typeof snapStates.showCompose !== 'boolean'
-                ? snapStates.showCompose.replyToStatus
-                : window.__COMPOSE__?.replyToStatus || null
-            }
-            editStatus={
-              states.showCompose?.editStatus ||
-              window.__COMPOSE__?.editStatus ||
-              null
-            }
-            draftStatus={
-              states.showCompose?.draftStatus ||
-              window.__COMPOSE__?.draftStatus ||
-              null
-            }
-            onClose={(results) => {
-              const { newStatus, instance } = results || {};
-              states.showCompose = false;
-              window.__COMPOSE__ = null;
-              if (newStatus) {
-                states.reloadStatusPage++;
-                showToast({
-                  text: 'Post published. Check it out.',
-                  delay: 1000,
-                  duration: 10_000, // 10 seconds
-                  onClick: (toast) => {
-                    toast.hideToast();
-                    states.prevLocation = location;
-                    navigate(
-                      instance
-                        ? `/${instance}/s/${newStatus.id}`
-                        : `/s/${newStatus.id}`,
-                    );
-                  },
-                });
-              }
-            }}
-          />
-        </Modal>
-      )}
-      {!!snapStates.showSettings && (
-        <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showSettings = false;
-            }
-          }}
-        >
-          <Settings
-            onClose={() => {
-              states.showSettings = false;
-            }}
-          />
-        </Modal>
-      )}
-      {!!snapStates.showAccounts && (
-        <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showAccounts = false;
-            }
-          }}
-        >
-          <Accounts
-            onClose={() => {
-              states.showAccounts = false;
-            }}
-          />
-        </Modal>
-      )}
-      {!!snapStates.showAccount && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showAccount = false;
-            }
-          }}
-        >
-          <AccountSheet
-            account={snapStates.showAccount?.account || snapStates.showAccount}
-            instance={snapStates.showAccount?.instance}
-            onClose={({ destination } = {}) => {
-              states.showAccount = false;
-              if (destination) {
-                states.showAccounts = false;
-              }
-            }}
-          />
-        </Modal>
-      )}
-      {!!snapStates.showDrafts && (
-        <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showDrafts = false;
-            }
-          }}
-        >
-          <Drafts onClose={() => (states.showDrafts = false)} />
-        </Modal>
-      )}
-      {!!snapStates.showMediaModal && (
-        <Modal
-          onClick={(e) => {
-            if (
-              e.target === e.currentTarget ||
-              e.target.classList.contains('media')
-            ) {
-              states.showMediaModal = false;
-            }
-          }}
-        >
-          <MediaModal
-            mediaAttachments={snapStates.showMediaModal.mediaAttachments}
-            instance={snapStates.showMediaModal.instance}
-            index={snapStates.showMediaModal.index}
-            statusID={snapStates.showMediaModal.statusID}
-            onClose={() => {
-              states.showMediaModal = false;
-            }}
-          />
-        </Modal>
-      )}
-      {!!snapStates.showShortcutsSettings && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showShortcutsSettings = false;
-            }
-          }}
-        >
-          <ShortcutsSettings
-            onClose={() => (states.showShortcutsSettings = false)}
-          />
-        </Modal>
-      )}
+      <Modals />
       <NotificationService />
       <BackgroundService isLoggedIn={isLoggedIn} />
       <SearchCommand onClose={focusDeck} />

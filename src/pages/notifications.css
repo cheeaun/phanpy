@@ -4,6 +4,11 @@
   gap: 12px;
   animation: appear 0.2s ease-out;
   clear: both;
+
+  b[tabindex='0']:is(:hover, :focus) {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 .notification.notification-mention {
   margin-top: 16px;

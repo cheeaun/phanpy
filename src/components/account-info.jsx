@@ -55,7 +55,9 @@ function AccountInfo({
   instance,
   authenticated,
 }) {
-  const { masto } = api();
+  const { masto } = api({
+    instance,
+  });
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);

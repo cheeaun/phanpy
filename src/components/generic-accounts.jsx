@@ -73,7 +73,7 @@ export default function GenericAccounts({ onClose = () => {} }) {
           <>
             <ul class="accounts-list">
               {accounts.map((account) => (
-                <li key={account.id}>
+                <li key={account.id + (account._types || '')}>
                   {showReactions && account._types?.length > 0 && (
                     <div class="reactions-block">
                       {account._types.map((type) => (

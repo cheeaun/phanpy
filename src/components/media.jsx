@@ -103,7 +103,11 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
     [to],
   );
 
-  const isImage = type === 'image' || (type === 'unknown' && previewUrl);
+  const isVideoMaybe =
+    type === 'unknown' &&
+    /\.(mp4|m4a|m4p|m4b|m4r|m4v|mov|webm)$/i.test(remoteMediaURL);
+  const isImage =
+    type === 'image' || (type === 'unknown' && previewUrl && !isVideoMaybe);
 
   const parentRef = useRef();
   const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
@@ -221,7 +225,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         )}
       </Parent>
     );
-  } else if (type === 'gifv' || type === 'video') {
+  } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {
     const shortDuration = original.duration < 31;
     const isGIF = type === 'gifv' && shortDuration;
     // If GIF is too long, treat it as a video

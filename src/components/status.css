@@ -779,7 +779,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: relative;
   background-clip: padding-box;
 }
-.status :is(.media-video, .media-audio)[data-formatted-duration] .media-play {
+.status :is(.media-video, .media-audio) .media-play {
   pointer-events: none;
   width: 44px;
   height: 44px;
@@ -797,9 +797,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 70px;
   transition: all 0.2s ease-in-out;
 }
-.status
-  :is(.media-video, .media-audio)[data-formatted-duration]:hover:not(:active)
-  .media-play {
+.status :is(.media-video, .media-audio):hover:not(:active) .media-play {
   transform: translate(-50%, -50%) scale(1.1);
   background-color: var(--bg-color);
   box-shadow: 0 0 16px var(--drop-shadow-color),

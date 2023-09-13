@@ -560,8 +560,20 @@
 .status .content blockquote {
   margin-block: min(0.75em, 12px);
   margin-inline: 0;
-  padding: 0 0 0 8px;
-  border-left: 4px solid var(--link-faded-color);
+  padding-block: 0;
+  padding-inline: 12px 0;
+  /* border-left: 4px solid var(--link-faded-color); */
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: '';
+    width: 3px;
+    background-color: var(--link-faded-color);
+    inset-block: 0;
+    inset-inline-start: 0;
+    border-radius: 9999px;
+  }
 }
 .status .content > :is(ul, ol),
 .status .content > div > :is(ul, ol) {

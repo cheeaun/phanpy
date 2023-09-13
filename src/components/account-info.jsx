@@ -1,7 +1,7 @@
 import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
-import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -61,6 +61,11 @@ function AccountInfo({
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
+
+  const isSelf = useMemo(
+    () => account.id === store.session.get('currentAccount'),
+    [account?.id],
+  );
 
   useEffect(() => {
     if (!isString) {
@@ -128,6 +133,8 @@ function AccountInfo({
       });
     }
     const results = await followersIterator.current.next();
+    if (isSelf) return results;
+
     const { value } = results;
     let newValue = [];
     // On first load, fetch familiar followers, merge to top of results' `value`

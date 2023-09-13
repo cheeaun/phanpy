@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import { subscribe, useSnapshot } from 'valtio';
 
 import Accounts from '../pages/accounts';
@@ -25,6 +26,9 @@ subscribe(states, (changes) => {
 
 export default function Modals() {
   const snapStates = useSnapshot(states);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <>
       {!!snapStates.showCompose && (
@@ -58,14 +62,11 @@ export default function Modals() {
                   onClick: (toast) => {
                     toast.hideToast();
                     states.prevLocation = location;
-                    // navigate(
-                    //   instance
-                    //     ? `/${instance}/s/${newStatus.id}`
-                    //     : `/s/${newStatus.id}`,
-                    // );
-                    location.hash = instance
-                      ? `/${instance}/s/${newStatus.id}`
-                      : `/s/${newStatus.id}`;
+                    navigate(
+                      instance
+                        ? `/${instance}/s/${newStatus.id}`
+                        : `/s/${newStatus.id}`,
+                    );
                   },
                 });
               }

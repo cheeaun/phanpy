@@ -1,5 +1,4 @@
 import { useEffect } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
 import states from '../utils/states';

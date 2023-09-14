@@ -234,6 +234,13 @@ function NavMenu(props) {
               <MenuLink to="/login">
                 <Icon icon="user" size="l" /> <span>Log in</span>
               </MenuLink>
+              <MenuItem
+                onClick={() => {
+                  states.showSettings = true;
+                }}
+              >
+                <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+              </MenuItem>
             </>
           )}
         </section>

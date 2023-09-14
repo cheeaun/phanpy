@@ -34,6 +34,7 @@ function Settings({ onClose }) {
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
   const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
+  const { masto, authenticated } = api();
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
   // useEffect(() => {
@@ -169,50 +170,55 @@ function Settings({ onClose }) {
             </li>
           </ul>
         </section>
-        <h3>Posting</h3>
-        <section>
-          <ul>
-            <li>
-              <div>
-                <label for="posting-privacy-field">Default visibility</label>
-              </div>
-              <div>
-                <select
-                  id="posting-privacy-field"
-                  value={prefs['posting:default:visibility'] || 'public'}
-                  onChange={(e) => {
-                    const { value } = e.target;
-                    const { masto } = api();
-                    (async () => {
-                      try {
-                        await masto.v1.accounts.updateCredentials({
-                          source: {
-                            privacy: value,
-                          },
-                        });
-                        setPrefs({
-                          ...prefs,
-                          'posting:default:visibility': value,
-                        });
-                        store.account.set('preferences', {
-                          ...prefs,
-                          'posting:default:visibility': value,
-                        });
-                      } catch (e) {
-                        alert('Failed to update posting privacy');
-                        console.error(e);
-                      }
-                    })();
-                  }}
-                >
-                  <option value="public">Public</option>
-                  <option value="unlisted">Unlisted</option>
-                  <option value="private">Followers only</option>
-                </select>
-              </div>
-            </li>
-          </ul>
-        </section>
+        {authenticated && (
+          <>
+            <h3>Posting</h3>
+            <section>
+              <ul>
+                <li>
+                  <div>
+                    <label for="posting-privacy-field">
+                      Default visibility
+                    </label>
+                  </div>
+                  <div>
+                    <select
+                      id="posting-privacy-field"
+                      value={prefs['posting:default:visibility'] || 'public'}
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        (async () => {
+                          try {
+                            await masto.v1.accounts.updateCredentials({
+                              source: {
+                                privacy: value,
+                              },
+                            });
+                            setPrefs({
+                              ...prefs,
+                              'posting:default:visibility': value,
+                            });
+                            store.account.set('preferences', {
+                              ...prefs,
+                              'posting:default:visibility': value,
+                            });
+                          } catch (e) {
+                            alert('Failed to update posting privacy');
+                            console.error(e);
+                          }
+                        })();
+                      }}
+                    >
+                      <option value="public">Public</option>
+                      <option value="unlisted">Unlisted</option>
+                      <option value="private">Followers only</option>
+                    </select>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </>
+        )}
         <h3>Experiments</h3>
         <section>
           <ul>
@@ -384,21 +390,23 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
-            <li>
-              <button
-                type="button"
-                class="light"
-                onClick={() => {
-                  states.showDrafts = true;
-                  states.showSettings = false;
-                }}
-              >
-                Unsent drafts
-              </button>
-            </li>
+            {authenticated && (
+              <li>
+                <button
+                  type="button"
+                  class="light"
+                  onClick={() => {
+                    states.showDrafts = true;
+                    states.showSettings = false;
+                  }}
+                >
+                  Unsent drafts
+                </button>
+              </li>
+            )}
           </ul>
         </section>
-        <PushNotificationsSection onClose={onClose} />
+        {authenticated && <PushNotificationsSection onClose={onClose} />}
         <h3>About</h3>
         <section>
           <div

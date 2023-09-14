@@ -39,7 +39,9 @@ function Modal({ children, onClose, onClick, class: className }) {
       }}
       tabIndex="-1"
       onFocus={(e) => {
-        modalRef.current?.querySelector?.('[tabindex="-1"]')?.focus?.();
+        if (e.target === e.currentTarget) {
+          modalRef.current?.querySelector?.('[tabindex="-1"]')?.focus?.();
+        }
       }}
     >
       {children}

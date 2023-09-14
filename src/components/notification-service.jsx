@@ -106,6 +106,11 @@ export default memo(function NotificationService() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (navigator?.clearAppBadge) {
+      navigator.clearAppBadge();
+    }
+  }, []);
   usePageVisibility((visible) => {
     if (visible && navigator?.clearAppBadge) {
       console.log('🔰 Clear app badge');

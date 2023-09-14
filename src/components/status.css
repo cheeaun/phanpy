@@ -654,6 +654,31 @@
   width: auto !important;
   max-width: 100%;
   display: block;
+
+  figure {
+    margin: 0;
+    padding: 0;
+
+    figcaption {
+      margin: -2px 0 0;
+      padding: 0 4px;
+      font-size: 90%;
+      color: var(--text-insignificant-color);
+      overflow: hidden;
+      white-space: normal;
+      display: -webkit-box;
+      display: box;
+      -webkit-box-orient: vertical;
+      box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      line-height: 1.2;
+    }
+  }
+
+  &:hover figure figcaption {
+    color: var(--text-color);
+  }
 }
 .status .media-container.media-eq1 .media {
   display: inline-block;

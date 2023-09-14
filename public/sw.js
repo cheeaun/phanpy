@@ -9,6 +9,25 @@ import {
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
+const assetsRoute = new Route(
+  ({ request, sameOrigin }) => {
+    const isAsset =
+      request.destination === 'style' || request.destination === 'script';
+    const hasHash = /-[0-9a-f]{4,}\./i.test(request.url);
+    return sameOrigin && isAsset && hasHash;
+  },
+  new NetworkFirst({
+    cacheName: 'assets',
+    networkTimeoutSeconds: 5,
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(assetsRoute);
+
 const imageRoute = new Route(
   ({ request, sameOrigin }) => {
     const isRemote = !sameOrigin;

@@ -76,10 +76,8 @@ export default function Modals() {
       )}
       {!!snapStates.showSettings && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showSettings = false;
-            }
+          onClose={() => {
+            states.showSettings = false;
           }}
         >
           <Settings
@@ -91,10 +89,8 @@ export default function Modals() {
       )}
       {!!snapStates.showAccounts && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showAccounts = false;
-            }
+          onClose={() => {
+            states.showAccounts = false;
           }}
         >
           <Accounts
@@ -107,10 +103,8 @@ export default function Modals() {
       {!!snapStates.showAccount && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showAccount = false;
-            }
+          onClose={() => {
+            states.showAccount = false;
           }}
         >
           <AccountSheet
@@ -127,10 +121,8 @@ export default function Modals() {
       )}
       {!!snapStates.showDrafts && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showDrafts = false;
-            }
+          onClose={() => {
+            states.showDrafts = false;
           }}
         >
           <Drafts onClose={() => (states.showDrafts = false)} />
@@ -161,10 +153,8 @@ export default function Modals() {
       {!!snapStates.showShortcutsSettings && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showShortcutsSettings = false;
-            }
+          onClose={() => {
+            states.showShortcutsSettings = false;
           }}
         >
           <ShortcutsSettings
@@ -175,10 +165,8 @@ export default function Modals() {
       {!!snapStates.showGenericAccounts && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showGenericAccounts = false;
-            }
+          onClose={() => {
+            states.showGenericAccounts = false;
           }}
         >
           <GenericAccounts

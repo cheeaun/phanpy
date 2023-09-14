@@ -11,8 +11,6 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
   const isString = typeof account === 'string';
 
-  const escRef = useHotkeys('esc', onClose, [onClose]);
-
   useEffect(() => {
     if (!isString) {
       states.accounts[`${account.id}@${instance}`] = account;

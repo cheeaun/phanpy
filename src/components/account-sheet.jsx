@@ -19,7 +19,6 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
 
   return (
     <div
-      ref={escRef}
       class="sheet"
       onClick={(e) => {
         const accountBlock = e.target.closest('.account-block');

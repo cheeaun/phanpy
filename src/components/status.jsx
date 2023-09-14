@@ -228,7 +228,12 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const showSpoiler = previewMode || !!snapStates.spoilers[id] || false;
+  const readingExpandSpoilers = useMemo(() => {
+    const prefs = store.account.get('preferences') || {};
+    return !!prefs['reading:expand:spoilers'];
+  }, []);
+  const showSpoiler =
+    previewMode || readingExpandSpoilers || !!snapStates.spoilers[id] || false;
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
@@ -1128,6 +1133,7 @@ function Status({
               <button
                 class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}
                 type="button"
+                disabled={readingExpandSpoilers}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -1139,7 +1145,11 @@ function Status({
                 }}
               >
                 <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                {showSpoiler ? 'Show less' : 'Show more'}
+                {readingExpandSpoilers
+                  ? 'Content warning'
+                  : showSpoiler
+                  ? 'Show less'
+                  : 'Show more'}
               </button>
             </>
           )}

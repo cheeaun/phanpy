@@ -2,6 +2,7 @@ import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
 import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
+import { proxy, useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -48,6 +49,10 @@ const MUTE_DURATIONS_LABELS = {
 
 const LIMIT = 80;
 
+const accountInfoStates = proxy({
+  familiarFollowers: [],
+});
+
 function AccountInfo({
   account,
   fetchAccount = () => {},
@@ -61,6 +66,7 @@ function AccountInfo({
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
+  const snapAccountInfoStates = useSnapshot(accountInfoStates);
 
   const isSelf = useMemo(
     () => account.id === store.session.get('currentAccount'),
@@ -394,6 +400,22 @@ function AccountInfo({
                       };
                     }}
                   >
+                    {!!snapAccountInfoStates.familiarFollowers.length && (
+                      <span class="shazam-container-horizontal">
+                        <span class="shazam-container-inner stats-avatars-bunch">
+                          {(snapAccountInfoStates.familiarFollowers || []).map(
+                            (follower) => (
+                              <Avatar
+                                url={follower.avatarStatic}
+                                size="s"
+                                alt={`${follower.displayName} @${follower.acct}`}
+                                squircle={follower?.bot}
+                              />
+                            ),
+                          )}
+                        </span>
+                      </span>
+                    )}
                     <span title={followersCount}>
                       {shortenNumber(followersCount)}
                     </span>{' '}
@@ -459,7 +481,7 @@ function AccountInfo({
   );
 }
 
-const FAMILIAR_FOLLOWERS_LIMIT = 10;
+const FAMILIAR_FOLLOWERS_LIMIT = 3;
 
 function RelatedActions({ info, instance, authenticated, standalone }) {
   if (!info) return null;
@@ -472,7 +494,6 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
 
   const [relationshipUIState, setRelationshipUIState] = useState('default');
   const [relationship, setRelationship] = useState(null);
-  const [familiarFollowers, setFamiliarFollowers] = useState([]);
   const [postingStats, setPostingStats] = useState();
 
   const { id, acct, url, username, locked, lastStatusAt, note, fields } = info;
@@ -533,7 +554,7 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
         accountID.current = currentID;
 
         setRelationshipUIState('loading');
-        setFamiliarFollowers([]);
+        accountInfoStates.familiarFollowers = [];
         setPostingStats(null);
 
         const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
@@ -559,7 +580,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
 
                 const followers = await fetchFamiliarFollowers;
                 console.log('fetched familiar followers', followers);
-                setFamiliarFollowers(followers[0].accounts);
+                accountInfoStates.familiarFollowers =
+                  followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT);
 
                 if (standalone) return;
 
@@ -624,61 +646,12 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
 
-  const hasFamiliarFollowers = familiarFollowers?.length > 0;
   const hasPostingStats = postingStats?.total >= 3;
 
   return (
     <>
-      {(hasFamiliarFollowers || hasPostingStats) && (
+      {hasPostingStats && (
         <div class="account-metadata-box">
-          {hasFamiliarFollowers && (
-            <div class="shazam-container">
-              <div class="shazam-container-inner">
-                <p class="common-followers">
-                  Followed by{' '}
-                  <span class="ib">
-                    {familiarFollowers
-                      .slice(0, FAMILIAR_FOLLOWERS_LIMIT)
-                      .map((follower) => (
-                        <a
-                          href={follower.url}
-                          rel="noopener noreferrer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            states.showAccount = {
-                              account: follower,
-                              instance,
-                            };
-                          }}
-                        >
-                          <Avatar
-                            url={follower.avatarStatic}
-                            size="l"
-                            alt={`${follower.displayName} @${follower.acct}`}
-                            squircle={follower?.bot}
-                          />
-                        </a>
-                      ))}
-                    {familiarFollowers.length > FAMILIAR_FOLLOWERS_LIMIT && (
-                      <button
-                        type="button"
-                        class="small plain4"
-                        onClick={() => {
-                          states.showGenericAccounts = {
-                            heading: 'Followed by',
-                            accounts: familiarFollowers,
-                          };
-                        }}
-                      >
-                        +{familiarFollowers.length - FAMILIAR_FOLLOWERS_LIMIT}
-                        <Icon icon="chevron-down" size="s" />
-                      </button>
-                    )}
-                  </span>
-                </p>
-              </div>
-            </div>
-          )}
           {hasPostingStats && (
             <div class="shazam-container">
               <div class="shazam-container-inner">

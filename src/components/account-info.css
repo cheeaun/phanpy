@@ -154,6 +154,14 @@
     cursor: pointer;
     text-decoration-color: var(--text-insignificant-color);
   }
+
+  .stats-avatars-bunch {
+    animation: appear 1s both ease-in-out;
+
+    > *:not(:first-child) {
+      margin: 0 0 0 -4px;
+    }
+  }
 }
 .timeline-start .account-container .stats {
   flex-wrap: wrap;

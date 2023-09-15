@@ -438,3 +438,24 @@ kbd {
 .shazam-container-inner {
   overflow: hidden;
 }
+
+@keyframes shazam-horizontal {
+  0% {
+    grid-template-columns: 0fr;
+  }
+  100% {
+    grid-template-columns: 1fr;
+  }
+}
+.shazam-container-horizontal {
+  display: grid;
+  grid-template-columns: 1fr;
+  transition: grid-template-columns 0.5s ease-in-out;
+  white-space: nowrap;
+}
+.shazam-container-horizontal:not(.no-animation) {
+  animation: shazam-horizontal 0.5s ease-in-out both !important;
+}
+.shazam-container-horizontal[hidden] {
+  grid-template-columns: 0fr;
+}

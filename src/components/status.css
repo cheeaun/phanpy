@@ -417,7 +417,12 @@
   .content-container.has-spoiler:not(.show-spoiler)
   .spoiler
   ~ .card
-  .meta-container {
+  .meta-container,
+.status
+  .content-container.has-spoiler:not(.show-spoiler)
+  .spoiler
+  ~ .media-container
+  figcaption {
   filter: blur(5px) invert(0.5);
   image-rendering: crisp-edges;
   image-rendering: pixelated;

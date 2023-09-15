@@ -184,9 +184,11 @@ function App() {
   useEffect(() => {
     const $app = document.getElementById('app');
     if ($app) {
-      $app.dataset.shortcutsViewMode = snapStates.settings.shortcutsViewMode;
+      $app.dataset.shortcutsViewMode = snapStates.shortcuts?.length
+        ? snapStates.settings.shortcutsViewMode
+        : '';
     }
-  }, [snapStates.settings.shortcutsViewMode]);
+  }, [snapStates.shortcuts, snapStates.settings.shortcutsViewMode]);
 
   // Add/Remove cloak class to body
   useEffect(() => {

@@ -87,7 +87,7 @@ function Search(props) {
       if (type) {
         params.limit = LIMIT;
         params.type = type;
-        params.offset = offsetRef.current;
+        if (authenticated) params.offset = offsetRef.current;
       }
       try {
         const results = await masto.v2.search(params);

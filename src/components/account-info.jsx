@@ -583,43 +583,43 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
                 accountInfoStates.familiarFollowers =
                   followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT);
 
-                if (standalone) return;
+                if (!standalone) {
+                  const { value: statuses } = await fetchStatuses;
+                  console.log('fetched statuses', statuses);
+                  const stats = {
+                    total: statuses.length,
+                    originals: 0,
+                    replies: 0,
+                    boosts: 0,
+                  };
+                  // Categories statuses by type
+                  // - Original posts (not replies to others)
+                  // - Threads (self-replies + 1st original post)
+                  // - Boosts (reblogs)
+                  // - Replies (not-self replies)
+                  statuses.forEach((status) => {
+                    if (status.reblog) {
+                      stats.boosts++;
+                    } else if (
+                      status.inReplyToAccountId !== currentID &&
+                      !!status.inReplyToId
+                    ) {
+                      stats.replies++;
+                    } else {
+                      stats.originals++;
+                    }
+                  });
 
-                const { value: statuses } = await fetchStatuses;
-                console.log('fetched statuses', statuses);
-                const stats = {
-                  total: statuses.length,
-                  originals: 0,
-                  replies: 0,
-                  boosts: 0,
-                };
-                // Categories statuses by type
-                // - Original posts (not replies to others)
-                // - Threads (self-replies + 1st original post)
-                // - Boosts (reblogs)
-                // - Replies (not-self replies)
-                statuses.forEach((status) => {
-                  if (status.reblog) {
-                    stats.boosts++;
-                  } else if (
-                    status.inReplyToAccountId !== currentID &&
-                    !!status.inReplyToId
-                  ) {
-                    stats.replies++;
-                  } else {
-                    stats.originals++;
-                  }
-                });
+                  // Count days since last post
+                  stats.daysSinceLastPost = Math.ceil(
+                    (Date.now() -
+                      new Date(statuses[statuses.length - 1].createdAt)) /
+                      86400000,
+                  );
 
-                // Count days since last post
-                stats.daysSinceLastPost = Math.ceil(
-                  (Date.now() -
-                    new Date(statuses[statuses.length - 1].createdAt)) /
-                    86400000,
-                );
-
-                console.log('posting stats', stats);
-                setPostingStats(stats);
+                  console.log('posting stats', stats);
+                  setPostingStats(stats);
+                }
               } catch (e) {
                 console.error(e);
               }

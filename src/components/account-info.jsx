@@ -564,6 +564,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
         try {
           const relationships = await fetchRelationships;
           console.log('fetched relationship', relationships);
+          setRelationshipUIState('default');
+
           if (relationships.length) {
             const relationship = relationships[0];
             setRelationship(relationship);
@@ -625,7 +627,6 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
               }
             }
           }
-          setRelationshipUIState('default');
         } catch (e) {
           console.error(e);
           setRelationshipUIState('error');

@@ -1056,10 +1056,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
       {!!showTranslatedBio && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowTranslatedBio(false);
-            }
+          onClose={() => {
+            setShowTranslatedBio(false);
           }}
         >
           <TranslatedBioSheet
@@ -1072,10 +1070,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
       {!!showAddRemoveLists && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowAddRemoveLists(false);
-            }
+          onClose={() => {
+            setShowAddRemoveLists(false);
           }}
         >
           <AddRemoveListsSheet

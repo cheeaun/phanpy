@@ -648,58 +648,63 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
 
   const hasPostingStats = postingStats?.total >= 3;
+  const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
 
   return (
     <>
       {hasPostingStats && (
-        <div class="account-metadata-box">
-          {hasPostingStats && (
-            <div class="shazam-container">
-              <div class="shazam-container-inner">
-                <div class="posting-stats">
-                  <div>
-                    {postingStats.daysSinceLastPost < 365
-                      ? `Last ${postingStats.total} posts in the past 
+        <Link
+          to={accountLink}
+          class="account-metadata-box"
+          onClick={() => {
+            states.showAccount = false;
+          }}
+        >
+          <div class="shazam-container">
+            <div class="shazam-container-inner">
+              <div class="posting-stats">
+                <div>
+                  {postingStats.daysSinceLastPost < 365
+                    ? `Last ${postingStats.total} posts in the past 
                     ${postingStats.daysSinceLastPost} day${
-                          postingStats.daysSinceLastPost > 1 ? 's' : ''
-                        }`
-                      : `
+                        postingStats.daysSinceLastPost > 1 ? 's' : ''
+                      }`
+                    : `
                      Last ${postingStats.total} posts in the past year(s)
                     `}
-                  </div>
-                  <div
-                    class="posting-stats-bar"
-                    style={{
-                      // [originals | replies | boosts]
-                      '--originals-percentage': `${
-                        (postingStats.originals / postingStats.total) * 100
-                      }%`,
-                      '--replies-percentage': `${
-                        ((postingStats.originals + postingStats.replies) /
-                          postingStats.total) *
-                        100
-                      }%`,
-                    }}
-                  />
-                  <div class="posting-stats-legends">
-                    <span class="ib">
-                      <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                      Original
-                    </span>{' '}
-                    <span class="ib">
-                      <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                      Replies
-                    </span>{' '}
-                    <span class="ib">
-                      <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                      Boosts
-                    </span>
-                  </div>
+                </div>
+                <div
+                  class="posting-stats-bar"
+                  style={{
+                    // [originals | replies | boosts]
+                    '--originals-percentage': `${
+                      (postingStats.originals / postingStats.total) * 100
+                    }%`,
+                    '--replies-percentage': `${
+                      ((postingStats.originals + postingStats.replies) /
+                        postingStats.total) *
+                      100
+                    }%`,
+                  }}
+                />
+                <div class="posting-stats-legends">
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                    Original
+                  </span>{' '}
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                    Replies
+                  </span>{' '}
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                    Boosts
+                  </span>
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        </Link>
       )}
       <p class="actions">
         <span>

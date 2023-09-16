@@ -196,6 +196,8 @@
 .account-container .account-metadata-box {
   overflow: hidden;
   border-radius: 16px;
+  display: block;
+  text-decoration: none;
 
   & > * {
     margin-bottom: 2px;
@@ -307,6 +309,10 @@
   padding: 8px 12px;
   --size: 8px;
   --original-color: var(--link-color);
+
+  &:is(:hover, :focus-within) {
+    background-color: var(--link-bg-hover-color);
+  }
 
   .posting-stats-bar {
     height: var(--size);

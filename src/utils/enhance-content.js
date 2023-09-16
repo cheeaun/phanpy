@@ -1,6 +1,7 @@
 import emojifyText from './emojify-text';
 
 const fauxDiv = document.createElement('div');
+const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
 
 function enhanceContent(content, opts = {}) {
   const { emojis, postEnhanceDOM = () => {} } = opts;
@@ -22,10 +23,9 @@ function enhanceContent(content, opts = {}) {
 
     // Remove all classes except `u-url`, `mention`, `hashtag`
     const links = Array.from(dom.querySelectorAll('a[class]'));
-    const whitelistClasses = ['u-url', 'mention', 'hashtag'];
     links.forEach((link) => {
-      link.classList.forEach((c) => {
-        if (!whitelistClasses.includes(c)) {
+      Array.from(link.classList).forEach((c) => {
+        if (!whitelistLinkClasses.includes(c)) {
           link.classList.remove(c);
         }
       });

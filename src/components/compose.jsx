@@ -1175,6 +1175,17 @@ function Compose({
   );
 }
 
+function autoResizeTextarea(textarea) {
+  if (!textarea) return;
+  const { value, offsetHeight, scrollHeight, clientHeight } = textarea;
+  if (offsetHeight < window.innerHeight) {
+    // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
+    // No idea why it does that, will re-investigate in far future
+    const offset = offsetHeight - clientHeight;
+    textarea.style.height = value ? scrollHeight + offset + 'px' : null;
+  }
+}
+
 const Textarea = forwardRef((props, ref) => {
   const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
@@ -1367,15 +1378,46 @@ const Textarea = forwardRef((props, ref) => {
         ref={ref}
         name="status"
         value={text}
-        onInput={(e) => {
-          const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
-          setText(value);
-          if (offsetHeight < window.innerHeight) {
-            // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
-            // No idea why it does that, will re-investigate in far future
-            const offset = offsetHeight - clientHeight;
-            e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+        onKeyDown={(e) => {
+          // Get line before cursor position after pressing 'Enter'
+          const { key, target } = e;
+          if (key === 'Enter') {
+            try {
+              const { value, selectionStart } = target;
+              const textBeforeCursor = value.slice(0, selectionStart);
+              const lastLine = textBeforeCursor.split('\n').slice(-1)[0];
+              if (lastLine) {
+                // If line starts with "- " or "12. "
+                if (/^\s*(-|\d+\.)\s/.test(lastLine)) {
+                  // insert "- " at cursor position
+                  const [_, preSpaces, bullet, postSpaces, anything] =
+                    lastLine.match(/^(\s*)(-|\d+\.)(\s+)(.+)?/) || [];
+                  if (anything) {
+                    e.preventDefault();
+                    const [number] = bullet.match(/\d+/) || [];
+                    const newBullet = number ? `${+number + 1}.` : '-';
+                    const text = `\n${preSpaces}${newBullet}${postSpaces}`;
+                    target.setRangeText(text, selectionStart, selectionStart);
+                    const pos = selectionStart + text.length;
+                    target.setSelectionRange(pos, pos);
+                  } else {
+                    // trim the line before the cursor, then insert new line
+                    const pos = selectionStart - lastLine.length;
+                    target.setRangeText('', pos, selectionStart);
+                  }
+                  autoResizeTextarea(target);
+                }
+              }
+            } catch (e) {
+              // silent fail
+              console.error(e);
+            }
           }
+        }}
+        onInput={(e) => {
+          const { target } = e;
+          setText(target.value);
+          autoResizeTextarea(target);
           props.onInput?.(e);
         }}
         style={{

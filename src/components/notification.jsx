@@ -61,6 +61,8 @@ const contentText = {
   'admin.report': 'reported a post.',
 };
 
+const AVATARS_LIMIT = 50;
+
 function Notification({ notification, instance, reload, isStatic }) {
   const { id, status, account, _accounts, _statuses } = notification;
   let { type } = notification;
@@ -207,7 +209,7 @@ function Notification({ notification, instance, reload, isStatic }) {
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
-            {_accounts.slice(0, 50).map((account, i) => (
+            {_accounts.slice(0, AVATARS_LIMIT).map((account, i) => (
               <>
                 <a
                   href={account.url}
@@ -254,6 +256,8 @@ function Notification({ notification, instance, reload, isStatic }) {
               class="small plain"
               onClick={handleOpenGenericAccounts}
             >
+              {_accounts.length > AVATARS_LIMIT &&
+                `+${_accounts.length - AVATARS_LIMIT}`}
               <Icon icon="chevron-down" />
             </button>
           </p>

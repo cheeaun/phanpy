@@ -10,14 +10,25 @@ function enhanceContent(content, opts = {}) {
   const hasLink = /<a/i.test(enhancedContent);
   const hasCodeBlock = enhancedContent.indexOf('```') !== -1;
 
-  // Add target="_blank" to all links with no target="_blank"
-  // E.g. `note` in `account`
   if (hasLink) {
+    // Add target="_blank" to all links with no target="_blank"
+    // E.g. `note` in `account`
     const noTargetBlankLinks = Array.from(
       dom.querySelectorAll('a:not([target="_blank"])'),
     );
     noTargetBlankLinks.forEach((link) => {
       link.setAttribute('target', '_blank');
+    });
+
+    // Remove all classes except `u-url`, `mention`, `hashtag`
+    const links = Array.from(dom.querySelectorAll('a[class]'));
+    const whitelistClasses = ['u-url', 'mention', 'hashtag'];
+    links.forEach((link) => {
+      link.classList.forEach((c) => {
+        if (!whitelistClasses.includes(c)) {
+          link.classList.remove(c);
+        }
+      });
     });
   }
 

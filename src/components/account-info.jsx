@@ -662,7 +662,16 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
         >
           <div class="shazam-container">
             <div class="shazam-container-inner">
-              <div class="posting-stats">
+              <div
+                class="posting-stats"
+                title={`${Math.round(
+                  (postingStats.originals / postingStats.total) * 100,
+                )}% original posts, ${Math.round(
+                  (postingStats.replies / postingStats.total) * 100,
+                )}% replies, ${Math.round(
+                  (postingStats.boosts / postingStats.total) * 100,
+                )}% boosts`}
+              >
                 <div>
                   {postingStats.daysSinceLastPost < 365
                     ? `Last ${postingStats.total} posts in the past 

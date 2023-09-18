@@ -328,7 +328,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             <>
               <img
                 src={previewUrl}
-                alt={description}
+                alt={showInlineDesc ? '' : description}
                 width={width}
                 height={height}
                 data-orientation={orientation}

@@ -286,6 +286,20 @@ function Notification({ notification, instance, reload, isStatic }) {
                 ? `/${instance}/s/${actualStatusID}`
                 : `/s/${actualStatusID}`
             }
+            onContextMenu={(e) => {
+              const post = e.target.querySelector('.status');
+              if (post) {
+                // Fire a custom event to open the context menu
+                if (e.metaKey) return;
+                e.preventDefault();
+                post.dispatchEvent(
+                  new MouseEvent('contextmenu', {
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                  }),
+                );
+              }
+            }}
           >
             {isStatic ? (
               <Status status={actualStatus} size="s" />

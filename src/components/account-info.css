@@ -315,6 +315,8 @@
   }
 
   .posting-stats-bar {
+    --gap: 0.5px;
+    --gap-color: var(--outline-color);
     height: var(--size);
     border-radius: var(--size);
     overflow: hidden;
@@ -327,10 +329,14 @@
     background-image: linear-gradient(
       to right,
       var(--original-color) 0%,
-      var(--original-color) var(--originals-percentage),
-      var(--reply-to-color) var(--originals-percentage),
-      var(--reply-to-color) var(--replies-percentage),
-      var(--reblog-color) var(--replies-percentage),
+      var(--original-color) calc(var(--originals-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--originals-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--originals-percentage) + var(--gap)),
+      var(--reply-to-color) calc(var(--originals-percentage) + var(--gap)),
+      var(--reply-to-color) calc(var(--replies-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--replies-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--replies-percentage) + var(--gap)),
+      var(--reblog-color) calc(var(--replies-percentage) + var(--gap)),
       var(--reblog-color) 100%
     );
   }

@@ -48,6 +48,7 @@ import showToast from '../utils/show-toast';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
+import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
@@ -318,40 +319,8 @@ function Status({
   const [showEdited, setShowEdited] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
 
-  const spoilerContentRef = useRef(null);
-  useResizeObserver({
-    ref: spoilerContentRef,
-    onResize: () => {
-      if (spoilerContentRef.current) {
-        const { scrollHeight, clientHeight } = spoilerContentRef.current;
-        if (scrollHeight < window.innerHeight * 0.4) {
-          spoilerContentRef.current.classList.remove('truncated');
-        } else {
-          spoilerContentRef.current.classList.toggle(
-            'truncated',
-            scrollHeight > clientHeight,
-          );
-        }
-      }
-    },
-  });
-  const contentRef = useRef(null);
-  useResizeObserver({
-    ref: contentRef,
-    onResize: () => {
-      if (contentRef.current) {
-        const { scrollHeight, clientHeight } = contentRef.current;
-        if (scrollHeight < window.innerHeight * 0.4) {
-          contentRef.current.classList.remove('truncated');
-        } else {
-          contentRef.current.classList.toggle(
-            'truncated',
-            scrollHeight > clientHeight,
-          );
-        }
-      }
-    },
-  });
+  const spoilerContentRef = useTruncated();
+  const contentRef = useTruncated();
   const readMoreText = 'Read more →';
 
   const statusRef = useRef(null);

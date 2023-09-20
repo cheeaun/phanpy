@@ -93,6 +93,34 @@
   text-decoration: none;
   color: var(--text-color);
 }
+.status-card-link:not(.status-card-link .status-card-link):has(.truncated) {
+  position: relative;
+
+  &:after {
+    content: attr(data-read-more);
+    line-height: 1;
+    display: inline-block;
+    position: absolute;
+    --inset-offset: 16px;
+    inset-block-end: var(--inset-offset);
+    inset-inline-end: var(--inset-offset);
+    color: var(--link-color);
+    background-color: var(--bg-faded-blur-color);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--outline-color);
+    padding: 0.5em 0.75em;
+    border-radius: 10em;
+    font-size: 90%;
+    white-space: nowrap;
+    transition: all 0.2s ease-out;
+  }
+
+  &:is(:hover, :focus):after {
+    border-color: var(--link-color);
+    background-color: var(--bg-color);
+    transform: translate(2px, 0);
+  }
+}
 .status-card-link:is(:hover, :focus) .status-card {
   border-color: var(--outline-hover-color);
   box-shadow: inset 0 0 0 4px var(--bg-faded-blur-color);
@@ -131,11 +159,13 @@
   :is(.content, .poll, .media-container) {
   max-height: 80px !important;
 }
-.status-card :is(.content, .poll) {
+.status-card :is(.content.truncated, .poll, .media-container.truncated) {
   font-size: inherit !important;
   mask-image: linear-gradient(to bottom, #000 80px, transparent);
 }
-.status.small .status-card :is(.content, .poll) {
+.status.small
+  .status-card
+  :is(.content.truncated, .poll, .media-container.truncated) {
   mask-image: linear-gradient(to bottom, #000 40px, transparent);
 }
 .status-card .card {

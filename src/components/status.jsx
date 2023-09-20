@@ -321,6 +321,7 @@ function Status({
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
+  const mediaContainerRef = useTruncated();
   const readMoreText = 'Read more →';
 
   const statusRef = useRef(null);
@@ -1248,6 +1249,7 @@ function Status({
           )}
           {!!mediaAttachments.length && (
             <div
+              ref={mediaContainerRef}
               class={`media-container media-eq${mediaAttachments.length} ${
                 mediaAttachments.length > 2 ? 'media-gt2' : ''
               } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
@@ -2185,6 +2187,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
         key={q.instance + q.id}
         to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
         class="status-card-link"
+        data-read-more="Read more →"
       >
         <Status
           statusID={q.id}

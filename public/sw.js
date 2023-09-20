@@ -143,7 +143,7 @@ self.addEventListener('push', (event) => {
         body,
         icon,
         dir: 'auto',
-        badge: '/logo-192.png',
+        badge: '/logo-badge-72.png',
         lang: preferred_locale,
         tag: notification_id,
         timestamp: Date.now(),

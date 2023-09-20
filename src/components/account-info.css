@@ -9,6 +9,46 @@
   color: var(--outline-color);
 }
 
+.account-container .account-moved {
+  animation: fade-in 0.3s both ease-in-out 0.3s;
+  padding: 16px;
+  background-color: var(--bg-color);
+  position: absolute;
+  top: 8px;
+  inset-inline: 8px;
+  z-index: 2;
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 8px 16px var(--drop-shadow-color);
+  border-radius: calc(16px - 8px);
+  overflow: hidden;
+
+  p {
+    margin: 0 0 8px;
+    padding: 0;
+  }
+
+  .account-block {
+    background-color: var(--bg-faded-color);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--link-faded-color);
+
+    &:hover {
+      background-color: var(--link-bg-hover-color);
+      border-color: var(--link-color);
+    }
+
+    b {
+      color: var(--link-color);
+    }
+  }
+
+  ~ * {
+    /* pointer-events: none; */
+    filter: grayscale(0.75) brightness(0.75);
+  }
+}
+
 .account-container .header-banner {
   /* pointer-events: none; */
   aspect-ratio: 6 / 1;

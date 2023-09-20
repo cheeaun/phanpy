@@ -115,6 +115,7 @@ function AccountInfo({
     url,
     username,
     memorial,
+    moved,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -235,6 +236,22 @@ function AccountInfo({
       ) : (
         info && (
           <>
+            {!!moved && (
+              <div class="account-moved">
+                <p>
+                  <b>{displayName}</b> has indicated that their new account is
+                  now:
+                </p>
+                <AccountBlock
+                  account={moved}
+                  instance={instance}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    states.showAccount = moved;
+                  }}
+                />
+              </div>
+            )}
             {header && !/missing\.png$/.test(header) && (
               <img
                 src={header}
@@ -496,7 +513,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
   const [relationship, setRelationship] = useState(null);
   const [postingStats, setPostingStats] = useState();
 
-  const { id, acct, url, username, locked, lastStatusAt, note, fields } = info;
+  const { id, acct, url, username, locked, lastStatusAt, note, fields, moved } =
+    info;
   const accountID = useRef(id);
 
   const {
@@ -552,6 +570,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
         }
 
         accountID.current = currentID;
+
+        if (moved) return;
 
         setRelationshipUIState('loading');
         accountInfoStates.familiarFollowers = [];

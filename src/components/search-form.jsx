@@ -23,6 +23,9 @@ const SearchForm = forwardRef((props, ref) => {
     focus: () => {
       searchFieldRef.current.focus();
     },
+    select: () => {
+      searchFieldRef.current.select();
+    },
     blur: () => {
       searchFieldRef.current.blur();
     },

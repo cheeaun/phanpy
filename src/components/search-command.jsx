@@ -16,6 +16,7 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
       setShowSearch(true);
       setTimeout(() => {
         searchFormRef.current?.focus?.();
+        searchFormRef.current?.select?.();
       }, 0);
     },
     {

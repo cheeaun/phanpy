@@ -1128,7 +1128,12 @@ function Status({
               lang={language}
               dir="auto"
               class="inner-content"
-              onClick={handleContentLinks({ mentions, instance, previewMode })}
+              onClick={handleContentLinks({
+                mentions,
+                instance,
+                previewMode,
+                statusURL: url,
+              })}
               dangerouslySetInnerHTML={{
                 __html: enhanceContent(content, {
                   emojis,

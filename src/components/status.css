@@ -1131,6 +1131,9 @@ a:focus-visible .card img {
   overflow: hidden;
   display: block;
 }
+.card:visited .meta.domain {
+  color: var(--link-visited-color);
+}
 .card .meta.domain * {
   vertical-align: middle;
 }
@@ -1141,6 +1144,9 @@ a.card {
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);
   box-shadow: 0 0 0 2px var(--link-faded-color);
+}
+a.card:is(:hover, :focus):visited {
+  border-color: var(--link-visited-color);
 }
 .card.video {
   max-width: 320px;

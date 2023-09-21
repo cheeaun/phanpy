@@ -1737,25 +1737,25 @@ meter.donut[hidden] {
 
 :is(.shiny-pill, :root .toastify.shiny-pill) {
   pointer-events: auto;
-  color: var(--button-text-color);
-  text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
-  background-color: var(--button-bg-color);
-  background-image: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.5),
-    rgba(0, 0, 0, 0.1)
-  );
-  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
-    0 10px 36px -4px var(--button-bg-blur-color),
-    inset var(--hairline-width) var(--hairline-width) rgba(255, 255, 255, 0.5);
-  transition: filter 0.3s;
+  color: var(--link-text-color);
+  font-weight: 500;
+  text-shadow: 0 1px var(--bg-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 0 0 1px var(--bg-blur-color),
+    0 3px 16px var(--drop-shadow-color),
+    0 6px 16px -3px var(--drop-shadow-color);
 }
 :is(.shiny-pill, :root .toastify.shiny-pill):hover {
-  filter: brightness(1.2);
+  color: var(--text-color);
+  border-color: var(--link-color);
+  filter: none;
+  box-shadow: 0 0 0 1px var(--link-color), 0 3px 16px var(--drop-shadow-color),
+    0 6px 16px -3px var(--drop-shadow-color);
 }
 :is(.shiny-pill, :root .toastify.shiny-pill):active {
   transition: none;
-  filter: brightness(0.9);
+  filter: brightness(0.975);
 }
 
 /* TOAST */
@@ -1767,9 +1767,10 @@ meter.donut[hidden] {
   pointer-events: none;
   color: var(--button-text-color);
   text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
-  background-color: var(--button-bg-blur-color);
+  background-color: var(--button-bg-color);
   background-image: none;
-  backdrop-filter: blur(16px);
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);

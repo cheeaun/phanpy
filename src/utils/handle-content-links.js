@@ -6,6 +6,12 @@ function handleContentLinks(opts) {
     let { target } = e;
     target = target.closest('a');
     if (!target) return;
+
+    // If cmd/ctrl/shift/alt key is pressed or middle-click, let the browser handle it
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2) {
+      return;
+    }
+
     const prevText = target.previousSibling?.textContent;
     const textBeforeLinkIsAt = prevText?.endsWith('@');
     const textStartsWithAt = target.innerText.startsWith('@');

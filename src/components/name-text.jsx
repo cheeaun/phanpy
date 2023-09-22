@@ -71,9 +71,9 @@ function NameText({
           )}
         </>
       ) : short ? (
-        <i>@{username}</i>
+        <i>{username}</i>
       ) : (
-        <b>@{username}</b>
+        <b>{username}</b>
       )}
       {showAcct && (
         <>

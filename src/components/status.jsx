@@ -2089,6 +2089,8 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
     },
   );
 
+  const statusPeekRef = useTruncated();
+
   return (
     <div
       class={isReblog ? (group ? 'status-group' : 'status-reblog') : ''}
@@ -2162,16 +2164,15 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
             </header>
             <main tabIndex="-1">
               <Link
+                ref={statusPeekRef}
                 class="status-link"
                 to={`/${instance}/s/${status.id}`}
                 onClick={() => {
                   setShowPeek(false);
                 }}
+                data-read-more="Read more →"
               >
                 <Status status={status} instance={instance} size="s" readOnly />
-                <button type="button" class="status-post-link plain3">
-                  See post &raquo;
-                </button>
               </Link>
             </main>
           </div>

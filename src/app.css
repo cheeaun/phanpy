@@ -1742,20 +1742,17 @@ meter.donut[hidden] {
   text-shadow: 0 1px var(--bg-color);
   background-color: var(--bg-color);
   border: 1px solid var(--outline-color);
-  box-shadow: 0 0 0 1px var(--bg-blur-color),
-    0 3px 16px var(--drop-shadow-color),
+  box-shadow: 0 3px 16px var(--drop-shadow-color),
     0 6px 16px -3px var(--drop-shadow-color);
 }
-:is(.shiny-pill, :root .toastify.shiny-pill):hover {
+:is(.shiny-pill, :root .toastify.shiny-pill):hover:not(:active) {
   color: var(--text-color);
   border-color: var(--link-color);
-  filter: none;
-  box-shadow: 0 0 0 1px var(--link-color), 0 3px 16px var(--drop-shadow-color),
-    0 6px 16px -3px var(--drop-shadow-color);
-}
-:is(.shiny-pill, :root .toastify.shiny-pill):active {
-  transition: none;
-  filter: brightness(0.975);
+  filter: none !important;
+  box-shadow: 0 0 0 1px var(--link-text-color),
+    0 3px 16px var(--drop-shadow-color),
+    0 6px 16px -3px var(--drop-shadow-color),
+    0 6px 16px var(--drop-shadow-color);
 }
 
 /* TOAST */

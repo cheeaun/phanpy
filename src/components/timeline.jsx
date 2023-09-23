@@ -332,7 +332,7 @@ function Timeline({
                   });
                 }}
               >
-                <Icon icon="arrow-up" /> <span>New posts</span>
+                <Icon icon="arrow-up" /> New posts
               </button>
             )}
         </header>

@@ -1555,6 +1555,7 @@ function Card({ card, instance }) {
         rel="nofollow noopener noreferrer"
         class={`card link ${blurhashImage ? '' : size}`}
         lang={language}
+        dir="auto"
       >
         <div class="card-image">
           <img
@@ -1571,9 +1572,15 @@ function Card({ card, instance }) {
           />
         </div>
         <div class="meta-container">
-          <p class="meta domain">{domain}</p>
-          <p class="title">{title}</p>
-          <p class="meta">{description || providerName || authorName}</p>
+          <p class="meta domain" dir="auto">
+            {domain}
+          </p>
+          <p class="title" dir="auto">
+            {title}
+          </p>
+          <p class="meta" dir="auto">
+            {description || providerName || authorName}
+          </p>
         </div>
       </a>
     );

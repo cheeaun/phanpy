@@ -162,14 +162,12 @@ function Notifications({ columnMode }) {
     }
   }, [nearReachEnd, showMore]);
 
-  const isHovering = useRef(false);
   const idle = useIdle(5000);
   console.debug('🧘‍♀️ IDLE', idle);
   const loadUpdates = useCallback(() => {
     console.log('✨ Load updates', {
       autoRefresh: snapStates.settings.autoRefresh,
       scrollTop: scrollableRef.current?.scrollTop === 0,
-      isHovering: isHovering.current,
       inBackground: inBackground(),
       notificationsShowNew: snapStates.notificationsShowNew,
       uiState,
@@ -177,7 +175,7 @@ function Notifications({ columnMode }) {
     if (
       snapStates.settings.autoRefresh &&
       scrollableRef.current?.scrollTop === 0 &&
-      (!isHovering.current || idle) &&
+      idle &&
       !inBackground() &&
       snapStates.notificationsShowNew &&
       uiState !== 'loading'
@@ -236,14 +234,6 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={scrollableRef}
       tabIndex="-1"
-      onPointerEnter={() => {
-        console.log('👆 Pointer enter');
-        isHovering.current = true;
-      }}
-      onPointerLeave={() => {
-        console.log('👇 Pointer leave');
-        isHovering.current = false;
-      }}
     >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>
         <header

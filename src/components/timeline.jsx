@@ -206,7 +206,6 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
-  const isHovering = useRef(false);
   const idle = useIdle(5000);
   console.debug('🧘‍♀️ IDLE', idle);
   const loadOrCheckUpdates = useCallback(
@@ -275,12 +274,6 @@ function Timeline({
         oRef.current = node;
       }}
       tabIndex="-1"
-      onPointerEnter={(e) => {
-        isHovering.current = true;
-      }}
-      onPointerLeave={() => {
-        isHovering.current = false;
-      }}
     >
       <div class="timeline-deck deck">
         <header

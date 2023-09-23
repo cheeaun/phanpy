@@ -89,7 +89,7 @@ function TranslationBlock({
           });
         }
       } else {
-        console.error(result);
+        if (error) console.error(error);
         setUIState('error');
       }
     } catch (e) {

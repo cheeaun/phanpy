@@ -63,6 +63,11 @@
   --close-button-color: rgba(0, 0, 0, 0.5);
   --close-button-hover-color: rgba(0, 0, 0, 1);
 
+  /* Video colors won't change based on color scheme */
+  --video-fg-color: #f0f2f5;
+  --video-bg-color: #242526;
+  --video-outline-color: color-mix(in lch, var(--video-fg-color), transparent);
+
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
 }
 

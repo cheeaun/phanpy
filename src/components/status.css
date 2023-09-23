@@ -869,26 +869,17 @@ body:has(#modal-container .carousel) .status .media img:hover {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: var(--text-color);
-  background-color: var(--bg-blur-color);
-  background-image: radial-gradient(
-    circle at top left,
-    var(--bg-color),
-    transparent
-  );
-  /* backdrop-filter: blur(6px) saturate(3) invert(0.2); */
-  box-shadow: 0 0 0 1px var(--bg-color), 0 0 16px var(--drop-shadow-color);
+  color: var(--video-fg-color);
+  background-color: var(--video-bg-color);
+  box-shadow: inset 0 0 0 2px var(--video-outline-color);
   display: flex;
   place-content: center;
   place-items: center;
   border-radius: 70px;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 .status :is(.media-video, .media-audio):hover:not(:active) .media-play {
   transform: translate(-50%, -50%) scale(1.1);
-  background-color: var(--bg-color);
-  box-shadow: 0 0 0 1px var(--bg-color), 0 0 16px var(--drop-shadow-color),
-    0 0 8px var(--drop-shadow-color);
 }
 .status :is(.media-video, .media-audio)[data-formatted-duration]:after {
   font-size: 12px;
@@ -897,9 +888,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  color: var(--bg-color);
-  background-color: var(--text-color);
-  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  color: var(--video-fg-color);
+  background-color: var(--video-bg-color);
+  border: var(--hairline-width) solid var(--video-outline-color);
   border-radius: 4px;
   padding: 0 4px;
 }

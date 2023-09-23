@@ -93,7 +93,10 @@
   text-decoration: none;
   color: var(--text-color);
 }
-.status-card-link:not(.status-card-link .status-card-link):has(.truncated) {
+.status-card-link:not(
+    .truncated .status-card-link, /* parent status already truncated */
+    .status-card-link .status-card-link /* nested status cards */
+  ):has(.truncated) {
   position: relative;
 
   &:after {

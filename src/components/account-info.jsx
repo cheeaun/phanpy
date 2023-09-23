@@ -73,6 +73,11 @@ function AccountInfo({
     [account?.id],
   );
 
+  const sameCurrentInstance = useMemo(
+    () => instance === api().instance,
+    [instance],
+  );
+
   useEffect(() => {
     if (!isString) {
       setInfo(account);
@@ -141,6 +146,7 @@ function AccountInfo({
     }
     const results = await followersIterator.current.next();
     if (isSelf) return results;
+    if (!sameCurrentInstance) return results;
 
     const { value } = results;
     let newValue = [];

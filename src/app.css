@@ -2191,6 +2191,9 @@ ul.link-list li a .icon {
   .timeline-deck > header[hidden] {
     transform: translate3d(0, calc((100% + var(--margin-top)) * -1), 0);
   }
+  .deck > header {
+    text-shadow: 0 1px var(--bg-color);
+  }
   .deck > header h1 {
     font-size: 1.5em;
   }

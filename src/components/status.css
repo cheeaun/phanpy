@@ -166,6 +166,9 @@
   :is(.content, .poll, .media-container) {
   max-height: 80px !important;
 }
+.status.large .status-card :is(.content, .poll, .media-container) {
+  max-height: 80vh !important;
+}
 .status-card :is(.content.truncated, .poll, .media-container.truncated) {
   font-size: inherit !important;
   mask-image: linear-gradient(to bottom, #000 80px, transparent);

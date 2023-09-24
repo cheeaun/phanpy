@@ -97,6 +97,7 @@
     .truncated .status-card-link, /* parent status already truncated */
     .status-card-link .status-card-link /* nested status cards */
   ):has(.truncated) {
+  display: block;
   position: relative;
 
   &:after {

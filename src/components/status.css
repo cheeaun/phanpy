@@ -958,6 +958,15 @@ body:has(#modal-container .carousel) .status .media img:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+
+  /* Convert breaks to spaces */
+  br {
+    display: none;
+
+    + * {
+      margin-left: 1ex;
+    }
+  }
 }
 .status:not(.large) .hashtag-stuffing:first-child {
   display: -webkit-box;

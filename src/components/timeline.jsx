@@ -412,7 +412,13 @@ function Timeline({
                     const isSpoiler = item.sensitive && !!item.spoilerText;
                     const showCompact =
                       (isSpoiler && i > 0) ||
-                      (manyItems && isMiddle && type === 'thread');
+                      (manyItems &&
+                        isMiddle &&
+                        (type === 'thread' ||
+                          (type === 'conversation' &&
+                            !_differentAuthor &&
+                            !items[i - 1]._differentAuthor &&
+                            !items[i + 1]._differentAuthor)));
                     return (
                       <li
                         key={`timeline-${statusID}`}

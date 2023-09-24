@@ -18,8 +18,8 @@ function EmojiText({ text, emojis }) {
             src={url}
             alt={word}
             class="shortcode-emoji emoji"
-            width="12"
-            height="12"
+            width="16"
+            height="16"
             loading="lazy"
             decoding="async"
           />

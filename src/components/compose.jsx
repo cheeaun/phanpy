@@ -1893,14 +1893,23 @@ function CustomEmojisModal({
                           }}
                           title={`:${emoji.shortcode}:`}
                         >
-                          <img
-                            src={emoji.url || emoji.staticUrl}
-                            alt={emoji.shortcode}
-                            width="16"
-                            height="16"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          <picture>
+                            {!!emoji.staticUrl && (
+                              <source
+                                srcset={emoji.staticUrl}
+                                media="(prefers-reduced-motion: reduce)"
+                              />
+                            )}
+                            <img
+                              class="shortcode-emoji"
+                              src={emoji.url || emoji.staticUrl}
+                              alt={emoji.shortcode}
+                              width="16"
+                              height="16"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </picture>
                         </button>
                       ))}
                     </section>

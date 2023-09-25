@@ -211,6 +211,10 @@
   display: flex;
   gap: 8px;
   align-items: center;
+
+  .status-carousel & {
+    padding: 16px 16px 16px 24px;
+  }
 }
 .status.filtered .status-filtered-info {
   pointer-events: none;

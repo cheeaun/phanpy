@@ -788,6 +788,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   gap: 16px;
   align-items: flex-start;
   counter-reset: index;
+  min-height: 160px;
 }
 .status-carousel > ul > li {
   scroll-snap-align: center;

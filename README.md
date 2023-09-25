@@ -93,7 +93,7 @@ Everything is designed and engineered following my taste and vision. This is a p
   - Content can be partially revealed by hovering over the post, with tooltip showing the post text.
   - Clicking it will open the Post page.
   - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
-  - On boosts carousel, they are not partially hidden, but sorted to the end of the carousel.
+  - On boosts carousel, they are sorted to the end of the carousel.
 
 ## Development
 

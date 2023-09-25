@@ -385,6 +385,7 @@ function Timeline({
                                       instance={instance}
                                       size="s"
                                       contentTextWeight
+                                      allowFilters={allowFilters}
                                     />
                                   ) : (
                                     <Status
@@ -392,6 +393,7 @@ function Timeline({
                                       instance={instance}
                                       size="s"
                                       contentTextWeight
+                                      allowFilters={allowFilters}
                                     />
                                   )}
                                 </Link>

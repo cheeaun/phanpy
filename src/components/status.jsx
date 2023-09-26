@@ -34,6 +34,7 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
 import { api } from '../utils/api';
+import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
@@ -1210,6 +1211,7 @@ function Status({
           )}
           {(((enableTranslate || inlineTranslate) &&
             !!content.trim() &&
+            !!getHTMLText(emojifyText(content, emojis)) &&
             differentLanguage) ||
             forceTranslate) && (
             <TranslationBlock

@@ -209,7 +209,11 @@ function AccountInfo({
         <div class="ui-state">
           <p>Unable to load account.</p>
           <p>
-            <a href={account} target="_blank">
+            <a
+              href={isString ? account : url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Go to account page <Icon icon="external" />
             </a>
           </p>

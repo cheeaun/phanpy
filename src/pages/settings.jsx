@@ -443,7 +443,11 @@ function Settings({ onClose }) {
                 @phanpy
               </a>
               <br />
-              <a href="https://github.com/cheeaun/phanpy" target="_blank">
+              <a
+                href="https://github.com/cheeaun/phanpy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Built
               </a>{' '}
               by{' '}

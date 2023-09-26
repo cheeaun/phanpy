@@ -1303,7 +1303,7 @@ function Status({
                     icon={visibilityIconsMap[visibility]}
                     alt={visibilityText[visibility]}
                   />{' '}
-                  <a href={url} target="_blank">
+                  <a href={url} target="_blank" rel="noopener noreferrer">
                     <time
                       class="created"
                       datetime={createdAtDate.toISOString()}

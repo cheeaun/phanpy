@@ -30,7 +30,7 @@ export default function HttpRoute() {
         <>
           <h2>Unable to process URL</h2>
           <p>
-            <a href={url} target="_blank">
+            <a href={url} target="_blank" rel="noopener noreferrer">
               {url}
             </a>
           </p>

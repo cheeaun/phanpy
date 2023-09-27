@@ -155,14 +155,14 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
   - [Semaphore](https://semaphore.social/)
-  - [Enafore](https://pinafore.easrng.net/)
+  - [Enafore](https://enafore.social/)
 - [Cuckoo+](https://www.cuckoo.social/)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
-- [Elk](https://elk.zone/)
-  - Fork https://elk.fedified.com/
+- [Elk](https://elk.zone/) - forks ↓
+  - [elk.fedified.com](https://elk.fedified.com/)
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)

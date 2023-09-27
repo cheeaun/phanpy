@@ -931,6 +931,14 @@ function Compose({
             }}
             maxCharacters={maxCharacters}
             performSearch={(params) => {
+              const { type, q, limit } = params;
+              if (type === 'accounts') {
+                return masto.v1.accounts.search({
+                  q,
+                  limit,
+                  resolve: false,
+                });
+              }
               return masto.v2.search(params);
             }}
           />
@@ -1269,7 +1277,7 @@ const Textarea = forwardRef((props, ref) => {
                 return;
               }
               console.log({ value, type, v: value[type] });
-              const results = value[type];
+              const results = value[type] || value;
               console.log('RESULTS', value, results);
               let html = '';
               results.forEach((result) => {

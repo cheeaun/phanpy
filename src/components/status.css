@@ -544,7 +544,7 @@
   max-height: 40vh;
   max-height: 40dvh;
 }
-.timeline-deck .status .content.truncated {
+.timeline-deck .status:not(.truncated .status) .content.truncated {
   mask-image: linear-gradient(
     to top,
     transparent,
@@ -552,7 +552,7 @@
     black 1.5em
   );
 }
-.timeline-deck .status .content.truncated:after {
+.timeline-deck .status:not(.truncated .status) .content.truncated:after {
   content: attr(data-read-more);
   line-height: 1;
   display: inline-block;

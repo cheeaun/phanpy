@@ -1049,6 +1049,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   font-size: 90%;
   z-index: 1;
   text-shadow: 0 var(--hairline-width) var(--bg-color);
+  mix-blend-mode: luminosity;
 }
 .carousel-item button.media-alt .media-alt-desc {
   overflow: hidden;

@@ -1087,6 +1087,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   top: env(safe-area-inset-top, 0);
 }
 :is(.carousel-top-controls, .carousel-controls) {
+  mix-blend-mode: luminosity;
   position: absolute;
   left: 0;
   left: env(safe-area-inset-left, 0);

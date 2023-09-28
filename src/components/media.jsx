@@ -48,6 +48,8 @@ const AltBadge = (props) => {
   );
 };
 
+const MEDIA_CAPTION_LIMIT = 140;
+
 function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
   const {
     blurhash,
@@ -371,11 +373,17 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         </Parent>
         {showInlineDesc && (
           <figcaption
+            class={`media-caption media-caption-${
+              description.length <= MEDIA_CAPTION_LIMIT ? 'short' : 'long'
+            }`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               states.showMediaAlt = description;
             }}
+            title={
+              description.length > MEDIA_CAPTION_LIMIT ? description : undefined
+            }
           >
             {description}
           </figcaption>

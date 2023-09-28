@@ -876,26 +876,6 @@
         mix-blend-mode: normal;
       }
     }
-
-    &:before {
-      font-size: 12px;
-      font-weight: bold;
-      pointer-events: none;
-      content: attr(data-alt-label);
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      color: var(--media-fg-color);
-      background-color: var(--media-bg-color);
-      border: var(--hairline-width) solid var(--media-outline-color);
-      border-radius: 4px;
-      padding: 0 4px;
-      transition: opacity 0.2s ease-in-out;
-    }
-
-    &:hover:before {
-      opacity: 0.2;
-    }
   }
 }
 .status .media img:is(:hover, :focus),

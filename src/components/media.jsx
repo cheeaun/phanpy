@@ -34,7 +34,7 @@ const AltBadge = (props) => {
   return (
     <button
       type="button"
-      class="tag collapsed clickable"
+      class="alt-badge clickable"
       {...rest}
       onClick={(e) => {
         e.stopPropagation();

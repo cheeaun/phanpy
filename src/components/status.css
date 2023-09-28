@@ -853,30 +853,15 @@
   &[data-has-alt] {
     position: relative;
 
-    .tag {
+    .alt-badge {
       position: absolute;
       bottom: 8px;
       left: 8px;
-      font-size: 12px;
-      font-weight: bold;
-      color: var(--media-fg-color);
-      background-color: var(--media-bg-color);
-      border: var(--hairline-width) solid var(--media-outline-color);
-      mix-blend-mode: luminosity;
-      opacity: 0.75;
 
       &:before {
         content: '';
         position: absolute;
         inset: -12px;
-      }
-
-      &:is(:hover, :focus):not(:active) {
-        transition: 0.15s ease-out;
-        transition-property: transform, opacity, mix-blend-mode;
-        transform: scale(1.15);
-        opacity: 0.8;
-        mix-blend-mode: normal;
       }
     }
   }
@@ -1673,4 +1658,31 @@ a.card:is(:hover, :focus):visited {
 }
 #reactions-container .reactions-block .reblog-icon {
   color: var(--reblog-color);
+}
+
+/* ALT BADGE */
+
+.alt-badge {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--media-fg-color);
+  background-color: var(--media-bg-color);
+  border: var(--hairline-width) solid var(--media-outline-color);
+  mix-blend-mode: luminosity;
+  border-radius: 4px;
+  padding: 4px;
+  opacity: 0.65;
+
+  &.clickable {
+    opacity: 0.75;
+    border-width: 2px;
+
+    &:is(:hover, :focus):not(:active) {
+      transition: 0.15s ease-out;
+      transition-property: transform, opacity, mix-blend-mode;
+      transform: scale(1.15);
+      opacity: 0.8;
+      mix-blend-mode: normal;
+    }
+  }
 }

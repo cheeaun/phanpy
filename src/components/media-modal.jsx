@@ -141,7 +141,7 @@ function MediaModal({
                     setShowMediaAlt(media.description);
                   }}
                 >
-                  <Icon icon="info" />
+                  <span class="tag collapsed">ALT</span>
                   <span class="media-alt-desc">{media.description}</span>
                 </button>
               )}

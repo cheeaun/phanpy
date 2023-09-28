@@ -856,8 +856,11 @@
       left: 8px;
       font-size: 12px;
       font-weight: bold;
+      color: var(--media-fg-color);
+      background-color: var(--media-bg-color);
       border: var(--hairline-width) solid var(--media-outline-color);
       mix-blend-mode: luminosity;
+      opacity: 0.75;
 
       &:before {
         content: '';
@@ -866,8 +869,11 @@
       }
 
       &:is(:hover, :focus):not(:active) {
-        transition: transform 0.15s ease-out;
+        transition: 0.15s ease-out;
+        transition-property: transform, opacity, mix-blend-mode;
         transform: scale(1.15);
+        opacity: 0.8;
+        mix-blend-mode: normal;
       }
     }
 

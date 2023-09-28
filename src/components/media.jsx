@@ -9,6 +9,8 @@ import {
 } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
+import states from '../utils/states';
+
 import Icon from './icon';
 import Link from './link';
 import { formatDuration } from './status';
@@ -24,6 +26,27 @@ gifv = Looping, soundless animation
 video = Video clip
 audio = Audio track
 */
+
+const dataAltLabel = 'ALT';
+const AltBadge = (props) => {
+  const { alt, ...rest } = props;
+  if (!alt || !alt.trim()) return null;
+  return (
+    <button
+      type="button"
+      class="tag collapsed clickable"
+      {...rest}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        states.showMediaAlt = alt;
+      }}
+      title="Media description"
+    >
+      {dataAltLabel}
+    </button>
+  );
+};
 
 function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
   const {
@@ -157,6 +180,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
         class={`media media-image`}
         onClick={onClick}
         data-orientation={orientation}
+        data-has-alt={!!description || undefined}
         style={
           showOriginal
             ? {
@@ -193,36 +217,39 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             />
           </QuickPinchZoom>
         ) : (
-          <img
-            src={mediaURL}
-            alt={description}
-            width={width}
-            height={height}
-            data-orientation={orientation}
-            loading="lazy"
-            style={{
-              backgroundColor:
-                rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-              backgroundPosition: focalBackgroundPosition || 'center',
-              // Duration based on width or height in pixels
-              // 100px per second (rough estimate)
-              // Clamp between 5s and 120s
-              '--anim-duration': `${Math.min(
-                Math.max(Math.max(width, height) / 100, 5),
-                120,
-              )}s`,
-            }}
-            onLoad={(e) => {
-              e.target.closest('.media-image').style.backgroundImage = '';
-              e.target.dataset.loaded = true;
-            }}
-            onError={(e) => {
-              const { src } = e.target;
-              if (src === mediaURL) {
-                e.target.src = remoteMediaURL;
-              }
-            }}
-          />
+          <>
+            <img
+              src={mediaURL}
+              alt={description}
+              width={width}
+              height={height}
+              data-orientation={orientation}
+              loading="lazy"
+              style={{
+                backgroundColor:
+                  rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+                backgroundPosition: focalBackgroundPosition || 'center',
+                // Duration based on width or height in pixels
+                // 100px per second (rough estimate)
+                // Clamp between 5s and 120s
+                '--anim-duration': `${Math.min(
+                  Math.max(Math.max(width, height) / 100, 5),
+                  120,
+                )}s`,
+              }}
+              onLoad={(e) => {
+                e.target.closest('.media-image').style.backgroundImage = '';
+                e.target.dataset.loaded = true;
+              }}
+              onError={(e) => {
+                const { src } = e.target;
+                if (src === mediaURL) {
+                  e.target.src = remoteMediaURL;
+                }
+              }}
+            />
+            <AltBadge alt={description} />
+          </>
         )}
       </Parent>
     );
@@ -264,6 +291,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
           data-orientation={orientation}
           data-formatted-duration={formattedDuration}
           data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
+          data-has-alt={!!description || undefined}
           // style={{
           //   backgroundColor:
           //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -339,11 +367,14 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               </div>
             </>
           )}
+          {!showOriginal && !showInlineDesc && <AltBadge alt={description} />}
         </Parent>
         {showInlineDesc && (
           <figcaption
-            onClick={() => {
-              location.hash = to;
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              states.showMediaAlt = description;
             }}
           >
             {description}
@@ -357,6 +388,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
       <Parent
         class="media media-audio"
         data-formatted-duration={formattedDuration}
+        data-has-alt={!!description || undefined}
         onClick={onClick}
         style={!showOriginal && mediaStyles}
       >
@@ -373,9 +405,12 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
           />
         ) : null}
         {!showOriginal && (
-          <div class="media-play">
-            <Icon icon="play" size="xl" />
-          </div>
+          <>
+            <div class="media-play">
+              <Icon icon="play" size="xl" />
+            </div>
+            <AltBadge alt={description} />
+          </>
         )}
       </Parent>
     );

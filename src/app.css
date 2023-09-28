@@ -1423,6 +1423,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   display: inline-block;
   margin: 4px;
   align-self: center;
+
+  &.clickable {
+    cursor: pointer;
+  }
 }
 .tag .icon {
   vertical-align: middle;

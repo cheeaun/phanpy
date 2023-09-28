@@ -723,6 +723,7 @@
       -webkit-line-clamp: 2;
       line-clamp: 2;
       line-height: 1.2;
+      cursor: pointer;
     }
   }
 
@@ -833,7 +834,7 @@
 .status .media:is(:hover, :focus) {
   border-color: var(--outline-hover-color);
 }
-.status .media:active {
+.status .media:active:not(:has(button:active)) {
   filter: brightness(0.8);
   transform: scale(0.99);
 }
@@ -845,6 +846,51 @@
 }
 .status .media {
   cursor: pointer;
+
+  &[data-has-alt] {
+    position: relative;
+
+    .tag {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      border: var(--hairline-width) solid var(--media-outline-color);
+      mix-blend-mode: luminosity;
+
+      &:before {
+        content: '';
+        position: absolute;
+        inset: -12px;
+      }
+
+      &:is(:hover, :focus):not(:active) {
+        transition: transform 0.15s ease-out;
+        transform: scale(1.15);
+      }
+    }
+
+    &:before {
+      font-size: 12px;
+      font-weight: bold;
+      pointer-events: none;
+      content: attr(data-alt-label);
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      color: var(--media-fg-color);
+      background-color: var(--media-bg-color);
+      border: var(--hairline-width) solid var(--media-outline-color);
+      border-radius: 4px;
+      padding: 0 4px;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    &:hover:before {
+      opacity: 0.2;
+    }
+  }
 }
 .status .media img:is(:hover, :focus),
 a:focus-visible .status .media img {
@@ -874,9 +920,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: var(--video-fg-color);
-  background-color: var(--video-bg-color);
-  box-shadow: inset 0 0 0 2px var(--video-outline-color);
+  color: var(--media-fg-color);
+  background-color: var(--media-bg-color);
+  box-shadow: inset 0 0 0 2px var(--media-outline-color);
   display: flex;
   place-content: center;
   place-items: center;
@@ -893,9 +939,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  color: var(--video-fg-color);
-  background-color: var(--video-bg-color);
-  border: var(--hairline-width) solid var(--video-outline-color);
+  color: var(--media-fg-color);
+  background-color: var(--media-bg-color);
+  border: var(--hairline-width) solid var(--media-outline-color);
   border-radius: 4px;
   padding: 0 4px;
 }
@@ -910,9 +956,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  color: var(--bg-faded-color);
-  background-color: var(--text-insignificant-color);
-  backdrop-filter: blur(6px) saturate(3) invert(0.2);
+  color: var(--media-fg-color);
+  background-color: var(--media-bg-color);
+  border: var(--hairline-width) solid var(--media-outline-color);
   border-radius: 4px;
   padding: 0 4px;
 }

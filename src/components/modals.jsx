@@ -11,6 +11,7 @@ import AccountSheet from './account-sheet';
 import Compose from './compose';
 import Drafts from './drafts';
 import GenericAccounts from './generic-accounts';
+import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
 import ShortcutsSettings from './shortcuts-settings';
@@ -175,6 +176,23 @@ export default function Modals() {
         >
           <GenericAccounts
             onClose={() => (states.showGenericAccounts = false)}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showMediaAlt && (
+        <Modal
+          class="light"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              states.showMediaAlt = false;
+            }
+          }}
+        >
+          <MediaAltModal
+            alt={snapStates.showMediaAlt}
+            onClose={() => {
+              states.showMediaAlt = false;
+            }}
           />
         </Modal>
       )}

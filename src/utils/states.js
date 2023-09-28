@@ -40,6 +40,7 @@ const states = proxy({
   showShortcutsSettings: false,
   showKeyboardShortcutsHelp: false,
   showGenericAccounts: false,
+  showMediaAlt: false,
   // Shortcuts
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
@@ -141,6 +142,7 @@ export function hideAllModals() {
   states.showShortcutsSettings = false;
   states.showKeyboardShortcutsHelp = false;
   states.showGenericAccounts = false;
+  states.showMediaAlt = false;
 }
 
 export function statusKey(id, instance) {

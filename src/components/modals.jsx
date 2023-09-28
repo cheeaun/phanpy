@@ -50,13 +50,17 @@ export default function Modals() {
               null
             }
             onClose={(results) => {
-              const { newStatus, instance } = results || {};
+              const { newStatus, instance, type } = results || {};
               states.showCompose = false;
               window.__COMPOSE__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
                 showToast({
-                  text: 'Post published. Check it out.',
+                  text: {
+                    post: 'Post published. Check it out.',
+                    reply: 'Reply posted. Check it out.',
+                    edit: 'Post updated. Check it out.',
+                  }[type || 'post'],
                   delay: 1000,
                   duration: 10_000, // 10 seconds
                   onClick: (toast) => {

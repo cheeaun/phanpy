@@ -839,6 +839,8 @@ function Compose({
 
                 // Close
                 onClose({
+                  // type: post, reply, edit
+                  type: editStatus ? 'edit' : replyToStatus ? 'reply' : 'post',
                   newStatus,
                   instance,
                 });

@@ -807,7 +807,7 @@ function Status({
       threshold: 600,
       captureEvent: true,
       detect: 'touch',
-      cancelOnMovement: 4, // true allows movement of up to 25 pixels
+      cancelOnMovement: 2, // true allows movement of up to 25 pixels
     },
   );
 
@@ -2088,7 +2088,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       threshold: 600,
       captureEvent: true,
       detect: 'touch',
-      cancelOnMovement: 4, // true allows movement of up to 25 pixels
+      cancelOnMovement: 2, // true allows movement of up to 25 pixels
     },
   );
 

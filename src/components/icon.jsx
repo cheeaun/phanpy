@@ -125,7 +125,7 @@ function Icon({
   }, [iconBlock]);
 
   return (
-    <div
+    <span
       class={`icon ${className}`}
       title={title || alt}
       style={{
@@ -150,7 +150,7 @@ function Icon({
           }}
         />
       )}
-    </div>
+    </span>
   );
 }
 

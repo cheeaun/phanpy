@@ -321,6 +321,20 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               } catch (e) {}
             }
           }}
+          onFocus={() => {
+            if (hoverAnimate) {
+              try {
+                videoRef.current.play();
+              } catch (e) {}
+            }
+          }}
+          onBlur={() => {
+            if (hoverAnimate) {
+              try {
+                videoRef.current.pause();
+              } catch (e) {}
+            }
+          }}
         >
           {showOriginal || autoGIFAnimate ? (
             isGIF && showOriginal ? (

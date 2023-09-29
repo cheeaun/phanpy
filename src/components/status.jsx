@@ -968,13 +968,14 @@ function Status({
       )}
       <div class="container">
         <div class="meta">
-          {/* <span> */}
-          <NameText
-            account={status.account}
-            instance={instance}
-            showAvatar={size === 's'}
-            showAcct={isSizeLarge}
-          />
+          <span class="meta-name">
+            <NameText
+              account={status.account}
+              instance={instance}
+              showAvatar={size === 's'}
+              showAcct={isSizeLarge}
+            />
+          </span>
           {/* {inReplyToAccount && !withinContext && size !== 's' && (
               <>
                 {' '}

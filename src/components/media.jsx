@@ -29,7 +29,7 @@ audio = Audio track
 
 const dataAltLabel = 'ALT';
 const AltBadge = (props) => {
-  const { alt, ...rest } = props;
+  const { alt, lang, ...rest } = props;
   if (!alt || !alt.trim()) return null;
   return (
     <button
@@ -39,7 +39,10 @@ const AltBadge = (props) => {
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
-        states.showMediaAlt = alt;
+        states.showMediaAlt = {
+          alt,
+          lang,
+        };
       }}
       title="Media description"
     >
@@ -50,7 +53,14 @@ const AltBadge = (props) => {
 
 const MEDIA_CAPTION_LIMIT = 140;
 
-function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
+function Media({
+  media,
+  to,
+  lang,
+  showOriginal,
+  autoAnimate,
+  onClick = () => {},
+}) {
   const {
     blurhash,
     description,
@@ -250,7 +260,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
                 }
               }}
             />
-            <AltBadge alt={description} />
+            <AltBadge alt={description} lang={lang} />
           </>
         )}
       </Parent>
@@ -383,17 +393,24 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
               </div>
             </>
           )}
-          {!showOriginal && !showInlineDesc && <AltBadge alt={description} />}
+          {!showOriginal && !showInlineDesc && (
+            <AltBadge alt={description} lang={lang} />
+          )}
         </Parent>
         {showInlineDesc && (
           <figcaption
             class={`media-caption media-caption-${
               description.length <= MEDIA_CAPTION_LIMIT ? 'short' : 'long'
             }`}
+            lang={lang}
+            dir="auto"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              states.showMediaAlt = description;
+              states.showMediaAlt = {
+                alt: description,
+                lang,
+              };
             }}
             title={
               description.length > MEDIA_CAPTION_LIMIT ? description : undefined
@@ -431,7 +448,7 @@ function Media({ media, to, showOriginal, autoAnimate, onClick = () => {} }) {
             <div class="media-play">
               <Icon icon="play" size="xl" />
             </div>
-            <AltBadge alt={description} />
+            <AltBadge alt={description} lang={lang} />
           </>
         )}
       </Parent>

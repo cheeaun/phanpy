@@ -4,7 +4,7 @@ import { useState } from 'preact/hooks';
 import Icon from './icon';
 import TranslationBlock from './translation-block';
 
-export default function MediaAltModal({ alt, onClose }) {
+export default function MediaAltModal({ alt, lang, onClose }) {
   const [forceTranslate, setForceTranslate] = useState(false);
   return (
     <div class="sheet">
@@ -36,7 +36,7 @@ export default function MediaAltModal({ alt, onClose }) {
           </Menu>
         </div>
       </header>
-      <main>
+      <main lang={lang} dir="auto">
         <p
           style={{
             whiteSpace: 'pre-wrap',

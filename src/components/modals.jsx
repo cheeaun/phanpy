@@ -189,7 +189,8 @@ export default function Modals() {
           }}
         >
           <MediaAltModal
-            alt={snapStates.showMediaAlt}
+            alt={snapStates.showMediaAlt.alt || snapStates.showMediaAlt}
+            lang={snapStates.showMediaAlt?.lang}
             onClose={() => {
               states.showMediaAlt = false;
             }}

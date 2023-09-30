@@ -14,6 +14,7 @@ function MediaModal({
   mediaAttachments,
   statusID,
   instance,
+  lang,
   index = 0,
   onClose = () => {},
 }) {
@@ -138,14 +139,19 @@ function MediaModal({
                   class="media-alt"
                   hidden={!showControls}
                   onClick={() => {
-                    setShowMediaAlt(media.description);
+                    setShowMediaAlt({
+                      alt: media.description,
+                      lang,
+                    });
                   }}
                 >
                   <span class="alt-badge">ALT</span>
-                  <span class="media-alt-desc">{media.description}</span>
+                  <span class="media-alt-desc" lang={lang} dir="auto">
+                    {media.description}
+                  </span>
                 </button>
               )}
-              <Media media={media} showOriginal />
+              <Media media={media} showOriginal lang={lang} />
             </div>
           );
         })}
@@ -279,7 +285,8 @@ function MediaModal({
           }}
         >
           <MediaAltModal
-            alt={showMediaAlt}
+            alt={showMediaAlt.alt || showMediaAlt}
+            lang={showMediaAlt?.lang}
             onClose={() => setShowMediaAlt(false)}
           />
         </Modal>

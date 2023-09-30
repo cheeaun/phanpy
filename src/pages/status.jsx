@@ -135,6 +135,7 @@ function StatusPage(params) {
             mediaAttachments={mediaAttachments}
             statusID={mediaStatusID || id}
             instance={instance}
+            lang={heroStatus?.language}
             index={mediaIndex - 1}
             onClose={handleMediaClose}
           />

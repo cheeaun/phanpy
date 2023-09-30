@@ -1269,6 +1269,7 @@ function Status({
                     key={media.id}
                     media={media}
                     autoAnimate={isSizeLarge}
+                    lang={language}
                     to={`/${instance}/s/${id}?${
                       withinContext ? 'media' : 'media-only'
                     }=${i + 1}`}

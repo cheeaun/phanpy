@@ -258,11 +258,14 @@ function Hashtags({ columnMode, ...props }) {
                 onClick={(e) => {
                   hashtags.splice(i, 1);
                   hashtags.sort();
-                  navigate(
-                    instance
-                      ? `/${instance}/t/${hashtags.join('+')}`
-                      : `/t/${hashtags.join('+')}`,
-                  );
+                  // navigate(
+                  //   instance
+                  //     ? `/${instance}/t/${hashtags.join('+')}`
+                  //     : `/t/${hashtags.join('+')}`,
+                  // );
+                  location.hash = instance
+                    ? `/${instance}/t/${hashtags.join('+')}`
+                    : `/t/${hashtags.join('+')}`;
                 }}
               >
                 <Icon icon="x" alt="Remove hashtag" class="danger-icon" />
@@ -317,7 +320,8 @@ function Hashtags({ columnMode, ...props }) {
               }
               if (newInstance) {
                 newInstance = newInstance.toLowerCase().trim();
-                navigate(`/${newInstance}/t/${hashtags.join('+')}`);
+                // navigate(`/${newInstance}/t/${hashtags.join('+')}`);
+                location.hash = `/${newInstance}/t/${hashtags.join('+')}`;
               }
             }}
           >

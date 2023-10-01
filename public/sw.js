@@ -161,52 +161,40 @@ self.addEventListener('notificationclick', (event) => {
   console.log('NOTIFICATION CLICK payload', payload);
   const { badge, body, data, dir, icon, lang, tag, timestamp, title } = payload;
   const { access_token, notification_type } = data;
-  const actions = new Promise((resolve) => {
-    event.notification.close();
-    const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
-    self.clients
-      .matchAll({
+  const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
+
+  event.waitUntil(
+    (async () => {
+      const clients = await self.clients.matchAll({
         type: 'window',
         includeUncontrolled: true,
-      })
-      .then((clients) => {
-        console.log('NOTIFICATION CLICK clients 1', clients);
-        if (clients.length && 'navigate' in clients[0]) {
-          console.log('NOTIFICATION CLICK clients 2', clients);
-          const bestClient =
-            clients.find(
-              (client) =>
-                client.focused || client.visibilityState === 'visible',
-            ) || clients[0];
-          console.log('NOTIFICATION CLICK navigate', url);
-          // Check if URL is root / or /notifications
-          // const clientURL = new URL(bestClient.url);
-          // if (
-          //   /^#\/?$/.test(clientURL.hash) ||
-          //   /^#\/notifications/i.test(clientURL.hash)
-          // ) {
-          //   bestClient.navigate(url).then((client) => client?.focus());
-          // } else {
-          // User might be on a different page (e.g. composing a post), so don't navigate anywhere else
-          if (bestClient) {
-            console.log('NOTIFICATION CLICK postMessage', bestClient);
-            bestClient.postMessage?.({
-              type: 'notification',
-              id: tag,
-              accessToken: access_token,
-            });
-            bestClient.focus();
-          } else {
-            console.log('NOTIFICATION CLICK openWindow', url);
-            self.clients.openWindow(url);
-          }
-          // }
+      });
+      console.log('NOTIFICATION CLICK clients 1', clients);
+      if (clients.length && 'navigate' in clients[0]) {
+        console.log('NOTIFICATION CLICK clients 2', clients);
+        const bestClient =
+          clients.find(
+            (client) => client.focused || client.visibilityState === 'visible',
+          ) || clients[0];
+        console.log('NOTIFICATION CLICK navigate', url);
+        if (bestClient) {
+          console.log('NOTIFICATION CLICK postMessage', bestClient);
+          bestClient.postMessage?.({
+            type: 'notification',
+            id: tag,
+            accessToken: access_token,
+          });
+          bestClient.focus();
         } else {
           console.log('NOTIFICATION CLICK openWindow', url);
-          self.clients.openWindow(url);
+          await self.clients.openWindow(url);
         }
-        resolve();
-      });
-  });
-  event.waitUntil(actions);
+        // }
+      } else {
+        console.log('NOTIFICATION CLICK openWindow', url);
+        await self.clients.openWindow(url);
+      }
+      await event.notification.close();
+    })(),
+  );
 });

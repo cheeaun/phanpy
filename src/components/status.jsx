@@ -22,7 +22,6 @@ import {
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useLongPress } from 'use-long-press';
-import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 import { snapshot } from 'valtio/vanilla';
 

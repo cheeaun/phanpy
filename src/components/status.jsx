@@ -789,19 +789,29 @@ function Status({
     x: 0,
     y: 0,
   });
+  const isIOS =
+    window.ontouchstart !== undefined &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // Only iOS/iPadOS browsers don't support contextmenu
+  // Some comments report iPadOS might support contextmenu if a mouse is connected
   const bindLongPressContext = useLongPress(
-    (e) => {
-      const { clientX, clientY } = e.touches?.[0] || e;
-      // link detection copied from onContextMenu because here it works
-      const link = e.target.closest('a');
-      if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
-      e.preventDefault();
-      setContextMenuAnchorPoint({
-        x: clientX,
-        y: clientY,
-      });
-      setIsContextMenuOpen(true);
-    },
+    isIOS
+      ? (e) => {
+          if (e.pointerType === 'mouse') return;
+          // There's 'pen' too, but not sure if contextmenu event would trigger from a pen
+
+          const { clientX, clientY } = e.touches?.[0] || e;
+          // link detection copied from onContextMenu because here it works
+          const link = e.target.closest('a');
+          if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+          e.preventDefault();
+          setContextMenuAnchorPoint({
+            x: clientX,
+            y: clientY,
+          });
+          setIsContextMenuOpen(true);
+        }
+      : null,
     {
       threshold: 600,
       captureEvent: true,

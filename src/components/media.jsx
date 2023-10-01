@@ -59,6 +59,7 @@ function Media({
   lang,
   showOriginal,
   autoAnimate,
+  showCaption,
   onClick = () => {},
 }) {
   const {
@@ -169,6 +170,48 @@ function Media({
     aspectRatio: `${width} / ${height}`,
   };
 
+  const multilineDesc =
+    !!description && description.trim().split('\n').length > 2;
+  const longDesc = description?.length > MEDIA_CAPTION_LIMIT || multilineDesc;
+  const showInlineDesc =
+    !!showCaption &&
+    !showOriginal &&
+    !!description &&
+    !longDesc &&
+    !multilineDesc;
+  const Figure = !showInlineDesc
+    ? Fragment
+    : (props) => {
+        const { children, ...restProps } = props;
+        return (
+          <figure {...restProps}>
+            {children}
+            <figcaption
+              class={`media-caption media-caption-${
+                longDesc ? 'long' : 'short'
+              }`}
+              lang={lang}
+              dir="auto"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                states.showMediaAlt = {
+                  alt: description,
+                  lang,
+                };
+              }}
+              title={
+                description.length > MEDIA_CAPTION_LIMIT
+                  ? description
+                  : undefined
+              }
+            >
+              {description}
+            </figcaption>
+          </figure>
+        );
+      };
+
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
@@ -187,83 +230,85 @@ function Media({
     }, [mediaURL]);
 
     return (
-      <Parent
-        ref={parentRef}
-        class={`media media-image`}
-        onClick={onClick}
-        data-orientation={orientation}
-        data-has-alt={!!description || undefined}
-        style={
-          showOriginal
-            ? {
-                backgroundImage: `url(${previewUrl})`,
-                backgroundSize: imageSmallerThanParent
-                  ? `${width}px ${height}px`
-                  : undefined,
-              }
-            : mediaStyles
-        }
-      >
-        {showOriginal ? (
-          <QuickPinchZoom {...quickPinchZoomProps}>
-            <img
-              ref={mediaRef}
-              src={mediaURL}
-              alt={description}
-              width={width}
-              height={height}
-              data-orientation={orientation}
-              loading="eager"
-              decoding="sync"
-              onLoad={(e) => {
-                e.target.closest('.media-image').style.backgroundImage = '';
-                e.target.closest('.media-zoom').style.display = '';
-                setPinchZoomEnabled(true);
-              }}
-              onError={(e) => {
-                const { src } = e.target;
-                if (src === mediaURL) {
-                  e.target.src = remoteMediaURL;
+      <Figure>
+        <Parent
+          ref={parentRef}
+          class={`media media-image`}
+          onClick={onClick}
+          data-orientation={orientation}
+          data-has-alt={!showInlineDesc}
+          style={
+            showOriginal
+              ? {
+                  backgroundImage: `url(${previewUrl})`,
+                  backgroundSize: imageSmallerThanParent
+                    ? `${width}px ${height}px`
+                    : undefined,
                 }
-              }}
-            />
-          </QuickPinchZoom>
-        ) : (
-          <>
-            <img
-              src={mediaURL}
-              alt={description}
-              width={width}
-              height={height}
-              data-orientation={orientation}
-              loading="lazy"
-              style={{
-                backgroundColor:
-                  rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-                backgroundPosition: focalBackgroundPosition || 'center',
-                // Duration based on width or height in pixels
-                // 100px per second (rough estimate)
-                // Clamp between 5s and 120s
-                '--anim-duration': `${Math.min(
-                  Math.max(Math.max(width, height) / 100, 5),
-                  120,
-                )}s`,
-              }}
-              onLoad={(e) => {
-                e.target.closest('.media-image').style.backgroundImage = '';
-                e.target.dataset.loaded = true;
-              }}
-              onError={(e) => {
-                const { src } = e.target;
-                if (src === mediaURL) {
-                  e.target.src = remoteMediaURL;
-                }
-              }}
-            />
-            <AltBadge alt={description} lang={lang} />
-          </>
-        )}
-      </Parent>
+              : mediaStyles
+          }
+        >
+          {showOriginal ? (
+            <QuickPinchZoom {...quickPinchZoomProps}>
+              <img
+                ref={mediaRef}
+                src={mediaURL}
+                alt={description}
+                width={width}
+                height={height}
+                data-orientation={orientation}
+                loading="eager"
+                decoding="sync"
+                onLoad={(e) => {
+                  e.target.closest('.media-image').style.backgroundImage = '';
+                  e.target.closest('.media-zoom').style.display = '';
+                  setPinchZoomEnabled(true);
+                }}
+                onError={(e) => {
+                  const { src } = e.target;
+                  if (src === mediaURL) {
+                    e.target.src = remoteMediaURL;
+                  }
+                }}
+              />
+            </QuickPinchZoom>
+          ) : (
+            <>
+              <img
+                src={mediaURL}
+                alt={showInlineDesc ? '' : description}
+                width={width}
+                height={height}
+                data-orientation={orientation}
+                loading="lazy"
+                style={{
+                  backgroundColor:
+                    rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+                  backgroundPosition: focalBackgroundPosition || 'center',
+                  // Duration based on width or height in pixels
+                  // 100px per second (rough estimate)
+                  // Clamp between 5s and 120s
+                  '--anim-duration': `${Math.min(
+                    Math.max(Math.max(width, height) / 100, 5),
+                    120,
+                  )}s`,
+                }}
+                onLoad={(e) => {
+                  e.target.closest('.media-image').style.backgroundImage = '';
+                  e.target.dataset.loaded = true;
+                }}
+                onError={(e) => {
+                  const { src } = e.target;
+                  if (src === mediaURL) {
+                    e.target.src = remoteMediaURL;
+                  }
+                }}
+              />
+              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
+            </>
+          )}
+        </Parent>
+      </Figure>
     );
   } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {
     const shortDuration = original.duration < 31;
@@ -291,11 +336,8 @@ function Media({
     ></video>
   `;
 
-    const showInlineDesc = !showOriginal && !isGIF && !!description;
-    const Container = showInlineDesc ? 'figure' : Fragment;
-
     return (
-      <Container>
+      <Figure>
         <Parent
           class={`media media-${isGIF ? 'gif' : 'video'} ${
             autoGIFAnimate ? 'media-contain' : ''
@@ -303,7 +345,7 @@ function Media({
           data-orientation={orientation}
           data-formatted-duration={formattedDuration}
           data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
-          data-has-alt={!!description || undefined}
+          data-has-alt={!showInlineDesc}
           // style={{
           //   backgroundColor:
           //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -391,67 +433,48 @@ function Media({
               <div class="media-play">
                 <Icon icon="play" size="xl" />
               </div>
+              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
             </>
           )}
           {!showOriginal && !showInlineDesc && (
             <AltBadge alt={description} lang={lang} />
           )}
         </Parent>
-        {showInlineDesc && (
-          <figcaption
-            class={`media-caption media-caption-${
-              description.length <= MEDIA_CAPTION_LIMIT ? 'short' : 'long'
-            }`}
-            lang={lang}
-            dir="auto"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              states.showMediaAlt = {
-                alt: description,
-                lang,
-              };
-            }}
-            title={
-              description.length > MEDIA_CAPTION_LIMIT ? description : undefined
-            }
-          >
-            {description}
-          </figcaption>
-        )}
-      </Container>
+      </Figure>
     );
   } else if (type === 'audio') {
     const formattedDuration = formatDuration(original.duration);
     return (
-      <Parent
-        class="media media-audio"
-        data-formatted-duration={formattedDuration}
-        data-has-alt={!!description || undefined}
-        onClick={onClick}
-        style={!showOriginal && mediaStyles}
-      >
-        {showOriginal ? (
-          <audio src={remoteUrl || url} preload="none" controls autoplay />
-        ) : previewUrl ? (
-          <img
-            src={previewUrl}
-            alt={description}
-            width={width}
-            height={height}
-            data-orientation={orientation}
-            loading="lazy"
-          />
-        ) : null}
-        {!showOriginal && (
-          <>
-            <div class="media-play">
-              <Icon icon="play" size="xl" />
-            </div>
-            <AltBadge alt={description} lang={lang} />
-          </>
-        )}
-      </Parent>
+      <Figure>
+        <Parent
+          class="media media-audio"
+          data-formatted-duration={formattedDuration}
+          data-has-alt={!showInlineDesc}
+          onClick={onClick}
+          style={!showOriginal && mediaStyles}
+        >
+          {showOriginal ? (
+            <audio src={remoteUrl || url} preload="none" controls autoplay />
+          ) : previewUrl ? (
+            <img
+              src={previewUrl}
+              alt={showInlineDesc ? '' : description}
+              width={width}
+              height={height}
+              data-orientation={orientation}
+              loading="lazy"
+            />
+          ) : null}
+          {!showOriginal && (
+            <>
+              <div class="media-play">
+                <Icon icon="play" size="xl" />
+              </div>
+              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
+            </>
+          )}
+        </Parent>
+      </Figure>
     );
   }
 }

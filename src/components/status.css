@@ -719,6 +719,7 @@
       color: var(--text-insignificant-color);
       line-height: 1.2;
       cursor: pointer;
+      white-space: pre-line;
 
       &.media-caption-long {
         overflow: hidden;
@@ -1027,6 +1028,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
   z-index: 1;
   text-shadow: 0 var(--hairline-width) var(--bg-color);
   mix-blend-mode: luminosity;
+  white-space: pre-line;
+
+  &:is(:hover, :focus) {
+    mix-blend-mode: normal;
+  }
 }
 .carousel-item button.media-alt .media-alt-desc {
   overflow: hidden;
@@ -1684,7 +1690,7 @@ a.card:is(:hover, :focus):visited {
       transition: 0.15s ease-out;
       transition-property: transform, opacity, mix-blend-mode;
       transform: scale(1.15);
-      opacity: 0.8;
+      opacity: 0.9;
       mix-blend-mode: normal;
     }
   }

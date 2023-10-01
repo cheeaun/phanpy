@@ -484,7 +484,7 @@ function Status({
   };
 
   const differentLanguage =
-    language &&
+    !!language &&
     language !== targetLanguage &&
     !localeMatch([language], [targetLanguage]) &&
     !contentTranslationHideLanguages.find(

@@ -1,11 +1,28 @@
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
+
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
+import localeMatch from '../utils/locale-match';
+import states from '../utils/states';
 
 import Icon from './icon';
 import TranslationBlock from './translation-block';
 
 export default function MediaAltModal({ alt, lang, onClose }) {
+  const snapStates = useSnapshot(states);
   const [forceTranslate, setForceTranslate] = useState(false);
+  const targetLanguage = getTranslateTargetLanguage(true);
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
+  const differentLanguage =
+    !!lang &&
+    lang !== targetLanguage &&
+    !localeMatch([lang], [targetLanguage]) &&
+    !contentTranslationHideLanguages.find(
+      (l) => lang === l || localeMatch([lang], [l]),
+    );
+
   return (
     <div class="sheet">
       {!!onClose && (
@@ -44,8 +61,12 @@ export default function MediaAltModal({ alt, lang, onClose }) {
         >
           {alt}
         </p>
-        {forceTranslate && (
-          <TranslationBlock forceTranslate={forceTranslate} text={alt} />
+        {(differentLanguage || forceTranslate) && (
+          <TranslationBlock
+            forceTranslate={forceTranslate}
+            sourceLanguage={lang}
+            text={alt}
+          />
         )}
       </main>
     </div>

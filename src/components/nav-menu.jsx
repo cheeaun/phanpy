@@ -240,7 +240,7 @@ function NavMenu(props) {
                   };
                 }}
               >
-                <Icon icon="mute-user" size="l" /> Muted users&hellip;
+                <Icon icon="mute" size="l" /> Muted users&hellip;
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -251,7 +251,7 @@ function NavMenu(props) {
                   };
                 }}
               >
-                <Icon icon="block-user" size="l" />
+                <Icon icon="block" size="l" />
                 Blocked users&hellip;
               </MenuItem>
               <MenuItem

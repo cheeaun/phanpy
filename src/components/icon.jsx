@@ -99,8 +99,6 @@ export const ICONS = {
   'account-edit': () => import('@iconify-icons/mingcute/user-edit-line'),
   'account-warning': () => import('@iconify-icons/mingcute/user-warning-line'),
   keyboard: () => import('@iconify-icons/mingcute/keyboard-line'),
-  'mute-user': () => import('@iconify-icons/mingcute/user-hide-line'),
-  'block-user': () => import('@iconify-icons/mingcute/user-security-line'),
   cloud: () => import('@iconify-icons/mingcute/cloud-line'),
 };
 

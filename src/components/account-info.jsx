@@ -121,6 +121,7 @@ function AccountInfo({
     username,
     memorial,
     moved,
+    roles,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -133,6 +134,12 @@ function AccountInfo({
       }
     }
   }
+
+  const accountInstance = useMemo(() => {
+    if (!url) return null;
+    const domain = new URL(url).hostname;
+    return domain;
+  }, [url]);
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
@@ -381,6 +388,17 @@ function AccountInfo({
                   <Icon icon="group" /> Group
                 </span>
               )}
+              {roles?.map((role) => (
+                <span class="tag">
+                  {role.name}
+                  {!!accountInstance && (
+                    <>
+                      {' '}
+                      <span class="more-insignificant">{accountInstance}</span>
+                    </>
+                  )}
+                </span>
+              ))}
               <div
                 class="note"
                 onClick={handleContentLinks({

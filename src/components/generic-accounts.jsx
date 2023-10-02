@@ -21,6 +21,7 @@ export default function GenericAccounts({ onClose = () => {} }) {
   }
 
   const {
+    id,
     heading,
     fetchAccounts,
     accounts: staticAccounts,
@@ -59,6 +60,14 @@ export default function GenericAccounts({ onClose = () => {} }) {
       loadAccounts(true);
     }
   }, [staticAccounts, fetchAccounts]);
+
+  useEffect(() => {
+    // reloadGenericAccounts contains value like {id: 'mute', counter: 1}
+    // We only need to reload if the id matches
+    if (snapStates.reloadGenericAccounts?.id === id) {
+      loadAccounts(true);
+    }
+  }, [snapStates.reloadGenericAccounts.counter]);
 
   return (
     <div id="generic-accounts-container" class="sheet" tabindex="-1">

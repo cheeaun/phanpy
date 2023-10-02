@@ -906,6 +906,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
                           showToast(`Unmuted @${username}`);
+                          states.reloadGenericAccounts.id = 'mute';
+                          states.reloadGenericAccounts.counter++;
                         } catch (e) {
                           console.error(e);
                           setRelationshipUIState('error');
@@ -957,6 +959,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
                                 showToast(
                                   `Muted @${username} for ${MUTE_DURATIONS_LABELS[duration]}`,
                                 );
+                                states.reloadGenericAccounts.id = 'mute';
+                                states.reloadGenericAccounts.counter++;
                               } catch (e) {
                                 console.error(e);
                                 setRelationshipUIState('error');
@@ -1007,6 +1011,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
                           setRelationshipUIState('default');
                           showToast(`Blocked @${username}`);
                         }
+                        states.reloadGenericAccounts.id = 'block';
+                        states.reloadGenericAccounts.counter++;
                       } catch (e) {
                         console.error(e);
                         setRelationshipUIState('error');

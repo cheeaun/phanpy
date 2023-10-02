@@ -1,6 +1,11 @@
 import './nav-menu.css';
 
-import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  Menu,
+  MenuDivider,
+  MenuItem,
+} from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -16,7 +21,7 @@ import MenuLink from './menu-link';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
-  const { instance, authenticated } = api();
+  const { masto, instance, authenticated } = api();
 
   const [currentAccount, setCurrentAccount] = useState();
   const [moreThanOneAccount, setMoreThanOneAccount] = useState(false);
@@ -59,6 +64,28 @@ function NavMenu(props) {
     snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? 50 : 0,
     0,
   ]);
+
+  const mutesIterator = useRef();
+  async function fetchMutes(firstLoad) {
+    if (firstLoad || !mutesIterator.current) {
+      mutesIterator.current = masto.v1.mutes.list({
+        limit: 80,
+      });
+    }
+    const results = await mutesIterator.current.next();
+    return results;
+  }
+
+  const blocksIterator = useRef();
+  async function fetchBlocks(firstLoad) {
+    if (firstLoad || !blocksIterator.current) {
+      blocksIterator.current = masto.v1.blocks.list({
+        limit: 80,
+      });
+    }
+    const results = await blocksIterator.current.next();
+    return results;
+  }
 
   return (
     <>
@@ -203,6 +230,29 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showGenericAccounts = {
+                    id: 'mute',
+                    heading: 'Muted users',
+                    fetchAccounts: fetchMutes,
+                  };
+                }}
+              >
+                <Icon icon="mute-user" size="l" /> Muted users&hellip;
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showGenericAccounts = {
+                    id: 'block',
+                    heading: 'Blocked users',
+                    fetchAccounts: fetchBlocks,
+                  };
+                }}
+              >
+                <Icon icon="block-user" size="l" />
+                Blocked users&hellip;
               </MenuItem>
               <MenuItem
                 onClick={() => {

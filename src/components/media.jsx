@@ -29,7 +29,7 @@ audio = Audio track
 
 const dataAltLabel = 'ALT';
 const AltBadge = (props) => {
-  const { alt, lang, ...rest } = props;
+  const { alt, lang, index, ...rest } = props;
   if (!alt || !alt.trim()) return null;
   return (
     <button
@@ -47,6 +47,7 @@ const AltBadge = (props) => {
       title="Media description"
     >
       {dataAltLabel}
+      {!!index && <sup>{index}</sup>}
     </button>
   );
 };
@@ -60,6 +61,7 @@ function Media({
   showOriginal,
   autoAnimate,
   showCaption,
+  altIndex,
   onClick = () => {},
 }) {
   const {
@@ -304,7 +306,9 @@ function Media({
                   }
                 }}
               />
-              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
+              {!showInlineDesc && (
+                <AltBadge alt={description} lang={lang} index={altIndex} />
+              )}
             </>
           )}
         </Parent>
@@ -433,11 +437,13 @@ function Media({
               <div class="media-play">
                 <Icon icon="play" size="xl" />
               </div>
-              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
+              {!showInlineDesc && (
+                <AltBadge alt={description} lang={lang} index={altIndex} />
+              )}
             </>
           )}
           {!showOriginal && !showInlineDesc && (
-            <AltBadge alt={description} lang={lang} />
+            <AltBadge alt={description} lang={lang} index={altIndex} />
           )}
         </Parent>
       </Figure>
@@ -470,7 +476,9 @@ function Media({
               <div class="media-play">
                 <Icon icon="play" size="xl" />
               </div>
-              {!showInlineDesc && <AltBadge alt={description} lang={lang} />}
+              {!showInlineDesc && (
+                <AltBadge alt={description} lang={lang} index={altIndex} />
+              )}
             </>
           )}
         </Parent>

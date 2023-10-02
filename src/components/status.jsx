@@ -1265,34 +1265,72 @@ function Status({
             </button>
           )}
           {!!mediaAttachments.length && (
-            <div
-              ref={mediaContainerRef}
-              class={`media-container media-eq${mediaAttachments.length} ${
-                mediaAttachments.length > 2 ? 'media-gt2' : ''
-              } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+            <MultipleMediaFigure
+              lang={language}
+              enabled={
+                mediaAttachments.length > 1 &&
+                mediaAttachments.some((media) => !!media.description)
+              }
+              captionChildren={() => {
+                return mediaAttachments.map(
+                  (media, i) =>
+                    !!media.description && (
+                      <div
+                        key={media.id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          states.showMediaAlt = {
+                            alt: media.description,
+                            lang: language,
+                          };
+                        }}
+                        title={
+                          media.description
+                            ? `Media ${i + 1}: ${media.description}`
+                            : undefined
+                        }
+                      >
+                        <sup>{i + 1}</sup> {media.description}
+                      </div>
+                    ),
+                );
+              }}
             >
-              {mediaAttachments
-                .slice(0, isSizeLarge ? undefined : 4)
-                .map((media, i) => (
-                  <Media
-                    key={media.id}
-                    media={media}
-                    autoAnimate={isSizeLarge}
-                    showCaption={mediaAttachments.length === 1}
-                    lang={language}
-                    to={`/${instance}/s/${id}?${
-                      withinContext ? 'media' : 'media-only'
-                    }=${i + 1}`}
-                    onClick={
-                      onMediaClick
-                        ? (e) => {
-                            onMediaClick(e, i, media, status);
-                          }
-                        : undefined
-                    }
-                  />
-                ))}
-            </div>
+              <div
+                ref={mediaContainerRef}
+                class={`media-container media-eq${mediaAttachments.length} ${
+                  mediaAttachments.length > 2 ? 'media-gt2' : ''
+                } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+              >
+                {mediaAttachments
+                  .slice(0, isSizeLarge ? undefined : 4)
+                  .map((media, i) => (
+                    <Media
+                      key={media.id}
+                      media={media}
+                      autoAnimate={isSizeLarge}
+                      showCaption={mediaAttachments.length === 1}
+                      lang={language}
+                      altIndex={
+                        mediaAttachments.length > 1 &&
+                        !!media.description &&
+                        i + 1
+                      }
+                      to={`/${instance}/s/${id}?${
+                        withinContext ? 'media' : 'media-only'
+                      }=${i + 1}`}
+                      onClick={
+                        onMediaClick
+                          ? (e) => {
+                              onMediaClick(e, i, media, status);
+                            }
+                          : undefined
+                      }
+                    />
+                  ))}
+              </div>
+            </MultipleMediaFigure>
           )}
           {!!card &&
             card?.url !== status.url &&
@@ -1486,6 +1524,19 @@ function Status({
         </Modal>
       )}
     </article>
+  );
+}
+
+function MultipleMediaFigure(props) {
+  const { enabled, children, lang, captionChildren } = props;
+  if (!enabled || !captionChildren) return children;
+  return (
+    <figure class="media-figure-multiple">
+      {children}
+      <figcaption lang={lang} dir="auto">
+        {captionChildren?.()}
+      </figcaption>
+    </figure>
   );
 }
 

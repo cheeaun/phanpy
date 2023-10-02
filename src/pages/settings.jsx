@@ -339,6 +339,7 @@ function Settings({ onClose }) {
                     <a
                       href="https://github.com/thedaviddelta/lingva-translate"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Lingva Translate
                     </a>
@@ -435,6 +436,7 @@ function Settings({ onClose }) {
               <a
                 href="https://hachyderm.io/@phanpy"
                 // target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   states.showAccount = 'phanpy@hachyderm.io';
@@ -454,6 +456,7 @@ function Settings({ onClose }) {
               <a
                 href="https://mastodon.social/@cheeaun"
                 // target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   states.showAccount = 'cheeaun@mastodon.social';
@@ -467,6 +470,7 @@ function Settings({ onClose }) {
             <a
               href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
               target="_blank"
+              rel="noopener noreferrer"
             >
               Privacy Policy
             </a>
@@ -481,6 +485,7 @@ function Settings({ onClose }) {
                   <a
                     href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <code>{__COMMIT_HASH__}</code>
                   </a>

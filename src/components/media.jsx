@@ -431,9 +431,6 @@ function Media({
               <div class="media-play">
                 <Icon icon="play" size="xl" />
               </div>
-              {!showInlineDesc && (
-                <AltBadge alt={description} lang={lang} index={altIndex} />
-              )}
             </>
           )}
           {!showOriginal && !showInlineDesc && (

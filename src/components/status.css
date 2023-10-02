@@ -725,17 +725,6 @@
       white-space: pre-line;
       flex-basis: 15em;
       flex-grow: 1;
-
-      &.media-caption-long {
-        overflow: hidden;
-        white-space: normal;
-        display: -webkit-box;
-        display: box;
-        -webkit-box-orient: vertical;
-        box-orient: vertical;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
-      }
     }
   }
 

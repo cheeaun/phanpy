@@ -1,4 +1,5 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
+import mem from 'mem';
 import { Fragment } from 'preact';
 import {
   useCallback,
@@ -53,6 +54,12 @@ const AltBadge = (props) => {
 };
 
 const MEDIA_CAPTION_LIMIT = 140;
+export const isMediaCaptionLong = mem((caption) =>
+  caption?.length
+    ? caption.length > MEDIA_CAPTION_LIMIT ||
+      /[\n\r].*[\n\r]/.test(caption.trim())
+    : false,
+);
 
 function Media({
   media,
@@ -172,15 +179,9 @@ function Media({
     aspectRatio: `${width} / ${height}`,
   };
 
-  const multilineDesc =
-    !!description && description.trim().split('\n').length > 2;
-  const longDesc = description?.length > MEDIA_CAPTION_LIMIT || multilineDesc;
+  const longDesc = isMediaCaptionLong(description);
   const showInlineDesc =
-    !!showCaption &&
-    !showOriginal &&
-    !!description &&
-    !longDesc &&
-    !multilineDesc;
+    !!showCaption && !showOriginal && !!description && !longDesc;
   const Figure = !showInlineDesc
     ? Fragment
     : (props) => {
@@ -189,9 +190,7 @@ function Media({
           <figure {...restProps}>
             {children}
             <figcaption
-              class={`media-caption media-caption-${
-                longDesc ? 'long' : 'short'
-              }`}
+              class="media-caption"
               lang={lang}
               dir="auto"
               onClick={(e) => {
@@ -202,11 +201,6 @@ function Media({
                   lang,
                 };
               }}
-              title={
-                description.length > MEDIA_CAPTION_LIMIT
-                  ? description
-                  : undefined
-              }
             >
               {description}
             </figcaption>

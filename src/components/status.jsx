@@ -55,6 +55,7 @@ import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
+import { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
@@ -1269,12 +1270,17 @@ function Status({
               lang={language}
               enabled={
                 mediaAttachments.length > 1 &&
-                mediaAttachments.some((media) => !!media.description)
+                mediaAttachments.some(
+                  (media) =>
+                    !!media.description &&
+                    !isMediaCaptionLong(media.description),
+                )
               }
               captionChildren={() => {
                 return mediaAttachments.map(
                   (media, i) =>
-                    !!media.description && (
+                    !!media.description &&
+                    !isMediaCaptionLong(media.description) && (
                       <div
                         key={media.id}
                         onClick={(e) => {
@@ -1315,6 +1321,7 @@ function Status({
                       altIndex={
                         mediaAttachments.length > 1 &&
                         !!media.description &&
+                        !isMediaCaptionLong(media.description) &&
                         i + 1
                       }
                       to={`/${instance}/s/${id}?${

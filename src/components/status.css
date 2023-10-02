@@ -711,15 +711,20 @@
   figure {
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    column-gap: 4px;
 
     figcaption {
-      margin: -2px 0 0;
-      padding: 0 4px;
+      padding: 4px;
       font-size: 90%;
       color: var(--text-insignificant-color);
       line-height: 1.2;
       cursor: pointer;
       white-space: pre-line;
+      flex-basis: 15em;
+      flex-grow: 1;
 
       &.media-caption-long {
         overflow: hidden;

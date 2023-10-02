@@ -1291,11 +1291,7 @@ function Status({
                             lang: language,
                           };
                         }}
-                        title={
-                          media.description
-                            ? `Media ${i + 1}: ${media.description}`
-                            : undefined
-                        }
+                        title={media.description}
                       >
                         <sup>{i + 1}</sup> {media.description}
                       </div>

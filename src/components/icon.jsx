@@ -101,6 +101,7 @@ export const ICONS = {
   keyboard: () => import('@iconify-icons/mingcute/keyboard-line'),
   'mute-user': () => import('@iconify-icons/mingcute/user-hide-line'),
   'block-user': () => import('@iconify-icons/mingcute/user-security-line'),
+  cloud: () => import('@iconify-icons/mingcute/cloud-line'),
 };
 
 function Icon({

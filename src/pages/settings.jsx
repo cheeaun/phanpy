@@ -34,7 +34,7 @@ function Settings({ onClose }) {
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
   const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
-  const { masto, authenticated } = api();
+  const { masto, authenticated, instance } = api();
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
   // useEffect(() => {
@@ -178,7 +178,8 @@ function Settings({ onClose }) {
                 <li>
                   <div>
                     <label for="posting-privacy-field">
-                      Default visibility
+                      Default visibility{' '}
+                      <Icon icon="cloud" alt="Synced" class="synced-icon" />
                     </label>
                   </div>
                   <div>
@@ -217,6 +218,19 @@ function Settings({ onClose }) {
                 </li>
               </ul>
             </section>
+            <p class="section-postnote">
+              <Icon icon="cloud" alt="Synced" class="synced-icon" />{' '}
+              <small>
+                Synced to your instance server's settings.{' '}
+                <a
+                  href={`https://${instance}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Go to your instance ({instance}) for more settings.
+                </a>
+              </small>
+            </p>
           </>
         )}
         <h3>Experiments</h3>

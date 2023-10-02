@@ -19,7 +19,19 @@ const Link = forwardRef((props, ref) => {
   let hash = (location.hash || '').replace(/^#/, '').trim();
   if (hash === '') hash = '/';
   const { to, ...restProps } = props;
-  const isActive = decodeURIComponent(hash) === to;
+
+  // Handle encodeURIComponent of searchParams values
+  if (!!hash && hash !== '/' && hash.includes('?')) {
+    const parsedHash = new URL(hash, location.origin); // Fake base URL
+    if (parsedHash.searchParams.size) {
+      const searchParamsStr = Array.from(parsedHash.searchParams.entries())
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&');
+      hash = parsedHash.pathname + '?' + searchParamsStr;
+    }
+  }
+
+  const isActive = hash === to || decodeURIComponent(hash) === to;
   return (
     <a
       ref={ref}
@@ -27,6 +39,10 @@ const Link = forwardRef((props, ref) => {
       {...restProps}
       class={`${props.class || ''} ${isActive ? 'is-active' : ''}`}
       onClick={(e) => {
+        if (e.currentTarget?.parentNode?.closest('a')) {
+          // If this <a> is nested inside another <a>
+          e.stopPropagation();
+        }
         if (routerLocation) states.prevLocation = routerLocation;
         props.onClick?.(e);
       }}

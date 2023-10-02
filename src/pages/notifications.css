@@ -4,6 +4,11 @@
   gap: 12px;
   animation: appear 0.2s ease-out;
   clear: both;
+
+  b[tabindex='0']:is(:hover, :focus) {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 .notification.notification-mention {
   margin-top: 16px;
@@ -93,14 +98,41 @@
 }
 .notification .status-link:not(.status-type-mention) > .status {
   font-size: calc(var(--text-size) * 0.9);
-  max-height: 160px;
-  overflow: hidden;
+}
+.notification .status-link.truncated:not(.status-type-mention) > .status {
   /* fade out mask gradient bottom */
   mask-image: linear-gradient(
     rgba(0, 0, 0, 1) 130px,
     rgba(0, 0, 0, 0.5) 145px,
     transparent 159px
   );
+}
+.notification .status-link.truncated {
+  position: relative;
+}
+.notification .status-link.truncated:after {
+  content: attr(data-read-more);
+  line-height: 1;
+  display: inline-block;
+  position: absolute;
+  --inset-offset: 16px;
+  inset-block-end: var(--inset-offset);
+  inset-inline-end: var(--inset-offset);
+  color: var(--text-color);
+  background-color: var(--bg-faded-color);
+  border: 1px dashed var(--link-color);
+  box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
+    0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+  padding: 0.5em 0.75em;
+  border-radius: 10em;
+  font-size: 90%;
+  white-space: nowrap;
+  text-shadow: 0 -1px var(--bg-color);
+  transition: transform 0.2s ease-out;
+}
+.notification .status-link:is(:hover, :focus).truncated:after {
+  color: var(--link-color);
+  transform: translate(2px, 0);
 }
 .notification .status-link.status-type-mention {
   max-height: 320px;

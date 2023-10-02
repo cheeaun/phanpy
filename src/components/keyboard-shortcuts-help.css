@@ -1,0 +1,44 @@
+#keyboard-shortcuts-help-container {
+  table {
+    tr > * {
+      border-top: 1px solid var(--outline-color);
+      vertical-align: middle;
+    }
+    th {
+      font-weight: normal;
+      text-align: start;
+      padding: 0.25em 0;
+      line-height: 1;
+      width: 60%;
+    }
+    td {
+      padding: 0.25em 1em;
+    }
+  }
+
+  kbd {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0.2em 0.3em;
+    margin: 1px 0;
+    line-height: 1;
+    border: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
+    background-image: linear-gradient(
+      to top,
+      var(--bg-blur-color),
+      transparent
+    );
+    text-shadow: 0 1px var(--bg-color);
+    box-shadow: 0 1px var(--drop-shadow-color),
+      0 1px 1px var(--drop-shadow-color), 0 1px 8px var(--drop-shadow-color),
+      inset 0 1px var(--bg-blur-color);
+
+    &:active {
+      box-shadow: 0 1px 4px var(--drop-shadow-color),
+        inset 0 1px var(--bg-blur-color);
+      transform: translateY(1px);
+      filter: brightness(0.95);
+    }
+  }
+}

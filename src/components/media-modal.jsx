@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { Menu } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -6,14 +6,15 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
+import MediaAltModal from './media-alt-modal';
 import MenuLink from './menu-link';
 import Modal from './modal';
-import TranslationBlock from './translation-block';
 
 function MediaModal({
   mediaAttachments,
   statusID,
   instance,
+  lang,
   index = 0,
   onClose = () => {},
 }) {
@@ -138,14 +139,19 @@ function MediaModal({
                   class="media-alt"
                   hidden={!showControls}
                   onClick={() => {
-                    setShowMediaAlt(media.description);
+                    setShowMediaAlt({
+                      alt: media.description,
+                      lang,
+                    });
                   }}
                 >
-                  <Icon icon="info" />
-                  <span class="media-alt-desc">{media.description}</span>
+                  <span class="alt-badge">ALT</span>
+                  <span class="media-alt-desc" lang={lang} dir="auto">
+                    {media.description}
+                  </span>
                 </button>
               )}
-              <Media media={media} showOriginal />
+              <Media media={media} showOriginal lang={lang} />
             </div>
           );
         })}
@@ -279,59 +285,12 @@ function MediaModal({
           }}
         >
           <MediaAltModal
-            alt={showMediaAlt}
+            alt={showMediaAlt.alt || showMediaAlt}
+            lang={showMediaAlt?.lang}
             onClose={() => setShowMediaAlt(false)}
           />
         </Modal>
       )}
-    </div>
-  );
-}
-
-function MediaAltModal({ alt, onClose }) {
-  const [forceTranslate, setForceTranslate] = useState(false);
-  return (
-    <div class="sheet">
-      {!!onClose && (
-        <button type="button" class="sheet-close outer" onClick={onClose}>
-          <Icon icon="x" />
-        </button>
-      )}
-      <header class="header-grid">
-        <h2>Media description</h2>
-        <div class="header-side">
-          <Menu
-            align="end"
-            menuButton={
-              <button type="button" class="plain4">
-                <Icon icon="more" alt="More" size="xl" />
-              </button>
-            }
-          >
-            <MenuItem
-              disabled={forceTranslate}
-              onClick={() => {
-                setForceTranslate(true);
-              }}
-            >
-              <Icon icon="translate" />
-              <span>Translate</span>
-            </MenuItem>
-          </Menu>
-        </div>
-      </header>
-      <main>
-        <p
-          style={{
-            whiteSpace: 'pre-wrap',
-          }}
-        >
-          {alt}
-        </p>
-        {forceTranslate && (
-          <TranslationBlock forceTranslate={forceTranslate} text={alt} />
-        )}
-      </main>
     </div>
   );
 }

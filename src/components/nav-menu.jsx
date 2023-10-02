@@ -1,6 +1,11 @@
 import './nav-menu.css';
 
-import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  Menu,
+  MenuDivider,
+  MenuItem,
+} from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -16,7 +21,7 @@ import MenuLink from './menu-link';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
-  const { instance, authenticated } = api();
+  const { masto, instance, authenticated } = api();
 
   const [currentAccount, setCurrentAccount] = useState();
   const [moreThanOneAccount, setMoreThanOneAccount] = useState(false);
@@ -59,6 +64,28 @@ function NavMenu(props) {
     snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? 50 : 0,
     0,
   ]);
+
+  const mutesIterator = useRef();
+  async function fetchMutes(firstLoad) {
+    if (firstLoad || !mutesIterator.current) {
+      mutesIterator.current = masto.v1.mutes.list({
+        limit: 80,
+      });
+    }
+    const results = await mutesIterator.current.next();
+    return results;
+  }
+
+  const blocksIterator = useRef();
+  async function fetchBlocks(firstLoad) {
+    if (firstLoad || !blocksIterator.current) {
+      blocksIterator.current = masto.v1.blocks.list({
+        limit: 80,
+      });
+    }
+    const results = await blocksIterator.current.next();
+    return results;
+  }
 
   return (
     <>
@@ -115,28 +142,28 @@ function NavMenu(props) {
         boundingBoxPadding={boundingBoxPadding}
         unmountOnClose
       >
+        {!!snapStates.appVersion?.commitHash &&
+          __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
+            <div class="top-menu">
+              <MenuItem
+                onClick={() => {
+                  const yes = confirm('Reload page now to update?');
+                  if (yes) {
+                    (async () => {
+                      try {
+                        location.reload();
+                      } catch (e) {}
+                    })();
+                  }
+                }}
+              >
+                <Icon icon="sparkles" class="sparkle-icon" size="l" />{' '}
+                <span>New update available…</span>
+              </MenuItem>
+              <MenuDivider />
+            </div>
+          )}
         <section>
-          {!!snapStates.appVersion?.commitHash &&
-            __COMMIT_HASH__ !== snapStates.appVersion.commitHash && (
-              <>
-                <MenuItem
-                  onClick={() => {
-                    const yes = confirm('Reload page now to update?');
-                    if (yes) {
-                      (async () => {
-                        try {
-                          location.reload();
-                        } catch (e) {}
-                      })();
-                    }
-                  }}
-                >
-                  <Icon icon="sparkles" size="l" />{' '}
-                  <span>New update available…</span>
-                </MenuItem>
-                <MenuDivider />
-              </>
-            )}
           <MenuLink to="/">
             <Icon icon="home" size="l" /> <span>Home</span>
           </MenuLink>
@@ -206,6 +233,37 @@ function NavMenu(props) {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  states.showGenericAccounts = {
+                    id: 'mute',
+                    heading: 'Muted users',
+                    fetchAccounts: fetchMutes,
+                  };
+                }}
+              >
+                <Icon icon="mute" size="l" /> Muted users&hellip;
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showGenericAccounts = {
+                    id: 'block',
+                    heading: 'Blocked users',
+                    fetchAccounts: fetchBlocks,
+                  };
+                }}
+              >
+                <Icon icon="block" size="l" />
+                Blocked users&hellip;
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  states.showKeyboardShortcutsHelp = true;
+                }}
+              >
+                <Icon icon="keyboard" size="l" />{' '}
+                <span>Keyboard shortcuts</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
                   states.showShortcutsSettings = true;
                 }}
               >
@@ -226,6 +284,13 @@ function NavMenu(props) {
               <MenuLink to="/login">
                 <Icon icon="user" size="l" /> <span>Log in</span>
               </MenuLink>
+              <MenuItem
+                onClick={() => {
+                  states.showSettings = true;
+                }}
+              >
+                <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+              </MenuItem>
             </>
           )}
         </section>

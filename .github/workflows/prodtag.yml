@@ -1,0 +1,16 @@
+name: Auto-create tag on every push to `production`
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: production
+      - run: git tag -a "'{date +%Y.%m.%d}.{git rev-parse --short HEAD}'" $(git rev-parse HEAD)
+      - run: git push

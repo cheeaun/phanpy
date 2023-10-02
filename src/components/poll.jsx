@@ -199,6 +199,7 @@ export default function Poll({
                 setUIState('default');
               })();
             }}
+            title="Refresh"
           >
             <Icon icon="refresh" alt="Refresh" />
           </button>
@@ -212,6 +213,7 @@ export default function Poll({
               e.preventDefault();
               setShowResults(!showResults);
             }}
+            title={showResults ? 'Hide results' : 'Show results'}
           >
             <Icon
               icon={showResults ? 'eye-open' : 'eye-close'}

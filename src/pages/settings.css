@@ -7,6 +7,7 @@
   text-transform: uppercase;
   color: var(--text-insignificant-color);
   font-weight: normal;
+  padding-inline: 16px;
 }
 
 #settings-container section {
@@ -127,4 +128,15 @@
   display: flex;
   gap: 4px;
   align-items: flex-start;
+}
+
+#settings-container .section-postnote {
+  margin-bottom: 48px;
+  padding-inline: 16px;
+  color: var(--text-insignificant-color);
+}
+
+#settings-container .synced-icon {
+  color: var(--link-color);
+  vertical-align: middle;
 }

@@ -24,11 +24,16 @@ const states = proxy({
   notificationsLastFetchTime: null,
   accounts: {},
   reloadStatusPage: 0,
+  reloadGenericAccounts: {
+    id: null,
+    counter: 0,
+  },
   spoilers: {},
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},
   accounts: {},
+  routeNotification: null,
   // Modals
   showCompose: false,
   showSettings: false,
@@ -37,6 +42,9 @@ const states = proxy({
   showDrafts: false,
   showMediaModal: false,
   showShortcutsSettings: false,
+  showKeyboardShortcutsHelp: false,
+  showGenericAccounts: false,
+  showMediaAlt: false,
   // Shortcuts
   shortcuts: store.account.get('shortcuts') ?? [],
   // Settings
@@ -136,6 +144,9 @@ export function hideAllModals() {
   states.showDrafts = false;
   states.showMediaModal = false;
   states.showShortcutsSettings = false;
+  states.showKeyboardShortcutsHelp = false;
+  states.showGenericAccounts = false;
+  states.showMediaAlt = false;
 }
 
 export function statusKey(id, instance) {

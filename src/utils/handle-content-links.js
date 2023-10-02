@@ -1,14 +1,24 @@
 import states from './states';
 
 function handleContentLinks(opts) {
-  const { mentions = [], instance, previewMode } = opts || {};
+  const { mentions = [], instance, previewMode, statusURL } = opts || {};
   return (e) => {
     let { target } = e;
     target = target.closest('a');
     if (!target) return;
+
+    // If cmd/ctrl/shift/alt key is pressed or middle-click, let the browser handle it
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2) {
+      return;
+    }
+
     const prevText = target.previousSibling?.textContent;
     const textBeforeLinkIsAt = prevText?.endsWith('@');
-    if (target.classList.contains('u-url') || textBeforeLinkIsAt) {
+    const textStartsWithAt = target.innerText.startsWith('@');
+    if (
+      (target.classList.contains('u-url') && textStartsWithAt) ||
+      (textBeforeLinkIsAt && !textStartsWithAt)
+    ) {
       const targetText = (
         target.querySelector('span') || target
       ).innerText.trim();
@@ -46,7 +56,11 @@ function handleContentLinks(opts) {
         const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
         console.log({ hashURL });
         location.hash = hashURL;
-      } else if (states.unfurledLinks[target.href]?.url) {
+      } else if (
+        states.unfurledLinks[target.href]?.url &&
+        statusURL !== target.href
+      ) {
+        // If unfurled AND not self-referential
         e.preventDefault();
         e.stopPropagation();
         states.prevLocation = {

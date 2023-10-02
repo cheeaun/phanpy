@@ -1,7 +1,8 @@
 import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
-import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
+import { proxy, useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -46,6 +47,12 @@ const MUTE_DURATIONS_LABELS = {
   604_800_000: '1 week',
 };
 
+const LIMIT = 80;
+
+const accountInfoStates = proxy({
+  familiarFollowers: [],
+});
+
 function AccountInfo({
   account,
   fetchAccount = () => {},
@@ -53,9 +60,23 @@ function AccountInfo({
   instance,
   authenticated,
 }) {
+  const { masto } = api({
+    instance,
+  });
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
+  const snapAccountInfoStates = useSnapshot(accountInfoStates);
+
+  const isSelf = useMemo(
+    () => account.id === store.session.get('currentAccount'),
+    [account?.id],
+  );
+
+  const sameCurrentInstance = useMemo(
+    () => instance === api().instance,
+    [instance],
+  );
 
   useEffect(() => {
     if (!isString) {
@@ -98,6 +119,9 @@ function AccountInfo({
     statusesCount,
     url,
     username,
+    memorial,
+    moved,
+    roles,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -111,7 +135,72 @@ function AccountInfo({
     }
   }
 
+  const accountInstance = useMemo(() => {
+    if (!url) return null;
+    const domain = new URL(url).hostname;
+    return domain;
+  }, [url]);
+
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
+
+  const followersIterator = useRef();
+  const familiarFollowersCache = useRef([]);
+  async function fetchFollowers(firstLoad) {
+    if (firstLoad || !followersIterator.current) {
+      followersIterator.current = masto.v1.accounts.listFollowers(id, {
+        limit: LIMIT,
+      });
+    }
+    const results = await followersIterator.current.next();
+    if (isSelf) return results;
+    if (!sameCurrentInstance) return results;
+
+    const { value } = results;
+    let newValue = [];
+    // On first load, fetch familiar followers, merge to top of results' `value`
+    // Remove dups on every fetch
+    if (firstLoad) {
+      const familiarFollowers = await masto.v1.accounts.fetchFamiliarFollowers(
+        id,
+      );
+      familiarFollowersCache.current = familiarFollowers[0].accounts;
+      newValue = [
+        ...familiarFollowersCache.current,
+        ...value.filter(
+          (account) =>
+            !familiarFollowersCache.current.some(
+              (familiar) => familiar.id === account.id,
+            ),
+        ),
+      ];
+    } else if (value?.length) {
+      newValue = value.filter(
+        (account) =>
+          !familiarFollowersCache.current.some(
+            (familiar) => familiar.id === account.id,
+          ),
+      );
+    }
+
+    return {
+      ...results,
+      value: newValue,
+    };
+  }
+
+  const followingIterator = useRef();
+  async function fetchFollowing(firstLoad) {
+    if (firstLoad || !followingIterator.current) {
+      followingIterator.current = masto.v1.accounts.listFollowing(id, {
+        limit: LIMIT,
+      });
+    }
+    const results = await followingIterator.current.next();
+    return results;
+  }
+
+  const LinkOrDiv = standalone ? 'div' : Link;
+  const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
 
   return (
     <div
@@ -127,7 +216,11 @@ function AccountInfo({
         <div class="ui-state">
           <p>Unable to load account.</p>
           <p>
-            <a href={account} target="_blank">
+            <a
+              href={isString ? account : url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Go to account page <Icon icon="external" />
             </a>
           </p>
@@ -160,6 +253,22 @@ function AccountInfo({
       ) : (
         info && (
           <>
+            {!!moved && (
+              <div class="account-moved">
+                <p>
+                  <b>{displayName}</b> has indicated that their new account is
+                  now:
+                </p>
+                <AccountBlock
+                  account={moved}
+                  instance={instance}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    states.showAccount = moved;
+                  }}
+                />
+              </div>
+            )}
             {header && !/missing\.png$/.test(header) && (
               <img
                 src={header}
@@ -187,7 +296,9 @@ function AccountInfo({
                   try {
                     // Get color from four corners of image
                     const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
+                    const ctx = canvas.getContext('2d', {
+                      willReadFrequently: true,
+                    });
                     canvas.width = e.target.width;
                     canvas.height = e.target.height;
                     ctx.drawImage(e.target, 0, 0);
@@ -266,20 +377,28 @@ function AccountInfo({
               />
             </header>
             <main tabIndex="-1">
-              {bot && (
-                <>
-                  <span class="tag">
-                    <Icon icon="bot" /> Automated
-                  </span>
-                </>
+              {!!memorial && <span class="tag">In Memoriam</span>}
+              {!!bot && (
+                <span class="tag">
+                  <Icon icon="bot" /> Automated
+                </span>
               )}
-              {group && (
-                <>
-                  <span class="tag">
-                    <Icon icon="group" /> Group
-                  </span>
-                </>
+              {!!group && (
+                <span class="tag">
+                  <Icon icon="group" /> Group
+                </span>
               )}
+              {roles?.map((role) => (
+                <span class="tag">
+                  {role.name}
+                  {!!accountInstance && (
+                    <>
+                      {' '}
+                      <span class="more-insignificant">{accountInstance}</span>
+                    </>
+                  )}
+                </span>
+              ))}
               <div
                 class="note"
                 onClick={handleContentLinks({
@@ -289,78 +408,115 @@ function AccountInfo({
                   __html: enhanceContent(note, { emojis }),
                 }}
               />
-              {fields?.length > 0 && (
-                <div class="profile-metadata">
-                  {fields.map(({ name, value, verifiedAt }, i) => (
-                    <div
-                      class={`profile-field ${
-                        verifiedAt ? 'profile-verified' : ''
-                      }`}
-                      key={name + i}
-                    >
-                      <b>
-                        <EmojiText text={name} emojis={emojis} />{' '}
-                        {!!verifiedAt && <Icon icon="check-circle" size="s" />}
-                      </b>
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html: enhanceContent(value, { emojis }),
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p class="stats">
-                <div>
-                  <span title={followersCount}>
-                    {shortenNumber(followersCount)}
-                  </span>{' '}
-                  Followers
-                </div>
-                <div class="insignificant">
-                  <span title={followingCount}>
-                    {shortenNumber(followingCount)}
-                  </span>{' '}
-                  Following
-                  <br />
-                </div>
-                {standalone ? (
-                  <div class="insignificant">
-                    <span title={statusesCount}>
-                      {shortenNumber(statusesCount)}
-                    </span>{' '}
-                    Posts
+              <div class="account-metadata-box">
+                {fields?.length > 0 && (
+                  <div class="profile-metadata">
+                    {fields.map(({ name, value, verifiedAt }, i) => (
+                      <div
+                        class={`profile-field ${
+                          verifiedAt ? 'profile-verified' : ''
+                        }`}
+                        key={name + i}
+                      >
+                        <b>
+                          <EmojiText text={name} emojis={emojis} />{' '}
+                          {!!verifiedAt && (
+                            <Icon icon="check-circle" size="s" />
+                          )}
+                        </b>
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: enhanceContent(value, { emojis }),
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ) : (
-                  <Link
-                    class="insignificant"
-                    to={instance ? `/${instance}/a/${id}` : `/a/${id}`}
+                )}
+                <div class="stats">
+                  <LinkOrDiv
+                    tabIndex={0}
+                    to={accountLink}
                     onClick={() => {
-                      hideAllModals();
+                      states.showAccount = false;
+                      states.showGenericAccounts = {
+                        heading: 'Followers',
+                        fetchAccounts: fetchFollowers,
+                      };
                     }}
+                  >
+                    {!!snapAccountInfoStates.familiarFollowers.length && (
+                      <span class="shazam-container-horizontal">
+                        <span class="shazam-container-inner stats-avatars-bunch">
+                          {(snapAccountInfoStates.familiarFollowers || []).map(
+                            (follower) => (
+                              <Avatar
+                                url={follower.avatarStatic}
+                                size="s"
+                                alt={`${follower.displayName} @${follower.acct}`}
+                                squircle={follower?.bot}
+                              />
+                            ),
+                          )}
+                        </span>
+                      </span>
+                    )}
+                    <span title={followersCount}>
+                      {shortenNumber(followersCount)}
+                    </span>{' '}
+                    Followers
+                  </LinkOrDiv>
+                  <LinkOrDiv
+                    class="insignificant"
+                    tabIndex={0}
+                    to={accountLink}
+                    onClick={() => {
+                      states.showAccount = false;
+                      states.showGenericAccounts = {
+                        heading: 'Following',
+                        fetchAccounts: fetchFollowing,
+                      };
+                    }}
+                  >
+                    <span title={followingCount}>
+                      {shortenNumber(followingCount)}
+                    </span>{' '}
+                    Following
+                    <br />
+                  </LinkOrDiv>
+                  <LinkOrDiv
+                    class="insignificant"
+                    to={accountLink}
+                    onClick={
+                      standalone
+                        ? undefined
+                        : () => {
+                            hideAllModals();
+                          }
+                    }
                   >
                     <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
                     </span>{' '}
                     Posts
-                  </Link>
-                )}
-                {!!createdAt && (
-                  <div class="insignificant">
-                    Joined{' '}
-                    <time datetime={createdAt}>
-                      {niceDateTime(createdAt, {
-                        hideTime: true,
-                      })}
-                    </time>
-                  </div>
-                )}
-              </p>
+                  </LinkOrDiv>
+                  {!!createdAt && (
+                    <div class="insignificant">
+                      Joined{' '}
+                      <time datetime={createdAt}>
+                        {niceDateTime(createdAt, {
+                          hideTime: true,
+                        })}
+                      </time>
+                    </div>
+                  )}
+                </div>
+              </div>
               <RelatedActions
                 info={info}
                 instance={instance}
                 authenticated={authenticated}
+                standalone={standalone}
               />
             </main>
           </>
@@ -370,7 +526,9 @@ function AccountInfo({
   );
 }
 
-function RelatedActions({ info, instance, authenticated }) {
+const FAMILIAR_FOLLOWERS_LIMIT = 3;
+
+function RelatedActions({ info, instance, authenticated, standalone }) {
   if (!info) return null;
   const {
     masto: currentMasto,
@@ -381,9 +539,10 @@ function RelatedActions({ info, instance, authenticated }) {
 
   const [relationshipUIState, setRelationshipUIState] = useState('default');
   const [relationship, setRelationship] = useState(null);
-  const [familiarFollowers, setFamiliarFollowers] = useState([]);
+  const [postingStats, setPostingStats] = useState();
 
-  const { id, acct, url, username, locked, lastStatusAt, note, fields } = info;
+  const { id, acct, url, username, locked, lastStatusAt, note, fields, moved } =
+    info;
   const accountID = useRef(id);
 
   const {
@@ -440,33 +599,82 @@ function RelatedActions({ info, instance, authenticated }) {
 
         accountID.current = currentID;
 
+        if (moved) return;
+
         setRelationshipUIState('loading');
-        setFamiliarFollowers([]);
+        accountInfoStates.familiarFollowers = [];
+        setPostingStats(null);
 
         const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
           currentID,
         ]);
-        const fetchFamiliarFollowers =
-          currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
 
         try {
           const relationships = await fetchRelationships;
           console.log('fetched relationship', relationships);
+          setRelationshipUIState('default');
+
           if (relationships.length) {
             const relationship = relationships[0];
             setRelationship(relationship);
 
             if (!relationship.following) {
               try {
+                const fetchFamiliarFollowers =
+                  currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
+                const fetchStatuses = currentMasto.v1.accounts
+                  .listStatuses(currentID, {
+                    limit: 20,
+                  })
+                  .next();
+
                 const followers = await fetchFamiliarFollowers;
                 console.log('fetched familiar followers', followers);
-                setFamiliarFollowers(followers[0].accounts.slice(0, 10));
+                accountInfoStates.familiarFollowers =
+                  followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT);
+
+                if (!standalone) {
+                  const { value: statuses } = await fetchStatuses;
+                  console.log('fetched statuses', statuses);
+                  const stats = {
+                    total: statuses.length,
+                    originals: 0,
+                    replies: 0,
+                    boosts: 0,
+                  };
+                  // Categories statuses by type
+                  // - Original posts (not replies to others)
+                  // - Threads (self-replies + 1st original post)
+                  // - Boosts (reblogs)
+                  // - Replies (not-self replies)
+                  statuses.forEach((status) => {
+                    if (status.reblog) {
+                      stats.boosts++;
+                    } else if (
+                      status.inReplyToAccountId !== currentID &&
+                      !!status.inReplyToId
+                    ) {
+                      stats.replies++;
+                    } else {
+                      stats.originals++;
+                    }
+                  });
+
+                  // Count days since last post
+                  stats.daysSinceLastPost = Math.ceil(
+                    (Date.now() -
+                      new Date(statuses[statuses.length - 1].createdAt)) /
+                      86400000,
+                  );
+
+                  console.log('posting stats', stats);
+                  setPostingStats(stats);
+                }
               } catch (e) {
                 console.error(e);
               }
             }
           }
-          setRelationshipUIState('default');
         } catch (e) {
           console.error(e);
           setRelationshipUIState('error');
@@ -487,40 +695,74 @@ function RelatedActions({ info, instance, authenticated }) {
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
 
+  const hasPostingStats = postingStats?.total >= 3;
+  const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
+
   return (
     <>
-      <div
-        class="common-followers shazam-container no-animation"
-        hidden={!familiarFollowers?.length}
-      >
-        <div class="shazam-container-inner">
-          <p>
-            Followed by{' '}
-            <span class="ib">
-              {familiarFollowers.map((follower) => (
-                <a
-                  href={follower.url}
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    states.showAccount = {
-                      account: follower,
-                      instance,
-                    };
+      {hasPostingStats && (
+        <Link
+          to={accountLink}
+          class="account-metadata-box"
+          onClick={() => {
+            states.showAccount = false;
+          }}
+        >
+          <div class="shazam-container">
+            <div class="shazam-container-inner">
+              <div
+                class="posting-stats"
+                title={`${Math.round(
+                  (postingStats.originals / postingStats.total) * 100,
+                )}% original posts, ${Math.round(
+                  (postingStats.replies / postingStats.total) * 100,
+                )}% replies, ${Math.round(
+                  (postingStats.boosts / postingStats.total) * 100,
+                )}% boosts`}
+              >
+                <div>
+                  {postingStats.daysSinceLastPost < 365
+                    ? `Last ${postingStats.total} posts in the past 
+                    ${postingStats.daysSinceLastPost} day${
+                        postingStats.daysSinceLastPost > 1 ? 's' : ''
+                      }`
+                    : `
+                     Last ${postingStats.total} posts in the past year(s)
+                    `}
+                </div>
+                <div
+                  class="posting-stats-bar"
+                  style={{
+                    // [originals | replies | boosts]
+                    '--originals-percentage': `${
+                      (postingStats.originals / postingStats.total) * 100
+                    }%`,
+                    '--replies-percentage': `${
+                      ((postingStats.originals + postingStats.replies) /
+                        postingStats.total) *
+                      100
+                    }%`,
                   }}
-                >
-                  <Avatar
-                    url={follower.avatarStatic}
-                    size="l"
-                    alt={`${follower.displayName} @${follower.acct}`}
-                    squircle={follower?.bot}
-                  />
-                </a>
-              ))}
-            </span>
-          </p>
-        </div>
-      </div>
+                />
+                <div class="posting-stats-legends">
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                    Original
+                  </span>{' '}
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                    Replies
+                  </span>{' '}
+                  <span class="ib">
+                    <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                    Boosts
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      )}
       <p class="actions">
         <span>
           {followedBy ? (
@@ -664,6 +906,8 @@ function RelatedActions({ info, instance, authenticated }) {
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
                           showToast(`Unmuted @${username}`);
+                          states.reloadGenericAccounts.id = 'mute';
+                          states.reloadGenericAccounts.counter++;
                         } catch (e) {
                           console.error(e);
                           setRelationshipUIState('error');
@@ -715,6 +959,8 @@ function RelatedActions({ info, instance, authenticated }) {
                                 showToast(
                                   `Muted @${username} for ${MUTE_DURATIONS_LABELS[duration]}`,
                                 );
+                                states.reloadGenericAccounts.id = 'mute';
+                                states.reloadGenericAccounts.counter++;
                               } catch (e) {
                                 console.error(e);
                                 setRelationshipUIState('error');
@@ -765,6 +1011,8 @@ function RelatedActions({ info, instance, authenticated }) {
                           setRelationshipUIState('default');
                           showToast(`Blocked @${username}`);
                         }
+                        states.reloadGenericAccounts.id = 'block';
+                        states.reloadGenericAccounts.counter++;
                       } catch (e) {
                         console.error(e);
                         setRelationshipUIState('error');
@@ -876,10 +1124,8 @@ function RelatedActions({ info, instance, authenticated }) {
       {!!showTranslatedBio && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowTranslatedBio(false);
-            }
+          onClose={() => {
+            setShowTranslatedBio(false);
           }}
         >
           <TranslatedBioSheet
@@ -892,10 +1138,8 @@ function RelatedActions({ info, instance, authenticated }) {
       {!!showAddRemoveLists && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowAddRemoveLists(false);
-            }
+          onClose={() => {
+            setShowAddRemoveLists(false);
           }}
         >
           <AddRemoveListsSheet

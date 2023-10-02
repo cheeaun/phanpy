@@ -93,7 +93,7 @@ Everything is designed and engineered following my taste and vision. This is a p
   - Content can be partially revealed by hovering over the post, with tooltip showing the post text.
   - Clicking it will open the Post page.
   - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
-  - On boosts carousel, they are not partially hidden, but sorted to the end of the carousel.
+  - On boosts carousel, they are sorted to the end of the carousel.
 
 ## Development
 
@@ -109,7 +109,7 @@ Prerequisites: Node.js 18+
 
 ## Self-hosting
 
-This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` and serve the `dist` folder.
+This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` (after `npm install`) and serve the `dist` folder.
 
 Try search for "how to self-host static sites" as there are many ways to do it.
 
@@ -124,6 +124,14 @@ Try search for "how to self-host static sites" as there are many ways to do it.
 - Vanilla CSS - *Yes, I'm old school.*
 
 Some of these may change in the future. The front-end world is ever-changing.
+
+## Costs
+
+Costs involved in running and developing this web app:
+
+- Domain name (.social): **USD$23.18/year** (USD$6.87 1st year)
+- Hosting: Free
+- Development, design, maintenance: "Free" (My precious time)
 
 ## Mascot
 
@@ -147,14 +155,14 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
-- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/))
+- [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
   - [Semaphore](https://semaphore.social/)
-  - [Enafore](https://pinafore.easrng.net/)
+  - [Enafore](https://enafore.social/)
 - [Cuckoo+](https://www.cuckoo.social/)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
-- [Elk](https://elk.zone/)
-  - Fork https://elk.fedified.com/
+- [Elk](https://elk.zone/) - forks ↓
+  - [elk.fedified.com](https://elk.fedified.com/)
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)

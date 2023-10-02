@@ -5,11 +5,18 @@ import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
 import targetLanguages from '../data/lingva-target-languages';
 import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
+import {
+  initSubscription,
+  isPushSupported,
+  removeSubscription,
+  updateSubscription,
+} from '../utils/push-notifications';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -27,6 +34,7 @@ function Settings({ onClose }) {
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
   const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
+  const { masto, authenticated, instance } = api();
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
   // useEffect(() => {
@@ -162,50 +170,69 @@ function Settings({ onClose }) {
             </li>
           </ul>
         </section>
-        <h3>Posting</h3>
-        <section>
-          <ul>
-            <li>
-              <div>
-                <label for="posting-privacy-field">Default visibility</label>
-              </div>
-              <div>
-                <select
-                  id="posting-privacy-field"
-                  value={prefs['posting:default:visibility'] || 'public'}
-                  onChange={(e) => {
-                    const { value } = e.target;
-                    const { masto } = api();
-                    (async () => {
-                      try {
-                        await masto.v1.accounts.updateCredentials({
-                          source: {
-                            privacy: value,
-                          },
-                        });
-                        setPrefs({
-                          ...prefs,
-                          'posting:default:visibility': value,
-                        });
-                        store.account.set('preferences', {
-                          ...prefs,
-                          'posting:default:visibility': value,
-                        });
-                      } catch (e) {
-                        alert('Failed to update posting privacy');
-                        console.error(e);
-                      }
-                    })();
-                  }}
+        {authenticated && (
+          <>
+            <h3>Posting</h3>
+            <section>
+              <ul>
+                <li>
+                  <div>
+                    <label for="posting-privacy-field">
+                      Default visibility{' '}
+                      <Icon icon="cloud" alt="Synced" class="synced-icon" />
+                    </label>
+                  </div>
+                  <div>
+                    <select
+                      id="posting-privacy-field"
+                      value={prefs['posting:default:visibility'] || 'public'}
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        (async () => {
+                          try {
+                            await masto.v1.accounts.updateCredentials({
+                              source: {
+                                privacy: value,
+                              },
+                            });
+                            setPrefs({
+                              ...prefs,
+                              'posting:default:visibility': value,
+                            });
+                            store.account.set('preferences', {
+                              ...prefs,
+                              'posting:default:visibility': value,
+                            });
+                          } catch (e) {
+                            alert('Failed to update posting privacy');
+                            console.error(e);
+                          }
+                        })();
+                      }}
+                    >
+                      <option value="public">Public</option>
+                      <option value="unlisted">Unlisted</option>
+                      <option value="private">Followers only</option>
+                    </select>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <p class="section-postnote">
+              <Icon icon="cloud" alt="Synced" class="synced-icon" />{' '}
+              <small>
+                Synced to your instance server's settings.{' '}
+                <a
+                  href={`https://${instance}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <option value="public">Public</option>
-                  <option value="unlisted">Unlisted</option>
-                  <option value="private">Followers only</option>
-                </select>
-              </div>
-            </li>
-          </ul>
-        </section>
+                  Go to your instance ({instance}) for more settings.
+                </a>
+              </small>
+            </p>
+          </>
+        )}
         <h3>Experiments</h3>
         <section>
           <ul>
@@ -326,6 +353,7 @@ function Settings({ onClose }) {
                     <a
                       href="https://github.com/thedaviddelta/lingva-translate"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Lingva Translate
                     </a>
@@ -377,20 +405,23 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
-            <li>
-              <button
-                type="button"
-                class="light"
-                onClick={() => {
-                  states.showDrafts = true;
-                  states.showSettings = false;
-                }}
-              >
-                Unsent drafts
-              </button>
-            </li>
+            {authenticated && (
+              <li>
+                <button
+                  type="button"
+                  class="light"
+                  onClick={() => {
+                    states.showDrafts = true;
+                    states.showSettings = false;
+                  }}
+                >
+                  Unsent drafts
+                </button>
+              </li>
+            )}
           </ul>
         </section>
+        {authenticated && <PushNotificationsSection onClose={onClose} />}
         <h3>About</h3>
         <section>
           <div
@@ -419,6 +450,7 @@ function Settings({ onClose }) {
               <a
                 href="https://hachyderm.io/@phanpy"
                 // target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   states.showAccount = 'phanpy@hachyderm.io';
@@ -427,13 +459,18 @@ function Settings({ onClose }) {
                 @phanpy
               </a>
               <br />
-              <a href="https://github.com/cheeaun/phanpy" target="_blank">
+              <a
+                href="https://github.com/cheeaun/phanpy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Built
               </a>{' '}
               by{' '}
               <a
                 href="https://mastodon.social/@cheeaun"
                 // target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   states.showAccount = 'cheeaun@mastodon.social';
@@ -447,6 +484,7 @@ function Settings({ onClose }) {
             <a
               href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
               target="_blank"
+              rel="noopener noreferrer"
             >
               Privacy Policy
             </a>
@@ -461,6 +499,7 @@ function Settings({ onClose }) {
                   <a
                     href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <code>{__COMMIT_HASH__}</code>
                   </a>
@@ -472,6 +511,246 @@ function Settings({ onClose }) {
         </section>
       </main>
     </div>
+  );
+}
+
+function PushNotificationsSection({ onClose }) {
+  if (!isPushSupported()) return null;
+
+  const { instance } = api();
+  const [uiState, setUIState] = useState('default');
+  const pushFormRef = useRef();
+  const [allowNofitications, setAllowNotifications] = useState(false);
+  const [needRelogin, setNeedRelogin] = useState(false);
+  const previousPolicyRef = useRef();
+  useEffect(() => {
+    (async () => {
+      setUIState('loading');
+      try {
+        const { subscription, backendSubscription } = await initSubscription();
+        if (
+          backendSubscription?.policy &&
+          backendSubscription.policy !== 'none'
+        ) {
+          setAllowNotifications(true);
+          const { alerts, policy } = backendSubscription;
+          previousPolicyRef.current = policy;
+          const { elements } = pushFormRef.current;
+          const policyEl = elements.namedItem(policy);
+          if (policyEl) policyEl.value = policy;
+          // alerts is {}, iterate it
+          Object.keys(alerts).forEach((alert) => {
+            const el = elements.namedItem(alert);
+            if (el?.type === 'checkbox') {
+              el.checked = true;
+            }
+          });
+        }
+        setUIState('default');
+      } catch (err) {
+        console.warn(err);
+        if (/outside.*authorized/i.test(err.message)) {
+          setNeedRelogin(true);
+        } else {
+          alert(err?.message || err);
+        }
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  const isLoading = uiState === 'loading';
+
+  return (
+    <form
+      ref={pushFormRef}
+      onChange={() => {
+        const values = Object.fromEntries(new FormData(pushFormRef.current));
+        const allowNofitications = !!values['policy-allow'];
+        const params = {
+          policy: values.policy,
+          data: {
+            alerts: {
+              mention: !!values.mention,
+              favourite: !!values.favourite,
+              reblog: !!values.reblog,
+              follow: !!values.follow,
+              follow_request: !!values.followRequest,
+              poll: !!values.poll,
+              update: !!values.update,
+              status: !!values.status,
+            },
+          },
+        };
+
+        let alertsCount = 0;
+        // Remove false values from data.alerts
+        // API defaults to false anyway
+        Object.keys(params.data.alerts).forEach((key) => {
+          if (!params.data.alerts[key]) {
+            delete params.data.alerts[key];
+          } else {
+            alertsCount++;
+          }
+        });
+        const policyChanged = previousPolicyRef.current !== params.policy;
+
+        console.log('PN Form', { values, allowNofitications, params });
+
+        if (allowNofitications && alertsCount > 0) {
+          if (policyChanged) {
+            console.debug('Policy changed.');
+            removeSubscription()
+              .then(() => {
+                updateSubscription(params);
+              })
+              .catch((err) => {
+                console.warn(err);
+                alert('Failed to update subscription. Please try again.');
+              });
+          } else {
+            updateSubscription(params).catch((err) => {
+              console.warn(err);
+              alert('Failed to update subscription. Please try again.');
+            });
+          }
+        } else {
+          removeSubscription().catch((err) => {
+            console.warn(err);
+            alert('Failed to remove subscription. Please try again.');
+          });
+        }
+      }}
+    >
+      <h3>Push Notifications (beta)</h3>
+      <section>
+        <ul>
+          <li>
+            <label>
+              <input
+                type="checkbox"
+                disabled={isLoading || needRelogin}
+                name="policy-allow"
+                checked={allowNofitications}
+                onChange={async (e) => {
+                  const { checked } = e.target;
+                  if (checked) {
+                    // Request permission
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                      setAllowNotifications(true);
+                    } else {
+                      setAllowNotifications(false);
+                      if (permission === 'denied') {
+                        alert(
+                          'Push notifications are blocked. Please enable them in your browser settings.',
+                        );
+                      }
+                    }
+                  } else {
+                    setAllowNotifications(false);
+                  }
+                }}
+              />{' '}
+              Allow from{' '}
+              <select
+                name="policy"
+                disabled={isLoading || needRelogin || !allowNofitications}
+              >
+                {[
+                  {
+                    value: 'all',
+                    label: 'anyone',
+                  },
+                  {
+                    value: 'followed',
+                    label: 'people I follow',
+                  },
+                  {
+                    value: 'follower',
+                    label: 'followers',
+                  },
+                ].map((type) => (
+                  <option value={type.value}>{type.label}</option>
+                ))}
+              </select>
+            </label>
+            <div
+              class="shazam-container no-animation"
+              style={{
+                width: '100%',
+              }}
+              hidden={!allowNofitications}
+            >
+              <div class="shazam-container-inner">
+                <div class="sub-section">
+                  <ul>
+                    {[
+                      {
+                        value: 'mention',
+                        label: 'Mentions',
+                      },
+                      {
+                        value: 'favourite',
+                        label: 'Favourites',
+                      },
+                      {
+                        value: 'reblog',
+                        label: 'Boosts',
+                      },
+                      {
+                        value: 'follow',
+                        label: 'Follows',
+                      },
+                      {
+                        value: 'followRequest',
+                        label: 'Follow requests',
+                      },
+                      {
+                        value: 'poll',
+                        label: 'Polls',
+                      },
+                      {
+                        value: 'update',
+                        label: 'Post edits',
+                      },
+                      {
+                        value: 'status',
+                        label: 'New posts',
+                      },
+                    ].map((alert) => (
+                      <li>
+                        <label>
+                          <input type="checkbox" name={alert.value} />{' '}
+                          {alert.label}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {needRelogin && (
+              <div class="sub-section">
+                <p>
+                  Push permission was not granted since your last login. You'll
+                  need to{' '}
+                  <Link to={`/login?instance=${instance}`} onClick={onClose}>
+                    <b>log in</b> again to grant push permission
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+          </li>
+        </ul>
+      </section>
+      <p class="section-postnote">
+        <small>
+          NOTE: Push notifications only work for <b>one account</b>.
+        </small>
+      </p>
+    </form>
   );
 }
 

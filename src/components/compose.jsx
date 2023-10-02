@@ -28,7 +28,8 @@ import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
-import Avatar from './avatar';
+import AccountBlock from './account-block';
+// import Avatar from './avatar';
 import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
@@ -508,11 +509,16 @@ function Compose({
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
         <div class="compose-top">
           {currentAccountInfo?.avatarStatic && (
-            <Avatar
-              url={currentAccountInfo.avatarStatic}
-              size="xl"
-              alt={currentAccountInfo.username}
-              squircle={currentAccountInfo?.bot}
+            // <Avatar
+            //   url={currentAccountInfo.avatarStatic}
+            //   size="xl"
+            //   alt={currentAccountInfo.username}
+            //   squircle={currentAccountInfo?.bot}
+            // />
+            <AccountBlock
+              account={currentAccountInfo}
+              accountInstance={currentAccount.instanceURL}
+              hideDisplayName
             />
           )}
           {!standalone ? (
@@ -833,6 +839,8 @@ function Compose({
 
                 // Close
                 onClose({
+                  // type: post, reply, edit
+                  type: editStatus ? 'edit' : replyToStatus ? 'reply' : 'post',
                   newStatus,
                   instance,
                 });
@@ -925,6 +933,14 @@ function Compose({
             }}
             maxCharacters={maxCharacters}
             performSearch={(params) => {
+              const { type, q, limit } = params;
+              if (type === 'accounts') {
+                return masto.v1.accounts.search({
+                  q,
+                  limit,
+                  resolve: false,
+                });
+              }
               return masto.v2.search(params);
             }}
           />
@@ -1169,6 +1185,17 @@ function Compose({
   );
 }
 
+function autoResizeTextarea(textarea) {
+  if (!textarea) return;
+  const { value, offsetHeight, scrollHeight, clientHeight } = textarea;
+  if (offsetHeight < window.innerHeight) {
+    // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
+    // No idea why it does that, will re-investigate in far future
+    const offset = offsetHeight - clientHeight;
+    textarea.style.height = value ? scrollHeight + offset + 'px' : null;
+  }
+}
+
 const Textarea = forwardRef((props, ref) => {
   const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
@@ -1252,7 +1279,7 @@ const Textarea = forwardRef((props, ref) => {
                 return;
               }
               console.log({ value, type, v: value[type] });
-              const results = value[type];
+              const results = value[type] || value;
               console.log('RESULTS', value, results);
               let html = '';
               results.forEach((result) => {
@@ -1361,11 +1388,46 @@ const Textarea = forwardRef((props, ref) => {
         ref={ref}
         name="status"
         value={text}
+        onKeyDown={(e) => {
+          // Get line before cursor position after pressing 'Enter'
+          const { key, target } = e;
+          if (key === 'Enter') {
+            try {
+              const { value, selectionStart } = target;
+              const textBeforeCursor = value.slice(0, selectionStart);
+              const lastLine = textBeforeCursor.split('\n').slice(-1)[0];
+              if (lastLine) {
+                // If line starts with "- " or "12. "
+                if (/^\s*(-|\d+\.)\s/.test(lastLine)) {
+                  // insert "- " at cursor position
+                  const [_, preSpaces, bullet, postSpaces, anything] =
+                    lastLine.match(/^(\s*)(-|\d+\.)(\s+)(.+)?/) || [];
+                  if (anything) {
+                    e.preventDefault();
+                    const [number] = bullet.match(/\d+/) || [];
+                    const newBullet = number ? `${+number + 1}.` : '-';
+                    const text = `\n${preSpaces}${newBullet}${postSpaces}`;
+                    target.setRangeText(text, selectionStart, selectionStart);
+                    const pos = selectionStart + text.length;
+                    target.setSelectionRange(pos, pos);
+                  } else {
+                    // trim the line before the cursor, then insert new line
+                    const pos = selectionStart - lastLine.length;
+                    target.setRangeText('', pos, selectionStart);
+                  }
+                  autoResizeTextarea(target);
+                }
+              }
+            } catch (e) {
+              // silent fail
+              console.error(e);
+            }
+          }
+        }}
         onInput={(e) => {
-          const { scrollHeight, offsetHeight, clientHeight, value } = e.target;
-          setText(value);
-          const offset = offsetHeight - clientHeight;
-          e.target.style.height = value ? scrollHeight + offset + 'px' : null;
+          const { target } = e;
+          setText(target.value);
+          autoResizeTextarea(target);
           props.onInput?.(e);
         }}
         style={{
@@ -1841,14 +1903,23 @@ function CustomEmojisModal({
                           }}
                           title={`:${emoji.shortcode}:`}
                         >
-                          <img
-                            src={emoji.url || emoji.staticUrl}
-                            alt={emoji.shortcode}
-                            width="16"
-                            height="16"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          <picture>
+                            {!!emoji.staticUrl && (
+                              <source
+                                srcset={emoji.staticUrl}
+                                media="(prefers-reduced-motion: reduce)"
+                              />
+                            )}
+                            <img
+                              class="shortcode-emoji"
+                              src={emoji.url || emoji.staticUrl}
+                              alt={emoji.shortcode}
+                              width="16"
+                              height="16"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </picture>
                         </button>
                       ))}
                     </section>

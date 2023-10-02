@@ -1,12 +1,22 @@
 @media (min-width: 23em) {
   .nav-menu {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'top top'
+      'left right';
     padding: 0;
     width: 22em;
   }
+  .nav-menu .top-menu {
+    grid-area: top;
+    padding-top: 8px;
+    margin-bottom: -8px;
+  }
   .nav-menu section {
     padding: 8px 0;
-    width: 50%;
+    /* width: 50%; */
   }
   @keyframes phanpying {
     0% {
@@ -48,4 +58,18 @@
   .nav-menu {
     width: 28em;
   }
+}
+
+@keyframes sparkle-icon {
+  0% {
+    transform: scale(1);
+    color: var(--red-color);
+  }
+  100% {
+    transform: scale(1.2);
+    color: var(--orange-color);
+  }
+}
+.sparkle-icon {
+  animation: sparkle-icon 0.3s ease-in-out infinite alternate;
 }

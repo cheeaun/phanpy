@@ -1,6 +1,7 @@
 import './login.css';
 
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useSearchParams } from 'react-router-dom';
 
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -14,8 +15,10 @@ function Login() {
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
+  const [searchParams] = useSearchParams();
+  const instance = searchParams.get('instance');
   const [instanceText, setInstanceText] = useState(
-    cachedInstanceURL?.toLowerCase() || '',
+    instance || cachedInstanceURL?.toLowerCase() || '',
   );
 
   const [instancesList, setInstancesList] = useState([]);
@@ -44,13 +47,15 @@ function Login() {
     (async () => {
       setUIState('loading');
       try {
-        const { client_id, client_secret } = await registerApplication({
-          instanceURL,
-        });
+        const { client_id, client_secret, vapid_key } =
+          await registerApplication({
+            instanceURL,
+          });
 
         if (client_id && client_secret) {
           store.session.set('clientID', client_id);
           store.session.set('clientSecret', client_secret);
+          store.session.set('vapidKey', vapid_key);
 
           location.href = await getAuthorizationURL({
             instanceURL,

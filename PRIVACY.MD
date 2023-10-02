@@ -6,6 +6,10 @@ Phanpy does not collect or process any personal information from its users. The 
 
 Phanpy is hosted on [Cloudflare Pages](https://pages.cloudflare.com/) as a static website. Read more about [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/).
 
+## Post translations
+
+Phanpy uses [Lingva Translate](https://github.com/thedaviddelta/lingva-translate) to translate posts.
+
 ## Error logging
 
 Phanpy dev site (*dev.phanpy.social*) uses [Rollbar](https://rollbar.com/) to log errors for debugging purposes. Read more about [Rollbar's privacy policy](https://rollbar.com/privacy/). The production site (*phanpy.social*) does not use error logging.

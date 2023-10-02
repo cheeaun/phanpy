@@ -47,11 +47,12 @@
   --reply-to-color: var(--orange-color);
   --reply-to-text-color: #b36200;
   --favourite-color: var(--red-color);
-  --reply-to-faded-color: #ffa60030;
+  --reply-to-faded-color: #ffa60020;
   --outline-color: rgba(128, 128, 128, 0.2);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.05);
+  --backdrop-darker-color: rgba(0, 0, 0, 0.25);
   --backdrop-solid-color: #ccc;
   --img-bg-color: rgba(128, 128, 128, 0.2);
   --loader-color: #1c1e2199;
@@ -61,6 +62,11 @@
   --close-button-bg-active-color: rgba(0, 0, 0, 0.2);
   --close-button-color: rgba(0, 0, 0, 0.5);
   --close-button-hover-color: rgba(0, 0, 0, 1);
+
+  /* Video colors won't change based on color scheme */
+  --media-fg-color: #f0f2f5;
+  --media-bg-color: #242526;
+  --media-outline-color: color-mix(in lch, var(--media-fg-color), transparent);
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
 }
@@ -88,7 +94,7 @@
     --link-bg-hover-color: #34353799;
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
-    --reply-to-faded-color: #ffa60027;
+    --reply-to-faded-color: #ffa60017;
     --divider-color: rgba(255, 255, 255, 0.1);
     --bg-blur-color: #24252699;
     --backdrop-color: rgba(0, 0, 0, 0.5);
@@ -314,7 +320,8 @@ pre {
   tab-size: 2;
 }
 pre code,
-code {
+code,
+kbd {
   font-size: 90%;
   font-family: var(--monospace-font);
 }
@@ -435,4 +442,25 @@ code {
 }
 .shazam-container-inner {
   overflow: hidden;
+}
+
+@keyframes shazam-horizontal {
+  0% {
+    grid-template-columns: 0fr;
+  }
+  100% {
+    grid-template-columns: 1fr;
+  }
+}
+.shazam-container-horizontal {
+  display: grid;
+  grid-template-columns: 1fr;
+  transition: grid-template-columns 0.5s ease-in-out;
+  white-space: nowrap;
+}
+.shazam-container-horizontal:not(.no-animation) {
+  animation: shazam-horizontal 0.5s ease-in-out both !important;
+}
+.shazam-container-horizontal[hidden] {
+  grid-template-columns: 0fr;
 }

@@ -48,9 +48,10 @@ const MAX_WEIGHT = 5;
 
 let cachedRepliesToggle = {};
 let cachedStatusesMap = {};
+let scrollPositions = {};
 function resetScrollPosition(id) {
   delete cachedStatusesMap[id];
-  delete states.scrollPositions[id];
+  delete scrollPositions[id];
 }
 
 function StatusPage(params) {
@@ -109,6 +110,23 @@ function StatusPage(params) {
     ? mediaStatus?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
+  const handleMediaClose = useCallback(() => {
+    if (
+      !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
+      snapStates.prevLocation
+    ) {
+      history.back();
+    } else {
+      if (showMediaOnly) {
+        location.hash = closeLink;
+      } else {
+        searchParams.delete('media');
+        searchParams.delete('mediaStatusID');
+        setSearchParams(searchParams);
+      }
+    }
+  }, [showMediaOnly, closeLink, snapStates.prevLocation]);
+
   return (
     <div class="deck-backdrop">
       {showMedia ? (
@@ -117,23 +135,9 @@ function StatusPage(params) {
             mediaAttachments={mediaAttachments}
             statusID={mediaStatusID || id}
             instance={instance}
+            lang={heroStatus?.language}
             index={mediaIndex - 1}
-            onClose={() => {
-              if (
-                !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
-                snapStates.prevLocation
-              ) {
-                history.back();
-              } else {
-                if (showMediaOnly) {
-                  location.hash = closeLink;
-                } else {
-                  searchParams.delete('media');
-                  searchParams.delete('mediaStatusID');
-                  setSearchParams(searchParams);
-                }
-              }
-            }}
+            onClose={handleMediaClose}
           />
         ) : (
           <div class="media-modal-container loading">
@@ -184,7 +188,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       if (!scrollableRef.current) return;
       const { scrollTop } = scrollableRef.current;
       if (uiState !== 'loading') {
-        states.scrollPositions[id] = scrollTop;
+        scrollPositions[id] = scrollTop;
       }
     }, 50);
     scrollableRef.current?.addEventListener('scroll', onScroll, {
@@ -391,7 +395,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   useEffect(() => {
     if (!statuses.length) return;
     console.debug('STATUSES', statuses);
-    const scrollPosition = snapStates.scrollPositions[id];
+    const scrollPosition = scrollPositions[id];
     console.debug('scrollPosition', scrollPosition);
     if (!!scrollPosition) {
       console.debug('Case 1', {
@@ -449,7 +453,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   useEffect(() => {
     return () => {
       // RESET
-      states.scrollPositions = {};
+      scrollPositions = {};
       states.reloadStatusPage = 0;
       cachedStatusesMap = {};
       cachedRepliesToggle = {};
@@ -632,6 +636,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
     [id],
   );
+
+  const handleStatusLinkClick = useCallback((e, status) => {
+    resetScrollPosition(status.id);
+  }, []);
 
   return (
     <div
@@ -979,9 +987,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       size={thread || ancestor ? 'm' : 's'}
                       enableTranslate
                       onMediaClick={handleMediaClick}
-                      onStatusLinkClick={() => {
-                        resetScrollPosition(statusID);
-                      }}
+                      onStatusLinkClick={handleStatusLinkClick}
                     />
                     {ancestor && isThread && repliesCount > 1 && (
                       <div class="replies-link">

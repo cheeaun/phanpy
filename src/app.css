@@ -747,6 +747,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent 150%
   );
   position: relative;
+  container-type: inline-size;
 }
 .status-carousel:after {
   content: '';
@@ -787,6 +788,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   gap: 16px;
   align-items: flex-start;
   counter-reset: index;
+  min-height: 160px;
 }
 .status-carousel > ul > li {
   scroll-snap-align: center;
@@ -806,7 +808,18 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel > ul > li:is(:empty, :has(> a:empty)) {
   display: none;
 }
-@media (hover: hover) or (pointer: fine) or (min-width: 40em) {
+/*
+  Assume that browsers that do support inline-size property also support container queries.
+  https://www.smashingmagazine.com/2021/05/css-container-queries-use-cases-migration-strategies/#progressive-enhancement-polyfills
+*/
+@supports not (contain: inline-size) {
+  @media (hover: hover) or (pointer: fine) or (min-width: 40em) {
+    .status-carousel > ul {
+      scroll-snap-type: none;
+    }
+  }
+}
+@container (min-width: 640px) {
   .status-carousel > ul {
     scroll-snap-type: none;
   }
@@ -1074,6 +1087,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   top: env(safe-area-inset-top, 0);
 }
 :is(.carousel-top-controls, .carousel-controls) {
+  mix-blend-mode: luminosity;
   position: absolute;
   left: 0;
   left: env(safe-area-inset-left, 0);
@@ -1410,6 +1424,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   display: inline-block;
   margin: 4px;
   align-self: center;
+
+  &.clickable {
+    cursor: pointer;
+  }
 }
 .tag .icon {
   vertical-align: middle;
@@ -1725,25 +1743,22 @@ meter.donut[hidden] {
 
 :is(.shiny-pill, :root .toastify.shiny-pill) {
   pointer-events: auto;
-  color: var(--button-text-color);
-  text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
-  background-color: var(--button-bg-color);
-  background-image: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.5),
-    rgba(0, 0, 0, 0.1)
-  );
-  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
-    0 10px 36px -4px var(--button-bg-blur-color),
-    inset var(--hairline-width) var(--hairline-width) rgba(255, 255, 255, 0.5);
-  transition: filter 0.3s;
+  color: var(--link-text-color);
+  font-weight: 500;
+  text-shadow: 0 1px var(--bg-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 3px 16px var(--drop-shadow-color),
+    0 6px 16px -3px var(--drop-shadow-color);
 }
-:is(.shiny-pill, :root .toastify.shiny-pill):hover {
-  filter: brightness(1.2);
-}
-:is(.shiny-pill, :root .toastify.shiny-pill):active {
-  transition: none;
-  filter: brightness(0.9);
+:is(.shiny-pill, :root .toastify.shiny-pill):hover:not(:active) {
+  color: var(--text-color);
+  border-color: var(--link-color);
+  filter: none !important;
+  box-shadow: 0 0 0 1px var(--link-text-color),
+    0 3px 16px var(--drop-shadow-color),
+    0 6px 16px -3px var(--drop-shadow-color),
+    0 6px 16px var(--drop-shadow-color);
 }
 
 /* TOAST */
@@ -1755,9 +1770,10 @@ meter.donut[hidden] {
   pointer-events: none;
   color: var(--button-text-color);
   text-shadow: 0 calc(var(--hairline-width) * -1) var(--drop-shadow-color);
-  background-color: var(--button-bg-blur-color);
+  background-color: var(--button-bg-color);
   background-image: none;
-  backdrop-filter: blur(16px);
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
+    0 10px 36px -4px var(--button-bg-blur-color);
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);
@@ -2181,6 +2197,9 @@ ul.link-list li a .icon {
   .timeline-deck > header[hidden] {
     transform: translate3d(0, calc((100% + var(--margin-top)) * -1), 0);
   }
+  .deck > header {
+    text-shadow: 0 1px var(--bg-color);
+  }
   .deck > header h1 {
     font-size: 1.5em;
   }
@@ -2215,13 +2234,30 @@ ul.link-list li a .icon {
     transform: translate3d(-2.5vw, 0, 0);
   }
   .timeline:not(.flat)
+    > li.timeline-item-container:has(.status-link.is-active) {
+    border-top-left-radius: var(--item-radius);
+    border-bottom-left-radius: var(--item-radius);
+  }
+  .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(+ li .status-link.is-active),
-  .timeline:not(.flat) > li.timeline-item-container:has(.status-link.is-active),
   .timeline:not(.flat)
     > li:not(:has(.status-carousel)):has(.status-link.is-active)
     + li {
     transition: var(--back-transition);
     transform: translate3d(-1.25vw, 0, 0);
+  }
+  .timeline:not(.flat)
+    > li.timeline-item-container:not(:has(.status-carousel)):has(
+      + li .status-link.is-active
+    ) {
+    border-top-left-radius: var(--item-radius);
+  }
+  .timeline:not(.flat)
+    > li.timeline-item-container:not(:has(.status-carousel)):has(
+      .status-link.is-active
+    )
+    + li.timeline-item-container {
+    border-bottom-left-radius: var(--item-radius);
   }
   .box {
     padding: 32px;

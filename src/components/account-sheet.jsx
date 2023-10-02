@@ -1,5 +1,4 @@
 import { useEffect } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -11,8 +10,6 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
   const { masto, instance, authenticated } = api({ instance: propInstance });
   const isString = typeof account === 'string';
 
-  const escRef = useHotkeys('esc', onClose, [onClose]);
-
   useEffect(() => {
     if (!isString) {
       states.accounts[`${account.id}@${instance}`] = account;
@@ -21,7 +18,6 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
 
   return (
     <div
-      ref={escRef}
       class="sheet"
       onClick={(e) => {
         const accountBlock = e.target.closest('.account-block');
@@ -58,6 +54,18 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               if (result.accounts.length) {
                 return result.accounts[0];
+              } else if (/https?:\/\/[^/]+\/@/.test(account)) {
+                const accountURL = new URL(account);
+                const acct = accountURL.pathname.replace(/^\//, '');
+                const result = await masto.v2.search({
+                  q: acct,
+                  type: 'accounts',
+                  limit: 1,
+                  resolve: authenticated,
+                });
+                if (result.accounts.length) {
+                  return result.accounts[0];
+                }
               }
             }
           } else {

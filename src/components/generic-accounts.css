@@ -1,0 +1,42 @@
+#generic-accounts-container {
+  .accounts-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    column-gap: 1.5em;
+    row-gap: 16px;
+
+    li {
+      display: flex;
+      flex-grow: 1;
+      flex-basis: 16em;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 8px;
+    }
+
+    .account-block-acct {
+      font-size: 80%;
+      color: var(--text-insignificant-color);
+      display: block;
+    }
+  }
+
+  .reactions-block {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    .favourite-icon {
+      color: var(--favourite-color);
+    }
+
+    .reblog-icon {
+      color: var(--reblog-color);
+    }
+  }
+}

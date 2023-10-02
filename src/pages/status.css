@@ -31,6 +31,9 @@
 .ancestors-indicator {
   font-size: 70% !important;
 }
+.ancestors-indicator:not([hidden]) {
+  animation: slide-up 0.3s both ease-out 0.3s;
+}
 .ancestors-indicator[hidden] {
   opacity: 0;
   pointer-events: none;

@@ -1,5 +1,6 @@
 import './translation-block.css';
 
+import pRetry from 'p-retry';
 import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
@@ -15,24 +16,45 @@ const throttle = pThrottle({
   interval: 2000,
 });
 
+// Using other API instances instead of lingva.ml because of this bug (slashes don't work):
+// https://github.com/thedaviddelta/lingva-translate/issues/68
+const LINGVA_INSTANCES = [
+  'lingva.garudalinux.org',
+  'lingva.lunar.icu',
+  'translate.plausibility.cloud',
+];
+let currentLingvaInstance = 0;
+
 function lingvaTranslate(text, source, target) {
   console.log('TRANSLATE', text, source, target);
-  // Using another API instance instead of lingva.ml because of this bug (slashes don't work):
-  // https://github.com/thedaviddelta/lingva-translate/issues/68
-  return fetch(
-    `https://lingva.garudalinux.org/api/v1/${source}/${target}/${encodeURIComponent(
-      text,
-    )}`,
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      return {
-        provider: 'lingva',
-        content: res.translation,
-        detectedSourceLanguage: res.info?.detectedSource,
-        info: res.info,
-      };
-    });
+  const fetchCall = () => {
+    let instance = LINGVA_INSTANCES[currentLingvaInstance];
+    return fetch(
+      `https://${instance}/api/v1/${source}/${target}/${encodeURIComponent(
+        text,
+      )}`,
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        return {
+          provider: 'lingva',
+          content: res.translation,
+          detectedSourceLanguage: res.info?.detectedSource,
+          info: res.info,
+        };
+      });
+  };
+  return pRetry(fetchCall, {
+    retries: 3,
+    onFailedAttempt: (e) => {
+      currentLingvaInstance =
+        (currentLingvaInstance + 1) % LINGVA_INSTANCES.length;
+      console.log(
+        'Retrying translation with another instance',
+        currentLingvaInstance,
+      );
+    },
+  });
   // return masto.v1.statuses.translate(id, {
   //   lang: DEFAULT_LANG,
   // });
@@ -66,7 +88,7 @@ function TranslationBlock({
   const translate = async () => {
     setUIState('loading');
     try {
-      const { content, detectedSourceLanguage, provider, ...props } =
+      const { content, detectedSourceLanguage, provider, error, ...props } =
         await onTranslate(text, apiSourceLang.current, targetLang);
       if (content) {
         if (detectedSourceLanguage) {
@@ -89,7 +111,7 @@ function TranslationBlock({
           });
         }
       } else {
-        console.error(result);
+        if (error) console.error(error);
         setUIState('error');
       }
     } catch (e) {

@@ -1,5 +1,7 @@
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
+import useTruncated from '../utils/useTruncated';
 
 import Avatar from './avatar';
 import FollowRequestButtons from './follow-request-buttons';
@@ -18,6 +20,8 @@ const NOTIFICATION_ICONS = {
   favourite: 'heart',
   poll: 'poll',
   update: 'pencil',
+  'admin.signup': 'account-edit',
+  'admin.report': 'account-warning',
 };
 
 /*
@@ -54,14 +58,19 @@ const contentText = {
   'favourite+reblog+account': (count) =>
     `boosted & favourited ${count} of your posts.`,
   'favourite+reblog_reply': 'boosted & favourited your reply.',
+  'admin.signup': 'signed up.',
+  'admin.report': 'reported a post.',
 };
 
-function Notification({ notification, instance, reload }) {
+const AVATARS_LIMIT = 50;
+
+function Notification({ notification, instance, reload, isStatic }) {
   const { id, status, account, _accounts, _statuses } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
-  const actualStatusID = status?.reblog?.id || status?.id;
+  const actualStatus = status?.reblog || status;
+  const actualStatusID = actualStatus?.id;
 
   const currentAccount = store.session.get('currentAccount');
   const isSelf = currentAccount === account?.id;
@@ -101,9 +110,14 @@ function Notification({ notification, instance, reload }) {
     } else {
       text = contentText[type];
     }
-  } else {
+  } else if (contentText[type]) {
     text = contentText[type];
+  } else {
+    // Anticipate unhandled notification types, possibly from Mastodon forks or non-Mastodon instances
+    // This surfaces the error to the user, hoping that users will report it
+    text = `[Unknown notification type: ${type}]`;
   }
+
   if (typeof text === 'function') {
     text = text(_statuses?.length || _accounts?.length);
   }
@@ -113,11 +127,29 @@ function Notification({ notification, instance, reload }) {
     return null;
   }
 
+  const formattedCreatedAt =
+    notification.createdAt && new Date(notification.createdAt).toLocaleString();
+
+  const genericAccountsHeading =
+    {
+      'favourite+reblog': 'Boosted/Favourited by…',
+      favourite: 'Favourited by…',
+      reblog: 'Boosted by…',
+      follow: 'Followed by…',
+    }[type] || 'Accounts';
+  const handleOpenGenericAccounts = () => {
+    states.showGenericAccounts = {
+      heading: genericAccountsHeading,
+      accounts: _accounts,
+      showReactions: type === 'favourite+reblog',
+    };
+  };
+
   return (
     <div class={`notification notification-${type}`} tabIndex="0">
       <div
         class={`notification-type notification-${type}`}
-        title={new Date(notification.createdAt).toLocaleString()}
+        title={formattedCreatedAt}
       >
         {type === 'favourite+reblog' ? (
           <>
@@ -140,7 +172,12 @@ function Notification({ notification, instance, reload }) {
                 <>
                   {_accounts?.length > 1 ? (
                     <>
-                      <b>{_accounts.length} people</b>{' '}
+                      <b tabIndex="0" onClick={handleOpenGenericAccounts}>
+                        <span title={_accounts.length}>
+                          {shortenNumber(_accounts.length)}
+                        </span>{' '}
+                        people
+                      </b>{' '}
                     </>
                   ) : (
                     <>
@@ -173,7 +210,7 @@ function Notification({ notification, instance, reload }) {
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
-            {_accounts.map((account, i) => (
+            {_accounts.slice(0, AVATARS_LIMIT).map((account, i) => (
               <>
                 <a
                   href={account.url}
@@ -189,11 +226,11 @@ function Notification({ notification, instance, reload }) {
                     size={
                       _accounts.length <= 10
                         ? 'xxl'
-                        : _accounts.length < 100
+                        : _accounts.length < 20
                         ? 'xl'
-                        : _accounts.length < 1000
+                        : _accounts.length < 30
                         ? 'l'
-                        : _accounts.length < 2000
+                        : _accounts.length < 40
                         ? 'm'
                         : 's' // My god, this person is popular!
                     }
@@ -215,39 +252,71 @@ function Notification({ notification, instance, reload }) {
                 </a>{' '}
               </>
             ))}
+            <button
+              type="button"
+              class="small plain"
+              onClick={handleOpenGenericAccounts}
+            >
+              {_accounts.length > AVATARS_LIMIT &&
+                `+${_accounts.length - AVATARS_LIMIT}`}
+              <Icon icon="chevron-down" />
+            </button>
           </p>
         )}
         {_statuses?.length > 1 && (
           <ul class="notification-group-statuses">
             {_statuses.map((status) => (
               <li key={status.id}>
-                <Link
+                <TruncatedLink
                   class={`status-link status-type-${type}`}
                   to={
                     instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
                   }
                 >
                   <Status status={status} size="s" />
-                </Link>
+                </TruncatedLink>
               </li>
             ))}
           </ul>
         )}
         {status && (!_statuses?.length || _statuses?.length <= 1) && (
-          <Link
+          <TruncatedLink
             class={`status-link status-type-${type}`}
             to={
               instance
                 ? `/${instance}/s/${actualStatusID}`
                 : `/s/${actualStatusID}`
             }
+            onContextMenu={(e) => {
+              const post = e.target.querySelector('.status');
+              if (post) {
+                // Fire a custom event to open the context menu
+                if (e.metaKey) return;
+                e.preventDefault();
+                post.dispatchEvent(
+                  new MouseEvent('contextmenu', {
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                  }),
+                );
+              }
+            }}
           >
-            <Status statusID={actualStatusID} size="s" />
-          </Link>
+            {isStatic ? (
+              <Status status={actualStatus} size="s" />
+            ) : (
+              <Status statusID={actualStatusID} size="s" />
+            )}
+          </TruncatedLink>
         )}
       </div>
     </div>
   );
+}
+
+function TruncatedLink(props) {
+  const ref = useTruncated();
+  return <Link {...props} data-read-more="Read more →" ref={ref} />;
 }
 
 export default Notification;

@@ -1,5 +1,7 @@
 import Toastify from 'toastify-js';
 
+window._showToast = showToast;
+
 function showToast(props) {
   if (typeof props === 'string') {
     props = { text: props };

@@ -206,7 +206,6 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
-  const isHovering = useRef(false);
   const idle = useIdle(5000);
   console.debug('🧘‍♀️ IDLE', idle);
   const loadOrCheckUpdates = useCallback(
@@ -275,12 +274,6 @@ function Timeline({
         oRef.current = node;
       }}
       tabIndex="-1"
-      onPointerEnter={(e) => {
-        isHovering.current = true;
-      }}
-      onPointerLeave={() => {
-        isHovering.current = false;
-      }}
     >
       <div class="timeline-deck deck">
         <header
@@ -392,6 +385,7 @@ function Timeline({
                                       instance={instance}
                                       size="s"
                                       contentTextWeight
+                                      allowFilters={allowFilters}
                                     />
                                   ) : (
                                     <Status
@@ -399,6 +393,7 @@ function Timeline({
                                       instance={instance}
                                       size="s"
                                       contentTextWeight
+                                      allowFilters={allowFilters}
                                     />
                                   )}
                                 </Link>
@@ -419,7 +414,13 @@ function Timeline({
                     const isSpoiler = item.sensitive && !!item.spoilerText;
                     const showCompact =
                       (isSpoiler && i > 0) ||
-                      (manyItems && isMiddle && type === 'thread');
+                      (manyItems &&
+                        isMiddle &&
+                        (type === 'thread' ||
+                          (type === 'conversation' &&
+                            !_differentAuthor &&
+                            !items[i - 1]._differentAuthor &&
+                            !items[i + 1]._differentAuthor)));
                     return (
                       <li
                         key={`timeline-${statusID}`}

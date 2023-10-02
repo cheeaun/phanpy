@@ -9,6 +9,46 @@
   color: var(--outline-color);
 }
 
+.account-container .account-moved {
+  animation: fade-in 0.3s both ease-in-out 0.3s;
+  padding: 16px;
+  background-color: var(--bg-color);
+  position: absolute;
+  top: 8px;
+  inset-inline: 8px;
+  z-index: 2;
+  border: 1px solid var(--outline-color);
+  box-shadow: 0 8px 16px var(--drop-shadow-color);
+  border-radius: calc(16px - 8px);
+  overflow: hidden;
+
+  p {
+    margin: 0 0 8px;
+    padding: 0;
+  }
+
+  .account-block {
+    background-color: var(--bg-faded-color);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--link-faded-color);
+
+    &:hover {
+      background-color: var(--link-bg-hover-color);
+      border-color: var(--link-color);
+    }
+
+    b {
+      color: var(--link-color);
+    }
+  }
+
+  ~ * {
+    /* pointer-events: none; */
+    filter: grayscale(0.75) brightness(0.75);
+  }
+}
+
 .account-container .header-banner {
   /* pointer-events: none; */
   aspect-ratio: 6 / 1;
@@ -139,15 +179,29 @@
   /* flex-wrap: wrap; */
   column-gap: 24px;
   row-gap: 8px;
-  opacity: 0.75;
+  /* opacity: 0.75; */
   font-size: 90%;
   background-color: var(--bg-faded-color);
   padding: 12px;
-  border-radius: 16px;
+  /* border-radius: 16px; */
   line-height: 1.25;
-  overflow-x: auto;
+  overflow-x: auto !important;
   justify-content: flex-start;
   position: relative;
+
+  [tabindex='0']:is(:hover, :focus) {
+    color: var(--text-color);
+    cursor: pointer;
+    text-decoration-color: var(--text-insignificant-color);
+  }
+
+  .stats-avatars-bunch {
+    animation: appear 1s both ease-in-out;
+
+    > *:not(:first-child) {
+      margin: 0 0 0 -4px;
+    }
+  }
 }
 .timeline-start .account-container .stats {
   flex-wrap: wrap;
@@ -157,6 +211,9 @@
   flex-shrink: 0;
   display: flex;
   gap: 0.5em;
+}
+.account-container .stats a:not(.insignificant) {
+  color: inherit;
 }
 .account-container .stats a:hover {
   color: inherit;
@@ -176,11 +233,35 @@
   display: flex;
 }
 
+.account-container .account-metadata-box {
+  overflow: hidden;
+  border-radius: 16px;
+  display: block;
+  text-decoration: none;
+
+  & > * {
+    margin-bottom: 2px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &:has(+ .account-metadata-box) {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  + .account-metadata-box {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+}
+
 .account-container .profile-metadata {
   display: flex;
   /* flex-wrap: wrap; */
   gap: 2px;
-  border-radius: 16px;
   overflow: hidden;
   overflow-x: auto;
 }
@@ -226,12 +307,11 @@
   margin: 0;
 }
 
-.account-container .common-followers p {
+.account-container .common-followers {
   font-size: 90%;
   color: var(--text-insignificant-color);
-  border-top: 1px solid var(--outline-color);
-  border-bottom: 1px solid var(--outline-color);
-  padding: 8px 0;
+  background-color: var(--bg-faded-color);
+  padding: 8px 12px;
   margin: 0;
 }
 
@@ -250,6 +330,84 @@
 }
 .timeline-start .account-container .account-block .account-block-acct {
   opacity: 0.5;
+}
+
+@keyframes swoosh-bg-image {
+  0% {
+    background-position: -320px 0;
+    opacity: 0.25;
+  }
+  100% {
+    background-position: 0 0;
+    opacity: 1;
+  }
+}
+.account-container .posting-stats {
+  font-size: 90%;
+  color: var(--text-insignificant-color);
+  background-color: var(--bg-faded-color);
+  padding: 8px 12px;
+  --size: 8px;
+  --original-color: var(--link-color);
+
+  &:is(:hover, :focus-within) {
+    background-color: var(--link-bg-hover-color);
+  }
+
+  .posting-stats-bar {
+    --gap: 0.5px;
+    --gap-color: var(--outline-color);
+    height: var(--size);
+    border-radius: var(--size);
+    overflow: hidden;
+    margin: 8px 0;
+    box-shadow: inset 0 0 0 1px var(--outline-color),
+      inset 0 0 0 1.5px var(--bg-blur-color);
+    background-color: var(--bg-color);
+    background-repeat: no-repeat;
+    animation: swoosh-bg-image 0.3s ease-in-out 0.3s both;
+    background-image: linear-gradient(
+      to right,
+      var(--original-color) 0%,
+      var(--original-color) calc(var(--originals-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--originals-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--originals-percentage) + var(--gap)),
+      var(--reply-to-color) calc(var(--originals-percentage) + var(--gap)),
+      var(--reply-to-color) calc(var(--replies-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--replies-percentage) - var(--gap)),
+      var(--gap-color) calc(var(--replies-percentage) + var(--gap)),
+      var(--reblog-color) calc(var(--replies-percentage) + var(--gap)),
+      var(--reblog-color) 100%
+    );
+  }
+
+  .posting-stats-legends {
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .posting-stats-legend-item {
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--size);
+    background-color: var(--text-insignificant-color);
+    vertical-align: middle;
+    margin: 0 4px 2px;
+    /* border: 1px solid var(--outline-color); */
+    box-shadow: inset 0 0 0 1px var(--outline-color),
+      inset 0 0 0 1.5px var(--bg-blur-color);
+
+    &.posting-stats-legend-item-originals {
+      background-color: var(--original-color);
+    }
+    &.posting-stats-legend-item-replies {
+      background-color: var(--reply-to-color);
+    }
+    &.posting-stats-legend-item-boosts {
+      background-color: var(--reblog-color);
+    }
+  }
 }
 
 @keyframes shine {
@@ -340,7 +498,7 @@
   }
   .timeline-start .account-container header .account-block {
     font-size: 175%;
-    margin-bottom: -8px;
+    /* margin-bottom: -8px; */
     line-height: 1.1;
     letter-spacing: -0.5px;
     mix-blend-mode: multiply;

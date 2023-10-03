@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
+
 import Icon from '../components/icon';
 import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
@@ -481,6 +482,22 @@ function Settings({ onClose }) {
             </div>
           </div>
           <p>
+            <a
+              href="https://github.com/sponsors/cheeaun"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sponsor
+            </a>{' '}
+            &middot;{' '}
+            <a
+              href="https://www.buymeacoffee.com/cheeaun"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Donate
+            </a>{' '}
+            &middot;{' '}
             <a
               href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
               target="_blank"

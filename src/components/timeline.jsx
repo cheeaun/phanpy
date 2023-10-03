@@ -14,7 +14,6 @@ import useScroll from '../utils/useScroll';
 
 import Icon from './icon';
 import Link from './link';
-import Loader from './loader';
 import NavMenu from './nav-menu';
 import Status from './status';
 

@@ -1,6 +1,5 @@
 import {
   FocusableItem,
-  Menu,
   MenuDivider,
   MenuGroup,
   MenuItem,

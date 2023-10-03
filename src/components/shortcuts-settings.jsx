@@ -11,6 +11,7 @@ import { useSnapshot } from 'valtio';
 import floatingButtonUrl from '../assets/floating-button.svg';
 import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
+
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';

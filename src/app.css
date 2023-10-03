@@ -1120,11 +1120,10 @@ button.carousel-dot {
 button.carousel-dot {
   background-color: transparent;
 }
-.carousel-controls :is(.button, button).carousel-button {
+:is(.button, button).carousel-button {
   background-color: var(--bg-blur-color);
 }
-.carousel-controls
-  :is(.button, button).carousel-button:is(:hover, :focus):not(:active) {
+:is(.button, button).carousel-button:is(:hover, :focus):not(:active) {
   background-color: var(--bg-color);
 }
 .carousel-top-controls .szh-menu-container {
@@ -1141,15 +1140,19 @@ button.carousel-dot {
   border: 1px solid var(--outline-color);
   box-shadow: 0 4px 32px var(--drop-shadow-color);
   /* backdrop-filter: blur(12px) invert(0.25); */
+  transition: background-color 0.2s ease-out;
+  &:hover {
+    background-color: var(--bg-color);
+  }
 }
 button.carousel-dot {
   backdrop-filter: none !important;
   border: none;
   box-shadow: none;
 }
-button.carousel-dot[disabled] {
+/* button.carousel-dot[disabled] {
   pointer-events: none;
-}
+} */
 button.carousel-dot .icon {
   transition: all 0.2s;
   transform: scale(0.5);

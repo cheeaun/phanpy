@@ -13,4 +13,4 @@ jobs:
         with:
           ref: production
       - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
-      - run: git push
+      - run: git push --tags

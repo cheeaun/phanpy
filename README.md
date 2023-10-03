@@ -121,6 +121,7 @@ Try search for "how to self-host static sites" as there are many ways to do it.
 - [React Router](https://reactrouter.com/) - Routing
 - [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
 - [Iconify](https://iconify.design/) - Icon library
+  - [MingCute icons](https://www.mingcute.com/)
 - Vanilla CSS - *Yes, I'm old school.*
 
 Some of these may change in the future. The front-end world is ever-changing.

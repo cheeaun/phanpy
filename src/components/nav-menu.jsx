@@ -1,11 +1,6 @@
 import './nav-menu.css';
 
-import {
-  ControlledMenu,
-  Menu,
-  MenuDivider,
-  MenuItem,
-} from '@szhsin/react-menu';
+import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';

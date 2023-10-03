@@ -3,7 +3,6 @@ import './account-block.css';
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
 import niceDateTime from '../utils/nice-date-time';
-import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 
 import Avatar from './avatar';

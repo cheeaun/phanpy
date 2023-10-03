@@ -166,7 +166,7 @@ export function api({ instance, accessToken, accountID, account } = {}) {
             instance,
           };
         } else {
-          throw new Error(`Access token ${accessToken} not found`);
+          throw new Error(`Access token not found`);
         }
       }
     }

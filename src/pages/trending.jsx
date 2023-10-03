@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { MenuItem } from '@szhsin/react-menu';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';

@@ -401,6 +401,7 @@ function AccountInfo({
               ))}
               <div
                 class="note"
+                dir="auto"
                 onClick={handleContentLinks({
                   instance,
                 })}
@@ -417,6 +418,7 @@ function AccountInfo({
                           verifiedAt ? 'profile-verified' : ''
                         }`}
                         key={name + i}
+                        dir="auto"
                       >
                         <b>
                           <EmojiText text={name} emojis={emojis} />{' '}

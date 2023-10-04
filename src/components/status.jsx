@@ -1553,6 +1553,7 @@ function Card({ card, instance }) {
     providerName,
     providerUrl,
     authorName,
+    authorUrl,
     width,
     height,
     image,

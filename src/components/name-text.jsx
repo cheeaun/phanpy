@@ -25,13 +25,20 @@ function NameText({
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
   const shortenedDisplayName = trimmedDisplayName
     .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
-    .replace(/\s+/g, '') // E.g. "My name" === "myname"
-    .replace(/[^a-z0-9]/gi, ''); // Remove non-alphanumeric characters
+    .replace(/\s+/g, ''); // E.g. "My name" === "myname"
+  const shortenedAlphaNumericDisplayName = shortenedDisplayName.replace(
+    /[^a-z0-9]/gi,
+    '',
+  ); // Remove non-alphanumeric characters
 
   if (
     !short &&
     (trimmedUsername === trimmedDisplayName ||
-      trimmedUsername === shortenedDisplayName)
+      trimmedUsername === shortenedDisplayName ||
+      trimmedUsername === shortenedAlphaNumericDisplayName ||
+      trimmedUsername.localeCompare?.(shortenedDisplayName, 'en', {
+        sensitivity: 'base',
+      }) === 0)
   ) {
     username = null;
   }

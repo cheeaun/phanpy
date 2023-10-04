@@ -1551,14 +1551,17 @@ function Card({ card, instance }) {
     description,
     html,
     providerName,
+    providerUrl,
     authorName,
     width,
     height,
     image,
+    imageDescription,
     url,
     type,
     embedUrl,
     language,
+    publishedAt,
   } = card;
 
   /* type
@@ -1631,7 +1634,7 @@ function Card({ card, instance }) {
             width={width}
             height={height}
             loading="lazy"
-            alt=""
+            alt={imageDescription || ''}
             onError={(e) => {
               try {
                 e.target.style.display = 'none';

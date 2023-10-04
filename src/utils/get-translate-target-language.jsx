@@ -3,6 +3,11 @@ import translationTargetLanguages from '../data/lingva-target-languages';
 import localeMatch from './locale-match';
 import states from './states';
 
+const locales = [
+  new Intl.DateTimeFormat().resolvedOptions().locale,
+  ...navigator.languages,
+];
+
 function getTranslateTargetLanguage(fromSettings = false) {
   if (fromSettings) {
     const { contentTranslationTargetLanguage } = states.settings;
@@ -11,10 +16,7 @@ function getTranslateTargetLanguage(fromSettings = false) {
     }
   }
   return localeMatch(
-    [
-      new Intl.DateTimeFormat().resolvedOptions().locale,
-      ...navigator.languages,
-    ],
+    locales,
     translationTargetLanguages.map((l) => l.code.replace('_', '-')), // The underscore will fail Intl.Locale inside `match`
     'en',
   );

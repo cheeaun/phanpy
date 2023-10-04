@@ -412,7 +412,7 @@ function Timeline({
                     const isMiddle = i > 0 && i < items.length - 1;
                     const isSpoiler = item.sensitive && !!item.spoilerText;
                     const showCompact =
-                      (isSpoiler && i > 0) ||
+                      (!_differentAuthor && isSpoiler && i > 0) ||
                       (manyItems &&
                         isMiddle &&
                         (type === 'thread' ||

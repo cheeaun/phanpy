@@ -92,6 +92,11 @@
     --link-light-color: #6494ed99;
     --link-faded-color: #6494ed88;
     --link-bg-hover-color: #34353799;
+    --link-visited-color: color-mix(
+      in lch,
+      mediumslateblue 70%,
+      var(--text-color) 30%
+    );
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
     --reply-to-faded-color: #ffa60017;

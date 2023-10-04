@@ -54,6 +54,12 @@ function resetScrollPosition(id) {
   delete scrollPositions[id];
 }
 
+const scrollIntoViewOptions = {
+  block: 'nearest',
+  inline: 'center',
+  behavior: 'smooth',
+};
+
 function StatusPage(params) {
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
@@ -555,7 +561,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       let nextStatus = allStatusLinks[activeStatusIndex + 1];
       if (nextStatus) {
         nextStatus.focus();
-        nextStatus.scrollIntoViewIfNeeded?.();
+        nextStatus.scrollIntoView(scrollIntoViewOptions);
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
@@ -565,7 +571,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoViewIfNeeded?.();
+        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
       }
     }
   });
@@ -589,7 +595,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       let prevStatus = allStatusLinks[activeStatusIndex - 1];
       if (prevStatus) {
         prevStatus.focus();
-        prevStatus.scrollIntoViewIfNeeded?.();
+        prevStatus.scrollIntoView(scrollIntoViewOptions);
       }
     } else {
       // If active status is not in viewport, get the topmost status-link in viewport
@@ -599,7 +605,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       });
       if (topmostStatusLink) {
         topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoViewIfNeeded?.();
+        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
       }
     }
   });

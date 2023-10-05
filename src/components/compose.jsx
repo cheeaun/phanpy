@@ -1477,7 +1477,8 @@ function MediaAttachment({
   onRemove = () => {},
 }) {
   const supportsEdit = supports('@mastodon/edit-media-attributes');
-  const { url, type, id } = attachment;
+  const { type, id, file } = attachment;
+  const url = file ? URL.createObjectURL(file) : attachment.url;
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];

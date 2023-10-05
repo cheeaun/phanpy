@@ -1545,6 +1545,7 @@ function MediaAttachment({
       <div class="media-attachment">
         <div
           class="media-preview"
+          tabIndex="0"
           onClick={() => {
             setShowModal(true);
           }}
@@ -1571,6 +1572,7 @@ function MediaAttachment({
       </div>
       {showModal && (
         <Modal
+          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowModal(false);
@@ -1608,7 +1610,20 @@ function MediaAttachment({
                   <audio src={url} controls />
                 ) : null}
               </div>
-              {descTextarea}
+              <div class="media-form">
+                {descTextarea}
+                <footer>
+                  <button
+                    type="button"
+                    class="light block"
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                  >
+                    Done
+                  </button>
+                </footer>
+              </div>
             </main>
           </div>
         </Modal>

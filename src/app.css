@@ -1335,11 +1335,15 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   position: relative;
 }
 .sheet-max {
-  width: 90vw;
-  width: 90dvw;
   max-width: none;
   height: 90vh;
   height: 90dvh;
+}
+@media (min-width: 40em) {
+  .sheet {
+    width: 90vw;
+    width: 90dvw;
+  }
 }
 .sheet .sheet-close {
   position: absolute;

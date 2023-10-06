@@ -1477,7 +1477,8 @@ function MediaAttachment({
   onRemove = () => {},
 }) {
   const supportsEdit = supports('@mastodon/edit-media-attributes');
-  const { url, type, id } = attachment;
+  const { type, id, file } = attachment;
+  const url = file ? URL.createObjectURL(file) : attachment.url;
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];
@@ -1544,6 +1545,7 @@ function MediaAttachment({
       <div class="media-attachment">
         <div
           class="media-preview"
+          tabIndex="0"
           onClick={() => {
             setShowModal(true);
           }}
@@ -1570,6 +1572,7 @@ function MediaAttachment({
       </div>
       {showModal && (
         <Modal
+          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowModal(false);
@@ -1607,7 +1610,20 @@ function MediaAttachment({
                   <audio src={url} controls />
                 ) : null}
               </div>
-              {descTextarea}
+              <div class="media-form">
+                {descTextarea}
+                <footer>
+                  <button
+                    type="button"
+                    class="light block"
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                  >
+                    Done
+                  </button>
+                </footer>
+              </div>
             </main>
           </div>
         </Modal>

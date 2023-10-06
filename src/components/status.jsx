@@ -872,6 +872,11 @@ function Status({
     },
   );
 
+  const displayedMediaAttachments = mediaAttachments.slice(
+    0,
+    isSizeLarge ? undefined : 4,
+  );
+
   return (
     <article
       ref={(node) => {
@@ -1270,17 +1275,16 @@ function Status({
               lang={language}
               enabled={
                 mediaAttachments.length > 1 &&
-                mediaAttachments.some(
+                displayedMediaAttachments.some(
                   (media) =>
                     !!media.description &&
                     !isMediaCaptionLong(media.description),
                 )
               }
               captionChildren={() => {
-                return mediaAttachments.map(
+                return displayedMediaAttachments.map(
                   (media, i) =>
-                    !!media.description &&
-                    !isMediaCaptionLong(media.description) && (
+                    !!media.description && (
                       <div
                         key={media.id}
                         onClick={(e) => {
@@ -1305,33 +1309,30 @@ function Status({
                   mediaAttachments.length > 2 ? 'media-gt2' : ''
                 } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
               >
-                {mediaAttachments
-                  .slice(0, isSizeLarge ? undefined : 4)
-                  .map((media, i) => (
-                    <Media
-                      key={media.id}
-                      media={media}
-                      autoAnimate={isSizeLarge}
-                      showCaption={mediaAttachments.length === 1}
-                      lang={language}
-                      altIndex={
-                        mediaAttachments.length > 1 &&
-                        !!media.description &&
-                        !isMediaCaptionLong(media.description) &&
-                        i + 1
-                      }
-                      to={`/${instance}/s/${id}?${
-                        withinContext ? 'media' : 'media-only'
-                      }=${i + 1}`}
-                      onClick={
-                        onMediaClick
-                          ? (e) => {
-                              onMediaClick(e, i, media, status);
-                            }
-                          : undefined
-                      }
-                    />
-                  ))}
+                {displayedMediaAttachments.map((media, i) => (
+                  <Media
+                    key={media.id}
+                    media={media}
+                    autoAnimate={isSizeLarge}
+                    showCaption={mediaAttachments.length === 1}
+                    lang={language}
+                    altIndex={
+                      mediaAttachments.length > 1 &&
+                      !!media.description &&
+                      i + 1
+                    }
+                    to={`/${instance}/s/${id}?${
+                      withinContext ? 'media' : 'media-only'
+                    }=${i + 1}`}
+                    onClick={
+                      onMediaClick
+                        ? (e) => {
+                            onMediaClick(e, i, media, status);
+                          }
+                        : undefined
+                    }
+                  />
+                ))}
               </div>
             </MultipleMediaFigure>
           )}

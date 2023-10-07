@@ -876,6 +876,11 @@ function Status({
     0,
     isSizeLarge ? undefined : 4,
   );
+  const showMultipleMediaCaptions =
+    mediaAttachments.length > 1 &&
+    displayedMediaAttachments.some(
+      (media) => !!media.description && !isMediaCaptionLong(media.description),
+    );
 
   return (
     <article
@@ -1273,14 +1278,7 @@ function Status({
           {!!mediaAttachments.length && (
             <MultipleMediaFigure
               lang={language}
-              enabled={
-                mediaAttachments.length > 1 &&
-                displayedMediaAttachments.some(
-                  (media) =>
-                    !!media.description &&
-                    !isMediaCaptionLong(media.description),
-                )
-              }
+              enabled={showMultipleMediaCaptions}
               captionChildren={() => {
                 return displayedMediaAttachments.map(
                   (media, i) =>
@@ -1317,9 +1315,7 @@ function Status({
                     showCaption={mediaAttachments.length === 1}
                     lang={language}
                     altIndex={
-                      mediaAttachments.length > 1 &&
-                      !!media.description &&
-                      i + 1
+                      showMultipleMediaCaptions && !!media.description && i + 1
                     }
                     to={`/${instance}/s/${id}?${
                       withinContext ? 'media' : 'media-only'

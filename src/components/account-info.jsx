@@ -1,8 +1,14 @@
 import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
-import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
-import { proxy, useSnapshot } from 'valtio';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'preact/hooks';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -49,10 +55,6 @@ const MUTE_DURATIONS_LABELS = {
 
 const LIMIT = 80;
 
-const accountInfoStates = proxy({
-  familiarFollowers: [],
-});
-
 function AccountInfo({
   account,
   fetchAccount = () => {},
@@ -63,10 +65,10 @@ function AccountInfo({
   const { masto } = api({
     instance,
   });
+  const { masto: currentMasto } = api();
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
-  const snapAccountInfoStates = useSnapshot(accountInfoStates);
 
   const isSelf = useMemo(
     () => account.id === store.session.get('currentAccount'),
@@ -201,6 +203,75 @@ function AccountInfo({
 
   const LinkOrDiv = standalone ? 'div' : Link;
   const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
+
+  const [familiarFollowers, setFamiliarFollowers] = useState([]);
+  const [postingStats, setPostingStats] = useState();
+  const hasPostingStats = postingStats?.total >= 3;
+
+  const onRelationshipChange = useCallback(
+    ({ relationship, currentID }) => {
+      if (!relationship.following) {
+        (async () => {
+          try {
+            const fetchFamiliarFollowers =
+              currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
+            const fetchStatuses = currentMasto.v1.accounts
+              .listStatuses(currentID, {
+                limit: 20,
+              })
+              .next();
+
+            const followers = await fetchFamiliarFollowers;
+            console.log('fetched familiar followers', followers);
+            setFamiliarFollowers(
+              followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
+            );
+
+            if (!standalone) {
+              const { value: statuses } = await fetchStatuses;
+              console.log('fetched statuses', statuses);
+              const stats = {
+                total: statuses.length,
+                originals: 0,
+                replies: 0,
+                boosts: 0,
+              };
+              // Categories statuses by type
+              // - Original posts (not replies to others)
+              // - Threads (self-replies + 1st original post)
+              // - Boosts (reblogs)
+              // - Replies (not-self replies)
+              statuses.forEach((status) => {
+                if (status.reblog) {
+                  stats.boosts++;
+                } else if (
+                  status.inReplyToAccountId !== currentID &&
+                  !!status.inReplyToId
+                ) {
+                  stats.replies++;
+                } else {
+                  stats.originals++;
+                }
+              });
+
+              // Count days since last post
+              stats.daysSinceLastPost = Math.ceil(
+                (Date.now() -
+                  new Date(statuses[statuses.length - 1].createdAt)) /
+                  86400000,
+              );
+
+              console.log('posting stats', stats);
+              setPostingStats(stats);
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        })();
+      }
+    },
+    [standalone],
+  );
 
   return (
     <div
@@ -447,19 +518,17 @@ function AccountInfo({
                       };
                     }}
                   >
-                    {!!snapAccountInfoStates.familiarFollowers.length && (
+                    {!!familiarFollowers.length && (
                       <span class="shazam-container-horizontal">
                         <span class="shazam-container-inner stats-avatars-bunch">
-                          {(snapAccountInfoStates.familiarFollowers || []).map(
-                            (follower) => (
-                              <Avatar
-                                url={follower.avatarStatic}
-                                size="s"
-                                alt={`${follower.displayName} @${follower.acct}`}
-                                squircle={follower?.bot}
-                              />
-                            ),
-                          )}
+                          {familiarFollowers.map((follower) => (
+                            <Avatar
+                              url={follower.avatarStatic}
+                              size="s"
+                              alt={`${follower.displayName} @${follower.acct}`}
+                              squircle={follower?.bot}
+                            />
+                          ))}
                         </span>
                       </span>
                     )}
@@ -514,11 +583,75 @@ function AccountInfo({
                   )}
                 </div>
               </div>
+              {hasPostingStats && (
+                <Link
+                  to={accountLink}
+                  class="account-metadata-box"
+                  onClick={() => {
+                    states.showAccount = false;
+                  }}
+                >
+                  <div class="shazam-container">
+                    <div class="shazam-container-inner">
+                      <div
+                        class="posting-stats"
+                        title={`${Math.round(
+                          (postingStats.originals / postingStats.total) * 100,
+                        )}% original posts, ${Math.round(
+                          (postingStats.replies / postingStats.total) * 100,
+                        )}% replies, ${Math.round(
+                          (postingStats.boosts / postingStats.total) * 100,
+                        )}% boosts`}
+                      >
+                        <div>
+                          {postingStats.daysSinceLastPost < 365
+                            ? `Last ${postingStats.total} posts in the past 
+                    ${postingStats.daysSinceLastPost} day${
+                                postingStats.daysSinceLastPost > 1 ? 's' : ''
+                              }`
+                            : `
+                     Last ${postingStats.total} posts in the past year(s)
+                    `}
+                        </div>
+                        <div
+                          class="posting-stats-bar"
+                          style={{
+                            // [originals | replies | boosts]
+                            '--originals-percentage': `${
+                              (postingStats.originals / postingStats.total) *
+                              100
+                            }%`,
+                            '--replies-percentage': `${
+                              ((postingStats.originals + postingStats.replies) /
+                                postingStats.total) *
+                              100
+                            }%`,
+                          }}
+                        />
+                        <div class="posting-stats-legends">
+                          <span class="ib">
+                            <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                            Original
+                          </span>{' '}
+                          <span class="ib">
+                            <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                            Replies
+                          </span>{' '}
+                          <span class="ib">
+                            <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                            Boosts
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )}
               <RelatedActions
                 info={info}
                 instance={instance}
                 authenticated={authenticated}
-                standalone={standalone}
+                onRelationshipChange={onRelationshipChange}
               />
             </main>
           </>
@@ -530,7 +663,12 @@ function AccountInfo({
 
 const FAMILIAR_FOLLOWERS_LIMIT = 3;
 
-function RelatedActions({ info, instance, authenticated, standalone }) {
+function RelatedActions({
+  info,
+  instance,
+  authenticated,
+  onRelationshipChange = () => {},
+}) {
   if (!info) return null;
   const {
     masto: currentMasto,
@@ -541,7 +679,6 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
 
   const [relationshipUIState, setRelationshipUIState] = useState('default');
   const [relationship, setRelationship] = useState(null);
-  const [postingStats, setPostingStats] = useState();
 
   const { id, acct, url, username, locked, lastStatusAt, note, fields, moved } =
     info;
@@ -604,8 +741,6 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
         if (moved) return;
 
         setRelationshipUIState('loading');
-        accountInfoStates.familiarFollowers = [];
-        setPostingStats(null);
 
         const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
           currentID,
@@ -619,63 +754,7 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
           if (relationships.length) {
             const relationship = relationships[0];
             setRelationship(relationship);
-
-            if (!relationship.following) {
-              try {
-                const fetchFamiliarFollowers =
-                  currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
-                const fetchStatuses = currentMasto.v1.accounts
-                  .listStatuses(currentID, {
-                    limit: 20,
-                  })
-                  .next();
-
-                const followers = await fetchFamiliarFollowers;
-                console.log('fetched familiar followers', followers);
-                accountInfoStates.familiarFollowers =
-                  followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT);
-
-                if (!standalone) {
-                  const { value: statuses } = await fetchStatuses;
-                  console.log('fetched statuses', statuses);
-                  const stats = {
-                    total: statuses.length,
-                    originals: 0,
-                    replies: 0,
-                    boosts: 0,
-                  };
-                  // Categories statuses by type
-                  // - Original posts (not replies to others)
-                  // - Threads (self-replies + 1st original post)
-                  // - Boosts (reblogs)
-                  // - Replies (not-self replies)
-                  statuses.forEach((status) => {
-                    if (status.reblog) {
-                      stats.boosts++;
-                    } else if (
-                      status.inReplyToAccountId !== currentID &&
-                      !!status.inReplyToId
-                    ) {
-                      stats.replies++;
-                    } else {
-                      stats.originals++;
-                    }
-                  });
-
-                  // Count days since last post
-                  stats.daysSinceLastPost = Math.ceil(
-                    (Date.now() -
-                      new Date(statuses[statuses.length - 1].createdAt)) /
-                      86400000,
-                  );
-
-                  console.log('posting stats', stats);
-                  setPostingStats(stats);
-                }
-              } catch (e) {
-                console.error(e);
-              }
-            }
+            onRelationshipChange({ relationship, currentID });
           }
         } catch (e) {
           console.error(e);
@@ -697,74 +776,8 @@ function RelatedActions({ info, instance, authenticated, standalone }) {
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
 
-  const hasPostingStats = postingStats?.total >= 3;
-  const accountLink = instance ? `/${instance}/a/${id}` : `/a/${id}`;
-
   return (
     <>
-      {hasPostingStats && (
-        <Link
-          to={accountLink}
-          class="account-metadata-box"
-          onClick={() => {
-            states.showAccount = false;
-          }}
-        >
-          <div class="shazam-container">
-            <div class="shazam-container-inner">
-              <div
-                class="posting-stats"
-                title={`${Math.round(
-                  (postingStats.originals / postingStats.total) * 100,
-                )}% original posts, ${Math.round(
-                  (postingStats.replies / postingStats.total) * 100,
-                )}% replies, ${Math.round(
-                  (postingStats.boosts / postingStats.total) * 100,
-                )}% boosts`}
-              >
-                <div>
-                  {postingStats.daysSinceLastPost < 365
-                    ? `Last ${postingStats.total} posts in the past 
-                    ${postingStats.daysSinceLastPost} day${
-                        postingStats.daysSinceLastPost > 1 ? 's' : ''
-                      }`
-                    : `
-                     Last ${postingStats.total} posts in the past year(s)
-                    `}
-                </div>
-                <div
-                  class="posting-stats-bar"
-                  style={{
-                    // [originals | replies | boosts]
-                    '--originals-percentage': `${
-                      (postingStats.originals / postingStats.total) * 100
-                    }%`,
-                    '--replies-percentage': `${
-                      ((postingStats.originals + postingStats.replies) /
-                        postingStats.total) *
-                      100
-                    }%`,
-                  }}
-                />
-                <div class="posting-stats-legends">
-                  <span class="ib">
-                    <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                    Original
-                  </span>{' '}
-                  <span class="ib">
-                    <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                    Replies
-                  </span>{' '}
-                  <span class="ib">
-                    <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                    Boosts
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Link>
-      )}
       <p class="actions">
         <span>
           {followedBy ? (

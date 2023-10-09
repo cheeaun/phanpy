@@ -17,7 +17,7 @@ function FollowRequestButtons({ accountID, onChange }) {
     <p class="follow-request-buttons">
       <button
         type="button"
-        disabled={uiState === 'loading'}
+        disabled={uiState === 'loading' || hasRelationship}
         onClick={() => {
           setUIState('loading');
           setRequestState('accept');
@@ -40,7 +40,7 @@ function FollowRequestButtons({ accountID, onChange }) {
       </button>{' '}
       <button
         type="button"
-        disabled={uiState === 'loading'}
+        disabled={uiState === 'loading' || hasRelationship}
         class="light danger"
         onClick={() => {
           setUIState('loading');

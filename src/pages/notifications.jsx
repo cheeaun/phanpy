@@ -92,11 +92,16 @@ function Notifications({ columnMode }) {
     return allNotifications;
   }
 
-  function fetchFollowRequests() {
+  async function fetchFollowRequests() {
     // Note: no pagination here yet because this better be on a separate page. Should be rare use-case???
-    return masto.v1.followRequests.list({
-      limit: 80,
-    });
+    try {
+      return await masto.v1.followRequests.list({
+        limit: 80,
+      });
+    } catch (e) {
+      // Silently fail
+      return [];
+    }
   }
 
   const loadFollowRequests = () => {
@@ -112,8 +117,13 @@ function Notifications({ columnMode }) {
     })();
   };
 
-  function fetchAnnouncements() {
-    return masto.v1.announcements.list();
+  async function fetchAnnouncements() {
+    try {
+      return await masto.v1.announcements.list();
+    } catch (e) {
+      // Silently fail
+      return [];
+    }
   }
 
   const loadNotifications = (firstLoad) => {

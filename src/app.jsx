@@ -126,11 +126,13 @@ function App() {
         setUIState('default');
       })();
     } else {
+      window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
       const account = getCurrentAccount();
       if (account) {
         store.session.set('currentAccount', account.info.id);
         const { masto, instance } = api({ account });
         console.log('masto', masto);
+        initStates();
         initPreferences(masto);
         setUIState('loading');
         (async () => {

@@ -99,8 +99,10 @@
   text-shadow: 0 var(--hairline-width) var(--bg-color);
   width: 100%;
 
-  &:is(:hover, :focus) {
-    color: var(--text-color);
+  @media (hover: hover) {
+    &:is(:hover, :focus) {
+      color: var(--text-color);
+    }
   }
 }
 #shortcuts .tab-bar li a:active {

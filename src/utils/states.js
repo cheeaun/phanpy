@@ -18,7 +18,7 @@ const states = proxy({
   homeLast: null, // Last item in 'home' list
   homeLastFetchTime: null,
   notifications: [],
-  notificationsLast: store.account.get('notificationsLast') || null, // Last read notification
+  notificationsLast: null, // Last read notification
   notificationsNew: [],
   notificationsShowNew: false,
   notificationsLastFetchTime: null,
@@ -46,23 +46,18 @@ const states = proxy({
   showGenericAccounts: false,
   showMediaAlt: false,
   // Shortcuts
-  shortcuts: store.account.get('shortcuts') ?? [],
+  shortcuts: [],
   // Settings
   settings: {
-    autoRefresh: store.account.get('settings-autoRefresh') ?? false,
-    shortcutsViewMode: store.account.get('settings-shortcutsViewMode') ?? null,
-    shortcutsColumnsMode:
-      store.account.get('settings-shortcutsColumnsMode') ?? false,
-    boostsCarousel: store.account.get('settings-boostsCarousel') ?? true,
-    contentTranslation:
-      store.account.get('settings-contentTranslation') ?? true,
-    contentTranslationTargetLanguage:
-      store.account.get('settings-contentTranslationTargetLanguage') || null,
-    contentTranslationHideLanguages:
-      store.account.get('settings-contentTranslationHideLanguages') || [],
-    contentTranslationAutoInline:
-      store.account.get('settings-contentTranslationAutoInline') ?? false,
-    cloakMode: store.account.get('settings-cloakMode') ?? false,
+    autoRefresh: false,
+    shortcutsViewMode: null,
+    shortcutsColumnsMode: false,
+    boostsCarousel: true,
+    contentTranslation: true,
+    contentTranslationTargetLanguage: null,
+    contentTranslationHideLanguages: [],
+    contentTranslationAutoInline: false,
+    cloakMode: false,
   },
 });
 

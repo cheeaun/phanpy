@@ -11,6 +11,11 @@ export function getAccountByAccessToken(accessToken) {
 }
 
 export function getCurrentAccount() {
+  if (!window.__IGNORE_GET_ACCOUNT_ERROR__) {
+    // Track down getCurrentAccount() calls before account-based states are initialized
+    console.error('getCurrentAccount() called before states are initialized');
+    if (import.meta.env.DEV) console.trace();
+  }
   const currentAccount = store.session.get('currentAccount');
   const account = getAccount(currentAccount);
   return account;

@@ -1477,7 +1477,10 @@ function MediaAttachment({
 }) {
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
-  const url = file ? URL.createObjectURL(file) : attachment.url;
+  const url = useMemo(
+    () => (file ? URL.createObjectURL(file) : attachment.url),
+    [file, attachment.url],
+  );
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];

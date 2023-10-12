@@ -206,71 +206,85 @@ function AccountInfo({
 
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
   const [postingStats, setPostingStats] = useState();
-  const hasPostingStats = postingStats?.total >= 3;
+  const [postingStatsUIState, setPostingStatsUIState] = useState('default');
+  const hasPostingStats = !!postingStats?.total;
+  const currentIDRef = useRef();
+
+  const renderFamiliarFollowers = async () => {
+    if (!currentIDRef.current) return;
+    const currentID = currentIDRef.current;
+    try {
+      const fetchFamiliarFollowers =
+        currentMasto.v1.accounts.familiarFollowers.fetch({
+          id: [currentID],
+        });
+
+      const followers = await fetchFamiliarFollowers;
+      console.log('fetched familiar followers', followers);
+      setFamiliarFollowers(
+        followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderPostingStats = async () => {
+    setPostingStatsUIState('loading');
+    try {
+      const fetchStatuses = masto.v1.accounts
+        .$select(id)
+        .statuses.list({
+          limit: 20,
+        })
+        .next();
+
+      const { value: statuses } = await fetchStatuses;
+      console.log('fetched statuses', statuses);
+      const stats = {
+        total: statuses.length,
+        originals: 0,
+        replies: 0,
+        boosts: 0,
+      };
+      // Categories statuses by type
+      // - Original posts (not replies to others)
+      // - Threads (self-replies + 1st original post)
+      // - Boosts (reblogs)
+      // - Replies (not-self replies)
+      statuses.forEach((status) => {
+        if (status.reblog) {
+          stats.boosts++;
+        } else if (status.inReplyToAccountId !== id && !!status.inReplyToId) {
+          stats.replies++;
+        } else {
+          stats.originals++;
+        }
+      });
+
+      // Count days since last post
+      stats.daysSinceLastPost = Math.ceil(
+        (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) /
+          86400000,
+      );
+
+      console.log('posting stats', stats);
+      setPostingStats(stats);
+      setPostingStatsUIState('default');
+    } catch (e) {
+      console.error(e);
+      setPostingStatsUIState('error');
+    }
+  };
 
   const onRelationshipChange = useCallback(
     ({ relationship, currentID }) => {
+      currentIDRef.current = currentID;
       if (!relationship.following) {
-        (async () => {
-          try {
-            const fetchFamiliarFollowers =
-              currentMasto.v1.accounts.familiarFollowers.fetch({
-                id: [currentID],
-              });
-            const fetchStatuses = currentMasto.v1.accounts
-              .$select(currentID)
-              .statuses.list({
-                limit: 20,
-              })
-              .next();
-
-            const followers = await fetchFamiliarFollowers;
-            console.log('fetched familiar followers', followers);
-            setFamiliarFollowers(
-              followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
-            );
-
-            if (!standalone) {
-              const { value: statuses } = await fetchStatuses;
-              console.log('fetched statuses', statuses);
-              const stats = {
-                total: statuses.length,
-                originals: 0,
-                replies: 0,
-                boosts: 0,
-              };
-              // Categories statuses by type
-              // - Original posts (not replies to others)
-              // - Threads (self-replies + 1st original post)
-              // - Boosts (reblogs)
-              // - Replies (not-self replies)
-              statuses.forEach((status) => {
-                if (status.reblog) {
-                  stats.boosts++;
-                } else if (
-                  status.inReplyToAccountId !== currentID &&
-                  !!status.inReplyToId
-                ) {
-                  stats.replies++;
-                } else {
-                  stats.originals++;
-                }
-              });
-
-              // Count days since last post
-              stats.daysSinceLastPost = Math.ceil(
-                (Date.now() -
-                  new Date(statuses[statuses.length - 1].createdAt)) /
-                  86400000,
-              );
-
-              console.log('posting stats', stats);
-              setPostingStats(stats);
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        })();
+        renderFamiliarFollowers();
+        if (!standalone) {
+          renderPostingStats();
+        }
       }
     },
     [standalone],
@@ -586,8 +600,8 @@ function AccountInfo({
                   )}
                 </div>
               </div>
-              {hasPostingStats && (
-                <Link
+              {!!postingStats && (
+                <LinkOrDiv
                   to={accountLink}
                   class="account-metadata-box"
                   onClick={() => {
@@ -596,60 +610,97 @@ function AccountInfo({
                 >
                   <div class="shazam-container">
                     <div class="shazam-container-inner">
-                      <div
-                        class="posting-stats"
-                        title={`${Math.round(
-                          (postingStats.originals / postingStats.total) * 100,
-                        )}% original posts, ${Math.round(
-                          (postingStats.replies / postingStats.total) * 100,
-                        )}% replies, ${Math.round(
-                          (postingStats.boosts / postingStats.total) * 100,
-                        )}% boosts`}
-                      >
-                        <div>
-                          {postingStats.daysSinceLastPost < 365
-                            ? `Last ${postingStats.total} posts in the past 
-                    ${postingStats.daysSinceLastPost} day${
-                                postingStats.daysSinceLastPost > 1 ? 's' : ''
-                              }`
-                            : `
-                     Last ${postingStats.total} posts in the past year(s)
-                    `}
-                        </div>
+                      {hasPostingStats ? (
                         <div
-                          class="posting-stats-bar"
-                          style={{
-                            // [originals | replies | boosts]
-                            '--originals-percentage': `${
-                              (postingStats.originals / postingStats.total) *
-                              100
-                            }%`,
-                            '--replies-percentage': `${
-                              ((postingStats.originals + postingStats.replies) /
-                                postingStats.total) *
-                              100
-                            }%`,
-                          }}
-                        />
-                        <div class="posting-stats-legends">
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                            Original
-                          </span>{' '}
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                            Replies
-                          </span>{' '}
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                            Boosts
-                          </span>
+                          class="posting-stats"
+                          title={`${Math.round(
+                            (postingStats.originals / postingStats.total) * 100,
+                          )}% original posts, ${Math.round(
+                            (postingStats.replies / postingStats.total) * 100,
+                          )}% replies, ${Math.round(
+                            (postingStats.boosts / postingStats.total) * 100,
+                          )}% boosts`}
+                        >
+                          <div>
+                            {postingStats.daysSinceLastPost < 365
+                              ? `Last ${postingStats.total} posts in the past 
+                      ${postingStats.daysSinceLastPost} day${
+                                  postingStats.daysSinceLastPost > 1 ? 's' : ''
+                                }`
+                              : `
+                      Last ${postingStats.total} posts in the past year(s)
+                      `}
+                          </div>
+                          <div
+                            class="posting-stats-bar"
+                            style={{
+                              // [originals | replies | boosts]
+                              '--originals-percentage': `${
+                                (postingStats.originals / postingStats.total) *
+                                100
+                              }%`,
+                              '--replies-percentage': `${
+                                ((postingStats.originals +
+                                  postingStats.replies) /
+                                  postingStats.total) *
+                                100
+                              }%`,
+                            }}
+                          />
+                          <div class="posting-stats-legends">
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                              Original
+                            </span>{' '}
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                              Replies
+                            </span>{' '}
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                              Boosts
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div class="posting-stats">Post stats unavailable.</div>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </LinkOrDiv>
               )}
+              <div class="account-metadata-box">
+                <div
+                  class="shazam-container no-animation"
+                  hidden={!!postingStats}
+                >
+                  <div class="shazam-container-inner">
+                    <button
+                      type="button"
+                      class="posting-stats-button"
+                      disabled={postingStatsUIState === 'loading'}
+                      onClick={() => {
+                        renderPostingStats();
+                      }}
+                    >
+                      <div
+                        class={`posting-stats-bar posting-stats-icon ${
+                          postingStatsUIState === 'loading' ? 'loading' : ''
+                        }`}
+                        style={{
+                          '--originals-percentage': '33%',
+                          '--replies-percentage': '66%',
+                        }}
+                      />
+                      View post stats{' '}
+                      {/* <Loader
+                        abrupt
+                        hidden={postingStatsUIState !== 'loading'}
+                      /> */}
+                    </button>
+                  </div>
+                </div>
+              </div>
               <RelatedActions
                 info={info}
                 instance={instance}

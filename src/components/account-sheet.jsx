@@ -46,7 +46,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               return info;
             } catch (e) {
-              const result = await masto.v2.search({
+              const result = await masto.v2.search.fetch({
                 q: account,
                 type: 'accounts',
                 limit: 1,
@@ -57,7 +57,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               } else if (/https?:\/\/[^/]+\/@/.test(account)) {
                 const accountURL = new URL(account);
                 const acct = accountURL.pathname.replace(/^\//, '');
-                const result = await masto.v2.search({
+                const result = await masto.v2.search.fetch({
                   q: acct,
                   type: 'accounts',
                   limit: 1,

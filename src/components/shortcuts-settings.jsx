@@ -135,7 +135,7 @@ export const SHORTCUTS_META = {
     id: 'list',
     title: mem(
       async ({ id }) => {
-        const list = await api().masto.v1.lists.fetch(id);
+        const list = await api().masto.v1.lists.$select(id).fetch();
         return list.title;
       },
       {
@@ -169,7 +169,7 @@ export const SHORTCUTS_META = {
     id: 'account-statuses',
     title: mem(
       async ({ id }) => {
-        const account = await api().masto.v1.accounts.fetch(id);
+        const account = await api().masto.v1.accounts.$select(id).fetch();
         return account.username || account.acct || account.displayName;
       },
       {

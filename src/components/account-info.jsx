@@ -149,7 +149,7 @@ function AccountInfo({
   const familiarFollowersCache = useRef([]);
   async function fetchFollowers(firstLoad) {
     if (firstLoad || !followersIterator.current) {
-      followersIterator.current = masto.v1.accounts.listFollowers(id, {
+      followersIterator.current = masto.v1.accounts.$select(id).followers.list({
         limit: LIMIT,
       });
     }
@@ -162,9 +162,9 @@ function AccountInfo({
     // On first load, fetch familiar followers, merge to top of results' `value`
     // Remove dups on every fetch
     if (firstLoad) {
-      const familiarFollowers = await masto.v1.accounts.fetchFamiliarFollowers(
-        id,
-      );
+      const familiarFollowers = await masto.v1.accounts
+        .familiarFollowers(id)
+        .fetch();
       familiarFollowersCache.current = familiarFollowers[0].accounts;
       newValue = [
         ...familiarFollowersCache.current,
@@ -193,7 +193,7 @@ function AccountInfo({
   const followingIterator = useRef();
   async function fetchFollowing(firstLoad) {
     if (firstLoad || !followingIterator.current) {
-      followingIterator.current = masto.v1.accounts.listFollowing(id, {
+      followingIterator.current = masto.v1.accounts.$select(id).following.list({
         limit: LIMIT,
       });
     }
@@ -214,9 +214,12 @@ function AccountInfo({
         (async () => {
           try {
             const fetchFamiliarFollowers =
-              currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
+              currentMasto.v1.accounts.familiarFollowers.fetch({
+                id: [currentID],
+              });
             const fetchStatuses = currentMasto.v1.accounts
-              .listStatuses(currentID, {
+              .$select(currentID)
+              .statuses.list({
                 limit: 20,
               })
               .next();
@@ -712,7 +715,7 @@ function RelatedActions({
           // Grab this account from my logged-in instance
           const acctHasInstance = info.acct.includes('@');
           try {
-            const results = await currentMasto.v2.search({
+            const results = await currentMasto.v2.search.fetch({
               q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
               type: 'accounts',
               limit: 1,
@@ -742,9 +745,11 @@ function RelatedActions({
 
         setRelationshipUIState('loading');
 
-        const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
-          currentID,
-        ]);
+        const fetchRelationships = currentMasto.v1.accounts.relationships.fetch(
+          {
+            id: [currentID],
+          },
+        );
 
         try {
           const relationships = await fetchRelationships;
@@ -913,10 +918,9 @@ function RelatedActions({
                       setRelationshipUIState('loading');
                       (async () => {
                         try {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.unmute(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .unmute();
                           console.log('unmuting', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
@@ -962,12 +966,11 @@ function RelatedActions({
                             (async () => {
                               try {
                                 const newRelationship =
-                                  await currentMasto.v1.accounts.mute(
-                                    currentInfo?.id || id,
-                                    {
+                                  await currentMasto.v1.accounts
+                                    .$select(currentInfo?.id || id)
+                                    .mute({
                                       duration,
-                                    },
-                                  );
+                                    });
                                 console.log('muting', newRelationship);
                                 setRelationship(newRelationship);
                                 setRelationshipUIState('default');
@@ -1008,19 +1011,17 @@ function RelatedActions({
                     (async () => {
                       try {
                         if (blocking) {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.unblock(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .unblock();
                           console.log('unblocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
                           showToast(`Unblocked @${username}`);
                         } else {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.block(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .block();
                           console.log('blocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
@@ -1089,14 +1090,14 @@ function RelatedActions({
                       // );
 
                       // if (yes) {
-                      newRelationship = await currentMasto.v1.accounts.unfollow(
-                        accountID.current,
-                      );
+                      newRelationship = await currentMasto.v1.accounts
+                        .$select(accountID.current)
+                        .unfollow();
                       // }
                     } else {
-                      newRelationship = await currentMasto.v1.accounts.follow(
-                        accountID.current,
-                      );
+                      newRelationship = await currentMasto.v1.accounts
+                        .$select(accountID.current)
+                        .follow();
                     }
 
                     if (newRelationship) setRelationship(newRelationship);
@@ -1241,9 +1242,9 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
-        const listsContainingAccount = await masto.v1.accounts.listLists(
-          accountID,
-        );
+        const listsContainingAccount = await masto.v1.accounts
+          .$select(accountID)
+          .lists.list();
         console.log({ lists, listsContainingAccount });
         setLists(lists);
         setListsContainingAccount(listsContainingAccount);
@@ -1285,13 +1286,17 @@ function AddRemoveListsSheet({ accountID, onClose }) {
                       (async () => {
                         try {
                           if (inList) {
-                            await masto.v1.lists.removeAccount(list.id, {
-                              accountIds: [accountID],
-                            });
+                            await masto.v1.lists
+                              .$select(list.id)
+                              .accounts.remove({
+                                accountIds: [accountID],
+                              });
                           } else {
-                            await masto.v1.lists.addAccount(list.id, {
-                              accountIds: [accountID],
-                            });
+                            await masto.v1.lists
+                              .$select(list.id)
+                              .accounts.create({
+                                accountIds: [accountID],
+                              });
                           }
                           // setUIState('default');
                           reload();

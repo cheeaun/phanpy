@@ -30,13 +30,13 @@ function Trending({ columnMode, ...props }) {
   const trendIterator = useRef();
   async function fetchTrend(firstLoad) {
     if (firstLoad || !trendIterator.current) {
-      trendIterator.current = masto.v1.trends.listStatuses({
+      trendIterator.current = masto.v1.trends.statuses.list({
         limit: LIMIT,
       });
 
       // Get hashtags
       try {
-        const iterator = masto.v1.trends.listTags();
+        const iterator = masto.v1.trends.tags.list();
         const { value: tags } = await iterator.next();
         console.log(tags);
         setHashtags(tags);
@@ -64,8 +64,8 @@ function Trending({ columnMode, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.trends
-        .listStatuses({
+      const results = await masto.v1.trends.statuses
+        .list({
           limit: 1,
           // NOT SUPPORTED
           // since_id: latestItem.current,

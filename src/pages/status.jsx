@@ -100,7 +100,7 @@ function StatusPage(params) {
     if (!heroStatus && showMedia) {
       (async () => {
         try {
-          const status = await masto.v1.statuses.fetch(id);
+          const status = await masto.v1.statuses.$select(id).fetch();
           saveStatus(status, instance);
           setHeroStatus(status);
         } catch (err) {
@@ -235,12 +235,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
     (async () => {
       const heroFetch = () =>
-        pRetry(() => masto.v1.statuses.fetch(id), {
+        pRetry(() => masto.v1.statuses.$select(id).fetch(), {
           retries: 4,
         });
-      const contextFetch = pRetry(() => masto.v1.statuses.fetchContext(id), {
-        retries: 8,
-      });
+      const contextFetch = pRetry(
+        () => masto.v1.statuses.$select(id).context.fetch(),
+        {
+          retries: 8,
+        },
+      );
 
       const hasStatus = !!snapStates.statuses[sKey];
       let heroStatus = snapStates.statuses[sKey];
@@ -946,12 +949,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                               setUIState('loading');
                               (async () => {
                                 try {
-                                  const results = await currentMasto.v2.search({
-                                    q: heroStatus.url,
-                                    type: 'statuses',
-                                    resolve: true,
-                                    limit: 1,
-                                  });
+                                  const results =
+                                    await currentMasto.v2.search.fetch({
+                                      q: heroStatus.url,
+                                      type: 'statuses',
+                                      resolve: true,
+                                      limit: 1,
+                                    });
                                   if (results.statuses.length) {
                                     const status = results.statuses[0];
                                     location.hash = currentInstance

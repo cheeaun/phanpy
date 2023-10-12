@@ -46,7 +46,7 @@ function Hashtags({ columnMode, ...props }) {
   const maxID = useRef(undefined);
   async function fetchHashtags(firstLoad) {
     // if (firstLoad || !hashtagsIterator.current) {
-    //   hashtagsIterator.current = masto.v1.timelines.listHashtag(hashtag, {
+    //   hashtagsIterator.current = masto.v1.timelines.tag.$select(hashtag).list({
     //     limit: LIMIT,
     //     any: hashtags.slice(1),
     //   });
@@ -54,8 +54,9 @@ function Hashtags({ columnMode, ...props }) {
     // const results = await hashtagsIterator.current.next();
 
     // NOTE: Temporary fix for listHashtag not persisting `any` in subsequent calls.
-    const results = await masto.v1.timelines
-      .listHashtag(hashtag, {
+    const results = await masto.v1.timelines.tag
+      .$select(hashtag)
+      .list({
         limit: LIMIT,
         any: hashtags.slice(1),
         maxId: firstLoad ? undefined : maxID.current,
@@ -81,8 +82,9 @@ function Hashtags({ columnMode, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines
-        .listHashtag(hashtag, {
+      const results = await masto.v1.timelines.tag
+        .$select(hashtag)
+        .list({
           limit: 1,
           any: hashtags.slice(1),
           since_id: latestItem.current,
@@ -104,7 +106,7 @@ function Hashtags({ columnMode, ...props }) {
   useEffect(() => {
     (async () => {
       try {
-        const info = await masto.v1.tags.fetch(hashtag);
+        const info = await masto.v1.tags.$select(hashtag).fetch();
         console.log(info);
         setInfo(info);
       } catch (e) {
@@ -163,7 +165,8 @@ function Hashtags({ columnMode, ...props }) {
                     //   return;
                     // }
                     masto.v1.tags
-                      .unfollow(hashtag)
+                      .$select(hashtag)
+                      .unfollow()
                       .then(() => {
                         setInfo({ ...info, following: false });
                         showToast(`Unfollowed #${hashtag}`);
@@ -177,7 +180,8 @@ function Hashtags({ columnMode, ...props }) {
                       });
                   } else {
                     masto.v1.tags
-                      .follow(hashtag)
+                      .$select(hashtag)
+                      .follow()
                       .then(() => {
                         setInfo({ ...info, following: true });
                         showToast(`Followed #${hashtag}`);

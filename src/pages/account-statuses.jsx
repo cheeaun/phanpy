@@ -31,7 +31,8 @@ function AccountStatuses() {
     const results = [];
     if (firstLoad) {
       const { value: pinnedStatuses } = await masto.v1.accounts
-        .listStatuses(id, {
+        .$select(id)
+        .statuses.list({
           pinned: true,
         })
         .next();
@@ -53,13 +54,15 @@ function AccountStatuses() {
       }
     }
     if (firstLoad || !accountStatusesIterator.current) {
-      accountStatusesIterator.current = masto.v1.accounts.listStatuses(id, {
-        limit: LIMIT,
-        exclude_replies: excludeReplies,
-        exclude_reblogs: excludeBoosts,
-        only_media: media,
-        tagged,
-      });
+      accountStatusesIterator.current = masto.v1.accounts
+        .$select(id)
+        .statuses.list({
+          limit: LIMIT,
+          exclude_replies: excludeReplies,
+          exclude_reblogs: excludeBoosts,
+          only_media: media,
+          tagged,
+        });
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
@@ -86,14 +89,16 @@ function AccountStatuses() {
   useEffect(() => {
     (async () => {
       try {
-        const acc = await masto.v1.accounts.fetch(id);
+        const acc = await masto.v1.accounts.$select(id).fetch();
         console.log(acc);
         setAccount(acc);
       } catch (e) {
         console.error(e);
       }
       try {
-        const featuredTags = await masto.v1.accounts.listFeaturedTags(id);
+        const featuredTags = await masto.v1.accounts
+          .$select(id)
+          .featuredTags.list(id);
         console.log({ featuredTags });
         setFeaturedTags(featuredTags);
       } catch (e) {
@@ -113,7 +118,7 @@ function AccountStatuses() {
         <AccountInfo
           instance={instance}
           account={cachedAccount || id}
-          fetchAccount={() => masto.v1.accounts.fetch(id)}
+          fetchAccount={() => masto.v1.accounts.$select(id).fetch()}
           authenticated={authenticated}
           standalone
         />

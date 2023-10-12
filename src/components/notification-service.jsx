@@ -38,7 +38,7 @@ export default memo(function NotificationService() {
       ? getAccountByAccessToken(accessToken)
       : getCurrentAccount();
     (async () => {
-      const notification = await masto.v1.notifications.fetch(id);
+      const notification = await masto.v1.notifications.$select(id).fetch();
       if (notification && account) {
         console.log('🛎️ Notification', { id, notification, account });
         const accountInstance = account.instanceURL;

@@ -1,4 +1,4 @@
-import { createClient } from 'masto';
+import { createRestAPIClient, createStreamingAPIClient } from 'masto';
 
 import store from './store';
 import {
@@ -37,14 +37,17 @@ export function initClient({ instance, accessToken }) {
   }
   const url = instance ? `https://${instance}` : `https://${DEFAULT_INSTANCE}`;
 
-  const client = createClient({
+  const masto = createRestAPIClient({
     url,
     accessToken, // Can be null
-    disableVersionCheck: true, // Allow non-Mastodon instances
     timeout: 30_000, // Unfortunatly this is global instead of per-request
   });
-  client.__instance__ = instance;
 
+  const client = {
+    masto,
+    instance,
+    accessToken,
+  };
   apis[instance] = client;
   if (!accountApis[instance]) accountApis[instance] = {};
   if (accessToken) accountApis[instance][accessToken] = client;
@@ -55,7 +58,8 @@ export function initClient({ instance, accessToken }) {
 // Get the instance information
 // The config is needed for composing
 export async function initInstance(client, instance) {
-  const masto = client;
+  console.log('INIT INSTANCE', client, instance);
+  const { masto, accessToken } = client;
   // Request v2, fallback to v1 if fail
   let info;
   try {
@@ -63,7 +67,7 @@ export async function initInstance(client, instance) {
   } catch (e) {}
   if (!info) {
     try {
-      info = await masto.v1.instances.fetch();
+      info = await masto.v1.instance.fetch();
     } catch (e) {}
   }
   if (!info) return;
@@ -91,17 +95,28 @@ export async function initInstance(client, instance) {
   store.local.setJSON('instances', instances);
   // This is a weird place to put this but here's updating the masto instance with the streaming API URL set in the configuration
   // Reason: Streaming WebSocket URL may change, unlike the standard API REST URLs
-  if (streamingApi || streaming) {
+  const supportsWebSocket = 'WebSocket' in window;
+  if (supportsWebSocket && (streamingApi || streaming)) {
     console.log('🎏 Streaming API URL:', streaming || streamingApi);
-    masto.config.props.streamingApiUrl = streaming || streamingApi;
+    // masto.config.props.streamingApiUrl = streaming || streamingApi;
+    // Legacy masto.ws
+    const streamClient = createStreamingAPIClient({
+      streamingApiUrl: streaming || streamingApi,
+      accessToken,
+      implementation: WebSocket,
+    });
+    client.streaming = streamClient;
+    // masto.ws = streamClient;
+    console.log('🎏 Streaming API client:', client);
   }
 }
 
 // Get the account information and store it
 export async function initAccount(client, instance, accessToken, vapidKey) {
-  const masto = client;
+  const { masto } = client;
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
+  console.log('CURRENTACCOUNT SET', mastoAccount.id);
   store.session.set('currentAccount', mastoAccount.id);
 
   saveAccount({
@@ -115,7 +130,7 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
 // Get preferences
 export async function initPreferences(client) {
   try {
-    const masto = client;
+    const { masto } = client;
     const preferences = await masto.v1.preferences.fetch();
     store.account.set('preferences', preferences);
   } catch (e) {
@@ -134,10 +149,14 @@ export function api({ instance, accessToken, accountID, account } = {}) {
 
   // If instance and accessToken are provided, get the masto instance for that account
   if (instance && accessToken) {
+    const client =
+      accountApis[instance]?.[accessToken] ||
+      initClient({ instance, accessToken });
+    const { masto, streaming } = client;
     return {
-      masto:
-        accountApis[instance]?.[accessToken] ||
-        initClient({ instance, accessToken }),
+      masto,
+      streaming,
+      client,
       authenticated: true,
       instance,
     };
@@ -149,8 +168,12 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     for (const instance in accountApis) {
       if (accountApis[instance][accessToken]) {
         console.log('X 2', accountApis, instance, accessToken);
+        const client = accountApis[instance][accessToken];
+        const { masto, streaming } = client;
         return {
-          masto: accountApis[instance][accessToken],
+          masto,
+          streaming,
+          client,
           authenticated: true,
           instance,
         };
@@ -160,8 +183,12 @@ export function api({ instance, accessToken, accountID, account } = {}) {
         if (account) {
           const accessToken = account.accessToken;
           const instance = account.instanceURL.toLowerCase().trim();
+          const client = initClient({ instance, accessToken });
+          const { masto, streaming } = client;
           return {
-            masto: initClient({ instance, accessToken }),
+            masto,
+            streaming,
+            client,
             authenticated: true,
             instance,
           };
@@ -178,10 +205,14 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     if (account) {
       const accessToken = account.accessToken;
       const instance = account.instanceURL.toLowerCase().trim();
+      const client =
+        accountApis[instance]?.[accessToken] ||
+        initClient({ instance, accessToken });
+      const { masto, streaming } = client;
       return {
-        masto:
-          accountApis[instance]?.[accessToken] ||
-          initClient({ instance, accessToken }),
+        masto,
+        streaming,
+        client,
         authenticated: true,
         instance,
       };
@@ -192,10 +223,13 @@ export function api({ instance, accessToken, accountID, account } = {}) {
 
   // If only instance is provided, get the masto instance for that instance
   if (instance) {
-    const masto = apis[instance] || initClient({ instance });
+    const client = apis[instance] || initClient({ instance });
+    const { masto, streaming, accessToken } = client;
     return {
       masto,
-      authenticated: !!masto.config.props.accessToken,
+      streaming,
+      client,
+      authenticated: !!accessToken,
       instance,
     };
   }
@@ -203,9 +237,11 @@ export function api({ instance, accessToken, accountID, account } = {}) {
   // If no instance is provided, get the masto instance for the current account
   if (currentAccountApi) {
     return {
-      masto: currentAccountApi,
+      masto: currentAccountApi.masto,
+      streaming: currentAccountApi.streaming,
+      client: currentAccountApi,
       authenticated: true,
-      instance: currentAccountApi.__instance__,
+      instance: currentAccountApi.instance,
     };
   }
   const currentAccount = getCurrentAccount();
@@ -215,15 +251,22 @@ export function api({ instance, accessToken, accountID, account } = {}) {
       accountApis[instance]?.[accessToken] ||
       initClient({ instance, accessToken });
     return {
-      masto: currentAccountApi,
+      masto: currentAccountApi.masto,
+      streaming: currentAccountApi.streaming,
+      client: currentAccountApi,
       authenticated: true,
       instance,
     };
   }
 
   // If no instance is provided and no account is logged in, get the masto instance for DEFAULT_INSTANCE
+  const client =
+    apis[DEFAULT_INSTANCE] || initClient({ instance: DEFAULT_INSTANCE });
+  const { masto, streaming } = client;
   return {
-    masto: apis[DEFAULT_INSTANCE] || initClient({ instance: DEFAULT_INSTANCE }),
+    masto,
+    streaming,
+    client,
     authenticated: false,
     instance: DEFAULT_INSTANCE,
   };

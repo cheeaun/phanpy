@@ -128,9 +128,9 @@ function Drafts({ onClose }) {
                         if (replyTo) {
                           setUIState('loading');
                           try {
-                            replyToStatus = await masto.v1.statuses.fetch(
-                              replyTo.id,
-                            );
+                            replyToStatus = await masto.v1.statuses
+                              .$select(replyTo.id)
+                              .fetch();
                           } catch (e) {
                             console.error(e);
                             alert('Error fetching reply-to status!');

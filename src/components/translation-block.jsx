@@ -55,7 +55,7 @@ function lingvaTranslate(text, source, target) {
       );
     },
   });
-  // return masto.v1.statuses.translate(id, {
+  // return masto.v1.statuses.$select(id).translate({
   //   lang: DEFAULT_LANG,
   // });
 }

@@ -68,7 +68,7 @@ const throttle = pThrottle({
 
 function fetchAccount(id, masto) {
   try {
-    return masto.v1.accounts.fetch(id);
+    return masto.v1.accounts.$select(id).fetch();
   } catch (e) {
     return Promise.reject(e);
   }
@@ -390,11 +390,11 @@ function Status({
         reblogsCount: reblogsCount + (reblogged ? -1 : 1),
       };
       if (reblogged) {
-        const newStatus = await masto.v1.statuses.unreblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
         return true;
       } else {
-        const newStatus = await masto.v1.statuses.reblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
         return true;
       }
@@ -418,11 +418,11 @@ function Status({
         reblogsCount: reblogsCount + (reblogged ? -1 : 1),
       };
       if (reblogged) {
-        const newStatus = await masto.v1.statuses.unreblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
         return true;
       } else {
-        const newStatus = await masto.v1.statuses.reblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
         return true;
       }
@@ -446,10 +446,10 @@ function Status({
         favouritesCount: favouritesCount + (favourited ? -1 : 1),
       };
       if (favourited) {
-        const newStatus = await masto.v1.statuses.unfavourite(id);
+        const newStatus = await masto.v1.statuses.$select(id).unfavourite();
         saveStatus(newStatus, instance);
       } else {
-        const newStatus = await masto.v1.statuses.favourite(id);
+        const newStatus = await masto.v1.statuses.$select(id).favourite();
         saveStatus(newStatus, instance);
       }
     } catch (e) {
@@ -470,10 +470,10 @@ function Status({
         bookmarked: !bookmarked,
       };
       if (bookmarked) {
-        const newStatus = await masto.v1.statuses.unbookmark(id);
+        const newStatus = await masto.v1.statuses.$select(id).unbookmark();
         saveStatus(newStatus, instance);
       } else {
-        const newStatus = await masto.v1.statuses.bookmark(id);
+        const newStatus = await masto.v1.statuses.$select(id).bookmark();
         saveStatus(newStatus, instance);
       }
     } catch (e) {
@@ -708,9 +708,9 @@ function Status({
         <MenuItem
           onClick={async () => {
             try {
-              const newStatus = await masto.v1.statuses[
-                muted ? 'unmute' : 'mute'
-              ](id);
+              const newStatus = await masto.v1.statuses
+                .$select(id)
+                [muted ? 'unmute' : 'mute']();
               saveStatus(newStatus, instance);
               showToast(muted ? 'Conversation unmuted' : 'Conversation muted');
             } catch (e) {
@@ -763,7 +763,7 @@ function Status({
                 // if (yes) {
                 (async () => {
                   try {
-                    await masto.v1.statuses.remove(id);
+                    await masto.v1.statuses.$select(id).remove();
                     const cachedStatus = getStatus(id, instance);
                     cachedStatus._deleted = true;
                     showToast('Deleted');
@@ -1212,7 +1212,8 @@ function Status({
               }}
               refresh={() => {
                 return masto.v1.polls
-                  .fetch(poll.id)
+                  .$select(poll.id)
+                  .fetch()
                   .then((pollResponse) => {
                     states.statuses[sKey].poll = pollResponse;
                   })
@@ -1220,7 +1221,8 @@ function Status({
               }}
               votePoll={(choices) => {
                 return masto.v1.polls
-                  .vote(poll.id, {
+                  .$select(poll.id)
+                  .votes.create({
                     choices,
                   })
                   .then((pollResponse) => {
@@ -1498,7 +1500,7 @@ function Status({
             statusID={showEdited}
             instance={instance}
             fetchStatusHistory={() => {
-              return masto.v1.statuses.listHistory(showEdited);
+              return masto.v1.statuses.$select(showEdited).history.list();
             }}
             onClose={() => {
               setShowEdited(false);
@@ -1585,7 +1587,7 @@ function Card({ card, instance }) {
         // NOTE: This is for quote post
         // (async () => {
         //   const { masto } = api({ instance });
-        //   const status = await masto.v1.statuses.fetch(id);
+        //   const status = await masto.v1.statuses.$select(id).fetch();
         //   saveStatus(status, instance);
         //   setCardStatusID(id);
         // })();
@@ -1805,15 +1807,16 @@ function ReactionsModal({ statusID, instance, onClose }) {
     (async () => {
       try {
         if (firstLoad) {
-          reblogIterator.current = masto.v1.statuses.listRebloggedBy(statusID, {
-            limit: REACTIONS_LIMIT,
-          });
-          favouriteIterator.current = masto.v1.statuses.listFavouritedBy(
-            statusID,
-            {
+          reblogIterator.current = masto.v1.statuses
+            .$select(statusID)
+            .rebloggedBy.list({
               limit: REACTIONS_LIMIT,
-            },
-          );
+            });
+          favouriteIterator.current = masto.v1.statuses
+            .$select(statusID)
+            .favouritedBy.list({
+              limit: REACTIONS_LIMIT,
+            });
         }
         const [{ value: reblogResults }, { value: favouriteResults }] =
           await Promise.allSettled([
@@ -2043,21 +2046,24 @@ function _unfurlMastodonLink(instance, url) {
   if (statusMatch) {
     const id = statusMatch[3];
     const { masto } = api({ instance: domain });
-    remoteInstanceFetch = masto.v1.statuses.fetch(id).then((status) => {
-      if (status?.id) {
-        return {
-          status,
-          instance: domain,
-        };
-      } else {
-        throw new Error('No results');
-      }
-    });
+    remoteInstanceFetch = masto.v1.statuses
+      .$select(id)
+      .fetch()
+      .then((status) => {
+        if (status?.id) {
+          return {
+            status,
+            instance: domain,
+          };
+        } else {
+          throw new Error('No results');
+        }
+      });
   }
 
   const { masto } = api({ instance });
-  const mastoSearchFetch = masto.v2
-    .search({
+  const mastoSearchFetch = masto.v2.search
+    .fetch({
       q: url,
       type: 'statuses',
       resolve: true,

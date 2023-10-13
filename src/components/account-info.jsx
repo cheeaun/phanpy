@@ -286,6 +286,7 @@ function AccountInfo({
   };
 
   const renderPostingStats = async () => {
+    if (!id) return;
     setPostingStatsUIState('loading');
     try {
       const stats = await memFetchPostingStats(id, masto);

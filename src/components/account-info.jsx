@@ -854,7 +854,7 @@ function RelatedActions({
 
   return (
     <>
-      <p class="actions">
+      <div class="actions">
         <span>
           {followedBy ? (
             <span class="tag">Following you</span>
@@ -1207,7 +1207,7 @@ function RelatedActions({
             </MenuConfirm>
           )}
         </span>
-      </p>
+      </div>
       {!!showTranslatedBio && (
         <Modal
           class="light"

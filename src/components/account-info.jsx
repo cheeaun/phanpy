@@ -1,6 +1,7 @@
 import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
+import mem from 'mem';
 import {
   useCallback,
   useEffect,
@@ -54,6 +55,63 @@ const MUTE_DURATIONS_LABELS = {
 };
 
 const LIMIT = 80;
+
+const ACCOUNT_INFO_MAX_AGE = 1000 * 60 * 10; // 10 mins
+
+function fetchFamiliarFollowers(currentID, masto) {
+  return masto.v1.accounts.familiarFollowers.fetch({
+    id: [currentID],
+  });
+}
+const memFetchFamiliarFollowers = mem(fetchFamiliarFollowers, {
+  maxAge: ACCOUNT_INFO_MAX_AGE,
+});
+
+async function fetchPostingStats(accountID, masto) {
+  const fetchStatuses = masto.v1.accounts
+    .$select(accountID)
+    .statuses.list({
+      limit: 20,
+    })
+    .next();
+
+  const { value: statuses } = await fetchStatuses;
+  console.log('fetched statuses', statuses);
+  const stats = {
+    total: statuses.length,
+    originals: 0,
+    replies: 0,
+    boosts: 0,
+  };
+  // Categories statuses by type
+  // - Original posts (not replies to others)
+  // - Threads (self-replies + 1st original post)
+  // - Boosts (reblogs)
+  // - Replies (not-self replies)
+  statuses.forEach((status) => {
+    if (status.reblog) {
+      stats.boosts++;
+    } else if (
+      !!status.inReplyToId &&
+      status.inReplyToAccountId !== status.account.id // Not self-reply
+    ) {
+      stats.replies++;
+    } else {
+      stats.originals++;
+    }
+  });
+
+  // Count days since last post
+  stats.daysSinceLastPost = Math.ceil(
+    (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) / 86400000,
+  );
+
+  console.log('posting stats', stats);
+  return stats;
+}
+const memFetchPostingStats = mem(fetchPostingStats, {
+  maxAge: ACCOUNT_INFO_MAX_AGE,
+});
 
 function AccountInfo({
   account,
@@ -208,18 +266,13 @@ function AccountInfo({
   const [postingStats, setPostingStats] = useState();
   const [postingStatsUIState, setPostingStatsUIState] = useState('default');
   const hasPostingStats = !!postingStats?.total;
-  const currentIDRef = useRef();
 
-  const renderFamiliarFollowers = async () => {
-    if (!currentIDRef.current) return;
-    const currentID = currentIDRef.current;
+  const renderFamiliarFollowers = async (currentID) => {
     try {
-      const fetchFamiliarFollowers =
-        currentMasto.v1.accounts.familiarFollowers.fetch({
-          id: [currentID],
-        });
-
-      const followers = await fetchFamiliarFollowers;
+      const followers = await memFetchFamiliarFollowers(
+        currentID,
+        currentMasto,
+      );
       console.log('fetched familiar followers', followers);
       setFamiliarFollowers(
         followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
@@ -232,43 +285,7 @@ function AccountInfo({
   const renderPostingStats = async () => {
     setPostingStatsUIState('loading');
     try {
-      const fetchStatuses = masto.v1.accounts
-        .$select(id)
-        .statuses.list({
-          limit: 20,
-        })
-        .next();
-
-      const { value: statuses } = await fetchStatuses;
-      console.log('fetched statuses', statuses);
-      const stats = {
-        total: statuses.length,
-        originals: 0,
-        replies: 0,
-        boosts: 0,
-      };
-      // Categories statuses by type
-      // - Original posts (not replies to others)
-      // - Threads (self-replies + 1st original post)
-      // - Boosts (reblogs)
-      // - Replies (not-self replies)
-      statuses.forEach((status) => {
-        if (status.reblog) {
-          stats.boosts++;
-        } else if (status.inReplyToAccountId !== id && !!status.inReplyToId) {
-          stats.replies++;
-        } else {
-          stats.originals++;
-        }
-      });
-
-      // Count days since last post
-      stats.daysSinceLastPost = Math.ceil(
-        (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) /
-          86400000,
-      );
-
-      console.log('posting stats', stats);
+      const stats = await memFetchPostingStats(id, masto);
       setPostingStats(stats);
       setPostingStatsUIState('default');
     } catch (e) {
@@ -279,9 +296,8 @@ function AccountInfo({
 
   const onRelationshipChange = useCallback(
     ({ relationship, currentID }) => {
-      currentIDRef.current = currentID;
       if (!relationship.following) {
-        renderFamiliarFollowers();
+        renderFamiliarFollowers(currentID);
         if (!standalone) {
           renderPostingStats();
         }

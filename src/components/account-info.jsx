@@ -344,7 +344,7 @@ function AccountInfo({
               <p>████████ ███████</p>
               <p>███████████████ ███████████████</p>
             </div>
-            <p class="stats">
+            <div class="stats">
               <div>
                 <span>██</span> Followers
               </div>
@@ -355,7 +355,7 @@ function AccountInfo({
                 <span>██</span> Posts
               </div>
               <div>Joined ██</div>
-            </p>
+            </div>
           </main>
         </>
       ) : (

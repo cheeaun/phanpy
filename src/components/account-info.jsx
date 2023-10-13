@@ -102,9 +102,12 @@ async function fetchPostingStats(accountID, masto) {
   });
 
   // Count days since last post
-  stats.daysSinceLastPost = Math.ceil(
-    (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) / 86400000,
-  );
+  if (statuses.length) {
+    stats.daysSinceLastPost = Math.ceil(
+      (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) /
+        86400000,
+    );
+  }
 
   console.log('posting stats', stats);
   return stats;

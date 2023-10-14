@@ -9,7 +9,6 @@ import {
   MenuItem,
 } from '@szhsin/react-menu';
 import { decodeBlurHash } from 'fast-blurhash';
-import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import {
@@ -42,6 +41,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -67,13 +67,9 @@ const throttle = pThrottle({
 });
 
 function fetchAccount(id, masto) {
-  try {
-    return masto.v1.accounts.$select(id).fetch();
-  } catch (e) {
-    return Promise.reject(e);
-  }
+  return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = mem(fetchAccount);
+const memFetchAccount = pmem(fetchAccount);
 
 const visibilityText = {
   public: 'Public',
@@ -2133,11 +2129,7 @@ function nicePostURL(url) {
   );
 }
 
-const unfurlMastodonLink = throttle(
-  mem(_unfurlMastodonLink, {
-    cacheKey: (instance, url) => `${instance}:${url}`,
-  }),
-);
+const unfurlMastodonLink = throttle(pmem(_unfurlMastodonLink));
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

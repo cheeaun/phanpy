@@ -1,5 +1,5 @@
-import moize from 'moize';
+import mem from './mem';
 
 export default function pmem(fn, opts = {}) {
-  return moize(fn, { isPromise: true, ...opts, maxSize: Infinity });
+  return mem(fn, { isPromise: true, ...opts });
 }

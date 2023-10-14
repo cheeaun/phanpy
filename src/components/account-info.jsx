@@ -1,7 +1,6 @@
 import './account-info.css';
 
 import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
-import mem from 'mem';
 import {
   useCallback,
   useEffect,
@@ -16,6 +15,7 @@ import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
+import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
@@ -63,7 +63,7 @@ function fetchFamiliarFollowers(currentID, masto) {
     id: [currentID],
   });
 }
-const memFetchFamiliarFollowers = mem(fetchFamiliarFollowers, {
+const memFetchFamiliarFollowers = pmem(fetchFamiliarFollowers, {
   maxAge: ACCOUNT_INFO_MAX_AGE,
 });
 
@@ -112,7 +112,7 @@ async function fetchPostingStats(accountID, masto) {
   console.log('posting stats', stats);
   return stats;
 }
-const memFetchPostingStats = mem(fetchPostingStats, {
+const memFetchPostingStats = pmem(fetchPostingStats, {
   maxAge: ACCOUNT_INFO_MAX_AGE,
 });
 

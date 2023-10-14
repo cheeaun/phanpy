@@ -1,8 +1,8 @@
-import mem from 'mem';
 import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
+import pmem from './pmem';
 import store from './store';
 
 const states = proxy({
@@ -229,6 +229,6 @@ export function threadifyStatus(status, propInstance) {
     });
 }
 
-const fetchStatus = mem((statusID, masto) => {
+const fetchStatus = pmem((statusID, masto) => {
   return masto.v1.statuses.$select(statusID).fetch();
 });

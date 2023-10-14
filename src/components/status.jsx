@@ -2129,7 +2129,7 @@ function nicePostURL(url) {
   );
 }
 
-const unfurlMastodonLink = throttle(pmem(_unfurlMastodonLink));
+const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

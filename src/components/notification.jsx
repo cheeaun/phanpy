@@ -58,8 +58,8 @@ const contentText = {
   'favourite+reblog+account': (count) =>
     `boosted & favourited ${count} of your posts.`,
   'favourite+reblog_reply': 'boosted & favourited your reply.',
-  'admin.signup': 'signed up.',
   'admin.report': 'reported a post.',
+  'admin.sign_up': 'signed up.',
 };
 
 const AVATARS_LIMIT = 50;

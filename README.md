@@ -138,9 +138,11 @@ Costs involved in running and developing this web app:
 
 [Phanpy](https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)) is a Ground-type Pokémon.
 
-## Maintainers
+## Maintainers + contributors
 
 - [Chee Aun](https://github.com/cheeaun) ([Mastodon](https://mastodon.social/@cheeaun)) ([Twitter](https://twitter.com/cheeaun))
+
+[![Contributors](https://contrib.rocks/image?repo=cheeaun/phanpy)](https://github.com/cheeaun/phanpy/graphs/contributors)
 
 ## Backstory
 

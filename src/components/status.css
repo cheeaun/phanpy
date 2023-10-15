@@ -1015,8 +1015,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: inline-flex;
-      gap: 4px;
 
       &:hover {
         color: var(--text-color);
@@ -1027,6 +1025,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
         white-space: pre-line;
         overflow: auto;
         text-overflow: unset;
+        display: flex;
+        gap: 4px;
       }
     }
 

@@ -185,7 +185,7 @@ function Compose({
           : visibility,
       );
       setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
-      setSensitive(sensitive);
+      setSensitive(sensitive && !!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
         editStatus;

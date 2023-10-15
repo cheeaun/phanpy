@@ -337,7 +337,7 @@
 .status > .container > .meta a.time:after {
   content: '';
   position: absolute;
-  inset: -16px;
+  inset: -16px -16px -8px;
 }
 .status > .container > .meta .reply-to {
   opacity: 0.5;

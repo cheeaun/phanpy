@@ -877,6 +877,62 @@ function Status({
     displayedMediaAttachments.some(
       (media) => !!media.description && !isMediaCaptionLong(media.description),
     );
+  const captionChildren = useMemo(() => {
+    if (!showMultipleMediaCaptions) return null;
+    const attachments = [];
+    displayedMediaAttachments.forEach((media, i) => {
+      if (!media.description) return;
+      const index = attachments.findIndex(
+        (attachment) => attachment.media.description === media.description,
+      );
+      if (index === -1) {
+        attachments.push({
+          media,
+          indices: [i],
+        });
+      } else {
+        attachments[index].indices.push(i);
+      }
+    });
+    return attachments.map(({ media, indices }) => (
+      <div
+        key={media.id}
+        data-caption-index={indices.map((i) => i + 1).join(' ')}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          states.showMediaAlt = {
+            alt: media.description,
+            lang: language,
+          };
+        }}
+        title={media.description}
+      >
+        <sup>{indices.map((i) => i + 1).join(' ')}</sup> {media.description}
+      </div>
+    ));
+
+    // return displayedMediaAttachments.map(
+    //   (media, i) =>
+    //     !!media.description && (
+    //       <div
+    //         key={media.id}
+    //         data-caption-index={i + 1}
+    //         onClick={(e) => {
+    //           e.preventDefault();
+    //           e.stopPropagation();
+    //           states.showMediaAlt = {
+    //             alt: media.description,
+    //             lang: language,
+    //           };
+    //         }}
+    //         title={media.description}
+    //       >
+    //         <sup>{i + 1}</sup> {media.description}
+    //       </div>
+    //     ),
+    // );
+  }, [showMultipleMediaCaptions, displayedMediaAttachments, language]);
 
   return (
     <article
@@ -1277,28 +1333,7 @@ function Status({
             <MultipleMediaFigure
               lang={language}
               enabled={showMultipleMediaCaptions}
-              captionChildren={() => {
-                return displayedMediaAttachments.map(
-                  (media, i) =>
-                    !!media.description && (
-                      <div
-                        key={media.id}
-                        data-caption-index={i + 1}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          states.showMediaAlt = {
-                            alt: media.description,
-                            lang: language,
-                          };
-                        }}
-                        title={media.description}
-                      >
-                        <sup>{i + 1}</sup> {media.description}
-                      </div>
-                    ),
-                );
-              }}
+              captionChildren={captionChildren}
             >
               <div
                 ref={mediaContainerRef}
@@ -1533,7 +1568,7 @@ function MultipleMediaFigure(props) {
     <figure class="media-figure-multiple">
       {children}
       <figcaption lang={lang} dir="auto">
-        {captionChildren?.()}
+        {captionChildren}
       </figcaption>
     </figure>
   );

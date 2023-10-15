@@ -163,9 +163,9 @@ self.addEventListener('notificationclick', (event) => {
   const { access_token, notification_type } = data;
   const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
 
-  event.notification.close();
   event.waitUntil(
     (async () => {
+      await event.notification.close();
       const clients = await self.clients.matchAll({
         type: 'window',
         includeUncontrolled: true,

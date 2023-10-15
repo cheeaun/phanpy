@@ -1283,6 +1283,7 @@ function Status({
                     !!media.description && (
                       <div
                         key={media.id}
+                        data-caption-index={i + 1}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();

@@ -1027,6 +1027,22 @@ body:has(#modal-container .carousel) .status .media img:hover {
       font-variant-numeric: tabular-nums;
     }
   }
+
+  /* Only 4, for now. Would be better if this is a for loop */
+  &:has(.media[data-has-alt]:nth-child(1):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index='1'],
+  &:has(.media[data-has-alt]:nth-child(2):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index='2'],
+  &:has(.media[data-has-alt]:nth-child(3):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index='3'],
+  &:has(.media[data-has-alt]:nth-child(4):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index='4'] {
+    color: var(--text-color);
+  }
 }
 
 .carousel-item {

@@ -307,7 +307,7 @@ function AccountInfo({
         }
       }
     },
-    [standalone],
+    [standalone, id],
   );
 
   return (

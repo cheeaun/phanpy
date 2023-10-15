@@ -163,6 +163,7 @@ self.addEventListener('notificationclick', (event) => {
   const { access_token, notification_type } = data;
   const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
 
+  event.notification.close();
   event.waitUntil(
     (async () => {
       const clients = await self.clients.matchAll({
@@ -194,7 +195,6 @@ self.addEventListener('notificationclick', (event) => {
         console.log('NOTIFICATION CLICK openWindow', url);
         await self.clients.openWindow(url);
       }
-      await event.notification.close();
     })(),
   );
 });

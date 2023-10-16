@@ -2,10 +2,9 @@ name: Create Release on every tag push in `production`
 
 on:
   push:
-    branches:
-      - production
     tags:
       - '*'
+  workflow_dispatch:
 
 jobs:
   release:

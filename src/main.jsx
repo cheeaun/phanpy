@@ -11,6 +11,19 @@ if (import.meta.env.DEV) {
   import('preact/debug');
 }
 
+// AbortSignal.timeout polyfill
+// Temporary fix from https://github.com/mo/abortcontroller-polyfill/issues/73#issuecomment-1541180943
+// Incorrect implementation, but should be good enough for now
+if ('AbortSignal' in window) {
+  AbortSignal.timeout =
+    AbortSignal.timeout ||
+    ((duration) => {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), duration);
+      return controller.signal;
+    });
+}
+
 render(
   <HashRouter>
     <App />

@@ -63,7 +63,7 @@ function NotificationsLink() {
         to="/notifications"
         class={`button plain notifications-button ${
           snapStates.notificationsShowNew ? 'has-badge' : ''
-        } ${menuState}`}
+        } ${menuState || ''}`}
         onClick={(e) => {
           e.stopPropagation();
           if (window.matchMedia('(min-width: calc(40em))').matches) {

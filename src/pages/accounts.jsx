@@ -52,9 +52,9 @@ function Accounts({ onClose }) {
                       onDblClick={async () => {
                         if (isCurrent) {
                           try {
-                            const info = await masto.v1.accounts.fetch(
-                              account.info.id,
-                            );
+                            const info = await masto.v1.accounts
+                              .$select(account.info.id)
+                              .fetch();
                             console.log('fetched account info', info);
                             account.info = info;
                             store.local.setJSON('accounts', accounts);

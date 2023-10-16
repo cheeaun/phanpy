@@ -15,6 +15,7 @@ import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
+import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
@@ -54,6 +55,66 @@ const MUTE_DURATIONS_LABELS = {
 };
 
 const LIMIT = 80;
+
+const ACCOUNT_INFO_MAX_AGE = 1000 * 60 * 10; // 10 mins
+
+function fetchFamiliarFollowers(currentID, masto) {
+  return masto.v1.accounts.familiarFollowers.fetch({
+    id: [currentID],
+  });
+}
+const memFetchFamiliarFollowers = pmem(fetchFamiliarFollowers, {
+  maxAge: ACCOUNT_INFO_MAX_AGE,
+});
+
+async function fetchPostingStats(accountID, masto) {
+  const fetchStatuses = masto.v1.accounts
+    .$select(accountID)
+    .statuses.list({
+      limit: 20,
+    })
+    .next();
+
+  const { value: statuses } = await fetchStatuses;
+  console.log('fetched statuses', statuses);
+  const stats = {
+    total: statuses.length,
+    originals: 0,
+    replies: 0,
+    boosts: 0,
+  };
+  // Categories statuses by type
+  // - Original posts (not replies to others)
+  // - Threads (self-replies + 1st original post)
+  // - Boosts (reblogs)
+  // - Replies (not-self replies)
+  statuses.forEach((status) => {
+    if (status.reblog) {
+      stats.boosts++;
+    } else if (
+      !!status.inReplyToId &&
+      status.inReplyToAccountId !== status.account.id // Not self-reply
+    ) {
+      stats.replies++;
+    } else {
+      stats.originals++;
+    }
+  });
+
+  // Count days since last post
+  if (statuses.length) {
+    stats.daysSinceLastPost = Math.ceil(
+      (Date.now() - new Date(statuses[statuses.length - 1].createdAt)) /
+        86400000,
+    );
+  }
+
+  console.log('posting stats', stats);
+  return stats;
+}
+const memFetchPostingStats = pmem(fetchPostingStats, {
+  maxAge: ACCOUNT_INFO_MAX_AGE,
+});
 
 function AccountInfo({
   account,
@@ -149,7 +210,7 @@ function AccountInfo({
   const familiarFollowersCache = useRef([]);
   async function fetchFollowers(firstLoad) {
     if (firstLoad || !followersIterator.current) {
-      followersIterator.current = masto.v1.accounts.listFollowers(id, {
+      followersIterator.current = masto.v1.accounts.$select(id).followers.list({
         limit: LIMIT,
       });
     }
@@ -162,9 +223,9 @@ function AccountInfo({
     // On first load, fetch familiar followers, merge to top of results' `value`
     // Remove dups on every fetch
     if (firstLoad) {
-      const familiarFollowers = await masto.v1.accounts.fetchFamiliarFollowers(
-        id,
-      );
+      const familiarFollowers = await masto.v1.accounts
+        .familiarFollowers(id)
+        .fetch();
       familiarFollowersCache.current = familiarFollowers[0].accounts;
       newValue = [
         ...familiarFollowersCache.current,
@@ -193,7 +254,7 @@ function AccountInfo({
   const followingIterator = useRef();
   async function fetchFollowing(firstLoad) {
     if (firstLoad || !followingIterator.current) {
-      followingIterator.current = masto.v1.accounts.listFollowing(id, {
+      followingIterator.current = masto.v1.accounts.$select(id).following.list({
         limit: LIMIT,
       });
     }
@@ -206,71 +267,47 @@ function AccountInfo({
 
   const [familiarFollowers, setFamiliarFollowers] = useState([]);
   const [postingStats, setPostingStats] = useState();
-  const hasPostingStats = postingStats?.total >= 3;
+  const [postingStatsUIState, setPostingStatsUIState] = useState('default');
+  const hasPostingStats = !!postingStats?.total;
+
+  const renderFamiliarFollowers = async (currentID) => {
+    try {
+      const followers = await memFetchFamiliarFollowers(
+        currentID,
+        currentMasto,
+      );
+      console.log('fetched familiar followers', followers);
+      setFamiliarFollowers(
+        followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderPostingStats = async () => {
+    if (!id) return;
+    setPostingStatsUIState('loading');
+    try {
+      const stats = await memFetchPostingStats(id, masto);
+      setPostingStats(stats);
+      setPostingStatsUIState('default');
+    } catch (e) {
+      console.error(e);
+      setPostingStatsUIState('error');
+    }
+  };
 
   const onRelationshipChange = useCallback(
     ({ relationship, currentID }) => {
       if (!relationship.following) {
-        (async () => {
-          try {
-            const fetchFamiliarFollowers =
-              currentMasto.v1.accounts.fetchFamiliarFollowers(currentID);
-            const fetchStatuses = currentMasto.v1.accounts
-              .listStatuses(currentID, {
-                limit: 20,
-              })
-              .next();
-
-            const followers = await fetchFamiliarFollowers;
-            console.log('fetched familiar followers', followers);
-            setFamiliarFollowers(
-              followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
-            );
-
-            if (!standalone) {
-              const { value: statuses } = await fetchStatuses;
-              console.log('fetched statuses', statuses);
-              const stats = {
-                total: statuses.length,
-                originals: 0,
-                replies: 0,
-                boosts: 0,
-              };
-              // Categories statuses by type
-              // - Original posts (not replies to others)
-              // - Threads (self-replies + 1st original post)
-              // - Boosts (reblogs)
-              // - Replies (not-self replies)
-              statuses.forEach((status) => {
-                if (status.reblog) {
-                  stats.boosts++;
-                } else if (
-                  status.inReplyToAccountId !== currentID &&
-                  !!status.inReplyToId
-                ) {
-                  stats.replies++;
-                } else {
-                  stats.originals++;
-                }
-              });
-
-              // Count days since last post
-              stats.daysSinceLastPost = Math.ceil(
-                (Date.now() -
-                  new Date(statuses[statuses.length - 1].createdAt)) /
-                  86400000,
-              );
-
-              console.log('posting stats', stats);
-              setPostingStats(stats);
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        })();
+        renderFamiliarFollowers(currentID);
+        if (!standalone) {
+          renderPostingStats();
+        }
       }
     },
-    [standalone],
+    [standalone, id],
   );
 
   return (
@@ -307,7 +344,7 @@ function AccountInfo({
               <p>████████ ███████</p>
               <p>███████████████ ███████████████</p>
             </div>
-            <p class="stats">
+            <div class="stats">
               <div>
                 <span>██</span> Followers
               </div>
@@ -318,7 +355,7 @@ function AccountInfo({
                 <span>██</span> Posts
               </div>
               <div>Joined ██</div>
-            </p>
+            </div>
           </main>
         </>
       ) : (
@@ -583,8 +620,8 @@ function AccountInfo({
                   )}
                 </div>
               </div>
-              {hasPostingStats && (
-                <Link
+              {!!postingStats && (
+                <LinkOrDiv
                   to={accountLink}
                   class="account-metadata-box"
                   onClick={() => {
@@ -593,60 +630,97 @@ function AccountInfo({
                 >
                   <div class="shazam-container">
                     <div class="shazam-container-inner">
-                      <div
-                        class="posting-stats"
-                        title={`${Math.round(
-                          (postingStats.originals / postingStats.total) * 100,
-                        )}% original posts, ${Math.round(
-                          (postingStats.replies / postingStats.total) * 100,
-                        )}% replies, ${Math.round(
-                          (postingStats.boosts / postingStats.total) * 100,
-                        )}% boosts`}
-                      >
-                        <div>
-                          {postingStats.daysSinceLastPost < 365
-                            ? `Last ${postingStats.total} posts in the past 
-                    ${postingStats.daysSinceLastPost} day${
-                                postingStats.daysSinceLastPost > 1 ? 's' : ''
-                              }`
-                            : `
-                     Last ${postingStats.total} posts in the past year(s)
-                    `}
-                        </div>
+                      {hasPostingStats ? (
                         <div
-                          class="posting-stats-bar"
-                          style={{
-                            // [originals | replies | boosts]
-                            '--originals-percentage': `${
-                              (postingStats.originals / postingStats.total) *
-                              100
-                            }%`,
-                            '--replies-percentage': `${
-                              ((postingStats.originals + postingStats.replies) /
-                                postingStats.total) *
-                              100
-                            }%`,
-                          }}
-                        />
-                        <div class="posting-stats-legends">
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                            Original
-                          </span>{' '}
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                            Replies
-                          </span>{' '}
-                          <span class="ib">
-                            <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                            Boosts
-                          </span>
+                          class="posting-stats"
+                          title={`${Math.round(
+                            (postingStats.originals / postingStats.total) * 100,
+                          )}% original posts, ${Math.round(
+                            (postingStats.replies / postingStats.total) * 100,
+                          )}% replies, ${Math.round(
+                            (postingStats.boosts / postingStats.total) * 100,
+                          )}% boosts`}
+                        >
+                          <div>
+                            {postingStats.daysSinceLastPost < 365
+                              ? `Last ${postingStats.total} posts in the past 
+                      ${postingStats.daysSinceLastPost} day${
+                                  postingStats.daysSinceLastPost > 1 ? 's' : ''
+                                }`
+                              : `
+                      Last ${postingStats.total} posts in the past year(s)
+                      `}
+                          </div>
+                          <div
+                            class="posting-stats-bar"
+                            style={{
+                              // [originals | replies | boosts]
+                              '--originals-percentage': `${
+                                (postingStats.originals / postingStats.total) *
+                                100
+                              }%`,
+                              '--replies-percentage': `${
+                                ((postingStats.originals +
+                                  postingStats.replies) /
+                                  postingStats.total) *
+                                100
+                              }%`,
+                            }}
+                          />
+                          <div class="posting-stats-legends">
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                              Original
+                            </span>{' '}
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                              Replies
+                            </span>{' '}
+                            <span class="ib">
+                              <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                              Boosts
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div class="posting-stats">Post stats unavailable.</div>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </LinkOrDiv>
               )}
+              <div class="account-metadata-box">
+                <div
+                  class="shazam-container no-animation"
+                  hidden={!!postingStats}
+                >
+                  <div class="shazam-container-inner">
+                    <button
+                      type="button"
+                      class="posting-stats-button"
+                      disabled={postingStatsUIState === 'loading'}
+                      onClick={() => {
+                        renderPostingStats();
+                      }}
+                    >
+                      <div
+                        class={`posting-stats-bar posting-stats-icon ${
+                          postingStatsUIState === 'loading' ? 'loading' : ''
+                        }`}
+                        style={{
+                          '--originals-percentage': '33%',
+                          '--replies-percentage': '66%',
+                        }}
+                      />
+                      View post stats{' '}
+                      {/* <Loader
+                        abrupt
+                        hidden={postingStatsUIState !== 'loading'}
+                      /> */}
+                    </button>
+                  </div>
+                </div>
+              </div>
               <RelatedActions
                 info={info}
                 instance={instance}
@@ -712,7 +786,7 @@ function RelatedActions({
           // Grab this account from my logged-in instance
           const acctHasInstance = info.acct.includes('@');
           try {
-            const results = await currentMasto.v2.search({
+            const results = await currentMasto.v2.search.fetch({
               q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
               type: 'accounts',
               limit: 1,
@@ -742,9 +816,11 @@ function RelatedActions({
 
         setRelationshipUIState('loading');
 
-        const fetchRelationships = currentMasto.v1.accounts.fetchRelationships([
-          currentID,
-        ]);
+        const fetchRelationships = currentMasto.v1.accounts.relationships.fetch(
+          {
+            id: [currentID],
+          },
+        );
 
         try {
           const relationships = await fetchRelationships;
@@ -778,7 +854,7 @@ function RelatedActions({
 
   return (
     <>
-      <p class="actions">
+      <div class="actions">
         <span>
           {followedBy ? (
             <span class="tag">Following you</span>
@@ -913,10 +989,9 @@ function RelatedActions({
                       setRelationshipUIState('loading');
                       (async () => {
                         try {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.unmute(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .unmute();
                           console.log('unmuting', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
@@ -962,12 +1037,11 @@ function RelatedActions({
                             (async () => {
                               try {
                                 const newRelationship =
-                                  await currentMasto.v1.accounts.mute(
-                                    currentInfo?.id || id,
-                                    {
+                                  await currentMasto.v1.accounts
+                                    .$select(currentInfo?.id || id)
+                                    .mute({
                                       duration,
-                                    },
-                                  );
+                                    });
                                 console.log('muting', newRelationship);
                                 setRelationship(newRelationship);
                                 setRelationshipUIState('default');
@@ -1008,19 +1082,17 @@ function RelatedActions({
                     (async () => {
                       try {
                         if (blocking) {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.unblock(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .unblock();
                           console.log('unblocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
                           showToast(`Unblocked @${username}`);
                         } else {
-                          const newRelationship =
-                            await currentMasto.v1.accounts.block(
-                              currentInfo?.id || id,
-                            );
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .block();
                           console.log('blocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
@@ -1089,14 +1161,14 @@ function RelatedActions({
                       // );
 
                       // if (yes) {
-                      newRelationship = await currentMasto.v1.accounts.unfollow(
-                        accountID.current,
-                      );
+                      newRelationship = await currentMasto.v1.accounts
+                        .$select(accountID.current)
+                        .unfollow();
                       // }
                     } else {
-                      newRelationship = await currentMasto.v1.accounts.follow(
-                        accountID.current,
-                      );
+                      newRelationship = await currentMasto.v1.accounts
+                        .$select(accountID.current)
+                        .follow();
                     }
 
                     if (newRelationship) setRelationship(newRelationship);
@@ -1135,7 +1207,7 @@ function RelatedActions({
             </MenuConfirm>
           )}
         </span>
-      </p>
+      </div>
       {!!showTranslatedBio && (
         <Modal
           class="light"
@@ -1241,9 +1313,9 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
-        const listsContainingAccount = await masto.v1.accounts.listLists(
-          accountID,
-        );
+        const listsContainingAccount = await masto.v1.accounts
+          .$select(accountID)
+          .lists.list();
         console.log({ lists, listsContainingAccount });
         setLists(lists);
         setListsContainingAccount(listsContainingAccount);
@@ -1285,13 +1357,17 @@ function AddRemoveListsSheet({ accountID, onClose }) {
                       (async () => {
                         try {
                           if (inList) {
-                            await masto.v1.lists.removeAccount(list.id, {
-                              accountIds: [accountID],
-                            });
+                            await masto.v1.lists
+                              .$select(list.id)
+                              .accounts.remove({
+                                accountIds: [accountID],
+                              });
                           } else {
-                            await masto.v1.lists.addAccount(list.id, {
-                              accountIds: [accountID],
-                            });
+                            await masto.v1.lists
+                              .$select(list.id)
+                              .accounts.create({
+                                accountIds: [accountID],
+                              });
                           }
                           // setUIState('default');
                           reload();

@@ -114,13 +114,13 @@ function App() {
           code,
         });
 
-        const masto = initClient({ instance: instanceURL, accessToken });
+        const client = initClient({ instance: instanceURL, accessToken });
         await Promise.allSettled([
-          initInstance(masto, instanceURL),
-          initAccount(masto, instanceURL, accessToken, vapidKey),
+          initInstance(client, instanceURL),
+          initAccount(client, instanceURL, accessToken, vapidKey),
         ]);
         initStates();
-        initPreferences(masto);
+        initPreferences(client);
 
         setIsLoggedIn(true);
         setUIState('default');
@@ -130,14 +130,15 @@ function App() {
       const account = getCurrentAccount();
       if (account) {
         store.session.set('currentAccount', account.info.id);
-        const { masto, instance } = api({ account });
-        console.log('masto', masto);
+        const { client } = api({ account });
+        const { instance } = client;
+        // console.log('masto', masto);
         initStates();
-        initPreferences(masto);
+        initPreferences(client);
         setUIState('loading');
         (async () => {
           try {
-            await initInstance(masto, instance);
+            await initInstance(client, instance);
           } catch (e) {
           } finally {
             setIsLoggedIn(true);
@@ -253,9 +254,9 @@ function App() {
           <Shortcuts />
         )}
       <Modals />
-      <NotificationService />
+      {isLoggedIn && <NotificationService />}
       <BackgroundService isLoggedIn={isLoggedIn} />
-      <SearchCommand onClose={focusDeck} />
+      {uiState !== 'loading' && <SearchCommand onClose={focusDeck} />}
       <KeyboardShortcutsHelp />
     </>
   );

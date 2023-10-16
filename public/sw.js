@@ -165,6 +165,7 @@ self.addEventListener('notificationclick', (event) => {
 
   event.waitUntil(
     (async () => {
+      await event.notification.close();
       const clients = await self.clients.matchAll({
         type: 'window',
         includeUncontrolled: true,
@@ -194,7 +195,6 @@ self.addEventListener('notificationclick', (event) => {
         console.log('NOTIFICATION CLICK openWindow', url);
         await self.clients.openWindow(url);
       }
-      await event.notification.close();
     })(),
   );
 });

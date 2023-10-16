@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 
 const SIZES = {
@@ -132,9 +133,6 @@ function Icon({
       style={{
         width: `${iconSize}px`,
         height: `${iconSize}px`,
-        display: 'inline-block',
-        overflow: 'hidden',
-        lineHeight: 0,
         ...style,
       }}
     >
@@ -155,4 +153,4 @@ function Icon({
   );
 }
 
-export default Icon;
+export default memo(Icon);

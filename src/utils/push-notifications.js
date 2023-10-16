@@ -34,22 +34,22 @@ import { getCurrentAccount } from './store-utils';
 
 function createBackendPushSubscription(subscription) {
   const { masto } = api();
-  return masto.v1.webPushSubscriptions.create(subscription);
+  return masto.v1.push.subscription.create(subscription);
 }
 
 function fetchBackendPushSubscription() {
   const { masto } = api();
-  return masto.v1.webPushSubscriptions.fetch();
+  return masto.v1.push.subscription.fetch();
 }
 
 function updateBackendPushSubscription(subscription) {
   const { masto } = api();
-  return masto.v1.webPushSubscriptions.update(subscription);
+  return masto.v1.push.subscription.update(subscription);
 }
 
 function removeBackendPushSubscription() {
   const { masto } = api();
-  return masto.v1.webPushSubscriptions.remove();
+  return masto.v1.push.subscription.remove();
 }
 
 // Front-end

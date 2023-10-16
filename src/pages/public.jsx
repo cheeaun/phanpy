@@ -29,7 +29,7 @@ function Public({ local, columnMode, ...props }) {
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
-      publicIterator.current = masto.v1.timelines.listPublic({
+      publicIterator.current = masto.v1.timelines.public.list({
         limit: LIMIT,
         local: isLocal,
       });
@@ -54,8 +54,8 @@ function Public({ local, columnMode, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines
-        .listPublic({
+      const results = await masto.v1.timelines.public
+        .list({
           limit: 1,
           local: isLocal,
           since_id: latestItem.current,

@@ -13,7 +13,7 @@ const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
   useTitle(title || 'Following', path || '/following');
-  const { masto, instance } = api();
+  const { masto, streaming, instance } = api();
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
   const latestItem = useRef();
@@ -22,7 +22,7 @@ function Following({ title, path, id, ...props }) {
 
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
-      homeIterator.current = masto.v1.timelines.listHome({ limit: LIMIT });
+      homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
     }
     const results = await homeIterator.current.next();
     let { value } = results;
@@ -53,8 +53,8 @@ function Following({ title, path, id, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines
-        .listHome({
+      const results = await masto.v1.timelines.home
+        .list({
           limit: 5,
           since_id: latestItem.current,
         })
@@ -75,52 +75,33 @@ function Following({ title, path, id, ...props }) {
     }
   }
 
-  const ws = useRef();
-  const streamUser = async () => {
-    console.log('🎏 Start streaming user', ws.current);
-    if (
-      ws.current &&
-      (ws.current.readyState === WebSocket.CONNECTING ||
-        ws.current.readyState === WebSocket.OPEN)
-    ) {
-      console.log('🎏 Streaming user already open');
-      return;
-    }
-    const stream = await masto.v1.stream.streamUser();
-    ws.current = stream.ws;
-    ws.current.__id = Math.random();
-    console.log('🎏 Streaming user', ws.current);
-
-    stream.on('status.update', (status) => {
-      console.log(`🔄 Status ${status.id} updated`);
-      saveStatus(status, instance);
-    });
-
-    stream.on('delete', (statusID) => {
-      console.log(`❌ Status ${statusID} deleted`);
-      // delete states.statuses[statusID];
-      const s = getStatus(statusID, instance);
-      if (s) s._deleted = true;
-    });
-
-    stream.ws.onclose = () => {
-      console.log('🎏 Streaming user closed');
-    };
-
-    return stream;
-  };
   useEffect(() => {
-    let stream;
+    let sub;
     (async () => {
-      stream = await streamUser();
+      if (streaming) {
+        sub = streaming.user.subscribe();
+        console.log('🎏 Streaming user', sub);
+        for await (const entry of sub) {
+          if (!sub) break;
+          if (entry.event === 'status.update') {
+            const status = entry.payload;
+            console.log(`🔄 Status ${status.id} updated`);
+            saveStatus(status, instance);
+          } else if (entry.event === 'delete') {
+            const statusID = entry.payload;
+            console.log(`❌ Status ${statusID} deleted`);
+            // delete states.statuses[statusID];
+            const s = getStatus(statusID, instance);
+            if (s) s._deleted = true;
+          }
+        }
+      }
     })();
     return () => {
-      if (stream) {
-        stream.ws.close();
-        ws.current = null;
-      }
+      sub?.unsubscribe?.();
+      sub = null;
     };
-  }, []);
+  }, [streaming]);
 
   return (
     <Timeline

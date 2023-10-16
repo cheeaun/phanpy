@@ -1,9 +1,10 @@
 import emojifyText from './emojify-text';
+import mem from './mem';
 
 const fauxDiv = document.createElement('div');
 const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
 
-function enhanceContent(content, opts = {}) {
+function _enhanceContent(content, opts = {}) {
   const { emojis, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   const dom = document.createElement('div');
@@ -250,6 +251,7 @@ function enhanceContent(content, opts = {}) {
 
   return enhancedContent;
 }
+const enhanceContent = mem(_enhanceContent);
 
 const defaultRejectFilter = [
   // Document metadata

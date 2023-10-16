@@ -9,7 +9,6 @@ import {
   MenuItem,
 } from '@szhsin/react-menu';
 import { decodeBlurHash } from 'fast-blurhash';
-import mem from 'mem';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import {
@@ -42,6 +41,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -67,13 +67,9 @@ const throttle = pThrottle({
 });
 
 function fetchAccount(id, masto) {
-  try {
-    return masto.v1.accounts.fetch(id);
-  } catch (e) {
-    return Promise.reject(e);
-  }
+  return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = mem(fetchAccount);
+const memFetchAccount = pmem(fetchAccount);
 
 const visibilityText = {
   public: 'Public',
@@ -390,11 +386,11 @@ function Status({
         reblogsCount: reblogsCount + (reblogged ? -1 : 1),
       };
       if (reblogged) {
-        const newStatus = await masto.v1.statuses.unreblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
         return true;
       } else {
-        const newStatus = await masto.v1.statuses.reblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
         return true;
       }
@@ -418,11 +414,11 @@ function Status({
         reblogsCount: reblogsCount + (reblogged ? -1 : 1),
       };
       if (reblogged) {
-        const newStatus = await masto.v1.statuses.unreblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
         return true;
       } else {
-        const newStatus = await masto.v1.statuses.reblog(id);
+        const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
         return true;
       }
@@ -446,10 +442,10 @@ function Status({
         favouritesCount: favouritesCount + (favourited ? -1 : 1),
       };
       if (favourited) {
-        const newStatus = await masto.v1.statuses.unfavourite(id);
+        const newStatus = await masto.v1.statuses.$select(id).unfavourite();
         saveStatus(newStatus, instance);
       } else {
-        const newStatus = await masto.v1.statuses.favourite(id);
+        const newStatus = await masto.v1.statuses.$select(id).favourite();
         saveStatus(newStatus, instance);
       }
     } catch (e) {
@@ -470,10 +466,10 @@ function Status({
         bookmarked: !bookmarked,
       };
       if (bookmarked) {
-        const newStatus = await masto.v1.statuses.unbookmark(id);
+        const newStatus = await masto.v1.statuses.$select(id).unbookmark();
         saveStatus(newStatus, instance);
       } else {
-        const newStatus = await masto.v1.statuses.bookmark(id);
+        const newStatus = await masto.v1.statuses.$select(id).bookmark();
         saveStatus(newStatus, instance);
       }
     } catch (e) {
@@ -708,9 +704,9 @@ function Status({
         <MenuItem
           onClick={async () => {
             try {
-              const newStatus = await masto.v1.statuses[
-                muted ? 'unmute' : 'mute'
-              ](id);
+              const newStatus = await masto.v1.statuses
+                .$select(id)
+                [muted ? 'unmute' : 'mute']();
               saveStatus(newStatus, instance);
               showToast(muted ? 'Conversation unmuted' : 'Conversation muted');
             } catch (e) {
@@ -763,7 +759,7 @@ function Status({
                 // if (yes) {
                 (async () => {
                   try {
-                    await masto.v1.statuses.remove(id);
+                    await masto.v1.statuses.$select(id).remove();
                     const cachedStatus = getStatus(id, instance);
                     cachedStatus._deleted = true;
                     showToast('Deleted');
@@ -881,6 +877,62 @@ function Status({
     displayedMediaAttachments.some(
       (media) => !!media.description && !isMediaCaptionLong(media.description),
     );
+  const captionChildren = useMemo(() => {
+    if (!showMultipleMediaCaptions) return null;
+    const attachments = [];
+    displayedMediaAttachments.forEach((media, i) => {
+      if (!media.description) return;
+      const index = attachments.findIndex(
+        (attachment) => attachment.media.description === media.description,
+      );
+      if (index === -1) {
+        attachments.push({
+          media,
+          indices: [i],
+        });
+      } else {
+        attachments[index].indices.push(i);
+      }
+    });
+    return attachments.map(({ media, indices }) => (
+      <div
+        key={media.id}
+        data-caption-index={indices.map((i) => i + 1).join(' ')}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          states.showMediaAlt = {
+            alt: media.description,
+            lang: language,
+          };
+        }}
+        title={media.description}
+      >
+        <sup>{indices.map((i) => i + 1).join(' ')}</sup> {media.description}
+      </div>
+    ));
+
+    // return displayedMediaAttachments.map(
+    //   (media, i) =>
+    //     !!media.description && (
+    //       <div
+    //         key={media.id}
+    //         data-caption-index={i + 1}
+    //         onClick={(e) => {
+    //           e.preventDefault();
+    //           e.stopPropagation();
+    //           states.showMediaAlt = {
+    //             alt: media.description,
+    //             lang: language,
+    //           };
+    //         }}
+    //         title={media.description}
+    //       >
+    //         <sup>{i + 1}</sup> {media.description}
+    //       </div>
+    //     ),
+    // );
+  }, [showMultipleMediaCaptions, displayedMediaAttachments, language]);
 
   return (
     <article
@@ -1212,7 +1264,8 @@ function Status({
               }}
               refresh={() => {
                 return masto.v1.polls
-                  .fetch(poll.id)
+                  .$select(poll.id)
+                  .fetch()
                   .then((pollResponse) => {
                     states.statuses[sKey].poll = pollResponse;
                   })
@@ -1220,7 +1273,8 @@ function Status({
               }}
               votePoll={(choices) => {
                 return masto.v1.polls
-                  .vote(poll.id, {
+                  .$select(poll.id)
+                  .votes.create({
                     choices,
                   })
                   .then((pollResponse) => {
@@ -1279,27 +1333,7 @@ function Status({
             <MultipleMediaFigure
               lang={language}
               enabled={showMultipleMediaCaptions}
-              captionChildren={() => {
-                return displayedMediaAttachments.map(
-                  (media, i) =>
-                    !!media.description && (
-                      <div
-                        key={media.id}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          states.showMediaAlt = {
-                            alt: media.description,
-                            lang: language,
-                          };
-                        }}
-                        title={media.description}
-                      >
-                        <sup>{i + 1}</sup> {media.description}
-                      </div>
-                    ),
-                );
-              }}
+              captionChildren={captionChildren}
             >
               <div
                 ref={mediaContainerRef}
@@ -1498,7 +1532,7 @@ function Status({
             statusID={showEdited}
             instance={instance}
             fetchStatusHistory={() => {
-              return masto.v1.statuses.listHistory(showEdited);
+              return masto.v1.statuses.$select(showEdited).history.list();
             }}
             onClose={() => {
               setShowEdited(false);
@@ -1534,7 +1568,7 @@ function MultipleMediaFigure(props) {
     <figure class="media-figure-multiple">
       {children}
       <figcaption lang={lang} dir="auto">
-        {captionChildren?.()}
+        {captionChildren}
       </figcaption>
     </figure>
   );
@@ -1585,7 +1619,7 @@ function Card({ card, instance }) {
         // NOTE: This is for quote post
         // (async () => {
         //   const { masto } = api({ instance });
-        //   const status = await masto.v1.statuses.fetch(id);
+        //   const status = await masto.v1.statuses.$select(id).fetch();
         //   saveStatus(status, instance);
         //   setCardStatusID(id);
         // })();
@@ -1805,15 +1839,16 @@ function ReactionsModal({ statusID, instance, onClose }) {
     (async () => {
       try {
         if (firstLoad) {
-          reblogIterator.current = masto.v1.statuses.listRebloggedBy(statusID, {
-            limit: REACTIONS_LIMIT,
-          });
-          favouriteIterator.current = masto.v1.statuses.listFavouritedBy(
-            statusID,
-            {
+          reblogIterator.current = masto.v1.statuses
+            .$select(statusID)
+            .rebloggedBy.list({
               limit: REACTIONS_LIMIT,
-            },
-          );
+            });
+          favouriteIterator.current = masto.v1.statuses
+            .$select(statusID)
+            .favouritedBy.list({
+              limit: REACTIONS_LIMIT,
+            });
         }
         const [{ value: reblogResults }, { value: favouriteResults }] =
           await Promise.allSettled([
@@ -2043,21 +2078,24 @@ function _unfurlMastodonLink(instance, url) {
   if (statusMatch) {
     const id = statusMatch[3];
     const { masto } = api({ instance: domain });
-    remoteInstanceFetch = masto.v1.statuses.fetch(id).then((status) => {
-      if (status?.id) {
-        return {
-          status,
-          instance: domain,
-        };
-      } else {
-        throw new Error('No results');
-      }
-    });
+    remoteInstanceFetch = masto.v1.statuses
+      .$select(id)
+      .fetch()
+      .then((status) => {
+        if (status?.id) {
+          return {
+            status,
+            instance: domain,
+          };
+        } else {
+          throw new Error('No results');
+        }
+      });
   }
 
   const { masto } = api({ instance });
-  const mastoSearchFetch = masto.v2
-    .search({
+  const mastoSearchFetch = masto.v2.search
+    .fetch({
       q: url,
       type: 'statuses',
       resolve: true,
@@ -2127,11 +2165,7 @@ function nicePostURL(url) {
   );
 }
 
-const unfurlMastodonLink = throttle(
-  mem(_unfurlMastodonLink, {
-    cacheKey: (instance, url) => `${instance}:${url}`,
-  }),
-);
+const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {

@@ -185,7 +185,7 @@ function Compose({
           : visibility,
       );
       setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
-      setSensitive(sensitive);
+      setSensitive(sensitive && !!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
         editStatus;
@@ -197,9 +197,9 @@ function Compose({
       setUIState('loading');
       (async () => {
         try {
-          const statusSource = await masto.v1.statuses.fetchSource(
-            editStatus.id,
-          );
+          const statusSource = await masto.v1.statuses
+            .$select(editStatus.id)
+            .source.fetch();
           console.log({ statusSource });
           const { text, spoilerText } = statusSource;
           textareaRef.current.value = text;
@@ -749,14 +749,12 @@ function Compose({
                         file,
                         description,
                       });
-                      return masto.v2.mediaAttachments
-                        .create(params)
-                        .then((res) => {
-                          if (res.id) {
-                            attachment.id = res.id;
-                          }
-                          return res;
-                        });
+                      return masto.v2.media.create(params).then((res) => {
+                        if (res.id) {
+                          attachment.id = res.id;
+                        }
+                        return res;
+                      });
                     }
                   });
                   const results = await Promise.allSettled(mediaPromises);
@@ -784,6 +782,8 @@ function Compose({
                 /* NOTE:
                 Using snakecase here because masto.js's `isObject` returns false for `params`, ONLY happens when opening in pop-out window. This is maybe due to `window.masto` variable being passed from the parent window. The check that failed is `x.constructor === Object`, so maybe the `Object` in new window is different than parent window's?
                 Code: https://github.com/neet/masto.js/blob/dd0d649067b6a2b6e60fbb0a96597c373a255b00/src/serializers/is-object.ts#L2
+
+                // TODO: Note above is no longer true in Masto.js v6. Revisit this.
               */
                 let params = {
                   status,
@@ -818,10 +818,9 @@ function Compose({
 
                 let newStatus;
                 if (editStatus) {
-                  newStatus = await masto.v1.statuses.update(
-                    editStatus.id,
-                    params,
-                  );
+                  newStatus = await masto.v1.statuses
+                    .$select(editStatus.id)
+                    .update(params);
                   saveStatus(newStatus, instance, {
                     skipThreading: true,
                   });
@@ -935,13 +934,13 @@ function Compose({
             performSearch={(params) => {
               const { type, q, limit } = params;
               if (type === 'accounts') {
-                return masto.v1.accounts.search({
+                return masto.v1.accounts.search.list({
                   q,
                   limit,
                   resolve: false,
                 });
               }
-              return masto.v2.search(params);
+              return masto.v2.search.fetch(params);
             }}
           />
           {mediaAttachments?.length > 0 && (
@@ -1478,7 +1477,10 @@ function MediaAttachment({
 }) {
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
-  const url = file ? URL.createObjectURL(file) : attachment.url;
+  const url = useMemo(
+    () => (file ? URL.createObjectURL(file) : attachment.url),
+    [file, attachment.url],
+  );
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
   const suffixType = type.split('/')[0];

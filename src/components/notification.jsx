@@ -58,14 +58,14 @@ const contentText = {
   'favourite+reblog+account': (count) =>
     `boosted & favourited ${count} of your posts.`,
   'favourite+reblog_reply': 'boosted & favourited your reply.',
-  'admin.signup': 'signed up.',
-  'admin.report': 'reported a post.',
+  'admin.sign_up': 'signed up.',
+  'admin.report': (targetAccount) => <>reported {targetAccount}</>,
 };
 
 const AVATARS_LIMIT = 50;
 
 function Notification({ notification, instance, reload, isStatic }) {
-  const { id, status, account, _accounts, _statuses } = notification;
+  const { id, status, account, report, _accounts, _statuses } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
@@ -119,7 +119,15 @@ function Notification({ notification, instance, reload, isStatic }) {
   }
 
   if (typeof text === 'function') {
-    text = text(_statuses?.length || _accounts?.length);
+    const count = _statuses?.length || _accounts?.length;
+    if (count) {
+      text = text(count);
+    } else if (type === 'admin.report') {
+      const targetAccount = report?.targetAccount;
+      if (targetAccount) {
+        text = text(<NameText account={targetAccount} showAvatar />);
+      }
+    }
   }
 
   if (type === 'mention' && !status) {

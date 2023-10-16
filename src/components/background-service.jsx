@@ -11,10 +11,10 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
   usePageVisibility(setVisible);
-  const notificationStream = useRef();
   useEffect(() => {
+    let sub;
     if (isLoggedIn && visible) {
-      const { masto, instance } = api();
+      const { masto, streaming, instance } = api();
       (async () => {
         // 1. Get the latest notification
         if (states.notificationsLast) {
@@ -42,34 +42,26 @@ export default memo(function BackgroundService({ isLoggedIn }) {
         }
 
         // 2. Start streaming
-        notificationStream.current = await masto.ws.stream(
-          '/api/v1/streaming',
-          {
-            stream: 'user:notification',
-          },
-        );
-        console.log('🎏 Streaming notification', notificationStream.current);
-
-        notificationStream.current.on('notification', (notification) => {
-          console.log('🔔🔔 Notification', notification);
-          if (notification.status) {
-            saveStatus(notification.status, instance, {
-              skipThreading: true,
-            });
+        if (streaming) {
+          sub = streaming.user.notification.subscribe();
+          console.log('🎏 Streaming notification', sub);
+          for await (const entry of sub) {
+            if (!sub) break;
+            console.log('🔔🔔 Notification entry', entry);
+            if (entry.event === 'notification') {
+              console.log('🔔🔔 Notification', entry);
+              saveStatus(entry.payload, instance, {
+                skipThreading: true,
+              });
+            }
+            states.notificationsShowNew = true;
           }
-          states.notificationsShowNew = true;
-        });
-
-        notificationStream.current.ws.onclose = () => {
-          console.log('🔔🔔 Notification stream closed');
-        };
+        }
       })();
     }
     return () => {
-      if (notificationStream.current) {
-        notificationStream.current.ws.close();
-        notificationStream.current = null;
-      }
+      sub?.unsubscribe?.();
+      sub = null;
     };
   }, [visible, isLoggedIn]);
 

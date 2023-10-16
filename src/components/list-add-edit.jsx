@@ -56,7 +56,7 @@ function ListAddEdit({ list, onClose }) {
                 let listResult;
 
                 if (editMode) {
-                  listResult = await masto.v1.lists.update(list.id, {
+                  listResult = await masto.v1.lists.$select(list.id).update({
                     title,
                     replies_policy: repliesPolicy,
                     exclusive,
@@ -141,7 +141,7 @@ function ListAddEdit({ list, onClose }) {
 
                   (async () => {
                     try {
-                      await masto.v1.lists.remove(list.id);
+                      await masto.v1.lists.$select(list.id).remove();
                       setUIState('default');
                       onClose?.({
                         state: 'deleted',

@@ -337,7 +337,7 @@
 .status > .container > .meta a.time:after {
   content: '';
   position: absolute;
-  inset: -16px;
+  inset: -16px -16px -8px;
 }
 .status > .container > .meta .reply-to {
   opacity: 0.5;
@@ -1020,12 +1020,37 @@ body:has(#modal-container .carousel) .status .media img:hover {
         color: var(--text-color);
         cursor: pointer;
       }
+
+      &:only-child {
+        white-space: pre-line;
+        overflow: auto;
+        text-overflow: unset;
+        display: flex;
+        gap: 4px;
+      }
     }
 
     sup {
       opacity: 0.75;
       font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
     }
+  }
+
+  /* Only 4, for now. Would be better if this is a for loop */
+  &:has(.media[data-has-alt]:nth-child(1):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index~='1'],
+  &:has(.media[data-has-alt]:nth-child(2):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index~='2'],
+  &:has(.media[data-has-alt]:nth-child(3):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index~='3'],
+  &:has(.media[data-has-alt]:nth-child(4):is(:hover, :focus))
+    figcaption
+    > div[data-caption-index~='4'] {
+    color: var(--text-color);
   }
 }
 

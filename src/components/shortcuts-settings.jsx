@@ -4,7 +4,6 @@ import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
 } from 'lz-string';
-import mem from 'mem';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -13,6 +12,7 @@ import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
+import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 
@@ -133,15 +133,10 @@ export const SHORTCUTS_META = {
   },
   list: {
     id: 'list',
-    title: mem(
-      async ({ id }) => {
-        const list = await api().masto.v1.lists.fetch(id);
-        return list.title;
-      },
-      {
-        cacheKey: ([{ id }]) => id,
-      },
-    ),
+    title: pmem(async ({ id }) => {
+      const list = await api().masto.v1.lists.$select(id).fetch();
+      return list.title;
+    }),
     path: ({ id }) => `/l/${id}`,
     icon: 'list',
   },
@@ -167,15 +162,10 @@ export const SHORTCUTS_META = {
   },
   'account-statuses': {
     id: 'account-statuses',
-    title: mem(
-      async ({ id }) => {
-        const account = await api().masto.v1.accounts.fetch(id);
-        return account.username || account.acct || account.displayName;
-      },
-      {
-        cacheKey: ([{ id }]) => id,
-      },
-    ),
+    title: pmem(async ({ id }) => {
+      const account = await api().masto.v1.accounts.$select(id).fetch();
+      return account.username || account.acct || account.displayName;
+    }),
     path: ({ id }) => `/a/${id}`,
     icon: 'user',
   },

@@ -23,7 +23,9 @@ function FollowRequestButtons({ accountID, onChange }) {
           setRequestState('accept');
           (async () => {
             try {
-              const rel = await masto.v1.followRequests.authorize(accountID);
+              const rel = await masto.v1.followRequests
+                .$select(accountID)
+                .authorize();
               if (!rel?.followedBy) {
                 throw new Error('Follow request not accepted');
               }
@@ -47,7 +49,9 @@ function FollowRequestButtons({ accountID, onChange }) {
           setRequestState('reject');
           (async () => {
             try {
-              const rel = await masto.v1.followRequests.reject(accountID);
+              const rel = await masto.v1.followRequests
+                .$select(accountID)
+                .reject();
               if (rel?.followedBy) {
                 throw new Error('Follow request not rejected');
               }

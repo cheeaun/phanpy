@@ -650,6 +650,189 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     resetScrollPosition(status.id);
   }, []);
 
+  const renderStatus = (status) => {
+    const {
+      id: statusID,
+      ancestor,
+      isThread,
+      descendant,
+      thread,
+      replies,
+      repliesCount,
+      weight,
+    } = status;
+    const isHero = statusID === id;
+    // const StatusParent = useCallback(
+    //   (props) =>
+    //     isThread || thread || ancestor ? (
+    //       <Link
+    //         class="status-link"
+    //         to={
+    //           instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
+    //         }
+    //         onClick={() => {
+    //           resetScrollPosition(statusID);
+    //         }}
+    //         {...props}
+    //       />
+    //     ) : (
+    //       <div class="status-focus" tabIndex={0} {...props} />
+    //     ),
+    //   [isThread, thread],
+    // );
+    return (
+      <li
+        key={statusID}
+        ref={isHero ? heroStatusRef : null}
+        class={`${ancestor ? 'ancestor' : ''} ${
+          descendant ? 'descendant' : ''
+        } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
+      >
+        {isHero ? (
+          <>
+            <InView
+              threshold={0.1}
+              onChange={onView}
+              class="status-focus"
+              tabIndex={0}
+            >
+              <Status
+                statusID={statusID}
+                instance={instance}
+                withinContext
+                size="l"
+                enableTranslate
+                forceTranslate={translate}
+              />
+            </InView>
+            {uiState !== 'loading' && !authenticated ? (
+              <div class="post-status-banner">
+                <p>
+                  You're not logged in. Interactions (reply, boost, etc) are not
+                  possible.
+                </p>
+                <Link to="/login" class="button">
+                  Log in
+                </Link>
+              </div>
+            ) : (
+              !sameInstance && (
+                <div class="post-status-banner">
+                  <p>
+                    This post is from another instance (<b>{instance}</b>).
+                    Interactions (reply, boost, etc) are not possible.
+                  </p>
+                  <button
+                    type="button"
+                    disabled={uiState === 'loading'}
+                    onClick={() => {
+                      setUIState('loading');
+                      (async () => {
+                        try {
+                          const results = await currentMasto.v2.search.fetch({
+                            q: heroStatus.url,
+                            type: 'statuses',
+                            resolve: true,
+                            limit: 1,
+                          });
+                          if (results.statuses.length) {
+                            const status = results.statuses[0];
+                            location.hash = currentInstance
+                              ? `/${currentInstance}/s/${status.id}`
+                              : `/s/${status.id}`;
+                          } else {
+                            throw new Error('No results');
+                          }
+                        } catch (e) {
+                          setUIState('default');
+                          alert('Error: ' + e);
+                          console.error(e);
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="transfer" /> Switch to my instance to enable
+                    interactions
+                  </button>
+                </div>
+              )
+            )}
+          </>
+        ) : (
+          // <StatusParent>
+          <Link
+            class="status-link"
+            to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
+            onClick={() => {
+              resetScrollPosition(statusID);
+            }}
+          >
+            <Status
+              statusID={statusID}
+              instance={instance}
+              withinContext
+              size={thread || ancestor ? 'm' : 's'}
+              enableTranslate
+              onMediaClick={handleMediaClick}
+              onStatusLinkClick={handleStatusLinkClick}
+            />
+            {ancestor && isThread && repliesCount > 1 && (
+              <div class="replies-link">
+                <Icon icon="comment" />{' '}
+                <span title={repliesCount}>{shortenNumber(repliesCount)}</span>
+              </div>
+            )}{' '}
+            {/* {replies?.length > LIMIT && (
+                        <div class="replies-link">
+                          <Icon icon="comment" />{' '}
+                          <span title={replies.length}>
+                            {shortenNumber(replies.length)}
+                          </span>
+                        </div>
+                      )} */}
+            {/* </StatusParent> */}
+          </Link>
+        )}
+        {descendant && replies?.length > 0 && (
+          <SubComments
+            instance={instance}
+            replies={replies}
+            hasParentThread={thread}
+            level={1}
+            accWeight={weight}
+            openAll={totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT}
+          />
+        )}
+        {uiState === 'loading' &&
+          isHero &&
+          !!heroStatus?.repliesCount &&
+          !hasDescendants && (
+            <div class="status-loading">
+              <Loader />
+            </div>
+          )}
+        {uiState === 'error' &&
+          isHero &&
+          !!heroStatus?.repliesCount &&
+          !hasDescendants && (
+            <div class="status-error">
+              Unable to load replies.
+              <br />
+              <button
+                type="button"
+                class="plain"
+                onClick={() => {
+                  states.reloadStatusPage++;
+                }}
+              >
+                Try again
+              </button>
+            </div>
+          )}
+      </li>
+    );
+  };
+
   return (
     <div
       tabIndex="-1"
@@ -869,196 +1052,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             uiState === 'loading' ? 'loading' : ''
           }`}
         >
-          {statuses.slice(0, limit).map((status) => {
-            const {
-              id: statusID,
-              ancestor,
-              isThread,
-              descendant,
-              thread,
-              replies,
-              repliesCount,
-              weight,
-            } = status;
-            const isHero = statusID === id;
-            // const StatusParent = useCallback(
-            //   (props) =>
-            //     isThread || thread || ancestor ? (
-            //       <Link
-            //         class="status-link"
-            //         to={
-            //           instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
-            //         }
-            //         onClick={() => {
-            //           resetScrollPosition(statusID);
-            //         }}
-            //         {...props}
-            //       />
-            //     ) : (
-            //       <div class="status-focus" tabIndex={0} {...props} />
-            //     ),
-            //   [isThread, thread],
-            // );
-            return (
-              <li
-                key={statusID}
-                ref={isHero ? heroStatusRef : null}
-                class={`${ancestor ? 'ancestor' : ''} ${
-                  descendant ? 'descendant' : ''
-                } ${thread ? 'thread' : ''} ${isHero ? 'hero' : ''}`}
-              >
-                {isHero ? (
-                  <>
-                    <InView
-                      threshold={0.1}
-                      onChange={onView}
-                      class="status-focus"
-                      tabIndex={0}
-                    >
-                      <Status
-                        statusID={statusID}
-                        instance={instance}
-                        withinContext
-                        size="l"
-                        enableTranslate
-                        forceTranslate={translate}
-                      />
-                    </InView>
-                    {uiState !== 'loading' && !authenticated ? (
-                      <div class="post-status-banner">
-                        <p>
-                          You're not logged in. Interactions (reply, boost, etc)
-                          are not possible.
-                        </p>
-                        <Link to="/login" class="button">
-                          Log in
-                        </Link>
-                      </div>
-                    ) : (
-                      !sameInstance && (
-                        <div class="post-status-banner">
-                          <p>
-                            This post is from another instance (
-                            <b>{instance}</b>). Interactions (reply, boost, etc)
-                            are not possible.
-                          </p>
-                          <button
-                            type="button"
-                            disabled={uiState === 'loading'}
-                            onClick={() => {
-                              setUIState('loading');
-                              (async () => {
-                                try {
-                                  const results =
-                                    await currentMasto.v2.search.fetch({
-                                      q: heroStatus.url,
-                                      type: 'statuses',
-                                      resolve: true,
-                                      limit: 1,
-                                    });
-                                  if (results.statuses.length) {
-                                    const status = results.statuses[0];
-                                    location.hash = currentInstance
-                                      ? `/${currentInstance}/s/${status.id}`
-                                      : `/s/${status.id}`;
-                                  } else {
-                                    throw new Error('No results');
-                                  }
-                                } catch (e) {
-                                  setUIState('default');
-                                  alert('Error: ' + e);
-                                  console.error(e);
-                                }
-                              })();
-                            }}
-                          >
-                            <Icon icon="transfer" /> Switch to my instance to
-                            enable interactions
-                          </button>
-                        </div>
-                      )
-                    )}
-                  </>
-                ) : (
-                  // <StatusParent>
-                  <Link
-                    class="status-link"
-                    to={
-                      instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
-                    }
-                    onClick={() => {
-                      resetScrollPosition(statusID);
-                    }}
-                  >
-                    <Status
-                      statusID={statusID}
-                      instance={instance}
-                      withinContext
-                      size={thread || ancestor ? 'm' : 's'}
-                      enableTranslate
-                      onMediaClick={handleMediaClick}
-                      onStatusLinkClick={handleStatusLinkClick}
-                    />
-                    {ancestor && isThread && repliesCount > 1 && (
-                      <div class="replies-link">
-                        <Icon icon="comment" />{' '}
-                        <span title={repliesCount}>
-                          {shortenNumber(repliesCount)}
-                        </span>
-                      </div>
-                    )}{' '}
-                    {/* {replies?.length > LIMIT && (
-                        <div class="replies-link">
-                          <Icon icon="comment" />{' '}
-                          <span title={replies.length}>
-                            {shortenNumber(replies.length)}
-                          </span>
-                        </div>
-                      )} */}
-                    {/* </StatusParent> */}
-                  </Link>
-                )}
-                {descendant && replies?.length > 0 && (
-                  <SubComments
-                    instance={instance}
-                    replies={replies}
-                    hasParentThread={thread}
-                    level={1}
-                    accWeight={weight}
-                    openAll={
-                      totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT
-                    }
-                  />
-                )}
-                {uiState === 'loading' &&
-                  isHero &&
-                  !!heroStatus?.repliesCount &&
-                  !hasDescendants && (
-                    <div class="status-loading">
-                      <Loader />
-                    </div>
-                  )}
-                {uiState === 'error' &&
-                  isHero &&
-                  !!heroStatus?.repliesCount &&
-                  !hasDescendants && (
-                    <div class="status-error">
-                      Unable to load replies.
-                      <br />
-                      <button
-                        type="button"
-                        class="plain"
-                        onClick={() => {
-                          states.reloadStatusPage++;
-                        }}
-                      >
-                        Try again
-                      </button>
-                    </div>
-                  )}
-              </li>
-            );
-          })}
+          {statuses.slice(0, limit).map(renderStatus)}
           {showMore > 0 && (
             <li>
               <button

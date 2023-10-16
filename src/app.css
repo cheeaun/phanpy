@@ -1418,6 +1418,13 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 
 .icon {
   flex-shrink: 0;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+
+  svg {
+    contain: none;
+  }
 }
 
 /* TAG */

@@ -643,7 +643,9 @@ function AccountInfo({
                         >
                           <div>
                             {postingStats.daysSinceLastPost < 365
-                              ? `Last ${postingStats.total} posts in the past 
+                              ? `Last ${postingStats.total} post${
+                                  postingStats.total > 1 ? 's' : ''
+                                } in the past 
                       ${postingStats.daysSinceLastPost} day${
                                   postingStats.daysSinceLastPost > 1 ? 's' : ''
                                 }`

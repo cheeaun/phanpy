@@ -165,6 +165,76 @@
   animation: fade-in 0.3s both ease-in-out 0.2s;
 }
 
+.private-note-tag {
+  z-index: 1;
+  appearance: none;
+  display: inline-block;
+  color: var(--private-note-text-color);
+  background-color: var(--private-note-bg-color);
+  border: 1px solid var(--private-note-border-color);
+  padding: 4px;
+  line-height: normal;
+  font-size: smaller;
+  border-radius: 0;
+  align-self: center !important;
+  /* clip a dog ear on top right */
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
+  /* 4x4px square on top right */
+  background-size: 4px 4px;
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-image: linear-gradient(
+    to bottom,
+    var(--private-note-border-color),
+    var(--private-note-border-color)
+  );
+  transition: transform 0.15s ease-in-out;
+
+  span {
+    color: inherit;
+    opacity: 0.75;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-align: left;
+  }
+
+  &:hover:not(:active) {
+    filter: none !important;
+    transform: rotate(-0.5deg) scale(1.05);
+
+    span {
+      opacity: 1;
+    }
+  }
+}
+.account-container .private-note {
+  font-size: 90%;
+  color: var(--text-insignificant-color);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px;
+  background-color: var(--bg-faded-color);
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+
+  b {
+    font-size: 90%;
+    text-transform: uppercase;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .account-container .note {
   font-size: 95%;
   line-height: 1.4;
@@ -228,10 +298,11 @@
   align-items: center;
 }
 .account-container .actions button {
-  align-self: flex-end;
+  /* align-self: flex-end; */
 }
 .account-container .actions .buttons {
   display: flex;
+  align-items: center;
 }
 
 .account-container .account-metadata-box {
@@ -569,5 +640,32 @@
     height: 112px !important;
     filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
       drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+  }
+}
+
+#private-note-container {
+  textarea {
+    margin-top: 8px;
+    width: 100%;
+    resize: vertical;
+    height: 33vh;
+    min-height: 25vh;
+    max-height: 50vh;
+    color: var(--private-note-text-color);
+    background-color: var(--private-note-bg-color);
+    border: 1px solid var(--private-note-border-color);
+    box-shadow: 0 2px 8px var(--drop-shadow-color);
+    border-radius: 0;
+    padding: 16px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    * {
+      vertical-align: middle;
+    }
   }
 }

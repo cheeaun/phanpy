@@ -30,6 +30,10 @@
 
 .ancestors-indicator {
   font-size: 70% !important;
+
+  & > .avatar:not(:first-child) {
+    margin-left: -4px;
+  }
 }
 .ancestors-indicator:not([hidden]) {
   animation: slide-up 0.3s both ease-out 0.3s;

@@ -643,7 +643,9 @@ function AccountInfo({
                         >
                           <div>
                             {postingStats.daysSinceLastPost < 365
-                              ? `Last ${postingStats.total} posts in the past 
+                              ? `Last ${postingStats.total} post${
+                                  postingStats.total > 1 ? 's' : ''
+                                } in the past 
                       ${postingStats.daysSinceLastPost} day${
                                   postingStats.daysSinceLastPost > 1 ? 's' : ''
                                 }`
@@ -770,6 +772,7 @@ function RelatedActions({
     requested,
     domainBlocking,
     endorsed,
+    note: privateNote,
   } = relationship || {};
 
   const [currentInfo, setCurrentInfo] = useState(null);
@@ -851,6 +854,7 @@ function RelatedActions({
 
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
+  const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
 
   return (
     <>
@@ -861,9 +865,11 @@ function RelatedActions({
           ) : !!lastStatusAt ? (
             <small class="insignificant">
               Last post:{' '}
-              {niceDateTime(lastStatusAt, {
-                hideTime: true,
-              })}
+              <span class="ib">
+                {niceDateTime(lastStatusAt, {
+                  hideTime: true,
+                })}
+              </span>
             </small>
           ) : (
             <span />
@@ -872,6 +878,19 @@ function RelatedActions({
           {blocking && <span class="tag danger">Blocked</span>}
         </span>{' '}
         <span class="buttons">
+          {!!privateNote && (
+            <button
+              type="button"
+              class="private-note-tag"
+              title="Private note"
+              onClick={() => {
+                setShowPrivateNoteModal(true);
+              }}
+              dir="auto"
+            >
+              <span>{privateNote}</span>
+            </button>
+          )}
           <Menu
             instanceRef={menuInstanceRef}
             portal={{
@@ -924,6 +943,16 @@ function RelatedActions({
                 >
                   <Icon icon="translate" />
                   <span>Translate bio</span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setShowPrivateNoteModal(true);
+                  }}
+                >
+                  <Icon icon="pencil" />
+                  <span>
+                    {privateNote ? 'Edit private note' : 'Add private note'}
+                  </span>
                 </MenuItem>
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
@@ -1235,6 +1264,24 @@ function RelatedActions({
           />
         </Modal>
       )}
+      {!!showPrivateNoteModal && (
+        <Modal
+          class="light"
+          onClose={() => {
+            setShowPrivateNoteModal(false);
+          }}
+        >
+          <PrivateNoteSheet
+            account={info}
+            note={privateNote}
+            onRelationshipChange={(relationship) => {
+              setRelationship(relationship);
+              // onRelationshipChange({ relationship, currentID: accountID.current });
+            }}
+            onClose={() => setShowPrivateNoteModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 }
@@ -1428,6 +1475,97 @@ function AddRemoveListsSheet({ accountID, onClose }) {
           />
         </Modal>
       )}
+    </div>
+  );
+}
+
+function PrivateNoteSheet({
+  account,
+  note: initialNote,
+  onRelationshipChange = () => {},
+  onClose = () => {},
+}) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('default');
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    let timer;
+    if (textareaRef.current && !initialNote) {
+      timer = setTimeout(() => {
+        textareaRef.current.focus?.();
+      }, 100);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <div class="sheet" id="private-note-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <b>Private note for @{account?.acct}</b>
+      </header>
+      <main>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const note = formData.get('note');
+            if (note?.trim() !== initialNote?.trim()) {
+              setUIState('loading');
+              (async () => {
+                try {
+                  const newRelationship = await masto.v1.accounts
+                    .$select(account?.id)
+                    .note.create({
+                      comment: note,
+                    });
+                  console.log('updated relationship', newRelationship);
+                  setUIState('default');
+                  onRelationshipChange(newRelationship);
+                  onClose();
+                } catch (e) {
+                  console.error(e);
+                  setUIState('error');
+                  alert(e?.message || 'Unable to update private note.');
+                }
+              })();
+            }
+          }}
+        >
+          <textarea
+            ref={textareaRef}
+            name="note"
+            disabled={uiState === 'loading'}
+          >
+            {initialNote}
+          </textarea>
+          <footer>
+            <button
+              type="button"
+              class="light"
+              disabled={uiState === 'loading'}
+              onClick={() => {
+                onClose?.();
+              }}
+            >
+              Cancel
+            </button>
+            <span>
+              <Loader abrupt hidden={uiState !== 'loading'} />
+              <button disabled={uiState === 'loading'} type="submit">
+                Save &amp; close
+              </button>
+            </span>
+          </footer>
+        </form>
+      </main>
     </div>
   );
 }

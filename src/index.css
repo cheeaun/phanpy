@@ -62,6 +62,9 @@
   --close-button-bg-active-color: rgba(0, 0, 0, 0.2);
   --close-button-color: rgba(0, 0, 0, 0.5);
   --close-button-hover-color: rgba(0, 0, 0, 1);
+  --private-note-text-color: var(--text-color);
+  --private-note-bg-color: color-mix(in srgb, yellow 20%, var(--bg-color));
+  --private-note-border-color: rgba(0, 0, 0, 0.2);
 
   /* Video colors won't change based on color scheme */
   --media-fg-color: #f0f2f5;
@@ -111,6 +114,7 @@
     --close-button-bg-active-color: rgba(255, 255, 255, 0.15);
     --close-button-color: rgba(255, 255, 255, 0.5);
     --close-button-hover-color: rgba(255, 255, 255, 1);
+    --private-note-border-color: rgba(255, 255, 255, 0.2);
   }
 }
 

@@ -128,6 +128,7 @@ function AccountStatuses() {
               to={`/${instance}/a/${id}`}
               class="insignificant filter-clear"
               title="Clear filters"
+              key="clear-filters"
             >
               <Icon icon="x" size="l" />
             </Link>

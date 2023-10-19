@@ -2116,6 +2116,13 @@ ul.link-list li a .icon {
     transparent
   );
   align-items: center;
+  transition: opacity 0.3s ease-out;
+
+  &.loading,
+  .loading > & {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 .filter-bar.centered {
   justify-content: center;

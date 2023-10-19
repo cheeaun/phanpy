@@ -152,7 +152,7 @@ function Search(props) {
         </header>
         <main>
           {!!q && (
-            <div class="filter-bar">
+            <div class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}>
               {!!type && (
                 <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
                   ‹ All

@@ -676,6 +676,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
   border-radius: 0;
   padding-block: 16px !important;
+
+  .avatars-bunch > .avatar:not(:first-child) {
+    margin-left: -4px;
+  }
 }
 .timeline .show-more:hover {
   filter: none !important;

@@ -263,7 +263,7 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="shortcut" size="l" />{' '}
-                <span>Shortcuts Settings&hellip;</span>
+                <span>Shortcuts / Columns&hellip;</span>
               </MenuItem>
               <MenuItem
                 onClick={() => {

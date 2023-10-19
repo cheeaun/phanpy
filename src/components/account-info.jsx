@@ -1515,7 +1515,7 @@ function PrivateNoteSheet({
         </button>
       )}
       <header>
-        <b>Private note for @{account?.acct}</b>
+        <b>Private note about @{account?.username || account?.acct}</b>
       </header>
       <main>
         <form

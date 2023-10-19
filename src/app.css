@@ -2229,6 +2229,10 @@ ul.link-list li a .icon {
   }
   .deck > header {
     text-shadow: 0 1px var(--bg-color);
+
+    form {
+      text-shadow: none;
+    }
   }
   .deck > header h1 {
     font-size: 1.5em;

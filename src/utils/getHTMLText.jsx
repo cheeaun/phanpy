@@ -1,3 +1,5 @@
+import mem from './mem';
+
 const div = document.createElement('div');
 function getHTMLText(html) {
   if (!html) return '';
@@ -10,4 +12,4 @@ function getHTMLText(html) {
   return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
 }
 
-export default getHTMLText;
+export default mem(getHTMLText);

@@ -1,4 +1,5 @@
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
+import { useLocation } from 'react-router-dom';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
@@ -16,17 +17,28 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
     }
   }, [account]);
 
+  const location = useLocation();
+  const currentLocationRef = useRef(location.pathname);
+  useEffect(() => {
+    if (
+      currentLocationRef.current &&
+      location.pathname !== currentLocationRef.current
+    ) {
+      onClose?.();
+    }
+  }, [location.pathname]);
+
   return (
     <div
       class="sheet"
-      onClick={(e) => {
-        const accountBlock = e.target.closest('.account-block');
-        if (accountBlock) {
-          onClose({
-            destination: 'account-statuses',
-          });
-        }
-      }}
+      // onClick={(e) => {
+      //   const accountBlock = e.target.closest('.account-block');
+      //   if (accountBlock) {
+      //     onClose({
+      //       destination: 'account-statuses',
+      //     });
+      //   }
+      // }}
     >
       {!!onClose && (
         <button type="button" class="sheet-close outer" onClick={onClose}>

@@ -550,11 +550,13 @@ function AccountInfo({
                     tabIndex={0}
                     to={accountLink}
                     onClick={() => {
-                      states.showAccount = false;
-                      states.showGenericAccounts = {
-                        heading: 'Followers',
-                        fetchAccounts: fetchFollowers,
-                      };
+                      // states.showAccount = false;
+                      setTimeout(() => {
+                        states.showGenericAccounts = {
+                          heading: 'Followers',
+                          fetchAccounts: fetchFollowers,
+                        };
+                      }, 0);
                     }}
                   >
                     {!!familiarFollowers.length && (
@@ -581,11 +583,13 @@ function AccountInfo({
                     tabIndex={0}
                     to={accountLink}
                     onClick={() => {
-                      states.showAccount = false;
-                      states.showGenericAccounts = {
-                        heading: 'Following',
-                        fetchAccounts: fetchFollowing,
-                      };
+                      // states.showAccount = false;
+                      setTimeout(() => {
+                        states.showGenericAccounts = {
+                          heading: 'Following',
+                          fetchAccounts: fetchFollowing,
+                        };
+                      }, 0);
                     }}
                   >
                     <span title={followingCount}>
@@ -597,13 +601,13 @@ function AccountInfo({
                   <LinkOrDiv
                     class="insignificant"
                     to={accountLink}
-                    onClick={
-                      standalone
-                        ? undefined
-                        : () => {
-                            hideAllModals();
-                          }
-                    }
+                    // onClick={
+                    //   standalone
+                    //     ? undefined
+                    //     : () => {
+                    //         hideAllModals();
+                    //       }
+                    // }
                   >
                     <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
@@ -626,9 +630,9 @@ function AccountInfo({
                 <LinkOrDiv
                   to={accountLink}
                   class="account-metadata-box"
-                  onClick={() => {
-                    states.showAccount = false;
-                  }}
+                  // onClick={() => {
+                  //   states.showAccount = false;
+                  // }}
                 >
                   <div class="shazam-container">
                     <div class="shazam-container-inner">

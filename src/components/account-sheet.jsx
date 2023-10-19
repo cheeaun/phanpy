@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'preact/hooks';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import states from '../utils/states';
+import useLocationChange from '../utils/useLocationChange';
 
 import AccountInfo from './account-info';
 import Icon from './icon';
@@ -17,16 +17,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
     }
   }, [account]);
 
-  const location = useLocation();
-  const currentLocationRef = useRef(location.pathname);
-  useEffect(() => {
-    if (
-      currentLocationRef.current &&
-      location.pathname !== currentLocationRef.current
-    ) {
-      onClose?.();
-    }
-  }, [location.pathname]);
+  useLocationChange(onClose);
 
   return (
     <div

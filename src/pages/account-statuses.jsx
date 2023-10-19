@@ -258,7 +258,7 @@ function AccountStatuses() {
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
-      refresh={excludeReplies + excludeBoosts + tagged + media}
+      refresh={[excludeReplies, excludeBoosts, tagged, media].toString()}
       headerEnd={
         <Menu2
           portal

@@ -249,6 +249,7 @@ function NavMenu(props) {
                 <Icon icon="block" size="l" />
                 Blocked users&hellip;
               </MenuItem>
+              <MenuDivider className="divider-grow" />
               <MenuItem
                 onClick={() => {
                   states.showKeyboardShortcutsHelp = true;
@@ -263,7 +264,7 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="shortcut" size="l" />{' '}
-                <span>Shortcuts Settings&hellip;</span>
+                <span>Shortcuts / Columns&hellip;</span>
               </MenuItem>
               <MenuItem
                 onClick={() => {

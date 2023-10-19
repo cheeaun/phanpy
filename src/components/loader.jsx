@@ -2,14 +2,14 @@ import './loader.css';
 
 function Loader({ abrupt, hidden, ...props }) {
   return (
-    <div
+    <span
       {...props}
       class={`loader-container ${abrupt ? 'abrupt' : ''} ${
         hidden ? 'hidden' : ''
       }`}
     >
-      <div class="loader" />
-    </div>
+      <span class="loader" />
+    </span>
   );
 }
 

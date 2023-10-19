@@ -1062,7 +1062,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
               >
-                <div class="ib">
+                <div class="ib avatars-bunch">
                   {/* show avatars for first 5 statuses */}
                   {statuses.slice(limit, limit + 5).map((status) => (
                     <Avatar

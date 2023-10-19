@@ -579,7 +579,11 @@ function Status({
                 try {
                   const done = await confirmBoostStatus();
                   if (!isSizeLarge && done) {
-                    showToast(reblogged ? 'Unboosted' : 'Boosted');
+                    showToast(
+                      reblogged
+                        ? `Unboosted @${username || acct}'s post`
+                        : `Boosted @${username || acct}'s post`,
+                    );
                   }
                 } catch (e) {}
               }}
@@ -597,7 +601,11 @@ function Status({
                 try {
                   favouriteStatus();
                   if (!isSizeLarge) {
-                    showToast(favourited ? 'Unfavourited' : 'Favourited');
+                    showToast(
+                      favourited
+                        ? `Unfavourited @${username || acct}'s post`
+                        : `Favourited @${username || acct}'s post`,
+                    );
                   }
                 } catch (e) {}
               }}
@@ -621,7 +629,11 @@ function Status({
                 try {
                   bookmarkStatus();
                   if (!isSizeLarge) {
-                    showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+                    showToast(
+                      bookmarked
+                        ? `Unbookmarked @${username || acct}'s post`
+                        : `Bookmarked @${username || acct}'s post`,
+                    );
                   }
                 } catch (e) {}
               }}
@@ -829,7 +841,11 @@ function Status({
       try {
         favouriteStatus();
         if (!isSizeLarge) {
-          showToast(favourited ? 'Unfavourited' : 'Favourited');
+          showToast(
+            favourited
+              ? `Unfavourited @${username || acct}'s post`
+              : `Favourited @${username || acct}'s post`,
+          );
         }
       } catch (e) {}
     },
@@ -843,7 +859,11 @@ function Status({
       try {
         bookmarkStatus();
         if (!isSizeLarge) {
-          showToast(bookmarked ? 'Unbookmarked' : 'Bookmarked');
+          showToast(
+            bookmarked
+              ? `Unbookmarked @${username || acct}'s post`
+              : `Bookmarked @${username || acct}'s post`,
+          );
         }
       } catch (e) {}
     },
@@ -858,7 +878,11 @@ function Status({
         try {
           const done = await confirmBoostStatus();
           if (!isSizeLarge && done) {
-            showToast(reblogged ? 'Unboosted' : 'Boosted');
+            showToast(
+              reblogged
+                ? `Unboosted @${username || acct}'s post`
+                : `Boosted @${username || acct}'s post`,
+            );
           }
         } catch (e) {}
       })();

@@ -5,6 +5,7 @@ import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
 import states from '../utils/states';
+import useLocationChange from '../utils/useLocationChange';
 
 import AccountBlock from './account-block';
 import Icon from './icon';
@@ -15,6 +16,8 @@ export default function GenericAccounts({ onClose = () => {} }) {
   const [uiState, setUIState] = useState('default');
   const [accounts, setAccounts] = useState([]);
   const [showMore, setShowMore] = useState(false);
+
+  useLocationChange(onClose);
 
   if (!snapStates.showGenericAccounts) {
     return null;

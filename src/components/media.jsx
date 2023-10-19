@@ -130,6 +130,7 @@ function Media({
     enabled: pinchZoomEnabled,
     draggableUnZoomed: false,
     inertiaFriction: 0.9,
+    doubleTapZoomOutOnMaxScale: true,
     containerProps: {
       className: 'media-zoom',
       style: {

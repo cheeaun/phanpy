@@ -14,15 +14,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: production
-      - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
-      - run: git push --tags
+      # - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
+      # - run: git push --tags
       - uses: actions/setup-node@v3
         with:
           node-version: 18
       - run: npm ci && npm run build
       - run: cd dist && zip -r ../phanpy-dist.zip . && cd ..
+      - id: tag_name
+        run: echo ::set-output name=tag_name::$(date +%Y.%m.%d).$(git rev-parse --short HEAD)
       - uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ steps.tag_name.outputs.tag_name }}
           generate_release_notes: true
           files: phanpy-dist.zip

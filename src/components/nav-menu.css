@@ -1,3 +1,9 @@
+.nav-menu section:last-child {
+  background-color: var(--bg-faded-color);
+  margin-bottom: -8px;
+  padding-bottom: 8px;
+}
+
 @media (min-width: 23em) {
   .nav-menu {
     display: grid;
@@ -8,6 +14,7 @@
       'left right';
     padding: 0;
     width: 22em;
+    max-width: calc(100vw - 16px);
   }
   .nav-menu .top-menu {
     grid-area: top;
@@ -27,7 +34,6 @@
     }
   }
   .nav-menu section:last-child {
-    background-color: var(--bg-faded-color);
     background-image: linear-gradient(
         to right,
         var(--divider-color) 1px,
@@ -45,6 +51,15 @@
     animation: phanpying 0.2s ease-in-out both;
     border-top-right-radius: inherit;
     border-bottom-right-radius: inherit;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+    .divider-grow {
+      flex-grow: 1;
+      height: auto;
+      background-color: transparent;
+    }
   }
   .nav-menu section:last-child > .szh-menu__divider:first-child {
     display: none;

@@ -179,12 +179,12 @@ self.addEventListener('notificationclick', (event) => {
         console.log('NOTIFICATION CLICK navigate', url);
         if (bestClient) {
           console.log('NOTIFICATION CLICK postMessage', bestClient);
+          bestClient.focus();
           bestClient.postMessage?.({
             type: 'notification',
             id: tag,
             accessToken: access_token,
           });
-          bestClient.focus();
         } else {
           console.log('NOTIFICATION CLICK openWindow', url);
           await self.clients.openWindow(url);

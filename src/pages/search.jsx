@@ -141,7 +141,7 @@ function Search(props) {
   return (
     <div id="search-page" class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
-        <header>
+        <header class={uiState === 'loading' ? 'loading' : ''}>
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />

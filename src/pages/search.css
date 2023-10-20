@@ -40,8 +40,14 @@ ul.link-list.hashtag-list li a {
 }
 
 @media (min-width: 40em) {
-  #search-page header input {
-    background-color: var(--bg-color);
+  #search-page {
+    header input {
+      background-color: var(--bg-color);
+    }
+
+    .filter-bar {
+      margin-top: 8px;
+    }
   }
 }
 

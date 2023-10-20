@@ -181,7 +181,9 @@ function Search(props) {
                   return 0;
                 })
                 .map((link) => (
-                  <Link to={link.to}>{link.label}</Link>
+                  <Link to={link.to} key={link.type}>
+                    {link.label}
+                  </Link>
                 ))}
             </div>
           )}

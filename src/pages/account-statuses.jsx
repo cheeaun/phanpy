@@ -30,9 +30,9 @@ const supportsInputMonth = (() => {
   }
 })();
 
-function _isSearchEnabled(instance) {
+async function _isSearchEnabled(instance) {
   const { masto } = api({ instance });
-  const results = masto.v2.search.fetch({
+  const results = await masto.v2.search.fetch({
     q: 'from:me',
     type: 'statuses',
     limit: 1,
@@ -72,6 +72,7 @@ function AccountStatuses() {
     if (!account?.acct) return;
     (async () => {
       const enabled = await isSearchEnabled(instance);
+      console.log({ enabled });
       setSearchEnabled(enabled);
     })();
   }, [instance, sameCurrentInstance, account?.acct]);

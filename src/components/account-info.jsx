@@ -343,20 +343,39 @@ function AccountInfo({
           </header>
           <main>
             <div class="note">
-              <p>████████ ███████</p>
-              <p>███████████████ ███████████████</p>
+              <p>███████ ████ ████</p>
+              <p>████ ████████ ██████ █████████ ████ ██</p>
             </div>
-            <div class="stats">
-              <div>
-                <span>██</span> Followers
+            <div class="account-metadata-box">
+              <div class="profile-metadata">
+                <div class="profile-field">
+                  <b class="more-insignificant">███</b>
+                  <p>██████</p>
+                </div>
+                <div class="profile-field">
+                  <b class="more-insignificant">████</b>
+                  <p>███████████</p>
+                </div>
               </div>
-              <div>
-                <span>██</span> Following
+              <div class="stats">
+                <div>
+                  <span>██</span> Followers
+                </div>
+                <div>
+                  <span>██</span> Following
+                </div>
+                <div>
+                  <span>██</span> Posts
+                </div>
               </div>
-              <div>
-                <span>██</span> Posts
-              </div>
-              <div>Joined ██</div>
+            </div>
+            <div class="actions">
+              <span />
+              <span class="buttons">
+                <button type="button" title="More" class="plain" disabled>
+                  <Icon icon="more" size="l" alt="More" />
+                </button>
+              </span>
             </div>
           </main>
         </>

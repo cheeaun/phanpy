@@ -2134,11 +2134,18 @@ ul.link-list li a .icon {
     border-radius: 999px;
     color: var(--text-color);
     background-color: var(--bg-color);
+    background-image: none;
     border: 2px solid transparent;
     margin: 0;
-    appearance: none;
+    /* appearance: none; */
     line-height: 1;
     font-size: 90%;
+    display: flex;
+    gap: 8px;
+
+    > .icon {
+      color: var(--link-color);
+    }
 
     &:placeholder-shown {
       color: var(--text-insignificant-color);
@@ -2157,6 +2164,7 @@ ul.link-list li a .icon {
 
     :is(input, select) {
       background-color: transparent;
+      background-image: none;
       border: 0;
       padding: 0;
       margin: 0;
@@ -2167,6 +2175,12 @@ ul.link-list li a .icon {
       border-radius: 0;
       box-shadow: none;
       outline: none;
+
+      &::-webkit-calendar-picker-indicator {
+        /* replace icon with triangle */
+        opacity: 0.5;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      }
     }
   }
 }

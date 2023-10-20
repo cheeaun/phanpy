@@ -10,6 +10,7 @@ import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
@@ -28,6 +29,17 @@ const supportsInputMonth = (() => {
     return false;
   }
 })();
+
+function _isSearchEnabled(instance) {
+  const { masto } = api({ instance });
+  const results = masto.v2.search.fetch({
+    q: 'from:me',
+    type: 'statuses',
+    limit: 1,
+  });
+  return !!results?.statuses?.length;
+}
+const isSearchEnabled = pmem(_isSearchEnabled);
 
 function AccountStatuses() {
   const snapStates = useSnapshot(states);
@@ -59,14 +71,10 @@ function AccountStatuses() {
     if (!sameCurrentInstance) return;
     if (!account?.acct) return;
     (async () => {
-      const results = await masto.v2.search.fetch({
-        q: `from:${account?.acct}`,
-        type: 'statuses',
-        limit: 1,
-      });
-      setSearchEnabled(!!results?.statuses?.length);
+      const enabled = await isSearchEnabled(instance);
+      setSearchEnabled(enabled);
     })();
-  }, [sameCurrentInstance, account?.acct]);
+  }, [instance, sameCurrentInstance, account?.acct]);
 
   async function fetchAccountStatuses(firstLoad) {
     const isValidMonth = /^\d{4}-[01]\d$/.test(month);

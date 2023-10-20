@@ -374,7 +374,7 @@ function AccountStatuses() {
           (filterBarRef.current.offsetWidth - active.offsetWidth) / 2,
       });
     }
-  }, [featuredTags, tagged, media, excludeReplies, excludeBoosts]);
+  }, [featuredTags, searchEnabled, ...allSearchParams]);
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;

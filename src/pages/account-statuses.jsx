@@ -98,7 +98,7 @@ function AccountStatuses() {
       try {
         const featuredTags = await masto.v1.accounts
           .$select(id)
-          .featuredTags.list(id);
+          .featuredTags.list();
         console.log({ featuredTags });
         setFeaturedTags(featuredTags);
       } catch (e) {

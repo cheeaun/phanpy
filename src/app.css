@@ -2175,16 +2175,22 @@ ul.link-list li a .icon {
       border-radius: 0;
       box-shadow: none;
       outline: none;
+    }
+
+    input[type='month'] {
+      min-width: 6em;
 
       &::-webkit-calendar-picker-indicator {
         /* replace icon with triangle */
         opacity: 0.5;
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
       }
-    }
 
-    input[type='month'] {
-      min-width: 6em;
+      @media (prefers-color-scheme: dark) {
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ import './notifications.css';
 
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -454,15 +455,27 @@ function Notifications({ columnMode }) {
           </>
         )}
         {showMore && (
-          <button
-            type="button"
-            class="plain block"
-            disabled={uiState === 'loading'}
-            onClick={() => loadNotifications()}
-            style={{ marginBlockEnd: '6em' }}
+          <InView
+            onChange={(inView) => {
+              if (inView) {
+                loadNotifications();
+              }
+            }}
           >
-            {uiState === 'loading' ? <Loader abrupt /> : <>Show more&hellip;</>}
-          </button>
+            <button
+              type="button"
+              class="plain block"
+              disabled={uiState === 'loading'}
+              onClick={() => loadNotifications()}
+              style={{ marginBlockEnd: '6em' }}
+            >
+              {uiState === 'loading' ? (
+                <Loader abrupt />
+              ) : (
+                <>Show more&hellip;</>
+              )}
+            </button>
+          </InView>
         )}
       </div>
     </div>

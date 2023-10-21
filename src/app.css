@@ -1372,7 +1372,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   margin-top: -44px;
   background-image: radial-gradient(
     circle,
-    var(--bg-faded-color) 0px 14px,
+    var(--bg-faded-color) 0px 13px,
+    var(--outline-color) 13px 14px,
     transparent 14px
   );
 }

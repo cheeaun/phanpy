@@ -32,9 +32,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
               lastReadId = markers?.notifications?.lastReadId;
             } catch (e) {}
             if (lastReadId) {
-              if (notifications[0].id !== lastReadId) {
-                states.notificationsShowNew = true;
-              }
+              states.notificationsShowNew = notifications[0].id !== lastReadId;
             } else {
               states.notificationsShowNew = true;
             }

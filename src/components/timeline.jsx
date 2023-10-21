@@ -606,11 +606,16 @@ function StatusCarousel({ title, class: className, children }) {
 
 function TimelineStatusCompact({ status, instance }) {
   const snapStates = useSnapshot(states);
-  const { id } = status;
+  const { id, visibility } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
   return (
-    <article class="status compact-thread" tabindex="-1">
+    <article
+      class={`status compact-thread ${
+        visibility === 'direct' ? 'visibility-direct' : ''
+      }`}
+      tabindex="-1"
+    >
       {!!snapStates.statusThreadNumber[sKey] ? (
         <div class="status-thread-badge">
           <Icon icon="thread" size="s" />

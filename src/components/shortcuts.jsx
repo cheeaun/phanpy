@@ -18,9 +18,15 @@ import MenuLink from './menu-link';
 function Shortcuts() {
   const { instance } = api();
   const snapStates = useSnapshot(states);
-  const { shortcuts } = snapStates;
+  const { shortcuts, settings } = snapStates;
 
   if (!shortcuts.length) {
+    return null;
+  }
+  if (
+    settings.shortcutsColumnsMode ||
+    settings.shortcutsViewMode === 'multi-column'
+  ) {
     return null;
   }
 

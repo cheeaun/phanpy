@@ -1,6 +1,5 @@
 import './notifications.css';
 
-import { useIdle } from '@uidotdev/usehooks';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
@@ -172,8 +171,6 @@ function Notifications({ columnMode }) {
     }
   }, [nearReachEnd, showMore]);
 
-  const idle = useIdle(5000);
-  console.debug('🧘‍♀️ IDLE', idle);
   const loadUpdates = useCallback(() => {
     console.log('✨ Load updates', {
       autoRefresh: snapStates.settings.autoRefresh,
@@ -185,7 +182,7 @@ function Notifications({ columnMode }) {
     if (
       snapStates.settings.autoRefresh &&
       scrollableRef.current?.scrollTop === 0 &&
-      idle &&
+      window.__IDLE__ &&
       !inBackground() &&
       snapStates.notificationsShowNew &&
       uiState !== 'loading'
@@ -193,7 +190,6 @@ function Notifications({ columnMode }) {
       loadNotifications(true);
     }
   }, [
-    idle,
     snapStates.notificationsShowNew,
     snapStates.settings.autoRefresh,
     uiState,

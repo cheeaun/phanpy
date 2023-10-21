@@ -1,5 +1,6 @@
 import './app.css';
 
+import debounce from 'just-debounce-it';
 import {
   useEffect,
   useLayoutEffect,
@@ -67,6 +68,45 @@ setTimeout(() => {
     }
   }
 }, 5000);
+
+(() => {
+  window.__IDLE__ = false;
+  const nonIdleEvents = [
+    'mousemove',
+    'mousedown',
+    'resize',
+    'keydown',
+    'touchstart',
+    'pointerdown',
+    'pointermove',
+    'wheel',
+  ];
+  const IDLE_TIME = 5_000; // 5 seconds
+  const setIdle = debounce(() => {
+    window.__IDLE__ = true;
+  }, IDLE_TIME);
+  const onNonIdle = () => {
+    window.__IDLE__ = false;
+    setIdle();
+  };
+  nonIdleEvents.forEach((event) => {
+    window.addEventListener(event, onNonIdle, {
+      passive: true,
+      capture: true,
+    });
+  });
+  // document.addEventListener(
+  //   'visibilitychange',
+  //   () => {
+  //     if (document.visibilityState === 'visible') {
+  //       onNonIdle();
+  //     }
+  //   },
+  //   {
+  //     passive: true,
+  //   },
+  // );
+})();
 
 function App() {
   const snapStates = useSnapshot(states);

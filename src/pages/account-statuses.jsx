@@ -319,7 +319,8 @@ function AccountStatuses() {
                   min={MIN_YEAR_MONTH}
                   max={new Date().toISOString().slice(0, 7)}
                   onInput={(e) => {
-                    const { value } = e.currentTarget;
+                    const { value, validity } = e.currentTarget;
+                    if (!validity.valid) return;
                     setSearchParams(
                       value
                         ? {
@@ -339,7 +340,8 @@ function AccountStatuses() {
                 min={MIN_YEAR_MONTH}
                 max={new Date().toISOString().slice(0, 7)}
                 onInput={(e) => {
-                  const { value } = e;
+                  const { value, validity } = e;
+                  if (!validity.valid) return;
                   setSearchParams(
                     value
                       ? {
@@ -478,6 +480,16 @@ function MonthPicker(props) {
   const monthFieldRef = useRef();
   const yearFieldRef = useRef();
 
+  const checkValidity = (month, year) => {
+    const [minYear, minMonth] = min?.split('-') || [];
+    const [maxYear, maxMonth] = max?.split('-') || [];
+    if (year < minYear) return false;
+    if (year > maxYear) return false;
+    if (year === minYear && month < minMonth) return false;
+    if (year === maxYear && month > maxMonth) return false;
+    return true;
+  };
+
   return (
     <div class={className}>
       <Icon icon="month" size="l" />
@@ -486,9 +498,20 @@ function MonthPicker(props) {
         disabled={disabled}
         value={_month || ''}
         onInput={(e) => {
-          const { value } = e.currentTarget;
+          const { value: month } = e.currentTarget;
+          const year = yearFieldRef.current.value;
+          if (!checkValidity(month, year))
+            return {
+              value: '',
+              validity: {
+                valid: false,
+              },
+            };
           onInput({
-            value: value ? `${yearFieldRef.current.value}-${value}` : '',
+            value: month ? `${year}-${month}` : '',
+            validity: {
+              valid: true,
+            },
           });
         }}
       >
@@ -516,9 +539,20 @@ function MonthPicker(props) {
         min={min?.slice(0, 4) || MIN_YEAR}
         max={max?.slice(0, 4) || new Date().getFullYear()}
         onInput={(e) => {
-          const { value } = e.currentTarget;
+          const { value: year, validity } = e.currentTarget;
+          const month = monthFieldRef.current.value;
+          if (!validity.valid || !checkValidity(month, year))
+            return {
+              value: '',
+              validity: {
+                valid: false,
+              },
+            };
           onInput({
-            value: value ? `${value}-${monthFieldRef.current.value}` : '',
+            value: year ? `${year}-${month}` : '',
+            validity: {
+              valid: true,
+            },
           });
         }}
         style={{

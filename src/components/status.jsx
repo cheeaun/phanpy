@@ -794,10 +794,7 @@ function Status({
 
   const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
-  const [contextMenuAnchorPoint, setContextMenuAnchorPoint] = useState({
-    x: 0,
-    y: 0,
-  });
+  const [contextMenuProps, setContextMenuProps] = useState({});
   const isIOS =
     window.ontouchstart !== undefined &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -814,9 +811,12 @@ function Status({
           const link = e.target.closest('a');
           if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
           e.preventDefault();
-          setContextMenuAnchorPoint({
-            x: clientX,
-            y: clientY,
+          setContextMenuProps({
+            anchorPoint: {
+              x: clientX,
+              y: clientY,
+            },
+            direction: 'right',
           });
           setIsContextMenuOpen(true);
         }
@@ -996,9 +996,12 @@ function Status({
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
         e.preventDefault();
-        setContextMenuAnchorPoint({
-          x: e.clientX,
-          y: e.clientY,
+        setContextMenuProps({
+          anchorPoint: {
+            x: e.clientX,
+            y: e.clientY,
+          },
+          direction: 'right',
         });
         setIsContextMenuOpen(true);
       }}
@@ -1008,8 +1011,7 @@ function Status({
         <ControlledMenu
           ref={contextMenuRef}
           state={isContextMenuOpen ? 'open' : undefined}
-          anchorPoint={contextMenuAnchorPoint}
-          direction="right"
+          {...contextMenuProps}
           onClose={(e) => {
             setIsContextMenuOpen(false);
             // statusRef.current?.focus?.();
@@ -1086,49 +1088,78 @@ function Status({
             (_deleted ? (
               <span class="status-deleted-tag">Deleted</span>
             ) : url && !previewMode && !quoted ? (
-              <Menu
-                instanceRef={menuInstanceRef}
-                portal={{
-                  target: document.body,
+              <Link
+                to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onStatusLinkClick?.(e, status);
+                  setContextMenuProps({
+                    anchorRef: {
+                      current: e.currentTarget,
+                    },
+                    align: 'end',
+                    direction: 'bottom',
+                    gap: 4,
+                  });
+                  setIsContextMenuOpen(true);
                 }}
-                containerProps={{
-                  style: {
-                    // Higher than the backdrop
-                    zIndex: 1001,
-                  },
-                  onClick: (e) => {
-                    if (e.target === e.currentTarget)
-                      menuInstanceRef.current?.closeMenu?.();
-                  },
-                }}
-                align="end"
-                gap={4}
-                overflow="auto"
-                viewScroll="close"
-                boundingBoxPadding="8 8 8 8"
-                unmountOnClose
-                menuButton={({ open }) => (
-                  <Link
-                    to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onStatusLinkClick?.(e, status);
-                    }}
-                    class={`time ${open ? 'is-open' : ''}`}
-                  >
-                    <Icon
-                      icon={visibilityIconsMap[visibility]}
-                      alt={visibilityText[visibility]}
-                      size="s"
-                    />{' '}
-                    <RelativeTime datetime={createdAtDate} format="micro" />
-                  </Link>
-                )}
+                class={`time ${
+                  isContextMenuOpen && contextMenuProps?.anchorRef
+                    ? 'is-open'
+                    : ''
+                }`}
               >
-                {StatusMenuItems}
-              </Menu>
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={visibilityText[visibility]}
+                  size="s"
+                />{' '}
+                <RelativeTime datetime={createdAtDate} format="micro" />
+              </Link>
             ) : (
+              // <Menu
+              //   instanceRef={menuInstanceRef}
+              //   portal={{
+              //     target: document.body,
+              //   }}
+              //   containerProps={{
+              //     style: {
+              //       // Higher than the backdrop
+              //       zIndex: 1001,
+              //     },
+              //     onClick: (e) => {
+              //       if (e.target === e.currentTarget)
+              //         menuInstanceRef.current?.closeMenu?.();
+              //     },
+              //   }}
+              //   align="end"
+              //   gap={4}
+              //   overflow="auto"
+              //   viewScroll="close"
+              //   boundingBoxPadding="8 8 8 8"
+              //   unmountOnClose
+              //   menuButton={({ open }) => (
+              //     <Link
+              //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+              //       onClick={(e) => {
+              //         e.preventDefault();
+              //         e.stopPropagation();
+              //         onStatusLinkClick?.(e, status);
+              //       }}
+              //       class={`time ${open ? 'is-open' : ''}`}
+              //     >
+              //       <Icon
+              //         icon={visibilityIconsMap[visibility]}
+              //         alt={visibilityText[visibility]}
+              //         size="s"
+              //       />{' '}
+              //       <RelativeTime datetime={createdAtDate} format="micro" />
+              //     </Link>
+              //   )}
+              // >
+              //   {StatusMenuItems}
+              // </Menu>
               <span class="time">
                 <Icon
                   icon={visibilityIconsMap[visibility]}

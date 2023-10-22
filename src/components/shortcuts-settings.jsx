@@ -205,6 +205,7 @@ function ShortcutsSettings({ onClose }) {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
+        lists.sort((a, b) => a.title.localeCompare(b.title));
         setLists(lists);
       } catch (e) {
         console.error(e);

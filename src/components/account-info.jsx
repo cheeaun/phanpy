@@ -1385,6 +1385,7 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
+        lists.sort((a, b) => a.title.localeCompare(b.title));
         const listsContainingAccount = await masto.v1.accounts
           .$select(accountID)
           .lists.list();

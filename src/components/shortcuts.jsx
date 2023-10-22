@@ -1,6 +1,7 @@
 import './shortcuts.css';
 
 import { Menu, MenuItem } from '@szhsin/react-menu';
+import { memo } from 'preact/compat';
 import { useMemo, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
@@ -186,4 +187,4 @@ function Shortcuts() {
   );
 }
 
-export default Shortcuts;
+export default memo(Shortcuts);

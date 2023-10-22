@@ -1,7 +1,7 @@
 .links-bar {
   position: relative;
   display: flex;
-  padding: 16px 16px 20px calc(16px + 1em + 12px);
+  padding: 16px 16px 20px 16px;
   gap: 16px;
   overflow-x: auto;
   background-color: var(--bg-faded-color);
@@ -23,27 +23,34 @@
     }
   }
 
-  h3 {
-    font-size: 90%;
-    font-style: italic;
-    margin: 0;
-    padding: 0;
-    text-transform: uppercase;
-    color: var(--text-insignificant-color);
-    position: absolute;
-    top: calc(16px + 8px);
-    left: 16px;
-    transform-origin: top left;
-    transform: rotate(-90deg) translateX(-100%);
-    user-select: none;
-    background-image: linear-gradient(
-      to left,
-      var(--text-color),
-      var(--link-color)
-    );
-    background-clip: text;
-    text-fill-color: transparent;
-    -webkit-text-fill-color: transparent;
+  & > header {
+    width: 1.2em;
+    white-space: nowrap;
+    position: relative;
+    flex-shrink: 0;
+
+    h3 {
+      font-size: 90%;
+      font-style: italic;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+      color: var(--text-insignificant-color);
+      position: absolute;
+      top: 8px;
+      left: 0;
+      transform-origin: top left;
+      transform: rotate(-90deg) translateX(-100%);
+      user-select: none;
+      background-image: linear-gradient(
+        to left,
+        var(--text-color),
+        var(--link-color)
+      );
+      background-clip: text;
+      text-fill-color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
   a {
@@ -52,6 +59,8 @@
       --other-color: var(--dark-color);
     }
     min-width: 240px;
+    flex-grow: 1;
+    max-width: 320px;
     text-decoration: none;
     color: inherit;
     border-radius: 16px;
@@ -63,15 +72,17 @@
     display: flex;
     background-image: linear-gradient(
       to bottom,
-      var(--average-color) -50%,
+      var(--accent-color) -50%,
       transparent
     );
     background-clip: border-box;
     background-origin: border-box;
+    min-height: 160px;
     height: 320px;
+    max-height: 50vh;
 
     &:not(:active):is(:hover, :focus-visible) {
-      border-color: var(--average-color);
+      border-color: var(--accent-color);
       box-shadow: 0 4px 8px var(--drop-shadow-color),
         0 8px 16px var(--drop-shadow-color);
       transform-origin: center bottom;

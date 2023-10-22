@@ -55,7 +55,9 @@ function Trending({ columnMode, ...props }) {
         const iterator = masto.v1.trends.tags.list();
         const { value: tags } = await iterator.next();
         console.log('tags', tags);
-        setHashtags(tags);
+        if (tags?.length) {
+          setHashtags(tags);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -64,7 +66,9 @@ function Trending({ columnMode, ...props }) {
       try {
         const { value: links } = await fetchLinks(masto);
         console.log('links', links);
-        setLinks(links);
+        if (links?.length) {
+          setLinks(links);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -131,7 +135,9 @@ function Trending({ columnMode, ...props }) {
         )}
         {!!links.length && (
           <div class="links-bar">
-            <h3>Trending News</h3>
+            <header>
+              <h3>Trending News</h3>
+            </header>
             {links.map((link) => {
               const {
                 authorName,
@@ -163,6 +169,12 @@ function Trending({ columnMode, ...props }) {
               //   const v = c - 100;
               //   return v < 0 ? 0 : v;
               // });
+              const accentColor = labAverageColor.map((c, i) => {
+                if (i === 0) {
+                  return 0.65;
+                }
+                return c;
+              });
               const lightColor = labAverageColor.map((c, i) => {
                 if (i === 0) {
                   return 0.9;
@@ -186,6 +198,7 @@ function Trending({ columnMode, ...props }) {
                     '--average-color': `rgb(${averageColor?.join(',')})`,
                     // '--light-color': `rgb(${lightColor?.join(',')})`,
                     // '--dark-color': `rgb(${darkColor?.join(',')})`,
+                    '--accent-color': `oklab(${accentColor?.join(' ')})`,
                     '--light-color': `oklab(${lightColor?.join(' ')})`,
                     '--dark-color': `oklab(${darkColor?.join(' ')})`,
                   }}
@@ -289,39 +302,24 @@ function Trending({ columnMode, ...props }) {
   );
 }
 
-function rgb2oklab(rgb) {
-  // Normalize RGB values to the range [0, 1]
-  const r = rgb[0] / 255;
-  const g = rgb[1] / 255;
-  const b = rgb[2] / 255;
-
-  // Linearize RGB values
-  const rLinear = r <= 0.04045 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
-  const gLinear = g <= 0.04045 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
-  const bLinear = b <= 0.04045 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
-
-  // Convert to XYZ color space
-  const x = rLinear * 0.4124564 + gLinear * 0.3575761 + bLinear * 0.1804375;
-  const y = rLinear * 0.2126729 + gLinear * 0.7151522 + bLinear * 0.072175;
-  const z = rLinear * 0.0193339 + gLinear * 0.119192 + bLinear * 0.9503041;
-
-  // Normalize to reference white
-  const xNormalized = x / 0.95047;
-  const yNormalized = y / 1.0;
-  const zNormalized = z / 1.08883;
-
-  // Non-linear transfer function for luminance
-  const fy =
-    yNormalized > 0.008856
-      ? Math.cbrt(yNormalized)
-      : (903.3 * yNormalized + 16.0) / 116.0;
-
-  // Calculate OkLab values
-  const l = Math.max(0, Math.min(1, (116.0 * fy - 16.0) / 100));
-  const a = (xNormalized - yNormalized) * 0.21;
-  const bValue = (yNormalized - zNormalized) * 0.12;
-
-  return [l, a, bValue];
+// https://gist.github.com/earthbound19/e7fe15fdf8ca3ef814750a61bc75b5ce
+const gammaToLinear = (c) =>
+  c >= 0.04045 ? Math.pow((c + 0.055) / 1.055, 2.4) : c / 12.92;
+function rgb2oklab([r, g, b]) {
+  r = gammaToLinear(r / 255);
+  g = gammaToLinear(g / 255);
+  b = gammaToLinear(b / 255);
+  var l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  var m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  var s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+  l = Math.cbrt(l);
+  m = Math.cbrt(m);
+  s = Math.cbrt(s);
+  return [
+    l * +0.2104542553 + m * +0.793617785 + s * -0.0040720468,
+    l * +1.9779984951 + m * -2.428592205 + s * +0.4505937099,
+    l * +0.0259040371 + m * +0.7827717662 + s * -0.808675766,
+  ];
 }
 
 export default Trending;

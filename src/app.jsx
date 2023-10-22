@@ -209,10 +209,10 @@ function App() {
   }, []);
 
   let location = useLocation();
-  // states.currentLocation = location.pathname;
-  useLayoutEffect(() => {
-    states.currentLocation = location.pathname;
-  }, [location.pathname]);
+  states.currentLocation = location.pathname;
+  // useLayoutEffect(() => {
+  //   states.currentLocation = location.pathname;
+  // }, [location.pathname]);
 
   useEffect(focusDeck, [location, isLoggedIn]);
 

@@ -197,6 +197,7 @@ function Trending({ columnMode, ...props }) {
                         alt={imageDescription}
                         width={width}
                         height={height}
+                        loading="lazy"
                       />
                     </figure>
                     <div class="article-body">

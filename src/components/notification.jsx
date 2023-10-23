@@ -1,3 +1,5 @@
+import { memo } from 'preact/compat';
+
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -64,7 +66,7 @@ const contentText = {
 
 const AVATARS_LIMIT = 50;
 
-function Notification({ notification, instance, reload, isStatic }) {
+function Notification({ notification, instance, isStatic }) {
   const { id, status, account, report, _accounts, _statuses } = notification;
   let { type } = notification;
 
@@ -153,8 +155,14 @@ function Notification({ notification, instance, reload, isStatic }) {
     };
   };
 
+  console.debug('RENDER Notification', notification.id);
+
   return (
-    <div class={`notification notification-${type}`} tabIndex="0">
+    <div
+      class={`notification notification-${type}`}
+      data-notification-id={id}
+      tabIndex="0"
+    >
       <div
         class={`notification-type notification-${type}`}
         title={formattedCreatedAt}
@@ -207,12 +215,7 @@ function Notification({ notification, instance, reload, isStatic }) {
               )}
             </p>
             {type === 'follow_request' && (
-              <FollowRequestButtons
-                accountID={account.id}
-                onChange={() => {
-                  // reload();
-                }}
-              />
+              <FollowRequestButtons accountID={account.id} />
             )}
           </>
         )}
@@ -327,4 +330,4 @@ function TruncatedLink(props) {
   return <Link {...props} data-read-more="Read more →" ref={ref} />;
 }
 
-export default Notification;
+export default memo(Notification);

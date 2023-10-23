@@ -1,5 +1,6 @@
 import './notifications.css';
 
+import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
@@ -166,11 +167,11 @@ function Notifications({ columnMode }) {
     }
   }, [reachStart]);
 
-  useEffect(() => {
-    if (nearReachEnd && showMore) {
-      loadNotifications();
-    }
-  }, [nearReachEnd, showMore]);
+  // useEffect(() => {
+  //   if (nearReachEnd && showMore) {
+  //     loadNotifications();
+  //   }
+  // }, [nearReachEnd, showMore]);
 
   const loadUpdates = useCallback(() => {
     console.log('✨ Load updates', {
@@ -409,18 +410,14 @@ function Notifications({ columnMode }) {
                         hideTime: true,
                       });
                 return (
-                  <>
+                  <Fragment key={notification.id}>
                     {differentDay && <h2 class="timeline-header">{heading}</h2>}
                     <Notification
                       instance={instance}
                       notification={notification}
                       key={notification.id}
-                      reload={() => {
-                        loadNotifications(true);
-                        loadFollowRequests();
-                      }}
                     />
-                  </>
+                  </Fragment>
                 );
               })}
           </>

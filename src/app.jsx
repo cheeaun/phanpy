@@ -267,11 +267,14 @@ function PrimaryRoutes({ isLoggedIn, loading }) {
   );
 }
 
+function getPrevLocation() {
+  return states.prevLocation || null;
+}
 function SecondaryRoutes({ isLoggedIn }) {
-  const snapStates = useSnapshot(states);
+  // const snapStates = useSnapshot(states);
   const location = useLocation();
-  const prevLocation = snapStates.prevLocation;
-  const backgroundLocation = useRef(prevLocation || null);
+  // const prevLocation = snapStates.prevLocation;
+  const backgroundLocation = useRef(getPrevLocation());
 
   const isModalPage = useMemo(() => {
     return (
@@ -280,7 +283,8 @@ function SecondaryRoutes({ isLoggedIn }) {
     );
   }, [location.pathname, matchPath]);
   if (isModalPage) {
-    if (!backgroundLocation.current) backgroundLocation.current = prevLocation;
+    if (!backgroundLocation.current)
+      backgroundLocation.current = getPrevLocation();
   } else {
     backgroundLocation.current = null;
   }

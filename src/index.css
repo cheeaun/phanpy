@@ -148,6 +148,16 @@ body {
   }
 }
 
+p {
+  /*
+    white-space is shorthand for two values; white-space-collapse and text-wrap
+    https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+    !important is needed to override higher specificity when elements are styled
+    with `white-space` and 1 value, which doesn't have "pretty"
+  */
+  text-wrap: pretty !important;
+}
+
 a {
   color: var(--link-color);
   text-decoration-color: var(--link-faded-color);

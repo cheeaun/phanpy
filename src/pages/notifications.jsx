@@ -217,23 +217,23 @@ function Notifications({ columnMode }) {
     }
   }, [notificationID, notificationAccessToken]);
 
-  useEffect(() => {
-    if (uiState === 'default') {
-      (async () => {
-        try {
-          const registration = await getRegistration();
-          if (registration?.getNotifications) {
-            const notifications = await registration.getNotifications();
-            console.log('🔔 Push notifications', notifications);
-            // Close all notifications?
-            // notifications.forEach((notification) => {
-            //   notification.close();
-            // });
-          }
-        } catch (e) {}
-      })();
-    }
-  }, [uiState]);
+  // useEffect(() => {
+  //   if (uiState === 'default') {
+  //     (async () => {
+  //       try {
+  //         const registration = await getRegistration();
+  //         if (registration?.getNotifications) {
+  //           const notifications = await registration.getNotifications();
+  //           console.log('🔔 Push notifications', notifications);
+  //           // Close all notifications?
+  //           // notifications.forEach((notification) => {
+  //           //   notification.close();
+  //           // });
+  //         }
+  //       } catch (e) {}
+  //     })();
+  //   }
+  // }, [uiState]);
 
   return (
     <div

@@ -230,10 +230,16 @@ function Trending({ columnMode, ...props }) {
                             </>
                           )}
                         </div>
-                        {!!title && <h1 class="title">{title}</h1>}
+                        {!!title && (
+                          <h1 class="title" lang={language} dir="auto">
+                            {title}
+                          </h1>
+                        )}
                       </header>
                       {!!description && (
-                        <p class="description">{description}</p>
+                        <p class="description" lang={language} dir="auto">
+                          {description}
+                        </p>
                       )}
                     </div>
                   </article>

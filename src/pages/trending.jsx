@@ -64,7 +64,10 @@ function Trending({ columnMode, ...props }) {
 
       // Get links
       try {
-        const { value: links } = await fetchLinks(masto);
+        const { value } = await fetchLinks(masto);
+        // 4 types available: link, photo, video, rich
+        // Only want links for now
+        const links = value?.filter?.((link) => link.type === 'link');
         console.log('links', links);
         if (links?.length) {
           setLinks(links);

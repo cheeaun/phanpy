@@ -18,6 +18,7 @@ import {
   removeSubscription,
   updateSubscription,
 } from '../utils/push-notifications';
+import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
 
@@ -508,21 +509,38 @@ function Settings({ onClose }) {
           </p>
           {__BUILD_TIME__ && (
             <p>
-              <span class="insignificant">Last build:</span>{' '}
-              <RelativeTime datetime={new Date(__BUILD_TIME__)} />{' '}
-              {__COMMIT_HASH__ && (
-                <>
-                  (
-                  <a
-                    href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <code>{__COMMIT_HASH__}</code>
-                  </a>
-                  )
-                </>
-              )}
+              Version:{' '}
+              <input
+                type="text"
+                class="version-string"
+                readOnly
+                size="18" // Manually calculated here
+                value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+                  __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
+                }`}
+                onClick={(e) => {
+                  e.target.select();
+                  // Copy to clipboard
+                  try {
+                    navigator.clipboard.writeText(e.target.value);
+                    showToast('Version string copied');
+                  } catch (e) {
+                    console.warn(e);
+                    showToast('Unable to copy version string');
+                  }
+                }}
+              />{' '}
+              <span class="ib insignificant">
+                (
+                <a
+                  href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <RelativeTime datetime={new Date(__BUILD_TIME__)} />
+                </a>
+                )
+              </span>
             </p>
           )}
         </section>

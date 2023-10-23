@@ -1,5 +1,6 @@
 import './shortcuts-settings.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
@@ -201,6 +202,8 @@ function ShortcutsSettings({ onClose }) {
   const [showForm, setShowForm] = useState(false);
   const [showImportExport, setShowImportExport] = useState(false);
 
+  const [shortcutsListParent] = useAutoAnimate();
+
   useEffect(() => {
     (async () => {
       try {
@@ -316,9 +319,10 @@ function ShortcutsSettings({ onClose }) {
           </details>
         </p> */}
         {shortcuts.length > 0 ? (
-          <ol class="shortcuts-list">
+          <ol class="shortcuts-list" ref={shortcutsListParent}>
             {shortcuts.filter(Boolean).map((shortcut, i) => {
-              const key = i + Object.values(shortcut);
+              // const key = i + Object.values(shortcut);
+              const key = Object.values(shortcut).join('-');
               const { type } = shortcut;
               if (!SHORTCUTS_META[type]) return null;
               let { icon, title, subtitle } = SHORTCUTS_META[type];

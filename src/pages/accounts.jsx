@@ -1,7 +1,7 @@
 import './accounts.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
-import { useReducer, useState } from 'preact/hooks';
 import { useReducer } from 'preact/hooks';
 
 import Avatar from '../components/avatar';
@@ -21,6 +21,7 @@ function Accounts({ onClose }) {
   const moreThanOneAccount = accounts.length > 1;
 
   const [_, reload] = useReducer((x) => x + 1, 0);
+  const [accountsListParent] = useAutoAnimate();
 
   return (
     <div id="accounts-container" class="sheet" tabIndex="-1">
@@ -34,7 +35,7 @@ function Accounts({ onClose }) {
       </header>
       <main>
         <section>
-          <ul class="accounts-list">
+          <ul class="accounts-list" ref={accountsListParent}>
             {accounts.map((account, i) => {
               const isCurrent = account.info.id === currentAccount;
               const isDefault = i === 0; // first account is always default

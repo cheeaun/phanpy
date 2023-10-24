@@ -1210,7 +1210,7 @@ const Textarea = forwardRef((props, ref) => {
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);
-  const charCount = snapStates.composerCharacterCount;
+  // const charCount = snapStates.composerCharacterCount;
 
   const customEmojis = useRef();
   useEffect(() => {
@@ -1442,7 +1442,7 @@ const Textarea = forwardRef((props, ref) => {
         style={{
           width: '100%',
           height: '4em',
-          '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
+          // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
       />
     </text-expander>

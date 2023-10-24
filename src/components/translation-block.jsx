@@ -35,7 +35,10 @@ function _lingvaTranslate(text, source, target) {
         text,
       )}`,
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
       .then((res) => {
         return {
           provider: 'lingva',

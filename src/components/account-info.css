@@ -1,8 +1,10 @@
 .account-container {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* overflow: hidden; */
+  overflow-y: auto;
   max-width: 100%;
+  --banner-overlap: 44px;
 }
 
 .account-container.skeleton {
@@ -51,6 +53,7 @@
 
 .account-container .header-banner {
   /* pointer-events: none; */
+  vertical-align: top;
   aspect-ratio: 6 / 1;
   width: 100%;
   height: auto;
@@ -75,7 +78,7 @@
     hsla(0, 0%, 0%, 0.013) 95.3%,
     hsla(0, 0%, 0%, 0) 100%
   );
-  margin-bottom: -44px;
+  margin-bottom: calc(-1 * var(--banner-overlap));
   user-select: none;
   -webkit-user-drag: none;
   opacity: 0;
@@ -116,18 +119,26 @@
 }
 .account-container .header-banner:active {
   mask-image: none;
-}
-.account-container .header-banner:active + header .avatar + * {
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0 !important;
-}
-.account-container .header-banner:active + header .avatar {
-  transition: filter 0.3s ease-in-out;
-  filter: none !important;
-}
-.account-container .header-banner:active + header .avatar img {
-  transition: border-radius 0.3s ease-in-out;
-  border-radius: 8px;
+
+  & + header {
+    background-image: none;
+  }
+
+  & + header .avatar + * {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0 !important;
+  }
+
+  &,
+  & + header .avatar {
+    transition: filter 0.3s ease-in-out;
+    filter: none !important;
+  }
+
+  & + header .avatar img {
+    transition: border-radius 0.3s ease-in-out;
+    border-radius: 8px;
+  }
 }
 
 @media (min-height: 480px) {
@@ -163,6 +174,10 @@
 }
 .account-container main > *:first-child ~ * {
   animation: fade-in 0.3s both ease-in-out 0.2s;
+}
+
+.account-container .account-block .account-block-acct {
+  opacity: 0.7;
 }
 
 .private-note-tag {
@@ -290,8 +305,11 @@
   color: inherit;
 }
 
+.account-container footer {
+  padding: 0 16px 16px;
+}
 .account-container .actions {
-  margin-block: 8px;
+  /* margin-block: 8px; */
   display: flex;
   gap: 8px;
   justify-content: space-between;
@@ -396,13 +414,64 @@
   animation: none;
 }
 .timeline-start .account-container main {
-  padding: 1px 16px 1px;
+  padding: 1px 16px 16px;
 }
 .timeline-start .account-container main > * {
   animation: none;
 }
-.timeline-start .account-container .account-block .account-block-acct {
-  opacity: 0.5;
+
+.faux-header-bg {
+  display: none;
+}
+
+.sheet .account-container {
+  border-radius: 16px 16px 0 0;
+  overflow-x: hidden;
+  max-height: 75vh;
+  overscroll-behavior: contain;
+
+  header {
+    padding-bottom: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    /* --bg-color: red; */
+    background-image: linear-gradient(
+      to bottom,
+      transparent 30%,
+      var(--bg-color) var(--banner-overlap),
+      var(--bg-color) calc(100% - 8px),
+      transparent
+    );
+  }
+
+  .faux-header-bg {
+    display: block;
+    height: var(--banner-overlap);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--bg-color);
+    margin-top: calc(-1 * var(--banner-overlap));
+  }
+
+  main {
+    margin-top: -8px;
+    padding-top: 1px;
+  }
+
+  footer {
+    min-height: calc(40px + 16px);
+    animation: slide-up 0.3s ease-out 0.3s both;
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bg-faded-blur-color);
+    backdrop-filter: blur(16px) saturate(3);
+    padding: 8px 16px;
+    border-top: var(--hairline-width) solid var(--outline-color);
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 16px -8px var(--drop-shadow-color);
+  }
 }
 
 @keyframes swoosh-bg-image {
@@ -609,6 +678,7 @@
 
 @media (min-width: 40em) {
   .timeline-start .account-container {
+    --banner-overlap: 77px;
     --item-radius: 16px;
     border: 1px solid var(--divider-color);
     margin: 16px 0;
@@ -625,9 +695,9 @@
       var(--shadow-offset) var(--shadow-offset) var(--shadow-blur)
         var(--shadow-spread) var(--header-color-2, var(--drop-shadow-color));
   }
-  .timeline-start .account-container .header-banner {
+  /* .timeline-start .account-container .header-banner {
     margin-bottom: -77px;
-  }
+  } */
   .timeline-start .account-container header .account-block {
     font-size: 175%;
     /* margin-bottom: -8px; */

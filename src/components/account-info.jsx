@@ -314,6 +314,7 @@ function AccountInfo({
 
   return (
     <div
+      tabIndex="-1"
       class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
       style={{
         '--header-color-1': headerCornerColors[0],
@@ -398,7 +399,7 @@ function AccountInfo({
                 />
               </div>
             )}
-            {header && !/missing\.png$/.test(header) && (
+            {!!header && !/missing\.png$/.test(header) && (
               <img
                 src={header}
                 alt=""
@@ -505,7 +506,8 @@ function AccountInfo({
                 internal={!standalone}
               />
             </header>
-            <main tabIndex="-1">
+            <div class="faux-header-bg" aria-hidden="true" />
+            <main>
               {!!memorial && <span class="tag">In Memoriam</span>}
               {!!bot && (
                 <span class="tag">
@@ -748,13 +750,15 @@ function AccountInfo({
                   </div>
                 </div>
               </div>
+            </main>
+            <footer>
               <RelatedActions
                 info={info}
                 instance={instance}
                 authenticated={authenticated}
                 onRelationshipChange={onRelationshipChange}
               />
-            </main>
+            </footer>
           </>
         )
       )}

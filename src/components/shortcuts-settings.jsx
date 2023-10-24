@@ -271,25 +271,27 @@ function ShortcutsSettings({ onClose }) {
               label: 'Multi-column',
               imgURL: multiColumnUrl,
             },
-          ].map(({ value, label, imgURL }) => (
-            <label>
-              <input
-                type="radio"
-                name="shortcuts-view-mode"
-                value={value}
-                checked={
-                  snapStates.settings.shortcutsViewMode === value ||
-                  (value === 'float-button' &&
-                    !snapStates.settings.shortcutsViewMode)
-                }
-                onChange={(e) => {
-                  states.settings.shortcutsViewMode = e.target.value;
-                }}
-              />{' '}
-              <img src={imgURL} alt="" width="80" height="58" />{' '}
-              <span>{label}</span>
-            </label>
-          ))}
+          ].map(({ value, label, imgURL }) => {
+            const checked =
+              snapStates.settings.shortcutsViewMode === value ||
+              (value === 'float-button' &&
+                !snapStates.settings.shortcutsViewMode);
+            return (
+              <label key={value} class={checked ? 'checked' : ''}>
+                <input
+                  type="radio"
+                  name="shortcuts-view-mode"
+                  value={value}
+                  checked={checked}
+                  onChange={(e) => {
+                    states.settings.shortcutsViewMode = e.target.value;
+                  }}
+                />{' '}
+                <img src={imgURL} alt="" width="80" height="58" />{' '}
+                <span>{label}</span>
+              </label>
+            );
+          })}
         </div>
         {/* <select
               value={snapStates.settings.shortcutsViewMode || 'float-button'}

@@ -23,6 +23,7 @@ import {
   getCurrentAccount,
   getCurrentAccountNS,
   getCurrentInstance,
+  getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
@@ -119,21 +120,30 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const { configuration } = getCurrentInstance();
+  const configuration = getCurrentInstanceConfiguration();
   console.log('⚙️ Configuration', configuration);
 
   const {
-    statuses: { maxCharacters, maxMediaAttachments, charactersReservedPerUrl },
+    statuses: {
+      maxCharacters,
+      maxMediaAttachments,
+      charactersReservedPerUrl,
+    } = {},
     mediaAttachments: {
-      supportedMimeTypes,
+      supportedMimeTypes = [],
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
       videoMatrixLimit,
       videoFrameRateLimit,
-    },
-    polls: { maxOptions, maxCharactersPerOption, maxExpiration, minExpiration },
-  } = configuration;
+    } = {},
+    polls: {
+      maxOptions,
+      maxCharactersPerOption,
+      maxExpiration,
+      minExpiration,
+    } = {},
+  } = configuration || {};
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();

@@ -4,13 +4,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
+import states from '../utils/states';
 
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
-import MediaAltModal from './media-alt-modal';
 import MenuLink from './menu-link';
-import Modal from './modal';
 
 function MediaModal({
   mediaAttachments,
@@ -154,10 +153,10 @@ function MediaModal({
                   class="media-alt"
                   hidden={!showControls}
                   onClick={() => {
-                    setShowMediaAlt({
+                    states.showMediaAlt = {
                       alt: media.description,
                       lang,
-                    });
+                    };
                   }}
                 >
                   <span class="alt-badge">ALT</span>
@@ -288,23 +287,6 @@ function MediaModal({
             <Icon icon="arrow-right" />
           </button>
         </div>
-      )}
-      {!!showMediaAlt && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMediaAlt(false);
-              carouselRef.current.focus();
-            }
-          }}
-        >
-          <MediaAltModal
-            alt={showMediaAlt.alt || showMediaAlt}
-            lang={showMediaAlt?.lang}
-            onClose={() => setShowMediaAlt(false)}
-          />
-        </Modal>
       )}
     </div>
   );

@@ -512,7 +512,7 @@ function Status({
               )}{' '}
               {favouritesCount > 0 && (
                 <span>
-                  <Icon icon="heart" alt="Favourites" size="s" />{' '}
+                  <Icon icon="heart" alt="Likes" size="s" />{' '}
                   <span>{shortenNumber(favouritesCount)}</span>
                 </span>
               )}
@@ -550,7 +550,7 @@ function Status({
         <MenuItem onClick={() => setShowReactions(true)}>
           <Icon icon="react" />
           <span>
-            Boosted/Favourited by<span class="more-insignificant">…</span>
+            Boosted/Liked by<span class="more-insignificant">…</span>
           </span>
         </MenuItem>
       )}
@@ -603,8 +603,8 @@ function Status({
                   if (!isSizeLarge) {
                     showToast(
                       favourited
-                        ? `Unfavourited @${username || acct}'s post`
-                        : `Favourited @${username || acct}'s post`,
+                        ? `Unliked @${username || acct}'s post`
+                        : `Liked @${username || acct}'s post`,
                     );
                   }
                 } catch (e) {}
@@ -616,7 +616,7 @@ function Status({
                   color: favourited && 'var(--favourite-color)',
                 }}
               />
-              <span>{favourited ? 'Unfavourite' : 'Favourite'}</span>
+              <span>{favourited ? 'Unlike' : 'Like'}</span>
             </MenuItem>
           </div>
           <div class="menu-horizontal">
@@ -836,15 +836,15 @@ function Status({
     enabled: hotkeysEnabled,
   });
   const fRef = useHotkeys(
-    'f',
+    'f, l',
     () => {
       try {
         favouriteStatus();
         if (!isSizeLarge) {
           showToast(
             favourited
-              ? `Unfavourited @${username || acct}'s post`
-              : `Favourited @${username || acct}'s post`,
+              ? `Unliked @${username || acct}'s post`
+              : `Liked @${username || acct}'s post`,
           );
         }
       } catch (e) {}
@@ -1528,8 +1528,8 @@ function Status({
               <div class="action has-count">
                 <StatusButton
                   checked={favourited}
-                  title={['Favourite', 'Unfavourite']}
-                  alt={['Favourite', 'Favourited']}
+                  title={['Like', 'Unlike']}
+                  alt={['Like', 'Liked']}
                   class="favourite-button"
                   icon="heart"
                   count={favouritesCount}
@@ -1962,7 +1962,7 @@ function ReactionsModal({ statusID, instance, onClose }) {
         </button>
       )}
       <header>
-        <h2>Boosted/Favourited by…</h2>
+        <h2>Boosted/Liked by…</h2>
       </header>
       <main>
         {accounts.length > 0 ? (

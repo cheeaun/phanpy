@@ -192,7 +192,7 @@ function NavMenu(props) {
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>
               <MenuLink to="/f">
-                <Icon icon="heart" size="l" /> <span>Favourites</span>
+                <Icon icon="heart" size="l" /> <span>Likes</span>
               </MenuLink>
             </>
           )}

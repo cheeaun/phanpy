@@ -727,7 +727,7 @@ function PushNotificationsSection({ onClose }) {
                       },
                       {
                         value: 'favourite',
-                        label: 'Favourites',
+                        label: 'Likes',
                       },
                       {
                         value: 'reblog',

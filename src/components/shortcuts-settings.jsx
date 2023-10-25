@@ -46,7 +46,7 @@ const TYPE_TEXT = {
   search: 'Search',
   'account-statuses': 'Account',
   bookmarks: 'Bookmarks',
-  favourites: 'Favourites',
+  favourites: 'Likes',
   hashtag: 'Hashtag',
   trending: 'Trending',
   mentions: 'Mentions',
@@ -178,7 +178,7 @@ export const SHORTCUTS_META = {
   },
   favourites: {
     id: 'favourites',
-    title: 'Favourites',
+    title: 'Likes',
     path: '/f',
     icon: 'heart',
   },

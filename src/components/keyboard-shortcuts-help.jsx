@@ -135,8 +135,12 @@ export default memo(function KeyboardShortcutsHelp() {
                   keys: <kbd>r</kbd>,
                 },
                 {
-                  action: 'Favourite',
-                  keys: <kbd>f</kbd>,
+                  action: 'Like (favourite)',
+                  keys: (
+                    <>
+                      <kbd>l</kbd> or <kbd>f</kbd>
+                    </>
+                  ),
                 },
                 {
                   action: 'Boost',

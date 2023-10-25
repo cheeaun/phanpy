@@ -12,6 +12,7 @@ import Menu2 from '../components/menu2';
 import RelativeTime from '../components/relative-time';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
 import states from '../utils/states';
@@ -161,35 +162,16 @@ function Trending({ columnMode, ...props }) {
               const domain = new URL(url).hostname
                 .replace(/^www\./, '')
                 .replace(/\/$/, '');
-              const averageColor = getBlurHashAverageColor(blurhash);
-              const labAverageColor = rgb2oklab(averageColor);
-
-              // const lightColor = averageColor.map((c) => {
-              //   const v = c + 120;
-              //   return v > 255 ? 255 : v;
-              // });
-              // const darkColor = averageColor.map((c) => {
-              //   const v = c - 100;
-              //   return v < 0 ? 0 : v;
-              // });
-              const accentColor = labAverageColor.map((c, i) => {
-                if (i === 0) {
-                  return 0.65;
-                }
-                return c;
-              });
-              const lightColor = labAverageColor.map((c, i) => {
-                if (i === 0) {
-                  return 0.9;
-                }
-                return c;
-              });
-              const darkColor = labAverageColor.map((c, i) => {
-                if (i === 0) {
-                  return 0.4;
-                }
-                return c;
-              });
+              let accentColor;
+              if (blurhash) {
+                const averageColor = getBlurHashAverageColor(blurhash);
+                const labAverageColor = rgb2oklab(averageColor);
+                accentColor = oklab2rgb([
+                  0.6,
+                  labAverageColor[1],
+                  labAverageColor[2],
+                ]);
+              }
 
               return (
                 <a
@@ -197,14 +179,16 @@ function Trending({ columnMode, ...props }) {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    '--average-color': `rgb(${averageColor?.join(',')})`,
-                    // '--light-color': `rgb(${lightColor?.join(',')})`,
-                    // '--dark-color': `rgb(${darkColor?.join(',')})`,
-                    '--accent-color': `oklab(${accentColor?.join(' ')})`,
-                    '--light-color': `oklab(${lightColor?.join(' ')})`,
-                    '--dark-color': `oklab(${darkColor?.join(' ')})`,
-                  }}
+                  style={
+                    accentColor
+                      ? {
+                          '--accent-color': `rgb(${accentColor.join(',')})`,
+                          '--accent-alpha-color': `rgba(${accentColor.join(
+                            ',',
+                          )}, 0.4)`,
+                        }
+                      : {}
+                  }
                 >
                   <article>
                     <figure>
@@ -309,26 +293,6 @@ function Trending({ columnMode, ...props }) {
       }
     />
   );
-}
-
-// https://gist.github.com/earthbound19/e7fe15fdf8ca3ef814750a61bc75b5ce
-const gammaToLinear = (c) =>
-  c >= 0.04045 ? Math.pow((c + 0.055) / 1.055, 2.4) : c / 12.92;
-function rgb2oklab([r, g, b]) {
-  r = gammaToLinear(r / 255);
-  g = gammaToLinear(g / 255);
-  b = gammaToLinear(b / 255);
-  var l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
-  var m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
-  var s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-  l = Math.cbrt(l);
-  m = Math.cbrt(m);
-  s = Math.cbrt(s);
-  return [
-    l * +0.2104542553 + m * +0.793617785 + s * -0.0040720468,
-    l * +1.9779984951 + m * -2.428592205 + s * +0.4505937099,
-    l * +0.0259040371 + m * +0.7827717662 + s * -0.808675766,
-  ];
 }
 
 export default Trending;

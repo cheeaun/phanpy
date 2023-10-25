@@ -54,10 +54,6 @@
   }
 
   a {
-    --other-color: var(--light-color);
-    @media (prefers-color-scheme: dark) {
-      --other-color: var(--dark-color);
-    }
     min-width: 240px;
     flex-grow: 1;
     max-width: 320px;
@@ -65,14 +61,14 @@
     color: inherit;
     border-radius: 16px;
     overflow: hidden;
-    background-color: var(--other-color);
+    background-color: var(--accent-alpha-color);
     border: 4px solid transparent;
     box-shadow: 0 4px 8px -2px var(--drop-shadow-color);
     transition: all 0.15s ease-out;
     display: flex;
     background-image: linear-gradient(
       to bottom,
-      var(--accent-color) -50%,
+      var(--accent-color, var(--link-text-color)) -50%,
       transparent
     );
     background-clip: border-box;
@@ -82,7 +78,7 @@
     max-height: 50vh;
 
     &:not(:active):is(:hover, :focus-visible) {
-      border-color: var(--accent-color);
+      border-color: var(--accent-color, var(--link-light-color));
       box-shadow: 0 4px 8px var(--drop-shadow-color),
         0 8px 16px var(--drop-shadow-color);
       transform-origin: center bottom;
@@ -107,7 +103,7 @@
       background-repeat: no-repeat;
       background-image: linear-gradient(
         to bottom,
-        var(--other-color) 70%,
+        var(--accent-alpha-color) 70%,
         var(--bg-color) 100%
       );
       transition: background-position-y 0.15s ease-out;

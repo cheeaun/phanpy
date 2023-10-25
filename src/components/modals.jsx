@@ -183,10 +183,8 @@ export default function Modals() {
       {!!snapStates.showMediaAlt && (
         <Modal
           class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              states.showMediaAlt = false;
-            }
+          onClose={(e) => {
+            states.showMediaAlt = false;
           }}
         >
           <MediaAltModal

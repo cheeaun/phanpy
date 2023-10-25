@@ -66,9 +66,17 @@ function MediaModal({
     };
   }, []);
 
-  useHotkeys('esc', onClose, [onClose]);
-
-  const [showMediaAlt, setShowMediaAlt] = useState(false);
+  useHotkeys(
+    'esc',
+    onClose,
+    {
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        return hasModal;
+      },
+    },
+    [onClose],
+  );
 
   useEffect(() => {
     let handleScroll = () => {

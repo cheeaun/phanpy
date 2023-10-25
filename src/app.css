@@ -1052,13 +1052,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--average-color-alpha);
-  background-image: radial-gradient(
+  background-color: var(--accent-alpha-color);
+  /* background-image: radial-gradient(
     closest-side,
-    var(--average-color) 10%,
-    var(--average-color-alpha) 40%,
+    var(--accent-color) 10%,
+    var(--accent-alpha-color) 40%,
     transparent 100%
-  );
+  ); */
 }
 .carousel .carousel-item :is(img, video) {
   width: auto;

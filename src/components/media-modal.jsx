@@ -3,6 +3,8 @@ import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
+
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
@@ -112,17 +114,22 @@ function MediaModal({
       >
         {mediaAttachments?.map((media, i) => {
           const { blurhash } = media;
-          const rgbAverageColor = blurhash
-            ? getBlurHashAverageColor(blurhash)
-            : null;
+          let accentColor;
+          if (blurhash) {
+            const averageColor = getBlurHashAverageColor(blurhash);
+            const labAverageColor = rgb2oklab(averageColor);
+            accentColor = oklab2rgb([
+              0.6,
+              labAverageColor[1],
+              labAverageColor[2],
+            ]);
+          }
           return (
             <div
               class="carousel-item"
               style={{
-                '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
-                '--average-color-alpha': `rgba(${rgbAverageColor?.join(
-                  ',',
-                )}, .5)`,
+                '--accent-color': `rgb(${accentColor?.join(',')})`,
+                '--accent-alpha-color': `rgba(${accentColor?.join(',')}, 0.4)`,
               }}
               tabindex="0"
               key={media.id}

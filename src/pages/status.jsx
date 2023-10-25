@@ -537,6 +537,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       // If media is open, esc to close media first
       // Else close the status page
       enabled: !showMedia,
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        return hasModal;
+      },
     },
   );
   // For backspace, will always close both media and status page

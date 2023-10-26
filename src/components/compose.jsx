@@ -387,6 +387,14 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
+      ignoreEventWhen: (e) => {
+        const modals = document.querySelectorAll('#modal-container > *');
+        const hasModal = !!modals;
+        const hasOnlyComposer =
+          modals.length === 1 && modals[0].querySelector('#compose-container');
+        console.log('hasModal', hasModal, 'hasOnlyComposer', hasOnlyComposer);
+        return hasModal && !hasOnlyComposer;
+      },
     },
   );
 

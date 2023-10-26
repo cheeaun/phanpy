@@ -120,7 +120,7 @@ function Trending({ columnMode, ...props }) {
     return (
       <>
         {!!hashtags.length && (
-          <div class="filter-bar">
+          <div class="filter-bar expandable">
             <Icon icon="chart" class="insignificant" size="l" />
             {hashtags.map((tag, i) => {
               const { name, history } = tag;

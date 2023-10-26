@@ -108,10 +108,6 @@
       );
       transition: background-position-y 0.15s ease-out;
 
-      &:is(:hover, :focus-visible) {
-        background-position-y: -40px;
-      }
-
       figure {
         flex-grow: 1;
         margin: 0 0 -16px;
@@ -146,6 +142,10 @@
           hsla(0, 0%, 0%, 0) 100%
         );
       }
+    }
+
+    &:is(:hover, :focus-visible) article {
+      background-position-y: -40px;
     }
 
     .article-body {

@@ -2130,6 +2130,14 @@ ul.link-list li a .icon {
   align-items: center;
   transition: opacity 0.3s ease-out;
 
+  &.expandable:not(#columns &) {
+    @media (min-width: 40em) {
+      width: 95vw;
+      max-width: calc(320px * 3.3);
+      transform: translateX(calc(-50% + var(--main-width) / 2));
+    }
+  }
+
   &.loading,
   .loading > & {
     pointer-events: none;

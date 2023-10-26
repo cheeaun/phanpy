@@ -23,6 +23,7 @@ function Lists() {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
+        lists.sort((a, b) => a.title.localeCompare(b.title));
         console.log(lists);
         setLists(lists);
         setUIState('default');

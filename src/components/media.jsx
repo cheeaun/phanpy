@@ -170,15 +170,18 @@ function Media({
   const maxAspectHeight =
     window.innerHeight * (orientation === 'portrait' ? 0.45 : 0.33);
   const maxHeight = orientation === 'portrait' ? 0 : 160;
-  const mediaStyles = {
-    '--width': `${width}px`,
-    '--height': `${height}px`,
-    // Calculate '--aspectWidth' based on aspect ratio calculated from '--width' and '--height', max height has to be 160px
-    '--aspectWidth': `${
-      (width / height) * Math.max(maxHeight, maxAspectHeight)
-    }px`,
-    aspectRatio: `${width} / ${height}`,
-  };
+  const mediaStyles =
+    width && height
+      ? {
+          '--width': `${width}px`,
+          '--height': `${height}px`,
+          // Calculate '--aspectWidth' based on aspect ratio calculated from '--width' and '--height', max height has to be 160px
+          '--aspectWidth': `${
+            (width / height) * Math.max(maxHeight, maxAspectHeight)
+          }px`,
+          aspectRatio: `${width} / ${height}`,
+        }
+      : {};
 
   const longDesc = isMediaCaptionLong(description);
   const showInlineDesc =

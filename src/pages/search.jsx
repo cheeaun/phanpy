@@ -71,6 +71,11 @@ function Search(props) {
   };
 
   function loadResults(firstLoad) {
+    if (!firstLoad && !authenticated) {
+      // Search results pagination is only available to authenticated users
+      return;
+    }
+
     setUIState('loading');
     if (firstLoad && !type) {
       setStatusResults(statusResults.slice(0, SHORT_LIMIT));
@@ -89,6 +94,7 @@ function Search(props) {
         params.type = type;
         if (authenticated) params.offset = offsetRef.current;
       }
+
       try {
         const results = await masto.v2.search.fetch(params);
         console.log(results);
@@ -141,7 +147,7 @@ function Search(props) {
   return (
     <div id="search-page" class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
-        <header>
+        <header class={uiState === 'loading' ? 'loading' : ''}>
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
@@ -181,7 +187,9 @@ function Search(props) {
                   return 0;
                 })
                 .map((link) => (
-                  <Link to={link.to}>{link.label}</Link>
+                  <Link to={link.to} key={link.type}>
+                    {link.label}
+                  </Link>
                 ))}
             </div>
           )}

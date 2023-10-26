@@ -53,7 +53,7 @@
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.05);
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
-  --backdrop-solid-color: #ccc;
+  --backdrop-solid-color: #eee;
   --img-bg-color: rgba(128, 128, 128, 0.2);
   --loader-color: #1c1e2199;
   --comment-line-color: #e5e5e5;
@@ -106,7 +106,7 @@
     --divider-color: rgba(255, 255, 255, 0.1);
     --bg-blur-color: #24252699;
     --backdrop-color: rgba(0, 0, 0, 0.5);
-    --backdrop-solid-color: #333;
+    --backdrop-solid-color: #111;
     --loader-color: #f0f2f599;
     --comment-line-color: #565656;
     --drop-shadow-color: rgba(0, 0, 0, 0.5);
@@ -146,6 +146,16 @@ body {
   body {
     overscroll-behavior-y: none;
   }
+}
+
+p {
+  /*
+    white-space is shorthand for two values; white-space-collapse and text-wrap
+    https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+    !important is needed to override higher specificity when elements are styled
+    with `white-space` and 1 value, which doesn't have "pretty"
+  */
+  text-wrap: pretty !important;
 }
 
 a {

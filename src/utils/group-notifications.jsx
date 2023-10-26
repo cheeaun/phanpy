@@ -6,7 +6,7 @@ function groupNotifications(notifications) {
   const cleanNotifications = [];
   for (let i = 0, j = 0; i < notifications.length; i++) {
     const notification = notifications[i];
-    const { status, account, type, createdAt } = notification;
+    const { id, status, account, type, createdAt } = notification;
     const date = new Date(createdAt).toLocaleDateString();
     let virtualType = type;
     if (type === 'favourite' || type === 'reblog') {
@@ -23,9 +23,11 @@ function groupNotifications(notifications) {
       if (mappedAccount) {
         mappedAccount._types.push(type);
         mappedAccount._types.sort().reverse();
+        mappedNotification.id += `-${id}`;
       } else {
         account._types = [type];
         mappedNotification._accounts.push(account);
+        mappedNotification.id += `-${id}`;
       }
     } else {
       account._types = [type];
@@ -47,13 +49,14 @@ function groupNotifications(notifications) {
   const cleanNotifications2 = [];
   for (let i = 0, j = 0; i < cleanNotifications.length; i++) {
     const notification = cleanNotifications[i];
-    const { account, _accounts, type, createdAt } = notification;
+    const { id, account, _accounts, type, createdAt } = notification;
     const date = new Date(createdAt).toLocaleDateString();
     if (type === 'favourite+reblog' && account && _accounts.length === 1) {
       const key = `${account?.id}-${type}-${date}`;
       const mappedNotification = notificationsMap2[key];
       if (mappedNotification) {
         mappedNotification._statuses.push(notification.status);
+        mappedNotification.id += `-${id}`;
       } else {
         let n = (notificationsMap2[key] = {
           ...notification,

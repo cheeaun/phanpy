@@ -101,6 +101,7 @@ export const ICONS = {
   'account-warning': () => import('@iconify-icons/mingcute/user-warning-line'),
   keyboard: () => import('@iconify-icons/mingcute/keyboard-line'),
   cloud: () => import('@iconify-icons/mingcute/cloud-line'),
+  month: () => import('@iconify-icons/mingcute/calendar-month-line'),
 };
 
 function Icon({

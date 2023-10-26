@@ -1,7 +1,8 @@
 import './accounts.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
-import { useReducer, useState } from 'preact/hooks';
+import { useReducer } from 'preact/hooks';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
@@ -18,9 +19,9 @@ function Accounts({ onClose }) {
   const accounts = store.local.getJSON('accounts');
   const currentAccount = store.session.get('currentAccount');
   const moreThanOneAccount = accounts.length > 1;
-  const [currentDefault, setCurrentDefault] = useState(0);
 
   const [_, reload] = useReducer((x) => x + 1, 0);
+  const [accountsListParent] = useAutoAnimate();
 
   return (
     <div id="accounts-container" class="sheet" tabIndex="-1">
@@ -34,12 +35,12 @@ function Accounts({ onClose }) {
       </header>
       <main>
         <section>
-          <ul class="accounts-list">
+          <ul class="accounts-list" ref={accountsListParent}>
             {accounts.map((account, i) => {
               const isCurrent = account.info.id === currentAccount;
-              const isDefault = i === (currentDefault || 0);
+              const isDefault = i === 0; // first account is always default
               return (
-                <li key={i + account.id}>
+                <li key={account.info.id}>
                   <div>
                     {moreThanOneAccount && (
                       <span class={`current ${isCurrent ? 'is-current' : ''}`}>
@@ -120,7 +121,7 @@ function Accounts({ onClose }) {
                             accounts.splice(i, 1);
                             accounts.unshift(account);
                             store.local.setJSON('accounts', accounts);
-                            setCurrentDefault(i);
+                            reload();
                           }}
                         >
                           <Icon icon="check-circle" />

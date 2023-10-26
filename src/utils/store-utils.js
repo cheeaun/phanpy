@@ -81,3 +81,42 @@ export function getCurrentInstance() {
     return {};
   }
 }
+
+// Massage these instance configurations to match the Mastodon API
+// - Pleroma
+function getInstanceConfiguration(instance) {
+  const {
+    configuration,
+    maxMediaAttachments,
+    maxTootChars,
+    pleroma,
+    pollLimits,
+  } = instance;
+
+  const statuses = configuration?.statuses || {};
+  if (maxMediaAttachments) {
+    statuses.maxMediaAttachments ??= maxMediaAttachments;
+  }
+  if (maxTootChars) {
+    statuses.maxCharacters ??= maxTootChars;
+  }
+
+  const polls = configuration?.polls || {};
+  if (pollLimits) {
+    polls.maxCharactersPerOption ??= pollLimits.maxOptionChars;
+    polls.maxExpiration ??= pollLimits.maxExpiration;
+    polls.maxOptions ??= pollLimits.maxOptions;
+    polls.minExpiration ??= pollLimits.minExpiration;
+  }
+
+  return {
+    ...configuration,
+    statuses,
+    polls,
+  };
+}
+
+export function getCurrentInstanceConfiguration() {
+  const instance = getCurrentInstance();
+  return getInstanceConfiguration(instance);
+}

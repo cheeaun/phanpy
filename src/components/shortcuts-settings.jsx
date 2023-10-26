@@ -1,5 +1,6 @@
 import './shortcuts-settings.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
@@ -45,7 +46,7 @@ const TYPE_TEXT = {
   search: 'Search',
   'account-statuses': 'Account',
   bookmarks: 'Bookmarks',
-  favourites: 'Favourites',
+  favourites: 'Likes',
   hashtag: 'Hashtag',
   trending: 'Trending',
   mentions: 'Mentions',
@@ -177,7 +178,7 @@ export const SHORTCUTS_META = {
   },
   favourites: {
     id: 'favourites',
-    title: 'Favourites',
+    title: 'Likes',
     path: '/f',
     icon: 'heart',
   },
@@ -201,10 +202,13 @@ function ShortcutsSettings({ onClose }) {
   const [showForm, setShowForm] = useState(false);
   const [showImportExport, setShowImportExport] = useState(false);
 
+  const [shortcutsListParent] = useAutoAnimate();
+
   useEffect(() => {
     (async () => {
       try {
         const lists = await masto.v1.lists.list();
+        lists.sort((a, b) => a.title.localeCompare(b.title));
         setLists(lists);
       } catch (e) {
         console.error(e);
@@ -267,25 +271,27 @@ function ShortcutsSettings({ onClose }) {
               label: 'Multi-column',
               imgURL: multiColumnUrl,
             },
-          ].map(({ value, label, imgURL }) => (
-            <label>
-              <input
-                type="radio"
-                name="shortcuts-view-mode"
-                value={value}
-                checked={
-                  snapStates.settings.shortcutsViewMode === value ||
-                  (value === 'float-button' &&
-                    !snapStates.settings.shortcutsViewMode)
-                }
-                onChange={(e) => {
-                  states.settings.shortcutsViewMode = e.target.value;
-                }}
-              />{' '}
-              <img src={imgURL} alt="" width="80" height="58" />{' '}
-              <span>{label}</span>
-            </label>
-          ))}
+          ].map(({ value, label, imgURL }) => {
+            const checked =
+              snapStates.settings.shortcutsViewMode === value ||
+              (value === 'float-button' &&
+                !snapStates.settings.shortcutsViewMode);
+            return (
+              <label key={value} class={checked ? 'checked' : ''}>
+                <input
+                  type="radio"
+                  name="shortcuts-view-mode"
+                  value={value}
+                  checked={checked}
+                  onChange={(e) => {
+                    states.settings.shortcutsViewMode = e.target.value;
+                  }}
+                />{' '}
+                <img src={imgURL} alt="" width="80" height="58" />{' '}
+                <span>{label}</span>
+              </label>
+            );
+          })}
         </div>
         {/* <select
               value={snapStates.settings.shortcutsViewMode || 'float-button'}
@@ -315,9 +321,10 @@ function ShortcutsSettings({ onClose }) {
           </details>
         </p> */}
         {shortcuts.length > 0 ? (
-          <ol class="shortcuts-list">
+          <ol class="shortcuts-list" ref={shortcutsListParent}>
             {shortcuts.filter(Boolean).map((shortcut, i) => {
-              const key = i + Object.values(shortcut);
+              // const key = i + Object.values(shortcut);
+              const key = Object.values(shortcut).join('-');
               const { type } = shortcut;
               if (!SHORTCUTS_META[type]) return null;
               let { icon, title, subtitle } = SHORTCUTS_META[type];

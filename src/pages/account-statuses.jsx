@@ -10,24 +10,139 @@ import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
+const MIN_YEAR = 1983;
+const MIN_YEAR_MONTH = `${MIN_YEAR}-01`; // Birth of the Internet
+
+const supportsInputMonth = (() => {
+  try {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'month');
+    return input.type === 'month';
+  } catch (e) {
+    return false;
+  }
+})();
+
+async function _isSearchEnabled(instance) {
+  const { masto } = api({ instance });
+  const results = await masto.v2.search.fetch({
+    q: 'from:me',
+    type: 'statuses',
+    limit: 1,
+  });
+  return !!results?.statuses?.length;
+}
+const isSearchEnabled = pmem(_isSearchEnabled);
 
 function AccountStatuses() {
   const snapStates = useSnapshot(states);
   const { id, ...params } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const month = searchParams.get('month');
   const excludeReplies = !searchParams.get('replies');
   const excludeBoosts = !!searchParams.get('boosts');
   const tagged = searchParams.get('tagged');
   const media = !!searchParams.get('media');
   const { masto, instance, authenticated } = api({ instance: params.instance });
   const accountStatusesIterator = useRef();
+
+  const allSearchParams = [month, excludeReplies, excludeBoosts, tagged, media];
+  const [account, setAccount] = useState();
+  const searchOffsetRef = useRef(0);
+  useEffect(() => {
+    searchOffsetRef.current = 0;
+  }, allSearchParams);
+
+  const sameCurrentInstance = useMemo(
+    () => instance === api().instance,
+    [instance],
+  );
+  const [searchEnabled, setSearchEnabled] = useState(false);
+  useEffect(() => {
+    // Only enable for current logged-in instance
+    // Most remote instances don't allow unauthenticated searches
+    if (!sameCurrentInstance) return;
+    if (!account?.acct) return;
+    (async () => {
+      const enabled = await isSearchEnabled(instance);
+      console.log({ enabled });
+      setSearchEnabled(enabled);
+    })();
+  }, [instance, sameCurrentInstance, account?.acct]);
+
   async function fetchAccountStatuses(firstLoad) {
+    const isValidMonth = /^\d{4}-[01]\d$/.test(month);
+    const isValidYear = month?.split?.('-')?.[0] >= MIN_YEAR;
+    if (isValidMonth && isValidYear) {
+      if (!account) {
+        return {
+          value: [],
+          done: true,
+        };
+      }
+      const [_year, _month] = month.split('-');
+      const monthIndex = parseInt(_month, 10) - 1;
+      // YYYY-MM (no day)
+      // Search options:
+      // - from:account
+      // - after:YYYY-MM-DD (non-inclusive)
+      // - before:YYYY-MM-DD (non-inclusive)
+
+      // Last day of previous month
+      const after = new Date(_year, monthIndex, 0);
+      const afterStr = `${after.getFullYear()}-${(after.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${after.getDate().toString().padStart(2, '0')}`;
+      // First day of next month
+      const before = new Date(_year, monthIndex + 1, 1);
+      const beforeStr = `${before.getFullYear()}-${(before.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${before.getDate().toString().padStart(2, '0')}`;
+      console.log({
+        month,
+        _year,
+        _month,
+        monthIndex,
+        after,
+        before,
+        afterStr,
+        beforeStr,
+      });
+
+      let limit;
+      if (firstLoad) {
+        limit = LIMIT + 1;
+        searchOffsetRef.current = 0;
+      } else {
+        limit = LIMIT + searchOffsetRef.current + 1;
+        searchOffsetRef.current += LIMIT;
+      }
+
+      const searchResults = await masto.v2.search.fetch({
+        q: `from:${account.acct} after:${afterStr} before:${beforeStr}`,
+        type: 'statuses',
+        limit,
+        offset: searchOffsetRef.current,
+      });
+      if (searchResults?.statuses?.length) {
+        const value = searchResults.statuses.slice(0, LIMIT);
+        value.forEach((item) => {
+          saveStatus(item, instance);
+        });
+        const done = searchResults.statuses.length <= LIMIT;
+        return { value, done };
+      } else {
+        return { value: [], done: true };
+      }
+    }
+
     const results = [];
     if (firstLoad) {
       const { value: pinnedStatuses } = await masto.v1.accounts
@@ -78,7 +193,6 @@ function AccountStatuses() {
     };
   }
 
-  const [account, setAccount] = useState();
   const [featuredTags, setFeaturedTags] = useState([]);
   useTitle(
     `${account?.displayName ? account.displayName + ' ' : ''}@${
@@ -98,7 +212,7 @@ function AccountStatuses() {
       try {
         const featuredTags = await masto.v1.accounts
           .$select(id)
-          .featuredTags.list(id);
+          .featuredTags.list();
         console.log({ featuredTags });
         setFeaturedTags(featuredTags);
       } catch (e) {
@@ -112,7 +226,8 @@ function AccountStatuses() {
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
     const cachedAccount = snapStates.accounts[`${id}@${instance}`];
-    const filtered = !excludeReplies || excludeBoosts || tagged || media;
+    const filtered =
+      !excludeReplies || excludeBoosts || tagged || media || !!month;
     return (
       <>
         <AccountInfo
@@ -170,6 +285,7 @@ function AccountStatuses() {
           </Link>
           {featuredTags.map((tag) => (
             <Link
+              key={tag.id}
               to={`/${instance}/a/${id}${
                 tagged === tag.name
                   ? ''
@@ -192,6 +308,50 @@ function AccountStatuses() {
               {/* <span class="filter-count">{tag.statusesCount}</span> */}
             </Link>
           ))}
+          {searchEnabled &&
+            (supportsInputMonth ? (
+              <label class={`filter-field ${month ? 'is-active' : ''}`}>
+                <Icon icon="month" size="l" />
+                <input
+                  type="month"
+                  disabled={!account?.acct}
+                  value={month || ''}
+                  min={MIN_YEAR_MONTH}
+                  max={new Date().toISOString().slice(0, 7)}
+                  onInput={(e) => {
+                    const { value, validity } = e.currentTarget;
+                    if (!validity.valid) return;
+                    setSearchParams(
+                      value
+                        ? {
+                            month: value,
+                          }
+                        : {},
+                    );
+                  }}
+                />
+              </label>
+            ) : (
+              // Fallback to <select> for month and <input type="number"> for year
+              <MonthPicker
+                class={`filter-field ${month ? 'is-active' : ''}`}
+                disabled={!account?.acct}
+                value={month || ''}
+                min={MIN_YEAR_MONTH}
+                max={new Date().toISOString().slice(0, 7)}
+                onInput={(e) => {
+                  const { value, validity } = e;
+                  if (!validity.valid) return;
+                  setSearchParams(
+                    value
+                      ? {
+                          month: value,
+                        }
+                      : {},
+                  );
+                }}
+              />
+            ))}
         </div>
       </>
     );
@@ -199,11 +359,9 @@ function AccountStatuses() {
     id,
     instance,
     authenticated,
-    excludeReplies,
-    excludeBoosts,
     featuredTags,
-    tagged,
-    media,
+    searchEnabled,
+    ...allSearchParams,
   ]);
 
   useEffect(() => {
@@ -218,7 +376,7 @@ function AccountStatuses() {
           (filterBarRef.current.offsetWidth - active.offsetWidth) / 2,
       });
     }
-  }, [featuredTags, tagged, media, excludeReplies, excludeBoosts]);
+  }, [featuredTags, searchEnabled, ...allSearchParams]);
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;
@@ -258,7 +416,13 @@ function AccountStatuses() {
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
-      refresh={[excludeReplies, excludeBoosts, tagged, media].toString()}
+      refresh={[
+        excludeReplies,
+        excludeBoosts,
+        tagged,
+        media,
+        month + account?.acct,
+      ].toString()}
       headerEnd={
         <Menu2
           portal
@@ -300,6 +464,102 @@ function AccountStatuses() {
         </Menu2>
       }
     />
+  );
+}
+
+function MonthPicker(props) {
+  const {
+    class: className,
+    disabled,
+    value,
+    min,
+    max,
+    onInput = () => {},
+  } = props;
+  const [_year, _month] = value?.split('-') || [];
+  const monthFieldRef = useRef();
+  const yearFieldRef = useRef();
+
+  const checkValidity = (month, year) => {
+    const [minYear, minMonth] = min?.split('-') || [];
+    const [maxYear, maxMonth] = max?.split('-') || [];
+    if (year < minYear) return false;
+    if (year > maxYear) return false;
+    if (year === minYear && month < minMonth) return false;
+    if (year === maxYear && month > maxMonth) return false;
+    return true;
+  };
+
+  return (
+    <div class={className}>
+      <Icon icon="month" size="l" />
+      <select
+        ref={monthFieldRef}
+        disabled={disabled}
+        value={_month || ''}
+        onInput={(e) => {
+          const { value: month } = e.currentTarget;
+          const year = yearFieldRef.current.value;
+          if (!checkValidity(month, year))
+            return {
+              value: '',
+              validity: {
+                valid: false,
+              },
+            };
+          onInput({
+            value: month ? `${year}-${month}` : '',
+            validity: {
+              valid: true,
+            },
+          });
+        }}
+      >
+        <option value="">Month</option>
+        <option disabled>-----</option>
+        {Array.from({ length: 12 }, (_, i) => (
+          <option
+            value={
+              // Month is 1-indexed
+              (i + 1).toString().padStart(2, '0')
+            }
+            key={i}
+          >
+            {new Date(0, i).toLocaleString('default', {
+              month: 'long',
+            })}
+          </option>
+        ))}
+      </select>{' '}
+      <input
+        ref={yearFieldRef}
+        type="number"
+        disabled={disabled}
+        value={_year || new Date().getFullYear()}
+        min={min?.slice(0, 4) || MIN_YEAR}
+        max={max?.slice(0, 4) || new Date().getFullYear()}
+        onInput={(e) => {
+          const { value: year, validity } = e.currentTarget;
+          const month = monthFieldRef.current.value;
+          if (!validity.valid || !checkValidity(month, year))
+            return {
+              value: '',
+              validity: {
+                valid: false,
+              },
+            };
+          onInput({
+            value: year ? `${year}-${month}` : '',
+            validity: {
+              valid: true,
+            },
+          });
+        }}
+        style={{
+          width: '4.5em',
+        }}
+      />
+    </div>
   );
 }
 

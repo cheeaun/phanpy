@@ -86,6 +86,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: var(--main-width);
   max-width: 100%;
   background-color: var(--bg-color);
+  overflow-anchor: auto;
 }
 .deck.contained {
   overflow: auto;
@@ -273,6 +274,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background-color: var(--bg-color);
   box-shadow: inset 0 -3px var(--comment-line-color),
     inset 0 3px var(--comment-line-color);
+  overscroll-behavior-x: contain;
+
+  .status-link {
+    width: fit-content;
+  }
 }
 .timeline.contextual .replies[data-comments-level='4'] {
   overflow-x: auto;
@@ -1051,13 +1057,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--average-color-alpha);
-  background-image: radial-gradient(
+  background-color: var(--accent-alpha-color);
+  /* background-image: radial-gradient(
     closest-side,
-    var(--average-color) 10%,
-    var(--average-color-alpha) 40%,
+    var(--accent-color) 10%,
+    var(--accent-alpha-color) 40%,
     transparent 100%
-  );
+  ); */
 }
 .carousel .carousel-item :is(img, video) {
   width: auto;
@@ -1372,7 +1378,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   margin-top: -44px;
   background-image: radial-gradient(
     circle,
-    var(--bg-faded-color) 0px 14px,
+    var(--bg-faded-color) 0px 13px,
+    var(--outline-color) 13px 14px,
     transparent 14px
   );
 }
@@ -1792,6 +1799,7 @@ meter.donut[hidden] {
   background-image: none;
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
+  text-align: center;
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);
@@ -2127,6 +2135,72 @@ ul.link-list li a .icon {
     pointer-events: none;
     opacity: 0.5;
   }
+
+  .filter-field {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    background-image: none;
+    border: 2px solid transparent;
+    margin: 0;
+    /* appearance: none; */
+    line-height: 1;
+    font-size: 90%;
+    display: flex;
+    gap: 8px;
+
+    > .icon {
+      color: var(--link-color);
+    }
+
+    &:placeholder-shown {
+      color: var(--text-insignificant-color);
+    }
+
+    &:is(:hover, :focus-visible) {
+      border-color: var(--link-light-color);
+    }
+    &:focus {
+      outline-color: var(--link-light-color);
+    }
+    &.is-active {
+      border-color: var(--link-color);
+      box-shadow: inset 0 0 8px var(--link-faded-color);
+    }
+
+    :is(input, select) {
+      background-color: transparent;
+      background-image: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      appearance: none;
+      border-radius: 0;
+      box-shadow: none;
+      outline: none;
+    }
+
+    input[type='month'] {
+      min-width: 6em;
+
+      &::-webkit-calendar-picker-indicator {
+        /* replace icon with triangle */
+        opacity: 0.5;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      }
+
+      @media (prefers-color-scheme: dark) {
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }
+      }
+    }
+  }
 }
 .filter-bar.centered {
   justify-content: center;
@@ -2229,6 +2303,10 @@ ul.link-list li a .icon {
   }
   .deck > header {
     text-shadow: 0 1px var(--bg-color);
+
+    form {
+      text-shadow: none;
+    }
   }
   .deck > header h1 {
     font-size: 1.5em;

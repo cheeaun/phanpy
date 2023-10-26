@@ -20,9 +20,22 @@ function Modal({ children, onClose, onClick, class: className }) {
     return () => clearTimeout(timer);
   }, []);
 
-  const escRef = useHotkeys('esc', onClose, [onClose], {
-    enabled: !!onClose,
-  });
+  const escRef = useHotkeys(
+    'esc',
+    () => {
+      setTimeout(() => {
+        onClose?.();
+      }, 0);
+    },
+    {
+      enabled: !!onClose,
+      // Using keyup and setTimeout above
+      // This will run "later" to prevent clash with esc handlers from other components
+      keydown: false,
+      keyup: true,
+    },
+    [onClose],
+  );
 
   const Modal = (
     <div

@@ -23,6 +23,7 @@ import {
   getCurrentAccount,
   getCurrentAccountNS,
   getCurrentInstance,
+  getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
 import useInterval from '../utils/useInterval';
@@ -119,21 +120,30 @@ function Compose({
   const currentAccount = getCurrentAccount();
   const currentAccountInfo = currentAccount.info;
 
-  const { configuration } = getCurrentInstance();
+  const configuration = getCurrentInstanceConfiguration();
   console.log('⚙️ Configuration', configuration);
 
   const {
-    statuses: { maxCharacters, maxMediaAttachments, charactersReservedPerUrl },
+    statuses: {
+      maxCharacters,
+      maxMediaAttachments,
+      charactersReservedPerUrl,
+    } = {},
     mediaAttachments: {
-      supportedMimeTypes,
+      supportedMimeTypes = [],
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
       videoMatrixLimit,
       videoFrameRateLimit,
-    },
-    polls: { maxOptions, maxCharactersPerOption, maxExpiration, minExpiration },
-  } = configuration;
+    } = {},
+    polls: {
+      maxOptions,
+      maxCharactersPerOption,
+      maxExpiration,
+      minExpiration,
+    } = {},
+  } = configuration || {};
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
@@ -377,6 +387,14 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
+      ignoreEventWhen: (e) => {
+        const modals = document.querySelectorAll('#modal-container > *');
+        const hasModal = !!modals;
+        const hasOnlyComposer =
+          modals.length === 1 && modals[0].querySelector('#compose-container');
+        console.log('hasModal', hasModal, 'hasOnlyComposer', hasOnlyComposer);
+        return hasModal && !hasOnlyComposer;
+      },
     },
   );
 
@@ -1200,7 +1218,7 @@ const Textarea = forwardRef((props, ref) => {
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   const snapStates = useSnapshot(states);
-  const charCount = snapStates.composerCharacterCount;
+  // const charCount = snapStates.composerCharacterCount;
 
   const customEmojis = useRef();
   useEffect(() => {
@@ -1432,7 +1450,7 @@ const Textarea = forwardRef((props, ref) => {
         style={{
           width: '100%',
           height: '4em',
-          '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
+          // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
       />
     </text-expander>

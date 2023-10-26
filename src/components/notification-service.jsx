@@ -77,11 +77,7 @@ export default memo(function NotificationService() {
           }
         }
       } else {
-        console.warn(
-          '🛎️ Notification not found',
-          notificationID,
-          notificationAccessToken,
-        );
+        console.warn('🛎️ Notification not found', id);
       }
     })();
   }, [id, accessToken]);

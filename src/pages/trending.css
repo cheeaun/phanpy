@@ -1,0 +1,191 @@
+.links-bar {
+  position: relative;
+  display: flex;
+  padding: 16px 16px 20px 16px;
+  gap: 16px;
+  overflow-x: auto;
+  background-color: var(--bg-faded-color);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 16px,
+    black calc(100% - 16px),
+    transparent
+  );
+  text-shadow: 0 1px var(--bg-blur-color);
+  transition: opacity 0.3s ease-out;
+
+  &:not(#columns &) {
+    @media (min-width: 40em) {
+      width: 95vw;
+      max-width: calc(320px * 3.3);
+      transform: translateX(calc(-50% + var(--main-width) / 2));
+    }
+  }
+
+  & > header {
+    width: 1.2em;
+    white-space: nowrap;
+    position: relative;
+    flex-shrink: 0;
+
+    h3 {
+      font-size: 90%;
+      font-style: italic;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+      color: var(--text-insignificant-color);
+      position: absolute;
+      top: 8px;
+      left: 0;
+      transform-origin: top left;
+      transform: rotate(-90deg) translateX(-100%);
+      user-select: none;
+      background-image: linear-gradient(
+        to left,
+        var(--text-color),
+        var(--link-color)
+      );
+      background-clip: text;
+      text-fill-color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  a {
+    min-width: 240px;
+    flex-grow: 1;
+    max-width: 320px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--accent-alpha-color);
+    border: 4px solid transparent;
+    box-shadow: 0 4px 8px -2px var(--drop-shadow-color);
+    transition: all 0.15s ease-out;
+    display: flex;
+    background-image: linear-gradient(
+      to bottom,
+      var(--accent-color, var(--link-text-color)) -50%,
+      transparent
+    );
+    background-clip: border-box;
+    background-origin: border-box;
+    min-height: 160px;
+    height: 320px;
+    max-height: 50vh;
+
+    &:not(:active):is(:hover, :focus-visible) {
+      border-color: var(--accent-color, var(--link-light-color));
+      box-shadow: 0 4px 8px var(--drop-shadow-color),
+        0 8px 16px var(--drop-shadow-color);
+      transform-origin: center bottom;
+      transform: scale(1.02);
+
+      img {
+        animation: position-object 5s ease-in-out 1s 5;
+      }
+    }
+
+    &:active {
+      transition: none;
+      transform: scale(1.015);
+      filter: brightness(0.8);
+    }
+
+    article {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background-color: var(--bg-color);
+      background-repeat: no-repeat;
+      background-image: linear-gradient(
+        to bottom,
+        var(--accent-alpha-color) 70%,
+        var(--bg-color) 100%
+      );
+      transition: background-position-y 0.15s ease-out;
+
+      &:is(:hover, :focus-visible) {
+        background-position-y: -40px;
+      }
+
+      figure {
+        flex-grow: 1;
+        margin: 0 0 -16px;
+        padding: 0;
+        position: relative;
+      }
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        vertical-align: top;
+        mask-image: linear-gradient(
+          to bottom,
+          hsl(0, 0%, 0%) 0%,
+          hsla(0, 0%, 0%, 0.987) 14%,
+          hsla(0, 0%, 0%, 0.951) 26.2%,
+          hsla(0, 0%, 0%, 0.896) 36.8%,
+          hsla(0, 0%, 0%, 0.825) 45.9%,
+          hsla(0, 0%, 0%, 0.741) 53.7%,
+          hsla(0, 0%, 0%, 0.648) 60.4%,
+          hsla(0, 0%, 0%, 0.55) 66.2%,
+          hsla(0, 0%, 0%, 0.45) 71.2%,
+          hsla(0, 0%, 0%, 0.352) 75.6%,
+          hsla(0, 0%, 0%, 0.259) 79.6%,
+          hsla(0, 0%, 0%, 0.175) 83.4%,
+          hsla(0, 0%, 0%, 0.104) 87.2%,
+          hsla(0, 0%, 0%, 0.049) 91.1%,
+          hsla(0, 0%, 0%, 0.013) 95.3%,
+          hsla(0, 0%, 0%, 0) 100%
+        );
+      }
+    }
+
+    .article-body {
+      padding: 0 8px 8px;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .article-meta {
+      color: var(--text-insignificant-color);
+      font-size: 90%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover .domain {
+      color: var(--link-text-color);
+    }
+
+    h1 {
+      font-weight: normal;
+      font-size: inherit;
+      margin: 0;
+      padding: 0;
+      text-wrap: balance;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    p {
+      color: var(--text-insignificant-color);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 90%;
+    }
+  }
+}

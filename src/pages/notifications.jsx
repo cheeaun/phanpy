@@ -1,8 +1,9 @@
 import './notifications.css';
 
-import { useIdle } from '@uidotdev/usehooks';
+import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -166,14 +167,12 @@ function Notifications({ columnMode }) {
     }
   }, [reachStart]);
 
-  useEffect(() => {
-    if (nearReachEnd && showMore) {
-      loadNotifications();
-    }
-  }, [nearReachEnd, showMore]);
+  // useEffect(() => {
+  //   if (nearReachEnd && showMore) {
+  //     loadNotifications();
+  //   }
+  // }, [nearReachEnd, showMore]);
 
-  const idle = useIdle(5000);
-  console.debug('🧘‍♀️ IDLE', idle);
   const loadUpdates = useCallback(() => {
     console.log('✨ Load updates', {
       autoRefresh: snapStates.settings.autoRefresh,
@@ -185,7 +184,7 @@ function Notifications({ columnMode }) {
     if (
       snapStates.settings.autoRefresh &&
       scrollableRef.current?.scrollTop === 0 &&
-      idle &&
+      window.__IDLE__ &&
       !inBackground() &&
       snapStates.notificationsShowNew &&
       uiState !== 'loading'
@@ -193,7 +192,6 @@ function Notifications({ columnMode }) {
       loadNotifications(true);
     }
   }, [
-    idle,
     snapStates.notificationsShowNew,
     snapStates.settings.autoRefresh,
     uiState,
@@ -220,23 +218,23 @@ function Notifications({ columnMode }) {
     }
   }, [notificationID, notificationAccessToken]);
 
-  useEffect(() => {
-    if (uiState === 'default') {
-      (async () => {
-        try {
-          const registration = await getRegistration();
-          if (registration?.getNotifications) {
-            const notifications = await registration.getNotifications();
-            console.log('🔔 Push notifications', notifications);
-            // Close all notifications?
-            // notifications.forEach((notification) => {
-            //   notification.close();
-            // });
-          }
-        } catch (e) {}
-      })();
-    }
-  }, [uiState]);
+  // useEffect(() => {
+  //   if (uiState === 'default') {
+  //     (async () => {
+  //       try {
+  //         const registration = await getRegistration();
+  //         if (registration?.getNotifications) {
+  //           const notifications = await registration.getNotifications();
+  //           console.log('🔔 Push notifications', notifications);
+  //           // Close all notifications?
+  //           // notifications.forEach((notification) => {
+  //           //   notification.close();
+  //           // });
+  //         }
+  //       } catch (e) {}
+  //     })();
+  //   }
+  // }, [uiState]);
 
   return (
     <div
@@ -412,18 +410,14 @@ function Notifications({ columnMode }) {
                         hideTime: true,
                       });
                 return (
-                  <>
+                  <Fragment key={notification.id}>
                     {differentDay && <h2 class="timeline-header">{heading}</h2>}
                     <Notification
                       instance={instance}
                       notification={notification}
                       key={notification.id}
-                      reload={() => {
-                        loadNotifications(true);
-                        loadFollowRequests();
-                      }}
                     />
-                  </>
+                  </Fragment>
                 );
               })}
           </>
@@ -458,15 +452,27 @@ function Notifications({ columnMode }) {
           </>
         )}
         {showMore && (
-          <button
-            type="button"
-            class="plain block"
-            disabled={uiState === 'loading'}
-            onClick={() => loadNotifications()}
-            style={{ marginBlockEnd: '6em' }}
+          <InView
+            onChange={(inView) => {
+              if (inView) {
+                loadNotifications();
+              }
+            }}
           >
-            {uiState === 'loading' ? <Loader abrupt /> : <>Show more&hellip;</>}
-          </button>
+            <button
+              type="button"
+              class="plain block"
+              disabled={uiState === 'loading'}
+              onClick={() => loadNotifications()}
+              style={{ marginBlockEnd: '6em' }}
+            >
+              {uiState === 'loading' ? (
+                <Loader abrupt />
+              ) : (
+                <>Show more&hellip;</>
+              )}
+            </button>
+          </InView>
         )}
       </div>
     </div>

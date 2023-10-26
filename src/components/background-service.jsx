@@ -1,5 +1,6 @@
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { api } from '../utils/api';
 import states, { saveStatus } from '../utils/states';
@@ -11,57 +12,62 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
   usePageVisibility(setVisible);
-  useEffect(() => {
-    let sub;
-    if (isLoggedIn && visible) {
-      const { masto, streaming, instance } = api();
-      (async () => {
-        // 1. Get the latest notification
-        if (states.notificationsLast) {
-          const notificationsIterator = masto.v1.notifications.list({
-            limit: 1,
-            since_id: states.notificationsLast.id,
-          });
-          const { value: notifications } = await notificationsIterator.next();
-          if (notifications?.length) {
-            let lastReadId;
-            try {
-              const markers = await masto.v1.markers.fetch({
-                timeline: 'notifications',
-              });
-              lastReadId = markers?.notifications?.lastReadId;
-            } catch (e) {}
-            if (lastReadId) {
-              if (notifications[0].id !== lastReadId) {
-                states.notificationsShowNew = true;
-              }
-            } else {
-              states.notificationsShowNew = true;
-            }
-          }
-        }
-
-        // 2. Start streaming
-        if (streaming) {
-          sub = streaming.user.notification.subscribe();
-          console.log('🎏 Streaming notification', sub);
-          for await (const entry of sub) {
-            if (!sub) break;
-            console.log('🔔🔔 Notification entry', entry);
-            if (entry.event === 'notification') {
-              console.log('🔔🔔 Notification', entry);
-              saveStatus(entry.payload, instance, {
-                skipThreading: true,
-              });
-            }
+  const subRef = useRef();
+  const debouncedStartNotifications = useDebouncedCallback(() => {
+    const { masto, streaming, instance } = api();
+    (async () => {
+      // 1. Get the latest notification
+      if (states.notificationsLast) {
+        const notificationsIterator = masto.v1.notifications.list({
+          limit: 1,
+          since_id: states.notificationsLast.id,
+        });
+        const { value: notifications } = await notificationsIterator.next();
+        if (notifications?.length) {
+          let lastReadId;
+          try {
+            const markers = await masto.v1.markers.fetch({
+              timeline: 'notifications',
+            });
+            lastReadId = markers?.notifications?.lastReadId;
+          } catch (e) {}
+          if (lastReadId) {
+            states.notificationsShowNew = notifications[0].id !== lastReadId;
+          } else {
             states.notificationsShowNew = true;
           }
         }
-      })();
+      }
+
+      // 2. Start streaming
+      if (streaming) {
+        let sub = (subRef.current = streaming.user.notification.subscribe());
+        console.log('🎏 Streaming notification', sub);
+        for await (const entry of sub) {
+          if (!sub) break;
+          console.log('🔔🔔 Notification entry', entry);
+          if (entry.event === 'notification') {
+            console.log('🔔🔔 Notification', entry);
+            saveStatus(entry.payload, instance, {
+              skipThreading: true,
+            });
+          }
+          states.notificationsShowNew = true;
+        }
+      }
+    })();
+  }, 3000);
+  useEffect(() => {
+    // let sub;
+    if (isLoggedIn && visible) {
+      debouncedStartNotifications();
     }
     return () => {
-      sub?.unsubscribe?.();
-      sub = null;
+      // sub?.unsubscribe?.();
+      // sub = null;
+      debouncedStartNotifications?.cancel?.();
+      subRef.current?.unsubscribe?.();
+      subRef.current = null;
     };
   }, [visible, isLoggedIn]);
 

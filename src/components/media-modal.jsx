@@ -3,12 +3,13 @@ import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
+import states from '../utils/states';
+
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
-import MediaAltModal from './media-alt-modal';
 import MenuLink from './menu-link';
-import Modal from './modal';
 
 function MediaModal({
   mediaAttachments,
@@ -64,9 +65,17 @@ function MediaModal({
     };
   }, []);
 
-  useHotkeys('esc', onClose, [onClose]);
-
-  const [showMediaAlt, setShowMediaAlt] = useState(false);
+  useHotkeys(
+    'esc',
+    onClose,
+    {
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        return hasModal;
+      },
+    },
+    [onClose],
+  );
 
   useEffect(() => {
     let handleScroll = () => {
@@ -112,17 +121,22 @@ function MediaModal({
       >
         {mediaAttachments?.map((media, i) => {
           const { blurhash } = media;
-          const rgbAverageColor = blurhash
-            ? getBlurHashAverageColor(blurhash)
-            : null;
+          let accentColor;
+          if (blurhash) {
+            const averageColor = getBlurHashAverageColor(blurhash);
+            const labAverageColor = rgb2oklab(averageColor);
+            accentColor = oklab2rgb([
+              0.6,
+              labAverageColor[1],
+              labAverageColor[2],
+            ]);
+          }
           return (
             <div
               class="carousel-item"
               style={{
-                '--average-color': `rgb(${rgbAverageColor?.join(',')})`,
-                '--average-color-alpha': `rgba(${rgbAverageColor?.join(
-                  ',',
-                )}, .5)`,
+                '--accent-color': `rgb(${accentColor?.join(',')})`,
+                '--accent-alpha-color': `rgba(${accentColor?.join(',')}, 0.4)`,
               }}
               tabindex="0"
               key={media.id}
@@ -139,10 +153,10 @@ function MediaModal({
                   class="media-alt"
                   hidden={!showControls}
                   onClick={() => {
-                    setShowMediaAlt({
+                    states.showMediaAlt = {
                       alt: media.description,
                       lang,
-                    });
+                    };
                   }}
                 >
                   <span class="alt-badge">ALT</span>
@@ -273,23 +287,6 @@ function MediaModal({
             <Icon icon="arrow-right" />
           </button>
         </div>
-      )}
-      {!!showMediaAlt && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMediaAlt(false);
-              carouselRef.current.focus();
-            }
-          }}
-        >
-          <MediaAltModal
-            alt={showMediaAlt.alt || showMediaAlt}
-            lang={showMediaAlt?.lang}
-            onClose={() => setShowMediaAlt(false)}
-          />
-        </Modal>
       )}
     </div>
   );

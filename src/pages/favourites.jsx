@@ -7,7 +7,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Favourites() {
-  useTitle('Favourites', '/f');
+  useTitle('Likes', '/f');
   const { masto, instance } = api();
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
@@ -19,10 +19,10 @@ function Favourites() {
 
   return (
     <Timeline
-      title="Favourites"
+      title="Likes"
       id="favourites"
-      emptyText="No favourites yet. Go favourite something!"
-      errorText="Unable to load favourites"
+      emptyText="No likes yet. Go like something!"
+      errorText="Unable to load likes"
       instance={instance}
       fetchItems={fetchFavourites}
     />

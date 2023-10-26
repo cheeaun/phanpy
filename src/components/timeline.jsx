@@ -1,4 +1,3 @@
-import { useIdle } from '@uidotdev/usehooks';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -211,21 +210,19 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
-  const idle = useIdle(5000);
-  console.debug('🧘‍♀️ IDLE', idle);
   const loadOrCheckUpdates = useCallback(
-    async ({ disableHoverCheck = false } = {}) => {
+    async ({ disableIdleCheck = false } = {}) => {
       console.log('✨ Load or check updates', {
         autoRefresh: snapStates.settings.autoRefresh,
         scrollTop: scrollableRef.current.scrollTop,
-        disableHoverCheck,
-        idle,
+        disableIdleCheck,
+        idle: window.__IDLE__,
         inBackground: inBackground(),
       });
       if (
         snapStates.settings.autoRefresh &&
         scrollableRef.current.scrollTop === 0 &&
-        (disableHoverCheck || idle) &&
+        (disableIdleCheck || window.__IDLE__) &&
         !inBackground()
       ) {
         console.log('✨ Load updates', snapStates.settings.autoRefresh);
@@ -239,7 +236,11 @@ function Timeline({
         }
       }
     },
-    [id, idle, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
+    [id, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
+  );
+  const debouncedLoadOrCheckUpdates = useDebouncedCallback(
+    loadOrCheckUpdates,
+    3000,
   );
 
   const lastHiddenTime = useRef();
@@ -248,12 +249,14 @@ function Timeline({
       if (visible) {
         const timeDiff = Date.now() - lastHiddenTime.current;
         if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
-          loadOrCheckUpdates({
-            disableHoverCheck: true,
+          // 1 minute
+          debouncedLoadOrCheckUpdates({
+            disableIdleCheck: true,
           });
         }
       } else {
         lastHiddenTime.current = Date.now();
+        debouncedLoadOrCheckUpdates.cancel();
       }
       setVisible(visible);
     },
@@ -609,11 +612,16 @@ function StatusCarousel({ title, class: className, children }) {
 
 function TimelineStatusCompact({ status, instance }) {
   const snapStates = useSnapshot(states);
-  const { id } = status;
+  const { id, visibility } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
   return (
-    <article class="status compact-thread" tabindex="-1">
+    <article
+      class={`status compact-thread ${
+        visibility === 'direct' ? 'visibility-direct' : ''
+      }`}
+      tabindex="-1"
+    >
       {!!snapStates.statusThreadNumber[sKey] ? (
         <div class="status-thread-badge">
           <Icon icon="thread" size="s" />

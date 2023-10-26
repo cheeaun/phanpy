@@ -168,7 +168,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const showMedia = parseInt(mediaParam, 10) > 0;
-  const [viewMode, setViewMode] = useState(searchParams.get('view'));
+  const firstLoad = useRef(!states.prevLocation && history.length === 1);
+  const [viewMode, setViewMode] = useState(
+    searchParams.get('view') || firstLoad.current ? 'full' : null,
+  );
   const translate = !!parseInt(searchParams.get('translate'));
   const { masto, instance } = api({ instance: propInstance });
   const {
@@ -534,6 +537,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       // If media is open, esc to close media first
       // Else close the status page
       enabled: !showMedia,
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        return hasModal;
+      },
     },
   );
   // For backspace, will always close both media and status page
@@ -839,9 +846,11 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       ref={scrollableRef}
       class={`status-deck deck contained ${
         statuses.length > 1 ? 'padded-bottom' : ''
-      } ${initialPageState.current === 'status' ? 'slide-in' : ''} ${
-        viewMode ? `deck-view-${viewMode}` : ''
-      }`}
+      } ${
+        initialPageState.current === 'status' && !firstLoad.current
+          ? 'slide-in'
+          : ''
+      } ${viewMode ? `deck-view-${viewMode}` : ''}`}
       onAnimationEnd={(e) => {
         // Fix the bounce effect when switching viewMode
         // `slide-in` animation kicks in when switching viewMode
@@ -959,6 +968,23 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             )}
           </h1>
           <div class="header-side">
+            <button
+              type="button"
+              class="plain4"
+              style={{
+                display: viewMode === 'full' ? '' : 'none',
+              }}
+              onClick={() => {
+                setViewMode(null);
+                searchParams.delete('media');
+                searchParams.delete('media-only');
+                searchParams.delete('view');
+                setSearchParams(searchParams);
+              }}
+              title="Switch to Side Peek view"
+            >
+              <Icon icon="layout4" size="l" />
+            </button>
             <Menu
               align="end"
               portal={{

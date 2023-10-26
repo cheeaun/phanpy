@@ -1,5 +1,6 @@
 import './app.css';
 
+import debounce from 'just-debounce-it';
 import {
   useEffect,
   useLayoutEffect,
@@ -9,7 +10,7 @@ import {
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
-import { useSnapshot } from 'valtio';
+import { subscribe, useSnapshot } from 'valtio';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
@@ -68,8 +69,64 @@ setTimeout(() => {
   }
 }, 5000);
 
+(() => {
+  window.__IDLE__ = false;
+  const nonIdleEvents = [
+    'mousemove',
+    'mousedown',
+    'resize',
+    'keydown',
+    'touchstart',
+    'pointerdown',
+    'pointermove',
+    'wheel',
+  ];
+  const IDLE_TIME = 5_000; // 5 seconds
+  const setIdle = debounce(() => {
+    window.__IDLE__ = true;
+  }, IDLE_TIME);
+  const onNonIdle = () => {
+    window.__IDLE__ = false;
+    setIdle();
+  };
+  nonIdleEvents.forEach((event) => {
+    window.addEventListener(event, onNonIdle, {
+      passive: true,
+      capture: true,
+    });
+  });
+  // document.addEventListener(
+  //   'visibilitychange',
+  //   () => {
+  //     if (document.visibilityState === 'visible') {
+  //       onNonIdle();
+  //     }
+  //   },
+  //   {
+  //     passive: true,
+  //   },
+  // );
+})();
+
+subscribe(states, (changes) => {
+  for (const [action, path, value, prevValue] of changes) {
+    // Change #app dataset based on settings.shortcutsViewMode
+    if (path.join('.') === 'settings.shortcutsViewMode') {
+      const $app = document.getElementById('app');
+      if ($app) {
+        $app.dataset.shortcutsViewMode = states.shortcuts?.length ? value : '';
+      }
+    }
+
+    // Add/Remove cloak class to body
+    if (path.join('.') === 'settings.cloakMode') {
+      const $body = document.body;
+      $body.classList.toggle('cloak', value);
+    }
+  }
+});
+
 function App() {
-  const snapStates = useSnapshot(states);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
 
@@ -153,11 +210,72 @@ function App() {
 
   let location = useLocation();
   states.currentLocation = location.pathname;
+  // useLayoutEffect(() => {
+  //   states.currentLocation = location.pathname;
+  // }, [location.pathname]);
 
   useEffect(focusDeck, [location, isLoggedIn]);
 
-  const prevLocation = snapStates.prevLocation;
-  const backgroundLocation = useRef(prevLocation || null);
+  if (/\/https?:/.test(location.pathname)) {
+    return <HttpRoute />;
+  }
+
+  return (
+    <>
+      <PrimaryRoutes isLoggedIn={isLoggedIn} loading={uiState === 'loading'} />
+      <SecondaryRoutes isLoggedIn={isLoggedIn} />
+      {uiState === 'default' && (
+        <Routes>
+          <Route path="/:instance?/s/:id" element={<StatusRoute />} />
+        </Routes>
+      )}
+      {isLoggedIn && <ComposeButton />}
+      {isLoggedIn && <Shortcuts />}
+      <Modals />
+      {isLoggedIn && <NotificationService />}
+      <BackgroundService isLoggedIn={isLoggedIn} />
+      {uiState !== 'loading' && <SearchCommand onClose={focusDeck} />}
+      <KeyboardShortcutsHelp />
+    </>
+  );
+}
+
+function PrimaryRoutes({ isLoggedIn, loading }) {
+  const location = useLocation();
+  const nonRootLocation = useMemo(() => {
+    const { pathname } = location;
+    return !/^\/(login|welcome)/.test(pathname);
+  }, [location]);
+
+  return (
+    <Routes location={nonRootLocation || location}>
+      <Route
+        path="/"
+        element={
+          isLoggedIn ? (
+            <Home />
+          ) : loading ? (
+            <Loader id="loader-root" />
+          ) : (
+            <Welcome />
+          )
+        }
+      />
+      <Route path="/login" element={<Login />} />
+      <Route path="/welcome" element={<Welcome />} />
+    </Routes>
+  );
+}
+
+function getPrevLocation() {
+  return states.prevLocation || null;
+}
+function SecondaryRoutes({ isLoggedIn }) {
+  // const snapStates = useSnapshot(states);
+  const location = useLocation();
+  // const prevLocation = snapStates.prevLocation;
+  const backgroundLocation = useRef(getPrevLocation());
+
   const isModalPage = useMemo(() => {
     return (
       matchPath('/:instance/s/:id', location.pathname) ||
@@ -165,7 +283,8 @@ function App() {
     );
   }, [location.pathname, matchPath]);
   if (isModalPage) {
-    if (!backgroundLocation.current) backgroundLocation.current = prevLocation;
+    if (!backgroundLocation.current)
+      backgroundLocation.current = getPrevLocation();
   } else {
     backgroundLocation.current = null;
   }
@@ -174,91 +293,32 @@ function App() {
     location,
   });
 
-  if (/\/https?:/.test(location.pathname)) {
-    return <HttpRoute />;
-  }
-
-  const nonRootLocation = useMemo(() => {
-    const { pathname } = location;
-    return !/^\/(login|welcome)/.test(pathname);
-  }, [location]);
-
-  // Change #app dataset based on snapStates.settings.shortcutsViewMode
-  useEffect(() => {
-    const $app = document.getElementById('app');
-    if ($app) {
-      $app.dataset.shortcutsViewMode = snapStates.shortcuts?.length
-        ? snapStates.settings.shortcutsViewMode
-        : '';
-    }
-  }, [snapStates.shortcuts, snapStates.settings.shortcutsViewMode]);
-
-  // Add/Remove cloak class to body
-  useEffect(() => {
-    const $body = document.body;
-    $body.classList.toggle('cloak', snapStates.settings.cloakMode);
-  }, [snapStates.settings.cloakMode]);
-
   return (
-    <>
-      <Routes location={nonRootLocation || location}>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <Home />
-            ) : uiState === 'loading' ? (
-              <Loader id="loader-root" />
-            ) : (
-              <Welcome />
-            )
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/welcome" element={<Welcome />} />
-      </Routes>
-      <Routes location={backgroundLocation.current || location}>
-        {isLoggedIn && (
+    <Routes location={backgroundLocation.current || location}>
+      {isLoggedIn && (
+        <>
           <Route path="/notifications" element={<Notifications />} />
-        )}
-        {isLoggedIn && <Route path="/mentions" element={<Mentions />} />}
-        {isLoggedIn && <Route path="/following" element={<Following />} />}
-        {isLoggedIn && <Route path="/b" element={<Bookmarks />} />}
-        {isLoggedIn && <Route path="/f" element={<Favourites />} />}
-        {isLoggedIn && (
+          <Route path="/mentions" element={<Mentions />} />
+          <Route path="/following" element={<Following />} />
+          <Route path="/b" element={<Bookmarks />} />
+          <Route path="/f" element={<Favourites />} />
           <Route path="/l">
             <Route index element={<Lists />} />
             <Route path=":id" element={<List />} />
           </Route>
-        )}
-        {isLoggedIn && <Route path="/ft" element={<FollowedHashtags />} />}
-        <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />
-        <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
-        <Route path="/:instance?/p">
-          <Route index element={<Public />} />
-          <Route path="l" element={<Public local />} />
-        </Route>
-        <Route path="/:instance?/trending" element={<Trending />} />
-        <Route path="/:instance?/search" element={<Search />} />
-        {/* <Route path="/:anything" element={<NotFound />} /> */}
-      </Routes>
-      {uiState === 'default' && (
-        <Routes>
-          <Route path="/:instance?/s/:id" element={<StatusRoute />} />
-        </Routes>
+          <Route path="/ft" element={<FollowedHashtags />} />
+        </>
       )}
-      {isLoggedIn && <ComposeButton />}
-      {isLoggedIn &&
-        !snapStates.settings.shortcutsColumnsMode &&
-        snapStates.settings.shortcutsViewMode !== 'multi-column' && (
-          <Shortcuts />
-        )}
-      <Modals />
-      {isLoggedIn && <NotificationService />}
-      <BackgroundService isLoggedIn={isLoggedIn} />
-      {uiState !== 'loading' && <SearchCommand onClose={focusDeck} />}
-      <KeyboardShortcutsHelp />
-    </>
+      <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />
+      <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
+      <Route path="/:instance?/p">
+        <Route index element={<Public />} />
+        <Route path="l" element={<Public local />} />
+      </Route>
+      <Route path="/:instance?/trending" element={<Trending />} />
+      <Route path="/:instance?/search" element={<Search />} />
+      {/* <Route path="/:anything" element={<NotFound />} /> */}
+    </Routes>
   );
 }
 

@@ -1,6 +1,7 @@
 import './shortcuts.css';
 
 import { Menu, MenuItem } from '@szhsin/react-menu';
+import { memo } from 'preact/compat';
 import { useMemo, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
@@ -18,9 +19,15 @@ import MenuLink from './menu-link';
 function Shortcuts() {
   const { instance } = api();
   const snapStates = useSnapshot(states);
-  const { shortcuts } = snapStates;
+  const { shortcuts, settings } = snapStates;
 
   if (!shortcuts.length) {
+    return null;
+  }
+  if (
+    settings.shortcutsColumnsMode ||
+    settings.shortcutsViewMode === 'multi-column'
+  ) {
     return null;
   }
 
@@ -180,4 +187,4 @@ function Shortcuts() {
   );
 }
 
-export default Shortcuts;
+export default memo(Shortcuts);

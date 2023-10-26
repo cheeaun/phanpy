@@ -20,8 +20,8 @@ const throttle = pThrottle({
 // Using other API instances instead of lingva.ml because of this bug (slashes don't work):
 // https://github.com/thedaviddelta/lingva-translate/issues/68
 const LINGVA_INSTANCES = [
-  'lingva.garudalinux.org',
   'lingva.lunar.icu',
+  'lingva.garudalinux.org',
   'translate.plausibility.cloud',
 ];
 let currentLingvaInstance = 0;
@@ -35,7 +35,10 @@ function _lingvaTranslate(text, source, target) {
         text,
       )}`,
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
       .then((res) => {
         return {
           provider: 'lingva',

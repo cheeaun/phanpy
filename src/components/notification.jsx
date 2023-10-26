@@ -1,3 +1,5 @@
+import { memo } from 'preact/compat';
+
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -47,24 +49,24 @@ const contentText = {
   reblog_reply: 'boosted your reply.',
   follow: 'followed you.',
   follow_request: 'requested to follow you.',
-  favourite: 'favourited your post.',
-  'favourite+account': (count) => `favourited ${count} of your posts.`,
-  favourite_reply: 'favourited your reply.',
+  favourite: 'liked your post.',
+  'favourite+account': (count) => `liked ${count} of your posts.`,
+  favourite_reply: 'liked your reply.',
   poll: 'A poll you have voted in or created has ended.',
   'poll-self': 'A poll you have created has ended.',
   'poll-voted': 'A poll you have voted in has ended.',
   update: 'A post you interacted with has been edited.',
-  'favourite+reblog': 'boosted & favourited your post.',
+  'favourite+reblog': 'boosted & liked your post.',
   'favourite+reblog+account': (count) =>
-    `boosted & favourited ${count} of your posts.`,
-  'favourite+reblog_reply': 'boosted & favourited your reply.',
+    `boosted & liked ${count} of your posts.`,
+  'favourite+reblog_reply': 'boosted & liked your reply.',
   'admin.sign_up': 'signed up.',
   'admin.report': (targetAccount) => <>reported {targetAccount}</>,
 };
 
 const AVATARS_LIMIT = 50;
 
-function Notification({ notification, instance, reload, isStatic }) {
+function Notification({ notification, instance, isStatic }) {
   const { id, status, account, report, _accounts, _statuses } = notification;
   let { type } = notification;
 
@@ -140,8 +142,8 @@ function Notification({ notification, instance, reload, isStatic }) {
 
   const genericAccountsHeading =
     {
-      'favourite+reblog': 'Boosted/Favourited by…',
-      favourite: 'Favourited by…',
+      'favourite+reblog': 'Boosted/Liked by…',
+      favourite: 'Liked by…',
       reblog: 'Boosted by…',
       follow: 'Followed by…',
     }[type] || 'Accounts';
@@ -153,8 +155,14 @@ function Notification({ notification, instance, reload, isStatic }) {
     };
   };
 
+  console.debug('RENDER Notification', notification.id);
+
   return (
-    <div class={`notification notification-${type}`} tabIndex="0">
+    <div
+      class={`notification notification-${type}`}
+      data-notification-id={id}
+      tabIndex="0"
+    >
       <div
         class={`notification-type notification-${type}`}
         title={formattedCreatedAt}
@@ -207,12 +215,7 @@ function Notification({ notification, instance, reload, isStatic }) {
               )}
             </p>
             {type === 'follow_request' && (
-              <FollowRequestButtons
-                accountID={account.id}
-                onChange={() => {
-                  // reload();
-                }}
-              />
+              <FollowRequestButtons accountID={account.id} />
             )}
           </>
         )}
@@ -327,4 +330,4 @@ function TruncatedLink(props) {
   return <Link {...props} data-read-more="Read more →" ref={ref} />;
 }
 
-export default Notification;
+export default memo(Notification);

@@ -71,6 +71,11 @@ function Search(props) {
   };
 
   function loadResults(firstLoad) {
+    if (!firstLoad && !authenticated) {
+      // Search results pagination is only available to authenticated users
+      return;
+    }
+
     setUIState('loading');
     if (firstLoad && !type) {
       setStatusResults(statusResults.slice(0, SHORT_LIMIT));
@@ -89,6 +94,7 @@ function Search(props) {
         params.type = type;
         if (authenticated) params.offset = offsetRef.current;
       }
+
       try {
         const results = await masto.v2.search.fetch(params);
         console.log(results);

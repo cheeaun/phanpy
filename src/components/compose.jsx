@@ -392,7 +392,6 @@ function Compose({
         const hasModal = !!modals;
         const hasOnlyComposer =
           modals.length === 1 && modals[0].querySelector('#compose-container');
-        console.log('hasModal', hasModal, 'hasOnlyComposer', hasOnlyComposer);
         return hasModal && !hasOnlyComposer;
       },
     },

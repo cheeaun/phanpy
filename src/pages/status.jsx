@@ -167,6 +167,7 @@ function StatusPage(params) {
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
+  const mediaStatusID = searchParams.get('mediaStatusID');
   const showMedia = parseInt(mediaParam, 10) > 0;
   const firstLoad = useRef(!states.prevLocation && history.length === 1);
   const [viewMode, setViewMode] = useState(
@@ -656,6 +657,23 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const handleStatusLinkClick = useCallback((e, status) => {
     resetScrollPosition(status.id);
   }, []);
+
+  useEffect(() => {
+    let timer;
+    if (mediaStatusID && showMedia) {
+      timer = setTimeout(() => {
+        const status = scrollableRef.current?.querySelector(
+          `.status-link[href*="/${mediaStatusID}"]`,
+        );
+        if (status) {
+          status.scrollIntoView(scrollIntoViewOptions);
+        }
+      }, 400); // After CSS transition
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [mediaStatusID, showMedia]);
 
   const renderStatus = useCallback(
     (status) => {

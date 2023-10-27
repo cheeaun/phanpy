@@ -928,10 +928,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-backdrop .deck .status {
   max-width: var(--main-width);
 }
-.deck-backdrop .deck .menu-switch-view {
+.deck-backdrop .deck :is(.button-switch-view, menu-switch-view) {
   display: none;
 }
 @media (min-width: 40em) {
+  .deck-backdrop .deck .button-switch-view {
+    display: inline-block;
+  }
   .deck-backdrop .deck .menu-switch-view {
     display: flex;
   }

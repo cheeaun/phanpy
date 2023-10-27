@@ -1003,7 +1003,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           <div class="header-side">
             <button
               type="button"
-              class="plain4"
+              class="plain4 button-switch-view"
               style={{
                 display: viewMode === 'full' ? '' : 'none',
               }}

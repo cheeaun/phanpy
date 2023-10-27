@@ -22,7 +22,6 @@ const states = proxy({
   notificationsNew: [],
   notificationsShowNew: false,
   notificationsLastFetchTime: null,
-  accounts: {},
   reloadStatusPage: 0,
   reloadGenericAccounts: {
     id: null,

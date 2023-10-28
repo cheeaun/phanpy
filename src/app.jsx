@@ -55,6 +55,20 @@ import { getCurrentAccount } from './utils/store-utils';
 import './utils/toast-alert';
 
 window.__STATES__ = states;
+window.__STATES_STATS__ = () => {
+  const keys = [
+    'statuses',
+    'accounts',
+    'spoilers',
+    'unfurledLinks',
+    'statusQuotes',
+  ];
+  const counts = {};
+  keys.forEach((key) => {
+    counts[key] = Object.keys(states[key]).length;
+  });
+  console.warn('STATE stats', counts);
+};
 
 // Preload icons
 // There's probably a better way to do this

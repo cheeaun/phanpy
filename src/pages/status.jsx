@@ -60,6 +60,12 @@ const scrollIntoViewOptions = {
   behavior: 'smooth',
 };
 
+// Select all statuses except those inside collapsed details/summary
+// Hat-tip to @AmeliaBR@front-end.social
+// https://front-end.social/@AmeliaBR/109784776146144471
+const STATUSES_SELECTOR =
+  '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)';
+
 function StatusPage(params) {
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
@@ -555,12 +561,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
-      // Select all statuses except those inside collapsed details/summary
-      // Hat-tip to @AmeliaBR@front-end.social
-      // https://front-end.social/@AmeliaBR/109784776146144471
-      scrollableRef.current.querySelectorAll(
-        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
-      ),
+      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
     );
     console.log({ allStatusLinks });
     if (
@@ -593,9 +594,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     );
     const activeStatusRect = activeStatus?.getBoundingClientRect();
     const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll(
-        '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)',
-      ),
+      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
     );
     if (
       activeStatus &&

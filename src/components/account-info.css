@@ -18,7 +18,7 @@
   position: absolute;
   top: 8px;
   inset-inline: 8px;
-  z-index: 2;
+  z-index: 3;
   border: 1px solid var(--outline-color);
   box-shadow: 0 8px 16px var(--drop-shadow-color);
   border-radius: calc(16px - 8px);
@@ -47,7 +47,7 @@
 
   ~ * {
     /* pointer-events: none; */
-    filter: grayscale(0.75) brightness(0.75);
+    filter: grayscale(0.75) opacity(0.75);
   }
 }
 

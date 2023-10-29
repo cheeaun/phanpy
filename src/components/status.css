@@ -846,7 +846,7 @@
   object-fit: cover;
   vertical-align: middle;
 }
-.status .media {
+.media {
   cursor: pointer;
 
   &[data-has-alt] {
@@ -885,7 +885,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: relative;
   background-clip: padding-box;
 }
-.status :is(.media-video, .media-audio) .media-play {
+:is(.media-video, .media-audio) .media-play {
   pointer-events: none;
   width: 44px;
   height: 44px;
@@ -902,10 +902,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 70px;
   transition: transform 0.2s ease-in-out;
 }
-.status :is(.media-video, .media-audio):hover:not(:active) .media-play {
+:is(.media-video, .media-audio):hover:not(:active) .media-play {
   transform: translate(-50%, -50%) scale(1.1);
 }
-.status :is(.media-video, .media-audio)[data-formatted-duration]:after {
+:is(.media-video, .media-audio)[data-formatted-duration]:after {
   font-size: 12px;
   pointer-events: none;
   content: attr(data-formatted-duration);
@@ -918,10 +918,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 4px;
   padding: 0 4px;
 }
-.status .media-audio[data-formatted-duration]:after {
+.media-audio[data-formatted-duration]:after {
   content: '♬ ' attr(data-formatted-duration);
 }
-.status .media-gif[data-label]:not(:hover):after {
+.media-gif[data-label]:not(:hover):after {
   font-size: 12px;
   font-weight: bold;
   pointer-events: none;
@@ -953,12 +953,12 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .status .media-audio audio {
   width: 100%;
 } */
-.status .media-audio {
+.media-audio {
   width: 100%;
   height: 100%;
   background-image: radial-gradient(
       circle at center center,
-      var(--bg-color),
+      transparent,
       var(--bg-faded-color)
     ),
     repeating-radial-gradient(

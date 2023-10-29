@@ -13,6 +13,8 @@ import useScroll from '../utils/useScroll';
 
 import Icon from './icon';
 import Link from './link';
+import Media from './media';
+import MediaPost from './media-post';
 import NavMenu from './nav-menu';
 import Status from './status';
 
@@ -39,6 +41,7 @@ function Timeline({
   timelineStart,
   allowFilters,
   refresh,
+  view,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -50,6 +53,7 @@ function Timeline({
 
   console.debug('RENDER Timeline', id, refresh);
 
+  const allowGrouping = view !== 'media';
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);
@@ -59,10 +63,12 @@ function Timeline({
         try {
           let { done, value } = await fetchItems(firstLoad);
           if (Array.isArray(value)) {
-            if (boostsCarousel) {
-              value = groupBoosts(value);
+            if (allowGrouping) {
+              if (boostsCarousel) {
+                value = groupBoosts(value);
+              }
+              value = groupContext(value);
             }
-            value = groupContext(value);
             console.log(value);
             if (firstLoad) {
               setItems(value);
@@ -210,6 +216,14 @@ function Timeline({
     }
   }, [nearReachEnd, showMore]);
 
+  const prevView = useRef(view);
+  useEffect(() => {
+    if (prevView.current !== view) {
+      prevView.current = view;
+      setItems([]);
+    }
+  }, [view]);
+
   const loadOrCheckUpdates = useCallback(
     async ({ disableIdleCheck = false } = {}) => {
       console.log('✨ Load or check updates', {
@@ -346,7 +360,7 @@ function Timeline({
         )}
         {!!items.length ? (
           <>
-            <ul class="timeline">
+            <ul class={`timeline ${view ? `timeline-${view}` : ''}`}>
               {items.map((status) => (
                 <TimelineItem
                   status={status}
@@ -354,26 +368,29 @@ function Timeline({
                   useItemID={useItemID}
                   allowFilters={allowFilters}
                   key={status.id + status?._pinned}
+                  view={view}
                 />
               ))}
-              {showMore && uiState === 'loading' && (
-                <>
-                  <li
-                    style={{
-                      height: '20vh',
-                    }}
-                  >
-                    <Status skeleton />
-                  </li>
-                  <li
-                    style={{
-                      height: '25vh',
-                    }}
-                  >
-                    <Status skeleton />
-                  </li>
-                </>
-              )}
+              {showMore &&
+                uiState === 'loading' &&
+                (view === 'media' ? null : (
+                  <>
+                    <li
+                      style={{
+                        height: '20vh',
+                      }}
+                    >
+                      <Status skeleton />
+                    </li>
+                    <li
+                      style={{
+                        height: '25vh',
+                      }}
+                    >
+                      <Status skeleton />
+                    </li>
+                  </>
+                ))}
             </ul>
             {uiState === 'default' &&
               (showMore ? (
@@ -399,11 +416,19 @@ function Timeline({
           </>
         ) : uiState === 'loading' ? (
           <ul class="timeline">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <li key={i}>
-                <Status skeleton />
-              </li>
-            ))}
+            {Array.from({ length: 5 }).map((_, i) =>
+              view === 'media' ? (
+                <div
+                  style={{
+                    height: '50vh',
+                  }}
+                />
+              ) : (
+                <li key={i}>
+                  <Status skeleton />
+                </li>
+              ),
+            )}
           </ul>
         ) : (
           uiState !== 'error' && <p class="ui-state">{emptyText}</p>
@@ -426,7 +451,7 @@ function Timeline({
   );
 }
 
-function TimelineItem({ status, instance, useItemID, allowFilters }) {
+function TimelineItem({ status, instance, useItemID, allowFilters, view }) {
   const { id: statusID, reblog, items, type, _pinned } = status;
   const actualStatusID = reblog?.id || statusID;
   const url = instance
@@ -531,8 +556,33 @@ function TimelineItem({ status, instance, useItemID, allowFilters }) {
       );
     });
   }
+
+  const itemKey = `timeline-${statusID + _pinned}`;
+
+  if (view === 'media') {
+    return useItemID ? (
+      <MediaPost
+        class="timeline-item"
+        parent="li"
+        key={itemKey}
+        statusID={statusID}
+        instance={instance}
+        allowFilters={allowFilters}
+      />
+    ) : (
+      <MediaPost
+        class="timeline-item"
+        parent="li"
+        key={itemKey}
+        status={status}
+        instance={instance}
+        allowFilters={allowFilters}
+      />
+    );
+  }
+
   return (
-    <li key={`timeline-${statusID + _pinned}`}>
+    <li key={itemKey}>
       <Link class="status-link timeline-item" to={url}>
         {useItemID ? (
           <Status

@@ -105,6 +105,11 @@ const TYPE_PARAMS = {
       pattern: '[^#]+',
     },
     {
+      text: 'Media only',
+      name: 'media',
+      type: 'checkbox',
+    },
+    {
       text: 'Instance',
       name: 'instance',
       type: 'text',
@@ -186,8 +191,10 @@ export const SHORTCUTS_META = {
     id: 'hashtag',
     title: ({ hashtag }) => hashtag,
     subtitle: ({ instance }) => instance || api().instance,
-    path: ({ hashtag, instance }) =>
-      `${instance ? `/${instance}` : ''}/t/${hashtag.split(/\s+/).join('+')}`,
+    path: ({ hashtag, instance, media }) =>
+      `${instance ? `/${instance}` : ''}/t/${hashtag.split(/\s+/).join('+')}${
+        media ? '?media=1' : ''
+      }`,
     icon: 'hashtag',
   },
 };

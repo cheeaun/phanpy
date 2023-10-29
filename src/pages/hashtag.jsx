@@ -2,10 +2,11 @@ import {
   FocusableItem,
   MenuDivider,
   MenuGroup,
+  MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
 import Menu2 from '../components/menu2';
@@ -25,13 +26,16 @@ const LIMIT = 20;
 const TAGS_LIMIT_PER_MODE = 4;
 const TOTAL_TAGS_LIMIT = TAGS_LIMIT_PER_MODE + 1;
 
-function Hashtags({ columnMode, ...props }) {
+function Hashtags({ media: mediaView, columnMode, ...props }) {
   // const navigate = useNavigate();
   let { hashtag, ...params } = columnMode ? {} : useParams();
   if (props.hashtag) hashtag = props.hashtag;
   let hashtags = hashtag.trim().split(/[\s+]+/);
   hashtags.sort();
   hashtag = hashtags[0];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const media = mediaView || !!searchParams.get('media');
+  const linkParams = media ? '?media=1' : '';
 
   const { masto, instance, authenticated } = api({
     instance: props?.instance || params.instance,
@@ -60,6 +64,7 @@ function Hashtags({ columnMode, ...props }) {
         limit: LIMIT,
         any: hashtags.slice(1),
         maxId: firstLoad ? undefined : maxID.current,
+        onlyMedia: media,
       })
       .next();
     const { value } = results;
@@ -69,7 +74,9 @@ function Hashtags({ columnMode, ...props }) {
       }
 
       value.forEach((item) => {
-        saveStatus(item, instance);
+        saveStatus(item, instance, {
+          skipThreading: media, // If media view, no need to form threads
+        });
       });
 
       maxID.current = value[value.length - 1].id;
@@ -136,6 +143,8 @@ function Hashtags({ columnMode, ...props }) {
       fetchItems={fetchHashtags}
       checkForUpdates={checkForUpdates}
       useItemID
+      view={media ? 'media' : undefined}
+      refresh={media}
       headerEnd={
         <Menu2
           portal
@@ -209,6 +218,23 @@ function Hashtags({ columnMode, ...props }) {
               <MenuDivider />
             </>
           )}
+          <MenuHeader className="plain">Filters</MenuHeader>
+          <MenuItem
+            type="checkbox"
+            checked={!!media}
+            onClick={() => {
+              if (media) {
+                searchParams.delete('media');
+              } else {
+                searchParams.set('media', '1');
+              }
+              setSearchParams(searchParams);
+            }}
+          >
+            <Icon icon="check-circle" />{' '}
+            <span class="menu-grow">Media only</span>
+          </MenuItem>
+          <MenuDivider />
           <FocusableItem className="menu-field" disabled={reachLimit}>
             {({ ref }) => (
               <form
@@ -231,7 +257,7 @@ function Hashtags({ columnMode, ...props }) {
                     // );
                     location.hash = instance
                       ? `/${instance}/t/${hashtags.join('+')}`
-                      : `/t/${hashtags.join('+')}`;
+                      : `/t/${hashtags.join('+')}${linkParams}`;
                   }
                 }}
               >
@@ -267,8 +293,8 @@ function Hashtags({ columnMode, ...props }) {
                   //     : `/t/${hashtags.join('+')}`,
                   // );
                   location.hash = instance
-                    ? `/${instance}/t/${hashtags.join('+')}`
-                    : `/t/${hashtags.join('+')}`;
+                    ? `/${instance}/t/${hashtags.join('+')}${linkParams}`
+                    : `/t/${hashtags.join('+')}${linkParams}`;
                 }}
               >
                 <Icon icon="x" alt="Remove hashtag" class="danger-icon" />
@@ -287,6 +313,7 @@ function Hashtags({ columnMode, ...props }) {
                 type: 'hashtag',
                 hashtag: hashtags.join(' '),
                 instance,
+                media: media ? 'on' : undefined,
               };
               // Check if already exists
               const exists = states.shortcuts.some(
@@ -300,7 +327,8 @@ function Hashtags({ columnMode, ...props }) {
                       .split(/[\s+]+/)
                       .sort()
                       .join(' ') &&
-                  (s.instance ? s.instance === shortcut.instance : true),
+                  (s.instance ? s.instance === shortcut.instance : true) &&
+                  (s.media ? !!s.media === !!shortcut.media : true),
               );
               if (exists) {
                 alert('This shortcut already exists');
@@ -324,7 +352,9 @@ function Hashtags({ columnMode, ...props }) {
               if (newInstance) {
                 newInstance = newInstance.toLowerCase().trim();
                 // navigate(`/${newInstance}/t/${hashtags.join('+')}`);
-                location.hash = `/${newInstance}/t/${hashtags.join('+')}`;
+                location.hash = `/${newInstance}/t/${hashtags.join(
+                  '+',
+                )}${linkParams}`;
               }
             }}
           >

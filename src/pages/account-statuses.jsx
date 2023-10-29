@@ -414,6 +414,7 @@ function AccountStatuses() {
       errorText="Unable to load posts"
       fetchItems={fetchAccountStatuses}
       useItemID
+      view={media ? 'media' : undefined}
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
       refresh={[

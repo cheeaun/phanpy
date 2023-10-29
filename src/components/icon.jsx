@@ -102,6 +102,7 @@ export const ICONS = {
   keyboard: () => import('@iconify-icons/mingcute/keyboard-line'),
   cloud: () => import('@iconify-icons/mingcute/cloud-line'),
   month: () => import('@iconify-icons/mingcute/calendar-month-line'),
+  media: () => import('@iconify-icons/mingcute/photo-album-line'),
 };
 
 function Icon({

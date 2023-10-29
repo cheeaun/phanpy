@@ -1,6 +1,6 @@
 import './generic-accounts.css';
 
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
 
@@ -56,15 +56,18 @@ export default function GenericAccounts({ onClose = () => {} }) {
     })();
   };
 
+  const firstLoad = useRef(true);
   useEffect(() => {
     if (staticAccounts?.length > 0) {
       setAccounts(staticAccounts);
     } else {
       loadAccounts(true);
+      firstLoad.current = false;
     }
   }, [staticAccounts, fetchAccounts]);
 
   useEffect(() => {
+    if (firstLoad.current) return;
     // reloadGenericAccounts contains value like {id: 'mute', counter: 1}
     // We only need to reload if the id matches
     if (snapStates.reloadGenericAccounts?.id === id) {

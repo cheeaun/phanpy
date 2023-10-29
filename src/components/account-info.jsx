@@ -126,7 +126,7 @@ function AccountInfo({
   const { masto } = api({
     instance,
   });
-  const { masto: currentMasto } = api();
+  const { masto: currentMasto, instance: currentInstance } = api();
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -137,8 +137,8 @@ function AccountInfo({
   );
 
   const sameCurrentInstance = useMemo(
-    () => instance === api().instance,
-    [instance],
+    () => instance === currentInstance,
+    [instance, currentInstance],
   );
 
   useEffect(() => {
@@ -534,7 +534,7 @@ function AccountInfo({
                 class="note"
                 dir="auto"
                 onClick={handleContentLinks({
-                  instance,
+                  instance: currentInstance,
                 })}
                 dangerouslySetInnerHTML={{
                   __html: enhanceContent(note, { emojis }),

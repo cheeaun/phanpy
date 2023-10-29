@@ -142,7 +142,11 @@ function MediaModal({
               key={media.id}
               ref={i === currentIndex ? carouselFocusItem : null}
               onClick={(e) => {
-                if (e.target !== e.currentTarget) {
+                // console.log(e);
+                // if (e.target !== e.currentTarget) {
+                //   setShowControls(!showControls);
+                // }
+                if (!e.target.classList.contains('media')) {
                   setShowControls(!showControls);
                 }
               }}

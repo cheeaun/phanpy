@@ -2084,13 +2084,18 @@ ul.link-list li a .icon {
 #columns .header-grid input {
   pointer-events: none;
 }
-#columns
-  .header-grid
-  .header-side:first-of-type
-  :is(button, .button)
-  ~ :is(button, .button),
-#columns .deck-container:not(:first-of-type) .header-grid .header-side > * {
-  display: none;
+#columns {
+  /* Any buttons except nav menu button on first header-side, on 1st column */
+  .deck-container:first-of-type
+    .header-grid
+    .header-side:first-of-type
+    > *:not(.nav-menu-button),
+  /* Any buttons on last header-side, on 1st column */
+  .deck-container:first-of-type .header-grid .header-side:last-of-type > *,
+  /* Any buttons on any header-side, on columns after 1st */
+  .deck-container:not(:first-of-type) .header-grid .header-side > * {
+    display: none;
+  }
 }
 @media (min-width: 40em) {
   #columns {

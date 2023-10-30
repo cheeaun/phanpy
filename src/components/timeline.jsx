@@ -252,10 +252,6 @@ function Timeline({
     },
     [id, loadItems, checkForUpdates, snapStates.settings.autoRefresh],
   );
-  const debouncedLoadOrCheckUpdates = useDebouncedCallback(
-    loadOrCheckUpdates,
-    3000,
-  );
 
   const lastHiddenTime = useRef();
   usePageVisibility(
@@ -263,14 +259,12 @@ function Timeline({
       if (visible) {
         const timeDiff = Date.now() - lastHiddenTime.current;
         if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
-          // 1 minute
-          debouncedLoadOrCheckUpdates({
+          loadOrCheckUpdates({
             disableIdleCheck: true,
           });
         }
       } else {
         lastHiddenTime.current = Date.now();
-        debouncedLoadOrCheckUpdates.cancel();
       }
       setVisible(visible);
     },

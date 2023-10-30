@@ -42,7 +42,10 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
   });
   const { authenticated: currentAuthenticated } = api();
   const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
-  const title = instance ? `${hashtagTitle} on ${instance}` : hashtagTitle;
+  const hashtagPostTitle = media ? ` (Media only)` : '';
+  const title = instance
+    ? `${hashtagTitle}${hashtagPostTitle} on ${instance}`
+    : `${hashtagTitle}${hashtagPostTitle}`;
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 

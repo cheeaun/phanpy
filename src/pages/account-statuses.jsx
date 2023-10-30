@@ -195,9 +195,26 @@ function AccountStatuses() {
 
   const [featuredTags, setFeaturedTags] = useState([]);
   useTitle(
-    `${account?.displayName ? account.displayName + ' ' : ''}@${
-      account?.acct ? account.acct : 'Account posts'
-    }`,
+    account?.acct
+      ? `${account?.displayName ? account.displayName + ' ' : ''}@${
+          account.acct
+        }${
+          !excludeReplies
+            ? ' (+ Replies)'
+            : excludeBoosts
+            ? ' (- Boosts)'
+            : tagged
+            ? ` (#${tagged})`
+            : media
+            ? ' (Media)'
+            : month
+            ? ` (${new Date(month).toLocaleString('default', {
+                month: 'long',
+                year: 'numeric',
+              })})`
+            : ''
+        }`
+      : 'Account posts',
     '/:instance?/a/:id',
   );
   useEffect(() => {

@@ -11,11 +11,11 @@ const LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 function Mentions({ columnMode, ...props }) {
-  useTitle('Mentions', '/mentions');
   const { masto, instance } = api();
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const [stateType, setStateType] = useState(null);
   const type = props?.type || searchParams.get('type') || stateType;
+  useTitle(`Mentions${type === 'private' ? ' (Private)' : ''}`, '/mentions');
 
   const mentionsIterator = useRef();
   const latestItem = useRef();

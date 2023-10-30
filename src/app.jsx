@@ -84,7 +84,7 @@ setTimeout(() => {
 }, 5000);
 
 (() => {
-  window.__IDLE__ = false;
+  window.__IDLE__ = true;
   const nonIdleEvents = [
     'mousemove',
     'mousedown',
@@ -95,13 +95,14 @@ setTimeout(() => {
     'pointermove',
     'wheel',
   ];
-  const IDLE_TIME = 5_000; // 5 seconds
-  const setIdle = debounce(() => {
+  const setIdle = () => {
     window.__IDLE__ = true;
-  }, IDLE_TIME);
+  };
+  const IDLE_TIME = 3_000; // 3 seconds
+  const debouncedSetIdle = debounce(setIdle, IDLE_TIME);
   const onNonIdle = () => {
     window.__IDLE__ = false;
-    setIdle();
+    debouncedSetIdle();
   };
   nonIdleEvents.forEach((event) => {
     window.addEventListener(event, onNonIdle, {
@@ -109,6 +110,21 @@ setTimeout(() => {
       capture: true,
     });
   });
+  window.addEventListener('blur', setIdle, {
+    passive: true,
+  });
+  // When cursor leaves the window, set idle
+  document.documentElement.addEventListener(
+    'mouseleave',
+    (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        setIdle();
+      }
+    },
+    {
+      passive: true,
+    },
+  );
   // document.addEventListener(
   //   'visibilitychange',
   //   () => {

@@ -235,7 +235,7 @@ function Timeline({
       });
       if (
         snapStates.settings.autoRefresh &&
-        scrollableRef.current.scrollTop === 0 &&
+        scrollableRef.current.scrollTop < 16 &&
         (disableIdleCheck || window.__IDLE__) &&
         !inBackground()
       ) {

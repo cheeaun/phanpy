@@ -179,7 +179,7 @@ function Notifications({ columnMode }) {
     ({ disableIdleCheck = false } = {}) => {
       console.log('✨ Load updates', {
         autoRefresh: snapStates.settings.autoRefresh,
-        scrollTop: scrollableRef.current?.scrollTop === 0,
+        scrollTop: scrollableRef.current?.scrollTop,
         inBackground: inBackground(),
         disableIdleCheck,
         notificationsShowNew: snapStates.notificationsShowNew,
@@ -187,7 +187,7 @@ function Notifications({ columnMode }) {
       });
       if (
         snapStates.settings.autoRefresh &&
-        scrollableRef.current?.scrollTop === 0 &&
+        scrollableRef.current?.scrollTop < 16 &&
         (disableIdleCheck || window.__IDLE__) &&
         !inBackground() &&
         snapStates.notificationsShowNew &&

@@ -24,6 +24,18 @@
     border-radius: calc(var(--item-radius) / 2);
     font-size: 90%;
     border: var(--hairline-width) dashed var(--bg-color);
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    opacity: 0.8;
+    mix-blend-mode: luminosity;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    display: -webkit-box;
+    display: box;
+    overflow: hidden;
 
     > * {
       pointer-events: none;
@@ -78,9 +90,9 @@
       vertical-align: top;
     }
 
-    &:is(:hover, :focus) img {
+    :not(.filtered, .has-spoiler) &:is(:hover, :focus) img {
       /* Less delay here to make it feel more responsive */
-      animation: position-object 5s ease-in-out 0.3s 5;
+      animation: position-object 5s ease-in-out 0.1s 5;
       animation-duration: var(--anim-duration, 5s);
     }
   }

@@ -213,13 +213,17 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   &.timeline-media {
     --grid-gap: 8px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-auto-rows: fit-content;
     gap: var(--grid-gap);
     padding: var(--grid-gap);
 
     &:not(#columns &) {
       background-color: var(--bg-faded-color);
+    }
+
+    @media (min-width: 320px) {
+      grid-template-columns: 1fr 1fr;
     }
 
     @media (min-width: 40em) {

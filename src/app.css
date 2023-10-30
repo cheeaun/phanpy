@@ -1992,6 +1992,21 @@ ul.link-list li a {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  .count {
+    font-size: 80%;
+    display: inline-block;
+    color: var(--text-insignificant-color);
+    min-width: 16px;
+    min-height: 16px;
+    padding: 4px;
+    background-color: var(--bg-color);
+    border-radius: 4px;
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-faded-color);
+    }
+  }
 }
 ul.link-list li:first-child a {
   border-top-left-radius: var(--radius);

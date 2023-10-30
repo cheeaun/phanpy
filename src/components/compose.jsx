@@ -17,6 +17,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
 import openCompose from '../utils/open-compose';
+import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
@@ -1306,6 +1307,7 @@ const Textarea = forwardRef((props, ref) => {
                   username,
                   acct,
                   emojis,
+                  history,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
                 // const item = menuItem.cloneNode();
@@ -1324,9 +1326,18 @@ const Textarea = forwardRef((props, ref) => {
                     </li>
                   `;
                 } else {
+                  const total = history?.reduce?.(
+                    (acc, cur) => acc + +cur.uses,
+                    0,
+                  );
                   html += `
                     <li role="option" data-value="${encodeHTML(name)}">
-                      <span>#<b>${encodeHTML(name)}</b></span>
+                      <span class="grow">#<b>${encodeHTML(name)}</b></span>
+                      ${
+                        total
+                          ? `<span class="count">${shortenNumber(total)}</span>`
+                          : ''
+                      }
                     </li>
                   `;
                 }

@@ -15,6 +15,7 @@ import { api } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -131,7 +132,7 @@ function Trending({ columnMode, ...props }) {
                     <span class="more-insignificant">#</span>
                     {name}
                   </span>
-                  <span class="filter-count">{total.toLocaleString()}</span>
+                  <span class="filter-count">{shortenNumber(total)}</span>
                 </Link>
               );
             })}

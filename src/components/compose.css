@@ -269,6 +269,15 @@
   gap: 8px;
   align-items: center;
   font-size: 90%;
+
+  .grow {
+    flex-grow: 1;
+  }
+
+  .count {
+    font-size: 80%;
+    opacity: 0.5;
+  }
 }
 #compose-container .text-expander-menu li b img {
   /* The shortcode emojis */

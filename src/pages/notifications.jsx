@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
+import { subscribeKey } from 'valtio/utils';
 
 import AccountBlock from '../components/account-block';
 import FollowRequestButtons from '../components/follow-request-buttons';
@@ -23,6 +24,7 @@ import { getRegistration } from '../utils/push-notifications';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentInstance } from '../utils/store-utils';
+import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
@@ -173,30 +175,53 @@ function Notifications({ columnMode }) {
   //   }
   // }, [nearReachEnd, showMore]);
 
-  const loadUpdates = useCallback(() => {
-    console.log('✨ Load updates', {
-      autoRefresh: snapStates.settings.autoRefresh,
-      scrollTop: scrollableRef.current?.scrollTop === 0,
-      inBackground: inBackground(),
-      notificationsShowNew: snapStates.notificationsShowNew,
-      uiState,
-    });
-    if (
-      snapStates.settings.autoRefresh &&
-      scrollableRef.current?.scrollTop === 0 &&
-      window.__IDLE__ &&
-      !inBackground() &&
-      snapStates.notificationsShowNew &&
-      uiState !== 'loading'
-    ) {
-      loadNotifications(true);
+  const loadUpdates = useCallback(
+    ({ disableIdleCheck = false } = {}) => {
+      console.log('✨ Load updates', {
+        autoRefresh: snapStates.settings.autoRefresh,
+        scrollTop: scrollableRef.current?.scrollTop === 0,
+        inBackground: inBackground(),
+        disableIdleCheck,
+        notificationsShowNew: snapStates.notificationsShowNew,
+        uiState,
+      });
+      if (
+        snapStates.settings.autoRefresh &&
+        scrollableRef.current?.scrollTop === 0 &&
+        (disableIdleCheck || window.__IDLE__) &&
+        !inBackground() &&
+        snapStates.notificationsShowNew &&
+        uiState !== 'loading'
+      ) {
+        loadNotifications(true);
+      }
+    },
+    [snapStates.notificationsShowNew, snapStates.settings.autoRefresh, uiState],
+  );
+  // useEffect(loadUpdates, [snapStates.notificationsShowNew]);
+
+  const lastHiddenTime = useRef();
+  usePageVisibility((visible) => {
+    let unsub;
+    if (visible) {
+      const timeDiff = Date.now() - lastHiddenTime.current;
+      if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
+        loadUpdates({
+          disableIdleCheck: true,
+        });
+      } else {
+        lastHiddenTime.current = Date.now();
+      }
+      unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+        if (v) {
+          loadUpdates();
+        }
+      });
     }
-  }, [
-    snapStates.notificationsShowNew,
-    snapStates.settings.autoRefresh,
-    uiState,
-  ]);
-  useEffect(loadUpdates, [snapStates.notificationsShowNew]);
+    return () => {
+      unsub?.();
+    };
+  });
 
   const todayDate = new Date();
   const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);

@@ -1,5 +1,6 @@
 import './search.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -145,6 +146,8 @@ function Search(props) {
     },
   );
 
+  const [filterBarParent] = useAutoAnimate();
+
   return (
     <div id="search-page" class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
@@ -159,7 +162,10 @@ function Search(props) {
         </header>
         <main>
           {!!q && (
-            <div class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}>
+            <div
+              ref={filterBarParent}
+              class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}
+            >
               {!!type && (
                 <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
                   ‹ All

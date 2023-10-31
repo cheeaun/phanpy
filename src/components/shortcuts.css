@@ -152,7 +152,7 @@ shortcuts .tab-bar[hidden] {
   }
 }
 
-@media (min-width: 40em) {
+@media (min-width: 40em) and (hover: hover) {
   #app[data-shortcuts-view-mode='tab-menu-bar'] .timeline-deck {
     margin-top: 44px;
   }

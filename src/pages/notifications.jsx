@@ -54,6 +54,8 @@ function Notifications({ columnMode }) {
 
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
+    states.notificationsShowNew = false; // Hide "new notifications" button early
+
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
       notificationsIterator.current = masto.v1.notifications.list({
@@ -90,7 +92,6 @@ function Notifications({ columnMode }) {
       }
     }
 
-    states.notificationsShowNew = false;
     states.notificationsLastFetchTime = Date.now();
     return allNotifications;
   }

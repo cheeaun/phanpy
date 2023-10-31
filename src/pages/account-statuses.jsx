@@ -345,6 +345,15 @@ function AccountStatuses() {
                           }
                         : {},
                     );
+                    showToast(
+                      `Showing posts in ${new Date(value).toLocaleString(
+                        'default',
+                        {
+                          month: 'long',
+                          year: 'numeric',
+                        },
+                      )}`,
+                    );
                   }}
                 />
               </label>

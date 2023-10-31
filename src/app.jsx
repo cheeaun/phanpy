@@ -10,7 +10,7 @@ import {
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
-import { subscribe, useSnapshot } from 'valtio';
+import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';

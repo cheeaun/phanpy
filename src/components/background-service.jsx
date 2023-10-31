@@ -1,7 +1,9 @@
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
+import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
@@ -90,6 +92,15 @@ export default memo(function BackgroundService({ isLoggedIn }) {
         }
       }
     }
+  });
+
+  // Global keyboard shortcuts "service"
+  useHotkeys('shift+alt+k', () => {
+    const currentCloakMode = states.settings.cloakMode;
+    states.settings.cloakMode = !currentCloakMode;
+    showToast({
+      text: `Cloak mode ${currentCloakMode ? 'disabled' : 'enabled'}`,
+    });
   });
 
   return null;

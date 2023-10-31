@@ -154,6 +154,14 @@ export default memo(function KeyboardShortcutsHelp() {
                   action: 'Bookmark',
                   keys: <kbd>d</kbd>,
                 },
+                {
+                  action: 'Toggle Cloak mode',
+                  keys: (
+                    <>
+                      <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>k</kbd>
+                    </>
+                  ),
+                },
               ].map(({ action, keys }) => (
                 <tr key={action}>
                   <th>{action}</th>

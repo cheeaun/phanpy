@@ -424,6 +424,16 @@
   display: none;
 }
 
+@keyframes bye-banner {
+  20% {
+    transform: translateY(0);
+    filter: blur(0) opacity(1);
+  }
+  100% {
+    transform: translateY(8px);
+    filter: blur(16px) opacity(0.75);
+  }
+}
 .sheet .account-container {
   border-radius: 16px 16px 0 0;
   overflow-x: hidden;
@@ -453,6 +463,11 @@
     z-index: 1;
     background-color: var(--bg-color);
     margin-top: calc(-1 * var(--banner-overlap));
+  }
+
+  .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
+    animation: bye-banner 1s linear both;
+    animation-timeline: scroll();
   }
 
   main {

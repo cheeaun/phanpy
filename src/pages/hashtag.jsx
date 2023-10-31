@@ -98,6 +98,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           limit: 1,
           any: hashtags.slice(1),
           since_id: latestItem.current,
+          onlyMedia: media,
         })
         .next();
       const { value } = results;

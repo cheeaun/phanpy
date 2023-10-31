@@ -56,6 +56,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overscroll-behavior: contain;
   scroll-behavior: smooth;
   background-color: var(--bg-color);
+  flex-grow: 1;
   /* This `transform` fixes carousel blocking vertical scrolling for pointer devices on iPad */
   transform: translateZ(0);
 }
@@ -77,6 +78,21 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-container,
 .deck.contained {
   scroll-padding-top: 3em;
+}
+
+:is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {
+  z-index: 10;
+  position: fixed;
+  inset: 0;
+}
+:is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
+  display: block;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  /* This causes scrollTop to be reset to 0 when the page is hidden */
+  /* content-visibility: hidden; */
 }
 
 .deck {
@@ -1916,25 +1932,6 @@ meter.donut[hidden] {
   .avatars-stack:hover > *:nth-of-type(even) img {
     transform: rotate(-15deg);
   }
-}
-
-.deck-container {
-  width: 100%;
-  flex-grow: 1;
-}
-:is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {
-  z-index: 10;
-  position: fixed;
-  inset: 0;
-}
-:is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
-  display: block;
-  position: absolute;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0;
-  /* This causes scrollTop to be reset to 0 when the page is hidden */
-  /* content-visibility: hidden; */
 }
 
 /* 404 */

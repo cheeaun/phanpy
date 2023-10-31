@@ -465,9 +465,11 @@
     margin-top: calc(-1 * var(--banner-overlap));
   }
 
-  .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
-    animation: bye-banner 1s linear both;
-    animation-timeline: scroll();
+  @supports (animation-timeline: scroll()) {
+    .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
+      animation: bye-banner 1s linear both;
+      animation-timeline: scroll();
+    }
   }
 
   main {

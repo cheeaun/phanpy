@@ -221,10 +221,37 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     }
   }
 
+  const currentAccount = getCurrentAccount();
+
   // If only instance is provided, get the masto instance for that instance
   if (instance) {
+    if (currentAccountApi?.instance === instance) {
+      return {
+        masto: currentAccountApi.masto,
+        streaming: currentAccountApi.streaming,
+        client: currentAccountApi,
+        authenticated: true,
+        instance,
+      };
+    }
+
+    if (currentAccount?.instanceURL === instance) {
+      const { accessToken } = currentAccount;
+      currentAccountApi =
+        accountApis[instance]?.[accessToken] ||
+        initClient({ instance, accessToken });
+      return {
+        masto: currentAccountApi.masto,
+        streaming: currentAccountApi.streaming,
+        client: currentAccountApi,
+        authenticated: true,
+        instance,
+      };
+    }
+
     const client = apis[instance] || initClient({ instance });
     const { masto, streaming, accessToken } = client;
+    console.log('XX', instance, accessToken);
     return {
       masto,
       streaming,
@@ -244,7 +271,6 @@ export function api({ instance, accessToken, accountID, account } = {}) {
       instance: currentAccountApi.instance,
     };
   }
-  const currentAccount = getCurrentAccount();
   if (currentAccount) {
     const { accessToken, instanceURL: instance } = currentAccount;
     currentAccountApi =
@@ -263,6 +289,7 @@ export function api({ instance, accessToken, accountID, account } = {}) {
   const client =
     apis[DEFAULT_INSTANCE] || initClient({ instance: DEFAULT_INSTANCE });
   const { masto, streaming } = client;
+  console.log('XX', { DEFAULT_INSTANCE });
   return {
     masto,
     streaming,

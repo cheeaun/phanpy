@@ -628,43 +628,6 @@
   }
 }
 
-@keyframes shine {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-.timeline-start .account-container {
-  position: relative;
-  overflow: hidden;
-}
-.timeline-start .account-container:before {
-  content: '';
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0) 70%
-  );
-  top: 0;
-  left: -100%;
-  pointer-events: none;
-}
-@media (prefers-color-scheme: dark) {
-  .timeline-start .account-container:before {
-    opacity: 0.25;
-  }
-}
-.timeline-start .account-container:hover:before {
-  animation: shine 1s ease-in-out 1s;
-}
-
 #list-add-remove-container .list-add-remove {
   display: flex;
   flex-direction: column;

@@ -179,7 +179,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const showMedia = parseInt(mediaParam, 10) > 0;
   const firstLoad = useRef(
     !states.prevLocation &&
-      (history.length === 1 || navigation?.entries?.()?.length === 1),
+      (history.length === 1 ||
+        ('navigation' in window && navigation?.entries?.()?.length === 1)),
   );
   const [viewMode, setViewMode] = useState(
     searchParams.get('view') || firstLoad.current ? 'full' : null,
@@ -879,7 +880,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
   const prevLocationIsStatusPage = useMemo(() => {
     // Navigation API
-    if (navigation?.entries) {
+    if ('navigation' in window && navigation?.entries) {
       const prevEntry = navigation.entries()[navigation.currentEntry.index - 1];
       if (prevEntry?.url) {
         return STATUS_URL_REGEX.test(prevEntry.url);

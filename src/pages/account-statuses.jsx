@@ -276,7 +276,13 @@ function AccountStatuses() {
     return (
       <>
         {accountInfoMemo}
-        <div class="filter-bar" ref={filterBarRef}>
+        <div
+          class="filter-bar"
+          ref={filterBarRef}
+          style={{
+            position: 'relative',
+          }}
+        >
           {filtered ? (
             <Link
               to={`/${instance}/a/${id}`}

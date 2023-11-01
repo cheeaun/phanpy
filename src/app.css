@@ -1954,9 +1954,26 @@ meter.donut[hidden] {
 
 /* ACCOUNT STATUSES */
 
+@keyframes peekaboo-header {
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .header-account {
   font-size: 90% !important;
   cursor: pointer;
+
+  @supports (animation-timeline: scroll()) {
+    animation: peekaboo-header 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0 150px;
+  }
 }
 .header-account div {
   font-weight: normal;

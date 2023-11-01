@@ -66,6 +66,8 @@ const scrollIntoViewOptions = {
 const STATUSES_SELECTOR =
   '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)';
 
+const STATUS_URL_REGEX = /\/s\//i;
+
 function StatusPage(params) {
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
@@ -872,6 +874,17 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     ],
   );
 
+  const prevLocationIsStatusPage = useMemo(() => {
+    // Navigation API
+    if (navigation?.entries) {
+      const prevEntry = navigation.entries()[navigation.currentEntry.index - 1];
+      if (prevEntry?.url) {
+        return STATUS_URL_REGEX.test(prevEntry.url);
+      }
+    }
+    return STATUS_URL_REGEX.test(states.prevLocation?.pathname);
+  }, [sKey]);
+
   return (
     <div
       tabIndex="-1"
@@ -908,7 +921,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           </div> */}
         <div class="header-grid header-grid-2">
           <h1>
-            {!!/\/s\//i.test(snapStates.prevLocation?.pathname) && (
+            {prevLocationIsStatusPage && (
               <button
                 type="button"
                 class="plain deck-back"

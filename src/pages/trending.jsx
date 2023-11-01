@@ -242,7 +242,7 @@ function Trending({ columnMode, ...props }) {
       key={instance}
       title={title}
       titleComponent={
-        <h1 class="header-account">
+        <h1 class="header-double-lines">
           <b>Trending</b>
           <div>{instance}</div>
         </h1>

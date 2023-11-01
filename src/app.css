@@ -126,6 +126,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   user-select: none;
   transition: transform 0.5s ease-in-out;
   user-select: none;
+
+  .header-double-lines {
+    font-size: 90% !important;
+    cursor: pointer;
+
+    div {
+      font-weight: normal;
+      color: var(--text-insignificant-color);
+    }
+  }
 }
 .deck > header[hidden] {
   display: block;
@@ -1965,19 +1975,12 @@ meter.donut[hidden] {
   }
 }
 
-.header-account {
-  font-size: 90% !important;
-  cursor: pointer;
-
-  @supports (animation-timeline: scroll()) {
+@supports (animation-timeline: scroll()) {
+  .header-account {
     animation: peekaboo-header 1s linear both;
     animation-timeline: scroll();
     animation-range: 0 150px;
   }
-}
-.header-account div {
-  font-weight: normal;
-  color: var(--text-insignificant-color);
 }
 
 /* LINK LISTS? */

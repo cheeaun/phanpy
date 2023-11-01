@@ -446,7 +446,7 @@ function AccountStatuses() {
       title={`${account?.acct ? '@' + account.acct : 'Posts'}`}
       titleComponent={
         <h1
-          class="header-account"
+          class="header-double-lines header-account"
           // onClick={() => {
           //   states.showAccount = {
           //     account,

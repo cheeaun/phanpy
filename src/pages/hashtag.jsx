@@ -135,7 +135,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       title={title}
       titleComponent={
         !!instance && (
-          <h1 class="header-account">
+          <h1 class="header-double-lines">
             <b>{hashtagTitle}</b>
             <div>{instance}</div>
           </h1>

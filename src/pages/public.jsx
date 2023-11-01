@@ -77,7 +77,7 @@ function Public({ local, columnMode, ...props }) {
       key={instance + isLocal}
       title={title}
       titleComponent={
-        <h1 class="header-account">
+        <h1 class="header-double-lines">
           <b>{isLocal ? 'Local timeline' : 'Federated timeline'}</b>
           <div>{instance}</div>
         </h1>

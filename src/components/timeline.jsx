@@ -226,23 +226,28 @@ function Timeline({
 
   const loadOrCheckUpdates = useCallback(
     async ({ disableIdleCheck = false } = {}) => {
-      console.log('✨ Load or check updates', {
+      const noPointers = scrollableRef.current
+        ? getComputedStyle(scrollableRef.current).pointerEvents === 'none'
+        : false;
+      console.log('✨ Load or check updates', id, {
         autoRefresh: snapStates.settings.autoRefresh,
         scrollTop: scrollableRef.current.scrollTop,
         disableIdleCheck,
         idle: window.__IDLE__,
         inBackground: inBackground(),
+        noPointers,
       });
       if (
         snapStates.settings.autoRefresh &&
         scrollableRef.current.scrollTop < 16 &&
         (disableIdleCheck || window.__IDLE__) &&
-        !inBackground()
+        !inBackground() &&
+        !noPointers
       ) {
-        console.log('✨ Load updates', snapStates.settings.autoRefresh);
+        console.log('✨ Load updates', id, snapStates.settings.autoRefresh);
         loadItems(true);
       } else {
-        console.log('✨ Check updates', snapStates.settings.autoRefresh);
+        console.log('✨ Check updates', id, snapStates.settings.autoRefresh);
         const hasUpdate = await checkForUpdates();
         if (hasUpdate) {
           console.log('✨ Has new updates', id);

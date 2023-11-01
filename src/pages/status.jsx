@@ -177,7 +177,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const mediaParam = searchParams.get('media');
   const mediaStatusID = searchParams.get('mediaStatusID');
   const showMedia = parseInt(mediaParam, 10) > 0;
-  const firstLoad = useRef(!states.prevLocation && history.length === 1);
+  const firstLoad = useRef(
+    !states.prevLocation &&
+      (history.length === 1 || navigation?.entries?.()?.length === 1),
+  );
   const [viewMode, setViewMode] = useState(
     searchParams.get('view') || firstLoad.current ? 'full' : null,
   );

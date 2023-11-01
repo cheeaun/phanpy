@@ -8,6 +8,9 @@ import states, { saveStatus } from '../utils/states';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 
+const STREAMING_TIMEOUT = 1000 * 3; // 3 seconds
+const POLL_INTERVAL = 1000 * 60; // 1 minute
+
 export default memo(function BackgroundService({ isLoggedIn }) {
   // Notifications service
   // - WebSocket to receive notifications when page is visible
@@ -53,39 +56,44 @@ export default memo(function BackgroundService({ isLoggedIn }) {
         let hasStreaming = false;
         // 2. Start streaming
         if (streaming) {
-          try {
-            hasStreaming = true;
-            sub = streaming.user.notification.subscribe();
-            console.log('🎏 Streaming notification', sub);
-            for await (const entry of sub) {
-              if (!sub) break;
-              console.log('🔔🔔 Notification entry', entry);
-              if (entry.event === 'notification') {
-                console.log('🔔🔔 Notification', entry);
-                saveStatus(entry.payload, instance, {
-                  skipThreading: true,
-                });
+          pollNotifications = setTimeout(() => {
+            (async () => {
+              try {
+                hasStreaming = true;
+                sub = streaming.user.notification.subscribe();
+                console.log('🎏 Streaming notification', sub);
+                for await (const entry of sub) {
+                  if (!sub) break;
+                  if (!visible) break;
+                  console.log('🔔🔔 Notification entry', entry);
+                  if (entry.event === 'notification') {
+                    console.log('🔔🔔 Notification', entry);
+                    saveStatus(entry.payload, instance, {
+                      skipThreading: true,
+                    });
+                  }
+                  states.notificationsShowNew = true;
+                }
+              } catch (e) {
+                hasStreaming = false;
+                console.error(e);
               }
-              states.notificationsShowNew = true;
-            }
-          } catch (e) {
-            hasStreaming = false;
-            console.error(e);
-          }
-        }
 
-        if (!hasStreaming) {
-          console.log('🎏 Streaming failed, fallback to polling');
-          // Fallback to polling every minute
-          pollNotifications = setInterval(() => {
-            checkLatestNotification(masto, instance, true);
-          }, 1000 * 60);
+              if (!hasStreaming) {
+                console.log('🎏 Streaming failed, fallback to polling');
+                pollNotifications = setInterval(() => {
+                  checkLatestNotification(masto, instance, true);
+                }, POLL_INTERVAL);
+              }
+            })();
+          }, STREAMING_TIMEOUT);
         }
       })();
     }
     return () => {
       sub?.unsubscribe?.();
       sub = null;
+      clearTimeout(pollNotifications);
       clearInterval(pollNotifications);
     };
   }, [visible, isLoggedIn]);

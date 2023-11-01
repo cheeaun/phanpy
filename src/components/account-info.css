@@ -426,12 +426,10 @@
 
 @keyframes bye-banner {
   20% {
-    transform: translateY(0);
     filter: blur(0) opacity(1);
   }
   100% {
-    transform: translateY(8px);
-    filter: blur(16px) opacity(0.75);
+    filter: blur(16px) opacity(0.2);
   }
 }
 .sheet .account-container {
@@ -468,7 +466,8 @@
   @supports (animation-timeline: scroll()) {
     .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
       animation: bye-banner 1s linear both;
-      animation-timeline: scroll();
+      animation-timeline: view();
+      animation-range: contain 100% cover 100%;
     }
   }
 

@@ -1,5 +1,11 @@
 import { MenuItem } from '@szhsin/react-menu';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -217,10 +223,19 @@ function AccountStatuses() {
       : 'Account posts',
     '/:instance?/a/:id',
   );
+
+  const fetchAccountPromiseRef = useRef();
+  const fetchAccount = useCallback(() => {
+    const fetchPromise =
+      fetchAccountPromiseRef.current || masto.v1.accounts.$select(id).fetch();
+    fetchAccountPromiseRef.current = fetchPromise;
+    return fetchPromise;
+  }, [id, masto]);
+
   useEffect(() => {
     (async () => {
       try {
-        const acc = await masto.v1.accounts.$select(id).fetch();
+        const acc = await fetchAccount();
         console.log(acc);
         setAccount(acc);
       } catch (e) {
@@ -240,20 +255,27 @@ function AccountStatuses() {
 
   const { displayName, acct, emojis } = account || {};
 
+  const accountInfoMemo = useMemo(() => {
+    const cachedAccount = snapStates.accounts[`${id}@${instance}`];
+    return (
+      <AccountInfo
+        instance={instance}
+        account={cachedAccount || id}
+        fetchAccount={fetchAccount}
+        authenticated={authenticated}
+        standalone
+      />
+    );
+  }, [id, instance, authenticated, fetchAccount]);
+
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
-    const cachedAccount = snapStates.accounts[`${id}@${instance}`];
     const filtered =
       !excludeReplies || excludeBoosts || tagged || media || !!month;
+
     return (
       <>
-        <AccountInfo
-          instance={instance}
-          account={cachedAccount || id}
-          fetchAccount={() => masto.v1.accounts.$select(id).fetch()}
-          authenticated={authenticated}
-          standalone
-        />
+        {accountInfoMemo}
         <div class="filter-bar" ref={filterBarRef}>
           {filtered ? (
             <Link

@@ -22,7 +22,7 @@ import Icon from './icon';
 import MenuConfirm from './menu-confirm';
 import Modal from './modal';
 
-const SHORTCUTS_LIMIT = 9;
+export const SHORTCUTS_LIMIT = 9;
 
 const TYPES = [
   'following',

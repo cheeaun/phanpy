@@ -11,6 +11,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Icon from '../components/icon';
 import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import { SHORTCUTS_LIMIT } from '../components/shortcuts-settings';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
@@ -313,6 +314,12 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           <MenuItem
             disabled={!currentAuthenticated}
             onClick={() => {
+              if (states.shortcuts.length >= SHORTCUTS_LIMIT) {
+                alert(
+                  `Max ${SHORTCUTS_LIMIT} shortcuts reached. Unable to add shortcut.`,
+                );
+                return;
+              }
               const shortcut = {
                 type: 'hashtag',
                 hashtag: hashtags.join(' '),

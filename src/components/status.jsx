@@ -1091,6 +1091,15 @@ function Status({
               <Link
                 to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                 onClick={(e) => {
+                  if (
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey ||
+                    e.which === 2
+                  ) {
+                    return;
+                  }
                   e.preventDefault();
                   e.stopPropagation();
                   onStatusLinkClick?.(e, status);

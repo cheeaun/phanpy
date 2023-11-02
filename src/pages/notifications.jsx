@@ -90,6 +90,7 @@ function Notifications({ columnMode }) {
       }
     }
 
+    states.notificationsShowNew = false;
     states.notificationsLastFetchTime = Date.now();
     return allNotifications;
   }

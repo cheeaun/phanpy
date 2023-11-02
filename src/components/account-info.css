@@ -432,11 +432,22 @@
     filter: blur(16px) opacity(0.2);
   }
 }
+@keyframes shrink-avatar {
+  0% {
+    width: 64px;
+    height: 64px;
+  }
+  100% {
+    width: 2.5em;
+    height: 2.5em;
+  }
+}
 .sheet .account-container {
   border-radius: 16px 16px 0 0;
   overflow-x: hidden;
   max-height: 75vh;
   overscroll-behavior: none;
+  scroll-timeline: --account-scroll;
 
   header {
     padding-bottom: 16px;
@@ -468,6 +479,12 @@
       animation: bye-banner 1s linear both;
       animation-timeline: view();
       animation-range: contain 100% cover 100%;
+    }
+
+    header .avatar {
+      animation: shrink-avatar 1s linear both;
+      animation-timeline: --account-scroll;
+      animation-range: 0 150px;
     }
   }
 

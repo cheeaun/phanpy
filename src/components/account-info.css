@@ -433,6 +433,16 @@
     filter: blur(16px) opacity(0.2);
   }
 }
+@keyframes surface-header {
+  0% {
+    border-bottom-color: transparent;
+    box-shadow: none;
+  }
+  100% {
+    border-bottom-color: var(--outline-color);
+    box-shadow: 0 8px 16px -8px var(--drop-shadow-color);
+  }
+}
 @keyframes shrink-avatar {
   0% {
     width: 64px;
@@ -487,6 +497,18 @@
       animation: bye-banner 1s linear both;
       animation-timeline: view();
       animation-range: contain 100% cover 100%;
+    }
+
+    header {
+      background-image: linear-gradient(
+        to bottom,
+        transparent 30%,
+        var(--bg-color) var(--banner-overlap)
+      );
+      border-bottom: 1px solid transparent;
+      animation: surface-header 1s linear both;
+      animation-timeline: --account-scroll;
+      animation-range: 0 150px;
     }
 
     header .avatar {

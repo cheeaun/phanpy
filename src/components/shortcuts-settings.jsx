@@ -300,33 +300,6 @@ function ShortcutsSettings({ onClose }) {
             );
           })}
         </div>
-        {/* <select
-              value={snapStates.settings.shortcutsViewMode || 'float-button'}
-              onChange={(e) => {
-                states.settings.shortcutsViewMode = e.target.value;
-              }}
-            >
-              <option value="float-button">Floating button</option>
-              <option value="multi-column">Multi-column</option>
-              <option value="tab-menu-bar">Tab/Menu bar </option>
-            </select> */}
-        {/* <p>
-          <details>
-            <summary class="insignificant">
-              Experimental Multi-column mode
-            </summary>
-            <label>
-              <input
-                type="checkbox"
-                checked={snapStates.settings.shortcutsColumnsMode}
-                onChange={(e) => {
-                  states.settings.shortcutsColumnsMode = e.target.checked;
-                }}
-              />{' '}
-              Show shortcuts in multiple columns instead of the floating button.
-            </label>
-          </details>
-        </p> */}
         {shortcuts.length > 0 ? (
           <ol class="shortcuts-list" ref={shortcutsListParent}>
             {shortcuts.filter(Boolean).map((shortcut, i) => {

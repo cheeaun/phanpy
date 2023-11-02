@@ -35,8 +35,9 @@ function Home() {
 
   return (
     <>
-      {(snapStates.settings.shortcutsColumnsMode ||
-        snapStates.settings.shortcutsViewMode === 'multi-column') &&
+      {(snapStates.settings.shortcutsViewMode === 'multi-column' ||
+        (!snapStates.settings.shortcutsViewMode &&
+          snapStates.settings.shortcutsColumnsMode)) &&
       !!snapStates.shortcuts?.length ? (
         <Columns />
       ) : (

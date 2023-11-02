@@ -71,8 +71,9 @@ export function initStates() {
     store.account.get('settings-autoRefresh') ?? false;
   states.settings.shortcutsViewMode =
     store.account.get('settings-shortcutsViewMode') ?? null;
-  states.settings.shortcutsColumnsMode =
-    store.account.get('settings-shortcutsColumnsMode') ?? false;
+  if (store.account.get('settings-shortcutsColumnsMode')) {
+    states.settings.shortcutsColumnsMode = true;
+  }
   states.settings.boostsCarousel =
     store.account.get('settings-boostsCarousel') ?? true;
   states.settings.contentTranslation =
@@ -98,9 +99,6 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.boostsCarousel') {
       store.account.set('settings-boostsCarousel', !!value);
-    }
-    if (path.join('.') === 'settings.shortcutsColumnsMode') {
-      store.account.set('settings-shortcutsColumnsMode', !!value);
     }
     if (path.join('.') === 'settings.shortcutsViewMode') {
       store.account.set('settings-shortcutsViewMode', value);

@@ -25,8 +25,8 @@ function Shortcuts() {
     return null;
   }
   if (
-    settings.shortcutsColumnsMode ||
-    settings.shortcutsViewMode === 'multi-column'
+    settings.shortcutsViewMode === 'multi-column' ||
+    (!settings.shortcutsViewMode && settings.shortcutsColumnsMode)
   ) {
     return null;
   }

@@ -603,6 +603,7 @@
   margin-block: min(0.75em, 12px);
   white-space: pre-wrap;
   tab-size: 2;
+  text-wrap: pretty;
 }
 .status .content p:first-child {
   margin-block-start: 0;
@@ -726,6 +727,7 @@
       white-space: pre-line;
       flex-basis: 15em;
       flex-grow: 1;
+      text-wrap: pretty;
     }
   }
 
@@ -1203,6 +1205,7 @@ a:focus-visible .card img {
   box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+  text-wrap: balance;
 }
 .card .meta {
   font-size: smaller;

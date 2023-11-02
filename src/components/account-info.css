@@ -254,6 +254,7 @@
 .account-container .note {
   font-size: 95%;
   line-height: 1.4;
+  text-wrap: pretty;
 }
 .account-container .note:not(:has(p)):not(:empty) {
   /* Some notes don't have <p> tags, so we need to add some padding */

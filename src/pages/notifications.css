@@ -162,9 +162,10 @@
   flex-grow: 1;
   min-width: 0;
 }
-.notification-content p:first-child {
+.notification-content > p:first-child {
   margin-top: 0;
   margin-bottom: 8px;
+  text-wrap: pretty;
 }
 
 .notification-group-statuses {
@@ -407,6 +408,7 @@
   margin-block: min(0.75em, 12px);
   white-space: pre-wrap;
   tab-size: 2;
+  text-wrap: pretty;
 }
 .announcements .announcement-reactions:not(:hidden) {
   display: flex;

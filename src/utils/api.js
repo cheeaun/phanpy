@@ -251,7 +251,6 @@ export function api({ instance, accessToken, accountID, account } = {}) {
 
     const client = apis[instance] || initClient({ instance });
     const { masto, streaming, accessToken } = client;
-    console.log('XX', instance, accessToken);
     return {
       masto,
       streaming,
@@ -289,7 +288,6 @@ export function api({ instance, accessToken, accountID, account } = {}) {
   const client =
     apis[DEFAULT_INSTANCE] || initClient({ instance: DEFAULT_INSTANCE });
   const { masto, streaming } = client;
-  console.log('XX', { DEFAULT_INSTANCE });
   return {
     masto,
     streaming,

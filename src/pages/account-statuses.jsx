@@ -159,8 +159,8 @@ function AccountStatuses() {
         .next();
       if (pinnedStatuses?.length && !tagged && !media) {
         pinnedStatuses.forEach((status) => {
-          status._pinned = true;
           saveStatus(status, instance);
+          status._pinned = true;
         });
         if (pinnedStatuses.length >= 3) {
           const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);

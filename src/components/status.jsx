@@ -795,13 +795,16 @@ function Status({
   const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuProps, setContextMenuProps] = useState({});
+
+  const showContextMenu = !isSizeLarge && !previewMode && !_deleted && !quoted;
+
   const isIOS =
     window.ontouchstart !== undefined &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
   // Only iOS/iPadOS browsers don't support contextmenu
   // Some comments report iPadOS might support contextmenu if a mouse is connected
   const bindLongPressContext = useLongPress(
-    isIOS
+    isIOS && showContextMenu
       ? (e) => {
           if (e.pointerType === 'mouse') return;
           // There's 'pen' too, but not sure if contextmenu event would trigger from a pen
@@ -828,8 +831,6 @@ function Status({
       cancelOnMovement: 2, // true allows movement of up to 25 pixels
     },
   );
-
-  const showContextMenu = size !== 'l' && !previewMode && !_deleted && !quoted;
 
   const hotkeysEnabled = !readOnly && !previewMode;
   const rRef = useHotkeys('r', replyStatus, {

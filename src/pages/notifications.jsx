@@ -54,8 +54,6 @@ function Notifications({ columnMode }) {
 
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
-    states.notificationsShowNew = false; // Hide "new notifications" button early
-
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
       notificationsIterator.current = masto.v1.notifications.list({
@@ -176,6 +174,8 @@ function Notifications({ columnMode }) {
   //   }
   // }, [nearReachEnd, showMore]);
 
+  const [showNew, setShowNew] = useState(false);
+
   const loadUpdates = useCallback(
     ({ disableIdleCheck = false } = {}) => {
       console.log('✨ Load updates', {
@@ -195,6 +195,8 @@ function Notifications({ columnMode }) {
         uiState !== 'loading'
       ) {
         loadNotifications(true);
+      } else {
+        setShowNew(snapStates.notificationsShowNew);
       }
     },
     [snapStates.notificationsShowNew, snapStates.settings.autoRefresh, uiState],
@@ -291,7 +293,7 @@ function Notifications({ columnMode }) {
               {/* <Loader hidden={uiState !== 'loading'} /> */}
             </div>
           </div>
-          {snapStates.notificationsShowNew && uiState !== 'loading' && (
+          {showNew && uiState !== 'loading' && (
             <button
               class="updates-button shiny-pill"
               type="button"

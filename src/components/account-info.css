@@ -462,6 +462,14 @@
       var(--bg-color) calc(100% - 8px),
       transparent
     );
+
+    .account-block-content {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+    }
   }
 
   .faux-header-bg {

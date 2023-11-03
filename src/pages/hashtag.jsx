@@ -14,6 +14,7 @@ import MenuConfirm from '../components/menu-confirm';
 import { SHORTCUTS_LIMIT } from '../components/shortcuts-settings';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
@@ -71,12 +72,13 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         onlyMedia: media,
       })
       .next();
-    const { value } = results;
+    let { value } = results;
     if (value?.length) {
       if (firstLoad) {
         latestItem.current = value[0].id;
       }
 
+      value = filteredItems(value, 'public');
       value.forEach((item) => {
         saveStatus(item, instance, {
           skipThreading: media, // If media view, no need to form threads
@@ -102,7 +104,8 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           onlyMedia: media,
         })
         .next();
-      const { value } = results;
+      let { value } = results;
+      value = filteredItems(value, 'public');
       if (value?.length) {
         return true;
       }
@@ -150,6 +153,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       useItemID
       view={media ? 'media' : undefined}
       refresh={media}
+      allowFilters
       headerEnd={
         <Menu2
           portal

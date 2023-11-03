@@ -10,10 +10,16 @@
     animation: none !important;
   }
 
+  &.filtered[data-filtered-text]:before {
+    content: attr(data-filtered-text);
+  }
+  &.has-spoiler[data-spoiler-text]:before {
+    content: attr(data-spoiler-text);
+  }
+
   &.filtered[data-filtered-text]:before,
   &.has-spoiler[data-spoiler-text]:before {
     pointer-events: none;
-    content: attr(data-spoiler-text);
     position: absolute;
     top: 0;
     left: 0;

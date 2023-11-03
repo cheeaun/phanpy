@@ -49,7 +49,24 @@ function Columns() {
     }
   });
 
-  return <div id="columns">{components}</div>;
+  return (
+    <div
+      id="columns"
+      onContextMenu={(e) => {
+        // If right-click on header, but not links or buttons
+        if (
+          e.target.closest('.deck > header') &&
+          !e.target.closest('a') &&
+          !e.target.closest('button')
+        ) {
+          e.preventDefault();
+          states.showShortcutsSettings = true;
+        }
+      }}
+    >
+      {components}
+    </div>
+  );
 }
 
 export default Columns;

@@ -90,7 +90,13 @@ function Shortcuts() {
   return (
     <div id="shortcuts">
       {snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? (
-        <nav class="tab-bar">
+        <nav
+          class="tab-bar"
+          onContextMenu={(e) => {
+            e.preventDefault();
+            states.showShortcutsSettings = true;
+          }}
+        >
           <ul>
             {formattedShortcuts.map(
               ({ id, path, title, subtitle, icon }, i) => {
@@ -146,6 +152,10 @@ function Shortcuts() {
               type="button"
               id="shortcuts-button"
               class="plain"
+              onContextMenu={(e) => {
+                e.preventDefault();
+                states.showShortcutsSettings = true;
+              }}
               onTransitionStart={(e) => {
                 // Close menu if the button disappears
                 try {

@@ -32,7 +32,7 @@ function Following({ title, path, id, ...props }) {
         console.log('First load', latestItem.current);
       }
 
-      value = filteredItems(value, 'home');
+      // value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -115,7 +115,8 @@ function Following({ title, path, id, ...props }) {
       useItemID
       boostsCarousel={snapStates.settings.boostsCarousel}
       {...props}
-      allowFilters
+      // allowFilters
+      filterContext="home"
     />
   );
 }

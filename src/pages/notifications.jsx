@@ -195,6 +195,7 @@ function Notifications({ columnMode }) {
         snapStates.notificationsShowNew &&
         uiState !== 'loading'
       ) {
+        setShowNew(false);
         loadNotifications(true);
       } else {
         setShowNew(snapStates.notificationsShowNew);

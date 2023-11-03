@@ -78,7 +78,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'public');
+      // value = filteredItems(value, 'public');
       value.forEach((item) => {
         saveStatus(item, instance, {
           skipThreading: media, // If media view, no need to form threads
@@ -153,7 +153,8 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       useItemID
       view={media ? 'media' : undefined}
       refresh={media}
-      allowFilters
+      // allowFilters
+      filterContext="public"
       headerEnd={
         <Menu2
           portal

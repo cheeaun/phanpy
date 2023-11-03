@@ -41,7 +41,7 @@ function Public({ local, columnMode, ...props }) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'public');
+      // value = filteredItems(value, 'public');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -91,7 +91,8 @@ function Public({ local, columnMode, ...props }) {
       useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
-      allowFilters
+      // allowFilters
+      filterContext="public"
       headerEnd={
         <Menu2
           portal

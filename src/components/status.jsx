@@ -13,6 +13,7 @@ import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -34,6 +35,8 @@ import Poll from '../components/poll';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
+import FilterContext from '../utils/filter-context';
+import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -90,7 +93,7 @@ function Status({
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
-  allowFilters,
+  // allowFilters,
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
@@ -166,8 +169,23 @@ function Status({
     // Non-API props
     _deleted,
     _pinned,
-    _filtered,
+    // _filtered,
   } = status;
+
+  const currentAccount = useMemo(() => {
+    return store.session.get('currentAccount');
+  }, []);
+  const isSelf = useMemo(() => {
+    return currentAccount && currentAccount === accountId;
+  }, [accountId, currentAccount]);
+
+  const filterContext = useContext(FilterContext);
+  const filterInfo =
+    !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
+
+  if (filterInfo?.action === 'hide') {
+    return null;
+  }
 
   console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
@@ -179,11 +197,11 @@ function Status({
     }
   };
 
-  if (allowFilters && size !== 'l' && _filtered) {
+  if (/*allowFilters && */ size !== 'l' && filterInfo) {
     return (
       <FilteredStatus
         status={status}
-        filterInfo={_filtered}
+        filterInfo={filterInfo}
         instance={instance}
         containerProps={{
           onMouseEnter: debugHover,
@@ -194,13 +212,6 @@ function Status({
 
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
-
-  const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
-  }, []);
-  const isSelf = useMemo(() => {
-    return currentAccount && currentAccount === accountId;
-  }, [accountId, currentAccount]);
 
   let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,

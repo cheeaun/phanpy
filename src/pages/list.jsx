@@ -43,7 +43,7 @@ function List(props) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'home');
+      // value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -102,7 +102,8 @@ function List(props) {
         checkForUpdates={checkForUpdates}
         useItemID
         boostsCarousel={snapStates.settings.boostsCarousel}
-        allowFilters
+        // allowFilters
+        filterContext="home"
         // refresh={reloadCount}
         headerStart={
           <Link to="/l" class="button plain">

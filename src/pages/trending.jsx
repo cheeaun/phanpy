@@ -85,7 +85,7 @@ function Trending({ columnMode, ...props }) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'public'); // Might not work here
+      // value = filteredItems(value, 'public'); // Might not work here
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -257,7 +257,8 @@ function Trending({ columnMode, ...props }) {
       useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
-      allowFilters
+      // allowFilters
+      filterContext="public"
       timelineStart={TimelineStart}
       headerEnd={
         <Menu2

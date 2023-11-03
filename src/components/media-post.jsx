@@ -1,9 +1,13 @@
 import './media-post.css';
 
 import { memo } from 'preact/compat';
+import { useContext, useMemo } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import FilterContext from '../utils/filter-context';
+import { isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
+import store from '../utils/store';
 
 import Media from './media';
 
@@ -13,7 +17,7 @@ function MediaPost({
   status,
   instance,
   parent,
-  allowFilters,
+  // allowFilters,
   onMediaClick,
 }) {
   let sKey = statusKey(statusID, instance);
@@ -68,7 +72,7 @@ function MediaPost({
     // Non-API props
     _deleted,
     _pinned,
-    _filtered,
+    // _filtered,
   } = status;
 
   if (!mediaAttachments?.length) {
@@ -83,6 +87,20 @@ function MediaPost({
     }
   };
 
+  const currentAccount = useMemo(() => {
+    return store.session.get('currentAccount');
+  }, []);
+  const isSelf = useMemo(() => {
+    return currentAccount && currentAccount === accountId;
+  }, [accountId, currentAccount]);
+
+  const filterContext = useContext(FilterContext);
+  const filterInfo = !isSelf && isFiltered(filtered, filterContext);
+
+  if (filterInfo?.action === 'hide') {
+    return null;
+  }
+
   console.debug('RENDER Media post', id, status?.account.displayName);
 
   // const readingExpandSpoilers = useMemo(() => {
@@ -95,6 +113,7 @@ function MediaPost({
 
   return mediaAttachments.map((media, i) => {
     const mediaKey = `${sKey}-${media.id}`;
+    const filterTitleStr = filterInfo?.titlesStr;
     return (
       <Parent
         onMouseEnter={debugHover}
@@ -102,10 +121,14 @@ function MediaPost({
         data-spoiler-text={
           spoilerText || (sensitive ? 'Sensitive media' : undefined)
         }
-        data-filtered-text={_filtered ? 'Filtered' : undefined}
+        data-filtered-text={
+          filterInfo
+            ? `Filtered${filterTitleStr ? `: ${filterTitleStr}` : ''}`
+            : undefined
+        }
         class={`
           media-post
-          ${allowFilters && _filtered ? 'filtered' : ''}
+          ${filterInfo ? 'filtered' : ''}
           ${hasSpoiler ? 'has-spoiler' : ''}
         `}
       >

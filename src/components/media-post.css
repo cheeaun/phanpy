@@ -33,7 +33,6 @@
     word-break: break-word;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    opacity: 0.8;
     mix-blend-mode: luminosity;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -70,6 +69,8 @@
     @media (hover: hover) {
       &:hover {
         --drop-shadow: var(--drop-shadow-color);
+        position: relative;
+        z-index: 1;
         box-shadow: 0 8px 16px -4px var(--drop-shadow),
           0 4px 8px var(--drop-shadow);
 

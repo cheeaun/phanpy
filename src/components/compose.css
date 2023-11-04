@@ -136,16 +136,18 @@
   line-height: 1.4;
   border-color: transparent;
 
-  @media (width < 30em) {
-    margin-inline: calc(-1 * var(--form-padding-inline));
-    width: 100vw !important;
-    max-width: 100vw;
-    border-radius: 0;
-    border: 0;
-  }
+  &.compose-field {
+    @media (width < 30em) {
+      margin-inline: calc(-1 * var(--form-padding-inline));
+      width: 100vw !important;
+      max-width: 100vw;
+      border-radius: 0;
+      border: 0;
+    }
 
-  @media (min-width: 40em) {
-    max-height: 65vh;
+    @media (min-width: 40em) {
+      max-height: 65vh;
+    }
   }
 }
 #compose-container textarea:hover {

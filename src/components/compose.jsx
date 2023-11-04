@@ -1417,6 +1417,7 @@ const Textarea = forwardRef((props, ref) => {
   return (
     <text-expander ref={textExpanderRef} keys="@ # :">
       <textarea
+        class="compose-field"
         autoCapitalize="sentences"
         autoComplete="on"
         autoCorrect="on"

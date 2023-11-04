@@ -103,7 +103,9 @@ function MediaModal({
   }, []);
 
   return (
-    <div class="media-modal-container">
+    <div
+      class={`media-modal-container media-modal-count-${mediaAttachments?.length}`}
+    >
       <div
         ref={carouselRef}
         tabIndex="0"

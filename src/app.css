@@ -1301,6 +1301,9 @@ button.carousel-dot:is(.active, [disabled].active) .icon {
 body:has(.status-deck) .media-post-link {
   display: none;
 }
+.media-modal-count-1 .button-label {
+  display: inline;
+}
 
 /* ✨ New */
 body:has(.media-modal-container + .status-deck) .media-post-link {

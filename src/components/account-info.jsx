@@ -304,12 +304,13 @@ function AccountInfo({
     ({ relationship, currentID }) => {
       if (!relationship.following) {
         renderFamiliarFollowers(currentID);
-        if (!standalone) {
+        if (!standalone && statusesCount > 0) {
+          // Only render posting stats if not standalone and has posts
           renderPostingStats();
         }
       }
     },
-    [standalone, id],
+    [standalone, id, statusesCount],
   );
 
   return (

@@ -42,7 +42,11 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
   const { masto, instance, authenticated } = api({
     instance: props?.instance || params.instance,
   });
-  const { authenticated: currentAuthenticated } = api();
+  const {
+    masto: currentMasto,
+    instance: currentInstance,
+    authenticated: currentAuthenticated,
+  } = api();
   const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
   const hashtagPostTitle = media ? ` (Media only)` : '';
   const title = instance
@@ -376,6 +380,20 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
+          {currentInstance !== instance && (
+            <MenuItem
+              onClick={() => {
+                location.hash = `/${currentInstance}/t/${hashtags.join(
+                  '+',
+                )}${linkParams}`;
+              }}
+            >
+              <Icon icon="bus" />{' '}
+              <small class="menu-double-lines">
+                Go to my instance (<b>{currentInstance}</b>)
+              </small>
+            </MenuItem>
+          )}
         </Menu2>
       }
     />

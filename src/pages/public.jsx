@@ -21,6 +21,7 @@ function Public({ local, columnMode, ...props }) {
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
+  const { masto: currentMasto, instance: currentInstance } = api();
   const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   // const navigate = useNavigate();
@@ -138,6 +139,20 @@ function Public({ local, columnMode, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
+          {currentInstance !== instance && (
+            <MenuItem
+              onClick={() => {
+                location.hash = isLocal
+                  ? `/${currentInstance}/p/l`
+                  : `/${currentInstance}/p`;
+              }}
+            >
+              <Icon icon="bus" />{' '}
+              <small class="menu-double-lines">
+                Go to my instance (<b>{currentInstance}</b>)
+              </small>
+            </MenuItem>
+          )}
         </Menu2>
       }
     />

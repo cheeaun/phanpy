@@ -38,6 +38,7 @@ function Trending({ columnMode, ...props }) {
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
+  const { masto: currentMasto, instance: currentInstance } = api();
   const title = `Trending (${instance})`;
   useTitle(title, `/:instance?/trending`);
   // const navigate = useNavigate();
@@ -291,6 +292,18 @@ function Trending({ columnMode, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
+          {currentInstance !== instance && (
+            <MenuItem
+              onClick={() => {
+                location.hash = `/${currentInstance}/trending`;
+              }}
+            >
+              <Icon icon="bus" />{' '}
+              <small class="menu-double-lines">
+                Go to my instance (<b>{currentInstance}</b>)
+              </small>
+            </MenuItem>
+          )}
         </Menu2>
       }
     />

@@ -441,10 +441,7 @@ function Timeline({
               {errorText}
               <br />
               <br />
-              <button
-                class="button plain"
-                onClick={() => loadItems(!items.length)}
-              >
+              <button type="button" onClick={() => loadItems(!items.length)}>
                 Try again
               </button>
             </p>

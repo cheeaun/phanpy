@@ -973,6 +973,7 @@ function Status({
 
   return (
     <article
+      data-state-post-id={sKey}
       ref={(node) => {
         statusRef.current = node;
         // Use parent node if it's in focus

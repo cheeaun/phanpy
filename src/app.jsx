@@ -68,7 +68,30 @@ window.__STATES_STATS__ = () => {
     counts[key] = Object.keys(states[key]).length;
   });
   console.warn('STATE stats', counts);
+
+  const { statuses } = states;
+  const unmountedPosts = [];
+  for (const key in statuses) {
+    const $post = document.querySelector(`[data-state-post-id="${key}"]`);
+    if (!$post) {
+      unmountedPosts.push(key);
+    }
+  }
+  console.warn('Unmounted posts', unmountedPosts.length, unmountedPosts);
 };
+
+// Experimental "garbage collection" for states
+// Every 5 minutes
+// Only posts for now
+setInterval(() => {
+  const { statuses } = states;
+  for (const key in statuses) {
+    const $post = document.querySelector(`[data-state-post-id="${key}"]`);
+    if (!$post) {
+      delete states.statuses[key];
+    }
+  }
+}, 5 * 60 * 1000);
 
 // Preload icons
 // There's probably a better way to do this

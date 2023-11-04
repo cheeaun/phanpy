@@ -116,6 +116,7 @@ function MediaPost({
     const filterTitleStr = filterInfo?.titlesStr;
     return (
       <Parent
+        data-state-post-id={sKey}
         onMouseEnter={debugHover}
         key={mediaKey}
         data-spoiler-text={

@@ -81,6 +81,10 @@ const visibilityText = {
   direct: 'Private mention',
 };
 
+const isIOS =
+  window.ontouchstart !== undefined &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 function Status({
   statusID,
   status,
@@ -809,9 +813,6 @@ function Status({
 
   const showContextMenu = !isSizeLarge && !previewMode && !_deleted && !quoted;
 
-  const isIOS =
-    window.ontouchstart !== undefined &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent);
   // Only iOS/iPadOS browsers don't support contextmenu
   // Some comments report iPadOS might support contextmenu if a mouse is connected
   const bindLongPressContext = useLongPress(

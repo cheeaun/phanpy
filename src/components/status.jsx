@@ -1714,7 +1714,9 @@ function Card({ card, instance }) {
   if (snapStates.unfurledLinks[url]) return null;
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = new URL(url).hostname.replace(/^www\./, '');
+    const domain = new URL(url).hostname
+      .replace(/^www\./, '')
+      .replace(/\/$/, '');
     let blurhashImage;
     if (!image) {
       const w = 44;

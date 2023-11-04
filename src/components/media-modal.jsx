@@ -252,7 +252,7 @@ function MediaModal({
             //   }
             // }}
           >
-            <span class="button-label">See post </span>&raquo;
+            <span class="button-label">View post </span>&raquo;
           </Link>
         </span>
       </div>

@@ -1762,7 +1762,10 @@ function Card({ card, instance }) {
             {title}
           </p>
           <p class="meta" dir="auto">
-            {description || providerName || authorName}
+            {description ||
+              (!!publishedAt && (
+                <RelativeTime datetime={publishedAt} format="micro" />
+              ))}
           </p>
         </div>
       </a>

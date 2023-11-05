@@ -86,7 +86,7 @@ window.__STATES_STATS__ = () => {
 setInterval(() => {
   const { statuses } = states;
   for (const key in statuses) {
-    const $post = document.querySelector(`[data-state-post-id="${key}"]`);
+    const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
     if (!$post) {
       delete states.statuses[key];
     }

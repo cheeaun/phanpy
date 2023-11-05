@@ -253,7 +253,11 @@ function Status({
 
     if (group) {
       return (
-        <div class="status-group" onMouseEnter={debugHover}>
+        <div
+          data-state-post-id={sKey}
+          class="status-group"
+          onMouseEnter={debugHover}
+        >
           <div class="status-pre-meta">
             <Icon icon="group" size="l" alt="Group" />{' '}
             <NameText account={status.account} instance={instance} showAvatar />
@@ -270,7 +274,11 @@ function Status({
     }
 
     return (
-      <div class="status-reblog" onMouseEnter={debugHover}>
+      <div
+        data-state-post-id={sKey}
+        class="status-reblog"
+        onMouseEnter={debugHover}
+      >
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
           <NameText account={status.account} instance={instance} showAvatar />{' '}
@@ -2278,6 +2286,10 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   );
 
   const statusPeekRef = useTruncated();
+  const sKey =
+    statusKey(status.id, instance) +
+    ' ' +
+    (statusKey(reblog?.id, instance) || '');
 
   return (
     <div
@@ -2290,7 +2302,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       }}
       {...bindLongPressPeek()}
     >
-      <article class="status filtered" tabindex="-1">
+      <article data-state-post-id={sKey} class="status filtered" tabindex="-1">
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}

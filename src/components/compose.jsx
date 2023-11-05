@@ -607,7 +607,6 @@ function Compose({
                   });
 
                   if (!newWin) {
-                    alert('Looks like your browser is blocking popups.');
                     return;
                   }
 

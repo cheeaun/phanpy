@@ -44,6 +44,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
@@ -373,9 +374,16 @@ function Status({
     canBoost = true;
   }
 
-  const replyStatus = () => {
+  const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
       return alert(unauthInteractionErrorMessage);
+    }
+    // syntheticEvent comes from MenuItem
+    if (e?.shiftKey || e?.syntheticEvent?.shiftKey) {
+      const newWin = openCompose({
+        replyToStatus: status,
+      });
+      if (newWin) return;
     }
     states.showCompose = {
       replyToStatus: status,
@@ -855,7 +863,7 @@ function Status({
   );
 
   const hotkeysEnabled = !readOnly && !previewMode;
-  const rRef = useHotkeys('r', replyStatus, {
+  const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
   });
   const fRef = useHotkeys(

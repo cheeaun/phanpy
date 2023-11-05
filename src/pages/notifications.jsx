@@ -134,20 +134,25 @@ function Notifications({ columnMode }) {
     (async () => {
       try {
         const fetchNotificationsPromise = fetchNotifications(firstLoad);
-        const fetchFollowRequestsPromise = fetchFollowRequests();
-        const fetchAnnouncementsPromise = fetchAnnouncements();
 
         if (firstLoad) {
-          const announcements = await fetchAnnouncementsPromise;
-          announcements.sort((a, b) => {
-            // Sort by updatedAt first, then createdAt
-            const aDate = new Date(a.updatedAt || a.createdAt);
-            const bDate = new Date(b.updatedAt || b.createdAt);
-            return bDate - aDate;
-          });
-          setAnnouncements(announcements);
-          const requests = await fetchFollowRequestsPromise;
-          setFollowRequests(requests);
+          fetchAnnouncements()
+            .then((announcements) => {
+              announcements.sort((a, b) => {
+                // Sort by updatedAt first, then createdAt
+                const aDate = new Date(a.updatedAt || a.createdAt);
+                const bDate = new Date(b.updatedAt || b.createdAt);
+                return bDate - aDate;
+              });
+              setAnnouncements(announcements);
+            })
+            .catch(() => {});
+
+          fetchFollowRequests()
+            .then((requests) => {
+              setFollowRequests(requests);
+            })
+            .catch(() => {});
         }
 
         const { done } = await fetchNotificationsPromise;

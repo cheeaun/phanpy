@@ -84,6 +84,7 @@ window.__STATES_STATS__ = () => {
 // Every 5 minutes
 // Only posts for now
 setInterval(() => {
+  if (!window.__IDLE__) return;
   const { statuses } = states;
   for (const key in statuses) {
     const $post = document.querySelector(`[data-state-post-id~="${key}"]`);

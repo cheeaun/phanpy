@@ -86,6 +86,7 @@ window.__STATES_STATS__ = () => {
 setInterval(() => {
   if (!window.__IDLE__) return;
   const { statuses, unfurledLinks } = states;
+  let keysCount = 0;
   for (const key in statuses) {
     try {
       const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
@@ -100,8 +101,12 @@ setInterval(() => {
             break;
           }
         }
+        keysCount++;
       }
     } catch (e) {}
+  }
+  if (keysCount) {
+    console.info(`GC: Removed ${keysCount} keys`);
   }
 }, 15 * 60 * 1000);
 

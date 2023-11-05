@@ -569,6 +569,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li .replies > .replies-summary .avatars {
   margin-right: 8px;
+
+  > *:not(:first-child) {
+    margin: 0 0 0 -4px;
+  }
 }
 .timeline.contextual > li .replies > .replies-summary:active,
 .timeline.contextual > li .replies[open] > .replies-summary {

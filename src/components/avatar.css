@@ -8,24 +8,31 @@
   box-shadow: 0 0 0 1px var(--bg-blur-color);
   flex-shrink: 0;
   vertical-align: middle;
-}
-.avatar.has-alpha {
-  border-radius: 0;
-}
-.avatar:not(.has-alpha).squircle {
-  border-radius: 25%;
-}
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-color: var(--img-bg-color);
-  contain: none;
-}
+  &.has-alpha {
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
 
-.avatar[data-loaded],
-.avatar[data-loaded] img {
-  box-shadow: none;
-  background-color: transparent;
+    img {
+      background-color: transparent;
+    }
+  }
+  &:not(.has-alpha).squircle {
+    border-radius: 25%;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: var(--img-bg-color);
+    contain: none;
+  }
+
+  &[data-loaded],
+  &[data-loaded] img {
+    box-shadow: none;
+    background-color: transparent;
+  }
 }

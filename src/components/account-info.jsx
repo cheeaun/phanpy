@@ -131,11 +131,6 @@ function AccountInfo({
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
 
-  const isSelf = useMemo(
-    () => account.id === store.session.get('currentAccount'),
-    [account?.id],
-  );
-
   const sameCurrentInstance = useMemo(
     () => instance === currentInstance,
     [instance, currentInstance],
@@ -197,6 +192,37 @@ function AccountInfo({
       }
     }
   }
+
+  const isSelf = useMemo(
+    () => id === store.session.get('currentAccount'),
+    [id],
+  );
+
+  useEffect(() => {
+    const infoHasEssentials = !!(
+      info?.id &&
+      info?.username &&
+      info?.acct &&
+      info?.avatar &&
+      info?.avatarStatic &&
+      info?.displayName &&
+      info?.url
+    );
+    if (isSelf && instance && infoHasEssentials) {
+      const accounts = store.local.getJSON('accounts');
+      let updated = false;
+      accounts.forEach((account) => {
+        if (account.info.id === info.id && account.instanceURL === instance) {
+          account.info = info;
+          updated = true;
+        }
+      });
+      if (updated) {
+        console.log('Updated account info', info);
+        store.local.setJSON('accounts', accounts);
+      }
+    }
+  }, [isSelf, info, instance]);
 
   const accountInstance = useMemo(() => {
     if (!url) return null;

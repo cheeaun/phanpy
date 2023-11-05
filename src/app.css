@@ -359,6 +359,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   box-shadow: inset 0 -3px var(--comment-line-color),
     inset 0 3px var(--comment-line-color);
   overscroll-behavior-x: contain;
+  touch-action: pan-x;
 }
 .timeline.contextual .replies[data-comments-level='4'] {
   overflow-x: auto;

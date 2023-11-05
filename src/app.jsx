@@ -49,7 +49,7 @@ import {
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
-import states, { initStates } from './utils/states';
+import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 import './utils/toast-alert';
@@ -81,18 +81,29 @@ window.__STATES_STATS__ = () => {
 };
 
 // Experimental "garbage collection" for states
-// Every 5 minutes
+// Every 15 minutes
 // Only posts for now
 setInterval(() => {
   if (!window.__IDLE__) return;
-  const { statuses } = states;
+  const { statuses, unfurledLinks } = states;
   for (const key in statuses) {
-    const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
-    if (!$post) {
-      delete states.statuses[key];
-    }
+    try {
+      const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
+      if (!$post) {
+        delete states.statuses[key];
+        delete states.statusQuotes[key];
+        for (const link in unfurledLinks) {
+          const unfurled = unfurledLinks[link];
+          const sKey = statusKey(unfurled.id, unfurled.instance);
+          if (sKey === key) {
+            delete states.unfurledLinks[link];
+            break;
+          }
+        }
+      }
+    } catch (e) {}
   }
-}, 5 * 60 * 1000);
+}, 15 * 60 * 1000);
 
 // Preload icons
 // There's probably a better way to do this

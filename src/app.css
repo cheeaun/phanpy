@@ -552,7 +552,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
-  font-weight: 500;
   font-size: 12px;
   color: var(--text-insignificant-color);
   user-select: none;
@@ -560,6 +559,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
   list-style: none;
   white-space: nowrap;
+
+  b {
+    font-weight: 500;
+    color: var(--text-color);
+  }
 }
 .timeline.contextual > li .replies > .replies-summary::-webkit-details-marker {
   display: none;

@@ -1280,11 +1280,11 @@ function SubComments({
             />
           ))}
         </span>
-        <span>
+        <b>
           <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
           repl
           {replies.length === 1 ? 'y' : 'ies'}
-        </span>
+        </b>
         {!sameCount && totalComments > 1 && (
           <>
             {' '}

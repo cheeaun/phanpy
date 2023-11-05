@@ -2158,10 +2158,24 @@ function _unfurlMastodonLink(instance, url) {
 
   let remoteInstanceFetch;
   let theURL = url;
-  if (/\/\/elk\.[^\/]+\/[^.]+\.[^.]+/i.test(theURL)) {
-    // E.g. https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+
+  // https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+  if (/\/\/elk\.[^\/]+\/[^\/]+\.[^\/]+/i.test(theURL)) {
     theURL = theURL.replace(/elk\.[^\/]+\//i, '');
   }
+
+  // https://trunks.social/status/domain.com/@stest/123 -> https://domain.com/@stest/123
+  if (/\/\/trunks\.[^\/]+\/status\/[^\/]+\.[^\/]+/i.test(theURL)) {
+    theURL = theURL.replace(/trunks\.[^\/]+\/status\//i, '');
+  }
+
+  // https://phanpy.social/#/domain.com/s/123 -> https://domain.com/statuses/123
+  if (/\/#\/[^\/]+\.[^\/]+\/s\/.+/i.test(theURL)) {
+    const urlAfterHash = theURL.split('/#/')[1];
+    const finalURL = urlAfterHash.replace(/\/s\//i, '/@fakeUsername/');
+    theURL = `https://${finalURL}`;
+  }
+
   const urlObj = new URL(theURL);
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
@@ -2189,7 +2203,7 @@ function _unfurlMastodonLink(instance, url) {
   const { masto } = api({ instance });
   const mastoSearchFetch = masto.v2.search
     .fetch({
-      q: url,
+      q: theURL,
       type: 'statuses',
       resolve: true,
       limit: 1,

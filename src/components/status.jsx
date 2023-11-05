@@ -268,6 +268,7 @@ function Status({
             instance={instance}
             size={size}
             contentTextWeight={contentTextWeight}
+            readOnly={readOnly}
           />
         </div>
       );
@@ -290,6 +291,7 @@ function Status({
           instance={instance}
           size={size}
           contentTextWeight={contentTextWeight}
+          readOnly={readOnly}
         />
       </div>
     );
@@ -2276,6 +2278,7 @@ const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
+    id: statusID,
     account: { avatar, avatarStatic, bot, group },
     createdAt,
     visibility,
@@ -2304,6 +2307,11 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
     statusKey(status.id, instance) +
     ' ' +
     (statusKey(reblog?.id, instance) || '');
+
+  const actualStatusID = reblog?.id || statusID;
+  const url = instance
+    ? `/${instance}/s/${actualStatusID}`
+    : `/s/${actualStatusID}`;
 
   return (
     <div
@@ -2380,7 +2388,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
               <Link
                 ref={statusPeekRef}
                 class="status-link"
-                to={`/${instance}/s/${status.id}`}
+                to={url}
                 onClick={() => {
                   setShowPeek(false);
                 }}

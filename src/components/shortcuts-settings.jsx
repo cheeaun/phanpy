@@ -466,15 +466,6 @@ const fetchLists = pmem(
     maxAge: FETCH_MAX_AGE,
   },
 );
-const fetchFollowedHashtags = pmem(
-  () => {
-    const { masto } = api();
-    return masto.v1.followedTags.list();
-  },
-  {
-    maxAge: FETCH_MAX_AGE,
-  },
-);
 
 function ShortcutForm({
   onSubmit,
@@ -486,6 +477,7 @@ function ShortcutForm({
   console.log('shortcut', shortcut);
   const editMode = !!shortcut;
   const [currentType, setCurrentType] = useState(shortcut?.type || null);
+  const { masto } = api();
 
   const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -508,7 +500,7 @@ function ShortcutForm({
     (async () => {
       if (currentType !== 'hashtag') return;
       try {
-        const iterator = fetchFollowedHashtags();
+        const iterator = masto.v1.followedTags.list();
         const tags = [];
         do {
           const { value, done } = await iterator.next();

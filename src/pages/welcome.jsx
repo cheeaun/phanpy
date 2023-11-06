@@ -98,31 +98,33 @@ function Welcome() {
           </section>
         </div>
       </div>
-      <hr />
-      <p>
-        <a href="https://github.com/cheeaun/phanpy" target="_blank">
-          Built
-        </a>{' '}
-        by{' '}
-        <a
-          href="https://mastodon.social/@cheeaun"
-          target="_blank"
-          onClick={(e) => {
-            e.preventDefault();
-            states.showAccount = 'cheeaun@mastodon.social';
-          }}
-        >
-          @cheeaun
-        </a>
-        .{' '}
-        <a
-          href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
-          target="_blank"
-        >
-          Privacy Policy
-        </a>
-        .
-      </p>
+      <footer>
+        <hr />
+        <p>
+          <a href="https://github.com/cheeaun/phanpy" target="_blank">
+            Built
+          </a>{' '}
+          by{' '}
+          <a
+            href="https://mastodon.social/@cheeaun"
+            target="_blank"
+            onClick={(e) => {
+              e.preventDefault();
+              states.showAccount = 'cheeaun@mastodon.social';
+            }}
+          >
+            @cheeaun
+          </a>
+          .{' '}
+          <a
+            href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+          .
+        </p>
+      </footer>
     </main>
   );
 }

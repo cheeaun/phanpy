@@ -9,7 +9,7 @@ import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 
 const STREAMING_TIMEOUT = 1000 * 3; // 3 seconds
-const POLL_INTERVAL = 1000 * 60; // 1 minute
+const POLL_INTERVAL = 15_000; // 15 seconds
 
 export default memo(function BackgroundService({ isLoggedIn }) {
   // Notifications service

@@ -36,7 +36,7 @@ function Timeline({
   boostsCarousel,
   fetchItems = () => {},
   checkForUpdates = () => {},
-  checkForUpdatesInterval = 60_000, // 1 minute
+  checkForUpdatesInterval = 15_000, // 15 seconds
   headerStart,
   headerEnd,
   timelineStart,

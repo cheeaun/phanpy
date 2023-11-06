@@ -85,12 +85,16 @@ window.__STATES_STATS__ = () => {
 // Only posts for now
 setInterval(() => {
   if (!window.__IDLE__) return;
-  const { statuses, unfurledLinks } = states;
+  const { statuses, unfurledLinks, notifications } = states;
   let keysCount = 0;
+  const { instance } = api();
   for (const key in statuses) {
     try {
       const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
-      if (!$post) {
+      const postInNotifications = notifications.some(
+        (n) => key === statusKey(n.status?.id, instance),
+      );
+      if (!$post && !postInNotifications) {
         delete states.statuses[key];
         delete states.statusQuotes[key];
         for (const link in unfurledLinks) {

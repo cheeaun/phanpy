@@ -130,6 +130,7 @@ function Notifications({ columnMode }) {
   }
 
   const loadNotifications = (firstLoad) => {
+    setShowNew(false);
     setUIState('loading');
     (async () => {
       try {
@@ -192,19 +193,14 @@ function Notifications({ columnMode }) {
         scrollTop: scrollableRef.current?.scrollTop,
         inBackground: inBackground(),
         disableIdleCheck,
-        notificationsShowNew: snapStates.notificationsShowNew,
       });
       if (
         snapStates.settings.autoRefresh &&
         scrollableRef.current?.scrollTop < 16 &&
         (disableIdleCheck || window.__IDLE__) &&
-        !inBackground() &&
-        snapStates.notificationsShowNew
+        !inBackground()
       ) {
-        setShowNew(false);
         loadNotifications(true);
-      } else {
-        setShowNew(snapStates.notificationsShowNew);
       }
     },
     [snapStates.notificationsShowNew, snapStates.settings.autoRefresh, uiState],
@@ -228,6 +224,7 @@ function Notifications({ columnMode }) {
         if (v) {
           loadUpdates();
         }
+        setShowNew(v);
       });
     }
     return () => {

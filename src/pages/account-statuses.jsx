@@ -152,16 +152,19 @@ function AccountStatuses() {
 
     const results = [];
     if (firstLoad) {
-      const { value: pinnedStatuses } = await masto.v1.accounts
+      const { value } = await masto.v1.accounts
         .$select(id)
         .statuses.list({
           pinned: true,
         })
         .next();
-      if (pinnedStatuses?.length && !tagged && !media) {
-        pinnedStatuses.forEach((status) => {
+      if (value?.length && !tagged && !media) {
+        const pinnedStatuses = value.map((status) => {
           saveStatus(status, instance);
-          status._pinned = true;
+          return {
+            ...status,
+            _pinned: true,
+          };
         });
         if (pinnedStatuses.length >= 3) {
           const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);

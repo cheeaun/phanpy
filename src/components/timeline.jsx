@@ -461,6 +461,7 @@ function TimelineItem({
   view,
 }) {
   const { id: statusID, reblog, items, type, _pinned } = status;
+  if (_pinned) useItemID = false;
   const actualStatusID = reblog?.id || statusID;
   const url = instance
     ? `/${instance}/s/${actualStatusID}`
@@ -496,11 +497,12 @@ function TimelineItem({
         <li key={`timeline-${statusID}`} class="timeline-item-carousel">
           <StatusCarousel title={title} class={`${type}-carousel`}>
             {items.map((item) => {
-              const { id: statusID, reblog } = item;
+              const { id: statusID, reblog, _pinned } = item;
               const actualStatusID = reblog?.id || statusID;
               const url = instance
                 ? `/${instance}/s/${actualStatusID}`
                 : `/s/${actualStatusID}`;
+              if (_pinned) useItemID = false;
               return (
                 <li key={statusID}>
                   <Link class="status-carousel-link timeline-item-alt" to={url}>

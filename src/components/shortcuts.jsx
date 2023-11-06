@@ -101,7 +101,7 @@ function Shortcuts() {
             {formattedShortcuts.map(
               ({ id, path, title, subtitle, icon }, i) => {
                 return (
-                  <li key={i + title}>
+                  <li key={`${i}-${id}-${title}-${subtitle}-${path}`}>
                     <Link
                       class={subtitle ? 'has-subtitle' : ''}
                       to={path}
@@ -170,9 +170,13 @@ function Shortcuts() {
             </button>
           }
         >
-          {formattedShortcuts.map(({ path, title, subtitle, icon }, i) => {
+          {formattedShortcuts.map(({ id, path, title, subtitle, icon }, i) => {
             return (
-              <MenuLink to={path} key={i + title} class="glass-menu-item">
+              <MenuLink
+                to={path}
+                key={`${i}-${id}-${title}-${subtitle}-${path}`}
+                class="glass-menu-item"
+              >
                 <Icon icon={icon} size="l" />{' '}
                 <span class="menu-grow">
                   <span>

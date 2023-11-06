@@ -118,6 +118,15 @@ export default memo(function KeyboardShortcutsHelp() {
                   keys: <kbd>c</kbd>,
                 },
                 {
+                  action: 'Compose new post (new window)',
+                  className: 'insignificant',
+                  keys: (
+                    <>
+                      <kbd>Shift</kbd> + <kbd>c</kbd>
+                    </>
+                  ),
+                },
+                {
                   action: 'Send post',
                   keys: (
                     <>
@@ -133,6 +142,15 @@ export default memo(function KeyboardShortcutsHelp() {
                 {
                   action: 'Reply',
                   keys: <kbd>r</kbd>,
+                },
+                {
+                  action: 'Reply (new window)',
+                  className: 'insignificant',
+                  keys: (
+                    <>
+                      <kbd>Shift</kbd> + <kbd>r</kbd>
+                    </>
+                  ),
                 },
                 {
                   action: 'Like (favourite)',
@@ -162,9 +180,9 @@ export default memo(function KeyboardShortcutsHelp() {
                     </>
                   ),
                 },
-              ].map(({ action, keys }) => (
+              ].map(({ action, className, keys }) => (
                 <tr key={action}>
-                  <th>{action}</th>
+                  <th class={className}>{action}</th>
                   <td>{keys}</td>
                 </tr>
               ))}

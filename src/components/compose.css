@@ -40,28 +40,6 @@
   border-radius: 9999px;
 }
 
-#compose-container textarea {
-  width: 100%;
-  max-width: 100%;
-  height: 5em;
-  min-height: 5em;
-  max-height: 50vh;
-  resize: vertical;
-  line-height: 1.4;
-  border-color: transparent;
-}
-#compose-container textarea:hover {
-  border-color: var(--divider-color);
-}
-
-@media (min-width: 40em) {
-  #compose-container textarea {
-    /* font-size: 150%;
-    font-size: calc(100% + 50% / var(--text-weight)); */
-    max-height: 65vh;
-  }
-}
-
 @keyframes appear-up {
   0% {
     opacity: 0;
@@ -129,17 +107,51 @@
 }
 
 #compose-container form {
-  border-radius: 16px;
-  padding: 4px 12px;
+  --form-padding-inline: 12px;
+  --form-padding-block: 8px;
+  /* border-radius: 16px; */
+  padding: var(--form-padding-block) var(--form-padding-inline);
   background-color: var(--bg-blur-color);
   /* background-image: linear-gradient(var(--bg-color) 85%, transparent); */
   position: relative;
   z-index: 2;
   --drop-shadow: 0 3px 6px -3px var(--drop-shadow-color);
   box-shadow: var(--drop-shadow);
+
+  @media (min-width: 40em) {
+    border-radius: 16px;
+  }
 }
 #compose-container .status-preview ~ form {
   box-shadow: var(--drop-shadow), 0 -3px 6px -3px var(--drop-shadow-color);
+}
+
+#compose-container textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 5em;
+  min-height: 5em;
+  max-height: 50vh;
+  resize: vertical;
+  line-height: 1.4;
+  border-color: transparent;
+
+  &.compose-field {
+    @media (width < 30em) {
+      margin-inline: calc(-1 * var(--form-padding-inline));
+      width: 100vw !important;
+      max-width: 100vw;
+      border-radius: 0;
+      border: 0;
+    }
+
+    @media (min-width: 40em) {
+      max-height: 65vh;
+    }
+  }
+}
+#compose-container textarea:hover {
+  border-color: var(--divider-color);
 }
 
 #compose-container .toolbar {
@@ -269,6 +281,15 @@
   gap: 8px;
   align-items: center;
   font-size: 90%;
+
+  .grow {
+    flex-grow: 1;
+  }
+
+  .count {
+    font-size: 80%;
+    opacity: 0.5;
+  }
 }
 #compose-container .text-expander-menu li b img {
   /* The shortcode emojis */

@@ -103,7 +103,9 @@ function MediaModal({
   }, []);
 
   return (
-    <div class="media-modal-container">
+    <div
+      class={`media-modal-container media-modal-count-${mediaAttachments?.length}`}
+    >
       <div
         ref={carouselRef}
         tabIndex="0"
@@ -142,7 +144,11 @@ function MediaModal({
               key={media.id}
               ref={i === currentIndex ? carouselFocusItem : null}
               onClick={(e) => {
-                if (e.target !== e.currentTarget) {
+                // console.log(e);
+                // if (e.target !== e.currentTarget) {
+                //   setShowControls(!showControls);
+                // }
+                if (!e.target.classList.contains('media')) {
                   setShowControls(!showControls);
                 }
               }}
@@ -248,7 +254,7 @@ function MediaModal({
             //   }
             // }}
           >
-            <span class="button-label">See post </span>&raquo;
+            <span class="button-label">View post </span>&raquo;
           </Link>
         </span>
       </div>

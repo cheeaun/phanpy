@@ -11,7 +11,7 @@ body.cloak,
   .status .content-compact,
   .account-container :is(header, main > *:not(.actions)),
   .account-container :is(header, main > *:not(.actions)) *,
-  .header-account,
+  .header-double-lines,
   .account-block {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
@@ -25,6 +25,7 @@ body.cloak,
   }
 
   .status :is(img, video, audio),
+  .media-post .media,
   .avatar,
   .emoji,
   .header-banner {

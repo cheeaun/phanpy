@@ -1,5 +1,6 @@
 import './search.css';
 
+import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -13,6 +14,7 @@ import NavMenu from '../components/nav-menu';
 import SearchForm from '../components/search-form';
 import Status from '../components/status';
 import { api } from '../utils/api';
+import shortenNumber from '../utils/shorten-number';
 import useTitle from '../utils/useTitle';
 
 const SHORT_LIMIT = 5;
@@ -144,6 +146,8 @@ function Search(props) {
     },
   );
 
+  const [filterBarParent] = useAutoAnimate();
+
   return (
     <div id="search-page" class="deck-container" ref={scrollableRef}>
       <div class="timeline-deck deck">
@@ -158,7 +162,10 @@ function Search(props) {
         </header>
         <main>
           {!!q && (
-            <div class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}>
+            <div
+              ref={filterBarParent}
+              class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}
+            >
               {!!type && (
                 <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
                   ‹ All
@@ -244,20 +251,32 @@ function Search(props) {
                   {hashtagResults.length > 0 ? (
                     <>
                       <ul class="link-list hashtag-list">
-                        {hashtagResults.map((hashtag) => (
-                          <li key={hashtag.name}>
-                            <Link
-                              to={
-                                instance
-                                  ? `/${instance}/t/${hashtag.name}`
-                                  : `/t/${hashtag.name}`
-                              }
-                            >
-                              <Icon icon="hashtag" />
-                              <span>{hashtag.name}</span>
-                            </Link>
-                          </li>
-                        ))}
+                        {hashtagResults.map((hashtag) => {
+                          const { name, history } = hashtag;
+                          const total = history.reduce(
+                            (acc, cur) => acc + +cur.uses,
+                            0,
+                          );
+                          return (
+                            <li key={hashtag.name}>
+                              <Link
+                                to={
+                                  instance
+                                    ? `/${instance}/t/${hashtag.name}`
+                                    : `/t/${hashtag.name}`
+                                }
+                              >
+                                <Icon icon="hashtag" />
+                                <span>{hashtag.name}</span>
+                                {!!total && (
+                                  <span class="count">
+                                    {shortenNumber(total)}
+                                  </span>
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                       {type !== 'hashtags' && (
                         <div class="ui-state">

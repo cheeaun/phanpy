@@ -13,6 +13,7 @@ import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -34,6 +35,8 @@ import Poll from '../components/poll';
 import { api } from '../utils/api';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
+import FilterContext from '../utils/filter-context';
+import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -41,6 +44,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
+import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
@@ -78,6 +82,10 @@ const visibilityText = {
   direct: 'Private mention',
 };
 
+const isIOS =
+  window.ontouchstart !== undefined &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 function Status({
   statusID,
   status,
@@ -90,7 +98,7 @@ function Status({
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
-  allowFilters,
+  // allowFilters,
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
@@ -166,8 +174,23 @@ function Status({
     // Non-API props
     _deleted,
     _pinned,
-    _filtered,
+    // _filtered,
   } = status;
+
+  const currentAccount = useMemo(() => {
+    return store.session.get('currentAccount');
+  }, []);
+  const isSelf = useMemo(() => {
+    return currentAccount && currentAccount === accountId;
+  }, [accountId, currentAccount]);
+
+  const filterContext = useContext(FilterContext);
+  const filterInfo =
+    !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
+
+  if (filterInfo?.action === 'hide') {
+    return null;
+  }
 
   console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
@@ -179,11 +202,11 @@ function Status({
     }
   };
 
-  if (allowFilters && size !== 'l' && _filtered) {
+  if (/*allowFilters && */ size !== 'l' && filterInfo) {
     return (
       <FilteredStatus
         status={status}
-        filterInfo={_filtered}
+        filterInfo={filterInfo}
         instance={instance}
         containerProps={{
           onMouseEnter: debugHover,
@@ -194,13 +217,6 @@ function Status({
 
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
-
-  const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
-  }, []);
-  const isSelf = useMemo(() => {
-    return currentAccount && currentAccount === accountId;
-  }, [accountId, currentAccount]);
 
   let inReplyToAccountRef = mentions?.find(
     (mention) => mention.id === inReplyToAccountId,
@@ -238,7 +254,11 @@ function Status({
 
     if (group) {
       return (
-        <div class="status-group" onMouseEnter={debugHover}>
+        <div
+          data-state-post-id={sKey}
+          class="status-group"
+          onMouseEnter={debugHover}
+        >
           <div class="status-pre-meta">
             <Icon icon="group" size="l" alt="Group" />{' '}
             <NameText account={status.account} instance={instance} showAvatar />
@@ -249,13 +269,18 @@ function Status({
             instance={instance}
             size={size}
             contentTextWeight={contentTextWeight}
+            readOnly={readOnly}
           />
         </div>
       );
     }
 
     return (
-      <div class="status-reblog" onMouseEnter={debugHover}>
+      <div
+        data-state-post-id={sKey}
+        class="status-reblog"
+        onMouseEnter={debugHover}
+      >
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
           <NameText account={status.account} instance={instance} showAvatar />{' '}
@@ -267,6 +292,7 @@ function Status({
           instance={instance}
           size={size}
           contentTextWeight={contentTextWeight}
+          readOnly={readOnly}
         />
       </div>
     );
@@ -348,9 +374,16 @@ function Status({
     canBoost = true;
   }
 
-  const replyStatus = () => {
+  const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
       return alert(unauthInteractionErrorMessage);
+    }
+    // syntheticEvent comes from MenuItem
+    if (e?.shiftKey || e?.syntheticEvent?.shiftKey) {
+      const newWin = openCompose({
+        replyToStatus: status,
+      });
+      if (newWin) return;
     }
     states.showCompose = {
       replyToStatus: status,
@@ -795,13 +828,13 @@ function Status({
   const contextMenuRef = useRef();
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuProps, setContextMenuProps] = useState({});
-  const isIOS =
-    window.ontouchstart !== undefined &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  const showContextMenu = !isSizeLarge && !previewMode && !_deleted && !quoted;
+
   // Only iOS/iPadOS browsers don't support contextmenu
   // Some comments report iPadOS might support contextmenu if a mouse is connected
   const bindLongPressContext = useLongPress(
-    isIOS
+    isIOS && showContextMenu
       ? (e) => {
           if (e.pointerType === 'mouse') return;
           // There's 'pen' too, but not sure if contextmenu event would trigger from a pen
@@ -829,10 +862,8 @@ function Status({
     },
   );
 
-  const showContextMenu = size !== 'l' && !previewMode && !_deleted && !quoted;
-
   const hotkeysEnabled = !readOnly && !previewMode;
-  const rRef = useHotkeys('r', replyStatus, {
+  const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
   });
   const fRef = useHotkeys(
@@ -960,6 +991,7 @@ function Status({
 
   return (
     <article
+      data-state-post-id={sKey}
       ref={(node) => {
         statusRef.current = node;
         // Use parent node if it's in focus
@@ -1091,6 +1123,15 @@ function Status({
               <Link
                 to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                 onClick={(e) => {
+                  if (
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey ||
+                    e.which === 2
+                  ) {
+                    return;
+                  }
                   e.preventDefault();
                   e.stopPropagation();
                   onStatusLinkClick?.(e, status);
@@ -1457,6 +1498,7 @@ function Status({
                       {' '}
                       &bull; <Icon icon="pencil" alt="Edited" />{' '}
                       <time
+                        tabIndex="0"
                         class="edited"
                         datetime={editedAtDate.toISOString()}
                         onClick={() => {
@@ -1576,10 +1618,11 @@ function Status({
       </div>
       {!!showEdited && (
         <Modal
+          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowEdited(false);
-              statusRef.current?.focus();
+              // statusRef.current?.focus();
             }
           }}
         >
@@ -1691,7 +1734,9 @@ function Card({ card, instance }) {
   if (snapStates.unfurledLinks[url]) return null;
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = new URL(url).hostname.replace(/^www\./, '');
+    const domain = new URL(url).hostname
+      .replace(/^www\./, '')
+      .replace(/\/$/, '');
     let blurhashImage;
     if (!image) {
       const w = 44;
@@ -1737,7 +1782,10 @@ function Card({ card, instance }) {
             {title}
           </p>
           <p class="meta" dir="auto">
-            {description || providerName || authorName}
+            {description ||
+              (!!publishedAt && (
+                <RelativeTime datetime={publishedAt} format="micro" />
+              ))}
           </p>
         </div>
       </a>
@@ -2120,10 +2168,24 @@ function _unfurlMastodonLink(instance, url) {
 
   let remoteInstanceFetch;
   let theURL = url;
-  if (/\/\/elk\.[^\/]+\/[^.]+\.[^.]+/i.test(theURL)) {
-    // E.g. https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+
+  // https://elk.zone/domain.com/@stest/123 -> https://domain.com/@stest/123
+  if (/\/\/elk\.[^\/]+\/[^\/]+\.[^\/]+/i.test(theURL)) {
     theURL = theURL.replace(/elk\.[^\/]+\//i, '');
   }
+
+  // https://trunks.social/status/domain.com/@stest/123 -> https://domain.com/@stest/123
+  if (/\/\/trunks\.[^\/]+\/status\/[^\/]+\.[^\/]+/i.test(theURL)) {
+    theURL = theURL.replace(/trunks\.[^\/]+\/status\//i, '');
+  }
+
+  // https://phanpy.social/#/domain.com/s/123 -> https://domain.com/statuses/123
+  if (/\/#\/[^\/]+\.[^\/]+\/s\/.+/i.test(theURL)) {
+    const urlAfterHash = theURL.split('/#/')[1];
+    const finalURL = urlAfterHash.replace(/\/s\//i, '/@fakeUsername/');
+    theURL = `https://${finalURL}`;
+  }
+
   const urlObj = new URL(theURL);
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
@@ -2151,7 +2213,7 @@ function _unfurlMastodonLink(instance, url) {
   const { masto } = api({ instance });
   const mastoSearchFetch = masto.v2.search
     .fetch({
-      q: url,
+      q: theURL,
       type: 'statuses',
       resolve: true,
       limit: 1,
@@ -2224,6 +2286,7 @@ const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
 function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const {
+    id: statusID,
     account: { avatar, avatarStatic, bot, group },
     createdAt,
     visibility,
@@ -2248,6 +2311,15 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   );
 
   const statusPeekRef = useTruncated();
+  const sKey =
+    statusKey(status.id, instance) +
+    ' ' +
+    (statusKey(reblog?.id, instance) || '');
+
+  const actualStatusID = reblog?.id || statusID;
+  const url = instance
+    ? `/${instance}/s/${actualStatusID}`
+    : `/s/${actualStatusID}`;
 
   return (
     <div
@@ -2260,7 +2332,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       }}
       {...bindLongPressPeek()}
     >
-      <article class="status filtered" tabindex="-1">
+      <article data-state-post-id={sKey} class="status filtered" tabindex="-1">
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}
@@ -2324,7 +2396,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
               <Link
                 ref={statusPeekRef}
                 class="status-link"
-                to={`/${instance}/s/${status.id}`}
+                to={url}
                 onClick={() => {
                   setShowPeek(false);
                 }}

@@ -18,6 +18,8 @@ export default function openCompose(opts) {
     // }
 
     newWin.__COMPOSE__ = opts;
+  } else {
+    alert('Looks like your browser is blocking popups.');
   }
 
   return newWin;

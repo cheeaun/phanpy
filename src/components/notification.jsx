@@ -1,3 +1,4 @@
+import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import shortenNumber from '../utils/shorten-number';
@@ -221,9 +222,10 @@ function Notification({ notification, instance, isStatic }) {
         )}
         {_accounts?.length > 1 && (
           <p class="avatars-stack">
-            {_accounts.slice(0, AVATARS_LIMIT).map((account, i) => (
-              <>
+            {_accounts.slice(0, AVATARS_LIMIT).map((account) => (
+              <Fragment key={account.id}>
                 <a
+                  key={account.id}
                   href={account.url}
                   rel="noopener noreferrer"
                   class="account-avatar-stack"
@@ -261,7 +263,7 @@ function Notification({ notification, instance, isStatic }) {
                     </div>
                   )}
                 </a>{' '}
-              </>
+              </Fragment>
             ))}
             <button
               type="button"

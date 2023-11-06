@@ -82,7 +82,7 @@ function AccountBlock({
       }}
     >
       <Avatar url={avatar} size={avatarSize} squircle={bot} />
-      <span>
+      <span class="account-block-content">
         {!hideDisplayName && (
           <>
             {displayName ? (

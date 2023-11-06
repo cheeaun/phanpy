@@ -603,6 +603,7 @@
   margin-block: min(0.75em, 12px);
   white-space: pre-wrap;
   tab-size: 2;
+  text-wrap: pretty;
 }
 .status .content p:first-child {
   margin-block-start: 0;
@@ -726,6 +727,7 @@
       white-space: pre-line;
       flex-basis: 15em;
       flex-grow: 1;
+      text-wrap: pretty;
     }
   }
 
@@ -846,7 +848,7 @@
   object-fit: cover;
   vertical-align: middle;
 }
-.status .media {
+:is(.status, .media-post) .media {
   cursor: pointer;
 
   &[data-has-alt] {
@@ -885,7 +887,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   position: relative;
   background-clip: padding-box;
 }
-.status :is(.media-video, .media-audio) .media-play {
+:is(.status, .media-post) :is(.media-video, .media-audio) .media-play {
   pointer-events: none;
   width: 44px;
   height: 44px;
@@ -902,10 +904,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 70px;
   transition: transform 0.2s ease-in-out;
 }
-.status :is(.media-video, .media-audio):hover:not(:active) .media-play {
+:is(.status, .media-post)
+  :is(.media-video, .media-audio):hover:not(:active)
+  .media-play {
   transform: translate(-50%, -50%) scale(1.1);
 }
-.status :is(.media-video, .media-audio)[data-formatted-duration]:after {
+:is(.status, .media-post)
+  :is(.media-video, .media-audio)[data-formatted-duration]:after {
   font-size: 12px;
   pointer-events: none;
   content: attr(data-formatted-duration);
@@ -918,10 +923,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 4px;
   padding: 0 4px;
 }
-.status .media-audio[data-formatted-duration]:after {
+:is(.status, .media-post) .media-audio[data-formatted-duration]:after {
   content: '♬ ' attr(data-formatted-duration);
 }
-.status .media-gif[data-label]:not(:hover):after {
+:is(.status, .media-post) .media-gif[data-label]:not(:hover):after {
   font-size: 12px;
   font-weight: bold;
   pointer-events: none;
@@ -953,12 +958,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
 .status .media-audio audio {
   width: 100%;
 } */
-.status .media-audio {
+:is(.status, .media-post) .media-audio {
   width: 100%;
   height: 100%;
+  min-height: 88px;
   background-image: radial-gradient(
       circle at center center,
-      var(--bg-color),
+      transparent,
       var(--bg-faded-color)
     ),
     repeating-radial-gradient(
@@ -1078,7 +1084,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
   font-size: 90%;
   z-index: 1;
   text-shadow: 0 var(--hairline-width) var(--bg-color);
-  mix-blend-mode: luminosity;
   white-space: pre-line;
 
   &:is(:hover, :focus) {
@@ -1202,6 +1207,7 @@ a:focus-visible .card img {
   box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+  text-wrap: balance;
 }
 .card .meta {
   font-size: smaller;

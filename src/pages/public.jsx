@@ -21,6 +21,7 @@ function Public({ local, columnMode, ...props }) {
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
+  const { masto: currentMasto, instance: currentInstance } = api();
   const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   // const navigate = useNavigate();
@@ -41,7 +42,7 @@ function Public({ local, columnMode, ...props }) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'public');
+      // value = filteredItems(value, 'public');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -77,7 +78,7 @@ function Public({ local, columnMode, ...props }) {
       key={instance + isLocal}
       title={title}
       titleComponent={
-        <h1 class="header-account">
+        <h1 class="header-double-lines">
           <b>{isLocal ? 'Local timeline' : 'Federated timeline'}</b>
           <div>{instance}</div>
         </h1>
@@ -91,7 +92,8 @@ function Public({ local, columnMode, ...props }) {
       useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
-      allowFilters
+      // allowFilters
+      filterContext="public"
       headerEnd={
         <Menu2
           portal
@@ -137,6 +139,20 @@ function Public({ local, columnMode, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
+          {currentInstance !== instance && (
+            <MenuItem
+              onClick={() => {
+                location.hash = isLocal
+                  ? `/${currentInstance}/p/l`
+                  : `/${currentInstance}/p`;
+              }}
+            >
+              <Icon icon="bus" />{' '}
+              <small class="menu-double-lines">
+                Go to my instance (<b>{currentInstance}</b>)
+              </small>
+            </MenuItem>
+          )}
         </Menu2>
       }
     />

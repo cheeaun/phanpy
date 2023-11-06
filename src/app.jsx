@@ -10,7 +10,7 @@ import {
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
-import { subscribe, useSnapshot } from 'valtio';
+import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
@@ -49,12 +49,70 @@ import {
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
-import states, { initStates } from './utils/states';
+import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 import './utils/toast-alert';
 
 window.__STATES__ = states;
+window.__STATES_STATS__ = () => {
+  const keys = [
+    'statuses',
+    'accounts',
+    'spoilers',
+    'unfurledLinks',
+    'statusQuotes',
+  ];
+  const counts = {};
+  keys.forEach((key) => {
+    counts[key] = Object.keys(states[key]).length;
+  });
+  console.warn('STATE stats', counts);
+
+  const { statuses } = states;
+  const unmountedPosts = [];
+  for (const key in statuses) {
+    const $post = document.querySelector(`[data-state-post-id="${key}"]`);
+    if (!$post) {
+      unmountedPosts.push(key);
+    }
+  }
+  console.warn('Unmounted posts', unmountedPosts.length, unmountedPosts);
+};
+
+// Experimental "garbage collection" for states
+// Every 15 minutes
+// Only posts for now
+setInterval(() => {
+  if (!window.__IDLE__) return;
+  const { statuses, unfurledLinks, notifications } = states;
+  let keysCount = 0;
+  const { instance } = api();
+  for (const key in statuses) {
+    try {
+      const $post = document.querySelector(`[data-state-post-id~="${key}"]`);
+      const postInNotifications = notifications.some(
+        (n) => key === statusKey(n.status?.id, instance),
+      );
+      if (!$post && !postInNotifications) {
+        delete states.statuses[key];
+        delete states.statusQuotes[key];
+        for (const link in unfurledLinks) {
+          const unfurled = unfurledLinks[link];
+          const sKey = statusKey(unfurled.id, unfurled.instance);
+          if (sKey === key) {
+            delete states.unfurledLinks[link];
+            break;
+          }
+        }
+        keysCount++;
+      }
+    } catch (e) {}
+  }
+  if (keysCount) {
+    console.info(`GC: Removed ${keysCount} keys`);
+  }
+}, 15 * 60 * 1000);
 
 // Preload icons
 // There's probably a better way to do this
@@ -70,7 +128,7 @@ setTimeout(() => {
 }, 5000);
 
 (() => {
-  window.__IDLE__ = false;
+  window.__IDLE__ = true;
   const nonIdleEvents = [
     'mousemove',
     'mousedown',
@@ -81,13 +139,14 @@ setTimeout(() => {
     'pointermove',
     'wheel',
   ];
-  const IDLE_TIME = 5_000; // 5 seconds
-  const setIdle = debounce(() => {
+  const setIdle = () => {
     window.__IDLE__ = true;
-  }, IDLE_TIME);
+  };
+  const IDLE_TIME = 3_000; // 3 seconds
+  const debouncedSetIdle = debounce(setIdle, IDLE_TIME);
   const onNonIdle = () => {
     window.__IDLE__ = false;
-    setIdle();
+    debouncedSetIdle();
   };
   nonIdleEvents.forEach((event) => {
     window.addEventListener(event, onNonIdle, {
@@ -95,6 +154,21 @@ setTimeout(() => {
       capture: true,
     });
   });
+  window.addEventListener('blur', setIdle, {
+    passive: true,
+  });
+  // When cursor leaves the window, set idle
+  document.documentElement.addEventListener(
+    'mouseleave',
+    (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        setIdle();
+      }
+    },
+    {
+      passive: true,
+    },
+  );
   // document.addEventListener(
   //   'visibilitychange',
   //   () => {

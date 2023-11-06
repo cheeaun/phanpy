@@ -1,4 +1,4 @@
-import { satisfies } from 'semver';
+import { satisfies } from 'compare-versions';
 
 import features from '../data/features.json';
 

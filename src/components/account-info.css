@@ -18,7 +18,7 @@
   position: absolute;
   top: 8px;
   inset-inline: 8px;
-  z-index: 2;
+  z-index: 3;
   border: 1px solid var(--outline-color);
   box-shadow: 0 8px 16px var(--drop-shadow-color);
   border-radius: calc(16px - 8px);
@@ -47,7 +47,7 @@
 
   ~ * {
     /* pointer-events: none; */
-    filter: grayscale(0.75) brightness(0.75);
+    filter: grayscale(0.75) opacity(0.75);
   }
 }
 
@@ -254,6 +254,7 @@
 .account-container .note {
   font-size: 95%;
   line-height: 1.4;
+  text-wrap: pretty;
 }
 .account-container .note:not(:has(p)):not(:empty) {
   /* Some notes don't have <p> tags, so we need to add some padding */
@@ -408,6 +409,7 @@
 
 .timeline-start .account-container {
   border-bottom: 1px solid var(--outline-color);
+  position: relative;
 }
 .timeline-start .account-container header {
   padding: 16px 16px 1px;
@@ -424,18 +426,46 @@
   display: none;
 }
 
+@keyframes bye-banner {
+  20% {
+    filter: blur(0) opacity(1);
+  }
+  100% {
+    filter: blur(16px) opacity(0.2);
+  }
+}
+@keyframes surface-header {
+  0% {
+    border-bottom-color: transparent;
+    box-shadow: none;
+  }
+  100% {
+    border-bottom-color: var(--outline-color);
+    box-shadow: 0 8px 16px -8px var(--drop-shadow-color);
+  }
+}
+@keyframes shrink-avatar {
+  0% {
+    width: 64px;
+    height: 64px;
+  }
+  100% {
+    width: 2.5em;
+    height: 2.5em;
+  }
+}
 .sheet .account-container {
   border-radius: 16px 16px 0 0;
   overflow-x: hidden;
   max-height: 75vh;
   overscroll-behavior: none;
+  scroll-timeline: --account-scroll;
 
   header {
     padding-bottom: 16px;
     position: sticky;
     top: 0;
     z-index: 2;
-    /* --bg-color: red; */
     background-image: linear-gradient(
       to bottom,
       transparent 30%,
@@ -443,6 +473,14 @@
       var(--bg-color) calc(100% - 8px),
       transparent
     );
+
+    .account-block-content {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+    }
   }
 
   .faux-header-bg {
@@ -453,6 +491,32 @@
     z-index: 1;
     background-color: var(--bg-color);
     margin-top: calc(-1 * var(--banner-overlap));
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
+      animation: bye-banner 1s linear both;
+      animation-timeline: view();
+      animation-range: contain 100% cover 100%;
+    }
+
+    header {
+      background-image: linear-gradient(
+        to bottom,
+        transparent 30%,
+        var(--bg-color) var(--banner-overlap)
+      );
+      border-bottom: 1px solid transparent;
+      animation: surface-header 1s linear both;
+      animation-timeline: --account-scroll;
+      animation-range: 0 150px;
+    }
+
+    header .avatar {
+      animation: shrink-avatar 1s linear both;
+      animation-timeline: --account-scroll;
+      animation-range: 0 150px;
+    }
   }
 
   main {
@@ -610,43 +674,6 @@
       background-color: var(--reblog-color);
     }
   }
-}
-
-@keyframes shine {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-.timeline-start .account-container {
-  position: relative;
-  overflow: hidden;
-}
-.timeline-start .account-container:before {
-  content: '';
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0) 70%
-  );
-  top: 0;
-  left: -100%;
-  pointer-events: none;
-}
-@media (prefers-color-scheme: dark) {
-  .timeline-start .account-container:before {
-    opacity: 0.25;
-  }
-}
-.timeline-start .account-container:hover:before {
-  animation: shine 1s ease-in-out 1s;
 }
 
 #list-add-remove-container .list-add-remove {

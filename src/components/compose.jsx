@@ -17,6 +17,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
 import openCompose from '../utils/open-compose';
+import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
@@ -521,6 +522,34 @@ function Compose({
 
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
 
+  const [topSupportedLanguages, restSupportedLanguages] = useMemo(() => {
+    const topLanguages = [];
+    const restLanguages = [];
+    const { contentTranslationHideLanguages = [] } = states.settings;
+    supportedLanguages.forEach((l) => {
+      const [code] = l;
+      if (
+        code === language ||
+        code === prevLanguage.current ||
+        code === DEFAULT_LANG ||
+        contentTranslationHideLanguages.includes(code)
+      ) {
+        topLanguages.push(l);
+      } else {
+        restLanguages.push(l);
+      }
+    });
+    topLanguages.sort(([codeA, commonA], [codeB, commonB]) => {
+      if (codeA === language) return -1;
+      if (codeB === language) return 1;
+      return commonA.localeCompare(commonB);
+    });
+    restLanguages.sort(([codeA, commonA], [codeB, commonB]) =>
+      commonA.localeCompare(commonB),
+    );
+    return [topLanguages, restLanguages];
+  }, [language]);
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -578,7 +607,6 @@ function Compose({
                   });
 
                   if (!newWin) {
-                    alert('Looks like your browser is blocking popups.');
                     return;
                   }
 
@@ -1125,32 +1153,17 @@ function Compose({
                 }}
                 disabled={uiState === 'loading'}
               >
-                {supportedLanguages
-                  .sort(([codeA, commonA], [codeB, commonB]) => {
-                    const { contentTranslationHideLanguages = [] } =
-                      states.settings;
-                    // Sort codes that same as language, prevLanguage, DEFAULT_LANGUAGE and all the ones in states.settings.contentTranslationHideLanguages, to the top
-                    if (
-                      codeA === language ||
-                      codeA === prevLanguage ||
-                      codeA === DEFAULT_LANG ||
-                      contentTranslationHideLanguages?.includes(codeA)
-                    )
-                      return -1;
-                    if (
-                      codeB === language ||
-                      codeB === prevLanguage ||
-                      codeB === DEFAULT_LANG ||
-                      contentTranslationHideLanguages?.includes(codeB)
-                    )
-                      return 1;
-                    return commonA.localeCompare(commonB);
-                  })
-                  .map(([code, common, native]) => (
-                    <option value={code}>
-                      {common} ({native})
-                    </option>
-                  ))}
+                {topSupportedLanguages.map(([code, common, native]) => (
+                  <option value={code} key={code}>
+                    {common} ({native})
+                  </option>
+                ))}
+                <hr />
+                {restSupportedLanguages.map(([code, common, native]) => (
+                  <option value={code} key={code}>
+                    {common} ({native})
+                  </option>
+                ))}
               </select>
             </label>{' '}
             <button
@@ -1306,6 +1319,7 @@ const Textarea = forwardRef((props, ref) => {
                   username,
                   acct,
                   emojis,
+                  history,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
                 // const item = menuItem.cloneNode();
@@ -1324,9 +1338,18 @@ const Textarea = forwardRef((props, ref) => {
                     </li>
                   `;
                 } else {
+                  const total = history?.reduce?.(
+                    (acc, cur) => acc + +cur.uses,
+                    0,
+                  );
                   html += `
                     <li role="option" data-value="${encodeHTML(name)}">
-                      <span>#<b>${encodeHTML(name)}</b></span>
+                      <span class="grow">#<b>${encodeHTML(name)}</b></span>
+                      ${
+                        total
+                          ? `<span class="count">${shortenNumber(total)}</span>`
+                          : ''
+                      }
                     </li>
                   `;
                 }
@@ -1393,6 +1416,7 @@ const Textarea = forwardRef((props, ref) => {
   return (
     <text-expander ref={textExpanderRef} keys="@ # :">
       <textarea
+        class="compose-field"
         autoCapitalize="sentences"
         autoComplete="on"
         autoCorrect="on"

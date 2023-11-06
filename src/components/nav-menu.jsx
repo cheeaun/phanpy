@@ -35,8 +35,9 @@ function NavMenu(props) {
   // User may choose pin or not to pin Following
   // If user doesn't pin Following, we show it in the menu
   const showFollowing =
-    (snapStates.settings.shortcutsColumnsMode ||
-      snapStates.settings.shortcutsViewMode === 'multi-column') &&
+    (snapStates.settings.shortcutsViewMode === 'multi-column' ||
+      (!snapStates.settings.shortcutsViewMode &&
+        snapStates.settings.shortcutsColumnsMode)) &&
     !snapStates.shortcuts.find((pin) => pin.type === 'following');
 
   const bindLongPress = useLongPress(

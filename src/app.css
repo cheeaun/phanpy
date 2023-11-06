@@ -56,6 +56,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   overscroll-behavior: contain;
   scroll-behavior: smooth;
   background-color: var(--bg-color);
+  flex-grow: 1;
   /* This `transform` fixes carousel blocking vertical scrolling for pointer devices on iPad */
   transform: translateZ(0);
 }
@@ -77,6 +78,21 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-container,
 .deck.contained {
   scroll-padding-top: 3em;
+}
+
+:is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {
+  z-index: 10;
+  position: fixed;
+  inset: 0;
+}
+:is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
+  display: block;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  /* This causes scrollTop to be reset to 0 when the page is hidden */
+  /* content-visibility: hidden; */
 }
 
 .deck {
@@ -110,6 +126,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   user-select: none;
   transition: transform 0.5s ease-in-out;
   user-select: none;
+
+  .header-double-lines {
+    font-size: 90% !important;
+    cursor: pointer;
+
+    div {
+      font-weight: normal;
+      color: var(--text-insignificant-color);
+    }
+  }
 }
 .deck > header[hidden] {
   display: block;
@@ -209,6 +235,64 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline {
   margin: 0 auto;
   padding: 0;
+
+  &.timeline-media {
+    --grid-gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: fit-content;
+    gap: var(--grid-gap);
+    padding: var(--grid-gap);
+
+    &:not(#columns &) {
+      background-color: var(--bg-faded-color);
+    }
+
+    @media (min-width: 320px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (min-width: 40em) {
+      &:not(#columns &) {
+        --grid-gap: 16px;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        @media (min-width: 40em) {
+          width: 95vw;
+          max-width: calc(320px * 3.3);
+          transform: translateX(calc(-50% + var(--main-width) / 2));
+        }
+      }
+
+      #columns & {
+        padding-inline: 0;
+      }
+    }
+
+    li {
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      overflow: visible !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    @supports (grid-template-rows: masonry) {
+      grid-template-rows: masonry;
+      masonry-auto-flow: pack;
+
+      .media-post a {
+        aspect-ratio: revert !important;
+
+        video,
+        img,
+        audio {
+          min-height: 88px; /* for extreme dimensions */
+        }
+      }
+    }
+  }
 }
 .timeline.grow {
   /* min-height: 100vh;
@@ -275,10 +359,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   box-shadow: inset 0 -3px var(--comment-line-color),
     inset 0 3px var(--comment-line-color);
   overscroll-behavior-x: contain;
-
-  .status-link {
-    width: fit-content;
-  }
+  touch-action: pan-x;
 }
 .timeline.contextual .replies[data-comments-level='4'] {
   overflow-x: auto;
@@ -471,7 +552,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
-  font-weight: 500;
   font-size: 12px;
   color: var(--text-insignificant-color);
   user-select: none;
@@ -479,6 +559,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
   list-style: none;
   white-space: nowrap;
+
+  b {
+    font-weight: 500;
+    color: var(--text-color);
+  }
 }
 .timeline.contextual > li .replies > .replies-summary::-webkit-details-marker {
   display: none;
@@ -488,6 +573,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li .replies > .replies-summary .avatars {
   margin-right: 8px;
+
+  > *:not(:first-child) {
+    margin: 0 0 0 -4px;
+  }
 }
 .timeline.contextual > li .replies > .replies-summary:active,
 .timeline.contextual > li .replies[open] > .replies-summary {
@@ -928,10 +1017,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .deck-backdrop .deck .status {
   max-width: var(--main-width);
 }
-.deck-backdrop .deck .menu-switch-view {
+.deck-backdrop .deck :is(.button-switch-view, .menu-switch-view) {
   display: none;
 }
 @media (min-width: 40em) {
+  .deck-backdrop .deck .button-switch-view {
+    display: inline-block;
+  }
   .deck-backdrop .deck .menu-switch-view {
     display: flex;
   }
@@ -1217,6 +1309,9 @@ button.carousel-dot:is(.active, [disabled].active) .icon {
 }
 body:has(.status-deck) .media-post-link {
   display: none;
+}
+.media-modal-count-1 .button-label {
+  display: inline;
 }
 
 /* ✨ New */
@@ -1675,6 +1770,24 @@ body > .szh-menu-container {
   opacity: 1;
 }
 
+.szh-menu
+  .szh-menu__item--type-checkbox:not(.szh-menu__item--disabled):not(
+    .szh-menu__item--hover
+  ) {
+  .icon {
+    opacity: 0.15;
+  }
+
+  &.szh-menu__item--checked {
+    color: var(--link-color);
+
+    .icon {
+      opacity: 1;
+      color: inherit;
+    }
+  }
+}
+
 .szh-menu .menu-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -1843,25 +1956,6 @@ meter.donut[hidden] {
   }
 }
 
-.deck-container {
-  width: 100%;
-  flex-grow: 1;
-}
-:is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {
-  z-index: 10;
-  position: fixed;
-  inset: 0;
-}
-:is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
-  display: block;
-  position: absolute;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0;
-  /* This causes scrollTop to be reset to 0 when the page is hidden */
-  /* content-visibility: hidden; */
-}
-
 /* 404 */
 
 #not-found-page {
@@ -1882,13 +1976,23 @@ meter.donut[hidden] {
 
 /* ACCOUNT STATUSES */
 
-.header-account {
-  font-size: 90% !important;
-  cursor: pointer;
+@keyframes peekaboo-header {
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.header-account div {
-  font-weight: normal;
-  color: var(--text-insignificant-color);
+
+@supports (animation-timeline: scroll()) {
+  .header-account {
+    animation: peekaboo-header 1s linear both;
+    animation-timeline: scroll();
+    animation-range: 0 150px;
+  }
 }
 
 /* LINK LISTS? */
@@ -1917,6 +2021,21 @@ ul.link-list li a {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  .count {
+    font-size: 80%;
+    display: inline-block;
+    color: var(--text-insignificant-color);
+    min-width: 16px;
+    min-height: 16px;
+    padding: 4px;
+    background-color: var(--bg-color);
+    border-radius: 4px;
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-faded-color);
+    }
+  }
 }
 ul.link-list li:first-child a {
   border-top-left-radius: var(--radius);
@@ -2009,13 +2128,18 @@ ul.link-list li a .icon {
 #columns .header-grid input {
   pointer-events: none;
 }
-#columns
-  .header-grid
-  .header-side:first-of-type
-  :is(button, .button)
-  ~ :is(button, .button),
-#columns .deck-container:not(:first-of-type) .header-grid .header-side > * {
-  display: none;
+#columns {
+  /* Any buttons except nav menu button on first header-side, on 1st column */
+  .deck-container:first-of-type
+    .header-grid
+    .header-side:first-of-type
+    > *:not(.nav-menu-button),
+  /* Any buttons on last header-side, on 1st column */
+  .deck-container:first-of-type .header-grid .header-side:last-of-type > *,
+  /* Any buttons on any header-side, on columns after 1st */
+  .deck-container:not(:first-of-type) .header-grid .header-side > * {
+    display: none;
+  }
 }
 @media (min-width: 40em) {
   #columns {

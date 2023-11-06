@@ -22,7 +22,6 @@ const states = proxy({
   notificationsNew: [],
   notificationsShowNew: false,
   notificationsLastFetchTime: null,
-  accounts: {},
   reloadStatusPage: 0,
   reloadGenericAccounts: {
     id: null,
@@ -72,8 +71,9 @@ export function initStates() {
     store.account.get('settings-autoRefresh') ?? false;
   states.settings.shortcutsViewMode =
     store.account.get('settings-shortcutsViewMode') ?? null;
-  states.settings.shortcutsColumnsMode =
-    store.account.get('settings-shortcutsColumnsMode') ?? false;
+  if (store.account.get('settings-shortcutsColumnsMode')) {
+    states.settings.shortcutsColumnsMode = true;
+  }
   states.settings.boostsCarousel =
     store.account.get('settings-boostsCarousel') ?? true;
   states.settings.contentTranslation =
@@ -99,9 +99,6 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.boostsCarousel') {
       store.account.set('settings-boostsCarousel', !!value);
-    }
-    if (path.join('.') === 'settings.shortcutsColumnsMode') {
-      store.account.set('settings-shortcutsColumnsMode', !!value);
     }
     if (path.join('.') === 'settings.shortcutsViewMode') {
       store.account.set('settings-shortcutsViewMode', value);
@@ -171,7 +168,7 @@ export function saveStatus(status, instance, opts) {
   if (!override && oldStatus) return;
   const key = statusKey(status.id, instance);
   if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
-  if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
+  // if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
   states.statuses[key] = status;
   if (status.reblog) {
     const key = statusKey(status.reblog.id, instance);

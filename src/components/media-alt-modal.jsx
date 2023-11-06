@@ -57,6 +57,7 @@ export default function MediaAltModal({ alt, lang, onClose }) {
         <p
           style={{
             whiteSpace: 'pre-wrap',
+            textWrap: 'pretty',
           }}
         >
           {alt}

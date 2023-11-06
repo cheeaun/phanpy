@@ -15,6 +15,7 @@ import { api } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -37,6 +38,7 @@ function Trending({ columnMode, ...props }) {
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
+  const { masto: currentMasto, instance: currentInstance } = api();
   const title = `Trending (${instance})`;
   useTitle(title, `/:instance?/trending`);
   // const navigate = useNavigate();
@@ -84,7 +86,7 @@ function Trending({ columnMode, ...props }) {
         latestItem.current = value[0].id;
       }
 
-      value = filteredItems(value, 'public'); // Might not work here
+      // value = filteredItems(value, 'public'); // Might not work here
       value.forEach((item) => {
         saveStatus(item, instance);
       });
@@ -131,7 +133,7 @@ function Trending({ columnMode, ...props }) {
                     <span class="more-insignificant">#</span>
                     {name}
                   </span>
-                  <span class="filter-count">{total.toLocaleString()}</span>
+                  <span class="filter-count">{shortenNumber(total)}</span>
                 </Link>
               );
             })}
@@ -241,7 +243,7 @@ function Trending({ columnMode, ...props }) {
       key={instance}
       title={title}
       titleComponent={
-        <h1 class="header-account">
+        <h1 class="header-double-lines">
           <b>Trending</b>
           <div>{instance}</div>
         </h1>
@@ -256,7 +258,8 @@ function Trending({ columnMode, ...props }) {
       useItemID
       headerStart={<></>}
       boostsCarousel={snapStates.settings.boostsCarousel}
-      allowFilters
+      // allowFilters
+      filterContext="public"
       timelineStart={TimelineStart}
       headerEnd={
         <Menu2
@@ -289,6 +292,18 @@ function Trending({ columnMode, ...props }) {
           >
             <Icon icon="bus" /> <span>Go to another instance…</span>
           </MenuItem>
+          {currentInstance !== instance && (
+            <MenuItem
+              onClick={() => {
+                location.hash = `/${currentInstance}/trending`;
+              }}
+            >
+              <Icon icon="bus" />{' '}
+              <small class="menu-double-lines">
+                Go to my instance (<b>{currentInstance}</b>)
+              </small>
+            </MenuItem>
+          )}
         </Menu2>
       }
     />

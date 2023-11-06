@@ -11,7 +11,6 @@ export default function ComposeButton() {
       const newWin = openCompose();
 
       if (!newWin) {
-        alert('Looks like your browser is blocking popups.');
         states.showCompose = true;
       }
     } else {

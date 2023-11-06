@@ -370,7 +370,7 @@ function Timeline({
                     useItemID={useItemID}
                     // allowFilters={allowFilters}
                     filterContext={filterContext}
-                    key={status.id + status?._pinned}
+                    key={status.id + status?._pinned + view}
                     view={view}
                   />
                 ))}

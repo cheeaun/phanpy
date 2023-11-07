@@ -265,7 +265,8 @@ function Timeline({
     (visible) => {
       if (visible) {
         const timeDiff = Date.now() - lastHiddenTime.current;
-        if (!lastHiddenTime.current || timeDiff > 1000 * 60) {
+        if (!lastHiddenTime.current || timeDiff > 1000 * 3) {
+          // 3 seconds
           loadOrCheckUpdates({
             disableIdleCheck: true,
           });

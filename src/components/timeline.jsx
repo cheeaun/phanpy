@@ -282,7 +282,9 @@ function Timeline({
   // checkForUpdates interval
   useInterval(
     loadOrCheckUpdates,
-    visible && !showNew ? checkForUpdatesInterval : null,
+    visible && !showNew
+      ? checkForUpdatesInterval * (nearReachStart ? 1 : 2)
+      : null,
   );
 
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;

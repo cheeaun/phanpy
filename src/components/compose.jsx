@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -132,13 +132,12 @@ function highlightText(text, { maxCharacters = Infinity }) {
   let leftoverHTML = '';
   if (composerCharacterCount > maxCharacters) {
     const leftoverCount = composerCharacterCount - maxCharacters;
-    leftoverHTML = html.slice(-leftoverCount);
-    html = html.slice(0, -leftoverCount);
     // Highlight exceeded characters
-    leftoverHTML = leftoverHTML.replace(
-      new RegExp(`(.{${leftoverCount}})$`),
-      '<mark class="compose-highlight-exceeded">$1</mark>',
-    );
+    leftoverHTML =
+      '<mark class="compose-highlight-exceeded">' +
+      html.slice(-leftoverCount) +
+      '</mark>';
+    html = html.slice(0, -leftoverCount);
   }
 
   html = html
@@ -1270,7 +1269,8 @@ function autoResizeTextarea(textarea) {
     // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
     // No idea why it does that, will re-investigate in far future
     const offset = offsetHeight - clientHeight;
-    textarea.style.height = value ? scrollHeight + offset + 'px' : null;
+    const height = value ? scrollHeight + offset + 'px' : null;
+    textarea.style.height = height;
   }
 }
 
@@ -1467,7 +1467,26 @@ const Textarea = forwardRef((props, ref) => {
     };
   }, []);
 
+  useEffect(() => {
+    // Resize observer for textarea
+    const textarea = ref.current;
+    if (!textarea) return;
+    const resizeObserver = new ResizeObserver(() => {
+      // Get height of textarea, set height to textExpander
+      const { height } = textarea.getBoundingClientRect();
+      textExpanderRef.current.style.height = height + 'px';
+    });
+    resizeObserver.observe(textarea);
+  }, []);
+
   const composeHighlightRef = useRef();
+  const throttleHighlightText = useThrottledCallback((text) => {
+    composeHighlightRef.current.innerHTML =
+      highlightText(text, {
+        maxCharacters,
+      }) + '\n';
+    // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
+  }, 500);
 
   return (
     <text-expander
@@ -1530,11 +1549,7 @@ const Textarea = forwardRef((props, ref) => {
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
-          composeHighlightRef.current.innerHTML =
-            highlightText(text, {
-              maxCharacters,
-            }) + '\n';
-          // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
+          throttleHighlightText(text);
         }}
         style={{
           width: '100%',

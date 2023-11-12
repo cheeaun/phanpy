@@ -13,6 +13,7 @@ function AccountBlock({
   skeleton,
   account,
   avatarSize = 'xl',
+  useAvatarStatic = false,
   instance,
   external,
   internal,
@@ -81,7 +82,11 @@ function AccountBlock({
         }
       }}
     >
-      <Avatar url={avatar} size={avatarSize} squircle={bot} />
+      <Avatar
+        url={useAvatarStatic ? avatarStatic : avatar || avatarStatic}
+        size={avatarSize}
+        squircle={bot}
+      />
       <span class="account-block-content">
         {!hideDisplayName && (
           <>

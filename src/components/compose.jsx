@@ -613,6 +613,7 @@ function Compose({
               account={currentAccountInfo}
               accountInstance={currentAccount.instanceURL}
               hideDisplayName
+              useAvatarStatic
             />
           )}
           {!standalone ? (

@@ -204,11 +204,12 @@
   left: -100vw !important;
 }
 #compose-container .toolbar-button select {
-  background-color: inherit;
+  background-color: transparent;
   border: 0;
   padding: 0 0 0 8px;
   margin: 0;
   appearance: none;
+  line-height: 1em;
 }
 #compose-container .toolbar-button:not(.show-field) select {
   right: 0;

@@ -137,14 +137,6 @@
   border-color: transparent;
 
   &.compose-field {
-    @media (width < 30em) {
-      margin-inline: calc(-1 * var(--form-padding-inline));
-      width: 100vw !important;
-      max-width: 100vw;
-      border-radius: 0;
-      border: 0;
-    }
-
     @media (min-width: 40em) {
       max-height: 65vh;
     }
@@ -623,6 +615,17 @@
 .compose-field-container {
   display: grid !important;
 
+  @media (width < 30em) {
+    margin-inline: calc(-1 * var(--form-padding-inline));
+    width: 100vw !important;
+    max-width: 100vw;
+
+    .compose-field {
+      border-radius: 0;
+      outline-offset: -2px;
+    }
+  }
+
   &.debug {
     grid-template-columns: 1fr 1fr;
   }
@@ -653,12 +656,6 @@
     /* Follow textarea styles */
     @media (min-width: 40em) {
       max-height: 65vh;
-    }
-    @media (width < 30em) {
-      margin-inline: calc(-1 * var(--form-padding-inline));
-      width: 100vw !important;
-      max-width: 100vw;
-      border: 0;
     }
 
     mark {

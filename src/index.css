@@ -18,7 +18,13 @@
   --purple-color: blueviolet;
   --green-color: darkgreen;
   --orange-color: darkorange;
+  --orange-light-bg-color: color-mix(
+    in srgb,
+    var(--orange-color) 20%,
+    transparent
+  );
   --red-color: orangered;
+  --red-bg-color: color-mix(in lch, var(--red-color) 40%, transparent);
   --bg-color: #fff;
   --bg-faded-color: #f0f2f5;
   --bg-blur-color: #fff9;

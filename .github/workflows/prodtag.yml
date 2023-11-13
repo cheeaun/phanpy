@@ -20,11 +20,13 @@ jobs:
         with:
           node-version: 18
       - run: npm ci && npm run build
-      - run: cd dist && zip -r ../phanpy-dist.zip . && cd ..
+      - run: cd dist && zip -r ../phanpy-dist.zip . && tar -czf ../phanpy-dist.tar.gz . && cd ..
       - id: tag_name
         run: echo ::set-output name=tag_name::$(date +%Y.%m.%d).$(git rev-parse --short HEAD)
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.tag_name.outputs.tag_name }}
           generate_release_notes: true
-          files: phanpy-dist.zip
+          files: |
+            phanpy-dist.zip
+            phanpy-dist.tar.gz

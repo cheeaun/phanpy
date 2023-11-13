@@ -65,11 +65,27 @@ function Timeline({
         try {
           let { done, value } = await fetchItems(firstLoad);
           if (Array.isArray(value)) {
+            // Avoid grouping for pinned posts
+            const [pinnedPosts, otherPosts] = value.reduce(
+              (acc, item) => {
+                if (item._pinned) {
+                  acc[0].push(item);
+                } else {
+                  acc[1].push(item);
+                }
+                return acc;
+              },
+              [[], []],
+            );
+            value = otherPosts;
             if (allowGrouping) {
               if (boostsCarousel) {
                 value = groupBoosts(value);
               }
               value = groupContext(value);
+            }
+            if (pinnedPosts.length) {
+              value = pinnedPosts.concat(value);
             }
             console.log(value);
             if (firstLoad) {
@@ -282,7 +298,9 @@ function Timeline({
   // checkForUpdates interval
   useInterval(
     loadOrCheckUpdates,
-    visible && !showNew ? checkForUpdatesInterval : null,
+    visible && !showNew
+      ? checkForUpdatesInterval * (nearReachStart ? 1 : 2)
+      : null,
   );
 
   const hiddenUI = scrollDirection === 'end' && !nearReachStart;

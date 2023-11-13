@@ -1,6 +1,12 @@
 import { Menu } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
@@ -102,6 +108,41 @@ function MediaModal({
     return () => clearTimeout(timer);
   }, []);
 
+  const mediaAccentColors = useMemo(() => {
+    return mediaAttachments?.map((media) => {
+      const { blurhash } = media;
+      if (blurhash) {
+        const averageColor = getBlurHashAverageColor(blurhash);
+        const labAverageColor = rgb2oklab(averageColor);
+        return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
+      }
+      return null;
+    });
+  }, [mediaAttachments]);
+  const mediaAccentGradient = useMemo(() => {
+    const gap = 5;
+    const range = 100 / mediaAccentColors.length;
+    return (
+      mediaAccentColors
+        ?.map((color, i) => {
+          const start = i * range + gap;
+          const end = (i + 1) * range - gap;
+          if (color) {
+            return `
+            rgba(${color?.join(',')}, 0.4) ${start}%,
+            rgba(${color?.join(',')}, 0.4) ${end}%
+          `;
+          }
+
+          return `
+            transparent ${start}%,
+            transparent ${end}%
+          `;
+        })
+        ?.join(', ') || 'transparent'
+    );
+  }, [mediaAccentColors]);
+
   return (
     <div
       class={`media-modal-container media-modal-count-${mediaAttachments?.length}`}
@@ -120,26 +161,32 @@ function MediaModal({
             onClose();
           }
         }}
+        style={
+          mediaAttachments.length > 1
+            ? {
+                backgroundAttachment: 'local',
+                backgroundImage: `linear-gradient(
+            to right, ${mediaAccentGradient})`,
+              }
+            : {}
+        }
       >
         {mediaAttachments?.map((media, i) => {
-          const { blurhash } = media;
-          let accentColor;
-          if (blurhash) {
-            const averageColor = getBlurHashAverageColor(blurhash);
-            const labAverageColor = rgb2oklab(averageColor);
-            accentColor = oklab2rgb([
-              0.6,
-              labAverageColor[1],
-              labAverageColor[2],
-            ]);
-          }
+          const accentColor =
+            mediaAttachments.length === 1 ? mediaAccentColors[i] : null;
           return (
             <div
               class="carousel-item"
-              style={{
-                '--accent-color': `rgb(${accentColor?.join(',')})`,
-                '--accent-alpha-color': `rgba(${accentColor?.join(',')}, 0.4)`,
-              }}
+              style={
+                accentColor
+                  ? {
+                      '--accent-color': `rgb(${accentColor?.join(',')})`,
+                      '--accent-alpha-color': `rgba(${accentColor?.join(
+                        ',',
+                      )}, 0.4)`,
+                    }
+                  : {}
+              }
               tabindex="0"
               key={media.id}
               ref={i === currentIndex ? carouselFocusItem : null}

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -102,6 +102,54 @@ function countableText(inputText) {
   return inputText
     .replace(urlRegexObj, urlPlaceholder)
     .replace(usernameRegex, '$1@$3');
+}
+
+// https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
+const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
+const MENTION_RE = new RegExp(
+  `(?<![=\\/\\w])@((${USERNAME_RE.source})(?:@[\\w.-]+[\\w]+)?)`,
+  'ig',
+);
+
+// AI-generated, all other regexes are too complicated
+const HASHTAG_RE = new RegExp(
+  `(?<![=\\/\\w])#([a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
+  'ig',
+);
+
+// https://github.com/mastodon/mastodon/blob/23e32a4b3031d1da8b911e0145d61b4dd47c4f96/app/models/custom_emoji.rb#L31
+const SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}';
+const SCAN_RE = new RegExp(
+  `(?<=[^A-Za-z0-9_:\\n]|^):(${SHORTCODE_RE_FRAGMENT}):(?=[^A-Za-z0-9_:]|$)`,
+  'g',
+);
+
+function highlightText(text, { maxCharacters = Infinity }) {
+  // Accept text string, return formatted HTML string
+  let html = text;
+  // Exceeded characters limit
+  const { composerCharacterCount } = states;
+  let leftoverHTML = '';
+  if (composerCharacterCount > maxCharacters) {
+    const leftoverCount = composerCharacterCount - maxCharacters;
+    // Highlight exceeded characters
+    leftoverHTML =
+      '<mark class="compose-highlight-exceeded">' +
+      html.slice(-leftoverCount) +
+      '</mark>';
+    html = html.slice(0, -leftoverCount);
+  }
+
+  html = html
+    .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
+    .replace(MENTION_RE, '<mark class="compose-highlight-mention">$&</mark>') // Mentions
+    .replace(HASHTAG_RE, '<mark class="compose-highlight-hashtag">#$1</mark>') // Hashtags
+    .replace(
+      SCAN_RE,
+      '<mark class="compose-highlight-emoji-shortcode">$&</mark>',
+    ); // Emoji shortcodes
+
+  return html + leftoverHTML;
 }
 
 function Compose({
@@ -565,6 +613,7 @@ function Compose({
               account={currentAccountInfo}
               accountInstance={currentAccount.instanceURL}
               hideDisplayName
+              useAvatarStatic
             />
           )}
           {!standalone ? (
@@ -1221,7 +1270,8 @@ function autoResizeTextarea(textarea) {
     // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render
     // No idea why it does that, will re-investigate in far future
     const offset = offsetHeight - clientHeight;
-    textarea.style.height = value ? scrollHeight + offset + 'px' : null;
+    const height = value ? scrollHeight + offset + 'px' : null;
+    textarea.style.height = height;
   }
 }
 
@@ -1387,6 +1437,11 @@ const Textarea = forwardRef((props, ref) => {
       handleCommited = (e) => {
         const { input } = e.detail;
         setText(input.value);
+        // fire input event
+        if (ref.current) {
+          const event = new Event('input', { bubbles: true });
+          ref.current.dispatchEvent(event);
+        }
       };
 
       textExpanderRef.current.addEventListener(
@@ -1413,8 +1468,33 @@ const Textarea = forwardRef((props, ref) => {
     };
   }, []);
 
+  useEffect(() => {
+    // Resize observer for textarea
+    const textarea = ref.current;
+    if (!textarea) return;
+    const resizeObserver = new ResizeObserver(() => {
+      // Get height of textarea, set height to textExpander
+      const { height } = textarea.getBoundingClientRect();
+      textExpanderRef.current.style.height = height + 'px';
+    });
+    resizeObserver.observe(textarea);
+  }, []);
+
+  const composeHighlightRef = useRef();
+  const throttleHighlightText = useThrottledCallback((text) => {
+    composeHighlightRef.current.innerHTML =
+      highlightText(text, {
+        maxCharacters,
+      }) + '\n';
+    // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
+  }, 500);
+
   return (
-    <text-expander ref={textExpanderRef} keys="@ # :">
+    <text-expander
+      ref={textExpanderRef}
+      keys="@ # :"
+      class="compose-field-container"
+    >
       <textarea
         class="compose-field"
         autoCapitalize="sentences"
@@ -1466,15 +1546,26 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          setText(target.value);
+          const text = target.value;
+          setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
+          throttleHighlightText(text);
         }}
         style={{
           width: '100%',
           height: '4em',
           // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
+        onScroll={(e) => {
+          const { scrollTop } = e.target;
+          composeHighlightRef.current.scrollTop = scrollTop;
+        }}
+      />
+      <div
+        ref={composeHighlightRef}
+        class="compose-highlight"
+        aria-hidden="true"
       />
     </text-expander>
   );

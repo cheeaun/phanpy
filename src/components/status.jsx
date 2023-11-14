@@ -102,6 +102,7 @@ function Status({
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
+  enableCommentHint,
 }) {
   if (skeleton) {
     return (
@@ -293,6 +294,7 @@ function Status({
           size={size}
           contentTextWeight={contentTextWeight}
           readOnly={readOnly}
+          enableCommentHint
         />
       </div>
     );
@@ -994,17 +996,30 @@ function Status({
       (!!inReplyToId && inReplyToAccountId === status.account?.id) ||
       !!snapStates.statusThreadNumber[sKey]
     );
-  }, [inReplyToId, inReplyToAccountId, status.account?.id, snapStates.statusThreadNumber[sKey]]);
+  }, [
+    inReplyToId,
+    inReplyToAccountId,
+    status.account?.id,
+    snapStates.statusThreadNumber[sKey],
+  ]);
 
   const showCommentHint = useMemo(() => {
     return (
+      enableCommentHint &&
       !isThread &&
       !withinContext &&
       !inReplyToId &&
       visibility === 'public' &&
       repliesCount > 0
     );
-  }, [isThread, withinContext, inReplyToId, repliesCount, visibility]);
+  }, [
+    enableCommentHint,
+    isThread,
+    withinContext,
+    inReplyToId,
+    repliesCount,
+    visibility,
+  ]);
 
   return (
     <article
@@ -2463,6 +2478,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
           instance={q.instance}
           size="s"
           quoted={level + 1}
+          enableCommentHint
         />
       </Link>
     );

@@ -531,6 +531,7 @@ function TimelineItem({
                         instance={instance}
                         size="s"
                         contentTextWeight
+                        enableCommentHint
                         // allowFilters={allowFilters}
                       />
                     ) : (
@@ -539,6 +540,7 @@ function TimelineItem({
                         instance={instance}
                         size="s"
                         contentTextWeight
+                        enableCommentHint
                         // allowFilters={allowFilters}
                       />
                     )}
@@ -625,12 +627,14 @@ function TimelineItem({
           <Status
             statusID={statusID}
             instance={instance}
+            enableCommentHint
             // allowFilters={allowFilters}
           />
         ) : (
           <Status
             status={status}
             instance={instance}
+            enableCommentHint
             // allowFilters={allowFilters}
           />
         )}

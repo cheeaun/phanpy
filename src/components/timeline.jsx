@@ -567,11 +567,12 @@ function TimelineItem({
               !_differentAuthor &&
               !items[i - 1]._differentAuthor &&
               !items[i + 1]._differentAuthor)));
+      const isEnd = i === items.length - 1;
       return (
         <li
           key={`timeline-${statusID}`}
           class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
-            i === 0 ? 'start' : i === items.length - 1 ? 'end' : 'middle'
+            i === 0 ? 'start' : isEnd ? 'end' : 'middle'
           } ${_differentAuthor ? 'timeline-item-diff-author' : ''}`}
         >
           <Link class="status-link timeline-item" to={url}>
@@ -581,12 +582,14 @@ function TimelineItem({
               <Status
                 statusID={statusID}
                 instance={instance}
+                enableCommentHint={isEnd}
                 // allowFilters={allowFilters}
               />
             ) : (
               <Status
                 status={item}
                 instance={instance}
+                enableCommentHint={isEnd}
                 // allowFilters={allowFilters}
               />
             )}

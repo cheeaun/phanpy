@@ -28,6 +28,7 @@ export const ICONS = {
   'eye-open': () => import('@iconify-icons/mingcute/eye-2-line'),
   message: () => import('@iconify-icons/mingcute/mail-line'),
   comment: () => import('@iconify-icons/mingcute/chat-3-line'),
+  comment2: () => import('@iconify-icons/mingcute/comment-2-line'),
   home: () => import('@iconify-icons/mingcute/home-3-line'),
   notification: () => import('@iconify-icons/mingcute/notification-line'),
   follow: () => import('@iconify-icons/mingcute/user-follow-line'),

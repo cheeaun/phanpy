@@ -102,6 +102,7 @@ function Status({
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
+  enableCommentHint,
 }) {
   if (skeleton) {
     return (
@@ -293,6 +294,7 @@ function Status({
           size={size}
           contentTextWeight={contentTextWeight}
           readOnly={readOnly}
+          enableCommentHint
         />
       </div>
     );
@@ -533,7 +535,7 @@ function Status({
             <span class="ib">
               {repliesCount > 0 && (
                 <span>
-                  <Icon icon="reply" alt="Replies" size="s" />{' '}
+                  <Icon icon="comment2" alt="Replies" size="s" />{' '}
                   <span>{shortenNumber(repliesCount)}</span>
                 </span>
               )}{' '}
@@ -989,6 +991,36 @@ function Status({
     // );
   }, [showMultipleMediaCaptions, displayedMediaAttachments, language]);
 
+  const isThread = useMemo(() => {
+    return (
+      (!!inReplyToId && inReplyToAccountId === status.account?.id) ||
+      !!snapStates.statusThreadNumber[sKey]
+    );
+  }, [
+    inReplyToId,
+    inReplyToAccountId,
+    status.account?.id,
+    snapStates.statusThreadNumber[sKey],
+  ]);
+
+  const showCommentHint = useMemo(() => {
+    return (
+      enableCommentHint &&
+      !isThread &&
+      !withinContext &&
+      !inReplyToId &&
+      visibility === 'public' &&
+      repliesCount > 0
+    );
+  }, [
+    enableCommentHint,
+    isThread,
+    withinContext,
+    inReplyToId,
+    repliesCount,
+    visibility,
+  ]);
+
   return (
     <article
       data-state-post-id={sKey}
@@ -1151,11 +1183,21 @@ function Status({
                     : ''
                 }`}
               >
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={visibilityText[visibility]}
-                  size="s"
-                />{' '}
+                {showCommentHint ? (
+                  <Icon
+                    icon="comment2"
+                    size="s"
+                    alt={`${repliesCount} ${
+                      repliesCount === 1 ? 'reply' : 'replies'
+                    }`}
+                  />
+                ) : (
+                  <Icon
+                    icon={visibilityIconsMap[visibility]}
+                    alt={visibilityText[visibility]}
+                    size="s"
+                  />
+                )}{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
               </Link>
             ) : (
@@ -1218,8 +1260,7 @@ function Status({
         )}
         {!withinContext && (
           <>
-            {(!!inReplyToId && inReplyToAccountId === status.account?.id) ||
-            !!snapStates.statusThreadNumber[sKey] ? (
+            {isThread ? (
               <div class="status-thread-badge">
                 <Icon icon="thread" size="s" />
                 Thread
@@ -2437,6 +2478,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
           instance={q.instance}
           size="s"
           quoted={level + 1}
+          enableCommentHint
         />
       </Link>
     );

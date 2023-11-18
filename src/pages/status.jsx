@@ -23,6 +23,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import MediaModal from '../components/media-modal';
+import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
@@ -1034,7 +1035,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             >
               <Icon icon="layout4" size="l" />
             </button>
-            <Menu
+            <Menu2
               align="end"
               portal={{
                 // Need this, else the menu click will cause scroll jump
@@ -1114,7 +1115,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   Switch to post's instance (<b>{postInstance}</b>)
                 </small>
               </MenuItem>
-            </Menu>
+            </Menu2>
             <Link class="button plain deck-close" to={closeLink}>
               <Icon icon="x" size="xl" />
             </Link>

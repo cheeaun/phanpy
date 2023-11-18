@@ -6,13 +6,15 @@ import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 
 // It's like Menu but with sensible defaults, bug fixes and improvements.
 function Menu2(props) {
-  const { containerProps } = props;
+  const { containerProps, instanceRef: _instanceRef } = props;
   const size = useWindowSize();
-  const instanceRef = useRef();
+  const instanceRef = _instanceRef?.current ? _instanceRef : useRef();
+
   return (
     <Menu
       boundingBoxPadding={safeBoundingBoxPadding()}
       repositionFlag={`${size.width}x${size.height}`}
+      unmountOnClose
       {...props}
       instanceRef={instanceRef}
       containerProps={{

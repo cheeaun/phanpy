@@ -107,20 +107,20 @@ function countableText(inputText) {
 // https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
 const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
 const MENTION_RE = new RegExp(
-  `(?<![=\\/\\w])@((${USERNAME_RE.source})(?:@[\\w.-]+[\\w]+)?)`,
+  `(^|[^=\\/\\w])(@${USERNAME_RE.source}(?:@[\\w.-]+[\\w]+)?)`,
   'ig',
 );
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(?<![=\\/\\w])#([a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
+  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
   'ig',
 );
 
 // https://github.com/mastodon/mastodon/blob/23e32a4b3031d1da8b911e0145d61b4dd47c4f96/app/models/custom_emoji.rb#L31
 const SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}';
 const SCAN_RE = new RegExp(
-  `(?<=[^A-Za-z0-9_:\\n]|^):(${SHORTCODE_RE_FRAGMENT}):(?=[^A-Za-z0-9_:]|$)`,
+  `([^A-Za-z0-9_:\\n]|^)(:${SHORTCODE_RE_FRAGMENT}:)(?=[^A-Za-z0-9_:]|$)`,
   'g',
 );
 
@@ -142,11 +142,11 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
   html = html
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
-    .replace(MENTION_RE, '<mark class="compose-highlight-mention">$&</mark>') // Mentions
-    .replace(HASHTAG_RE, '<mark class="compose-highlight-hashtag">#$1</mark>') // Hashtags
+    .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
+    .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags
     .replace(
       SCAN_RE,
-      '<mark class="compose-highlight-emoji-shortcode">$&</mark>',
+      '$1<mark class="compose-highlight-emoji-shortcode">$2</mark>',
     ); // Emoji shortcodes
 
   return html + leftoverHTML;

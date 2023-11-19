@@ -1474,8 +1474,10 @@ const Textarea = forwardRef((props, ref) => {
     if (!textarea) return;
     const resizeObserver = new ResizeObserver(() => {
       // Get height of textarea, set height to textExpander
-      const { height } = textarea.getBoundingClientRect();
-      textExpanderRef.current.style.height = height + 'px';
+      if (textExpanderRef.current) {
+        const { height } = textarea.getBoundingClientRect();
+        textExpanderRef.current.style.height = height + 'px';
+      }
     });
     resizeObserver.observe(textarea);
   }, []);

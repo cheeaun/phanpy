@@ -1577,7 +1577,7 @@ body > .szh-menu-container {
   position: fixed !important;
   z-index: 10;
 }
-.szh-menu-container:has(.szh-menu--state-open) {
+.szh-menu-container:not(:empty) {
   inset: 0;
   inset: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);

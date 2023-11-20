@@ -28,6 +28,7 @@ import { snapshot } from 'valtio/vanilla';
 import AccountBlock from '../components/account-block';
 import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
+import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
@@ -1629,7 +1630,7 @@ function Status({
                   onClick={bookmarkStatus}
                 />
               </div>
-              <Menu
+              <Menu2
                 portal={{
                   target:
                     document.querySelector('.status-deck') || document.body,
@@ -1638,7 +1639,6 @@ function Status({
                 gap={4}
                 overflow="auto"
                 viewScroll="close"
-                boundingBoxPadding="8 8 8 8"
                 menuButton={
                   <div class="action">
                     <button
@@ -1652,7 +1652,7 @@ function Status({
                 }
               >
                 {StatusMenuItems}
-              </Menu>
+              </Menu2>
             </div>
           </>
         )}

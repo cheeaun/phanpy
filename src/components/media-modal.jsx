@@ -15,6 +15,7 @@ import states from '../utils/states';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
+import Menu2 from './menu2';
 import MenuLink from './menu-link';
 
 function MediaModal({
@@ -259,11 +260,10 @@ function MediaModal({
           <span />
         )}
         <span>
-          <Menu
+          <Menu2
             overflow="auto"
             align="end"
             position="anchor"
-            boundingBoxPadding="8 8 8 8"
             gap={4}
             menuClassName="glass-menu"
             menuButton={
@@ -284,7 +284,7 @@ function MediaModal({
               <Icon icon="popout" />
               <span>Open original media</span>
             </MenuLink>
-          </Menu>{' '}
+          </Menu2>{' '}
           <Link
             to={`${instance ? `/${instance}` : ''}/s/${statusID}${
               window.matchMedia('(min-width: calc(40em + 350px))').matches

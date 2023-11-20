@@ -29,6 +29,7 @@ import Icon from './icon';
 import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
+import Menu2 from './menu2';
 import MenuConfirm from './menu-confirm';
 import Modal from './modal';
 import TranslationBlock from './translation-block';
@@ -906,7 +907,6 @@ function RelatedActions({
   }, [info, isSelf]);
 
   const loading = relationshipUIState === 'loading';
-  const menuInstanceRef = useRef(null);
 
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
@@ -947,8 +947,7 @@ function RelatedActions({
               <span>{privateNote}</span>
             </button>
           )}
-          <Menu
-            instanceRef={menuInstanceRef}
+          <Menu2
             portal={{
               target: document.body,
             }}
@@ -957,16 +956,10 @@ function RelatedActions({
                 // Higher than the backdrop
                 zIndex: 1001,
               },
-              onClick: (e) => {
-                if (e.target === e.currentTarget) {
-                  menuInstanceRef.current?.closeMenu?.();
-                }
-              },
             }}
             align="center"
             position="anchor"
             overflow="auto"
-            boundingBoxPadding="8 8 8 8"
             menuButton={
               <button
                 type="button"
@@ -1215,7 +1208,7 @@ function RelatedActions({
               </MenuItem> */}
               </>
             )}
-          </Menu>
+          </Menu2>
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />
           )}

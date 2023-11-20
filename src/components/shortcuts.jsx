@@ -14,6 +14,7 @@ import states from '../utils/states';
 import AsyncText from './AsyncText';
 import Icon from './icon';
 import Link from './link';
+import Menu2 from './menu2';
 import MenuLink from './menu-link';
 
 function Shortcuts() {
@@ -139,11 +140,10 @@ function Shortcuts() {
           </ul>
         </nav>
       ) : (
-        <Menu
+        <Menu2
           instanceRef={menuRef}
           overflow="auto"
           viewScroll="close"
-          boundingBoxPadding="8 8 8 8"
           menuClassName="glass-menu shortcuts-menu"
           gap={8}
           position="anchor"
@@ -195,7 +195,7 @@ function Shortcuts() {
               </MenuLink>
             );
           })}
-        </Menu>
+        </Menu2>
       )}
     </div>
   );

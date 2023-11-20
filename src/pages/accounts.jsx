@@ -7,6 +7,7 @@ import { useReducer } from 'preact/hooks';
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
+import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
@@ -92,7 +93,7 @@ function Accounts({ onClose }) {
                         <span class="tag">Default</span>{' '}
                       </>
                     )}
-                    <Menu
+                    <Menu2
                       align="end"
                       menuButton={
                         <button
@@ -150,7 +151,7 @@ function Accounts({ onClose }) {
                         <Icon icon="exit" />
                         <span>Log out…</span>
                       </MenuConfirm>
-                    </Menu>
+                    </Menu2>
                   </div>
                 </li>
               );

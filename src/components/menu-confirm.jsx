@@ -2,6 +2,8 @@ import { Menu, MenuItem, SubMenu } from '@szhsin/react-menu';
 import { cloneElement } from 'preact';
 import { useRef } from 'preact/hooks';
 
+import Menu2 from './menu2';
+
 function MenuConfirm({
   subMenu = false,
   confirm = true,
@@ -20,7 +22,7 @@ function MenuConfirm({
     }
     return children;
   }
-  const Parent = subMenu ? SubMenu : Menu;
+  const Parent = subMenu ? SubMenu : Menu2;
   const menuRef = useRef();
   return (
     <Parent

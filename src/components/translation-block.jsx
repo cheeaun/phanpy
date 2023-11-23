@@ -20,6 +20,7 @@ const throttle = pThrottle({
 // Using other API instances instead of lingva.ml because of this bug (slashes don't work):
 // https://github.com/thedaviddelta/lingva-translate/issues/68
 const LINGVA_INSTANCES = [
+  'lingva.phanpy.social',
   'lingva.lunar.icu',
   'lingva.garudalinux.org',
   'translate.plausibility.cloud',

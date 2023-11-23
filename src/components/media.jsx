@@ -328,6 +328,7 @@ function Media({
     const formattedDuration = formatDuration(original.duration);
     const hoverAnimate = !showOriginal && !autoAnimate && isGIF;
     const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
+    const showProgress = original.duration > 5;
 
     const videoHTML = `
     <video
@@ -343,6 +344,11 @@ function Media({
       playsinline
       loop="${loopable}"
       ${isGIF ? 'ondblclick="this.paused ? this.play() : this.pause()"' : ''}
+      ${
+        isGIF && showProgress
+          ? "ontimeupdate=\"this.closest('.media-gif') && this.closest('.media-gif').style.setProperty('--progress', `${~~((this.currentTime / this.duration) * 100)}%`)\""
+          : ''
+      }
     ></video>
   `;
 
@@ -431,6 +437,22 @@ function Media({
               playsinline
               loop
               muted
+              onTimeUpdate={
+                showProgress
+                  ? (e) => {
+                      const { target } = e;
+                      const container = target?.closest('.media-gif');
+                      if (container) {
+                        const percentage =
+                          (target.currentTime / target.duration) * 100;
+                        container.style.setProperty(
+                          '--progress',
+                          `${percentage}%`,
+                        );
+                      }
+                    }
+                  : undefined
+              }
             />
           ) : (
             <>

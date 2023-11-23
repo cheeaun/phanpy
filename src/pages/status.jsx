@@ -1137,6 +1137,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 disabled={uiState === 'loading'}
                 onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
+                data-state-post-ids={statuses
+                  .slice(limit)
+                  .map((s) => statusKey(s.id, instance))
+                  .join(' ')}
               >
                 <div class="ib avatars-bunch">
                   {/* show avatars for first 5 statuses */}

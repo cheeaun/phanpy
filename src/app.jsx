@@ -73,7 +73,7 @@ window.__STATES_STATS__ = () => {
   const unmountedPosts = [];
   for (const key in statuses) {
     const $post = document.querySelector(
-      `[data-state-post-id="${key}"], [data-state-post-ids~="${key}"]`,
+      `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
     );
     if (!$post) {
       unmountedPosts.push(key);
@@ -94,7 +94,7 @@ setInterval(() => {
     if (!window.__IDLE__) break;
     try {
       const $post = document.querySelector(
-        `[data-state-post-id="${key}"], [data-state-post-ids~="${key}"]`,
+        `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
       );
       const postInNotifications = notifications.some(
         (n) => key === statusKey(n.status?.id, instance),

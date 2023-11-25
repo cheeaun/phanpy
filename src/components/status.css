@@ -940,6 +940,28 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 4px;
   padding: 0 4px;
 }
+.media-gif {
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: auto !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--media-outline-color);
+    transform: translateX(calc(var(--progress, 0%) - 100%));
+    border-radius: 0 !important;
+    border: 0 !important;
+    border-right: 1px solid var(--media-fg-color) !important;
+    transition: transform 0.15s linear;
+  }
+  &:before {
+    height: 3px;
+  }
+}
 .status .media-gif video {
   object-fit: cover;
   pointer-events: none;

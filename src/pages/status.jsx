@@ -1100,7 +1100,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               <MenuDivider />
               <MenuHeader className="plain">Experimental</MenuHeader>
               <MenuItem
-                disabled={postSameInstance}
+                disabled={!postInstance || postSameInstance}
                 onClick={() => {
                   const statusURL = getInstanceStatusURL(heroStatus.url);
                   if (statusURL) {
@@ -1112,7 +1112,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               >
                 <Icon icon="transfer" />
                 <small class="menu-double-lines">
-                  Switch to post's instance (<b>{postInstance}</b>)
+                  Switch to post's instance
+                  {postInstance ? (
+                    <>
+                      {' '}
+                      (<b>{postInstance}</b>)
+                    </>
+                  ) : (
+                    ''
+                  )}
                 </small>
               </MenuItem>
             </Menu2>

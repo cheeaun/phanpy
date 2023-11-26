@@ -5,6 +5,7 @@ import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { substring } from 'runes2';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
@@ -131,16 +132,20 @@ function highlightText(text, { maxCharacters = Infinity }) {
   const { composerCharacterCount } = states;
   let leftoverHTML = '';
   if (composerCharacterCount > maxCharacters) {
-    const leftoverCount = composerCharacterCount - maxCharacters;
+    // NOTE: runes2 substring considers surrogate pairs
+    // const leftoverCount = composerCharacterCount - maxCharacters;
     // Highlight exceeded characters
     leftoverHTML =
       '<mark class="compose-highlight-exceeded">' +
-      html.slice(-leftoverCount) +
+      // html.slice(-leftoverCount) +
+      substring(html, maxCharacters) +
       '</mark>';
-    html = html.slice(0, -leftoverCount);
+    // html = html.slice(0, -leftoverCount);
+    html = substring(html, 0, maxCharacters);
+    return html + leftoverHTML;
   }
 
-  html = html
+  return html
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
     .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
     .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags
@@ -148,8 +153,6 @@ function highlightText(text, { maxCharacters = Infinity }) {
       SCAN_RE,
       '$1<mark class="compose-highlight-emoji-shortcode">$2</mark>',
     ); // Emoji shortcodes
-
-  return html + leftoverHTML;
 }
 
 function Compose({
@@ -1538,6 +1541,7 @@ const Textarea = forwardRef((props, ref) => {
                     target.setRangeText('', pos, selectionStart);
                   }
                   autoResizeTextarea(target);
+                  target.dispatchEvent(new Event('input'));
                 }
               }
             } catch (e) {
@@ -1545,6 +1549,7 @@ const Textarea = forwardRef((props, ref) => {
               console.error(e);
             }
           }
+          composeHighlightRef.current.scrollTop = target.scrollTop;
         }}
         onInput={(e) => {
           const { target } = e;

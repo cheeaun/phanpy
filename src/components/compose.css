@@ -653,6 +653,11 @@
     white-space: pre-wrap;
     min-height: 5em;
     max-height: 50vh;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     /* Follow textarea styles */
     @media (min-width: 40em) {

@@ -429,6 +429,7 @@ function Settings({ onClose }) {
           <div
             style={{
               display: 'flex',
+              flexWrap: 'wrap',
               gap: 8,
               lineHeight: 1.25,
               alignItems: 'center',

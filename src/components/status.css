@@ -520,6 +520,14 @@
   color: inherit;
 } */
 
+.status .content-comment-hint {
+  margin-top: 0.25em;
+  font-size: 90%;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
 .status.compact-thread .spoiler-badge {
   font-size: smaller;
   color: var(--button-bg-color);

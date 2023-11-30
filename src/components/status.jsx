@@ -65,6 +65,7 @@ import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
+const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 const throttle = pThrottle({
   limit: 1,
@@ -1021,6 +1022,40 @@ function Status({
     repliesCount,
     visibility,
   ]);
+  const showCommentCount = useMemo(() => {
+    if (
+      card ||
+      poll ||
+      sensitive ||
+      spoilerText ||
+      mediaAttachments?.length ||
+      isThread ||
+      withinContext ||
+      inReplyToId ||
+      repliesCount <= 0
+    ) {
+      return false;
+    }
+    const questionRegex = /[??？︖❓❔⁇⁈⁉¿‽؟]/;
+    const containsQuestion = questionRegex.test(content);
+    if (!containsQuestion) return false;
+    const contentLength = htmlContentLength(content);
+    if (contentLength > 0 && contentLength <= SHOW_COMMENT_COUNT_LIMIT) {
+      return true;
+    }
+  }, [
+    card,
+    poll,
+    sensitive,
+    spoilerText,
+    mediaAttachments,
+    reblog,
+    isThread,
+    withinContext,
+    inReplyToId,
+    repliesCount,
+    content,
+  ]);
 
   return (
     <article
@@ -1184,7 +1219,7 @@ function Status({
                     : ''
                 }`}
               >
-                {showCommentHint ? (
+                {showCommentHint && !showCommentCount ? (
                   <Icon
                     icon="comment2"
                     size="s"
@@ -1516,6 +1551,11 @@ function Status({
               <Card card={card} instance={currentInstance} />
             )}
         </div>
+        {!isSizeLarge && showCommentCount && (
+          <div class="content-comment-hint insignificant">
+            <Icon icon="comment2" alt="Replies" /> {repliesCount}
+          </div>
+        )}
         {isSizeLarge && (
           <>
             <div class="extra-meta">

@@ -1485,12 +1485,30 @@ const Textarea = forwardRef((props, ref) => {
     resizeObserver.observe(textarea);
   }, []);
 
+  const slowHighlightPerf = useRef(0); // increment if slow
   const composeHighlightRef = useRef();
   const throttleHighlightText = useThrottledCallback((text) => {
+    if (!composeHighlightRef.current) return;
+    if (slowHighlightPerf.current > 3) {
+      // After 3 times of lag, disable highlighting
+      composeHighlightRef.current.innerHTML = '';
+      composeHighlightRef.current = null; // Destroy the whole thing
+      throttleHighlightText?.cancel?.();
+      return;
+    }
+    let start;
+    let end;
+    if (slowHighlightPerf.current <= 3) start = Date.now();
     composeHighlightRef.current.innerHTML =
       highlightText(text, {
         maxCharacters,
       }) + '\n';
+    if (slowHighlightPerf.current <= 3) end = Date.now();
+    console.debug('HIGHLIGHT PERF', { start, end, diff: end - start });
+    if (start && end && end - start > 50) {
+      // if slow, increment
+      slowHighlightPerf.current++;
+    }
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
@@ -1549,7 +1567,9 @@ const Textarea = forwardRef((props, ref) => {
               console.error(e);
             }
           }
-          composeHighlightRef.current.scrollTop = target.scrollTop;
+          if (composeHighlightRef.current) {
+            composeHighlightRef.current.scrollTop = target.scrollTop;
+          }
         }}
         onInput={(e) => {
           const { target } = e;
@@ -1565,8 +1585,10 @@ const Textarea = forwardRef((props, ref) => {
           // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
         onScroll={(e) => {
-          const { scrollTop } = e.target;
-          composeHighlightRef.current.scrollTop = scrollTop;
+          if (composeHighlightRef.current) {
+            const { scrollTop } = e.target;
+            composeHighlightRef.current.scrollTop = scrollTop;
+          }
         }}
       />
       <div

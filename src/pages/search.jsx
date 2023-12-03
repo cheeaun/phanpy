@@ -113,9 +113,9 @@ function Search(props) {
             setShowMore(!!length);
           }
         } else {
-          setStatusResults(results.statuses);
-          setAccountResults(results.accounts);
-          setHashtagResults(results.hashtags);
+          setStatusResults(results.statuses || []);
+          setAccountResults(results.accounts || []);
+          setHashtagResults(results.hashtags || []);
           offsetRef.current = 0;
           setShowMore(false);
         }

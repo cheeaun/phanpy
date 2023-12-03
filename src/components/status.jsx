@@ -2269,7 +2269,12 @@ function _unfurlMastodonLink(instance, url) {
     theURL = `https://${finalURL}`;
   }
 
-  const urlObj = new URL(theURL);
+  let urlObj;
+  try {
+    urlObj = new URL(theURL);
+  } catch (e) {
+    return;
+  }
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   // Regex /:username/:id, where username = @username or @username@domain, id = number

@@ -946,8 +946,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: absolute;
   left: 0;
   font-size: 10px;
-  color: var(--carousel-color);
-  padding: 8px;
+  color: var(--text-insignificant-color);
+  padding: 6px;
 }
 
 .ui-state {
@@ -966,9 +966,17 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   animation: appear 0.2s ease-out;
   border: 1px solid var(--outline-color);
   background-color: var(--bg-blur-color);
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 1px var(--bg-color);
+
+  &:has(.status-badge:not(:empty)) {
+    border-top-right-radius: 8px;
+  }
+
+  .status-carousel.boosts-carousel & {
+    border-top-left-radius: 8px;
+  }
 }
 .status-carousel-link::focus {
   background-color: var(--link-bg-hover-color);

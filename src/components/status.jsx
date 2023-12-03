@@ -1370,63 +1370,65 @@ function Status({
               </button>
             </>
           )}
-          <div class="content" ref={contentRef} data-read-more={readMoreText}>
-            <div
-              lang={language}
-              dir="auto"
-              class="inner-content"
-              onClick={handleContentLinks({
-                mentions,
-                instance,
-                previewMode,
-                statusURL: url,
-              })}
-              dangerouslySetInnerHTML={{
-                __html: enhanceContent(content, {
-                  emojis,
-                  postEnhanceDOM: (dom) => {
-                    // Remove target="_blank" from links
-                    dom
-                      .querySelectorAll('a.u-url[target="_blank"]')
-                      .forEach((a) => {
-                        if (!/http/i.test(a.innerText.trim())) {
-                          a.removeAttribute('target');
-                        }
-                      });
-                    if (previewMode) return;
-                    // Unfurl Mastodon links
-                    Array.from(
-                      dom.querySelectorAll(
-                        'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                      ),
-                    )
-                      .filter((a) => {
-                        const url = a.href;
-                        const isPostItself =
-                          url === status.url || url === status.uri;
-                        return !isPostItself && isMastodonLinkMaybe(url);
-                      })
-                      .forEach((a, i) => {
-                        unfurlMastodonLink(currentInstance, a.href).then(
-                          (result) => {
-                            if (!result) return;
+          {!!content && (
+            <div class="content" ref={contentRef} data-read-more={readMoreText}>
+              <div
+                lang={language}
+                dir="auto"
+                class="inner-content"
+                onClick={handleContentLinks({
+                  mentions,
+                  instance,
+                  previewMode,
+                  statusURL: url,
+                })}
+                dangerouslySetInnerHTML={{
+                  __html: enhanceContent(content, {
+                    emojis,
+                    postEnhanceDOM: (dom) => {
+                      // Remove target="_blank" from links
+                      dom
+                        .querySelectorAll('a.u-url[target="_blank"]')
+                        .forEach((a) => {
+                          if (!/http/i.test(a.innerText.trim())) {
                             a.removeAttribute('target');
-                            if (!sKey) return;
-                            if (!Array.isArray(states.statusQuotes[sKey])) {
-                              states.statusQuotes[sKey] = [];
-                            }
-                            if (!states.statusQuotes[sKey][i]) {
-                              states.statusQuotes[sKey].splice(i, 0, result);
-                            }
-                          },
-                        );
-                      });
-                  },
-                }),
-              }}
-            />
-            <QuoteStatuses id={id} instance={instance} level={quoted} />
-          </div>
+                          }
+                        });
+                      if (previewMode) return;
+                      // Unfurl Mastodon links
+                      Array.from(
+                        dom.querySelectorAll(
+                          'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                        ),
+                      )
+                        .filter((a) => {
+                          const url = a.href;
+                          const isPostItself =
+                            url === status.url || url === status.uri;
+                          return !isPostItself && isMastodonLinkMaybe(url);
+                        })
+                        .forEach((a, i) => {
+                          unfurlMastodonLink(currentInstance, a.href).then(
+                            (result) => {
+                              if (!result) return;
+                              a.removeAttribute('target');
+                              if (!sKey) return;
+                              if (!Array.isArray(states.statusQuotes[sKey])) {
+                                states.statusQuotes[sKey] = [];
+                              }
+                              if (!states.statusQuotes[sKey][i]) {
+                                states.statusQuotes[sKey].splice(i, 0, result);
+                              }
+                            },
+                          );
+                        });
+                    },
+                  }),
+                }}
+              />
+              <QuoteStatuses id={id} instance={instance} level={quoted} />
+            </div>
+          )}
           {!!poll && (
             <Poll
               lang={language}

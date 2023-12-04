@@ -967,7 +967,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border: 1px solid var(--outline-color);
   background-color: var(--bg-blur-color);
   border-radius: 16px;
-  overflow: hidden;
+  overflow: clip;
   box-shadow: 0 1px var(--bg-color);
 
   &:has(.status-badge:not(:empty)) {

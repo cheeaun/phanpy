@@ -712,6 +712,14 @@
   /* height: 200px; */
   max-height: max(200px, 40vh);
 }
+.status.medium .content ~ * .media-container:is(.media-eq2, .media-gt2),
+.status.medium .content ~ .media-container:is(.media-eq2, .media-gt2) {
+  /*
+    50px = avatar size
+    12px = gap
+  */
+  margin-left: calc(-1 * (50px + 12px));
+}
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
   /* min-height: 160px; */

@@ -631,7 +631,8 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  > * {
+  > .compose-field,
+  > .compose-highlight {
     grid-area: 1 / 1 / 2 / 2;
   }
 

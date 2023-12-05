@@ -104,6 +104,7 @@ export const ICONS = {
   cloud: () => import('@iconify-icons/mingcute/cloud-line'),
   month: () => import('@iconify-icons/mingcute/calendar-month-line'),
   media: () => import('@iconify-icons/mingcute/photo-album-line'),
+  chat: () => import('@iconify-icons/mingcute/chat-1-line'),
 };
 
 function Icon({

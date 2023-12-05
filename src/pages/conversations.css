@@ -1,0 +1,40 @@
+.conversation-form {
+  padding: 8px 0;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.conversation-form-row :is(input[type='text'], select) {
+  width: 100%;
+  appearance: none;
+}
+
+.conversation-form-row .label-block {
+  display: flex;
+  padding: 8px 0;
+  gap: 4px;
+}
+
+.conversation-form-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+.conversation-form-footer button[type='submit'] {
+  padding-inline: 24px;
+}
+
+#conversation-manage-members-container ul {
+  display: block;
+  conversation-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+#conversation-manage-members-container ul li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}

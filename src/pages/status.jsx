@@ -142,6 +142,17 @@ function StatusPage(params) {
     }
   }, [showMediaOnly, closeLink, snapStates.prevLocation]);
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      // carouselRef.current?.focus?.();
+      const $carousel = document.querySelector('.carousel');
+      if ($carousel) {
+        $carousel.focus();
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [showMediaOnly]);
+
   return (
     <div class="deck-backdrop">
       {showMedia ? (

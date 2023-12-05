@@ -1121,6 +1121,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   flex-grow: 1;
   background-color: var(--backdrop-solid-color);
   animation: appear 0.3s var(--timing-function) both;
+  transition: width 0.3s var(--timing-function);
+
+  &:only-child {
+    width: 100%;
+  }
 }
 .media-modal-container.loading {
   display: flex;

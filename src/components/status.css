@@ -714,11 +714,14 @@
 }
 .status.medium .content ~ * .media-container:is(.media-eq2, .media-gt2),
 .status.medium .content ~ .media-container:is(.media-eq2, .media-gt2) {
-  /*
-    50px = avatar size
-    12px = gap
-  */
+  /* 50px = avatar size */
   margin-left: calc(-1 * ((50px / 2)));
+  /*
+    outer padding = 16px
+    gap = 12px
+    so... 16 - 12 = 4
+  */
+  margin-right: -4px;
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;

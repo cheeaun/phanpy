@@ -718,7 +718,7 @@
     50px = avatar size
     12px = gap
   */
-  margin-left: calc(-1 * (50px + 12px));
+  margin-left: calc(-1 * ((50px / 2)));
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;

@@ -684,7 +684,7 @@
   /* min-height: 0 !important; */
   max-height: none !important;
 }
-.status-carousel .status .media-container {
+.status-carousel .status .media-container:not(.status-card .media-container) {
   margin-inline: -16px;
   max-width: calc(100% + 16px + 16px) !important;
 

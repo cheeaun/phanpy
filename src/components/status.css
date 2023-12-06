@@ -520,6 +520,14 @@
   color: inherit;
 } */
 
+.status .content-comment-hint {
+  margin-top: 0.25em;
+  font-size: 90%;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
 .status.compact-thread .spoiler-badge {
   font-size: smaller;
   color: var(--button-bg-color);
@@ -676,6 +684,24 @@
   /* min-height: 0 !important; */
   max-height: none !important;
 }
+.status-carousel .status .media-container:not(.status-card .media-container) {
+  margin-inline: -16px;
+  max-width: calc(100% + 16px + 16px) !important;
+
+  figure figcaption {
+    padding-inline: 16px !important;
+  }
+
+  &:not(.media-figure-multiple .media-container) {
+    margin-bottom: -16px;
+  }
+
+  .media {
+    --media-radius: 0;
+    --media-radius-inner: 0;
+    box-sizing: border-box;
+  }
+}
 .status:not(.large):not(.status-carousel .status)
   .media-container.media-eq1:has([data-orientation='portrait']) {
   width: 85%;
@@ -685,6 +711,17 @@
 .status .media-container.media-gt2 {
   /* height: 200px; */
   max-height: max(200px, 40vh);
+}
+.status.medium .content ~ * .media-container:is(.media-eq2, .media-gt2),
+.status.medium .content ~ .media-container:is(.media-eq2, .media-gt2) {
+  /* 50px = avatar size */
+  margin-left: calc(-1 * ((50px / 2)));
+  /*
+    outer padding = 16px
+    gap = 12px
+    so... 16 - 12 = 4
+  */
+  margin-right: -4px;
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
@@ -700,6 +737,7 @@
   overflow: hidden;
   min-height: 80px;
   border: var(--media-border-width) solid var(--outline-color);
+  vertical-align: top;
 }
 .status .media-container:not(.media-eq1) .media {
   aspect-ratio: auto !important;

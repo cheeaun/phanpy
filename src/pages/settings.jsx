@@ -23,7 +23,7 @@ import states from '../utils/states';
 import store from '../utils/store';
 
 const DEFAULT_TEXT_SIZE = 16;
-const TEXT_SIZES = [16, 17, 18, 19, 20];
+const TEXT_SIZES = [15, 16, 17, 18, 19, 20];
 
 function Settings({ onClose }) {
   const snapStates = useSnapshot(states);
@@ -429,6 +429,7 @@ function Settings({ onClose }) {
           <div
             style={{
               display: 'flex',
+              flexWrap: 'wrap',
               gap: 8,
               lineHeight: 1.25,
               alignItems: 'center',

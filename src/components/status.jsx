@@ -65,6 +65,7 @@ import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
 
+const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 const throttle = pThrottle({
   limit: 1,
@@ -1021,6 +1022,40 @@ function Status({
     repliesCount,
     visibility,
   ]);
+  const showCommentCount = useMemo(() => {
+    if (
+      card ||
+      poll ||
+      sensitive ||
+      spoilerText ||
+      mediaAttachments?.length ||
+      isThread ||
+      withinContext ||
+      inReplyToId ||
+      repliesCount <= 0
+    ) {
+      return false;
+    }
+    const questionRegex = /[??？︖❓❔⁇⁈⁉¿‽؟]/;
+    const containsQuestion = questionRegex.test(content);
+    if (!containsQuestion) return false;
+    const contentLength = htmlContentLength(content);
+    if (contentLength > 0 && contentLength <= SHOW_COMMENT_COUNT_LIMIT) {
+      return true;
+    }
+  }, [
+    card,
+    poll,
+    sensitive,
+    spoilerText,
+    mediaAttachments,
+    reblog,
+    isThread,
+    withinContext,
+    inReplyToId,
+    repliesCount,
+    content,
+  ]);
 
   return (
     <article
@@ -1184,7 +1219,7 @@ function Status({
                     : ''
                 }`}
               >
-                {showCommentHint ? (
+                {showCommentHint && !showCommentCount ? (
                   <Icon
                     icon="comment2"
                     size="s"
@@ -1335,63 +1370,65 @@ function Status({
               </button>
             </>
           )}
-          <div class="content" ref={contentRef} data-read-more={readMoreText}>
-            <div
-              lang={language}
-              dir="auto"
-              class="inner-content"
-              onClick={handleContentLinks({
-                mentions,
-                instance,
-                previewMode,
-                statusURL: url,
-              })}
-              dangerouslySetInnerHTML={{
-                __html: enhanceContent(content, {
-                  emojis,
-                  postEnhanceDOM: (dom) => {
-                    // Remove target="_blank" from links
-                    dom
-                      .querySelectorAll('a.u-url[target="_blank"]')
-                      .forEach((a) => {
-                        if (!/http/i.test(a.innerText.trim())) {
-                          a.removeAttribute('target');
-                        }
-                      });
-                    if (previewMode) return;
-                    // Unfurl Mastodon links
-                    Array.from(
-                      dom.querySelectorAll(
-                        'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                      ),
-                    )
-                      .filter((a) => {
-                        const url = a.href;
-                        const isPostItself =
-                          url === status.url || url === status.uri;
-                        return !isPostItself && isMastodonLinkMaybe(url);
-                      })
-                      .forEach((a, i) => {
-                        unfurlMastodonLink(currentInstance, a.href).then(
-                          (result) => {
-                            if (!result) return;
+          {!!content && (
+            <div class="content" ref={contentRef} data-read-more={readMoreText}>
+              <div
+                lang={language}
+                dir="auto"
+                class="inner-content"
+                onClick={handleContentLinks({
+                  mentions,
+                  instance,
+                  previewMode,
+                  statusURL: url,
+                })}
+                dangerouslySetInnerHTML={{
+                  __html: enhanceContent(content, {
+                    emojis,
+                    postEnhanceDOM: (dom) => {
+                      // Remove target="_blank" from links
+                      dom
+                        .querySelectorAll('a.u-url[target="_blank"]')
+                        .forEach((a) => {
+                          if (!/http/i.test(a.innerText.trim())) {
                             a.removeAttribute('target');
-                            if (!sKey) return;
-                            if (!Array.isArray(states.statusQuotes[sKey])) {
-                              states.statusQuotes[sKey] = [];
-                            }
-                            if (!states.statusQuotes[sKey][i]) {
-                              states.statusQuotes[sKey].splice(i, 0, result);
-                            }
-                          },
-                        );
-                      });
-                  },
-                }),
-              }}
-            />
-            <QuoteStatuses id={id} instance={instance} level={quoted} />
-          </div>
+                          }
+                        });
+                      if (previewMode) return;
+                      // Unfurl Mastodon links
+                      Array.from(
+                        dom.querySelectorAll(
+                          'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                        ),
+                      )
+                        .filter((a) => {
+                          const url = a.href;
+                          const isPostItself =
+                            url === status.url || url === status.uri;
+                          return !isPostItself && isMastodonLinkMaybe(url);
+                        })
+                        .forEach((a, i) => {
+                          unfurlMastodonLink(currentInstance, a.href).then(
+                            (result) => {
+                              if (!result) return;
+                              a.removeAttribute('target');
+                              if (!sKey) return;
+                              if (!Array.isArray(states.statusQuotes[sKey])) {
+                                states.statusQuotes[sKey] = [];
+                              }
+                              if (!states.statusQuotes[sKey][i]) {
+                                states.statusQuotes[sKey].splice(i, 0, result);
+                              }
+                            },
+                          );
+                        });
+                    },
+                  }),
+                }}
+              />
+              <QuoteStatuses id={id} instance={instance} level={quoted} />
+            </div>
+          )}
           {!!poll && (
             <Poll
               lang={language}
@@ -1516,6 +1553,11 @@ function Status({
               <Card card={card} instance={currentInstance} />
             )}
         </div>
+        {!isSizeLarge && showCommentCount && (
+          <div class="content-comment-hint insignificant">
+            <Icon icon="comment2" alt="Replies" /> {repliesCount}
+          </div>
+        )}
         {isSizeLarge && (
           <>
             <div class="extra-meta">
@@ -2227,7 +2269,12 @@ function _unfurlMastodonLink(instance, url) {
     theURL = `https://${finalURL}`;
   }
 
-  const urlObj = new URL(theURL);
+  let urlObj;
+  try {
+    urlObj = new URL(theURL);
+  } catch (e) {
+    return;
+  }
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   // Regex /:username/:id, where username = @username or @username@domain, id = number

@@ -5,6 +5,7 @@ import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { substring } from 'runes2';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
@@ -107,8 +108,8 @@ function countableText(inputText) {
 // https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
 const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
 const MENTION_RE = new RegExp(
-  `(^|[^=\\/\\w])(@${USERNAME_RE.source}(?:@[\\w.-]+[\\w]+)?)`,
-  'ig',
+  `(^|[^=\\/\\w])(@${USERNAME_RE.source}(?:@[\\p{L}\\w.-]+[\\w]+)?)`,
+  'uig',
 );
 
 // AI-generated, all other regexes are too complicated
@@ -131,16 +132,20 @@ function highlightText(text, { maxCharacters = Infinity }) {
   const { composerCharacterCount } = states;
   let leftoverHTML = '';
   if (composerCharacterCount > maxCharacters) {
-    const leftoverCount = composerCharacterCount - maxCharacters;
+    // NOTE: runes2 substring considers surrogate pairs
+    // const leftoverCount = composerCharacterCount - maxCharacters;
     // Highlight exceeded characters
     leftoverHTML =
       '<mark class="compose-highlight-exceeded">' +
-      html.slice(-leftoverCount) +
+      // html.slice(-leftoverCount) +
+      substring(html, maxCharacters) +
       '</mark>';
-    html = html.slice(0, -leftoverCount);
+    // html = html.slice(0, -leftoverCount);
+    html = substring(html, 0, maxCharacters);
+    return html + leftoverHTML;
   }
 
-  html = html
+  return html
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
     .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
     .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags
@@ -148,8 +153,6 @@ function highlightText(text, { maxCharacters = Infinity }) {
       SCAN_RE,
       '$1<mark class="compose-highlight-emoji-shortcode">$2</mark>',
     ); // Emoji shortcodes
-
-  return html + leftoverHTML;
 }
 
 function Compose({
@@ -1482,12 +1485,30 @@ const Textarea = forwardRef((props, ref) => {
     resizeObserver.observe(textarea);
   }, []);
 
+  const slowHighlightPerf = useRef(0); // increment if slow
   const composeHighlightRef = useRef();
   const throttleHighlightText = useThrottledCallback((text) => {
+    if (!composeHighlightRef.current) return;
+    if (slowHighlightPerf.current > 3) {
+      // After 3 times of lag, disable highlighting
+      composeHighlightRef.current.innerHTML = '';
+      composeHighlightRef.current = null; // Destroy the whole thing
+      throttleHighlightText?.cancel?.();
+      return;
+    }
+    let start;
+    let end;
+    if (slowHighlightPerf.current <= 3) start = Date.now();
     composeHighlightRef.current.innerHTML =
       highlightText(text, {
         maxCharacters,
       }) + '\n';
+    if (slowHighlightPerf.current <= 3) end = Date.now();
+    console.debug('HIGHLIGHT PERF', { start, end, diff: end - start });
+    if (start && end && end - start > 50) {
+      // if slow, increment
+      slowHighlightPerf.current++;
+    }
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
@@ -1538,12 +1559,16 @@ const Textarea = forwardRef((props, ref) => {
                     target.setRangeText('', pos, selectionStart);
                   }
                   autoResizeTextarea(target);
+                  target.dispatchEvent(new Event('input'));
                 }
               }
             } catch (e) {
               // silent fail
               console.error(e);
             }
+          }
+          if (composeHighlightRef.current) {
+            composeHighlightRef.current.scrollTop = target.scrollTop;
           }
         }}
         onInput={(e) => {
@@ -1560,8 +1585,10 @@ const Textarea = forwardRef((props, ref) => {
           // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
         }}
         onScroll={(e) => {
-          const { scrollTop } = e.target;
-          composeHighlightRef.current.scrollTop = scrollTop;
+          if (composeHighlightRef.current) {
+            const { scrollTop } = e.target;
+            composeHighlightRef.current.scrollTop = scrollTop;
+          }
         }}
       />
       <div

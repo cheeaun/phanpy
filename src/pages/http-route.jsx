@@ -1,34 +1,73 @@
-import { useLayoutEffect } from 'preact/hooks';
+import { useLayoutEffect, useState } from 'preact/hooks';
 import { useLocation } from 'react-router-dom';
 
 import Link from '../components/link';
-import getInstanceStatusURL from '../utils/get-instance-status-url';
+import Loader from '../components/loader';
+import { api } from '../utils/api';
+import getInstanceStatusURL, {
+  getInstanceStatusObject,
+} from '../utils/get-instance-status-url';
 
 export default function HttpRoute() {
   const location = useLocation();
   const url = location.pathname.replace(/^\//, '');
-  const statusURL = getInstanceStatusURL(url);
+  const statusObject = getInstanceStatusObject(url);
+  // const statusURL = getInstanceStatusURL(url);
+  const statusURL = statusObject?.instance
+    ? `/${statusObject.instance}/s/${statusObject.id}`
+    : null;
+  const [uiState, setUIState] = useState('loading');
 
   useLayoutEffect(() => {
-    if (statusURL) {
-      setTimeout(() => {
-        window.location.hash = statusURL + '?view=full';
-      }, 300);
-    }
+    setUIState('loading');
+    (async () => {
+      const { instance, id } = statusObject;
+      const { masto } = api({ instance });
+
+      // Check if status returns 200
+      try {
+        const status = await masto.v1.statuses.$select(id).fetch();
+        if (status) {
+          window.location.hash = statusURL + '?view=full';
+          return;
+        }
+      } catch (e) {}
+
+      // Fallback to search
+      {
+        const { masto: currentMasto, instance: currentInstance } = api();
+        const result = await currentMasto.v2.search.fetch({
+          q: url,
+          type: 'statuses',
+          limit: 1,
+          resolve: true,
+        });
+        if (result.statuses.length) {
+          const status = result.statuses[0];
+          window.location.hash = `/${currentInstance}/s/${status.id}?view=full`;
+        } else {
+          // Fallback to original URL, which will probably show error
+          window.location.hash = statusURL + '?view=full';
+        }
+      }
+    })();
   }, [statusURL]);
 
   return (
     <div class="ui-state" tabIndex="-1">
-      {statusURL ? (
+      {uiState === 'loading' ? (
         <>
-          <h2>Redirecting…</h2>
+          <Loader abrupt />
+          <h2>Resolving…</h2>
           <p>
-            <a href={`#${statusURL}?view=full`}>{statusURL}</a>
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              {url}
+            </a>
           </p>
         </>
       ) : (
         <>
-          <h2>Unable to process URL</h2>
+          <h2>Unable to resolve URL</h2>
           <p>
             <a href={url} target="_blank" rel="noopener noreferrer">
               {url}

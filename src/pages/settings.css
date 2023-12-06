@@ -66,15 +66,17 @@
 
 #settings-container section select {
   padding: 4px;
+  width: 100%;
 }
 
 #settings-container .radio-group {
   display: inline-flex;
   align-items: center;
-  border-radius: 999px;
+  border-radius: 1.1em;
   border: 1px solid var(--button-bg-color);
   overflow: hidden;
   padding: 1px;
+  flex-wrap: wrap;
 }
 #settings-container .radio-group input[type='radio'] {
   opacity: 0;
@@ -85,6 +87,8 @@
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+  flex-grow: 1;
+  text-align: center;
 }
 #settings-container .radio-group label input:checked + span {
   color: var(--link-color);
@@ -94,7 +98,7 @@
   color: var(--button-bg-color);
 }
 #settings-container .radio-group label:has(input:checked) {
-  border-radius: 999px;
+  border-radius: 1.1em;
   color: var(--button-text-color);
   background-color: var(--button-bg-color);
 }
@@ -105,10 +109,34 @@
 #settings-container .range-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+
+  @media (width < 320px) {
+    display: grid;
+    gap: 0;
+    column-gap: 4px;
+    grid-template-areas:
+      'label1 label2'
+      'input input';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    > span:first-child {
+      text-align: left;
+    }
+
+    > span:last-child {
+      text-align: right;
+    }
+  }
 }
 #settings-container .range-group input[type='range'] {
   flex-grow: 1;
+  width: 100%;
+
+  @media (width < 320px) {
+    grid-area: input;
+  }
 }
 
 #settings-container .checkbox-fields {

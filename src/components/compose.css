@@ -631,7 +631,8 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  > * {
+  > .compose-field,
+  > .compose-highlight {
     grid-area: 1 / 1 / 2 / 2;
   }
 
@@ -653,6 +654,11 @@
     white-space: pre-wrap;
     min-height: 5em;
     max-height: 50vh;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     /* Follow textarea styles */
     @media (min-width: 40em) {

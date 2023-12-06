@@ -113,9 +113,9 @@ function Search(props) {
             setShowMore(!!length);
           }
         } else {
-          setStatusResults(results.statuses);
-          setAccountResults(results.accounts);
-          setHashtagResults(results.hashtags);
+          setStatusResults(results.statuses || []);
+          setAccountResults(results.accounts || []);
+          setHashtagResults(results.hashtags || []);
           offsetRef.current = 0;
           setShowMore(false);
         }
@@ -253,21 +253,21 @@ function Search(props) {
                       <ul class="link-list hashtag-list">
                         {hashtagResults.map((hashtag) => {
                           const { name, history } = hashtag;
-                          const total = history.reduce(
+                          const total = history?.reduce?.(
                             (acc, cur) => acc + +cur.uses,
                             0,
                           );
                           return (
-                            <li key={hashtag.name}>
+                            <li key={`${name}-${total}`}>
                               <Link
                                 to={
                                   instance
-                                    ? `/${instance}/t/${hashtag.name}`
-                                    : `/t/${hashtag.name}`
+                                    ? `/${instance}/t/${name}`
+                                    : `/t/${name}`
                                 }
                               >
                                 <Icon icon="hashtag" />
-                                <span>{hashtag.name}</span>
+                                <span>{name}</span>
                                 {!!total && (
                                   <span class="count">
                                     {shortenNumber(total)}

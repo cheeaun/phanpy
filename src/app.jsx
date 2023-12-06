@@ -187,6 +187,32 @@ setTimeout(() => {
   // );
 })();
 
+// Possible fix for iOS PWA theme-color bug
+// It changes when loading web pages in "webview"
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+if (isIOS) {
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      // Get current color scheme
+      const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+        .matches
+        ? 'dark'
+        : 'light';
+      // Get current theme-color
+      const $meta = document.querySelector(
+        `meta[name="theme-color"][media*="${colorScheme}"]`,
+      );
+      const color = $meta?.getAttribute('content');
+      if (color) {
+        $meta.content = '';
+        setTimeout(() => {
+          $meta.content = color;
+        }, 10);
+      }
+    }
+  });
+}
+
 subscribe(states, (changes) => {
   for (const [action, path, value, prevValue] of changes) {
     // Change #app dataset based on settings.shortcutsViewMode

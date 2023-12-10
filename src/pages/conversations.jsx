@@ -1,6 +1,7 @@
 import './conversations.css';
 
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
+import pRetry from 'p-retry';
 
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -25,13 +26,15 @@ function Conversations({instance}) {
     setUIState('loading');
     (async () => {
       try {
-        const conversationsRaw = await masto.v1.conversations.list({
-            limit: LIMIT
-        });
+        const conversationsFetch = () =>
+          pRetry(() => masto.v1.conversations.list({limit: LIMIT}), {
+            retries: 4
+          })
         const cc = [];
 
+        const conversationsRaw = await conversationsFetch();
         conversationsRaw.forEach(u => {
-        	u.accounts.forEach((account) => states.accounts[account.id] = account)
+          u.accounts.forEach((account) => states.accounts[account.id] = account)
             const conversation = {
                 actors: u.accounts.map(account => account.id),
                 id: u.lastStatus?.id,
@@ -39,7 +42,7 @@ function Conversations({instance}) {
             }
             const withSameActorsIndex = cc.findIndex(c => c.actors.join(',') == conversation.actors.join(','));
             if (withSameActorsIndex == -1) {
-            	cc.push(conversation)
+              cc.push(conversation)
             } else if (cc[withSameActorsIndex].date < conversation.date) {
                 cc.set(withSameActorsIndex, conversation)
             }

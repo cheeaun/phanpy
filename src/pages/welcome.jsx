@@ -17,29 +17,58 @@ function Welcome() {
   return (
     <main id="welcome">
       <div class="hero-container">
-        <h1>
-          <img
-            src={logo}
-            alt=""
-            width="200"
-            height="200"
-            style={{
-              aspectRatio: '1/1',
-              marginBlockEnd: -16,
-            }}
-          />
-          <img src={logoText} alt="Phanpy" width="250" />
-        </h1>
+        <div class="hero-content">
+          <h1>
+            <img
+              src={logo}
+              alt=""
+              width="160"
+              height="160"
+              style={{
+                aspectRatio: '1/1',
+                marginBlockEnd: -16,
+              }}
+            />
+            <img src={logoText} alt="Phanpy" width="200" />
+          </h1>
+          <p class="desc">A minimalistic opinionated Mastodon web client.</p>
+          <p>
+            <Link to="/login" class="button">
+              Log in with Mastodon
+            </Link>
+          </p>
+          <p class="insignificant">
+            <small>
+              Connect your existing Mastodon/Fediverse account.
+              <br />
+              Your credentials are not stored on this server.
+            </small>
+          </p>
+        </div>
         <p>
-          <big>
-            <b>
-              <Link to="/login" class="button">
-                Log in
-              </Link>
-            </b>
-          </big>
+          <a href="https://github.com/cheeaun/phanpy" target="_blank">
+            Built
+          </a>{' '}
+          by{' '}
+          <a
+            href="https://mastodon.social/@cheeaun"
+            target="_blank"
+            onClick={(e) => {
+              e.preventDefault();
+              states.showAccount = 'cheeaun@mastodon.social';
+            }}
+          >
+            @cheeaun
+          </a>
+          .{' '}
+          <a
+            href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+          .
         </p>
-        <p class="desc">A minimalistic opinionated Mastodon web client.</p>
       </div>
       <div id="why-container">
         <div class="sections">
@@ -98,33 +127,6 @@ function Welcome() {
           </section>
         </div>
       </div>
-      <footer>
-        <hr />
-        <p>
-          <a href="https://github.com/cheeaun/phanpy" target="_blank">
-            Built
-          </a>{' '}
-          by{' '}
-          <a
-            href="https://mastodon.social/@cheeaun"
-            target="_blank"
-            onClick={(e) => {
-              e.preventDefault();
-              states.showAccount = 'cheeaun@mastodon.social';
-            }}
-          >
-            @cheeaun
-          </a>
-          .{' '}
-          <a
-            href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
-            target="_blank"
-          >
-            Privacy Policy
-          </a>
-          .
-        </p>
-      </footer>
     </main>
   );
 }

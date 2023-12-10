@@ -1,3 +1,5 @@
+import './conversation.css';
+
 import { useMemo, useRef, useState, useEffect } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -9,6 +11,7 @@ import { api } from '../utils/api';
 import states, { saveStatus, getStatus, statusKey, threadifyStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 import htmlContentLength from '../utils/html-content-length';
+import AccountBlock from '../components/account-block';
 
 const LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
@@ -17,6 +20,7 @@ const cachedStatusesMap = {};
 function Conversation(props) {
   const { masto, instance } = api();
   const [stateType, setStateType] = useState(null);
+  const [participants, setParticipants] = useState();
   const id = props?.id || useParams()?.id;
   const snapStates = useSnapshot(states);
   useTitle(`Conversation`, '/c/:id');
@@ -178,6 +182,8 @@ function Conversation(props) {
         }
     }
 
+    setParticipants(pointer.accounts)
+
   	return {
   	  done: true,
   	  value: allStatuses,
@@ -214,10 +220,17 @@ function Conversation(props) {
       }
   }
 
+  const participantsHeader = participants
+    ? <div class="participants">
+        {participants.map((participant) => <AccountBlock account={participant}/>)}
+      </div>
+    : "";
+
   return (
     <Timeline
       key={id}
       title="Conversation"
+      timelineStart={participantsHeader}
       id="conversation"
       emptyText="This conversation doesn't exist"
       errorText="Unable to load conversation."

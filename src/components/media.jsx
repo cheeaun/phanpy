@@ -274,7 +274,7 @@ function Media({
                 }}
                 onError={(e) => {
                   const { src } = e.target;
-                  if (src === mediaURL) {
+                  if (src === mediaURL && mediaURL !== remoteMediaURL) {
                     e.target.src = remoteMediaURL;
                   }
                 }}
@@ -307,7 +307,7 @@ function Media({
                 }}
                 onError={(e) => {
                   const { src } = e.target;
-                  if (src === mediaURL) {
+                  if (src === mediaURL && mediaURL !== remoteMediaURL) {
                     e.target.src = remoteMediaURL;
                   }
                 }}

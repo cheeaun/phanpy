@@ -41,6 +41,7 @@ import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import Conversations from './pages/conversations';
+import Conversation from './pages/conversation';
 import {
   api,
   initAccount,
@@ -417,7 +418,10 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/ft" element={<FollowedHashtags />} />
-          <Route path="/c" element={<Conversations />} />
+          <Route path="/c">
+            <Route index element={<Conversations />} />
+            <Route path=":id" element={<Conversation />} />
+          </Route>
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

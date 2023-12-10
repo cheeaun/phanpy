@@ -9,7 +9,8 @@ import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
 import { api } from '../utils/api';
 import useTitle from '../utils/useTitle';
-import NameText from '../components/name-text';
+import AccountBlock from '../components/account-block';
+import states from '../utils/states';
 
 const LIMIT = 20;
 
@@ -30,12 +31,13 @@ function Conversations({instance}) {
         const cc = [];
 
         conversationsRaw.forEach(u => {
+        	u.accounts.forEach((account) => states.accounts[account.id] = account)
             const conversation = {
-                actors: u.accounts.map(account => account.displayName + ' (@' + account.acct + ')').join(', '),
+                actors: u.accounts.map(account => account.id),
                 id: u.lastStatus?.id,
                 date: u.lastStatus?.editedAt || u.lastStatus?.createdAt,
             }
-            const withSameActorsIndex = cc.findIndex(c => c.actors == conversation.actors);
+            const withSameActorsIndex = cc.findIndex(c => c.actors.join(',') == conversation.actors.join(','));
             if (withSameActorsIndex == -1) {
             	cc.push(conversation)
             } else if (cc[withSameActorsIndex].date < conversation.date) {
@@ -47,6 +49,7 @@ function Conversations({instance}) {
         const conversations = cc.sort((a, b) => { a.date.localeCompare(b.date)})
 
         console.log(cc);
+        console.log("accounts", states.accounts)
         setConversations(cc);
         setUIState('default');
       } catch (e) {
@@ -68,17 +71,7 @@ function Conversations({instance}) {
               </Link>
             </div>
             <h1>Conversations</h1>
-            <div class="header-side">
-            {/*
-              <button
-                type="button"
-                class="plain"
-                onClick={() => setShowConversationAddEditModal(true)}
-              >
-                <Icon icon="plus" size="l" alt="New conversation" />
-              </button>
-            */}
-            </div>
+            <div class="header-side" />
           </div>
         </header>
         <main>
@@ -87,22 +80,10 @@ function Conversations({instance}) {
               {conversations.map((conversation) => (
                 <li>
                   <Link to={`/c/${conversation.id}`}>
-                    <span>
-                      <Icon icon="chat" /> <span>{conversation.actors}</span>
-                    </span>
-                    {/* <button
-                      type="button"
-                      class="plain"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setShowConversationAddEditModal({
-                          conversation,
-                        });
-                      }}
-                    >
-                      <Icon icon="pencil" />
-                    </button> */}
+                    <div class="row">
+                      <Icon icon="chat" size="xl" />
+                      {conversation.actors.map((actor) => <AccountBlock account={states.accounts[actor]} />) }
+                    </div>
                   </Link>
                 </li>
               ))}

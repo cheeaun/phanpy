@@ -1,0 +1,25 @@
+name: Deploy conversations branch to Github Pages
+
+on:
+  push:
+    branches: [ "conversations" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci && npm run build
+      - uses: actions/upload-pages-artifact@v2
+        with:
+          path: "dist"
+      - uses: actions/deploy-pages@v3
+
+

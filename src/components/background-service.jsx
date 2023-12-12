@@ -74,6 +74,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
                   }
                   states.notificationsShowNew = true;
                 }
+                console.log('💥 Streaming notification loop STOPPED');
               } catch (e) {
                 hasStreaming = false;
                 console.error(e);

@@ -109,7 +109,12 @@ Prerequisites: Node.js 18+
 
 ## Self-hosting
 
-This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` (after `npm install`) and serve the `dist` folder.
+This is a **pure static web app**. You can host it anywhere you want.
+
+Two ways (choose one):
+
+1. (Recommended) Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
+2. Download or `git clone` this repository. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
 
 Try search for "how to self-host static sites" as there are many ways to do it.
 

@@ -261,7 +261,11 @@ function App() {
     if (code) {
       console.log({ code });
       // Clear the code from the URL
-      window.history.replaceState({}, document.title, location.pathname || '/');
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname || '/',
+      );
 
       const clientID = store.session.get('clientID');
       const clientSecret = store.session.get('clientSecret');

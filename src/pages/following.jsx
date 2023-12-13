@@ -95,6 +95,7 @@ function Following({ title, path, id, ...props }) {
             if (s) s._deleted = true;
           }
         }
+        console.log('💥 Streaming user loop STOPPED');
       }
     })();
     return () => {

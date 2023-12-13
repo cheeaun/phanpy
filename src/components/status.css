@@ -688,6 +688,13 @@
   margin-inline: -16px;
   max-width: calc(100% + 16px + 16px) !important;
 
+  figure:before {
+    content: '';
+    display: block;
+    /* padding (16px) - gap (4px) */
+    flex-basis: calc(16px - 4px);
+  }
+
   figure figcaption {
     padding-inline: 16px !important;
   }
@@ -712,8 +719,19 @@
   /* height: 200px; */
   max-height: max(200px, 40vh);
 }
-.status.medium .content ~ * .media-container:is(.media-eq2, .media-gt2),
-.status.medium .content ~ .media-container:is(.media-eq2, .media-gt2) {
+.status.medium
+  .content
+  ~ *
+  .media-container:not(.status-card .media-container):is(
+    .media-eq2,
+    .media-gt2
+  ),
+.status.medium
+  .content
+  ~ .media-container:not(.status-card .media-container):is(
+    .media-eq2,
+    .media-gt2
+  ) {
   /* 50px = avatar size */
   margin-left: calc(-1 * ((50px / 2)));
   /*

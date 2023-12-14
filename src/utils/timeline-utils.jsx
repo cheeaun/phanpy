@@ -1,3 +1,5 @@
+import { extractTagsFromStatus, getFollowedTags } from './followed-tags';
+import states, { statusKey } from './states';
 import store from './store';
 
 export function groupBoosts(values) {
@@ -174,4 +176,34 @@ export function groupContext(items) {
   });
 
   return newItems;
+}
+
+export async function assignFollowedTags(items, instance) {
+  const followedTags = await getFollowedTags(); // [{name: 'tag'}, {...}]
+  if (!followedTags.length) return;
+  const { statusFollowedTags } = states;
+  items.forEach((item) => {
+    if (item.reblog) return;
+    const { id, content, tags = [] } = item;
+    const sKey = statusKey(id, instance);
+    if (statusFollowedTags[sKey]?.length) return;
+    const extractedTags = extractTagsFromStatus(content);
+    if (!extractedTags.length && !tags.length) return;
+    const itemFollowedTags = followedTags.reduce((acc, tag) => {
+      if (
+        extractedTags.some((t) => t.toLowerCase() === tag.name.toLowerCase()) ||
+        tags.some((t) => t.name.toLowerCase() === tag.name.toLowerCase())
+      ) {
+        acc.push(tag.name);
+      }
+      return acc;
+    }, []);
+    if (itemFollowedTags.length) {
+      statusFollowedTags[sKey] = itemFollowedTags;
+    }
+  });
+}
+
+export function clearFollowedTagsState() {
+  states.statusFollowedTags = {};
 }

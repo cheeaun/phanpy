@@ -31,6 +31,7 @@ const states = proxy({
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},
+  statusFollowedTags: {},
   accounts: {},
   routeNotification: null,
   // Modals

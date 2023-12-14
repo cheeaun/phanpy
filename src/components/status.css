@@ -14,6 +14,13 @@
     transparent min(160px, 50%)
   );
 }
+.status-followed-tags {
+  background: linear-gradient(
+    160deg,
+    var(--hashtag-faded-color),
+    transparent min(160px, 50%)
+  );
+}
 .status-reply-to {
   background: linear-gradient(
     160deg,
@@ -21,7 +28,7 @@
     transparent min(160px, 50%)
   );
 }
-:is(.status-reblog, .status-group) .status-reply-to {
+:is(.status-reblog, .status-group, .status-followed-tags) .status-reply-to {
   background: linear-gradient(
     -20deg,
     var(--reply-to-faded-color),
@@ -62,6 +69,49 @@
   color: var(--group-color);
   margin-right: 4px;
   vertical-align: text-bottom;
+}
+.status-followed-tags {
+  .status-pre-meta {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+
+    .icon {
+      color: var(--hashtag-color);
+      margin-right: 4px;
+      vertical-align: text-bottom;
+    }
+    a {
+      color: var(--hashtag-text-color);
+      font-weight: bold;
+      font-size: 12px;
+      text-decoration-color: var(--hashtag-faded-color);
+      text-underline-offset: 2px;
+      text-decoration-thickness: 2px;
+      display: inline-block;
+      padding: 2px;
+      vertical-align: top;
+      text-transform: uppercase;
+      text-shadow: 0 1px var(--bg-color);
+
+      &:hover {
+        color: var(--text-color);
+        text-decoration-color: var(--hashtag-color);
+      }
+    }
+  }
+
+  .status-followed-tag-item {
+    color: var(--hashtag-text-color);
+    padding: 2px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-inline-end: 0.5em;
+  }
 }
 
 /* STATUS */

@@ -44,6 +44,7 @@ function Timeline({
   refresh,
   view,
   filterContext,
+  showFollowedTags,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -391,6 +392,7 @@ function Timeline({
                     filterContext={filterContext}
                     key={status.id + status?._pinned + view}
                     view={view}
+                    showFollowedTags={showFollowedTags}
                   />
                 ))}
                 {showMore &&
@@ -478,6 +480,7 @@ function TimelineItem({
   // allowFilters,
   filterContext,
   view,
+  showFollowedTags,
 }) {
   const { id: statusID, reblog, items, type, _pinned } = status;
   if (_pinned) useItemID = false;
@@ -567,12 +570,13 @@ function TimelineItem({
               !_differentAuthor &&
               !items[i - 1]._differentAuthor &&
               !items[i + 1]._differentAuthor)));
+      const isStart = i === 0;
       const isEnd = i === items.length - 1;
       return (
         <li
           key={`timeline-${statusID}`}
           class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
-            i === 0 ? 'start' : isEnd ? 'end' : 'middle'
+            isStart ? 'start' : isEnd ? 'end' : 'middle'
           } ${_differentAuthor ? 'timeline-item-diff-author' : ''}`}
         >
           <Link class="status-link timeline-item" to={url}>
@@ -583,6 +587,7 @@ function TimelineItem({
                 statusID={statusID}
                 instance={instance}
                 enableCommentHint={isEnd}
+                showFollowedTags={showFollowedTags}
                 // allowFilters={allowFilters}
               />
             ) : (
@@ -590,6 +595,7 @@ function TimelineItem({
                 status={item}
                 instance={instance}
                 enableCommentHint={isEnd}
+                showFollowedTags={showFollowedTags}
                 // allowFilters={allowFilters}
               />
             )}
@@ -631,6 +637,7 @@ function TimelineItem({
             statusID={statusID}
             instance={instance}
             enableCommentHint
+            showFollowedTags={showFollowedTags}
             // allowFilters={allowFilters}
           />
         ) : (
@@ -638,6 +645,7 @@ function TimelineItem({
             status={status}
             instance={instance}
             enableCommentHint
+            showFollowedTags={showFollowedTags}
             // allowFilters={allowFilters}
           />
         )}

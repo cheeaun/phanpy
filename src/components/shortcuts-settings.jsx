@@ -13,6 +13,7 @@ import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
+import { fetchFollowedTags } from '../utils/followed-tags';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -500,13 +501,7 @@ function ShortcutForm({
     (async () => {
       if (currentType !== 'hashtag') return;
       try {
-        const iterator = masto.v1.followedTags.list();
-        const tags = [];
-        do {
-          const { value, done } = await iterator.next();
-          if (done || value?.length === 0) break;
-          tags.push(...value);
-        } while (true);
+        const tags = await fetchFollowedTags();
         setFollowedHashtags(tags);
       } catch (e) {
         console.error(e);

@@ -92,11 +92,12 @@ function Status({
   statusID,
   status,
   instance: propInstance,
-  withinContext,
   size = 'm',
-  skeleton,
-  readOnly,
   contentTextWeight,
+  readOnly,
+  enableCommentHint,
+  withinContext,
+  skeleton,
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
@@ -104,7 +105,7 @@ function Status({
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
-  enableCommentHint,
+  showFollowedTags,
 }) {
   if (skeleton) {
     return (
@@ -174,6 +175,7 @@ function Status({
     uri,
     url,
     emojis,
+    tags,
     // Non-API props
     _deleted,
     _pinned,
@@ -214,6 +216,7 @@ function Status({
         containerProps={{
           onMouseEnter: debugHover,
         }}
+        showFollowedTags
       />
     );
   }
@@ -292,6 +295,39 @@ function Status({
         <Status
           status={statusID ? null : reblog}
           statusID={statusID ? reblog.id : null}
+          instance={instance}
+          size={size}
+          contentTextWeight={contentTextWeight}
+          readOnly={readOnly}
+          enableCommentHint
+        />
+      </div>
+    );
+  }
+
+  // Check followedTags
+  if (showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length) {
+    return (
+      <div
+        data-state-post-id={sKey}
+        class="status-followed-tags"
+        onMouseEnter={debugHover}
+      >
+        <div class="status-pre-meta">
+          <Icon icon="hashtag" size="l" />{' '}
+          {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+            <Link
+              key={tag}
+              to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
+              class="status-followed-tag-item"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
+        <Status
+          status={statusID ? null : status}
+          statusID={statusID ? status.id : null}
           instance={instance}
           size={size}
           contentTextWeight={contentTextWeight}
@@ -2372,7 +2408,14 @@ function nicePostURL(url) {
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
-function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
+function FilteredStatus({
+  status,
+  filterInfo,
+  instance,
+  containerProps = {},
+  showFollowedTags,
+}) {
+  const snapStates = useSnapshot(states);
   const {
     id: statusID,
     account: { avatar, avatarStatic, bot, group },
@@ -2399,7 +2442,8 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   );
 
   const statusPeekRef = useTruncated();
-  const sKey =
+  const sKey = statusKey(status.id, instance);
+  const ssKey =
     statusKey(status.id, instance) +
     ' ' +
     (statusKey(reblog?.id, instance) || '');
@@ -2408,10 +2452,20 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const url = instance
     ? `/${instance}/s/${actualStatusID}`
     : `/s/${actualStatusID}`;
+  const isFollowedTags =
+    showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length;
 
   return (
     <div
-      class={isReblog ? (group ? 'status-group' : 'status-reblog') : ''}
+      class={
+        isReblog
+          ? group
+            ? 'status-group'
+            : 'status-reblog'
+          : isFollowedTags
+          ? 'status-followed-tags'
+          : ''
+      }
       {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {
@@ -2420,7 +2474,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       }}
       {...bindLongPressPeek()}
     >
-      <article data-state-post-id={sKey} class="status filtered" tabindex="-1">
+      <article data-state-post-id={ssKey} class="status filtered" tabindex="-1">
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}
@@ -2443,6 +2497,14 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
             />{' '}
             {isReblog ? (
               'boosted'
+            ) : isFollowedTags ? (
+              <span>
+                {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+                  <span key={tag} class="status-followed-tag-item">
+                    #{tag}
+                  </span>
+                ))}
+              </span>
             ) : (
               <RelativeTime datetime={createdAtDate} format="micro" />
             )}

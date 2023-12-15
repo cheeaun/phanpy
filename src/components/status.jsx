@@ -1609,6 +1609,7 @@ function Status({
                     <time
                       class="created"
                       datetime={createdAtDate.toISOString()}
+                      title={createdAtDate.toLocaleString()}
                     >
                       {createdDateText}
                     </time>

@@ -107,6 +107,19 @@ Prerequisites: Node.js 18+
   - requires `.env.dev` file with `INSTANCES_SOCIAL_SECRET_TOKEN` variable set
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 
+## Tech stack
+
+- [Vite](https://vitejs.dev/) - Build tool
+- [Preact](https://preactjs.com/) - UI library
+- [Valtio](https://valtio.pmnd.rs/) - State management
+- [React Router](https://reactrouter.com/) - Routing
+- [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
+- [Iconify](https://iconify.design/) - Icon library
+  - [MingCute icons](https://www.mingcute.com/)
+- Vanilla CSS - _Yes, I'm old school._
+
+Some of these may change in the future. The front-end world is ever-changing.
+
 ## Self-hosting
 
 This is a **pure static web app**. You can host it anywhere you want.
@@ -118,18 +131,13 @@ Two ways (choose one):
 
 Try search for "how to self-host static sites" as there are many ways to do it.
 
-## Tech stack
+## Community deployments
 
-- [Vite](https://vitejs.dev/) - Build tool
-- [Preact](https://preactjs.com/) - UI library
-- [Valtio](https://valtio.pmnd.rs/) - State management
-- [React Router](https://reactrouter.com/) - Routing
-- [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
-- [Iconify](https://iconify.design/) - Icon library
-  - [MingCute icons](https://www.mingcute.com/)
-- Vanilla CSS - *Yes, I'm old school.*
+These are self-hosted by other wonderful folks.
 
-Some of these may change in the future. The front-end world is ever-changing.
+- [ferengi.one](https://ferengi.one/) by [david@collantes.social](https://collantes.social/@david)
+- [phanpy.blaede.family](https://phanpy.blaede.family/) by [cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
+- [phanpy.vmst.io](https://phanpy.vmst.io/) by [vmstan@vmstan.io](https://vmst.io/@vmstan)
 
 ## Costs
 

@@ -137,7 +137,7 @@ These are self-hosted by other wonderful folks.
 
 - [ferengi.one](https://ferengi.one/) by [david@collantes.social](https://collantes.social/@david)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
-- [phanpy.vmst.io](https://phanpy.vmst.io/) by [vmstan@vmstan.io](https://vmst.io/@vmstan)
+- [phanpy.vmst.io](https://phanpy.vmst.io/) by [vmstan@vmst.io](https://vmst.io/@vmstan)
 
 ## Costs
 

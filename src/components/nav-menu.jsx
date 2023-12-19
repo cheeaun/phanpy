@@ -182,6 +182,9 @@ function NavMenu(props) {
                   </sup>
                 )}
               </MenuLink>
+              <MenuLink to="/c">
+                <Icon icon="chat" size="l" /> <span>Conversations</span>
+              </MenuLink>
               <MenuDivider />
               <MenuLink to="/l">
                 <Icon icon="list" size="l" /> <span>Lists</span>

@@ -94,7 +94,13 @@ export default memo(function KeyboardShortcutsHelp() {
                   ),
                 },
                 {
-                  action: 'Toggle expanded/collapsed thread',
+                  action: (
+                    <>
+                      Expand content warning or
+                      <br />
+                      toggle expanded/collapsed thread
+                    </>
+                  ),
                   keys: <kbd>x</kbd>,
                 },
                 {

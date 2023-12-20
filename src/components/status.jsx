@@ -1021,6 +1021,20 @@ function Status({
       enabled: hotkeysEnabled && canBoost,
     },
   );
+  const xRef = useHotkeys('x', (e) => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    if (activeStatus) {
+      const spoilerButton = activeStatus.querySelector(
+        'button.spoiler:not(.spoiling)',
+      );
+      if (spoilerButton) {
+        e.stopPropagation();
+        spoilerButton.click();
+      }
+    }
+  });
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,
@@ -1169,6 +1183,7 @@ function Status({
         fRef.current = nodeRef;
         dRef.current = nodeRef;
         bRef.current = nodeRef;
+        xRef.current = nodeRef;
       }}
       tabindex="-1"
       class={`status ${

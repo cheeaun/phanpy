@@ -28,6 +28,7 @@ import {
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
+import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -416,6 +417,7 @@ function Compose({
   };
   useEffect(updateCharCount, []);
 
+  const supportsCloseWatcher = window.CloseWatcher;
   const escDownRef = useRef(false);
   useHotkeys(
     'esc',
@@ -424,6 +426,7 @@ function Compose({
       // This won't be true if this event is already handled and not propagated 🤞
     },
     {
+      enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
     },
   );
@@ -436,6 +439,7 @@ function Compose({
       escDownRef.current = false;
     },
     {
+      enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
@@ -448,6 +452,11 @@ function Compose({
       },
     },
   );
+  useCloseWatcher(() => {
+    if (!standalone && confirmClose()) {
+      onClose();
+    }
+  }, [standalone, confirmClose, onClose]);
 
   const prevBackgroundDraft = useRef({});
   const draftKey = () => {

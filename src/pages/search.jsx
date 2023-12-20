@@ -14,6 +14,7 @@ import NavMenu from '../components/nav-menu';
 import SearchForm from '../components/search-form';
 import Status from '../components/status';
 import { api } from '../utils/api';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import useTitle from '../utils/useTitle';
 
@@ -72,6 +73,18 @@ function Search(props) {
     hashtags: setHashtagResults,
   };
 
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+  const loadRelationships = async (accounts) => {
+    if (!accounts?.length) return;
+    const relationships = await fetchRelationships(accounts, relationshipsMap);
+    if (relationships) {
+      setRelationshipsMap({
+        ...relationshipsMap,
+        ...relationships,
+      });
+    }
+  };
+
   function loadResults(firstLoad) {
     if (!firstLoad && !authenticated) {
       // Search results pagination is only available to authenticated users
@@ -119,6 +132,8 @@ function Search(props) {
           offsetRef.current = 0;
           setShowMore(false);
         }
+        loadRelationships(results.accounts);
+
         setUIState('default');
       } catch (err) {
         console.error(err);
@@ -216,6 +231,7 @@ function Search(props) {
                               account={account}
                               instance={instance}
                               showStats
+                              relationship={relationshipsMap[account.id]}
                             />
                           </li>
                         ))}

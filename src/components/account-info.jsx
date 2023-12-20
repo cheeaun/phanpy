@@ -604,6 +604,8 @@ function AccountInfo({
                         states.showGenericAccounts = {
                           heading: 'Followers',
                           fetchAccounts: fetchFollowers,
+                          instance,
+                          excludeRelationshipAttrs: ['followedBy'],
                         };
                       }, 0);
                     }}
@@ -637,6 +639,8 @@ function AccountInfo({
                         states.showGenericAccounts = {
                           heading: 'Following',
                           fetchAccounts: fetchFollowing,
+                          instance,
+                          excludeRelationshipAttrs: ['following'],
                         };
                       }, 0);
                     }}

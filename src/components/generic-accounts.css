@@ -1,5 +1,6 @@
 #generic-accounts-container {
   .accounts-list {
+    --list-gap: 16px;
     list-style: none;
     margin: 0;
     padding: 8px 0;
@@ -7,29 +8,46 @@
     flex-wrap: wrap;
     flex-direction: row;
     column-gap: 1.5em;
-    row-gap: 16px;
+    row-gap: var(--list-gap);
 
     li {
       display: flex;
       flex-grow: 1;
       flex-basis: 16em;
-      align-items: center;
+      /* align-items: center; */
       margin: 0;
       padding: 0;
       gap: 8px;
+
+      position: relative;
+
+      &:before {
+        content: '';
+        display: block;
+        border-top: var(--hairline-width) solid var(--divider-color);
+        position: absolute;
+        bottom: calc(-1 * var(--list-gap) / 2);
+        left: 40px;
+        right: 0;
+      }
+
+      &:has(.reactions-block):before {
+        /* avatar + reactions + gap */
+        left: calc(40px + 16px + 8px);
+      }
     }
 
     .account-block-acct {
-      font-size: 80%;
+      font-size: 0.9em;
       color: var(--text-insignificant-color);
-      display: block;
+      /* display: block; */
     }
   }
 
   .reactions-block {
     display: flex;
     flex-direction: column;
-    align-self: center;
+    /* align-self: center; */
 
     .favourite-icon {
       color: var(--favourite-color);
@@ -38,5 +56,21 @@
     .reblog-icon {
       color: var(--reblog-color);
     }
+
+    > .icon:only-child {
+      margin-top: 8px; /* half of icon dimension */
+    }
+  }
+
+  .account-relationships {
+    flex-grow: 1;
+
+    .tag {
+      animation: appear 0.3s ease-out;
+    }
+  }
+
+  .account-block {
+    align-items: flex-start;
   }
 }

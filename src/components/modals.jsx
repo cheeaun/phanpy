@@ -176,6 +176,10 @@ export default function Modals() {
           }}
         >
           <GenericAccounts
+            instance={snapStates.showGenericAccounts.instance}
+            excludeRelationshipAttrs={
+              snapStates.showGenericAccounts.excludeRelationshipAttrs
+            }
             onClose={() => (states.showGenericAccounts = false)}
           />
         </Modal>

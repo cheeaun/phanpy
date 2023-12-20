@@ -1578,6 +1578,13 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 .tag.danger {
   background-color: var(--red-color);
 }
+.tag.minimal {
+  margin: 0;
+  color: var(--text-insignificant-color);
+  background-color: var(--bg-faded-color);
+  text-shadow: 0 1px var(--bg-color);
+  line-height: 1;
+}
 
 /* MENU POPUP */
 

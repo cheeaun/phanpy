@@ -158,6 +158,7 @@ function Notification({
       heading: genericAccountsHeading,
       accounts: _accounts,
       showReactions: type === 'favourite+reblog',
+      excludeRelationshipAttrs: type === 'follow' ? ['followedBy'] : [],
     };
   };
 

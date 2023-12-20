@@ -31,7 +31,11 @@ function Following({ title, path, id, ...props }) {
     const results = await homeIterator.current.next();
     let { value } = results;
     if (value?.length) {
+      let latestItemChanged = false;
       if (firstLoad) {
+        if (value[0].id !== latestItem.current) {
+          latestItemChanged = true;
+        }
         latestItem.current = value[0].id;
         console.log('First load', latestItem.current);
       }
@@ -41,7 +45,7 @@ function Following({ title, path, id, ...props }) {
         saveStatus(item, instance);
       });
       value = dedupeBoosts(value, instance);
-      if (firstLoad) clearFollowedTagsState();
+      if (firstLoad && latestItemChanged) clearFollowedTagsState();
       assignFollowedTags(value, instance);
 
       // ENFORCE sort by datetime (Latest first)

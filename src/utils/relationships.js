@@ -19,6 +19,7 @@ export async function fetchRelationships(accounts, relationshipsMap = {}) {
     }
     return acc;
   }, []);
+  if (!uniqueAccountIds.length) return null;
 
   try {
     const relationships = await masto.v1.accounts.relationships.fetch({

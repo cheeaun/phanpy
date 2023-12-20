@@ -1,4 +1,5 @@
 import { extractTagsFromStatus, getFollowedTags } from './followed-tags';
+import { fetchRelationships } from './relationships';
 import states, { statusKey } from './states';
 import store from './store';
 
@@ -182,6 +183,8 @@ export async function assignFollowedTags(items, instance) {
   const followedTags = await getFollowedTags(); // [{name: 'tag'}, {...}]
   if (!followedTags.length) return;
   const { statusFollowedTags } = states;
+  console.log('statusFollowedTags', statusFollowedTags);
+  const statusWithFollowedTags = [];
   items.forEach((item) => {
     if (item.reblog) return;
     const { id, content, tags = [] } = item;
@@ -199,9 +202,28 @@ export async function assignFollowedTags(items, instance) {
       return acc;
     }, []);
     if (itemFollowedTags.length) {
-      statusFollowedTags[sKey] = itemFollowedTags;
+      // statusFollowedTags[sKey] = itemFollowedTags;
+      statusWithFollowedTags.push({
+        item,
+        sKey,
+        followedTags: itemFollowedTags,
+      });
     }
   });
+
+  if (statusWithFollowedTags.length) {
+    const accounts = statusWithFollowedTags.map((s) => s.item.account);
+    const relationships = await fetchRelationships(accounts);
+    if (!relationships) return;
+
+    statusWithFollowedTags.forEach((s) => {
+      const { item, sKey, followedTags } = s;
+      const r = relationships[item.account.id];
+      if (!r.following) {
+        statusFollowedTags[sKey] = followedTags;
+      }
+    });
+  }
 }
 
 export function clearFollowedTagsState() {

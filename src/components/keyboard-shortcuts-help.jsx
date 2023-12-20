@@ -30,24 +30,10 @@ export default memo(function KeyboardShortcutsHelp() {
     },
   );
 
-  const escRef = useHotkeys('esc', onClose, []);
-
   return (
     !!snapStates.showKeyboardShortcutsHelp && (
-      <Modal
-        class="light"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            onClose();
-          }
-        }}
-      >
-        <div
-          id="keyboard-shortcuts-help-container"
-          class="sheet"
-          tabindex="-1"
-          ref={escRef}
-        >
+      <Modal class="light" onClose={onClose}>
+        <div id="keyboard-shortcuts-help-container" class="sheet" tabindex="-1">
           <button type="button" class="sheet-close" onClick={onClose}>
             <Icon icon="x" />
           </button>

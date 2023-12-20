@@ -1652,15 +1652,19 @@ function Status({
             </MultipleMediaFigure>
           )}
           {!!card &&
-            card?.url !== status.url &&
-            card?.url !== status.uri &&
             /^https/i.test(card?.url) &&
             !sensitive &&
             !spoilerText &&
             !poll &&
             !mediaAttachments.length &&
             !snapStates.statusQuotes[sKey] && (
-              <Card card={card} instance={currentInstance} />
+              <Card
+                card={card}
+                selfReferential={
+                  card?.url === status.url || card?.url === status.uri
+                }
+                instance={currentInstance}
+              />
             )}
         </div>
         {!isSizeLarge && showCommentCount && (
@@ -1850,7 +1854,7 @@ function MultipleMediaFigure(props) {
   );
 }
 
-function Card({ card, instance }) {
+function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
     blurhash,
@@ -1886,7 +1890,7 @@ function Card({ card, instance }) {
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
   useEffect(() => {
-    if (hasText && image && isMastodonLinkMaybe(url)) {
+    if (hasText && image && !selfReferential && isMastodonLinkMaybe(url)) {
       unfurlMastodonLink(instance, url).then((result) => {
         if (!result) return;
         const { id, url } = result;
@@ -1901,7 +1905,7 @@ function Card({ card, instance }) {
         // })();
       });
     }
-  }, [hasText, image]);
+  }, [hasText, image, selfReferential]);
 
   // if (cardStatusID) {
   //   return (

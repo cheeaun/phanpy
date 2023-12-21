@@ -7,6 +7,10 @@ import states from '../utils/states';
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 
+const nameCollator = new Intl.Collator('en', {
+  sensitivity: 'base',
+});
+
 function NameText({
   account,
   instance,
@@ -36,9 +40,7 @@ function NameText({
     (trimmedUsername === trimmedDisplayName ||
       trimmedUsername === shortenedDisplayName ||
       trimmedUsername === shortenedAlphaNumericDisplayName ||
-      trimmedUsername.localeCompare?.(shortenedDisplayName, 'en', {
-        sensitivity: 'base',
-      }) === 0)
+      nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)
   ) {
     username = null;
   }

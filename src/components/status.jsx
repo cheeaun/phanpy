@@ -63,6 +63,7 @@ import Media from './media';
 import { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
+import { speak, supportsTTS } from '../utils/speech';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
@@ -89,6 +90,26 @@ const isIOS =
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const REACTIONS_LIMIT = 80;
+
+function getPollText(poll) {
+  if (!poll?.options?.length) return '';
+  return `📊:\n${poll.options
+    .map(
+      (option) =>
+        `- ${option.title}${
+          option.votesCount >= 0 ? ` (${option.votesCount})` : ''
+        }`,
+    )
+    .join('\n')}`;
+}
+function getPostText(status) {
+  const { spoilerText, content, poll } = status;
+  return (
+    (spoilerText ? `${spoilerText}\n\n` : '') +
+    getHTMLText(content) +
+    getPollText(poll)
+  );
+}
 
 function Status({
   statusID,
@@ -782,23 +803,53 @@ function Status({
         </>
       )}
       {enableTranslate ? (
-        <MenuItem
-          disabled={forceTranslate}
-          onClick={() => {
-            setForceTranslate(true);
-          }}
-        >
-          <Icon icon="translate" />
-          <span>Translate</span>
-        </MenuItem>
-      ) : (
-        (!language || differentLanguage) && (
-          <MenuLink
-            to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+        <div class={supportsTTS ? 'menu-horizontal' : ''}>
+          <MenuItem
+            disabled={forceTranslate}
+            onClick={() => {
+              setForceTranslate(true);
+            }}
           >
             <Icon icon="translate" />
             <span>Translate</span>
-          </MenuLink>
+          </MenuItem>
+          {supportsTTS && (
+            <MenuItem
+              onClick={() => {
+                const postText = getPostText(status);
+                if (postText) {
+                  speak(postText, language);
+                }
+              }}
+            >
+              <Icon icon="speak" />
+              <span>Speak</span>
+            </MenuItem>
+          )}
+        </div>
+      ) : (
+        (!language || differentLanguage) && (
+          <div class={supportsTTS ? 'menu-horizontal' : ''}>
+            <MenuLink
+              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+            >
+              <Icon icon="translate" />
+              <span>Translate</span>
+            </MenuLink>
+            {supportsTTS && (
+              <MenuItem
+                onClick={() => {
+                  const postText = getPostText(status);
+                  if (postText) {
+                    speak(postText, language);
+                  }
+                }}
+              >
+                <Icon icon="speak" />
+                <span>Speak</span>
+              </MenuItem>
+            )}
+          </div>
         )
       )}
       {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
@@ -1578,22 +1629,7 @@ function Status({
               forceTranslate={forceTranslate || inlineTranslate}
               mini={!isSizeLarge && !withinContext}
               sourceLanguage={language}
-              text={
-                (spoilerText ? `${spoilerText}\n\n` : '') +
-                getHTMLText(content) +
-                (poll?.options?.length
-                  ? `\n\nPoll:\n${poll.options
-                      .map(
-                        (option) =>
-                          `- ${option.title}${
-                            option.votesCount >= 0
-                              ? ` (${option.votesCount})`
-                              : ''
-                          }`,
-                      )
-                      .join('\n')}`
-                  : '')
-              }
+              text={getPostText(status)}
             />
           )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (

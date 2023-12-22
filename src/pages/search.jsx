@@ -16,21 +16,26 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
+import usePageVisibility from '../utils/usePageVisibility';
+import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const SHORT_LIMIT = 5;
 const LIMIT = 40;
+const emptySearchParams = new URLSearchParams();
 
-function Search(props) {
-  const params = useParams();
+function Search({ columnMode, ...props }) {
+  const params = columnMode ? {} : useParams();
   const { masto, instance, authenticated } = api({
     instance: params.instance,
   });
   const [uiState, setUIState] = useState('default');
-  const [searchParams] = useSearchParams();
+  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const searchFormRef = useRef();
   const q = props?.query || searchParams.get('q');
-  const type = props?.type || searchParams.get('type');
+  const type = columnMode
+    ? 'statuses'
+    : props?.type || searchParams.get('type');
   useTitle(
     q
       ? `Search: ${q}${
@@ -86,6 +91,10 @@ function Search(props) {
   };
 
   function loadResults(firstLoad) {
+    if (firstLoad) {
+      offsetRef.current = 0;
+    }
+
     if (!firstLoad && !authenticated) {
       // Search results pagination is only available to authenticated users
       return;
@@ -142,6 +151,22 @@ function Search(props) {
     })();
   }
 
+  const { reachStart } = useScroll({
+    scrollableRef,
+  });
+  const lastHiddenTime = useRef();
+  usePageVisibility((visible) => {
+    if (visible && reachStart) {
+      const timeDiff = Date.now() - lastHiddenTime.current;
+      if (!lastHiddenTime.current || timeDiff > 1000 * 3) {
+        // 3 seconds
+        loadResults(true);
+      } else {
+        lastHiddenTime.current = Date.now();
+      }
+    }
+  });
+
   useEffect(() => {
     if (q) {
       searchFormRef.current?.setValue?.(q);
@@ -172,11 +197,22 @@ function Search(props) {
               <NavMenu />
             </div>
             <SearchForm ref={searchFormRef} />
-            <div class="header-side">&nbsp;</div>
+            <div class="header-side">
+              <button
+                type="button"
+                class="plain"
+                onClick={() => {
+                  loadResults(true);
+                }}
+                disabled={uiState === 'loading'}
+              >
+                <Icon icon="search" size="l" />
+              </button>
+            </div>
           </div>
         </header>
         <main>
-          {!!q && (
+          {!!q && !columnMode && (
             <div
               ref={filterBarParent}
               class={`filter-bar ${uiState === 'loading' ? 'loading' : ''}`}

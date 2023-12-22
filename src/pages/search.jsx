@@ -168,8 +168,8 @@ function Search({ columnMode, ...props }) {
   });
 
   useEffect(() => {
+    searchFormRef.current?.setValue?.(q || '');
     if (q) {
-      searchFormRef.current?.setValue?.(q);
       loadResults(true);
     } else {
       searchFormRef.current?.focus?.();

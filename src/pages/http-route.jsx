@@ -21,11 +21,10 @@ export default function HttpRoute() {
   useLayoutEffect(() => {
     setUIState('loading');
     (async () => {
-      const { instance, id } = statusObject;
-      const { masto } = api({ instance });
-
       // Check if status returns 200
       try {
+        const { instance, id } = statusObject;
+        const { masto } = api({ instance });
         const status = await masto.v1.statuses.$select(id).fetch();
         if (status) {
           window.location.hash = statusURL + '?view=full';

@@ -3,6 +3,7 @@ import './account-block.css';
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
 import niceDateTime from '../utils/nice-date-time';
+import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -22,6 +23,8 @@ function AccountBlock({
   showStats = false,
   accountInstance,
   hideDisplayName = false,
+  relationship = {},
+  excludeRelationshipAttrs = [],
 }) {
   if (skeleton) {
     return (
@@ -34,6 +37,10 @@ function AccountBlock({
         </span>
       </div>
     );
+  }
+
+  if (!account) {
+    return null;
   }
 
   // const navigate = useNavigate();
@@ -53,6 +60,7 @@ function AccountBlock({
     fields,
     note,
     group,
+    followersCount,
   } = account;
   let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
   if (accountInstance) {
@@ -60,6 +68,17 @@ function AccountBlock({
   }
 
   const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
+
+  const excludedRelationship = {};
+  for (const r in relationship) {
+    if (!excludeRelationshipAttrs.includes(r)) {
+      excludedRelationship[r] = relationship[r];
+    }
+  }
+  const hasRelationship =
+    excludedRelationship.following ||
+    excludedRelationship.followedBy ||
+    excludedRelationship.requested;
 
   return (
     <a
@@ -97,9 +116,8 @@ function AccountBlock({
             ) : (
               <b>{username}</b>
             )}
-            <br />
           </>
-        )}
+        )}{' '}
         <span class="account-block-acct">
           @{acct1}
           <wbr />
@@ -124,28 +142,44 @@ function AccountBlock({
         )}
         {showStats && (
           <div class="account-block-stats">
-            <div
-              class="short-desc"
-              dangerouslySetInnerHTML={{
-                __html: enhanceContent(note, { emojis }),
-              }}
-            />
             {bot && (
               <>
-                <span class="tag">
+                <span class="tag collapsed">
                   <Icon icon="bot" /> Automated
                 </span>
               </>
             )}
             {!!group && (
               <>
-                <span class="tag">
+                <span class="tag collapsed">
                   <Icon icon="group" /> Group
                 </span>
               </>
             )}
+            {hasRelationship && (
+              <div key={relationship.id} class="shazam-container-horizontal">
+                <div class="shazam-container-inner">
+                  {excludedRelationship.following &&
+                  excludedRelationship.followedBy ? (
+                    <span class="tag minimal">Mutual</span>
+                  ) : excludedRelationship.requested ? (
+                    <span class="tag minimal">Requested</span>
+                  ) : excludedRelationship.following ? (
+                    <span class="tag minimal">Following</span>
+                  ) : excludedRelationship.followedBy ? (
+                    <span class="tag minimal">Follows you</span>
+                  ) : null}
+                </div>
+              </div>
+            )}
+            {!!followersCount && (
+              <span class="ib">
+                {shortenNumber(followersCount)}{' '}
+                {followersCount === 1 ? 'follower' : 'followers'}
+              </span>
+            )}
             {!!verifiedField && (
-              <span class="verified-field ib">
+              <span class="verified-field">
                 <Icon icon="check-circle" size="s" />{' '}
                 <span
                   dangerouslySetInnerHTML={{

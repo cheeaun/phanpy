@@ -1,18 +1,47 @@
 #search-page .deck > header .header-grid {
   grid-template-columns: auto 1fr auto;
 }
-#search-page header input {
-  width: 100%;
-  padding: 8px 16px;
-  border: 0;
-  border-radius: 999px;
-  background-color: var(--bg-faded-color);
-  border: 2px solid transparent;
+#search-page header {
+  input {
+    width: 100%;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--bg-faded-color);
+    border: 2px solid transparent;
+
+    &:focus {
+      outline: 0;
+      background-color: var(--bg-color);
+      border-color: var(--link-color);
+    }
+
+    #columns & {
+      font-weight: bold;
+      background-color: transparent;
+      text-align: center;
+      padding-inline: 8px;
+      text-overflow: ellipsis;
+    }
+  }
 }
-#search-page header input:focus {
-  outline: 0;
-  background-color: var(--bg-color);
-  border-color: var(--link-color);
+
+#columns #search-page {
+  .header-grid {
+    .header-side {
+      min-width: 40px;
+
+      &:last-of-type {
+        button {
+          display: block;
+
+          &:not(:hover, :focus) {
+            color: var(--text-insignificant-color);
+          }
+        }
+      }
+    }
+  }
 }
 
 #search-page ul.accounts-list {
@@ -24,8 +53,12 @@
   display: flex;
   padding: 8px 16px;
   gap: 8px;
-  align-items: center;
+  /* align-items: center; */
   flex-grow: 1;
+
+  .account-block {
+    align-items: flex-start;
+  }
 }
 
 ul.link-list.hashtag-list {

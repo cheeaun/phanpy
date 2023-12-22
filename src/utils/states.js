@@ -3,6 +3,7 @@ import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
 import pmem from './pmem';
+import rateLimit from './ratelimit';
 import store from './store';
 
 const states = proxy({
@@ -31,6 +32,7 @@ const states = proxy({
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},
+  statusFollowedTags: {},
   accounts: {},
   routeNotification: null,
   // Modals
@@ -186,7 +188,7 @@ export function saveStatus(status, instance, opts) {
   }
 }
 
-export function threadifyStatus(status, propInstance) {
+function _threadifyStatus(status, propInstance) {
   const { masto, instance } = api({ instance: propInstance });
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
@@ -225,6 +227,7 @@ export function threadifyStatus(status, propInstance) {
       console.error(e, status);
     });
 }
+export const threadifyStatus = rateLimit(_threadifyStatus, 100);
 
 const fetchStatus = pmem((statusID, masto) => {
   return masto.v1.statuses.$select(statusID).fetch();

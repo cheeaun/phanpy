@@ -4,6 +4,7 @@ import { useSnapshot } from 'valtio';
 
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeMatch from '../utils/locale-match';
+import { speak, supportsTTS } from '../utils/speech';
 import states from '../utils/states';
 
 import Icon from './icon';
@@ -51,6 +52,16 @@ export default function MediaAltModal({ alt, lang, onClose }) {
               <Icon icon="translate" />
               <span>Translate</span>
             </MenuItem>
+            {supportsTTS && (
+              <MenuItem
+                onClick={() => {
+                  speak(alt, lang);
+                }}
+              >
+                <Icon icon="speak" />
+                <span>Speak</span>
+              </MenuItem>
+            )}
           </Menu2>
         </div>
       </header>

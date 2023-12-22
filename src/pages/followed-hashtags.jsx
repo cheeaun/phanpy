@@ -5,9 +5,8 @@ import Link from '../components/link';
 import Loader from '../components/loader';
 import NavMenu from '../components/nav-menu';
 import { api } from '../utils/api';
+import { fetchFollowedTags } from '../utils/followed-tags';
 import useTitle from '../utils/useTitle';
-
-const LIMIT = 200;
 
 function FollowedHashtags() {
   const { masto, instance } = api();
@@ -19,17 +18,7 @@ function FollowedHashtags() {
     setUIState('loading');
     (async () => {
       try {
-        const iterator = masto.v1.followedTags.list({
-          limit: LIMIT,
-        });
-        const tags = [];
-        do {
-          const { value, done } = await iterator.next();
-          if (done || value?.length === 0) break;
-          tags.push(...value);
-        } while (true);
-        tags.sort((a, b) => a.name.localeCompare(b.name));
-        console.log(tags);
+        const tags = await fetchFollowedTags();
         setFollowedHashtags(tags);
         setUIState('default');
       } catch (e) {

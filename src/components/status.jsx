@@ -63,6 +63,7 @@ import Media from './media';
 import { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
+import { speak, supportsTTS } from '../utils/speech';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
@@ -88,15 +89,38 @@ const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
+const REACTIONS_LIMIT = 80;
+
+function getPollText(poll) {
+  if (!poll?.options?.length) return '';
+  return `📊:\n${poll.options
+    .map(
+      (option) =>
+        `- ${option.title}${
+          option.votesCount >= 0 ? ` (${option.votesCount})` : ''
+        }`,
+    )
+    .join('\n')}`;
+}
+function getPostText(status) {
+  const { spoilerText, content, poll } = status;
+  return (
+    (spoilerText ? `${spoilerText}\n\n` : '') +
+    getHTMLText(content) +
+    getPollText(poll)
+  );
+}
+
 function Status({
   statusID,
   status,
   instance: propInstance,
-  withinContext,
   size = 'm',
-  skeleton,
-  readOnly,
   contentTextWeight,
+  readOnly,
+  enableCommentHint,
+  withinContext,
+  skeleton,
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
@@ -104,7 +128,7 @@ function Status({
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
-  enableCommentHint,
+  showFollowedTags,
 }) {
   if (skeleton) {
     return (
@@ -174,6 +198,7 @@ function Status({
     uri,
     url,
     emojis,
+    tags,
     // Non-API props
     _deleted,
     _pinned,
@@ -214,6 +239,7 @@ function Status({
         containerProps={{
           onMouseEnter: debugHover,
         }}
+        showFollowedTags
       />
     );
   }
@@ -302,6 +328,39 @@ function Status({
     );
   }
 
+  // Check followedTags
+  if (showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length) {
+    return (
+      <div
+        data-state-post-id={sKey}
+        class="status-followed-tags"
+        onMouseEnter={debugHover}
+      >
+        <div class="status-pre-meta">
+          <Icon icon="hashtag" size="l" />{' '}
+          {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+            <Link
+              key={tag}
+              to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
+              class="status-followed-tag-item"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
+        <Status
+          status={statusID ? null : status}
+          statusID={statusID ? status.id : null}
+          instance={instance}
+          size={size}
+          contentTextWeight={contentTextWeight}
+          readOnly={readOnly}
+          enableCommentHint
+        />
+      </div>
+    );
+  }
+
   const isSizeLarge = size === 'l';
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
@@ -344,7 +403,6 @@ function Status({
   ]);
 
   const [showEdited, setShowEdited] = useState(false);
-  const [showReactions, setShowReactions] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -524,6 +582,55 @@ function Status({
       (l) => language === l || localeMatch([language], [l]),
     );
 
+  const reblogIterator = useRef();
+  const favouriteIterator = useRef();
+  async function fetchBoostedLikedByAccounts(firstLoad) {
+    if (firstLoad) {
+      reblogIterator.current = masto.v1.statuses
+        .$select(statusID)
+        .rebloggedBy.list({
+          limit: REACTIONS_LIMIT,
+        });
+      favouriteIterator.current = masto.v1.statuses
+        .$select(statusID)
+        .favouritedBy.list({
+          limit: REACTIONS_LIMIT,
+        });
+    }
+    const [{ value: reblogResults }, { value: favouriteResults }] =
+      await Promise.allSettled([
+        reblogIterator.current.next(),
+        favouriteIterator.current.next(),
+      ]);
+    if (reblogResults.value?.length || favouriteResults.value?.length) {
+      const accounts = [];
+      if (reblogResults.value?.length) {
+        accounts.push(
+          ...reblogResults.value.map((a) => {
+            a._types = ['reblog'];
+            return a;
+          }),
+        );
+      }
+      if (favouriteResults.value?.length) {
+        accounts.push(
+          ...favouriteResults.value.map((a) => {
+            a._types = ['favourite'];
+            return a;
+          }),
+        );
+      }
+      return {
+        value: accounts,
+        done: reblogResults.done && favouriteResults.done,
+      };
+    }
+    return {
+      value: [],
+      done: true,
+    };
+  }
+
   const menuInstanceRef = useRef();
   const StatusMenuItems = (
     <>
@@ -584,7 +691,16 @@ function Status({
       )}
       {(!isSizeLarge || !!editedAt) && <MenuDivider />}
       {isSizeLarge && (
-        <MenuItem onClick={() => setShowReactions(true)}>
+        <MenuItem
+          onClick={() => {
+            states.showGenericAccounts = {
+              heading: 'Boosted/Liked by…',
+              fetchAccounts: fetchBoostedLikedByAccounts,
+              instance,
+              showReactions: true,
+            };
+          }}
+        >
           <Icon icon="react" />
           <span>
             Boosted/Liked by<span class="more-insignificant">…</span>
@@ -687,23 +803,53 @@ function Status({
         </>
       )}
       {enableTranslate ? (
-        <MenuItem
-          disabled={forceTranslate}
-          onClick={() => {
-            setForceTranslate(true);
-          }}
-        >
-          <Icon icon="translate" />
-          <span>Translate</span>
-        </MenuItem>
-      ) : (
-        (!language || differentLanguage) && (
-          <MenuLink
-            to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+        <div class={supportsTTS ? 'menu-horizontal' : ''}>
+          <MenuItem
+            disabled={forceTranslate}
+            onClick={() => {
+              setForceTranslate(true);
+            }}
           >
             <Icon icon="translate" />
             <span>Translate</span>
-          </MenuLink>
+          </MenuItem>
+          {supportsTTS && (
+            <MenuItem
+              onClick={() => {
+                const postText = getPostText(status);
+                if (postText) {
+                  speak(postText, language);
+                }
+              }}
+            >
+              <Icon icon="speak" />
+              <span>Speak</span>
+            </MenuItem>
+          )}
+        </div>
+      ) : (
+        (!language || differentLanguage) && (
+          <div class={supportsTTS ? 'menu-horizontal' : ''}>
+            <MenuLink
+              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+            >
+              <Icon icon="translate" />
+              <span>Translate</span>
+            </MenuLink>
+            {supportsTTS && (
+              <MenuItem
+                onClick={() => {
+                  const postText = getPostText(status);
+                  if (postText) {
+                    speak(postText, language);
+                  }
+                }}
+              >
+                <Icon icon="speak" />
+                <span>Speak</span>
+              </MenuItem>
+            )}
+          </div>
         )
       )}
       {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
@@ -926,6 +1072,20 @@ function Status({
       enabled: hotkeysEnabled && canBoost,
     },
   );
+  const xRef = useHotkeys('x', (e) => {
+    const activeStatus = document.activeElement.closest(
+      '.status-link, .status-focus',
+    );
+    if (activeStatus) {
+      const spoilerButton = activeStatus.querySelector(
+        'button.spoiler:not(.spoiling)',
+      );
+      if (spoilerButton) {
+        e.stopPropagation();
+        spoilerButton.click();
+      }
+    }
+  });
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,
@@ -1074,6 +1234,7 @@ function Status({
         fRef.current = nodeRef;
         dRef.current = nodeRef;
         bRef.current = nodeRef;
+        xRef.current = nodeRef;
       }}
       tabindex="-1"
       class={`status ${
@@ -1468,22 +1629,7 @@ function Status({
               forceTranslate={forceTranslate || inlineTranslate}
               mini={!isSizeLarge && !withinContext}
               sourceLanguage={language}
-              text={
-                (spoilerText ? `${spoilerText}\n\n` : '') +
-                getHTMLText(content) +
-                (poll?.options?.length
-                  ? `\n\nPoll:\n${poll.options
-                      .map(
-                        (option) =>
-                          `- ${option.title}${
-                            option.votesCount >= 0
-                              ? ` (${option.votesCount})`
-                              : ''
-                          }`,
-                      )
-                      .join('\n')}`
-                  : '')
-              }
+              text={getPostText(status)}
             />
           )}
           {!spoilerText && sensitive && !!mediaAttachments.length && (
@@ -1542,15 +1688,19 @@ function Status({
             </MultipleMediaFigure>
           )}
           {!!card &&
-            card?.url !== status.url &&
-            card?.url !== status.uri &&
             /^https/i.test(card?.url) &&
             !sensitive &&
             !spoilerText &&
             !poll &&
             !mediaAttachments.length &&
             !snapStates.statusQuotes[sKey] && (
-              <Card card={card} instance={currentInstance} />
+              <Card
+                card={card}
+                selfReferential={
+                  card?.url === status.url || card?.url === status.uri
+                }
+                instance={currentInstance}
+              />
             )}
         </div>
         {!isSizeLarge && showCommentCount && (
@@ -1573,6 +1723,7 @@ function Status({
                     <time
                       class="created"
                       datetime={createdAtDate.toISOString()}
+                      title={createdAtDate.toLocaleString()}
                     >
                       {createdDateText}
                     </time>
@@ -1722,22 +1873,6 @@ function Status({
           />
         </Modal>
       )}
-      {showReactions && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowReactions(false);
-            }
-          }}
-        >
-          <ReactionsModal
-            statusID={id}
-            instance={instance}
-            onClose={() => setShowReactions(false)}
-          />
-        </Modal>
-      )}
     </article>
   );
 }
@@ -1755,7 +1890,7 @@ function MultipleMediaFigure(props) {
   );
 }
 
-function Card({ card, instance }) {
+function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
     blurhash,
@@ -1791,7 +1926,7 @@ function Card({ card, instance }) {
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
   useEffect(() => {
-    if (hasText && image && isMastodonLinkMaybe(url)) {
+    if (hasText && image && !selfReferential && isMastodonLinkMaybe(url)) {
       unfurlMastodonLink(instance, url).then((result) => {
         if (!result) return;
         const { id, url } = result;
@@ -1806,7 +1941,7 @@ function Card({ card, instance }) {
         // })();
       });
     }
-  }, [hasText, image]);
+  }, [hasText, image, selfReferential]);
 
   // if (cardStatusID) {
   //   return (
@@ -2003,160 +2138,6 @@ function EditedAtModal({
               );
             })}
           </ol>
-        )}
-      </main>
-    </div>
-  );
-}
-
-const REACTIONS_LIMIT = 80;
-function ReactionsModal({ statusID, instance, onClose }) {
-  const { masto } = api({ instance });
-  const [uiState, setUIState] = useState('default');
-  const [accounts, setAccounts] = useState([]);
-  const [showMore, setShowMore] = useState(false);
-
-  const reblogIterator = useRef();
-  const favouriteIterator = useRef();
-
-  async function fetchAccounts(firstLoad) {
-    setShowMore(false);
-    setUIState('loading');
-    (async () => {
-      try {
-        if (firstLoad) {
-          reblogIterator.current = masto.v1.statuses
-            .$select(statusID)
-            .rebloggedBy.list({
-              limit: REACTIONS_LIMIT,
-            });
-          favouriteIterator.current = masto.v1.statuses
-            .$select(statusID)
-            .favouritedBy.list({
-              limit: REACTIONS_LIMIT,
-            });
-        }
-        const [{ value: reblogResults }, { value: favouriteResults }] =
-          await Promise.allSettled([
-            reblogIterator.current.next(),
-            favouriteIterator.current.next(),
-          ]);
-        if (reblogResults.value?.length || favouriteResults.value?.length) {
-          if (reblogResults.value?.length) {
-            for (const account of reblogResults.value) {
-              const theAccount = accounts.find((a) => a.id === account.id);
-              if (!theAccount) {
-                accounts.push({
-                  ...account,
-                  _types: ['reblog'],
-                });
-              } else {
-                theAccount._types.push('reblog');
-              }
-            }
-          }
-          if (favouriteResults.value?.length) {
-            for (const account of favouriteResults.value) {
-              const theAccount = accounts.find((a) => a.id === account.id);
-              if (!theAccount) {
-                accounts.push({
-                  ...account,
-                  _types: ['favourite'],
-                });
-              } else {
-                theAccount._types.push('favourite');
-              }
-            }
-          }
-          setAccounts(accounts);
-          setShowMore(!reblogResults.done || !favouriteResults.done);
-        } else {
-          setShowMore(false);
-        }
-        setUIState('default');
-      } catch (e) {
-        console.error(e);
-        setUIState('error');
-      }
-    })();
-  }
-
-  useEffect(() => {
-    fetchAccounts(true);
-  }, []);
-
-  return (
-    <div id="reactions-container" class="sheet">
-      {!!onClose && (
-        <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
-        </button>
-      )}
-      <header>
-        <h2>Boosted/Liked by…</h2>
-      </header>
-      <main>
-        {accounts.length > 0 ? (
-          <>
-            <ul class="reactions-list">
-              {accounts.map((account) => {
-                const { _types } = account;
-                return (
-                  <li key={account.id + _types}>
-                    <div class="reactions-block">
-                      {_types.map((type) => (
-                        <Icon
-                          icon={
-                            {
-                              reblog: 'rocket',
-                              favourite: 'heart',
-                            }[type]
-                          }
-                          class={`${type}-icon`}
-                        />
-                      ))}
-                    </div>
-                    <AccountBlock account={account} instance={instance} />
-                  </li>
-                );
-              })}
-            </ul>
-            {uiState === 'default' ? (
-              showMore ? (
-                <InView
-                  onChange={(inView) => {
-                    if (inView) {
-                      fetchAccounts();
-                    }
-                  }}
-                >
-                  <button
-                    type="button"
-                    class="plain block"
-                    onClick={() => fetchAccounts()}
-                  >
-                    Show more&hellip;
-                  </button>
-                </InView>
-              ) : (
-                <p class="ui-state insignificant">The end.</p>
-              )
-            ) : (
-              uiState === 'loading' && (
-                <p class="ui-state">
-                  <Loader abrupt />
-                </p>
-              )
-            )}
-          </>
-        ) : uiState === 'loading' ? (
-          <p class="ui-state">
-            <Loader abrupt />
-          </p>
-        ) : uiState === 'error' ? (
-          <p class="ui-state">Unable to load accounts</p>
-        ) : (
-          <p class="ui-state insignificant">No one yet.</p>
         )}
       </main>
     </div>
@@ -2372,7 +2353,14 @@ function nicePostURL(url) {
 
 const unfurlMastodonLink = throttle(_unfurlMastodonLink);
 
-function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
+function FilteredStatus({
+  status,
+  filterInfo,
+  instance,
+  containerProps = {},
+  showFollowedTags,
+}) {
+  const snapStates = useSnapshot(states);
   const {
     id: statusID,
     account: { avatar, avatarStatic, bot, group },
@@ -2399,7 +2387,8 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   );
 
   const statusPeekRef = useTruncated();
-  const sKey =
+  const sKey = statusKey(status.id, instance);
+  const ssKey =
     statusKey(status.id, instance) +
     ' ' +
     (statusKey(reblog?.id, instance) || '');
@@ -2408,10 +2397,20 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
   const url = instance
     ? `/${instance}/s/${actualStatusID}`
     : `/s/${actualStatusID}`;
+  const isFollowedTags =
+    showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length;
 
   return (
     <div
-      class={isReblog ? (group ? 'status-group' : 'status-reblog') : ''}
+      class={
+        isReblog
+          ? group
+            ? 'status-group'
+            : 'status-reblog'
+          : isFollowedTags
+          ? 'status-followed-tags'
+          : ''
+      }
       {...containerProps}
       title={statusPeekText}
       onContextMenu={(e) => {
@@ -2420,7 +2419,7 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
       }}
       {...bindLongPressPeek()}
     >
-      <article data-state-post-id={sKey} class="status filtered" tabindex="-1">
+      <article data-state-post-id={ssKey} class="status filtered" tabindex="-1">
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}
@@ -2443,6 +2442,14 @@ function FilteredStatus({ status, filterInfo, instance, containerProps = {} }) {
             />{' '}
             {isReblog ? (
               'boosted'
+            ) : isFollowedTags ? (
+              <span>
+                {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+                  <span key={tag} class="status-followed-tag-item">
+                    #{tag}
+                  </span>
+                ))}
+              </span>
             ) : (
               <RelativeTime datetime={createdAtDate} format="micro" />
             )}

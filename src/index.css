@@ -54,6 +54,17 @@
   --reply-to-text-color: #b36200;
   --favourite-color: var(--red-color);
   --reply-to-faded-color: #ffa60020;
+  --hashtag-color: LightSeaGreen;
+  --hashtag-faded-color: color-mix(
+    in srgb,
+    var(--hashtag-color) 15%,
+    transparent
+  );
+  --hashtag-text-color: color-mix(
+    in lch,
+    var(--hashtag-color) 40%,
+    var(--text-color) 60%
+  );
   --outline-color: rgba(128, 128, 128, 0.2);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);

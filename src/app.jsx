@@ -204,7 +204,16 @@ if (isIOS) {
       );
       const color = $meta?.getAttribute('content');
       if (color) {
-        $meta.content = '';
+        let tempColor;
+        if (/^#/.test(color)) {
+          // Assume either #RBG or #RRGGBB
+          if (color.length === 4) {
+            tempColor = color + 'f';
+          } else if (color.length === 7) {
+            tempColor = color + 'ff';
+          }
+        }
+        $meta.content = tempColor || '';
         setTimeout(() => {
           $meta.content = color;
         }, 10);

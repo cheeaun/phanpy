@@ -5,7 +5,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import FilterContext from '../utils/filter-context';
-import { isFiltered } from '../utils/filters';
+import { filteredItems, isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { groupBoosts, groupContext } from '../utils/timeline-utils';
@@ -44,6 +44,7 @@ function Timeline({
   refresh,
   view,
   filterContext,
+  showFollowedTags,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -391,6 +392,7 @@ function Timeline({
                     filterContext={filterContext}
                     key={status.id + status?._pinned + view}
                     view={view}
+                    showFollowedTags={showFollowedTags}
                   />
                 ))}
                 {showMore &&
@@ -478,6 +480,7 @@ function TimelineItem({
   // allowFilters,
   filterContext,
   view,
+  showFollowedTags,
 }) {
   const { id: statusID, reblog, items, type, _pinned } = status;
   if (_pinned) useItemID = false;
@@ -493,9 +496,10 @@ function TimelineItem({
   }
   const isCarousel = type === 'boosts' || type === 'pinned';
   if (items) {
+    const fItems = filteredItems(items, filterContext);
     if (isCarousel) {
       // Here, we don't hide filtered posts, but we sort them last
-      items.sort((a, b) => {
+      fItems.sort((a, b) => {
         // if (a._filtered && !b._filtered) {
         //   return 1;
         // }
@@ -515,7 +519,7 @@ function TimelineItem({
       return (
         <li key={`timeline-${statusID}`} class="timeline-item-carousel">
           <StatusCarousel title={title} class={`${type}-carousel`}>
-            {items.map((item) => {
+            {fItems.map((item) => {
               const { id: statusID, reblog, _pinned } = item;
               const actualStatusID = reblog?.id || statusID;
               const url = instance
@@ -552,11 +556,11 @@ function TimelineItem({
         </li>
       );
     }
-    const manyItems = items.length > 3;
-    return items.map((item, i) => {
+    const manyItems = fItems.length > 3;
+    return fItems.map((item, i) => {
       const { id: statusID, _differentAuthor } = item;
       const url = instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`;
-      const isMiddle = i > 0 && i < items.length - 1;
+      const isMiddle = i > 0 && i < fItems.length - 1;
       const isSpoiler = item.sensitive && !!item.spoilerText;
       const showCompact =
         (!_differentAuthor && isSpoiler && i > 0) ||
@@ -565,14 +569,15 @@ function TimelineItem({
           (type === 'thread' ||
             (type === 'conversation' &&
               !_differentAuthor &&
-              !items[i - 1]._differentAuthor &&
-              !items[i + 1]._differentAuthor)));
-      const isEnd = i === items.length - 1;
+              !fItems[i - 1]._differentAuthor &&
+              !fItems[i + 1]._differentAuthor)));
+      const isStart = i === 0;
+      const isEnd = i === fItems.length - 1;
       return (
         <li
           key={`timeline-${statusID}`}
           class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
-            i === 0 ? 'start' : isEnd ? 'end' : 'middle'
+            isStart ? 'start' : isEnd ? 'end' : 'middle'
           } ${_differentAuthor ? 'timeline-item-diff-author' : ''}`}
         >
           <Link class="status-link timeline-item" to={url}>
@@ -583,6 +588,7 @@ function TimelineItem({
                 statusID={statusID}
                 instance={instance}
                 enableCommentHint={isEnd}
+                showFollowedTags={showFollowedTags}
                 // allowFilters={allowFilters}
               />
             ) : (
@@ -590,6 +596,7 @@ function TimelineItem({
                 status={item}
                 instance={instance}
                 enableCommentHint={isEnd}
+                showFollowedTags={showFollowedTags}
                 // allowFilters={allowFilters}
               />
             )}
@@ -631,6 +638,7 @@ function TimelineItem({
             statusID={statusID}
             instance={instance}
             enableCommentHint
+            showFollowedTags={showFollowedTags}
             // allowFilters={allowFilters}
           />
         ) : (
@@ -638,6 +646,7 @@ function TimelineItem({
             status={status}
             instance={instance}
             enableCommentHint
+            showFollowedTags={showFollowedTags}
             // allowFilters={allowFilters}
           />
         )}

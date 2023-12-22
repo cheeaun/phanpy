@@ -179,6 +179,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
                   key={notification.id}
                   instance={instance}
                   notification={notification}
+                  disableContextMenu
                 />
               ))}
           </>

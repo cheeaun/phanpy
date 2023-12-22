@@ -4,6 +4,8 @@ import { createPortal } from 'preact/compat';
 import { useEffect, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import useCloseWatcher from '../utils/useCloseWatcher';
+
 const $modalContainer = document.getElementById('modal-container');
 
 function Modal({ children, onClose, onClick, class: className }) {
@@ -20,6 +22,7 @@ function Modal({ children, onClose, onClick, class: className }) {
     return () => clearTimeout(timer);
   }, []);
 
+  const supportsCloseWatcher = window.CloseWatcher;
   const escRef = useHotkeys(
     'esc',
     () => {
@@ -28,7 +31,7 @@ function Modal({ children, onClose, onClick, class: className }) {
       }, 0);
     },
     {
-      enabled: !!onClose,
+      enabled: !supportsCloseWatcher && !!onClose,
       // Using keyup and setTimeout above
       // This will run "later" to prevent clash with esc handlers from other components
       keydown: false,
@@ -36,6 +39,7 @@ function Modal({ children, onClose, onClick, class: className }) {
     },
     [onClose],
   );
+  useCloseWatcher(onClose, [onClose]);
 
   const Modal = (
     <div

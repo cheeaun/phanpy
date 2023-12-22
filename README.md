@@ -107,12 +107,6 @@ Prerequisites: Node.js 18+
   - requires `.env.dev` file with `INSTANCES_SOCIAL_SECRET_TOKEN` variable set
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 
-## Self-hosting
-
-This is a **pure static web app**. You can host it anywhere you want. Build it by running `npm run build` (after `npm install`) and serve the `dist` folder.
-
-Try search for "how to self-host static sites" as there are many ways to do it.
-
 ## Tech stack
 
 - [Vite](https://vitejs.dev/) - Build tool
@@ -122,9 +116,33 @@ Try search for "how to self-host static sites" as there are many ways to do it.
 - [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
 - [Iconify](https://iconify.design/) - Icon library
   - [MingCute icons](https://www.mingcute.com/)
-- Vanilla CSS - *Yes, I'm old school.*
+- Vanilla CSS - _Yes, I'm old school._
 
 Some of these may change in the future. The front-end world is ever-changing.
+
+## Self-hosting
+
+This is a **pure static web app**. You can host it anywhere you want.
+
+Two ways (choose one):
+
+1. (Recommended) Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
+2. Download or `git clone` this repository. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+
+Try search for "how to self-host static sites" as there are many ways to do it.
+
+## Community deployments
+
+These are self-hosted by other wonderful folks.
+
+- [ferengi.one](https://ferengi.one/) by [@david@collantes.social](https://collantes.social/@david)
+- [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
+- [phanpy.mstdn.mx](https://phanpy.mstdn.mx/) by [@maop@mstdn.mx](https://mstdn.mx/@maop)
+- [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
+- [phanpy.gotosocial.social](https://phanpy.gotosocial.social/) by [@admin@gotosocial.social](https://gotosocial.social/@admin)
+- [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
+
+> Note: Add yours by creating a pull request.
 
 ## Costs
 

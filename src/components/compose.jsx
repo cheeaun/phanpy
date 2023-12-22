@@ -28,6 +28,7 @@ import {
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
+import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
@@ -108,7 +109,7 @@ function countableText(inputText) {
 // https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
 const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
 const MENTION_RE = new RegExp(
-  `(^|[^=\\/\\w.])(@${USERNAME_RE.source}(?:@[\\p{L}\\w.-]+[\\w]+)?)`,
+  `(^|[^=\\/\\w])(@${USERNAME_RE.source}(?:@[\\p{L}\\w.-]+[\\w]+)?)`,
   'uig',
 );
 
@@ -416,6 +417,7 @@ function Compose({
   };
   useEffect(updateCharCount, []);
 
+  const supportsCloseWatcher = window.CloseWatcher;
   const escDownRef = useRef(false);
   useHotkeys(
     'esc',
@@ -424,6 +426,7 @@ function Compose({
       // This won't be true if this event is already handled and not propagated 🤞
     },
     {
+      enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
     },
   );
@@ -436,6 +439,7 @@ function Compose({
       escDownRef.current = false;
     },
     {
+      enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
@@ -448,6 +452,11 @@ function Compose({
       },
     },
   );
+  useCloseWatcher(() => {
+    if (!standalone && confirmClose()) {
+      onClose();
+    }
+  }, [standalone, confirmClose, onClose]);
 
   const prevBackgroundDraft = useRef({});
   const draftKey = () => {

@@ -39,6 +39,10 @@ function AccountBlock({
     );
   }
 
+  if (!account) {
+    return null;
+  }
+
   // const navigate = useNavigate();
 
   const {

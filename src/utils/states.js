@@ -3,6 +3,7 @@ import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
 import pmem from './pmem';
+import rateLimit from './ratelimit';
 import store from './store';
 
 const states = proxy({
@@ -187,7 +188,7 @@ export function saveStatus(status, instance, opts) {
   }
 }
 
-export function threadifyStatus(status, propInstance) {
+function _threadifyStatus(status, propInstance) {
   const { masto, instance } = api({ instance: propInstance });
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
@@ -204,7 +205,7 @@ export function threadifyStatus(status, propInstance) {
     let prevStatus = states.statuses[key];
     if (!prevStatus) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
-      await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
+      await new Promise((r) => setTimeout(r, 300 * fetchIndex)); // Be nice to rate limits
       // prevStatus = await masto.v1.statuses.$.select(inReplyToId).fetch();
       prevStatus = await fetchStatus(inReplyToId, masto);
       saveStatus(prevStatus, instance, { skipThreading: true });
@@ -226,6 +227,7 @@ export function threadifyStatus(status, propInstance) {
       console.error(e, status);
     });
 }
+export const threadifyStatus = rateLimit(_threadifyStatus, 300);
 
 const fetchStatus = pmem((statusID, masto) => {
   return masto.v1.statuses.$select(statusID).fetch();

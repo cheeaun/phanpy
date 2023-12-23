@@ -107,6 +107,8 @@ export const ICONS = {
   speak: () => import('@iconify-icons/mingcute/radar-line'),
 };
 
+const ICONDATA = {};
+
 function Icon({
   icon,
   size = 'm',
@@ -124,11 +126,15 @@ function Icon({
     [iconBlock, rotate, flip] = iconBlock;
   }
 
-  const [iconData, setIconData] = useState(null);
-  useEffect(async () => {
-    const icon = await iconBlock();
-    setIconData(icon.default);
-  }, [iconBlock]);
+  const [iconData, setIconData] = useState(ICONDATA[icon]);
+  useEffect(() => {
+    if (iconData) return;
+    (async () => {
+      const iconB = await iconBlock();
+      setIconData(iconB.default);
+      ICONDATA[icon] = iconB.default;
+    })();
+  }, [iconData, icon, iconBlock]);
 
   return (
     <span

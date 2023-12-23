@@ -751,6 +751,11 @@
 
   &:not(.media-figure-multiple .media-container) {
     margin-bottom: -16px;
+
+    &.media-eq1 {
+      text-align: center;
+      background-color: var(--img-bg-color);
+    }
   }
 
   .media {

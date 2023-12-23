@@ -10,6 +10,11 @@ export function getAccountByAccessToken(accessToken) {
   return accounts.find((a) => a.accessToken === accessToken);
 }
 
+export function getAccountByInstance(instance) {
+  const accounts = store.local.getJSON('accounts') || [];
+  return accounts.find((a) => a.instanceURL === instance);
+}
+
 export function getCurrentAccount() {
   if (!window.__IGNORE_GET_ACCOUNT_ERROR__) {
     // Track down getCurrentAccount() calls before account-based states are initialized

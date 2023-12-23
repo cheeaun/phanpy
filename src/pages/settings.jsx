@@ -82,9 +82,43 @@ function Settings({ onClose }) {
 
                     if (theme === 'auto') {
                       html.classList.remove('is-light', 'is-dark');
+
+                      // Disable manual theme <meta>
+                      const $manualMeta = document.querySelector(
+                        'meta[data-theme-setting="manual"]',
+                      );
+                      if ($manualMeta) {
+                        $manualMeta.name = '';
+                      }
+                      // Enable auto theme <meta>s
+                      const $autoMetas = document.querySelectorAll(
+                        'meta[data-theme-setting="auto"]',
+                      );
+                      $autoMetas.forEach((m) => {
+                        m.name = 'theme-color';
+                      });
                     } else {
                       html.classList.toggle('is-light', theme === 'light');
                       html.classList.toggle('is-dark', theme === 'dark');
+
+                      // Enable manual theme <meta>
+                      const $manualMeta = document.querySelector(
+                        'meta[data-theme-setting="manual"]',
+                      );
+                      if ($manualMeta) {
+                        $manualMeta.name = 'theme-color';
+                        $manualMeta.content =
+                          theme === 'light'
+                            ? $manualMeta.dataset.themeLightColor
+                            : $manualMeta.dataset.themeDarkColor;
+                      }
+                      // Disable auto theme <meta>s
+                      const $autoMetas = document.querySelectorAll(
+                        'meta[data-theme-setting="auto"]',
+                      );
+                      $autoMetas.forEach((m) => {
+                        m.name = '';
+                      });
                     }
                     document
                       .querySelector('meta[name="color-scheme"]')

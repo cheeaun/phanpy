@@ -1,5 +1,5 @@
 import { memo } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 const SIZES = {
   s: 12,
@@ -127,14 +127,16 @@ function Icon({
   }
 
   const [iconData, setIconData] = useState(ICONDATA[icon]);
+  const currentIcon = useRef(icon);
   useEffect(() => {
-    if (iconData) return;
+    if (iconData && currentIcon.current === icon) return;
     (async () => {
       const iconB = await iconBlock();
       setIconData(iconB.default);
       ICONDATA[icon] = iconB.default;
     })();
-  }, [iconData, icon, iconBlock]);
+    currentIcon.current = icon;
+  }, [icon]);
 
   return (
     <span

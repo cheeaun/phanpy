@@ -29,6 +29,7 @@ const states = proxy({
     counter: 0,
   },
   spoilers: {},
+  spoilersMedia: {},
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},

@@ -499,76 +499,69 @@
   padding-bottom: 10px;
 }
 
-.status .content-container.has-spoiler .spoiler {
+.status
+  .content-container.has-spoiler
+  :is(.spoiler-button, .spoiler-media-button):not([hidden]) {
   margin: 4px 0;
   font-size: 90%;
   border: 1px dashed var(--button-bg-color);
   display: flex;
-  gap: 8px;
+  gap: 4px;
   align-items: center;
 }
-.status
-  .content-container.has-spoiler:not(.show-spoiler)
-  .spoiler
-  ~ *:not(.media-container, .card, .media-figure-multiple),
-.status
-  .content-container.has-spoiler:not(.show-spoiler)
-  .spoiler
-  ~ .card
-  .meta-container,
-.status
-  .content-container.has-spoiler:not(.show-spoiler)
-  .spoiler
-  ~ :is(.media-container, .media-figure-multiple)
-  figcaption {
-  filter: blur(5px) invert(0.5);
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-  pointer-events: none;
-  user-select: none;
-  contain: layout;
-  transform: scale(0.97);
-  transition: transform 0.1s ease-in-out;
+.status .content-container.has-spoiler:not(.show-spoiler) .spoiler-button {
+  ~ *:not(
+      .media-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
+  ~ .card .meta-container,
+  ~ :is(.media-container, .media-figure-multiple) figcaption {
+    filter: blur(5px) invert(0.5);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    pointer-events: none;
+    user-select: none;
+    contain: layout;
+    transform: scale(0.97);
+    transition: transform 0.1s ease-in-out;
+  }
+
+  /* ~ :is(.media-container, .media-figure-multiple) .media > *, */
+  ~ .card > img {
+    filter: blur(32px);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    animation: none !important;
+  }
+}
+.status .content-container.has-spoiler:not(.show-media) .spoiler-media-button {
+  ~ :is(.media-container, .media-figure-multiple) .media > * {
+    filter: blur(32px);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    animation: none !important;
+  }
 }
 .status
-  .content-container.has-spoiler:not(.show-spoiler)
-  .spoiler
-  ~ :is(.media-container, .media-figure-multiple)
-  .media
-  > *,
-.status
-  .content-container.has-spoiler:not(.show-spoiler)
-  .spoiler
-  ~ .card
-  > img {
-  filter: blur(32px);
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-  animation: none !important;
-}
-.status .content-container.show-spoiler .spoiler {
+  .content-container.show-spoiler
+  :is(.spoiler-button, .spoiler-media-button).spoiling {
   border-style: dotted;
 }
-/* .status
-  .content-container.show-spoiler
-  .spoiler
-  ~ *:not(.media-container, .card),
-.status .content-container.show-spoiler .spoiler ~ .card .meta-container {
-  filter: none !important;
-  transform: none;
-  pointer-events: auto;
-  user-select: auto;
-  text-rendering: auto;
-  image-rendering: auto;
+
+.status .content-container .spoiler-divider {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-insignificant-color);
+  text-transform: uppercase;
+  font-size: 0.8em;
+  margin-top: 0.25em;
+  margin-bottom: 1em;
+  padding-block: 0.25em;
+  border-bottom: 1px dashed var(--divider-color);
 }
-.status .content-container.show-spoiler .spoiler ~ .media-container .media > *,
-.status .content-container.show-spoiler .spoiler ~ .card > img {
-  filter: none;
-  image-rendering: auto;
-} */
-/* .status .content a:not(.mention):not(:has(span)) {
-  color: inherit;
-} */
 
 .status .content-comment-hint {
   margin-top: 0.25em;

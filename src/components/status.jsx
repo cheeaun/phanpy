@@ -275,8 +275,21 @@ function Status({
     const prefs = store.account.get('preferences') || {};
     return !!prefs['reading:expand:spoilers'];
   }, []);
+  const readingExpandMedia = useMemo(() => {
+    // default | show_all | hide_all
+    // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
+    const prefs = store.account.get('preferences') || {};
+    return prefs['reading:expand:media'] || 'default';
+  }, []);
+  // FOR TESTING:
+  // const readingExpandSpoilers = true;
+  // const readingExpandMedia = 'show_all';
   const showSpoiler =
-    previewMode || readingExpandSpoilers || !!snapStates.spoilers[id] || false;
+    previewMode || readingExpandSpoilers || !!snapStates.spoilers[id];
+  const showSpoilerMedia =
+    previewMode ||
+    readingExpandMedia === 'show_all' ||
+    !!snapStates.spoilersMedia[id];
 
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
@@ -1078,11 +1091,19 @@ function Status({
     );
     if (activeStatus) {
       const spoilerButton = activeStatus.querySelector(
-        'button.spoiler:not(.spoiling)',
+        '.spoiler-button:not(.spoiling)',
       );
       if (spoilerButton) {
         e.stopPropagation();
         spoilerButton.click();
+      } else {
+        const spoilerMediaButton = activeStatus.querySelector(
+          '.spoiler-media-button:not(.spoiling)',
+        );
+        if (spoilerMediaButton) {
+          e.stopPropagation();
+          spoilerMediaButton.click();
+        }
       }
     }
   });
@@ -1487,7 +1508,9 @@ function Status({
         <div
           class={`content-container ${
             spoilerText || sensitive ? 'has-spoiler' : ''
-          } ${showSpoiler ? 'show-spoiler' : ''}`}
+          } ${showSpoiler ? 'show-spoiler' : ''} ${
+            showSpoilerMedia ? 'show-media' : ''
+          }`}
           data-content-text-weight={contentTextWeight ? textWeight() : null}
           style={
             (isSizeLarge || contentTextWeight) && {
@@ -1508,27 +1531,36 @@ function Status({
                   <EmojiText text={spoilerText} emojis={emojis} />
                 </p>
               </div>
-              <button
-                class={`light spoiler ${showSpoiler ? 'spoiling' : ''}`}
-                type="button"
-                disabled={readingExpandSpoilers}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  if (showSpoiler) {
-                    delete states.spoilers[id];
-                  } else {
-                    states.spoilers[id] = true;
-                  }
-                }}
-              >
-                <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                {readingExpandSpoilers
-                  ? 'Content warning'
-                  : showSpoiler
-                  ? 'Show less'
-                  : 'Show more'}
-              </button>
+              {readingExpandSpoilers || previewMode ? (
+                <div class="spoiler-divider">
+                  <Icon icon="eye-open" /> Content warning
+                </div>
+              ) : (
+                <button
+                  class={`light spoiler-button ${
+                    showSpoiler ? 'spoiling' : ''
+                  }`}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (showSpoiler) {
+                      delete states.spoilers[id];
+                      if (!readingExpandSpoilers) {
+                        delete states.spoilersMedia[id];
+                      }
+                    } else {
+                      states.spoilers[id] = true;
+                      if (!readingExpandSpoilers) {
+                        states.spoilersMedia[id] = true;
+                      }
+                    }
+                  }}
+                >
+                  <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
+                  {showSpoiler ? 'Show less' : 'Show content'}
+                </button>
+              )}
             </>
           )}
           {!!content && (
@@ -1632,24 +1664,30 @@ function Status({
               text={getPostText(status)}
             />
           )}
-          {!spoilerText && sensitive && !!mediaAttachments.length && (
-            <button
-              class={`plain spoiler ${showSpoiler ? 'spoiling' : ''}`}
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (showSpoiler) {
-                  delete states.spoilers[id];
-                } else {
-                  states.spoilers[id] = true;
-                }
-              }}
-            >
-              <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} /> Sensitive
-              content
-            </button>
-          )}
+          {!previewMode &&
+            sensitive &&
+            !!mediaAttachments.length &&
+            readingExpandMedia !== 'show_all' && (
+              <button
+                class={`plain spoiler-media-button ${
+                  showSpoilerMedia ? 'spoiling' : ''
+                }`}
+                type="button"
+                hidden={!readingExpandSpoilers && !!spoilerText}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (showSpoilerMedia) {
+                    delete states.spoilersMedia[id];
+                  } else {
+                    states.spoilersMedia[id] = true;
+                  }
+                }}
+              >
+                <Icon icon={showSpoilerMedia ? 'eye-open' : 'eye-close'} />{' '}
+                {showSpoilerMedia ? 'Show less' : 'Show media'}
+              </button>
+            )}
           {!!mediaAttachments.length && (
             <MultipleMediaFigure
               lang={language}

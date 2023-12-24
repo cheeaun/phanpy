@@ -203,7 +203,7 @@ textarea {
   max-width: 100%;
 }
 
-button,
+button:not([hidden]),
 .button {
   display: inline-block;
   padding: 8px 12px;

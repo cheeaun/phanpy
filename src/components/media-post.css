@@ -3,7 +3,7 @@
   position: relative;
   animation: appear-smooth 1s ease-out;
 
-  &:is(.filtered, .has-spoiler) :is(img, video) {
+  &:is(.filtered, .has-spoiler:not(.show-media)) :is(img, video) {
     filter: blur(32px);
     image-rendering: crisp-edges;
     image-rendering: pixelated;
@@ -46,6 +46,11 @@
     > * {
       pointer-events: none;
     }
+  }
+
+  &.has-spoiler.show-media[data-spoiler-text]:before {
+    mix-blend-mode: normal;
+    backdrop-filter: blur(4px);
   }
 
   .media {

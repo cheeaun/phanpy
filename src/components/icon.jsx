@@ -1,4 +1,3 @@
-import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 const SIZES = {
@@ -165,4 +164,4 @@ function Icon({
   );
 }
 
-export default memo(Icon);
+export default Icon;

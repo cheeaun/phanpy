@@ -203,7 +203,7 @@ textarea {
   max-width: 100%;
 }
 
-button:not([hidden]),
+button,
 .button {
   display: inline-block;
   padding: 8px 12px;
@@ -215,6 +215,9 @@ button:not([hidden]),
   vertical-align: middle;
   text-decoration: none;
   user-select: none;
+}
+button[hidden] {
+  display: none !important;
 }
 :is(button, .button) > * {
   vertical-align: middle;

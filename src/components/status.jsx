@@ -50,6 +50,7 @@ import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
+import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
@@ -63,7 +64,6 @@ import Media from './media';
 import { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
-import { speak, supportsTTS } from '../utils/speech';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;

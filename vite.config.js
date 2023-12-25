@@ -2,6 +2,7 @@ import preact from '@preact/preset-vite';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import { resolve } from 'path';
+import { uid } from 'uid/single';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
@@ -10,13 +11,19 @@ import removeConsole from 'vite-plugin-remove-console';
 
 const { NODE_ENV } = process.env;
 const {
-  VITE_CLIENT_NAME: CLIENT_NAME,
-  VITE_CLIENT_ID: CLIENT_ID,
-  VITE_APP_ERROR_LOGGING: ERROR_LOGGING,
+  PHANPY_CLIENT_NAME: CLIENT_NAME,
+  PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
 } = loadEnv('production', process.cwd());
 
 const now = new Date();
-const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
+let commitHash;
+try {
+  commitHash = execSync('git rev-parse --short HEAD').toString().trim();
+} catch (error) {
+  // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
+  // Fallback to random hash which should be different on every build run 🤞
+  commitHash = uid();
+}
 
 const rollbarCode = fs.readFileSync(
   resolve(__dirname, './rollbar.js'),
@@ -26,6 +33,7 @@ const rollbarCode = fs.readFileSync(
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  envPrefix: ['VITE_', 'PHANPY_'],
   mode: NODE_ENV,
   define: {
     __BUILD_TIME__: JSON.stringify(now),
@@ -55,7 +63,6 @@ export default defineConfig({
     ]),
     VitePWA({
       manifest: {
-        id: CLIENT_ID,
         name: CLIENT_NAME,
         short_name: CLIENT_NAME,
         description: 'Minimalistic opinionated Mastodon web client',

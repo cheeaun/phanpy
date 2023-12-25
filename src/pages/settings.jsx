@@ -24,6 +24,10 @@ import store from '../utils/store';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [15, 16, 17, 18, 19, 20];
+const {
+  PHANPY_WEBSITE: WEBSITE,
+  PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
+} = import.meta.env;
 
 function Settings({ onClose }) {
   const snapStates = useSnapshot(states);
@@ -535,7 +539,7 @@ function Settings({ onClose }) {
             </a>{' '}
             &middot;{' '}
             <a
-              href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+              href={PRIVACY_POLICY_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -544,7 +548,14 @@ function Settings({ onClose }) {
           </p>
           {__BUILD_TIME__ && (
             <p>
-              Version:{' '}
+              {WEBSITE && (
+                <>
+                  <span class="insignificant">Site:</span>{' '}
+                  {WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')}
+                  <br />
+                </>
+              )}
+              <span class="insignificant">Version:</span>{' '}
               <input
                 type="text"
                 class="version-string"

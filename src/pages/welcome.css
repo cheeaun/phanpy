@@ -75,6 +75,18 @@
     margin-top: 0;
   }
 
+  .app-site-version {
+    text-align: center;
+    opacity: 0.5;
+    color: var(--text-insignificant-color);
+    font-family: var(--monospace-font), monospace;
+
+    small {
+      font-size: 11px;
+      letter-spacing: -0.2px;
+    }
+  }
+
   #why-container {
     padding: 0 16px;
   }

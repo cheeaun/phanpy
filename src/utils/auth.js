@@ -1,4 +1,4 @@
-const { VITE_CLIENT_NAME: CLIENT_NAME, VITE_WEBSITE: WEBSITE } = import.meta
+const { PHANPY_CLIENT_NAME: CLIENT_NAME, PHANPY_WEBSITE: WEBSITE } = import.meta
   .env;
 
 const SCOPES = 'read write follow push';

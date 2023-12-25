@@ -153,7 +153,7 @@ It's also possible to set them in the `.env` file.
 
 Available variables:
 
-- `PHANPY_APP_TITLE` (optional, default: `Phanpy`) affects:
+- `PHANPY_CLIENT_NAME` (optional, default: `Phanpy`) affects:
   - Web page title, shown in the browser window or tab title
   - App title, when installed as PWA, shown in the Home screen, macOS dock, Windows taskbar, etc
   - OpenGraph card title, when shared on social networks

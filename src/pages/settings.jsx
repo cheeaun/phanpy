@@ -576,17 +576,19 @@ function Settings({ onClose }) {
                   }
                 }}
               />{' '}
-              <span class="ib insignificant">
-                (
-                <a
-                  href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <RelativeTime datetime={new Date(__BUILD_TIME__)} />
-                </a>
-                )
-              </span>
+              {!__FAKE_COMMIT_HASH__ && (
+                <span class="ib insignificant">
+                  (
+                  <a
+                    href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <RelativeTime datetime={new Date(__BUILD_TIME__)} />
+                  </a>
+                  )
+                </span>
+              )}
             </p>
           )}
         </section>

@@ -17,12 +17,14 @@ const {
 
 const now = new Date();
 let commitHash;
+let fakeCommitHash = false;
 try {
   commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 } catch (error) {
   // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
   // Fallback to random hash which should be different on every build run 🤞
   commitHash = uid();
+  fakeCommitHash = true;
 }
 
 const rollbarCode = fs.readFileSync(
@@ -38,6 +40,7 @@ export default defineConfig({
   define: {
     __BUILD_TIME__: JSON.stringify(now),
     __COMMIT_HASH__: JSON.stringify(commitHash),
+    __FAKE_COMMIT_HASH__: fakeCommitHash,
   },
   server: {
     host: true,

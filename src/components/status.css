@@ -516,32 +516,84 @@
       .media-figure-multiple,
       .spoiler-media-button
     ),
-  ~ .card .meta-container,
-  ~ :is(.media-container, .media-figure-multiple) figcaption {
-    filter: blur(5px) invert(0.5);
+  ~ .card .meta-container {
+    /* filter: blur(5px) invert(0.5);
     image-rendering: crisp-edges;
-    image-rendering: pixelated;
+    image-rendering: pixelated; */
+    opacity: 0.2;
+    text-decoration-thickness: 1.5em;
+    text-decoration-line: line-through;
+    text-rendering: optimizeSpeed;
     pointer-events: none;
     user-select: none;
-    contain: layout;
-    transform: scale(0.97);
-    transition: transform 0.1s ease-in-out;
+    /* contain: layout; */
+    /* transform: scale(0.97);
+    transition: transform 0.1s ease-in-out; */
+
+    * {
+      text-decoration-thickness: 1.5em;
+      text-decoration-line: line-through;
+      text-rendering: optimizeSpeed;
+    }
+
+    img {
+      filter: invert(0.5);
+      background-color: black;
+    }
   }
 
   /* ~ :is(.media-container, .media-figure-multiple) .media > *, */
-  ~ .card > img {
-    filter: blur(32px);
+  ~ .card .card-image > img {
+    display: none;
+    /* filter: blur(32px);
+    opacity: 0;
     image-rendering: crisp-edges;
     image-rendering: pixelated;
-    animation: none !important;
+    animation: none !important; */
   }
 }
 .status .content-container.has-spoiler:not(.show-media) .spoiler-media-button {
-  ~ :is(.media-container, .media-figure-multiple) .media > * {
-    filter: blur(32px);
+  ~ :is(.media-container, .media-figure-multiple) figcaption {
+    /* filter: blur(5px) invert(0.5);
     image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    animation: none !important;
+    image-rendering: pixelated; */
+    opacity: 0.2;
+    color: inherit;
+    text-decoration-thickness: 1.5em;
+    text-decoration-line: line-through;
+    text-rendering: optimizeSpeed;
+    pointer-events: none;
+    user-select: none;
+    /* contain: layout; */
+    /* transform: scale(0.97);
+    transition: transform 0.1s ease-in-out; */
+
+    * {
+      text-decoration-thickness: 1.5em;
+      text-decoration-line: line-through;
+      text-rendering: optimizeSpeed;
+    }
+
+    img {
+      opacity: 0;
+    }
+  }
+
+  ~ :is(.media-container, .media-figure-multiple) .media {
+    background-image: radial-gradient(
+      circle at 50% 50%,
+      var(--average-color, var(--bg-faded-color)),
+      var(--bg-color) 20em
+    );
+
+    > *:not(.media-play, .alt-badge) {
+      /* display: none; */
+      /* filter: blur(32px); */
+      opacity: 0;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+      animation: none !important;
+    }
   }
 }
 .status
@@ -745,7 +797,7 @@
   &:not(.media-figure-multiple .media-container) {
     margin-bottom: -16px;
 
-    &.media-eq1 {
+    &.media-eq1:not(:has(figure)) {
       text-align: center;
       background-color: var(--img-bg-color);
     }
@@ -804,6 +856,11 @@
   min-height: 80px;
   border: var(--media-border-width) solid var(--outline-color);
   vertical-align: top;
+
+  &:not(.media-audio) {
+    background-color: var(--average-color, var(--bg-faded-color));
+    background-clip: padding-box;
+  }
 }
 .status .media-container:not(.media-eq1) .media {
   aspect-ratio: auto !important;
@@ -1270,6 +1327,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
   width: 35%;
   position: relative;
   border-inline-end: 1px solid var(--outline-color);
+  background-color: var(--average-color, var(--bg-faded-color));
+  background-clip: padding-box;
 }
 .card .card-image img {
   position: absolute;

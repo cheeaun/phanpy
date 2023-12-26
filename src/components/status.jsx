@@ -8,7 +8,7 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
-import { decodeBlurHash } from 'fast-blurhash';
+import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import pThrottle from 'p-throttle';
 import { memo } from 'preact/compat';
 import {
@@ -1994,6 +1994,8 @@ function Card({ card, selfReferential, instance }) {
       .replace(/^www\./, '')
       .replace(/\/$/, '');
     let blurhashImage;
+    const rgbAverageColor =
+      image && blurhash ? getBlurHashAverageColor(blurhash) : null;
     if (!image) {
       const w = 44;
       const h = 44;
@@ -2015,6 +2017,10 @@ function Card({ card, selfReferential, instance }) {
         class={`card link ${blurhashImage ? '' : size}`}
         lang={language}
         dir="auto"
+        style={{
+          '--average-color':
+            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+        }}
       >
         <div class="card-image">
           <img

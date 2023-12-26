@@ -132,7 +132,9 @@ Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the la
 
 ### Custom-build way
 
-Download or `git clone` this repository. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+Requires [Node.js](https://nodejs.org/).
+
+Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
 
 Customization can be done by passing environment variables to the build command. Examples:
 

@@ -1098,7 +1098,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   // Click all buttons with class .spoiler but not .spoiling
                   const buttons = Array.from(
                     scrollableRef.current.querySelectorAll(
-                      'button.spoiler:not(.spoiling)',
+                      '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
                     ),
                   );
                   buttons.forEach((button) => {

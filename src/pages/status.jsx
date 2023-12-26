@@ -819,7 +819,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 onMediaClick={handleMediaClick}
                 onStatusLinkClick={handleStatusLinkClick}
               />
-              {ancestor && isThread && repliesCount > 1 && (
+              {ancestor && repliesCount > 1 && (
                 <div class="replies-link">
                   <Icon icon="comment2" />{' '}
                   <span title={repliesCount}>

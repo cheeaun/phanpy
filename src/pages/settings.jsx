@@ -388,8 +388,16 @@ function Settings({ onClose }) {
                 </p>
                 <p class="insignificant">
                   <small>
-                    Note: This feature uses an external API to translate,
+                    Note: This feature uses external translation services,
                     powered by{' '}
+                    <a
+                      href="https://github.com/cheeaun/lingva-api"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Lingva API
+                    </a>{' '}
+                    &amp;{' '}
                     <a
                       href="https://github.com/thedaviddelta/lingva-translate"
                       target="_blank"

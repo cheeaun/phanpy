@@ -923,7 +923,7 @@ function RelatedActions({
       <div class="actions">
         <span>
           {followedBy ? (
-            <span class="tag">Following you</span>
+            <span class="tag">Follows you</span>
           ) : !!lastStatusAt ? (
             <small class="insignificant">
               Last post:{' '}

@@ -180,7 +180,7 @@ export function saveStatus(status, instance, opts) {
 
   // THREAD TRAVERSER
   if (!skipThreading) {
-    requestAnimationFrame(() => {
+    queueMicrotask(() => {
       threadifyStatus(status, instance);
       if (status.reblog) {
         threadifyStatus(status.reblog, instance);

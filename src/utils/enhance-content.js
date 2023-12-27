@@ -244,7 +244,8 @@ function _enhanceContent(content, opts = {}) {
   }
 
   if (postEnhanceDOM) {
-    postEnhanceDOM(dom); // mutate dom
+    queueMicrotask(() => postEnhanceDOM(dom));
+    // postEnhanceDOM(dom); // mutate dom
   }
 
   enhancedContent = dom.innerHTML;

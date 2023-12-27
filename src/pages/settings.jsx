@@ -27,6 +27,7 @@ const TEXT_SIZES = [15, 16, 17, 18, 19, 20];
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
+  PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
 } = import.meta.env;
 
 function Settings({ onClose }) {
@@ -432,6 +433,34 @@ function Settings({ onClose }) {
                 </div>
               </div>
             </li>
+            {!!IMG_ALT_API_URL && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.mediaAltGenerator}
+                    onChange={(e) => {
+                      states.settings.mediaAltGenerator = e.target.checked;
+                    }}
+                  />{' '}
+                  Image description generator{' '}
+                  <Icon icon="sparkles2" class="more-insignificant" />
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    Note: This feature uses external AI service, powered by{' '}
+                    <a
+                      href="https://github.com/cheeaun/img-alt-api"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      img-alt-api
+                    </a>
+                    . May not work well. Only for images and in English.
+                  </small>
+                </div>
+              </li>
+            )}
             <li>
               <label>
                 <input

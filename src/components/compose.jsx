@@ -1,6 +1,7 @@
 import './compose.css';
 
 import '@github/text-expander-element';
+import { MenuItem } from '@szhsin/react-menu';
 import equal from 'fast-deep-equal';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -11,6 +12,7 @@ import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
+import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
@@ -19,6 +21,7 @@ import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
 import openCompose from '../utils/open-compose';
 import shortenNumber from '../utils/shorten-number';
+import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
@@ -38,6 +41,8 @@ import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
 import Status from './status';
+
+const { PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL } = import.meta.env;
 
 const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   const [code, common, native] = l;
@@ -1291,7 +1296,7 @@ const Textarea = forwardRef((props, ref) => {
   const { masto } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
-  const snapStates = useSnapshot(states);
+  // const snapStates = useSnapshot(states);
   // const charCount = snapStates.composerCharacterCount;
 
   const customEmojis = useRef();
@@ -1645,6 +1650,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
+  const [uiState, setUIState] = useState('default');
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
   const url = useMemo(
@@ -1653,7 +1659,7 @@ function MediaAttachment({
   );
   console.log({ attachment });
   const [description, setDescription] = useState(attachment.description);
-  const suffixType = type.split('/')[0];
+  const [suffixType, subtype] = type.split('/');
   const debouncedOnDescriptionChange = useDebouncedCallback(
     onDescriptionChange,
     250,
@@ -1699,7 +1705,8 @@ function MediaAttachment({
           autoCorrect="on"
           spellCheck="true"
           dir="auto"
-          disabled={disabled}
+          disabled={disabled || uiState === 'loading'}
+          class={uiState === 'loading' ? 'loading' : ''}
           maxlength="1500" // Not unicode-aware :(
           // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
           onInput={(e) => {
@@ -1711,6 +1718,13 @@ function MediaAttachment({
       )}
     </>
   );
+
+  const toastRef = useRef(null);
+  useEffect(() => {
+    return () => {
+      toastRef.current?.hideToast?.();
+    };
+  }, []);
 
   return (
     <>
@@ -1785,12 +1799,68 @@ function MediaAttachment({
               <div class="media-form">
                 {descTextarea}
                 <footer>
+                  {suffixType === 'image' &&
+                    /^(png|jpe?g|gif|webp)$/i.test(subtype) &&
+                    !!states.settings.mediaAltGenerator &&
+                    !!IMG_ALT_API_URL && (
+                      <Menu2
+                        portal={{
+                          target: document.body,
+                        }}
+                        containerProps={{
+                          style: {
+                            zIndex: 1001,
+                          },
+                        }}
+                        align="center"
+                        position="anchor"
+                        overflow="auto"
+                        menuButton={
+                          <button type="button" title="More" class="plain">
+                            <Icon icon="more" size="l" alt="More" />
+                          </button>
+                        }
+                      >
+                        <MenuItem
+                          disabled={uiState === 'loading'}
+                          onClick={() => {
+                            setUIState('loading');
+                            toastRef.current = showToast({
+                              text: 'Generating description. Please wait...',
+                              duration: -1,
+                            });
+                            // POST with multipart
+                            (async function () {
+                              try {
+                                const body = new FormData();
+                                body.append('image', file);
+                                const response = await fetch(IMG_ALT_API_URL, {
+                                  method: 'POST',
+                                  body,
+                                }).then((r) => r.json());
+                                setDescription(response.description);
+                              } catch (e) {
+                                console.error(e);
+                                showToast('Failed to generate description');
+                              } finally {
+                                setUIState('default');
+                                toastRef.current?.hideToast?.();
+                              }
+                            })();
+                          }}
+                        >
+                          <Icon icon="sparkles2" />
+                          <span>Generate description…</span>
+                        </MenuItem>
+                      </Menu2>
+                    )}
                   <button
                     type="button"
                     class="light block"
                     onClick={() => {
                       setShowModal(false);
                     }}
+                    disabled={uiState === 'loading'}
                   >
                     Done
                   </button>

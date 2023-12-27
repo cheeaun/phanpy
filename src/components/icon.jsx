@@ -69,6 +69,7 @@ export const ICONS = {
   history: () => import('@iconify-icons/mingcute/history-line'),
   share: () => import('@iconify-icons/mingcute/share-2-line'),
   sparkles: () => import('@iconify-icons/mingcute/sparkles-line'),
+  sparkles2: () => import('@iconify-icons/mingcute/sparkles-2-line'),
   exit: () => import('@iconify-icons/mingcute/exit-line'),
   translate: () => import('@iconify-icons/mingcute/translate-line'),
   play: () => import('@iconify-icons/mingcute/play-fill'),

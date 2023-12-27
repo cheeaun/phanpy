@@ -59,6 +59,7 @@ const states = proxy({
     contentTranslationTargetLanguage: null,
     contentTranslationHideLanguages: [],
     contentTranslationAutoInline: false,
+    mediaAltGenerator: false,
     cloakMode: false,
   },
 });
@@ -87,6 +88,8 @@ export function initStates() {
     store.account.get('settings-contentTranslationHideLanguages') || [];
   states.settings.contentTranslationAutoInline =
     store.account.get('settings-contentTranslationAutoInline') ?? false;
+  states.settings.mediaAltGenerator =
+    store.account.get('settings-mediaAltGenerator') ?? false;
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
 }
 
@@ -121,6 +124,9 @@ subscribe(states, (changes) => {
         'settings-contentTranslationHideLanguages',
         states.settings.contentTranslationHideLanguages,
       );
+    }
+    if (path.join('.') === 'settings.mediaAltGenerator') {
+      store.account.set('settings-mediaAltGenerator', !!value);
     }
     if (path?.[0] === 'shortcuts') {
       store.account.set('shortcuts', states.shortcuts);

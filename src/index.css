@@ -338,6 +338,9 @@ button.large {
   font-size: 125%;
   padding: 12px;
 }
+textarea:disabled {
+  background-color: var(--bg-faded-color);
+}
 
 :is(input[type='text'], textarea, select).block {
   display: block;

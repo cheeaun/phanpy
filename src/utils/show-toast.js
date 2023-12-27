@@ -23,6 +23,7 @@ function showToast(props) {
   } else {
     toast.showToast();
   }
+  return toast;
 }
 
 export default showToast;

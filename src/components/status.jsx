@@ -2364,9 +2364,18 @@ function _unfurlMastodonLink(instance, url) {
   }
 
   if (remoteInstanceFetch) {
-    return Promise.any([remoteInstanceFetch, mastoSearchFetch])
-      .then(handleFulfill)
-      .catch(handleCatch);
+    // return Promise.any([remoteInstanceFetch, mastoSearchFetch])
+    //   .then(handleFulfill)
+    //   .catch(handleCatch);
+    // If mastoSearchFetch is fulfilled within 3s, return it, else return remoteInstanceFetch
+    const finalPromise = Promise.race([
+      mastoSearchFetch,
+      new Promise((resolve, reject) => setTimeout(reject, 3000)),
+    ]).catch(() => {
+      // If remoteInstanceFetch is fullfilled, return it, else return mastoSearchFetch
+      return remoteInstanceFetch.catch(() => mastoSearchFetch);
+    });
+    return finalPromise.then(handleFulfill).catch(handleCatch);
   } else {
     return mastoSearchFetch.then(handleFulfill).catch(handleCatch);
   }

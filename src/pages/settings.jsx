@@ -447,6 +447,9 @@ function Settings({ onClose }) {
                   <Icon icon="sparkles2" class="more-insignificant" />
                 </label>
                 <div class="sub-section insignificant">
+                  <small>Only for new images while composing new posts.</small>
+                </div>
+                <div class="sub-section insignificant">
                   <small>
                     Note: This feature uses external AI service, powered by{' '}
                     <a

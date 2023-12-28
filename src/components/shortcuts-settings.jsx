@@ -159,7 +159,7 @@ export const SHORTCUTS_META = {
     title: ({ local }) => (local ? 'Local' : 'Federated'),
     subtitle: ({ instance }) => instance || api().instance,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
-    icon: ({ local }) => (local ? 'group' : 'earth'),
+    icon: ({ local }) => (local ? 'building' : 'earth'),
   },
   trending: {
     id: 'trending',

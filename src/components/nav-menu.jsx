@@ -202,7 +202,7 @@ function NavMenu(props) {
             <Icon icon="search" size="l" /> <span>Search</span>
           </MenuLink>
           <MenuLink to={`/${instance}/p/l`}>
-            <Icon icon="group" size="l" /> <span>Local</span>
+            <Icon icon="building" size="l" /> <span>Local</span>
           </MenuLink>
           <MenuLink to={`/${instance}/p`}>
             <Icon icon="earth" size="l" /> <span>Federated</span>

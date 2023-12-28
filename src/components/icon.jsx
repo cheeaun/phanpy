@@ -105,6 +105,7 @@ export const ICONS = {
   month: () => import('@iconify-icons/mingcute/calendar-month-line'),
   media: () => import('@iconify-icons/mingcute/photo-album-line'),
   speak: () => import('@iconify-icons/mingcute/radar-line'),
+  building: () => import('@iconify-icons/mingcute/building-5-line'),
 };
 
 const ICONDATA = {};

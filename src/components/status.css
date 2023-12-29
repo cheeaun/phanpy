@@ -767,6 +767,9 @@
 .status .content ul {
   list-style-type: disc;
 }
+.status .content :is(strong, b) {
+  font-weight: 600;
+}
 .status .content .invisible {
   display: none;
 }

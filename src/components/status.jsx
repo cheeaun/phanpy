@@ -149,7 +149,7 @@ function Status({
   const { instance: currentInstance } = api();
   const sameInstance = instance === currentInstance;
 
-  let sKey = statusKey(statusID, instance);
+  let sKey = statusKey(statusID || status?.id, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
     status = snapStates.statuses[sKey] || snapStates.statuses[statusID];

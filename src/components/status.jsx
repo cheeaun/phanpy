@@ -1025,7 +1025,7 @@ function Status({
     },
   );
 
-  const hotkeysEnabled = !readOnly && !previewMode;
+  const hotkeysEnabled = !readOnly && !previewMode && !quoted;
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
   });

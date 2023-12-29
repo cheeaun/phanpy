@@ -1092,6 +1092,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transform: translate(-50%, 0);
   font-size: 90%;
   pointer-events: auto;
+  transition: all 0.3s ease-in-out;
+
+  header[hidden] & {
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(0.9);
+    pointer-events: none;
+  }
 }
 .updates-button .icon {
   vertical-align: top;

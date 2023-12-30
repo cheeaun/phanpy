@@ -901,6 +901,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     return STATUS_URL_REGEX.test(states.prevLocation?.pathname);
   }, [sKey]);
 
+  const moreStatusesKeys = useMemo(() => {
+    if (!showMore) return [];
+    const ids = [];
+    function getIDs(status) {
+      ids.push(status.id);
+      if (status.replies) {
+        status.replies.forEach(getIDs);
+      }
+    }
+    statuses.slice(limit).forEach(getIDs);
+    return ids.map((id) => statusKey(id, instance));
+  }, [showMore, statuses, limit, instance]);
+
   return (
     <div
       tabIndex="-1"
@@ -1156,10 +1169,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 disabled={uiState === 'loading'}
                 onClick={() => setLimit((l) => l + LIMIT)}
                 style={{ marginBlockEnd: '6em' }}
-                data-state-post-ids={statuses
-                  .slice(limit)
-                  .map((s) => statusKey(s.id, instance))
-                  .join(' ')}
+                data-state-post-ids={moreStatusesKeys.join(' ')}
               >
                 <div class="ib avatars-bunch">
                   {/* show avatars for first 5 statuses */}

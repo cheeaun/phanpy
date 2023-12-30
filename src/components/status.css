@@ -940,6 +940,10 @@
 }
 .status.large .media-container.media-eq1 {
   max-height: min(var(--height), 60vh);
+
+  .media-gif.media-contain {
+    border-radius: 2px;
+  }
 }
 .status.large
   .media-container:not(.status-card .media-container).media-eq1
@@ -1158,6 +1162,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .status .media-contain video {
   object-fit: scale-down !important;
+}
+.status .media-eq1 .media-hover-animate {
+  transition: border-radius 0.15s ease-out;
+
+  &:hover {
+    border-radius: 2px;
+  }
 }
 /* .status .media-audio {
   border: 0;

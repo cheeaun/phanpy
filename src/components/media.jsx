@@ -358,7 +358,7 @@ function Media({
         <Parent
           class={`media ${className} media-${isGIF ? 'gif' : 'video'} ${
             autoGIFAnimate ? 'media-contain' : ''
-          }`}
+          } ${hoverAnimate ? 'media-hover-animate' : ''}`}
           data-orientation={orientation}
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined

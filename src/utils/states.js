@@ -2,9 +2,11 @@ import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
+import isMastodonLinkMaybe from './isMastodonLinkMaybe';
 import pmem from './pmem';
 import rateLimit from './ratelimit';
 import store from './store';
+import unfurlMastodonLink from './unfurl-link';
 
 const states = proxy({
   appVersion: {},
@@ -168,10 +170,11 @@ export function saveStatus(status, instance, opts) {
     opts = instance;
     instance = null;
   }
-  const { override, skipThreading } = Object.assign(
-    { override: true, skipThreading: false },
-    opts,
-  );
+  const {
+    override = true,
+    skipThreading = false,
+    skipUnfurling = false,
+  } = opts || {};
   if (!status) return;
   const oldStatus = getStatus(status.id, instance);
   if (!override && oldStatus) return;
@@ -195,6 +198,13 @@ export function saveStatus(status, instance, opts) {
           threadifyStatus(status.reblog, instance);
         });
       }
+    });
+  }
+
+  // UNFURLER
+  if (!skipUnfurling) {
+    queueMicrotask(() => {
+      unfurlStatus(status, instance);
     });
   }
 }
@@ -239,6 +249,38 @@ function _threadifyStatus(status, propInstance) {
     });
 }
 export const threadifyStatus = rateLimit(_threadifyStatus, 100);
+
+const fauxDiv = document.createElement('div');
+export function unfurlStatus(status, instance) {
+  const { instance: currentInstance } = api();
+  const content = status.reblog?.content || status.content;
+  const hasLink = /<a/i.test(content);
+  if (hasLink) {
+    const sKey = statusKey(status?.reblog?.id || status?.id, instance);
+    fauxDiv.innerHTML = content;
+    const links = fauxDiv.querySelectorAll(
+      'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+    );
+    [...links]
+      .filter((a) => {
+        const url = a.href;
+        const isPostItself = url === status.url || url === status.uri;
+        return !isPostItself && isMastodonLinkMaybe(url);
+      })
+      .forEach((a, i) => {
+        unfurlMastodonLink(currentInstance, a.href).then((result) => {
+          if (!result) return;
+          if (!sKey) return;
+          if (!Array.isArray(states.statusQuotes[sKey])) {
+            states.statusQuotes[sKey] = [];
+          }
+          if (!states.statusQuotes[sKey][i]) {
+            states.statusQuotes[sKey].splice(i, 0, result);
+          }
+        });
+      });
+  }
+}
 
 const fetchStatus = pmem((statusID, masto) => {
   return masto.v1.statuses.$select(statusID).fetch();

@@ -1165,8 +1165,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .status .media-eq1 .media-hover-animate {
   transition: border-radius 0.15s ease-out;
+  transition-delay: 0.15s;
 
   &:hover {
+    transition-delay: 0;
     border-radius: 2px;
   }
 }

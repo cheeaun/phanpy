@@ -1098,6 +1098,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     opacity: 0;
     transform: translate(-50%, -100%) scale(0.9);
     pointer-events: none;
+    animation: none !important;
   }
 }
 .updates-button .icon {

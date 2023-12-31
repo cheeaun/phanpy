@@ -224,7 +224,7 @@ if (isIOS) {
           `meta[name="theme-color"][media*="${colorScheme}"]`,
         );
         if ($meta) {
-          const color = $meta.content;
+          const color = $meta.dataset.content;
           const tempColor = $meta.dataset.contentTemp;
           $meta.content = tempColor || '';
           setTimeout(() => {

@@ -377,14 +377,14 @@ function AccountStatuses() {
                           }
                         : {},
                     );
+                    const [year, month] = value.split('-');
+                    const monthIndex = parseInt(month, 10) - 1;
+                    const date = new Date(year, monthIndex);
                     showToast(
-                      `Showing posts in ${new Date(value).toLocaleString(
-                        'default',
-                        {
-                          month: 'long',
-                          year: 'numeric',
-                        },
-                      )}`,
+                      `Showing posts in ${date.toLocaleString('default', {
+                        month: 'long',
+                        year: 'numeric',
+                      })}`,
                     );
                   }}
                 />

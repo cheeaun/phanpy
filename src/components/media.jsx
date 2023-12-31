@@ -96,7 +96,7 @@ function Media({
 
   const videoRef = useRef();
 
-  let focalBackgroundPosition;
+  let focalPosition;
   if (focus) {
     // Convert focal point to CSS background position
     // Formula from jquery-focuspoint
@@ -105,7 +105,7 @@ function Media({
     // x = 1, y = -1 => 100% 100%
     const x = ((focus.x + 1) / 2) * 100;
     const y = ((1 - focus.y) / 2) * 100;
-    focalBackgroundPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
+    focalPosition = `${x.toFixed(0)}% ${y.toFixed(0)}%`;
   }
 
   const mediaRef = useRef();
@@ -290,10 +290,11 @@ function Media({
                 data-orientation={orientation}
                 loading="lazy"
                 style={{
-                  backgroundColor:
-                    rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-                  backgroundPosition: focalBackgroundPosition || 'center',
+                  // backgroundColor:
+                  //   rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+                  // backgroundPosition: focalBackgroundPosition || 'center',
                   // Duration based on width or height in pixels
+                  objectPosition: focalPosition || 'center',
                   // 100px per second (rough estimate)
                   // Clamp between 5s and 120s
                   '--anim-duration': `${Math.min(
@@ -302,7 +303,7 @@ function Media({
                   )}s`,
                 }}
                 onLoad={(e) => {
-                  e.target.closest('.media-image').style.backgroundImage = '';
+                  // e.target.closest('.media-image').style.backgroundImage = '';
                   e.target.dataset.loaded = true;
                 }}
                 onError={(e) => {
@@ -357,7 +358,7 @@ function Media({
         <Parent
           class={`media ${className} media-${isGIF ? 'gif' : 'video'} ${
             autoGIFAnimate ? 'media-contain' : ''
-          }`}
+          } ${hoverAnimate ? 'media-hover-animate' : ''}`}
           data-orientation={orientation}
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined

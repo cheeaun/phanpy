@@ -501,6 +501,19 @@
     padding-inline: 24px;
   }
 }
+
+@keyframes breathe {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 #media-sheet {
   .media-form {
     flex: 1;
@@ -514,6 +527,10 @@
       resize: none;
       width: 100%;
       /* height: 10em; */
+
+      &.loading {
+        animation: skeleton-breathe 1.5s linear infinite;
+      }
     }
 
     footer {

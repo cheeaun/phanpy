@@ -8,6 +8,12 @@ const locales = [
   ...navigator.languages,
 ];
 
+const localeTargetLanguages = localeMatch(
+  locales,
+  translationTargetLanguages.map((l) => l.code.replace('_', '-')), // The underscore will fail Intl.Locale inside `match`
+  'en',
+);
+
 function getTranslateTargetLanguage(fromSettings = false) {
   if (fromSettings) {
     const { contentTranslationTargetLanguage } = states.settings;
@@ -15,11 +21,7 @@ function getTranslateTargetLanguage(fromSettings = false) {
       return contentTranslationTargetLanguage;
     }
   }
-  return localeMatch(
-    locales,
-    translationTargetLanguages.map((l) => l.code.replace('_', '-')), // The underscore will fail Intl.Locale inside `match`
-    'en',
-  );
+  return localeTargetLanguages;
 }
 
 export default getTranslateTargetLanguage;

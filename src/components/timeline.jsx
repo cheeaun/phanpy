@@ -12,6 +12,7 @@ import { groupBoosts, groupContext } from '../utils/timeline-utils';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
+import useScrollFn from '../utils/useScrollFn';
 
 import Icon from './icon';
 import Link from './link';
@@ -203,17 +204,47 @@ function Timeline({
     }
   });
 
-  const {
-    scrollDirection,
-    nearReachStart,
-    nearReachEnd,
-    reachStart,
-    reachEnd,
-  } = useScroll({
-    scrollableRef,
-    distanceFromEnd: 2,
-    scrollThresholdStart: 44,
-  });
+  // const {
+  //   scrollDirection,
+  //   nearReachStart,
+  //   nearReachEnd,
+  //   reachStart,
+  //   reachEnd,
+  // } = useScroll({
+  //   scrollableRef,
+  //   distanceFromEnd: 2,
+  //   scrollThresholdStart: 44,
+  // });
+  const headerRef = useRef();
+  // const [hiddenUI, setHiddenUI] = useState(false);
+  const [nearReachStart, setNearReachStart] = useState(false);
+  useScrollFn(
+    {
+      scrollableRef,
+      distanceFromEnd: 2,
+      scrollThresholdStart: 44,
+    },
+    ({
+      scrollDirection,
+      nearReachStart,
+      nearReachEnd,
+      reachStart,
+      reachEnd,
+    }) => {
+      // setHiddenUI(scrollDirection === 'end' && !nearReachEnd);
+      if (headerRef.current) {
+        const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+        headerRef.current.hidden = hiddenUI;
+      }
+      setNearReachStart(nearReachStart);
+      if (reachStart) {
+        loadItems(true);
+      } else if (nearReachEnd || (reachEnd && showMore)) {
+        loadItems();
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     scrollableRef.current?.scrollTo({ top: 0 });
@@ -223,17 +254,17 @@ function Timeline({
     loadItems(true);
   }, [refresh]);
 
-  useEffect(() => {
-    if (reachStart) {
-      loadItems(true);
-    }
-  }, [reachStart]);
+  // useEffect(() => {
+  //   if (reachStart) {
+  //     loadItems(true);
+  //   }
+  // }, [reachStart]);
 
-  useEffect(() => {
-    if (nearReachEnd || (reachEnd && showMore)) {
-      loadItems();
-    }
-  }, [nearReachEnd, showMore]);
+  // useEffect(() => {
+  //   if (nearReachEnd || (reachEnd && showMore)) {
+  //     loadItems();
+  //   }
+  // }, [nearReachEnd, showMore]);
 
   const prevView = useRef(view);
   useEffect(() => {
@@ -304,7 +335,7 @@ function Timeline({
       : null,
   );
 
-  const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+  // const hiddenUI = scrollDirection === 'end' && !nearReachStart;
 
   return (
     <FilterContext.Provider value={filterContext}>
@@ -321,7 +352,8 @@ function Timeline({
       >
         <div class="timeline-deck deck">
           <header
-            hidden={hiddenUI}
+            ref={headerRef}
+            // hidden={hiddenUI}
             onClick={(e) => {
               if (!e.target.closest('a, button')) {
                 scrollableRef.current?.scrollTo({
@@ -356,7 +388,7 @@ function Timeline({
             </div>
             {items.length > 0 &&
               uiState !== 'loading' &&
-              !hiddenUI &&
+              // !hiddenUI &&
               showNew && (
                 <button
                   class="updates-button shiny-pill"
@@ -657,13 +689,27 @@ function TimelineItem({
 
 function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();
-  const { reachStart, reachEnd, init } = useScroll({
-    scrollableRef: carouselRef,
-    direction: 'horizontal',
-  });
-  useEffect(() => {
-    init?.();
-  }, []);
+  // const { reachStart, reachEnd, init } = useScroll({
+  //   scrollableRef: carouselRef,
+  //   direction: 'horizontal',
+  // });
+  const startButtonRef = useRef();
+  const endButtonRef = useRef();
+  useScrollFn(
+    {
+      scrollableRef: carouselRef,
+      direction: 'horizontal',
+      init: true,
+    },
+    ({ reachStart, reachEnd }) => {
+      if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
+      if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
+    },
+    [],
+  );
+  // useEffect(() => {
+  //   init?.();
+  // }, []);
 
   return (
     <div class={`status-carousel ${className}`}>
@@ -671,9 +717,10 @@ function StatusCarousel({ title, class: className, children }) {
         <h3>{title}</h3>
         <span>
           <button
+            ref={startButtonRef}
             type="button"
             class="small plain2"
-            disabled={reachStart}
+            // disabled={reachStart}
             onClick={() => {
               carouselRef.current?.scrollBy({
                 left: -Math.min(320, carouselRef.current?.offsetWidth),
@@ -684,9 +731,10 @@ function StatusCarousel({ title, class: className, children }) {
             <Icon icon="chevron-left" />
           </button>{' '}
           <button
+            ref={endButtonRef}
             type="button"
             class="small plain2"
-            disabled={reachEnd}
+            // disabled={reachEnd}
             onClick={() => {
               carouselRef.current?.scrollBy({
                 left: Math.min(320, carouselRef.current?.offsetWidth),

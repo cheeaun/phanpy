@@ -12,6 +12,8 @@ import { getAuthorizationURL, registerApplication } from '../utils/auth';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
+const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
+
 function Login() {
   useTitle('Log in');
   const instanceURLRef = useRef();
@@ -19,6 +21,7 @@ function Login() {
   const [uiState, setUIState] = useState('default');
   const [searchParams] = useSearchParams();
   const instance = searchParams.get('instance');
+  const submit = searchParams.get('submit');
   const [instanceText, setInstanceText] = useState(
     instance || cachedInstanceURL?.toLowerCase() || '',
   );
@@ -129,6 +132,12 @@ function Login() {
     submitInstance(selectedInstanceText);
   };
 
+  if (submit) {
+    useEffect(() => {
+      submitInstance(instance || selectedInstanceText);
+    }, []);
+  }
+
   return (
     <main id="login" style={{ textAlign: 'center' }}>
       <form onSubmit={onSubmit}>
@@ -200,11 +209,13 @@ function Login() {
         </div>
         <Loader hidden={uiState !== 'loading'} />
         <hr />
-        <p>
-          <a href="https://joinmastodon.org/servers" target="_blank">
-            Don't have an account? Create one!
-          </a>
-        </p>
+        {!DEFAULT_INSTANCE && (
+          <p>
+            <a href="https://joinmastodon.org/servers" target="_blank">
+              Don't have an account? Create one!
+            </a>
+          </p>
+        )}
         <p>
           <Link to="/">Go home</Link>
         </p>

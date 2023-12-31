@@ -4,6 +4,7 @@ import store from './store';
 import {
   getAccount,
   getAccountByAccessToken,
+  getAccountByInstance,
   getCurrentAccount,
   saveAccount,
 } from './store-utils';
@@ -244,6 +245,22 @@ export function api({ instance, accessToken, accountID, account } = {}) {
         masto: currentAccountApi.masto,
         streaming: currentAccountApi.streaming,
         client: currentAccountApi,
+        authenticated: true,
+        instance,
+      };
+    }
+
+    const instanceAccount = getAccountByInstance(instance);
+    if (instanceAccount) {
+      const accessToken = instanceAccount.accessToken;
+      const client =
+        accountApis[instance]?.[accessToken] ||
+        initClient({ instance, accessToken });
+      const { masto, streaming } = client;
+      return {
+        masto,
+        streaming,
+        client,
         authenticated: true,
         instance,
       };

@@ -686,6 +686,22 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   pointer-events: none;
 }
 
+.timeline.contextual > li .replies {
+  > ul > li:only-child {
+    > .replies {
+      > ul > li:only-child {
+        margin-left: calc(-1 * var(--line-margin-end));
+        background-position: calc(16px) 0;
+        background-size: 100% calc(20px + 8px);
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);
   overflow: hidden;
@@ -1092,6 +1108,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transform: translate(-50%, 0);
   font-size: 90%;
   pointer-events: auto;
+  transition: all 0.3s ease-in-out;
+
+  header[hidden] & {
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(0.9);
+    pointer-events: none;
+    animation: none !important;
+  }
 }
 .updates-button .icon {
   vertical-align: top;

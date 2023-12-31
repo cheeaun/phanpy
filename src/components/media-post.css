@@ -3,10 +3,11 @@
   position: relative;
   animation: appear-smooth 1s ease-out;
 
-  &:is(.filtered, .has-spoiler) :is(img, video) {
-    filter: blur(32px);
+  &:is(.filtered, .has-spoiler:not(.show-media)) :is(img, video) {
+    /* filter: blur(32px);
     image-rendering: crisp-edges;
-    image-rendering: pixelated;
+    image-rendering: pixelated; */
+    opacity: 0;
     animation: none !important;
   }
 
@@ -48,6 +49,11 @@
     }
   }
 
+  &.has-spoiler.show-media[data-spoiler-text]:before {
+    mix-blend-mode: normal;
+    backdrop-filter: blur(4px);
+  }
+
   .media {
     border-radius: var(--item-radius);
     overflow: hidden;
@@ -65,6 +71,7 @@
 
     &:not(.media-audio) {
       background-color: var(--average-color, var(--media-bg-color));
+      background-clip: padding-box;
     }
 
     @media (hover: hover) {
@@ -103,5 +110,13 @@
       animation: position-object 5s ease-in-out 0.1s 5;
       animation-duration: var(--anim-duration, 5s);
     }
+  }
+
+  &.has-spoiler .media:not(.media-audio) {
+    background-image: radial-gradient(
+      circle at 50% 50%,
+      var(--average-color, var(--bg-faded-color)),
+      var(--bg-color) 20em
+    );
   }
 }

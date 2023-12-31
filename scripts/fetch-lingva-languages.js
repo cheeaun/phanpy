@@ -1,7 +1,6 @@
-// Fetch https://lingva.ml/api/v1/languages/{source|target}
 import fs from 'fs';
 
-fetch('https://lingva.ml/api/v1/languages/source')
+fetch('https://lingva.phanpy.social/api/v1/languages/source')
   .then((response) => response.json())
   .then((json) => {
     const file = './src/data/lingva-source-languages.json';
@@ -9,7 +8,7 @@ fetch('https://lingva.ml/api/v1/languages/source')
     fs.writeFileSync(file, JSON.stringify(json.languages, null, '\t'), 'utf8');
   });
 
-fetch('https://lingva.ml/api/v1/languages/target')
+fetch('https://lingva.phanpy.social/api/v1/languages/target')
   .then((response) => response.json())
   .then((json) => {
     const file = './src/data/lingva-target-languages.json';

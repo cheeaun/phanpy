@@ -103,11 +103,13 @@ function MediaPost({
 
   console.debug('RENDER Media post', id, status?.account.displayName);
 
-  // const readingExpandSpoilers = useMemo(() => {
-  //   const prefs = store.account.get('preferences') || {};
-  //   return !!prefs['reading:expand:spoilers'];
-  // }, []);
-  const hasSpoiler = spoilerText || sensitive;
+  const hasSpoiler = sensitive;
+  const readingExpandMedia = useMemo(() => {
+    // default | show_all | hide_all
+    const prefs = store.account.get('preferences') || {};
+    return prefs['reading:expand:media'] || 'default';
+  }, []);
+  const showSpoilerMedia = readingExpandMedia === 'show_all';
 
   const Parent = parent || 'div';
 
@@ -131,6 +133,7 @@ function MediaPost({
           media-post
           ${filterInfo ? 'filtered' : ''}
           ${hasSpoiler ? 'has-spoiler' : ''}
+          ${showSpoilerMedia ? 'show-media' : ''}
         `}
       >
         <Media

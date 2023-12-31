@@ -1,5 +1,4 @@
-import { memo } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 const SIZES = {
   s: 12,
@@ -70,6 +69,7 @@ export const ICONS = {
   history: () => import('@iconify-icons/mingcute/history-line'),
   share: () => import('@iconify-icons/mingcute/share-2-line'),
   sparkles: () => import('@iconify-icons/mingcute/sparkles-line'),
+  sparkles2: () => import('@iconify-icons/mingcute/sparkles-2-line'),
   exit: () => import('@iconify-icons/mingcute/exit-line'),
   translate: () => import('@iconify-icons/mingcute/translate-line'),
   play: () => import('@iconify-icons/mingcute/play-fill'),
@@ -105,7 +105,10 @@ export const ICONS = {
   month: () => import('@iconify-icons/mingcute/calendar-month-line'),
   media: () => import('@iconify-icons/mingcute/photo-album-line'),
   speak: () => import('@iconify-icons/mingcute/radar-line'),
+  building: () => import('@iconify-icons/mingcute/building-5-line'),
 };
+
+const ICONDATA = {};
 
 function Icon({
   icon,
@@ -124,11 +127,17 @@ function Icon({
     [iconBlock, rotate, flip] = iconBlock;
   }
 
-  const [iconData, setIconData] = useState(null);
-  useEffect(async () => {
-    const icon = await iconBlock();
-    setIconData(icon.default);
-  }, [iconBlock]);
+  const [iconData, setIconData] = useState(ICONDATA[icon]);
+  const currentIcon = useRef(icon);
+  useEffect(() => {
+    if (iconData && currentIcon.current === icon) return;
+    (async () => {
+      const iconB = await iconBlock();
+      setIconData(iconB.default);
+      ICONDATA[icon] = iconB.default;
+    })();
+    currentIcon.current = icon;
+  }, [icon]);
 
   return (
     <span
@@ -157,4 +166,4 @@ function Icon({
   );
 }
 
-export default memo(Icon);
+export default Icon;

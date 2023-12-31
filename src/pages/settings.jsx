@@ -24,6 +24,11 @@ import store from '../utils/store';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [15, 16, 17, 18, 19, 20];
+const {
+  PHANPY_WEBSITE: WEBSITE,
+  PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
+  PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
+} = import.meta.env;
 
 function Settings({ onClose }) {
   const snapStates = useSnapshot(states);
@@ -82,9 +87,43 @@ function Settings({ onClose }) {
 
                     if (theme === 'auto') {
                       html.classList.remove('is-light', 'is-dark');
+
+                      // Disable manual theme <meta>
+                      const $manualMeta = document.querySelector(
+                        'meta[data-theme-setting="manual"]',
+                      );
+                      if ($manualMeta) {
+                        $manualMeta.name = '';
+                      }
+                      // Enable auto theme <meta>s
+                      const $autoMetas = document.querySelectorAll(
+                        'meta[data-theme-setting="auto"]',
+                      );
+                      $autoMetas.forEach((m) => {
+                        m.name = 'theme-color';
+                      });
                     } else {
                       html.classList.toggle('is-light', theme === 'light');
                       html.classList.toggle('is-dark', theme === 'dark');
+
+                      // Enable manual theme <meta>
+                      const $manualMeta = document.querySelector(
+                        'meta[data-theme-setting="manual"]',
+                      );
+                      if ($manualMeta) {
+                        $manualMeta.name = 'theme-color';
+                        $manualMeta.content =
+                          theme === 'light'
+                            ? $manualMeta.dataset.themeLightColor
+                            : $manualMeta.dataset.themeDarkColor;
+                      }
+                      // Disable auto theme <meta>s
+                      const $autoMetas = document.querySelectorAll(
+                        'meta[data-theme-setting="auto"]',
+                      );
+                      $autoMetas.forEach((m) => {
+                        m.name = '';
+                      });
                     }
                     document
                       .querySelector('meta[name="color-scheme"]')
@@ -350,8 +389,16 @@ function Settings({ onClose }) {
                 </p>
                 <p class="insignificant">
                   <small>
-                    Note: This feature uses an external API to translate,
+                    Note: This feature uses external translation services,
                     powered by{' '}
+                    <a
+                      href="https://github.com/cheeaun/lingva-api"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Lingva API
+                    </a>{' '}
+                    &amp;{' '}
                     <a
                       href="https://github.com/thedaviddelta/lingva-translate"
                       target="_blank"
@@ -386,6 +433,37 @@ function Settings({ onClose }) {
                 </div>
               </div>
             </li>
+            {!!IMG_ALT_API_URL && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.mediaAltGenerator}
+                    onChange={(e) => {
+                      states.settings.mediaAltGenerator = e.target.checked;
+                    }}
+                  />{' '}
+                  Image description generator{' '}
+                  <Icon icon="sparkles2" class="more-insignificant" />
+                </label>
+                <div class="sub-section insignificant">
+                  <small>Only for new images while composing new posts.</small>
+                </div>
+                <div class="sub-section insignificant">
+                  <small>
+                    Note: This feature uses external AI service, powered by{' '}
+                    <a
+                      href="https://github.com/cheeaun/img-alt-api"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      img-alt-api
+                    </a>
+                    . May not work well. Only for images and in English.
+                  </small>
+                </div>
+              </li>
+            )}
             <li>
               <label>
                 <input
@@ -501,7 +579,7 @@ function Settings({ onClose }) {
             </a>{' '}
             &middot;{' '}
             <a
-              href="https://github.com/cheeaun/phanpy/blob/main/PRIVACY.MD"
+              href={PRIVACY_POLICY_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -510,7 +588,14 @@ function Settings({ onClose }) {
           </p>
           {__BUILD_TIME__ && (
             <p>
-              Version:{' '}
+              {WEBSITE && (
+                <>
+                  <span class="insignificant">Site:</span>{' '}
+                  {WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')}
+                  <br />
+                </>
+              )}
+              <span class="insignificant">Version:</span>{' '}
               <input
                 type="text"
                 class="version-string"
@@ -531,17 +616,19 @@ function Settings({ onClose }) {
                   }
                 }}
               />{' '}
-              <span class="ib insignificant">
-                (
-                <a
-                  href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <RelativeTime datetime={new Date(__BUILD_TIME__)} />
-                </a>
-                )
-              </span>
+              {!__FAKE_COMMIT_HASH__ && (
+                <span class="ib insignificant">
+                  (
+                  <a
+                    href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <RelativeTime datetime={new Date(__BUILD_TIME__)} />
+                  </a>
+                  )
+                </span>
+              )}
             </p>
           )}
         </section>

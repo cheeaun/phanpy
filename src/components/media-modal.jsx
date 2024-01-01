@@ -295,8 +295,7 @@ function MediaModal({
               <Icon icon="popout" />
               <span>Open original media</span>
             </MenuLink>
-            {import.meta.env.DEV && // Only dev for now
-              !!states.settings.mediaAltGenerator &&
+            {!!states.settings.mediaAltGenerator &&
               !!IMG_ALT_API_URL &&
               !!mediaAttachments[currentIndex]?.url &&
               !mediaAttachments[currentIndex]?.description &&

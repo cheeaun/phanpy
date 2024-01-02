@@ -714,6 +714,13 @@ function StatusCarousel({ title, class: className, children }) {
   //   init?.();
   // }, []);
 
+  const [render, setRender] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setRender(true);
+    }, 1);
+  }, []);
+
   return (
     <div class={`status-carousel ${className}`}>
       <header>
@@ -757,7 +764,8 @@ function StatusCarousel({ title, class: className, children }) {
               startButtonRef.current.disabled = inView;
           }}
         />
-        {children}
+        {children[0]}
+        {render && children.slice(1)}
         <InView
           class="status-carousel-beacon"
           onChange={(inView) => {

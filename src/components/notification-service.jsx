@@ -15,6 +15,22 @@ import Link from './link';
 import Modal from './modal';
 import Notification from './notification';
 
+{
+  if ('serviceWorker' in navigator) {
+    console.log('👂👂👂 Listen to message');
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      console.log('💥💥💥 Message event', event);
+      const { type, id, accessToken } = event?.data || {};
+      if (type === 'notification') {
+        states.routeNotification = {
+          id,
+          accessToken,
+        };
+      }
+    });
+  }
+}
+
 export default memo(function NotificationService() {
   if (!('serviceWorker' in navigator)) return null;
 
@@ -82,25 +98,25 @@ export default memo(function NotificationService() {
     })();
   }, [id, accessToken]);
 
-  useLayoutEffect(() => {
-    // Listen to message from service worker
-    const handleMessage = (event) => {
-      console.log('💥💥💥 Message event', event);
-      const { type, id, accessToken } = event?.data || {};
-      if (type === 'notification') {
-        states.routeNotification = {
-          id,
-          accessToken,
-        };
-      }
-    };
-    console.log('👂👂👂 Listen to message');
-    navigator.serviceWorker.addEventListener('message', handleMessage);
-    return () => {
-      console.log('👂👂👂 Remove listen to message');
-      navigator.serviceWorker.removeEventListener('message', handleMessage);
-    };
-  }, []);
+  // useLayoutEffect(() => {
+  //   // Listen to message from service worker
+  //   const handleMessage = (event) => {
+  //     console.log('💥💥💥 Message event', event);
+  //     const { type, id, accessToken } = event?.data || {};
+  //     if (type === 'notification') {
+  //       states.routeNotification = {
+  //         id,
+  //         accessToken,
+  //       };
+  //     }
+  //   };
+  //   console.log('👂👂👂 Listen to message');
+  //   navigator.serviceWorker.addEventListener('message', handleMessage);
+  //   return () => {
+  //     console.log('👂👂👂 Remove listen to message');
+  //     navigator.serviceWorker.removeEventListener('message', handleMessage);
+  //   };
+  // }, []);
 
   useLayoutEffect(() => {
     if (navigator?.clearAppBadge) {

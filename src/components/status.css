@@ -206,7 +206,7 @@
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
   max-height: 160px !important;
-  overflow: hidden;
+  overflow: clip;
 }
 .status.small:not(.status-carousel .status)
   .status-card
@@ -1957,7 +1957,7 @@ a.card:is(:hover, :focus):visited {
   color: var(--media-fg-color);
   background-color: var(--media-bg-color);
   border: var(--hairline-width) solid var(--media-outline-color);
-  mix-blend-mode: luminosity;
+  /* mix-blend-mode: luminosity; */
   border-radius: 4px;
   padding: 4px;
   opacity: 0.65;

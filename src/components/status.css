@@ -730,6 +730,9 @@
   tab-size: 2;
   text-wrap: pretty;
 }
+.status-card .content p {
+  margin-block: min(0.25em, 4px);
+}
 .status .content p:first-child {
   margin-block-start: 0;
 }

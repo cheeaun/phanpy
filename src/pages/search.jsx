@@ -17,7 +17,6 @@ import { api } from '../utils/api';
 import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import usePageVisibility from '../utils/usePageVisibility';
-import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 const SHORT_LIMIT = 5;
@@ -151,11 +150,9 @@ function Search({ columnMode, ...props }) {
     })();
   }
 
-  const { reachStart } = useScroll({
-    scrollableRef,
-  });
   const lastHiddenTime = useRef();
   usePageVisibility((visible) => {
+    const reachStart = scrollableRef.current?.scrollTop === 0;
     if (visible && reachStart) {
       const timeDiff = Date.now() - lastHiddenTime.current;
       if (!lastHiddenTime.current || timeDiff > 1000 * 3) {

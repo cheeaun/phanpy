@@ -208,7 +208,7 @@
   max-height: 160px !important;
   overflow: clip;
 }
-.status.small:not(.status-carousel .status)
+.status.small:not(.status-carousel .status, .status.large .status)
   .status-card
   :is(.content, .poll, .media-container) {
   max-height: 80px !important;
@@ -958,6 +958,11 @@
   width: min(var(--width), 100%);
   height: auto;
   max-height: 60vh;
+}
+.status.status-card .media-container.media-eq1 .media {
+  max-height: 160px;
+  width: auto;
+  max-width: min(var(--width), 100%);
 }
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {

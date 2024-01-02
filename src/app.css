@@ -944,6 +944,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .status-carousel .content-container .content:only-child {
   font-size: calc(100% + 25% * max(2 - var(--content-text-weight), 0));
+
+  &:has(.status-card) {
+    font-size: unset;
+  }
 }
 /* .status-carousel
   .content-container[data-content-text-weight='1']

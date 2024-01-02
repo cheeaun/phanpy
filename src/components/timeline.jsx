@@ -239,9 +239,10 @@ function Timeline({
       setNearReachStart(nearReachStart);
       if (reachStart) {
         loadItems(true);
-      } else if (nearReachEnd || (reachEnd && showMore)) {
-        loadItems();
       }
+      // else if (nearReachEnd || (reachEnd && showMore)) {
+      //   loadItems();
+      // }
     },
     [],
   );
@@ -451,6 +452,8 @@ function Timeline({
               {uiState === 'default' &&
                 (showMore ? (
                   <InView
+                    root={scrollableRef.current}
+                    rootMargin={Math.max(screen.width, screen.height) + 'px'}
                     onChange={(inView) => {
                       if (inView) {
                         loadItems();

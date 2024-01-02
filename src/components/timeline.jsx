@@ -698,18 +698,18 @@ function StatusCarousel({ title, class: className, children }) {
   // });
   const startButtonRef = useRef();
   const endButtonRef = useRef();
-  useScrollFn(
-    {
-      scrollableRef: carouselRef,
-      direction: 'horizontal',
-      init: true,
-    },
-    ({ reachStart, reachEnd }) => {
-      if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
-      if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
-    },
-    [],
-  );
+  // useScrollFn(
+  //   {
+  //     scrollableRef: carouselRef,
+  //     direction: 'horizontal',
+  //     init: true,
+  //   },
+  //   ({ reachStart, reachEnd }) => {
+  //     if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
+  //     if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
+  //   },
+  //   [],
+  // );
   // useEffect(() => {
   //   init?.();
   // }, []);
@@ -749,7 +749,22 @@ function StatusCarousel({ title, class: className, children }) {
           </button>
         </span>
       </header>
-      <ul ref={carouselRef}>{children}</ul>
+      <ul ref={carouselRef}>
+        <InView
+          class="status-carousel-beacon"
+          onChange={(inView) => {
+            if (startButtonRef.current)
+              startButtonRef.current.disabled = inView;
+          }}
+        />
+        {children}
+        <InView
+          class="status-carousel-beacon"
+          onChange={(inView) => {
+            if (endButtonRef.current) endButtonRef.current.disabled = inView;
+          }}
+        />
+      </ul>
     </div>
   );
 }

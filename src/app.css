@@ -894,6 +894,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   text-shadow: 0 1px var(--bg-color);
 }
 .status-carousel > ul {
+  --carousel-gap: 16px;
   display: flex;
   overflow-x: auto;
   overflow-y: clip;
@@ -901,7 +902,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   scroll-behavior: smooth;
   margin: 0;
   padding: 8px 16px;
-  gap: 16px;
+  gap: var(--carousel-gap);
   align-items: flex-start;
   counter-reset: index;
   min-height: 160px;
@@ -925,6 +926,15 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .status-carousel > ul > li:is(:empty, :has(> a:empty)) {
   display: none;
+}
+.status-carousel .status-carousel-beacon {
+  margin-right: calc(-1 * var(--carousel-gap));
+  pointer-events: none;
+  opacity: 0;
+
+  ~ .status-carousel-beacon {
+    margin-left: calc(-1 * var(--carousel-gap));
+  }
 }
 /*
   Assume that browsers that do support inline-size property also support container queries.

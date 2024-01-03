@@ -453,7 +453,7 @@ function Timeline({
                 (showMore ? (
                   <InView
                     root={scrollableRef.current}
-                    rootMargin={Math.max(screen.width, screen.height) + 'px'}
+                    rootMargin={`0px 0px ${screen.height * 1.5}px 0px`}
                     onChange={(inView) => {
                       if (inView) {
                         loadItems();

@@ -1,3 +1,4 @@
+import moize from 'moize';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 const SIZES = {
@@ -110,6 +111,29 @@ export const ICONS = {
 
 const ICONDATA = {};
 
+// Memoize the dangerouslySetInnerHTML of the SVGs
+const SVGICon = moize(
+  function ({ size, width, height, body, rotate, flip }) {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${width} ${height}`}
+        dangerouslySetInnerHTML={{ __html: body }}
+        style={{
+          transform: `${rotate ? `rotate(${rotate})` : ''} ${
+            flip ? `scaleX(-1)` : ''
+          }`,
+        }}
+      />
+    );
+  },
+  {
+    isShallowEqual: true,
+    maxSize: Object.keys(ICONS).length,
+  },
+);
+
 function Icon({
   icon,
   size = 'm',
@@ -150,16 +174,24 @@ function Icon({
       }}
     >
       {iconData && (
-        <svg
-          width={iconSize}
-          height={iconSize}
-          viewBox={`0 0 ${iconData.width} ${iconData.height}`}
-          dangerouslySetInnerHTML={{ __html: iconData.body }}
-          style={{
-            transform: `${rotate ? `rotate(${rotate})` : ''} ${
-              flip ? `scaleX(-1)` : ''
-            }`,
-          }}
+        // <svg
+        //   width={iconSize}
+        //   height={iconSize}
+        //   viewBox={`0 0 ${iconData.width} ${iconData.height}`}
+        //   dangerouslySetInnerHTML={{ __html: iconData.body }}
+        //   style={{
+        //     transform: `${rotate ? `rotate(${rotate})` : ''} ${
+        //       flip ? `scaleX(-1)` : ''
+        //     }`,
+        //   }}
+        // />
+        <SVGICon
+          size={iconSize}
+          width={iconData.width}
+          height={iconData.height}
+          body={iconData.body}
+          rotate={rotate}
+          flip={flip}
         />
       )}
     </span>

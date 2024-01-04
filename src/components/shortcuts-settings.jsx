@@ -172,7 +172,9 @@ export const SHORTCUTS_META = {
     id: 'search',
     title: ({ query }) => (query ? `"${query}"` : 'Search'),
     path: ({ query }) =>
-      query ? `/search?q=${query}&type=statuses` : '/search',
+      query
+        ? `/search?q=${encodeURIComponent(query)}&type=statuses`
+        : '/search',
     icon: 'search',
     excludeViewMode: ({ query }) => (!query ? ['multi-column'] : []),
   },

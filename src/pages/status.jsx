@@ -735,7 +735,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             <>
               <InView
                 threshold={0.1}
-                onChange={setHeroInView}
+                onChange={(inView) => {
+                  queueMicrotask(() => {
+                    requestAnimationFrame(() => {
+                      setHeroInView(inView);
+                    });
+                  });
+                }}
                 class="status-focus"
                 tabIndex={0}
               >
@@ -813,7 +819,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               <InView
                 skip={i !== 0 || !ancestor}
                 threshold={0.5}
-                onChange={setReachTopPost}
+                onChange={(inView) => {
+                  queueMicrotask(() => {
+                    requestAnimationFrame(() => {
+                      setReachTopPost(inView);
+                    });
+                  });
+                }}
               >
                 <Status
                   statusID={statusID}

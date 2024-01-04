@@ -210,7 +210,7 @@
 }
 .status.small:not(.status-carousel .status, .status.large .status)
   .status-card
-  :is(.content, .poll, .media-container) {
+  :is(.content, .poll, .media-container:not(.media-gt2)) {
   max-height: 80px !important;
 }
 .status.large .status-card :is(.content, .poll, .media-container) {

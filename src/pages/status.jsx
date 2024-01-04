@@ -941,9 +941,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       }}
     >
       <header
-        class={`${heroInView ? 'inview' : ''} ${
-          uiState === 'loading' ? 'loading' : ''
-        }`}
+        class={`${uiState === 'loading' ? 'loading' : ''}`}
         onDblClick={(e) => {
           // reload statuses
           states.reloadStatusPage++;

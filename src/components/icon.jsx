@@ -146,6 +146,11 @@ function Icon({
 
   const iconSize = SIZES[size];
   let iconBlock = ICONS[icon];
+  if (!iconBlock) {
+    console.warn(`Icon ${icon} not found`);
+    return null;
+  }
+
   let rotate, flip;
   if (Array.isArray(iconBlock)) {
     [iconBlock, rotate, flip] = iconBlock;

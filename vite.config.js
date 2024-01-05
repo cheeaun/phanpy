@@ -9,11 +9,12 @@ import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
 
+const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
 const {
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
-} = loadEnv('production', process.cwd());
+} = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
 let commitHash;
@@ -35,7 +36,7 @@ const rollbarCode = fs.readFileSync(
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  envPrefix: ['VITE_', 'PHANPY_'],
+  envPrefix: allowedEnvPrefixes,
   mode: NODE_ENV,
   define: {
     __BUILD_TIME__: JSON.stringify(now),

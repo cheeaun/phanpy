@@ -184,6 +184,15 @@ function StatusPage(params) {
   );
 }
 
+function StatusParent(props) {
+  const { linkable, to, onClick, ...restProps } = props;
+  return linkable ? (
+    <Link class="status-link" to={to} onClick={onClick} {...restProps} />
+  ) : (
+    <div class="status-focus" tabIndex={0} {...restProps} />
+  );
+}
+
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
@@ -705,24 +714,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         weight,
       } = status;
       const isHero = statusID === id;
-      // const StatusParent = useCallback(
-      //   (props) =>
-      //     isThread || thread || ancestor ? (
-      //       <Link
-      //         class="status-link"
-      //         to={
-      //           instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`
-      //         }
-      //         onClick={() => {
-      //           resetScrollPosition(statusID);
-      //         }}
-      //         {...props}
-      //       />
-      //     ) : (
-      //       <div class="status-focus" tabIndex={0} {...props} />
-      //     ),
-      //   [isThread, thread],
-      // );
+      const isLinkable = isThread || ancestor;
+
       return (
         <li
           key={statusID}
@@ -808,25 +801,42 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               )}
             </>
           ) : (
-            // <StatusParent>
-            <Link
-              class="status-link"
+            <StatusParent
+              linkable={isLinkable}
               to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
               onClick={() => {
                 resetScrollPosition(statusID);
               }}
             >
-              <InView
-                skip={i !== 0 || !ancestor}
-                threshold={0.5}
-                onChange={(inView) => {
-                  queueMicrotask(() => {
-                    requestAnimationFrame(() => {
-                      setReachTopPost(inView);
+              {/* <Link
+              class="status-link"
+              to={instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`}
+              onClick={() => {
+                resetScrollPosition(statusID);
+              }}
+            > */}
+              {i === 0 && ancestor ? (
+                <InView
+                  threshold={0.5}
+                  onChange={(inView) => {
+                    queueMicrotask(() => {
+                      requestAnimationFrame(() => {
+                        setReachTopPost(inView);
+                      });
                     });
-                  });
-                }}
-              >
+                  }}
+                >
+                  <Status
+                    statusID={statusID}
+                    instance={instance}
+                    withinContext
+                    size={thread || ancestor ? 'm' : 's'}
+                    enableTranslate
+                    onMediaClick={handleMediaClick}
+                    onStatusLinkClick={handleStatusLinkClick}
+                  />
+                </InView>
+              ) : (
                 <Status
                   statusID={statusID}
                   instance={instance}
@@ -836,7 +846,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   onMediaClick={handleMediaClick}
                   onStatusLinkClick={handleStatusLinkClick}
                 />
-              </InView>
+              )}
               {ancestor && repliesCount > 1 && (
                 <div class="replies-link">
                   <Icon icon="comment2" />{' '}
@@ -853,8 +863,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                           </span>
                         </div>
                       )} */}
-              {/* </StatusParent> */}
-            </Link>
+            </StatusParent>
+            // </Link>
           )}
           {descendant && replies?.length > 0 && (
             <SubComments
@@ -864,6 +874,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               level={1}
               accWeight={weight}
               openAll={totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT}
+              parentLink={{
+                to: instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`,
+                onClick: () => resetScrollPosition(statusID),
+              }}
             />
           )}
           {uiState === 'loading' &&
@@ -931,6 +945,11 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     statuses.slice(limit).forEach(getIDs);
     return ids.map((id) => statusKey(id, instance));
   }, [showMore, statuses, limit, instance]);
+
+  const statusesList = useMemo(
+    () => statuses.slice(0, limit).map(renderStatus),
+    [statuses, limit, renderStatus],
+  );
 
   return (
     <div
@@ -1176,7 +1195,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             uiState === 'loading' ? 'loading' : ''
           }`}
         >
-          {statuses.slice(0, limit).map(renderStatus)}
+          {statusesList}
           {showMore > 0 && (
             <li>
               <button
@@ -1244,6 +1263,7 @@ function SubComments({
   level,
   accWeight,
   openAll,
+  parentLink,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -1330,34 +1350,49 @@ function SubComments({
             />
           ))}
         </span>
-        <b>
-          <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
-          repl
-          {replies.length === 1 ? 'y' : 'ies'}
-        </b>
-        {!sameCount && totalComments > 1 && (
-          <>
-            {' '}
-            &middot;{' '}
-            <span>
-              <span title={totalComments}>{shortenNumber(totalComments)}</span>{' '}
-              comment
-              {totalComments === 1 ? '' : 's'}
-            </span>
-          </>
+        <span class="replies-counts">
+          <b>
+            <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
+            repl
+            {replies.length === 1 ? 'y' : 'ies'}
+          </b>
+          {!sameCount && totalComments > 1 && (
+            <>
+              {' '}
+              &middot;{' '}
+              <span>
+                <span title={totalComments}>
+                  {shortenNumber(totalComments)}
+                </span>{' '}
+                comment
+                {totalComments === 1 ? '' : 's'}
+              </span>
+            </>
+          )}
+        </span>
+        <Icon icon="chevron-down" class="replies-summary-chevron" />
+        {!!parentLink && (
+          <Link
+            class="replies-parent-link"
+            to={parentLink.to}
+            onClick={parentLink.onClick}
+            title="View post with its replies"
+          >
+            &raquo;
+          </Link>
         )}
       </summary>
       <ul>
         {replies.map((r) => (
           <li key={r.id}>
-            <Link
+            {/* <Link
               class="status-link"
               to={instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`}
               onClick={() => {
                 resetScrollPosition(r.id);
               }}
-            >
-              {/* <div class="status-focus" tabIndex={0}> */}
+            > */}
+            <div class="status-focus" tabIndex={0}>
               <Status
                 statusID={r.id}
                 instance={instance}
@@ -1374,8 +1409,8 @@ function SubComments({
                   </span>
                 </div>
               )}
-              {/* </div> */}
-            </Link>
+            </div>
+            {/* </Link> */}
             {r.replies?.length && (
               <SubComments
                 instance={instance}
@@ -1383,6 +1418,12 @@ function SubComments({
                 level={level + 1}
                 accWeight={!open ? r.weight : totalWeight}
                 openAll={openAll}
+                parentLink={{
+                  to: instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`,
+                  onClick: () => {
+                    resetScrollPosition(r.id);
+                  },
+                }}
               />
             )}
           </li>

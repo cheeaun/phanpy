@@ -86,7 +86,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   inset: 0;
 }
 :is(#home-page, #welcome, #columns, #loader-root):has(~ .deck-container) {
-  display: block;
+  /* display: block; */
   position: absolute;
   user-select: none;
   pointer-events: none;

@@ -831,6 +831,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-top-right-radius: 0;
   border-top: 0;
   background-size: 100% 16px;
+
+  &:has(.status-pre-meta) {
+    /* 20px = icon of the pre-meta */
+    background-size: 100% calc(16px + 20px);
+  }
 }
 .timeline:not(.flat)
   > li:is(.timeline-item-container-middle, .timeline-item-container-end)

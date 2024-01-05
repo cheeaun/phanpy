@@ -22,7 +22,7 @@ export function getInstanceStatusObject(url) {
       };
     }
   }
-  return null;
+  return {};
 }
 
 function getInstanceStatusURL(url) {

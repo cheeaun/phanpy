@@ -239,9 +239,10 @@ function Timeline({
       setNearReachStart(nearReachStart);
       if (reachStart) {
         loadItems(true);
-      } else if (nearReachEnd || (reachEnd && showMore)) {
-        loadItems();
       }
+      // else if (nearReachEnd || (reachEnd && showMore)) {
+      //   loadItems();
+      // }
     },
     [],
   );
@@ -451,6 +452,8 @@ function Timeline({
               {uiState === 'default' &&
                 (showMore ? (
                   <InView
+                    root={scrollableRef.current}
+                    rootMargin={`0px 0px ${screen.height * 1.5}px 0px`}
                     onChange={(inView) => {
                       if (inView) {
                         loadItems();
@@ -695,21 +698,28 @@ function StatusCarousel({ title, class: className, children }) {
   // });
   const startButtonRef = useRef();
   const endButtonRef = useRef();
-  useScrollFn(
-    {
-      scrollableRef: carouselRef,
-      direction: 'horizontal',
-      init: true,
-    },
-    ({ reachStart, reachEnd }) => {
-      if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
-      if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
-    },
-    [],
-  );
+  // useScrollFn(
+  //   {
+  //     scrollableRef: carouselRef,
+  //     direction: 'horizontal',
+  //     init: true,
+  //   },
+  //   ({ reachStart, reachEnd }) => {
+  //     if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
+  //     if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
+  //   },
+  //   [],
+  // );
   // useEffect(() => {
   //   init?.();
   // }, []);
+
+  const [render, setRender] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setRender(true);
+    }, 1);
+  }, []);
 
   return (
     <div class={`status-carousel ${className}`}>
@@ -746,7 +756,23 @@ function StatusCarousel({ title, class: className, children }) {
           </button>
         </span>
       </header>
-      <ul ref={carouselRef}>{children}</ul>
+      <ul ref={carouselRef}>
+        <InView
+          class="status-carousel-beacon"
+          onChange={(inView) => {
+            if (startButtonRef.current)
+              startButtonRef.current.disabled = inView;
+          }}
+        />
+        {children[0]}
+        {render && children.slice(1)}
+        <InView
+          class="status-carousel-beacon"
+          onChange={(inView) => {
+            if (endButtonRef.current) endButtonRef.current.disabled = inView;
+          }}
+        />
+      </ul>
     </div>
   );
 }

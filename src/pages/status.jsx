@@ -545,7 +545,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const ancestors = statuses.filter((s) => s.ancestor);
 
   const [heroInView, setHeroInView] = useState(true);
-  const onView = useDebouncedCallback(setHeroInView, 100);
   const heroPointer = useMemo(() => {
     // get top offset of heroStatus
     if (!heroStatusRef.current || heroInView) return null;
@@ -652,10 +651,11 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     }
   });
 
-  const { nearReachStart } = useScroll({
-    scrollableRef,
-    distanceFromStartPx: 16,
-  });
+  const [reachTopPost, setReachTopPost] = useState(false);
+  // const { nearReachStart } = useScroll({
+  //   scrollableRef,
+  //   distanceFromStartPx: 16,
+  // });
 
   const initialPageState = useRef(showMedia ? 'media+status' : 'status');
 
@@ -693,7 +693,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   }, [mediaStatusID, showMedia]);
 
   const renderStatus = useCallback(
-    (status) => {
+    (status, i) => {
       const {
         id: statusID,
         ancestor,
@@ -735,7 +735,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             <>
               <InView
                 threshold={0.1}
-                onChange={onView}
+                onChange={(inView) => {
+                  queueMicrotask(() => {
+                    requestAnimationFrame(() => {
+                      setHeroInView(inView);
+                    });
+                  });
+                }}
                 class="status-focus"
                 tabIndex={0}
               >
@@ -810,15 +816,27 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 resetScrollPosition(statusID);
               }}
             >
-              <Status
-                statusID={statusID}
-                instance={instance}
-                withinContext
-                size={thread || ancestor ? 'm' : 's'}
-                enableTranslate
-                onMediaClick={handleMediaClick}
-                onStatusLinkClick={handleStatusLinkClick}
-              />
+              <InView
+                skip={i !== 0 || !ancestor}
+                threshold={0.5}
+                onChange={(inView) => {
+                  queueMicrotask(() => {
+                    requestAnimationFrame(() => {
+                      setReachTopPost(inView);
+                    });
+                  });
+                }}
+              >
+                <Status
+                  statusID={statusID}
+                  instance={instance}
+                  withinContext
+                  size={thread || ancestor ? 'm' : 's'}
+                  enableTranslate
+                  onMediaClick={handleMediaClick}
+                  onStatusLinkClick={handleStatusLinkClick}
+                />
+              </InView>
               {ancestor && repliesCount > 1 && (
                 <div class="replies-link">
                   <Icon icon="comment2" />{' '}
@@ -935,9 +953,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       }}
     >
       <header
-        class={`${heroInView ? 'inview' : ''} ${
-          uiState === 'loading' ? 'loading' : ''
-        }`}
+        class={`${uiState === 'loading' ? 'loading' : ''}`}
         onDblClick={(e) => {
           // reload statuses
           states.reloadStatusPage++;
@@ -1011,7 +1027,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       behavior: 'smooth',
                     });
                   }}
-                  hidden={!ancestors.length || nearReachStart}
+                  hidden={!ancestors.length || reachTopPost}
                   title={`${ancestors.length} posts above ‒ Go to top`}
                 >
                   <Icon icon="arrow-up" />

@@ -206,11 +206,11 @@
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
   max-height: 160px !important;
-  overflow: hidden;
+  overflow: clip;
 }
-.status.small:not(.status-carousel .status)
+.status.small:not(.status-carousel .status, .status.large .status)
   .status-card
-  :is(.content, .poll, .media-container) {
+  :is(.content, .poll, .media-container:not(.media-gt2)) {
   max-height: 80px !important;
 }
 .status.large .status-card :is(.content, .poll, .media-container) {
@@ -730,6 +730,9 @@
   tab-size: 2;
   text-wrap: pretty;
 }
+.status-card .content p {
+  margin-block: min(0.25em, 4px);
+}
 .status .content p:first-child {
   margin-block-start: 0;
 }
@@ -958,6 +961,11 @@
   width: min(var(--width), 100%);
   height: auto;
   max-height: 60vh;
+}
+.status.status-card .media-container.media-eq1 .media {
+  max-height: 160px;
+  width: auto;
+  max-width: min(var(--width), 100%);
 }
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {
@@ -1957,7 +1965,7 @@ a.card:is(:hover, :focus):visited {
   color: var(--media-fg-color);
   background-color: var(--media-bg-color);
   border: var(--hairline-width) solid var(--media-outline-color);
-  mix-blend-mode: luminosity;
+  /* mix-blend-mode: luminosity; */
   border-radius: 4px;
   padding: 4px;
   opacity: 0.65;

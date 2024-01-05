@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
+import { useThrottledCallback } from 'use-debounce';
 
 export default function useScrollFn(
   {
@@ -22,59 +23,62 @@ export default function useScrollFn(
   const [nearReachStart, setNearReachStart] = useState(false);
   const [nearReachEnd, setNearReachEnd] = useState(false);
   const isVertical = direction === 'vertical';
+  const previousScrollStart = useRef(null);
+
+  const onScroll = useThrottledCallback(() => {
+    const scrollableElement = scrollableRef.current;
+    const {
+      scrollTop,
+      scrollLeft,
+      scrollHeight,
+      scrollWidth,
+      clientHeight,
+      clientWidth,
+    } = scrollableElement;
+    const scrollStart = isVertical ? scrollTop : scrollLeft;
+    const scrollDimension = isVertical ? scrollHeight : scrollWidth;
+    const clientDimension = isVertical ? clientHeight : clientWidth;
+    const scrollDistance = Math.abs(scrollStart - previousScrollStart.current);
+    const distanceFromStartPx =
+      _distanceFromStartPx ||
+      Math.min(
+        clientDimension * distanceFromStart,
+        scrollDimension,
+        scrollStart,
+      );
+    const distanceFromEndPx =
+      _distanceFromEndPx ||
+      Math.min(
+        clientDimension * distanceFromEnd,
+        scrollDimension,
+        scrollDimension - scrollStart - clientDimension,
+      );
+
+    if (
+      scrollDistance >=
+      (previousScrollStart.current < scrollStart
+        ? scrollThresholdEnd
+        : scrollThresholdStart)
+    ) {
+      setScrollDirection(
+        previousScrollStart.current < scrollStart ? 'end' : 'start',
+      );
+      previousScrollStart.current = scrollStart;
+    }
+
+    setReachStart(scrollStart <= 0);
+    setReachEnd(scrollStart + clientDimension >= scrollDimension);
+    setNearReachStart(scrollStart <= distanceFromStartPx);
+    setNearReachEnd(
+      scrollStart + clientDimension >= scrollDimension - distanceFromEndPx,
+    );
+  }, 500);
 
   useLayoutEffect(() => {
     const scrollableElement = scrollableRef.current;
     if (!scrollableElement) return {};
-    let previousScrollStart = isVertical
-      ? scrollableElement.scrollTop
-      : scrollableElement.scrollLeft;
-
-    function onScroll() {
-      const {
-        scrollTop,
-        scrollLeft,
-        scrollHeight,
-        scrollWidth,
-        clientHeight,
-        clientWidth,
-      } = scrollableElement;
-      const scrollStart = isVertical ? scrollTop : scrollLeft;
-      const scrollDimension = isVertical ? scrollHeight : scrollWidth;
-      const clientDimension = isVertical ? clientHeight : clientWidth;
-      const scrollDistance = Math.abs(scrollStart - previousScrollStart);
-      const distanceFromStartPx =
-        _distanceFromStartPx ||
-        Math.min(
-          clientDimension * distanceFromStart,
-          scrollDimension,
-          scrollStart,
-        );
-      const distanceFromEndPx =
-        _distanceFromEndPx ||
-        Math.min(
-          clientDimension * distanceFromEnd,
-          scrollDimension,
-          scrollDimension - scrollStart - clientDimension,
-        );
-
-      if (
-        scrollDistance >=
-        (previousScrollStart < scrollStart
-          ? scrollThresholdEnd
-          : scrollThresholdStart)
-      ) {
-        setScrollDirection(previousScrollStart < scrollStart ? 'end' : 'start');
-        previousScrollStart = scrollStart;
-      }
-
-      setReachStart(scrollStart <= 0);
-      setReachEnd(scrollStart + clientDimension >= scrollDimension);
-      setNearReachStart(scrollStart <= distanceFromStartPx);
-      setNearReachEnd(
-        scrollStart + clientDimension >= scrollDimension - distanceFromEndPx,
-      );
-    }
+    previousScrollStart.current =
+      scrollableElement[isVertical ? 'scrollTop' : 'scrollLeft'];
 
     scrollableElement.addEventListener('scroll', onScroll, { passive: true });
 

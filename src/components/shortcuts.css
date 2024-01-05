@@ -59,8 +59,9 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: var(--bg-blur-color);
-  backdrop-filter: blur(16px) saturate(3);
+  background-color: var(--bg-color);
+  /* background-color: var(--bg-blur-color);
+  backdrop-filter: blur(16px) saturate(3); */
   border-top: var(--hairline-width) solid var(--outline-color);
   box-shadow: 0 -8px 16px -8px var(--drop-shadow-color);
   overflow: auto;
@@ -165,6 +166,7 @@ shortcuts .tab-bar[hidden] {
     padding: env(safe-area-inset-top) env(safe-area-inset-right) 0
       env(safe-area-inset-left);
     background-color: var(--bg-faded-blur-color);
+    backdrop-filter: blur(16px);
     border: 0;
     box-shadow: none;
     border-bottom: var(--hairline-width) solid var(--bg-faded-color);

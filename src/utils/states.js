@@ -192,19 +192,14 @@ export function saveStatus(status, instance, opts) {
   // THREAD TRAVERSER
   if (!skipThreading) {
     queueMicrotask(() => {
-      threadifyStatus(status, instance);
-      if (status.reblog) {
-        queueMicrotask(() => {
-          threadifyStatus(status.reblog, instance);
-        });
-      }
+      threadifyStatus(status.reblog || status, instance);
     });
   }
 
   // UNFURLER
   if (!skipUnfurling) {
     queueMicrotask(() => {
-      unfurlStatus(status, instance);
+      unfurlStatus(status.reblog || status, instance);
     });
   }
 }
@@ -253,10 +248,10 @@ export const threadifyStatus = rateLimit(_threadifyStatus, 100);
 const fauxDiv = document.createElement('div');
 export function unfurlStatus(status, instance) {
   const { instance: currentInstance } = api();
-  const content = status.reblog?.content || status.content;
+  const content = status?.content;
   const hasLink = /<a/i.test(content);
   if (hasLink) {
-    const sKey = statusKey(status?.reblog?.id || status?.id, instance);
+    const sKey = statusKey(status?.id, instance);
     fauxDiv.innerHTML = content;
     const links = fauxDiv.querySelectorAll(
       'a[href]:not(.u-url):not(.mention):not(.hashtag)',

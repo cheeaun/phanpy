@@ -1,3 +1,4 @@
+import moize from 'moize';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 const SIZES = {
@@ -110,6 +111,29 @@ export const ICONS = {
 
 const ICONDATA = {};
 
+// Memoize the dangerouslySetInnerHTML of the SVGs
+const SVGICon = moize(
+  function ({ size, width, height, body, rotate, flip }) {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${width} ${height}`}
+        dangerouslySetInnerHTML={{ __html: body }}
+        style={{
+          transform: `${rotate ? `rotate(${rotate})` : ''} ${
+            flip ? `scaleX(-1)` : ''
+          }`,
+        }}
+      />
+    );
+  },
+  {
+    isShallowEqual: true,
+    maxSize: Object.keys(ICONS).length,
+  },
+);
+
 function Icon({
   icon,
   size = 'm',
@@ -122,6 +146,11 @@ function Icon({
 
   const iconSize = SIZES[size];
   let iconBlock = ICONS[icon];
+  if (!iconBlock) {
+    console.warn(`Icon ${icon} not found`);
+    return null;
+  }
+
   let rotate, flip;
   if (Array.isArray(iconBlock)) {
     [iconBlock, rotate, flip] = iconBlock;
@@ -150,16 +179,24 @@ function Icon({
       }}
     >
       {iconData && (
-        <svg
-          width={iconSize}
-          height={iconSize}
-          viewBox={`0 0 ${iconData.width} ${iconData.height}`}
-          dangerouslySetInnerHTML={{ __html: iconData.body }}
-          style={{
-            transform: `${rotate ? `rotate(${rotate})` : ''} ${
-              flip ? `scaleX(-1)` : ''
-            }`,
-          }}
+        // <svg
+        //   width={iconSize}
+        //   height={iconSize}
+        //   viewBox={`0 0 ${iconData.width} ${iconData.height}`}
+        //   dangerouslySetInnerHTML={{ __html: iconData.body }}
+        //   style={{
+        //     transform: `${rotate ? `rotate(${rotate})` : ''} ${
+        //       flip ? `scaleX(-1)` : ''
+        //     }`,
+        //   }}
+        // />
+        <SVGICon
+          size={iconSize}
+          width={iconData.width}
+          height={iconData.height}
+          body={iconData.body}
+          rotate={rotate}
+          flip={flip}
         />
       )}
     </span>

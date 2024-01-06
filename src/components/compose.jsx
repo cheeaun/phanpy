@@ -1838,10 +1838,17 @@ function MediaAttachment({
                                   method: 'POST',
                                   body,
                                 }).then((r) => r.json());
+                                if (response.error) {
+                                  throw new Error(response.error);
+                                }
                                 setDescription(response.description);
                               } catch (e) {
                                 console.error(e);
-                                showToast('Failed to generate description');
+                                showToast(
+                                  `Failed to generate description${
+                                    e?.message ? `: ${e.message}` : ''
+                                  }`,
+                                );
                               } finally {
                                 setUIState('default');
                                 toastRef.current?.hideToast?.();

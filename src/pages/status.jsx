@@ -438,7 +438,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   };
 
   useEffect(initContext, [id, masto]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!statuses.length) return;
     console.debug('STATUSES', statuses);
     const scrollPosition = scrollPositions[id];

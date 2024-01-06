@@ -1,3 +1,4 @@
+import { deepEqual } from 'fast-equals';
 import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
@@ -178,6 +179,7 @@ export function saveStatus(status, instance, opts) {
   if (!status) return;
   const oldStatus = getStatus(status.id, instance);
   if (!override && oldStatus) return;
+  if (deepEqual(status, oldStatus)) return;
   queueMicrotask(() => {
     const key = statusKey(status.id, instance);
     if (oldStatus?._pinned) status._pinned = oldStatus._pinned;

@@ -2,7 +2,7 @@ import './compose.css';
 
 import '@github/text-expander-element';
 import { MenuItem } from '@szhsin/react-menu';
-import equal from 'fast-deep-equal';
+import { deepEqual } from 'fast-equals';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -502,7 +502,10 @@ function Compose({
         mediaAttachments,
       },
     };
-    if (!equal(backgroundDraft, prevBackgroundDraft.current) && !canClose()) {
+    if (
+      !deepEqual(backgroundDraft, prevBackgroundDraft.current) &&
+      !canClose()
+    ) {
       console.debug('not equal', backgroundDraft, prevBackgroundDraft.current);
       db.drafts
         .set(key, {

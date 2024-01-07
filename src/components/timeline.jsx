@@ -204,6 +204,21 @@ function Timeline({
     }
   });
 
+  const showNewPostsIndicator =
+    items.length > 0 && uiState !== 'loading' && showNew;
+  const handleLoadNewPosts = useCallback(() => {
+    loadItems(true);
+    scrollableRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [loadItems]);
+  const dotRef = useHotkeys('.', () => {
+    if (showNewPostsIndicator) {
+      handleLoadNewPosts();
+    }
+  });
+
   // const {
   //   scrollDirection,
   //   nearReachStart,
@@ -387,24 +402,15 @@ function Timeline({
                 {!!headerEnd && headerEnd}
               </div>
             </div>
-            {items.length > 0 &&
-              uiState !== 'loading' &&
-              // !hiddenUI &&
-              showNew && (
-                <button
-                  class="updates-button shiny-pill"
-                  type="button"
-                  onClick={() => {
-                    loadItems(true);
-                    scrollableRef.current?.scrollTo({
-                      top: 0,
-                      behavior: 'smooth',
-                    });
-                  }}
-                >
-                  <Icon icon="arrow-up" /> New posts
-                </button>
-              )}
+            {showNewPostsIndicator && (
+              <button
+                class="updates-button shiny-pill"
+                type="button"
+                onClick={handleLoadNewPosts}
+              >
+                <Icon icon="arrow-up" /> New posts
+              </button>
+            )}
           </header>
           {!!timelineStart && (
             <div

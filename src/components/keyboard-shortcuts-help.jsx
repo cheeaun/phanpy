@@ -72,6 +72,10 @@ export default memo(function KeyboardShortcutsHelp() {
                   ),
                 },
                 {
+                  action: 'Load new posts',
+                  keys: <kbd>.</kbd>,
+                },
+                {
                   action: 'Open post details',
                   keys: (
                     <>

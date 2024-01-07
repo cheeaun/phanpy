@@ -164,7 +164,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           portal
           setDownOverflow
           overflow="auto"
-          viewScroll="close"
+          // viewScroll="close"
           position="anchor"
           menuButton={
             <button type="button" class="plain">

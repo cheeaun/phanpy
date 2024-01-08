@@ -32,6 +32,7 @@
   --text-color: #1c1e21;
   --text-insignificant-color: #1c1e2199;
   --link-color: var(--blue-color);
+  --link-bg-color: #4169e122;
   --link-light-color: #4169e199;
   --link-faded-color: #4169e155;
   --link-bg-hover-color: #f0f2f599;
@@ -89,6 +90,7 @@
   --media-outline-color: color-mix(in lch, var(--media-fg-color), transparent);
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
+  --spring-timing-funtion: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @media (min-resolution: 2dppx) {
@@ -443,6 +445,17 @@ kbd {
     transform: translateY(100%);
   }
   100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up-smooth {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
     transform: translateY(0);
   }
 }

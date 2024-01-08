@@ -9,6 +9,7 @@ import {
   MenuItem,
 } from '@szhsin/react-menu';
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
+import { shallowEqual } from 'fast-equals';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -1983,6 +1984,20 @@ function Card({ card, selfReferential, instance }) {
 
   if (snapStates.unfurledLinks[url]) return null;
 
+  const hasIframeHTML = /<iframe/i.test(html);
+  const handleClick = useCallback(
+    (e) => {
+      if (hasIframeHTML) {
+        e.preventDefault();
+        states.showEmbedModal = {
+          html,
+          url: url || embedUrl,
+        };
+      }
+    },
+    [hasIframeHTML],
+  );
+
   if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = new URL(url).hostname
       .replace(/^www\./, '')
@@ -2015,6 +2030,7 @@ function Card({ card, selfReferential, instance }) {
           '--average-color':
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
         }}
+        onClick={handleClick}
       >
         <div class="card-image">
           <img
@@ -2053,6 +2069,7 @@ function Card({ card, selfReferential, instance }) {
         target="_blank"
         rel="nofollow noopener noreferrer"
         class="card photo"
+        onClick={handleClick}
       >
         <img
           src={embedUrl}
@@ -2067,42 +2084,46 @@ function Card({ card, selfReferential, instance }) {
         />
       </a>
     );
-  } else if (type === 'video') {
-    if (/youtube/i.test(providerName)) {
-      // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
-      const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
-      if (videoID) {
-        return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+  } else {
+    if (type === 'video') {
+      if (/youtube/i.test(providerName)) {
+        // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
+        const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
+        if (videoID) {
+          return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+        }
       }
+      // return (
+      //   <div
+      //     class="card video"
+      //     style={{
+      //       aspectRatio: `${width}/${height}`,
+      //     }}
+      //     dangerouslySetInnerHTML={{ __html: html }}
+      //   />
+      // );
     }
-    return (
-      <div
-        class="card video"
-        style={{
-          aspectRatio: `${width}/${height}`,
-        }}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
-  } else if (hasText && !image) {
-    const domain = new URL(url).hostname.replace(/^www\./, '');
-    return (
-      <a
-        href={cardStatusURL || url}
-        target={cardStatusURL ? null : '_blank'}
-        rel="nofollow noopener noreferrer"
-        class={`card link no-image`}
-        lang={language}
-      >
-        <div class="meta-container">
-          <p class="meta domain">
-            <Icon icon="link" size="s" /> <span>{domain}</span>
-          </p>
-          <p class="title">{title}</p>
-          <p class="meta">{description || providerName || authorName}</p>
-        </div>
-      </a>
-    );
+    if (hasText && !image) {
+      const domain = new URL(url).hostname.replace(/^www\./, '');
+      return (
+        <a
+          href={cardStatusURL || url}
+          target={cardStatusURL ? null : '_blank'}
+          rel="nofollow noopener noreferrer"
+          class={`card link no-image`}
+          lang={language}
+          onClick={handleClick}
+        >
+          <div class="meta-container">
+            <p class="meta domain">
+              <Icon icon="link" size="s" /> <span>{domain}</span>
+            </p>
+            <p class="title">{title}</p>
+            <p class="meta">{description || providerName || authorName}</p>
+          </div>
+        </a>
+      );
+    }
   }
 }
 
@@ -2460,4 +2481,12 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   });
 });
 
-export default memo(Status);
+export default memo(Status, (oldProps, newProps) => {
+  // Shallow equal all props except 'status'
+  // This will be pure static until status ID changes
+  const { status, ...restOldProps } = oldProps;
+  const { status: newStatus, ...restNewProps } = newProps;
+  return (
+    status?.id === newStatus?.id && shallowEqual(restOldProps, restNewProps)
+  );
+});

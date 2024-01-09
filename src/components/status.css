@@ -364,9 +364,8 @@
   vertical-align: middle;
 }
 .status > .container > .meta :is(.time, .edited) {
-  color: inherit;
+  color: var(--text-insignificant-color);
   text-align: end;
-  opacity: 0.5;
   text-decoration: none;
   flex-shrink: 0;
   margin-left: 4px;
@@ -375,9 +374,21 @@
 .status > .container > .meta a.time {
   position: relative;
   overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 90%;
+
+  .more {
+    margin-left: 4px;
+    transition: transform 0.2s ease-out;
+  }
 }
 .status > .container > .meta a.time:is(:hover, :focus) {
-  text-decoration: underline;
+  .more {
+    transform: scale(1.2);
+    color: var(--link-color);
+  }
 }
 .status > .container > .meta a.time:active,
 .status > .container > .meta a.time.is-open {

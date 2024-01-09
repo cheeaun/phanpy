@@ -1412,6 +1412,7 @@ function Status({
                   />
                 )}{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
+                {showContextMenu && <Icon icon="more2" class="more" />}
               </Link>
             ) : (
               // <Menu

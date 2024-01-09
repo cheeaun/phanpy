@@ -11,7 +11,7 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
   const searchFormRef = useRef(null);
 
   useHotkeys(
-    '/',
+    ['Slash', '/'],
     (e) => {
       setShowSearch(true);
       setTimeout(() => {

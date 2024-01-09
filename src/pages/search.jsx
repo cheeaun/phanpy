@@ -174,7 +174,7 @@ function Search({ columnMode, ...props }) {
   }, [q, type, instance]);
 
   useHotkeys(
-    '/',
+    ['/', 'Slash'],
     (e) => {
       searchFormRef.current?.focus?.();
     },

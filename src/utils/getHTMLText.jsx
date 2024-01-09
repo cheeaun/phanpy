@@ -9,6 +9,17 @@ function getHTMLText(html) {
   div.querySelectorAll('br').forEach((br) => {
     br.replaceWith('\n');
   });
+
+  // MASTODON-SPECIFIC classes
+  // Remove .invisible
+  div.querySelectorAll('.invisible').forEach((el) => {
+    el.remove();
+  });
+  // Add … at end of .ellipsis
+  div.querySelectorAll('.ellipsis').forEach((el) => {
+    el.append('...');
+  });
+
   return div.innerText.replace(/[\r\n]{3,}/g, '\n\n').trim();
 }
 

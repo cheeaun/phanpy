@@ -1059,6 +1059,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .ui-state {
   padding: 16px;
   text-align: center;
+
+  .icon {
+    vertical-align: middle;
+  }
 }
 
 .status-carousel-link {

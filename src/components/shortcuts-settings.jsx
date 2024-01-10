@@ -428,7 +428,12 @@ function ShortcutsSettings({ onClose }) {
             disabled={shortcuts.length >= SHORTCUTS_LIMIT}
             onClick={() => setShowForm(true)}
           >
-            <Icon icon="plus" /> <span>Add shortcut</span>
+            <Icon icon="plus" />{' '}
+            <span>
+              {snapStates.settings.shortcutsViewMode === 'multi-column'
+                ? 'Add column…'
+                : 'Add shortcut…'}
+            </span>
           </button>
         </p>
       </main>

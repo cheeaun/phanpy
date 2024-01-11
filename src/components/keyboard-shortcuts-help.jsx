@@ -17,7 +17,7 @@ export default memo(function KeyboardShortcutsHelp() {
   }
 
   useHotkeys(
-    '?, shift+?',
+    '?, shift+?, shift+slash',
     (e) => {
       console.log('help');
       states.showKeyboardShortcutsHelp = true;
@@ -70,6 +70,10 @@ export default memo(function KeyboardShortcutsHelp() {
                       <kbd>Shift</kbd> + <kbd>k</kbd>
                     </>
                   ),
+                },
+                {
+                  action: 'Load new posts',
+                  keys: <kbd>.</kbd>,
                 },
                 {
                   action: 'Open post details',

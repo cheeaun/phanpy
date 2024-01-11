@@ -219,7 +219,7 @@ export async function assignFollowedTags(items, instance) {
     statusWithFollowedTags.forEach((s) => {
       const { item, sKey, followedTags } = s;
       const r = relationships[item.account.id];
-      if (!r.following) {
+      if (r && !r.following) {
         statusFollowedTags[sKey] = followedTags;
       }
     });

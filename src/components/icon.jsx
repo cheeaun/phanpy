@@ -41,6 +41,7 @@ export const ICONS = {
   upload: () => import('@iconify-icons/mingcute/upload-3-line'),
   gear: () => import('@iconify-icons/mingcute/settings-3-line'),
   more: () => import('@iconify-icons/mingcute/more-3-line'),
+  more2: () => import('@iconify-icons/mingcute/more-1-fill'),
   external: () => import('@iconify-icons/mingcute/external-link-line'),
   popout: () => import('@iconify-icons/mingcute/external-link-line'),
   popin: [() => import('@iconify-icons/mingcute/external-link-line'), '180deg'],

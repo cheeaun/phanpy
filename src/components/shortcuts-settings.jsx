@@ -279,92 +279,93 @@ function ShortcutsSettings({ onClose }) {
           })}
         </div>
         {shortcuts.length > 0 ? (
-          <ol class="shortcuts-list" ref={shortcutsListParent}>
-            {shortcuts.filter(Boolean).map((shortcut, i) => {
-              // const key = i + Object.values(shortcut);
-              const key = Object.values(shortcut).join('-');
-              const { type } = shortcut;
-              if (!SHORTCUTS_META[type]) return null;
-              let { icon, title, subtitle, excludeViewMode } =
-                SHORTCUTS_META[type];
-              if (typeof title === 'function') {
-                title = title(shortcut, i);
-              }
-              if (typeof subtitle === 'function') {
-                subtitle = subtitle(shortcut, i);
-              }
-              if (typeof icon === 'function') {
-                icon = icon(shortcut, i);
-              }
-              if (typeof excludeViewMode === 'function') {
-                excludeViewMode = excludeViewMode(shortcut, i);
-              }
-              const excludedViewMode = excludeViewMode?.includes(
-                snapStates.settings.shortcutsViewMode,
-              );
-              return (
-                <li key={key}>
-                  <Icon icon={icon} />
-                  <span class="shortcut-text">
-                    <AsyncText>{title}</AsyncText>
-                    {subtitle && (
-                      <>
-                        {' '}
-                        <small class="ib insignificant">{subtitle}</small>
-                      </>
-                    )}
-                    {excludedViewMode && (
-                      <span class="tag">
-                        Not available in current view mode
-                      </span>
-                    )}
-                  </span>
-                  <span class="shortcut-actions">
-                    <button
-                      type="button"
-                      class="plain small"
-                      disabled={i === 0}
-                      onClick={() => {
-                        const shortcutsArr = Array.from(states.shortcuts);
-                        if (i > 0) {
-                          const temp = states.shortcuts[i - 1];
-                          shortcutsArr[i - 1] = shortcut;
-                          shortcutsArr[i] = temp;
-                          states.shortcuts = shortcutsArr;
-                        }
-                      }}
-                    >
-                      <Icon icon="arrow-up" alt="Move up" />
-                    </button>
-                    <button
-                      type="button"
-                      class="plain small"
-                      disabled={i === shortcuts.length - 1}
-                      onClick={() => {
-                        const shortcutsArr = Array.from(states.shortcuts);
-                        if (i < states.shortcuts.length - 1) {
-                          const temp = states.shortcuts[i + 1];
-                          shortcutsArr[i + 1] = shortcut;
-                          shortcutsArr[i] = temp;
-                          states.shortcuts = shortcutsArr;
-                        }
-                      }}
-                    >
-                      <Icon icon="arrow-down" alt="Move down" />
-                    </button>
-                    <button
-                      type="button"
-                      class="plain small"
-                      onClick={() => {
-                        setShowForm({
-                          shortcut,
-                          shortcutIndex: i,
-                        });
-                      }}
-                    >
-                      <Icon icon="pencil" alt="Edit" />
-                    </button>
-                    {/* <button
+          <>
+            <ol class="shortcuts-list" ref={shortcutsListParent}>
+              {shortcuts.filter(Boolean).map((shortcut, i) => {
+                // const key = i + Object.values(shortcut);
+                const key = Object.values(shortcut).join('-');
+                const { type } = shortcut;
+                if (!SHORTCUTS_META[type]) return null;
+                let { icon, title, subtitle, excludeViewMode } =
+                  SHORTCUTS_META[type];
+                if (typeof title === 'function') {
+                  title = title(shortcut, i);
+                }
+                if (typeof subtitle === 'function') {
+                  subtitle = subtitle(shortcut, i);
+                }
+                if (typeof icon === 'function') {
+                  icon = icon(shortcut, i);
+                }
+                if (typeof excludeViewMode === 'function') {
+                  excludeViewMode = excludeViewMode(shortcut, i);
+                }
+                const excludedViewMode = excludeViewMode?.includes(
+                  snapStates.settings.shortcutsViewMode,
+                );
+                return (
+                  <li key={key}>
+                    <Icon icon={icon} />
+                    <span class="shortcut-text">
+                      <AsyncText>{title}</AsyncText>
+                      {subtitle && (
+                        <>
+                          {' '}
+                          <small class="ib insignificant">{subtitle}</small>
+                        </>
+                      )}
+                      {excludedViewMode && (
+                        <span class="tag">
+                          Not available in current view mode
+                        </span>
+                      )}
+                    </span>
+                    <span class="shortcut-actions">
+                      <button
+                        type="button"
+                        class="plain small"
+                        disabled={i === 0}
+                        onClick={() => {
+                          const shortcutsArr = Array.from(states.shortcuts);
+                          if (i > 0) {
+                            const temp = states.shortcuts[i - 1];
+                            shortcutsArr[i - 1] = shortcut;
+                            shortcutsArr[i] = temp;
+                            states.shortcuts = shortcutsArr;
+                          }
+                        }}
+                      >
+                        <Icon icon="arrow-up" alt="Move up" />
+                      </button>
+                      <button
+                        type="button"
+                        class="plain small"
+                        disabled={i === shortcuts.length - 1}
+                        onClick={() => {
+                          const shortcutsArr = Array.from(states.shortcuts);
+                          if (i < states.shortcuts.length - 1) {
+                            const temp = states.shortcuts[i + 1];
+                            shortcutsArr[i + 1] = shortcut;
+                            shortcutsArr[i] = temp;
+                            states.shortcuts = shortcutsArr;
+                          }
+                        }}
+                      >
+                        <Icon icon="arrow-down" alt="Move down" />
+                      </button>
+                      <button
+                        type="button"
+                        class="plain small"
+                        onClick={() => {
+                          setShowForm({
+                            shortcut,
+                            shortcutIndex: i,
+                          });
+                        }}
+                      >
+                        <Icon icon="pencil" alt="Edit" />
+                      </button>
+                      {/* <button
                       type="button"
                       class="plain small"
                       onClick={() => {
@@ -373,11 +374,21 @@ function ShortcutsSettings({ onClose }) {
                     >
                       <Icon icon="x" alt="Remove" />
                     </button> */}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+            {shortcuts.length === 1 &&
+              snapStates.settings.shortcutsViewMode !== 'float-button' && (
+                <div class="ui-state insignificant">
+                  <Icon icon="info" />{' '}
+                  <small>
+                    Add more than one shortcut/column to make this work.
+                  </small>
+                </div>
+              )}
+          </>
         ) : (
           <div class="ui-state insignificant">
             <p>No shortcuts yet. Tap on the Add shortcut button.</p>
@@ -428,7 +439,12 @@ function ShortcutsSettings({ onClose }) {
             disabled={shortcuts.length >= SHORTCUTS_LIMIT}
             onClick={() => setShowForm(true)}
           >
-            <Icon icon="plus" /> <span>Add shortcut</span>
+            <Icon icon="plus" />{' '}
+            <span>
+              {snapStates.settings.shortcutsViewMode === 'multi-column'
+                ? 'Add column…'
+                : 'Add shortcut…'}
+            </span>
           </button>
         </p>
       </main>

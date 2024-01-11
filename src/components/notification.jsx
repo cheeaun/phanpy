@@ -292,7 +292,12 @@ function Notification({
                     instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
                   }
                 >
-                  <Status status={status} size="s" />
+                  <Status
+                    status={status}
+                    size="s"
+                    previewMode
+                    allowContextMenu
+                  />
                 </TruncatedLink>
               </li>
             ))}
@@ -326,9 +331,19 @@ function Notification({
             }
           >
             {isStatic ? (
-              <Status status={actualStatus} size="s" />
+              <Status
+                status={actualStatus}
+                size="s"
+                previewMode
+                allowContextMenu
+              />
             ) : (
-              <Status statusID={actualStatusID} size="s" />
+              <Status
+                statusID={actualStatusID}
+                size="s"
+                previewMode
+                allowContextMenu
+              />
             )}
           </TruncatedLink>
         )}

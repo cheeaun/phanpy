@@ -124,6 +124,7 @@ function Status({
   quoted,
   onStatusLinkClick = () => {},
   showFollowedTags,
+  allowContextMenu,
 }) {
   if (skeleton) {
     return (
@@ -987,7 +988,8 @@ function Status({
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuProps, setContextMenuProps] = useState({});
 
-  const showContextMenu = !isSizeLarge && !previewMode && !_deleted && !quoted;
+  const showContextMenu =
+    allowContextMenu || (!isSizeLarge && !previewMode && !_deleted && !quoted);
 
   // Only iOS/iPadOS browsers don't support contextmenu
   // Some comments report iPadOS might support contextmenu if a mouse is connected
@@ -1412,7 +1414,7 @@ function Status({
                   />
                 )}{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
-                {showContextMenu && <Icon icon="more2" class="more" />}
+                {!previewMode && <Icon icon="more2" class="more" />}
               </Link>
             ) : (
               // <Menu

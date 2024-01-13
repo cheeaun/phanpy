@@ -845,6 +845,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   enableTranslate
                   onMediaClick={handleMediaClick}
                   onStatusLinkClick={handleStatusLinkClick}
+                  showActionsBar={!!descendant}
                 />
               )}
               {ancestor && repliesCount > 1 && (
@@ -1400,6 +1401,7 @@ function SubComments({
                 size="s"
                 enableTranslate
                 onMediaClick={handleMediaClick}
+                showActionsBar
               />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">

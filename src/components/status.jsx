@@ -783,7 +783,7 @@ function Status({
           </div>
           <div class="menu-horizontal">
             <MenuItem onClick={replyStatus}>
-              <Icon icon="reply" />
+              <Icon icon="comment" />
               <span>Reply</span>
             </MenuItem>
             <MenuItem

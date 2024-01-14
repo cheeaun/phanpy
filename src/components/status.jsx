@@ -1322,7 +1322,9 @@ function Status({
       )}
       {showActionsBar && size !== 'l' && !previewMode && !readOnly && (
         <div
-          class={`status-actions ${isContextMenuOpen ? 'open' : ''}`}
+          class={`status-actions ${
+            isContextMenuOpen === 'actions-bar' ? 'open' : ''
+          }`}
           ref={actionsRef}
         >
           <StatusButton
@@ -1369,7 +1371,7 @@ function Status({
                 direction: 'bottom',
                 gap: 4,
               });
-              setIsContextMenuOpen(true);
+              setIsContextMenuOpen('actions-bar');
             }}
           >
             <Icon icon="more2" size="m" alt="More" />

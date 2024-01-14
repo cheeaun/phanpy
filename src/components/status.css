@@ -1829,7 +1829,9 @@ a.card:is(:hover, :focus):visited {
 
   &.open {
     button.more-button {
+      color: var(--text-color);
       background-color: var(--outline-color);
+      box-shadow: inset 0 0 0 2px var(--bg-color);
     }
 
     button:not(.more-button) {

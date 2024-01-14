@@ -1822,6 +1822,20 @@ a.card:is(:hover, :focus):visited {
     pointer-events: auto;
     transform: scale(1);
   }
+  .status:has(&):hover {
+    transition: background-color 0.1s ease-out 0.3s;
+    background-color: var(--bg-faded-blur-color);
+  }
+
+  &.open {
+    button.more-button {
+      background-color: var(--outline-color);
+    }
+
+    button:not(.more-button) {
+      opacity: 0.3;
+    }
+  }
 }
 
 /* BADGE */
@@ -1920,6 +1934,12 @@ a.card:is(:hover, :focus):visited {
   color: var(--text-insignificant-color);
   text-transform: uppercase;
   font-size: 80%;
+}
+
+/* MENU OPEN */
+
+.status-menu-open {
+  background-color: var(--link-bg-hover-color) !important;
 }
 
 /* FILTERED */

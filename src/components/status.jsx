@@ -1266,7 +1266,9 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
+      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
+        isContextMenuOpen ? 'status-menu-open' : ''
+      }`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         // FIXME: this code isn't getting called on Chrome at all?
@@ -1319,7 +1321,10 @@ function Status({
         </ControlledMenu>
       )}
       {showActionsBar && size !== 'l' && !previewMode && !readOnly && (
-        <div class="status-actions" ref={actionsRef}>
+        <div
+          class={`status-actions ${isContextMenuOpen ? 'open' : ''}`}
+          ref={actionsRef}
+        >
           <StatusButton
             size="s"
             title="Reply"
@@ -1338,34 +1343,37 @@ function Status({
             icon="heart"
             iconSize="m"
             count={favouritesCount}
-            onClick={favouriteStatus}
-          />
-          <Menu2
-            portal={{
-              target: document.querySelector('.status-deck') || document.body,
+            onClick={() => {
+              try {
+                favouriteStatus();
+                showToast(
+                  favourited
+                    ? `Unliked @${username || acct}'s post`
+                    : `Liked @${username || acct}'s post`,
+                );
+              } catch (e) {}
             }}
-            align="end"
-            gap={4}
-            overflow="auto"
-            viewScroll="close"
-            menuButton={({ open }) => {
-              if (actionsRef.current) {
-                actionsRef.current.classList.toggle('open', open);
-              }
-              return (
-                <button
-                  type="button"
-                  title="More"
-                  class="plain more-button"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <Icon icon="more2" size="m" alt="More" />
-                </button>
-              );
+          />
+          <button
+            type="button"
+            title="More"
+            class="plain more-button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setContextMenuProps({
+                anchorRef: {
+                  current: e.currentTarget,
+                },
+                align: 'end',
+                direction: 'bottom',
+                gap: 4,
+              });
+              setIsContextMenuOpen(true);
             }}
           >
-            {StatusMenuItems}
-          </Menu2>
+            <Icon icon="more2" size="m" alt="More" />
+          </button>
         </div>
       )}
       {size !== 'l' && (

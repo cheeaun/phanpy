@@ -645,6 +645,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     var(--bg-faded-color)
   );
 }
+@keyframes summary-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .timeline.contextual > li .replies[open] > .replies-summary {
   border-bottom-left-radius: 0;
 
@@ -658,6 +668,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
   .replies-summary-chevron {
     transform: rotate(180deg);
+  }
+
+  + * {
+    animation: summary-fade 0.3s ease-out both;
   }
 }
 .timeline.contextual > li .replies .replies-summary[hidden] {

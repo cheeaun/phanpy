@@ -1822,9 +1822,11 @@ a.card:is(:hover, :focus):visited {
     pointer-events: auto;
     transform: scale(1);
   }
-  .status:has(&):hover {
-    transition: background-color 0.1s ease-out 0.3s;
-    background-color: var(--bg-faded-blur-color);
+  @media (pointer: coarse) {
+    .status:has(&):hover {
+      transition: background-color 0.1s ease-out 0.3s;
+      background-color: var(--bg-faded-blur-color);
+    }
   }
 
   &.open {

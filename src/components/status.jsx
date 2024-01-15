@@ -1320,64 +1320,69 @@ function Status({
           {StatusMenuItems}
         </ControlledMenu>
       )}
-      {showActionsBar && size !== 'l' && !previewMode && !readOnly && (
-        <div
-          class={`status-actions ${
-            isContextMenuOpen === 'actions-bar' ? 'open' : ''
-          }`}
-          ref={actionsRef}
-        >
-          <StatusButton
-            size="s"
-            title="Reply"
-            alt="Reply"
-            class="reply-button"
-            icon="comment"
-            iconSize="m"
-            onClick={replyStatus}
-          />
-          <StatusButton
-            size="s"
-            checked={favourited}
-            title={['Like', 'Unlike']}
-            alt={['Like', 'Liked']}
-            class="favourite-button"
-            icon="heart"
-            iconSize="m"
-            count={favouritesCount}
-            onClick={() => {
-              try {
-                favouriteStatus();
-                showToast(
-                  favourited
-                    ? `Unliked @${username || acct}'s post`
-                    : `Liked @${username || acct}'s post`,
-                );
-              } catch (e) {}
-            }}
-          />
-          <button
-            type="button"
-            title="More"
-            class="plain more-button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setContextMenuProps({
-                anchorRef: {
-                  current: e.currentTarget,
-                },
-                align: 'end',
-                direction: 'bottom',
-                gap: 4,
-              });
-              setIsContextMenuOpen('actions-bar');
-            }}
+      {showActionsBar &&
+        size !== 'l' &&
+        !previewMode &&
+        !readOnly &&
+        !_deleted &&
+        !quoted && (
+          <div
+            class={`status-actions ${
+              isContextMenuOpen === 'actions-bar' ? 'open' : ''
+            }`}
+            ref={actionsRef}
           >
-            <Icon icon="more2" size="m" alt="More" />
-          </button>
-        </div>
-      )}
+            <StatusButton
+              size="s"
+              title="Reply"
+              alt="Reply"
+              class="reply-button"
+              icon="comment"
+              iconSize="m"
+              onClick={replyStatus}
+            />
+            <StatusButton
+              size="s"
+              checked={favourited}
+              title={['Like', 'Unlike']}
+              alt={['Like', 'Liked']}
+              class="favourite-button"
+              icon="heart"
+              iconSize="m"
+              count={favouritesCount}
+              onClick={() => {
+                try {
+                  favouriteStatus();
+                  showToast(
+                    favourited
+                      ? `Unliked @${username || acct}'s post`
+                      : `Liked @${username || acct}'s post`,
+                  );
+                } catch (e) {}
+              }}
+            />
+            <button
+              type="button"
+              title="More"
+              class="plain more-button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setContextMenuProps({
+                  anchorRef: {
+                    current: e.currentTarget,
+                  },
+                  align: 'end',
+                  direction: 'bottom',
+                  gap: 4,
+                });
+                setIsContextMenuOpen('actions-bar');
+              }}
+            >
+              <Icon icon="more2" size="m" alt="More" />
+            </button>
+          </div>
+        )}
       {size !== 'l' && (
         <div class="status-badge">
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}

@@ -245,6 +245,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   }, [id, uiState !== 'loading']);
 
   const scrollOffsets = useRef();
+  const lastInitContextTS = useRef();
   const initContext = ({ reloadHero } = {}) => {
     console.debug('initContext', id);
     setUIState('loading');
@@ -432,12 +433,31 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       }
     })();
 
+    lastInitContextTS.current = Date.now();
+
     return () => {
       clearTimeout(heroTimer);
     };
   };
 
   useEffect(initContext, [id, masto]);
+
+  const [showRefresh, setShowRefresh] = useState(false);
+  useEffect(() => {
+    let interval = setInterval(() => {
+      const now = Date.now();
+      if (
+        lastInitContextTS.current &&
+        now - lastInitContextTS.current >= 60_000
+      ) {
+        setShowRefresh(true);
+      }
+    }, 60_000); // 1 minute
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useLayoutEffect(() => {
     if (!statuses.length) return;
     console.debug('STATUSES', statuses);
@@ -845,6 +865,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   enableTranslate
                   onMediaClick={handleMediaClick}
                   onStatusLinkClick={handleStatusLinkClick}
+                  showActionsBar={!!descendant}
                 />
               )}
               {ancestor && repliesCount > 1 && (
@@ -1094,6 +1115,18 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             >
               <Icon icon="layout4" size="l" />
             </button>
+            {showRefresh && (
+              <button
+                type="button"
+                class="plain button-refresh"
+                onClick={() => {
+                  states.reloadStatusPage++;
+                  setShowRefresh(false);
+                }}
+              >
+                <Icon icon="refresh" size="l" />
+              </button>
+            )}
             <Menu2
               align="end"
               portal={{
@@ -1400,6 +1433,7 @@ function SubComments({
                 size="s"
                 enableTranslate
                 onMediaClick={handleMediaClick}
+                showActionsBar
               />
               {!r.replies?.length && r.repliesCount > 0 && (
                 <div class="replies-link">

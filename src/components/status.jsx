@@ -125,6 +125,7 @@ function Status({
   onStatusLinkClick = () => {},
   showFollowedTags,
   allowContextMenu,
+  showActionsBar,
 }) {
   if (skeleton) {
     return (
@@ -640,7 +641,7 @@ function Status({
     };
   }
 
-  const menuInstanceRef = useRef();
+  const actionsRef = useRef();
   const StatusMenuItems = (
     <>
       {!isSizeLarge && (
@@ -783,7 +784,7 @@ function Status({
           </div>
           <div class="menu-horizontal">
             <MenuItem onClick={replyStatus}>
-              <Icon icon="reply" />
+              <Icon icon="comment" />
               <span>Reply</span>
             </MenuItem>
             <MenuItem
@@ -1265,7 +1266,9 @@ function Status({
           m: 'medium',
           l: 'large',
         }[size]
-      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''}`}
+      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
+        isContextMenuOpen ? 'status-menu-open' : ''
+      }`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
         // FIXME: this code isn't getting called on Chrome at all?
@@ -1317,6 +1320,69 @@ function Status({
           {StatusMenuItems}
         </ControlledMenu>
       )}
+      {showActionsBar &&
+        size !== 'l' &&
+        !previewMode &&
+        !readOnly &&
+        !_deleted &&
+        !quoted && (
+          <div
+            class={`status-actions ${
+              isContextMenuOpen === 'actions-bar' ? 'open' : ''
+            }`}
+            ref={actionsRef}
+          >
+            <StatusButton
+              size="s"
+              title="Reply"
+              alt="Reply"
+              class="reply-button"
+              icon="comment"
+              iconSize="m"
+              onClick={replyStatus}
+            />
+            <StatusButton
+              size="s"
+              checked={favourited}
+              title={['Like', 'Unlike']}
+              alt={['Like', 'Liked']}
+              class="favourite-button"
+              icon="heart"
+              iconSize="m"
+              count={favouritesCount}
+              onClick={() => {
+                try {
+                  favouriteStatus();
+                  showToast(
+                    favourited
+                      ? `Unliked @${username || acct}'s post`
+                      : `Liked @${username || acct}'s post`,
+                  );
+                } catch (e) {}
+              }}
+            />
+            <button
+              type="button"
+              title="More"
+              class="plain more-button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setContextMenuProps({
+                  anchorRef: {
+                    current: e.currentTarget,
+                  },
+                  align: 'end',
+                  direction: 'bottom',
+                  gap: 4,
+                });
+                setIsContextMenuOpen('actions-bar');
+              }}
+            >
+              <Icon icon="more2" size="m" alt="More" />
+            </button>
+          </div>
+        )}
       {size !== 'l' && (
         <div class="status-badge">
           {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
@@ -2212,7 +2278,9 @@ function StatusButton({
   class: className,
   title,
   alt,
+  size,
   icon,
+  iconSize = 'l',
   onClick,
   ...props
 }) {
@@ -2240,7 +2308,9 @@ function StatusButton({
     <button
       type="button"
       title={buttonTitle}
-      class={`plain ${className} ${checked ? 'checked' : ''}`}
+      class={`plain ${size ? 'small' : ''} ${className} ${
+        checked ? 'checked' : ''
+      }`}
       onClick={(e) => {
         if (!onClick) return;
         e.preventDefault();
@@ -2249,7 +2319,7 @@ function StatusButton({
       }}
       {...props}
     >
-      <Icon icon={icon} size="l" alt={iconAlt} />
+      <Icon icon={icon} size={iconSize} alt={iconAlt} />
       {!!count && (
         <>
           {' '}

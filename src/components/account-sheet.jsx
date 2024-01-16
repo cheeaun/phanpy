@@ -59,7 +59,11 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
                 return result.accounts[0];
               } else if (/https?:\/\/[^/]+\/@/.test(account)) {
                 const accountURL = new URL(account);
-                const acct = accountURL.pathname.replace(/^\//, '');
+                const { hostname, pathname } = accountURL;
+                const acct =
+                  pathname.replace(/^\//, '').replace(/\/$/, '') +
+                  '@' +
+                  hostname;
                 const result = await masto.v2.search.fetch({
                   q: acct,
                   type: 'accounts',

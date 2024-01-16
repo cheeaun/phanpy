@@ -1,16 +1,32 @@
-.status-deck header {
-  white-space: nowrap;
+.status-deck {
+  header {
+    white-space: nowrap;
+  }
+  header h1 {
+    min-width: 0;
+    flex-grow: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    align-self: stretch;
+  }
+  header h1 .deck-back {
+    margin-left: -16px;
+  }
+
+  .button-refresh .icon {
+    animation: spin 1s linear;
+  }
+  .button-refresh:is(:hover, :focus) .icon {
+    transition: transform 1s linear;
+    transform: rotate(360deg);
+  }
 }
-.status-deck header h1 {
-  min-width: 0;
-  flex-grow: 1;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  align-self: stretch;
-}
-.status-deck header h1 .deck-back {
-  margin-left: -16px;
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hero-heading {

@@ -1118,7 +1118,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             {showRefresh && (
               <button
                 type="button"
-                class="plain4"
+                class="plain button-refresh"
                 onClick={() => {
                   states.reloadStatusPage++;
                   setShowRefresh(false);

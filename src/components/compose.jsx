@@ -133,7 +133,14 @@ const SCAN_RE = new RegExp(
 
 function highlightText(text, { maxCharacters = Infinity }) {
   // Accept text string, return formatted HTML string
-  let html = text;
+  // Escape all HTML special characters
+  let html = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
   // Exceeded characters limit
   const { composerCharacterCount } = states;
   let leftoverHTML = '';

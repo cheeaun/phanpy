@@ -643,7 +643,7 @@ function PushNotificationsSection({ onClose }) {
   const { instance } = api();
   const [uiState, setUIState] = useState('default');
   const pushFormRef = useRef();
-  const [allowNofitications, setAllowNotifications] = useState(false);
+  const [allowNotifications, setAllowNotifications] = useState(false);
   const [needRelogin, setNeedRelogin] = useState(false);
   const previousPolicyRef = useRef();
   useEffect(() => {
@@ -689,7 +689,7 @@ function PushNotificationsSection({ onClose }) {
       ref={pushFormRef}
       onChange={() => {
         const values = Object.fromEntries(new FormData(pushFormRef.current));
-        const allowNofitications = !!values['policy-allow'];
+        const allowNotifications = !!values['policy-allow'];
         const params = {
           policy: values.policy,
           data: {
@@ -718,9 +718,13 @@ function PushNotificationsSection({ onClose }) {
         });
         const policyChanged = previousPolicyRef.current !== params.policy;
 
-        console.log('PN Form', { values, allowNofitications, params });
+        console.log('PN Form', {
+          values,
+          allowNotifications: allowNotifications,
+          params,
+        });
 
-        if (allowNofitications && alertsCount > 0) {
+        if (allowNotifications && alertsCount > 0) {
           if (policyChanged) {
             console.debug('Policy changed.');
             removeSubscription()
@@ -754,7 +758,7 @@ function PushNotificationsSection({ onClose }) {
                 type="checkbox"
                 disabled={isLoading || needRelogin}
                 name="policy-allow"
-                checked={allowNofitications}
+                checked={allowNotifications}
                 onChange={async (e) => {
                   const { checked } = e.target;
                   if (checked) {
@@ -778,7 +782,7 @@ function PushNotificationsSection({ onClose }) {
               Allow from{' '}
               <select
                 name="policy"
-                disabled={isLoading || needRelogin || !allowNofitications}
+                disabled={isLoading || needRelogin || !allowNotifications}
               >
                 {[
                   {
@@ -803,7 +807,7 @@ function PushNotificationsSection({ onClose }) {
               style={{
                 width: '100%',
               }}
-              hidden={!allowNofitications}
+              hidden={!allowNotifications}
             >
               <div class="shazam-container-inner">
                 <div class="sub-section">

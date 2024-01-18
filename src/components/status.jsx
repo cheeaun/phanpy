@@ -1271,12 +1271,20 @@ function Status({
       }`}
       onMouseEnter={debugHover}
       onContextMenu={(e) => {
-        // FIXME: this code isn't getting called on Chrome at all?
         if (!showContextMenu) return;
         if (e.metaKey) return;
         // console.log('context menu', e);
         const link = e.target.closest('a');
         if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+
+        // If there's selected text, don't show custom context menu
+        const selection = window.getSelection?.();
+        if (selection.toString().length > 0) {
+          const { anchorNode } = selection;
+          if (statusRef.current?.contains(anchorNode)) {
+            return;
+          }
+        }
         e.preventDefault();
         setContextMenuProps({
           anchorPoint: {

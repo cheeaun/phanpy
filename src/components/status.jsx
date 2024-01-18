@@ -937,6 +937,40 @@ function Status({
           )}
         </MenuItem>
       )}
+      {isSelf && /(public|unlisted|private)/i.test(visibility) && (
+        <MenuItem
+          onClick={async () => {
+            try {
+              const newStatus = await masto.v1.statuses
+                .$select(id)
+                [_pinned ? 'unpin' : 'pin']();
+              // saveStatus(newStatus, instance);
+              showToast(
+                _pinned
+                  ? 'Post unpinned from profile'
+                  : 'Post pinned to profile',
+              );
+            } catch (e) {
+              console.error(e);
+              showToast(
+                _pinned ? 'Unable to unpin post' : 'Unable to pin post',
+              );
+            }
+          }}
+        >
+          {_pinned ? (
+            <>
+              <Icon icon="unpin" />
+              <span>Unpin from profile</span>
+            </>
+          ) : (
+            <>
+              <Icon icon="pin" />
+              <span>Pin to profile</span>
+            </>
+          )}
+        </MenuItem>
+      )}
       {isSelf && (
         <div class="menu-horizontal">
           <MenuItem

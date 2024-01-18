@@ -66,6 +66,7 @@ export const ICONS = {
   user: () => import('@iconify-icons/mingcute/user-4-line'),
   following: () => import('@iconify-icons/mingcute/walk-line'),
   pin: () => import('@iconify-icons/mingcute/pin-line'),
+  unpin: [() => import('@iconify-icons/mingcute/pin-line'), '180deg'],
   bus: () => import('@iconify-icons/mingcute/bus-2-line'),
   link: () => import('@iconify-icons/mingcute/link-2-line'),
   history: () => import('@iconify-icons/mingcute/history-line'),

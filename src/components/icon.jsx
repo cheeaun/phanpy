@@ -109,6 +109,7 @@ export const ICONS = {
   media: () => import('@iconify-icons/mingcute/photo-album-line'),
   speak: () => import('@iconify-icons/mingcute/radar-line'),
   building: () => import('@iconify-icons/mingcute/building-5-line'),
+  history: () => import('@iconify-icons/mingcute/history-2-line'),
 };
 
 const ICONDATA = {};
@@ -118,8 +119,8 @@ const SVGICon = moize(
   function ({ size, width, height, body, rotate, flip }) {
     return (
       <svg
-        width={size}
-        height={size}
+        // width={size}
+        // height={size}
         viewBox={`0 0 ${width} ${height}`}
         dangerouslySetInnerHTML={{ __html: body }}
         style={{

@@ -170,7 +170,7 @@ export const SHORTCUTS_META = {
   },
   search: {
     id: 'search',
-    title: ({ query }) => (query ? `"${query}"` : 'Search'),
+    title: ({ query }) => (query ? `“${query}”` : 'Search'),
     path: ({ query }) =>
       query
         ? `/search?q=${encodeURIComponent(query)}&type=statuses`

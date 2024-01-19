@@ -2103,6 +2103,8 @@ function Card({ card, selfReferential, instance }) {
         states.showEmbedModal = {
           html,
           url: url || embedUrl,
+          width,
+          height,
         };
       }
     },

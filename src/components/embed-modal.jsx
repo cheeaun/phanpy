@@ -2,7 +2,7 @@ import './embed-modal.css';
 
 import Icon from './icon';
 
-function EmbedModal({ html, url, onClose = () => {} }) {
+function EmbedModal({ html, url, width, height, onClose = () => {} }) {
   return (
     <div class="embed-modal-container">
       <div class="top-controls">
@@ -20,7 +20,15 @@ function EmbedModal({ html, url, onClose = () => {} }) {
           </a>
         )}
       </div>
-      <div class="embed-content" dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        class="embed-content"
+        dangerouslySetInnerHTML={{ __html: html }}
+        style={{
+          '--width': width + 'px',
+          '--height': height + 'px',
+          '--aspect-ratio': `${width}/${height}`,
+        }}
+      />
     </div>
   );
 }

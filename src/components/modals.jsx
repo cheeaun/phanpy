@@ -210,6 +210,8 @@ export default function Modals() {
           <EmbedModal
             html={snapStates.showEmbedModal.html}
             url={snapStates.showEmbedModal.url}
+            width={snapStates.showEmbedModal.width}
+            height={snapStates.showEmbedModal.height}
             onClose={() => {
               states.showEmbedModal = false;
             }}

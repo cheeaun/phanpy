@@ -14,7 +14,7 @@ import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
-import { ICONS } from './components/icon';
+import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import Modals from './components/modals';

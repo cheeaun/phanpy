@@ -1783,13 +1783,15 @@ a.card:is(:hover, :focus):visited {
   pointer-events: none;
   transform: translateX(8px);
   transform-origin: right center;
-  transition: all 0.1s ease-out 0.3s, border-color 0.3s ease-out;
+  transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
 
   button.plain {
     color: var(--text-insignificant-color);
     backdrop-filter: none;
     padding: 10px;
     border-radius: 8px;
+    outline-offset: -5px;
+    outline: 1px solid transparent;
 
     &:is(:hover, :focus) {
       color: var(--text-color);
@@ -1800,14 +1802,17 @@ a.card:is(:hover, :focus):visited {
 
     &.reblog-button.checked {
       color: var(--reblog-color);
+      outline-color: var(--reblog-color);
     }
 
     &.favourite-button.checked {
       color: var(--favourite-color);
+      outline-color: var(--favourite-color);
     }
 
     &.bookmark-button.checked {
       color: var(--link-color);
+      outline-color: var(--link-color);
     }
   }
 
@@ -1820,7 +1825,7 @@ a.card:is(:hover, :focus):visited {
   &.open {
     opacity: 1;
     pointer-events: auto;
-    transform: scale(1);
+    transform: translateX(0);
   }
   @media (pointer: coarse) {
     .status:has(&):hover {

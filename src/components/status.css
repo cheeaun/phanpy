@@ -1243,6 +1243,14 @@ body:has(#modal-container .carousel) .status .media img:hover {
   -webkit-box-orient: vertical;
   white-space: normal;
 }
+/* Collapse possible hashtag stuffing */
+/* If >= 9 hashtags, collapse */
+/* TODO: lower the threshold one day */
+.status:not(.large) p:has(.hashtag:nth-child(9)) {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 
 .media-figure-multiple {
   margin: 0;

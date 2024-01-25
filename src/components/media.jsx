@@ -160,7 +160,6 @@ function Media({
     type === 'unknown' &&
     remoteMediaURLObj &&
     /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(remoteMediaURLObj.pathname);
-  console.log('render media', remoteMediaURL, remoteMediaURLObj, isAudioMaybe);
   const isImage =
     type === 'image' ||
     (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);

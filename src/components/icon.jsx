@@ -31,7 +31,8 @@ const SVGICon = moize(
   {
     isShallowEqual: true,
     maxSize: Object.keys(ICONS).length,
-    matchesArg: (cacheKeyArg, keyArg) => cacheKeyArg.icon === keyArg.icon,
+    matchesArg: (cacheKeyArg, keyArg) =>
+      cacheKeyArg.icon === keyArg.icon && cacheKeyArg.body === keyArg.body,
   },
 );
 

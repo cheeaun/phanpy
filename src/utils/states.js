@@ -187,9 +187,19 @@ export function saveStatus(status, instance, opts) {
     if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
     // if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
     states.statuses[key] = status;
-    if (status.reblog) {
-      const key = statusKey(status.reblog.id, instance);
-      states.statuses[key] = status.reblog;
+    if (status.reblog?.id) {
+      const srKey = statusKey(status.reblog.id, instance);
+      states.statuses[srKey] = status.reblog;
+    }
+    if (status.quote?.id) {
+      const sKey = statusKey(status.quote.id, instance);
+      states.statuses[sKey] = status.quote;
+      states.statusQuotes[key] = [
+        {
+          id: status.quote.id,
+          instance,
+        },
+      ];
     }
   });
 

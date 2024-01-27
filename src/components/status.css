@@ -206,7 +206,7 @@
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
   max-height: 160px !important;
-  overflow: clip;
+  overflow: hidden;
 }
 .status.small:not(.status-carousel .status, .status.large .status)
   .status-card

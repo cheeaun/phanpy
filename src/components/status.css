@@ -1246,7 +1246,15 @@ body:has(#modal-container .carousel) .status .media img:hover {
 /* Collapse possible hashtag stuffing */
 /* If >= 9 hashtags, collapse */
 /* TODO: lower the threshold one day */
-.status:not(.large) p:not(.hashtag-stuffing):has(.hashtag:nth-child(9)) {
+.status:not(.large, .contextual .status)
+  p:not(.hashtag-stuffing):has(.hashtag:nth-of-type(1)):has(
+    .hashtag:nth-of-type(2)
+  ):has(.hashtag:nth-of-type(3)):has(.hashtag:nth-of-type(4)):has(
+    .hashtag:nth-of-type(5)
+  ):has(.hashtag:nth-of-type(6)):has(.hashtag:nth-of-type(7)):has(
+    .hashtag:nth-of-type(8)
+  ):has(.hashtag:nth-of-type(9)) {
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

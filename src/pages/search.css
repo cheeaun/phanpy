@@ -44,6 +44,18 @@
   }
 }
 
+#search-page h2 {
+  a {
+    .icon {
+      vertical-align: middle;
+      transition: transform 0.2s;
+    }
+    &:hover .icon {
+      transform: translateX(4px);
+    }
+  }
+}
+
 #search-page ul.accounts-list {
   display: flex;
   flex-wrap: wrap;

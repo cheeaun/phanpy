@@ -73,6 +73,7 @@ const SearchForm = forwardRef((props, ref) => {
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
+        spellcheck="false"
         onSearch={(e) => {
           if (!e.target.value) {
             setSearchParams({});
@@ -84,6 +85,9 @@ const SearchForm = forwardRef((props, ref) => {
         }}
         onFocus={() => {
           setSearchMenuOpen(true);
+          formRef.current
+            ?.querySelector('.search-popover-item')
+            ?.classList.add('focus');
         }}
         onBlur={() => {
           setTimeout(() => {
@@ -178,8 +182,33 @@ const SearchForm = forwardRef((props, ref) => {
         }}
       />
       <div class="search-popover" hidden={!searchMenuOpen || !query}>
+        {/* {!!query && (
+          <Link
+            to={`/search?q=${encodeURIComponent(query)}`}
+            class="search-popover-item focus"
+            onClick={(e) => {
+              props?.onSubmit?.(e);
+            }}
+          >
+            <Icon icon="search" />
+            <span>{query}</span>
+          </Link>
+        )} */}
         {!!query &&
           [
+            {
+              label: (
+                <>
+                  {query}{' '}
+                  <small class="insignificant">
+                    ‒ accounts, hashtags &amp; posts
+                  </small>
+                </>
+              ),
+              to: `/search?q=${encodeURIComponent(query)}`,
+              top: !type && !/\s/.test(query),
+              hidden: !!type,
+            },
             {
               label: (
                 <>
@@ -188,6 +217,8 @@ const SearchForm = forwardRef((props, ref) => {
               ),
               to: `/search?q=${encodeURIComponent(query)}&type=statuses`,
               hidden: /^https?:/.test(query),
+              top: /\s/.test(query),
+              icon: 'document',
             },
             {
               label: (
@@ -200,6 +231,7 @@ const SearchForm = forwardRef((props, ref) => {
                 /^@/.test(query) || /^https?:/.test(query) || /\s/.test(query),
               top: /^#/.test(query),
               type: 'link',
+              icon: 'hashtag',
             },
             {
               label: (
@@ -219,6 +251,7 @@ const SearchForm = forwardRef((props, ref) => {
                 </>
               ),
               to: `/search?q=${encodeURIComponent(query)}&type=accounts`,
+              icon: 'group',
             },
           ]
             .sort((a, b) => {
@@ -226,17 +259,18 @@ const SearchForm = forwardRef((props, ref) => {
               if (!a.top && b.top) return 1;
               return 0;
             })
-            .map(({ label, to, hidden, type }) => (
+            .filter(({ hidden }) => !hidden)
+            .map(({ label, to, icon, type }, i) => (
               <Link
                 to={to}
-                class="search-popover-item"
-                hidden={hidden}
+                class={`search-popover-item ${i === 0 ? 'focus' : ''}`}
+                // hidden={hidden}
                 onClick={(e) => {
                   props?.onSubmit?.(e);
                 }}
               >
                 <Icon
-                  icon={type === 'link' ? 'arrow-right' : 'search'}
+                  icon={icon || (type === 'link' ? 'arrow-right' : 'search')}
                   class="more-insignificant"
                 />
                 <span>{label}</span>{' '}

@@ -61,6 +61,7 @@ function AccountBlock({
     note,
     group,
     followersCount,
+    createdAt,
   } = account;
   let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
   if (accountInstance) {
@@ -188,6 +189,21 @@ function AccountBlock({
                 />
               </span>
             )}
+            {!bot &&
+              !group &&
+              !hasRelationship &&
+              !followersCount &&
+              !verifiedField &&
+              !!createdAt && (
+                <span class="created-at">
+                  Joined{' '}
+                  <time datetime={createdAt}>
+                    {niceDateTime(createdAt, {
+                      hideTime: true,
+                    })}
+                  </time>
+                </span>
+              )}
           </div>
         )}
       </span>

@@ -178,30 +178,29 @@ export function groupContext(items, instance) {
 
     if (item.inReplyToId && item.inReplyToAccountId !== item.account.id) {
       const sKey = statusKey(item.id, instance);
-      if (states.statusReply[sKey]) {
-        return;
+      if (!states.statusReply[sKey]) {
+        // If it's a reply and not a thread
+        queueMicrotask(async () => {
+          try {
+            const { masto } = api({ instance });
+            // const replyToStatus = await masto.v1.statuses
+            //   .$select(item.inReplyToId)
+            //   .fetch();
+            const replyToStatus = await fetchStatus(item.inReplyToId, masto);
+            saveStatus(replyToStatus, instance, {
+              skipThreading: true,
+              skipUnfurling: true,
+            });
+            states.statusReply[sKey] = {
+              id: replyToStatus.id,
+              instance,
+            };
+          } catch (e) {
+            // Silently fail
+            console.error(e);
+          }
+        });
       }
-      // If it's a reply and not a thread
-      queueMicrotask(async () => {
-        try {
-          const { masto } = api({ instance });
-          // const replyToStatus = await masto.v1.statuses
-          //   .$select(item.inReplyToId)
-          //   .fetch();
-          const replyToStatus = await fetchStatus(item.inReplyToId, masto);
-          saveStatus(replyToStatus, instance, {
-            skipThreading: true,
-            skipUnfurling: true,
-          });
-          states.statusReply[sKey] = {
-            id: replyToStatus.id,
-            instance,
-          };
-        } catch (e) {
-          // Silently fail
-          console.error(e);
-        }
-      });
     }
 
     newItems.push(item);

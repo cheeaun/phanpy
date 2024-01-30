@@ -682,7 +682,7 @@ function TimelineItem({
             instance={instance}
             enableCommentHint
             showFollowedTags={showFollowedTags}
-            showReplyParent
+            showReplyParent={showReplyParent}
             // allowFilters={allowFilters}
           />
         ) : (
@@ -691,7 +691,7 @@ function TimelineItem({
             instance={instance}
             enableCommentHint
             showFollowedTags={showFollowedTags}
-            showReplyParent
+            showReplyParent={showReplyParent}
             // allowFilters={allowFilters}
           />
         )}

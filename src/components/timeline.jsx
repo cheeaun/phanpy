@@ -46,6 +46,7 @@ function Timeline({
   view,
   filterContext,
   showFollowedTags,
+  showReplyParent,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -84,7 +85,7 @@ function Timeline({
               if (boostsCarousel) {
                 value = groupBoosts(value);
               }
-              value = groupContext(value);
+              value = groupContext(value, instance);
             }
             if (pinnedPosts.length) {
               value = pinnedPosts.concat(value);
@@ -522,6 +523,7 @@ function TimelineItem({
   filterContext,
   view,
   showFollowedTags,
+  showReplyParent,
 }) {
   const { id: statusID, reblog, items, type, _pinned } = status;
   if (_pinned) useItemID = false;
@@ -680,6 +682,7 @@ function TimelineItem({
             instance={instance}
             enableCommentHint
             showFollowedTags={showFollowedTags}
+            showReplyParent
             // allowFilters={allowFilters}
           />
         ) : (
@@ -688,6 +691,7 @@ function TimelineItem({
             instance={instance}
             enableCommentHint
             showFollowedTags={showFollowedTags}
+            showReplyParent
             // allowFilters={allowFilters}
           />
         )}

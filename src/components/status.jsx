@@ -126,6 +126,7 @@ function Status({
   showFollowedTags,
   allowContextMenu,
   showActionsBar,
+  showReplyParent,
 }) {
   if (skeleton) {
     return (
@@ -1271,225 +1272,149 @@ function Status({
   ]);
 
   return (
-    <article
-      data-state-post-id={sKey}
-      ref={(node) => {
-        statusRef.current = node;
-        // Use parent node if it's in focus
-        // Use case: <a><status /></a>
-        // When navigating (j/k), the <a> is focused instead of <status />
-        // Hotkey binding doesn't bubble up thus this hack
-        const nodeRef =
-          node?.closest?.(
-            '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
-          ) || node;
-        rRef.current = nodeRef;
-        fRef.current = nodeRef;
-        dRef.current = nodeRef;
-        bRef.current = nodeRef;
-        xRef.current = nodeRef;
-      }}
-      tabindex="-1"
-      class={`status ${
-        !withinContext && inReplyToId && inReplyToAccount
-          ? 'status-reply-to'
-          : ''
-      } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
-        {
-          s: 'small',
-          m: 'medium',
-          l: 'large',
-        }[size]
-      } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
-        isContextMenuOpen ? 'status-menu-open' : ''
-      }`}
-      onMouseEnter={debugHover}
-      onContextMenu={(e) => {
-        if (!showContextMenu) return;
-        if (e.metaKey) return;
-        // console.log('context menu', e);
-        const link = e.target.closest('a');
-        if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+    <>
+      {showReplyParent && !!(inReplyToId && inReplyToAccount) && (
+        <StatusCompact sKey={sKey} />
+      )}
+      <article
+        data-state-post-id={sKey}
+        ref={(node) => {
+          statusRef.current = node;
+          // Use parent node if it's in focus
+          // Use case: <a><status /></a>
+          // When navigating (j/k), the <a> is focused instead of <status />
+          // Hotkey binding doesn't bubble up thus this hack
+          const nodeRef =
+            node?.closest?.(
+              '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
+            ) || node;
+          rRef.current = nodeRef;
+          fRef.current = nodeRef;
+          dRef.current = nodeRef;
+          bRef.current = nodeRef;
+          xRef.current = nodeRef;
+        }}
+        tabindex="-1"
+        class={`status ${
+          !withinContext && inReplyToId && inReplyToAccount
+            ? 'status-reply-to'
+            : ''
+        } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
+          {
+            s: 'small',
+            m: 'medium',
+            l: 'large',
+          }[size]
+        } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
+          isContextMenuOpen ? 'status-menu-open' : ''
+        }`}
+        onMouseEnter={debugHover}
+        onContextMenu={(e) => {
+          if (!showContextMenu) return;
+          if (e.metaKey) return;
+          // console.log('context menu', e);
+          const link = e.target.closest('a');
+          if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
 
-        // If there's selected text, don't show custom context menu
-        const selection = window.getSelection?.();
-        if (selection.toString().length > 0) {
-          const { anchorNode } = selection;
-          if (statusRef.current?.contains(anchorNode)) {
-            return;
-          }
-        }
-        e.preventDefault();
-        setContextMenuProps({
-          anchorPoint: {
-            x: e.clientX,
-            y: e.clientY,
-          },
-          direction: 'right',
-        });
-        setIsContextMenuOpen(true);
-      }}
-      {...(showContextMenu ? bindLongPressContext() : {})}
-    >
-      {showContextMenu && (
-        <ControlledMenu
-          ref={contextMenuRef}
-          state={isContextMenuOpen ? 'open' : undefined}
-          {...contextMenuProps}
-          onClose={(e) => {
-            setIsContextMenuOpen(false);
-            // statusRef.current?.focus?.();
-            if (e?.reason === 'click') {
-              statusRef.current?.closest('[tabindex]')?.focus?.();
+          // If there's selected text, don't show custom context menu
+          const selection = window.getSelection?.();
+          if (selection.toString().length > 0) {
+            const { anchorNode } = selection;
+            if (statusRef.current?.contains(anchorNode)) {
+              return;
             }
-          }}
-          portal={{
-            target: document.body,
-          }}
-          containerProps={{
-            style: {
-              // Higher than the backdrop
-              zIndex: 1001,
+          }
+          e.preventDefault();
+          setContextMenuProps({
+            anchorPoint: {
+              x: e.clientX,
+              y: e.clientY,
             },
-            onClick: () => {
-              contextMenuRef.current?.closeMenu?.();
-            },
-          }}
-          overflow="auto"
-          boundingBoxPadding={safeBoundingBoxPadding()}
-          unmountOnClose
-        >
-          {StatusMenuItems}
-        </ControlledMenu>
-      )}
-      {showActionsBar &&
-        size !== 'l' &&
-        !previewMode &&
-        !readOnly &&
-        !_deleted &&
-        !quoted && (
-          <div
-            class={`status-actions ${
-              isContextMenuOpen === 'actions-bar' ? 'open' : ''
-            }`}
-            ref={actionsRef}
+            direction: 'right',
+          });
+          setIsContextMenuOpen(true);
+        }}
+        {...(showContextMenu ? bindLongPressContext() : {})}
+      >
+        {showContextMenu && (
+          <ControlledMenu
+            ref={contextMenuRef}
+            state={isContextMenuOpen ? 'open' : undefined}
+            {...contextMenuProps}
+            onClose={(e) => {
+              setIsContextMenuOpen(false);
+              // statusRef.current?.focus?.();
+              if (e?.reason === 'click') {
+                statusRef.current?.closest('[tabindex]')?.focus?.();
+              }
+            }}
+            portal={{
+              target: document.body,
+            }}
+            containerProps={{
+              style: {
+                // Higher than the backdrop
+                zIndex: 1001,
+              },
+              onClick: () => {
+                contextMenuRef.current?.closeMenu?.();
+              },
+            }}
+            overflow="auto"
+            boundingBoxPadding={safeBoundingBoxPadding()}
+            unmountOnClose
           >
-            <StatusButton
-              size="s"
-              title="Reply"
-              alt="Reply"
-              class="reply-button"
-              icon="comment"
-              iconSize="m"
-              onClick={replyStatus}
-            />
-            <StatusButton
-              size="s"
-              checked={favourited}
-              title={['Like', 'Unlike']}
-              alt={['Like', 'Liked']}
-              class="favourite-button"
-              icon="heart"
-              iconSize="m"
-              count={favouritesCount}
-              onClick={() => {
-                try {
-                  favouriteStatus();
-                  showToast(
-                    favourited
-                      ? `Unliked @${username || acct}'s post`
-                      : `Liked @${username || acct}'s post`,
-                  );
-                } catch (e) {}
-              }}
-            />
-            <button
-              type="button"
-              title="More"
-              class="plain more-button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setContextMenuProps({
-                  anchorRef: {
-                    current: e.currentTarget,
-                  },
-                  align: 'end',
-                  direction: 'bottom',
-                  gap: 4,
-                });
-                setIsContextMenuOpen('actions-bar');
-              }}
-            >
-              <Icon icon="more2" size="m" alt="More" />
-            </button>
-          </div>
+            {StatusMenuItems}
+          </ControlledMenu>
         )}
-      {size !== 'l' && (
-        <div class="status-badge">
-          {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
-          {favourited && <Icon class="favourite" icon="heart" size="s" />}
-          {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
-          {_pinned && <Icon class="pin" icon="pin" size="s" />}
-        </div>
-      )}
-      {size !== 's' && (
-        <a
-          href={accountURL}
-          tabindex="-1"
-          // target="_blank"
-          title={`@${acct}`}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            states.showAccount = {
-              account: status.account,
-              instance,
-            };
-          }}
-        >
-          <Avatar url={avatarStatic || avatar} size="xxl" squircle={bot} />
-        </a>
-      )}
-      <div class="container">
-        <div class="meta">
-          <span class="meta-name">
-            <NameText
-              account={status.account}
-              instance={instance}
-              showAvatar={size === 's'}
-              showAcct={isSizeLarge}
-            />
-          </span>
-          {/* {inReplyToAccount && !withinContext && size !== 's' && (
-              <>
-                {' '}
-                <span class="ib">
-                  <Icon icon="arrow-right" class="arrow" />{' '}
-                  <NameText account={inReplyToAccount} instance={instance} short />
-                </span>
-              </>
-            )} */}
-          {/* </span> */}{' '}
-          {size !== 'l' &&
-            (_deleted ? (
-              <span class="status-deleted-tag">Deleted</span>
-            ) : url && !previewMode && !quoted ? (
-              <Link
-                to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+        {showActionsBar &&
+          size !== 'l' &&
+          !previewMode &&
+          !readOnly &&
+          !_deleted &&
+          !quoted && (
+            <div
+              class={`status-actions ${
+                isContextMenuOpen === 'actions-bar' ? 'open' : ''
+              }`}
+              ref={actionsRef}
+            >
+              <StatusButton
+                size="s"
+                title="Reply"
+                alt="Reply"
+                class="reply-button"
+                icon="comment"
+                iconSize="m"
+                onClick={replyStatus}
+              />
+              <StatusButton
+                size="s"
+                checked={favourited}
+                title={['Like', 'Unlike']}
+                alt={['Like', 'Liked']}
+                class="favourite-button"
+                icon="heart"
+                iconSize="m"
+                count={favouritesCount}
+                onClick={() => {
+                  try {
+                    favouriteStatus();
+                    showToast(
+                      favourited
+                        ? `Unliked @${username || acct}'s post`
+                        : `Liked @${username || acct}'s post`,
+                    );
+                  } catch (e) {}
+                }}
+              />
+              <button
+                type="button"
+                title="More"
+                class="plain more-button"
                 onClick={(e) => {
-                  if (
-                    e.metaKey ||
-                    e.ctrlKey ||
-                    e.shiftKey ||
-                    e.altKey ||
-                    e.which === 2
-                  ) {
-                    return;
-                  }
                   e.preventDefault();
                   e.stopPropagation();
-                  onStatusLinkClick?.(e, status);
                   setContextMenuProps({
                     anchorRef: {
                       current: e.currentTarget,
@@ -1498,411 +1423,497 @@ function Status({
                     direction: 'bottom',
                     gap: 4,
                   });
-                  setIsContextMenuOpen(true);
+                  setIsContextMenuOpen('actions-bar');
                 }}
-                class={`time ${
-                  isContextMenuOpen && contextMenuProps?.anchorRef
-                    ? 'is-open'
-                    : ''
-                }`}
               >
-                {showCommentHint && !showCommentCount ? (
-                  <Icon
-                    icon="comment2"
-                    size="s"
-                    alt={`${repliesCount} ${
-                      repliesCount === 1 ? 'reply' : 'replies'
-                    }`}
-                  />
-                ) : (
+                <Icon icon="more2" size="m" alt="More" />
+              </button>
+            </div>
+          )}
+        {size !== 'l' && (
+          <div class="status-badge">
+            {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
+            {favourited && <Icon class="favourite" icon="heart" size="s" />}
+            {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
+            {_pinned && <Icon class="pin" icon="pin" size="s" />}
+          </div>
+        )}
+        {size !== 's' && (
+          <a
+            href={accountURL}
+            tabindex="-1"
+            // target="_blank"
+            title={`@${acct}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              states.showAccount = {
+                account: status.account,
+                instance,
+              };
+            }}
+          >
+            <Avatar url={avatarStatic || avatar} size="xxl" squircle={bot} />
+          </a>
+        )}
+        <div class="container">
+          <div class="meta">
+            <span class="meta-name">
+              <NameText
+                account={status.account}
+                instance={instance}
+                showAvatar={size === 's'}
+                showAcct={isSizeLarge}
+              />
+            </span>
+            {/* {inReplyToAccount && !withinContext && size !== 's' && (
+              <>
+                {' '}
+                <span class="ib">
+                  <Icon icon="arrow-right" class="arrow" />{' '}
+                  <NameText account={inReplyToAccount} instance={instance} short />
+                </span>
+              </>
+            )} */}
+            {/* </span> */}{' '}
+            {size !== 'l' &&
+              (_deleted ? (
+                <span class="status-deleted-tag">Deleted</span>
+              ) : url && !previewMode && !quoted ? (
+                <Link
+                  to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                  onClick={(e) => {
+                    if (
+                      e.metaKey ||
+                      e.ctrlKey ||
+                      e.shiftKey ||
+                      e.altKey ||
+                      e.which === 2
+                    ) {
+                      return;
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onStatusLinkClick?.(e, status);
+                    setContextMenuProps({
+                      anchorRef: {
+                        current: e.currentTarget,
+                      },
+                      align: 'end',
+                      direction: 'bottom',
+                      gap: 4,
+                    });
+                    setIsContextMenuOpen(true);
+                  }}
+                  class={`time ${
+                    isContextMenuOpen && contextMenuProps?.anchorRef
+                      ? 'is-open'
+                      : ''
+                  }`}
+                >
+                  {showCommentHint && !showCommentCount ? (
+                    <Icon
+                      icon="comment2"
+                      size="s"
+                      alt={`${repliesCount} ${
+                        repliesCount === 1 ? 'reply' : 'replies'
+                      }`}
+                    />
+                  ) : (
+                    <Icon
+                      icon={visibilityIconsMap[visibility]}
+                      alt={visibilityText[visibility]}
+                      size="s"
+                    />
+                  )}{' '}
+                  <RelativeTime datetime={createdAtDate} format="micro" />
+                  {!previewMode && <Icon icon="more2" class="more" />}
+                </Link>
+              ) : (
+                // <Menu
+                //   instanceRef={menuInstanceRef}
+                //   portal={{
+                //     target: document.body,
+                //   }}
+                //   containerProps={{
+                //     style: {
+                //       // Higher than the backdrop
+                //       zIndex: 1001,
+                //     },
+                //     onClick: (e) => {
+                //       if (e.target === e.currentTarget)
+                //         menuInstanceRef.current?.closeMenu?.();
+                //     },
+                //   }}
+                //   align="end"
+                //   gap={4}
+                //   overflow="auto"
+                //   viewScroll="close"
+                //   boundingBoxPadding="8 8 8 8"
+                //   unmountOnClose
+                //   menuButton={({ open }) => (
+                //     <Link
+                //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                //       onClick={(e) => {
+                //         e.preventDefault();
+                //         e.stopPropagation();
+                //         onStatusLinkClick?.(e, status);
+                //       }}
+                //       class={`time ${open ? 'is-open' : ''}`}
+                //     >
+                //       <Icon
+                //         icon={visibilityIconsMap[visibility]}
+                //         alt={visibilityText[visibility]}
+                //         size="s"
+                //       />{' '}
+                //       <RelativeTime datetime={createdAtDate} format="micro" />
+                //     </Link>
+                //   )}
+                // >
+                //   {StatusMenuItems}
+                // </Menu>
+                <span class="time">
                   <Icon
                     icon={visibilityIconsMap[visibility]}
                     alt={visibilityText[visibility]}
                     size="s"
-                  />
-                )}{' '}
-                <RelativeTime datetime={createdAtDate} format="micro" />
-                {!previewMode && <Icon icon="more2" class="more" />}
-              </Link>
-            ) : (
-              // <Menu
-              //   instanceRef={menuInstanceRef}
-              //   portal={{
-              //     target: document.body,
-              //   }}
-              //   containerProps={{
-              //     style: {
-              //       // Higher than the backdrop
-              //       zIndex: 1001,
-              //     },
-              //     onClick: (e) => {
-              //       if (e.target === e.currentTarget)
-              //         menuInstanceRef.current?.closeMenu?.();
-              //     },
-              //   }}
-              //   align="end"
-              //   gap={4}
-              //   overflow="auto"
-              //   viewScroll="close"
-              //   boundingBoxPadding="8 8 8 8"
-              //   unmountOnClose
-              //   menuButton={({ open }) => (
-              //     <Link
-              //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-              //       onClick={(e) => {
-              //         e.preventDefault();
-              //         e.stopPropagation();
-              //         onStatusLinkClick?.(e, status);
-              //       }}
-              //       class={`time ${open ? 'is-open' : ''}`}
-              //     >
-              //       <Icon
-              //         icon={visibilityIconsMap[visibility]}
-              //         alt={visibilityText[visibility]}
-              //         size="s"
-              //       />{' '}
-              //       <RelativeTime datetime={createdAtDate} format="micro" />
-              //     </Link>
-              //   )}
-              // >
-              //   {StatusMenuItems}
-              // </Menu>
-              <span class="time">
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={visibilityText[visibility]}
-                  size="s"
-                />{' '}
-                <RelativeTime datetime={createdAtDate} format="micro" />
-              </span>
-            ))}
-        </div>
-        {visibility === 'direct' && (
-          <>
-            <div class="status-direct-badge">Private mention</div>{' '}
-          </>
-        )}
-        {!withinContext && (
-          <>
-            {isThread ? (
-              <div class="status-thread-badge">
-                <Icon icon="thread" size="s" />
-                Thread
-                {snapStates.statusThreadNumber[sKey]
-                  ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-                  : ''}
-              </div>
-            ) : (
-              !!inReplyToId &&
-              !!inReplyToAccount &&
-              (!!spoilerText ||
-                !mentions.find((mention) => {
-                  return mention.id === inReplyToAccountId;
-                })) && (
-                <div class="status-reply-badge">
-                  <Icon icon="reply" />{' '}
-                  <NameText
-                    account={inReplyToAccount}
-                    instance={instance}
-                    short
-                  />
-                </div>
-              )
-            )}
-          </>
-        )}
-        <div
-          class={`content-container ${
-            spoilerText || sensitive ? 'has-spoiler' : ''
-          } ${showSpoiler ? 'show-spoiler' : ''} ${
-            showSpoilerMedia ? 'show-media' : ''
-          }`}
-          data-content-text-weight={contentTextWeight ? textWeight() : null}
-          style={
-            (isSizeLarge || contentTextWeight) && {
-              '--content-text-weight': textWeight(),
-            }
-          }
-        >
-          {!!spoilerText && (
+                  />{' '}
+                  <RelativeTime datetime={createdAtDate} format="micro" />
+                </span>
+              ))}
+          </div>
+          {visibility === 'direct' && (
             <>
-              <div
-                class="content spoiler-content"
-                lang={language}
-                dir="auto"
-                ref={spoilerContentRef}
-                data-read-more={readMoreText}
-              >
-                <p>
-                  <EmojiText text={spoilerText} emojis={emojis} />
-                </p>
-              </div>
-              {readingExpandSpoilers || previewMode ? (
-                <div class="spoiler-divider">
-                  <Icon icon="eye-open" /> Content warning
+              <div class="status-direct-badge">Private mention</div>{' '}
+            </>
+          )}
+          {!withinContext && (
+            <>
+              {isThread ? (
+                <div class="status-thread-badge">
+                  <Icon icon="thread" size="s" />
+                  Thread
+                  {snapStates.statusThreadNumber[sKey]
+                    ? ` ${snapStates.statusThreadNumber[sKey]}/X`
+                    : ''}
                 </div>
               ) : (
-                <button
-                  class={`light spoiler-button ${
-                    showSpoiler ? 'spoiling' : ''
-                  }`}
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (showSpoiler) {
-                      delete states.spoilers[id];
-                      if (!readingExpandSpoilers) {
-                        delete states.spoilersMedia[id];
-                      }
-                    } else {
-                      states.spoilers[id] = true;
-                      if (!readingExpandSpoilers) {
-                        states.spoilersMedia[id] = true;
-                      }
-                    }
-                  }}
-                >
-                  <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                  {showSpoiler ? 'Show less' : 'Show content'}
-                </button>
+                !!inReplyToId &&
+                !!inReplyToAccount &&
+                (!!spoilerText ||
+                  !mentions.find((mention) => {
+                    return mention.id === inReplyToAccountId;
+                  })) && (
+                  <div class="status-reply-badge">
+                    <Icon icon="reply" />{' '}
+                    <NameText
+                      account={inReplyToAccount}
+                      instance={instance}
+                      short
+                    />
+                  </div>
+                )
               )}
             </>
           )}
-          {!!content && (
-            <div class="content" ref={contentRef} data-read-more={readMoreText}>
-              <div
-                lang={language}
-                dir="auto"
-                class="inner-content"
-                onClick={handleContentLinks({
-                  mentions,
-                  instance,
-                  previewMode,
-                  statusURL: url,
-                })}
-                dangerouslySetInnerHTML={{
-                  __html: enhanceContent(content, {
-                    emojis,
-                    postEnhanceDOM: (dom) => {
-                      // Remove target="_blank" from links
-                      dom
-                        .querySelectorAll('a.u-url[target="_blank"]')
-                        .forEach((a) => {
-                          if (!/http/i.test(a.innerText.trim())) {
-                            a.removeAttribute('target');
-                          }
-                        });
-                      // if (previewMode) return;
-                      // Unfurl Mastodon links
-                      // Array.from(
-                      //   dom.querySelectorAll(
-                      //     'a[href]:not(.u-url):not(.mention):not(.hashtag)',
-                      //   ),
-                      // )
-                      //   .filter((a) => {
-                      //     const url = a.href;
-                      //     const isPostItself =
-                      //       url === status.url || url === status.uri;
-                      //     return !isPostItself && isMastodonLinkMaybe(url);
-                      //   })
-                      //   .forEach((a, i) => {
-                      //     unfurlMastodonLink(currentInstance, a.href).then(
-                      //       (result) => {
-                      //         if (!result) return;
-                      //         a.removeAttribute('target');
-                      //         if (!sKey) return;
-                      //         if (!Array.isArray(states.statusQuotes[sKey])) {
-                      //           states.statusQuotes[sKey] = [];
-                      //         }
-                      //         if (!states.statusQuotes[sKey][i]) {
-                      //           states.statusQuotes[sKey].splice(i, 0, result);
-                      //         }
-                      //       },
-                      //     );
-                      //   });
-                    },
-                  }),
-                }}
-              />
-              <QuoteStatuses id={id} instance={instance} level={quoted} />
-            </div>
-          )}
-          {!!poll && (
-            <Poll
-              lang={language}
-              poll={poll}
-              readOnly={readOnly || !sameInstance || !authenticated}
-              onUpdate={(newPoll) => {
-                states.statuses[sKey].poll = newPoll;
-              }}
-              refresh={() => {
-                return masto.v1.polls
-                  .$select(poll.id)
-                  .fetch()
-                  .then((pollResponse) => {
-                    states.statuses[sKey].poll = pollResponse;
-                  })
-                  .catch((e) => {}); // Silently fail
-              }}
-              votePoll={(choices) => {
-                return masto.v1.polls
-                  .$select(poll.id)
-                  .votes.create({
-                    choices,
-                  })
-                  .then((pollResponse) => {
-                    states.statuses[sKey].poll = pollResponse;
-                  })
-                  .catch((e) => {}); // Silently fail
-              }}
-            />
-          )}
-          {(((enableTranslate || inlineTranslate) &&
-            !!content.trim() &&
-            !!getHTMLText(emojifyText(content, emojis)) &&
-            differentLanguage) ||
-            forceTranslate) && (
-            <TranslationBlock
-              forceTranslate={forceTranslate || inlineTranslate}
-              mini={!isSizeLarge && !withinContext}
-              sourceLanguage={language}
-              text={getPostText(status)}
-            />
-          )}
-          {!previewMode &&
-            sensitive &&
-            !!mediaAttachments.length &&
-            readingExpandMedia !== 'show_all' && (
-              <button
-                class={`plain spoiler-media-button ${
-                  showSpoilerMedia ? 'spoiling' : ''
-                }`}
-                type="button"
-                hidden={!readingExpandSpoilers && !!spoilerText}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  if (showSpoilerMedia) {
-                    delete states.spoilersMedia[id];
-                  } else {
-                    states.spoilersMedia[id] = true;
-                  }
-                }}
-              >
-                <Icon icon={showSpoilerMedia ? 'eye-open' : 'eye-close'} />{' '}
-                {showSpoilerMedia ? 'Show less' : 'Show media'}
-              </button>
+          <div
+            class={`content-container ${
+              spoilerText || sensitive ? 'has-spoiler' : ''
+            } ${showSpoiler ? 'show-spoiler' : ''} ${
+              showSpoilerMedia ? 'show-media' : ''
+            }`}
+            data-content-text-weight={contentTextWeight ? textWeight() : null}
+            style={
+              (isSizeLarge || contentTextWeight) && {
+                '--content-text-weight': textWeight(),
+              }
+            }
+          >
+            {!!spoilerText && (
+              <>
+                <div
+                  class="content spoiler-content"
+                  lang={language}
+                  dir="auto"
+                  ref={spoilerContentRef}
+                  data-read-more={readMoreText}
+                >
+                  <p>
+                    <EmojiText text={spoilerText} emojis={emojis} />
+                  </p>
+                </div>
+                {readingExpandSpoilers || previewMode ? (
+                  <div class="spoiler-divider">
+                    <Icon icon="eye-open" /> Content warning
+                  </div>
+                ) : (
+                  <button
+                    class={`light spoiler-button ${
+                      showSpoiler ? 'spoiling' : ''
+                    }`}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (showSpoiler) {
+                        delete states.spoilers[id];
+                        if (!readingExpandSpoilers) {
+                          delete states.spoilersMedia[id];
+                        }
+                      } else {
+                        states.spoilers[id] = true;
+                        if (!readingExpandSpoilers) {
+                          states.spoilersMedia[id] = true;
+                        }
+                      }
+                    }}
+                  >
+                    <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
+                    {showSpoiler ? 'Show less' : 'Show content'}
+                  </button>
+                )}
+              </>
             )}
-          {!!mediaAttachments.length && (
-            <MultipleMediaFigure
-              lang={language}
-              enabled={showMultipleMediaCaptions}
-              captionChildren={captionChildren}
-            >
+            {!!content && (
               <div
-                ref={mediaContainerRef}
-                class={`media-container media-eq${mediaAttachments.length} ${
-                  mediaAttachments.length > 2 ? 'media-gt2' : ''
-                } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+                class="content"
+                ref={contentRef}
+                data-read-more={readMoreText}
               >
-                {displayedMediaAttachments.map((media, i) => (
-                  <Media
-                    key={media.id}
-                    media={media}
-                    autoAnimate={isSizeLarge}
-                    showCaption={mediaAttachments.length === 1}
-                    lang={language}
-                    altIndex={
-                      showMultipleMediaCaptions && !!media.description && i + 1
-                    }
-                    to={`/${instance}/s/${id}?${
-                      withinContext ? 'media' : 'media-only'
-                    }=${i + 1}`}
-                    onClick={
-                      onMediaClick
-                        ? (e) => {
-                            onMediaClick(e, i, media, status);
-                          }
-                        : undefined
-                    }
-                  />
-                ))}
-              </div>
-            </MultipleMediaFigure>
-          )}
-          {!!card &&
-            /^https/i.test(card?.url) &&
-            !sensitive &&
-            !spoilerText &&
-            !poll &&
-            !mediaAttachments.length &&
-            !snapStates.statusQuotes[sKey] && (
-              <Card
-                card={card}
-                selfReferential={
-                  card?.url === status.url || card?.url === status.uri
-                }
-                instance={currentInstance}
-              />
-            )}
-        </div>
-        {!isSizeLarge && showCommentCount && (
-          <div class="content-comment-hint insignificant">
-            <Icon icon="comment2" alt="Replies" /> {repliesCount}
-          </div>
-        )}
-        {isSizeLarge && (
-          <>
-            <div class="extra-meta">
-              {_deleted ? (
-                <span class="status-deleted-tag">Deleted</span>
-              ) : (
-                <>
-                  <Icon
-                    icon={visibilityIconsMap[visibility]}
-                    alt={visibilityText[visibility]}
-                  />{' '}
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    <time
-                      class="created"
-                      datetime={createdAtDate.toISOString()}
-                      title={createdAtDate.toLocaleString()}
-                    >
-                      {createdDateText}
-                    </time>
-                  </a>
-                  {editedAt && (
-                    <>
-                      {' '}
-                      &bull; <Icon icon="pencil" alt="Edited" />{' '}
-                      <time
-                        tabIndex="0"
-                        class="edited"
-                        datetime={editedAtDate.toISOString()}
-                        onClick={() => {
-                          setShowEdited(id);
-                        }}
-                      >
-                        {editedDateText}
-                      </time>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-            <div class={`actions ${_deleted ? 'disabled' : ''}`}>
-              <div class="action has-count">
-                <StatusButton
-                  title="Reply"
-                  alt="Comments"
-                  class="reply-button"
-                  icon="comment"
-                  count={repliesCount}
-                  onClick={replyStatus}
+                <div
+                  lang={language}
+                  dir="auto"
+                  class="inner-content"
+                  onClick={handleContentLinks({
+                    mentions,
+                    instance,
+                    previewMode,
+                    statusURL: url,
+                  })}
+                  dangerouslySetInnerHTML={{
+                    __html: enhanceContent(content, {
+                      emojis,
+                      postEnhanceDOM: (dom) => {
+                        // Remove target="_blank" from links
+                        dom
+                          .querySelectorAll('a.u-url[target="_blank"]')
+                          .forEach((a) => {
+                            if (!/http/i.test(a.innerText.trim())) {
+                              a.removeAttribute('target');
+                            }
+                          });
+                        // if (previewMode) return;
+                        // Unfurl Mastodon links
+                        // Array.from(
+                        //   dom.querySelectorAll(
+                        //     'a[href]:not(.u-url):not(.mention):not(.hashtag)',
+                        //   ),
+                        // )
+                        //   .filter((a) => {
+                        //     const url = a.href;
+                        //     const isPostItself =
+                        //       url === status.url || url === status.uri;
+                        //     return !isPostItself && isMastodonLinkMaybe(url);
+                        //   })
+                        //   .forEach((a, i) => {
+                        //     unfurlMastodonLink(currentInstance, a.href).then(
+                        //       (result) => {
+                        //         if (!result) return;
+                        //         a.removeAttribute('target');
+                        //         if (!sKey) return;
+                        //         if (!Array.isArray(states.statusQuotes[sKey])) {
+                        //           states.statusQuotes[sKey] = [];
+                        //         }
+                        //         if (!states.statusQuotes[sKey][i]) {
+                        //           states.statusQuotes[sKey].splice(i, 0, result);
+                        //         }
+                        //       },
+                        //     );
+                        //   });
+                      },
+                    }),
+                  }}
                 />
+                <QuoteStatuses id={id} instance={instance} level={quoted} />
               </div>
-              {/* <div class="action has-count">
+            )}
+            {!!poll && (
+              <Poll
+                lang={language}
+                poll={poll}
+                readOnly={readOnly || !sameInstance || !authenticated}
+                onUpdate={(newPoll) => {
+                  states.statuses[sKey].poll = newPoll;
+                }}
+                refresh={() => {
+                  return masto.v1.polls
+                    .$select(poll.id)
+                    .fetch()
+                    .then((pollResponse) => {
+                      states.statuses[sKey].poll = pollResponse;
+                    })
+                    .catch((e) => {}); // Silently fail
+                }}
+                votePoll={(choices) => {
+                  return masto.v1.polls
+                    .$select(poll.id)
+                    .votes.create({
+                      choices,
+                    })
+                    .then((pollResponse) => {
+                      states.statuses[sKey].poll = pollResponse;
+                    })
+                    .catch((e) => {}); // Silently fail
+                }}
+              />
+            )}
+            {(((enableTranslate || inlineTranslate) &&
+              !!content.trim() &&
+              !!getHTMLText(emojifyText(content, emojis)) &&
+              differentLanguage) ||
+              forceTranslate) && (
+              <TranslationBlock
+                forceTranslate={forceTranslate || inlineTranslate}
+                mini={!isSizeLarge && !withinContext}
+                sourceLanguage={language}
+                text={getPostText(status)}
+              />
+            )}
+            {!previewMode &&
+              sensitive &&
+              !!mediaAttachments.length &&
+              readingExpandMedia !== 'show_all' && (
+                <button
+                  class={`plain spoiler-media-button ${
+                    showSpoilerMedia ? 'spoiling' : ''
+                  }`}
+                  type="button"
+                  hidden={!readingExpandSpoilers && !!spoilerText}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (showSpoilerMedia) {
+                      delete states.spoilersMedia[id];
+                    } else {
+                      states.spoilersMedia[id] = true;
+                    }
+                  }}
+                >
+                  <Icon icon={showSpoilerMedia ? 'eye-open' : 'eye-close'} />{' '}
+                  {showSpoilerMedia ? 'Show less' : 'Show media'}
+                </button>
+              )}
+            {!!mediaAttachments.length && (
+              <MultipleMediaFigure
+                lang={language}
+                enabled={showMultipleMediaCaptions}
+                captionChildren={captionChildren}
+              >
+                <div
+                  ref={mediaContainerRef}
+                  class={`media-container media-eq${mediaAttachments.length} ${
+                    mediaAttachments.length > 2 ? 'media-gt2' : ''
+                  } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
+                >
+                  {displayedMediaAttachments.map((media, i) => (
+                    <Media
+                      key={media.id}
+                      media={media}
+                      autoAnimate={isSizeLarge}
+                      showCaption={mediaAttachments.length === 1}
+                      lang={language}
+                      altIndex={
+                        showMultipleMediaCaptions &&
+                        !!media.description &&
+                        i + 1
+                      }
+                      to={`/${instance}/s/${id}?${
+                        withinContext ? 'media' : 'media-only'
+                      }=${i + 1}`}
+                      onClick={
+                        onMediaClick
+                          ? (e) => {
+                              onMediaClick(e, i, media, status);
+                            }
+                          : undefined
+                      }
+                    />
+                  ))}
+                </div>
+              </MultipleMediaFigure>
+            )}
+            {!!card &&
+              /^https/i.test(card?.url) &&
+              !sensitive &&
+              !spoilerText &&
+              !poll &&
+              !mediaAttachments.length &&
+              !snapStates.statusQuotes[sKey] && (
+                <Card
+                  card={card}
+                  selfReferential={
+                    card?.url === status.url || card?.url === status.uri
+                  }
+                  instance={currentInstance}
+                />
+              )}
+          </div>
+          {!isSizeLarge && showCommentCount && (
+            <div class="content-comment-hint insignificant">
+              <Icon icon="comment2" alt="Replies" /> {repliesCount}
+            </div>
+          )}
+          {isSizeLarge && (
+            <>
+              <div class="extra-meta">
+                {_deleted ? (
+                  <span class="status-deleted-tag">Deleted</span>
+                ) : (
+                  <>
+                    <Icon
+                      icon={visibilityIconsMap[visibility]}
+                      alt={visibilityText[visibility]}
+                    />{' '}
+                    <a href={url} target="_blank" rel="noopener noreferrer">
+                      <time
+                        class="created"
+                        datetime={createdAtDate.toISOString()}
+                        title={createdAtDate.toLocaleString()}
+                      >
+                        {createdDateText}
+                      </time>
+                    </a>
+                    {editedAt && (
+                      <>
+                        {' '}
+                        &bull; <Icon icon="pencil" alt="Edited" />{' '}
+                        <time
+                          tabIndex="0"
+                          class="edited"
+                          datetime={editedAtDate.toISOString()}
+                          onClick={() => {
+                            setShowEdited(id);
+                          }}
+                        >
+                          {editedDateText}
+                        </time>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+              <div class={`actions ${_deleted ? 'disabled' : ''}`}>
+                <div class="action has-count">
+                  <StatusButton
+                    title="Reply"
+                    alt="Comments"
+                    class="reply-button"
+                    icon="comment"
+                    count={repliesCount}
+                    onClick={replyStatus}
+                  />
+                </div>
+                {/* <div class="action has-count">
                 <StatusButton
                   checked={reblogged}
                   title={['Boost', 'Unboost']}
@@ -1914,110 +1925,113 @@ function Status({
                   disabled={!canBoost}
                 />
               </div> */}
-              <MenuConfirm
-                disabled={!canBoost}
-                onClick={confirmBoostStatus}
-                confirmLabel={
-                  <>
-                    <Icon icon="rocket" />
-                    <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
-                  </>
-                }
-                menuFooter={
-                  mediaNoDesc &&
-                  !reblogged && (
-                    <div class="footer">
-                      <Icon icon="alert" />
-                      Some media have no descriptions.
-                    </div>
-                  )
-                }
-              >
+                <MenuConfirm
+                  disabled={!canBoost}
+                  onClick={confirmBoostStatus}
+                  confirmLabel={
+                    <>
+                      <Icon icon="rocket" />
+                      <span>
+                        {reblogged ? 'Unboost?' : 'Boost to everyone?'}
+                      </span>
+                    </>
+                  }
+                  menuFooter={
+                    mediaNoDesc &&
+                    !reblogged && (
+                      <div class="footer">
+                        <Icon icon="alert" />
+                        Some media have no descriptions.
+                      </div>
+                    )
+                  }
+                >
+                  <div class="action has-count">
+                    <StatusButton
+                      checked={reblogged}
+                      title={['Boost', 'Unboost']}
+                      alt={['Boost', 'Boosted']}
+                      class="reblog-button"
+                      icon="rocket"
+                      count={reblogsCount}
+                      // onClick={boostStatus}
+                      disabled={!canBoost}
+                    />
+                  </div>
+                </MenuConfirm>
                 <div class="action has-count">
                   <StatusButton
-                    checked={reblogged}
-                    title={['Boost', 'Unboost']}
-                    alt={['Boost', 'Boosted']}
-                    class="reblog-button"
-                    icon="rocket"
-                    count={reblogsCount}
-                    // onClick={boostStatus}
-                    disabled={!canBoost}
+                    checked={favourited}
+                    title={['Like', 'Unlike']}
+                    alt={['Like', 'Liked']}
+                    class="favourite-button"
+                    icon="heart"
+                    count={favouritesCount}
+                    onClick={favouriteStatus}
                   />
                 </div>
-              </MenuConfirm>
-              <div class="action has-count">
-                <StatusButton
-                  checked={favourited}
-                  title={['Like', 'Unlike']}
-                  alt={['Like', 'Liked']}
-                  class="favourite-button"
-                  icon="heart"
-                  count={favouritesCount}
-                  onClick={favouriteStatus}
-                />
+                <div class="action">
+                  <StatusButton
+                    checked={bookmarked}
+                    title={['Bookmark', 'Unbookmark']}
+                    alt={['Bookmark', 'Bookmarked']}
+                    class="bookmark-button"
+                    icon="bookmark"
+                    onClick={bookmarkStatus}
+                  />
+                </div>
+                <Menu2
+                  portal={{
+                    target:
+                      document.querySelector('.status-deck') || document.body,
+                  }}
+                  align="end"
+                  gap={4}
+                  overflow="auto"
+                  viewScroll="close"
+                  menuButton={
+                    <div class="action">
+                      <button
+                        type="button"
+                        title="More"
+                        class="plain more-button"
+                      >
+                        <Icon icon="more" size="l" alt="More" />
+                      </button>
+                    </div>
+                  }
+                >
+                  {StatusMenuItems}
+                </Menu2>
               </div>
-              <div class="action">
-                <StatusButton
-                  checked={bookmarked}
-                  title={['Bookmark', 'Unbookmark']}
-                  alt={['Bookmark', 'Bookmarked']}
-                  class="bookmark-button"
-                  icon="bookmark"
-                  onClick={bookmarkStatus}
-                />
-              </div>
-              <Menu2
-                portal={{
-                  target:
-                    document.querySelector('.status-deck') || document.body,
-                }}
-                align="end"
-                gap={4}
-                overflow="auto"
-                viewScroll="close"
-                menuButton={
-                  <div class="action">
-                    <button
-                      type="button"
-                      title="More"
-                      class="plain more-button"
-                    >
-                      <Icon icon="more" size="l" alt="More" />
-                    </button>
-                  </div>
-                }
-              >
-                {StatusMenuItems}
-              </Menu2>
-            </div>
-          </>
+            </>
+          )}
+        </div>
+        {!!showEdited && (
+          <Modal
+            class="light"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowEdited(false);
+                // statusRef.current?.focus();
+              }
+            }}
+          >
+            <EditedAtModal
+              statusID={showEdited}
+              instance={instance}
+              fetchStatusHistory={() => {
+                return masto.v1.statuses.$select(showEdited).history.list();
+              }}
+              onClose={() => {
+                setShowEdited(false);
+                statusRef.current?.focus();
+              }}
+            />
+          </Modal>
         )}
-      </div>
-      {!!showEdited && (
-        <Modal
-          class="light"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowEdited(false);
-              // statusRef.current?.focus();
-            }
-          }}
-        >
-          <EditedAtModal
-            statusID={showEdited}
-            instance={instance}
-            fetchStatusHistory={() => {
-              return masto.v1.statuses.$select(showEdited).history.list();
-            }}
-            onClose={() => {
-              setShowEdited(false);
-              statusRef.current?.focus();
-            }}
-          />
-        </Modal>
-      )}
-    </article>
+      </article>
+    </>
   );
 }
 
@@ -2409,6 +2423,41 @@ function nicePostURL(url) {
         <span class="more-insignificant">{path}</span>
       )}
     </>
+  );
+}
+
+function StatusCompact({ sKey }) {
+  const snapStates = useSnapshot(states);
+  const statusReply = snapStates.statusReply[sKey];
+  if (!statusReply) return null;
+
+  const { id, instance } = statusReply;
+  const status = getStatus(id, instance);
+  if (!status) return null;
+
+  const {
+    sensitive,
+    spoilerText,
+    account: { avatar, avatarStatic, bot },
+    visibility,
+    content,
+  } = status;
+  if (sensitive || spoilerText) return null;
+  if (!content) return null;
+
+  const statusPeekText = statusPeek(status);
+  return (
+    <article
+      class={`status compact-reply ${
+        visibility === 'direct' ? 'visibility-direct' : ''
+      }`}
+      tabindex="-1"
+    >
+      <Avatar url={avatarStatic || avatar} squircle={bot} />
+      <div class="content-compact" title={statusPeekText}>
+        {statusPeekText}
+      </div>
+    </article>
   );
 }
 

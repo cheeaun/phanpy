@@ -104,6 +104,7 @@ function List(props) {
         boostsCarousel={snapStates.settings.boostsCarousel}
         // allowFilters
         filterContext="home"
+        showReplyParent
         // refresh={reloadCount}
         headerStart={
           <Link to="/l" class="button plain">

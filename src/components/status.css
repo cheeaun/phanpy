@@ -330,6 +330,62 @@
   font-size: 90%;
 }
 
+.status.compact-reply {
+  --avatar-size: 20px;
+  --line-start: 40px;
+  --line-width: 3px;
+  --line-end: calc(var(--line-start) + var(--line-width));
+
+  display: flex;
+  gap: 12px;
+  --top-padding: 8px;
+  padding-top: var(--top-padding);
+  padding-bottom: 0;
+  background-image: linear-gradient(
+    160deg,
+    var(--reply-to-faded-color),
+    transparent
+  );
+
+  > * {
+    opacity: 0.65;
+    transition: opacity 1s ease-out;
+  }
+  .status-link:hover & > * {
+    opacity: 1;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(var(--top-padding) + var(--avatar-size));
+    left: var(--line-start);
+    width: var(--line-width);
+    height: calc(100% - var(--top-padding) - var(--avatar-size) + 16px);
+    background-color: var(--comment-line-color);
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, #000 8px, transparent);
+  }
+
+  .avatar {
+    margin-left: calc((50px - var(--avatar-size)) / 2);
+    justify-self: center;
+    z-index: 1;
+  }
+
+  .content-compact {
+    overflow: hidden;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: 90%;
+    line-height: var(--avatar-size);
+  }
+}
+
 .status .container {
   flex-grow: 1;
   min-width: 0;

@@ -129,6 +129,7 @@ function Following({ title, path, id, ...props }) {
       // allowFilters
       filterContext="home"
       showFollowedTags
+      showReplyParent
     />
   );
 }

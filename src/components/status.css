@@ -654,6 +654,10 @@
   display: flex;
   gap: 4px;
   align-items: center;
+
+  .timeline-item-container & {
+    display: none;
+  }
 }
 
 .status.compact-thread .spoiler-badge {

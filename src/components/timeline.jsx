@@ -433,6 +433,7 @@ function Timeline({
                     key={status.id + status?._pinned + view}
                     view={view}
                     showFollowedTags={showFollowedTags}
+                    showReplyParent={showReplyParent}
                   />
                 ))}
                 {showMore &&
@@ -789,7 +790,7 @@ function StatusCarousel({ title, class: className, children }) {
 
 function TimelineStatusCompact({ status, instance }) {
   const snapStates = useSnapshot(states);
-  const { id, visibility } = status;
+  const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
   return (
@@ -811,7 +812,12 @@ function TimelineStatusCompact({ status, instance }) {
           <Icon icon="thread" size="s" />
         </div>
       )}
-      <div class="content-compact" title={statusPeekText}>
+      <div
+        class="content-compact"
+        title={statusPeekText}
+        lang={language}
+        dir="auto"
+      >
         {statusPeekText}
         {status.sensitive && status.spoilerText && (
           <>

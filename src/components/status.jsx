@@ -1273,7 +1273,7 @@ function Status({
 
   return (
     <>
-      {showReplyParent && !!(inReplyToId && inReplyToAccount) && (
+      {showReplyParent && !!(inReplyToId && inReplyToAccountId) && (
         <StatusCompact sKey={sKey} />
       )}
       <article
@@ -2441,6 +2441,7 @@ function StatusCompact({ sKey }) {
     account: { avatar, avatarStatic, bot },
     visibility,
     content,
+    language,
   } = status;
   if (sensitive || spoilerText) return null;
   if (!content) return null;
@@ -2454,7 +2455,12 @@ function StatusCompact({ sKey }) {
       tabindex="-1"
     >
       <Avatar url={avatarStatic || avatar} squircle={bot} />
-      <div class="content-compact" title={statusPeekText}>
+      <div
+        class="content-compact"
+        title={statusPeekText}
+        lang={language}
+        dir="auto"
+      >
         {statusPeekText}
       </div>
     </article>

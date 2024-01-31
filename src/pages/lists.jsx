@@ -61,14 +61,15 @@ function Lists() {
         </header>
         <main>
           {lists.length > 0 ? (
-            <ul class="link-list">
-              {lists.map((list) => (
-                <li>
-                  <Link to={`/l/${list.id}`}>
-                    <span>
-                      <Icon icon="list" /> <span>{list.title}</span>
-                    </span>
-                    {/* <button
+            <>
+              <ul class="link-list">
+                {lists.map((list) => (
+                  <li>
+                    <Link to={`/l/${list.id}`}>
+                      <span>
+                        <Icon icon="list" /> <span>{list.title}</span>
+                      </span>
+                      {/* <button
                       type="button"
                       class="plain"
                       onClick={(e) => {
@@ -81,10 +82,19 @@ function Lists() {
                     >
                       <Icon icon="pencil" />
                     </button> */}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              {lists.length > 1 && (
+                <footer class="ui-state">
+                  <small class="insignificant">
+                    {lists.length} list
+                    {lists.length === 1 ? '' : 's'}
+                  </small>
+                </footer>
+              )}
+            </>
           ) : uiState === 'loading' ? (
             <p class="ui-state">
               <Loader />

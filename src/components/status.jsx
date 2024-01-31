@@ -2446,6 +2446,8 @@ function StatusCompact({ sKey }) {
   if (sensitive || spoilerText) return null;
   if (!content) return null;
 
+  const srKey = statusKey(id, instance);
+
   const statusPeekText = statusPeek(status);
   return (
     <article
@@ -2453,6 +2455,7 @@ function StatusCompact({ sKey }) {
         visibility === 'direct' ? 'visibility-direct' : ''
       }`}
       tabindex="-1"
+      data-state-post-id={srKey}
     >
       <Avatar url={avatarStatic || avatar} squircle={bot} />
       <div

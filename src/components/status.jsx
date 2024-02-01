@@ -2529,7 +2529,7 @@ function FilteredStatus({
           : ''
       }
       {...containerProps}
-      title={statusPeekText}
+      // title={statusPeekText}
       onContextMenu={(e) => {
         e.preventDefault();
         setShowPeek(true);

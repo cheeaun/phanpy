@@ -947,7 +947,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background: linear-gradient(
     to bottom right,
     var(--carousel-faded-color),
-    transparent 150%
+    transparent
   );
   position: relative;
   container-type: inline-size;
@@ -962,7 +962,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       var(--carousel-faded-color),
       transparent
     ),
-    linear-gradient(to top, var(--bg-color), transparent 64px);
+    linear-gradient(to top, var(--bg-color) 8px, transparent 64px);
   background-repeat: no-repeat;
   background-position: bottom center;
 }

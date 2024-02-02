@@ -338,12 +338,13 @@
 
   display: flex;
   gap: 12px;
-  --top-padding: 8px;
+  --top-padding: 16px;
   padding-top: var(--top-padding);
   padding-bottom: 0;
   background-image: linear-gradient(
     160deg,
-    var(--reply-to-faded-color),
+    transparent,
+    var(--reply-to-faded-color) 30%,
     transparent
   );
 

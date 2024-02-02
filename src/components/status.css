@@ -341,12 +341,15 @@
   --top-padding: 16px;
   padding-top: var(--top-padding);
   padding-bottom: 0;
+  margin-bottom: calc(-1 * var(--top-padding) / 2);
   background-image: linear-gradient(
     160deg,
-    transparent,
-    var(--reply-to-faded-color) 30%,
+    transparent 2.5%,
+    var(--reply-to-faded-color) 10%,
     transparent
   );
+  background-repeat: no-repeat;
+  background-size: 100% calc(100% - var(--top-padding) / 2);
 
   > * {
     opacity: 0.65;
@@ -362,7 +365,9 @@
     top: calc(var(--top-padding) + var(--avatar-size));
     left: var(--line-start);
     width: var(--line-width);
-    height: calc(100% - var(--top-padding) - var(--avatar-size) + 16px);
+    height: calc(
+      100% - var(--top-padding) - var(--avatar-size) + (var(--top-padding) / 2)
+    );
     background-color: var(--comment-line-color);
     z-index: 0;
     mask-image: linear-gradient(to bottom, #000 8px, transparent);

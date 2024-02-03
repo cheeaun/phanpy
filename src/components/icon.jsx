@@ -15,11 +15,9 @@ const ICONDATA = {};
 
 // Memoize the dangerouslySetInnerHTML of the SVGs
 const SVGICon = moize(
-  function ({ size, width, height, body, rotate, flip }) {
+  function ({ width, height, body, rotate, flip }) {
     return (
       <svg
-        // width={size}
-        // height={size}
         viewBox={`0 0 ${width} ${height}`}
         dangerouslySetInnerHTML={{ __html: body }}
         style={{
@@ -33,6 +31,8 @@ const SVGICon = moize(
   {
     isShallowEqual: true,
     maxSize: Object.keys(ICONS).length,
+    matchesArg: (cacheKeyArg, keyArg) =>
+      cacheKeyArg.icon === keyArg.icon && cacheKeyArg.body === keyArg.body,
   },
 );
 
@@ -93,7 +93,7 @@ function Icon({
         //   }}
         // />
         <SVGICon
-          size={iconSize}
+          icon={icon}
           width={iconData.width}
           height={iconData.height}
           body={iconData.body}

@@ -1,3 +1,5 @@
+import { memo } from 'preact/compat';
+
 function EmojiText({ text, emojis }) {
   if (!text) return '';
   if (!emojis?.length) return text;
@@ -31,4 +33,9 @@ function EmojiText({ text, emojis }) {
   return elements;
 }
 
-export default EmojiText;
+export default memo(
+  EmojiText,
+  (oldProps, newProps) =>
+    oldProps.text === newProps.text &&
+    oldProps.emojis?.length === newProps.emojis?.length,
+);

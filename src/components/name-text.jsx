@@ -97,4 +97,9 @@ function NameText({
   );
 }
 
-export default memo(NameText);
+export default memo(NameText, (oldProps, newProps) => {
+  // Only care about account.id, the other props usually don't change
+  const { account } = oldProps;
+  const { account: newAccount } = newProps;
+  return account?.acct === newAccount?.acct;
+});

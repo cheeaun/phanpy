@@ -37,6 +37,7 @@ function _enhanceContent(content, opts = {}) {
     links.forEach((link) => {
       if (/^https?:\/\//i.test(link.textContent.trim())) {
         link.classList.add('has-url-text');
+        shortenLink(link);
       }
     });
   }
@@ -287,6 +288,30 @@ const defaultRejectFilter = [
 const defaultRejectFilterMap = Object.fromEntries(
   defaultRejectFilter.map((nodeName) => [nodeName, true]),
 );
+
+const URL_PREFIX_REGEX = /^(https?:\/\/(www\.)?|xmpp:)/;
+const URL_DISPLAY_LENGTH = 30;
+// Similar to https://github.com/mastodon/mastodon/blob/1666b1955992e16f4605b414c6563ca25b3a3f18/app/lib/text_formatter.rb#L54-L69
+function shortenLink(link) {
+  if (!link || link.querySelector?.('*')) {
+    return;
+  }
+  try {
+    const url = link.innerText.trim();
+    const prefix = (url.match(URL_PREFIX_REGEX) || [])[0] || '';
+    if (!prefix) return;
+    const displayURL = url.slice(
+      prefix.length,
+      prefix.length + URL_DISPLAY_LENGTH,
+    );
+    const suffix = url.slice(prefix.length + URL_DISPLAY_LENGTH);
+    const cutoff = url.slice(prefix.length).length > URL_DISPLAY_LENGTH;
+    link.innerHTML = `<span class="invisible">${prefix}</span><span class=${
+      cutoff ? 'ellipsis' : ''
+    }>${displayURL}</span><span class="invisible">${suffix}</span>`;
+  } catch (e) {}
+}
+
 function extractTextNodes(dom, opts = {}) {
   const textNodes = [];
   const rejectFilterMap = Object.assign(

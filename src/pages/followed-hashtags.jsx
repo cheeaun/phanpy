@@ -45,19 +45,31 @@ function FollowedHashtags() {
         </header>
         <main>
           {followedHashtags.length > 0 ? (
-            <ul class="link-list">
-              {followedHashtags.map((tag) => (
-                <li>
-                  <Link
-                    to={
-                      instance ? `/${instance}/t/${tag.name}` : `/t/${tag.name}`
-                    }
-                  >
-                    <Icon icon="hashtag" /> <span>{tag.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul class="link-list">
+                {followedHashtags.map((tag) => (
+                  <li>
+                    <Link
+                      to={
+                        instance
+                          ? `/${instance}/t/${tag.name}`
+                          : `/t/${tag.name}`
+                      }
+                    >
+                      <Icon icon="hashtag" /> <span>{tag.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              {followedHashtags.length > 1 && (
+                <footer class="ui-state">
+                  <small class="insignificant">
+                    {followedHashtags.length} hashtag
+                    {followedHashtags.length === 1 ? '' : 's'}
+                  </small>
+                </footer>
+              )}
+            </>
           ) : uiState === 'loading' ? (
             <p class="ui-state">
               <Loader abrupt />

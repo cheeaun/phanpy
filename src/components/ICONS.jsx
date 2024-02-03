@@ -99,4 +99,5 @@ export const ICONS = {
   speak: () => import('@iconify-icons/mingcute/radar-line'),
   building: () => import('@iconify-icons/mingcute/building-5-line'),
   history: () => import('@iconify-icons/mingcute/history-2-line'),
+  document: () => import('@iconify-icons/mingcute/document-line'),
 };

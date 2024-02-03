@@ -1,6 +1,8 @@
+import { api } from './api';
 import { extractTagsFromStatus, getFollowedTags } from './followed-tags';
+import pmem from './pmem';
 import { fetchRelationships } from './relationships';
-import states, { statusKey } from './states';
+import states, { saveStatus, statusKey } from './states';
 import store from './store';
 
 export function groupBoosts(values) {
@@ -81,7 +83,7 @@ export function dedupeBoosts(items, instance) {
   return filteredItems;
 }
 
-export function groupContext(items) {
+export function groupContext(items, instance) {
   const contexts = [];
   let contextIndex = 0;
   items.forEach((item) => {
@@ -173,11 +175,43 @@ export function groupContext(items) {
         return;
       }
     }
+
+    if (item.inReplyToId && item.inReplyToAccountId !== item.account.id) {
+      const sKey = statusKey(item.id, instance);
+      if (!states.statusReply[sKey]) {
+        // If it's a reply and not a thread
+        queueMicrotask(async () => {
+          try {
+            const { masto } = api({ instance });
+            // const replyToStatus = await masto.v1.statuses
+            //   .$select(item.inReplyToId)
+            //   .fetch();
+            const replyToStatus = await fetchStatus(item.inReplyToId, masto);
+            saveStatus(replyToStatus, instance, {
+              skipThreading: true,
+              skipUnfurling: true,
+            });
+            states.statusReply[sKey] = {
+              id: replyToStatus.id,
+              instance,
+            };
+          } catch (e) {
+            // Silently fail
+            console.error(e);
+          }
+        });
+      }
+    }
+
     newItems.push(item);
   });
 
   return newItems;
 }
+
+const fetchStatus = pmem((statusID, masto) => {
+  return masto.v1.statuses.$select(statusID).fetch();
+});
 
 export async function assignFollowedTags(items, instance) {
   const followedTags = await getFollowedTags(); // [{name: 'tag'}, {...}]

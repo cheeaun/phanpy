@@ -206,7 +206,7 @@
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
   max-height: 160px !important;
-  overflow: clip;
+  overflow: hidden;
 }
 .status.small:not(.status-carousel .status, .status.large .status)
   .status-card
@@ -290,7 +290,7 @@
   transition: all 0.2s ease-out;
 }
 .status.filtered:hover :is(.status-filtered-info-1, .status-filtered-info-2) {
-  transition-delay: 0.5s;
+  transition-delay: 1.5s;
 }
 .status.filtered .status-filtered-info-1 {
   opacity: 0.5;
@@ -328,6 +328,68 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   font-size: 90%;
+}
+
+.status.compact-reply {
+  --avatar-size: 20px;
+  --line-start: 40px;
+  --line-width: 3px;
+  --line-end: calc(var(--line-start) + var(--line-width));
+
+  display: flex;
+  gap: 12px;
+  --top-padding: 16px;
+  padding-top: var(--top-padding);
+  padding-bottom: 0;
+  margin-bottom: calc(-1 * var(--top-padding) / 2);
+  background-image: linear-gradient(
+    160deg,
+    transparent 2.5%,
+    var(--reply-to-faded-color) 10%,
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 100% calc(100% - var(--top-padding) / 2);
+
+  > * {
+    opacity: 0.65;
+    transition: opacity 1s ease-out;
+  }
+  .status-link:hover & > * {
+    opacity: 1;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(var(--top-padding) + var(--avatar-size));
+    left: var(--line-start);
+    width: var(--line-width);
+    height: calc(
+      100% - var(--top-padding) - var(--avatar-size) + (var(--top-padding) / 2)
+    );
+    background-color: var(--comment-line-color);
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, #000 8px, transparent);
+  }
+
+  .avatar {
+    margin-left: calc((50px - var(--avatar-size)) / 2);
+    justify-self: center;
+    z-index: 1;
+  }
+
+  .content-compact {
+    overflow: hidden;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: 90%;
+    line-height: var(--avatar-size);
+  }
 }
 
 .status .container {
@@ -654,6 +716,10 @@
   display: flex;
   gap: 4px;
   align-items: center;
+
+  .timeline-item-container & {
+    display: none;
+  }
 }
 
 .status.compact-thread .spoiler-badge {
@@ -1242,6 +1308,22 @@ body:has(#modal-container .carousel) .status .media img:hover {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   white-space: normal;
+}
+/* Collapse possible hashtag stuffing */
+/* If >= 9 hashtags, collapse */
+/* TODO: lower the threshold one day */
+.status:not(.large, .contextual .status)
+  p:not(.hashtag-stuffing):has(.hashtag:nth-of-type(1)):has(
+    .hashtag:nth-of-type(2)
+  ):has(.hashtag:nth-of-type(3)):has(.hashtag:nth-of-type(4)):has(
+    .hashtag:nth-of-type(5)
+  ):has(.hashtag:nth-of-type(6)):has(.hashtag:nth-of-type(7)):has(
+    .hashtag:nth-of-type(8)
+  ):has(.hashtag:nth-of-type(9)) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .media-figure-multiple {

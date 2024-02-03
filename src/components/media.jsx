@@ -151,11 +151,18 @@ function Media({
     [to],
   );
 
+  const remoteMediaURLObj = remoteMediaURL ? new URL(remoteMediaURL) : null;
   const isVideoMaybe =
     type === 'unknown' &&
-    /\.(mp4|m4a|m4p|m4b|m4r|m4v|mov|webm)$/i.test(remoteMediaURL);
+    remoteMediaURLObj &&
+    /\.(mp4|m4r|m4v|mov|webm)$/i.test(remoteMediaURLObj.pathname);
+  const isAudioMaybe =
+    type === 'unknown' &&
+    remoteMediaURLObj &&
+    /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(remoteMediaURLObj.pathname);
   const isImage =
-    type === 'image' || (type === 'unknown' && previewUrl && !isVideoMaybe);
+    type === 'image' ||
+    (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);
 
   const parentRef = useRef();
   const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
@@ -476,7 +483,7 @@ function Media({
         </Parent>
       </Figure>
     );
-  } else if (type === 'audio') {
+  } else if (type === 'audio' || isAudioMaybe) {
     const formattedDuration = formatDuration(original.duration);
     return (
       <Figure>
@@ -499,6 +506,12 @@ function Media({
               height={height}
               data-orientation={orientation}
               loading="lazy"
+              onError={(e) => {
+                try {
+                  // Remove self if broken
+                  e.target?.remove?.();
+                } catch (e) {}
+              }}
             />
           ) : null}
           {!showOriginal && (

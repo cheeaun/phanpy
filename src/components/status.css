@@ -20,6 +20,16 @@
     var(--hashtag-faded-color),
     transparent min(160px, 50%)
   );
+
+  .timeline-item-container:not(.timeline-item-container-start) & {
+    background: radial-gradient(
+      ellipse at 0 1.2em,
+      var(--hashtag-faded-color),
+      transparent max(160px, 50%)
+    );
+    background-size: 100% 3em;
+    background-repeat: no-repeat;
+  }
 }
 .status-reply-to {
   background: linear-gradient(

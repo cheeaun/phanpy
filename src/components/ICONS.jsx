@@ -100,4 +100,5 @@ export const ICONS = {
   building: () => import('@iconify-icons/mingcute/building-5-line'),
   history: () => import('@iconify-icons/mingcute/history-2-line'),
   document: () => import('@iconify-icons/mingcute/document-line'),
+  'arrows-right': () => import('@iconify-icons/mingcute/arrows-right-line'),
 };

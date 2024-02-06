@@ -682,82 +682,34 @@ function Status({
   const actionsRef = useRef();
   const StatusMenuItems = (
     <>
-      {!isSizeLarge && (
+      {isSizeLarge && (
         <>
-          <MenuHeader>
-            <span class="ib">
-              <Icon icon={visibilityIconsMap[visibility]} size="s" />{' '}
-              <span>{visibilityText[visibility]}</span>
-            </span>{' '}
-            <span class="ib">
-              {repliesCount > 0 && (
-                <span>
-                  <Icon icon="comment2" alt="Replies" size="s" />{' '}
-                  <span>{shortenNumber(repliesCount)}</span>
-                </span>
-              )}{' '}
-              {reblogsCount > 0 && (
-                <span>
-                  <Icon icon="rocket" alt="Boosts" size="s" />{' '}
-                  <span>{shortenNumber(reblogsCount)}</span>
-                </span>
-              )}{' '}
-              {favouritesCount > 0 && (
-                <span>
-                  <Icon icon="heart" alt="Likes" size="s" />{' '}
-                  <span>{shortenNumber(favouritesCount)}</span>
-                </span>
-              )}
-            </span>
-            <br />
-            {createdDateText}
-          </MenuHeader>
-          <MenuLink
-            to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-            onClick={(e) => {
-              onStatusLinkClick(e, status);
+          <MenuItem
+            onClick={() => {
+              states.showGenericAccounts = {
+                heading: 'Boosted/Liked by…',
+                fetchAccounts: fetchBoostedLikedByAccounts,
+                instance,
+                showReactions: true,
+              };
             }}
           >
-            <Icon icon="arrow-right" />
-            <span>View post by @{username || acct}</span>
-          </MenuLink>
+            <Icon icon="react" />
+            <span>
+              Boosted/Liked by<span class="more-insignificant">…</span>
+            </span>
+          </MenuItem>
         </>
-      )}
-      {!!editedAt && (
-        <MenuItem
-          onClick={() => {
-            setShowEdited(id);
-          }}
-        >
-          <Icon icon="history" />
-          <span>
-            Show Edit History
-            <br />
-            <small class="more-insignificant">Edited: {editedDateText}</small>
-          </span>
-        </MenuItem>
-      )}
-      {(!isSizeLarge || !!editedAt) && <MenuDivider />}
-      {isSizeLarge && (
-        <MenuItem
-          onClick={() => {
-            states.showGenericAccounts = {
-              heading: 'Boosted/Liked by…',
-              fetchAccounts: fetchBoostedLikedByAccounts,
-              instance,
-              showReactions: true,
-            };
-          }}
-        >
-          <Icon icon="react" />
-          <span>
-            Boosted/Liked by<span class="more-insignificant">…</span>
-          </span>
-        </MenuItem>
       )}
       {!isSizeLarge && sameInstance && (
         <>
-          <div class="menu-horizontal">
+          <div class="menu-control-group-horizontal status-menu">
+            <MenuItem onClick={replyStatus}>
+              <Icon icon="comment" />
+              <span>
+                {repliesCount > 0 ? shortenNumber(repliesCount) : 'Reply'}
+              </span>
+            </MenuItem>
             <MenuConfirm
               subMenu
               confirmLabel={
@@ -766,6 +718,7 @@ function Status({
                   <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
                 </>
               }
+              className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuFooter={
                 mediaNoDesc &&
                 !reblogged && (
@@ -789,13 +742,14 @@ function Status({
                 } catch (e) {}
               }}
             >
-              <Icon
-                icon="rocket"
-                style={{
-                  color: reblogged && 'var(--reblog-color)',
-                }}
-              />
-              <span>{reblogged ? 'Unboost' : 'Boost…'}</span>
+              <Icon icon="rocket" />
+              <span>
+                {reblogsCount > 0
+                  ? shortenNumber(reblogsCount)
+                  : reblogged
+                  ? 'Unboost'
+                  : 'Boost…'}
+              </span>
             </MenuConfirm>
             <MenuItem
               onClick={() => {
@@ -810,20 +764,16 @@ function Status({
                   }
                 } catch (e) {}
               }}
+              className={`menu-favourite ${favourited ? 'checked' : ''}`}
             >
-              <Icon
-                icon="heart"
-                style={{
-                  color: favourited && 'var(--favourite-color)',
-                }}
-              />
-              <span>{favourited ? 'Unlike' : 'Like'}</span>
-            </MenuItem>
-          </div>
-          <div class="menu-horizontal">
-            <MenuItem onClick={replyStatus}>
-              <Icon icon="comment" />
-              <span>Reply</span>
+              <Icon icon="heart" />
+              <span>
+                {favouritesCount > 0
+                  ? shortenNumber(favouritesCount)
+                  : favourited
+                  ? 'Unlike'
+                  : 'Like'}
+              </span>
             </MenuItem>
             <MenuItem
               onClick={() => {
@@ -838,18 +788,15 @@ function Status({
                   }
                 } catch (e) {}
               }}
+              className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
             >
-              <Icon
-                icon="bookmark"
-                style={{
-                  color: bookmarked && 'var(--link-color)',
-                }}
-              />
+              <Icon icon="bookmark" />
               <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
             </MenuItem>
           </div>
         </>
       )}
+      {(enableTranslate || !language || differentLanguage) && <MenuDivider />}
       {enableTranslate ? (
         <div class={supportsTTS ? 'menu-horizontal' : ''}>
           <MenuItem
@@ -900,7 +847,46 @@ function Status({
           </div>
         )
       )}
-      {((!isSizeLarge && sameInstance) || enableTranslate) && <MenuDivider />}
+      {!isSizeLarge ||
+        ((enableTranslate || !language || differentLanguage) && (
+          <MenuDivider />
+        ))}
+      {!isSizeLarge && (
+        <>
+          <MenuDivider />
+          <MenuLink
+            to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+            onClick={(e) => {
+              onStatusLinkClick(e, status);
+            }}
+          >
+            <Icon icon="arrows-right" />
+            <small>
+              View post by @{username || acct}
+              <br />
+              <span class="more-insignificant">
+                {visibilityText[visibility]} • {createdDateText}
+              </span>
+            </small>
+          </MenuLink>
+        </>
+      )}
+      {!!editedAt && (
+        <>
+          <MenuItem
+            onClick={() => {
+              setShowEdited(id);
+            }}
+          >
+            <Icon icon="history" />
+            <small>
+              Show Edit History
+              <br />
+              <span class="more-insignificant">Edited: {editedDateText}</span>
+            </small>
+          </MenuItem>
+        </>
+      )}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
         <small class="menu-double-lines">{nicePostURL(url)}</small>

@@ -1858,10 +1858,11 @@ function Status({
                   <span class="status-deleted-tag">Deleted</span>
                 ) : (
                   <>
-                    <Icon
+                    {/* <Icon
                       icon={visibilityIconsMap[visibility]}
                       alt={visibilityText[visibility]}
-                    />{' '}
+                    /> */}
+                    <span>{visibilityText[visibility]}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener noreferrer">
                       <time
                         class="created"

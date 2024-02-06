@@ -1863,8 +1863,8 @@ a.card:is(:hover, :focus):visited {
 .status-actions {
   display: flex;
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: -6px;
+  right: 8px;
   background-color: var(--bg-color);
   border-radius: 8px;
   z-index: 1;
@@ -1873,7 +1873,7 @@ a.card:is(:hover, :focus):visited {
   overflow: clip;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(8px);
+  transform: translate3d(0, 6px, 0);
   transform-origin: right center;
   transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
 
@@ -1920,7 +1920,10 @@ a.card:is(:hover, :focus):visited {
     transform: translateX(0);
   }
   @media (pointer: coarse) {
-    .status:has(&):hover {
+    & {
+      border-color: var(--outline-hover-color);
+    }
+    .status-focus:has(&):has(.status:hover) {
       transition: background-color 0.1s ease-out 0.3s;
       background-color: var(--bg-faded-blur-color);
     }

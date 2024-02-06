@@ -928,9 +928,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     -webkit-touch-callout: none;
   }
 }
-:is(.status-link, .status-focus):is(:focus, .is-active) {
-  background-color: var(--link-bg-hover-color);
-  outline-offset: -2px;
+@media not (pointer: coarse) {
+  :is(.status-link, .status-focus):is(:focus, .is-active) {
+    background-color: var(--link-bg-hover-color);
+    outline-offset: -2px;
+  }
 }
 @media (hover: hover) {
   .status-link:hover {

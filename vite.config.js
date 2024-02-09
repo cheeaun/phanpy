@@ -46,6 +46,9 @@ export default defineConfig({
   server: {
     host: true,
   },
+  css: {
+    preprocessorMaxWorkers: 1,
+  },
   plugins: [
     preact(),
     splitVendorChunkPlugin(),

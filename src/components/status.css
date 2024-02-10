@@ -1974,7 +1974,7 @@ a.card:is(:hover, :focus):visited {
     & {
       border-color: var(--outline-hover-color);
     }
-    .status-focus:has(&):has(.status:hover) {
+    .status-focus:has(&):has(.status:focus) {
       transition: background-color 0.1s ease-out 0.3s;
       background-color: var(--bg-faded-blur-color);
     }

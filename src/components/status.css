@@ -1924,6 +1924,10 @@ a.card:is(:hover, :focus):visited {
   transform-origin: right center;
   transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
 
+  @media (hover: hover) {
+    transition: border-color 0.3s ease-out;
+  }
+
   button.plain {
     color: var(--text-insignificant-color);
     backdrop-filter: none;
@@ -1973,6 +1977,16 @@ a.card:is(:hover, :focus):visited {
     .status-focus:has(&):has(.status:hover) {
       transition: background-color 0.1s ease-out 0.3s;
       background-color: var(--bg-faded-blur-color);
+    }
+  }
+  @media (pointer: fine) and (hover: hover) {
+    .status:has(&):hover {
+      /* background-color: var(--bg-faded-blur-color); */
+      background-image: linear-gradient(
+        -140deg,
+        var(--bg-faded-color),
+        transparent 75%
+      );
     }
   }
 

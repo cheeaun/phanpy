@@ -1442,9 +1442,10 @@ function Status({
                     anchorRef: {
                       current: e.currentTarget,
                     },
-                    align: 'end',
-                    direction: 'bottom',
-                    gap: 4,
+                    align: 'start',
+                    direction: 'left',
+                    gap: 0,
+                    shift: -8,
                   });
                   setIsContextMenuOpen('actions-bar');
                 }}

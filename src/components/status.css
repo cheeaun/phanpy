@@ -1966,8 +1966,6 @@ a.card:is(:hover, :focus):visited {
     border-color: var(--outline-hover-color);
   }
 
-  &:hover,
-  .status:hover &:not(:hover),
   &.open {
     opacity: 1;
     pointer-events: auto;
@@ -1977,12 +1975,22 @@ a.card:is(:hover, :focus):visited {
     & {
       border-color: var(--outline-hover-color);
     }
+    .status:has(&):focus & {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
     .status-focus:has(&):has(.status:focus) {
       transition: background-color 0.1s ease-out 0.3s;
       background-color: var(--bg-faded-blur-color);
     }
   }
-  @media (pointer: fine) and (hover: hover) {
+  @media (pointer: fine), (hover: hover) {
+    .status:has(&):hover & {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
     .status:has(&):hover {
       /* background-color: var(--bg-faded-blur-color); */
       background-image: linear-gradient(

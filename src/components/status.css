@@ -361,6 +361,10 @@
   background-repeat: no-repeat;
   background-size: 100% calc(100% - var(--top-padding) / 2);
 
+  &.visibility-direct {
+    background-image: var(--yellow-stripes);
+  }
+
   > * {
     opacity: 0.65;
     transition: opacity 1s ease-out;

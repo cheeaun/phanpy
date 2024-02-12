@@ -1927,6 +1927,10 @@ a.card:is(:hover, :focus):visited {
   transform-origin: right center;
   transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
 
+  .timeline.contextual .replies[data-comments-level='4'] & {
+    top: 0;
+  }
+
   @media (hover: hover) {
     transition: border-color 0.3s ease-out;
   }
@@ -1966,6 +1970,7 @@ a.card:is(:hover, :focus):visited {
     border-color: var(--outline-hover-color);
   }
 
+  .status:focus &,
   &.open {
     opacity: 1;
     pointer-events: auto;
@@ -1975,29 +1980,12 @@ a.card:is(:hover, :focus):visited {
     & {
       border-color: var(--outline-hover-color);
     }
-    .status:has(&):focus & {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
-    .status-focus:has(&):has(.status:focus) {
-      transition: background-color 0.1s ease-out 0.3s;
-      background-color: var(--bg-faded-blur-color);
-    }
   }
   @media (pointer: fine), (hover: hover) {
-    .status:has(&):hover & {
+    .status:hover & {
       opacity: 1;
       pointer-events: auto;
       transform: translateX(0);
-    }
-    .status:has(&):hover {
-      /* background-color: var(--bg-faded-blur-color); */
-      background-image: linear-gradient(
-        -140deg,
-        var(--bg-faded-color),
-        transparent 75%
-      );
     }
   }
 
@@ -2010,6 +1998,23 @@ a.card:is(:hover, :focus):visited {
 
     button:not(.more-button) {
       opacity: 0.3;
+    }
+  }
+}
+.timeline.contextual .descendant .status {
+  --bg-gradient: linear-gradient(
+    -140deg,
+    var(--bg-faded-color),
+    transparent 75%
+  );
+
+  &:focus {
+    background-image: var(--bg-gradient);
+  }
+
+  @media (pointer: fine), (hover: hover) {
+    &:hover {
+      background-image: var(--bg-gradient);
     }
   }
 }

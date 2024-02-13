@@ -193,7 +193,7 @@ See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva
 
 These are self-hosted by other wonderful folks.
 
-- [ferengi.one](https://ferengi.one/) by [@david@collantes.social](https://collantes.social/@david)
+- [ferengi.one](https://m.ferengi.one/) by [@david@collantes.social](https://collantes.social/@david)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
 - [phanpy.mstdn.mx](https://phanpy.mstdn.mx/) by [@maop@mstdn.mx](https://mstdn.mx/@maop)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)

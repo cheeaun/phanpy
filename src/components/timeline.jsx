@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -243,9 +244,9 @@ function Timeline({
     ({
       scrollDirection,
       nearReachStart,
-      nearReachEnd,
+      // nearReachEnd,
       reachStart,
-      reachEnd,
+      // reachEnd,
     }) => {
       // setHiddenUI(scrollDirection === 'end' && !nearReachEnd);
       if (headerRef.current) {
@@ -516,190 +517,205 @@ function Timeline({
   );
 }
 
-function TimelineItem({
-  status,
-  instance,
-  useItemID,
-  // allowFilters,
-  filterContext,
-  view,
-  showFollowedTags,
-  showReplyParent,
-}) {
-  const { id: statusID, reblog, items, type, _pinned } = status;
-  if (_pinned) useItemID = false;
-  const actualStatusID = reblog?.id || statusID;
-  const url = instance
-    ? `/${instance}/s/${actualStatusID}`
-    : `/s/${actualStatusID}`;
-  let title = '';
-  if (type === 'boosts') {
-    title = `${items.length} Boosts`;
-  } else if (type === 'pinned') {
-    title = 'Pinned posts';
-  }
-  const isCarousel = type === 'boosts' || type === 'pinned';
-  if (items) {
-    const fItems = filteredItems(items, filterContext);
-    if (isCarousel) {
-      // Here, we don't hide filtered posts, but we sort them last
-      fItems.sort((a, b) => {
-        // if (a._filtered && !b._filtered) {
-        //   return 1;
-        // }
-        // if (!a._filtered && b._filtered) {
-        //   return -1;
-        // }
-        const aFiltered = isFiltered(a.filtered, filterContext);
-        const bFiltered = isFiltered(b.filtered, filterContext);
-        if (aFiltered && !bFiltered) {
-          return 1;
-        }
-        if (!aFiltered && bFiltered) {
-          return -1;
-        }
-        return 0;
+const TimelineItem = memo(
+  ({
+    status,
+    instance,
+    useItemID,
+    // allowFilters,
+    filterContext,
+    view,
+    showFollowedTags,
+    showReplyParent,
+  }) => {
+    console.debug('RENDER TimelineItem', status.id);
+    const { id: statusID, reblog, items, type, _pinned } = status;
+    if (_pinned) useItemID = false;
+    const actualStatusID = reblog?.id || statusID;
+    const url = instance
+      ? `/${instance}/s/${actualStatusID}`
+      : `/s/${actualStatusID}`;
+    let title = '';
+    if (type === 'boosts') {
+      title = `${items.length} Boosts`;
+    } else if (type === 'pinned') {
+      title = 'Pinned posts';
+    }
+    const isCarousel = type === 'boosts' || type === 'pinned';
+    if (items) {
+      const fItems = filteredItems(items, filterContext);
+      if (isCarousel) {
+        // Here, we don't hide filtered posts, but we sort them last
+        fItems.sort((a, b) => {
+          // if (a._filtered && !b._filtered) {
+          //   return 1;
+          // }
+          // if (!a._filtered && b._filtered) {
+          //   return -1;
+          // }
+          const aFiltered = isFiltered(a.filtered, filterContext);
+          const bFiltered = isFiltered(b.filtered, filterContext);
+          if (aFiltered && !bFiltered) {
+            return 1;
+          }
+          if (!aFiltered && bFiltered) {
+            return -1;
+          }
+          return 0;
+        });
+        return (
+          <li key={`timeline-${statusID}`} class="timeline-item-carousel">
+            <StatusCarousel title={title} class={`${type}-carousel`}>
+              {fItems.map((item) => {
+                const { id: statusID, reblog, _pinned } = item;
+                const actualStatusID = reblog?.id || statusID;
+                const url = instance
+                  ? `/${instance}/s/${actualStatusID}`
+                  : `/s/${actualStatusID}`;
+                if (_pinned) useItemID = false;
+                return (
+                  <li key={statusID}>
+                    <Link
+                      class="status-carousel-link timeline-item-alt"
+                      to={url}
+                    >
+                      {useItemID ? (
+                        <Status
+                          statusID={statusID}
+                          instance={instance}
+                          size="s"
+                          contentTextWeight
+                          enableCommentHint
+                          // allowFilters={allowFilters}
+                        />
+                      ) : (
+                        <Status
+                          status={item}
+                          instance={instance}
+                          size="s"
+                          contentTextWeight
+                          enableCommentHint
+                          // allowFilters={allowFilters}
+                        />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </StatusCarousel>
+          </li>
+        );
+      }
+      const manyItems = fItems.length > 3;
+      return fItems.map((item, i) => {
+        const { id: statusID, _differentAuthor } = item;
+        const url = instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`;
+        const isMiddle = i > 0 && i < fItems.length - 1;
+        const isSpoiler = item.sensitive && !!item.spoilerText;
+        const showCompact =
+          (!_differentAuthor && isSpoiler && i > 0) ||
+          (manyItems &&
+            isMiddle &&
+            (type === 'thread' ||
+              (type === 'conversation' &&
+                !_differentAuthor &&
+                !fItems[i - 1]._differentAuthor &&
+                !fItems[i + 1]._differentAuthor)));
+        const isStart = i === 0;
+        const isEnd = i === fItems.length - 1;
+        return (
+          <li
+            key={`timeline-${statusID}`}
+            class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
+              isStart ? 'start' : isEnd ? 'end' : 'middle'
+            } ${_differentAuthor ? 'timeline-item-diff-author' : ''}`}
+          >
+            <Link class="status-link timeline-item" to={url}>
+              {showCompact ? (
+                <TimelineStatusCompact status={item} instance={instance} />
+              ) : useItemID ? (
+                <Status
+                  statusID={statusID}
+                  instance={instance}
+                  enableCommentHint={isEnd}
+                  showFollowedTags={showFollowedTags}
+                  // allowFilters={allowFilters}
+                />
+              ) : (
+                <Status
+                  status={item}
+                  instance={instance}
+                  enableCommentHint={isEnd}
+                  showFollowedTags={showFollowedTags}
+                  // allowFilters={allowFilters}
+                />
+              )}
+            </Link>
+          </li>
+        );
       });
-      return (
-        <li key={`timeline-${statusID}`} class="timeline-item-carousel">
-          <StatusCarousel title={title} class={`${type}-carousel`}>
-            {fItems.map((item) => {
-              const { id: statusID, reblog, _pinned } = item;
-              const actualStatusID = reblog?.id || statusID;
-              const url = instance
-                ? `/${instance}/s/${actualStatusID}`
-                : `/s/${actualStatusID}`;
-              if (_pinned) useItemID = false;
-              return (
-                <li key={statusID}>
-                  <Link class="status-carousel-link timeline-item-alt" to={url}>
-                    {useItemID ? (
-                      <Status
-                        statusID={statusID}
-                        instance={instance}
-                        size="s"
-                        contentTextWeight
-                        enableCommentHint
-                        // allowFilters={allowFilters}
-                      />
-                    ) : (
-                      <Status
-                        status={item}
-                        instance={instance}
-                        size="s"
-                        contentTextWeight
-                        enableCommentHint
-                        // allowFilters={allowFilters}
-                      />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </StatusCarousel>
-        </li>
+    }
+
+    const itemKey = `timeline-${statusID + _pinned}`;
+
+    if (view === 'media') {
+      return useItemID ? (
+        <MediaPost
+          class="timeline-item"
+          parent="li"
+          key={itemKey}
+          statusID={statusID}
+          instance={instance}
+          // allowFilters={allowFilters}
+        />
+      ) : (
+        <MediaPost
+          class="timeline-item"
+          parent="li"
+          key={itemKey}
+          status={status}
+          instance={instance}
+          // allowFilters={allowFilters}
+        />
       );
     }
-    const manyItems = fItems.length > 3;
-    return fItems.map((item, i) => {
-      const { id: statusID, _differentAuthor } = item;
-      const url = instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`;
-      const isMiddle = i > 0 && i < fItems.length - 1;
-      const isSpoiler = item.sensitive && !!item.spoilerText;
-      const showCompact =
-        (!_differentAuthor && isSpoiler && i > 0) ||
-        (manyItems &&
-          isMiddle &&
-          (type === 'thread' ||
-            (type === 'conversation' &&
-              !_differentAuthor &&
-              !fItems[i - 1]._differentAuthor &&
-              !fItems[i + 1]._differentAuthor)));
-      const isStart = i === 0;
-      const isEnd = i === fItems.length - 1;
-      return (
-        <li
-          key={`timeline-${statusID}`}
-          class={`timeline-item-container timeline-item-container-type-${type} timeline-item-container-${
-            isStart ? 'start' : isEnd ? 'end' : 'middle'
-          } ${_differentAuthor ? 'timeline-item-diff-author' : ''}`}
-        >
-          <Link class="status-link timeline-item" to={url}>
-            {showCompact ? (
-              <TimelineStatusCompact status={item} instance={instance} />
-            ) : useItemID ? (
-              <Status
-                statusID={statusID}
-                instance={instance}
-                enableCommentHint={isEnd}
-                showFollowedTags={showFollowedTags}
-                // allowFilters={allowFilters}
-              />
-            ) : (
-              <Status
-                status={item}
-                instance={instance}
-                enableCommentHint={isEnd}
-                showFollowedTags={showFollowedTags}
-                // allowFilters={allowFilters}
-              />
-            )}
-          </Link>
-        </li>
-      );
-    });
-  }
 
-  const itemKey = `timeline-${statusID + _pinned}`;
-
-  if (view === 'media') {
-    return useItemID ? (
-      <MediaPost
-        class="timeline-item"
-        parent="li"
-        key={itemKey}
-        statusID={statusID}
-        instance={instance}
-        // allowFilters={allowFilters}
-      />
-    ) : (
-      <MediaPost
-        class="timeline-item"
-        parent="li"
-        key={itemKey}
-        status={status}
-        instance={instance}
-        // allowFilters={allowFilters}
-      />
+    return (
+      <li key={itemKey}>
+        <Link class="status-link timeline-item" to={url}>
+          {useItemID ? (
+            <Status
+              statusID={statusID}
+              instance={instance}
+              enableCommentHint
+              showFollowedTags={showFollowedTags}
+              showReplyParent={showReplyParent}
+              // allowFilters={allowFilters}
+            />
+          ) : (
+            <Status
+              status={status}
+              instance={instance}
+              enableCommentHint
+              showFollowedTags={showFollowedTags}
+              showReplyParent={showReplyParent}
+              // allowFilters={allowFilters}
+            />
+          )}
+        </Link>
+      </li>
     );
-  }
-
-  return (
-    <li key={itemKey}>
-      <Link class="status-link timeline-item" to={url}>
-        {useItemID ? (
-          <Status
-            statusID={statusID}
-            instance={instance}
-            enableCommentHint
-            showFollowedTags={showFollowedTags}
-            showReplyParent={showReplyParent}
-            // allowFilters={allowFilters}
-          />
-        ) : (
-          <Status
-            status={status}
-            instance={instance}
-            enableCommentHint
-            showFollowedTags={showFollowedTags}
-            showReplyParent={showReplyParent}
-            // allowFilters={allowFilters}
-          />
-        )}
-      </Link>
-    </li>
-  );
-}
+  },
+  (oldProps, newProps) => {
+    const oldID = (oldProps.status?.id || '').toString();
+    const newID = (newProps.status?.id || '').toString();
+    return (
+      oldID === newID &&
+      oldProps.instance === newProps.instance &&
+      oldProps.view === newProps.view
+    );
+  },
+);
 
 function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();

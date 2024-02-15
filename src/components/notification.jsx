@@ -357,4 +357,6 @@ function TruncatedLink(props) {
   return <Link {...props} data-read-more="Read more →" ref={ref} />;
 }
 
-export default memo(Notification);
+export default memo(Notification, (oldProps, newProps) => {
+  return oldProps.notification?.id === newProps.notification?.id;
+});

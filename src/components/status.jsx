@@ -137,9 +137,9 @@ const PostContent = memo(
     );
   },
   (oldProps, newProps) => {
-    const { content: oldContent } = oldProps;
-    const { content: newContent } = newProps;
-    return oldContent === newContent;
+    const { post: oldPost } = oldProps;
+    const { post: newPost } = newProps;
+    return oldPost.content === newPost.content;
   },
 );
 

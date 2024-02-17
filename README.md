@@ -103,8 +103,7 @@ Prerequisites: Node.js 18+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
-- `npm run fetch-instances` - Fetch instances list from [instances.social](https://instances.social/), save it to `src/data/instances.json`
-  - requires `.env.local` file with `INSTANCES_SOCIAL_SECRET_TOKEN` variable set
+- `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 
 ## Tech stack

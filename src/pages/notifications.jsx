@@ -285,6 +285,11 @@ function Notifications({ columnMode }) {
               scrollableRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }
           }}
+          onDblClick={(e) => {
+            if (!e.target.closest('a, button')) {
+              loadNotifications(true);
+            }
+          }}
           class={uiState === 'loading' ? 'loading' : ''}
         >
           <div class="header-grid">

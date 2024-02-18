@@ -2011,10 +2011,16 @@ a.card:is(:hover, :focus):visited {
   &:focus {
     background-image: var(--bg-gradient);
   }
+  &.visibility-direct:focus {
+    background-image: var(--bg-gradient), var(--yellow-stripes);
+  }
 
   @media (pointer: fine), (hover: hover) {
     &:hover {
       background-image: var(--bg-gradient);
+    }
+    &.visibility-direct:hover {
+      background-image: var(--bg-gradient), var(--yellow-stripes);
     }
   }
 }

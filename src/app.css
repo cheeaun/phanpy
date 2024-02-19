@@ -1125,7 +1125,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   z-index: 1000;
   display: flex;
   background-color: var(--backdrop-color);
-  animation: appear 0.2s ease-out;
+  animation: appear 0.1s ease-out;
 }
 .deck-backdrop > a {
   flex-grow: 1;
@@ -1254,7 +1254,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 70%;
   flex-grow: 1;
   background-color: var(--backdrop-solid-color);
-  animation: appear 0.3s var(--timing-function) both;
+  animation: appear 0.1s var(--timing-function) both;
   transition: width 0.3s var(--timing-function);
 
   &:only-child {

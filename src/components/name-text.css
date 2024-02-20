@@ -2,9 +2,11 @@
   color: inherit;
   text-decoration: none;
   display: inline;
+  unicode-bidi: isolate;
 
   b {
     font-weight: 500;
+    unicode-bidi: isolate;
   }
 }
 .name-text.show-acct {

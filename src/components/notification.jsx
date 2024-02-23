@@ -334,14 +334,14 @@ function Notification({
               <Status
                 status={actualStatus}
                 size="s"
-                previewMode
+                readOnly
                 allowContextMenu
               />
             ) : (
               <Status
                 statusID={actualStatusID}
                 size="s"
-                previewMode
+                readOnly
                 allowContextMenu
               />
             )}

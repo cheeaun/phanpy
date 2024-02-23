@@ -1503,7 +1503,7 @@ function Status({
             {size !== 'l' &&
               (_deleted ? (
                 <span class="status-deleted-tag">Deleted</span>
-              ) : url && !previewMode && !quoted ? (
+              ) : url && !previewMode && !readOnly && !quoted ? (
                 <Link
                   to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
                   onClick={(e) => {
@@ -1551,7 +1551,9 @@ function Status({
                     />
                   )}{' '}
                   <RelativeTime datetime={createdAtDate} format="micro" />
-                  {!previewMode && <Icon icon="more2" class="more" />}
+                  {!previewMode && !readOnly && (
+                    <Icon icon="more2" class="more" />
+                  )}
                 </Link>
               ) : (
                 // <Menu

@@ -219,6 +219,7 @@ const SearchForm = forwardRef((props, ref) => {
               hidden: /^https?:/.test(query),
               top: /\s/.test(query),
               icon: 'document',
+              queryType: 'statuses',
             },
             {
               label: (
@@ -232,6 +233,7 @@ const SearchForm = forwardRef((props, ref) => {
               top: /^#/.test(query),
               type: 'link',
               icon: 'hashtag',
+              queryType: 'hashtags',
             },
             {
               label: (
@@ -252,9 +254,14 @@ const SearchForm = forwardRef((props, ref) => {
               ),
               to: `/search?q=${encodeURIComponent(query)}&type=accounts`,
               icon: 'group',
+              queryType: 'accounts',
             },
           ]
             .sort((a, b) => {
+              if (type) {
+                if (a.queryType === type) return -1;
+                if (b.queryType === type) return 1;
+              }
               if (a.top && !b.top) return -1;
               if (!a.top && b.top) return 1;
               return 0;

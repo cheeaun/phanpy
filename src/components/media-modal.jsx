@@ -273,7 +273,7 @@ function MediaModal({
         <span>
           <Menu2
             overflow="auto"
-            align="center"
+            align="end"
             position="anchor"
             gap={4}
             menuClassName="glass-menu"

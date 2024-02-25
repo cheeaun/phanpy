@@ -917,6 +917,7 @@ function RelatedActions({
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
+  const [lists, setLists] = useState([]);
 
   return (
     <>
@@ -976,6 +977,22 @@ function RelatedActions({
                 <Icon icon="more" size="l" alt="More" />
               </button>
             }
+            onMenuChange={(e) => {
+              if (following && e.open) {
+                // Fetch lists that have this account
+                (async () => {
+                  try {
+                    const lists = await currentMasto.v1.accounts
+                      .$select(accountID.current)
+                      .lists.list();
+                    console.log('fetched account lists', lists);
+                    setLists(lists);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                })();
+              }
+            }}
           >
             {currentAuthenticated && !isSelf && (
               <>
@@ -1017,7 +1034,20 @@ function RelatedActions({
                     }}
                   >
                     <Icon icon="list" />
-                    <span>Add/remove from Lists</span>
+                    {lists.length ? (
+                      <>
+                        <small class="menu-grow">
+                          Add/Remove from Lists
+                          <br />
+                          <span class="more-insignificant">
+                            {lists.map((list) => list.title).join(', ')}
+                          </span>
+                        </small>
+                        <small class="more-insignificant">{lists.length}</small>
+                      </>
+                    ) : (
+                      <span>Add/Remove from Lists</span>
+                    )}
                   </MenuItem>
                 )}
                 <MenuDivider />

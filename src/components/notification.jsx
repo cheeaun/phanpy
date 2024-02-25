@@ -334,14 +334,14 @@ function Notification({
               <Status
                 status={actualStatus}
                 size="s"
-                previewMode
+                readOnly
                 allowContextMenu
               />
             ) : (
               <Status
                 statusID={actualStatusID}
                 size="s"
-                previewMode
+                readOnly
                 allowContextMenu
               />
             )}
@@ -357,4 +357,6 @@ function TruncatedLink(props) {
   return <Link {...props} data-read-more="Read more →" ref={ref} />;
 }
 
-export default memo(Notification);
+export default memo(Notification, (oldProps, newProps) => {
+  return oldProps.notification?.id === newProps.notification?.id;
+});

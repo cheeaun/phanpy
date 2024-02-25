@@ -23,7 +23,7 @@ import states from '../utils/states';
 import store from '../utils/store';
 
 const DEFAULT_TEXT_SIZE = 16;
-const TEXT_SIZES = [15, 16, 17, 18, 19, 20];
+const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,

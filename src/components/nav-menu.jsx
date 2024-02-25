@@ -83,6 +83,7 @@ function NavMenu(props) {
     return results;
   }
 
+  const buttonClickTS = useRef();
   return (
     <>
       <button
@@ -93,6 +94,7 @@ function NavMenu(props) {
         } ${open ? 'active' : ''}`}
         style={{ position: 'relative' }}
         onClick={() => {
+          buttonClickTS.current = Date.now();
           setMenuState((state) => (!state ? 'open' : undefined));
         }}
         onContextMenu={(e) => {
@@ -124,6 +126,9 @@ function NavMenu(props) {
             zIndex: 10,
           },
           onClick: () => {
+            if (Date.now() - buttonClickTS.current < 300) {
+              return;
+            }
             setMenuState(undefined);
           },
         }}

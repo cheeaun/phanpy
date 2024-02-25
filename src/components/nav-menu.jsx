@@ -1,6 +1,7 @@
 import './nav-menu.css';
 
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -303,4 +304,4 @@ function NavMenu(props) {
   );
 }
 
-export default NavMenu;
+export default memo(NavMenu);

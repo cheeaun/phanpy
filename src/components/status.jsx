@@ -559,12 +559,11 @@ function Status({
       if (reblogged) {
         const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
-        return true;
       } else {
         const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
-        return true;
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
@@ -575,7 +574,8 @@ function Status({
 
   const favouriteStatus = async () => {
     if (!sameInstance || !authenticated) {
-      return alert(unauthInteractionErrorMessage);
+      alert(unauthInteractionErrorMessage);
+      return false;
     }
     try {
       // Optimistic
@@ -591,16 +591,31 @@ function Status({
         const newStatus = await masto.v1.statuses.$select(id).favourite();
         saveStatus(newStatus, instance);
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
       states.statuses[sKey] = status;
+      return false;
     }
+  };
+  const favouriteStatusNotify = async () => {
+    try {
+      const done = await favouriteStatus();
+      if (!isSizeLarge && done) {
+        showToast(
+          favourited
+            ? `Unliked @${username || acct}'s post`
+            : `Liked @${username || acct}'s post`,
+        );
+      }
+    } catch (e) {}
   };
 
   const bookmarkStatus = async () => {
     if (!sameInstance || !authenticated) {
-      return alert(unauthInteractionErrorMessage);
+      alert(unauthInteractionErrorMessage);
+      return false;
     }
     try {
       // Optimistic
@@ -615,11 +630,25 @@ function Status({
         const newStatus = await masto.v1.statuses.$select(id).bookmark();
         saveStatus(newStatus, instance);
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
       states.statuses[sKey] = status;
+      return false;
     }
+  };
+  const bookmarkStatusNotify = async () => {
+    try {
+      const done = await bookmarkStatus();
+      if (!isSizeLarge && done) {
+        showToast(
+          bookmarked
+            ? `Unbookmarked @${username || acct}'s post`
+            : `Bookmarked @${username || acct}'s post`,
+        );
+      }
+    } catch (e) {}
   };
 
   const differentLanguage =
@@ -752,18 +781,7 @@ function Status({
               </span>
             </MenuConfirm>
             <MenuItem
-              onClick={() => {
-                try {
-                  favouriteStatus();
-                  if (!isSizeLarge) {
-                    showToast(
-                      favourited
-                        ? `Unliked @${username || acct}'s post`
-                        : `Liked @${username || acct}'s post`,
-                    );
-                  }
-                } catch (e) {}
-              }}
+              onClick={favouriteStatusNotify}
               className={`menu-favourite ${favourited ? 'checked' : ''}`}
             >
               <Icon icon="heart" />
@@ -776,18 +794,7 @@ function Status({
               </span>
             </MenuItem>
             <MenuItem
-              onClick={() => {
-                try {
-                  bookmarkStatus();
-                  if (!isSizeLarge) {
-                    showToast(
-                      bookmarked
-                        ? `Unbookmarked @${username || acct}'s post`
-                        : `Bookmarked @${username || acct}'s post`,
-                    );
-                  }
-                } catch (e) {}
-              }}
+              onClick={bookmarkStatusNotify}
               className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
             >
               <Icon icon="bookmark" />
@@ -1040,6 +1047,23 @@ function Status({
           )}
         </div>
       )}
+      {!isSelf && isSizeLarge && (
+        <>
+          <MenuDivider />
+          <MenuItem
+            className="danger"
+            onClick={() => {
+              states.showReportModal = {
+                account: status.account,
+                post: status,
+              };
+            }}
+          >
+            <Icon icon="flag" />
+            <span>Report post…</span>
+          </MenuItem>
+        </>
+      )}
     </>
   );
 
@@ -1085,42 +1109,12 @@ function Status({
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
   });
-  const fRef = useHotkeys(
-    'f, l',
-    () => {
-      try {
-        favouriteStatus();
-        if (!isSizeLarge) {
-          showToast(
-            favourited
-              ? `Unliked @${username || acct}'s post`
-              : `Liked @${username || acct}'s post`,
-          );
-        }
-      } catch (e) {}
-    },
-    {
-      enabled: hotkeysEnabled,
-    },
-  );
-  const dRef = useHotkeys(
-    'd',
-    () => {
-      try {
-        bookmarkStatus();
-        if (!isSizeLarge) {
-          showToast(
-            bookmarked
-              ? `Unbookmarked @${username || acct}'s post`
-              : `Bookmarked @${username || acct}'s post`,
-          );
-        }
-      } catch (e) {}
-    },
-    {
-      enabled: hotkeysEnabled,
-    },
-  );
+  const fRef = useHotkeys('f, l', favouriteStatusNotify, {
+    enabled: hotkeysEnabled,
+  });
+  const dRef = useHotkeys('d', bookmarkStatusNotify, {
+    enabled: hotkeysEnabled,
+  });
   const bRef = useHotkeys(
     'shift+b',
     () => {
@@ -1420,16 +1414,7 @@ function Status({
                 icon="heart"
                 iconSize="m"
                 count={favouritesCount}
-                onClick={() => {
-                  try {
-                    favouriteStatus();
-                    showToast(
-                      favourited
-                        ? `Unliked @${username || acct}'s post`
-                        : `Liked @${username || acct}'s post`,
-                    );
-                  } catch (e) {}
-                }}
+                onClick={favouriteStatusNotify}
               />
               <button
                 type="button"

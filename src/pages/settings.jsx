@@ -464,6 +464,39 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
+            {authenticated && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={
+                      snapStates.settings.shortcutSettingsCloudImportExport
+                    }
+                    onChange={(e) => {
+                      states.settings.shortcutSettingsCloudImportExport =
+                        e.target.checked;
+                    }}
+                  />{' '}
+                  "Cloud" import/export for shortcuts settings{' '}
+                  <Icon icon="cloud" class="more-insignificant" />
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    ⚠️⚠️⚠️ Very experimental.
+                    <br />
+                    Stored in your own profile’s notes. Profile (private) notes
+                    are mainly used for other profiles, and hidden for own
+                    profile.
+                  </small>
+                </div>
+                <div class="sub-section insignificant">
+                  <small>
+                    Note: This feature uses currently-logged-in instance server
+                    API.
+                  </small>
+                </div>
+              </li>
+            )}
             <li>
               <label>
                 <input

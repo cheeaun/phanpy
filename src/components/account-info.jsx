@@ -1251,6 +1251,27 @@ function RelatedActions({
                 </MenuItem>
               </>
             )}
+            {import.meta.env.DEV && currentAuthenticated && isSelf && (
+              <>
+                <MenuDivider />
+                <MenuItem
+                  onClick={async () => {
+                    const relationships =
+                      await currentMasto.v1.accounts.relationships.fetch({
+                        id: [accountID.current],
+                      });
+                    const { note } = relationships[0] || {};
+                    if (note) {
+                      alert(note);
+                      console.log(note);
+                    }
+                  }}
+                >
+                  <Icon icon="pencil" />
+                  <span>See note</span>
+                </MenuItem>
+              </>
+            )}
           </Menu2>
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />

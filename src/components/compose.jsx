@@ -1558,7 +1558,7 @@ const Textarea = forwardRef((props, ref) => {
         onKeyDown={(e) => {
           // Get line before cursor position after pressing 'Enter'
           const { key, target } = e;
-          if (key === 'Enter') {
+          if (key === 'Enter' && !(e.ctrlKey || e.metaKey)) {
             try {
               const { value, selectionStart } = target;
               const textBeforeCursor = value.slice(0, selectionStart);

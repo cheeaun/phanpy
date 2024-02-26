@@ -103,6 +103,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   max-width: 100%;
   background-color: var(--bg-color);
   overflow-anchor: auto;
+
+  &.wide {
+    width: 60em;
+  }
 }
 .deck.contained {
   overflow: auto;

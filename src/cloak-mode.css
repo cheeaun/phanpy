@@ -12,7 +12,8 @@ body.cloak,
   .account-container :is(header, main > *:not(.actions)),
   .account-container :is(header, main > *:not(.actions)) *,
   .header-double-lines,
-  .account-block {
+  .account-block,
+  .post-peek-html * {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
     /* text-rendering: optimizeSpeed; */
@@ -26,9 +27,10 @@ body.cloak,
 
   .status :is(img, video, audio),
   .media-post .media,
-  .avatar,
+  .avatar *,
   .emoji,
-  .header-banner {
+  .header-banner,
+  .post-peek-media {
     filter: contrast(0) !important;
     background-color: #000 !important;
   }

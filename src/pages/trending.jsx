@@ -1,4 +1,4 @@
-import './trending.css';
+import '../components/links-bar.css';
 
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';

@@ -24,6 +24,7 @@ import Shortcuts from './components/shortcuts';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
+import Catchup from './pages/catchup';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
@@ -394,7 +395,7 @@ function PrimaryRoutes({ isLoggedIn, loading }) {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome)/.test(pathname);
+    return !/^\/(login|welcome)/i.test(pathname);
   }, [location]);
 
   return (
@@ -457,6 +458,7 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/ft" element={<FollowedHashtags />} />
+          <Route path="/catchup" element={<Catchup />} />
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

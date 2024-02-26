@@ -176,6 +176,10 @@ function NavMenu(props) {
                   <Icon icon="following" size="l" /> <span>Following</span>
                 </MenuLink>
               )}
+              <MenuLink to="/catchup">
+                <Icon icon="history" />
+                <span>Catch-up</span>
+              </MenuLink>
               <MenuLink to="/mentions">
                 <Icon icon="at" size="l" /> <span>Mentions</span>
               </MenuLink>

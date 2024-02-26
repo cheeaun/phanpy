@@ -177,7 +177,7 @@ function NavMenu(props) {
                 </MenuLink>
               )}
               <MenuLink to="/catchup">
-                <Icon icon="history" />
+                <Icon icon="history" size="l" />
                 <span>Catch-up</span>
               </MenuLink>
               <MenuLink to="/mentions">

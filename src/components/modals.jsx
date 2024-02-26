@@ -15,6 +15,7 @@ import GenericAccounts from './generic-accounts';
 import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
+import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
 subscribe(states, (changes) => {
@@ -214,6 +215,21 @@ export default function Modals() {
             height={snapStates.showEmbedModal.height}
             onClose={() => {
               states.showEmbedModal = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showReportModal && (
+        <Modal
+          onClose={() => {
+            states.showReportModal = false;
+          }}
+        >
+          <ReportModal
+            account={snapStates.showReportModal.account}
+            post={snapStates.showReportModal.post}
+            onClose={() => {
+              states.showReportModal = false;
             }}
           />
         </Modal>

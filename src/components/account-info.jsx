@@ -1238,10 +1238,17 @@ function RelatedActions({
                     </>
                   )}
                 </MenuConfirm>
-                {/* <MenuItem>
-                <Icon icon="flag" />
-                <span>Report @{username}…</span>
-              </MenuItem> */}
+                <MenuItem
+                  className="danger"
+                  onClick={() => {
+                    states.showReportModal = {
+                      account: currentInfo || info,
+                    };
+                  }}
+                >
+                  <Icon icon="flag" />
+                  <span>Report @{username}…</span>
+                </MenuItem>
               </>
             )}
           </Menu2>

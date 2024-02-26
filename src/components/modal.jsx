@@ -56,8 +56,18 @@ function Modal({ children, onClose, onClick, class: className }) {
       }}
       tabIndex="-1"
       onFocus={(e) => {
-        if (e.target === e.currentTarget) {
-          modalRef.current?.querySelector?.('[tabindex="-1"]')?.focus?.();
+        try {
+          if (e.target === e.currentTarget) {
+            const focusElement =
+              modalRef.current?.querySelector('[tabindex="-1"]');
+            const isFocusable =
+              getComputedStyle(focusElement)?.pointerEvents !== 'none';
+            if (focusElement && isFocusable) {
+              focusElement.focus();
+            }
+          }
+        } catch (err) {
+          console.error(err);
         }
       }}
     >

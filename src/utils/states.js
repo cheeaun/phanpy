@@ -52,6 +52,7 @@ const states = proxy({
   showGenericAccounts: false,
   showMediaAlt: false,
   showEmbedModal: false,
+  showReportModal: false,
   // Shortcuts
   shortcuts: [],
   // Settings

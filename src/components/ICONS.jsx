@@ -73,7 +73,7 @@ export const ICONS = {
     () => import('@iconify-icons/mingcute/forbid-circle-line'),
     '180deg',
   ],
-  flag: () => import('@iconify-icons/mingcute/flag-4-line'),
+  flag: () => import('@iconify-icons/mingcute/flag-1-line'),
   time: () => import('@iconify-icons/mingcute/time-line'),
   refresh: () => import('@iconify-icons/mingcute/refresh-2-line'),
   emoji2: () => import('@iconify-icons/mingcute/emoji-2-line'),

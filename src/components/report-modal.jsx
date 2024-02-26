@@ -13,7 +13,7 @@ import Loader from './loader';
 import Status from './status';
 
 // NOTE: `dislike` hidden for now, it's actually not used for reporting
-// Mastodon shows another screen for unfollowing, muting or blocking instead or reporting
+// Mastodon shows another screen for unfollowing, muting or blocking instead of reporting
 
 const CATEGORIES = [, /*'dislike'*/ 'spam', 'legal', 'violation', 'other'];
 // `violation` will be set if there are `rule_ids[]`

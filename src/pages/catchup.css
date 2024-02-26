@@ -573,7 +573,7 @@
     /* align-items: center; */
     /* margin-left: 24px; */
     flex-direction: row-reverse;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: flex-end;
 
     /* CLOAK - uncomment when taking screenshots */
@@ -597,7 +597,7 @@
       overflow: hidden;
       line-height: 1.3;
       opacity: 0.9;
-      /* font-size: 0.9em; */
+      font-size: 0.9em;
       text-wrap: balance;
 
       &:empty {
@@ -734,6 +734,15 @@
         &:has(.post-peek-media),
         .post-peek-media:first-child img {
           transform-origin: left center;
+        }
+
+        .post-peek-media:not(:last-child) {
+          margin-right: -24px;
+          z-index: 1;
+          box-shadow: 2px 0 var(--bg-blur-color);
+        }
+        .post-peek-media:hover {
+          z-index: 2;
         }
       }
 

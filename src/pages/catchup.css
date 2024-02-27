@@ -262,6 +262,7 @@
 
         img {
           transition: filter 0.15s ease;
+          will-change: filter;
         }
       }
 
@@ -315,10 +316,15 @@
     }
   }
 
-  &:has(.filter-author :checked)
-    .filter-author:not(:has(:checked)):not(:is(:hover, :focus)) {
+  &:has(.filter-author :checked) .filter-author:not(:has(:checked)) {
     .avatar img {
       filter: grayscale(1) contrast(2) opacity(0.5);
+    }
+
+    &:is(:hover, :focus) {
+      .avatar img {
+        filter: none;
+      }
     }
   }
 

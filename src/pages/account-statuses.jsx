@@ -259,27 +259,21 @@ function AccountStatuses() {
 
   const { displayName, acct, emojis } = account || {};
 
-  const accountInfoMemo = useMemo(() => {
-    const cachedAccount = snapStates.accounts[`${id}@${instance}`];
-    return (
-      <AccountInfo
-        instance={instance}
-        account={cachedAccount || id}
-        fetchAccount={fetchAccount}
-        authenticated={authenticated}
-        standalone
-      />
-    );
-  }, [id, instance, authenticated, fetchAccount]);
-
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
     const filtered =
       !excludeReplies || excludeBoosts || tagged || media || !!month;
+    const cachedAccount = snapStates.accounts[`${id}@${instance}`];
 
     return (
       <>
-        {accountInfoMemo}
+        <AccountInfo
+          instance={instance}
+          account={cachedAccount || id}
+          fetchAccount={fetchAccount}
+          authenticated={authenticated}
+          standalone
+        />
         <div
           class="filter-bar"
           ref={filterBarRef}
@@ -418,6 +412,7 @@ function AccountStatuses() {
     instance,
     authenticated,
     featuredTags,
+    fetchAccount,
     searchEnabled,
     ...allSearchParams,
   ]);

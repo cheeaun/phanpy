@@ -343,7 +343,7 @@ function AccountInfo({
   return (
     <div
       tabIndex="-1"
-      class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
+      class={`account-container ${uiState === 'loading' ? 'skeleton' : ''}`}
       style={{
         '--header-color-1': headerCornerColors[0],
         '--header-color-2': headerCornerColors[1],

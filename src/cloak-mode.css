@@ -13,7 +13,9 @@ body.cloak,
   .account-container :is(header, main > *:not(.actions)) *,
   .header-double-lines,
   .account-block,
-  .post-peek-html * {
+  .catchup-filters .filter-author *,
+  .post-peek-html *,
+  .post-peek-content > * {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
     /* text-rendering: optimizeSpeed; */
@@ -21,7 +23,8 @@ body.cloak,
   }
   .name-text *,
   .status .content-container *,
-  .account-container :is(header, main > *:not(.actions)) * {
+  .account-container :is(header, main > *:not(.actions)) *,
+  .post-peek-content > * {
     filter: none;
   }
 
@@ -42,4 +45,8 @@ body.cloak,
   body.cloak .card :is(.title, .meta) {
     background-color: var(--text-color) !important;
   }
+}
+
+.catchup-filters .filter-author * {
+  color: var(--text-color);
 }

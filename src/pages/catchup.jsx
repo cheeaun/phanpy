@@ -1261,49 +1261,71 @@ function PostPeek({ post, filterInfo }) {
             </span>
           )}
           {!!mediaAttachments?.length
-            ? mediaAttachments.map((m) => (
-                <span key={m.id} class="post-peek-media">
-                  {{
-                    image:
-                      (m.previewUrl || m.url) && showMedia ? (
-                        <img
-                          src={m.previewUrl || m.url}
-                          width={MEDIA_SIZE}
-                          height={MEDIA_SIZE}
-                          alt={m.description}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span class="post-peek-faux-media">🖼</span>
-                      ),
-                    gifv:
-                      m.previewUrl && showMedia ? (
-                        <img
-                          src={m.previewUrl}
-                          width={MEDIA_SIZE}
-                          height={MEDIA_SIZE}
-                          alt={m.description}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span class="post-peek-faux-media">🎞️</span>
-                      ),
-                    video:
-                      m.previewUrl && showMedia ? (
-                        <img
-                          src={m.previewUrl}
-                          width={MEDIA_SIZE}
-                          height={MEDIA_SIZE}
-                          alt={m.description}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span class="post-peek-faux-media">📹</span>
-                      ),
-                    audio: <span class="post-peek-faux-media">🎵</span>,
-                  }[m.type] || null}
-                </span>
-              ))
+            ? mediaAttachments.map((m) => {
+                const mediaURL = m.previewUrl || m.url;
+                const remoteMediaURL = m.previewRemoteUrl || m.remoteUrl;
+                return (
+                  <span key={m.id} class="post-peek-media">
+                    {{
+                      image:
+                        (mediaURL || remoteMediaURL) && showMedia ? (
+                          <img
+                            src={mediaURL}
+                            width={MEDIA_SIZE}
+                            height={MEDIA_SIZE}
+                            alt={m.description}
+                            loading="lazy"
+                            onError={(e) => {
+                              const { src } = e.target;
+                              if (src === mediaURL) {
+                                e.target.src = remoteMediaURL;
+                              }
+                            }}
+                          />
+                        ) : (
+                          <span class="post-peek-faux-media">🖼</span>
+                        ),
+                      gifv:
+                        (mediaURL || remoteMediaURL) && showMedia ? (
+                          <img
+                            src={mediaURL}
+                            width={MEDIA_SIZE}
+                            height={MEDIA_SIZE}
+                            alt={m.description}
+                            loading="lazy"
+                            onError={(e) => {
+                              const { src } = e.target;
+                              if (src === mediaURL) {
+                                e.target.src = remoteMediaURL;
+                              }
+                            }}
+                          />
+                        ) : (
+                          <span class="post-peek-faux-media">🎞️</span>
+                        ),
+                      video:
+                        (mediaURL || remoteMediaURL) && showMedia ? (
+                          <img
+                            src={mediaURL}
+                            width={MEDIA_SIZE}
+                            height={MEDIA_SIZE}
+                            alt={m.description}
+                            loading="lazy"
+                            onError={(e) => {
+                              const { src } = e.target;
+                              if (src === mediaURL) {
+                                e.target.src = remoteMediaURL;
+                              }
+                            }}
+                          />
+                        ) : (
+                          <span class="post-peek-faux-media">📹</span>
+                        ),
+                      audio: <span class="post-peek-faux-media">🎵</span>,
+                    }[m.type] || null}
+                  </span>
+                );
+              })
             : !!card &&
               card.image &&
               showMedia && (

@@ -25,20 +25,10 @@ import getHTMLText from '../utils/getHTMLText';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
-import states, { getStatus, saveStatus, statusKey } from '../utils/states';
+import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
-import {
-  getCurrentAccount,
-  getCurrentAccountNS,
-  getCurrentInstance,
-  getCurrentInstanceConfiguration,
-} from '../utils/store-utils';
-import {
-  assignFollowedTags,
-  clearFollowedTagsState,
-  dedupeBoosts,
-} from '../utils/timeline-utils';
-import useScrollFn from '../utils/useScrollFn';
+import { getCurrentAccountNS } from '../utils/store-utils';
+import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = 'home';
@@ -469,20 +459,6 @@ function Catchup() {
   }, [posts, filteredPosts]);
 
   const scrollableRef = useRef(null);
-  const headerRef = useRef(null);
-
-  useScrollFn(
-    {
-      scrollableRef,
-    },
-    ({ scrollDirection, nearReachStart }) => {
-      if (headerRef.current) {
-        const hiddenUI = scrollDirection === 'end' && !nearReachStart;
-        headerRef.current.hidden = hiddenUI;
-      }
-    },
-    [],
-  );
 
   // if range value exceeded lastCatchupEndAt, show error
   const lastCatchupRange = useMemo(() => {
@@ -500,7 +476,6 @@ function Catchup() {
     >
       <div class="timeline-deck deck wide">
         <header
-          ref={headerRef}
           class={`${uiState === 'loading' ? 'loading' : ''}`}
           onClick={(e) => {
             if (!e.target.closest('a, button')) {

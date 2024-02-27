@@ -676,6 +676,7 @@
       }
 
       .post-peek-spoiler {
+        display: inline-block;
         line-height: 1.5;
         border-radius: 1em;
         padding-inline: 0.5em;
@@ -745,7 +746,7 @@
         .post-peek-media:not(:last-child) {
           margin-right: -24px;
           z-index: 1;
-          box-shadow: 2px 0 var(--bg-blur-color);
+          box-shadow: 0 0 0 2px var(--bg-blur-color);
         }
         .post-peek-media:hover {
           z-index: 2;

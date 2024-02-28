@@ -469,6 +469,7 @@ function Catchup() {
   }, [lastCatchupEndAt, range]);
 
   useEffect(() => {
+    if (uiState !== 'results') return;
     const filterCategoryText = {
       Filtered: 'filtered posts',
       Groups: 'group posts',
@@ -505,6 +506,7 @@ function Catchup() {
       toast?.hideToast?.();
     };
   }, [
+    uiState,
     selectedFilterCategory,
     selectedAuthor,
     sortBy,

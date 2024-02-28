@@ -404,6 +404,24 @@
     font-size: 90%;
     line-height: var(--avatar-size);
   }
+
+  .status-filtered-badge.badge-meta {
+    margin-top: 6px;
+    flex-direction: row;
+    gap: 0.5em;
+    color: var(--text-color);
+    border-color: var(--text-color);
+    background-color: var(--bg-blur-color);
+    max-width: 100%;
+
+    > span + span {
+      position: static;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
 }
 
 .status .container {

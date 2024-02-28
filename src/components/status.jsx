@@ -2405,13 +2405,21 @@ function StatusCompact({ sKey }) {
     visibility,
     content,
     language,
+    filtered,
   } = status;
   if (sensitive || spoilerText) return null;
   if (!content) return null;
 
   const srKey = statusKey(id, instance);
-
   const statusPeekText = statusPeek(status);
+
+  const filterContext = useContext(FilterContext);
+  const filterInfo = isFiltered(filtered, filterContext);
+
+  if (filterInfo?.action === 'hide') return null;
+
+  const filterTitleStr = filterInfo?.titlesStr || '';
+
   return (
     <article
       class={`status compact-reply ${
@@ -2427,7 +2435,14 @@ function StatusCompact({ sKey }) {
         lang={language}
         dir="auto"
       >
-        {statusPeekText}
+        {filterInfo ? (
+          <b class="status-filtered-badge badge-meta" title={filterTitleStr}>
+            <span>Filtered</span>
+            <span>{filterTitleStr}</span>
+          </b>
+        ) : (
+          statusPeekText
+        )}
       </div>
     </article>
   );

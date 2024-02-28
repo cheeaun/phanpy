@@ -179,6 +179,10 @@
     color: var(--text-insignificant-color);
     position: relative;
 
+    &:active {
+      transform: scale(0.95);
+    }
+
     select {
       /* appearance: none;
       background-color: var(--bg-faded-color);
@@ -456,6 +460,7 @@
   }
 
   .post-line {
+    font-size: 0.95em;
     border-radius: inherit;
     animation: appear-smooth 0.3s ease-in-out both;
     --pad: 16px;
@@ -603,7 +608,6 @@
       overflow: hidden;
       line-height: 1.3;
       opacity: 0.9;
-      font-size: 0.9em;
       text-wrap: balance;
 
       &:empty {
@@ -653,7 +657,8 @@
           }
         }
 
-        br:after {
+        br:after,
+        :not(br, span, a) + :is(p, div, blockquote, ul, ol, pre):before {
           font-size: 0.75em;
           content: ' ↵ ';
           opacity: 0.35;
@@ -823,20 +828,23 @@
   }
 
   .post-stats {
-    opacity: 0;
     display: inline-flex;
     gap: 2px;
     align-items: center;
-    transform: translateX(4px);
-    /* transition: all 0.25s ease-out; */
 
     &:empty {
       display: none;
     }
   }
-  .post-line:hover .post-stats {
-    opacity: 1;
-    transform: translateX(0);
+  @media (hover: hover) {
+    .post-stats {
+      opacity: 0;
+      transform: translateX(4px);
+    }
+    .post-line:hover .post-stats {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   + footer {

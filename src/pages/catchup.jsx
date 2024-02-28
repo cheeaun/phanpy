@@ -261,6 +261,7 @@ function Catchup() {
 
       const thePost = post.reblog || post;
       if (
+        post.__FILTER !== 'filtered' &&
         thePost.card?.url &&
         thePost.card?.image &&
         thePost.card?.type === 'link'
@@ -466,6 +467,51 @@ function Catchup() {
     if (!lastCatchupEndAt) return null;
     return (Date.now() - lastCatchupEndAt) / 1000 / 60 / 60;
   }, [lastCatchupEndAt, range]);
+
+  useEffect(() => {
+    const filterCategoryText = {
+      Filtered: 'filtered posts',
+      Groups: 'group posts',
+      Boosts: 'boosts',
+      Replies: 'replies',
+      'Followed tags': 'followed-tag posts',
+      Original: 'original posts',
+    };
+    const authorUsername =
+      selectedAuthor && authors[selectedAuthor]
+        ? authors[selectedAuthor].username
+        : '';
+    const sortOrderIndex = sortOrder === 'asc' ? 0 : 1;
+    const sortByText = {
+      // asc, desc
+      createdAt: ['oldest', 'latest'],
+      repliesCount: ['fewest replies', 'most replies'],
+      favouritesCount: ['fewest likes', 'most likes'],
+      reblogsCount: ['fewest boosts', 'most boosts'],
+    };
+    const groupByText = {
+      account: 'authors',
+    };
+    let toast = showToast(
+      `Showing ${filterCategoryText[selectedFilterCategory] || 'all posts'}${
+        authorUsername ? ` by @${authorUsername}` : ''
+      }, ${sortByText[sortBy][sortOrderIndex]} first${
+        !!groupBy
+          ? `, grouped by ${groupBy === 'account' ? groupByText[groupBy] : ''}`
+          : ''
+      }`,
+    );
+    return () => {
+      toast?.hideToast?.();
+    };
+  }, [
+    selectedFilterCategory,
+    selectedAuthor,
+    sortBy,
+    sortOrder,
+    groupBy,
+    authors,
+  ]);
 
   return (
     <div
@@ -934,7 +980,6 @@ function Catchup() {
                             repliesCount: 'Replies',
                             favouritesCount: 'Likes',
                             reblogsCount: 'Boosts',
-                            // account: 'Authors',
                           }[key]
                         }
                       </label>

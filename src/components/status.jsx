@@ -2441,7 +2441,7 @@ function StatusCompact({ sKey }) {
             <span>{filterTitleStr}</span>
           </b>
         ) : (
-          statusPeekText
+          <span>{statusPeekText}</span>
         )}
       </div>
     </article>

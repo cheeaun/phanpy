@@ -33,8 +33,9 @@ const imageRoute = new Route(
     const isRemote = !sameOrigin;
     const isImage = request.destination === 'image';
     const isAvatar = request.url.includes('/avatars/');
+    const isCustomEmoji = request.url.includes('/custom/_emojis');
     const isEmoji = request.url.includes('/emoji/');
-    return isRemote && isImage && (isAvatar || isEmoji);
+    return isRemote && isImage && (isAvatar || isCustomEmoji || isEmoji);
   },
   new CacheFirst({
     cacheName: 'remote-images',

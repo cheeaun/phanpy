@@ -1783,6 +1783,7 @@ function Status({
                       media={media}
                       autoAnimate={isSizeLarge}
                       showCaption={mediaAttachments.length === 1}
+                      allowLongerCaption={!content}
                       lang={language}
                       altIndex={
                         showMultipleMediaCaptions &&

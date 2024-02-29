@@ -515,6 +515,36 @@ function Catchup() {
     authors,
   ]);
 
+  const prevSelectedAuthorMissing = useRef(false);
+  useEffect(() => {
+    console.log({
+      prevSelectedAuthorMissing,
+      selectedAuthor,
+      authors,
+    });
+    let timer;
+    if (selectedAuthor) {
+      if (authors[selectedAuthor]) {
+        if (prevSelectedAuthorMissing.current) {
+          timer = setTimeout(() => {
+            authorsListParent.current
+              .querySelector(`[data-author="${selectedAuthor}"]`)
+              ?.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+              });
+          }, 500);
+          prevSelectedAuthorMissing.current = false;
+        }
+      } else {
+        prevSelectedAuthorMissing.current = true;
+      }
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [selectedAuthor, authors]);
+
   return (
     <div
       ref={scrollableRef}
@@ -907,6 +937,7 @@ function Catchup() {
                   {authorCountsList.map((author) => (
                     <label
                       class="filter-author"
+                      data-author={author}
                       key={`${author}-${authorCounts[author]}`}
                       // Preact messed up the order sometimes, need additional key besides just `author`
                       // https://github.com/preactjs/preact/issues/2849

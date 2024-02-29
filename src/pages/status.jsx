@@ -906,7 +906,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             !!heroStatus?.repliesCount &&
             !hasDescendants && (
               <div class="status-loading">
-                <Loader />
+                <Loader abrupt={heroStatus.repliesCount >= 3} />
               </div>
             )}
           {uiState === 'error' &&

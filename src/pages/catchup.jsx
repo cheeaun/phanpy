@@ -531,6 +531,7 @@ function Catchup() {
               .querySelector(`[data-author="${selectedAuthor}"]`)
               ?.scrollIntoView({
                 behavior: 'smooth',
+                block: 'nearest',
                 inline: 'center',
               });
           }, 500);

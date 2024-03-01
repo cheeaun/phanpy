@@ -493,15 +493,18 @@ function Catchup() {
     const groupByText = {
       account: 'authors',
     };
-    let toast = showToast(
-      `Showing ${filterCategoryText[selectedFilterCategory] || 'all posts'}${
-        authorUsername ? ` by @${authorUsername}` : ''
-      }, ${sortByText[sortBy][sortOrderIndex]} first${
+    let toast = showToast({
+      duration: 5_000, // 5 seconds
+      text: `Showing ${
+        filterCategoryText[selectedFilterCategory] || 'all posts'
+      }${authorUsername ? ` by @${authorUsername}` : ''}, ${
+        sortByText[sortBy][sortOrderIndex]
+      } first${
         !!groupBy
           ? `, grouped by ${groupBy === 'account' ? groupByText[groupBy] : ''}`
           : ''
       }`,
-    );
+    });
     return () => {
       toast?.hideToast?.();
     };

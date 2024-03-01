@@ -22,6 +22,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
 import getHTMLText from '../utils/getHTMLText';
+import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -423,8 +424,17 @@ function Catchup() {
       if (sortBy !== 'createdAt') {
         a = a.reblog || a;
         b = b.reblog || b;
-        if (a[sortBy] === b[sortBy]) {
+        if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
           return a.createdAt > b.createdAt ? 1 : -1;
+        }
+      }
+      if (sortBy === 'density') {
+        const aDensity = postDensity(a);
+        const bDensity = postDensity(b);
+        if (sortOrder === 'asc') {
+          return aDensity > bDensity ? 1 : -1;
+        } else {
+          return bDensity > aDensity ? 1 : -1;
         }
       }
       if (sortOrder === 'asc') {
@@ -489,6 +499,7 @@ function Catchup() {
       repliesCount: ['fewest replies', 'most replies'],
       favouritesCount: ['fewest likes', 'most likes'],
       reblogsCount: ['fewest boosts', 'most boosts'],
+      density: ['least dense', 'most dense'],
     };
     const groupByText = {
       account: 'authors',
@@ -994,6 +1005,7 @@ function Catchup() {
                       'repliesCount',
                       'favouritesCount',
                       'reblogsCount',
+                      'density',
                       // 'account',
                     ].map((key) => (
                       <label class="filter-sort" key={key}>
@@ -1003,11 +1015,10 @@ function Catchup() {
                           checked={sortBy === key}
                           onChange={() => {
                             setSortBy(key);
-                            const order = /(replies|favourites|reblogs)/.test(
-                              key,
-                            )
-                              ? 'desc'
-                              : 'asc';
+                            const order =
+                              /(replies|favourites|reblogs|density)/.test(key)
+                                ? 'desc'
+                                : 'asc';
                             setSortOrder(order);
                           }}
                           // disabled={key === 'account' && selectedAuthor}
@@ -1018,6 +1029,7 @@ function Catchup() {
                             repliesCount: 'Replies',
                             favouritesCount: 'Likes',
                             reblogsCount: 'Boosts',
+                            density: 'Density',
                           }[key]
                         }
                       </label>
@@ -1240,6 +1252,25 @@ const IntersectionPostLine = ({ root, ...props }) => {
     <div ref={ref} style={{ height: '4em' }} />
   );
 };
+
+// A media speak a thousand words
+const MEDIA_DENSITY = 8;
+const CARD_DENSITY = 8;
+function postDensity(post) {
+  const { spoilerText, content, poll, mediaAttachments, card } = post;
+  const pollContent = poll?.options?.length
+    ? poll.options.reduce((acc, cur) => acc + cur.title, '')
+    : '';
+  const density =
+    (spoilerText.length + htmlContentLength(content) + pollContent.length) /
+      140 +
+    (mediaAttachments?.length
+      ? MEDIA_DENSITY * mediaAttachments.length
+      : card?.image
+      ? CARD_DENSITY
+      : 0);
+  return density;
+}
 
 const MEDIA_SIZE = 48;
 

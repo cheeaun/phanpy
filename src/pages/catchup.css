@@ -32,6 +32,57 @@
     max-width: 40em;
     margin-inline: auto;
 
+    details {
+      border-radius: 16px;
+      text-wrap: balance;
+      color: var(--text-insignificant-color);
+      padding: 1em;
+      margin: -1em 0;
+      transition: all 0.3s var(--timing-function);
+      line-height: 1.4;
+
+      &[open] {
+        transform: translateY(-10vh);
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        background-image: radial-gradient(
+            farthest-corner at 25% 0,
+            transparent 80%,
+            var(--bg-faded-color) 95%,
+            var(--bg-color)
+          ),
+          radial-gradient(
+            farthest-corner at 100% 100%,
+            transparent 80%,
+            var(--bg-faded-blur-color)
+          );
+        outline: 1px solid var(--bg-color);
+        box-shadow: 0 16px 32px -16px var(--drop-shadow-color);
+
+        ~ * {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        img {
+          width: 480px;
+          height: auto;
+          border-radius: 8px;
+          border: 1px solid var(--outline-color);
+        }
+      }
+
+      summary {
+        font-size: 0.9em;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+          color: var(--text-color);
+        }
+      }
+    }
+
     .catchup-info {
       animation: appear 0.3s ease-out;
       display: flex;

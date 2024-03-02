@@ -9,6 +9,8 @@ import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
 
+import catchupUrl from '../assets/features/catch-up.png';
+
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -614,6 +616,30 @@ function Catchup() {
               <h1>
                 Catch-up <sup>beta</sup>
               </h1>
+              <details>
+                <summary>What is this?</summary>
+                <p>
+                  Catch-up is a separate timeline for your followings, offering
+                  a high-level view at a glance, with a simple, email-inspired
+                  interface to effortlessly sort and filter through posts.
+                </p>
+                <img
+                  src={catchupUrl}
+                  width="1200"
+                  height="900"
+                  alt="Preview of Catch-up UI"
+                />
+                <p>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.target.closest('details').open = false;
+                    }}
+                  >
+                    Let's catch up
+                  </button>
+                </p>
+              </details>
               <p>Let's catch up on the posts from your followings.</p>
               <p>
                 <b>Show me all posts from…</b>

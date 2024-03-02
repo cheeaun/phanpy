@@ -5,7 +5,14 @@ import autoAnimate from '@formkit/auto-animate';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
-import { useEffect, useMemo, useReducer, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
 
@@ -35,6 +42,47 @@ import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = 'home';
+
+const RANGES = [
+  { label: 'last 1 hour', value: 1 },
+  { label: 'last 2 hours', value: 2 },
+  { label: 'last 3 hours', value: 3 },
+  { label: 'last 4 hours', value: 4 },
+  { label: 'last 5 hours', value: 5 },
+  { label: 'last 6 hours', value: 6 },
+  { label: 'last 7 hours', value: 7 },
+  { label: 'last 8 hours', value: 8 },
+  { label: 'last 9 hours', value: 9 },
+  { label: 'last 10 hours', value: 10 },
+  { label: 'last 11 hours', value: 11 },
+  { label: 'last 12 hours', value: 12 },
+  { label: 'beyond 12 hours', value: 13 },
+];
+
+const FILTER_VALUES = {
+  Filtered: 'filtered',
+  Groups: 'group',
+  Boosts: 'boost',
+  Replies: 'reply',
+  'Followed tags': 'followedTags',
+  Original: 'original',
+};
+const FILTER_CATEGORY_TEXT = {
+  Filtered: 'filtered posts',
+  Groups: 'group posts',
+  Boosts: 'boosts',
+  Replies: 'replies',
+  'Followed tags': 'followed-tag posts',
+  Original: 'original posts',
+};
+const SORT_BY_TEXT = {
+  // asc, desc
+  createdAt: ['oldest', 'latest'],
+  repliesCount: ['fewest replies', 'most replies'],
+  favouritesCount: ['fewest likes', 'most likes'],
+  reblogsCount: ['fewest boosts', 'most boosts'],
+  density: ['least dense', 'most dense'],
+};
 
 function Catchup() {
   useTitle('Catch-up', '/catchup');
@@ -125,15 +173,15 @@ function Catchup() {
 
   const [posts, setPosts] = useState([]);
   const catchupRangeRef = useRef();
-  async function handleCatchupClick({ duration } = {}) {
+  const NS = useMemo(() => getCurrentAccountNS(), []);
+  const handleCatchupClick = useCallback(async ({ duration } = {}) => {
     const now = Date.now();
     const maxCreatedAt = duration ? now - duration : null;
     setUIState('loading');
     const results = await fetchHome({ maxCreatedAt });
     // Namespaced by account ID
     // Possible conflict if ID matches between different accounts from different instances
-    const ns = getCurrentAccountNS();
-    const catchupID = `${ns}-${uid()}`;
+    const catchupID = `${NS}-${uid()}`;
     try {
       await db.catchup.set(catchupID, {
         id: catchupID,
@@ -145,17 +193,15 @@ function Catchup() {
       setSearchParams({ id: catchupID });
     } catch (e) {
       console.error(e, results);
-      // setUIState('error');
     }
-    // setPosts(results);
-    // setUIState('results');
-  }
+  }, []);
 
   useEffect(() => {
     if (id) {
       (async () => {
         const catchup = await db.catchup.get(id);
         if (catchup) {
+          catchup.posts.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
           setPosts(catchup.posts);
           setUIState('results');
         }
@@ -340,64 +386,47 @@ function Catchup() {
   const [selectedAuthor, setSelectedAuthor] = useState(null);
 
   const [range, setRange] = useState(1);
-  const ranges = [
-    { label: 'last 1 hour', value: 1 },
-    { label: 'last 2 hours', value: 2 },
-    { label: 'last 3 hours', value: 3 },
-    { label: 'last 4 hours', value: 4 },
-    { label: 'last 5 hours', value: 5 },
-    { label: 'last 6 hours', value: 6 },
-    { label: 'last 7 hours', value: 7 },
-    { label: 'last 8 hours', value: 8 },
-    { label: 'last 9 hours', value: 9 },
-    { label: 'last 10 hours', value: 10 },
-    { label: 'last 11 hours', value: 11 },
-    { label: 'last 12 hours', value: 12 },
-    { label: 'beyond 12 hours', value: 13 },
-  ];
 
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('asc');
   const [groupBy, setGroupBy] = useState(null);
 
   const [filteredPosts, authors, authorCounts] = useMemo(() => {
-    let authors = [];
-    const authorCounts = {};
+    const authorsHash = {};
+    const authorCountsMap = new Map();
+
     let filteredPosts = posts.filter((post) => {
-      return (
+      const postFilterMatches =
         selectedFilterCategory === 'All' ||
-        post.__FILTER ===
-          {
-            Filtered: 'filtered',
-            Groups: 'group',
-            Boosts: 'boost',
-            Replies: 'reply',
-            'Followed tags': 'followedTags',
-            Original: 'original',
-          }[selectedFilterCategory]
-      );
-    });
+        post.__FILTER === FILTER_VALUES[selectedFilterCategory];
 
-    filteredPosts.forEach((post) => {
-      if (!authors.find((a) => a.id === post.account.id)) {
-        authors.push(post.account);
+      if (postFilterMatches) {
+        authorsHash[post.account.id] = post.account;
+        authorCountsMap.set(
+          post.account.id,
+          (authorCountsMap.get(post.account.id) || 0) + 1,
+        );
       }
-      authorCounts[post.account.id] = (authorCounts[post.account.id] || 0) + 1;
+
+      return postFilterMatches;
     });
 
-    if (selectedAuthor && authorCounts[selectedAuthor]) {
+    if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
       filteredPosts = filteredPosts.filter(
         (post) => post.account.id === selectedAuthor,
       );
     }
 
-    const authorsHash = {};
-    for (const author of authors) {
-      authorsHash[author.id] = author;
-    }
-
-    return [filteredPosts, authorsHash, authorCounts];
+    return [filteredPosts, authorsHash, Object.fromEntries(authorCountsMap)];
   }, [selectedFilterCategory, selectedAuthor, posts]);
+
+  const filteredPostsMap = useMemo(() => {
+    const map = {};
+    filteredPosts.forEach((post) => {
+      map[post.id] = post;
+    });
+    return map;
+  }, [filteredPosts]);
 
   const authorCountsList = useMemo(
     () =>
@@ -450,26 +479,55 @@ function Catchup() {
   const prevGroup = useRef(null);
 
   const authorsListParent = useRef(null);
+  const autoAnimated = useRef(false);
   useEffect(() => {
-    if (authorsListParent.current && authorCountsList.length < 30) {
+    if (posts.length > 100 || autoAnimated.current) return;
+    if (authorsListParent.current) {
       autoAnimate(authorsListParent.current, {
         duration: 200,
       });
+      autoAnimated.current = true;
     }
-  }, [selectedFilterCategory, authorCountsList, authorsListParent]);
+  }, [posts, authorsListParent]);
+
+  const postsBarType = posts.length > 160 ? '3d' : '2d';
 
   const postsBar = useMemo(() => {
+    if (postsBarType !== '2d') return null;
     return posts.map((post) => {
       // If part of filteredPosts
-      const isFiltered = filteredPosts.find((p) => p.id === post.id);
+      const isFiltered = filteredPostsMap[post.id];
       return (
         <span
+          data-id={post.id}
           key={post.id}
           class={`post-dot ${isFiltered ? 'post-dot-highlight' : ''}`}
         />
       );
     });
-  }, [posts, filteredPosts]);
+  }, [filteredPostsMap]);
+
+  const postsBins = useMemo(() => {
+    if (postsBarType !== '3d') return null;
+    if (!posts?.length) return null;
+    const bins = binByTime(posts, 'createdAt', 320);
+    return bins.map((posts, i) => {
+      return (
+        <div class="posts-bin" key={i}>
+          {posts.map((post) => {
+            const isFiltered = filteredPostsMap[post.id];
+            return (
+              <span
+                data-id={post.id}
+                key={post.id}
+                class={`post-dot ${isFiltered ? 'post-dot-highlight' : ''}`}
+              />
+            );
+          })}
+        </div>
+      );
+    });
+  }, [filteredPostsMap]);
 
   const scrollableRef = useRef(null);
 
@@ -482,36 +540,20 @@ function Catchup() {
 
   useEffect(() => {
     if (uiState !== 'results') return;
-    const filterCategoryText = {
-      Filtered: 'filtered posts',
-      Groups: 'group posts',
-      Boosts: 'boosts',
-      Replies: 'replies',
-      'Followed tags': 'followed-tag posts',
-      Original: 'original posts',
-    };
     const authorUsername =
       selectedAuthor && authors[selectedAuthor]
         ? authors[selectedAuthor].username
         : '';
     const sortOrderIndex = sortOrder === 'asc' ? 0 : 1;
-    const sortByText = {
-      // asc, desc
-      createdAt: ['oldest', 'latest'],
-      repliesCount: ['fewest replies', 'most replies'],
-      favouritesCount: ['fewest likes', 'most likes'],
-      reblogsCount: ['fewest boosts', 'most boosts'],
-      density: ['least dense', 'most dense'],
-    };
     const groupByText = {
       account: 'authors',
     };
     let toast = showToast({
       duration: 5_000, // 5 seconds
       text: `Showing ${
-        filterCategoryText[selectedFilterCategory] || 'all posts'
+        FILTER_CATEGORY_TEXT[selectedFilterCategory] || 'all posts'
       }${authorUsername ? ` by @${authorUsername}` : ''}, ${
-        sortByText[sortBy][sortOrderIndex]
+        SORT_BY_TEXT[sortBy][sortOrderIndex]
       } first${
         !!groupBy
           ? `, grouped by ${groupBy === 'account' ? groupByText[groupBy] : ''}`
@@ -533,11 +575,11 @@ function Catchup() {
 
   const prevSelectedAuthorMissing = useRef(false);
   useEffect(() => {
-    console.log({
-      prevSelectedAuthorMissing,
-      selectedAuthor,
-      authors,
-    });
+    // console.log({
+    //   prevSelectedAuthorMissing,
+    //   selectedAuthor,
+    //   authors,
+    // });
     let timer;
     if (selectedAuthor) {
       if (authors[selectedAuthor]) {
@@ -649,8 +691,8 @@ function Catchup() {
                   ref={catchupRangeRef}
                   type="range"
                   value={range}
-                  min={ranges[0].value}
-                  max={ranges[ranges.length - 1].value}
+                  min={RANGES[0].value}
+                  max={RANGES[RANGES.length - 1].value}
                   step="1"
                   list="catchup-ranges"
                   onChange={(e) => setRange(+e.target.value)}
@@ -660,10 +702,10 @@ function Catchup() {
                     width: '8em',
                   }}
                 >
-                  {ranges[range - 1].label}
+                  {RANGES[range - 1].label}
                   <br />
                   <small class="insignificant">
-                    {range == ranges[ranges.length - 1].value
+                    {range == RANGES[RANGES.length - 1].value
                       ? 'until the max'
                       : niceDateTime(
                           new Date(Date.now() - range * 60 * 60 * 1000),
@@ -671,14 +713,14 @@ function Catchup() {
                   </small>
                 </span>
                 <datalist id="catchup-ranges">
-                  {ranges.map(({ label, value }) => (
+                  {RANGES.map(({ label, value }) => (
                     <option value={value} label={label} />
                   ))}
                 </datalist>{' '}
                 <button
                   type="button"
                   onClick={() => {
-                    if (range < ranges[ranges.length - 1].value) {
+                    if (range < RANGES[RANGES.length - 1].value) {
                       const duration = range * 60 * 60 * 1000;
                       handleCatchupClick({ duration });
                     } else {
@@ -926,9 +968,12 @@ function Catchup() {
                   </div>
                 </div>
               </div>
-              {posts.length >= 5 && (
-                <div class="catchup-posts-viz-bar">{postsBar}</div>
-              )}
+              {posts.length >= 5 &&
+                (postsBarType === '3d' ? (
+                  <div class="catchup-posts-viz-time-bar">{postsBins}</div>
+                ) : (
+                  <div class="catchup-posts-viz-bar">{postsBar}</div>
+                ))}
               {posts.length >= 2 && (
                 <div class="catchup-filters">
                   <label class="filter-cat">
@@ -1139,14 +1184,11 @@ function Catchup() {
                   return (
                     <Fragment key={`${post.id}-${showSeparator}`}>
                       {showSeparator && <li class="separator" />}
-                      <li>
-                        <Link to={`/${instance}/s/${id}`}>
-                          <IntersectionPostLine
-                            post={post}
-                            root={scrollableRef.current}
-                          />
-                        </Link>
-                      </li>
+                      <IntersectionPostLineItem
+                        to={`/${instance}/s/${id}`}
+                        post={post}
+                        root={scrollableRef.current}
+                      />
                     </Fragment>
                   );
                 })}
@@ -1251,7 +1293,7 @@ const PostLine = memo(
   },
 );
 
-const IntersectionPostLine = ({ root, ...props }) => {
+const IntersectionPostLineItem = ({ root, to, ...props }) => {
   const ref = useRef();
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -1275,9 +1317,13 @@ const IntersectionPostLine = ({ root, ...props }) => {
   }, []);
 
   return show ? (
-    <PostLine {...props} />
+    <li>
+      <Link to={to}>
+        <PostLine {...props} />
+      </Link>
+    </li>
   ) : (
-    <div ref={ref} style={{ height: '4em' }} />
+    <li ref={ref} style={{ height: '4em' }} />
   );
 };
 
@@ -1505,6 +1551,35 @@ const dtf = new Intl.DateTimeFormat(locale, {
 });
 function formatRange(startDate, endDate) {
   return dtf.formatRange(startDate, endDate);
+}
+
+function binByTime(data, key, numBins) {
+  // Extract dates from data objects
+  const dates = data.map((item) => new Date(item[key]));
+
+  // Find minimum and maximum dates directly (avoiding Math.min/max)
+  const minDate = dates.reduce(
+    (acc, date) => (date < acc ? date : acc),
+    dates[0],
+  );
+  const maxDate = dates.reduce(
+    (acc, date) => (date > acc ? date : acc),
+    dates[0],
+  );
+
+  // Calculate the time span in milliseconds
+  const range = maxDate.getTime() - minDate.getTime();
+
+  // Create empty bins and loop through data
+  const bins = Array.from({ length: numBins }, () => []);
+  data.forEach((item) => {
+    const date = new Date(item[key]);
+    const normalized = (date.getTime() - minDate.getTime()) / range;
+    const binIndex = Math.floor(normalized * (numBins - 1));
+    bins[binIndex].push(item);
+  });
+
+  return bins;
 }
 
 export default Catchup;

@@ -37,6 +37,7 @@ const rollbarCode = fs.readFileSync(
 export default defineConfig({
   base: './',
   envPrefix: allowedEnvPrefixes,
+  appType: 'mpa',
   mode: NODE_ENV,
   define: {
     __BUILD_TIME__: JSON.stringify(now),

@@ -1609,6 +1609,11 @@ a.card:is(:hover, :focus):visited {
 .card.video {
   max-width: 320px;
   max-height: 320px;
+  cursor: pointer;
+
+  lite\-youtube {
+    pointer-events: none;
+  }
 }
 .card.video iframe {
   width: 100%;

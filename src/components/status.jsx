@@ -2181,7 +2181,11 @@ function Card({ card, selfReferential, instance }) {
         // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
         const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
         if (videoID) {
-          return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+          return (
+            <a class="card video" onClick={handleClick}>
+              <lite-youtube videoid={videoID} nocookie></lite-youtube>
+            </a>
+          );
         }
       }
       // return (

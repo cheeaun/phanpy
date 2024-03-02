@@ -61,6 +61,7 @@ function Modal({ children, onClose, onClick, class: className }) {
             const focusElement =
               modalRef.current?.querySelector('[tabindex="-1"]');
             const isFocusable =
+              !!focusElement &&
               getComputedStyle(focusElement)?.pointerEvents !== 'none';
             if (focusElement && isFocusable) {
               focusElement.focus();

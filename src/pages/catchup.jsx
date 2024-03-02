@@ -713,28 +713,30 @@ function Catchup() {
                             {formatRange(
                               new Date(pc.startAt),
                               new Date(pc.endAt),
-                            )}{' '}
-                            <small class="ib insignificant">
-                              {pc.count} posts
-                            </small>
+                            )}
                           </span>
                         </Link>{' '}
-                        <button
-                          type="button"
-                          class="light danger small"
-                          onClick={async () => {
-                            const yes = confirm('Remove this catch-up?');
-                            if (yes) {
-                              let t = showToast(`Removing Catch-up ${pc.id}`);
-                              await db.catchup.del(pc.id);
-                              t?.hideToast?.();
-                              showToast(`Catch-up ${pc.id} removed`);
-                              reloadCatchups();
-                            }
-                          }}
-                        >
-                          <Icon icon="x" />
-                        </button>
+                        <span>
+                          <small class="ib insignificant">
+                            {pc.count} posts
+                          </small>{' '}
+                          <button
+                            type="button"
+                            class="light danger small"
+                            onClick={async () => {
+                              const yes = confirm('Remove this catch-up?');
+                              if (yes) {
+                                let t = showToast(`Removing Catch-up ${pc.id}`);
+                                await db.catchup.del(pc.id);
+                                t?.hideToast?.();
+                                showToast(`Catch-up ${pc.id} removed`);
+                                reloadCatchups();
+                              }
+                            }}
+                          >
+                            <Icon icon="x" />
+                          </button>
+                        </span>
                       </li>
                     ))}
                   </ul>

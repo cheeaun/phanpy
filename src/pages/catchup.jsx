@@ -808,8 +808,8 @@ function Catchup() {
                   <p>
                     <b class="ib">
                       {formatRange(
-                        new Date(posts[posts.length - 1].createdAt),
                         new Date(posts[0].createdAt),
+                        new Date(posts[posts.length - 1].createdAt),
                       )}
                     </b>
                   </p>

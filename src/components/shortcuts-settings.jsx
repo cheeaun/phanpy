@@ -392,7 +392,11 @@ function ShortcutsSettings({ onClose }) {
           </>
         ) : (
           <div class="ui-state insignificant">
-            <p>No shortcuts yet. Tap on the Add shortcut button.</p>
+            <p>
+              {snapStates.settings.shortcutsViewMode === 'multi-column'
+                ? 'No columns yet. Tap on the Add column button.'
+                : 'No shortcuts yet. Tap on the Add shortcut button.'}
+            </p>
             <p>
               Not sure what to add?
               <br />
@@ -419,7 +423,9 @@ function ShortcutsSettings({ onClose }) {
         )}
         <p class="insignificant">
           {shortcuts.length >= SHORTCUTS_LIMIT &&
-            `Max ${SHORTCUTS_LIMIT} shortcuts`}
+            (snapStates.settings.shortcutsViewMode === 'multi-column'
+              ? `Max ${SHORTCUTS_LIMIT} columns`
+              : `Max ${SHORTCUTS_LIMIT} shortcuts`)}
         </p>
         <p
           style={{

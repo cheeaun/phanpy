@@ -1925,6 +1925,10 @@ body > .szh-menu-container {
   color: var(--red-color);
 }
 .szh-menu
+  .szh-menu__item.danger:not(.szh-menu__item--disabled).szh-menu__item--hover {
+  background-color: var(--red-color);
+}
+.szh-menu
   .szh-menu__item:not(.szh-menu__item--disabled):not(
     .szh-menu__item--hover
   ).danger

@@ -2333,6 +2333,7 @@ function generateHTMLCode(post, instance, level = 0) {
     account: {
       url: accountURL,
       displayName,
+      acct,
       username,
       emojis: accountEmojis,
       bot,
@@ -2477,7 +2478,7 @@ function generateHTMLCode(post, instance, level = 0) {
         — ${emojifyText(
           displayName,
           accountEmojis,
-        )} (@${username}) <a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>
+        )} (@${acct}) <a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>
       </footer>
     </blockquote>
   `;

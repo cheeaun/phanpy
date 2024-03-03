@@ -209,10 +209,14 @@
   margin: 0 16px;
   padding: 1px;
   display: flex;
-  gap: var(--hairline-width);
+  row-gap: var(--hairline-width);
   pointer-events: none;
   justify-content: stretch;
   background-image: linear-gradient(to bottom, transparent, var(--bg-color));
+
+  @media (min-width: 640px) {
+    column-gap: var(--hairline-width);
+  }
 
   .posts-bin {
     display: flex;

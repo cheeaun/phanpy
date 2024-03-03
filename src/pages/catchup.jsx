@@ -1088,10 +1088,11 @@ function Catchup() {
                           checked={sortBy === key}
                           onChange={() => {
                             setSortBy(key);
-                            const order =
-                              /(replies|favourites|reblogs|density)/.test(key)
-                                ? 'desc'
-                                : 'asc';
+                            const order = /(replies|favourites|reblogs)/.test(
+                              key,
+                            )
+                              ? 'desc'
+                              : 'asc';
                             setSortOrder(order);
                           }}
                           // disabled={key === 'account' && selectedAuthor}

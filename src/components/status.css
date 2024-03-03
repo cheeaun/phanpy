@@ -1994,6 +1994,7 @@ a.card:is(:hover, :focus):visited {
   }
 
   .status:focus &,
+  .status:focus-within &,
   &.open {
     opacity: 1;
     pointer-events: auto;

@@ -32,7 +32,7 @@ export default memo(function KeyboardShortcutsHelp() {
 
   return (
     !!snapStates.showKeyboardShortcutsHelp && (
-      <Modal class="light" onClose={onClose}>
+      <Modal onClose={onClose}>
         <div id="keyboard-shortcuts-help-container" class="sheet" tabindex="-1">
           <button type="button" class="sheet-close" onClick={onClose}>
             <Icon icon="x" />

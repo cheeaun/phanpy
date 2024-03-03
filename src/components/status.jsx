@@ -1985,7 +1985,6 @@ function Status({
         </div>
         {!!showEdited && (
           <Modal
-            class="light"
             onClick={(e) => {
               if (e.target === e.currentTarget) {
                 setShowEdited(false);
@@ -2008,7 +2007,6 @@ function Status({
         )}
         {!!showEmbed && (
           <Modal
-            class="light"
             onClick={(e) => {
               if (e.target === e.currentTarget) {
                 setShowEmbed(false);
@@ -2953,7 +2951,6 @@ function FilteredStatus({
       </article>
       {!!showPeek && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowPeek(false);

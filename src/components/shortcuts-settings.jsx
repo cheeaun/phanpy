@@ -457,7 +457,6 @@ function ShortcutsSettings({ onClose }) {
       </main>
       {showForm && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowForm(false);
@@ -481,7 +480,6 @@ function ShortcutsSettings({ onClose }) {
       )}
       {showImportExport && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowImportExport(false);

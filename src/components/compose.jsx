@@ -1254,7 +1254,6 @@ function Compose({
       </div>
       {showEmoji2Picker && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowEmoji2Picker(false);
@@ -1768,7 +1767,6 @@ function MediaAttachment({
       </div>
       {showModal && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowModal(false);

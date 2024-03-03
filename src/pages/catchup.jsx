@@ -499,7 +499,6 @@ function Catchup() {
       const isFiltered = filteredPostsMap[post.id];
       return (
         <span
-          data-id={post.id}
           key={post.id}
           class={`post-dot ${isFiltered ? 'post-dot-highlight' : ''}`}
         />
@@ -518,7 +517,6 @@ function Catchup() {
             const isFiltered = filteredPostsMap[post.id];
             return (
               <span
-                data-id={post.id}
                 key={post.id}
                 class={`post-dot ${isFiltered ? 'post-dot-highlight' : ''}`}
               />

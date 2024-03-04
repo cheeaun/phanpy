@@ -1620,7 +1620,7 @@ function Status({
                   <Icon icon="thread" size="s" />
                   Thread
                   {snapStates.statusThreadNumber[sKey]
-                    ? ` ${snapStates.statusThreadNumber[sKey]}/X`
+                    ? ` ${snapStates.statusThreadNumber[sKey]}`
                     : ''}
                 </div>
               ) : (

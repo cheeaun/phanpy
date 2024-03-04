@@ -627,9 +627,16 @@ function Catchup() {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain home-button">
-                <Icon icon="home" size="l" />
-              </Link>
+              {uiState === 'results' && (
+                <Link to="/catchup" class="button plain">
+                  <Icon icon="history" size="l" />
+                </Link>
+              )}
+              {uiState === 'start' && (
+                <Link to="/" class="button plain">
+                  <Icon icon="home" size="l" />
+                </Link>
+              )}
             </div>
             <h1>
               {uiState !== 'start' && (

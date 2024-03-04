@@ -1124,6 +1124,7 @@ function RelatedActions({
                   </MenuItem>
                 ) : (
                   <SubMenu
+                    menuClassName="menu-blur"
                     openTrigger="clickOnly"
                     direction="bottom"
                     overflow="auto"

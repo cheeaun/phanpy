@@ -22,6 +22,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
@@ -602,6 +603,8 @@ function Catchup() {
     };
   }, [selectedAuthor, authors]);
 
+  const [showHelp, setShowHelp] = useState(false);
+
   return (
     <div
       ref={scrollableRef}
@@ -641,10 +644,10 @@ function Catchup() {
                   type="button"
                   class="plain"
                   onClick={() => {
-                    setSearchParams({});
+                    setShowHelp(true);
                   }}
                 >
-                  Start over
+                  Help
                 </button>
               )}
             </div>
@@ -1215,6 +1218,42 @@ function Catchup() {
           )}
         </main>
       </div>
+      {showHelp && (
+        <Modal onClose={() => setShowHelp(false)}>
+          <div class="sheet" id="catchup-help-sheet">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => setShowHelp(false)}
+            >
+              <Icon icon="x" />
+            </button>
+            <header>
+              <h2>Help</h2>
+            </header>
+            <main>
+              <dl>
+                <dt>Top links</dt>
+                <dd>
+                  Links shared by followings, sorted by shared counts, boosts
+                  and likes.
+                </dd>
+                <dt>Sort: Density</dt>
+                <dd>
+                  Posts are sorted by information density or depth. Shorter
+                  posts are "lighter" while longer posts are "heavier". Posts
+                  with photos are "heavier" than posts without photos.
+                </dd>
+                <dt>Group: Authors</dt>
+                <dd>
+                  Posts are grouped by authors, sorted by posts count per
+                  author.
+                </dd>
+              </dl>
+            </main>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

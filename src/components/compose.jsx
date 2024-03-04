@@ -6,7 +6,6 @@ import { deepEqual } from 'fast-equals';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { substring } from 'runes2';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
@@ -131,6 +130,7 @@ const SCAN_RE = new RegExp(
   'g',
 );
 
+const segmenter = new Intl.Segmenter();
 function highlightText(text, { maxCharacters = Infinity }) {
   // Accept text string, return formatted HTML string
   // Escape all HTML special characters
@@ -143,19 +143,25 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
   // Exceeded characters limit
   const { composerCharacterCount } = states;
-  let leftoverHTML = '';
   if (composerCharacterCount > maxCharacters) {
-    // NOTE: runes2 substring considers surrogate pairs
-    // const leftoverCount = composerCharacterCount - maxCharacters;
     // Highlight exceeded characters
-    leftoverHTML =
-      '<mark class="compose-highlight-exceeded">' +
-      // html.slice(-leftoverCount) +
-      substring(html, maxCharacters) +
-      '</mark>';
-    // html = html.slice(0, -leftoverCount);
-    html = substring(html, 0, maxCharacters);
-    return html + leftoverHTML;
+    let withinLimitHTML = '',
+      exceedLimitHTML = '';
+    const htmlSegments = segmenter.segment(html);
+    for (const { segment, index } of htmlSegments) {
+      if (index < maxCharacters) {
+        withinLimitHTML += segment;
+      } else {
+        exceedLimitHTML += segment;
+      }
+    }
+    if (exceedLimitHTML) {
+      exceedLimitHTML =
+        '<mark class="compose-highlight-exceeded">' +
+        exceedLimitHTML +
+        '</mark>';
+    }
+    return withinLimitHTML + exceedLimitHTML;
   }
 
   return html

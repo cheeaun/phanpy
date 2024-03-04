@@ -433,7 +433,7 @@ function Settings({ onClose }) {
                 </div>
               </div>
             </li>
-            {!!IMG_ALT_API_URL && (
+            {!!IMG_ALT_API_URL && authenticated && (
               <li>
                 <label>
                   <input

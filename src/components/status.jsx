@@ -711,6 +711,8 @@ function Status({
   }
 
   const actionsRef = useRef();
+  const isPublic = ['public', 'unlisted'].includes(visibility);
+  const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const StatusMenuItems = (
     <>
       {isSizeLarge && (
@@ -916,7 +918,8 @@ function Status({
           <Icon icon="link" />
           <span>Copy</span>
         </MenuItem>
-        {navigator?.share &&
+        {isPublic &&
+          navigator?.share &&
           navigator?.canShare?.({
             url,
           }) && (
@@ -937,7 +940,7 @@ function Status({
             </MenuItem>
           )}
       </div>
-      {isSizeLarge && (
+      {isPublic && isSizeLarge && (
         <MenuItem
           onClick={() => {
             setShowEmbed(true);
@@ -980,7 +983,7 @@ function Status({
           )}
         </MenuItem>
       )}
-      {isSelf && /(public|unlisted|private)/i.test(visibility) && (
+      {isSelf && isPinnable && (
         <MenuItem
           onClick={async () => {
             try {

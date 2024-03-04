@@ -135,7 +135,7 @@ function NavMenu(props) {
             if (Date.now() - buttonClickTS.current < 300) {
               return;
             }
-            setMenuState(undefined);
+            // setMenuState(undefined);
           },
         }}
         portal={{

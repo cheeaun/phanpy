@@ -1,6 +1,7 @@
 import './app.css';
 
 import debounce from 'just-debounce-it';
+import { lazy, Suspense } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -17,14 +18,14 @@ import ComposeButton from './components/compose-button';
 import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
-import Modals from './components/modals';
+// import Modals from './components/modals';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
-import Catchup from './pages/catchup';
+// import Catchup from './pages/catchup';
 import Favourites from './pages/favourites';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
@@ -54,6 +55,9 @@ import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount } from './utils/store-utils';
 import './utils/toast-alert';
+
+const Catchup = lazy(() => import('./pages/catchup'));
+const Modals = lazy(() => import('./components/modals'));
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -382,7 +386,9 @@ function App() {
       )}
       {isLoggedIn && <ComposeButton />}
       {isLoggedIn && <Shortcuts />}
-      <Modals />
+      <Suspense>
+        <Modals />
+      </Suspense>
       {isLoggedIn && <NotificationService />}
       <BackgroundService isLoggedIn={isLoggedIn} />
       {uiState !== 'loading' && <SearchCommand onClose={focusDeck} />}
@@ -458,7 +464,14 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/ft" element={<FollowedHashtags />} />
-          <Route path="/catchup" element={<Catchup />} />
+          <Route
+            path="/catchup"
+            element={
+              <Suspense>
+                <Catchup />
+              </Suspense>
+            }
+          />
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

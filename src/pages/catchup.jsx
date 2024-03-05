@@ -674,7 +674,7 @@ function Catchup() {
               <NavMenu />
               {uiState === 'results' && (
                 <Link to="/catchup" class="button plain">
-                  <Icon icon="history" size="l" />
+                  <Icon icon="history2" size="l" />
                 </Link>
               )}
               {uiState === 'start' && (
@@ -803,7 +803,7 @@ function Catchup() {
                     {prevCatchups.map((pc) => (
                       <li key={pc.id}>
                         <Link to={`/catchup?id=${pc.id}`}>
-                          <Icon icon="history" />{' '}
+                          <Icon icon="history2" />{' '}
                           <span>
                             {formatRange(
                               new Date(pc.startAt),

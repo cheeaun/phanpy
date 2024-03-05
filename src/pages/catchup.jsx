@@ -1050,7 +1050,16 @@ function Catchup() {
                   ].map(
                     (label) =>
                       !!filterCounts[label] && (
-                        <label class="filter-cat" key={label}>
+                        <label
+                          class="filter-cat"
+                          key={label}
+                          title={
+                            (
+                              (filterCounts[label] / posts.length) *
+                              100
+                            ).toFixed(2) + '%'
+                          }
+                        >
                           <input
                             type="radio"
                             name="filter-cat"

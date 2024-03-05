@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
 
@@ -604,6 +605,50 @@ function Catchup() {
   }, [selectedAuthor, authors]);
 
   const [showHelp, setShowHelp] = useState(false);
+
+  const itemsSelector = '.catchup-list > li > a';
+  useHotkeys(
+    'j',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        const nextItem = allItems[activeItemIndex + 1];
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView({
+            block: 'center',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }
+    },
+    {
+      preventDefault: true,
+    },
+  );
 
   return (
     <div

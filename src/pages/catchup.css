@@ -668,6 +668,28 @@
     animation: none;
   }
 
+  &:is(.catchup-group-account, .catchup-selected-author):is(
+      .catchup-filter-original,
+      .catchup-filter-reply
+    )
+    > li {
+    margin-bottom: 0;
+
+    &:first-child ~ li {
+      .post-author:not(:has(.post-reblog-avatar)) {
+        opacity: 0.25;
+
+        @media (min-width: 40em) {
+          opacity: 0;
+        }
+      }
+
+      &.separator + li .post-author {
+        opacity: 1;
+      }
+    }
+  }
+
   .post-peek {
     grid-area: content;
     display: flex;
@@ -955,11 +977,17 @@
 
   .post-stats {
     display: inline-flex;
-    gap: 2px;
+    gap: 4px;
     align-items: center;
 
     &:empty {
       display: none;
+    }
+
+    > span {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
     }
   }
   @media (hover: hover) {
@@ -970,6 +998,63 @@
     .post-line:hover .post-stats {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+  &.catchup-sort-repliesCount {
+    .post-stats {
+      opacity: 1;
+      transform: translateX(0);
+
+      .post-stat-replies {
+        order: 2;
+      }
+
+      > *:not(.post-stat-replies) {
+        opacity: 0;
+      }
+    }
+    @media (hover: hover) {
+      .post-line:hover .post-stats > * {
+        opacity: 1;
+      }
+    }
+  }
+  &.catchup-sort-favouritesCount {
+    .post-stats {
+      opacity: 1;
+      transform: translateX(0);
+
+      .post-stat-likes {
+        order: 2;
+      }
+
+      > *:not(.post-stat-likes) {
+        opacity: 0;
+      }
+    }
+    @media (hover: hover) {
+      .post-line:hover .post-stats > * {
+        opacity: 1;
+      }
+    }
+  }
+  &.catchup-sort-reblogsCount {
+    .post-stats {
+      opacity: 1;
+      transform: translateX(0);
+
+      .post-stat-boosts {
+        order: 2;
+      }
+
+      > *:not(.post-stat-boosts) {
+        opacity: 0;
+      }
+    }
+    @media (hover: hover) {
+      .post-line:hover .post-stats > * {
+        opacity: 1;
+      }
     }
   }
 

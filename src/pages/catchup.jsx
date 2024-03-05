@@ -1176,7 +1176,15 @@ function Catchup() {
                   }
                 </div>
               )}
-              <ul class="catchup-list">
+              <ul
+                class={`catchup-list catchup-filter-${
+                  FILTER_VALUES[selectedFilterCategory] || ''
+                } ${sortBy ? `catchup-sort-${sortBy}` : ''} ${
+                  selectedAuthor && authors[selectedAuthor]
+                    ? `catchup-selected-author`
+                    : ''
+                } ${groupBy ? `catchup-group-${groupBy}` : ''}`}
+              >
                 {sortedFilteredPosts.map((post, i) => {
                   const id = post.reblog?.id || post.id;
                   let showSeparator = false;
@@ -1568,19 +1576,19 @@ function PostStats({ post }) {
   return (
     <span class="post-stats">
       {repliesCount > 0 && (
-        <>
+        <span class="post-stat-replies">
           <Icon icon="comment2" size="s" /> {shortenNumber(repliesCount)}
-        </>
+        </span>
       )}
       {favouritesCount > 0 && (
-        <>
+        <span class="post-stat-likes">
           <Icon icon="heart" size="s" /> {shortenNumber(favouritesCount)}
-        </>
+        </span>
       )}
       {reblogsCount > 0 && (
-        <>
+        <span class="post-stat-boosts">
           <Icon icon="rocket" size="s" /> {shortenNumber(reblogsCount)}
-        </>
+        </span>
       )}
     </span>
   );

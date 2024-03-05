@@ -61,6 +61,22 @@ const RANGES = [
   { label: 'beyond 12 hours', value: 13 },
 ];
 
+const FILTER_LABELS = [
+  'Original',
+  'Replies',
+  'Boosts',
+  'Followed tags',
+  'Groups',
+  'Filtered',
+];
+const FILTER_SORTS = [
+  'createdAt',
+  'repliesCount',
+  'favouritesCount',
+  'reblogsCount',
+  'density',
+];
+const FILTER_GROUPS = [null, 'account'];
 const FILTER_VALUES = {
   Filtered: 'filtered',
   Groups: 'group',
@@ -1040,14 +1056,7 @@ function Catchup() {
                     />
                     All <span class="count">{posts.length}</span>
                   </label>
-                  {[
-                    'Original',
-                    'Replies',
-                    'Boosts',
-                    'Followed tags',
-                    'Groups',
-                    'Filtered',
-                  ].map(
+                  {FILTER_LABELS.map(
                     (label) =>
                       !!filterCounts[label] && (
                         <label
@@ -1135,14 +1144,7 @@ function Catchup() {
                 <div class="catchup-filters">
                   <span class="filter-label">Sort</span>{' '}
                   <fieldset class="radio-field-group">
-                    {[
-                      'createdAt',
-                      'repliesCount',
-                      'favouritesCount',
-                      'reblogsCount',
-                      'density',
-                      // 'account',
-                    ].map((key) => (
+                    {FILTER_SORTS.map((key) => (
                       <label
                         class="filter-sort"
                         key={key}
@@ -1198,7 +1200,7 @@ function Catchup() {
                   </fieldset> */}
                   <span class="filter-label">Group</span>{' '}
                   <fieldset class="radio-field-group">
-                    {[null, 'account'].map((key) => (
+                    {FILTER_GROUPS.map((key) => (
                       <label class="filter-group" key={key || 'none'}>
                         <input
                           type="radio"

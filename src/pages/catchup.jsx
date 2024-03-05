@@ -1134,7 +1134,17 @@ function Catchup() {
                       'density',
                       // 'account',
                     ].map((key) => (
-                      <label class="filter-sort" key={key}>
+                      <label
+                        class="filter-sort"
+                        key={key}
+                        onClick={(e) => {
+                          if (sortBy === key) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+                          }
+                        }}
+                      >
                         <input
                           type="radio"
                           name="filter-sort-cat"
@@ -1148,7 +1158,6 @@ function Catchup() {
                               : 'asc';
                             setSortOrder(order);
                           }}
-                          // disabled={key === 'account' && selectedAuthor}
                         />
                         {
                           {
@@ -1159,10 +1168,11 @@ function Catchup() {
                             density: 'Density',
                           }[key]
                         }
+                        {sortBy === key && (sortOrder === 'asc' ? ' ↑' : ' ↓')}
                       </label>
                     ))}
                   </fieldset>
-                  <fieldset class="radio-field-group">
+                  {/* <fieldset class="radio-field-group">
                     {['asc', 'desc'].map((key) => (
                       <label class="filter-sort" key={key}>
                         <input
@@ -1176,7 +1186,7 @@ function Catchup() {
                         {key === 'asc' ? '↑' : '↓'}
                       </label>
                     ))}
-                  </fieldset>
+                  </fieldset> */}
                   <span class="filter-label">Group</span>{' '}
                   <fieldset class="radio-field-group">
                     {[null, 'account'].map((key) => (

@@ -1210,7 +1210,7 @@ function Catchup() {
                     selectedAuthor && authorCountsList.length > 1 ? (
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain6 small"
                         onClick={() => {
                           setSelectedAuthor(null);
                         }}

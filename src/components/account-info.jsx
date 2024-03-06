@@ -1053,6 +1053,27 @@ function RelatedActions({
                 <MenuDivider />
               </>
             )}
+            <MenuItem
+              onClick={() => {
+                const handle = `@${currentInfo?.acct || acct}`;
+                try {
+                  navigator.clipboard.writeText(handle);
+                  showToast('Handle copied');
+                } catch (e) {
+                  console.error(e);
+                  showToast('Unable to copy handle');
+                }
+              }}
+            >
+              <Icon icon="copy" />
+              <small>
+                Copy handle
+                <br />
+                <span class="more-insignificant">
+                  @{currentInfo?.acct || acct}
+                </span>
+              </small>
+            </MenuItem>
             <MenuItem href={url} target="_blank">
               <Icon icon="external" />
               <small class="menu-double-lines">{niceAccountURL(url)}</small>

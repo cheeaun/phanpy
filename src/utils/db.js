@@ -9,20 +9,20 @@ import {
   set,
 } from 'idb-keyval';
 
-const draftsStore = createStore('drafts-db', 'drafts-store');
-
-// Add additonal `draftsStore` parameter to all methods
-
-const drafts = {
-  set: (key, val) => set(key, val, draftsStore),
-  get: (key) => get(key, draftsStore),
-  getMany: (keys) => getMany(keys, draftsStore),
-  del: (key) => del(key, draftsStore),
-  delMany: (keys) => delMany(keys, draftsStore),
-  clear: () => clear(draftsStore),
-  keys: () => keys(draftsStore),
-};
+function initDB(dbName, storeName) {
+  const store = createStore(dbName, storeName);
+  return {
+    set: (key, val) => set(key, val, store),
+    get: (key) => get(key, store),
+    getMany: (keys) => getMany(keys, store),
+    del: (key) => del(key, store),
+    delMany: (keys) => delMany(keys, store),
+    clear: () => clear(store),
+    keys: () => keys(store),
+  };
+}
 
 export default {
-  drafts,
+  drafts: initDB('drafts-db', 'drafts-store'),
+  catchup: initDB('catchup-db', 'catchup-store'),
 };

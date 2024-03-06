@@ -10,6 +10,7 @@ import {
 } from '@szhsin/react-menu';
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import { shallowEqual } from 'fast-equals';
+import prettify from 'html-prettify';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -451,6 +452,7 @@ function Status({
   ]);
 
   const [showEdited, setShowEdited] = useState(false);
+  const [showEmbed, setShowEmbed] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -559,12 +561,11 @@ function Status({
       if (reblogged) {
         const newStatus = await masto.v1.statuses.$select(id).unreblog();
         saveStatus(newStatus, instance);
-        return true;
       } else {
         const newStatus = await masto.v1.statuses.$select(id).reblog();
         saveStatus(newStatus, instance);
-        return true;
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
@@ -575,7 +576,8 @@ function Status({
 
   const favouriteStatus = async () => {
     if (!sameInstance || !authenticated) {
-      return alert(unauthInteractionErrorMessage);
+      alert(unauthInteractionErrorMessage);
+      return false;
     }
     try {
       // Optimistic
@@ -591,16 +593,31 @@ function Status({
         const newStatus = await masto.v1.statuses.$select(id).favourite();
         saveStatus(newStatus, instance);
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
       states.statuses[sKey] = status;
+      return false;
     }
+  };
+  const favouriteStatusNotify = async () => {
+    try {
+      const done = await favouriteStatus();
+      if (!isSizeLarge && done) {
+        showToast(
+          favourited
+            ? `Unliked @${username || acct}'s post`
+            : `Liked @${username || acct}'s post`,
+        );
+      }
+    } catch (e) {}
   };
 
   const bookmarkStatus = async () => {
     if (!sameInstance || !authenticated) {
-      return alert(unauthInteractionErrorMessage);
+      alert(unauthInteractionErrorMessage);
+      return false;
     }
     try {
       // Optimistic
@@ -615,11 +632,25 @@ function Status({
         const newStatus = await masto.v1.statuses.$select(id).bookmark();
         saveStatus(newStatus, instance);
       }
+      return true;
     } catch (e) {
       console.error(e);
       // Revert optimistism
       states.statuses[sKey] = status;
+      return false;
     }
+  };
+  const bookmarkStatusNotify = async () => {
+    try {
+      const done = await bookmarkStatus();
+      if (!isSizeLarge && done) {
+        showToast(
+          bookmarked
+            ? `Unbookmarked @${username || acct}'s post`
+            : `Bookmarked @${username || acct}'s post`,
+        );
+      }
+    } catch (e) {}
   };
 
   const differentLanguage =
@@ -680,6 +711,8 @@ function Status({
   }
 
   const actionsRef = useRef();
+  const isPublic = ['public', 'unlisted'].includes(visibility);
+  const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const StatusMenuItems = (
     <>
       {isSizeLarge && (
@@ -752,18 +785,7 @@ function Status({
               </span>
             </MenuConfirm>
             <MenuItem
-              onClick={() => {
-                try {
-                  favouriteStatus();
-                  if (!isSizeLarge) {
-                    showToast(
-                      favourited
-                        ? `Unliked @${username || acct}'s post`
-                        : `Liked @${username || acct}'s post`,
-                    );
-                  }
-                } catch (e) {}
-              }}
+              onClick={favouriteStatusNotify}
               className={`menu-favourite ${favourited ? 'checked' : ''}`}
             >
               <Icon icon="heart" />
@@ -776,18 +798,7 @@ function Status({
               </span>
             </MenuItem>
             <MenuItem
-              onClick={() => {
-                try {
-                  bookmarkStatus();
-                  if (!isSizeLarge) {
-                    showToast(
-                      bookmarked
-                        ? `Unbookmarked @${username || acct}'s post`
-                        : `Bookmarked @${username || acct}'s post`,
-                    );
-                  }
-                } catch (e) {}
-              }}
+              onClick={bookmarkStatusNotify}
               className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
             >
               <Icon icon="bookmark" />
@@ -907,7 +918,8 @@ function Status({
           <Icon icon="link" />
           <span>Copy</span>
         </MenuItem>
-        {navigator?.share &&
+        {isPublic &&
+          navigator?.share &&
           navigator?.canShare?.({
             url,
           }) && (
@@ -928,6 +940,16 @@ function Status({
             </MenuItem>
           )}
       </div>
+      {isPublic && isSizeLarge && (
+        <MenuItem
+          onClick={() => {
+            setShowEmbed(true);
+          }}
+        >
+          <Icon icon="code" />
+          <span>Embed</span>
+        </MenuItem>
+      )}
       {(isSelf || mentionSelf) && <MenuDivider />}
       {(isSelf || mentionSelf) && (
         <MenuItem
@@ -961,7 +983,7 @@ function Status({
           )}
         </MenuItem>
       )}
-      {isSelf && /(public|unlisted|private)/i.test(visibility) && (
+      {isSelf && isPinnable && (
         <MenuItem
           onClick={async () => {
             try {
@@ -1040,6 +1062,23 @@ function Status({
           )}
         </div>
       )}
+      {!isSelf && isSizeLarge && (
+        <>
+          <MenuDivider />
+          <MenuItem
+            className="danger"
+            onClick={() => {
+              states.showReportModal = {
+                account: status.account,
+                post: status,
+              };
+            }}
+          >
+            <Icon icon="flag" />
+            <span>Report post…</span>
+          </MenuItem>
+        </>
+      )}
     </>
   );
 
@@ -1061,7 +1100,7 @@ function Status({
           const { clientX, clientY } = e.touches?.[0] || e;
           // link detection copied from onContextMenu because here it works
           const link = e.target.closest('a');
-          if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+          if (link && statusRef.current.contains(link)) return;
           e.preventDefault();
           setContextMenuProps({
             anchorPoint: {
@@ -1085,42 +1124,12 @@ function Status({
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
   });
-  const fRef = useHotkeys(
-    'f, l',
-    () => {
-      try {
-        favouriteStatus();
-        if (!isSizeLarge) {
-          showToast(
-            favourited
-              ? `Unliked @${username || acct}'s post`
-              : `Liked @${username || acct}'s post`,
-          );
-        }
-      } catch (e) {}
-    },
-    {
-      enabled: hotkeysEnabled,
-    },
-  );
-  const dRef = useHotkeys(
-    'd',
-    () => {
-      try {
-        bookmarkStatus();
-        if (!isSizeLarge) {
-          showToast(
-            bookmarked
-              ? `Unbookmarked @${username || acct}'s post`
-              : `Bookmarked @${username || acct}'s post`,
-          );
-        }
-      } catch (e) {}
-    },
-    {
-      enabled: hotkeysEnabled,
-    },
-  );
+  const fRef = useHotkeys('f, l', favouriteStatusNotify, {
+    enabled: hotkeysEnabled,
+  });
+  const dRef = useHotkeys('d', bookmarkStatusNotify, {
+    enabled: hotkeysEnabled,
+  });
   const bRef = useHotkeys(
     'shift+b',
     () => {
@@ -1337,7 +1346,7 @@ function Status({
           if (e.metaKey) return;
           // console.log('context menu', e);
           const link = e.target.closest('a');
-          if (link && /^https?:\/\//.test(link.getAttribute('href'))) return;
+          if (link && statusRef.current.contains(link)) return;
 
           // If there's selected text, don't show custom context menu
           const selection = window.getSelection?.();
@@ -1420,16 +1429,7 @@ function Status({
                 icon="heart"
                 iconSize="m"
                 count={favouritesCount}
-                onClick={() => {
-                  try {
-                    favouriteStatus();
-                    showToast(
-                      favourited
-                        ? `Unliked @${username || acct}'s post`
-                        : `Liked @${username || acct}'s post`,
-                    );
-                  } catch (e) {}
-                }}
+                onClick={favouriteStatusNotify}
               />
               <button
                 type="button"
@@ -1798,6 +1798,7 @@ function Status({
                       media={media}
                       autoAnimate={isSizeLarge}
                       showCaption={mediaAttachments.length === 1}
+                      allowLongerCaption={!content}
                       lang={language}
                       altIndex={
                         showMultipleMediaCaptions &&
@@ -1987,7 +1988,6 @@ function Status({
         </div>
         {!!showEdited && (
           <Modal
-            class="light"
             onClick={(e) => {
               if (e.target === e.currentTarget) {
                 setShowEdited(false);
@@ -2004,6 +2004,23 @@ function Status({
               onClose={() => {
                 setShowEdited(false);
                 statusRef.current?.focus();
+              }}
+            />
+          </Modal>
+        )}
+        {!!showEmbed && (
+          <Modal
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowEmbed(false);
+              }
+            }}
+          >
+            <EmbedModal
+              post={status}
+              instance={instance}
+              onClose={() => {
+                setShowEmbed(false);
               }}
             />
           </Modal>
@@ -2195,7 +2212,11 @@ function Card({ card, selfReferential, instance }) {
         // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
         const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
         if (videoID) {
-          return <lite-youtube videoid={videoID} nocookie></lite-youtube>;
+          return (
+            <a class="card video" onClick={handleClick}>
+              <lite-youtube videoid={videoID} nocookie></lite-youtube>
+            </a>
+          );
         }
       }
       // return (
@@ -2303,6 +2324,360 @@ function EditedAtModal({
             })}
           </ol>
         )}
+      </main>
+    </div>
+  );
+}
+
+function generateHTMLCode(post, instance, level = 0) {
+  const {
+    account: {
+      url: accountURL,
+      displayName,
+      acct,
+      username,
+      emojis: accountEmojis,
+      bot,
+      group,
+    },
+    id,
+    poll,
+    spoilerText,
+    language,
+    editedAt,
+    createdAt,
+    content,
+    mediaAttachments,
+    url,
+    emojis,
+  } = post;
+
+  const sKey = statusKey(id, instance);
+  const quotes = states.statusQuotes[sKey] || [];
+  const uniqueQuotes = quotes.filter(
+    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
+  );
+  const quoteStatusesHTML =
+    uniqueQuotes.length && level <= 2
+      ? uniqueQuotes
+          .map((quote) => {
+            const { id, instance } = quote;
+            const sKey = statusKey(id, instance);
+            const s = states.statuses[sKey];
+            if (s) {
+              return generateHTMLCode(s, instance, ++level);
+            }
+          })
+          .join('')
+      : '';
+
+  const createdAtDate = new Date(createdAt);
+  // const editedAtDate = editedAt && new Date(editedAt);
+
+  const contentHTML =
+    emojifyText(content, emojis) +
+    '\n' +
+    quoteStatusesHTML +
+    '\n' +
+    (poll?.options?.length
+      ? `
+        <p>📊:</p>
+        <ul>
+        ${poll.options
+          .map(
+            (option) => `
+              <li>
+                ${option.title}
+                ${option.votesCount >= 0 ? ` (${option.votesCount})` : ''}
+              </li>
+            `,
+          )
+          .join('')}
+        </ul>`
+      : '') +
+    (mediaAttachments.length > 0
+      ? '\n' +
+        mediaAttachments
+          .map((media) => {
+            const {
+              description,
+              meta,
+              previewRemoteUrl,
+              previewUrl,
+              remoteUrl,
+              url,
+              type,
+            } = media;
+            const { original = {}, small } = meta || {};
+            const width = small?.width || original?.width;
+            const height = small?.height || original?.height;
+
+            // Prefer remote over original
+            const sourceMediaURL = remoteUrl || url;
+            const previewMediaURL = previewRemoteUrl || previewUrl;
+            const mediaURL = previewMediaURL || sourceMediaURL;
+
+            const sourceMediaURLObj = sourceMediaURL
+              ? new URL(sourceMediaURL)
+              : null;
+            const isVideoMaybe =
+              type === 'unknown' &&
+              sourceMediaURLObj &&
+              /\.(mp4|m4r|m4v|mov|webm)$/i.test(sourceMediaURLObj.pathname);
+            const isAudioMaybe =
+              type === 'unknown' &&
+              sourceMediaURLObj &&
+              /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(sourceMediaURLObj.pathname);
+            const isImage =
+              type === 'image' ||
+              (type === 'unknown' &&
+                previewMediaURL &&
+                !isVideoMaybe &&
+                !isAudioMaybe);
+            const isVideo = type === 'gifv' || type === 'video' || isVideoMaybe;
+            const isAudio = type === 'audio' || isAudioMaybe;
+
+            let mediaHTML = '';
+            if (isImage) {
+              mediaHTML = `<img src="${mediaURL}" width="${width}" height="${height}" alt="${description}" loading="lazy" />`;
+            } else if (isVideo) {
+              mediaHTML = `
+                <video src="${sourceMediaURL}" width="${width}" height="${height}" controls preload="auto" poster="${previewMediaURL}" loading="lazy"></video>
+                ${description ? `<figcaption>${description}</figcaption>` : ''}
+              `;
+            } else if (isAudio) {
+              mediaHTML = `
+                <audio src="${sourceMediaURL}" controls preload="auto"></audio>
+                ${description ? `<figcaption>${description}</figcaption>` : ''}
+              `;
+            } else {
+              mediaHTML = `
+                <a href="${sourceMediaURL}">📄 ${
+                description || sourceMediaURL
+              }</a>
+              `;
+            }
+
+            return `<figure>${mediaHTML}</figure>`;
+          })
+          .join('\n')
+      : '');
+
+  const htmlCode = `
+    <blockquote lang="${language}" cite="${url}">
+      ${
+        spoilerText
+          ? `
+            <details>
+              <summary>${spoilerText}</summary>
+              ${contentHTML}
+            </details>
+          `
+          : contentHTML
+      }
+      <footer>
+        — ${emojifyText(
+          displayName,
+          accountEmojis,
+        )} (@${acct}) <a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>
+      </footer>
+    </blockquote>
+  `;
+
+  return prettify(htmlCode);
+}
+
+function EmbedModal({ post, instance, onClose }) {
+  const {
+    account: {
+      url: accountURL,
+      displayName,
+      username,
+      emojis: accountEmojis,
+      bot,
+      group,
+    },
+    id,
+    poll,
+    spoilerText,
+    language,
+    editedAt,
+    createdAt,
+    content,
+    mediaAttachments,
+    url,
+    emojis,
+  } = post;
+
+  const htmlCode = generateHTMLCode(post, instance);
+  return (
+    <div id="embed-post" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <h2>Embed post</h2>
+      </header>
+      <main tabIndex="-1">
+        <h3>HTML Code</h3>
+        <textarea
+          class="embed-code"
+          readonly
+          onClick={(e) => {
+            e.target.select();
+          }}
+        >
+          {htmlCode}
+        </textarea>
+        <button
+          type="button"
+          onClick={() => {
+            try {
+              navigator.clipboard.writeText(htmlCode);
+              showToast('HTML code copied');
+            } catch (e) {
+              console.error(e);
+              showToast('Unable to copy HTML code');
+            }
+          }}
+        >
+          <Icon icon="clipboard" /> <span>Copy</span>
+        </button>
+        {!!mediaAttachments?.length && (
+          <section>
+            <p>Media attachments:</p>
+            <ol class="links-list">
+              {mediaAttachments.map((media) => {
+                return (
+                  <li key={media.id}>
+                    <a
+                      href={media.remoteUrl || media.url}
+                      target="_blank"
+                      download
+                    >
+                      {media.remoteUrl || media.url}
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        )}
+        {!!accountEmojis?.length && (
+          <section>
+            <p>Account Emojis:</p>
+            <ul class="links-list">
+              {accountEmojis.map((emoji) => {
+                return (
+                  <li key={emoji.shortcode}>
+                    <picture>
+                      <source
+                        srcset={emoji.staticUrl}
+                        media="(prefers-reduced-motion: reduce)"
+                      ></source>
+                      <img
+                        class="shortcode-emoji emoji"
+                        src={emoji.url}
+                        alt={`:${emoji.shortcode}:`}
+                        width="16"
+                        height="16"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>{' '}
+                    <code>:{emoji.shortcode}:</code> (
+                    <a href={emoji.url} target="_blank" download>
+                      url
+                    </a>
+                    )
+                    {emoji.staticUrl ? (
+                      <>
+                        {' '}
+                        (
+                        <a href={emoji.staticUrl} target="_blank" download>
+                          static
+                        </a>
+                        )
+                      </>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        )}
+        {!!emojis?.length && (
+          <section>
+            <p>Emojis:</p>
+            <ul class="links-list">
+              {emojis.map((emoji) => {
+                return (
+                  <li key={emoji.shortcode}>
+                    <picture>
+                      <source
+                        srcset={emoji.staticUrl}
+                        media="(prefers-reduced-motion: reduce)"
+                      ></source>
+                      <img
+                        class="shortcode-emoji emoji"
+                        src={emoji.url}
+                        alt={`:${emoji.shortcode}:`}
+                        width="16"
+                        height="16"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>{' '}
+                    <code>:{emoji.shortcode}:</code> (
+                    <a href={emoji.url} target="_blank" download>
+                      url
+                    </a>
+                    )
+                    {emoji.staticUrl ? (
+                      <>
+                        {' '}
+                        (
+                        <a href={emoji.staticUrl} target="_blank" download>
+                          static
+                        </a>
+                        )
+                      </>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        )}
+        <section>
+          <small>
+            <p>Notes:</p>
+            <ul>
+              <li>
+                This is static, unstyled and scriptless. You may need to apply
+                your own styles and edit as needed.
+              </li>
+              <li>
+                Polls are not interactive, becomes a list with vote counts.
+              </li>
+              <li>
+                Media attachments can be images, videos, audios or any file
+                types.
+              </li>
+              <li>Post could be edited or deleted later.</li>
+            </ul>
+          </small>
+        </section>
+        <h3>Preview</h3>
+        <output
+          class="embed-preview"
+          dangerouslySetInnerHTML={{ __html: htmlCode }}
+        />
+        <p>
+          <small>Note: This preview is lightly styled.</small>
+        </p>
       </main>
     </div>
   );
@@ -2420,13 +2795,21 @@ function StatusCompact({ sKey }) {
     visibility,
     content,
     language,
+    filtered,
   } = status;
   if (sensitive || spoilerText) return null;
   if (!content) return null;
 
   const srKey = statusKey(id, instance);
-
   const statusPeekText = statusPeek(status);
+
+  const filterContext = useContext(FilterContext);
+  const filterInfo = isFiltered(filtered, filterContext);
+
+  if (filterInfo?.action === 'hide') return null;
+
+  const filterTitleStr = filterInfo?.titlesStr || '';
+
   return (
     <article
       class={`status compact-reply ${
@@ -2442,7 +2825,14 @@ function StatusCompact({ sKey }) {
         lang={language}
         dir="auto"
       >
-        {statusPeekText}
+        {filterInfo ? (
+          <b class="status-filtered-badge badge-meta" title={filterTitleStr}>
+            <span>Filtered</span>
+            <span>{filterTitleStr}</span>
+          </b>
+        ) : (
+          <span>{statusPeekText}</span>
+        )}
       </div>
     </article>
   );
@@ -2564,7 +2954,6 @@ function FilteredStatus({
       </article>
       {!!showPeek && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowPeek(false);

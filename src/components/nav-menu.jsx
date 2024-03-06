@@ -1,6 +1,11 @@
 import './nav-menu.css';
 
-import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  MenuDivider,
+  MenuItem,
+  SubMenu,
+} from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
@@ -130,7 +135,7 @@ function NavMenu(props) {
             if (Date.now() - buttonClickTS.current < 300) {
               return;
             }
-            setMenuState(undefined);
+            // setMenuState(undefined);
           },
         }}
         portal={{
@@ -169,13 +174,17 @@ function NavMenu(props) {
           <MenuLink to="/">
             <Icon icon="home" size="l" /> <span>Home</span>
           </MenuLink>
-          {authenticated && (
+          {authenticated ? (
             <>
               {showFollowing && (
                 <MenuLink to="/following">
                   <Icon icon="following" size="l" /> <span>Following</span>
                 </MenuLink>
               )}
+              <MenuLink to="/catchup">
+                <Icon icon="history2" size="l" />
+                <span>Catch-up</span>
+              </MenuLink>
               <MenuLink to="/mentions">
                 <Icon icon="at" size="l" /> <span>Mentions</span>
               </MenuLink>
@@ -189,43 +198,63 @@ function NavMenu(props) {
                 )}
               </MenuLink>
               <MenuDivider />
-              <MenuLink to="/l">
-                <Icon icon="list" size="l" /> <span>Lists</span>
-              </MenuLink>
-              <MenuLink to="/ft">
-                <Icon icon="hashtag" size="l" /> <span>Followed Hashtags</span>
-              </MenuLink>
-              <MenuLink to="/b">
-                <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
-              </MenuLink>
-              <MenuLink to="/f">
-                <Icon icon="heart" size="l" /> <span>Likes</span>
-              </MenuLink>
-            </>
-          )}
-          <MenuDivider />
-          <MenuLink to={`/search`}>
-            <Icon icon="search" size="l" /> <span>Search</span>
-          </MenuLink>
-          <MenuLink to={`/${instance}/p/l`}>
-            <Icon icon="building" size="l" /> <span>Local</span>
-          </MenuLink>
-          <MenuLink to={`/${instance}/p`}>
-            <Icon icon="earth" size="l" /> <span>Federated</span>
-          </MenuLink>
-          <MenuLink to={`/${instance}/trending`}>
-            <Icon icon="chart" size="l" /> <span>Trending</span>
-          </MenuLink>
-        </section>
-        <section>
-          {authenticated ? (
-            <>
-              <MenuDivider />
               {currentAccount?.info?.id && (
                 <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
                   <Icon icon="user" size="l" /> <span>Profile</span>
                 </MenuLink>
               )}
+              <MenuLink to="/l">
+                <Icon icon="list" size="l" /> <span>Lists</span>
+              </MenuLink>
+              <MenuLink to="/b">
+                <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+              </MenuLink>
+              <SubMenu
+                overflow="auto"
+                gap={-8}
+                label={
+                  <>
+                    <Icon icon="more" size="l" />
+                    <span class="menu-grow">More…</span>
+                    <Icon icon="chevron-right" />
+                  </>
+                }
+              >
+                <MenuLink to="/f">
+                  <Icon icon="heart" size="l" /> <span>Likes</span>
+                </MenuLink>
+                <MenuLink to="/ft">
+                  <Icon icon="hashtag" size="l" />{' '}
+                  <span>Followed Hashtags</span>
+                </MenuLink>
+                <MenuDivider />
+                <MenuItem
+                  onClick={() => {
+                    states.showGenericAccounts = {
+                      id: 'mute',
+                      heading: 'Muted users',
+                      fetchAccounts: fetchMutes,
+                      excludeRelationshipAttrs: ['muting'],
+                    };
+                  }}
+                >
+                  <Icon icon="mute" size="l" /> Muted users&hellip;
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    states.showGenericAccounts = {
+                      id: 'block',
+                      heading: 'Blocked users',
+                      fetchAccounts: fetchBlocks,
+                      excludeRelationshipAttrs: ['blocking'],
+                    };
+                  }}
+                >
+                  <Icon icon="block" size="l" />
+                  Blocked users&hellip;
+                </MenuItem>{' '}
+              </SubMenu>
+              <MenuDivider />
               <MenuItem
                 onClick={() => {
                   states.showAccounts = true;
@@ -233,31 +262,32 @@ function NavMenu(props) {
               >
                 <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
               </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  states.showGenericAccounts = {
-                    id: 'mute',
-                    heading: 'Muted users',
-                    fetchAccounts: fetchMutes,
-                    excludeRelationshipAttrs: ['muting'],
-                  };
-                }}
-              >
-                <Icon icon="mute" size="l" /> Muted users&hellip;
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  states.showGenericAccounts = {
-                    id: 'block',
-                    heading: 'Blocked users',
-                    fetchAccounts: fetchBlocks,
-                    excludeRelationshipAttrs: ['blocking'],
-                  };
-                }}
-              >
-                <Icon icon="block" size="l" />
-                Blocked users&hellip;
-              </MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuDivider />
+              <MenuLink to="/login">
+                <Icon icon="user" size="l" /> <span>Log in</span>
+              </MenuLink>
+            </>
+          )}
+        </section>
+        <section>
+          <MenuDivider />
+          <MenuLink to={`/search`}>
+            <Icon icon="search" size="l" /> <span>Search</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/trending`}>
+            <Icon icon="chart" size="l" /> <span>Trending</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/p/l`}>
+            <Icon icon="building" size="l" /> <span>Local</span>
+          </MenuLink>
+          <MenuLink to={`/${instance}/p`}>
+            <Icon icon="earth" size="l" /> <span>Federated</span>
+          </MenuLink>
+          {authenticated ? (
+            <>
               <MenuDivider className="divider-grow" />
               <MenuItem
                 onClick={() => {
@@ -286,9 +316,6 @@ function NavMenu(props) {
           ) : (
             <>
               <MenuDivider />
-              <MenuLink to="/login">
-                <Icon icon="user" size="l" /> <span>Log in</span>
-              </MenuLink>
               <MenuItem
                 onClick={() => {
                   states.showSettings = true;

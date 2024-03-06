@@ -15,6 +15,7 @@ import GenericAccounts from './generic-accounts';
 import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
+import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
 subscribe(states, (changes) => {
@@ -34,7 +35,7 @@ export default function Modals() {
   return (
     <>
       {!!snapStates.showCompose && (
-        <Modal>
+        <Modal class="solid">
           <Compose
             replyToStatus={
               typeof snapStates.showCompose !== 'boolean'
@@ -108,7 +109,6 @@ export default function Modals() {
       )}
       {!!snapStates.showAccount && (
         <Modal
-          class="light"
           onClose={() => {
             states.showAccount = false;
           }}
@@ -159,7 +159,6 @@ export default function Modals() {
       )}
       {!!snapStates.showShortcutsSettings && (
         <Modal
-          class="light"
           onClose={() => {
             states.showShortcutsSettings = false;
           }}
@@ -171,7 +170,6 @@ export default function Modals() {
       )}
       {!!snapStates.showGenericAccounts && (
         <Modal
-          class="light"
           onClose={() => {
             states.showGenericAccounts = false;
           }}
@@ -187,7 +185,6 @@ export default function Modals() {
       )}
       {!!snapStates.showMediaAlt && (
         <Modal
-          class="light"
           onClose={(e) => {
             states.showMediaAlt = false;
           }}
@@ -203,6 +200,7 @@ export default function Modals() {
       )}
       {!!snapStates.showEmbedModal && (
         <Modal
+          class="solid"
           onClose={() => {
             states.showEmbedModal = false;
           }}
@@ -214,6 +212,21 @@ export default function Modals() {
             height={snapStates.showEmbedModal.height}
             onClose={() => {
               states.showEmbedModal = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showReportModal && (
+        <Modal
+          onClose={() => {
+            states.showReportModal = false;
+          }}
+        >
+          <ReportModal
+            account={snapStates.showReportModal.account}
+            post={snapStates.showReportModal.post}
+            onClose={() => {
+              states.showReportModal = false;
             }}
           />
         </Modal>

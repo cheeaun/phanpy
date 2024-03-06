@@ -153,6 +153,15 @@
 }
 #import-export-container section p {
   margin: 8px 0;
+
+  &.field-button {
+    display: flex;
+    gap: 8px;
+
+    button {
+      flex-shrink: 0;
+    }
+  }
 }
 #import-export-container section details > summary {
   cursor: pointer;
@@ -181,4 +190,15 @@
   color: var(--text-insignificant-color);
   font-size: 90%;
   flex-shrink: 0;
+}
+
+#import-export-container {
+  footer {
+    font-size: 90%;
+    color: var(--text-insignificant-color);
+
+    .icon {
+      vertical-align: text-bottom;
+    }
+  }
 }

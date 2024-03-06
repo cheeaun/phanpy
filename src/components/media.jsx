@@ -54,6 +54,7 @@ const AltBadge = (props) => {
 };
 
 const MEDIA_CAPTION_LIMIT = 140;
+const MEDIA_CAPTION_LIMIT_LONGER = 280;
 export const isMediaCaptionLong = mem((caption) =>
   caption?.length
     ? caption.length > MEDIA_CAPTION_LIMIT ||
@@ -69,6 +70,7 @@ function Media({
   showOriginal,
   autoAnimate,
   showCaption,
+  allowLongerCaption,
   altIndex,
   onClick = () => {},
 }) {
@@ -198,8 +200,15 @@ function Media({
         };
 
   const longDesc = isMediaCaptionLong(description);
-  const showInlineDesc =
+  let showInlineDesc =
     !!showCaption && !showOriginal && !!description && !longDesc;
+  if (
+    allowLongerCaption &&
+    !showInlineDesc &&
+    description?.length <= MEDIA_CAPTION_LIMIT_LONGER
+  ) {
+    showInlineDesc = true;
+  }
   const Figure = !showInlineDesc
     ? Fragment
     : (props) => {

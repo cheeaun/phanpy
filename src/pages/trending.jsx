@@ -1,4 +1,4 @@
-import './trending.css';
+import '../components/links-bar.css';
 
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
@@ -67,7 +67,7 @@ function Trending({ columnMode, ...props }) {
 
       // Get links
       try {
-        const { value } = await fetchLinks(masto);
+        const { value } = await fetchLinks(masto, instance);
         // 4 types available: link, photo, video, rich
         // Only want links for now
         const links = value?.filter?.((link) => link.type === 'link');

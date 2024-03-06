@@ -143,7 +143,6 @@ function List(props) {
       />
       {showListAddEditModal && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowListAddEditModal(false);
@@ -167,7 +166,6 @@ function List(props) {
       )}
       {showManageMembersModal && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowManageMembersModal(false);

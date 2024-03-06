@@ -1,0 +1,196 @@
+.report-modal-container {
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 40em;
+  background-color: var(--bg-color);
+  box-shadow: 0 16px 32px -8px var(--drop-shadow-color);
+  overflow-y: auto;
+  animation: slide-up-smooth 0.3s ease-in-out;
+  position: relative;
+
+  @media (min-width: 40em) {
+    max-height: calc(100% - 32px);
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .top-controls {
+    position: sticky;
+    top: var(--sai-top, 0);
+    z-index: 1;
+    background-color: var(--bg-blur-color);
+    backdrop-filter: blur(16px);
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    pointer-events: auto;
+    align-items: center;
+
+    h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  main {
+    padding: 0 16px 16px;
+    /* display: flex;
+    flex-direction: column;
+    gap: 16px; */
+  }
+
+  form {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* gap: 16px; */
+    text-wrap: pretty;
+
+    input {
+      margin-inline: 0;
+    }
+  }
+
+  .report-preview {
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    border: 2px dashed var(--red-color);
+    box-shadow: inset 0 0 16px -4px var(--red-bg-color);
+    overflow: auto;
+    max-height: 33vh;
+
+    .status {
+      font-size: 90%;
+      user-select: none;
+      pointer-events: none;
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+      filter: grayscale(0.5);
+    }
+
+    .account-block {
+      margin: 16px;
+      user-select: none;
+      pointer-events: none;
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+      filter: grayscale(0.5);
+    }
+  }
+
+  .rubber-stamp {
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    right: 32px;
+    margin-top: -48px;
+    animation: rubber-stamp 0.3s ease-in both;
+    position: absolute;
+    font-weight: bold;
+    color: var(--red-color);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    font-size: 2em;
+    line-height: 1;
+    padding: 0.1em;
+    border: 0.15em solid var(--red-color);
+    border-radius: 0.3em;
+    background-color: var(--bg-blur-color);
+    text-align: center;
+    /* Noise pattern - https://css-tricks.com/making-static-noise-from-a-weird-css-gradient-bug/ */
+    mask-image: repeating-conic-gradient(
+      #000 0 0.01%,
+      rgba(0, 0, 0, 0.45) 0 0.02%
+    );
+
+    small {
+      display: block;
+      font-size: 11px;
+    }
+  }
+
+  p {
+    margin-block: 0.5em;
+  }
+
+  section {
+    label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 8px;
+
+      &:has(:checked) {
+        .insignificant {
+          color: var(--text-color);
+        }
+      }
+    }
+    > label:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .report-categories {
+    label {
+      align-items: flex-start;
+    }
+
+    .report-rules {
+      margin-left: 1.75em;
+    }
+  }
+
+  .report-comment {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-top: 2em;
+    flex-wrap: wrap;
+
+    p {
+      margin: 0;
+      padding: 8px 0 0;
+      flex-shrink: 0;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+
+    textarea {
+      flex-grow: 1;
+      resize: vertical;
+    }
+  }
+
+  footer {
+    margin-top: 2em;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    button {
+      border-radius: 8px !important;
+      align-self: stretch;
+    }
+  }
+}
+
+@keyframes rubber-stamp {
+  0% {
+    transform: rotate(-20deg) scale(5);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(-20deg) scale(1);
+    opacity: 1;
+  }
+}

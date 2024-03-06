@@ -144,7 +144,6 @@ export default memo(function NotificationService() {
     const { id, account, notification, sameInstance } = showNotificationSheet;
     return (
       <Modal
-        class="light"
         onClick={(e) => {
           if (e.target === e.currentTarget) {
             onClose();

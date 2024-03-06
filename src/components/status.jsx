@@ -2568,7 +2568,7 @@ function EmbedModal({ post, instance, onClose }) {
         {!!accountEmojis?.length && (
           <section>
             <p>Account Emojis:</p>
-            <ul class="links-list">
+            <ul>
               {accountEmojis.map((emoji) => {
                 return (
                   <li key={emoji.shortcode}>
@@ -2611,7 +2611,7 @@ function EmbedModal({ post, instance, onClose }) {
         {!!emojis?.length && (
           <section>
             <p>Emojis:</p>
-            <ul class="links-list">
+            <ul>
               {emojis.map((emoji) => {
                 return (
                   <li key={emoji.shortcode}>

@@ -343,7 +343,7 @@ function AccountInfo({
   return (
     <div
       tabIndex="-1"
-      class={`account-container  ${uiState === 'loading' ? 'skeleton' : ''}`}
+      class={`account-container ${uiState === 'loading' ? 'skeleton' : ''}`}
       style={{
         '--header-color-1': headerCornerColors[0],
         '--header-color-2': headerCornerColors[1],
@@ -1053,6 +1053,27 @@ function RelatedActions({
                 <MenuDivider />
               </>
             )}
+            <MenuItem
+              onClick={() => {
+                const handle = `@${currentInfo?.acct || acct}`;
+                try {
+                  navigator.clipboard.writeText(handle);
+                  showToast('Handle copied');
+                } catch (e) {
+                  console.error(e);
+                  showToast('Unable to copy handle');
+                }
+              }}
+            >
+              <Icon icon="copy" />
+              <small>
+                Copy handle
+                <br />
+                <span class="more-insignificant">
+                  @{currentInfo?.acct || acct}
+                </span>
+              </small>
+            </MenuItem>
             <MenuItem href={url} target="_blank">
               <Icon icon="external" />
               <small class="menu-double-lines">{niceAccountURL(url)}</small>
@@ -1124,6 +1145,7 @@ function RelatedActions({
                   </MenuItem>
                 ) : (
                   <SubMenu
+                    menuClassName="menu-blur"
                     openTrigger="clickOnly"
                     direction="bottom"
                     overflow="auto"
@@ -1238,10 +1260,38 @@ function RelatedActions({
                     </>
                   )}
                 </MenuConfirm>
-                {/* <MenuItem>
-                <Icon icon="flag" />
-                <span>Report @{username}…</span>
-              </MenuItem> */}
+                <MenuItem
+                  className="danger"
+                  onClick={() => {
+                    states.showReportModal = {
+                      account: currentInfo || info,
+                    };
+                  }}
+                >
+                  <Icon icon="flag" />
+                  <span>Report @{username}…</span>
+                </MenuItem>
+              </>
+            )}
+            {import.meta.env.DEV && currentAuthenticated && isSelf && (
+              <>
+                <MenuDivider />
+                <MenuItem
+                  onClick={async () => {
+                    const relationships =
+                      await currentMasto.v1.accounts.relationships.fetch({
+                        id: [accountID.current],
+                      });
+                    const { note } = relationships[0] || {};
+                    if (note) {
+                      alert(note);
+                      console.log(note);
+                    }
+                  }}
+                >
+                  <Icon icon="pencil" />
+                  <span>See note</span>
+                </MenuItem>
               </>
             )}
           </Menu2>
@@ -1324,7 +1374,6 @@ function RelatedActions({
       </div>
       {!!showTranslatedBio && (
         <Modal
-          class="light"
           onClose={() => {
             setShowTranslatedBio(false);
           }}
@@ -1338,7 +1387,6 @@ function RelatedActions({
       )}
       {!!showAddRemoveLists && (
         <Modal
-          class="light"
           onClose={() => {
             setShowAddRemoveLists(false);
           }}
@@ -1351,7 +1399,6 @@ function RelatedActions({
       )}
       {!!showPrivateNoteModal && (
         <Modal
-          class="light"
           onClose={() => {
             setShowPrivateNoteModal(false);
           }}
@@ -1543,7 +1590,6 @@ function AddRemoveListsSheet({ accountID, onClose }) {
       </main>
       {showListAddEditModal && (
         <Modal
-          class="light"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowListAddEditModal(false);

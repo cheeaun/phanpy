@@ -433,7 +433,7 @@ function Settings({ onClose }) {
                 </div>
               </div>
             </li>
-            {!!IMG_ALT_API_URL && (
+            {!!IMG_ALT_API_URL && authenticated && (
               <li>
                 <label>
                   <input
@@ -460,6 +460,39 @@ function Settings({ onClose }) {
                       img-alt-api
                     </a>
                     . May not work well. Only for images and in English.
+                  </small>
+                </div>
+              </li>
+            )}
+            {authenticated && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={
+                      snapStates.settings.shortcutSettingsCloudImportExport
+                    }
+                    onChange={(e) => {
+                      states.settings.shortcutSettingsCloudImportExport =
+                        e.target.checked;
+                    }}
+                  />{' '}
+                  "Cloud" import/export for shortcuts settings{' '}
+                  <Icon icon="cloud" class="more-insignificant" />
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    ⚠️⚠️⚠️ Very experimental.
+                    <br />
+                    Stored in your own profile’s notes. Profile (private) notes
+                    are mainly used for other profiles, and hidden for own
+                    profile.
+                  </small>
+                </div>
+                <div class="sub-section insignificant">
+                  <small>
+                    Note: This feature uses currently-logged-in instance server
+                    API.
                   </small>
                 </div>
               </li>

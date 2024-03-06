@@ -57,13 +57,14 @@
   width: fit-content;
   margin: -0.25em auto 0;
   line-height: 1;
+  z-index: 1;
+  position: relative;
   background-color: var(--bg-blur-color);
   /* background-image: linear-gradient(
     to bottom,
     var(--bg-color),
     var(--bg-blur-color)
   ); */
-  backdrop-filter: blur(16px) saturate(3);
   padding: 2px 4px;
   border-radius: 999px;
   overflow: hidden;

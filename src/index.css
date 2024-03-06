@@ -69,7 +69,7 @@
   --outline-color: rgba(128, 128, 128, 0.2);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
-  --backdrop-color: rgba(0, 0, 0, 0.05);
+  --backdrop-color: rgba(0, 0, 0, 0.1);
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
   --backdrop-solid-color: #eee;
   --img-bg-color: rgba(128, 128, 128, 0.2);
@@ -266,6 +266,14 @@ button[hidden] {
 }
 :is(button, .button).plain5:not(:disabled, .disabled):is(:hover, :focus) {
   text-decoration: underline;
+}
+:is(button, .button).plain6 {
+  background-color: var(--bg-blur-color);
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+}
+:is(button, .button).plain6:not(:disabled, .disabled):is(:hover, :focus) {
+  background-color: var(--link-bg-color);
 }
 :is(button, .button).light {
   background-color: var(--bg-faded-color);

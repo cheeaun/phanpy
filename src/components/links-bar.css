@@ -15,7 +15,7 @@
   text-shadow: 0 1px var(--bg-blur-color);
   transition: opacity 0.3s ease-out;
 
-  &:not(#columns &) {
+  #trending-page &:not(#columns &) {
     @media (min-width: 40em) {
       width: 95vw;
       max-width: calc(320px * 3.3);
@@ -96,6 +96,7 @@
     }
 
     article {
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -113,34 +114,34 @@
         margin: 0 0 -16px;
         padding: 0;
         position: relative;
-      }
 
-      img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        vertical-align: top;
-        mask-image: linear-gradient(
-          to bottom,
-          hsl(0, 0%, 0%) 0%,
-          hsla(0, 0%, 0%, 0.987) 14%,
-          hsla(0, 0%, 0%, 0.951) 26.2%,
-          hsla(0, 0%, 0%, 0.896) 36.8%,
-          hsla(0, 0%, 0%, 0.825) 45.9%,
-          hsla(0, 0%, 0%, 0.741) 53.7%,
-          hsla(0, 0%, 0%, 0.648) 60.4%,
-          hsla(0, 0%, 0%, 0.55) 66.2%,
-          hsla(0, 0%, 0%, 0.45) 71.2%,
-          hsla(0, 0%, 0%, 0.352) 75.6%,
-          hsla(0, 0%, 0%, 0.259) 79.6%,
-          hsla(0, 0%, 0%, 0.175) 83.4%,
-          hsla(0, 0%, 0%, 0.104) 87.2%,
-          hsla(0, 0%, 0%, 0.049) 91.1%,
-          hsla(0, 0%, 0%, 0.013) 95.3%,
-          hsla(0, 0%, 0%, 0) 100%
-        );
+        img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          vertical-align: top;
+          mask-image: linear-gradient(
+            to bottom,
+            hsl(0, 0%, 0%) 0%,
+            hsla(0, 0%, 0%, 0.987) 14%,
+            hsla(0, 0%, 0%, 0.951) 26.2%,
+            hsla(0, 0%, 0%, 0.896) 36.8%,
+            hsla(0, 0%, 0%, 0.825) 45.9%,
+            hsla(0, 0%, 0%, 0.741) 53.7%,
+            hsla(0, 0%, 0%, 0.648) 60.4%,
+            hsla(0, 0%, 0%, 0.55) 66.2%,
+            hsla(0, 0%, 0%, 0.45) 71.2%,
+            hsla(0, 0%, 0%, 0.352) 75.6%,
+            hsla(0, 0%, 0%, 0.259) 79.6%,
+            hsla(0, 0%, 0%, 0.175) 83.4%,
+            hsla(0, 0%, 0%, 0.104) 87.2%,
+            hsla(0, 0%, 0%, 0.049) 91.1%,
+            hsla(0, 0%, 0%, 0.013) 95.3%,
+            hsla(0, 0%, 0%, 0) 100%
+          );
+        }
       }
     }
 
@@ -186,6 +187,10 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       font-size: 90%;
+    }
+
+    hr {
+      margin: 4px 0;
     }
   }
 }

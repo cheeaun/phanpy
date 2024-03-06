@@ -8,27 +8,32 @@ body.cloak,
   .name-text *,
   .status .content-container,
   .status .content-container *,
-  .status .content-compact,
+  .status .content-compact > *,
   .account-container :is(header, main > *:not(.actions)),
   .account-container :is(header, main > *:not(.actions)) *,
   .header-double-lines,
-  .account-block {
+  .account-block,
+  .catchup-filters .filter-author *,
+  .post-peek-html *,
+  .post-peek-content > * {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
-    text-rendering: optimizeSpeed;
+    /* text-rendering: optimizeSpeed; */
     filter: opacity(0.5);
   }
   .name-text *,
   .status .content-container *,
-  .account-container :is(header, main > *:not(.actions)) * {
+  .account-container :is(header, main > *:not(.actions)) *,
+  .post-peek-content > * {
     filter: none;
   }
 
   .status :is(img, video, audio),
   .media-post .media,
-  .avatar,
+  .avatar *,
   .emoji,
-  .header-banner {
+  .header-banner,
+  .post-peek-media {
     filter: contrast(0) !important;
     background-color: #000 !important;
   }
@@ -37,7 +42,16 @@ body.cloak,
 /* SPECIAL CASES */
 
 @supports (display: -webkit-box) {
-  body.cloak .card :is(.title, .meta) {
-    background-color: var(--text-color) !important;
+  :is(body.cloak, .cloak) .card :is(.title, .meta) {
+    background-color: currentColor !important;
+  }
+}
+
+body.cloak,
+.cloak {
+  .media-container figcaption,
+  .media-container figcaption > *,
+  .catchup-filters .filter-author * {
+    color: var(--text-color) !important;
   }
 }

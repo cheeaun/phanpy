@@ -671,7 +671,7 @@ function ShortcutForm({
                       }
                       autocorrect="off"
                       autocapitalize="off"
-                      spellcheck={false}
+                      spellCheck={false}
                       pattern={pattern}
                     />
                     {currentType === 'hashtag' &&

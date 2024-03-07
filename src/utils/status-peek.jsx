@@ -9,8 +9,10 @@ function statusPeek(status) {
     text += getHTMLText(content);
   }
   text = text.trim();
-  if (poll) {
-    text += ' 📊';
+  if (poll?.options?.length) {
+    text += `\n\n📊:\n${poll.options
+      .map((o) => `${poll.multiple ? '▪️' : '•'} ${o.title}`)
+      .join('\n')}`;
   }
   if (mediaAttachments?.length) {
     text +=

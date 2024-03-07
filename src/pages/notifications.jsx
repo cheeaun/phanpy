@@ -221,6 +221,9 @@ function Notifications({ columnMode }) {
         lastHiddenTime.current = Date.now();
       }
       unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+        if (uiState === 'loading') {
+          return;
+        }
         if (v) {
           loadUpdates();
         }

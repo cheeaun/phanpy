@@ -32,12 +32,12 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
-import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
@@ -1484,7 +1484,7 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
   const showMedia = !spoilerText && !sensitive;
-  const postText = content ? getHTMLText(content) : '';
+  const postText = content ? statusPeek(post) : '';
 
   return (
     <div class="post-peek" title={!spoilerText ? postText : ''}>
@@ -1518,19 +1518,27 @@ function PostPeek({ post, filterInfo }) {
                 <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
               </>
             )}
-            {content ? (
+            {!!content && (
               <div
                 dangerouslySetInnerHTML={{
                   __html: emojifyText(content, emojis),
                 }}
               />
-            ) : mediaAttachments?.length === 1 &&
-              mediaAttachments[0].description ? (
-              <>
-                <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
-                <div>{mediaAttachments[0].description}</div>
-              </>
-            ) : null}
+            )}
+            {!!poll?.options?.length &&
+              poll.options.map((o) => (
+                <div>
+                  {poll.multiple ? '▪️' : '•'} {o.title}
+                </div>
+              ))}
+            {!content &&
+              mediaAttachments?.length === 1 &&
+              mediaAttachments[0].description && (
+                <>
+                  <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
+                  <div>{mediaAttachments[0].description}</div>
+                </>
+              )}
           </div>
         )}
       </span>

@@ -160,7 +160,7 @@ function Login() {
             autocorrect="off"
             autocapitalize="off"
             autocomplete="off"
-            spellcheck={false}
+            spellCheck={false}
             placeholder="instance domain"
             onInput={(e) => {
               setInstanceText(e.target.value);

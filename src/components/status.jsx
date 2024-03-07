@@ -947,7 +947,7 @@ function Status({
           }}
         >
           <Icon icon="code" />
-          <span>Embed</span>
+          <span>Embed post</span>
         </MenuItem>
       )}
       {(isSelf || mentionSelf) && <MenuDivider />}

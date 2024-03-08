@@ -143,6 +143,7 @@
   border-color: var(--reply-to-color);
   box-shadow: 0 0 0 3px var(--reply-to-faded-color);
 }
+.notification:focus-visible .status-link,
 .notification .status-link:is(:hover, :focus) {
   background-color: var(--bg-blur-color);
   filter: saturate(1);

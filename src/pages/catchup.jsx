@@ -589,35 +589,34 @@ function Catchup() {
     authors,
   ]);
 
-  const prevSelectedAuthorMissing = useRef(false);
   useEffect(() => {
-    // console.log({
-    //   prevSelectedAuthorMissing,
-    //   selectedAuthor,
-    //   authors,
-    // });
-    let timer;
     if (selectedAuthor) {
       if (authors[selectedAuthor]) {
-        if (prevSelectedAuthorMissing.current) {
-          timer = setTimeout(() => {
-            authorsListParent.current
-              .querySelector(`[data-author="${selectedAuthor}"]`)
-              ?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-              });
-          }, 500);
-          prevSelectedAuthorMissing.current = false;
+        // Check if author is visible and within the scrollable area viewport
+        const authorElement = authorsListParent.current.querySelector(
+          `[data-author="${selectedAuthor}"]`,
+        );
+        const scrollableRect =
+          authorsListParent.current?.getBoundingClientRect();
+        const authorRect = authorElement?.getBoundingClientRect();
+        console.log({
+          sLeft: scrollableRect.left,
+          sRight: scrollableRect.right,
+          aLeft: authorRect.left,
+          aRight: authorRect.right,
+        });
+        if (
+          authorRect.left < scrollableRect.left ||
+          authorRect.right > scrollableRect.right
+        ) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
         }
-      } else {
-        prevSelectedAuthorMissing.current = true;
       }
     }
-    return () => {
-      clearTimeout(timer);
-    };
   }, [selectedAuthor, authors]);
 
   const [showHelp, setShowHelp] = useState(false);
@@ -663,6 +662,76 @@ function Catchup() {
     },
     {
       preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  useHotkeys(
+    'k',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView({
+            block: 'center',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  useHotkeys(
+    'h, l',
+    (_, handler) => {
+      // Go next/prev selectedAuthor in authorCountsList list
+      if (selectedAuthor) {
+        const key = handler.keys[0];
+        const index = authorCountsList.indexOf(selectedAuthor);
+        if (key === 'h') {
+          if (index > 0 && index < authorCountsList.length) {
+            setSelectedAuthor(authorCountsList[index - 1]);
+          }
+        } else if (key === 'l') {
+          if (index < authorCountsList.length - 1 && index >= 0) {
+            setSelectedAuthor(authorCountsList[index + 1]);
+          }
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: true,
     },
   );
 

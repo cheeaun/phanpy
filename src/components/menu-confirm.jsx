@@ -1,4 +1,4 @@
-import { Menu, MenuItem, SubMenu } from '@szhsin/react-menu';
+import { MenuItem, SubMenu } from '@szhsin/react-menu';
 import { cloneElement } from 'preact';
 import { useRef } from 'preact/hooks';
 
@@ -10,6 +10,7 @@ function MenuConfirm({
   confirmLabel,
   menuItemClassName,
   menuFooter,
+  menuExtras,
   ...props
 }) {
   const { children, onClick, ...restProps } = props;
@@ -53,6 +54,7 @@ function MenuConfirm({
       <MenuItem className={menuItemClassName} onClick={onClick}>
         {confirmLabel}
       </MenuItem>
+      {menuExtras}
       {menuFooter}
     </Parent>
   );

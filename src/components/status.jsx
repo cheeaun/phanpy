@@ -748,10 +748,24 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="rocket" />
-                  <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                  <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                 </>
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
+              menuExtras={
+                <MenuItem
+                  onClick={() => {
+                    states.showCompose = {
+                      draftStatus: {
+                        status: `\n${url}`,
+                      },
+                    };
+                  }}
+                >
+                  <Icon icon="quote" />
+                  <span>Quote</span>
+                </MenuItem>
+              }
               menuFooter={
                 mediaNoDesc &&
                 !reblogged && (
@@ -1920,10 +1934,22 @@ function Status({
                   confirmLabel={
                     <>
                       <Icon icon="rocket" />
-                      <span>
-                        {reblogged ? 'Unboost?' : 'Boost to everyone?'}
-                      </span>
+                      <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                     </>
+                  }
+                  menuExtras={
+                    <MenuItem
+                      onClick={() => {
+                        states.showCompose = {
+                          draftStatus: {
+                            status: `\n${url}`,
+                          },
+                        };
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      <span>Quote</span>
+                    </MenuItem>
                   }
                   menuFooter={
                     mediaNoDesc &&

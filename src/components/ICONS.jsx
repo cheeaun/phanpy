@@ -103,4 +103,5 @@ export const ICONS = {
   'arrows-right': () => import('@iconify-icons/mingcute/arrows-right-line'),
   code: () => import('@iconify-icons/mingcute/code-line'),
   copy: () => import('@iconify-icons/mingcute/copy-2-line'),
+  quote: () => import('@iconify-icons/mingcute/quote-left-line'),
 };

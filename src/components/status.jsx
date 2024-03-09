@@ -1100,7 +1100,12 @@ function Status({
           const { clientX, clientY } = e.touches?.[0] || e;
           // link detection copied from onContextMenu because here it works
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
           e.preventDefault();
           setContextMenuProps({
             anchorPoint: {
@@ -1346,7 +1351,12 @@ function Status({
           if (e.metaKey) return;
           // console.log('context menu', e);
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
 
           // If there's selected text, don't show custom context menu
           const selection = window.getSelection?.();

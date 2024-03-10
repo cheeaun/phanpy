@@ -21,6 +21,7 @@ const canvas = window.OffscreenCanvas
 const ctx = canvas.getContext('2d', {
   willReadFrequently: true,
 });
+ctx.imageSmoothingEnabled = false;
 
 function Avatar({ url, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;

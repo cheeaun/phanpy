@@ -2167,10 +2167,13 @@ function Card({ card, selfReferential, instance }) {
       const w = 44;
       const h = 44;
       const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = document.createElement('canvas');
+      const canvas = window.OffscreenCanvas
+        ? new OffscreenCanvas(1, 1)
+        : document.createElement('canvas');
       canvas.width = w;
       canvas.height = h;
       const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);

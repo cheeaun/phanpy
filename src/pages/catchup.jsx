@@ -429,9 +429,29 @@ function Catchup() {
       return postFilterMatches;
     });
 
+    // Deduplicate boosts
+    const boostedPosts = {};
+    filteredPosts = filteredPosts.filter((post) => {
+      if (post.reblog) {
+        if (boostedPosts[post.reblog.id]) {
+          if (boostedPosts[post.reblog.id].__BOOSTERS) {
+            boostedPosts[post.reblog.id].__BOOSTERS.add(post.account);
+          } else {
+            boostedPosts[post.reblog.id].__BOOSTERS = new Set([post.account]);
+          }
+          return false;
+        } else {
+          boostedPosts[post.reblog.id] = post;
+        }
+      }
+      return true;
+    });
+
     if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
       filteredPosts = filteredPosts.filter(
-        (post) => post.account.id === selectedAuthor,
+        (post) =>
+          post.account.id === selectedAuthor ||
+          [...(post.__BOOSTERS || [])].find((a) => a.id === selectedAuthor),
       );
     }
 
@@ -1420,6 +1440,7 @@ const PostLine = memo(
       _followedTags: isFollowedTags,
       _filtered: filterInfo,
       visibility,
+      __BOOSTERS,
     } = post;
     const isReplyTo = inReplyToId && inReplyToAccountId !== account.id;
     const isFiltered = !!filterInfo;
@@ -1453,7 +1474,12 @@ const PostLine = memo(
               <Avatar
                 url={account.avatarStatic || account.avatar}
                 squircle={account.bot}
-              />{' '}
+              />
+              {__BOOSTERS?.size > 0
+                ? [...__BOOSTERS].map((b) => (
+                    <Avatar url={b.avatarStatic || b.avatar} squircle={b.bot} />
+                  ))
+                : ''}{' '}
               <Icon icon="rocket" />{' '}
               {/* <Avatar
               url={reblog.account.avatarStatic || reblog.account.avatar}

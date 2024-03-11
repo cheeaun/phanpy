@@ -634,6 +634,12 @@ function Catchup() {
             inline: 'center',
             behavior: 'smooth',
           });
+        } else if (authorRect.top < 0) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'nearest',
+            behavior: 'smooth',
+          });
         }
       }
     }

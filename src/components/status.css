@@ -679,7 +679,9 @@
     animation: none !important; */
   }
 }
-.status .content-container.has-spoiler:not(.show-media) .spoiler-media-button {
+.status
+  .content-container.has-spoiler:not(.show-media)
+  :is(.spoiler-button, .spoiler-media-button) {
   ~ :is(.media-container, .media-figure-multiple) figcaption {
     /* filter: blur(5px) invert(0.5);
     image-rendering: crisp-edges;
@@ -2165,7 +2167,7 @@ a.card:is(:hover, :focus):visited {
   }
 
   .links-list {
-    a {
+    li > a {
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;

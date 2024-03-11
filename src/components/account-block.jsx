@@ -62,6 +62,7 @@ function AccountBlock({
     group,
     followersCount,
     createdAt,
+    locked,
   } = account;
   let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
   if (accountInstance) {
@@ -123,6 +124,12 @@ function AccountBlock({
           @{acct1}
           <wbr />
           {acct2}
+          {locked && (
+            <>
+              {' '}
+              <Icon icon="lock" size="s" alt="Locked" />
+            </>
+          )}
         </span>
         {showActivity && (
           <>

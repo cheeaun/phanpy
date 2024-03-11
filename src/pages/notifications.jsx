@@ -3,6 +3,7 @@ import './notifications.css';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -30,6 +31,12 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 30; // 30 is the maximum limit :(
 const emptySearchParams = new URLSearchParams();
+
+const scrollIntoViewOptions = {
+  block: 'center',
+  inline: 'center',
+  behavior: 'smooth',
+};
 
 function Notifications({ columnMode }) {
   useTitle('Notifications', '/notifications');
@@ -221,6 +228,9 @@ function Notifications({ columnMode }) {
         lastHiddenTime.current = Date.now();
       }
       unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+        if (uiState === 'loading') {
+          return;
+        }
         if (v) {
           loadUpdates();
         }
@@ -270,11 +280,84 @@ function Notifications({ columnMode }) {
   //   }
   // }, [uiState]);
 
+  const itemsSelector = '.notification';
+  const jRef = useHotkeys('j', () => {
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let nextItem = allItems[activeItemIndex + 1];
+      if (nextItem) {
+        nextItem.focus();
+        nextItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
+  const kRef = useHotkeys('k', () => {
+    // focus on previous status after active item
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let prevItem = allItems[activeItemIndex - 1];
+      if (prevItem) {
+        prevItem.focus();
+        prevItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
+  const oRef = useHotkeys(['enter', 'o'], () => {
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const statusLink = activeItem?.querySelector('.status-link');
+    if (statusLink) {
+      statusLink.click();
+    }
+  });
+
   return (
     <div
       id="notifications-page"
       class="deck-container"
-      ref={scrollableRef}
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
+      }}
       tabIndex="-1"
     >
       <div class={`timeline-deck deck ${onlyMentions ? 'only-mentions' : ''}`}>

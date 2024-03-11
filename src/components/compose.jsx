@@ -235,6 +235,12 @@ function Compose({
   };
   const focusTextarea = () => {
     setTimeout(() => {
+      if (!textareaRef.current) return;
+      // status starts with newline, focus on first position
+      if (draftStatus?.status?.startsWith?.('\n')) {
+        textareaRef.current.selectionStart = 0;
+        textareaRef.current.selectionEnd = 0;
+      }
       console.debug('FOCUS textarea');
       textareaRef.current?.focus();
     }, 300);

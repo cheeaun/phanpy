@@ -285,7 +285,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   required
                   autocorrect="off"
                   autocapitalize="off"
-                  spellcheck={false}
+                  spellCheck={false}
                   // no spaces, no hashtags
                   pattern="[^#][^\s#]+[^#]"
                   disabled={reachLimit}

@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
 
@@ -31,12 +32,12 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
-import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
@@ -60,6 +61,22 @@ const RANGES = [
   { label: 'beyond 12 hours', value: 13 },
 ];
 
+const FILTER_LABELS = [
+  'Original',
+  'Replies',
+  'Boosts',
+  'Followed tags',
+  'Groups',
+  'Filtered',
+];
+const FILTER_SORTS = [
+  'createdAt',
+  'repliesCount',
+  'favouritesCount',
+  'reblogsCount',
+  'density',
+];
+const FILTER_GROUPS = [null, 'account'];
 const FILTER_VALUES = {
   Filtered: 'filtered',
   Groups: 'group',
@@ -412,9 +429,29 @@ function Catchup() {
       return postFilterMatches;
     });
 
+    // Deduplicate boosts
+    const boostedPosts = {};
+    filteredPosts = filteredPosts.filter((post) => {
+      if (post.reblog) {
+        if (boostedPosts[post.reblog.id]) {
+          if (boostedPosts[post.reblog.id].__BOOSTERS) {
+            boostedPosts[post.reblog.id].__BOOSTERS.add(post.account);
+          } else {
+            boostedPosts[post.reblog.id].__BOOSTERS = new Set([post.account]);
+          }
+          return false;
+        } else {
+          boostedPosts[post.reblog.id] = post;
+        }
+      }
+      return true;
+    });
+
     if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
       filteredPosts = filteredPosts.filter(
-        (post) => post.account.id === selectedAuthor,
+        (post) =>
+          post.account.id === selectedAuthor ||
+          [...(post.__BOOSTERS || [])].find((a) => a.id === selectedAuthor),
       );
     }
 
@@ -572,38 +609,157 @@ function Catchup() {
     authors,
   ]);
 
-  const prevSelectedAuthorMissing = useRef(false);
   useEffect(() => {
-    // console.log({
-    //   prevSelectedAuthorMissing,
-    //   selectedAuthor,
-    //   authors,
-    // });
-    let timer;
     if (selectedAuthor) {
       if (authors[selectedAuthor]) {
-        if (prevSelectedAuthorMissing.current) {
-          timer = setTimeout(() => {
-            authorsListParent.current
-              .querySelector(`[data-author="${selectedAuthor}"]`)
-              ?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-              });
-          }, 500);
-          prevSelectedAuthorMissing.current = false;
+        // Check if author is visible and within the scrollable area viewport
+        const authorElement = authorsListParent.current.querySelector(
+          `[data-author="${selectedAuthor}"]`,
+        );
+        const scrollableRect =
+          authorsListParent.current?.getBoundingClientRect();
+        const authorRect = authorElement?.getBoundingClientRect();
+        console.log({
+          sLeft: scrollableRect.left,
+          sRight: scrollableRect.right,
+          aLeft: authorRect.left,
+          aRight: authorRect.right,
+        });
+        if (
+          authorRect.left < scrollableRect.left ||
+          authorRect.right > scrollableRect.right
+        ) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        } else if (authorRect.top < 0) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'nearest',
+            behavior: 'smooth',
+          });
         }
-      } else {
-        prevSelectedAuthorMissing.current = true;
       }
     }
-    return () => {
-      clearTimeout(timer);
-    };
   }, [selectedAuthor, authors]);
 
   const [showHelp, setShowHelp] = useState(false);
+
+  const itemsSelector = '.catchup-list > li > a';
+  useHotkeys(
+    'j',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        const nextItem = allItems[activeItemIndex + 1];
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView({
+            block: 'center',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  useHotkeys(
+    'k',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView({
+            block: 'center',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  useHotkeys(
+    'h, l',
+    (_, handler) => {
+      // Go next/prev selectedAuthor in authorCountsList list
+      if (selectedAuthor) {
+        const key = handler.keys[0];
+        const index = authorCountsList.indexOf(selectedAuthor);
+        if (key === 'h') {
+          if (index > 0 && index < authorCountsList.length) {
+            setSelectedAuthor(authorCountsList[index - 1]);
+          }
+        } else if (key === 'l') {
+          if (index < authorCountsList.length - 1 && index >= 0) {
+            setSelectedAuthor(authorCountsList[index + 1]);
+          }
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: true,
+    },
+  );
 
   return (
     <div
@@ -629,7 +785,7 @@ function Catchup() {
               <NavMenu />
               {uiState === 'results' && (
                 <Link to="/catchup" class="button plain">
-                  <Icon icon="history" size="l" />
+                  <Icon icon="history2" size="l" />
                 </Link>
               )}
               {uiState === 'start' && (
@@ -758,7 +914,7 @@ function Catchup() {
                     {prevCatchups.map((pc) => (
                       <li key={pc.id}>
                         <Link to={`/catchup?id=${pc.id}`}>
-                          <Icon icon="history" />{' '}
+                          <Icon icon="history2" />{' '}
                           <span>
                             {formatRange(
                               new Date(pc.startAt),
@@ -995,17 +1151,19 @@ function Catchup() {
                     />
                     All <span class="count">{posts.length}</span>
                   </label>
-                  {[
-                    'Original',
-                    'Replies',
-                    'Boosts',
-                    'Followed tags',
-                    'Groups',
-                    'Filtered',
-                  ].map(
+                  {FILTER_LABELS.map(
                     (label) =>
                       !!filterCounts[label] && (
-                        <label class="filter-cat" key={label}>
+                        <label
+                          class="filter-cat"
+                          key={label}
+                          title={
+                            (
+                              (filterCounts[label] / posts.length) *
+                              100
+                            ).toFixed(2) + '%'
+                          }
+                        >
                           <input
                             type="radio"
                             name="filter-cat"
@@ -1081,15 +1239,18 @@ function Catchup() {
                 <div class="catchup-filters">
                   <span class="filter-label">Sort</span>{' '}
                   <fieldset class="radio-field-group">
-                    {[
-                      'createdAt',
-                      'repliesCount',
-                      'favouritesCount',
-                      'reblogsCount',
-                      'density',
-                      // 'account',
-                    ].map((key) => (
-                      <label class="filter-sort" key={key}>
+                    {FILTER_SORTS.map((key) => (
+                      <label
+                        class="filter-sort"
+                        key={key}
+                        onClick={(e) => {
+                          if (sortBy === key) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+                          }
+                        }}
+                      >
                         <input
                           type="radio"
                           name="filter-sort-cat"
@@ -1103,7 +1264,6 @@ function Catchup() {
                               : 'asc';
                             setSortOrder(order);
                           }}
-                          // disabled={key === 'account' && selectedAuthor}
                         />
                         {
                           {
@@ -1114,10 +1274,11 @@ function Catchup() {
                             density: 'Density',
                           }[key]
                         }
+                        {sortBy === key && (sortOrder === 'asc' ? ' ↑' : ' ↓')}
                       </label>
                     ))}
                   </fieldset>
-                  <fieldset class="radio-field-group">
+                  {/* <fieldset class="radio-field-group">
                     {['asc', 'desc'].map((key) => (
                       <label class="filter-sort" key={key}>
                         <input
@@ -1131,10 +1292,10 @@ function Catchup() {
                         {key === 'asc' ? '↑' : '↓'}
                       </label>
                     ))}
-                  </fieldset>
+                  </fieldset> */}
                   <span class="filter-label">Group</span>{' '}
                   <fieldset class="radio-field-group">
-                    {[null, 'account'].map((key) => (
+                    {FILTER_GROUPS.map((key) => (
                       <label class="filter-group" key={key || 'none'}>
                         <input
                           type="radio"
@@ -1155,7 +1316,7 @@ function Catchup() {
                     selectedAuthor && authorCountsList.length > 1 ? (
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain6 small"
                         onClick={() => {
                           setSelectedAuthor(null);
                         }}
@@ -1176,7 +1337,15 @@ function Catchup() {
                   }
                 </div>
               )}
-              <ul class="catchup-list">
+              <ul
+                class={`catchup-list catchup-filter-${
+                  FILTER_VALUES[selectedFilterCategory] || ''
+                } ${sortBy ? `catchup-sort-${sortBy}` : ''} ${
+                  selectedAuthor && authors[selectedAuthor]
+                    ? `catchup-selected-author`
+                    : ''
+                } ${groupBy ? `catchup-group-${groupBy}` : ''}`}
+              >
                 {sortedFilteredPosts.map((post, i) => {
                   const id = post.reblog?.id || post.id;
                   let showSeparator = false;
@@ -1277,6 +1446,7 @@ const PostLine = memo(
       _followedTags: isFollowedTags,
       _filtered: filterInfo,
       visibility,
+      __BOOSTERS,
     } = post;
     const isReplyTo = inReplyToId && inReplyToAccountId !== account.id;
     const isFiltered = !!filterInfo;
@@ -1310,7 +1480,12 @@ const PostLine = memo(
               <Avatar
                 url={account.avatarStatic || account.avatar}
                 squircle={account.bot}
-              />{' '}
+              />
+              {__BOOSTERS?.size > 0
+                ? [...__BOOSTERS].map((b) => (
+                    <Avatar url={b.avatarStatic || b.avatar} squircle={b.bot} />
+                  ))
+                : ''}{' '}
               <Icon icon="rocket" />{' '}
               {/* <Avatar
               url={reblog.account.avatarStatic || reblog.account.avatar}
@@ -1410,7 +1585,7 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
   const showMedia = !spoilerText && !sensitive;
-  const postText = content ? getHTMLText(content) : '';
+  const postText = content ? statusPeek(post) : '';
 
   return (
     <div class="post-peek" title={!spoilerText ? postText : ''}>
@@ -1444,19 +1619,27 @@ function PostPeek({ post, filterInfo }) {
                 <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
               </>
             )}
-            {content ? (
+            {!!content && (
               <div
                 dangerouslySetInnerHTML={{
                   __html: emojifyText(content, emojis),
                 }}
               />
-            ) : mediaAttachments?.length === 1 &&
-              mediaAttachments[0].description ? (
-              <>
-                <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
-                <div>{mediaAttachments[0].description}</div>
-              </>
-            ) : null}
+            )}
+            {!!poll?.options?.length &&
+              poll.options.map((o) => (
+                <div>
+                  {poll.multiple ? '▪️' : '•'} {o.title}
+                </div>
+              ))}
+            {!content &&
+              mediaAttachments?.length === 1 &&
+              mediaAttachments[0].description && (
+                <>
+                  <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
+                  <div>{mediaAttachments[0].description}</div>
+                </>
+              )}
           </div>
         )}
       </span>
@@ -1568,19 +1751,19 @@ function PostStats({ post }) {
   return (
     <span class="post-stats">
       {repliesCount > 0 && (
-        <>
+        <span class="post-stat-replies">
           <Icon icon="comment2" size="s" /> {shortenNumber(repliesCount)}
-        </>
+        </span>
       )}
       {favouritesCount > 0 && (
-        <>
+        <span class="post-stat-likes">
           <Icon icon="heart" size="s" /> {shortenNumber(favouritesCount)}
-        </>
+        </span>
       )}
       {reblogsCount > 0 && (
-        <>
+        <span class="post-stat-boosts">
           <Icon icon="rocket" size="s" /> {shortenNumber(reblogsCount)}
-        </>
+        </span>
       )}
     </span>
   );

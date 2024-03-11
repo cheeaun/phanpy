@@ -267,6 +267,14 @@ button[hidden] {
 :is(button, .button).plain5:not(:disabled, .disabled):is(:hover, :focus) {
   text-decoration: underline;
 }
+:is(button, .button).plain6 {
+  background-color: var(--bg-blur-color);
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+}
+:is(button, .button).plain6:not(:disabled, .disabled):is(:hover, :focus) {
+  background-color: var(--link-bg-color);
+}
 :is(button, .button).light {
   background-color: var(--bg-faded-color);
   color: var(--text-color);

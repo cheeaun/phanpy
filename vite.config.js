@@ -94,6 +94,7 @@ export default defineConfig({
             purpose: 'maskable',
           },
         ],
+        categories: ['social', 'news'],
       },
       strategies: 'injectManifest',
       injectRegister: 'inline',

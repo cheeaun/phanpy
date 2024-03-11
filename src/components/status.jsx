@@ -748,10 +748,24 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="rocket" />
-                  <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                  <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                 </>
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
+              menuExtras={
+                <MenuItem
+                  onClick={() => {
+                    states.showCompose = {
+                      draftStatus: {
+                        status: `\n${url}`,
+                      },
+                    };
+                  }}
+                >
+                  <Icon icon="quote" />
+                  <span>Quote</span>
+                </MenuItem>
+              }
               menuFooter={
                 mediaNoDesc &&
                 !reblogged && (
@@ -947,7 +961,7 @@ function Status({
           }}
         >
           <Icon icon="code" />
-          <span>Embed</span>
+          <span>Embed post</span>
         </MenuItem>
       )}
       {(isSelf || mentionSelf) && <MenuDivider />}
@@ -1100,7 +1114,12 @@ function Status({
           const { clientX, clientY } = e.touches?.[0] || e;
           // link detection copied from onContextMenu because here it works
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
           e.preventDefault();
           setContextMenuProps({
             anchorPoint: {
@@ -1346,7 +1365,12 @@ function Status({
           if (e.metaKey) return;
           // console.log('context menu', e);
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
 
           // If there's selected text, don't show custom context menu
           const selection = window.getSelection?.();
@@ -1910,10 +1934,22 @@ function Status({
                   confirmLabel={
                     <>
                       <Icon icon="rocket" />
-                      <span>
-                        {reblogged ? 'Unboost?' : 'Boost to everyone?'}
-                      </span>
+                      <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                     </>
+                  }
+                  menuExtras={
+                    <MenuItem
+                      onClick={() => {
+                        states.showCompose = {
+                          draftStatus: {
+                            status: `\n${url}`,
+                          },
+                        };
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      <span>Quote</span>
+                    </MenuItem>
                   }
                   menuFooter={
                     mediaNoDesc &&
@@ -2131,10 +2167,13 @@ function Card({ card, selfReferential, instance }) {
       const w = 44;
       const h = 44;
       const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = document.createElement('canvas');
+      const canvas = window.OffscreenCanvas
+        ? new OffscreenCanvas(1, 1)
+        : document.createElement('canvas');
       canvas.width = w;
       canvas.height = h;
       const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
@@ -2568,7 +2607,7 @@ function EmbedModal({ post, instance, onClose }) {
         {!!accountEmojis?.length && (
           <section>
             <p>Account Emojis:</p>
-            <ul class="links-list">
+            <ul>
               {accountEmojis.map((emoji) => {
                 return (
                   <li key={emoji.shortcode}>
@@ -2611,7 +2650,7 @@ function EmbedModal({ post, instance, onClose }) {
         {!!emojis?.length && (
           <section>
             <p>Emojis:</p>
-            <ul class="links-list">
+            <ul>
               {emojis.map((emoji) => {
                 return (
                   <li key={emoji.shortcode}>

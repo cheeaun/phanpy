@@ -453,12 +453,15 @@ function AccountInfo({
                   e.target.classList.add('loaded');
                   try {
                     // Get color from four corners of image
-                    const canvas = document.createElement('canvas');
+                    const canvas = window.OffscreenCanvas
+                      ? new OffscreenCanvas(1, 1)
+                      : document.createElement('canvas');
                     const ctx = canvas.getContext('2d', {
                       willReadFrequently: true,
                     });
                     canvas.width = e.target.width;
                     canvas.height = e.target.height;
+                    ctx.imageSmoothingEnabled = false;
                     ctx.drawImage(e.target, 0, 0);
                     // const colors = [
                     //   ctx.getImageData(0, 0, 1, 1).data,
@@ -1053,6 +1056,27 @@ function RelatedActions({
                 <MenuDivider />
               </>
             )}
+            <MenuItem
+              onClick={() => {
+                const handle = `@${currentInfo?.acct || acct}`;
+                try {
+                  navigator.clipboard.writeText(handle);
+                  showToast('Handle copied');
+                } catch (e) {
+                  console.error(e);
+                  showToast('Unable to copy handle');
+                }
+              }}
+            >
+              <Icon icon="copy" />
+              <small>
+                Copy handle
+                <br />
+                <span class="more-insignificant">
+                  @{currentInfo?.acct || acct}
+                </span>
+              </small>
+            </MenuItem>
             <MenuItem href={url} target="_blank">
               <Icon icon="external" />
               <small class="menu-double-lines">{niceAccountURL(url)}</small>

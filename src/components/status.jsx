@@ -1822,7 +1822,9 @@ function Status({
                       media={media}
                       autoAnimate={isSizeLarge}
                       showCaption={mediaAttachments.length === 1}
-                      allowLongerCaption={!content}
+                      allowLongerCaption={
+                        !content && mediaAttachments.length === 1
+                      }
                       lang={language}
                       altIndex={
                         showMultipleMediaCaptions &&

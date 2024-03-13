@@ -95,6 +95,10 @@
     0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color);
   z-index: 2;
+
+  strong {
+    color: var(--red-color);
+  }
 }
 #_compose-container .status-preview-legend.reply-to {
   color: var(--reply-to-color);

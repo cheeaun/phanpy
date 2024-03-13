@@ -174,6 +174,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
     ); // Emoji shortcodes
 }
 
+const rtf = new Intl.RelativeTimeFormat();
+
 function Compose({
   onClose,
   replyToStatus,
@@ -637,6 +639,16 @@ function Compose({
     return [topLanguages, restLanguages];
   }, [language]);
 
+  const replyToStatusMonthsAgo = useMemo(
+    () =>
+      !!replyToStatus?.createdAt &&
+      Math.floor(
+        (Date.now() - new Date(replyToStatus.createdAt)) /
+          (1000 * 60 * 60 * 24 * 30),
+      ),
+    [replyToStatus],
+  );
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -786,6 +798,16 @@ function Compose({
               Replying to @
               {replyToStatus.account.acct || replyToStatus.account.username}
               &rsquo;s post
+              {replyToStatusMonthsAgo >= 3 && (
+                <>
+                  {' '}
+                  (
+                  <strong>
+                    {rtf.format(-replyToStatusMonthsAgo, 'month')}
+                  </strong>
+                  )
+                </>
+              )}
             </div>
           </div>
         )}

@@ -525,8 +525,11 @@
         background-color: var(--bg-faded-color);
         box-shadow: 0 8px 16px -8px var(--drop-shadow-color),
           inset 0 1px var(--bg-color);
-        outline: 1px solid var(--outline-color);
         text-shadow: 0 1px var(--bg-color);
+      }
+
+      &:hover:not(:focus-visible) {
+        outline: 1px solid var(--outline-color);
       }
 
       &:active {
@@ -1091,6 +1094,20 @@
     dd {
       margin-block-end: 1em;
       margin-inline: 1em;
+
+      + dd {
+        margin-block-start: -0.9em;
+      }
     }
+  }
+
+  kbd {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0.2em 0.3em;
+    margin: 1px 0;
+    line-height: 1;
+    border: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
   }
 }

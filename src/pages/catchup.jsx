@@ -648,7 +648,7 @@ function Catchup() {
   const [showHelp, setShowHelp] = useState(false);
 
   const itemsSelector = '.catchup-list > li > a';
-  useHotkeys(
+  const jRef = useHotkeys(
     'j',
     () => {
       const activeItem = document.activeElement.closest(itemsSelector);
@@ -692,7 +692,7 @@ function Catchup() {
     },
   );
 
-  useHotkeys(
+  const kRef = useHotkeys(
     'k',
     () => {
       const activeItem = document.activeElement.closest(itemsSelector);
@@ -736,7 +736,7 @@ function Catchup() {
     },
   );
 
-  useHotkeys(
+  const hlRef = useHotkeys(
     'h, l',
     (_, handler) => {
       // Go next/prev selectedAuthor in authorCountsList list
@@ -757,13 +757,18 @@ function Catchup() {
     {
       preventDefault: true,
       ignoreModifiers: true,
-      enableOnFormTags: true,
+      enableOnFormTags: ['input'],
     },
   );
 
   return (
     <div
-      ref={scrollableRef}
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef.current = node;
+        kRef.current = node;
+        hlRef.current = node;
+      }}
       id="catchup-page"
       class="deck-container"
       tabIndex="-1"

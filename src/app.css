@@ -2673,6 +2673,10 @@ ul.link-list li a .icon {
     box-shadow: 0px 1px var(--bg-blur-color);
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
+
+    &:is(:empty, :has(> a:empty)) {
+      display: none;
+    }
   }
   .timeline:not(.flat) > li > a {
     border-radius: inherit;

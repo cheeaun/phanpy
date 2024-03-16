@@ -2232,10 +2232,10 @@ function Card({ card, selfReferential, instance }) {
           <p class="meta domain" dir="auto">
             {domain}
           </p>
-          <p class="title" dir="auto">
+          <p class="title" dir="auto" title={title}>
             {title}
           </p>
-          <p class="meta" dir="auto">
+          <p class="meta" dir="auto" title={description}>
             {description ||
               (!!publishedAt && (
                 <RelativeTime datetime={publishedAt} format="micro" />
@@ -2304,8 +2304,8 @@ function Card({ card, selfReferential, instance }) {
             <p class="meta domain">
               <Icon icon="link" size="s" /> <span>{domain}</span>
             </p>
-            <p class="title">{title}</p>
-            <p class="meta">{description || providerName || authorName}</p>
+            <p class="title" title={title}>{title}</p>
+            <p class="meta" title={description || providerName || authorName}>{description || providerName || authorName}</p>
           </div>
         </a>
       );

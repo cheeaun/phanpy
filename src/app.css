@@ -34,6 +34,8 @@ a.mention span {
   text-decoration-color: inherit;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
+  font-variant-numeric: slashed-zero;
+  font-feature-settings: 'ss01';
 }
 /* a.mention:has(span).hashtag {
   color: var(--link-light-color);

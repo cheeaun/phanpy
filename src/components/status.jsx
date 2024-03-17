@@ -85,6 +85,8 @@ const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
+const rtf = new Intl.RelativeTimeFormat();
+
 const REACTIONS_LIMIT = 80;
 
 function getPollText(poll) {
@@ -508,6 +510,13 @@ function Status({
       (attachment) => !attachment.description?.trim?.(),
     );
   }, [mediaAttachments]);
+
+  const statusMonthsAgo = useMemo(() => {
+    return Math.floor(
+      (new Date() - createdAtDate) / (1000 * 60 * 60 * 24 * 30),
+    );
+  }, [createdAtDate]);
+
   const boostStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -767,12 +776,22 @@ function Status({
                 </MenuItem>
               }
               menuFooter={
-                mediaNoDesc &&
-                !reblogged && (
+                mediaNoDesc && !reblogged ? (
                   <div class="footer">
                     <Icon icon="alert" />
                     Some media have no descriptions.
                   </div>
+                ) : (
+                  statusMonthsAgo >= 3 && (
+                    <div class="footer">
+                      <Icon icon="info" />
+                      <span>
+                        Old post (
+                        <strong>{rtf.format(-statusMonthsAgo, 'month')}</strong>
+                        )
+                      </span>
+                    </div>
+                  )
                 )
               }
               disabled={!canBoost}
@@ -2213,10 +2232,10 @@ function Card({ card, selfReferential, instance }) {
           <p class="meta domain" dir="auto">
             {domain}
           </p>
-          <p class="title" dir="auto">
+          <p class="title" dir="auto" title={title}>
             {title}
           </p>
-          <p class="meta" dir="auto">
+          <p class="meta" dir="auto" title={description}>
             {description ||
               (!!publishedAt && (
                 <RelativeTime datetime={publishedAt} format="micro" />
@@ -2285,8 +2304,8 @@ function Card({ card, selfReferential, instance }) {
             <p class="meta domain">
               <Icon icon="link" size="s" /> <span>{domain}</span>
             </p>
-            <p class="title">{title}</p>
-            <p class="meta">{description || providerName || authorName}</p>
+            <p class="title" title={title}>{title}</p>
+            <p class="meta" title={description || providerName || authorName}>{description || providerName || authorName}</p>
           </div>
         </a>
       );

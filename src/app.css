@@ -34,6 +34,8 @@ a.mention span {
   text-decoration-color: inherit;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
+  font-variant-numeric: slashed-zero;
+  font-feature-settings: 'ss01';
 }
 /* a.mention:has(span).hashtag {
   color: var(--link-light-color);
@@ -2673,6 +2675,10 @@ ul.link-list li a .icon {
     box-shadow: 0px 1px var(--bg-blur-color);
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
+
+    &:is(:empty, :has(> a:empty)) {
+      display: none;
+    }
   }
   .timeline:not(.flat) > li > a {
     border-radius: inherit;

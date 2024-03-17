@@ -648,7 +648,7 @@ function Catchup() {
   const [showHelp, setShowHelp] = useState(false);
 
   const itemsSelector = '.catchup-list > li > a';
-  useHotkeys(
+  const jRef = useHotkeys(
     'j',
     () => {
       const activeItem = document.activeElement.closest(itemsSelector);
@@ -692,7 +692,7 @@ function Catchup() {
     },
   );
 
-  useHotkeys(
+  const kRef = useHotkeys(
     'k',
     () => {
       const activeItem = document.activeElement.closest(itemsSelector);
@@ -736,34 +736,73 @@ function Catchup() {
     },
   );
 
-  useHotkeys(
+  const hlRef = useHotkeys(
     'h, l',
     (_, handler) => {
       // Go next/prev selectedAuthor in authorCountsList list
+      const key = handler.keys[0];
       if (selectedAuthor) {
-        const key = handler.keys[0];
         const index = authorCountsList.indexOf(selectedAuthor);
         if (key === 'h') {
           if (index > 0 && index < authorCountsList.length) {
             setSelectedAuthor(authorCountsList[index - 1]);
+            scrollableRef.current?.focus();
           }
         } else if (key === 'l') {
           if (index < authorCountsList.length - 1 && index >= 0) {
             setSelectedAuthor(authorCountsList[index + 1]);
+            scrollableRef.current?.focus();
           }
         }
+      } else if (key === 'l') {
+        setSelectedAuthor(authorCountsList[0]);
+        scrollableRef.current?.focus();
       }
     },
     {
       preventDefault: true,
       ignoreModifiers: true,
-      enableOnFormTags: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const escRef = useHotkeys(
+    'esc',
+    () => {
+      setSelectedAuthor(null);
+      scrollableRef.current?.focus();
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const dotRef = useHotkeys(
+    '.',
+    () => {
+      scrollableRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: ['input'],
     },
   );
 
   return (
     <div
-      ref={scrollableRef}
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef.current = node;
+        kRef.current = node;
+        hlRef.current = node;
+        escRef.current = node;
+      }}
       id="catchup-page"
       class="deck-container"
       tabIndex="-1"
@@ -1424,6 +1463,25 @@ function Catchup() {
                 <dd>
                   Posts are grouped by authors, sorted by posts count per
                   author.
+                </dd>
+                <dt>Keyboard shortcuts</dt>
+                <dd>
+                  <kbd>j</kbd>: Next post
+                </dd>
+                <dd>
+                  <kbd>k</kbd>: Previous post
+                </dd>
+                <dd>
+                  <kbd>l</kbd>: Next author
+                </dd>
+                <dd>
+                  <kbd>h</kbd>: Previous author
+                </dd>
+                <dd>
+                  <kbd>Enter</kbd>: Open post details
+                </dd>
+                <dd>
+                  <kbd>.</kbd>: Scroll to top
                 </dd>
               </dl>
             </main>

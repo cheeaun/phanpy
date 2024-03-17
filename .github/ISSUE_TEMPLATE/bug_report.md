@@ -10,6 +10,7 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 - Which site: [e.g. dev.phanpy.social OR phanpy.social]
+- Which site version: [On Phanpy, go to Settings -> About]
 - Which instance: [e.g. mastodon.social]
 
 **To Reproduce**

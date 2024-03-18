@@ -33,7 +33,7 @@ function AccountBlock({
         <span>
           <b>████████</b>
           <br />
-          <span class="account-block-acct">@██████</span>
+          <span class="account-block-acct">██████</span>
         </span>
       </div>
     );
@@ -87,7 +87,7 @@ function AccountBlock({
       class="account-block"
       href={url}
       target={external ? '_blank' : null}
-      title={`@${acct}`}
+      title={acct2 ? acct : `@${acct}`}
       onClick={(e) => {
         if (external) return;
         e.preventDefault();
@@ -121,7 +121,8 @@ function AccountBlock({
           </>
         )}{' '}
         <span class="account-block-acct">
-          @{acct1}
+          {acct2 ? '' : '@'}
+          {acct1}
           <wbr />
           {acct2}
           {locked && (

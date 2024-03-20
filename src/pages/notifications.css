@@ -421,3 +421,130 @@
   color: var(--text-color);
   background-color: var(--link-faded-color);
 }
+
+/* FILTERED NOTIFICATIONS */
+
+.filtered-notifications {
+  padding-block-end: 16px;
+
+  summary {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    user-select: none;
+    margin: 16px 0 0;
+    color: var(--text-insignificant-color);
+
+    &::marker,
+    &::-webkit-details-marker {
+      color: var(--text-insignificant-color);
+    }
+  }
+  details[open] summary {
+    color: var(--text-color);
+  }
+
+  summary + ul {
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 50vh;
+    max-height: 50dvh;
+    overflow: auto;
+    border-top: 1px solid var(--outline-color);
+    border-bottom: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-color);
+      border-radius: 16px;
+      border-width: 0;
+    }
+
+    li {
+      display: flex;
+      padding: 16px;
+      row-gap: 8px;
+      column-gap: 16px;
+      border-bottom: 1px solid var(--outline-color);
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .request-notifcations {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+
+      .last-post {
+        > .status-link {
+          border-radius: 8px;
+          overflow: hidden;
+          --max-height: 160px;
+          max-height: var(--max-height);
+          border: 1px solid var(--outline-color);
+
+          &:is(:hover, :focus-visible) {
+            border-color: var(--outline-hover-color);
+          }
+
+          .status {
+            mask-image: linear-gradient(
+              to bottom,
+              black calc(var(--max-height) / 2),
+              transparent calc(var(--max-height) - 8px)
+            );
+            font-size: calc(var(--text-size) * 0.9);
+
+            .content-container {
+              pointer-events: none;
+              filter: saturate(0.5);
+            }
+          }
+        }
+      }
+
+      .request-notifications-account {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+
+    .notification-request-buttons {
+      grid-area: buttons;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      button {
+        max-width: 30vw;
+      }
+
+      .notification-request-states {
+        min-height: 32px;
+        text-align: center;
+        vertical-align: middle;
+
+        .icon {
+          margin-inline: 8px;
+
+          &.notification-accepted {
+            color: var(--green-color);
+          }
+
+          &.notification-dismissed {
+            color: var(--red-color);
+          }
+        }
+      }
+    }
+  }
+}

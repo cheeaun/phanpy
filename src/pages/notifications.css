@@ -475,6 +475,7 @@
     }
 
     .request-notifcations {
+      min-width: 0;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -482,6 +483,8 @@
       gap: 8px;
 
       .last-post {
+        max-width: 100%;
+
         > .status-link {
           border-radius: 8px;
           overflow: hidden;

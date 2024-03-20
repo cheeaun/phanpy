@@ -891,13 +891,12 @@ function Status({
           </div>
         )
       )}
-      {!isSizeLarge ||
-        ((enableTranslate || !language || differentLanguage) && (
-          <MenuDivider />
-        ))}
+      {((!isSizeLarge && sameInstance) ||
+        enableTranslate ||
+        !language ||
+        differentLanguage) && <MenuDivider />}
       {!isSizeLarge && (
         <>
-          <MenuDivider />
           <MenuLink
             to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
             onClick={(e) => {

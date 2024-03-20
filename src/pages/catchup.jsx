@@ -431,7 +431,7 @@ function Catchup() {
 
     // Deduplicate boosts
     const boostedPosts = {};
-    filteredPosts = filteredPosts.filter((post) => {
+    filteredPosts.forEach((post) => {
       if (post.reblog) {
         if (boostedPosts[post.reblog.id]) {
           if (boostedPosts[post.reblog.id].__BOOSTERS) {
@@ -439,12 +439,11 @@ function Catchup() {
           } else {
             boostedPosts[post.reblog.id].__BOOSTERS = new Set([post.account]);
           }
-          return false;
+          post.__HIDDEN = true;
         } else {
           boostedPosts[post.reblog.id] = post;
         }
       }
-      return true;
     });
 
     if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
@@ -479,39 +478,41 @@ function Catchup() {
     authorCountsList.forEach((authorID, index) => {
       authorIndices[authorID] = index;
     });
-    return filteredPosts.sort((a, b) => {
-      if (groupBy === 'account') {
-        const aAccountID = a.account.id;
-        const bAccountID = b.account.id;
-        const aIndex = authorIndices[aAccountID];
-        const bIndex = authorIndices[bAccountID];
-        const order = aIndex - bIndex;
-        if (order !== 0) {
-          return order;
+    return filteredPosts
+      .filter((post) => !post.__HIDDEN)
+      .sort((a, b) => {
+        if (groupBy === 'account') {
+          const aAccountID = a.account.id;
+          const bAccountID = b.account.id;
+          const aIndex = authorIndices[aAccountID];
+          const bIndex = authorIndices[bAccountID];
+          const order = aIndex - bIndex;
+          if (order !== 0) {
+            return order;
+          }
         }
-      }
-      if (sortBy !== 'createdAt') {
-        a = a.reblog || a;
-        b = b.reblog || b;
-        if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
-          return a.createdAt > b.createdAt ? 1 : -1;
+        if (sortBy !== 'createdAt') {
+          a = a.reblog || a;
+          b = b.reblog || b;
+          if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
+            return a.createdAt > b.createdAt ? 1 : -1;
+          }
         }
-      }
-      if (sortBy === 'density') {
-        const aDensity = postDensity(a);
-        const bDensity = postDensity(b);
+        if (sortBy === 'density') {
+          const aDensity = postDensity(a);
+          const bDensity = postDensity(b);
+          if (sortOrder === 'asc') {
+            return aDensity > bDensity ? 1 : -1;
+          } else {
+            return bDensity > aDensity ? 1 : -1;
+          }
+        }
         if (sortOrder === 'asc') {
-          return aDensity > bDensity ? 1 : -1;
+          return a[sortBy] > b[sortBy] ? 1 : -1;
         } else {
-          return bDensity > aDensity ? 1 : -1;
+          return b[sortBy] > a[sortBy] ? 1 : -1;
         }
-      }
-      if (sortOrder === 'asc') {
-        return a[sortBy] > b[sortBy] ? 1 : -1;
-      } else {
-        return b[sortBy] > a[sortBy] ? 1 : -1;
-      }
-    });
+      });
   }, [filteredPosts, sortBy, sortOrder, groupBy, authorCountsList]);
 
   const prevGroup = useRef(null);

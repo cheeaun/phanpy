@@ -227,7 +227,7 @@ button[hidden] {
 }
 :is(button, .button):not(:disabled, .disabled):is(:hover, :focus) {
   cursor: pointer;
-  filter: brightness(1.2);
+  filter: brightness(1.05);
 }
 :is(button, .button):not(:disabled, .disabled):active {
   filter: brightness(0.8);

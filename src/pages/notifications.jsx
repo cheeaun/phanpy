@@ -709,7 +709,7 @@ function Notifications({ columnMode }) {
             }
           }}
         >
-          <div class="sheet" tabIndex="-1">
+          <div class="sheet" id="notifications-settings" tabIndex="-1">
             <button
               type="button"
               class="sheet-close"

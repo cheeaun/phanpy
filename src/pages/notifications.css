@@ -551,3 +551,15 @@
     }
   }
 }
+
+#notifications-settings {
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    input[type='checkbox'] {
+      flex-shrink: 0;
+    }
+  }
+}

@@ -956,10 +956,12 @@ function Catchup() {
                         <Link to={`/catchup?id=${pc.id}`}>
                           <Icon icon="history2" />{' '}
                           <span>
-                            {formatRange(
-                              new Date(pc.startAt),
-                              new Date(pc.endAt),
-                            )}
+                            {pc.startAt
+                              ? dtf.formatRange(
+                                  new Date(pc.startAt),
+                                  new Date(pc.endAt),
+                                )
+                              : `… – ${dtf.format(new Date(pc.endAt))}`}
                           </span>
                         </Link>{' '}
                         <span>
@@ -1011,7 +1013,7 @@ function Catchup() {
                 {posts.length > 0 && (
                   <p>
                     <b class="ib">
-                      {formatRange(
+                      {dtf.formatRange(
                         new Date(posts[0].createdAt),
                         new Date(posts[posts.length - 1].createdAt),
                       )}
@@ -1836,9 +1838,6 @@ const dtf = new Intl.DateTimeFormat(locale, {
   hour: 'numeric',
   minute: 'numeric',
 });
-function formatRange(startDate, endDate) {
-  return dtf.formatRange(startDate, endDate);
-}
 
 function binByTime(data, key, numBins) {
   // Extract dates from data objects

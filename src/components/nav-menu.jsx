@@ -223,11 +223,15 @@ function NavMenu(props) {
                 <MenuLink to="/f">
                   <Icon icon="heart" size="l" /> <span>Likes</span>
                 </MenuLink>
-                <MenuLink to="/ft">
+                <MenuLink to="/fh">
                   <Icon icon="hashtag" size="l" />{' '}
                   <span>Followed Hashtags</span>
                 </MenuLink>
                 <MenuDivider />
+                <MenuLink to="/ft">
+                  <Icon icon="filters" size="l" />
+                  Filters
+                </MenuLink>
                 <MenuItem
                   onClick={() => {
                     states.showGenericAccounts = {

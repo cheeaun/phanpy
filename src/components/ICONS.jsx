@@ -78,6 +78,7 @@ export const ICONS = {
   refresh: () => import('@iconify-icons/mingcute/refresh-2-line'),
   emoji2: () => import('@iconify-icons/mingcute/emoji-2-line'),
   filter: () => import('@iconify-icons/mingcute/filter-2-line'),
+  filters: () => import('@iconify-icons/mingcute/filter-line'),
   chart: () => import('@iconify-icons/mingcute/chart-line-line'),
   react: () => import('@iconify-icons/mingcute/react-line'),
   layout4: () => import('@iconify-icons/mingcute/layout-4-line'),

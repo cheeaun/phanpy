@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
+import { addListStore, deleteListStore, updateListStore } from '../utils/lists';
 import supports from '../utils/supports';
 
 import Icon from './icon';
@@ -75,6 +76,14 @@ function ListAddEdit({ list, onClose }) {
                   state: 'success',
                   list: listResult,
                 });
+
+                setTimeout(() => {
+                  if (editMode) {
+                    updateListStore(listResult);
+                  } else {
+                    addListStore(listResult);
+                  }
+                }, 1);
               } catch (e) {
                 console.error(e);
                 setUIState('error');
@@ -146,6 +155,9 @@ function ListAddEdit({ list, onClose }) {
                       onClose?.({
                         state: 'deleted',
                       });
+                      setTimeout(() => {
+                        deleteListStore(list.id);
+                      }, 1);
                     } catch (e) {
                       console.error(e);
                       setUIState('error');

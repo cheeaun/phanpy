@@ -39,6 +39,8 @@ function Columns() {
     if (!Component) return null;
     // Don't show Search column with no query, for now
     if (type === 'search' && !params.query) return null;
+    // Don't show List column with no list, for now
+    if (type === 'list' && !params.id) return null;
     return (
       <Component key={type + JSON.stringify(params)} {...params} columnMode />
     );

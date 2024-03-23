@@ -2288,10 +2288,10 @@ ul.link-list li a .icon {
   filter: none !important;
 }
 .nav-menu-button .avatar {
-  transition: box-shadow 0.3s ease-out;
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-light-color) !important;
 }
 .nav-menu-button:is(:hover, :focus, .active) .avatar {
-  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-light-color);
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-color) !important;
 }
 .nav-menu-button.with-avatar .icon {
   position: absolute;

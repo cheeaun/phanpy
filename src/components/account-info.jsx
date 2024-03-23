@@ -14,6 +14,7 @@ import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
+import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
@@ -1558,13 +1559,12 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     setUIState('loading');
     (async () => {
       try {
-        const lists = await masto.v1.lists.list();
-        lists.sort((a, b) => a.title.localeCompare(b.title));
+        const lists = await getLists();
+        setLists(lists);
         const listsContainingAccount = await masto.v1.accounts
           .$select(accountID)
           .lists.list();
         console.log({ lists, listsContainingAccount });
-        setLists(lists);
         setListsContainingAccount(listsContainingAccount);
         setUIState('default');
       } catch (e) {

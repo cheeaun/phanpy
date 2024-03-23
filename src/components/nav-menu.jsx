@@ -7,11 +7,12 @@ import {
   SubMenu,
 } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
+import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -24,16 +25,12 @@ function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { masto, instance, authenticated } = api();
 
-  const [currentAccount, setCurrentAccount] = useState();
-  const [moreThanOneAccount, setMoreThanOneAccount] = useState(false);
-
-  useEffect(() => {
+  const [currentAccount, moreThanOneAccount] = useMemo(() => {
     const accounts = store.local.getJSON('accounts') || [];
     const acc = accounts.find(
       (account) => account.info.id === store.session.get('currentAccount'),
     );
-    if (acc) setCurrentAccount(acc);
-    setMoreThanOneAccount(accounts.length > 1);
+    return [acc, accounts.length > 1];
   }, []);
 
   // Home = Following
@@ -89,6 +86,13 @@ function NavMenu(props) {
     return results;
   }
 
+  const [lists, setLists] = useState([]);
+  useEffect(() => {
+    if (menuState === 'open') {
+      getLists().then(setLists);
+    }
+  }, [menuState === 'open']);
+
   const buttonClickTS = useRef();
   return (
     <>
@@ -97,7 +101,7 @@ function NavMenu(props) {
         type="button"
         class={`button plain nav-menu-button ${
           moreThanOneAccount ? 'with-avatar' : ''
-        } ${open ? 'active' : ''}`}
+        } ${menuState === 'open' ? 'active' : ''}`}
         style={{ position: 'relative' }}
         onClick={() => {
           buttonClickTS.current = Date.now();
@@ -203,9 +207,38 @@ function NavMenu(props) {
                   <Icon icon="user" size="l" /> <span>Profile</span>
                 </MenuLink>
               )}
-              <MenuLink to="/l">
-                <Icon icon="list" size="l" /> <span>Lists</span>
-              </MenuLink>
+              {lists?.length > 0 ? (
+                <SubMenu
+                  overflow="auto"
+                  gap={-8}
+                  label={
+                    <>
+                      <Icon icon="list" size="l" />
+                      <span class="menu-grow">Lists</span>
+                      <Icon icon="chevron-right" />
+                    </>
+                  }
+                >
+                  <MenuLink to="/l">
+                    <span>All Lists</span>
+                  </MenuLink>
+                  {lists?.length > 0 && (
+                    <>
+                      <MenuDivider />
+                      {lists.map((list) => (
+                        <MenuLink key={list.id} to={`/l/${list.id}`}>
+                          <span>{list.title}</span>
+                        </MenuLink>
+                      ))}
+                    </>
+                  )}
+                </SubMenu>
+              ) : (
+                <MenuLink to="/l">
+                  <Icon icon="list" size="l" />
+                  <span>Lists</span>
+                </MenuLink>
+              )}
               <MenuLink to="/b">
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>

@@ -14,6 +14,7 @@ import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
 import { fetchFollowedTags } from '../utils/followed-tags';
+import { getLists, getListTitle } from '../utils/lists';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -43,7 +44,7 @@ const TYPES = [
 const TYPE_TEXT = {
   following: 'Home / Following',
   notifications: 'Notifications',
-  list: 'List',
+  list: 'Lists',
   public: 'Public (Local / Federated)',
   search: 'Search',
   'account-statuses': 'Account',
@@ -58,6 +59,7 @@ const TYPE_PARAMS = {
     {
       text: 'List ID',
       name: 'id',
+      notRequired: true,
     },
   ],
   public: [
@@ -122,10 +124,6 @@ const TYPE_PARAMS = {
     },
   ],
 };
-const fetchListTitle = pmem(async ({ id }) => {
-  const list = await api().masto.v1.lists.$select(id).fetch();
-  return list.title;
-});
 const fetchAccountTitle = pmem(async ({ id }) => {
   const account = await api().masto.v1.accounts.$select(id).fetch();
   return account.username || account.acct || account.displayName;
@@ -150,10 +148,11 @@ export const SHORTCUTS_META = {
     icon: 'notification',
   },
   list: {
-    id: 'list',
-    title: fetchListTitle,
-    path: ({ id }) => `/l/${id}`,
+    id: ({ id }) => (id ? 'list' : 'lists'),
+    title: ({ id }) => (id ? getListTitle(id) : 'Lists'),
+    path: ({ id }) => (id ? `/l/${id}` : '/l'),
     icon: 'list',
+    excludeViewMode: ({ id }) => (!id ? ['multi-column'] : []),
   },
   public: {
     id: 'public',
@@ -496,18 +495,8 @@ function ShortcutsSettings({ onClose }) {
   );
 }
 
-const FETCH_MAX_AGE = 1000 * 60; // 1 minute
-const fetchLists = pmem(
-  () => {
-    const { masto } = api();
-    return masto.v1.lists.list();
-  },
-  {
-    maxAge: FETCH_MAX_AGE,
-  },
-);
-
 const FORM_NOTES = {
+  list: `Specific list is optional. For multi-column mode, list is required, else the column will not be shown.`,
   search: `For multi-column mode, search term is required, else the column will not be shown.`,
   hashtag: 'Multiple hashtags are supported. Space-separated.',
 };
@@ -532,8 +521,7 @@ function ShortcutForm({
       if (currentType !== 'list') return;
       try {
         setUIState('loading');
-        const lists = await fetchLists();
-        lists.sort((a, b) => a.title.localeCompare(b.title));
+        const lists = await getLists();
         setLists(lists);
         setUIState('default');
       } catch (e) {
@@ -644,6 +632,7 @@ function ShortcutForm({
                         disabled={disabled || uiState === 'loading'}
                         defaultValue={editMode ? shortcut.id : undefined}
                       >
+                        <option value=""></option>
                         {lists.map((list) => (
                           <option value={list.id}>{list.title}</option>
                         ))}

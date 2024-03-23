@@ -1029,6 +1029,70 @@ function RelatedActions({
                     {privateNote ? 'Edit private note' : 'Add private note'}
                   </span>
                 </MenuItem>
+                {following && !!relationship && (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        setRelationshipUIState('loading');
+                        (async () => {
+                          try {
+                            const rel = await currentMasto.v1.accounts
+                              .$select(accountID.current)
+                              .follow({
+                                notify: !notifying,
+                              });
+                            if (rel) setRelationship(rel);
+                            setRelationshipUIState('default');
+                            showToast(
+                              rel.notifying
+                                ? `Notifications enabled for @${username}'s posts.`
+                                : ` Notifications disabled for @${username}'s posts.`,
+                            );
+                          } catch (e) {
+                            alert(e);
+                            setRelationshipUIState('error');
+                          }
+                        })();
+                      }}
+                    >
+                      <Icon icon="notification" />
+                      <span>
+                        {notifying
+                          ? 'Disable notifications'
+                          : 'Enable notifications'}
+                      </span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setRelationshipUIState('loading');
+                        (async () => {
+                          try {
+                            const rel = await currentMasto.v1.accounts
+                              .$select(accountID.current)
+                              .follow({
+                                reblogs: !showingReblogs,
+                              });
+                            if (rel) setRelationship(rel);
+                            setRelationshipUIState('default');
+                            showToast(
+                              rel.showingReblogs
+                                ? `Boosts from @${username} disabled.`
+                                : `Boosts from @${username} enabled.`,
+                            );
+                          } catch (e) {
+                            alert(e);
+                            setRelationshipUIState('error');
+                          }
+                        })();
+                      }}
+                    >
+                      <Icon icon="rocket" />
+                      <span>
+                        {showingReblogs ? 'Disable boosts' : 'Enable boosts'}
+                      </span>
+                    </MenuItem>
+                  </>
+                )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
                   <MenuItem

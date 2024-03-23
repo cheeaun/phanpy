@@ -2228,8 +2228,14 @@ function Card({ card, selfReferential, instance }) {
           />
         </div>
         <div class="meta-container">
-          <p class="meta domain" dir="auto">
-            {domain}
+          <p class="meta domain">
+            <span class="domain">{domain}</span>{' '}
+            {!!publishedAt && <>&middot; </>}
+            {!!publishedAt && (
+              <>
+                <RelativeTime datetime={publishedAt} format="micro" />
+              </>
+            )}
           </p>
           <p class="title" dir="auto" title={title}>
             {title}
@@ -2301,7 +2307,15 @@ function Card({ card, selfReferential, instance }) {
         >
           <div class="meta-container">
             <p class="meta domain">
-              <Icon icon="link" size="s" /> <span>{domain}</span>
+              <span class="domain">
+                <Icon icon="link" size="s" /> <span>{domain}</span>
+              </span>{' '}
+              {!!publishedAt && <>&middot; </>}
+              {!!publishedAt && (
+                <>
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                </>
+              )}
             </p>
             <p class="title" title={title}>
               {title}

@@ -198,6 +198,7 @@ function Notifications({ columnMode }) {
 
         setUIState('default');
       } catch (e) {
+        console.error(e);
         setUIState('error');
       }
     })();

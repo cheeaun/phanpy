@@ -25,6 +25,7 @@ const NOTIFICATION_ICONS = {
   update: 'pencil',
   'admin.signup': 'account-edit',
   'admin.report': 'account-warning',
+  severed_relationships: 'unlink',
 };
 
 /*
@@ -63,6 +64,14 @@ const contentText = {
   'favourite+reblog_reply': 'boosted & liked your reply.',
   'admin.sign_up': 'signed up.',
   'admin.report': (targetAccount) => <>reported {targetAccount}</>,
+  severed_relationships: (name) => `Relationships with ${name} severed.`,
+};
+
+// account_suspension, domain_block, user_domain_block
+const SEVERED_RELATIONSHIPS_TEXT = {
+  account_suspension: 'Account has been suspended.',
+  domain_block: 'Domain has been blocked.',
+  user_domain_block: 'You blocked this domain.',
 };
 
 const AVATARS_LIMIT = 50;
@@ -73,7 +82,8 @@ function Notification({
   isStatic,
   disableContextMenu,
 }) {
-  const { id, status, account, report, _accounts, _statuses } = notification;
+  const { id, status, account, report, event, _accounts, _statuses } =
+    notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
@@ -134,6 +144,11 @@ function Notification({
       const targetAccount = report?.targetAccount;
       if (targetAccount) {
         text = text(<NameText account={targetAccount} showAvatar />);
+      }
+    } else if (type === 'severed_relationships') {
+      const targetName = event?.targetName;
+      if (targetName) {
+        text = text(targetName);
       }
     }
   }
@@ -203,9 +218,11 @@ function Notification({
                       </b>{' '}
                     </>
                   ) : (
-                    <>
-                      <NameText account={account} showAvatar />{' '}
-                    </>
+                    account && (
+                      <>
+                        <NameText account={account} showAvatar />{' '}
+                      </>
+                    )
                   )}
                 </>
               )}
@@ -223,6 +240,44 @@ function Notification({
             </p>
             {type === 'follow_request' && (
               <FollowRequestButtons accountID={account.id} />
+            )}
+            {type === 'severed_relationships' && (
+              <>
+                <p>
+                  <span class="insignificant">
+                    {event?.purge ? (
+                      'Purged by administrators.'
+                    ) : (
+                      <>
+                        {event.relationshipsCount} relationship
+                        {event.relationshipsCount === 1 ? '' : 's'}
+                        {!!event.createdAt && (
+                          <>
+                            {' '}
+                            •{' '}
+                            <RelativeTime
+                              datetime={event.createdAt}
+                              format="micro"
+                            />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </span>
+                  <br />
+                  <b>{SEVERED_RELATIONSHIPS_TEXT[event.type]}</b>
+                </p>
+                <p>
+                  <a
+                    href={`https://${instance}/severed_relationships`}
+                    class="button plain6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>View</span> <Icon icon="external" />
+                  </a>
+                </p>
+              </>
             )}
           </>
         )}

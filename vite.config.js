@@ -110,6 +110,7 @@ export default defineConfig({
   ],
   build: {
     sourcemap: true,
+    cssCodeSplit: false,
     rollupOptions: {
       treeshake: false,
       input: {

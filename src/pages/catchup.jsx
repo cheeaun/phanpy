@@ -1134,7 +1134,12 @@ function Catchup() {
                                   )}
                                 </div>
                                 {!!title && (
-                                  <h1 class="title" lang={language} dir="auto">
+                                  <h1
+                                    class="title"
+                                    lang={language}
+                                    dir="auto"
+                                    title={title}
+                                  >
                                     {title}
                                   </h1>
                                 )}
@@ -1144,6 +1149,7 @@ function Catchup() {
                                   class="description"
                                   lang={language}
                                   dir="auto"
+                                  title={description}
                                 >
                                   {description}
                                 </p>

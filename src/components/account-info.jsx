@@ -1834,7 +1834,8 @@ function EditProfileSheet({ onClose = () => {} }) {
 
   console.log('EditProfileSheet', account);
   const { displayName, source } = account || {};
-  const { note } = source || {};
+  const { note, fields } = source || {};
+  const fieldsAttributesRef = useRef(null);
 
   return (
     <div class="sheet" id="edit-profile-container">
@@ -1858,11 +1859,34 @@ function EditProfileSheet({ onClose = () => {} }) {
               const formData = new FormData(e.target);
               const displayName = formData.get('display_name');
               const note = formData.get('note');
+              const fieldsAttributesFields =
+                fieldsAttributesRef.current.querySelectorAll(
+                  'input[name^="fields_attributes"]',
+                );
+              const fieldsAttributes = [];
+              fieldsAttributesFields.forEach((field) => {
+                const name = field.name;
+                const [_, index, key] =
+                  name.match(/fields_attributes\[(\d+)\]\[(.+)\]/) || [];
+                const value = field.value ? field.value.trim() : '';
+                if (index && key && value) {
+                  if (!fieldsAttributes[index]) fieldsAttributes[index] = {};
+                  fieldsAttributes[index][key] = value;
+                }
+              });
+              // Fill in the blanks
+              fieldsAttributes.forEach((field) => {
+                if (field.name && !field.value) {
+                  field.value = '';
+                }
+              });
+
               (async () => {
                 try {
                   const newAccount = await masto.v1.accounts.updateCredentials({
                     displayName,
                     note,
+                    fieldsAttributes,
                   });
                   console.log('updated account', newAccount);
                   onClose?.({
@@ -1900,6 +1924,32 @@ function EditProfileSheet({ onClose = () => {} }) {
                 />
               </label>
             </p>
+            {/* Table for fields; name and values are in fields, min 4 rows */}
+            <p>Extra fields</p>
+            <table ref={fieldsAttributesRef}>
+              <thead>
+                <tr>
+                  <th>Label</th>
+                  <th>Content</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: Math.max(4, fields.length) }).map(
+                  (_, i) => {
+                    const { name = '', value = '' } = fields[i] || {};
+                    return (
+                      <FieldsAttributesRow
+                        key={i}
+                        name={name}
+                        value={value}
+                        index={i}
+                        disabled={uiState === 'loading'}
+                      />
+                    );
+                  },
+                )}
+              </tbody>
+            </table>
             <footer>
               <button
                 type="button"
@@ -1919,6 +1969,34 @@ function EditProfileSheet({ onClose = () => {} }) {
         )}
       </main>
     </div>
+  );
+}
+
+function FieldsAttributesRow({ name, value, disabled, index: i }) {
+  const [hasValue, setHasValue] = useState(!!value);
+  return (
+    <tr>
+      <td>
+        <input
+          type="text"
+          name={`fields_attributes[${i}][name]`}
+          defaultValue={name}
+          disabled={disabled}
+          maxLength={255}
+          required={hasValue}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name={`fields_attributes[${i}][value]`}
+          defaultValue={value}
+          disabled={disabled}
+          maxLength={255}
+          onChange={(e) => setHasValue(!!e.currentTarget.value)}
+        />
+      </td>
+    </tr>
   );
 }
 

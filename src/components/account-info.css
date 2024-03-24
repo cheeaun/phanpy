@@ -801,6 +801,26 @@
     }
   }
 
+  table {
+    width: 100%;
+
+    th {
+      text-align: left;
+      color: var(--text-insignificant-color);
+      font-weight: normal;
+      font-size: 0.8em;
+      text-transform: uppercase;
+    }
+
+    tbody tr td:first-child {
+      width: 40%;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+
   footer {
     display: flex;
     justify-content: space-between;

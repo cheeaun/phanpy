@@ -341,6 +341,17 @@ function AccountInfo({
     [standalone, id, statusesCount],
   );
 
+  const onProfileUpdate = useCallback(
+    (newAccount) => {
+      if (newAccount.id === id) {
+        console.log('Updated account info', newAccount);
+        setInfo(newAccount);
+        states.accounts[`${newAccount.id}@${instance}`] = newAccount;
+      }
+    },
+    [id, instance],
+  );
+
   return (
     <div
       tabIndex="-1"
@@ -793,8 +804,10 @@ function AccountInfo({
               <RelatedActions
                 info={info}
                 instance={instance}
+                standalone={standalone}
                 authenticated={authenticated}
                 onRelationshipChange={onRelationshipChange}
+                onProfileUpdate={onProfileUpdate}
               />
             </footer>
           </>
@@ -809,8 +822,10 @@ const FAMILIAR_FOLLOWERS_LIMIT = 3;
 function RelatedActions({
   info,
   instance,
+  standalone,
   authenticated,
   onRelationshipChange = () => {},
+  onProfileUpdate = () => {},
 }) {
   if (!info) return null;
   const {
@@ -921,6 +936,7 @@ function RelatedActions({
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const [lists, setLists] = useState([]);
 
   return (
@@ -1341,6 +1357,19 @@ function RelatedActions({
                 </MenuItem>
               </>
             )}
+            {currentAuthenticated && isSelf && standalone && (
+              <>
+                <MenuDivider />
+                <MenuItem
+                  onClick={() => {
+                    setShowEditProfile(true);
+                  }}
+                >
+                  <Icon icon="pencil" />
+                  <span>Edit profile</span>
+                </MenuItem>
+              </>
+            )}
             {import.meta.env.DEV && currentAuthenticated && isSelf && (
               <>
                 <MenuDivider />
@@ -1479,6 +1508,22 @@ function RelatedActions({
               // onRelationshipChange({ relationship, currentID: accountID.current });
             }}
             onClose={() => setShowPrivateNoteModal(false)}
+          />
+        </Modal>
+      )}
+      {!!showEditProfile && (
+        <Modal
+          onClose={() => {
+            setShowEditProfile(false);
+          }}
+        >
+          <EditProfileSheet
+            onClose={({ state, account } = {}) => {
+              setShowEditProfile(false);
+              if (state === 'success' && account) {
+                onProfileUpdate(account);
+              }
+            }}
           />
         </Modal>
       )}
@@ -1764,6 +1809,114 @@ function PrivateNoteSheet({
             </span>
           </footer>
         </form>
+      </main>
+    </div>
+  );
+}
+
+function EditProfileSheet({ onClose = () => {} }) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('loading');
+  const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const acc = await masto.v1.accounts.verifyCredentials();
+        setAccount(acc);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  console.log('EditProfileSheet', account);
+  const { displayName, source } = account || {};
+  const { note } = source || {};
+
+  return (
+    <div class="sheet" id="edit-profile-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <b>Edit profile</b>
+      </header>
+      <main>
+        {uiState === 'loading' ? (
+          <p class="ui-state">
+            <Loader abrupt />
+          </p>
+        ) : (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const displayName = formData.get('display_name');
+              const note = formData.get('note');
+              (async () => {
+                try {
+                  const newAccount = await masto.v1.accounts.updateCredentials({
+                    displayName,
+                    note,
+                  });
+                  console.log('updated account', newAccount);
+                  onClose?.({
+                    state: 'success',
+                    account: newAccount,
+                  });
+                } catch (e) {
+                  console.error(e);
+                  alert(e?.message || 'Unable to update profile.');
+                }
+              })();
+            }}
+          >
+            <p>
+              <label>
+                Name{' '}
+                <input
+                  type="text"
+                  name="display_name"
+                  defaultValue={displayName}
+                  maxLength={30}
+                  disabled={uiState === 'loading'}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Bio
+                <textarea
+                  defaultValue={note}
+                  name="note"
+                  maxLength={500}
+                  rows="5"
+                  disabled={uiState === 'loading'}
+                />
+              </label>
+            </p>
+            <footer>
+              <button
+                type="button"
+                class="light"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  onClose?.();
+                }}
+              >
+                Cancel
+              </button>
+              <button type="submit" disabled={uiState === 'loading'}>
+                Save
+              </button>
+            </footer>
+          </form>
+        )}
       </main>
     </div>
   );

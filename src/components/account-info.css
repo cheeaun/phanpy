@@ -781,3 +781,33 @@
     }
   }
 }
+
+#edit-profile-container {
+  p {
+    margin-block: 8px;
+  }
+
+  label {
+    input,
+    textarea {
+      display: block;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 5em;
+      max-height: 50vh;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    * {
+      vertical-align: middle;
+    }
+  }
+}

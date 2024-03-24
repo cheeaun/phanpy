@@ -179,6 +179,7 @@ export default function Modals() {
             excludeRelationshipAttrs={
               snapStates.showGenericAccounts.excludeRelationshipAttrs
             }
+            postID={snapStates.showGenericAccounts.postID}
             onClose={() => (states.showGenericAccounts = false)}
           />
         </Modal>

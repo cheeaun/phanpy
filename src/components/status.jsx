@@ -724,25 +724,6 @@ function Status({
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const StatusMenuItems = (
     <>
-      {isSizeLarge && (
-        <>
-          <MenuItem
-            onClick={() => {
-              states.showGenericAccounts = {
-                heading: 'Boosted/Liked by…',
-                fetchAccounts: fetchBoostedLikedByAccounts,
-                instance,
-                showReactions: true,
-              };
-            }}
-          >
-            <Icon icon="react" />
-            <span>
-              Boosted/Liked by<span class="more-insignificant">…</span>
-            </span>
-          </MenuItem>
-        </>
-      )}
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-control-group-horizontal status-menu">
@@ -838,6 +819,29 @@ function Status({
               <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
             </MenuItem>
           </div>
+        </>
+      )}
+      {!isSizeLarge && sameInstance && (isSizeLarge || showActionsBar) && (
+        <MenuDivider />
+      )}
+      {(isSizeLarge || showActionsBar) && (
+        <>
+          <MenuItem
+            onClick={() => {
+              states.showGenericAccounts = {
+                heading: 'Boosted/Liked by…',
+                fetchAccounts: fetchBoostedLikedByAccounts,
+                instance,
+                showReactions: true,
+                postID: sKey,
+              };
+            }}
+          >
+            <Icon icon="react" />
+            <span>
+              Boosted/Liked by<span class="more-insignificant">…</span>
+            </span>
+          </MenuItem>
         </>
       )}
       {(enableTranslate || !language || differentLanguage) && <MenuDivider />}

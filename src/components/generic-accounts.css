@@ -1,4 +1,24 @@
 #generic-accounts-container {
+  .post-preview {
+    --max-height: 120px;
+    max-height: var(--max-height);
+    overflow: hidden;
+    margin-block: 8px;
+    border: 1px solid var(--outline-color);
+    border-radius: 8px;
+    pointer-events: none;
+
+    .status {
+      font-size: calc(var(--text-size) * 0.9);
+      mask-image: linear-gradient(
+        to bottom,
+        black calc(var(--max-height) / 2),
+        transparent calc(var(--max-height) - 8px)
+      );
+      filter: saturate(0.5);
+    }
+  }
+
   .accounts-list {
     --list-gap: 16px;
     list-style: none;

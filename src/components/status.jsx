@@ -24,7 +24,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
-import AccountBlock from '../components/account-block';
+import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
 import Loader from '../components/loader';
 import Menu2 from '../components/menu2';
@@ -241,6 +241,8 @@ function Status({
     _deleted,
     _pinned,
     // _filtered,
+    // Non-Mastodon
+    emojiReactions,
   } = status;
 
   const currentAccount = useMemo(() => {
@@ -1929,6 +1931,46 @@ function Status({
                   </>
                 )}
               </div>
+              {!!emojiReactions?.length && (
+                <div class="emoji-reactions">
+                  {emojiReactions.map((emojiReaction) => {
+                    const { name, count, me } = emojiReaction;
+                    const isShortCode = /^:.+?:$/.test(name);
+                    if (isShortCode) {
+                      const emoji = emojis.find(
+                        (e) =>
+                          e.shortcode ===
+                          name.replace(/^:/, '').replace(/:$/, ''),
+                      );
+                      if (emoji) {
+                        return (
+                          <span
+                            class={`emoji-reaction tag ${
+                              me ? '' : 'insignificant'
+                            }`}
+                          >
+                            <CustomEmoji
+                              alt={name}
+                              url={emoji.url}
+                              staticUrl={emoji.staticUrl}
+                            />
+                            {count}
+                          </span>
+                        );
+                      }
+                    }
+                    return (
+                      <span
+                        class={`emoji-reaction tag ${
+                          me ? '' : 'insignificant'
+                        }`}
+                      >
+                        {name} {count}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
               <div class={`actions ${_deleted ? 'disabled' : ''}`}>
                 <div class="action has-count">
                   <StatusButton

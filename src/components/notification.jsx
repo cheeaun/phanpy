@@ -7,6 +7,7 @@ import store from '../utils/store';
 import useTruncated from '../utils/useTruncated';
 
 import Avatar from './avatar';
+import CustomEmoji from './custom-emoji';
 import FollowRequestButtons from './follow-request-buttons';
 import Icon from './icon';
 import Link from './link';
@@ -45,6 +46,24 @@ admin.sign_up = Someone signed up (optionally sent to admins)
 admin.report = A new report has been filed
 */
 
+function emojiText(emoji, emoji_url) {
+  let url;
+  let staticUrl;
+  if (typeof emoji_url === 'string') {
+    url = emoji_url;
+  } else {
+    url = emoji_url?.url;
+    staticUrl = emoji_url?.staticUrl;
+  }
+  return url ? (
+    <>
+      reacted to your post with{' '}
+      <CustomEmoji url={url} staticUrl={staticUrl} alt={emoji} />
+    </>
+  ) : (
+    `reacted to your post with ${emoji}.`
+  );
+}
 const contentText = {
   mention: 'mentioned you in their post.',
   status: 'published a post.',
@@ -67,8 +86,8 @@ const contentText = {
   'admin.sign_up': 'signed up.',
   'admin.report': (targetAccount) => <>reported {targetAccount}</>,
   severed_relationships: (name) => `Relationships with ${name} severed.`,
-  emoji_reaction: (emoji) => `reacted to your post with ${emoji}.`,
-  'pleroma:emoji_reaction': (emoji) => `reacted to your post with ${emoji}.`,
+  emoji_reaction: emojiText,
+  'pleroma:emoji_reaction': emojiText,
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -156,7 +175,14 @@ function Notification({
       (type === 'emoji_reaction' || type === 'pleroma:emoji_reaction') &&
       notification.emoji
     ) {
-      text = text(notification.emoji);
+      const emojiURL =
+        notification.emoji_url || // This is string
+        status?.emojis?.find?.(
+          (emoji) =>
+            emoji?.shortcode ===
+            notification.emoji.replace(/^:/, '').replace(/:$/, ''),
+        ); // Emoji object instead of string
+      text = text(notification.emoji, emojiURL);
     } else if (count) {
       text = text(count);
     }

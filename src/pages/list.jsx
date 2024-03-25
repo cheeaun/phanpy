@@ -121,7 +121,8 @@ function List(props) {
             overflow="auto"
             menuButton={
               <button type="button" class="plain">
-                <Icon icon="list" size="l" />
+                <Icon icon="list" size="l" alt="Lists" />
+                <Icon icon="chevron-down" size="s" />
               </button>
             }
           >

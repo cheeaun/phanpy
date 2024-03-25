@@ -26,6 +26,8 @@ const NOTIFICATION_ICONS = {
   'admin.signup': 'account-edit',
   'admin.report': 'account-warning',
   severed_relationships: 'unlink',
+  emoji_reaction: 'emoji2',
+  'pleroma:emoji_reaction': 'emoji2',
 };
 
 /*
@@ -65,6 +67,8 @@ const contentText = {
   'admin.sign_up': 'signed up.',
   'admin.report': (targetAccount) => <>reported {targetAccount}</>,
   severed_relationships: (name) => `Relationships with ${name} severed.`,
+  emoji_reaction: (emoji) => `reacted to your post with ${emoji}.`,
+  'pleroma:emoji_reaction': (emoji) => `reacted to your post with ${emoji}.`,
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -138,9 +142,7 @@ function Notification({
 
   if (typeof text === 'function') {
     const count = _statuses?.length || _accounts?.length;
-    if (count) {
-      text = text(count);
-    } else if (type === 'admin.report') {
+    if (type === 'admin.report') {
       const targetAccount = report?.targetAccount;
       if (targetAccount) {
         text = text(<NameText account={targetAccount} showAvatar />);
@@ -150,6 +152,13 @@ function Notification({
       if (targetName) {
         text = text(targetName);
       }
+    } else if (
+      (type === 'emoji_reaction' || type === 'pleroma:emoji_reaction') &&
+      notification.emoji
+    ) {
+      text = text(notification.emoji);
+    } else if (count) {
+      text = text(count);
     }
   }
 

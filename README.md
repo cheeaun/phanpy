@@ -251,6 +251,7 @@ And here I am. Building a Mastodon web client.
 - [Statuzer](https://statuzer.com/)
 - [Tusked](https://tusked.app/)
 - [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone)
+- [Mangane](https://github.com/BDX-town/Mangane)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

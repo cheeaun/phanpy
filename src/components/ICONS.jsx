@@ -106,5 +106,5 @@ export const ICONS = {
   copy: () => import('@iconify-icons/mingcute/copy-2-line'),
   quote: () => import('@iconify-icons/mingcute/quote-left-line'),
   settings: () => import('@iconify-icons/mingcute/settings-6-line'),
-  unlink: () => import('@iconify-icons/mingcute/unlink-line'),
+  'heart-break': () => import('@iconify-icons/mingcute/heart-crack-line'),
 };

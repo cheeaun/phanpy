@@ -26,7 +26,7 @@ const NOTIFICATION_ICONS = {
   update: 'pencil',
   'admin.signup': 'account-edit',
   'admin.report': 'account-warning',
-  severed_relationships: 'unlink',
+  severed_relationships: 'heart-break',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
 };
@@ -85,16 +85,35 @@ const contentText = {
   'favourite+reblog_reply': 'boosted & liked your reply.',
   'admin.sign_up': 'signed up.',
   'admin.report': (targetAccount) => <>reported {targetAccount}</>,
-  severed_relationships: (name) => `Relationships with ${name} severed.`,
+  severed_relationships: (name) => (
+    <>
+      Lost connections with <i>{name}</i>.
+    </>
+  ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
 };
 
 // account_suspension, domain_block, user_domain_block
 const SEVERED_RELATIONSHIPS_TEXT = {
-  account_suspension: 'Account has been suspended.',
-  domain_block: 'Domain has been blocked.',
-  user_domain_block: 'You blocked this domain.',
+  account_suspension: ({ from, targetName }) => (
+    <>
+      An admin from <i>{from}</i> has suspended <i>{targetName}</i>, which means
+      you can no longer receive updates from them or interact with them.
+    </>
+  ),
+  domain_block: ({ from, targetName, followersCount, followingCount }) => (
+    <>
+      An admin from <i>{from}</i> has blocked <i>{targetName}</i>. Affected
+      followers: {followersCount}, followings: {followingCount}.
+    </>
+  ),
+  user_domain_block: ({ targetName, followersCount, followingCount }) => (
+    <>
+      You have blocked <i>{targetName}</i>. Removed followers: {followersCount},
+      followings: {followingCount}.
+    </>
+  ),
 };
 
 const AVATARS_LIMIT = 50;
@@ -277,42 +296,21 @@ function Notification({
               <FollowRequestButtons accountID={account.id} />
             )}
             {type === 'severed_relationships' && (
-              <>
-                <p>
-                  <span class="insignificant">
-                    {event?.purge ? (
-                      'Purged by administrators.'
-                    ) : (
-                      <>
-                        {event.relationshipsCount} relationship
-                        {event.relationshipsCount === 1 ? '' : 's'}
-                        {!!event.createdAt && (
-                          <>
-                            {' '}
-                            •{' '}
-                            <RelativeTime
-                              datetime={event.createdAt}
-                              format="micro"
-                            />
-                          </>
-                        )}
-                      </>
-                    )}
-                  </span>
-                  <br />
-                  <b>{SEVERED_RELATIONSHIPS_TEXT[event.type]}</b>
-                </p>
-                <p>
-                  <a
-                    href={`https://${instance}/severed_relationships`}
-                    class="button plain6"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>View</span> <Icon icon="external" />
-                  </a>
-                </p>
-              </>
+              <div>
+                {SEVERED_RELATIONSHIPS_TEXT[event.type]({
+                  from: instance,
+                  ...event,
+                })}
+                <br />
+                <a
+                  href={`https://${instance}/severed_relationships`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more <Icon icon="external" size="s" />
+                </a>
+                .
+              </div>
             )}
           </>
         )}

@@ -26,6 +26,7 @@ import { useSnapshot } from 'valtio';
 
 import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
+import LazyShazam from '../components/lazy-shazam';
 import Loader from '../components/loader';
 import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
@@ -3128,20 +3129,22 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
 
   return uniqueQuotes.map((q) => {
     return (
-      <Link
-        key={q.instance + q.id}
-        to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-        class="status-card-link"
-        data-read-more="Read more →"
-      >
-        <Status
-          statusID={q.id}
-          instance={q.instance}
-          size="s"
-          quoted={level + 1}
-          enableCommentHint
-        />
-      </Link>
+      <LazyShazam>
+        <Link
+          key={q.instance + q.id}
+          to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+          class="status-card-link"
+          data-read-more="Read more →"
+        >
+          <Status
+            statusID={q.id}
+            instance={q.instance}
+            size="s"
+            quoted={level + 1}
+            enableCommentHint
+          />
+        </Link>
+      </LazyShazam>
     );
   });
 });

@@ -209,17 +209,13 @@ function Timeline({
   const showNewPostsIndicator =
     items.length > 0 && uiState !== 'loading' && showNew;
   const handleLoadNewPosts = useCallback(() => {
-    loadItems(true);
+    if (showNewPostsIndicator) loadItems(true);
     scrollableRef.current?.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  }, [loadItems]);
-  const dotRef = useHotkeys('.', () => {
-    if (showNewPostsIndicator) {
-      handleLoadNewPosts();
-    }
-  });
+  }, [loadItems, showNewPostsIndicator]);
+  const dotRef = useHotkeys('.', handleLoadNewPosts);
 
   // const {
   //   scrollDirection,
@@ -365,6 +361,7 @@ function Timeline({
           jRef.current = node;
           kRef.current = node;
           oRef.current = node;
+          dotRef.current = node;
         }}
         tabIndex="-1"
       >

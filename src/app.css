@@ -1925,11 +1925,11 @@ body > .szh-menu-container {
   .szh-menu__item:not(.szh-menu__item--disabled):not(
     .szh-menu__item--hover
   ).danger {
-  color: var(--red-color);
+  color: var(--red-text-color);
 }
 .szh-menu
   .szh-menu__item.danger:not(.szh-menu__item--disabled).szh-menu__item--hover {
-  background-color: var(--red-color);
+  background-color: var(--red-text-color);
 }
 .szh-menu
   .szh-menu__item:not(.szh-menu__item--disabled):not(
@@ -2026,71 +2026,86 @@ body > .szh-menu-container {
   text-shadow: none;
 }
 
-/* DONUT METER */
+/* CHAR COUNTER */
 
-meter.donut {
-  appearance: none;
-}
-
-meter.donut::-webkit-meter-inner-element,
-meter.donut::-webkit-meter-bar,
-meter.donut::-webkit-meter-optimum-value,
-meter.donut::-webkit-meter-suboptimum-value,
-meter.donut::-webkit-meter-even-less-good-value {
-  display: none;
-}
-
-meter.donut::-moz-meter-bar {
-  background: transparent;
-}
-
-meter.donut {
-  position: relative;
+.char-counter {
   --dimension: 24px;
-  --border-width: 2px;
-  --middle-circle-radius: calc(var(--dimension) / 2 - var(--border-width));
-  width: var(--dimension);
-  height: var(--dimension);
-  border-radius: 50%;
-  --fill: calc(var(--percentage) * 1%);
-  --color: var(--link-color);
-  --middle-circle: radial-gradient(
-    circle at 50% 50%,
-    var(--bg-color) var(--middle-circle-radius),
-    transparent var(--middle-circle-radius)
-  );
-  background-image: var(--middle-circle),
-    conic-gradient(var(--color) var(--fill), var(--outline-color) 0);
-  transform: scale(0.7);
-  transition: transform 0.2s ease-in-out;
-}
-meter.donut.warning {
-  --color: var(--orange-color);
-  transform: scale(1);
-}
-meter.donut.danger {
-  --color: var(--red-color);
-  transform: scale(1);
-}
-meter.donut.explode {
-  background-image: none;
-  transform: scale(1);
-}
-meter.donut:is(.warning, .danger, .explode):after {
-  content: attr(data-left);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  color: var(--text-insignificant-color);
-}
-meter.donut:is(.danger, .explode):after {
-  color: var(--red-color);
-}
-meter.donut[hidden] {
+  min-width: var(--dimension);
+  min-height: var(--dimension);
+  position: relative;
   display: inline-block;
-  visibility: hidden;
+
+  &[hidden] {
+    visibility: hidden;
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  meter {
+    appearance: none;
+    position: relative;
+    --border-width: 2px;
+    --middle-circle-radius: calc(var(--dimension) / 2 - var(--border-width));
+    width: var(--dimension);
+    height: var(--dimension);
+    border-radius: 50%;
+    --fill: calc(var(--percentage) * 1%);
+    --color: var(--link-color);
+    --middle-circle: radial-gradient(
+      circle at 50% 50%,
+      var(--bg-color) var(--middle-circle-radius),
+      transparent var(--middle-circle-radius)
+    );
+    background-image: var(--middle-circle),
+      conic-gradient(var(--color) var(--fill), var(--outline-color) 0);
+    transform: scale(0.7);
+    transition: transform 0.2s ease-in-out;
+
+    &::-webkit-meter-inner-element,
+    &::-webkit-meter-bar,
+    &::-webkit-meter-optimum-value,
+    &::-webkit-meter-suboptimum-value,
+    &::-webkit-meter-even-less-good-value {
+      display: none;
+    }
+
+    &::-moz-meter-bar {
+      background: transparent;
+    }
+
+    &.warning {
+      --color: var(--orange-color);
+      transform: scale(1);
+    }
+    &.danger {
+      --color: var(--red-color);
+      transform: scale(1);
+    }
+    &.explode {
+      background-image: none;
+      transform: scale(1);
+    }
+    &:is(.warning, .danger, .explode) + .counter {
+      opacity: 1;
+      color: var(--text-insignificant-color);
+    }
+    &:is(.danger, .explode) + .counter {
+      opacity: 1;
+      color: var(--red-color);
+    }
+  }
+
+  .counter {
+    line-height: 1;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+  }
 }
 
 /* SHINY PILL */
@@ -2288,10 +2303,10 @@ ul.link-list li a .icon {
   filter: none !important;
 }
 .nav-menu-button .avatar {
-  transition: box-shadow 0.3s ease-out;
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-light-color) !important;
 }
 .nav-menu-button:is(:hover, :focus, .active) .avatar {
-  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-light-color);
+  box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--link-color) !important;
 }
 .nav-menu-button.with-avatar .icon {
   position: absolute;

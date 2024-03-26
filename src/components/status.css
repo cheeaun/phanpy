@@ -1585,16 +1585,16 @@ a:focus-visible .card img {
 }
 .card .meta.domain {
   opacity: 1;
-  color: var(--link-color);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: block;
+  color: var(--text-insignificant-color);
+
+  .domain {
+    color: var(--link-color);
+  }
 }
-.card:visited .meta.domain {
+.card:visited .meta .domain {
   color: var(--link-visited-color);
 }
-.card .meta.domain * {
+.card .meta .domain * {
   vertical-align: middle;
 }
 a.card {
@@ -1750,6 +1750,13 @@ a.card:is(:hover, :focus):visited {
 }
 .status.large .extra-meta {
   padding-top: 0;
+  margin-left: calc(-50px - 16px);
+}
+
+/* EMOJI REACTIONS */
+
+.status.large .emoji-reactions {
+  cursor: default;
   margin-left: calc(-50px - 16px);
 }
 

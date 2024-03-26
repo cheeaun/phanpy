@@ -431,7 +431,7 @@ function Catchup() {
 
     // Deduplicate boosts
     const boostedPosts = {};
-    filteredPosts = filteredPosts.filter((post) => {
+    filteredPosts.forEach((post) => {
       if (post.reblog) {
         if (boostedPosts[post.reblog.id]) {
           if (boostedPosts[post.reblog.id].__BOOSTERS) {
@@ -439,12 +439,11 @@ function Catchup() {
           } else {
             boostedPosts[post.reblog.id].__BOOSTERS = new Set([post.account]);
           }
-          return false;
+          post.__HIDDEN = true;
         } else {
           boostedPosts[post.reblog.id] = post;
         }
       }
-      return true;
     });
 
     if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
@@ -479,39 +478,41 @@ function Catchup() {
     authorCountsList.forEach((authorID, index) => {
       authorIndices[authorID] = index;
     });
-    return filteredPosts.sort((a, b) => {
-      if (groupBy === 'account') {
-        const aAccountID = a.account.id;
-        const bAccountID = b.account.id;
-        const aIndex = authorIndices[aAccountID];
-        const bIndex = authorIndices[bAccountID];
-        const order = aIndex - bIndex;
-        if (order !== 0) {
-          return order;
+    return filteredPosts
+      .filter((post) => !post.__HIDDEN)
+      .sort((a, b) => {
+        if (groupBy === 'account') {
+          const aAccountID = a.account.id;
+          const bAccountID = b.account.id;
+          const aIndex = authorIndices[aAccountID];
+          const bIndex = authorIndices[bAccountID];
+          const order = aIndex - bIndex;
+          if (order !== 0) {
+            return order;
+          }
         }
-      }
-      if (sortBy !== 'createdAt') {
-        a = a.reblog || a;
-        b = b.reblog || b;
-        if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
-          return a.createdAt > b.createdAt ? 1 : -1;
+        if (sortBy !== 'createdAt') {
+          a = a.reblog || a;
+          b = b.reblog || b;
+          if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
+            return a.createdAt > b.createdAt ? 1 : -1;
+          }
         }
-      }
-      if (sortBy === 'density') {
-        const aDensity = postDensity(a);
-        const bDensity = postDensity(b);
+        if (sortBy === 'density') {
+          const aDensity = postDensity(a);
+          const bDensity = postDensity(b);
+          if (sortOrder === 'asc') {
+            return aDensity > bDensity ? 1 : -1;
+          } else {
+            return bDensity > aDensity ? 1 : -1;
+          }
+        }
         if (sortOrder === 'asc') {
-          return aDensity > bDensity ? 1 : -1;
+          return a[sortBy] > b[sortBy] ? 1 : -1;
         } else {
-          return bDensity > aDensity ? 1 : -1;
+          return b[sortBy] > a[sortBy] ? 1 : -1;
         }
-      }
-      if (sortOrder === 'asc') {
-        return a[sortBy] > b[sortBy] ? 1 : -1;
-      } else {
-        return b[sortBy] > a[sortBy] ? 1 : -1;
-      }
-    });
+      });
   }, [filteredPosts, sortBy, sortOrder, groupBy, authorCountsList]);
 
   const prevGroup = useRef(null);
@@ -955,10 +956,12 @@ function Catchup() {
                         <Link to={`/catchup?id=${pc.id}`}>
                           <Icon icon="history2" />{' '}
                           <span>
-                            {formatRange(
-                              new Date(pc.startAt),
-                              new Date(pc.endAt),
-                            )}
+                            {pc.startAt
+                              ? dtf.formatRange(
+                                  new Date(pc.startAt),
+                                  new Date(pc.endAt),
+                                )
+                              : `… – ${dtf.format(new Date(pc.endAt))}`}
                           </span>
                         </Link>{' '}
                         <span>
@@ -1010,7 +1013,7 @@ function Catchup() {
                 {posts.length > 0 && (
                   <p>
                     <b class="ib">
-                      {formatRange(
+                      {dtf.formatRange(
                         new Date(posts[0].createdAt),
                         new Date(posts[posts.length - 1].createdAt),
                       )}
@@ -1131,7 +1134,12 @@ function Catchup() {
                                   )}
                                 </div>
                                 {!!title && (
-                                  <h1 class="title" lang={language} dir="auto">
+                                  <h1
+                                    class="title"
+                                    lang={language}
+                                    dir="auto"
+                                    title={title}
+                                  >
                                     {title}
                                   </h1>
                                 )}
@@ -1141,6 +1149,7 @@ function Catchup() {
                                   class="description"
                                   lang={language}
                                   dir="auto"
+                                  title={description}
                                 >
                                   {description}
                                 </p>
@@ -1835,9 +1844,6 @@ const dtf = new Intl.DateTimeFormat(locale, {
   hour: 'numeric',
   minute: 'numeric',
 });
-function formatRange(startDate, endDate) {
-  return dtf.formatRange(startDate, endDate);
-}
 
 function binByTime(data, key, numBins) {
   // Extract dates from data objects

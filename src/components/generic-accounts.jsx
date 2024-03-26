@@ -12,10 +12,12 @@ import useLocationChange from '../utils/useLocationChange';
 import AccountBlock from './account-block';
 import Icon from './icon';
 import Loader from './loader';
+import Status from './status';
 
 export default function GenericAccounts({
   instance,
   excludeRelationshipAttrs = [],
+  postID,
   onClose = () => {},
 }) {
   const { masto, instance: currentInstance } = api();
@@ -129,6 +131,8 @@ export default function GenericAccounts({
     }
   }, [snapStates.reloadGenericAccounts.counter]);
 
+  const post = states.statuses[postID];
+
   return (
     <div id="generic-accounts-container" class="sheet" tabindex="-1">
       <button type="button" class="sheet-close" onClick={onClose}>
@@ -138,6 +142,11 @@ export default function GenericAccounts({
         <h2>{heading || 'Accounts'}</h2>
       </header>
       <main>
+        {post && (
+          <div class="post-preview">
+            <Status status={post} size="s" readOnly />
+          </div>
+        )}
         {accounts.length > 0 ? (
           <>
             <ul class="accounts-list">

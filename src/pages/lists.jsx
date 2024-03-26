@@ -8,11 +8,10 @@ import ListAddEdit from '../components/list-add-edit';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
-import { api } from '../utils/api';
+import { fetchLists } from '../utils/lists';
 import useTitle from '../utils/useTitle';
 
 function Lists() {
-  const { masto } = api();
   useTitle(`Lists`, `/l`);
   const [uiState, setUIState] = useState('default');
 
@@ -22,8 +21,7 @@ function Lists() {
     setUIState('loading');
     (async () => {
       try {
-        const lists = await masto.v1.lists.list();
-        lists.sort((a, b) => a.title.localeCompare(b.title));
+        const lists = await fetchLists();
         console.log(lists);
         setLists(lists);
         setUIState('default');

@@ -525,8 +525,11 @@
         background-color: var(--bg-faded-color);
         box-shadow: 0 8px 16px -8px var(--drop-shadow-color),
           inset 0 1px var(--bg-color);
-        outline: 1px solid var(--outline-color);
         text-shadow: 0 1px var(--bg-color);
+      }
+
+      &:hover:not(:focus-visible) {
+        outline: 1px solid var(--outline-color);
       }
 
       &:active {
@@ -626,9 +629,23 @@
       gap: 4px;
       align-items: center;
       flex-shrink: 0;
+      min-height: 24px;
 
-      .icon {
+      > .avatar {
+        outline: 1px solid var(--bg-blur-color);
+      }
+
+      > .avatar ~ .avatar {
+        margin-left: -8px;
+      }
+
+      > .icon {
         color: var(--reblog-color);
+      }
+
+      > .name-text {
+        opacity: 0.75;
+        filter: grayscale(0.75);
       }
     }
 
@@ -796,6 +813,10 @@
           text-decoration: none;
           text-decoration-color: transparent;
           color: var(--link-text-color);
+
+          span {
+            text-decoration: none;
+          }
         }
       }
 
@@ -1077,6 +1098,20 @@
     dd {
       margin-block-end: 1em;
       margin-inline: 1em;
+
+      + dd {
+        margin-block-start: -0.9em;
+      }
     }
+  }
+
+  kbd {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0.2em 0.3em;
+    margin: 1px 0;
+    line-height: 1;
+    border: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
   }
 }

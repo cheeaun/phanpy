@@ -206,8 +206,12 @@ function AccountStatuses() {
   const [featuredTags, setFeaturedTags] = useState([]);
   useTitle(
     account?.acct
-      ? `${account?.displayName ? account.displayName + ' ' : ''}@${
-          account.acct
+      ? `${
+          account?.displayName
+            ? `${account.displayName} (${/@/.test(account.acct) ? '' : '@'}${
+                account.acct
+              })`
+            : `${/@/.test(account.acct) ? '' : '@'}${account.acct}`
         }${
           !excludeReplies
             ? ' (+ Replies)'

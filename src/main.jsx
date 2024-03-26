@@ -4,7 +4,7 @@ import './cloak-mode.css';
 
 // Polyfill needed for Firefox < 122
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1423593
-import '@formatjs/intl-segmenter/polyfill';
+// import '@formatjs/intl-segmenter/polyfill';
 import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 

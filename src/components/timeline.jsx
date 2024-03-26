@@ -209,17 +209,13 @@ function Timeline({
   const showNewPostsIndicator =
     items.length > 0 && uiState !== 'loading' && showNew;
   const handleLoadNewPosts = useCallback(() => {
-    loadItems(true);
+    if (showNewPostsIndicator) loadItems(true);
     scrollableRef.current?.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  }, [loadItems]);
-  const dotRef = useHotkeys('.', () => {
-    if (showNewPostsIndicator) {
-      handleLoadNewPosts();
-    }
-  });
+  }, [loadItems, showNewPostsIndicator]);
+  const dotRef = useHotkeys('.', handleLoadNewPosts);
 
   // const {
   //   scrollDirection,
@@ -365,6 +361,7 @@ function Timeline({
           jRef.current = node;
           kRef.current = node;
           oRef.current = node;
+          dotRef.current = node;
         }}
         tabIndex="-1"
       >
@@ -535,15 +532,15 @@ const TimelineItem = memo(
     const url = instance
       ? `/${instance}/s/${actualStatusID}`
       : `/s/${actualStatusID}`;
-    let title = '';
-    if (type === 'boosts') {
-      title = `${items.length} Boosts`;
-    } else if (type === 'pinned') {
-      title = 'Pinned posts';
-    }
-    const isCarousel = type === 'boosts' || type === 'pinned';
     if (items) {
       const fItems = filteredItems(items, filterContext);
+      let title = '';
+      if (type === 'boosts') {
+        title = `${fItems.length} Boosts`;
+      } else if (type === 'pinned') {
+        title = 'Pinned posts';
+      }
+      const isCarousel = type === 'boosts' || type === 'pinned';
       if (isCarousel) {
         // Here, we don't hide filtered posts, but we sort them last
         fItems.sort((a, b) => {

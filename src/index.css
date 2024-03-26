@@ -24,6 +24,11 @@
     transparent
   );
   --red-color: orangered;
+  --red-text-color: color-mix(
+    in srgb-linear,
+    var(--red-color) 60%,
+    var(--text-color) 40%
+  );
   --red-bg-color: color-mix(in lch, var(--red-color) 40%, transparent);
   --bg-color: #fff;
   --bg-faded-color: #f0f2f5;
@@ -227,7 +232,7 @@ button[hidden] {
 }
 :is(button, .button):not(:disabled, .disabled):is(:hover, :focus) {
   cursor: pointer;
-  filter: brightness(1.2);
+  filter: brightness(1.05);
 }
 :is(button, .button):not(:disabled, .disabled):active {
   filter: brightness(0.8);

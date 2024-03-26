@@ -78,6 +78,7 @@ export const ICONS = {
   refresh: () => import('@iconify-icons/mingcute/refresh-2-line'),
   emoji2: () => import('@iconify-icons/mingcute/emoji-2-line'),
   filter: () => import('@iconify-icons/mingcute/filter-2-line'),
+  filters: () => import('@iconify-icons/mingcute/filter-line'),
   chart: () => import('@iconify-icons/mingcute/chart-line-line'),
   react: () => import('@iconify-icons/mingcute/react-line'),
   layout4: () => import('@iconify-icons/mingcute/layout-4-line'),
@@ -103,4 +104,7 @@ export const ICONS = {
   'arrows-right': () => import('@iconify-icons/mingcute/arrows-right-line'),
   code: () => import('@iconify-icons/mingcute/code-line'),
   copy: () => import('@iconify-icons/mingcute/copy-2-line'),
+  quote: () => import('@iconify-icons/mingcute/quote-left-line'),
+  settings: () => import('@iconify-icons/mingcute/settings-6-line'),
+  'heart-break': () => import('@iconify-icons/mingcute/heart-crack-line'),
 };

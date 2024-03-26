@@ -16,7 +16,9 @@ function handleContentLinks(opts) {
     const textBeforeLinkIsAt = prevText?.endsWith('@');
     const textStartsWithAt = target.innerText.startsWith('@');
     if (
-      (target.classList.contains('u-url') && textStartsWithAt) ||
+      ((target.classList.contains('u-url') ||
+        target.classList.contains('mention')) &&
+        textStartsWithAt) ||
       (textBeforeLinkIsAt && !textStartsWithAt)
     ) {
       const targetText = (
@@ -24,12 +26,14 @@ function handleContentLinks(opts) {
       ).innerText.trim();
       const username = targetText.replace(/^@/, '');
       const url = target.getAttribute('href');
-      const mention = mentions.find(
-        (mention) =>
-          mention.username === username ||
-          mention.acct === username ||
-          mention.url === url,
-      );
+      // Only fallback to acct/username check if url doesn't match
+      const mention =
+        mentions.find((mention) => mention.url === url) ||
+        mentions.find(
+          (mention) =>
+            mention.acct === username || mention.username === username,
+        );
+      console.warn('MENTION', mention, url);
       if (mention) {
         e.preventDefault();
         e.stopPropagation();

@@ -8,6 +8,11 @@
     font-weight: 500;
     unicode-bidi: isolate;
   }
+
+  i {
+    font-variant-numeric: slashed-zero;
+    font-feature-settings: 'ss01';
+  }
 }
 .name-text.show-acct {
   display: inline-block;

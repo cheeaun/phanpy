@@ -690,9 +690,10 @@ function PushNotificationsSection({ onClose }) {
         ) {
           setAllowNotifications(true);
           const { alerts, policy } = backendSubscription;
+          console.log('backendSubscription', backendSubscription);
           previousPolicyRef.current = policy;
           const { elements } = pushFormRef.current;
-          const policyEl = elements.namedItem(policy);
+          const policyEl = elements.namedItem('policy');
           if (policyEl) policyEl.value = policy;
           // alerts is {}, iterate it
           Object.keys(alerts).forEach((alert) => {
@@ -721,65 +722,68 @@ function PushNotificationsSection({ onClose }) {
     <form
       ref={pushFormRef}
       onChange={() => {
-        const values = Object.fromEntries(new FormData(pushFormRef.current));
-        const allowNotifications = !!values['policy-allow'];
-        const params = {
-          policy: values.policy,
-          data: {
-            alerts: {
-              mention: !!values.mention,
-              favourite: !!values.favourite,
-              reblog: !!values.reblog,
-              follow: !!values.follow,
-              follow_request: !!values.followRequest,
-              poll: !!values.poll,
-              update: !!values.update,
-              status: !!values.status,
+        setTimeout(() => {
+          const values = Object.fromEntries(new FormData(pushFormRef.current));
+          const allowNotifications = !!values['policy-allow'];
+          const params = {
+            data: {
+              policy: values.policy,
+              alerts: {
+                mention: !!values.mention,
+                favourite: !!values.favourite,
+                reblog: !!values.reblog,
+                follow: !!values.follow,
+                follow_request: !!values.followRequest,
+                poll: !!values.poll,
+                update: !!values.update,
+                status: !!values.status,
+              },
             },
-          },
-        };
+          };
 
-        let alertsCount = 0;
-        // Remove false values from data.alerts
-        // API defaults to false anyway
-        Object.keys(params.data.alerts).forEach((key) => {
-          if (!params.data.alerts[key]) {
-            delete params.data.alerts[key];
-          } else {
-            alertsCount++;
-          }
-        });
-        const policyChanged = previousPolicyRef.current !== params.policy;
+          let alertsCount = 0;
+          // Remove false values from data.alerts
+          // API defaults to false anyway
+          Object.keys(params.data.alerts).forEach((key) => {
+            if (!params.data.alerts[key]) {
+              delete params.data.alerts[key];
+            } else {
+              alertsCount++;
+            }
+          });
+          const policyChanged =
+            previousPolicyRef.current !== params.data.policy;
 
-        console.log('PN Form', {
-          values,
-          allowNotifications: allowNotifications,
-          params,
-        });
+          console.log('PN Form', {
+            values,
+            allowNotifications: allowNotifications,
+            params,
+          });
 
-        if (allowNotifications && alertsCount > 0) {
-          if (policyChanged) {
-            console.debug('Policy changed.');
-            removeSubscription()
-              .then(() => {
-                updateSubscription(params);
-              })
-              .catch((err) => {
+          if (allowNotifications && alertsCount > 0) {
+            if (policyChanged) {
+              console.debug('Policy changed.');
+              removeSubscription()
+                .then(() => {
+                  updateSubscription(params);
+                })
+                .catch((err) => {
+                  console.warn(err);
+                  alert('Failed to update subscription. Please try again.');
+                });
+            } else {
+              updateSubscription(params).catch((err) => {
                 console.warn(err);
                 alert('Failed to update subscription. Please try again.');
               });
+            }
           } else {
-            updateSubscription(params).catch((err) => {
+            removeSubscription().catch((err) => {
               console.warn(err);
-              alert('Failed to update subscription. Please try again.');
+              alert('Failed to remove subscription. Please try again.');
             });
           }
-        } else {
-          removeSubscription().catch((err) => {
-            console.warn(err);
-            alert('Failed to remove subscription. Please try again.');
-          });
-        }
+        }, 100);
       }}
     >
       <h3>Push Notifications (beta)</h3>

@@ -232,8 +232,8 @@ function ReportModal({ account, post, onClose }) {
               disabled={uiState === 'loading'}
             />
           </section>
-          <section>
-            {domain !== currentDomain && (
+          {!!domain && domain !== currentDomain && (
+            <section>
               <p>
                 <label>
                   <input
@@ -247,8 +247,8 @@ function ReportModal({ account, post, onClose }) {
                   </span>
                 </label>
               </p>
-            )}
-          </section>
+            </section>
+          )}
           <footer>
             <button type="submit" disabled={uiState === 'loading'}>
               Send Report

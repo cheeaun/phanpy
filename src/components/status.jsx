@@ -24,8 +24,9 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
-import AccountBlock from '../components/account-block';
+import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
+import LazyShazam from '../components/lazy-shazam';
 import Loader from '../components/loader';
 import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
@@ -84,6 +85,8 @@ const visibilityText = {
 const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const rtf = new Intl.RelativeTimeFormat();
 
 const REACTIONS_LIMIT = 80;
 
@@ -239,6 +242,8 @@ function Status({
     _deleted,
     _pinned,
     // _filtered,
+    // Non-Mastodon
+    emojiReactions,
   } = status;
 
   const currentAccount = useMemo(() => {
@@ -508,6 +513,13 @@ function Status({
       (attachment) => !attachment.description?.trim?.(),
     );
   }, [mediaAttachments]);
+
+  const statusMonthsAgo = useMemo(() => {
+    return Math.floor(
+      (new Date() - createdAtDate) / (1000 * 60 * 60 * 24 * 30),
+    );
+  }, [createdAtDate]);
+
   const boostStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -715,25 +727,6 @@ function Status({
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const StatusMenuItems = (
     <>
-      {isSizeLarge && (
-        <>
-          <MenuItem
-            onClick={() => {
-              states.showGenericAccounts = {
-                heading: 'Boosted/Liked by…',
-                fetchAccounts: fetchBoostedLikedByAccounts,
-                instance,
-                showReactions: true,
-              };
-            }}
-          >
-            <Icon icon="react" />
-            <span>
-              Boosted/Liked by<span class="more-insignificant">…</span>
-            </span>
-          </MenuItem>
-        </>
-      )}
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-control-group-horizontal status-menu">
@@ -748,17 +741,41 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="rocket" />
-                  <span>{reblogged ? 'Unboost?' : 'Boost to everyone?'}</span>
+                  <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                 </>
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
+              menuExtras={
+                <MenuItem
+                  onClick={() => {
+                    states.showCompose = {
+                      draftStatus: {
+                        status: `\n${url}`,
+                      },
+                    };
+                  }}
+                >
+                  <Icon icon="quote" />
+                  <span>Quote</span>
+                </MenuItem>
+              }
               menuFooter={
-                mediaNoDesc &&
-                !reblogged && (
+                mediaNoDesc && !reblogged ? (
                   <div class="footer">
                     <Icon icon="alert" />
                     Some media have no descriptions.
                   </div>
+                ) : (
+                  statusMonthsAgo >= 3 && (
+                    <div class="footer">
+                      <Icon icon="info" />
+                      <span>
+                        Old post (
+                        <strong>{rtf.format(-statusMonthsAgo, 'month')}</strong>
+                        )
+                      </span>
+                    </div>
+                  )
                 )
               }
               disabled={!canBoost}
@@ -805,6 +822,29 @@ function Status({
               <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
             </MenuItem>
           </div>
+        </>
+      )}
+      {!isSizeLarge && sameInstance && (isSizeLarge || showActionsBar) && (
+        <MenuDivider />
+      )}
+      {(isSizeLarge || showActionsBar) && (
+        <>
+          <MenuItem
+            onClick={() => {
+              states.showGenericAccounts = {
+                heading: 'Boosted/Liked by…',
+                fetchAccounts: fetchBoostedLikedByAccounts,
+                instance,
+                showReactions: true,
+                postID: sKey,
+              };
+            }}
+          >
+            <Icon icon="react" />
+            <span>
+              Boosted/Liked by<span class="more-insignificant">…</span>
+            </span>
+          </MenuItem>
         </>
       )}
       {(enableTranslate || !language || differentLanguage) && <MenuDivider />}
@@ -858,13 +898,12 @@ function Status({
           </div>
         )
       )}
-      {!isSizeLarge ||
-        ((enableTranslate || !language || differentLanguage) && (
-          <MenuDivider />
-        ))}
+      {((!isSizeLarge && sameInstance) ||
+        enableTranslate ||
+        !language ||
+        differentLanguage) && <MenuDivider />}
       {!isSizeLarge && (
         <>
-          <MenuDivider />
           <MenuLink
             to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
             onClick={(e) => {
@@ -947,7 +986,7 @@ function Status({
           }}
         >
           <Icon icon="code" />
-          <span>Embed</span>
+          <span>Embed post</span>
         </MenuItem>
       )}
       {(isSelf || mentionSelf) && <MenuDivider />}
@@ -1100,7 +1139,12 @@ function Status({
           const { clientX, clientY } = e.touches?.[0] || e;
           // link detection copied from onContextMenu because here it works
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
           e.preventDefault();
           setContextMenuProps({
             anchorPoint: {
@@ -1346,7 +1390,12 @@ function Status({
           if (e.metaKey) return;
           // console.log('context menu', e);
           const link = e.target.closest('a');
-          if (link && statusRef.current.contains(link)) return;
+          if (
+            link &&
+            statusRef.current.contains(link) &&
+            !link.getAttribute('href').startsWith('#')
+          )
+            return;
 
           // If there's selected text, don't show custom context menu
           const selection = window.getSelection?.();
@@ -1798,7 +1847,9 @@ function Status({
                       media={media}
                       autoAnimate={isSizeLarge}
                       showCaption={mediaAttachments.length === 1}
-                      allowLongerCaption={!content}
+                      allowLongerCaption={
+                        !content && mediaAttachments.length === 1
+                      }
                       lang={language}
                       altIndex={
                         showMultipleMediaCaptions &&
@@ -1881,6 +1932,46 @@ function Status({
                   </>
                 )}
               </div>
+              {!!emojiReactions?.length && (
+                <div class="emoji-reactions">
+                  {emojiReactions.map((emojiReaction) => {
+                    const { name, count, me } = emojiReaction;
+                    const isShortCode = /^:.+?:$/.test(name);
+                    if (isShortCode) {
+                      const emoji = emojis.find(
+                        (e) =>
+                          e.shortcode ===
+                          name.replace(/^:/, '').replace(/:$/, ''),
+                      );
+                      if (emoji) {
+                        return (
+                          <span
+                            class={`emoji-reaction tag ${
+                              me ? '' : 'insignificant'
+                            }`}
+                          >
+                            <CustomEmoji
+                              alt={name}
+                              url={emoji.url}
+                              staticUrl={emoji.staticUrl}
+                            />
+                            {count}
+                          </span>
+                        );
+                      }
+                    }
+                    return (
+                      <span
+                        class={`emoji-reaction tag ${
+                          me ? '' : 'insignificant'
+                        }`}
+                      >
+                        {name} {count}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
               <div class={`actions ${_deleted ? 'disabled' : ''}`}>
                 <div class="action has-count">
                   <StatusButton
@@ -1910,10 +2001,22 @@ function Status({
                   confirmLabel={
                     <>
                       <Icon icon="rocket" />
-                      <span>
-                        {reblogged ? 'Unboost?' : 'Boost to everyone?'}
-                      </span>
+                      <span>{reblogged ? 'Unboost' : 'Boost'}</span>
                     </>
+                  }
+                  menuExtras={
+                    <MenuItem
+                      onClick={() => {
+                        states.showCompose = {
+                          draftStatus: {
+                            status: `\n${url}`,
+                          },
+                        };
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      <span>Quote</span>
+                    </MenuItem>
                   }
                   menuFooter={
                     mediaNoDesc &&
@@ -2131,10 +2234,13 @@ function Card({ card, selfReferential, instance }) {
       const w = 44;
       const h = 44;
       const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = document.createElement('canvas');
+      const canvas = window.OffscreenCanvas
+        ? new OffscreenCanvas(1, 1)
+        : document.createElement('canvas');
       canvas.width = w;
       canvas.height = h;
       const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
@@ -2169,13 +2275,19 @@ function Card({ card, selfReferential, instance }) {
           />
         </div>
         <div class="meta-container">
-          <p class="meta domain" dir="auto">
-            {domain}
+          <p class="meta domain">
+            <span class="domain">{domain}</span>{' '}
+            {!!publishedAt && <>&middot; </>}
+            {!!publishedAt && (
+              <>
+                <RelativeTime datetime={publishedAt} format="micro" />
+              </>
+            )}
           </p>
-          <p class="title" dir="auto">
+          <p class="title" dir="auto" title={title}>
             {title}
           </p>
-          <p class="meta" dir="auto">
+          <p class="meta" dir="auto" title={description}>
             {description ||
               (!!publishedAt && (
                 <RelativeTime datetime={publishedAt} format="micro" />
@@ -2242,10 +2354,22 @@ function Card({ card, selfReferential, instance }) {
         >
           <div class="meta-container">
             <p class="meta domain">
-              <Icon icon="link" size="s" /> <span>{domain}</span>
+              <span class="domain">
+                <Icon icon="link" size="s" /> <span>{domain}</span>
+              </span>{' '}
+              {!!publishedAt && <>&middot; </>}
+              {!!publishedAt && (
+                <>
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                </>
+              )}
             </p>
-            <p class="title">{title}</p>
-            <p class="meta">{description || providerName || authorName}</p>
+            <p class="title" title={title}>
+              {title}
+            </p>
+            <p class="meta" title={description || providerName || authorName}>
+              {description || providerName || authorName}
+            </p>
           </div>
         </a>
       );
@@ -3005,20 +3129,22 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
 
   return uniqueQuotes.map((q) => {
     return (
-      <Link
-        key={q.instance + q.id}
-        to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-        class="status-card-link"
-        data-read-more="Read more →"
-      >
-        <Status
-          statusID={q.id}
-          instance={q.instance}
-          size="s"
-          quoted={level + 1}
-          enableCommentHint
-        />
-      </Link>
+      <LazyShazam>
+        <Link
+          key={q.instance + q.id}
+          to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+          class="status-card-link"
+          data-read-more="Read more →"
+        >
+          <Status
+            statusID={q.id}
+            instance={q.instance}
+            size="s"
+            quoted={level + 1}
+            enableCommentHint
+          />
+        </Link>
+      </LazyShazam>
     );
   });
 });

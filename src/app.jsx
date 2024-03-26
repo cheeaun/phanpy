@@ -27,6 +27,7 @@ import AccountStatuses from './pages/account-statuses';
 import Bookmarks from './pages/bookmarks';
 // import Catchup from './pages/catchup';
 import Favourites from './pages/favourites';
+import Filters from './pages/filters';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
@@ -463,7 +464,8 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route index element={<Lists />} />
             <Route path=":id" element={<List />} />
           </Route>
-          <Route path="/ft" element={<FollowedHashtags />} />
+          <Route path="/fh" element={<FollowedHashtags />} />
+          <Route path="/ft" element={<Filters />} />
           <Route
             path="/catchup"
             element={

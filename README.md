@@ -200,6 +200,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
 - [phanpy.hear-me.social](https://phanpy.hear-me.social) by [@admin@hear-me.social](https://hear-me.social/@admin)
 - [phanpy.fulda.social](https://phanpy.fulda.social) by [@Ganneff@fulda.social](https://fulda.social/@Ganneff)
+- [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)
 
 > Note: Add yours by creating a pull request.
 
@@ -250,6 +251,7 @@ And here I am. Building a Mastodon web client.
 - [Statuzer](https://statuzer.com/)
 - [Tusked](https://tusked.app/)
 - [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone)
+- [Mangane](https://github.com/BDX-town/Mangane)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

@@ -26,6 +26,8 @@
     background-color: var(--bg-blur-color);
     backdrop-filter: blur(16px);
     padding: 16px;
+    padding: calc(var(--sai-top, 0) + 16px) calc(var(--sai-right, 0) + 16px)
+      16px calc(var(--sai-left, 0) + 16px);
     display: flex;
     gap: 8px;
     justify-content: space-between;
@@ -41,6 +43,8 @@
 
   main {
     padding: 0 16px 16px;
+    padding: 0 calc(var(--sai-right, 0) + 16px)
+      calc(var(--sai-bottom, 0) + 16px) calc(var(--sai-left, 0) + 16px);
     /* display: flex;
     flex-direction: column;
     gap: 16px; */

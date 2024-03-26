@@ -174,6 +174,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
     ); // Emoji shortcodes
 }
 
+const rtf = new Intl.RelativeTimeFormat();
+
 function Compose({
   onClose,
   replyToStatus,
@@ -235,6 +237,12 @@ function Compose({
   };
   const focusTextarea = () => {
     setTimeout(() => {
+      if (!textareaRef.current) return;
+      // status starts with newline, focus on first position
+      if (draftStatus?.status?.startsWith?.('\n')) {
+        textareaRef.current.selectionStart = 0;
+        textareaRef.current.selectionEnd = 0;
+      }
       console.debug('FOCUS textarea');
       textareaRef.current?.focus();
     }, 300);
@@ -631,6 +639,16 @@ function Compose({
     return [topLanguages, restLanguages];
   }, [language]);
 
+  const replyToStatusMonthsAgo = useMemo(
+    () =>
+      !!replyToStatus?.createdAt &&
+      Math.floor(
+        (Date.now() - new Date(replyToStatus.createdAt)) /
+          (1000 * 60 * 60 * 24 * 30),
+      ),
+    [replyToStatus],
+  );
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -780,6 +798,16 @@ function Compose({
               Replying to @
               {replyToStatus.account.acct || replyToStatus.account.username}
               &rsquo;s post
+              {replyToStatusMonthsAgo >= 3 && (
+                <>
+                  {' '}
+                  (
+                  <strong>
+                    {rtf.format(-replyToStatusMonthsAgo, 'month')}
+                  </strong>
+                  )
+                </>
+              )}
             </div>
           </div>
         )}
@@ -1634,27 +1662,31 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   const charCount = snapStates.composerCharacterCount;
   const leftChars = maxCharacters - charCount;
   if (hidden) {
-    return <meter class="donut" hidden />;
+    return <span class="char-counter" hidden />;
   }
   return (
-    <meter
-      class={`donut ${
-        leftChars <= -10
-          ? 'explode'
-          : leftChars <= 0
-          ? 'danger'
-          : leftChars <= 20
-          ? 'warning'
-          : ''
-      }`}
-      value={charCount}
-      max={maxCharacters}
-      data-left={leftChars}
+    <span
+      class="char-counter"
       title={`${leftChars}/${maxCharacters}`}
       style={{
         '--percentage': (charCount / maxCharacters) * 100,
       }}
-    />
+    >
+      <meter
+        class={`${
+          leftChars <= -10
+            ? 'explode'
+            : leftChars <= 0
+            ? 'danger'
+            : leftChars <= 20
+            ? 'warning'
+            : ''
+        }`}
+        value={charCount}
+        max={maxCharacters}
+      />
+      <span class="counter">{leftChars}</span>
+    </span>
   );
 }
 

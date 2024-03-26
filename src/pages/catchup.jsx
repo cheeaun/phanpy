@@ -32,12 +32,12 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
-import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
+import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
@@ -429,9 +429,28 @@ function Catchup() {
       return postFilterMatches;
     });
 
+    // Deduplicate boosts
+    const boostedPosts = {};
+    filteredPosts.forEach((post) => {
+      if (post.reblog) {
+        if (boostedPosts[post.reblog.id]) {
+          if (boostedPosts[post.reblog.id].__BOOSTERS) {
+            boostedPosts[post.reblog.id].__BOOSTERS.add(post.account);
+          } else {
+            boostedPosts[post.reblog.id].__BOOSTERS = new Set([post.account]);
+          }
+          post.__HIDDEN = true;
+        } else {
+          boostedPosts[post.reblog.id] = post;
+        }
+      }
+    });
+
     if (selectedAuthor && authorCountsMap.has(selectedAuthor)) {
       filteredPosts = filteredPosts.filter(
-        (post) => post.account.id === selectedAuthor,
+        (post) =>
+          post.account.id === selectedAuthor ||
+          [...(post.__BOOSTERS || [])].find((a) => a.id === selectedAuthor),
       );
     }
 
@@ -459,39 +478,41 @@ function Catchup() {
     authorCountsList.forEach((authorID, index) => {
       authorIndices[authorID] = index;
     });
-    return filteredPosts.sort((a, b) => {
-      if (groupBy === 'account') {
-        const aAccountID = a.account.id;
-        const bAccountID = b.account.id;
-        const aIndex = authorIndices[aAccountID];
-        const bIndex = authorIndices[bAccountID];
-        const order = aIndex - bIndex;
-        if (order !== 0) {
-          return order;
+    return filteredPosts
+      .filter((post) => !post.__HIDDEN)
+      .sort((a, b) => {
+        if (groupBy === 'account') {
+          const aAccountID = a.account.id;
+          const bAccountID = b.account.id;
+          const aIndex = authorIndices[aAccountID];
+          const bIndex = authorIndices[bAccountID];
+          const order = aIndex - bIndex;
+          if (order !== 0) {
+            return order;
+          }
         }
-      }
-      if (sortBy !== 'createdAt') {
-        a = a.reblog || a;
-        b = b.reblog || b;
-        if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
-          return a.createdAt > b.createdAt ? 1 : -1;
+        if (sortBy !== 'createdAt') {
+          a = a.reblog || a;
+          b = b.reblog || b;
+          if (sortBy !== 'density' && a[sortBy] === b[sortBy]) {
+            return a.createdAt > b.createdAt ? 1 : -1;
+          }
         }
-      }
-      if (sortBy === 'density') {
-        const aDensity = postDensity(a);
-        const bDensity = postDensity(b);
+        if (sortBy === 'density') {
+          const aDensity = postDensity(a);
+          const bDensity = postDensity(b);
+          if (sortOrder === 'asc') {
+            return aDensity > bDensity ? 1 : -1;
+          } else {
+            return bDensity > aDensity ? 1 : -1;
+          }
+        }
         if (sortOrder === 'asc') {
-          return aDensity > bDensity ? 1 : -1;
+          return a[sortBy] > b[sortBy] ? 1 : -1;
         } else {
-          return bDensity > aDensity ? 1 : -1;
+          return b[sortBy] > a[sortBy] ? 1 : -1;
         }
-      }
-      if (sortOrder === 'asc') {
-        return a[sortBy] > b[sortBy] ? 1 : -1;
-      } else {
-        return b[sortBy] > a[sortBy] ? 1 : -1;
-      }
-    });
+      });
   }, [filteredPosts, sortBy, sortOrder, groupBy, authorCountsList]);
 
   const prevGroup = useRef(null);
@@ -589,41 +610,46 @@ function Catchup() {
     authors,
   ]);
 
-  const prevSelectedAuthorMissing = useRef(false);
   useEffect(() => {
-    // console.log({
-    //   prevSelectedAuthorMissing,
-    //   selectedAuthor,
-    //   authors,
-    // });
-    let timer;
     if (selectedAuthor) {
       if (authors[selectedAuthor]) {
-        if (prevSelectedAuthorMissing.current) {
-          timer = setTimeout(() => {
-            authorsListParent.current
-              .querySelector(`[data-author="${selectedAuthor}"]`)
-              ?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-              });
-          }, 500);
-          prevSelectedAuthorMissing.current = false;
+        // Check if author is visible and within the scrollable area viewport
+        const authorElement = authorsListParent.current.querySelector(
+          `[data-author="${selectedAuthor}"]`,
+        );
+        const scrollableRect =
+          authorsListParent.current?.getBoundingClientRect();
+        const authorRect = authorElement?.getBoundingClientRect();
+        console.log({
+          sLeft: scrollableRect.left,
+          sRight: scrollableRect.right,
+          aLeft: authorRect.left,
+          aRight: authorRect.right,
+        });
+        if (
+          authorRect.left < scrollableRect.left ||
+          authorRect.right > scrollableRect.right
+        ) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        } else if (authorRect.top < 0) {
+          authorElement.scrollIntoView({
+            block: 'nearest',
+            inline: 'nearest',
+            behavior: 'smooth',
+          });
         }
-      } else {
-        prevSelectedAuthorMissing.current = true;
       }
     }
-    return () => {
-      clearTimeout(timer);
-    };
   }, [selectedAuthor, authors]);
 
   const [showHelp, setShowHelp] = useState(false);
 
   const itemsSelector = '.catchup-list > li > a';
-  useHotkeys(
+  const jRef = useHotkeys(
     'j',
     () => {
       const activeItem = document.activeElement.closest(itemsSelector);
@@ -663,12 +689,121 @@ function Catchup() {
     },
     {
       preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  const kRef = useHotkeys(
+    'k',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView({
+            block: 'center',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView({
+            block: 'nearest',
+            inline: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+    },
+  );
+
+  const hlRef = useHotkeys(
+    'h, l',
+    (_, handler) => {
+      // Go next/prev selectedAuthor in authorCountsList list
+      const key = handler.keys[0];
+      if (selectedAuthor) {
+        const index = authorCountsList.indexOf(selectedAuthor);
+        if (key === 'h') {
+          if (index > 0 && index < authorCountsList.length) {
+            setSelectedAuthor(authorCountsList[index - 1]);
+            scrollableRef.current?.focus();
+          }
+        } else if (key === 'l') {
+          if (index < authorCountsList.length - 1 && index >= 0) {
+            setSelectedAuthor(authorCountsList[index + 1]);
+            scrollableRef.current?.focus();
+          }
+        }
+      } else if (key === 'l') {
+        setSelectedAuthor(authorCountsList[0]);
+        scrollableRef.current?.focus();
+      }
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const escRef = useHotkeys(
+    'esc',
+    () => {
+      setSelectedAuthor(null);
+      scrollableRef.current?.focus();
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const dotRef = useHotkeys(
+    '.',
+    () => {
+      scrollableRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    },
+    {
+      preventDefault: true,
+      ignoreModifiers: true,
+      enableOnFormTags: ['input'],
     },
   );
 
   return (
     <div
-      ref={scrollableRef}
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef.current = node;
+        kRef.current = node;
+        hlRef.current = node;
+        escRef.current = node;
+      }}
       id="catchup-page"
       class="deck-container"
       tabIndex="-1"
@@ -821,10 +956,12 @@ function Catchup() {
                         <Link to={`/catchup?id=${pc.id}`}>
                           <Icon icon="history2" />{' '}
                           <span>
-                            {formatRange(
-                              new Date(pc.startAt),
-                              new Date(pc.endAt),
-                            )}
+                            {pc.startAt
+                              ? dtf.formatRange(
+                                  new Date(pc.startAt),
+                                  new Date(pc.endAt),
+                                )
+                              : `… – ${dtf.format(new Date(pc.endAt))}`}
                           </span>
                         </Link>{' '}
                         <span>
@@ -876,7 +1013,7 @@ function Catchup() {
                 {posts.length > 0 && (
                   <p>
                     <b class="ib">
-                      {formatRange(
+                      {dtf.formatRange(
                         new Date(posts[0].createdAt),
                         new Date(posts[posts.length - 1].createdAt),
                       )}
@@ -997,7 +1134,12 @@ function Catchup() {
                                   )}
                                 </div>
                                 {!!title && (
-                                  <h1 class="title" lang={language} dir="auto">
+                                  <h1
+                                    class="title"
+                                    lang={language}
+                                    dir="auto"
+                                    title={title}
+                                  >
                                     {title}
                                   </h1>
                                 )}
@@ -1007,6 +1149,7 @@ function Catchup() {
                                   class="description"
                                   lang={language}
                                   dir="auto"
+                                  title={description}
                                 >
                                   {description}
                                 </p>
@@ -1330,6 +1473,25 @@ function Catchup() {
                   Posts are grouped by authors, sorted by posts count per
                   author.
                 </dd>
+                <dt>Keyboard shortcuts</dt>
+                <dd>
+                  <kbd>j</kbd>: Next post
+                </dd>
+                <dd>
+                  <kbd>k</kbd>: Previous post
+                </dd>
+                <dd>
+                  <kbd>l</kbd>: Next author
+                </dd>
+                <dd>
+                  <kbd>h</kbd>: Previous author
+                </dd>
+                <dd>
+                  <kbd>Enter</kbd>: Open post details
+                </dd>
+                <dd>
+                  <kbd>.</kbd>: Scroll to top
+                </dd>
               </dl>
             </main>
           </div>
@@ -1351,6 +1513,7 @@ const PostLine = memo(
       _followedTags: isFollowedTags,
       _filtered: filterInfo,
       visibility,
+      __BOOSTERS,
     } = post;
     const isReplyTo = inReplyToId && inReplyToAccountId !== account.id;
     const isFiltered = !!filterInfo;
@@ -1384,7 +1547,12 @@ const PostLine = memo(
               <Avatar
                 url={account.avatarStatic || account.avatar}
                 squircle={account.bot}
-              />{' '}
+              />
+              {__BOOSTERS?.size > 0
+                ? [...__BOOSTERS].map((b) => (
+                    <Avatar url={b.avatarStatic || b.avatar} squircle={b.bot} />
+                  ))
+                : ''}{' '}
               <Icon icon="rocket" />{' '}
               {/* <Avatar
               url={reblog.account.avatarStatic || reblog.account.avatar}
@@ -1484,7 +1652,7 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
   const showMedia = !spoilerText && !sensitive;
-  const postText = content ? getHTMLText(content) : '';
+  const postText = content ? statusPeek(post) : '';
 
   return (
     <div class="post-peek" title={!spoilerText ? postText : ''}>
@@ -1518,19 +1686,27 @@ function PostPeek({ post, filterInfo }) {
                 <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
               </>
             )}
-            {content ? (
+            {!!content && (
               <div
                 dangerouslySetInnerHTML={{
                   __html: emojifyText(content, emojis),
                 }}
               />
-            ) : mediaAttachments?.length === 1 &&
-              mediaAttachments[0].description ? (
-              <>
-                <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
-                <div>{mediaAttachments[0].description}</div>
-              </>
-            ) : null}
+            )}
+            {!!poll?.options?.length &&
+              poll.options.map((o) => (
+                <div>
+                  {poll.multiple ? '▪️' : '•'} {o.title}
+                </div>
+              ))}
+            {!content &&
+              mediaAttachments?.length === 1 &&
+              mediaAttachments[0].description && (
+                <>
+                  <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
+                  <div>{mediaAttachments[0].description}</div>
+                </>
+              )}
           </div>
         )}
       </span>
@@ -1668,9 +1844,6 @@ const dtf = new Intl.DateTimeFormat(locale, {
   hour: 'numeric',
   minute: 'numeric',
 });
-function formatRange(startDate, endDate) {
-  return dtf.formatRange(startDate, endDate);
-}
 
 function binByTime(data, key, numBins) {
   // Extract dates from data objects

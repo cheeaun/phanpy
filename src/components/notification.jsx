@@ -2,7 +2,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
+import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
 import useTruncated from '../utils/useTruncated';
 
@@ -228,6 +228,7 @@ function Notification({
       accounts: _accounts,
       showReactions: type === 'favourite+reblog',
       excludeRelationshipAttrs: type === 'follow' ? ['followedBy'] : [],
+      postID: statusKey(actualStatusID, instance),
     };
   };
 

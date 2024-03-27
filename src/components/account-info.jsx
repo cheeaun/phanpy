@@ -541,13 +541,51 @@ function AccountInfo({
               />
             )}
             <header>
-              <AccountBlock
-                account={info}
-                instance={instance}
-                avatarSize="xxxl"
-                external={standalone}
-                internal={!standalone}
-              />
+              {standalone ? (
+                <Menu2
+                  shift={64}
+                  menuButton={
+                    <div>
+                      <AccountBlock
+                        account={info}
+                        instance={instance}
+                        avatarSize="xxxl"
+                        onClick={() => {}}
+                      />
+                    </div>
+                  }
+                >
+                  <div class="szh-menu__header">
+                    <AccountHandleInfo acct={acct} instance={instance} />
+                  </div>
+                  <MenuItem
+                    onClick={() => {
+                      const handle = `@${acct}`;
+                      try {
+                        navigator.clipboard.writeText(handle);
+                        showToast('Handle copied');
+                      } catch (e) {
+                        console.error(e);
+                        showToast('Unable to copy handle');
+                      }
+                    }}
+                  >
+                    <Icon icon="link" />
+                    <span>Copy handle</span>
+                  </MenuItem>
+                  <MenuItem href={url} target="_blank">
+                    <Icon icon="external" />
+                    <span>Go to original profile page</span>
+                  </MenuItem>
+                </Menu2>
+              ) : (
+                <AccountBlock
+                  account={info}
+                  instance={instance}
+                  avatarSize="xxxl"
+                  internal
+                />
+              )}
             </header>
             <div class="faux-header-bg" aria-hidden="true" />
             <main>
@@ -1997,6 +2035,29 @@ function FieldsAttributesRow({ name, value, disabled, index: i }) {
         />
       </td>
     </tr>
+  );
+}
+
+function AccountHandleInfo({ acct, instance }) {
+  // acct = username or username@server
+  let [username, server] = acct.split('@');
+  if (!server) server = instance;
+  return (
+    <div class="handle-info">
+      <span class="handle-handle">
+        <b class="handle-username">{username}</b>
+        <span class="handle-at">@</span>
+        <b class="handle-server">{server}</b>
+      </span>
+      <div class="handle-legend">
+        <span class="ib">
+          <span class="handle-legend-icon username" /> username
+        </span>{' '}
+        <span class="ib">
+          <span class="handle-legend-icon server" /> server domain name
+        </span>
+      </div>
+    </div>
   );
 }
 

@@ -16,6 +16,12 @@
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
+  --purple-fg-color: color-mix(
+    in srgb-linear,
+    var(--purple-color) 60%,
+    var(--text-color) 40%
+  );
+  --purple-bg-color: color-mix(in lch, var(--purple-color) 15%, transparent);
   --green-color: darkgreen;
   --orange-color: darkorange;
   --orange-light-bg-color: color-mix(
@@ -23,6 +29,12 @@
     var(--orange-color) 20%,
     transparent
   );
+  --orange-fg-color: color-mix(
+    in srgb-linear,
+    var(--orange-color) 60%,
+    var(--text-color) 40%
+  );
+  --orange-bg-color: color-mix(in lch, var(--orange-color) 15%, transparent);
   --red-color: orangered;
   --red-text-color: color-mix(
     in srgb-linear,

@@ -27,9 +27,10 @@ function NavMenu(props) {
 
   const [currentAccount, moreThanOneAccount] = useMemo(() => {
     const accounts = store.local.getJSON('accounts') || [];
-    const acc = accounts.find(
-      (account) => account.info.id === store.session.get('currentAccount'),
-    );
+    const acc =
+      accounts.find(
+        (account) => account.info.id === store.session.get('currentAccount'),
+      ) || accounts[0];
     return [acc, accounts.length > 1];
   }, []);
 

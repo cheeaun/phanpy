@@ -532,66 +532,72 @@ function Notifications({ columnMode }) {
         )}
         {supportsFilteredNotifications &&
           notificationsPolicy?.summary?.pendingRequestsCount > 0 && (
-            <div class="filtered-notifications">
-              <details
-                onToggle={async (e) => {
-                  const { open } = e.target;
-                  if (open) {
-                    const requests = await fetchNotificationsRequest();
-                    setNotificationsRequests(requests);
-                    console.log({ open, requests });
-                  }
-                }}
-              >
-                <summary>
-                  Filtered notifications from{' '}
-                  {notificationsPolicy.summary.pendingRequestsCount} people
-                </summary>
-                {!notificationsRequests ? (
-                  <p class="ui-state">
-                    <Loader abrupt />
-                  </p>
-                ) : (
-                  notificationsRequests?.length > 0 && (
-                    <ul>
-                      {notificationsRequests.map((request) => (
-                        <li key={request.id}>
-                          <div class="request-notifcations">
-                            {!request.lastStatus?.id && (
-                              <AccountBlock
-                                useAvatarStatic
-                                showStats
-                                account={request.account}
-                              />
-                            )}
-                            {request.lastStatus?.id && (
-                              <div class="last-post">
-                                <Link
-                                  class="status-link"
-                                  to={`/${instance}/s/${request.lastStatus.id}`}
-                                >
-                                  <Status
-                                    status={request.lastStatus}
-                                    size="s"
-                                    readOnly
+            <div class="shazam-container">
+              <div class="shazam-container-inner">
+                <div class="filtered-notifications">
+                  <details
+                    onToggle={async (e) => {
+                      const { open } = e.target;
+                      if (open) {
+                        const requests = await fetchNotificationsRequest();
+                        setNotificationsRequests(requests);
+                        console.log({ open, requests });
+                      }
+                    }}
+                  >
+                    <summary>
+                      Filtered notifications from{' '}
+                      {notificationsPolicy.summary.pendingRequestsCount} people
+                    </summary>
+                    {!notificationsRequests ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      notificationsRequests?.length > 0 && (
+                        <ul>
+                          {notificationsRequests.map((request) => (
+                            <li key={request.id}>
+                              <div class="request-notifcations">
+                                {!request.lastStatus?.id && (
+                                  <AccountBlock
+                                    useAvatarStatic
+                                    showStats
+                                    account={request.account}
                                   />
-                                </Link>
+                                )}
+                                {request.lastStatus?.id && (
+                                  <div class="last-post">
+                                    <Link
+                                      class="status-link"
+                                      to={`/${instance}/s/${request.lastStatus.id}`}
+                                    >
+                                      <Status
+                                        status={request.lastStatus}
+                                        size="s"
+                                        readOnly
+                                      />
+                                    </Link>
+                                  </div>
+                                )}
+                                <NotificationRequestModalButton
+                                  request={request}
+                                />
                               </div>
-                            )}
-                            <NotificationRequestModalButton request={request} />
-                          </div>
-                          <NotificationRequestButtons
-                            request={request}
-                            onChange={() => {
-                              loadNotifications(true);
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                )}
-              </details>
+                              <NotificationRequestButtons
+                                request={request}
+                                onChange={() => {
+                                  loadNotifications(true);
+                                }}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      )
+                    )}
+                  </details>
+                </div>
+              </div>
             </div>
           )}
         <div id="mentions-option">

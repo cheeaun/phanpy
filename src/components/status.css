@@ -1696,6 +1696,7 @@ a.card:is(:hover, :focus):visited {
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
   margin: 3px;
+  min-height: 1em;
 }
 .poll-option-votes {
   flex-shrink: 0;
@@ -1719,6 +1720,7 @@ a.card:is(:hover, :focus):visited {
 }
 .poll-option-title {
   text-shadow: 0 1px var(--bg-color);
+  line-height: 1.2;
 }
 .poll-option-title .icon {
   vertical-align: middle;

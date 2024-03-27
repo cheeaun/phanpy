@@ -623,26 +623,26 @@
       .spoiler-media-button
     ),
   ~ .card .meta-container {
-    /* filter: blur(5px) invert(0.5);
-    image-rendering: crisp-edges;
-    image-rendering: pixelated; */
     opacity: 0.2;
     text-decoration-thickness: 1.5em;
     text-decoration-line: line-through;
-    /* text-rendering: optimizeSpeed; */
     pointer-events: none;
     user-select: none;
-    /* contain: layout; */
-    /* transform: scale(0.97);
-    transition: transform 0.1s ease-in-out; */
 
     * {
       text-decoration-color: inherit;
       text-decoration-thickness: 1.5em;
       text-decoration-line: line-through;
-      /* text-rendering: optimizeSpeed; */
     }
+  }
 
+  ~ *:not(
+      .media-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
+  ~ .card .meta-container {
     img {
       filter: invert(0.5);
       background-color: black;

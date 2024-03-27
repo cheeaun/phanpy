@@ -299,7 +299,7 @@ function Compose({
           setVisibility(visibility);
           setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
           setSensitive(sensitive);
-          setPoll(composablePoll);
+          if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
           setUIState('default');
         } catch (e) {

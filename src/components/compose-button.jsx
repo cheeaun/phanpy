@@ -1,6 +1,7 @@
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import openCompose from '../utils/open-compose';
+import openOSK from '../utils/open-osk';
 import states from '../utils/states';
 
 import Icon from './icon';
@@ -14,6 +15,7 @@ export default function ComposeButton() {
         states.showCompose = true;
       }
     } else {
+      openOSK();
       states.showCompose = true;
     }
   }

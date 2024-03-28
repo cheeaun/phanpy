@@ -21,7 +21,7 @@
     var(--purple-color) 60%,
     var(--text-color) 40%
   );
-  --purple-bg-color: color-mix(in lch, var(--purple-color) 15%, transparent);
+  --purple-bg-color: color-mix(in srgb, var(--purple-color) 10%, transparent);
   --green-color: darkgreen;
   --orange-color: darkorange;
   --orange-light-bg-color: color-mix(
@@ -34,7 +34,7 @@
     var(--orange-color) 60%,
     var(--text-color) 40%
   );
-  --orange-bg-color: color-mix(in lch, var(--orange-color) 15%, transparent);
+  --orange-bg-color: color-mix(in srgb, var(--orange-color) 10%, transparent);
   --red-color: orangered;
   --red-text-color: color-mix(
     in srgb-linear,

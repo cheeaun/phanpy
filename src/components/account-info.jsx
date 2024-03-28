@@ -543,7 +543,11 @@ function AccountInfo({
             <header>
               {standalone ? (
                 <Menu2
-                  shift={64}
+                  shift={
+                    window.matchMedia('(min-width: calc(40em))').matches
+                      ? 114
+                      : 64
+                  }
                   menuButton={
                     <div>
                       <AccountBlock

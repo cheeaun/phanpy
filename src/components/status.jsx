@@ -1593,11 +1593,14 @@ function Status({
                       }`}
                     />
                   ) : (
-                    <Icon
-                      icon={visibilityIconsMap[visibility]}
-                      alt={visibilityText[visibility]}
-                      size="s"
-                    />
+                    visibility !== 'public' &&
+                    visibility !== 'direct' && (
+                      <Icon
+                        icon={visibilityIconsMap[visibility]}
+                        alt={visibilityText[visibility]}
+                        size="s"
+                      />
+                    )
                   )}{' '}
                   <RelativeTime datetime={createdAtDate} format="micro" />
                   {!previewMode && !readOnly && (
@@ -1648,11 +1651,15 @@ function Status({
                 //   {StatusMenuItems}
                 // </Menu>
                 <span class="time">
-                  <Icon
-                    icon={visibilityIconsMap[visibility]}
-                    alt={visibilityText[visibility]}
-                    size="s"
-                  />{' '}
+                  {visibility !== 'public' && visibility !== 'direct' && (
+                    <>
+                      <Icon
+                        icon={visibilityIconsMap[visibility]}
+                        alt={visibilityText[visibility]}
+                        size="s"
+                      />{' '}
+                    </>
+                  )}
                   <RelativeTime datetime={createdAtDate} format="micro" />
                 </span>
               ))}

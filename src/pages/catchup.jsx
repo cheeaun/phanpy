@@ -1263,7 +1263,7 @@ function Catchup() {
                           authors[author].avatarStatic || authors[author].avatar
                         }
                         size="xxl"
-                        alt={`${authors[author].displayName} (@${authors[author].username})`}
+                        alt={`${authors[author].displayName} (@${authors[author].acct})`}
                       />{' '}
                       <span class="count">{authorCounts[author]}</span>
                       <span class="username">{authors[author].username}</span>

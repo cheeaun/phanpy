@@ -180,6 +180,8 @@ function Filters() {
   );
 }
 
+let _id = 1;
+const incID = () => _id++;
 function FiltersAddEdit({ filter, onClose }) {
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
@@ -193,7 +195,12 @@ function FiltersAddEdit({ filter, onClose }) {
 
   // Hacky way of handling removed keywords for both existing and new ones
   const [removedKeywordIDs, setRemovedKeywordIDs] = useState([]);
-  const [removedNewKeywordIndices, setRemovedNewKeywordIndices] = useState([]);
+  const [removedKeyword_IDs, setRemovedKeyword_IDs] = useState([]);
+
+  const filteredEditKeywords = editKeywords.filter(
+    (k) =>
+      !removedKeywordIDs.includes(k.id) && !removedKeyword_IDs.includes(k._id),
+  );
 
   return (
     <div class="sheet" id="filters-add-edit-modal">
@@ -335,16 +342,12 @@ function FiltersAddEdit({ filter, onClose }) {
             </label>
           </div>
           <div class="filter-form-keywords" ref={keywordsRef}>
-            {editKeywords.length ? (
+            {filteredEditKeywords.length ? (
               <ul class="filter-keywords">
-                {editKeywords.map((k, index) => {
-                  const { id, keyword, wholeWord } = k;
-                  const removed =
-                    removedKeywordIDs.includes(id) ||
-                    removedNewKeywordIndices.includes(index);
-                  if (removed) return null;
+                {filteredEditKeywords.map((k) => {
+                  const { id, keyword, wholeWord, _id } = k;
                   return (
-                    <li key={`${index}-${id}`}>
+                    <li key={`${id}-${_id}`}>
                       <input
                         type="hidden"
                         name="keyword_attributes[][id]"
@@ -376,12 +379,9 @@ function FiltersAddEdit({ filter, onClose }) {
                             if (id) {
                               removedKeywordIDs.push(id);
                               setRemovedKeywordIDs([...removedKeywordIDs]);
-                            } else {
-                              // If no id, remove by index
-                              removedNewKeywordIndices.push(index);
-                              setRemovedNewKeywordIndices([
-                                ...removedNewKeywordIndices,
-                              ]);
+                            } else if (_id) {
+                              removedKeyword_IDs.push(_id);
+                              setRemovedKeyword_IDs([...removedKeyword_IDs]);
                             }
                           }}
                         >
@@ -405,6 +405,7 @@ function FiltersAddEdit({ filter, onClose }) {
                   setEditKeywords([
                     ...editKeywords,
                     {
+                      _id: incID(),
                       keyword: '',
                       wholeWord: true,
                     },
@@ -421,10 +422,10 @@ function FiltersAddEdit({ filter, onClose }) {
               >
                 Add keyword
               </button>{' '}
-              {editKeywords?.length > 1 && (
+              {filteredEditKeywords?.length > 1 && (
                 <small class="insignificant">
-                  {editKeywords.length} keyword
-                  {editKeywords.length === 1 ? '' : 's'}
+                  {filteredEditKeywords.length} keyword
+                  {filteredEditKeywords.length === 1 ? '' : 's'}
                 </small>
               )}
             </footer>

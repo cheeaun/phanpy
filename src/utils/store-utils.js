@@ -2,6 +2,7 @@ import store from './store';
 
 export function getAccount(id) {
   const accounts = store.local.getJSON('accounts') || [];
+  if (!id) return accounts[0];
   return accounts.find((a) => a.info.id === id) || accounts[0];
 }
 

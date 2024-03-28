@@ -105,7 +105,7 @@
       padding: 2px;
       vertical-align: top;
       text-transform: uppercase;
-      text-shadow: 0 1px var(--bg-color);
+      /* text-shadow: 0 1px var(--bg-color); */
 
       &:hover {
         color: var(--text-color);
@@ -623,26 +623,26 @@
       .spoiler-media-button
     ),
   ~ .card .meta-container {
-    /* filter: blur(5px) invert(0.5);
-    image-rendering: crisp-edges;
-    image-rendering: pixelated; */
     opacity: 0.2;
     text-decoration-thickness: 1.5em;
     text-decoration-line: line-through;
-    /* text-rendering: optimizeSpeed; */
     pointer-events: none;
     user-select: none;
-    /* contain: layout; */
-    /* transform: scale(0.97);
-    transition: transform 0.1s ease-in-out; */
 
     * {
       text-decoration-color: inherit;
       text-decoration-thickness: 1.5em;
       text-decoration-line: line-through;
-      /* text-rendering: optimizeSpeed; */
     }
+  }
 
+  ~ *:not(
+      .media-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
+  ~ .card .meta-container {
     img {
       filter: invert(0.5);
       background-color: black;
@@ -908,7 +908,7 @@
   grid-auto-rows: 1fr;
   gap: 2px;
   /* height: 160px; */
-  min-height: 88px;
+  min-height: var(--pointer-min-dimension);
   height: auto;
   max-height: max(160px, 33vh);
 }
@@ -1037,9 +1037,9 @@
 .status .media-container.media-eq1 .media {
   display: inline-block;
   max-width: 100% !important;
-  min-width: 88px;
+  min-width: var(--pointer-min-dimension);
   /* width: auto; */
-  min-height: 88px;
+  min-height: var(--pointer-min-dimension);
   /* --maxAspectHeight: max(160px, 33vh);
   --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
   width: min(var(--aspectWidth), var(--width), 100%);
@@ -1300,7 +1300,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 :is(.status, .media-post) .media-audio {
   width: 100%;
   height: 100%;
-  min-height: 88px;
+  min-height: var(--pointer-min-dimension);
   background-image: radial-gradient(
       circle at center center,
       transparent,
@@ -1696,6 +1696,7 @@ a.card:is(:hover, :focus):visited {
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
   margin: 3px;
+  min-height: 1em;
 }
 .poll-option-votes {
   flex-shrink: 0;
@@ -1719,6 +1720,7 @@ a.card:is(:hover, :focus):visited {
 }
 .poll-option-title {
   text-shadow: 0 1px var(--bg-color);
+  line-height: 1.2;
 }
 .poll-option-title .icon {
   vertical-align: middle;

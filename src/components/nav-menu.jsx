@@ -210,6 +210,7 @@ function NavMenu(props) {
               )}
               {lists?.length > 0 ? (
                 <SubMenu
+                  menuClassName="nav-submenu"
                   overflow="auto"
                   gap={-8}
                   label={
@@ -244,6 +245,7 @@ function NavMenu(props) {
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>
               <SubMenu
+                menuClassName="nav-submenu"
                 overflow="auto"
                 gap={-8}
                 label={

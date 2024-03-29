@@ -809,38 +809,40 @@ function AccountInfo({
                   </div>
                 </LinkOrDiv>
               )}
-              <div class="account-metadata-box">
-                <div
-                  class="shazam-container no-animation"
-                  hidden={!!postingStats}
-                >
-                  <div class="shazam-container-inner">
-                    <button
-                      type="button"
-                      class="posting-stats-button"
-                      disabled={postingStatsUIState === 'loading'}
-                      onClick={() => {
-                        renderPostingStats();
-                      }}
-                    >
-                      <div
-                        class={`posting-stats-bar posting-stats-icon ${
-                          postingStatsUIState === 'loading' ? 'loading' : ''
-                        }`}
-                        style={{
-                          '--originals-percentage': '33%',
-                          '--replies-percentage': '66%',
+              {!moved && (
+                <div class="account-metadata-box">
+                  <div
+                    class="shazam-container no-animation"
+                    hidden={!!postingStats}
+                  >
+                    <div class="shazam-container-inner">
+                      <button
+                        type="button"
+                        class="posting-stats-button"
+                        disabled={postingStatsUIState === 'loading'}
+                        onClick={() => {
+                          renderPostingStats();
                         }}
-                      />
-                      View post stats{' '}
-                      {/* <Loader
+                      >
+                        <div
+                          class={`posting-stats-bar posting-stats-icon ${
+                            postingStatsUIState === 'loading' ? 'loading' : ''
+                          }`}
+                          style={{
+                            '--originals-percentage': '33%',
+                            '--replies-percentage': '66%',
+                          }}
+                        />
+                        View post stats{' '}
+                        {/* <Loader
                         abrupt
                         hidden={postingStatsUIState !== 'loading'}
                       /> */}
-                    </button>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </main>
             <footer>
               <RelatedActions
@@ -939,7 +941,7 @@ function RelatedActions({
 
         accountID.current = currentID;
 
-        if (moved) return;
+        // if (moved) return;
 
         setRelationshipUIState('loading');
 
@@ -1437,7 +1439,7 @@ function RelatedActions({
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />
           )}
-          {!!relationship && (
+          {!!relationship && !moved && (
             <MenuConfirm
               confirm={following || requested}
               confirmLabel={

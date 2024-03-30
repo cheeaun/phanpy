@@ -21,6 +21,8 @@ import Avatar from './avatar';
 import Icon from './icon';
 import MenuLink from './menu-link';
 
+const supportsTouch = 'ontouchstart' in window;
+
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { masto, instance, authenticated } = api();
@@ -210,6 +212,7 @@ function NavMenu(props) {
               )}
               {lists?.length > 0 ? (
                 <SubMenu
+                  openTrigger={supportsTouch ? 'clickOnly' : undefined}
                   menuClassName="nav-submenu"
                   overflow="auto"
                   gap={-8}
@@ -245,6 +248,7 @@ function NavMenu(props) {
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>
               <SubMenu
+                openTrigger={supportsTouch ? 'clickOnly' : undefined}
                 menuClassName="nav-submenu"
                 overflow="auto"
                 gap={-8}

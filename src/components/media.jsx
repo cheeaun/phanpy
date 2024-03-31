@@ -9,12 +9,12 @@ import {
 } from 'preact/hooks';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
+import formatDuration from '../utils/format-duration';
 import mem from '../utils/mem';
 import states from '../utils/states';
 
 import Icon from './icon';
 import Link from './link';
-import { formatDuration } from './status';
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent); // https://stackoverflow.com/a/23522755
 

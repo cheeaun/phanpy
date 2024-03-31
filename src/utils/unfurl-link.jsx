@@ -83,15 +83,23 @@ function _unfurlMastodonLink(instance, url) {
       limit: 1,
     })
     .then((results) => {
-      if (results.statuses.length > 0) {
-        const status = results.statuses[0];
-        return {
-          status,
-          instance,
-        };
-      } else {
-        throw new Error('No results');
+      const { statuses } = results;
+      if (statuses.length > 0) {
+        // Filter out statuses that has content that contains the URL, in-case-sensitive
+        const theStatuses = statuses.filter(
+          (status) =>
+            !status.content?.toLowerCase().includes(theURL.toLowerCase()),
+        );
+
+        if (theStatuses.length === 1) {
+          return {
+            status: theStatuses[0],
+            instance,
+          };
+        }
+        // If there are multiple statuses, give up, something is wrong
       }
+      throw new Error('No results');
     });
 
   function handleFulfill(result) {

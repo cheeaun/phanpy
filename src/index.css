@@ -109,13 +109,7 @@
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
   --spring-timing-funtion: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  --pointer-min-dimension: 88px;
-}
-
-@media (pointer: fine) {
-  :root {
-    --pointer-min-dimension: 44px;
-  }
+  --min-dimension: 88px;
 }
 
 @media (min-resolution: 2dppx) {

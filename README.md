@@ -138,7 +138,7 @@ Download or `git clone` this repository. Use `production` branch for *stable* re
 Customization can be done by passing environment variables to the build command. Examples:
 
 ```bash
-PHANPY_APP_TITLE="Phanpy Dev" \
+PHANPY_CLIENT_NAME="Phanpy Dev" \
     PHANPY_WEBSITE="https://dev.phanpy.social" \
     npm run build
 ```

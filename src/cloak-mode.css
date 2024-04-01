@@ -15,7 +15,8 @@ body.cloak,
   .account-block,
   .catchup-filters .filter-author *,
   .post-peek-html *,
-  .post-peek-content > * {
+  .post-peek-content > *,
+  .request-notifications-account * {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
     /* text-rendering: optimizeSpeed; */
@@ -51,7 +52,8 @@ body.cloak,
 .cloak {
   .media-container figcaption,
   .media-container figcaption > *,
-  .catchup-filters .filter-author * {
+  .catchup-filters .filter-author *,
+  .request-notifications-account * {
     color: var(--text-color) !important;
   }
 }

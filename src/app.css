@@ -295,7 +295,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
         video,
         img,
         audio {
-          min-height: 88px; /* for extreme dimensions */
+          min-height: var(--min-dimension); /* for extreme dimensions */
         }
       }
     }

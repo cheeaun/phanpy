@@ -21,15 +21,18 @@ import Avatar from './avatar';
 import Icon from './icon';
 import MenuLink from './menu-link';
 
+const supportsTouch = 'ontouchstart' in window;
+
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
   const { masto, instance, authenticated } = api();
 
   const [currentAccount, moreThanOneAccount] = useMemo(() => {
     const accounts = store.local.getJSON('accounts') || [];
-    const acc = accounts.find(
-      (account) => account.info.id === store.session.get('currentAccount'),
-    );
+    const acc =
+      accounts.find(
+        (account) => account.info.id === store.session.get('currentAccount'),
+      ) || accounts[0];
     return [acc, accounts.length > 1];
   }, []);
 
@@ -147,7 +150,7 @@ function NavMenu(props) {
         }}
         {...props}
         overflow="auto"
-        viewScroll="close"
+        // viewScroll="close"
         position="anchor"
         align="center"
         boundingBoxPadding={boundingBoxPadding}
@@ -209,6 +212,8 @@ function NavMenu(props) {
               )}
               {lists?.length > 0 ? (
                 <SubMenu
+                  openTrigger={supportsTouch ? 'clickOnly' : undefined}
+                  menuClassName="nav-submenu"
                   overflow="auto"
                   gap={-8}
                   label={
@@ -243,6 +248,8 @@ function NavMenu(props) {
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>
               <SubMenu
+                openTrigger={supportsTouch ? 'clickOnly' : undefined}
+                menuClassName="nav-submenu"
                 overflow="auto"
                 gap={-8}
                 label={

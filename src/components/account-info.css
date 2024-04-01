@@ -831,3 +831,58 @@
     }
   }
 }
+
+.handle-info {
+  .handle-handle {
+    display: inline-block;
+    margin-block: 5px;
+
+    b {
+      font-weight: 600;
+      padding: 2px 4px;
+      border-radius: 4px;
+      display: inline-block;
+      box-shadow: 0 0 0 5px var(--bg-blur-color);
+
+      &.handle-username {
+        color: var(--orange-fg-color);
+        background-color: var(--orange-bg-color);
+      }
+
+      &.handle-server {
+        color: var(--purple-fg-color);
+        background-color: var(--purple-bg-color);
+      }
+    }
+  }
+
+  .handle-at {
+    display: inline-block;
+    margin-inline: -3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .handle-legend {
+    margin-top: 0.25em;
+  }
+
+  .handle-legend-icon {
+    overflow: hidden;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
+
+    &.username {
+      background-color: var(--orange-fg-color);
+      border-color: var(--orange-bg-color);
+    }
+    &.server {
+      background-color: var(--purple-fg-color);
+      border-color: var(--purple-bg-color);
+    }
+  }
+}

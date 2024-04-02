@@ -28,6 +28,7 @@ const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
+  PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
 } = import.meta.env;
 
 function Settings({ onClose }) {
@@ -433,6 +434,37 @@ function Settings({ onClose }) {
                 </div>
               </div>
             </li>
+            {!!GIPHY_API_KEY && authenticated && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.composerGIFPicker}
+                    onChange={(e) => {
+                      states.settings.composerGIFPicker = e.target.checked;
+                    }}
+                  />{' '}
+                  GIF Picker for composer
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    Note: This feature uses external GIF search service, powered
+                    by{' '}
+                    <a
+                      href="https://developers.giphy.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GIPHY
+                    </a>
+                    . G-rated (suitable for viewing by all ages), tracking
+                    parameters are stripped, referrer information is omitted
+                    from requests, but search queries and IP address information
+                    will still reach their servers.
+                  </small>
+                </div>
+              </li>
+            )}
             {!!IMG_ALT_API_URL && authenticated && (
               <li>
                 <label>

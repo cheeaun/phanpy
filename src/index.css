@@ -347,6 +347,7 @@ button[hidden] {
 }
 
 input[type='text'],
+input[type='search'],
 textarea,
 select {
   color: var(--text-color);
@@ -356,6 +357,7 @@ select {
   border-radius: 4px;
 }
 input[type='text']:focus,
+input[type='search']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--outline-color);
@@ -371,7 +373,7 @@ textarea:disabled {
   background-color: var(--bg-faded-color);
 }
 
-:is(input[type='text'], textarea, select).block {
+:is(input[type='text'], input[type='search'], textarea, select).block {
   display: block;
   width: 100%;
 }

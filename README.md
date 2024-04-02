@@ -179,6 +179,10 @@ Available variables:
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)
   - List of fallback instances hard-coded in `/.env`
   - [↗️ List of lingva-translate instances](https://github.com/thedaviddelta/lingva-translate?tab=readme-ov-file#instances)
+- `PHANPY_GIPHY_API_KEY` (optional, no defaults):
+  - API key for [GIPHY](https://developers.giphy.com/). See [API docs](https://developers.giphy.com/docs/api/).
+  - If provided, a setting will appear for users to enable the GIF picker in the composer. Disabled by default.
+  - This is not self-hosted.
 
 ### Static site hosting
 

@@ -1711,6 +1711,9 @@ function MediaAttachment({
     onDescriptionChange,
     250,
   );
+  useEffect(() => {
+    debouncedOnDescriptionChange(description);
+  }, [description, debouncedOnDescriptionChange]);
 
   const [showModal, setShowModal] = useState(false);
   const textareaRef = useRef(null);
@@ -1759,7 +1762,7 @@ function MediaAttachment({
           onInput={(e) => {
             const { value } = e.target;
             setDescription(value);
-            debouncedOnDescriptionChange(value);
+            // debouncedOnDescriptionChange(value);
           }}
         ></textarea>
       )}

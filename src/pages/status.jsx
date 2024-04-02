@@ -122,7 +122,7 @@ function StatusPage(params) {
   }, [showMedia]);
 
   const mediaAttachments = mediaStatusID
-    ? mediaStatus?.mediaAttachments
+    ? snapStates.statuses[statusKey(mediaStatusID, instance)]?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
   const handleMediaClose = useCallback(() => {

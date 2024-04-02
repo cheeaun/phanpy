@@ -12,10 +12,10 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { matchPath, useSearchParams } from 'react-router-dom';
-import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
@@ -1208,7 +1208,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   {postInstance ? (
                     <>
                       {' '}
-                      (<b>{postInstance}</b>)
+                      (<b>{punycode.toUnicode(postInstance)}</b>)
                     </>
                   ) : (
                     ''

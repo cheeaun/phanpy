@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -228,7 +229,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = new URL(url).hostname;
+    const domain = punycode.toUnicode(new URL(url).hostname);
     return domain;
   }, [url]);
 
@@ -1598,7 +1599,7 @@ function niceAccountURL(url) {
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (
     <>
-      <span class="more-insignificant">{host}/</span>
+      <span class="more-insignificant">{punycode.toUnicode(host)}/</span>
       <wbr />
       <span>{path}</span>
     </>

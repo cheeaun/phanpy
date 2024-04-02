@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
@@ -1099,9 +1100,11 @@ function Catchup() {
                         height,
                         publishedAt,
                       } = card;
-                      const domain = new URL(url).hostname
-                        .replace(/^www\./, '')
-                        .replace(/\/$/, '');
+                      const domain = punycode.toUnicode(
+                        new URL(url).hostname
+                          .replace(/^www\./, '')
+                          .replace(/\/$/, ''),
+                      );
                       let accentColor;
                       if (blurhash) {
                         const averageColor = getBlurHashAverageColor(blurhash);

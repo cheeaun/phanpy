@@ -20,6 +20,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -2231,9 +2232,9 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = new URL(url).hostname
-      .replace(/^www\./, '')
-      .replace(/\/$/, '');
+    const domain = punycode.toUnicode(
+      new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+    );
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2349,7 +2350,9 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = new URL(url).hostname.replace(/^www\./, '');
+      const domain = punycode.toUnicode(
+        new URL(url).hostname.replace(/^www\./, ''),
+      );
       return (
         <a
           href={cardStatusURL || url}
@@ -2881,7 +2884,7 @@ function nicePostURL(url) {
   const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
   return (
     <>
-      {host}
+      {punycode.toUnicode(host)}
       {username ? (
         <>
           /{username}

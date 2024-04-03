@@ -6,6 +6,15 @@ import Loader from './loader';
 
 const supportsIntlSegmenter = !shouldPolyfill();
 
+// Preload IntlSegmenter
+setTimeout(() => {
+  queueMicrotask(() => {
+    if (!supportsIntlSegmenter) {
+      import('@formatjs/intl-segmenter/polyfill-force').catch(() => {});
+    }
+  });
+}, 1000);
+
 export default function IntlSegmenterSuspense({ children }) {
   if (supportsIntlSegmenter) {
     return <Suspense fallback={<Loader />}>{children}</Suspense>;

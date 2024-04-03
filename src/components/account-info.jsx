@@ -670,6 +670,7 @@ function AccountInfo({
                       // states.showAccount = false;
                       setTimeout(() => {
                         states.showGenericAccounts = {
+                          id: 'followers',
                           heading: 'Followers',
                           fetchAccounts: fetchFollowers,
                           instance,
@@ -1338,6 +1339,43 @@ function RelatedActions({
                       ))}
                     </div>
                   </SubMenu>
+                )}
+                {followedBy && (
+                  <MenuConfirm
+                    subMenu
+                    menuItemClassName="danger"
+                    confirmLabel={
+                      <>
+                        <Icon icon="user-x" />
+                        <span>Remove @{username} from followers?</span>
+                      </>
+                    }
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .removeFromFollowers();
+                          console.log(
+                            'removing from followers',
+                            newRelationship,
+                          );
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(`@${username} removed from followers`);
+                          states.reloadGenericAccounts.id = 'followers';
+                          states.reloadGenericAccounts.counter++;
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="user-x" />
+                    <span>Remove follower…</span>
+                  </MenuConfirm>
                 )}
                 <MenuConfirm
                   subMenu

@@ -11,6 +11,7 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode';
 
+import MenuLink from '../components/menu-link';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
@@ -582,6 +583,15 @@ function AccountInfo({
                     <Icon icon="external" />
                     <span>Go to original profile page</span>
                   </MenuItem>
+                  <MenuDivider />
+                  <MenuLink href={info.avatar} target="_blank">
+                    <Icon icon="user" />
+                    <span>View profile image</span>
+                  </MenuLink>
+                  <MenuLink href={info.header} target="_blank">
+                    <Icon icon="media" />
+                    <span>View profile header</span>
+                  </MenuLink>
                 </Menu2>
               ) : (
                 <AccountBlock

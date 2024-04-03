@@ -1943,7 +1943,24 @@ function Status({
               {!!emojiReactions?.length && (
                 <div class="emoji-reactions">
                   {emojiReactions.map((emojiReaction) => {
-                    const { name, count, me } = emojiReaction;
+                    const { name, count, me, url, staticUrl } = emojiReaction;
+                    if (url) {
+                      // Some servers return url and staticUrl
+                      return (
+                        <span
+                          class={`emoji-reaction tag ${
+                            me ? '' : 'insignificant'
+                          }`}
+                        >
+                          <CustomEmoji
+                            alt={name}
+                            url={url}
+                            staticUrl={staticUrl}
+                          />{' '}
+                          {count}
+                        </span>
+                      );
+                    }
                     const isShortCode = /^:.+?:$/.test(name);
                     if (isShortCode) {
                       const emoji = emojis.find(
@@ -1962,7 +1979,7 @@ function Status({
                               alt={name}
                               url={emoji.url}
                               staticUrl={emoji.staticUrl}
-                            />
+                            />{' '}
                             {count}
                           </span>
                         );

@@ -1,7 +1,7 @@
 /*
   Rendered but hidden. Only show when visible
 */
-import { useLayoutEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useInView } from 'react-intersection-observer';
 
 // The sticky header, usually at the top
@@ -26,7 +26,7 @@ export default function LazyShazam({ children }) {
     skip: visibleStart || visible,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     if (rect.bottom > TOP) {

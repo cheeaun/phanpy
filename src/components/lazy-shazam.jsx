@@ -4,6 +4,9 @@
 import { useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useInView } from 'react-intersection-observer';
 
+// The sticky header, usually at the top
+const TOP = 48;
+
 export default function LazyShazam({ children }) {
   const containerRef = useRef();
   const [visible, setVisible] = useState(false);
@@ -11,6 +14,7 @@ export default function LazyShazam({ children }) {
 
   const { ref } = useInView({
     root: null,
+    rootMargin: `-${TOP}px 0px 0px 0px`,
     trackVisibility: true,
     delay: 1000,
     onChange: (inView) => {
@@ -25,7 +29,7 @@ export default function LazyShazam({ children }) {
   useLayoutEffect(() => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    if (rect.bottom > 0) {
+    if (rect.bottom > TOP) {
       setVisibleStart(true);
     }
   }, []);

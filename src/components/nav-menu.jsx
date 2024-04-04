@@ -148,7 +148,7 @@ function NavMenu(props) {
         }}
         {...props}
         overflow="auto"
-        // viewScroll="close"
+        viewScroll="close"
         position="anchor"
         align="center"
         boundingBoxPadding={boundingBoxPadding}

@@ -20,6 +20,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -1942,7 +1943,24 @@ function Status({
               {!!emojiReactions?.length && (
                 <div class="emoji-reactions">
                   {emojiReactions.map((emojiReaction) => {
-                    const { name, count, me } = emojiReaction;
+                    const { name, count, me, url, staticUrl } = emojiReaction;
+                    if (url) {
+                      // Some servers return url and staticUrl
+                      return (
+                        <span
+                          class={`emoji-reaction tag ${
+                            me ? '' : 'insignificant'
+                          }`}
+                        >
+                          <CustomEmoji
+                            alt={name}
+                            url={url}
+                            staticUrl={staticUrl}
+                          />{' '}
+                          {count}
+                        </span>
+                      );
+                    }
                     const isShortCode = /^:.+?:$/.test(name);
                     if (isShortCode) {
                       const emoji = emojis.find(
@@ -1961,7 +1979,7 @@ function Status({
                               alt={name}
                               url={emoji.url}
                               staticUrl={emoji.staticUrl}
-                            />
+                            />{' '}
                             {count}
                           </span>
                         );
@@ -2231,9 +2249,9 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = new URL(url).hostname
-      .replace(/^www\./, '')
-      .replace(/\/$/, '');
+    const domain = punycode.toUnicode(
+      new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+    );
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2349,7 +2367,9 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = new URL(url).hostname.replace(/^www\./, '');
+      const domain = punycode.toUnicode(
+        new URL(url).hostname.replace(/^www\./, ''),
+      );
       return (
         <a
           href={cardStatusURL || url}
@@ -2872,21 +2892,6 @@ function StatusButton({
   );
 }
 
-export function formatDuration(time) {
-  if (!time) return;
-  let hours = Math.floor(time / 3600);
-  let minutes = Math.floor((time % 3600) / 60);
-  let seconds = Math.round(time % 60);
-
-  if (hours === 0) {
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  } else {
-    return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds
-      .toString()
-      .padStart(2, '0')}`;
-  }
-}
-
 function nicePostURL(url) {
   if (!url) return;
   const urlObj = new URL(url);
@@ -2896,7 +2901,7 @@ function nicePostURL(url) {
   const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
   return (
     <>
-      {host}
+      {punycode.toUnicode(host)}
       {username ? (
         <>
           /{username}

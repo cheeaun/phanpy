@@ -908,7 +908,7 @@
   grid-auto-rows: 1fr;
   gap: 2px;
   /* height: 160px; */
-  min-height: var(--pointer-min-dimension);
+  min-height: var(--min-dimension);
   height: auto;
   max-height: max(160px, 33vh);
 }
@@ -1037,9 +1037,9 @@
 .status .media-container.media-eq1 .media {
   display: inline-block;
   max-width: 100% !important;
-  min-width: var(--pointer-min-dimension);
+  min-width: var(--min-dimension);
   /* width: auto; */
-  min-height: var(--pointer-min-dimension);
+  min-height: var(--min-dimension);
   /* --maxAspectHeight: max(160px, 33vh);
   --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
   width: min(var(--aspectWidth), var(--width), 100%);
@@ -1300,7 +1300,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 :is(.status, .media-post) .media-audio {
   width: 100%;
   height: 100%;
-  min-height: var(--pointer-min-dimension);
+  min-height: var(--min-dimension);
   background-image: radial-gradient(
       circle at center center,
       transparent,
@@ -1695,13 +1695,14 @@ a.card:is(:hover, :focus):visited {
 }
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
-  margin: 3px;
-  min-height: 1em;
+  margin: 0 3px;
+  min-height: 0.9em;
 }
 .poll-option-votes {
   flex-shrink: 0;
   font-size: 90%;
   opacity: 0.75;
+  line-height: 1;
 }
 .poll-option-leading .poll-option-votes {
   font-weight: bold;

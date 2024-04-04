@@ -51,7 +51,7 @@ function Timeline({
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
-  const [uiState, setUIState] = useState('default');
+  const [uiState, setUIState] = useState('start');
   const [showMore, setShowMore] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -496,7 +496,8 @@ function Timeline({
               )}
             </ul>
           ) : (
-            uiState !== 'error' && <p class="ui-state">{emptyText}</p>
+            uiState !== 'error' &&
+            uiState !== 'start' && <p class="ui-state">{emptyText}</p>
           )}
           {uiState === 'error' && (
             <p class="ui-state">

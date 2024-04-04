@@ -10,6 +10,7 @@ import localeCode2Text from '../utils/localeCode2Text';
 import pmem from '../utils/pmem';
 
 import Icon from './icon';
+import LazyShazam from './lazy-shazam';
 import Loader from './loader';
 
 const { PHANPY_LINGVA_INSTANCES } = import.meta.env;
@@ -142,23 +143,21 @@ function TranslationBlock({
       detectedLang !== targetLangText
     ) {
       return (
-        <div class="shazam-container">
-          <div class="shazam-container-inner">
-            <div class="status-translation-block-mini">
-              <Icon
-                icon="translate"
-                alt={`Auto-translated from ${sourceLangText}`}
-              />
-              <output
-                lang={targetLang}
-                dir="auto"
-                title={pronunciationContent || ''}
-              >
-                {translatedContent}
-              </output>
-            </div>
+        <LazyShazam>
+          <div class="status-translation-block-mini">
+            <Icon
+              icon="translate"
+              alt={`Auto-translated from ${sourceLangText}`}
+            />
+            <output
+              lang={targetLang}
+              dir="auto"
+              title={pronunciationContent || ''}
+            >
+              {translatedContent}
+            </output>
           </div>
-        </div>
+        </LazyShazam>
       );
     }
     return null;

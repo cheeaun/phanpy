@@ -1,6 +1,6 @@
 import './account-info.css';
 
-import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
   useEffect,
@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -32,7 +33,9 @@ import ListAddEdit from './list-add-edit';
 import Loader from './loader';
 import Menu2 from './menu2';
 import MenuConfirm from './menu-confirm';
+import MenuLink from './menu-link';
 import Modal from './modal';
+import SubMenu2 from './submenu2';
 import TranslationBlock from './translation-block';
 
 const MUTE_DURATIONS = [
@@ -228,7 +231,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = new URL(url).hostname;
+    const domain = punycode.toUnicode(new URL(url).hostname);
     return domain;
   }, [url]);
 
@@ -581,6 +584,15 @@ function AccountInfo({
                     <Icon icon="external" />
                     <span>Go to original profile page</span>
                   </MenuItem>
+                  <MenuDivider />
+                  <MenuLink href={info.avatar} target="_blank">
+                    <Icon icon="user" />
+                    <span>View profile image</span>
+                  </MenuLink>
+                  <MenuLink href={info.header} target="_blank">
+                    <Icon icon="media" />
+                    <span>View profile header</span>
+                  </MenuLink>
                 </Menu2>
               ) : (
                 <AccountBlock
@@ -659,6 +671,7 @@ function AccountInfo({
                       // states.showAccount = false;
                       setTimeout(() => {
                         states.showGenericAccounts = {
+                          id: 'followers',
                           heading: 'Followers',
                           fetchAccounts: fetchFollowers,
                           instance,
@@ -809,38 +822,40 @@ function AccountInfo({
                   </div>
                 </LinkOrDiv>
               )}
-              <div class="account-metadata-box">
-                <div
-                  class="shazam-container no-animation"
-                  hidden={!!postingStats}
-                >
-                  <div class="shazam-container-inner">
-                    <button
-                      type="button"
-                      class="posting-stats-button"
-                      disabled={postingStatsUIState === 'loading'}
-                      onClick={() => {
-                        renderPostingStats();
-                      }}
-                    >
-                      <div
-                        class={`posting-stats-bar posting-stats-icon ${
-                          postingStatsUIState === 'loading' ? 'loading' : ''
-                        }`}
-                        style={{
-                          '--originals-percentage': '33%',
-                          '--replies-percentage': '66%',
+              {!moved && (
+                <div class="account-metadata-box">
+                  <div
+                    class="shazam-container no-animation"
+                    hidden={!!postingStats}
+                  >
+                    <div class="shazam-container-inner">
+                      <button
+                        type="button"
+                        class="posting-stats-button"
+                        disabled={postingStatsUIState === 'loading'}
+                        onClick={() => {
+                          renderPostingStats();
                         }}
-                      />
-                      View post stats{' '}
-                      {/* <Loader
+                      >
+                        <div
+                          class={`posting-stats-bar posting-stats-icon ${
+                            postingStatsUIState === 'loading' ? 'loading' : ''
+                          }`}
+                          style={{
+                            '--originals-percentage': '33%',
+                            '--replies-percentage': '66%',
+                          }}
+                        />
+                        View post stats{' '}
+                        {/* <Loader
                         abrupt
                         hidden={postingStatsUIState !== 'loading'}
                       /> */}
-                    </button>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </main>
             <footer>
               <RelatedActions
@@ -939,7 +954,7 @@ function RelatedActions({
 
         accountID.current = currentID;
 
-        if (moved) return;
+        // if (moved) return;
 
         setRelationshipUIState('loading');
 
@@ -1270,7 +1285,7 @@ function RelatedActions({
                     <span>Unmute @{username}</span>
                   </MenuItem>
                 ) : (
-                  <SubMenu
+                  <SubMenu2
                     menuClassName="menu-blur"
                     openTrigger="clickOnly"
                     direction="bottom"
@@ -1324,7 +1339,44 @@ function RelatedActions({
                         </MenuItem>
                       ))}
                     </div>
-                  </SubMenu>
+                  </SubMenu2>
+                )}
+                {followedBy && (
+                  <MenuConfirm
+                    subMenu
+                    menuItemClassName="danger"
+                    confirmLabel={
+                      <>
+                        <Icon icon="user-x" />
+                        <span>Remove @{username} from followers?</span>
+                      </>
+                    }
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .removeFromFollowers();
+                          console.log(
+                            'removing from followers',
+                            newRelationship,
+                          );
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(`@${username} removed from followers`);
+                          states.reloadGenericAccounts.id = 'followers';
+                          states.reloadGenericAccounts.counter++;
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="user-x" />
+                    <span>Remove follower…</span>
+                  </MenuConfirm>
                 )}
                 <MenuConfirm
                   subMenu
@@ -1437,7 +1489,7 @@ function RelatedActions({
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />
           )}
-          {!!relationship && (
+          {!!relationship && !moved && (
             <MenuConfirm
               confirm={following || requested}
               confirmLabel={
@@ -1596,7 +1648,7 @@ function niceAccountURL(url) {
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (
     <>
-      <span class="more-insignificant">{host}/</span>
+      <span class="more-insignificant">{punycode.toUnicode(host)}/</span>
       <wbr />
       <span>{path}</span>
     </>

@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -516,7 +517,13 @@ function AccountStatuses() {
           >
             <Icon icon="transfer" />{' '}
             <small class="menu-double-lines">
-              Switch to account's instance (<b>{accountInstance}</b>)
+              Switch to account's instance{' '}
+              {accountInstance ? (
+                <>
+                  {' '}
+                  (<b>{punycode.toUnicode(accountInstance)}</b>)
+                </>
+              ) : null}
             </small>
           </MenuItem>
           {!sameCurrentInstance && (

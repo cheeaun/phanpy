@@ -1,10 +1,16 @@
-export default function localeCode2Text(code) {
+import mem from './mem';
+
+const IntlDN = new Intl.DisplayNames(navigator.languages, {
+  type: 'language',
+});
+
+function _localeCode2Text(code) {
   try {
-    return new Intl.DisplayNames(navigator.languages, {
-      type: 'language',
-    }).of(code);
+    return IntlDN.of(code);
   } catch (e) {
     console.error(e);
     return null;
   }
 }
+
+export default mem(_localeCode2Text);

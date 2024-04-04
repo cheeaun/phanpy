@@ -1,6 +1,6 @@
 import './account-info.css';
 
-import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
   useEffect,
@@ -11,7 +11,6 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode';
 
-import MenuLink from '../components/menu-link';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
@@ -34,7 +33,9 @@ import ListAddEdit from './list-add-edit';
 import Loader from './loader';
 import Menu2 from './menu2';
 import MenuConfirm from './menu-confirm';
+import MenuLink from './menu-link';
 import Modal from './modal';
+import SubMenu2 from './submenu2';
 import TranslationBlock from './translation-block';
 
 const MUTE_DURATIONS = [
@@ -1284,7 +1285,7 @@ function RelatedActions({
                     <span>Unmute @{username}</span>
                   </MenuItem>
                 ) : (
-                  <SubMenu
+                  <SubMenu2
                     menuClassName="menu-blur"
                     openTrigger="clickOnly"
                     direction="bottom"
@@ -1338,7 +1339,7 @@ function RelatedActions({
                         </MenuItem>
                       ))}
                     </div>
-                  </SubMenu>
+                  </SubMenu2>
                 )}
                 {followedBy && (
                   <MenuConfirm

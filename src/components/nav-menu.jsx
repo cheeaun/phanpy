@@ -1,11 +1,6 @@
 import './nav-menu.css';
 
-import {
-  ControlledMenu,
-  MenuDivider,
-  MenuItem,
-  SubMenu,
-} from '@szhsin/react-menu';
+import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
@@ -20,6 +15,7 @@ import store from '../utils/store';
 import Avatar from './avatar';
 import Icon from './icon';
 import MenuLink from './menu-link';
+import SubMenu2 from './submenu2';
 
 function NavMenu(props) {
   const snapStates = useSnapshot(states);
@@ -368,29 +364,6 @@ function NavMenu(props) {
         </section>
       </ControlledMenu>
     </>
-  );
-}
-
-function SubMenu2(props) {
-  const menuRef = useRef();
-  return (
-    <SubMenu
-      {...props}
-      instanceRef={menuRef}
-      // Test fix for bug; submenus not opening on Android
-      itemProps={{
-        onPointerMove: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-        onPointerLeave: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-      }}
-    />
   );
 }
 

@@ -1,6 +1,6 @@
 import './shortcuts.css';
 
-import { MenuDivider, SubMenu } from '@szhsin/react-menu';
+import { MenuDivider } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -17,6 +17,7 @@ import Icon from './icon';
 import Link from './link';
 import Menu2 from './menu2';
 import MenuLink from './menu-link';
+import SubMenu2 from './submenu2';
 
 function Shortcuts() {
   const { instance } = api();
@@ -182,7 +183,7 @@ function Shortcuts() {
           {formattedShortcuts.map(({ id, path, title, subtitle, icon }, i) => {
             if (id === 'lists') {
               return (
-                <SubMenu
+                <SubMenu2
                   menuClassName="glass-menu"
                   overflow="auto"
                   gap={-8}
@@ -205,7 +206,7 @@ function Shortcuts() {
                       <span>{list.title}</span>
                     </MenuLink>
                   ))}
-                </SubMenu>
+                </SubMenu2>
               );
             }
 

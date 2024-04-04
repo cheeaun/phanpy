@@ -209,7 +209,7 @@ function NavMenu(props) {
                 </MenuLink>
               )}
               {lists?.length > 0 ? (
-                <SubMenu
+                <SubMenu2
                   menuClassName="nav-submenu"
                   overflow="auto"
                   gap={-8}
@@ -234,7 +234,7 @@ function NavMenu(props) {
                       ))}
                     </>
                   )}
-                </SubMenu>
+                </SubMenu2>
               ) : (
                 <MenuLink to="/l">
                   <Icon icon="list" size="l" />
@@ -244,7 +244,7 @@ function NavMenu(props) {
               <MenuLink to="/b">
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
               </MenuLink>
-              <SubMenu
+              <SubMenu2
                 menuClassName="nav-submenu"
                 overflow="auto"
                 gap={-8}
@@ -293,7 +293,7 @@ function NavMenu(props) {
                   <Icon icon="block" size="l" />
                   Blocked users&hellip;
                 </MenuItem>{' '}
-              </SubMenu>
+              </SubMenu2>
               <MenuDivider />
               <MenuItem
                 onClick={() => {
@@ -368,6 +368,29 @@ function NavMenu(props) {
         </section>
       </ControlledMenu>
     </>
+  );
+}
+
+function SubMenu2(props) {
+  const menuRef = useRef();
+  return (
+    <SubMenu
+      {...props}
+      instanceRef={menuRef}
+      // Test fix for bug; submenus not opening on Android
+      itemProps={{
+        onPointerMove: (e) => {
+          if (e.pointerType === 'touch') {
+            menuRef.current?.openMenu?.();
+          }
+        },
+        onPointerLeave: (e) => {
+          if (e.pointerType === 'touch') {
+            menuRef.current?.openMenu?.();
+          }
+        },
+      }}
+    />
   );
 }
 

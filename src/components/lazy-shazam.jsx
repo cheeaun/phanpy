@@ -30,7 +30,11 @@ export default function LazyShazam({ children }) {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     if (rect.bottom > TOP) {
-      setVisibleStart(true);
+      if (rect.top < window.innerHeight) {
+        setVisible(true);
+      } else {
+        setVisibleStart(true);
+      }
     }
   }, []);
 

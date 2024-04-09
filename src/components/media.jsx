@@ -74,7 +74,7 @@ function Media({
   altIndex,
   onClick = () => {},
 }) {
-  const {
+  let {
     blurhash,
     description,
     meta,
@@ -84,10 +84,17 @@ function Media({
     url,
     type,
   } = media;
+  if (/no\-preview\./i.test(previewUrl)) {
+    previewUrl = null;
+  }
   const { original = {}, small, focus } = meta || {};
 
-  const width = showOriginal ? original?.width : small?.width;
-  const height = showOriginal ? original?.height : small?.height;
+  const width = showOriginal
+    ? original?.width
+    : small?.width || original?.width;
+  const height = showOriginal
+    ? original?.height
+    : small?.height || original?.height;
   const mediaURL = showOriginal ? url : previewUrl || url;
   const remoteMediaURL = showOriginal
     ? remoteUrl
@@ -290,7 +297,11 @@ function Media({
                 }}
                 onError={(e) => {
                   const { src } = e.target;
-                  if (src === mediaURL && mediaURL !== remoteMediaURL) {
+                  if (
+                    src === mediaURL &&
+                    remoteMediaURL &&
+                    mediaURL !== remoteMediaURL
+                  ) {
                     e.target.src = remoteMediaURL;
                   }
                 }}
@@ -473,14 +484,26 @@ function Media({
             />
           ) : (
             <>
-              <img
-                src={previewUrl}
-                alt={showInlineDesc ? '' : description}
-                width={width}
-                height={height}
-                data-orientation={orientation}
-                loading="lazy"
-              />
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt={showInlineDesc ? '' : description}
+                  width={width}
+                  height={height}
+                  data-orientation={orientation}
+                  loading="lazy"
+                />
+              ) : (
+                <video
+                  src={url}
+                  width={width}
+                  height={height}
+                  data-orientation={orientation}
+                  preload="metadata"
+                  muted
+                  disablePictureInPicture
+                />
+              )}
               <div class="media-play">
                 <Icon icon="play" size="xl" />
               </div>

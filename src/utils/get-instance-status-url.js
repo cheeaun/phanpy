@@ -6,6 +6,7 @@ const statusPostRegexes = [
   /\/notes\/([^\/]+)/i, // Misskey, Firefish
   /^\/(?:notice|objects)\/([a-z0-9-]+)/i, // Pleroma
   /\/@[^@\/]+@?[^\/]+?\/([^\/]+)/i, // Mastodon
+  /^\/p\/[^\/]+\/([^\/]+)/i, // Pixelfed
 ];
 
 export function getInstanceStatusObject(url) {

@@ -151,7 +151,7 @@ function AccountStatuses() {
       }
     }
 
-    const results = [];
+    let results = [];
     if (firstLoad) {
       const { value } = await masto.v1.accounts
         .$select(id)
@@ -192,6 +192,26 @@ function AccountStatuses() {
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
+      // Check if value is same as pinned post (results)
+      // If the index for every post is the same, means API might not support pinned posts
+      if (results.length) {
+        let pinnedStatusesIds = [];
+        if (results[0]?.type === 'pinned') {
+          pinnedStatusesIds = results[0].id;
+        } else {
+          pinnedStatusesIds = results
+            .filter((status) => status._pinned)
+            .map((status) => status.id);
+        }
+        const containsAllPinned = pinnedStatusesIds.every((postId) =>
+          value.some((status) => status.id === postId),
+        );
+        if (containsAllPinned) {
+          // Remove pinned posts
+          results = [];
+        }
+      }
+
       results.push(...value);
 
       value.forEach((item) => {

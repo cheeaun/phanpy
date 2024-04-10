@@ -418,7 +418,7 @@ function Notifications({ columnMode }) {
               {supportsFilteredNotifications && (
                 <button
                   type="button"
-                  class="button plain"
+                  class="button plain4"
                   onClick={() => {
                     setShowNotificationsSettings(true);
                   }}

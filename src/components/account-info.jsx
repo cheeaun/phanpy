@@ -254,12 +254,13 @@ function AccountInfo({
     // On first load, fetch familiar followers, merge to top of results' `value`
     // Remove dups on every fetch
     if (firstLoad) {
-      const familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch(
-        {
+      let familiarFollowers = [];
+      try {
+        familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch({
           id: [id],
-        },
-      );
-      familiarFollowersCache.current = familiarFollowers[0].accounts;
+        });
+      } catch (e) {}
+      familiarFollowersCache.current = familiarFollowers?.[0]?.accounts || [];
       newValue = [
         ...familiarFollowersCache.current,
         ...value.filter(

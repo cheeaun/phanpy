@@ -140,7 +140,8 @@ function Media({
     enabled: pinchZoomEnabled,
     draggableUnZoomed: false,
     inertiaFriction: 0.9,
-    doubleTapZoomOutOnMaxScale: true,
+    tapZoomFactor: 2,
+    doubleTapToggleZoom: true,
     containerProps: {
       className: 'media-zoom',
       style: {

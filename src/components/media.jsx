@@ -99,7 +99,12 @@ function Media({
   const remoteMediaURL = showOriginal
     ? remoteUrl
     : previewRemoteUrl || remoteUrl;
-  const orientation = width >= height ? 'landscape' : 'portrait';
+  const hasDimensions = width && height;
+  const orientation = hasDimensions
+    ? width > height
+      ? 'landscape'
+      : 'portrait'
+    : null;
 
   const rgbAverageColor = blurhash ? getBlurHashAverageColor(blurhash) : null;
 
@@ -333,6 +338,18 @@ function Media({
                 onLoad={(e) => {
                   // e.target.closest('.media-image').style.backgroundImage = '';
                   e.target.dataset.loaded = true;
+                  if (!hasDimensions) {
+                    const $media = e.target.closest('.media');
+                    if ($media) {
+                      $media.dataset.orientation =
+                        e.target.naturalWidth > e.target.naturalHeight
+                          ? 'landscape'
+                          : 'portrait';
+                      $media.style['--width'] = `${e.target.naturalWidth}px`;
+                      $media.style['--height'] = `${e.target.naturalHeight}px`;
+                      $media.style.aspectRatio = `${e.target.naturalWidth}/${e.target.naturalHeight}`;
+                    }
+                  }
                 }}
                 onError={(e) => {
                   const { src } = e.target;
@@ -350,6 +367,7 @@ function Media({
       </Figure>
     );
   } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {
+    const hasDuration = original.duration > 0;
     const shortDuration = original.duration < 31;
     const isGIF = type === 'gifv' && shortDuration;
     // If GIF is too long, treat it as a video
@@ -503,6 +521,19 @@ function Media({
                   preload="metadata"
                   muted
                   disablePictureInPicture
+                  onLoadedMetadata={(e) => {
+                    if (!hasDuration) {
+                      const { duration } = e.target;
+                      if (duration) {
+                        const formattedDuration = formatDuration(duration);
+                        const container = e.target.closest('.media-video');
+                        if (container) {
+                          container.dataset.formattedDuration =
+                            formattedDuration;
+                        }
+                      }
+                    }
+                  }}
                 />
               )}
               <div class="media-play">

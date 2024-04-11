@@ -160,7 +160,7 @@
   display: block;
   position: relative;
 
-  &:after {
+  &[data-read-more]:after {
     content: attr(data-read-more);
     line-height: 1;
     display: inline-block;
@@ -790,7 +790,9 @@
     black 1.5em
   );
 }
-.timeline-deck .status:not(.truncated .status) .content.truncated:after {
+.timeline-deck
+  .status:not(.truncated .status)
+  .content.truncated[data-read-more]:after {
   content: attr(data-read-more);
   line-height: 1;
   display: inline-block;
@@ -2289,7 +2291,7 @@ a.card:is(:hover, :focus):visited {
         mask-image: linear-gradient(to bottom, #000 80px, transparent);
       }
 
-      &:after {
+      &[data-read-more]:after {
         content: attr(data-read-more);
         line-height: 1;
         display: inline-block;

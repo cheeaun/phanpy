@@ -530,7 +530,7 @@ function Media({
                 />
               ) : (
                 <video
-                  src={url}
+                  src={url + '#t=0.1'} // Make Safari show 1st-frame preview
                   width={width}
                   height={height}
                   data-orientation={orientation}

@@ -608,7 +608,7 @@ function Notifications({ columnMode }) {
           </label>
         </div>
         <h2 class="timeline-header">Today</h2>
-        {showTodayEmpty && !!snapStates.notifications.length && (
+        {showTodayEmpty && (
           <p class="ui-state insignificant">
             {uiState === 'default' ? "You're all caught up." : <>&hellip;</>}
           </p>

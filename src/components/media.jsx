@@ -511,6 +511,22 @@ function Media({
                   height={height}
                   data-orientation={orientation}
                   loading="lazy"
+                  onLoad={(e) => {
+                    if (!hasDimensions) {
+                      const $media = e.target.closest('.media');
+                      if ($media) {
+                        $media.dataset.orientation =
+                          e.target.naturalWidth > e.target.naturalHeight
+                            ? 'landscape'
+                            : 'portrait';
+                        $media.style['--width'] = `${e.target.naturalWidth}px`;
+                        $media.style[
+                          '--height'
+                        ] = `${e.target.naturalHeight}px`;
+                        $media.style.aspectRatio = `${e.target.naturalWidth}/${e.target.naturalHeight}`;
+                      }
+                    }
+                  }}
                 />
               ) : (
                 <video

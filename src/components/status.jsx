@@ -169,15 +169,19 @@ function Status({
   allowContextMenu,
   showActionsBar,
   showReplyParent,
+  mediaFirst,
 }) {
   if (skeleton) {
     return (
-      <div class="status skeleton">
-        <Avatar size="xxl" />
+      <div class={`status skeleton ${mediaFirst ? 'status-media-first' : ''}`}>
+        {!mediaFirst && <Avatar size="xxl" />}
         <div class="container">
-          <div class="meta">███ ████████</div>
+          <div class="meta">
+            {(size === 's' || mediaFirst) && <Avatar size="m" />} ███ ████████
+          </div>
           <div class="content-container">
-            <div class="content">
+            {mediaFirst && <div class="media-first-container" />}
+            <div class={`content ${mediaFirst ? 'media-first-content' : ''}`}>
               <p>████ ████████</p>
             </div>
           </div>
@@ -246,6 +250,10 @@ function Status({
     // Non-Mastodon
     emojiReactions,
   } = status;
+
+  // if (!mediaAttachments?.length) mediaFirst = false;
+  const hasMediaAttachments = !!mediaAttachments?.length;
+  if (mediaFirst && hasMediaAttachments) size = 's';
 
   const currentAccount = useMemo(() => {
     return store.session.get('currentAccount');
@@ -354,6 +362,7 @@ function Status({
             size={size}
             contentTextWeight={contentTextWeight}
             readOnly={readOnly}
+            mediaFirst={mediaFirst}
           />
         </div>
       );
@@ -378,6 +387,7 @@ function Status({
           contentTextWeight={contentTextWeight}
           readOnly={readOnly}
           enableCommentHint
+          mediaFirst={mediaFirst}
         />
       </div>
     );
@@ -411,6 +421,7 @@ function Status({
           contentTextWeight={contentTextWeight}
           readOnly={readOnly}
           enableCommentHint
+          mediaFirst={mediaFirst}
         />
       </div>
     );
@@ -848,56 +859,62 @@ function Status({
           </MenuItem>
         </>
       )}
-      {(enableTranslate || !language || differentLanguage) && <MenuDivider />}
-      {enableTranslate ? (
-        <div class={supportsTTS ? 'menu-horizontal' : ''}>
-          <MenuItem
-            disabled={forceTranslate}
-            onClick={() => {
-              setForceTranslate(true);
-            }}
-          >
-            <Icon icon="translate" />
-            <span>Translate</span>
-          </MenuItem>
-          {supportsTTS && (
-            <MenuItem
-              onClick={() => {
-                const postText = getPostText(status);
-                if (postText) {
-                  speak(postText, language);
-                }
-              }}
-            >
-              <Icon icon="speak" />
-              <span>Speak</span>
-            </MenuItem>
+      {!mediaFirst && (
+        <>
+          {(enableTranslate || !language || differentLanguage) && (
+            <MenuDivider />
           )}
-        </div>
-      ) : (
-        (!language || differentLanguage) && (
-          <div class={supportsTTS ? 'menu-horizontal' : ''}>
-            <MenuLink
-              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
-            >
-              <Icon icon="translate" />
-              <span>Translate</span>
-            </MenuLink>
-            {supportsTTS && (
+          {enableTranslate ? (
+            <div class={supportsTTS ? 'menu-horizontal' : ''}>
               <MenuItem
+                disabled={forceTranslate}
                 onClick={() => {
-                  const postText = getPostText(status);
-                  if (postText) {
-                    speak(postText, language);
-                  }
+                  setForceTranslate(true);
                 }}
               >
-                <Icon icon="speak" />
-                <span>Speak</span>
+                <Icon icon="translate" />
+                <span>Translate</span>
               </MenuItem>
-            )}
-          </div>
-        )
+              {supportsTTS && (
+                <MenuItem
+                  onClick={() => {
+                    const postText = getPostText(status);
+                    if (postText) {
+                      speak(postText, language);
+                    }
+                  }}
+                >
+                  <Icon icon="speak" />
+                  <span>Speak</span>
+                </MenuItem>
+              )}
+            </div>
+          ) : (
+            (!language || differentLanguage) && (
+              <div class={supportsTTS ? 'menu-horizontal' : ''}>
+                <MenuLink
+                  to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+                >
+                  <Icon icon="translate" />
+                  <span>Translate</span>
+                </MenuLink>
+                {supportsTTS && (
+                  <MenuItem
+                    onClick={() => {
+                      const postText = getPostText(status);
+                      if (postText) {
+                        speak(postText, language);
+                      }
+                    }}
+                  >
+                    <Icon icon="speak" />
+                    <span>Speak</span>
+                  </MenuItem>
+                )}
+              </div>
+            )
+          )}
+        </>
       )}
       {((!isSizeLarge && sameInstance) ||
         enableTranslate ||
@@ -1384,7 +1401,7 @@ function Status({
           }[size]
         } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
           isContextMenuOpen ? 'status-menu-open' : ''
-        }`}
+        } ${mediaFirst && hasMediaAttachments ? 'status-media-first' : ''}`}
         onMouseEnter={debugHover}
         onContextMenu={(e) => {
           if (!showContextMenu) return;
@@ -1712,188 +1729,253 @@ function Status({
               }
             }
           >
-            {!!spoilerText && (
+            {mediaFirst && hasMediaAttachments ? (
               <>
-                <div
-                  class="content spoiler-content"
-                  lang={language}
-                  dir="auto"
-                  ref={spoilerContentRef}
-                  data-read-more={readMoreText}
-                >
-                  <p>
-                    <EmojiText text={spoilerText} emojis={emojis} />
-                  </p>
-                </div>
-                {readingExpandSpoilers || previewMode ? (
-                  <div class="spoiler-divider">
-                    <Icon icon="eye-open" /> Content warning
+                {(!!spoilerText || !!sensitive) && !readingExpandSpoilers && (
+                  <>
+                    {!!spoilerText && (
+                      <span
+                        class="spoiler-content media-first-spoiler-content"
+                        lang={language}
+                        dir="auto"
+                        ref={spoilerContentRef}
+                        data-read-more={readMoreText}
+                      >
+                        <EmojiText text={spoilerText} emojis={emojis} />{' '}
+                      </span>
+                    )}
+                    <button
+                      class={`light spoiler-button media-first-spoiler-button ${
+                        showSpoiler ? 'spoiling' : ''
+                      }`}
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (showSpoiler) {
+                          delete states.spoilers[id];
+                          if (!readingExpandSpoilers) {
+                            delete states.spoilersMedia[id];
+                          }
+                        } else {
+                          states.spoilers[id] = true;
+                          if (!readingExpandSpoilers) {
+                            states.spoilersMedia[id] = true;
+                          }
+                        }
+                      }}
+                    >
+                      <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
+                      {showSpoiler ? 'Show less' : 'Show content'}
+                    </button>
+                  </>
+                )}
+                <MediaFirstContainer
+                  mediaAttachments={mediaAttachments}
+                  language={language}
+                  postID={id}
+                  instance={instance}
+                />
+                {!!content && (
+                  <div class="media-first-content content" ref={contentRef}>
+                    <PostContent
+                      post={status}
+                      instance={instance}
+                      previewMode={previewMode}
+                    />
                   </div>
-                ) : (
-                  <button
-                    class={`light spoiler-button ${
-                      showSpoiler ? 'spoiling' : ''
-                    }`}
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      if (showSpoiler) {
-                        delete states.spoilers[id];
-                        if (!readingExpandSpoilers) {
-                          delete states.spoilersMedia[id];
-                        }
-                      } else {
-                        states.spoilers[id] = true;
-                        if (!readingExpandSpoilers) {
-                          states.spoilersMedia[id] = true;
-                        }
-                      }
-                    }}
-                  >
-                    <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                    {showSpoiler ? 'Show less' : 'Show content'}
-                  </button>
                 )}
               </>
-            )}
-            {!!content && (
-              <div
-                class="content"
-                ref={contentRef}
-                data-read-more={readMoreText}
-              >
-                <PostContent
-                  post={status}
-                  instance={instance}
-                  previewMode={previewMode}
-                />
-                <QuoteStatuses id={id} instance={instance} level={quoted} />
-              </div>
-            )}
-            {!!poll && (
-              <Poll
-                lang={language}
-                poll={poll}
-                readOnly={readOnly || !sameInstance || !authenticated}
-                onUpdate={(newPoll) => {
-                  states.statuses[sKey].poll = newPoll;
-                }}
-                refresh={() => {
-                  return masto.v1.polls
-                    .$select(poll.id)
-                    .fetch()
-                    .then((pollResponse) => {
-                      states.statuses[sKey].poll = pollResponse;
-                    })
-                    .catch((e) => {}); // Silently fail
-                }}
-                votePoll={(choices) => {
-                  return masto.v1.polls
-                    .$select(poll.id)
-                    .votes.create({
-                      choices,
-                    })
-                    .then((pollResponse) => {
-                      states.statuses[sKey].poll = pollResponse;
-                    })
-                    .catch((e) => {}); // Silently fail
-                }}
-              />
-            )}
-            {(((enableTranslate || inlineTranslate) &&
-              !!content.trim() &&
-              !!getHTMLText(emojifyText(content, emojis)) &&
-              differentLanguage) ||
-              forceTranslate) && (
-              <TranslationBlock
-                forceTranslate={forceTranslate || inlineTranslate}
-                mini={!isSizeLarge && !withinContext}
-                sourceLanguage={language}
-                text={getPostText(status)}
-              />
-            )}
-            {!previewMode &&
-              sensitive &&
-              !!mediaAttachments.length &&
-              readingExpandMedia !== 'show_all' && (
-                <button
-                  class={`plain spoiler-media-button ${
-                    showSpoilerMedia ? 'spoiling' : ''
-                  }`}
-                  type="button"
-                  hidden={!readingExpandSpoilers && !!spoilerText}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (showSpoilerMedia) {
-                      delete states.spoilersMedia[id];
-                    } else {
-                      states.spoilersMedia[id] = true;
-                    }
-                  }}
-                >
-                  <Icon icon={showSpoilerMedia ? 'eye-open' : 'eye-close'} />{' '}
-                  {showSpoilerMedia ? 'Show less' : 'Show media'}
-                </button>
-              )}
-            {!!mediaAttachments.length && (
-              <MultipleMediaFigure
-                lang={language}
-                enabled={showMultipleMediaCaptions}
-                captionChildren={captionChildren}
-              >
-                <div
-                  ref={mediaContainerRef}
-                  class={`media-container media-eq${mediaAttachments.length} ${
-                    mediaAttachments.length > 2 ? 'media-gt2' : ''
-                  } ${mediaAttachments.length > 4 ? 'media-gt4' : ''}`}
-                >
-                  {displayedMediaAttachments.map((media, i) => (
-                    <Media
-                      key={media.id}
-                      media={media}
-                      autoAnimate={isSizeLarge}
-                      showCaption={mediaAttachments.length === 1}
-                      allowLongerCaption={
-                        !content && mediaAttachments.length === 1
-                      }
+            ) : (
+              <>
+                {!!spoilerText && (
+                  <>
+                    <div
+                      class="content spoiler-content"
                       lang={language}
-                      altIndex={
-                        showMultipleMediaCaptions &&
-                        !!media.description &&
-                        i + 1
-                      }
-                      to={`/${instance}/s/${id}?${
-                        withinContext ? 'media' : 'media-only'
-                      }=${i + 1}`}
-                      onClick={
-                        onMediaClick
-                          ? (e) => {
-                              onMediaClick(e, i, media, status);
+                      dir="auto"
+                      ref={spoilerContentRef}
+                      data-read-more={readMoreText}
+                    >
+                      <p>
+                        <EmojiText text={spoilerText} emojis={emojis} />
+                      </p>
+                    </div>
+                    {readingExpandSpoilers || previewMode ? (
+                      <div class="spoiler-divider">
+                        <Icon icon="eye-open" /> Content warning
+                      </div>
+                    ) : (
+                      <button
+                        class={`light spoiler-button ${
+                          showSpoiler ? 'spoiling' : ''
+                        }`}
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (showSpoiler) {
+                            delete states.spoilers[id];
+                            if (!readingExpandSpoilers) {
+                              delete states.spoilersMedia[id];
                             }
-                          : undefined
-                      }
+                          } else {
+                            states.spoilers[id] = true;
+                            if (!readingExpandSpoilers) {
+                              states.spoilersMedia[id] = true;
+                            }
+                          }
+                        }}
+                      >
+                        <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
+                        {showSpoiler ? 'Show less' : 'Show content'}
+                      </button>
+                    )}
+                  </>
+                )}
+                {!!content && (
+                  <div
+                    class="content"
+                    ref={contentRef}
+                    data-read-more={readMoreText}
+                  >
+                    <PostContent
+                      post={status}
+                      instance={instance}
+                      previewMode={previewMode}
                     />
-                  ))}
-                </div>
-              </MultipleMediaFigure>
+                    <QuoteStatuses id={id} instance={instance} level={quoted} />
+                  </div>
+                )}
+                {!!poll && (
+                  <Poll
+                    lang={language}
+                    poll={poll}
+                    readOnly={readOnly || !sameInstance || !authenticated}
+                    onUpdate={(newPoll) => {
+                      states.statuses[sKey].poll = newPoll;
+                    }}
+                    refresh={() => {
+                      return masto.v1.polls
+                        .$select(poll.id)
+                        .fetch()
+                        .then((pollResponse) => {
+                          states.statuses[sKey].poll = pollResponse;
+                        })
+                        .catch((e) => {}); // Silently fail
+                    }}
+                    votePoll={(choices) => {
+                      return masto.v1.polls
+                        .$select(poll.id)
+                        .votes.create({
+                          choices,
+                        })
+                        .then((pollResponse) => {
+                          states.statuses[sKey].poll = pollResponse;
+                        })
+                        .catch((e) => {}); // Silently fail
+                    }}
+                  />
+                )}
+                {(((enableTranslate || inlineTranslate) &&
+                  !!content.trim() &&
+                  !!getHTMLText(emojifyText(content, emojis)) &&
+                  differentLanguage) ||
+                  forceTranslate) && (
+                  <TranslationBlock
+                    forceTranslate={forceTranslate || inlineTranslate}
+                    mini={!isSizeLarge && !withinContext}
+                    sourceLanguage={language}
+                    text={getPostText(status)}
+                  />
+                )}
+                {!previewMode &&
+                  sensitive &&
+                  !!mediaAttachments.length &&
+                  readingExpandMedia !== 'show_all' && (
+                    <button
+                      class={`plain spoiler-media-button ${
+                        showSpoilerMedia ? 'spoiling' : ''
+                      }`}
+                      type="button"
+                      hidden={!readingExpandSpoilers && !!spoilerText}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (showSpoilerMedia) {
+                          delete states.spoilersMedia[id];
+                        } else {
+                          states.spoilersMedia[id] = true;
+                        }
+                      }}
+                    >
+                      <Icon
+                        icon={showSpoilerMedia ? 'eye-open' : 'eye-close'}
+                      />{' '}
+                      {showSpoilerMedia ? 'Show less' : 'Show media'}
+                    </button>
+                  )}
+                {!!mediaAttachments.length && (
+                  <MultipleMediaFigure
+                    lang={language}
+                    enabled={showMultipleMediaCaptions}
+                    captionChildren={captionChildren}
+                  >
+                    <div
+                      ref={mediaContainerRef}
+                      class={`media-container media-eq${
+                        mediaAttachments.length
+                      } ${mediaAttachments.length > 2 ? 'media-gt2' : ''} ${
+                        mediaAttachments.length > 4 ? 'media-gt4' : ''
+                      }`}
+                    >
+                      {displayedMediaAttachments.map((media, i) => (
+                        <Media
+                          key={media.id}
+                          media={media}
+                          autoAnimate={isSizeLarge}
+                          showCaption={mediaAttachments.length === 1}
+                          allowLongerCaption={
+                            !content && mediaAttachments.length === 1
+                          }
+                          lang={language}
+                          altIndex={
+                            showMultipleMediaCaptions &&
+                            !!media.description &&
+                            i + 1
+                          }
+                          to={`/${instance}/s/${id}?${
+                            withinContext ? 'media' : 'media-only'
+                          }=${i + 1}`}
+                          onClick={
+                            onMediaClick
+                              ? (e) => {
+                                  onMediaClick(e, i, media, status);
+                                }
+                              : undefined
+                          }
+                        />
+                      ))}
+                    </div>
+                  </MultipleMediaFigure>
+                )}
+                {!!card &&
+                  /^https/i.test(card?.url) &&
+                  !sensitive &&
+                  !spoilerText &&
+                  !poll &&
+                  !mediaAttachments.length &&
+                  !snapStates.statusQuotes[sKey] && (
+                    <Card
+                      card={card}
+                      selfReferential={
+                        card?.url === status.url || card?.url === status.uri
+                      }
+                      instance={currentInstance}
+                    />
+                  )}
+              </>
             )}
-            {!!card &&
-              /^https/i.test(card?.url) &&
-              !sensitive &&
-              !spoilerText &&
-              !poll &&
-              !mediaAttachments.length &&
-              !snapStates.statusQuotes[sKey] && (
-                <Card
-                  card={card}
-                  selfReferential={
-                    card?.url === status.url || card?.url === status.uri
-                  }
-                  instance={currentInstance}
-                />
-              )}
           </div>
           {!isSizeLarge && showCommentCount && (
             <div class="content-comment-hint insignificant">
@@ -2168,6 +2250,101 @@ function MultipleMediaFigure(props) {
         {captionChildren}
       </figcaption>
     </figure>
+  );
+}
+
+function MediaFirstContainer(props) {
+  const { mediaAttachments, language, postID, instance } = props;
+  const moreThanOne = mediaAttachments.length > 1;
+
+  const carouselRef = useRef();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    let handleScroll = () => {
+      const { clientWidth, scrollLeft } = carouselRef.current;
+      const index = Math.round(scrollLeft / clientWidth);
+      setCurrentIndex(index);
+    };
+    if (carouselRef.current) {
+      carouselRef.current.addEventListener('scroll', handleScroll, {
+        passive: true,
+      });
+    }
+    return () => {
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <div class="media-first-container" ref={carouselRef}>
+        {mediaAttachments.map((media, i) => (
+          <div class="media-first-item" key={media.id}>
+            <Media
+              media={media}
+              lang={language}
+              to={`/${instance}/s/${postID}?media-only=${i + 1}`}
+            />
+          </div>
+        ))}
+        {moreThanOne && (
+          <div class="media-carousel-controls">
+            <div class="carousel-indexer">
+              {currentIndex + 1}/{mediaAttachments.length}
+            </div>
+            <label class="media-carousel-button">
+              <button
+                type="button"
+                class="carousel-button"
+                hidden={currentIndex === 0}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  carouselRef.current.focus();
+                  carouselRef.current.scrollTo({
+                    left: carouselRef.current.clientWidth * (currentIndex - 1),
+                    behavior: 'smooth',
+                  });
+                }}
+              >
+                <Icon icon="arrow-left" />
+              </button>
+            </label>
+            <label class="media-carousel-button">
+              <button
+                type="button"
+                class="carousel-button"
+                hidden={currentIndex === mediaAttachments.length - 1}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  carouselRef.current.focus();
+                  carouselRef.current.scrollTo({
+                    left: carouselRef.current.clientWidth * (currentIndex + 1),
+                    behavior: 'smooth',
+                  });
+                }}
+              >
+                <Icon icon="arrow-right" />
+              </button>
+            </label>
+          </div>
+        )}
+      </div>
+      {moreThanOne && (
+        <div class="media-carousel-dots">
+          {mediaAttachments.map((media, i) => (
+            <span
+              key={media.id}
+              class={`carousel-dot ${i === currentIndex ? 'active' : ''}`}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 

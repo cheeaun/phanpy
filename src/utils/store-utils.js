@@ -126,3 +126,8 @@ export function getCurrentInstanceConfiguration() {
   const instance = getCurrentInstance();
   return getInstanceConfiguration(instance);
 }
+
+export function isMediaFirstInstance() {
+  const instance = getCurrentInstance();
+  return /pixelfed/i.test(instance?.version);
+}

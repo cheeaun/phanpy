@@ -301,6 +301,34 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     }
   }
 }
+
+.deck-container-media-first {
+  .timeline {
+    > li:not(.timeline-item-carousel, .timeline-item-container) {
+      &:has(.status-media-first) {
+        width: fit-content;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        max-width: min(480px, 100%);
+        margin-inline: auto !important;
+
+        &:has(.skeleton) {
+          width: 100%;
+        }
+      }
+
+      &:has(.media[data-orientation='landscape']) {
+        max-width: 100%;
+      }
+    }
+
+    .status-link:has(.status-media-first):hover {
+      background-color: transparent;
+    }
+  }
+}
+
 .timeline.grow {
   /* min-height: 100vh;
   min-height: 100dvh; */

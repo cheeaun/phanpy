@@ -33,6 +33,7 @@ function Public({ local, columnMode, ...props }) {
       publicIterator.current = masto.v1.timelines.public.list({
         limit: LIMIT,
         local: isLocal,
+        remote: !isLocal, // Pixelfed
       });
     }
     const results = await publicIterator.current.next();

@@ -1,4 +1,3 @@
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
 import Bookmarks from '../pages/bookmarks';
@@ -12,6 +11,7 @@ import Public from '../pages/public';
 import Search from '../pages/search';
 import Trending from '../pages/trending';
 import states from '../utils/states';
+import useHotkeys from '../utils/useHotkeys';
 import useTitle from '../utils/useTitle';
 
 function Columns() {

@@ -13,7 +13,6 @@ import {
   useState,
 } from 'preact/hooks';
 import punycode from 'punycode';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { matchPath, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -38,6 +37,7 @@ import states, {
 } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
+import useHotkeys from '../utils/useHotkeys';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 

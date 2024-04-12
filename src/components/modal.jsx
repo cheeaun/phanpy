@@ -2,9 +2,9 @@ import './modal.css';
 
 import { createPortal } from 'preact/compat';
 import { useEffect, useRef } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import useCloseWatcher from '../utils/useCloseWatcher';
+import useHotkeys from '../utils/useHotkeys';
 
 const $modalContainer = document.getElementById('modal-container');
 

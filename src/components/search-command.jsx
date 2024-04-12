@@ -2,7 +2,8 @@ import './search-command.css';
 
 import { memo } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
-import { useHotkeys } from 'react-hotkeys-hook';
+
+import useHotkeys from '../utils/useHotkeys';
 
 import SearchForm from './search-form';
 

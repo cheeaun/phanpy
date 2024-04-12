@@ -14,7 +14,6 @@ import {
   useState,
 } from 'preact/hooks';
 import punycode from 'punycode';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
 
@@ -42,6 +41,7 @@ import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
+import useHotkeys from '../utils/useHotkeys';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = 'home';

@@ -21,7 +21,6 @@ import {
   useState,
 } from 'preact/hooks';
 import punycode from 'punycode';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -56,6 +55,7 @@ import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import unfurlMastodonLink from '../utils/unfurl-link';
+import useHotkeys from '../utils/useHotkeys';
 import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 

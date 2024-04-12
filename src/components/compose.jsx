@@ -124,7 +124,7 @@ const MENTION_RE = new RegExp(
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
+  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.]+[a-z0-9_]+)?)(?![\\/\\w])`,
   'ig',
 );
 

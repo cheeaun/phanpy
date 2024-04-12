@@ -73,7 +73,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         limit: LIMIT,
         any: hashtags.slice(1),
         maxId: firstLoad ? undefined : maxID.current,
-        onlyMedia: media,
+        onlyMedia: media ? true : undefined,
       })
       .next();
     let { value } = results;

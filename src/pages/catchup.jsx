@@ -39,7 +39,7 @@ import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
-import { getCurrentAccountNS } from '../utils/store-utils';
+import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useHotkeys from '../utils/useHotkeys';
 import useTitle from '../utils/useTitle';
@@ -112,7 +112,7 @@ function Catchup() {
   const [showTopLinks, setShowTopLinks] = useState(false);
 
   const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
+    return getCurrentAccountID();
   }, []);
   const isSelf = (accountID) => accountID === currentAccount;
 

@@ -19,6 +19,7 @@ import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 
 import AsyncText from './AsyncText';
 import Icon from './icon';
@@ -787,7 +788,7 @@ function ImportExport({ shortcuts, onClose }) {
                 disabled={importUIState === 'cloud-downloading'}
                 onClick={async () => {
                   setImportUIState('cloud-downloading');
-                  const currentAccount = store.session.get('currentAccount');
+                  const currentAccount = getCurrentAccountID();
                   showToast(
                     'Downloading saved shortcuts from instance server…',
                   );
@@ -1043,7 +1044,7 @@ function ImportExport({ shortcuts, onClose }) {
                 disabled={importUIState === 'cloud-uploading'}
                 onClick={async () => {
                   setImportUIState('cloud-uploading');
-                  const currentAccount = store.session.get('currentAccount');
+                  const currentAccount = getCurrentAccountID();
                   try {
                     const relationships =
                       await masto.v1.accounts.relationships.fetch({

@@ -54,6 +54,7 @@ import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 import unfurlMastodonLink from '../utils/unfurl-link';
 import useHotkeys from '../utils/useHotkeys';
 import useTruncated from '../utils/useTruncated';
@@ -256,7 +257,7 @@ function Status({
   if (mediaFirst && hasMediaAttachments) size = 's';
 
   const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
+    return getCurrentAccountID();
   }, []);
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;

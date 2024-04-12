@@ -7,6 +7,7 @@ import {
   getAccountByInstance,
   getCurrentAccount,
   saveAccount,
+  setCurrentAccountID,
 } from './store-utils';
 
 // Default *fallback* instance
@@ -118,7 +119,7 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
   console.log('CURRENTACCOUNT SET', mastoAccount.id);
-  store.session.set('currentAccount', mastoAccount.id);
+  setCurrentAccountID(mastoAccount.id);
 
   saveAccount({
     info: mastoAccount,

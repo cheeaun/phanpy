@@ -1,5 +1,5 @@
 import mem from './mem';
-import store from './store';
+import { getCurrentAccountID } from './store-utils';
 
 function _isFiltered(filtered, filterContext) {
   if (!filtered?.length) return false;
@@ -43,7 +43,7 @@ export function filteredItem(item, filterContext, currentAccountID) {
 export function filteredItems(items, filterContext) {
   if (!items?.length) return [];
   if (!filterContext) return items;
-  const currentAccountID = store.session.get('currentAccount');
+  const currentAccountID = getCurrentAccountID();
   return items.filter((item) =>
     filteredItem(item, filterContext, currentAccountID),
   );

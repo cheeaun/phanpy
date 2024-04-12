@@ -11,6 +11,7 @@ import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 
 import Avatar from './avatar';
 import Icon from './icon';
@@ -24,9 +25,8 @@ function NavMenu(props) {
   const [currentAccount, moreThanOneAccount] = useMemo(() => {
     const accounts = store.local.getJSON('accounts') || [];
     const acc =
-      accounts.find(
-        (account) => account.info.id === store.session.get('currentAccount'),
-      ) || accounts[0];
+      accounts.find((account) => account.info.id === getCurrentAccountID()) ||
+      accounts[0];
     return [acc, accounts.length > 1];
   }, []);
 

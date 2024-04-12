@@ -22,7 +22,7 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
-import { updateAccount } from '../utils/store-utils';
+import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
@@ -198,10 +198,7 @@ function AccountInfo({
     }
   }
 
-  const isSelf = useMemo(
-    () => id === store.session.get('currentAccount'),
-    [id],
-  );
+  const isSelf = useMemo(() => id === getCurrentAccountID(), [id]);
 
   useEffect(() => {
     const infoHasEssentials = !!(
@@ -920,7 +917,7 @@ function RelatedActions({
 
   useEffect(() => {
     if (info) {
-      const currentAccount = store.session.get('currentAccount');
+      const currentAccount = getCurrentAccountID();
       let currentID;
       (async () => {
         if (sameInstance && authenticated) {

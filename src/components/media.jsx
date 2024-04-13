@@ -341,13 +341,15 @@ function Media({
                   if (!hasDimensions) {
                     const $media = e.target.closest('.media');
                     if ($media) {
+                      const { naturalWidth, naturalHeight } = e.target;
                       $media.dataset.orientation =
-                        e.target.naturalWidth > e.target.naturalHeight
-                          ? 'landscape'
-                          : 'portrait';
-                      $media.style['--width'] = `${e.target.naturalWidth}px`;
-                      $media.style['--height'] = `${e.target.naturalHeight}px`;
-                      $media.style.aspectRatio = `${e.target.naturalWidth}/${e.target.naturalHeight}`;
+                        naturalWidth > naturalHeight ? 'landscape' : 'portrait';
+                      $media.style.setProperty('--width', `${naturalWidth}px`);
+                      $media.style.setProperty(
+                        '--height',
+                        `${naturalHeight}px`,
+                      );
+                      $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
                     }
                   }
                 }}
@@ -515,15 +517,20 @@ function Media({
                     if (!hasDimensions) {
                       const $media = e.target.closest('.media');
                       if ($media) {
+                        const { naturalHeight, naturalWidth } = e.target;
                         $media.dataset.orientation =
-                          e.target.naturalWidth > e.target.naturalHeight
+                          naturalWidth > naturalHeight
                             ? 'landscape'
                             : 'portrait';
-                        $media.style['--width'] = `${e.target.naturalWidth}px`;
-                        $media.style[
-                          '--height'
-                        ] = `${e.target.naturalHeight}px`;
-                        $media.style.aspectRatio = `${e.target.naturalWidth}/${e.target.naturalHeight}`;
+                        $media.style.setProperty(
+                          '--width',
+                          `${naturalWidth}px`,
+                        );
+                        $media.style.setProperty(
+                          '--height',
+                          `${naturalHeight}px`,
+                        );
+                        $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
                       }
                     }
                   }}

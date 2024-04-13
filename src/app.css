@@ -306,11 +306,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   .timeline {
     > li:not(.timeline-item-carousel, .timeline-item-container) {
       &:has(.status-media-first) {
-        width: fit-content;
+        @media (min-width: 40em) {
+          width: fit-content;
+          max-width: min(480px, 100%);
+        }
+
         background-color: transparent !important;
         border: 0 !important;
         box-shadow: none !important;
-        max-width: min(480px, 100%);
         margin-inline: auto !important;
 
         &:not(:first-child) {

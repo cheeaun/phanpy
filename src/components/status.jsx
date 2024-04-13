@@ -2287,7 +2287,7 @@ function MediaFirstContainer(props) {
             <Media
               media={media}
               lang={language}
-              to={`/${instance}/s/${postID}?media-only=${i + 1}`}
+              to={`/${instance}/s/${postID}?media=${i + 1}`}
             />
           </div>
         ))}

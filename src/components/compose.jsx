@@ -988,7 +988,11 @@ function Compose({
                 } else {
                   try {
                     newStatus = await masto.v1.statuses.create(params, {
-                      idempotencyKey: UID.current,
+                      requestInit: {
+                        headers: {
+                          'Idempotency-Key': UID.current,
+                        },
+                      },
                     });
                   } catch (_) {
                     // If idempotency key fails, try again without it

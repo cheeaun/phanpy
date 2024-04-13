@@ -312,7 +312,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
         box-shadow: none !important;
         max-width: min(480px, 100%);
         margin-inline: auto !important;
-        margin-block: 32px;
+
+        &:not(:first-child) {
+          margin-block: 32px;
+        }
 
         &:has(.skeleton) {
           width: 100%;

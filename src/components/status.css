@@ -1325,6 +1325,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 
 .status-media-first {
+  animation: appear-smooth 1s ease-out;
+
   .meta-name {
     opacity: 0.65;
     transition: opacity 0.5s ease-in-out;
@@ -1398,7 +1400,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
 
       .media {
         /* background-color: var(--average-color, var(--bg-faded-color)); */
-        width: var(--width);
+        width: var(--width, 100%);
         max-width: 100%;
         max-height: 100%;
         min-height: var(--min-dimension);

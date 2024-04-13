@@ -72,6 +72,13 @@ function Notifications({ columnMode }) {
         excludeTypes: ['follow_request'],
       });
     }
+    if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
+      // Pixelfed returns next paginationed link with empty max_id
+      // I assume, it's done (end of list)
+      return {
+        done: true,
+      };
+    }
     const allNotifications = await notificationsIterator.current.next();
     const notifications = allNotifications.value;
 

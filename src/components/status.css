@@ -1320,13 +1320,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 
 .status.skeleton .media-first-container {
-  min-height: 3em;
+  min-height: 320px;
   background-color: var(--outline-color);
 }
 
 .status-media-first {
-  animation: appear-smooth 1s ease-out;
-
   .meta-name {
     opacity: 0.65;
     transition: opacity 0.5s ease-in-out;
@@ -1405,6 +1403,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
         max-height: 100%;
         min-height: var(--min-dimension);
         /* max-height: min(var(--height), 80vh); */
+
+        &:has(img:not([data-loaded='true'])) {
+          min-height: 320px;
+        }
 
         &:active {
           transform: none;

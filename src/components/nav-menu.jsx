@@ -12,6 +12,7 @@ import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID } from '../utils/store-utils';
+import supports from '../utils/supports';
 
 import Avatar from './avatar';
 import Icon from './icon';
@@ -83,8 +84,10 @@ function NavMenu(props) {
     return results;
   }
 
+  const supportsLists = supports('@mastodon/lists');
   const [lists, setLists] = useState([]);
   useEffect(() => {
+    if (!supportsLists) return;
     if (menuState === 'open') {
       getLists().then(setLists);
     }
@@ -186,9 +189,11 @@ function NavMenu(props) {
                 <Icon icon="history2" size="l" />
                 <span>Catch-up</span>
               </MenuLink>
-              <MenuLink to="/mentions">
-                <Icon icon="at" size="l" /> <span>Mentions</span>
-              </MenuLink>
+              {supports('@mastodon/mentions') && (
+                <MenuLink to="/mentions">
+                  <Icon icon="at" size="l" /> <span>Mentions</span>
+                </MenuLink>
+              )}
               <MenuLink to="/notifications">
                 <Icon icon="notification" size="l" /> <span>Notifications</span>
                 {snapStates.notificationsShowNew && (
@@ -232,10 +237,12 @@ function NavMenu(props) {
                   )}
                 </SubMenu2>
               ) : (
-                <MenuLink to="/l">
-                  <Icon icon="list" size="l" />
-                  <span>Lists</span>
-                </MenuLink>
+                supportsLists && (
+                  <MenuLink to="/l">
+                    <Icon icon="list" size="l" />
+                    <span>Lists</span>
+                  </MenuLink>
+                )
               )}
               <MenuLink to="/b">
                 <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
@@ -260,10 +267,12 @@ function NavMenu(props) {
                   <span>Followed Hashtags</span>
                 </MenuLink>
                 <MenuDivider />
-                <MenuLink to="/ft">
-                  <Icon icon="filters" size="l" />
-                  Filters
-                </MenuLink>
+                {supports('@mastodon/filters') && (
+                  <MenuLink to="/ft">
+                    <Icon icon="filters" size="l" />
+                    Filters
+                  </MenuLink>
+                )}
                 <MenuItem
                   onClick={() => {
                     states.showGenericAccounts = {

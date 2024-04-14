@@ -55,6 +55,7 @@ import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountID } from '../utils/store-utils';
+import supports from '../utils/supports';
 import unfurlMastodonLink from '../utils/unfurl-link';
 import useHotkeys from '../utils/useHotkeys';
 import useTruncated from '../utils/useTruncated';
@@ -149,6 +150,12 @@ const PostContent = memo(
   },
 );
 
+const SIZE_CLASS = {
+  s: 'small',
+  m: 'medium',
+  l: 'large',
+};
+
 function Status({
   statusID,
   status,
@@ -174,7 +181,11 @@ function Status({
 }) {
   if (skeleton) {
     return (
-      <div class={`status skeleton ${mediaFirst ? 'status-media-first' : ''}`}>
+      <div
+        class={`status skeleton ${
+          mediaFirst ? 'status-media-first small' : ''
+        }`}
+      >
         {!mediaFirst && <Avatar size="xxl" />}
         <div class="container">
           <div class="meta">
@@ -640,6 +651,7 @@ function Status({
   };
 
   const bookmarkStatus = async () => {
+    if (!supports('@mastodon/post-bookmark')) return;
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
       return false;
@@ -827,13 +839,15 @@ function Status({
                   : 'Like'}
               </span>
             </MenuItem>
-            <MenuItem
-              onClick={bookmarkStatusNotify}
-              className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
-            >
-              <Icon icon="bookmark" />
-              <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
-            </MenuItem>
+            {supports('@mastodon/post-bookmark') && (
+              <MenuItem
+                onClick={bookmarkStatusNotify}
+                className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
+              >
+                <Icon icon="bookmark" />
+                <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
+              </MenuItem>
+            )}
           </div>
         </>
       )}
@@ -1077,16 +1091,18 @@ function Status({
       )}
       {isSelf && (
         <div class="menu-horizontal">
-          <MenuItem
-            onClick={() => {
-              states.showCompose = {
-                editStatus: status,
-              };
-            }}
-          >
-            <Icon icon="pencil" />
-            <span>Edit</span>
-          </MenuItem>
+          {supports('@mastodon/post-edit') && (
+            <MenuItem
+              onClick={() => {
+                states.showCompose = {
+                  editStatus: status,
+                };
+              }}
+            >
+              <Icon icon="pencil" />
+              <span>Edit</span>
+            </MenuItem>
+          )}
           {isSizeLarge && (
             <MenuConfirm
               subMenu
@@ -1395,11 +1411,7 @@ function Status({
             ? 'status-reply-to'
             : ''
         } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
-          {
-            s: 'small',
-            m: 'medium',
-            l: 'large',
-          }[size]
+          SIZE_CLASS[size]
         } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
           isContextMenuOpen ? 'status-menu-open' : ''
         } ${mediaFirst && hasMediaAttachments ? 'status-media-first' : ''}`}
@@ -2160,16 +2172,18 @@ function Status({
                     onClick={favouriteStatus}
                   />
                 </div>
-                <div class="action">
-                  <StatusButton
-                    checked={bookmarked}
-                    title={['Bookmark', 'Unbookmark']}
-                    alt={['Bookmark', 'Bookmarked']}
-                    class="bookmark-button"
-                    icon="bookmark"
-                    onClick={bookmarkStatus}
-                  />
-                </div>
+                {supports('@mastodon/post-bookmark') && (
+                  <div class="action">
+                    <StatusButton
+                      checked={bookmarked}
+                      title={['Bookmark', 'Unbookmark']}
+                      alt={['Bookmark', 'Bookmarked']}
+                      class="bookmark-button"
+                      icon="bookmark"
+                      onClick={bookmarkStatus}
+                    />
+                  </div>
+                )}
                 <Menu2
                   portal={{
                     target:

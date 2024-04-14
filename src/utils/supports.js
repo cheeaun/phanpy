@@ -4,6 +4,20 @@ import features from '../data/features.json';
 
 import { getCurrentInstance } from './store-utils';
 
+// Non-semver(?) UA string detection
+// Can't put this inside features.json due to regex
+const containPixelfed = /pixelfed/i;
+const notContainPixelfed = /^(?!.*pixelfed).*$/i;
+const platformFeatures = {
+  '@mastodon/lists': notContainPixelfed,
+  '@mastodon/filters': notContainPixelfed,
+  '@mastodon/mentions': notContainPixelfed,
+  '@mastodon/trending-hashtags': notContainPixelfed,
+  '@mastodon/trending-links': notContainPixelfed,
+  '@mastodon/post-bookmark': notContainPixelfed,
+  '@mastodon/post-edit': notContainPixelfed,
+  '@pixelfed/trending': containPixelfed,
+};
 const supportsCache = {};
 
 function supports(feature) {
@@ -11,6 +25,11 @@ function supports(feature) {
     const { version, domain } = getCurrentInstance();
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
+
+    if (platformFeatures[feature]) {
+      return (supportsCache[key] = platformFeatures[feature].test(version));
+    }
+
     const range = features[feature];
     if (!range) return false;
     return (supportsCache[key] = satisfies(version, range, {

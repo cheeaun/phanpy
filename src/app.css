@@ -1917,7 +1917,8 @@ body > .szh-menu-container {
   /* two columns only */
   grid-template-columns: repeat(2, 1fr);
 }
-.szh-menu .menu-horizontal:has(> .szh-menu__item:only-child) {
+.szh-menu .menu-horizontal:has(> .szh-menu__item:only-child),
+.szh-menu .menu-horizontal:has(> .szh-menu__submenu:only-child) {
   grid-template-columns: 1fr;
 }
 .szh-menu .menu-horizontal > .szh-menu__item:not(:only-child):first-child,

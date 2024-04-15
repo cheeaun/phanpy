@@ -89,6 +89,21 @@ function Notifications({ columnMode }) {
         });
       });
 
+      // TEST: Slot in a fake notification to test 'severed_relationships'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'severed_relationships',
+      //   createdAt: '2024-03-22T19:20:08.316Z',
+      //   event: {
+      //     type: 'account_suspension',
+      //     targetName: 'mastodon.dev',
+      //     followersCount: 0,
+      //     followingCount: 0,
+      //   },
+      // });
+
+      // console.log({ notifications });
+
       const groupedNotifications = groupNotifications(notifications);
 
       if (firstLoad) {

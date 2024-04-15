@@ -5,7 +5,6 @@ import features from '../data/features.json';
 import { getCurrentInstance } from './store-utils';
 
 // Non-semver(?) UA string detection
-// Can't put this inside features.json due to regex
 const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const platformFeatures = {
@@ -16,6 +15,8 @@ const platformFeatures = {
   '@mastodon/trending-links': notContainPixelfed,
   '@mastodon/post-bookmark': notContainPixelfed,
   '@mastodon/post-edit': notContainPixelfed,
+  '@mastodon/profile-edit': notContainPixelfed,
+  '@mastodon/profile-private-note': notContainPixelfed,
   '@pixelfed/trending': containPixelfed,
 };
 const supportsCache = {};

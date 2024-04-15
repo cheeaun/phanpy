@@ -23,6 +23,7 @@ import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
+import supports from '../utils/supports';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
@@ -1091,16 +1092,18 @@ function RelatedActions({
                   <Icon icon="translate" />
                   <span>Translate bio</span>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    setShowPrivateNoteModal(true);
-                  }}
-                >
-                  <Icon icon="pencil" />
-                  <span>
-                    {privateNote ? 'Edit private note' : 'Add private note'}
-                  </span>
-                </MenuItem>
+                {supports('@mastodon/profile-private-note') && (
+                  <MenuItem
+                    onClick={() => {
+                      setShowPrivateNoteModal(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>
+                      {privateNote ? 'Edit private note' : 'Add private note'}
+                    </span>
+                  </MenuItem>
+                )}
                 {following && !!relationship && (
                   <>
                     <MenuItem
@@ -1449,19 +1452,22 @@ function RelatedActions({
                 </MenuItem>
               </>
             )}
-            {currentAuthenticated && isSelf && standalone && (
-              <>
-                <MenuDivider />
-                <MenuItem
-                  onClick={() => {
-                    setShowEditProfile(true);
-                  }}
-                >
-                  <Icon icon="pencil" />
-                  <span>Edit profile</span>
-                </MenuItem>
-              </>
-            )}
+            {currentAuthenticated &&
+              isSelf &&
+              standalone &&
+              supports('@mastodon/profile-edit') && (
+                <>
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => {
+                      setShowEditProfile(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>Edit profile</span>
+                  </MenuItem>
+                </>
+              )}
             {import.meta.env.DEV && currentAuthenticated && isSelf && (
               <>
                 <MenuDivider />

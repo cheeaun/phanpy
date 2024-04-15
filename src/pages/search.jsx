@@ -2,6 +2,7 @@ import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -15,7 +16,6 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
-import useHotkeys from '../utils/useHotkeys';
 import usePageVisibility from '../utils/usePageVisibility';
 import useTitle from '../utils/useTitle';
 

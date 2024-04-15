@@ -7,11 +7,11 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
-import useHotkeys from '../utils/useHotkeys';
 
 import Icon from './icon';
 import Link from './link';

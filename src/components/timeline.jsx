@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
@@ -16,7 +17,6 @@ import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { isMediaFirstInstance } from '../utils/store-utils';
 import { groupBoosts, groupContext } from '../utils/timeline-utils';
-import useHotkeys from '../utils/useHotkeys';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';

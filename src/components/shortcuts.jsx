@@ -3,6 +3,7 @@ import './shortcuts.css';
 import { MenuDivider } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -10,7 +11,6 @@ import { SHORTCUTS_META } from '../components/shortcuts-settings';
 import { api } from '../utils/api';
 import { getLists } from '../utils/lists';
 import states from '../utils/states';
-import useHotkeys from '../utils/useHotkeys';
 
 import AsyncText from './AsyncText';
 import Icon from './icon';

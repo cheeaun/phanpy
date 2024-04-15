@@ -1,7 +1,8 @@
+import { useHotkeys } from 'react-hotkeys-hook';
+
 import openCompose from '../utils/open-compose';
 import openOSK from '../utils/open-osk';
 import states from '../utils/states';
-import useHotkeys from '../utils/useHotkeys';
 
 import Icon from './icon';
 

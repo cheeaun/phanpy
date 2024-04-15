@@ -1330,10 +1330,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
 
 @keyframes media-carousel-slide {
   0% {
-    transform: translateX(calc(var(--dots-count, 1) * 5px));
+    transform: translateX(calc(var(--dots-count, 1) * 2.5px));
   }
   100% {
-    transform: translateX(calc(var(--dots-count, 1) * -5px));
+    transform: translateX(calc(var(--dots-count, 1) * -2.5px));
   }
 }
 
@@ -1371,7 +1371,67 @@ body:has(#modal-container .carousel) .status .media img:hover {
   .media-first-spoiler-button {
     display: inline-flex !important;
   }
+
   .media-first-container {
+    position: relative;
+
+    .media-carousel-controls {
+      flex-shrink: 0;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .carousel-indexer {
+      z-index: 1;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: var(--media-fg-color);
+      background-color: var(--media-bg-color);
+      padding: 2px 8px;
+      border-radius: 16px;
+      font-size: 0.8em;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.6;
+      transition: opacity 1s ease-in-out 0.3s;
+      border: var(--hairline-width) solid var(--media-outline-color);
+    }
+
+    .media-carousel-button {
+      display: flex;
+      flex-shrink: 0;
+      padding-inline: 8px;
+      margin-block: 3em;
+      pointer-events: auto;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-button {
+      @media (pointer: coarse) {
+        display: none;
+      }
+
+      + .carousel-button {
+        left: auto;
+        right: 8px;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .carousel-button {
+        filter: opacity(0);
+      }
+      &:hover .carousel-button {
+        filter: opacity(1);
+      }
+    }
+  }
+
+  .media-first-carousel {
     margin-top: 8px;
     display: flex;
     max-height: 80vh;
@@ -1381,7 +1441,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
     scroll-behavior: smooth;
     user-select: none;
     margin-inline: -16px;
-    position: relative;
     scrollbar-width: none;
     /* border: var(--hairline-width) solid var(--outline-color);
     border-inline-width: 0;
@@ -1442,63 +1501,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
         }
       }
     }
-
-    .media-carousel-controls {
-      flex-shrink: 0;
-      width: 100%;
-      position: sticky;
-      right: 0;
-      left: 0;
-      pointer-events: none;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .carousel-indexer {
-      z-index: 1;
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      color: var(--media-fg-color);
-      background-color: var(--media-bg-color);
-      padding: 2px 8px;
-      border-radius: 16px;
-      font-size: 0.8em;
-      font-variant-numeric: tabular-nums;
-      opacity: 0.6;
-      transition: opacity 1.5s ease-in-out;
-      border: var(--hairline-width) solid var(--media-outline-color);
-    }
-
-    .media-carousel-button {
-      display: flex;
-      flex-shrink: 0;
-      padding-inline: 8px;
-      margin-block: 3em;
-      pointer-events: auto;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-    }
-    .carousel-button {
-      @media (pointer: coarse) {
-        display: none;
-      }
-
-      + .carousel-button {
-        left: auto;
-        right: 8px;
-      }
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .carousel-button {
-        filter: opacity(0);
-      }
-      &:hover .carousel-button {
-        filter: opacity(1);
-      }
-    }
   }
   :is(:hover, :focus) > & .carousel-indexer {
     opacity: 0;
@@ -1513,7 +1515,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
     padding: 8px;
 
     @supports (animation-timeline: scroll()) {
-      animation: auto media-carousel-slide linear both;
+      animation: media-carousel-slide 1s linear both;
       animation-timeline: --media-carousel;
     }
 

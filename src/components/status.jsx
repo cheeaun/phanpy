@@ -2292,16 +2292,18 @@ function MediaFirstContainer(props) {
 
   return (
     <>
-      <div class="media-first-container" ref={carouselRef}>
-        {mediaAttachments.map((media, i) => (
-          <div class="media-first-item" key={media.id}>
-            <Media
-              media={media}
-              lang={language}
-              to={`/${instance}/s/${postID}?media=${i + 1}`}
-            />
-          </div>
-        ))}
+      <div class="media-first-container">
+        <div class="media-first-carousel" ref={carouselRef}>
+          {mediaAttachments.map((media, i) => (
+            <div class="media-first-item" key={media.id}>
+              <Media
+                media={media}
+                lang={language}
+                to={`/${instance}/s/${postID}?media=${i + 1}`}
+              />
+            </div>
+          ))}
+        </div>
         {moreThanOne && (
           <div class="media-carousel-controls">
             <div class="carousel-indexer">

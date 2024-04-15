@@ -407,26 +407,29 @@ function Status({
   }
 
   // Check followedTags
-  const FollowedTagsParent = ({ children }) => (
-    <div
-      data-state-post-id={sKey}
-      class="status-followed-tags"
-      onMouseEnter={debugHover}
-    >
-      <div class="status-pre-meta">
-        <Icon icon="hashtag" size="l" />{' '}
-        {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
-          <Link
-            key={tag}
-            to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
-            class="status-followed-tag-item"
-          >
-            {tag}
-          </Link>
-        ))}
+  const FollowedTagsParent = useCallback(
+    ({ children }) => (
+      <div
+        data-state-post-id={sKey}
+        class="status-followed-tags"
+        onMouseEnter={debugHover}
+      >
+        <div class="status-pre-meta">
+          <Icon icon="hashtag" size="l" />{' '}
+          {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+            <Link
+              key={tag}
+              to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
+              class="status-followed-tag-item"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    ),
+    [sKey, instance, snapStates.statusFollowedTags[sKey]],
   );
   const StatusParent =
     showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length

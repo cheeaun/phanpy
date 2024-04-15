@@ -11,6 +11,7 @@ import {
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import { shallowEqual } from 'fast-equals';
 import prettify from 'html-prettify';
+import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -406,38 +407,31 @@ function Status({
   }
 
   // Check followedTags
-  if (showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length) {
-    return (
-      <div
-        data-state-post-id={sKey}
-        class="status-followed-tags"
-        onMouseEnter={debugHover}
-      >
-        <div class="status-pre-meta">
-          <Icon icon="hashtag" size="l" />{' '}
-          {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
-            <Link
-              key={tag}
-              to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
-              class="status-followed-tag-item"
-            >
-              {tag}
-            </Link>
-          ))}
-        </div>
-        <Status
-          status={statusID ? null : status}
-          statusID={statusID ? status.id : null}
-          instance={instance}
-          size={size}
-          contentTextWeight={contentTextWeight}
-          readOnly={readOnly}
-          enableCommentHint
-          mediaFirst={mediaFirst}
-        />
+  const FollowedTagsParent = ({ children }) => (
+    <div
+      data-state-post-id={sKey}
+      class="status-followed-tags"
+      onMouseEnter={debugHover}
+    >
+      <div class="status-pre-meta">
+        <Icon icon="hashtag" size="l" />{' '}
+        {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
+          <Link
+            key={tag}
+            to={instance ? `/${instance}/t/${tag}` : `/t/${tag}`}
+            class="status-followed-tag-item"
+          >
+            {tag}
+          </Link>
+        ))}
       </div>
-    );
-  }
+      {children}
+    </div>
+  );
+  const StatusParent =
+    showFollowedTags && !!snapStates.statusFollowedTags[sKey]?.length
+      ? FollowedTagsParent
+      : Fragment;
 
   const isSizeLarge = size === 'l';
 
@@ -1383,7 +1377,7 @@ function Status({
   ]);
 
   return (
-    <>
+    <StatusParent>
       {showReplyParent && !!(inReplyToId && inReplyToAccountId) && (
         <StatusCompact sKey={sKey} />
       )}
@@ -2251,7 +2245,7 @@ function Status({
           </Modal>
         )}
       </article>
-    </>
+    </StatusParent>
   );
 }
 

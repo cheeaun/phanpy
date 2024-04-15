@@ -1328,7 +1328,18 @@ body:has(#modal-container .carousel) .status .media img:hover {
   background-color: var(--outline-color);
 }
 
+@keyframes media-carousel-slide {
+  0% {
+    transform: translateX(calc(var(--dots-count, 1) * 5px));
+  }
+  100% {
+    transform: translateX(calc(var(--dots-count, 1) * -5px));
+  }
+}
+
 .status-media-first {
+  timeline-scope: --media-carousel;
+
   .meta-name {
     opacity: 0.65;
     transition: opacity 0.5s ease-in-out;
@@ -1376,6 +1387,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
     border-inline-width: 0;
     background-color: var(--bg-faded-color); */
     box-shadow: 0 0 0 var(--hairline-width) var(--outline-color);
+    scroll-timeline: --media-carousel x;
 
     @media (min-width: 40em) {
       margin-inline: 0;
@@ -1500,6 +1512,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
     margin-top: 8px;
     padding: 8px;
 
+    @supports (animation-timeline: scroll()) {
+      animation: auto media-carousel-slide linear both;
+      animation-timeline: --media-carousel;
+    }
+
     .carousel-dot {
       display: inline-block;
       width: 5px;
@@ -1508,6 +1525,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
       background-color: var(--text-color);
       transition: all 0.3s ease-in-out;
       opacity: 0.3;
+      flex-shrink: 0;
 
       &.active {
         opacity: 1;

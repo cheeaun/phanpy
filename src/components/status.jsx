@@ -2344,7 +2344,12 @@ function MediaFirstContainer(props) {
         )}
       </div>
       {moreThanOne && (
-        <div class="media-carousel-dots">
+        <div
+          class="media-carousel-dots"
+          style={{
+            '--dots-count': mediaAttachments.length,
+          }}
+        >
           {mediaAttachments.map((media, i) => (
             <span
               key={media.id}

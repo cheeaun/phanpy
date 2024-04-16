@@ -1374,6 +1374,12 @@ body:has(#modal-container .carousel) .status .media img:hover {
 
   .media-first-container {
     position: relative;
+    margin-top: 8px;
+    margin-inline: -16px;
+
+    @media (min-width: 40em) {
+      margin-inline: 0;
+    }
 
     .media-carousel-controls {
       flex-shrink: 0;
@@ -1432,7 +1438,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
   }
 
   .media-first-carousel {
-    margin-top: 8px;
     display: flex;
     max-height: 80vh;
     overflow-x: auto;
@@ -1440,7 +1445,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     user-select: none;
-    margin-inline: -16px;
     scrollbar-width: none;
     /* border: var(--hairline-width) solid var(--outline-color);
     border-inline-width: 0;
@@ -1449,9 +1453,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
     scroll-timeline: --media-carousel x;
 
     @media (min-width: 40em) {
-      margin-inline: 0;
+      /* margin-inline: 0; */
       /* border-radius: 4px; */
-      border-inline-width: var(--hairline-width);
+      /* border-inline-width: var(--hairline-width); */
       box-shadow: none;
     }
 

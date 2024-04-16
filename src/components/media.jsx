@@ -513,6 +513,7 @@ function Media({
                   height={height}
                   data-orientation={orientation}
                   loading="lazy"
+                  decoding="async"
                   onLoad={(e) => {
                     if (!hasDimensions) {
                       const $media = e.target.closest('.media');

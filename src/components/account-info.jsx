@@ -22,7 +22,8 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
-import { updateAccount } from '../utils/store-utils';
+import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
+import supports from '../utils/supports';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
@@ -198,10 +199,7 @@ function AccountInfo({
     }
   }
 
-  const isSelf = useMemo(
-    () => id === store.session.get('currentAccount'),
-    [id],
-  );
+  const isSelf = useMemo(() => id === getCurrentAccountID(), [id]);
 
   useEffect(() => {
     const infoHasEssentials = !!(
@@ -254,12 +252,13 @@ function AccountInfo({
     // On first load, fetch familiar followers, merge to top of results' `value`
     // Remove dups on every fetch
     if (firstLoad) {
-      const familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch(
-        {
+      let familiarFollowers = [];
+      try {
+        familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch({
           id: [id],
-        },
-      );
-      familiarFollowersCache.current = familiarFollowers[0].accounts;
+        });
+      } catch (e) {}
+      familiarFollowersCache.current = familiarFollowers?.[0]?.accounts || [];
       newValue = [
         ...familiarFollowersCache.current,
         ...value.filter(
@@ -919,7 +918,7 @@ function RelatedActions({
 
   useEffect(() => {
     if (info) {
-      const currentAccount = store.session.get('currentAccount');
+      const currentAccount = getCurrentAccountID();
       let currentID;
       (async () => {
         if (sameInstance && authenticated) {
@@ -1093,16 +1092,18 @@ function RelatedActions({
                   <Icon icon="translate" />
                   <span>Translate bio</span>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    setShowPrivateNoteModal(true);
-                  }}
-                >
-                  <Icon icon="pencil" />
-                  <span>
-                    {privateNote ? 'Edit private note' : 'Add private note'}
-                  </span>
-                </MenuItem>
+                {supports('@mastodon/profile-private-note') && (
+                  <MenuItem
+                    onClick={() => {
+                      setShowPrivateNoteModal(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>
+                      {privateNote ? 'Edit private note' : 'Add private note'}
+                    </span>
+                  </MenuItem>
+                )}
                 {following && !!relationship && (
                   <>
                     <MenuItem
@@ -1451,19 +1452,22 @@ function RelatedActions({
                 </MenuItem>
               </>
             )}
-            {currentAuthenticated && isSelf && standalone && (
-              <>
-                <MenuDivider />
-                <MenuItem
-                  onClick={() => {
-                    setShowEditProfile(true);
-                  }}
-                >
-                  <Icon icon="pencil" />
-                  <span>Edit profile</span>
-                </MenuItem>
-              </>
-            )}
+            {currentAuthenticated &&
+              isSelf &&
+              standalone &&
+              supports('@mastodon/profile-edit') && (
+                <>
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => {
+                      setShowEditProfile(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>Edit profile</span>
+                  </MenuItem>
+                </>
+              )}
             {import.meta.env.DEV && currentAuthenticated && isSelf && (
               <>
                 <MenuDivider />

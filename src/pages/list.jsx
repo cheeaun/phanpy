@@ -63,8 +63,9 @@ function List(props) {
         since_id: latestItem.current,
       });
       let { value } = results;
-      value = filteredItems(value, 'home');
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
+        value = filteredItems(value, 'home');
         return true;
       }
       return false;

@@ -95,7 +95,9 @@ function Mentions({ columnMode, ...props }) {
           latestConversationItem.current,
           value,
         );
-        if (value?.length) {
+        const valueContainsLatestItem =
+          value[0]?.id === latestConversationItem.current; // since_id might not be supported
+        if (value?.length && !valueContainsLatestItem) {
           latestConversationItem.current = value[0].lastStatus.id;
           return true;
         }

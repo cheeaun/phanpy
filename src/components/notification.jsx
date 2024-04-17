@@ -4,6 +4,7 @@ import { memo } from 'preact/compat';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 import useTruncated from '../utils/useTruncated';
 
 import Avatar from './avatar';
@@ -132,7 +133,7 @@ function Notification({
   const actualStatus = status?.reblog || status;
   const actualStatusID = actualStatus?.id;
 
-  const currentAccount = store.session.get('currentAccount');
+  const currentAccount = getCurrentAccountID();
   const isSelf = currentAccount === account?.id;
   const isVoted = status?.poll?.voted;
   const isReplyToOthers =

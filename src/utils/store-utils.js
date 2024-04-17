@@ -16,13 +16,40 @@ export function getAccountByInstance(instance) {
   return accounts.find((a) => a.instanceURL === instance);
 }
 
+const standaloneMQ = window.matchMedia('(display-mode: standalone)');
+
+export function getCurrentAccountID() {
+  try {
+    const id = store.session.get('currentAccount');
+    if (id) return id;
+  } catch (e) {}
+  if (standaloneMQ.matches) {
+    try {
+      const id = store.local.get('currentAccount');
+      if (id) return id;
+    } catch (e) {}
+  }
+  return null;
+}
+
+export function setCurrentAccountID(id) {
+  try {
+    store.session.set('currentAccount', id);
+  } catch (e) {}
+  if (standaloneMQ.matches) {
+    try {
+      store.local.set('currentAccount', id);
+    } catch (e) {}
+  }
+}
+
 export function getCurrentAccount() {
   if (!window.__IGNORE_GET_ACCOUNT_ERROR__) {
     // Track down getCurrentAccount() calls before account-based states are initialized
     console.error('getCurrentAccount() called before states are initialized');
     if (import.meta.env.DEV) console.trace();
   }
-  const currentAccount = store.session.get('currentAccount');
+  const currentAccount = getCurrentAccountID();
   const account = getAccount(currentAccount);
   return account;
 }
@@ -48,7 +75,7 @@ export function saveAccount(account) {
     accounts.push(account);
   }
   store.local.setJSON('accounts', accounts);
-  store.session.set('currentAccount', account.info.id);
+  setCurrentAccountID(account.info.id);
 }
 
 export function updateAccount(accountInfo) {
@@ -125,4 +152,9 @@ function getInstanceConfiguration(instance) {
 export function getCurrentInstanceConfiguration() {
   const instance = getCurrentInstance();
   return getInstanceConfiguration(instance);
+}
+
+export function isMediaFirstInstance() {
+  const instance = getCurrentInstance();
+  return /pixelfed/i.test(instance?.version);
 }

@@ -124,7 +124,7 @@ const MENTION_RE = new RegExp(
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
+  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.]+[a-z0-9_]+)?)(?![\\/\\w])`,
   'ig',
 );
 
@@ -988,7 +988,11 @@ function Compose({
                 } else {
                   try {
                     newStatus = await masto.v1.statuses.create(params, {
-                      idempotencyKey: UID.current,
+                      requestInit: {
+                        headers: {
+                          'Idempotency-Key': UID.current,
+                        },
+                      },
                     });
                   } catch (_) {
                     // If idempotency key fails, try again without it
@@ -2370,6 +2374,10 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
     qRef.current?.focus();
   }, []);
 
+  const debouncedOnInput = useDebouncedCallback(() => {
+    fetchGIFs({ offset: 0 });
+  }, 1000);
+
   return (
     <div id="gif-picker-sheet" class="sheet">
       {!!onClose && (
@@ -2396,6 +2404,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
             autocapitalize="off"
             spellCheck="false"
             dir="auto"
+            onInput={debouncedOnInput}
           />
           <input
             type="image"

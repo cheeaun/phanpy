@@ -21,6 +21,7 @@ import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
+import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -67,6 +68,8 @@ function AccountStatuses() {
   useEffect(() => {
     searchOffsetRef.current = 0;
   }, allSearchParams);
+
+  const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
   const sameCurrentInstance = useMemo(
     () => instance === currentInstance,
@@ -151,7 +154,7 @@ function AccountStatuses() {
       }
     }
 
-    const results = [];
+    let results = [];
     if (firstLoad) {
       const { value } = await masto.v1.accounts
         .$select(id)
@@ -186,12 +189,32 @@ function AccountStatuses() {
           limit: LIMIT,
           exclude_replies: excludeReplies,
           exclude_reblogs: excludeBoosts,
-          only_media: media,
+          only_media: media || undefined,
           tagged,
         });
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
+      // Check if value is same as pinned post (results)
+      // If the index for every post is the same, means API might not support pinned posts
+      if (results.length) {
+        let pinnedStatusesIds = [];
+        if (results[0]?.type === 'pinned') {
+          pinnedStatusesIds = results[0].id;
+        } else {
+          pinnedStatusesIds = results
+            .filter((status) => status._pinned)
+            .map((status) => status.id);
+        }
+        const containsAllPinned = pinnedStatusesIds.every((postId) =>
+          value.some((status) => status.id === postId),
+        );
+        if (containsAllPinned) {
+          // Remove pinned posts
+          results = [];
+        }
+      }
+
       results.push(...value);
 
       value.forEach((item) => {
@@ -250,17 +273,21 @@ function AccountStatuses() {
       } catch (e) {
         console.error(e);
       }
-      try {
-        const featuredTags = await masto.v1.accounts
-          .$select(id)
-          .featuredTags.list();
-        console.log({ featuredTags });
-        setFeaturedTags(featuredTags);
-      } catch (e) {
-        console.error(e);
+      // No need, because the whole filter bar is hidden
+      // TODO: Revisit this
+      if (!mediaFirst) {
+        try {
+          const featuredTags = await masto.v1.accounts
+            .$select(id)
+            .featuredTags.list();
+          console.log({ featuredTags });
+          setFeaturedTags(featuredTags);
+        } catch (e) {
+          console.error(e);
+        }
       }
     })();
-  }, [id]);
+  }, [id, mediaFirst]);
 
   const { displayName, acct, emojis } = account || {};
 
@@ -279,95 +306,126 @@ function AccountStatuses() {
           authenticated={authenticated}
           standalone
         />
-        <div
-          class="filter-bar"
-          ref={filterBarRef}
-          style={{
-            position: 'relative',
-          }}
-        >
-          {filtered ? (
+        {!mediaFirst && (
+          <div
+            class="filter-bar"
+            ref={filterBarRef}
+            style={{
+              position: 'relative',
+            }}
+          >
+            {filtered ? (
+              <Link
+                to={`/${instance}/a/${id}`}
+                class="insignificant filter-clear"
+                title="Clear filters"
+                key="clear-filters"
+              >
+                <Icon icon="x" size="l" />
+              </Link>
+            ) : (
+              <Icon icon="filter" class="insignificant" size="l" />
+            )}
             <Link
-              to={`/${instance}/a/${id}`}
-              class="insignificant filter-clear"
-              title="Clear filters"
-              key="clear-filters"
-            >
-              <Icon icon="x" size="l" />
-            </Link>
-          ) : (
-            <Icon icon="filter" class="insignificant" size="l" />
-          )}
-          <Link
-            to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
-            onClick={() => {
-              if (excludeReplies) {
-                showToast('Showing post with replies');
-              }
-            }}
-            class={excludeReplies ? '' : 'is-active'}
-          >
-            + Replies
-          </Link>
-          <Link
-            to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
-            onClick={() => {
-              if (!excludeBoosts) {
-                showToast('Showing posts without boosts');
-              }
-            }}
-            class={!excludeBoosts ? '' : 'is-active'}
-          >
-            - Boosts
-          </Link>
-          <Link
-            to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
-            onClick={() => {
-              if (!media) {
-                showToast('Showing posts with media');
-              }
-            }}
-            class={media ? 'is-active' : ''}
-          >
-            Media
-          </Link>
-          {featuredTags.map((tag) => (
-            <Link
-              key={tag.id}
-              to={`/${instance}/a/${id}${
-                tagged === tag.name
-                  ? ''
-                  : `?tagged=${encodeURIComponent(tag.name)}`
-              }`}
+              to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
               onClick={() => {
-                if (tagged !== tag.name) {
-                  showToast(`Showing posts tagged with #${tag.name}`);
+                if (excludeReplies) {
+                  showToast('Showing post with replies');
                 }
               }}
-              class={tagged === tag.name ? 'is-active' : ''}
+              class={excludeReplies ? '' : 'is-active'}
             >
-              <span>
-                <span class="more-insignificant">#</span>
-                {tag.name}
-              </span>
-              {
-                // The count differs based on instance 😅
-              }
-              {/* <span class="filter-count">{tag.statusesCount}</span> */}
+              + Replies
             </Link>
-          ))}
-          {searchEnabled &&
-            (supportsInputMonth ? (
-              <label class={`filter-field ${month ? 'is-active' : ''}`}>
-                <Icon icon="month" size="l" />
-                <input
-                  type="month"
+            <Link
+              to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
+              onClick={() => {
+                if (!excludeBoosts) {
+                  showToast('Showing posts without boosts');
+                }
+              }}
+              class={!excludeBoosts ? '' : 'is-active'}
+            >
+              - Boosts
+            </Link>
+            <Link
+              to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
+              onClick={() => {
+                if (!media) {
+                  showToast('Showing posts with media');
+                }
+              }}
+              class={media ? 'is-active' : ''}
+            >
+              Media
+            </Link>
+            {featuredTags.map((tag) => (
+              <Link
+                key={tag.id}
+                to={`/${instance}/a/${id}${
+                  tagged === tag.name
+                    ? ''
+                    : `?tagged=${encodeURIComponent(tag.name)}`
+                }`}
+                onClick={() => {
+                  if (tagged !== tag.name) {
+                    showToast(`Showing posts tagged with #${tag.name}`);
+                  }
+                }}
+                class={tagged === tag.name ? 'is-active' : ''}
+              >
+                <span>
+                  <span class="more-insignificant">#</span>
+                  {tag.name}
+                </span>
+                {
+                  // The count differs based on instance 😅
+                }
+                {/* <span class="filter-count">{tag.statusesCount}</span> */}
+              </Link>
+            ))}
+            {searchEnabled &&
+              (supportsInputMonth ? (
+                <label class={`filter-field ${month ? 'is-active' : ''}`}>
+                  <Icon icon="month" size="l" />
+                  <input
+                    type="month"
+                    disabled={!account?.acct}
+                    value={month || ''}
+                    min={MIN_YEAR_MONTH}
+                    max={new Date().toISOString().slice(0, 7)}
+                    onInput={(e) => {
+                      const { value, validity } = e.currentTarget;
+                      if (!validity.valid) return;
+                      setSearchParams(
+                        value
+                          ? {
+                              month: value,
+                            }
+                          : {},
+                      );
+                      const [year, month] = value.split('-');
+                      const monthIndex = parseInt(month, 10) - 1;
+                      const date = new Date(year, monthIndex);
+                      showToast(
+                        `Showing posts in ${date.toLocaleString('default', {
+                          month: 'long',
+                          year: 'numeric',
+                        })}`,
+                      );
+                    }}
+                  />
+                </label>
+              ) : (
+                // Fallback to <select> for month and <input type="number"> for year
+                <MonthPicker
+                  class={`filter-field ${month ? 'is-active' : ''}`}
                   disabled={!account?.acct}
                   value={month || ''}
                   min={MIN_YEAR_MONTH}
                   max={new Date().toISOString().slice(0, 7)}
                   onInput={(e) => {
-                    const { value, validity } = e.currentTarget;
+                    const { value, validity } = e;
                     if (!validity.valid) return;
                     setSearchParams(
                       value
@@ -376,40 +434,11 @@ function AccountStatuses() {
                           }
                         : {},
                     );
-                    const [year, month] = value.split('-');
-                    const monthIndex = parseInt(month, 10) - 1;
-                    const date = new Date(year, monthIndex);
-                    showToast(
-                      `Showing posts in ${date.toLocaleString('default', {
-                        month: 'long',
-                        year: 'numeric',
-                      })}`,
-                    );
                   }}
                 />
-              </label>
-            ) : (
-              // Fallback to <select> for month and <input type="number"> for year
-              <MonthPicker
-                class={`filter-field ${month ? 'is-active' : ''}`}
-                disabled={!account?.acct}
-                value={month || ''}
-                min={MIN_YEAR_MONTH}
-                max={new Date().toISOString().slice(0, 7)}
-                onInput={(e) => {
-                  const { value, validity } = e;
-                  if (!validity.valid) return;
-                  setSearchParams(
-                    value
-                      ? {
-                          month: value,
-                        }
-                      : {},
-                  );
-                }}
-              />
-            ))}
-        </div>
+              ))}
+          </div>
+        )}
       </>
     );
   }, [
@@ -472,7 +501,7 @@ function AccountStatuses() {
       errorText="Unable to load posts"
       fetchItems={fetchAccountStatuses}
       useItemID
-      view={media ? 'media' : undefined}
+      view={media || mediaFirst ? 'media' : undefined}
       boostsCarousel={snapStates.settings.boostsCarousel}
       timelineStart={TimelineStart}
       refresh={[

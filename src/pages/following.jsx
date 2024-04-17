@@ -71,7 +71,8 @@ function Following({ title, path, id, ...props }) {
         .next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
         latestItem.current = value[0].id;
         value = dedupeBoosts(value, instance);
         value = filteredItems(value, 'home');

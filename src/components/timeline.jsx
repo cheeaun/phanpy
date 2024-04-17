@@ -1,5 +1,11 @@
 import { memo } from 'preact/compat';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
@@ -9,6 +15,7 @@ import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
+import { isMediaFirstInstance } from '../utils/store-utils';
 import { groupBoosts, groupContext } from '../utils/timeline-utils';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
@@ -58,6 +65,8 @@ function Timeline({
   const scrollableRef = useRef();
 
   console.debug('RENDER Timeline', id, refresh);
+
+  const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
   const allowGrouping = view !== 'media';
   const loadItems = useDebouncedCallback(
@@ -355,7 +364,9 @@ function Timeline({
     <FilterContext.Provider value={filterContext}>
       <div
         id={`${id}-page`}
-        class="deck-container"
+        class={`deck-container ${
+          mediaFirst ? 'deck-container-media-first' : ''
+        }`}
         ref={(node) => {
           scrollableRef.current = node;
           jRef.current = node;
@@ -432,6 +443,7 @@ function Timeline({
                     view={view}
                     showFollowedTags={showFollowedTags}
                     showReplyParent={showReplyParent}
+                    mediaFirst={mediaFirst}
                   />
                 ))}
                 {showMore &&
@@ -443,14 +455,14 @@ function Timeline({
                           height: '20vh',
                         }}
                       >
-                        <Status skeleton />
+                        <Status skeleton mediaFirst={mediaFirst} />
                       </li>
                       <li
                         style={{
                           height: '25vh',
                         }}
                       >
-                        <Status skeleton />
+                        <Status skeleton mediaFirst={mediaFirst} />
                       </li>
                     </>
                   ))}
@@ -490,7 +502,7 @@ function Timeline({
                   />
                 ) : (
                   <li key={i}>
-                    <Status skeleton />
+                    <Status skeleton mediaFirst={mediaFirst} />
                   </li>
                 ),
               )}
@@ -525,6 +537,7 @@ const TimelineItem = memo(
     view,
     showFollowedTags,
     showReplyParent,
+    mediaFirst,
   }) => {
     console.debug('RENDER TimelineItem', status.id);
     const { id: statusID, reblog, items, type, _pinned } = status;
@@ -533,6 +546,7 @@ const TimelineItem = memo(
     const url = instance
       ? `/${instance}/s/${actualStatusID}`
       : `/s/${actualStatusID}`;
+
     if (items) {
       const fItems = filteredItems(items, filterContext);
       let title = '';
@@ -585,6 +599,7 @@ const TimelineItem = memo(
                           contentTextWeight
                           enableCommentHint
                           // allowFilters={allowFilters}
+                          mediaFirst={mediaFirst}
                         />
                       ) : (
                         <Status
@@ -594,6 +609,7 @@ const TimelineItem = memo(
                           contentTextWeight
                           enableCommentHint
                           // allowFilters={allowFilters}
+                          mediaFirst={mediaFirst}
                         />
                       )}
                     </Link>
@@ -689,6 +705,7 @@ const TimelineItem = memo(
               showFollowedTags={showFollowedTags}
               showReplyParent={showReplyParent}
               // allowFilters={allowFilters}
+              mediaFirst={mediaFirst}
             />
           ) : (
             <Status
@@ -698,6 +715,7 @@ const TimelineItem = memo(
               showFollowedTags={showFollowedTags}
               showReplyParent={showReplyParent}
               // allowFilters={allowFilters}
+              mediaFirst={mediaFirst}
             />
           )}
         </Link>

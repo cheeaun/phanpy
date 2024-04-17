@@ -33,6 +33,7 @@ function Public({ local, columnMode, ...props }) {
       publicIterator.current = masto.v1.timelines.public.list({
         limit: LIMIT,
         local: isLocal,
+        remote: !isLocal, // Pixelfed
       });
     }
     const results = await publicIterator.current.next();
@@ -63,8 +64,9 @@ function Public({ local, columnMode, ...props }) {
         })
         .next();
       let { value } = results;
-      value = filteredItems(value, 'public');
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
+        value = filteredItems(value, 'public');
         return true;
       }
       return false;

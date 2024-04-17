@@ -2374,6 +2374,10 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
     qRef.current?.focus();
   }, []);
 
+  const debouncedOnInput = useDebouncedCallback(() => {
+    fetchGIFs({ offset: 0 });
+  }, 1000);
+
   return (
     <div id="gif-picker-sheet" class="sheet">
       {!!onClose && (
@@ -2400,6 +2404,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
             autocapitalize="off"
             spellCheck="false"
             dir="auto"
+            onInput={debouncedOnInput}
           />
           <input
             type="image"

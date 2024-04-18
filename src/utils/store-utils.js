@@ -107,10 +107,10 @@ export function getCurrentInstance() {
     return (currentInstance = instances[instance]);
   } catch (e) {
     console.error(e);
-    alert(`Failed to load instance configuration. Please try again.\n\n${e}`);
+    // alert(`Failed to load instance configuration. Please try again.\n\n${e}`);
     // Temporary fix for corrupted data
-    store.local.del('instances');
-    location.reload();
+    // store.local.del('instances');
+    // location.reload();
     return {};
   }
 }

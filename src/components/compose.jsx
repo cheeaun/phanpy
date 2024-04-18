@@ -1219,22 +1219,30 @@ function Compose({
                 />
                 <Icon icon="attachment" />
               </label>{' '}
-              <button
-                type="button"
-                class="toolbar-button"
-                disabled={
-                  uiState === 'loading' || !!poll || !!mediaAttachments.length
-                }
-                onClick={() => {
-                  setPoll({
-                    options: ['', ''],
-                    expiresIn: 24 * 60 * 60, // 1 day
-                    multiple: false,
-                  });
-                }}
-              >
-                <Icon icon="poll" alt="Add poll" />
-              </button>{' '}
+              {/* If maxOptions is not defined or defined and is greater than 1, show poll button */}
+              {maxOptions == null ||
+                (maxOptions > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      class="toolbar-button"
+                      disabled={
+                        uiState === 'loading' ||
+                        !!poll ||
+                        !!mediaAttachments.length
+                      }
+                      onClick={() => {
+                        setPoll({
+                          options: ['', ''],
+                          expiresIn: 24 * 60 * 60, // 1 day
+                          multiple: false,
+                        });
+                      }}
+                    >
+                      <Icon icon="poll" alt="Add poll" />
+                    </button>{' '}
+                  </>
+                ))}
               <button
                 type="button"
                 class="toolbar-button"

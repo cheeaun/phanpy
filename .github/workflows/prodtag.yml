@@ -10,19 +10,84 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
           ref: production
       # - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
       # - run: git push --tags
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci && npm run build
-      - run: cd dist && zip -r ../phanpy-dist.zip . && tar -czf ../phanpy-dist.tar.gz . && cd ..
+
       - id: tag_name
         run: echo ::set-output name=tag_name::$(date +%Y.%m.%d).$(git rev-parse --short HEAD)
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # @cheeaun: If you want to check out other ways to tag your Docker image:
+      # https://github.com/docker/metadata-action/blob/master/README.md
+      # I kept "tag_name" as the tag name for the Docker image for now
+      - name: Extract metadata for the Docker image
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=${{ steps.tag_name.outputs.tag_name }}
+
+      # @cheeaun: I think deploying to Docker Hub and GitHub is a good idea, to always have a fallback
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Source: https://github.com/docker/login-action?tab=readme-ov-file#github-container-registry
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          # @cheeaun: I think this is a good idea to support multiple architectures
+          # Basically here: any Windows, Mac or Linux computers, and 32-bits Raspberry Pi
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Extract artifacts from the Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          # @cheeaun: And this is where we extract the artifacts from the Docker image
+          # The reason I'm extracting it this way, is that you don't depend on anything else than docker,
+          # and you don't always know if your CI runner will have the tools to zip or tar a directory.
+          push: false
+          load: true
+          tags: ${{ github.repository }}:artifacts-latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Copy the artifacts files from the Docker container to the host
+      - run: |
+          docker create --name phanpy-artifacts ${{ github.repository }}:artifacts-latest
+          docker cp -q phanpy-artifacts:/root/phanpy/latest.zip ./dist/phanpy-dist.zip
+          docker cp -q phanpy-artifacts:/root/phanpy/latest.tar.gz ./dist/phanpy-dist.tar.gz
+          docker rm phanpy-artifacts
+
       - uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.tag_name.outputs.tag_name }}

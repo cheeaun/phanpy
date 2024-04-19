@@ -1,23 +1,36 @@
-FROM busybox:1 AS build
-ARG PHANPY_RELEASE_VERSION
+#############################################
+# Install everything to build the application
+#############################################
+FROM node:20-alpine AS build
 
-WORKDIR /root/phanpy_release
+WORKDIR /root/phanpy
 
-RUN wget "https://github.com/cheeaun/phanpy/releases/download/${PHANPY_RELEASE_VERSION}/phanpy-dist.tar.gz" && \
-    tar -xvf "phanpy-dist.tar.gz" -C /root/phanpy_release && \
-    rm "phanpy-dist.tar.gz"
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# ---
-FROM busybox:1
+COPY . .
+RUN npm run build
 
-# Create a non-root user to own the files and run our server
-RUN adduser -D static
-USER static
-WORKDIR /home/static
+##################################################
+# Special stage to easily extract the app as a zip
+##################################################
+FROM alpine:3 AS artifacts
 
-# Copy the static website
-# Use the .dockerignore file to control what ends up inside the image!
-COPY --chown=static:static --from=build /root/phanpy_release /home/static
+WORKDIR /root/phanpy
 
-# Run BusyBox httpd
-CMD ["httpd", "-f", "-v", "-p", "8080"]
+RUN apk add zip
+COPY --from=build /root/phanpy/dist /root/phanpy/dist
+
+# Outputs:
+# - /root/phanpy/latest.zip
+# - /root/phanpy/latest.tar.gz
+RUN zip -r /root/phanpy/latest.zip dist && \
+    tar -czf /root/phanpy/latest.tar.gz dist
+
+#####################################################
+# Copy the static files to a mininal web server image
+#####################################################
+FROM nginx:1-alpine-slim
+
+ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
+COPY --chown=static:static --from=build /root/phanpy/dist /usr/share/nginx/html

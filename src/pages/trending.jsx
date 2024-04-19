@@ -3,6 +3,7 @@ import '../components/links-bar.css';
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useMemo, useRef, useState } from 'preact/hooks';
+import punycode from 'punycode';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -18,6 +19,7 @@ import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
+import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -31,6 +33,17 @@ const fetchLinks = pmem(
     maxAge: 10 * 60 * 1000, // 10 minutes
   },
 );
+
+function fetchTrends(masto) {
+  if (supports('@pixelfed/trending')) {
+    return masto.pixelfed.v2.discover.posts.trending.list({
+      range: 'daily',
+    });
+  }
+  return masto.v1.trends.statuses.list({
+    limit: LIMIT,
+  });
+}
 
 function Trending({ columnMode, ...props }) {
   const snapStates = useSnapshot(states);
@@ -47,36 +60,39 @@ function Trending({ columnMode, ...props }) {
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
   const trendIterator = useRef();
+
   async function fetchTrend(firstLoad) {
     if (firstLoad || !trendIterator.current) {
-      trendIterator.current = masto.v1.trends.statuses.list({
-        limit: LIMIT,
-      });
+      trendIterator.current = fetchTrends(masto);
 
       // Get hashtags
-      try {
-        const iterator = masto.v1.trends.tags.list();
-        const { value: tags } = await iterator.next();
-        console.log('tags', tags);
-        if (tags?.length) {
-          setHashtags(tags);
+      if (supports('@mastodon/trending-hashtags')) {
+        try {
+          const iterator = masto.v1.trends.tags.list();
+          const { value: tags } = await iterator.next();
+          console.log('tags', tags);
+          if (tags?.length) {
+            setHashtags(tags);
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
       }
 
       // Get links
-      try {
-        const { value } = await fetchLinks(masto, instance);
-        // 4 types available: link, photo, video, rich
-        // Only want links for now
-        const links = value?.filter?.((link) => link.type === 'link');
-        console.log('links', links);
-        if (links?.length) {
-          setLinks(links);
+      if (supports('@mastodon/trending-links')) {
+        try {
+          const { value } = await fetchLinks(masto, instance);
+          // 4 types available: link, photo, video, rich
+          // Only want links for now
+          const links = value?.filter?.((link) => link.type === 'link');
+          console.log('links', links);
+          if (links?.length) {
+            setLinks(links);
+          }
+        } catch (e) {
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e);
       }
     }
     const results = await trendIterator.current.next();
@@ -161,9 +177,9 @@ function Trending({ columnMode, ...props }) {
                 url,
                 width,
               } = link;
-              const domain = new URL(url).hostname
-                .replace(/^www\./, '')
-                .replace(/\/$/, '');
+              const domain = punycode.toUnicode(
+                new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+              );
               let accentColor;
               if (blurhash) {
                 const averageColor = getBlurHashAverageColor(blurhash);

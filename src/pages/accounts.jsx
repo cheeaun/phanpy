@@ -13,12 +13,13 @@ import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
 
 function Accounts({ onClose }) {
   const { masto } = api();
   // Accounts
   const accounts = store.local.getJSON('accounts');
-  const currentAccount = store.session.get('currentAccount');
+  const currentAccount = getCurrentAccountID();
   const moreThanOneAccount = accounts.length > 1;
 
   const [_, reload] = useReducer((x) => x + 1, 0);
@@ -81,7 +82,7 @@ function Accounts({ onClose }) {
                         if (isCurrent) {
                           states.showAccount = `${account.info.username}@${account.instanceURL}`;
                         } else {
-                          store.session.set('currentAccount', account.info.id);
+                          setCurrentAccountID(account.info.id);
                           location.reload();
                         }
                       }}

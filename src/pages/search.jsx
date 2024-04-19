@@ -177,6 +177,7 @@ function Search({ columnMode, ...props }) {
     ['/', 'Slash'],
     (e) => {
       searchFormRef.current?.focus?.();
+      searchFormRef.current?.select?.();
     },
     {
       preventDefault: true,

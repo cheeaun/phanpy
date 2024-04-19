@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { fixNotifications } from '../utils/group-notifications';
 import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -30,6 +31,8 @@ function Mentions({ columnMode, ...props }) {
     const results = await mentionsIterator.current.next();
     let { value } = results;
     if (value?.length) {
+      value = fixNotifications(value);
+
       if (firstLoad) {
         latestItem.current = value[0].id;
         console.log('First load', latestItem.current);
@@ -95,7 +98,9 @@ function Mentions({ columnMode, ...props }) {
           latestConversationItem.current,
           value,
         );
-        if (value?.length) {
+        const valueContainsLatestItem =
+          value[0]?.id === latestConversationItem.current; // since_id might not be supported
+        if (value?.length && !valueContainsLatestItem) {
           latestConversationItem.current = value[0].lastStatus.id;
           return true;
         }

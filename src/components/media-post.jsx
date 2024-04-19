@@ -8,6 +8,7 @@ import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 
 import Media from './media';
 
@@ -88,7 +89,7 @@ function MediaPost({
   };
 
   const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
+    return getCurrentAccountID();
   }, []);
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;

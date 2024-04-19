@@ -72,6 +72,13 @@ function Notifications({ columnMode }) {
         excludeTypes: ['follow_request'],
       });
     }
+    if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
+      // Pixelfed returns next paginationed link with empty max_id
+      // I assume, it's done (end of list)
+      return {
+        done: true,
+      };
+    }
     const allNotifications = await notificationsIterator.current.next();
     const notifications = allNotifications.value;
 
@@ -81,6 +88,21 @@ function Notifications({ columnMode }) {
           skipThreading: true,
         });
       });
+
+      // TEST: Slot in a fake notification to test 'severed_relationships'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'severed_relationships',
+      //   createdAt: '2024-03-22T19:20:08.316Z',
+      //   event: {
+      //     type: 'account_suspension',
+      //     targetName: 'mastodon.dev',
+      //     followersCount: 0,
+      //     followingCount: 0,
+      //   },
+      // });
+
+      // console.log({ notifications });
 
       const groupedNotifications = groupNotifications(notifications);
 
@@ -247,7 +269,6 @@ function Notifications({ columnMode }) {
 
   const lastHiddenTime = useRef();
   usePageVisibility((visible) => {
-    let unsub;
     if (visible) {
       const timeDiff = Date.now() - lastHiddenTime.current;
       if (!lastHiddenTime.current || timeDiff > 1000 * 3) {
@@ -258,20 +279,16 @@ function Notifications({ columnMode }) {
       } else {
         lastHiddenTime.current = Date.now();
       }
-      unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
-        if (uiState === 'loading') {
-          return;
-        }
-        if (v) {
-          loadUpdates();
-        }
-        setShowNew(v);
-      });
     }
-    return () => {
-      unsub?.();
-    };
   });
+  useEffect(() => {
+    let unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+      if (uiState === 'loading') return;
+      if (v) loadUpdates();
+      setShowNew(v);
+    });
+    return () => unsub?.();
+  }, []);
 
   const todayDate = new Date();
   const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);
@@ -418,7 +435,7 @@ function Notifications({ columnMode }) {
               {supportsFilteredNotifications && (
                 <button
                   type="button"
-                  class="button plain"
+                  class="button plain4"
                   onClick={() => {
                     setShowNotificationsSettings(true);
                   }}
@@ -613,7 +630,7 @@ function Notifications({ columnMode }) {
           </label>
         </div>
         <h2 class="timeline-header">Today</h2>
-        {showTodayEmpty && !!snapStates.notifications.length && (
+        {showTodayEmpty && (
           <p class="ui-state insignificant">
             {uiState === 'default' ? "You're all caught up." : <>&hellip;</>}
           </p>

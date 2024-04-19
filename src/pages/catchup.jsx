@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
@@ -39,7 +40,7 @@ import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
-import { getCurrentAccountNS } from '../utils/store-utils';
+import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
@@ -111,7 +112,7 @@ function Catchup() {
   const [showTopLinks, setShowTopLinks] = useState(false);
 
   const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
+    return getCurrentAccountID();
   }, []);
   const isSelf = (accountID) => accountID === currentAccount;
 
@@ -1099,9 +1100,11 @@ function Catchup() {
                         height,
                         publishedAt,
                       } = card;
-                      const domain = new URL(url).hostname
-                        .replace(/^www\./, '')
-                        .replace(/\/$/, '');
+                      const domain = punycode.toUnicode(
+                        new URL(url).hostname
+                          .replace(/^www\./, '')
+                          .replace(/\/$/, ''),
+                      );
                       let accentColor;
                       if (blurhash) {
                         const averageColor = getBlurHashAverageColor(blurhash);

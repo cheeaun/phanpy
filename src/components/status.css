@@ -47,7 +47,7 @@
 }
 .visibility-direct {
   --yellow-stripes: repeating-linear-gradient(
-    -45deg,
+    135deg,
     var(--reply-to-faded-color),
     var(--reply-to-faded-color) 10px,
     var(--reply-to-faded-color) 10px,
@@ -160,7 +160,7 @@
   display: block;
   position: relative;
 
-  &:after {
+  &[data-read-more]:after {
     content: attr(data-read-more);
     line-height: 1;
     display: inline-block;
@@ -363,6 +363,10 @@
 
   &.visibility-direct {
     background-image: var(--yellow-stripes);
+  }
+
+  .status-pre-meta + & {
+    background-image: none;
   }
 
   > * {
@@ -618,6 +622,7 @@
   ~ *:not(
       .content.truncated,
       .media-container,
+      .media-first-container,
       .card,
       .media-figure-multiple,
       .spoiler-media-button
@@ -638,6 +643,7 @@
 
   ~ *:not(
       .media-container,
+      .media-first-container,
       .card,
       .media-figure-multiple,
       .spoiler-media-button
@@ -708,11 +714,12 @@
     }
   }
 
-  ~ :is(.media-container, .media-figure-multiple) .media {
+  ~ :is(.media-container, .media-first-container, .media-figure-multiple)
+    .media {
     background-image: radial-gradient(
       circle at 50% 50%,
       var(--average-color, var(--bg-faded-color)),
-      var(--bg-color) 20em
+      var(--bg-color) 25em
     );
 
     > *:not(.media-play, .alt-badge) {
@@ -790,7 +797,9 @@
     black 1.5em
   );
 }
-.timeline-deck .status:not(.truncated .status) .content.truncated:after {
+.timeline-deck
+  .status:not(.truncated .status)
+  .content.truncated[data-read-more]:after {
   content: attr(data-read-more);
   line-height: 1;
   display: inline-block;
@@ -1314,6 +1323,258 @@ body:has(#modal-container .carousel) .status .media img:hover {
   background-blend-mode: multiply;
 }
 
+.status.skeleton .media-first-container {
+  min-height: 320px;
+  background-color: var(--outline-color);
+}
+
+@keyframes media-carousel-slide {
+  0% {
+    transform: translateX(calc(var(--dots-count, 1) * 2.5px));
+  }
+  100% {
+    transform: translateX(calc(var(--dots-count, 1) * -2.5px));
+  }
+}
+
+.status-media-first {
+  timeline-scope: --media-carousel;
+
+  .meta-name {
+    opacity: 0.65;
+    transition: opacity 0.5s ease-in-out;
+
+    b + i {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+  }
+  :is(:hover, :focus) > & .meta-name {
+    opacity: 1;
+    b + i {
+      opacity: 0.5;
+    }
+  }
+
+  .media-first-spoiler-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0.5;
+  }
+  &:hover .media-first-spoiler-content {
+    opacity: 1;
+  }
+
+  .media-first-spoiler-button {
+    display: inline-flex !important;
+  }
+
+  .media-first-container {
+    position: relative;
+    margin-top: 8px;
+    margin-inline: -16px;
+
+    @media (min-width: 40em) {
+      margin-inline: 0;
+    }
+
+    .media-carousel-controls {
+      flex-shrink: 0;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .carousel-indexer {
+      z-index: 1;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: var(--media-fg-color);
+      background-color: var(--media-bg-color);
+      padding: 2px 8px;
+      border-radius: 16px;
+      font-size: 0.8em;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.6;
+      transition: opacity 1s ease-in-out 0.3s;
+      border: var(--hairline-width) solid var(--media-outline-color);
+    }
+
+    .media-carousel-button {
+      display: flex;
+      flex-shrink: 0;
+      padding-inline: 8px;
+      margin-block: 3em;
+      pointer-events: auto;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-button {
+      @media (pointer: coarse) {
+        display: none;
+      }
+
+      + .carousel-button {
+        left: auto;
+        right: 8px;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .carousel-button {
+        filter: opacity(0);
+      }
+      &:hover .carousel-button {
+        filter: opacity(1);
+      }
+    }
+  }
+
+  .media-first-carousel {
+    display: flex;
+    max-height: 80vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    user-select: none;
+    scrollbar-width: none;
+    /* border: var(--hairline-width) solid var(--outline-color);
+    border-inline-width: 0;
+    background-color: var(--bg-faded-color); */
+    box-shadow: 0 0 0 var(--hairline-width) var(--outline-color);
+    scroll-timeline: --media-carousel x;
+
+    @media (min-width: 40em) {
+      /* margin-inline: 0; */
+      /* border-radius: 4px; */
+      /* border-inline-width: var(--hairline-width); */
+      box-shadow: none;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > .media-first-item {
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      flex-shrink: 0;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+
+      &:not(:only-child) {
+        background-color: var(--bg-blur-color);
+        /* box-shadow: inset 0 0 0 var(--hairline-width) var(--outline-color); */
+      }
+
+      .media {
+        /* background-color: var(--average-color, var(--bg-faded-color)); */
+        width: var(--width, 100%);
+        max-width: 100%;
+        max-height: 100%;
+        min-height: var(--min-dimension);
+        /* max-height: min(var(--height), 80vh); */
+
+        &:has(img:not([data-loaded='true'])) {
+          min-height: 320px;
+        }
+
+        &:active {
+          transform: none;
+          filter: none;
+        }
+
+        img,
+        video {
+          object-fit: scale-down;
+          animation: none;
+
+          &:not([data-loaded='true']) {
+            background-color: var(--bg-color);
+          }
+        }
+      }
+    }
+  }
+  :is(:hover, :focus) > & .carousel-indexer {
+    opacity: 0;
+  }
+
+  .media-carousel-dots {
+    pointer-events: none;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 8px;
+
+    @supports (animation-timeline: scroll()) {
+      animation: media-carousel-slide 1s linear both;
+      animation-timeline: --media-carousel;
+    }
+
+    .carousel-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--text-color);
+      transition: all 0.3s ease-in-out;
+      opacity: 0.3;
+      flex-shrink: 0;
+
+      &.active {
+        opacity: 1;
+        background-color: var(--text-color);
+        transform: scale(1.5);
+      }
+    }
+  }
+
+  .media-first-content {
+    margin-top: 8px;
+    height: 1.75em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9em;
+    mask-image: linear-gradient(to bottom, black 1.5em, transparent 1.75em);
+    opacity: 0.5;
+    transition: opacity 0.5s ease-in-out;
+
+    @media (min-width: 40em) {
+      margin-inline: 16px;
+    }
+
+    * {
+      text-align: center;
+      /* Brute force ellipsis */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap !important;
+      pointer-events: none;
+    }
+
+    a {
+      filter: grayscale(0.5);
+    }
+  }
+
+  :is(:hover, :focus) > & .media-first-content {
+    opacity: 1;
+  }
+}
+
 .status:not(.large) .hashtag-stuffing {
   opacity: 0.75;
   transition: opacity 0.2s ease-in-out;
@@ -1695,13 +1956,14 @@ a.card:is(:hover, :focus):visited {
 }
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
-  margin: 3px;
-  min-height: 1em;
+  margin: 0 3px;
+  min-height: 0.9em;
 }
 .poll-option-votes {
   flex-shrink: 0;
   font-size: 90%;
   opacity: 0.75;
+  line-height: 1;
 }
 .poll-option-leading .poll-option-votes {
   font-weight: bold;
@@ -2288,7 +2550,7 @@ a.card:is(:hover, :focus):visited {
         mask-image: linear-gradient(to bottom, #000 80px, transparent);
       }
 
-      &:after {
+      &[data-read-more]:after {
         content: attr(data-read-more);
         line-height: 1;
         display: inline-block;

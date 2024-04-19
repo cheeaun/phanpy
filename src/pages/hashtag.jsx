@@ -5,7 +5,7 @@ import {
   MenuHeader,
   MenuItem,
 } from '@szhsin/react-menu';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
@@ -18,6 +18,7 @@ import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
+import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -55,6 +56,8 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 
+  const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
+
   // const hashtagsIterator = useRef();
   const maxID = useRef(undefined);
   async function fetchHashtags(firstLoad) {
@@ -73,7 +76,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         limit: LIMIT,
         any: hashtags.slice(1),
         maxId: firstLoad ? undefined : maxID.current,
-        onlyMedia: media,
+        onlyMedia: media ? true : undefined,
       })
       .next();
     let { value } = results;
@@ -85,7 +88,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       // value = filteredItems(value, 'public');
       value.forEach((item) => {
         saveStatus(item, instance, {
-          skipThreading: media, // If media view, no need to form threads
+          skipThreading: media || mediaFirst, // If media view, no need to form threads
         });
       });
 
@@ -109,8 +112,9 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         })
         .next();
       let { value } = results;
-      value = filteredItems(value, 'public');
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
+        value = filteredItems(value, 'public');
         return true;
       }
       return false;
@@ -155,7 +159,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       fetchItems={fetchHashtags}
       checkForUpdates={checkForUpdates}
       useItemID
-      view={media ? 'media' : undefined}
+      view={media || mediaFirst ? 'media' : undefined}
       refresh={media}
       // allowFilters
       filterContext="public"
@@ -232,23 +236,27 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               <MenuDivider />
             </>
           )}
-          <MenuHeader className="plain">Filters</MenuHeader>
-          <MenuItem
-            type="checkbox"
-            checked={!!media}
-            onClick={() => {
-              if (media) {
-                searchParams.delete('media');
-              } else {
-                searchParams.set('media', '1');
-              }
-              setSearchParams(searchParams);
-            }}
-          >
-            <Icon icon="check-circle" />{' '}
-            <span class="menu-grow">Media only</span>
-          </MenuItem>
-          <MenuDivider />
+          {!mediaFirst && (
+            <>
+              <MenuHeader className="plain">Filters</MenuHeader>
+              <MenuItem
+                type="checkbox"
+                checked={!!media}
+                onClick={() => {
+                  if (media) {
+                    searchParams.delete('media');
+                  } else {
+                    searchParams.set('media', '1');
+                  }
+                  setSearchParams(searchParams);
+                }}
+              >
+                <Icon icon="check-circle" />{' '}
+                <span class="menu-grow">Media only</span>
+              </MenuItem>
+              <MenuDivider />
+            </>
+          )}
           <FocusableItem className="menu-field" disabled={reachLimit}>
             {({ ref }) => (
               <form

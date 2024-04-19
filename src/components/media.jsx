@@ -388,7 +388,7 @@ function Media({
       data-orientation="${orientation}"
       preload="auto"
       autoplay
-      muted="${isGIF}"
+      ${isGIF ? 'muted' : ''}
       ${isGIF ? '' : 'controls'}
       playsinline
       loop="${loopable}"

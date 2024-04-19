@@ -9,7 +9,7 @@ const notificationTypeKeys = {
   poll: ['status'],
   update: ['status'],
 };
-function fixNotifications(notifications) {
+export function fixNotifications(notifications) {
   return notifications.filter((notification) => {
     const { type, id, createdAt } = notification;
     if (!type) {

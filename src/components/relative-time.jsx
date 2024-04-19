@@ -21,6 +21,7 @@ export default function RelativeTime({ datetime, format }) {
   const [renderCount, rerender] = useReducer((x) => x + 1, 0);
   const date = useMemo(() => dayjs(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
+    if (!date.isValid()) return ['' + datetime, '', ''];
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year
@@ -37,6 +38,7 @@ export default function RelativeTime({ datetime, format }) {
   }, [date, format, renderCount]);
 
   useEffect(() => {
+    if (!date.isValid()) return;
     let timeout;
     let raf;
     function rafRerender() {

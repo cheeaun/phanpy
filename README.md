@@ -1,10 +1,10 @@
 <div align="center">
   <img src="design/logo-4.svg" width="128" height="128" alt="">
 
-Phanpy
-===
+# Phanpy
 
 **Minimalistic opinionated Mastodon web client.**
+
 </div>
 
 ![Fancy screenshot](readme-assets/fancy-screenshot.jpg)
@@ -55,7 +55,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 - On the timeline, the user name is displayed as `[NAME] @[username]`.
 - For the `@[username]`, always exclude the instance domain name.
-- If the `[NAME]` *looks the same* as the `@[username]`, then the `@[username]` is excluded as well.
+- If the `[NAME]` _looks the same_ as the `@[username]`, then the `@[username]` is excluded as well.
 
 ### Boosts Carousel
 
@@ -123,17 +123,29 @@ Some of these may change in the future. The front-end world is ever-changing.
 
 This is a **pure static web app**. You can host it anywhere you want.
 
-Two ways (choose one):
+Some examples:
 
-### Easy way
+### Using pre-built releases
 
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
+
+### Using a Docker image
+
+In your terminal, run:
+
+```
+$ docker run -d -p 8080:80 cheeaun/phanpy
+```
+
+Go to http://localhost:8080 and 🎉
+
+Make sure to deploy the web app using a reverse proxy that make the connection secure (using HTTPS).
 
 ### Custom-build way
 
 Requires [Node.js](https://nodejs.org/).
 
-Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+Download or `git clone` this repository. Use `production` branch for _stable_ releases, `main` for _latest_. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
 
 Customization can be done by passing environment variables to the build command. Examples:
 
@@ -214,7 +226,7 @@ Costs involved in running and developing this web app:
 
 ## Mascot
 
-[Phanpy](https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)) is a Ground-type Pokémon.
+[Phanpy](<https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)>) is a Ground-type Pokémon.
 
 ## Maintainers + contributors
 

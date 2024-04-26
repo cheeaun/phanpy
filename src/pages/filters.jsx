@@ -286,7 +286,13 @@ function FiltersAddEdit({ filter, onClose }) {
                     // Preserve existing expiry if not specified
                     // Seconds from now to expiresAtDate
                     // Other clients don't do this
-                    expiresIn = Math.floor((expiresAtDate - new Date()) / 1000);
+                    if (hasExpiry) {
+                      expiresIn = Math.floor(
+                        (expiresAtDate - new Date()) / 1000,
+                      );
+                    } else {
+                      expiresIn = null;
+                    }
                   } else if (expiresIn === '0' || expiresIn === 0) {
                     // 0 = Never
                     expiresIn = null;

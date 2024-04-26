@@ -209,8 +209,8 @@ function Timeline({
 
   const oRef = useHotkeys(['enter', 'o'], () => {
     // open active status
-    const activeItem = document.activeElement.closest(itemsSelector);
-    if (activeItem) {
+    const activeItem = document.activeElement;
+    if (activeItem?.matches(itemsSelector)) {
       activeItem.click();
     }
   });

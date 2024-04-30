@@ -7,6 +7,7 @@ import { lazy } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 
 import IntlSegmenterSuspense from './components/intl-segmenter-suspense';
+import { initStates } from './utils/states';
 // import Compose from './components/compose';
 import useTitle from './utils/useTitle';
 
@@ -30,6 +31,10 @@ function App() {
         }`
       : 'Compose',
   );
+
+  useEffect(() => {
+    initStates();
+  }, []);
 
   useEffect(() => {
     if (uiState === 'closed') {

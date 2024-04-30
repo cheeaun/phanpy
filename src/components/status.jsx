@@ -3337,7 +3337,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
 
   return uniqueQuotes.map((q) => {
     return (
-      <LazyShazam>
+      <LazyShazam id={q.instance + q.id}>
         <Link
           key={q.instance + q.id}
           to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}

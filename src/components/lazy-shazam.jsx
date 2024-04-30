@@ -7,10 +7,13 @@ import { useInView } from 'react-intersection-observer';
 // The sticky header, usually at the top
 const TOP = 48;
 
-export default function LazyShazam({ children }) {
+const shazamIDs = {};
+
+export default function LazyShazam({ id, children }) {
   const containerRef = useRef();
+  const hasID = !!shazamIDs[id];
   const [visible, setVisible] = useState(false);
-  const [visibleStart, setVisibleStart] = useState(false);
+  const [visibleStart, setVisibleStart] = useState(hasID || false);
 
   const { ref } = useInView({
     root: null,
@@ -20,6 +23,7 @@ export default function LazyShazam({ children }) {
     onChange: (inView) => {
       if (inView) {
         setVisible(true);
+        if (id) shazamIDs[id] = true;
       }
     },
     triggerOnce: true,
@@ -35,6 +39,7 @@ export default function LazyShazam({ children }) {
       } else {
         setVisibleStart(true);
       }
+      if (id) shazamIDs[id] = true;
     }
   }, []);
 

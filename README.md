@@ -244,6 +244,8 @@ And here I am. Building a Mastodon web client.
 
 ## Alternative web clients
 
+- Phanpy forks ↓
+  - [Agora](https://agorasocial.app/)
 - [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
   - [Semaphore](https://semaphore.social/)
   - [Enafore](https://enafore.social/)

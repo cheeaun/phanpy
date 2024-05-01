@@ -825,6 +825,12 @@
 .timeline-deck .status .content.truncated ~ .card {
   display: none;
 }
+.status .content .inner-content {
+  > img[height] {
+    height: auto;
+    aspect-ratio: var(--original-aspect-ratio);
+  }
+}
 .status .content .inner-content a:not(.mention, .has-url-text) {
   color: var(--link-text-color);
 }

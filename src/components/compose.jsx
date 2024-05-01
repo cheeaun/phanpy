@@ -3,8 +3,16 @@ import './compose.css';
 import '@github/text-expander-element';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
+import Fuse from 'fuse.js';
+import { memo } from 'preact/compat';
 import { forwardRef } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
@@ -21,6 +29,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
 import openCompose from '../utils/open-compose';
+import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -180,6 +189,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
 }
 
 const rtf = new Intl.RelativeTimeFormat();
+
+const CUSTOM_EMOJIS_COUNT = 100;
 
 function Compose({
   onClose,
@@ -1423,25 +1434,40 @@ function autoResizeTextarea(textarea) {
   }
 }
 
+async function _getCustomEmojis(instance, masto) {
+  const emojis = await masto.v1.customEmojis.list();
+  const visibleEmojis = emojis.filter((e) => e.visibleInPicker);
+  const searcher = new Fuse(visibleEmojis, {
+    keys: ['shortcode'],
+    findAllMatches: true,
+  });
+  return [visibleEmojis, searcher];
+}
+const getCustomEmojis = pmem(_getCustomEmojis, {
+  // Limit by time to reduce memory usage
+  // Cached by instance
+  matchesArg: (cacheKeyArg, keyArg) => cacheKeyArg.instance === keyArg.instance,
+  maxAge: 30 * 60 * 1000, // 30 minutes
+});
+
 const Textarea = forwardRef((props, ref) => {
-  const { masto } = api();
+  const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
   // const snapStates = useSnapshot(states);
   // const charCount = snapStates.composerCharacterCount;
 
-  const customEmojis = useRef();
+  // const customEmojis = useRef();
+  const searcherRef = useRef();
   useEffect(() => {
-    (async () => {
-      try {
-        const emojis = await masto.v1.customEmojis.list();
-        console.log({ emojis });
-        customEmojis.current = emojis;
-      } catch (e) {
-        // silent fail
+    getCustomEmojis(instance, masto)
+      .then((r) => {
+        const [emojis, searcher] = r;
+        searcherRef.current = searcher;
+      })
+      .catch((e) => {
         console.error(e);
-      }
-    })();
+      });
   }, []);
 
   const textExpanderRef = useRef();
@@ -1467,23 +1493,26 @@ const Textarea = forwardRef((props, ref) => {
           // const emojis = customEmojis.current.filter((emoji) =>
           //   emoji.shortcode.startsWith(text),
           // );
-          const emojis = filterShortcodes(customEmojis.current, text);
+          // const emojis = filterShortcodes(customEmojis.current, text);
+          const results = searcherRef.current?.search(text, {
+            limit: 5,
+          });
           let html = '';
-          emojis.forEach((emoji) => {
+          results.forEach(({ item: emoji }) => {
             const { shortcode, url } = emoji;
             html += `
                 <li role="option" data-value="${encodeHTML(shortcode)}">
                 <img src="${encodeHTML(
                   url,
                 )}" width="16" height="16" alt="" loading="lazy" /> 
-                :${encodeHTML(shortcode)}:
+                ${encodeHTML(shortcode)}
               </li>`;
           });
           // console.log({ emojis, html });
           menu.innerHTML = html;
           provide(
             Promise.resolve({
-              matched: emojis.length > 0,
+              matched: results.length > 0,
               fragment: menu,
             }),
           );
@@ -2185,38 +2214,19 @@ function CustomEmojisModal({
 }) {
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
-  const [customEmojis, setCustomEmojis] = useState({});
+  const [customEmojis, setCustomEmojis] = useState([]);
   const recentlyUsedCustomEmojis = useMemo(
     () => store.account.get('recentlyUsedCustomEmojis') || [],
   );
+  const searcherRef = useRef();
   useEffect(() => {
     setUIState('loading');
     (async () => {
       try {
-        const emojis = await masto.v1.customEmojis.list();
-        // Group emojis by category
-        const emojisCat = {
-          '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-            emojis.find((e) => e.shortcode === emoji.shortcode),
-          ),
-        };
-        const othersCat = [];
-        emojis.forEach((emoji) => {
-          if (!emoji.visibleInPicker) return;
-          customEmojisList.current?.push?.(emoji);
-          if (!emoji.category) {
-            othersCat.push(emoji);
-            return;
-          }
-          if (!emojisCat[emoji.category]) {
-            emojisCat[emoji.category] = [];
-          }
-          emojisCat[emoji.category].push(emoji);
-        });
-        if (othersCat.length) {
-          emojisCat['--others--'] = othersCat;
-        }
-        setCustomEmojis(emojisCat);
+        const [emojis, searcher] = await getCustomEmojis(instance, masto);
+        console.log('emojis', emojis);
+        searcherRef.current = searcher;
+        setCustomEmojis(emojis);
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -2224,6 +2234,83 @@ function CustomEmojisModal({
       }
     })();
   }, []);
+
+  const customEmojisCatList = useMemo(() => {
+    // Group emojis by category
+    const emojisCat = {
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+        customEmojis.find((e) => e.shortcode === emoji.shortcode),
+      ),
+    };
+    const othersCat = [];
+    customEmojis.forEach((emoji) => {
+      customEmojisList.current?.push?.(emoji);
+      if (!emoji.category) {
+        othersCat.push(emoji);
+        return;
+      }
+      if (!emojisCat[emoji.category]) {
+        emojisCat[emoji.category] = [];
+      }
+      emojisCat[emoji.category].push(emoji);
+    });
+    if (othersCat.length) {
+      emojisCat['--others--'] = othersCat;
+    }
+    return emojisCat;
+  }, [customEmojis]);
+
+  const scrollableRef = useRef();
+  const [matches, setMatches] = useState(null);
+  const onFind = useCallback(
+    (e) => {
+      const { value } = e.target;
+      if (value) {
+        const results = searcherRef.current?.search(value, {
+          limit: CUSTOM_EMOJIS_COUNT,
+        });
+        setMatches(results.map((r) => r.item));
+        scrollableRef.current?.scrollTo?.(0, 0);
+      } else {
+        setMatches(null);
+      }
+    },
+    [customEmojis],
+  );
+
+  const onSelectEmoji = useCallback(
+    (emoji) => {
+      onSelect?.(emoji);
+      onClose?.();
+
+      queueMicrotask(() => {
+        let recentlyUsedCustomEmojis =
+          store.account.get('recentlyUsedCustomEmojis') || [];
+        const recentlyUsedEmojiIndex = recentlyUsedCustomEmojis.findIndex(
+          (e) => e.shortcode === emoji.shortcode,
+        );
+        if (recentlyUsedEmojiIndex !== -1) {
+          // Move emoji to index 0
+          recentlyUsedCustomEmojis.splice(recentlyUsedEmojiIndex, 1);
+          recentlyUsedCustomEmojis.unshift(emoji);
+        } else {
+          recentlyUsedCustomEmojis.unshift(emoji);
+          // Remove unavailable ones
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.filter((e) =>
+            customEmojisList.current?.find?.(
+              (emoji) => emoji.shortcode === e.shortcode,
+            ),
+          );
+          // Limit to 10
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.slice(0, 10);
+        }
+
+        // Store back
+        store.account.set('recentlyUsedCustomEmojis', recentlyUsedCustomEmojis);
+      });
+    },
+    [onSelect],
+  );
 
   return (
     <div id="custom-emojis-sheet" class="sheet">
@@ -2233,106 +2320,166 @@ function CustomEmojisModal({
         </button>
       )}
       <header>
-        <b>Custom emojis</b>{' '}
-        {uiState === 'loading' ? (
-          <Loader />
-        ) : (
-          <small class="insignificant"> • {instance}</small>
-        )}
-      </header>
-      <main>
-        <div class="custom-emojis-list">
-          {uiState === 'error' && (
-            <div class="ui-state">
-              <p>Error loading custom emojis</p>
-            </div>
+        <div>
+          <b>Custom emojis</b>{' '}
+          {uiState === 'loading' ? (
+            <Loader />
+          ) : (
+            <small class="insignificant"> • {instance}</small>
           )}
-          {uiState === 'default' &&
-            Object.entries(customEmojis).map(
-              ([category, emojis]) =>
-                !!emojis?.length && (
-                  <>
-                    <div class="section-header">
-                      {{
-                        '--recent--': 'Recently used',
-                        '--others--': 'Others',
-                      }[category] || category}
-                    </div>
-                    <section>
-                      {emojis.map((emoji) => (
-                        <button
-                          key={emoji}
-                          type="button"
-                          class="plain4"
-                          onClick={() => {
-                            onClose();
-                            requestAnimationFrame(() => {
-                              onSelect(`:${emoji.shortcode}:`);
-                            });
-                            let recentlyUsedCustomEmojis =
-                              store.account.get('recentlyUsedCustomEmojis') ||
-                              [];
-                            const recentlyUsedEmojiIndex =
-                              recentlyUsedCustomEmojis.findIndex(
-                                (e) => e.shortcode === emoji.shortcode,
-                              );
-                            if (recentlyUsedEmojiIndex !== -1) {
-                              // Move emoji to index 0
-                              recentlyUsedCustomEmojis.splice(
-                                recentlyUsedEmojiIndex,
-                                1,
-                              );
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                            } else {
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                              // Remove unavailable ones
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.filter((e) =>
-                                  customEmojisList.current?.find?.(
-                                    (emoji) => emoji.shortcode === e.shortcode,
-                                  ),
-                                );
-                              // Limit to 10
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.slice(0, 10);
-                            }
-
-                            // Store back
-                            store.account.set(
-                              'recentlyUsedCustomEmojis',
-                              recentlyUsedCustomEmojis,
-                            );
-                          }}
-                          title={`:${emoji.shortcode}:`}
-                        >
-                          <picture>
-                            {!!emoji.staticUrl && (
-                              <source
-                                srcset={emoji.staticUrl}
-                                media="(prefers-reduced-motion: reduce)"
-                              />
-                            )}
-                            <img
-                              class="shortcode-emoji"
-                              src={emoji.url || emoji.staticUrl}
-                              alt={emoji.shortcode}
-                              width="16"
-                              height="16"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </picture>
-                        </button>
-                      ))}
-                    </section>
-                  </>
-                ),
-            )}
         </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const emoji = matches[0];
+            if (emoji) {
+              onSelectEmoji(`:${emoji.shortcode}:`);
+            }
+          }}
+        >
+          <input
+            type="search"
+            placeholder="Search emoji"
+            onInput={onFind}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+          />
+        </form>
+      </header>
+      <main ref={scrollableRef}>
+        {matches !== null ? (
+          <ul class="custom-emojis-matches custom-emojis-list">
+            {matches.map((emoji) => (
+              <li key={emoji.shortcode} class="custom-emojis-match">
+                <CustomEmojiButton
+                  emoji={emoji}
+                  onClick={() => {
+                    onSelectEmoji(`:${emoji.shortcode}:`);
+                  }}
+                  showCode
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="custom-emojis-list">
+            {uiState === 'error' && (
+              <div class="ui-state">
+                <p>Error loading custom emojis</p>
+              </div>
+            )}
+            {uiState === 'default' &&
+              Object.entries(customEmojisCatList).map(
+                ([category, emojis]) =>
+                  !!emojis?.length && (
+                    <>
+                      <div class="section-header">
+                        {{
+                          '--recent--': 'Recently used',
+                          '--others--': 'Others',
+                        }[category] || category}
+                      </div>
+                      <CustomEmojisList
+                        emojis={emojis}
+                        onSelect={onSelectEmoji}
+                      />
+                    </>
+                  ),
+              )}
+          </div>
+        )}
       </main>
     </div>
   );
 }
+
+const CustomEmojisList = memo(({ emojis, onSelect }) => {
+  const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
+  const showMore = emojis.length > max;
+  return (
+    <section>
+      {emojis.slice(0, max).map((emoji) => (
+        <CustomEmojiButton
+          key={emoji.shortcode}
+          emoji={emoji}
+          onClick={() => {
+            onSelect(`:${emoji.shortcode}:`);
+          }}
+        />
+      ))}
+      {showMore && (
+        <button
+          type="button"
+          class="plain small"
+          onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
+        >
+          {(emojis.length - max).toLocaleString()} more…
+        </button>
+      )}
+    </section>
+  );
+});
+
+const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
+  const addEdges = (e) => {
+    // Add edge-left or edge-right class based on self position relative to scrollable parent
+    // If near left edge, add edge-left, if near right edge, add edge-right
+    const buffer = 88;
+    const parent = e.currentTarget.closest('main');
+    if (parent) {
+      const rect = parent.getBoundingClientRect();
+      const selfRect = e.currentTarget.getBoundingClientRect();
+      const targetClassList = e.currentTarget.classList;
+      if (selfRect.left < rect.left + buffer) {
+        targetClassList.add('edge-left');
+        targetClassList.remove('edge-right');
+      } else if (selfRect.right > rect.right - buffer) {
+        targetClassList.add('edge-right');
+        targetClassList.remove('edge-left');
+      } else {
+        targetClassList.remove('edge-left', 'edge-right');
+      }
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className="plain4"
+      onClick={onClick}
+      data-title={showCode ? undefined : emoji.shortcode}
+      onPointerEnter={addEdges}
+      onFocus={addEdges}
+    >
+      <picture>
+        {!!emoji.staticUrl && (
+          <source
+            srcSet={emoji.staticUrl}
+            media="(prefers-reduced-motion: reduce)"
+          />
+        )}
+        <img
+          className="shortcode-emoji"
+          src={emoji.url || emoji.staticUrl}
+          alt={emoji.shortcode}
+          width="24"
+          height="24"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      {showCode && (
+        <>
+          {' '}
+          <code>{emoji.shortcode}</code>
+        </>
+      )}
+    </button>
+  );
+});
 
 const GIFS_PER_PAGE = 20;
 function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {

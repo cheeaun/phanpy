@@ -2386,8 +2386,8 @@ a.card:is(:hover, :focus):visited {
   max-width: 100%;
   height: 1.2em;
   vertical-align: text-bottom;
-  object-fit: cover;
-  object-position: left;
+  object-fit: contain;
+  /* object-position: left; */
 }
 
 /* EDIT HISTORY */

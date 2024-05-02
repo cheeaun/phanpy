@@ -569,8 +569,15 @@
   font-weight: bold;
   vertical-align: middle;
   display: inline-block;
+
+  &.horizontal {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+  }
 }
-.status-filtered-badge.badge-meta {
+.status-filtered-badge:not(.horizontal).badge-meta {
   display: inline-flex;
   flex-direction: column;
   position: relative;
@@ -584,10 +591,10 @@
   border-color: var(--text-color);
   background: var(--bg-color);
 }
-.status-filtered-badge.badge-meta > span:first-child {
+.status-filtered-badge:not(.horizontal).badge-meta > span:first-child {
   white-space: nowrap;
 }
-.status-filtered-badge.badge-meta > span + span {
+.status-filtered-badge:not(.horizontal).badge-meta > span + span {
   display: block;
   font-size: 9px;
   font-weight: normal;
@@ -600,6 +607,10 @@
   top: calc(100% + 2px);
   left: 0;
   text-align: center;
+}
+.status-filtered-badge.horizontal.badge-meta > span + span {
+  font-weight: normal;
+  text-transform: none;
 }
 
 .status.large > .container > .content-container {

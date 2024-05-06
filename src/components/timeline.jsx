@@ -209,8 +209,8 @@ function Timeline({
 
   const oRef = useHotkeys(['enter', 'o'], () => {
     // open active status
-    const activeItem = document.activeElement.closest(itemsSelector);
-    if (activeItem) {
+    const activeItem = document.activeElement;
+    if (activeItem?.matches(itemsSelector)) {
       activeItem.click();
     }
   });
@@ -646,7 +646,11 @@ const TimelineItem = memo(
           >
             <Link class="status-link timeline-item" to={url}>
               {showCompact ? (
-                <TimelineStatusCompact status={item} instance={instance} />
+                <TimelineStatusCompact
+                  status={item}
+                  instance={instance}
+                  filterContext={filterContext}
+                />
               ) : useItemID ? (
                 <Status
                   statusID={statusID}
@@ -820,11 +824,12 @@ function StatusCarousel({ title, class: className, children }) {
   );
 }
 
-function TimelineStatusCompact({ status, instance }) {
+function TimelineStatusCompact({ status, instance, filterContext }) {
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
+  const filterInfo = isFiltered(status.filtered, filterContext);
   return (
     <article
       class={`status compact-thread ${
@@ -850,13 +855,24 @@ function TimelineStatusCompact({ status, instance }) {
         lang={language}
         dir="auto"
       >
-        {statusPeekText}
-        {status.sensitive && status.spoilerText && (
+        {!!filterInfo ? (
+          <b
+            class="status-filtered-badge badge-meta horizontal"
+            title={filterInfo?.titlesStr || ''}
+          >
+            <span>Filtered</span>: <span>{filterInfo?.titlesStr || ''}</span>
+          </b>
+        ) : (
           <>
-            {' '}
-            <span class="spoiler-badge">
-              <Icon icon="eye-close" size="s" />
-            </span>
+            {statusPeekText}
+            {status.sensitive && status.spoilerText && (
+              <>
+                {' '}
+                <span class="spoiler-badge">
+                  <Icon icon="eye-close" size="s" />
+                </span>
+              </>
+            )}
           </>
         )}
       </div>

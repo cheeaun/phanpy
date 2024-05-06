@@ -1,5 +1,6 @@
 import './login.css';
 
+import Fuse from 'fuse.js';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
@@ -27,12 +28,14 @@ function Login() {
   );
 
   const [instancesList, setInstancesList] = useState([]);
+  const searcher = useRef();
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(instancesListURL);
         const data = await res.json();
         setInstancesList(data);
+        searcher.current = new Fuse(data);
       } catch (e) {
         // Silently fail
         console.error(e);
@@ -90,21 +93,11 @@ function Login() {
     !/[\s\/\\@]/.test(cleanInstanceText);
 
   const instancesSuggestions = cleanInstanceText
-    ? instancesList
-        .filter((instance) => instance.includes(instanceText))
-        .sort((a, b) => {
-          // Move text that starts with instanceText to the start
-          const aStartsWith = a
-            .toLowerCase()
-            .startsWith(instanceText.toLowerCase());
-          const bStartsWith = b
-            .toLowerCase()
-            .startsWith(instanceText.toLowerCase());
-          if (aStartsWith && !bStartsWith) return -1;
-          if (!aStartsWith && bStartsWith) return 1;
-          return 0;
+    ? searcher.current
+        ?.search(cleanInstanceText, {
+          limit: 10,
         })
-        .slice(0, 10)
+        ?.map((match) => match.item)
     : [];
 
   const selectedInstanceText = instanceTextLooksLikeDomain

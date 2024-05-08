@@ -102,6 +102,17 @@ function Notifications({ columnMode }) {
       //   },
       // });
 
+      // TEST: Slot in a fake notification to test 'moderation_warning'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'moderation_warning',
+      //   createdAt: new Date().toISOString(),
+      //   moderation_warning: {
+      //     id: '1231234',
+      //     action: 'mark_statuses_as_sensitive',
+      //   },
+      // });
+
       // console.log({ notifications });
 
       const groupedNotifications = groupNotifications(notifications);

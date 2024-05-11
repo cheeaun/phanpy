@@ -28,8 +28,8 @@
         border-color: var(--outline-hover-color);
       }
 
-      .status {
-        filter: none;
+      > * {
+        pointer-events: none;
       }
     }
   }

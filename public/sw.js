@@ -62,7 +62,7 @@ const iconsRoute = new Route(
     cacheName: 'icons',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 300,
         maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
         purgeOnQuotaError: true,
       }),

@@ -11,6 +11,7 @@ import useLocationChange from '../utils/useLocationChange';
 
 import AccountBlock from './account-block';
 import Icon from './icon';
+import Link from './link';
 import Loader from './loader';
 import Status from './status';
 
@@ -143,9 +144,12 @@ export default function GenericAccounts({
       </header>
       <main>
         {post && (
-          <div class="post-preview">
+          <Link
+            to={`/${instance || currentInstance}/s/${post.id}`}
+            class="post-preview"
+          >
             <Status status={post} size="s" readOnly />
-          </div>
+          </Link>
         )}
         {accounts.length > 0 ? (
           <>

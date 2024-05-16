@@ -186,6 +186,7 @@ function AccountInfo({
     memorial,
     moved,
     roles,
+    hideCollections,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -677,6 +678,9 @@ function AccountInfo({
                           excludeRelationshipAttrs: isSelf
                             ? ['followedBy']
                             : [],
+                          blankCopy: hideCollections
+                            ? 'This user has chosen to not make this information available.'
+                            : undefined,
                         };
                       }, 0);
                     }}
@@ -712,6 +716,9 @@ function AccountInfo({
                           fetchAccounts: fetchFollowing,
                           instance,
                           excludeRelationshipAttrs: isSelf ? ['following'] : [],
+                          blankCopy: hideCollections
+                            ? 'This user has chosen to not make this information available.'
+                            : undefined,
                         };
                       }, 0);
                     }}

@@ -303,6 +303,7 @@ function Status({
           onMouseEnter: debugHover,
         }}
         showFollowedTags
+        quoted={quoted}
       />
     );
   }
@@ -3176,6 +3177,7 @@ function FilteredStatus({
   instance,
   containerProps = {},
   showFollowedTags,
+  quoted,
 }) {
   const snapStates = useSnapshot(states);
   const {
@@ -3220,7 +3222,9 @@ function FilteredStatus({
   return (
     <div
       class={
-        isReblog
+        quoted
+          ? ''
+          : isReblog
           ? group
             ? 'status-group'
             : 'status-reblog'
@@ -3236,7 +3240,11 @@ function FilteredStatus({
       }}
       {...bindLongPressPeek()}
     >
-      <article data-state-post-id={ssKey} class="status filtered" tabindex="-1">
+      <article
+        data-state-post-id={ssKey}
+        class={`status filtered ${quoted ? 'status-card' : ''}`}
+        tabindex="-1"
+      >
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}

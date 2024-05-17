@@ -84,7 +84,7 @@ function NotificationsLink() {
   );
 }
 
-const NOTIFICATIONS_LIMIT = 30;
+const NOTIFICATIONS_LIMIT = 80;
 const NOTIFICATIONS_DISPLAY_LIMIT = 5;
 function NotificationsMenu({ anchorRef, state, onClose }) {
   const { masto, instance } = api();

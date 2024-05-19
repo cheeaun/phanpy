@@ -187,6 +187,7 @@ export default function Modals() {
             }
             postID={snapStates.showGenericAccounts.postID}
             onClose={() => (states.showGenericAccounts = false)}
+            blankCopy={snapStates.showGenericAccounts.blankCopy}
           />
         </Modal>
       )}

@@ -41,6 +41,24 @@ function Modal({ children, onClose, onClick, class: className }) {
   );
   useCloseWatcher(onClose, [onClose]);
 
+  useEffect(() => {
+    const $deckContainers = document.querySelectorAll('.deck-container');
+    if (children) {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.setAttribute('inert', '');
+      });
+    } else {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    }
+    return () => {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    };
+  }, [children]);
+
   const Modal = (
     <div
       ref={(node) => {

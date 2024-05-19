@@ -153,6 +153,18 @@ function StatusPage(params) {
     return () => clearTimeout(timer);
   }, [showMediaOnly]);
 
+  useEffect(() => {
+    const $deckContainers = document.querySelectorAll('.deck-container');
+    $deckContainers.forEach(($deckContainer) => {
+      $deckContainer.setAttribute('inert', '');
+    });
+    return () => {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    };
+  }, []);
+
   return (
     <div class="deck-backdrop">
       {showMedia ? (

@@ -28,6 +28,7 @@ import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
+import localeCode2Text from '../utils/localeCode2Text';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
@@ -2023,8 +2024,66 @@ function MediaAttachment({
                           }}
                         >
                           <Icon icon="sparkles2" />
-                          <span>Generate description…</span>
+                          {lang && lang !== 'en' ? (
+                            <small>
+                              Generate description…
+                              <br />
+                              (English)
+                            </small>
+                          ) : (
+                            <span>Generate description…</span>
+                          )}
                         </MenuItem>
+                        {!!lang && lang !== 'en' && (
+                          <MenuItem
+                            disabled={uiState === 'loading'}
+                            onClick={() => {
+                              setUIState('loading');
+                              toastRef.current = showToast({
+                                text: 'Generating description. Please wait...',
+                                duration: -1,
+                              });
+                              // POST with multipart
+                              (async function () {
+                                try {
+                                  const body = new FormData();
+                                  body.append('image', file);
+                                  const params = `?lang=${lang}`;
+                                  const response = await fetch(
+                                    IMG_ALT_API_URL + params,
+                                    {
+                                      method: 'POST',
+                                      body,
+                                    },
+                                  ).then((r) => r.json());
+                                  if (response.error) {
+                                    throw new Error(response.error);
+                                  }
+                                  setDescription(response.description);
+                                } catch (e) {
+                                  console.error(e);
+                                  showToast(
+                                    `Failed to generate description${
+                                      e?.message ? `: ${e.message}` : ''
+                                    }`,
+                                  );
+                                } finally {
+                                  setUIState('default');
+                                  toastRef.current?.hideToast?.();
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="sparkles2" />
+                            <small>
+                              Generate description…
+                              <br />({localeCode2Text(lang)}){' '}
+                              <span class="more-insignificant">
+                                — experimental
+                              </span>
+                            </small>
+                          </MenuItem>
+                        )}
                       </Menu2>
                     )}
                   <button

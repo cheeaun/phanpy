@@ -1677,63 +1677,70 @@ function PostPeek({ post, filterInfo }) {
   } = post;
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
-  const showMedia = !spoilerText && !sensitive;
+
+  const readingExpandSpoilers = useMemo(() => {
+    const prefs = store.account.get('preferences') || {};
+    return !!prefs['reading:expand:spoilers'];
+  }, []);
+  // const readingExpandSpoilers = true;
+  const showMedia = readingExpandSpoilers || (!spoilerText && !sensitive);
   const postText = content ? statusPeek(post) : '';
+
+  const showPostContent = !spoilerText || readingExpandSpoilers;
 
   return (
     <div class="post-peek" title={!spoilerText ? postText : ''}>
       <span class="post-peek-content">
+        {isThread && !showPostContent && (
+          <>
+            <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
+          </>
+        )}
         {!!filterInfo ? (
-          <>
-            {isThread && (
-              <>
-                <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
-              </>
-            )}
-            <span class="post-peek-filtered">
-              Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''}
-            </span>
-          </>
-        ) : !!spoilerText ? (
-          <>
-            {isThread && (
-              <>
-                <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
-              </>
-            )}
-            <span class="post-peek-spoiler">
-              <Icon icon="eye-close" /> {spoilerText}
-            </span>
-          </>
+          <span class="post-peek-filtered">
+            Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''}
+          </span>
         ) : (
-          <div class="post-peek-html">
-            {isThread && (
-              <>
-                <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
-              </>
+          <>
+            {!!spoilerText && (
+              <span class="post-peek-spoiler">
+                <Icon
+                  icon={`${readingExpandSpoilers ? 'eye-open' : 'eye-close'}`}
+                />{' '}
+                {spoilerText}
+              </span>
             )}
-            {!!content && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: emojifyText(content, emojis),
-                }}
-              />
+            {showPostContent && (
+              <div class="post-peek-html">
+                {isThread && (
+                  <>
+                    <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
+                  </>
+                )}
+                {!!content && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: emojifyText(content, emojis),
+                    }}
+                  />
+                )}
+                {!!poll?.options?.length &&
+                  poll.options.map((o) => (
+                    <div>
+                      {poll.multiple ? '▪️' : '•'} {o.title}
+                    </div>
+                  ))}
+                {!content &&
+                  mediaAttachments?.length === 1 &&
+                  mediaAttachments[0].description && (
+                    <>
+                      <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
+                      <div>{mediaAttachments[0].description}</div>
+                    </>
+                  )}
+              </div>
             )}
-            {!!poll?.options?.length &&
-              poll.options.map((o) => (
-                <div>
-                  {poll.multiple ? '▪️' : '•'} {o.title}
-                </div>
-              ))}
-            {!content &&
-              mediaAttachments?.length === 1 &&
-              mediaAttachments[0].description && (
-                <>
-                  <span class="post-peek-tag post-peek-alt">ALT</span>{' '}
-                  <div>{mediaAttachments[0].description}</div>
-                </>
-              )}
-          </div>
+          </>
         )}
       </span>
       {!filterInfo && (

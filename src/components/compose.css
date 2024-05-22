@@ -298,14 +298,20 @@
   height: 2.2em;
 }
 #compose-container .text-expander-menu li:is(:hover, :focus, [aria-selected]) {
-  color: var(--bg-color);
-  background-color: var(--link-color);
-}
-#compose-container
-  .text-expander-menu:hover
-  li[aria-selected]:not(:hover, :focus) {
+  background-color: var(--link-bg-color);
   color: var(--text-color);
-  background-color: var(--bg-color);
+}
+#compose-container .text-expander-menu li[aria-selected] {
+  box-shadow: inset 4px 0 0 0 var(--button-bg-color);
+}
+#compose-container .text-expander-menu li[data-more] {
+  &:not(:hover, :focus, [aria-selected]) {
+    color: var(--text-insignificant-color);
+    background-color: var(--bg-faded-color);
+  }
+
+  font-size: 0.8em;
+  justify-content: center;
 }
 
 #compose-container .form-visibility-direct {

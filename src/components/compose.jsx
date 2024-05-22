@@ -378,8 +378,11 @@ function Compose({
     }
 
     // check for status and media attachments
+    const hasValue = (value || '')
+      .trim()
+      .replace(/^\p{White_Space}+|\p{White_Space}+$/gu, '');
     const hasMediaAttachments = mediaAttachments.length > 0;
-    if (!value && !hasMediaAttachments) {
+    if (!hasValue && !hasMediaAttachments) {
       console.log('canClose', { value, mediaAttachments });
       return true;
     }
@@ -1119,6 +1122,13 @@ function Compose({
               }
               return masto.v2.search.fetch(params);
             }}
+            onTrigger={(action) => {
+              if (action?.name === 'custom-emojis') {
+                setShowEmoji2Picker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
+              }
+            }}
           />
           {mediaAttachments?.length > 0 && (
             <div class="media-attachments">
@@ -1342,19 +1352,29 @@ function Compose({
             onClose={() => {
               setShowEmoji2Picker(false);
             }}
-            onSelect={(emoji) => {
-              const emojiWithSpace = ` ${emoji} `;
+            defaultSearchTerm={showEmoji2Picker?.defaultSearchTerm}
+            onSelect={(emojiShortcode) => {
               const textarea = textareaRef.current;
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
+              const textBeforeEmoji = text.slice(0, selectionStart);
+              const spaceBeforeEmoji = /[\s\t\n\r]$/.test(textBeforeEmoji)
+                ? ''
+                : ' ';
+              const textAfterEmoji = text.slice(selectionEnd);
+              const spaceAfterEmoji = /^[\s\t\n\r]/.test(textAfterEmoji)
+                ? ''
+                : ' ';
               const newText =
-                text.slice(0, selectionStart) +
-                emojiWithSpace +
-                text.slice(selectionEnd);
+                textBeforeEmoji +
+                spaceBeforeEmoji +
+                emojiShortcode +
+                spaceAfterEmoji +
+                textAfterEmoji;
               textarea.value = newText;
               textarea.selectionStart = textarea.selectionEnd =
-                selectionEnd + emojiWithSpace.length;
+                selectionEnd + emojiShortcode.length + spaceAfterEmoji.length;
               textarea.focus();
               textarea.dispatchEvent(new Event('input'));
             }}
@@ -1454,7 +1474,12 @@ const getCustomEmojis = pmem(_getCustomEmojis, {
 const Textarea = forwardRef((props, ref) => {
   const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
-  const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
+  const {
+    maxCharacters,
+    performSearch = () => {},
+    onTrigger = () => {},
+    ...textareaProps
+  } = props;
   // const snapStates = useSnapshot(states);
   // const charCount = snapStates.composerCharacterCount;
 
@@ -1509,6 +1534,7 @@ const Textarea = forwardRef((props, ref) => {
                 ${encodeHTML(shortcode)}
               </li>`;
           });
+          html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
           // console.log({ emojis, html });
           menu.innerHTML = html;
           provide(
@@ -1600,10 +1626,22 @@ const Textarea = forwardRef((props, ref) => {
 
       handleValue = (e) => {
         const { key, item } = e.detail;
+        const { value, more } = item.dataset;
         if (key === ':') {
-          e.detail.value = `:${item.dataset.value}:`;
+          e.detail.value = value ? `:${value}:` : '​'; // zero-width space
+          if (more) {
+            // Prevent adding space after the above value
+            e.detail.continue = true;
+
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'custom-emojis',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
         } else {
-          e.detail.value = `${key}${item.dataset.value}`;
+          e.detail.value = `${key}${value}`;
         }
       };
 
@@ -1748,7 +1786,8 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          const text = target.value;
+          // Replace zero-width space
+          const text = target.value.replace(/\u200b/g, '');
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
@@ -2270,6 +2309,7 @@ function CustomEmojisModal({
   instance,
   onClose = () => {},
   onSelect = () => {},
+  defaultSearchTerm,
 }) {
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
@@ -2336,6 +2376,11 @@ function CustomEmojisModal({
     },
     [customEmojis],
   );
+  useEffect(() => {
+    if (defaultSearchTerm && customEmojis?.length) {
+      onFind({ target: { value: defaultSearchTerm } });
+    }
+  }, [defaultSearchTerm, onFind, customEmojis]);
 
   const onSelectEmoji = useCallback(
     (emoji) => {
@@ -2371,6 +2416,18 @@ function CustomEmojisModal({
     [onSelect],
   );
 
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
+  }, []);
+
   return (
     <div id="custom-emojis-sheet" class="sheet">
       {!!onClose && (
@@ -2397,6 +2454,7 @@ function CustomEmojisModal({
           }}
         >
           <input
+            ref={inputRef}
             type="search"
             placeholder="Search emoji"
             onInput={onFind}
@@ -2405,6 +2463,7 @@ function CustomEmojisModal({
             autocapitalize="off"
             spellCheck="false"
             dir="auto"
+            defaultValue={defaultSearchTerm || ''}
           />
         </form>
       </header>

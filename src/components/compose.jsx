@@ -802,7 +802,14 @@ function Compose({
                         },
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
-                      window.opener.__STATES__.showCompose = true;
+                      if (window.opener.__STATES__.showCompose) {
+                        window.opener.__STATES__.showCompose = false;
+                        setTimeout(() => {
+                          window.opener.__STATES__.showCompose = true;
+                        }, 10);
+                      } else {
+                        window.opener.__STATES__.showCompose = true;
+                      }
                     },
                   });
                 }}

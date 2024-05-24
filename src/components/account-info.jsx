@@ -19,6 +19,7 @@ import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
@@ -1081,11 +1082,11 @@ function RelatedActions({
               <>
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `@${currentInfo?.acct || acct} `,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="at" />

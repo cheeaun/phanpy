@@ -51,6 +51,7 @@ import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
@@ -524,9 +525,9 @@ function Status({
       });
       if (newWin) return;
     }
-    states.showCompose = {
+    showCompose({
       replyToStatus: status,
-    };
+    });
   };
 
   // Check if media has no descriptions
@@ -771,11 +772,11 @@ function Status({
               menuExtras={
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `\n${url}`,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="quote" />
@@ -1092,9 +1093,9 @@ function Status({
           {supports('@mastodon/post-edit') && (
             <MenuItem
               onClick={() => {
-                states.showCompose = {
+                showCompose({
                   editStatus: status,
-                };
+                });
               }}
             >
               <Icon icon="pencil" />
@@ -2125,11 +2126,11 @@ function Status({
                   menuExtras={
                     <MenuItem
                       onClick={() => {
-                        states.showCompose = {
+                        showCompose({
                           draftStatus: {
                             status: `\n${url}`,
                           },
-                        };
+                        });
                       }}
                     >
                       <Icon icon="quote" />

@@ -514,6 +514,7 @@ function Compose({
     // I don't think this warrant a draft mode for a status that's already posted
     // Maybe it could be a big edit change but it should be rare
     if (editStatus) return;
+    if (states.composerState.minimized) return;
     const key = draftKey();
     const backgroundDraft = {
       key,
@@ -670,6 +671,11 @@ function Compose({
     [replyToStatus],
   );
 
+  const onMinimize = () => {
+    saveUnsavedDraft();
+    states.composerState.minimized = true;
+  };
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -689,7 +695,7 @@ function Compose({
             />
           )}
           {!standalone ? (
-            <span>
+            <span class="button-group">
               <button
                 type="button"
                 class="light pop-button"
@@ -735,6 +741,13 @@ function Compose({
                 }}
               >
                 <Icon icon="popout" alt="Pop out" />
+              </button>{' '}
+              <button
+                type="button"
+                class="light min-button"
+                onClick={onMinimize}
+              >
+                <Icon icon="minimize" alt="Minimize" />
               </button>{' '}
               <button
                 type="button"
@@ -809,6 +822,10 @@ function Compose({
                         }, 10);
                       } else {
                         window.opener.__STATES__.showCompose = true;
+                      }
+                      if (window.opener.__STATES__.composerState.minimized) {
+                        // Maximize it
+                        window.opener.__STATES__.composerState.minimized = false;
                       }
                     },
                   });
@@ -915,6 +932,8 @@ function Compose({
             spoilerText = (sensitive && spoilerText) || undefined;
             status = status === '' ? undefined : status;
 
+            // states.composerState.minimized = true;
+            states.composerState.publishing = true;
             setUIState('loading');
             (async () => {
               try {
@@ -948,6 +967,8 @@ function Compose({
                       return result.status === 'rejected' || !result.value?.id;
                     })
                   ) {
+                    states.composerState.publishing = false;
+                    states.composerState.publishingError = true;
                     setUIState('error');
                     // Alert all the reasons
                     results.forEach((result) => {
@@ -1021,6 +1042,8 @@ function Compose({
                     newStatus = await masto.v1.statuses.create(params);
                   }
                 }
+                states.composerState.minimized = false;
+                states.composerState.publishing = false;
                 setUIState('default');
 
                 // Close
@@ -1031,6 +1054,8 @@ function Compose({
                   instance,
                 });
               } catch (e) {
+                states.composerState.publishing = false;
+                states.composerState.publishingError = true;
                 console.error(e);
                 alert(e?.reason || e);
                 setUIState('error');

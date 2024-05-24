@@ -39,7 +39,10 @@ export default function Modals() {
   return (
     <>
       {!!snapStates.showCompose && (
-        <Modal class="solid">
+        <Modal
+          class={`solid ${snapStates.composerState.minimized ? 'min' : ''}`}
+          minimized={!!snapStates.composerState.minimized}
+        >
           <IntlSegmenterSuspense>
             <Compose
               replyToStatus={

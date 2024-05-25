@@ -1612,6 +1612,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 #compose-button {
   &.min {
     outline: 2px solid var(--button-text-color);
+    z-index: 1001; /* Higher than modal */
 
     &:after {
       content: '';

@@ -697,10 +697,10 @@ function Compose({
             />
           )}
           {!standalone ? (
-            <span class="button-group">
+            <span class="compose-controls">
               <button
                 type="button"
-                class="light pop-button"
+                class="plain4 pop-button"
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
@@ -743,10 +743,10 @@ function Compose({
                 }}
               >
                 <Icon icon="popout" alt="Pop out" />
-              </button>{' '}
+              </button>
               <button
                 type="button"
-                class="light min-button"
+                class="plain4 min-button"
                 onClick={onMinimize}
               >
                 <Icon icon="minimize" alt="Minimize" />

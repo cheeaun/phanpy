@@ -388,27 +388,6 @@ select.plain {
   background-color: transparent;
 }
 
-.button-group {
-  display: flex;
-
-  button,
-  .button {
-    margin-inline: calc(-1 * var(--hairline-width));
-
-    &:first-child:not(:only-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    &:not(:first-child, :last-child, :only-child) {
-      border-radius: 0;
-    }
-    &:last-child:not(:only-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-}
-
 pre {
   tab-size: 2;
 }

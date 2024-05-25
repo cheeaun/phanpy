@@ -1398,9 +1398,11 @@ function Compose({
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
               const textBeforeEmoji = text.slice(0, selectionStart);
-              const spaceBeforeEmoji = /[\s\t\n\r]$/.test(textBeforeEmoji)
-                ? ''
-                : ' ';
+              const spaceBeforeEmoji = textBeforeEmoji
+                ? /[\s\t\n\r]$/.test(textBeforeEmoji)
+                  ? ''
+                  : ' '
+                : '';
               const textAfterEmoji = text.slice(selectionEnd);
               const spaceAfterEmoji = /^[\s\t\n\r]/.test(textAfterEmoji)
                 ? ''

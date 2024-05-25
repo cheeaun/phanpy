@@ -1579,8 +1579,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
     0 10px 36px -4px var(--button-bg-blur-color);
   transition: all 0.3s ease-in-out;
 }
-.deck-container:has(header[hidden]) ~ #compose-button,
-#compose-button[hidden] {
+.deck-container:has(header[hidden]) ~ #compose-button:not(.loading),
+#compose-button[hidden]:not(.loading) {
   transform: translateY(200%);
   pointer-events: none;
   user-select: none;

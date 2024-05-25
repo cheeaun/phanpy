@@ -57,9 +57,15 @@ function NameText({
       }
       onClick={(e) => {
         if (external) return;
+        if (e.shiftKey) return; // Save link? 🤷‍♂️
         e.preventDefault();
         e.stopPropagation();
         if (onClick) return onClick(e);
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.which === 2) {
+          const internalURL = `#/${instance}/a/${id}`;
+          window.open(internalURL, '_blank');
+          return;
+        }
         states.showAccount = {
           account,
           instance,

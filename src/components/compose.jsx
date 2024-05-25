@@ -788,9 +788,16 @@ function Compose({
                   }
 
                   if (window.opener.__STATES__.showCompose) {
-                    const yes = confirm(
-                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
-                    );
+                    if (window.opener.__STATES__.composerState?.publishing) {
+                      alert(
+                        'Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.',
+                      );
+                      return;
+                    }
+
+                    let confirmText =
+                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?';
+                    const yes = confirm(confirmText);
                     if (!yes) return;
                   }
 

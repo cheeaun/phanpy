@@ -600,6 +600,75 @@
   } */
 }
 
+#mention-sheet {
+  height: 50vh;
+
+  .accounts-list {
+    --list-gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--list-gap);
+
+    &.loading {
+      opacity: 0.5;
+    }
+
+    li {
+      display: flex;
+      flex-grow: 1;
+      /* align-items: center; */
+      margin: 0 -8px;
+      padding: 8px;
+      gap: 8px;
+      position: relative;
+      justify-content: space-between;
+      border-radius: 8px;
+      /* align-items: center; */
+
+      &:hover {
+        background-image: linear-gradient(
+          to right,
+          transparent 75%,
+          var(--link-bg-color)
+        );
+      }
+
+      &.selected {
+        background-image: linear-gradient(
+          to right,
+          var(--bg-faded-color) 75%,
+          var(--link-bg-color)
+        );
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        border-top: var(--hairline-width) solid var(--divider-color);
+        position: absolute;
+        bottom: 0;
+        left: 58px;
+        right: 0;
+      }
+
+      &:has(+ li:is(.selected, :hover)):before,
+      &:is(.selected, :hover):before {
+        opacity: 0;
+      }
+
+      > button {
+        border-radius: 4px;
+        &:hover {
+          outline: 2px solid var(--button-bg-blur-color);
+        }
+      }
+    }
+  }
+}
+
 #custom-emojis-sheet {
   max-height: 50vh;
   max-height: 50dvh;

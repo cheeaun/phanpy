@@ -31,6 +31,7 @@ import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -630,6 +631,7 @@ function Compose({
     };
   }, [mediaAttachments]);
 
+  const [showMentionPicker, setShowMentionPicker] = useState(false);
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
   const [showGIFPicker, setShowGIFPicker] = useState(false);
 
@@ -1166,6 +1168,10 @@ function Compose({
                 setShowEmoji2Picker({
                   defaultSearchTerm: action?.defaultSearchTerm || null,
                 });
+              } else if (action?.name === 'mention') {
+                setShowMentionPicker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
               }
             }}
           />
@@ -1304,6 +1310,16 @@ function Compose({
                     </button>{' '}
                   </>
                 ))}
+              {/* <button
+                type="button"
+                class="toolbar-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  setShowMentionPicker(true);
+                }}
+              >
+                <Icon icon="at" />
+              </button> */}
               <button
                 type="button"
                 class="toolbar-button"
@@ -1377,6 +1393,55 @@ function Compose({
           </div>
         </form>
       </div>
+      {showMentionPicker && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowMentionPicker(false);
+            }
+          }}
+        >
+          <MentionModal
+            masto={masto}
+            instance={instance}
+            onClose={() => {
+              setShowMentionPicker(false);
+            }}
+            defaultSearchTerm={showMentionPicker?.defaultSearchTerm}
+            onSelect={(socialAddress) => {
+              const textarea = textareaRef.current;
+              if (!textarea) return;
+              const { selectionStart, selectionEnd } = textarea;
+              const text = textarea.value;
+              const textBeforeMention = text.slice(0, selectionStart);
+              const spaceBeforeMention = textBeforeMention
+                ? /[\s\t\n\r]$/.test(textBeforeMention)
+                  ? ''
+                  : ' '
+                : '';
+              const textAfterMention = text.slice(selectionEnd);
+              const spaceAfterMention = /^[\s\t\n\r]/.test(textAfterMention)
+                ? ''
+                : ' ';
+              const newText =
+                textBeforeMention +
+                spaceBeforeMention +
+                '@' +
+                socialAddress +
+                spaceAfterMention +
+                textAfterMention;
+              textarea.value = newText;
+              textarea.selectionStart = textarea.selectionEnd =
+                selectionEnd +
+                1 +
+                socialAddress.length +
+                spaceAfterMention.length;
+              textarea.focus();
+              textarea.dispatchEvent(new Event('input'));
+            }}
+          />
+        </Modal>
+      )}
       {showEmoji2Picker && (
         <Modal
           onClick={(e) => {
@@ -1648,8 +1713,9 @@ const Textarea = forwardRef((props, ref) => {
                     </li>
                   `;
                 }
-                menu.innerHTML = html;
               });
+              html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+              menu.innerHTML = html;
               console.log('MENU', results, menu);
               resolve({
                 matched: results.length > 0,
@@ -1677,6 +1743,17 @@ const Textarea = forwardRef((props, ref) => {
             setTimeout(() => {
               onTrigger?.({
                 name: 'custom-emojis',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
+        } else if (key === '@') {
+          e.detail.value = value ? `@${value} ` : '​'; // zero-width space
+          if (more) {
+            e.detail.continue = true;
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'mention',
                 defaultSearchTerm: more,
               });
             }, 300);
@@ -2343,6 +2420,226 @@ function removeNullUndefined(obj) {
     }
   }
   return obj;
+}
+
+function MentionModal({
+  onClose = () => {},
+  onSelect = () => {},
+  defaultSearchTerm,
+}) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('default');
+  const [accounts, setAccounts] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const loadRelationships = async (accounts) => {
+    if (!accounts?.length) return;
+    const relationships = await fetchRelationships(accounts, relationshipsMap);
+    if (relationships) {
+      setRelationshipsMap({
+        ...relationshipsMap,
+        ...relationships,
+      });
+    }
+  };
+
+  const loadAccounts = (term) => {
+    if (!term) return;
+    setUIState('loading');
+    (async () => {
+      try {
+        const accounts = await masto.v1.accounts.search.list({
+          q: term,
+          limit: 40,
+          resolve: false,
+        });
+        setAccounts(accounts);
+        loadRelationships(accounts);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+        console.error(e);
+      }
+    })();
+  };
+
+  const debouncedLoadAccounts = useDebouncedCallback(loadAccounts, 1000);
+
+  useEffect(() => {
+    loadAccounts();
+  }, [loadAccounts]);
+
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (defaultSearchTerm) {
+      loadAccounts(defaultSearchTerm);
+    }
+  }, [defaultSearchTerm]);
+
+  const selectAccount = (account) => {
+    const socialAddress = account.acct;
+    onSelect(socialAddress);
+    onClose();
+  };
+
+  useHotkeys(
+    'enter',
+    () => {
+      const selectedAccount = accounts[selectedIndex];
+      if (selectedAccount) {
+        selectAccount(selectedAccount);
+      }
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const listRef = useRef();
+  useHotkeys(
+    'down',
+    () => {
+      if (selectedIndex < accounts.length - 1) {
+        setSelectedIndex(selectedIndex + 1);
+      } else {
+        setSelectedIndex(0);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  useHotkeys(
+    'up',
+    () => {
+      if (selectedIndex > 0) {
+        setSelectedIndex(selectedIndex - 1);
+      } else {
+        setSelectedIndex(accounts.length - 1);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  return (
+    <div id="mention-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            debouncedLoadAccounts.flush?.();
+            // const searchTerm = inputRef.current.value;
+            // debouncedLoadAccounts(searchTerm);
+          }}
+        >
+          <input
+            ref={inputRef}
+            required
+            type="search"
+            class="block"
+            placeholder="Search accounts"
+            onInput={(e) => {
+              const { value } = e.target;
+              debouncedLoadAccounts(value);
+            }}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            defaultValue={defaultSearchTerm || ''}
+          />
+        </form>
+      </header>
+      <main>
+        {accounts?.length > 0 ? (
+          <ul
+            ref={listRef}
+            class={`accounts-list ${uiState === 'loading' ? 'loading' : ''}`}
+          >
+            {accounts.map((account, i) => {
+              const relationship = relationshipsMap[account.id];
+              return (
+                <li
+                  key={account.id}
+                  class={i === selectedIndex ? 'selected' : ''}
+                >
+                  <AccountBlock
+                    avatarSize="xxl"
+                    account={account}
+                    relationship={relationship}
+                    showStats
+                    showActivity
+                  />
+                  <button
+                    type="button"
+                    class="plain2"
+                    onClick={() => {
+                      selectAccount(account);
+                    }}
+                  >
+                    <Icon icon="plus" size="xl" />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : uiState === 'loading' ? (
+          <div class="ui-state">
+            <Loader abrupt />
+          </div>
+        ) : uiState === 'error' ? (
+          <div class="ui-state">
+            <p>Error loading accounts</p>
+          </div>
+        ) : null}
+      </main>
+    </div>
+  );
 }
 
 function CustomEmojisModal({

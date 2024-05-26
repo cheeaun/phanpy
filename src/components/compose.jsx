@@ -1714,7 +1714,9 @@ const Textarea = forwardRef((props, ref) => {
                   `;
                 }
               });
-              html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+              if (type === 'accounts') {
+                html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+              }
               menu.innerHTML = html;
               console.log('MENU', results, menu);
               resolve({

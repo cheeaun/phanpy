@@ -2225,6 +2225,8 @@ body > .szh-menu-container {
   box-shadow: 0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);
   text-align: center;
+  width: fit-content;
+  max-width: calc(100vw - 32px);
 }
 .toastify-bottom {
   margin-bottom: env(safe-area-inset-bottom);

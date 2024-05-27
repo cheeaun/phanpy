@@ -31,16 +31,17 @@ function NameText({
     .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
     .replace(/\s+/g, ''); // E.g. "My name" === "myname"
   const shortenedAlphaNumericDisplayName = shortenedDisplayName.replace(
-    /[^a-z0-9]/gi,
+    /[^a-z0-9@\.]/gi,
     '',
   ); // Remove non-alphanumeric characters
 
   if (
-    !short &&
-    (trimmedUsername === trimmedDisplayName ||
-      trimmedUsername === shortenedDisplayName ||
-      trimmedUsername === shortenedAlphaNumericDisplayName ||
-      nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)
+    (!short &&
+      (trimmedUsername === trimmedDisplayName ||
+        trimmedUsername === shortenedDisplayName ||
+        trimmedUsername === shortenedAlphaNumericDisplayName ||
+        nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)) ||
+    shortenedAlphaNumericDisplayName === acct.toLowerCase()
   ) {
     username = null;
   }

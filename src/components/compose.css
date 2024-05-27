@@ -340,6 +340,21 @@
   display: flex;
   gap: 8px;
   align-items: stretch;
+
+  .media-error {
+    padding: 2px;
+    color: var(--orange-fg-color);
+    background-color: transparent;
+    border: 1.5px dashed transparent;
+    line-height: 1;
+    border-radius: 4px;
+    display: flex;
+
+    &:is(:hover, :focus) {
+      background-color: var(--bg-color);
+      border-color: var(--orange-fg-color);
+    }
+  }
 }
 #compose-container .media-preview {
   flex-shrink: 0;

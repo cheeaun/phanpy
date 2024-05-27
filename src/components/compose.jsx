@@ -1967,6 +1967,26 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   );
 }
 
+function prettyBytes(bytes) {
+  const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  let unitIndex = 0;
+  while (bytes >= 1024) {
+    bytes /= 1024;
+    unitIndex++;
+  }
+  return `${bytes.toFixed(0).toLocaleString()} ${units[unitIndex]}`;
+}
+
+function scaleDimension(matrix, matrixLimit, width, height) {
+  // matrix = number of pixels
+  // matrixLimit = max number of pixels
+  // Calculate new width and height, downsize to within the limit, preserve aspect ratio, no decimals
+  const scalingFactor = Math.sqrt(matrixLimit / matrix);
+  const newWidth = Math.floor(width * scalingFactor);
+  const newHeight = Math.floor(height * scalingFactor);
+  return { newWidth, newHeight };
+}
+
 function MediaAttachment({
   attachment,
   disabled,
@@ -1982,6 +2002,81 @@ function MediaAttachment({
     [file, attachment.url],
   );
   console.log({ attachment });
+
+  const checkMaxError = !!file?.size;
+  const configuration = checkMaxError ? getCurrentInstanceConfiguration() : {};
+  const {
+    mediaAttachments: {
+      imageSizeLimit,
+      imageMatrixLimit,
+      videoSizeLimit,
+      videoMatrixLimit,
+      videoFrameRateLimit,
+    } = {},
+  } = configuration || {};
+
+  const [maxError, setMaxError] = useState(() => {
+    if (!checkMaxError) return null;
+    if (
+      type.startsWith('image') &&
+      imageSizeLimit &&
+      file.size > imageSizeLimit
+    ) {
+      return {
+        type: 'imageSizeLimit',
+        details: {
+          imageSize: file.size,
+          imageSizeLimit,
+        },
+      };
+    } else if (
+      type.startsWith('video') &&
+      videoSizeLimit &&
+      file.size > videoSizeLimit
+    ) {
+      return {
+        type: 'videoSizeLimit',
+        details: {
+          videoSize: file.size,
+          videoSizeLimit,
+        },
+      };
+    }
+    return null;
+  });
+
+  const [imageMatrix, setImageMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !imageMatrixLimit) return;
+    if (imageMatrix?.matrix > imageMatrixLimit) {
+      setMaxError({
+        type: 'imageMatrixLimit',
+        details: {
+          imageMatrix: imageMatrix?.matrix,
+          imageMatrixLimit,
+          width: imageMatrix?.width,
+          height: imageMatrix?.height,
+        },
+      });
+    }
+  }, [imageMatrix, imageMatrixLimit, checkMaxError]);
+
+  const [videoMatrix, setVideoMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !videoMatrixLimit) return;
+    if (videoMatrix?.matrix > videoMatrixLimit) {
+      setMaxError({
+        type: 'videoMatrixLimit',
+        details: {
+          videoMatrix: videoMatrix?.matrix,
+          videoMatrixLimit,
+          width: videoMatrix?.width,
+          height: videoMatrix?.height,
+        },
+      });
+    }
+  }, [videoMatrix, videoMatrixLimit, checkMaxError]);
+
   const [description, setDescription] = useState(attachment.description);
   const [suffixType, subtype] = type.split('/');
   const debouncedOnDescriptionChange = useDebouncedCallback(
@@ -2053,6 +2148,50 @@ function MediaAttachment({
     };
   }, []);
 
+  const maxErrorToast = useRef(null);
+
+  const maxErrorText = (err) => {
+    const { type, details } = err;
+    switch (type) {
+      case 'imageSizeLimit': {
+        const { imageSize, imageSizeLimit } = details;
+        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          imageSize,
+        )} to ${prettyBytes(imageSizeLimit)} or lower.`;
+      }
+      case 'imageMatrixLimit': {
+        const { imageMatrix, imageMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          imageMatrix,
+          imageMatrixLimit,
+          width,
+          height,
+        );
+        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+      }
+      case 'videoSizeLimit': {
+        const { videoSize, videoSizeLimit } = details;
+        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          videoSize,
+        )} to ${prettyBytes(videoSizeLimit)} or lower.`;
+      }
+      case 'videoMatrixLimit': {
+        const { videoMatrix, videoMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          videoMatrix,
+          videoMatrixLimit,
+          width,
+          height,
+        );
+        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+      }
+      case 'videoFrameRateLimit': {
+        // Not possible to detect this on client-side for now
+        return 'Frame rate too high. Uploading might encounter issues.';
+      }
+    }
+  };
+
   return (
     <>
       <div class="media-attachment">
@@ -2064,9 +2203,38 @@ function MediaAttachment({
           }}
         >
           {suffixType === 'image' ? (
-            <img src={url} alt="" />
+            <img
+              src={url}
+              alt=""
+              onLoad={(e) => {
+                if (!checkMaxError) return;
+                const { naturalWidth, naturalHeight } = e.target;
+                setImageMatrix({
+                  matrix: naturalWidth * naturalHeight,
+                  width: naturalWidth,
+                  height: naturalHeight,
+                });
+              }}
+            />
           ) : suffixType === 'video' || suffixType === 'gifv' ? (
-            <video src={url} playsinline muted />
+            <video
+              src={url + '#t=0.1'} // Make Safari show 1st-frame preview
+              playsinline
+              muted
+              disablePictureInPicture
+              preload="metadata"
+              onLoadedMetadata={(e) => {
+                if (!checkMaxError) return;
+                const { videoWidth, videoHeight } = e.target;
+                if (videoWidth && videoHeight) {
+                  setVideoMatrix({
+                    matrix: videoWidth * videoHeight,
+                    width: videoWidth,
+                    height: videoHeight,
+                  });
+                }
+              }}
+            />
           ) : suffixType === 'audio' ? (
             <audio src={url} controls />
           ) : null}
@@ -2081,6 +2249,24 @@ function MediaAttachment({
           >
             <Icon icon="x" />
           </button>
+          {!!maxError && (
+            <button
+              type="button"
+              class="media-error"
+              title={maxErrorText(maxError)}
+              onClick={() => {
+                if (maxErrorToast.current) {
+                  maxErrorToast.current.hideToast();
+                }
+                maxErrorToast.current = showToast({
+                  text: maxErrorText(maxError),
+                  duration: 10_000,
+                });
+              }}
+            >
+              <Icon icon="alert" />
+            </button>
+          )}
         </div>
       </div>
       {showModal && (

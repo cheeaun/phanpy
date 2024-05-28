@@ -23,6 +23,7 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -46,6 +47,7 @@ import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -158,6 +160,18 @@ const SIZE_CLASS = {
   l: 'large',
 };
 
+const detectLang = mem((text) => {
+  const langs = detectAll(text);
+  const lang = langs[0];
+  if (lang?.lang && lang?.accuracy > 0.5) {
+    // If > 50% accurate, use it
+    // It can be accurate if < 50% but better be safe
+    // Though > 50% also can be inaccurate 🤷‍♂️
+    return lang.lang;
+  }
+  return null;
+});
+
 function Status({
   statusID,
   status,
@@ -242,7 +256,7 @@ function Status({
     sensitive,
     spoilerText,
     visibility, // public, unlisted, private, direct
-    language,
+    language: _language,
     editedAt,
     filtered,
     card,
@@ -264,6 +278,9 @@ function Status({
     // Non-Mastodon
     emojiReactions,
   } = status;
+
+  let languageAutoDetected = content && detectLang(getHTMLText(content));
+  const language = _language || languageAutoDetected;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -1898,6 +1915,7 @@ function Status({
                     forceTranslate={forceTranslate || inlineTranslate}
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
+                    autoDetected={languageAutoDetected}
                     text={getPostText(status)}
                   />
                 )}

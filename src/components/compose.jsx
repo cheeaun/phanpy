@@ -15,6 +15,7 @@ import {
 } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+import { detectAll } from 'tinyld/light';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
@@ -635,6 +636,7 @@ function Compose({
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
   const [showGIFPicker, setShowGIFPicker] = useState(false);
 
+  const [autoDetectedLanguages, setAutoDetectedLanguages] = useState(null);
   const [topSupportedLanguages, restSupportedLanguages] = useMemo(() => {
     const topLanguages = [];
     const restLanguages = [];
@@ -645,7 +647,8 @@ function Compose({
         code === language ||
         code === prevLanguage.current ||
         code === DEFAULT_LANG ||
-        contentTranslationHideLanguages.includes(code)
+        contentTranslationHideLanguages.includes(code) ||
+        (autoDetectedLanguages?.length && autoDetectedLanguages.includes(code))
       ) {
         topLanguages.push(l);
       } else {
@@ -661,7 +664,7 @@ function Compose({
       commonA.localeCompare(commonB),
     );
     return [topLanguages, restLanguages];
-  }, [language]);
+  }, [language, autoDetectedLanguages]);
 
   const replyToStatusMonthsAgo = useMemo(
     () =>
@@ -1172,6 +1175,11 @@ function Compose({
                 setShowMentionPicker({
                   defaultSearchTerm: action?.defaultSearchTerm || null,
                 });
+              } else if (
+                action?.name === 'auto-detect-language' &&
+                action?.languages
+              ) {
+                setAutoDetectedLanguages(action.languages);
               }
             }}
           />
@@ -1354,7 +1362,11 @@ function Compose({
             )}
             <label
               class={`toolbar-button ${
-                language !== prevLanguage.current ? 'highlight' : ''
+                language !== prevLanguage.current ||
+                (autoDetectedLanguages?.length &&
+                  autoDetectedLanguages.includes(language))
+                  ? 'highlight'
+                  : ''
               }`}
             >
               <span class="icon-text">
@@ -1576,6 +1588,15 @@ const getCustomEmojis = pmem(_getCustomEmojis, {
   matchesArg: (cacheKeyArg, keyArg) => cacheKeyArg.instance === keyArg.instance,
   maxAge: 30 * 60 * 1000, // 30 minutes
 });
+
+const detectLangs = (text) => {
+  const langs = detectAll(text);
+  if (langs?.length) {
+    // return max 2
+    return langs.slice(0, 2).map((lang) => lang.lang);
+  }
+  return null;
+};
 
 const Textarea = forwardRef((props, ref) => {
   const { masto, instance } = api();
@@ -1845,6 +1866,17 @@ const Textarea = forwardRef((props, ref) => {
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
+  const debouncedAutoDetectLanguage = useDebouncedCallback((text) => {
+    if (!text) return;
+    const langs = detectLangs(text);
+    if (langs?.length) {
+      onTrigger?.({
+        name: 'auto-detect-language',
+        languages: langs,
+      });
+    }
+  }, 1000);
+
   return (
     <text-expander
       ref={textExpanderRef}
@@ -1912,6 +1944,7 @@ const Textarea = forwardRef((props, ref) => {
           autoResizeTextarea(target);
           props.onInput?.(e);
           throttleHighlightText(text);
+          debouncedAutoDetectLanguage(text);
         }}
         style={{
           width: '100%',

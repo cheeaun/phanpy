@@ -77,6 +77,7 @@ function TranslationBlock({
   onTranslate,
   text = '',
   mini,
+  autoDetected,
 }) {
   const targetLang = getTranslateTargetLanguage(true);
   const [uiState, setUIState] = useState('default');
@@ -187,7 +188,9 @@ function TranslationBlock({
               {uiState === 'loading'
                 ? 'Translating…'
                 : sourceLanguage && sourceLangText && !detectedLang
-                ? `Translate from ${sourceLangText}`
+                ? autoDetected
+                  ? `Translate from ${sourceLangText} (auto-detected)`
+                  : `Translate from ${sourceLangText}`
                 : `Translate`}
             </span>
           </button>

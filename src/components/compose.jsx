@@ -1364,7 +1364,7 @@ function Compose({
               class={`toolbar-button ${
                 language !== prevLanguage.current ||
                 (autoDetectedLanguages?.length &&
-                  autoDetectedLanguages.includes(language))
+                  !autoDetectedLanguages.includes(language))
                   ? 'highlight'
                   : ''
               }`}

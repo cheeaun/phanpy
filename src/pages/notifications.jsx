@@ -292,8 +292,13 @@ function Notifications({ columnMode }) {
       }
     }
   });
+  const firstLoad = useRef(true);
   useEffect(() => {
     let unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+      if (firstLoad.current) {
+        firstLoad.current = false;
+        return;
+      }
       if (uiState === 'loading') return;
       if (v) loadUpdates();
       setShowNew(v);

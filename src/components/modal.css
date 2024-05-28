@@ -10,17 +10,56 @@
   align-items: center;
   background-color: var(--backdrop-color);
   animation: appear 0.5s var(--timing-function) both;
+  transition: all 0.5s var(--timing-function);
 
   &.solid {
     background-color: var(--backdrop-solid-color);
   }
 
+  --compose-button-dimension: 56px;
+  --compose-button-dimension-half: calc(var(--compose-button-dimension) / 2);
+  --compose-button-dimension-margin: 16px;
+
+  &.min {
+    /* Minimized */
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+    transform: scale(0);
+    --right: max(
+      var(--compose-button-dimension-margin),
+      env(safe-area-inset-right)
+    );
+    --bottom: max(
+      var(--compose-button-dimension-margin),
+      env(safe-area-inset-bottom)
+    );
+    --origin-right: calc(
+      100% - var(--compose-button-dimension-half) - var(--right)
+    );
+    --origin-bottom: calc(
+      100% - var(--compose-button-dimension-half) - var(--bottom)
+    );
+    transform-origin: var(--origin-right) var(--origin-bottom);
+  }
+
   .sheet {
     transition: transform 0.3s var(--timing-function);
-    transform-origin: center bottom;
+    transform-origin: 80% 80%;
   }
 
   &:has(~ div) .sheet {
     transform: scale(0.975);
+  }
+}
+
+@media (max-width: calc(40em - 1px)) {
+  #app[data-shortcuts-view-mode='tab-menu-bar'] ~ #modal-container > div.min {
+    border: 2px solid red;
+
+    --bottom: calc(
+      var(--compose-button-dimension-margin) + env(safe-area-inset-bottom) +
+        52px
+    );
   }
 }

@@ -3,10 +3,19 @@ import './compose.css';
 import '@github/text-expander-element';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
+import Fuse from 'fuse.js';
+import { memo } from 'preact/compat';
 import { forwardRef } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+import { detectAll } from 'tinyld/light';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
@@ -20,7 +29,10 @@ import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import localeMatch from '../utils/locale-match';
+import localeCode2Text from '../utils/localeCode2Text';
 import openCompose from '../utils/open-compose';
+import pmem from '../utils/pmem';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -180,6 +192,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
 }
 
 const rtf = new Intl.RelativeTimeFormat();
+
+const CUSTOM_EMOJIS_COUNT = 100;
 
 function Compose({
   onClose,
@@ -366,8 +380,11 @@ function Compose({
     }
 
     // check for status and media attachments
+    const hasValue = (value || '')
+      .trim()
+      .replace(/^\p{White_Space}+|\p{White_Space}+$/gu, '');
     const hasMediaAttachments = mediaAttachments.length > 0;
-    if (!value && !hasMediaAttachments) {
+    if (!hasValue && !hasMediaAttachments) {
       console.log('canClose', { value, mediaAttachments });
       return true;
     }
@@ -499,6 +516,7 @@ function Compose({
     // I don't think this warrant a draft mode for a status that's already posted
     // Maybe it could be a big edit change but it should be rare
     if (editStatus) return;
+    if (states.composerState.minimized) return;
     const key = draftKey();
     const backgroundDraft = {
       key,
@@ -614,9 +632,11 @@ function Compose({
     };
   }, [mediaAttachments]);
 
+  const [showMentionPicker, setShowMentionPicker] = useState(false);
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
   const [showGIFPicker, setShowGIFPicker] = useState(false);
 
+  const [autoDetectedLanguages, setAutoDetectedLanguages] = useState(null);
   const [topSupportedLanguages, restSupportedLanguages] = useMemo(() => {
     const topLanguages = [];
     const restLanguages = [];
@@ -627,7 +647,8 @@ function Compose({
         code === language ||
         code === prevLanguage.current ||
         code === DEFAULT_LANG ||
-        contentTranslationHideLanguages.includes(code)
+        contentTranslationHideLanguages.includes(code) ||
+        (autoDetectedLanguages?.length && autoDetectedLanguages.includes(code))
       ) {
         topLanguages.push(l);
       } else {
@@ -643,7 +664,7 @@ function Compose({
       commonA.localeCompare(commonB),
     );
     return [topLanguages, restLanguages];
-  }, [language]);
+  }, [language, autoDetectedLanguages]);
 
   const replyToStatusMonthsAgo = useMemo(
     () =>
@@ -654,6 +675,11 @@ function Compose({
       ),
     [replyToStatus],
   );
+
+  const onMinimize = () => {
+    saveUnsavedDraft();
+    states.composerState.minimized = true;
+  };
 
   return (
     <div id="compose-container-outer">
@@ -674,10 +700,10 @@ function Compose({
             />
           )}
           {!standalone ? (
-            <span>
+            <span class="compose-controls">
               <button
                 type="button"
-                class="light pop-button"
+                class="plain4 pop-button"
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
@@ -720,6 +746,13 @@ function Compose({
                 }}
               >
                 <Icon icon="popout" alt="Pop out" />
+              </button>
+              <button
+                type="button"
+                class="plain4 min-button"
+                onClick={onMinimize}
+              >
+                <Icon icon="minimize" alt="Minimize" />
               </button>{' '}
               <button
                 type="button"
@@ -760,9 +793,16 @@ function Compose({
                   }
 
                   if (window.opener.__STATES__.showCompose) {
-                    const yes = confirm(
-                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
-                    );
+                    if (window.opener.__STATES__.composerState?.publishing) {
+                      alert(
+                        'Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.',
+                      );
+                      return;
+                    }
+
+                    let confirmText =
+                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?';
+                    const yes = confirm(confirmText);
                     if (!yes) return;
                   }
 
@@ -787,7 +827,18 @@ function Compose({
                         },
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
-                      window.opener.__STATES__.showCompose = true;
+                      if (window.opener.__STATES__.showCompose) {
+                        window.opener.__STATES__.showCompose = false;
+                        setTimeout(() => {
+                          window.opener.__STATES__.showCompose = true;
+                        }, 10);
+                      } else {
+                        window.opener.__STATES__.showCompose = true;
+                      }
+                      if (window.opener.__STATES__.composerState.minimized) {
+                        // Maximize it
+                        window.opener.__STATES__.composerState.minimized = false;
+                      }
                     },
                   });
                 }}
@@ -893,6 +944,8 @@ function Compose({
             spoilerText = (sensitive && spoilerText) || undefined;
             status = status === '' ? undefined : status;
 
+            // states.composerState.minimized = true;
+            states.composerState.publishing = true;
             setUIState('loading');
             (async () => {
               try {
@@ -926,6 +979,8 @@ function Compose({
                       return result.status === 'rejected' || !result.value?.id;
                     })
                   ) {
+                    states.composerState.publishing = false;
+                    states.composerState.publishingError = true;
                     setUIState('error');
                     // Alert all the reasons
                     results.forEach((result) => {
@@ -999,6 +1054,8 @@ function Compose({
                     newStatus = await masto.v1.statuses.create(params);
                   }
                 }
+                states.composerState.minimized = false;
+                states.composerState.publishing = false;
                 setUIState('default');
 
                 // Close
@@ -1009,6 +1066,8 @@ function Compose({
                   instance,
                 });
               } catch (e) {
+                states.composerState.publishing = false;
+                states.composerState.publishingError = true;
                 console.error(e);
                 alert(e?.reason || e);
                 setUIState('error');
@@ -1106,6 +1165,22 @@ function Compose({
                 });
               }
               return masto.v2.search.fetch(params);
+            }}
+            onTrigger={(action) => {
+              if (action?.name === 'custom-emojis') {
+                setShowEmoji2Picker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
+              } else if (action?.name === 'mention') {
+                setShowMentionPicker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
+              } else if (
+                action?.name === 'auto-detect-language' &&
+                action?.languages
+              ) {
+                setAutoDetectedLanguages(action.languages);
+              }
             }}
           />
           {mediaAttachments?.length > 0 && (
@@ -1243,6 +1318,16 @@ function Compose({
                     </button>{' '}
                   </>
                 ))}
+              {/* <button
+                type="button"
+                class="toolbar-button"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  setShowMentionPicker(true);
+                }}
+              >
+                <Icon icon="at" />
+              </button> */}
               <button
                 type="button"
                 class="toolbar-button"
@@ -1277,7 +1362,11 @@ function Compose({
             )}
             <label
               class={`toolbar-button ${
-                language !== prevLanguage.current ? 'highlight' : ''
+                language !== prevLanguage.current ||
+                (autoDetectedLanguages?.length &&
+                  !autoDetectedLanguages.includes(language))
+                  ? 'highlight'
+                  : ''
               }`}
             >
               <span class="icon-text">
@@ -1316,6 +1405,55 @@ function Compose({
           </div>
         </form>
       </div>
+      {showMentionPicker && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowMentionPicker(false);
+            }
+          }}
+        >
+          <MentionModal
+            masto={masto}
+            instance={instance}
+            onClose={() => {
+              setShowMentionPicker(false);
+            }}
+            defaultSearchTerm={showMentionPicker?.defaultSearchTerm}
+            onSelect={(socialAddress) => {
+              const textarea = textareaRef.current;
+              if (!textarea) return;
+              const { selectionStart, selectionEnd } = textarea;
+              const text = textarea.value;
+              const textBeforeMention = text.slice(0, selectionStart);
+              const spaceBeforeMention = textBeforeMention
+                ? /[\s\t\n\r]$/.test(textBeforeMention)
+                  ? ''
+                  : ' '
+                : '';
+              const textAfterMention = text.slice(selectionEnd);
+              const spaceAfterMention = /^[\s\t\n\r]/.test(textAfterMention)
+                ? ''
+                : ' ';
+              const newText =
+                textBeforeMention +
+                spaceBeforeMention +
+                '@' +
+                socialAddress +
+                spaceAfterMention +
+                textAfterMention;
+              textarea.value = newText;
+              textarea.selectionStart = textarea.selectionEnd =
+                selectionEnd +
+                1 +
+                socialAddress.length +
+                spaceAfterMention.length;
+              textarea.focus();
+              textarea.dispatchEvent(new Event('input'));
+            }}
+          />
+        </Modal>
+      )}
       {showEmoji2Picker && (
         <Modal
           onClick={(e) => {
@@ -1330,19 +1468,31 @@ function Compose({
             onClose={() => {
               setShowEmoji2Picker(false);
             }}
-            onSelect={(emoji) => {
-              const emojiWithSpace = ` ${emoji} `;
+            defaultSearchTerm={showEmoji2Picker?.defaultSearchTerm}
+            onSelect={(emojiShortcode) => {
               const textarea = textareaRef.current;
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
+              const textBeforeEmoji = text.slice(0, selectionStart);
+              const spaceBeforeEmoji = textBeforeEmoji
+                ? /[\s\t\n\r]$/.test(textBeforeEmoji)
+                  ? ''
+                  : ' '
+                : '';
+              const textAfterEmoji = text.slice(selectionEnd);
+              const spaceAfterEmoji = /^[\s\t\n\r]/.test(textAfterEmoji)
+                ? ''
+                : ' ';
               const newText =
-                text.slice(0, selectionStart) +
-                emojiWithSpace +
-                text.slice(selectionEnd);
+                textBeforeEmoji +
+                spaceBeforeEmoji +
+                emojiShortcode +
+                spaceAfterEmoji +
+                textAfterEmoji;
               textarea.value = newText;
               textarea.selectionStart = textarea.selectionEnd =
-                selectionEnd + emojiWithSpace.length;
+                selectionEnd + emojiShortcode.length + spaceAfterEmoji.length;
               textarea.focus();
               textarea.dispatchEvent(new Event('input'));
             }}
@@ -1423,25 +1573,54 @@ function autoResizeTextarea(textarea) {
   }
 }
 
+async function _getCustomEmojis(instance, masto) {
+  const emojis = await masto.v1.customEmojis.list();
+  const visibleEmojis = emojis.filter((e) => e.visibleInPicker);
+  const searcher = new Fuse(visibleEmojis, {
+    keys: ['shortcode'],
+    findAllMatches: true,
+  });
+  return [visibleEmojis, searcher];
+}
+const getCustomEmojis = pmem(_getCustomEmojis, {
+  // Limit by time to reduce memory usage
+  // Cached by instance
+  matchesArg: (cacheKeyArg, keyArg) => cacheKeyArg.instance === keyArg.instance,
+  maxAge: 30 * 60 * 1000, // 30 minutes
+});
+
+const detectLangs = (text) => {
+  const langs = detectAll(text);
+  if (langs?.length) {
+    // return max 2
+    return langs.slice(0, 2).map((lang) => lang.lang);
+  }
+  return null;
+};
+
 const Textarea = forwardRef((props, ref) => {
-  const { masto } = api();
+  const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
-  const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
+  const {
+    maxCharacters,
+    performSearch = () => {},
+    onTrigger = () => {},
+    ...textareaProps
+  } = props;
   // const snapStates = useSnapshot(states);
   // const charCount = snapStates.composerCharacterCount;
 
-  const customEmojis = useRef();
+  // const customEmojis = useRef();
+  const searcherRef = useRef();
   useEffect(() => {
-    (async () => {
-      try {
-        const emojis = await masto.v1.customEmojis.list();
-        console.log({ emojis });
-        customEmojis.current = emojis;
-      } catch (e) {
-        // silent fail
+    getCustomEmojis(instance, masto)
+      .then((r) => {
+        const [emojis, searcher] = r;
+        searcherRef.current = searcher;
+      })
+      .catch((e) => {
         console.error(e);
-      }
-    })();
+      });
   }, []);
 
   const textExpanderRef = useRef();
@@ -1467,23 +1646,27 @@ const Textarea = forwardRef((props, ref) => {
           // const emojis = customEmojis.current.filter((emoji) =>
           //   emoji.shortcode.startsWith(text),
           // );
-          const emojis = filterShortcodes(customEmojis.current, text);
+          // const emojis = filterShortcodes(customEmojis.current, text);
+          const results = searcherRef.current?.search(text, {
+            limit: 5,
+          });
           let html = '';
-          emojis.forEach((emoji) => {
+          results.forEach(({ item: emoji }) => {
             const { shortcode, url } = emoji;
             html += `
                 <li role="option" data-value="${encodeHTML(shortcode)}">
                 <img src="${encodeHTML(
                   url,
                 )}" width="16" height="16" alt="" loading="lazy" /> 
-                :${encodeHTML(shortcode)}:
+                ${encodeHTML(shortcode)}
               </li>`;
           });
+          html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
           // console.log({ emojis, html });
           menu.innerHTML = html;
           provide(
             Promise.resolve({
-              matched: emojis.length > 0,
+              matched: results.length > 0,
               fragment: menu,
             }),
           );
@@ -1551,8 +1734,11 @@ const Textarea = forwardRef((props, ref) => {
                     </li>
                   `;
                 }
-                menu.innerHTML = html;
               });
+              if (type === 'accounts') {
+                html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+              }
+              menu.innerHTML = html;
               console.log('MENU', results, menu);
               resolve({
                 matched: results.length > 0,
@@ -1570,10 +1756,33 @@ const Textarea = forwardRef((props, ref) => {
 
       handleValue = (e) => {
         const { key, item } = e.detail;
+        const { value, more } = item.dataset;
         if (key === ':') {
-          e.detail.value = `:${item.dataset.value}:`;
+          e.detail.value = value ? `:${value}:` : '​'; // zero-width space
+          if (more) {
+            // Prevent adding space after the above value
+            e.detail.continue = true;
+
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'custom-emojis',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
+        } else if (key === '@') {
+          e.detail.value = value ? `@${value} ` : '​'; // zero-width space
+          if (more) {
+            e.detail.continue = true;
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'mention',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
         } else {
-          e.detail.value = `${key}${item.dataset.value}`;
+          e.detail.value = `${key}${value}`;
         }
       };
 
@@ -1657,6 +1866,17 @@ const Textarea = forwardRef((props, ref) => {
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
+  const debouncedAutoDetectLanguage = useDebouncedCallback((text) => {
+    if (!text) return;
+    const langs = detectLangs(text);
+    if (langs?.length) {
+      onTrigger?.({
+        name: 'auto-detect-language',
+        languages: langs,
+      });
+    }
+  }, 1000);
+
   return (
     <text-expander
       ref={textExpanderRef}
@@ -1718,11 +1938,13 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          const text = target.value;
+          // Replace zero-width space
+          const text = target.value.replace(/\u200b/g, '');
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
           throttleHighlightText(text);
+          debouncedAutoDetectLanguage(text);
         }}
         style={{
           width: '100%',
@@ -1778,6 +2000,26 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   );
 }
 
+function prettyBytes(bytes) {
+  const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  let unitIndex = 0;
+  while (bytes >= 1024) {
+    bytes /= 1024;
+    unitIndex++;
+  }
+  return `${bytes.toFixed(0).toLocaleString()} ${units[unitIndex]}`;
+}
+
+function scaleDimension(matrix, matrixLimit, width, height) {
+  // matrix = number of pixels
+  // matrixLimit = max number of pixels
+  // Calculate new width and height, downsize to within the limit, preserve aspect ratio, no decimals
+  const scalingFactor = Math.sqrt(matrixLimit / matrix);
+  const newWidth = Math.floor(width * scalingFactor);
+  const newHeight = Math.floor(height * scalingFactor);
+  return { newWidth, newHeight };
+}
+
 function MediaAttachment({
   attachment,
   disabled,
@@ -1793,6 +2035,81 @@ function MediaAttachment({
     [file, attachment.url],
   );
   console.log({ attachment });
+
+  const checkMaxError = !!file?.size;
+  const configuration = checkMaxError ? getCurrentInstanceConfiguration() : {};
+  const {
+    mediaAttachments: {
+      imageSizeLimit,
+      imageMatrixLimit,
+      videoSizeLimit,
+      videoMatrixLimit,
+      videoFrameRateLimit,
+    } = {},
+  } = configuration || {};
+
+  const [maxError, setMaxError] = useState(() => {
+    if (!checkMaxError) return null;
+    if (
+      type.startsWith('image') &&
+      imageSizeLimit &&
+      file.size > imageSizeLimit
+    ) {
+      return {
+        type: 'imageSizeLimit',
+        details: {
+          imageSize: file.size,
+          imageSizeLimit,
+        },
+      };
+    } else if (
+      type.startsWith('video') &&
+      videoSizeLimit &&
+      file.size > videoSizeLimit
+    ) {
+      return {
+        type: 'videoSizeLimit',
+        details: {
+          videoSize: file.size,
+          videoSizeLimit,
+        },
+      };
+    }
+    return null;
+  });
+
+  const [imageMatrix, setImageMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !imageMatrixLimit) return;
+    if (imageMatrix?.matrix > imageMatrixLimit) {
+      setMaxError({
+        type: 'imageMatrixLimit',
+        details: {
+          imageMatrix: imageMatrix?.matrix,
+          imageMatrixLimit,
+          width: imageMatrix?.width,
+          height: imageMatrix?.height,
+        },
+      });
+    }
+  }, [imageMatrix, imageMatrixLimit, checkMaxError]);
+
+  const [videoMatrix, setVideoMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !videoMatrixLimit) return;
+    if (videoMatrix?.matrix > videoMatrixLimit) {
+      setMaxError({
+        type: 'videoMatrixLimit',
+        details: {
+          videoMatrix: videoMatrix?.matrix,
+          videoMatrixLimit,
+          width: videoMatrix?.width,
+          height: videoMatrix?.height,
+        },
+      });
+    }
+  }, [videoMatrix, videoMatrixLimit, checkMaxError]);
+
   const [description, setDescription] = useState(attachment.description);
   const [suffixType, subtype] = type.split('/');
   const debouncedOnDescriptionChange = useDebouncedCallback(
@@ -1864,6 +2181,50 @@ function MediaAttachment({
     };
   }, []);
 
+  const maxErrorToast = useRef(null);
+
+  const maxErrorText = (err) => {
+    const { type, details } = err;
+    switch (type) {
+      case 'imageSizeLimit': {
+        const { imageSize, imageSizeLimit } = details;
+        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          imageSize,
+        )} to ${prettyBytes(imageSizeLimit)} or lower.`;
+      }
+      case 'imageMatrixLimit': {
+        const { imageMatrix, imageMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          imageMatrix,
+          imageMatrixLimit,
+          width,
+          height,
+        );
+        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+      }
+      case 'videoSizeLimit': {
+        const { videoSize, videoSizeLimit } = details;
+        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          videoSize,
+        )} to ${prettyBytes(videoSizeLimit)} or lower.`;
+      }
+      case 'videoMatrixLimit': {
+        const { videoMatrix, videoMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          videoMatrix,
+          videoMatrixLimit,
+          width,
+          height,
+        );
+        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+      }
+      case 'videoFrameRateLimit': {
+        // Not possible to detect this on client-side for now
+        return 'Frame rate too high. Uploading might encounter issues.';
+      }
+    }
+  };
+
   return (
     <>
       <div class="media-attachment">
@@ -1875,9 +2236,38 @@ function MediaAttachment({
           }}
         >
           {suffixType === 'image' ? (
-            <img src={url} alt="" />
+            <img
+              src={url}
+              alt=""
+              onLoad={(e) => {
+                if (!checkMaxError) return;
+                const { naturalWidth, naturalHeight } = e.target;
+                setImageMatrix({
+                  matrix: naturalWidth * naturalHeight,
+                  width: naturalWidth,
+                  height: naturalHeight,
+                });
+              }}
+            />
           ) : suffixType === 'video' || suffixType === 'gifv' ? (
-            <video src={url} playsinline muted />
+            <video
+              src={url + '#t=0.1'} // Make Safari show 1st-frame preview
+              playsinline
+              muted
+              disablePictureInPicture
+              preload="metadata"
+              onLoadedMetadata={(e) => {
+                if (!checkMaxError) return;
+                const { videoWidth, videoHeight } = e.target;
+                if (videoWidth && videoHeight) {
+                  setVideoMatrix({
+                    matrix: videoWidth * videoHeight,
+                    width: videoWidth,
+                    height: videoHeight,
+                  });
+                }
+              }}
+            />
           ) : suffixType === 'audio' ? (
             <audio src={url} controls />
           ) : null}
@@ -1892,6 +2282,24 @@ function MediaAttachment({
           >
             <Icon icon="x" />
           </button>
+          {!!maxError && (
+            <button
+              type="button"
+              class="media-error"
+              title={maxErrorText(maxError)}
+              onClick={() => {
+                if (maxErrorToast.current) {
+                  maxErrorToast.current.hideToast();
+                }
+                maxErrorToast.current = showToast({
+                  text: maxErrorText(maxError),
+                  duration: 10_000,
+                });
+              }}
+            >
+              <Icon icon="alert" />
+            </button>
+          )}
         </div>
       </div>
       {showModal && (
@@ -1994,8 +2402,66 @@ function MediaAttachment({
                           }}
                         >
                           <Icon icon="sparkles2" />
-                          <span>Generate description…</span>
+                          {lang && lang !== 'en' ? (
+                            <small>
+                              Generate description…
+                              <br />
+                              (English)
+                            </small>
+                          ) : (
+                            <span>Generate description…</span>
+                          )}
                         </MenuItem>
+                        {!!lang && lang !== 'en' && (
+                          <MenuItem
+                            disabled={uiState === 'loading'}
+                            onClick={() => {
+                              setUIState('loading');
+                              toastRef.current = showToast({
+                                text: 'Generating description. Please wait...',
+                                duration: -1,
+                              });
+                              // POST with multipart
+                              (async function () {
+                                try {
+                                  const body = new FormData();
+                                  body.append('image', file);
+                                  const params = `?lang=${lang}`;
+                                  const response = await fetch(
+                                    IMG_ALT_API_URL + params,
+                                    {
+                                      method: 'POST',
+                                      body,
+                                    },
+                                  ).then((r) => r.json());
+                                  if (response.error) {
+                                    throw new Error(response.error);
+                                  }
+                                  setDescription(response.description);
+                                } catch (e) {
+                                  console.error(e);
+                                  showToast(
+                                    `Failed to generate description${
+                                      e?.message ? `: ${e.message}` : ''
+                                    }`,
+                                  );
+                                } finally {
+                                  setUIState('default');
+                                  toastRef.current?.hideToast?.();
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="sparkles2" />
+                            <small>
+                              Generate description…
+                              <br />({localeCode2Text(lang)}){' '}
+                              <span class="more-insignificant">
+                                — experimental
+                              </span>
+                            </small>
+                          </MenuItem>
+                        )}
                       </Menu2>
                     )}
                   <button
@@ -2177,52 +2643,348 @@ function removeNullUndefined(obj) {
   return obj;
 }
 
-function CustomEmojisModal({
-  masto,
-  instance,
+function MentionModal({
   onClose = () => {},
   onSelect = () => {},
+  defaultSearchTerm,
 }) {
+  const { masto } = api();
   const [uiState, setUIState] = useState('default');
-  const customEmojisList = useRef([]);
-  const [customEmojis, setCustomEmojis] = useState({});
-  const recentlyUsedCustomEmojis = useMemo(
-    () => store.account.get('recentlyUsedCustomEmojis') || [],
-  );
-  useEffect(() => {
+  const [accounts, setAccounts] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const loadRelationships = async (accounts) => {
+    if (!accounts?.length) return;
+    const relationships = await fetchRelationships(accounts, relationshipsMap);
+    if (relationships) {
+      setRelationshipsMap({
+        ...relationshipsMap,
+        ...relationships,
+      });
+    }
+  };
+
+  const loadAccounts = (term) => {
+    if (!term) return;
     setUIState('loading');
     (async () => {
       try {
-        const emojis = await masto.v1.customEmojis.list();
-        // Group emojis by category
-        const emojisCat = {
-          '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-            emojis.find((e) => e.shortcode === emoji.shortcode),
-          ),
-        };
-        const othersCat = [];
-        emojis.forEach((emoji) => {
-          if (!emoji.visibleInPicker) return;
-          customEmojisList.current?.push?.(emoji);
-          if (!emoji.category) {
-            othersCat.push(emoji);
-            return;
-          }
-          if (!emojisCat[emoji.category]) {
-            emojisCat[emoji.category] = [];
-          }
-          emojisCat[emoji.category].push(emoji);
+        const accounts = await masto.v1.accounts.search.list({
+          q: term,
+          limit: 40,
+          resolve: false,
         });
-        if (othersCat.length) {
-          emojisCat['--others--'] = othersCat;
-        }
-        setCustomEmojis(emojisCat);
+        setAccounts(accounts);
+        loadRelationships(accounts);
         setUIState('default');
       } catch (e) {
         setUIState('error');
         console.error(e);
       }
     })();
+  };
+
+  const debouncedLoadAccounts = useDebouncedCallback(loadAccounts, 1000);
+
+  useEffect(() => {
+    loadAccounts();
+  }, [loadAccounts]);
+
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (defaultSearchTerm) {
+      loadAccounts(defaultSearchTerm);
+    }
+  }, [defaultSearchTerm]);
+
+  const selectAccount = (account) => {
+    const socialAddress = account.acct;
+    onSelect(socialAddress);
+    onClose();
+  };
+
+  useHotkeys(
+    'enter',
+    () => {
+      const selectedAccount = accounts[selectedIndex];
+      if (selectedAccount) {
+        selectAccount(selectedAccount);
+      }
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const listRef = useRef();
+  useHotkeys(
+    'down',
+    () => {
+      if (selectedIndex < accounts.length - 1) {
+        setSelectedIndex(selectedIndex + 1);
+      } else {
+        setSelectedIndex(0);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  useHotkeys(
+    'up',
+    () => {
+      if (selectedIndex > 0) {
+        setSelectedIndex(selectedIndex - 1);
+      } else {
+        setSelectedIndex(accounts.length - 1);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  return (
+    <div id="mention-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" />
+        </button>
+      )}
+      <header>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            debouncedLoadAccounts.flush?.();
+            // const searchTerm = inputRef.current.value;
+            // debouncedLoadAccounts(searchTerm);
+          }}
+        >
+          <input
+            ref={inputRef}
+            required
+            type="search"
+            class="block"
+            placeholder="Search accounts"
+            onInput={(e) => {
+              const { value } = e.target;
+              debouncedLoadAccounts(value);
+            }}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            defaultValue={defaultSearchTerm || ''}
+          />
+        </form>
+      </header>
+      <main>
+        {accounts?.length > 0 ? (
+          <ul
+            ref={listRef}
+            class={`accounts-list ${uiState === 'loading' ? 'loading' : ''}`}
+          >
+            {accounts.map((account, i) => {
+              const relationship = relationshipsMap[account.id];
+              return (
+                <li
+                  key={account.id}
+                  class={i === selectedIndex ? 'selected' : ''}
+                >
+                  <AccountBlock
+                    avatarSize="xxl"
+                    account={account}
+                    relationship={relationship}
+                    showStats
+                    showActivity
+                  />
+                  <button
+                    type="button"
+                    class="plain2"
+                    onClick={() => {
+                      selectAccount(account);
+                    }}
+                  >
+                    <Icon icon="plus" size="xl" />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : uiState === 'loading' ? (
+          <div class="ui-state">
+            <Loader abrupt />
+          </div>
+        ) : uiState === 'error' ? (
+          <div class="ui-state">
+            <p>Error loading accounts</p>
+          </div>
+        ) : null}
+      </main>
+    </div>
+  );
+}
+
+function CustomEmojisModal({
+  masto,
+  instance,
+  onClose = () => {},
+  onSelect = () => {},
+  defaultSearchTerm,
+}) {
+  const [uiState, setUIState] = useState('default');
+  const customEmojisList = useRef([]);
+  const [customEmojis, setCustomEmojis] = useState([]);
+  const recentlyUsedCustomEmojis = useMemo(
+    () => store.account.get('recentlyUsedCustomEmojis') || [],
+  );
+  const searcherRef = useRef();
+  useEffect(() => {
+    setUIState('loading');
+    (async () => {
+      try {
+        const [emojis, searcher] = await getCustomEmojis(instance, masto);
+        console.log('emojis', emojis);
+        searcherRef.current = searcher;
+        setCustomEmojis(emojis);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  const customEmojisCatList = useMemo(() => {
+    // Group emojis by category
+    const emojisCat = {
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+        customEmojis.find((e) => e.shortcode === emoji.shortcode),
+      ),
+    };
+    const othersCat = [];
+    customEmojis.forEach((emoji) => {
+      customEmojisList.current?.push?.(emoji);
+      if (!emoji.category) {
+        othersCat.push(emoji);
+        return;
+      }
+      if (!emojisCat[emoji.category]) {
+        emojisCat[emoji.category] = [];
+      }
+      emojisCat[emoji.category].push(emoji);
+    });
+    if (othersCat.length) {
+      emojisCat['--others--'] = othersCat;
+    }
+    return emojisCat;
+  }, [customEmojis]);
+
+  const scrollableRef = useRef();
+  const [matches, setMatches] = useState(null);
+  const onFind = useCallback(
+    (e) => {
+      const { value } = e.target;
+      if (value) {
+        const results = searcherRef.current?.search(value, {
+          limit: CUSTOM_EMOJIS_COUNT,
+        });
+        setMatches(results.map((r) => r.item));
+        scrollableRef.current?.scrollTo?.(0, 0);
+      } else {
+        setMatches(null);
+      }
+    },
+    [customEmojis],
+  );
+  useEffect(() => {
+    if (defaultSearchTerm && customEmojis?.length) {
+      onFind({ target: { value: defaultSearchTerm } });
+    }
+  }, [defaultSearchTerm, onFind, customEmojis]);
+
+  const onSelectEmoji = useCallback(
+    (emoji) => {
+      onSelect?.(emoji);
+      onClose?.();
+
+      queueMicrotask(() => {
+        let recentlyUsedCustomEmojis =
+          store.account.get('recentlyUsedCustomEmojis') || [];
+        const recentlyUsedEmojiIndex = recentlyUsedCustomEmojis.findIndex(
+          (e) => e.shortcode === emoji.shortcode,
+        );
+        if (recentlyUsedEmojiIndex !== -1) {
+          // Move emoji to index 0
+          recentlyUsedCustomEmojis.splice(recentlyUsedEmojiIndex, 1);
+          recentlyUsedCustomEmojis.unshift(emoji);
+        } else {
+          recentlyUsedCustomEmojis.unshift(emoji);
+          // Remove unavailable ones
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.filter((e) =>
+            customEmojisList.current?.find?.(
+              (emoji) => emoji.shortcode === e.shortcode,
+            ),
+          );
+          // Limit to 10
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.slice(0, 10);
+        }
+
+        // Store back
+        store.account.set('recentlyUsedCustomEmojis', recentlyUsedCustomEmojis);
+      });
+    },
+    [onSelect],
+  );
+
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
   }, []);
 
   return (
@@ -2233,106 +2995,168 @@ function CustomEmojisModal({
         </button>
       )}
       <header>
-        <b>Custom emojis</b>{' '}
-        {uiState === 'loading' ? (
-          <Loader />
-        ) : (
-          <small class="insignificant"> • {instance}</small>
-        )}
-      </header>
-      <main>
-        <div class="custom-emojis-list">
-          {uiState === 'error' && (
-            <div class="ui-state">
-              <p>Error loading custom emojis</p>
-            </div>
+        <div>
+          <b>Custom emojis</b>{' '}
+          {uiState === 'loading' ? (
+            <Loader />
+          ) : (
+            <small class="insignificant"> • {instance}</small>
           )}
-          {uiState === 'default' &&
-            Object.entries(customEmojis).map(
-              ([category, emojis]) =>
-                !!emojis?.length && (
-                  <>
-                    <div class="section-header">
-                      {{
-                        '--recent--': 'Recently used',
-                        '--others--': 'Others',
-                      }[category] || category}
-                    </div>
-                    <section>
-                      {emojis.map((emoji) => (
-                        <button
-                          key={emoji}
-                          type="button"
-                          class="plain4"
-                          onClick={() => {
-                            onClose();
-                            requestAnimationFrame(() => {
-                              onSelect(`:${emoji.shortcode}:`);
-                            });
-                            let recentlyUsedCustomEmojis =
-                              store.account.get('recentlyUsedCustomEmojis') ||
-                              [];
-                            const recentlyUsedEmojiIndex =
-                              recentlyUsedCustomEmojis.findIndex(
-                                (e) => e.shortcode === emoji.shortcode,
-                              );
-                            if (recentlyUsedEmojiIndex !== -1) {
-                              // Move emoji to index 0
-                              recentlyUsedCustomEmojis.splice(
-                                recentlyUsedEmojiIndex,
-                                1,
-                              );
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                            } else {
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                              // Remove unavailable ones
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.filter((e) =>
-                                  customEmojisList.current?.find?.(
-                                    (emoji) => emoji.shortcode === e.shortcode,
-                                  ),
-                                );
-                              // Limit to 10
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.slice(0, 10);
-                            }
-
-                            // Store back
-                            store.account.set(
-                              'recentlyUsedCustomEmojis',
-                              recentlyUsedCustomEmojis,
-                            );
-                          }}
-                          title={`:${emoji.shortcode}:`}
-                        >
-                          <picture>
-                            {!!emoji.staticUrl && (
-                              <source
-                                srcset={emoji.staticUrl}
-                                media="(prefers-reduced-motion: reduce)"
-                              />
-                            )}
-                            <img
-                              class="shortcode-emoji"
-                              src={emoji.url || emoji.staticUrl}
-                              alt={emoji.shortcode}
-                              width="16"
-                              height="16"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </picture>
-                        </button>
-                      ))}
-                    </section>
-                  </>
-                ),
-            )}
         </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const emoji = matches[0];
+            if (emoji) {
+              onSelectEmoji(`:${emoji.shortcode}:`);
+            }
+          }}
+        >
+          <input
+            ref={inputRef}
+            type="search"
+            placeholder="Search emoji"
+            onInput={onFind}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            defaultValue={defaultSearchTerm || ''}
+          />
+        </form>
+      </header>
+      <main ref={scrollableRef}>
+        {matches !== null ? (
+          <ul class="custom-emojis-matches custom-emojis-list">
+            {matches.map((emoji) => (
+              <li key={emoji.shortcode} class="custom-emojis-match">
+                <CustomEmojiButton
+                  emoji={emoji}
+                  onClick={() => {
+                    onSelectEmoji(`:${emoji.shortcode}:`);
+                  }}
+                  showCode
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="custom-emojis-list">
+            {uiState === 'error' && (
+              <div class="ui-state">
+                <p>Error loading custom emojis</p>
+              </div>
+            )}
+            {uiState === 'default' &&
+              Object.entries(customEmojisCatList).map(
+                ([category, emojis]) =>
+                  !!emojis?.length && (
+                    <>
+                      <div class="section-header">
+                        {{
+                          '--recent--': 'Recently used',
+                          '--others--': 'Others',
+                        }[category] || category}
+                      </div>
+                      <CustomEmojisList
+                        emojis={emojis}
+                        onSelect={onSelectEmoji}
+                      />
+                    </>
+                  ),
+              )}
+          </div>
+        )}
       </main>
     </div>
   );
 }
+
+const CustomEmojisList = memo(({ emojis, onSelect }) => {
+  const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
+  const showMore = emojis.length > max;
+  return (
+    <section>
+      {emojis.slice(0, max).map((emoji) => (
+        <CustomEmojiButton
+          key={emoji.shortcode}
+          emoji={emoji}
+          onClick={() => {
+            onSelect(`:${emoji.shortcode}:`);
+          }}
+        />
+      ))}
+      {showMore && (
+        <button
+          type="button"
+          class="plain small"
+          onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
+        >
+          {(emojis.length - max).toLocaleString()} more…
+        </button>
+      )}
+    </section>
+  );
+});
+
+const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
+  const addEdges = (e) => {
+    // Add edge-left or edge-right class based on self position relative to scrollable parent
+    // If near left edge, add edge-left, if near right edge, add edge-right
+    const buffer = 88;
+    const parent = e.currentTarget.closest('main');
+    if (parent) {
+      const rect = parent.getBoundingClientRect();
+      const selfRect = e.currentTarget.getBoundingClientRect();
+      const targetClassList = e.currentTarget.classList;
+      if (selfRect.left < rect.left + buffer) {
+        targetClassList.add('edge-left');
+        targetClassList.remove('edge-right');
+      } else if (selfRect.right > rect.right - buffer) {
+        targetClassList.add('edge-right');
+        targetClassList.remove('edge-left');
+      } else {
+        targetClassList.remove('edge-left', 'edge-right');
+      }
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className="plain4"
+      onClick={onClick}
+      data-title={showCode ? undefined : emoji.shortcode}
+      onPointerEnter={addEdges}
+      onFocus={addEdges}
+    >
+      <picture>
+        {!!emoji.staticUrl && (
+          <source
+            srcSet={emoji.staticUrl}
+            media="(prefers-reduced-motion: reduce)"
+          />
+        )}
+        <img
+          className="shortcode-emoji"
+          src={emoji.url || emoji.staticUrl}
+          alt={emoji.shortcode}
+          width="24"
+          height="24"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      {showCode && (
+        <>
+          {' '}
+          <code>{emoji.shortcode}</code>
+        </>
+      )}
+    </button>
+  );
+});
 
 const GIFS_PER_PAGE = 20;
 function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {

@@ -9,6 +9,20 @@ export const throttle = pThrottle({
   interval: 1000,
 });
 
+const STATUS_ID_REGEXES = [
+  /\/@[^@\/]+@?[^\/]+?\/(\d+)$/i, // Mastodon
+  /\/notice\/(\w+)$/i, // Pleroma
+];
+function getStatusID(path) {
+  for (let i = 0; i < STATUS_ID_REGEXES.length; i++) {
+    const statusMatchID = path.match(STATUS_ID_REGEXES[i])?.[1];
+    if (statusMatchID) {
+      return statusMatchID;
+    }
+  }
+  return null;
+}
+
 const denylistDomains = /(twitter|github)\.com/i;
 const failedUnfurls = {};
 function _unfurlMastodonLink(instance, url) {
@@ -53,11 +67,11 @@ function _unfurlMastodonLink(instance, url) {
   }
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
-  // Regex /:username/:id, where username = @username or @username@domain, id = number
-  const statusRegex = /\/@([^@\/]+)@?([^\/]+)?\/(\d+)$/i;
-  const statusMatch = statusRegex.exec(path);
-  if (statusMatch) {
-    const id = statusMatch[3];
+  // Regex /:username/:id, where username = @username or @username@domain, id = post ID
+  let statusMatchID = getStatusID(path);
+
+  if (statusMatchID) {
+    const id = statusMatchID;
     const { masto } = api({ instance: domain });
     remoteInstanceFetch = masto.v1.statuses
       .$select(id)

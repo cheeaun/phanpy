@@ -23,6 +23,7 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -46,11 +47,13 @@ import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
@@ -157,6 +160,18 @@ const SIZE_CLASS = {
   l: 'large',
 };
 
+const detectLang = mem((text) => {
+  const langs = detectAll(text);
+  const lang = langs[0];
+  if (lang?.lang && lang?.accuracy > 0.5) {
+    // If > 50% accurate, use it
+    // It can be accurate if < 50% but better be safe
+    // Though > 50% also can be inaccurate 🤷‍♂️
+    return lang.lang;
+  }
+  return null;
+});
+
 function Status({
   statusID,
   status,
@@ -241,7 +256,7 @@ function Status({
     sensitive,
     spoilerText,
     visibility, // public, unlisted, private, direct
-    language,
+    language: _language,
     editedAt,
     filtered,
     card,
@@ -263,6 +278,9 @@ function Status({
     // Non-Mastodon
     emojiReactions,
   } = status;
+
+  let languageAutoDetected = content && detectLang(getHTMLText(content));
+  const language = _language || languageAutoDetected;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -303,6 +321,7 @@ function Status({
           onMouseEnter: debugHover,
         }}
         showFollowedTags
+        quoted={quoted}
       />
     );
   }
@@ -523,9 +542,9 @@ function Status({
       });
       if (newWin) return;
     }
-    states.showCompose = {
+    showCompose({
       replyToStatus: status,
-    };
+    });
   };
 
   // Check if media has no descriptions
@@ -770,11 +789,11 @@ function Status({
               menuExtras={
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `\n${url}`,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="quote" />
@@ -1091,9 +1110,9 @@ function Status({
           {supports('@mastodon/post-edit') && (
             <MenuItem
               onClick={() => {
-                states.showCompose = {
+                showCompose({
                   editStatus: status,
-                };
+                });
               }}
             >
               <Icon icon="pencil" />
@@ -1896,6 +1915,7 @@ function Status({
                     forceTranslate={forceTranslate || inlineTranslate}
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
+                    autoDetected={languageAutoDetected}
                     text={getPostText(status)}
                   />
                 )}
@@ -2124,11 +2144,11 @@ function Status({
                   menuExtras={
                     <MenuItem
                       onClick={() => {
-                        states.showCompose = {
+                        showCompose({
                           draftStatus: {
                             status: `\n${url}`,
                           },
-                        };
+                        });
                       }}
                     >
                       <Icon icon="quote" />
@@ -3176,6 +3196,7 @@ function FilteredStatus({
   instance,
   containerProps = {},
   showFollowedTags,
+  quoted,
 }) {
   const snapStates = useSnapshot(states);
   const {
@@ -3220,7 +3241,9 @@ function FilteredStatus({
   return (
     <div
       class={
-        isReblog
+        quoted
+          ? ''
+          : isReblog
           ? group
             ? 'status-group'
             : 'status-reblog'
@@ -3236,7 +3259,11 @@ function FilteredStatus({
       }}
       {...bindLongPressPeek()}
     >
-      <article data-state-post-id={ssKey} class="status filtered" tabindex="-1">
+      <article
+        data-state-post-id={ssKey}
+        class={`status filtered ${quoted ? 'status-card' : ''}`}
+        tabindex="-1"
+      >
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}

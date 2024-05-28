@@ -6,6 +6,7 @@ import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states from '../utils/states';
 import { getStatus, saveStatus } from '../utils/states';
+import supports from '../utils/supports';
 import {
   assignFollowedTags,
   clearFollowedTagsState,
@@ -23,10 +24,18 @@ function Following({ title, path, id, ...props }) {
   const latestItem = useRef();
 
   console.debug('RENDER Following', title, id);
+  const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
       homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
+    }
+    if (supportsPixelfed && homeIterator.current?.nextParams) {
+      if (typeof homeIterator.current.nextParams === 'string') {
+        homeIterator.current.nextParams += '&include_reblogs=true';
+      } else {
+        homeIterator.current.nextParams.include_reblogs = true;
+      }
     }
     const results = await homeIterator.current.next();
     let { value } = results;
@@ -63,12 +72,14 @@ function Following({ title, path, id, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines.home
-        .list({
-          limit: 5,
-          since_id: latestItem.current,
-        })
-        .next();
+      const opts = {
+        limit: 5,
+        since_id: latestItem.current,
+      };
+      if (supports('@pixelfed/home-include-reblogs')) {
+        opts.include_reblogs = true;
+      }
+      const results = await masto.v1.timelines.home.list(opts).next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported

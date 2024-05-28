@@ -166,7 +166,7 @@ function Media({
     [to],
   );
 
-  const remoteMediaURLObj = remoteMediaURL ? new URL(remoteMediaURL) : null;
+  const remoteMediaURLObj = remoteMediaURL ? getURLObj(remoteMediaURL) : null;
   const isVideoMaybe =
     type === 'unknown' &&
     remoteMediaURLObj &&
@@ -615,6 +615,15 @@ function Media({
         </Parent>
       </Figure>
     );
+  }
+}
+
+function getURLObj(url) {
+  try {
+    // Fake base URL if url doesn't have https:// prefix
+    return new URL(url, location.origin);
+  } catch (e) {
+    return null;
   }
 }
 

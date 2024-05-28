@@ -108,4 +108,5 @@ export const ICONS = {
   settings: () => import('@iconify-icons/mingcute/settings-6-line'),
   'heart-break': () => import('@iconify-icons/mingcute/heart-crack-line'),
   'user-x': () => import('@iconify-icons/mingcute/user-x-line'),
+  minimize: () => import('@iconify-icons/mingcute/arrows-down-line'),
 };

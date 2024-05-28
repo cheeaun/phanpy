@@ -298,14 +298,20 @@
   height: 2.2em;
 }
 #compose-container .text-expander-menu li:is(:hover, :focus, [aria-selected]) {
-  color: var(--bg-color);
-  background-color: var(--link-color);
-}
-#compose-container
-  .text-expander-menu:hover
-  li[aria-selected]:not(:hover, :focus) {
+  background-color: var(--link-bg-color);
   color: var(--text-color);
-  background-color: var(--bg-color);
+}
+#compose-container .text-expander-menu li[aria-selected] {
+  box-shadow: inset 4px 0 0 0 var(--button-bg-color);
+}
+#compose-container .text-expander-menu li[data-more] {
+  &:not(:hover, :focus, [aria-selected]) {
+    color: var(--text-insignificant-color);
+    background-color: var(--bg-faded-color);
+  }
+
+  font-size: 0.8em;
+  justify-content: center;
 }
 
 #compose-container .form-visibility-direct {
@@ -334,6 +340,21 @@
   display: flex;
   gap: 8px;
   align-items: stretch;
+
+  .media-error {
+    padding: 2px;
+    color: var(--orange-fg-color);
+    background-color: transparent;
+    border: 1.5px dashed transparent;
+    line-height: 1;
+    border-radius: 4px;
+    display: flex;
+
+    &:is(:hover, :focus) {
+      background-color: var(--bg-color);
+      border-color: var(--orange-fg-color);
+    }
+  }
 }
 #compose-container .media-preview {
   flex-shrink: 0;
@@ -594,44 +615,194 @@
   } */
 }
 
+#mention-sheet {
+  height: 50vh;
+
+  .accounts-list {
+    --list-gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--list-gap);
+
+    &.loading {
+      opacity: 0.5;
+    }
+
+    li {
+      display: flex;
+      flex-grow: 1;
+      /* align-items: center; */
+      margin: 0 -8px;
+      padding: 8px;
+      gap: 8px;
+      position: relative;
+      justify-content: space-between;
+      border-radius: 8px;
+      /* align-items: center; */
+
+      &:hover {
+        background-image: linear-gradient(
+          to right,
+          transparent 75%,
+          var(--link-bg-color)
+        );
+      }
+
+      &.selected {
+        background-image: linear-gradient(
+          to right,
+          var(--bg-faded-color) 75%,
+          var(--link-bg-color)
+        );
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        border-top: var(--hairline-width) solid var(--divider-color);
+        position: absolute;
+        bottom: 0;
+        left: 58px;
+        right: 0;
+      }
+
+      &:has(+ li:is(.selected, :hover)):before,
+      &:is(.selected, :hover):before {
+        opacity: 0;
+      }
+
+      > button {
+        border-radius: 4px;
+        &:hover {
+          outline: 2px solid var(--button-bg-blur-color);
+        }
+      }
+    }
+  }
+}
+
 #custom-emojis-sheet {
   max-height: 50vh;
   max-height: 50dvh;
-}
-#custom-emojis-sheet main {
-  mask-image: none;
-}
-#custom-emojis-sheet .custom-emojis-list .section-header {
-  font-size: 80%;
-  text-transform: uppercase;
-  color: var(--text-insignificant-color);
-  padding: 8px 0 4px;
-  position: sticky;
-  top: 0;
-  background-color: var(--bg-blur-color);
-  backdrop-filter: blur(1px);
-}
-#custom-emojis-sheet .custom-emojis-list section {
-  display: flex;
-  flex-wrap: wrap;
-}
-#custom-emojis-sheet .custom-emojis-list button {
-  border-radius: 8px;
-  background-image: radial-gradient(
-    closest-side,
-    var(--img-bg-color),
-    transparent
-  );
-}
-#custom-emojis-sheet .custom-emojis-list button:is(:hover, :focus) {
-  filter: none;
-  background-color: var(--bg-faded-color);
-}
-#custom-emojis-sheet .custom-emojis-list button img {
-  transition: transform 0.1s ease-out;
-}
-#custom-emojis-sheet .custom-emojis-list button:is(:hover, :focus) img {
-  transform: scale(1.5);
+
+  header {
+    .loader-container {
+      margin: 0;
+    }
+
+    form {
+      margin: 8px 0 0;
+
+      input {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  }
+
+  main {
+    mask-image: none;
+    min-height: 40vh;
+    padding-bottom: 88px;
+  }
+
+  .custom-emojis-matches {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .custom-emojis-list {
+    .section-header {
+      font-size: 80%;
+      text-transform: uppercase;
+      color: var(--text-insignificant-color);
+      padding: 8px 0 4px;
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+      z-index: 1;
+    }
+    section {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    button {
+      color: var(--text-color);
+      border-radius: 8px;
+      background-image: radial-gradient(
+        closest-side,
+        var(--img-bg-color),
+        transparent
+      );
+      text-shadow: 0 1px 0 var(--bg-color);
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+      font-variant-numeric: slashed-zero;
+      font-feature-settings: 'ss01';
+
+      &[data-title]:after {
+        max-width: 50vw;
+        pointer-events: none;
+        position: absolute;
+        content: attr(data-title);
+        left: 50%;
+        top: 0;
+        background-color: var(--bg-color);
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 12px;
+        border: 1px solid var(--text-color);
+        transform: translate(-50%, -110%);
+        opacity: 0;
+        transition: opacity 0.1s ease-out 0.1s;
+        font-family: var(--monospace-font);
+        line-height: 1;
+      }
+      &.edge-left[data-title]:after {
+        left: 0;
+        transform: translate(0, -110%);
+      }
+      &.edge-right[data-title]:after {
+        left: 100%;
+        transform: translate(-100%, -110%);
+      }
+
+      &:is(:hover, :focus) {
+        z-index: 1;
+        filter: none;
+        background-color: var(--bg-faded-color);
+
+        &[data-title]:after {
+          opacity: 1;
+        }
+      }
+
+      img {
+        transition: transform 0.1s ease-out;
+      }
+
+      &:is(:hover, :focus) img {
+        transform: scale(2);
+      }
+      &.edge-left img {
+        transform-origin: left center;
+      }
+      &.edge-right img {
+        transform-origin: right center;
+      }
+
+      code {
+        font-size: 0.8em;
+      }
+    }
+  }
 }
 
 .compose-field-container {

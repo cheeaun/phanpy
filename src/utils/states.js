@@ -40,6 +40,7 @@ const states = proxy({
   statusReply: {},
   accounts: {},
   routeNotification: null,
+  composerState: {},
   // Modals
   showCompose: false,
   showSettings: false,

@@ -11,6 +11,7 @@ import useLocationChange from '../utils/useLocationChange';
 
 import AccountBlock from './account-block';
 import Icon from './icon';
+import Link from './link';
 import Loader from './loader';
 import Status from './status';
 
@@ -19,6 +20,7 @@ export default function GenericAccounts({
   excludeRelationshipAttrs = [],
   postID,
   onClose = () => {},
+  blankCopy = 'Nothing to show',
 }) {
   const { masto, instance: currentInstance } = api();
   const isCurrentInstance = instance ? instance === currentInstance : true;
@@ -143,9 +145,12 @@ export default function GenericAccounts({
       </header>
       <main>
         {post && (
-          <div class="post-preview">
+          <Link
+            to={`/${instance || currentInstance}/s/${post.id}`}
+            class="post-preview"
+          >
             <Status status={post} size="s" readOnly />
-          </div>
+          </Link>
         )}
         {accounts.length > 0 ? (
           <>
@@ -217,7 +222,7 @@ export default function GenericAccounts({
         ) : uiState === 'error' ? (
           <p class="ui-state">Error loading accounts</p>
         ) : (
-          <p class="ui-state insignificant">Nothing to show</p>
+          <p class="ui-state insignificant">{blankCopy}</p>
         )}
       </main>
     </div>

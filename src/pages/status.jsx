@@ -153,6 +153,18 @@ function StatusPage(params) {
     return () => clearTimeout(timer);
   }, [showMediaOnly]);
 
+  useEffect(() => {
+    const $deckContainers = document.querySelectorAll('.deck-container');
+    $deckContainers.forEach(($deckContainer) => {
+      $deckContainer.setAttribute('inert', '');
+    });
+    return () => {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    };
+  }, []);
+
   return (
     <div class="deck-backdrop">
       {showMedia ? (
@@ -971,6 +983,18 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     () => statuses.slice(0, limit).map(renderStatus),
     [statuses, limit, renderStatus],
   );
+
+  // If there's spoiler in hero status, auto-expand it
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (!heroStatusRef.current) return;
+      const spoilerButton = heroStatusRef.current.querySelector(
+        '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
+      );
+      if (spoilerButton) spoilerButton.click();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [id]);
 
   return (
     <div

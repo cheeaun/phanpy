@@ -41,6 +41,7 @@ import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
+import supports from '../utils/supports';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
@@ -116,6 +117,8 @@ function Catchup() {
   }, []);
   const isSelf = (accountID) => accountID === currentAccount;
 
+  const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
+
   async function fetchHome({ maxCreatedAt }) {
     const maxCreatedAtDate = maxCreatedAt ? new Date(maxCreatedAt) : null;
     console.debug('fetchHome', maxCreatedAtDate);
@@ -123,6 +126,13 @@ function Catchup() {
     const homeIterator = masto.v1.timelines.home.list({ limit: 40 });
     mainloop: while (true) {
       try {
+        if (supportsPixelfed && homeIterator.nextParams) {
+          if (typeof homeIterator.nextParams === 'string') {
+            homeIterator.nextParams += '&include_reblogs=true';
+          } else {
+            homeIterator.nextParams.include_reblogs = true;
+          }
+        }
         const results = await homeIterator.next();
         const { value } = results;
         if (value?.length) {

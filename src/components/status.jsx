@@ -161,6 +161,11 @@ const SIZE_CLASS = {
 };
 
 const detectLang = mem((text) => {
+  // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
+  // 500 should be enough for now, also the default max chars for Mastodon
+  if (text?.length > 500) {
+    return null;
+  }
   const langs = detectAll(text);
   const lang = langs[0];
   if (lang?.lang && lang?.accuracy > 0.5) {

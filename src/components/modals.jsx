@@ -34,7 +34,7 @@ export default function Modals() {
   const location = useLocation();
 
   useEffect(() => {
-    setTimeout(preload, 1);
+    setTimeout(preload, 1000);
   }, []);
 
   return (

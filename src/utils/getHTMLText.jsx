@@ -1,14 +1,18 @@
 import mem from './mem';
 
 const div = document.createElement('div');
-function getHTMLText(html) {
+function getHTMLText(html, opts) {
   if (!html) return '';
+  const { preProcess } = opts || {};
+
   div.innerHTML = html
     .replace(/<\/p>/g, '</p>\n\n')
     .replace(/<\/li>/g, '</li>\n');
   div.querySelectorAll('br').forEach((br) => {
     br.replaceWith('\n');
   });
+
+  preProcess?.(div);
 
   // MASTODON-SPECIFIC classes
   // Remove .invisible

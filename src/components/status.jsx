@@ -161,6 +161,8 @@ const SIZE_CLASS = {
 };
 
 const detectLang = mem((text) => {
+  text = text?.trim();
+
   // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
   // 500 should be enough for now, also the default max chars for Mastodon
   if (text?.length > 500) {
@@ -284,7 +286,40 @@ function Status({
     emojiReactions,
   } = status;
 
-  let languageAutoDetected = content && detectLang(getHTMLText(content));
+  const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
+  useEffect(() => {
+    if (!content) return;
+    if (_language) return;
+    let timer;
+    timer = setTimeout(() => {
+      let detected = detectLang(
+        getHTMLText(content, {
+          preProcess: (dom) => {
+            // Remove anything that can skew the language detection
+
+            // Remove .mention, .hashtag, pre, code, a:has(.invisible)
+            dom
+              .querySelectorAll(
+                '.mention, .hashtag, pre, code, a:has(.invisible)',
+              )
+              .forEach((a) => {
+                a.remove();
+              });
+
+            // Remove links that contains text that starts with https?://
+            dom.querySelectorAll('a').forEach((a) => {
+              const text = a.innerText.trim();
+              if (text.startsWith('https://') || text.startsWith('http://')) {
+                a.remove();
+              }
+            });
+          },
+        }),
+      );
+      setLanguageAutoDetected(detected);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [content, _language]);
   const language = _language || languageAutoDetected;
 
   // if (!mediaAttachments?.length) mediaFirst = false;

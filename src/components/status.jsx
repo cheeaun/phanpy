@@ -3183,7 +3183,7 @@ function StatusCompact({ sKey }) {
   const {
     sensitive,
     spoilerText,
-    account: { avatar, avatarStatic, bot },
+    account: { avatar, avatarStatic, bot } = {},
     visibility,
     content,
     language,

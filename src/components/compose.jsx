@@ -1342,7 +1342,11 @@ function Compose({
                 <button
                   type="button"
                   class="toolbar-button gif-picker-button"
-                  disabled={uiState === 'loading'}
+                  disabled={
+                    uiState === 'loading' ||
+                    mediaAttachments.length >= maxMediaAttachments ||
+                    !!poll
+                  }
                   onClick={() => {
                     setShowGIFPicker(true);
                   }}

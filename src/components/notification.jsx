@@ -132,7 +132,7 @@ const MODERATION_WARNING_TEXT = {
   suspend: 'Your account has been suspended.',
 };
 
-const AVATARS_LIMIT = 50;
+const AVATARS_LIMIT = 30;
 
 function Notification({
   notification,
@@ -374,11 +374,7 @@ function Notification({
                         ? 'xxl'
                         : _accounts.length < 20
                         ? 'xl'
-                        : _accounts.length < 30
-                        ? 'l'
-                        : _accounts.length < 40
-                        ? 'm'
-                        : 's' // My god, this person is popular!
+                        : 'l'
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}

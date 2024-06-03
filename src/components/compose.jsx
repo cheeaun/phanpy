@@ -1293,7 +1293,7 @@ function Compose({
                   }}
                 />
                 <Icon icon="attachment" />
-              </label>{' '}
+              </label>
               {/* If maxOptions is not defined or defined and is greater than 1, show poll button */}
               {maxOptions == null ||
                 (maxOptions > 1 && (
@@ -1315,7 +1315,7 @@ function Compose({
                       }}
                     >
                       <Icon icon="poll" alt="Add poll" />
-                    </button>{' '}
+                    </button>
                   </>
                 ))}
               {/* <button

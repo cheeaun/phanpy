@@ -126,13 +126,13 @@ setInterval(() => {
 // Related: https://github.com/vitejs/vite/issues/10600
 setTimeout(() => {
   for (const icon in ICONS) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       if (Array.isArray(ICONS[icon])) {
         ICONS[icon][0]?.();
       } else {
         ICONS[icon]?.();
       }
-    });
+    }, 1);
   }
 }, 5000);
 

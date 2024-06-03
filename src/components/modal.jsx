@@ -8,7 +8,7 @@ import useCloseWatcher from '../utils/useCloseWatcher';
 
 const $modalContainer = document.getElementById('modal-container');
 
-function Modal({ children, onClose, onClick, class: className }) {
+function Modal({ children, onClose, onClick, class: className, minimized }) {
   if (!children) return null;
 
   const modalRef = useRef();
@@ -41,6 +41,33 @@ function Modal({ children, onClose, onClick, class: className }) {
   );
   useCloseWatcher(onClose, [onClose]);
 
+  useEffect(() => {
+    const $deckContainers = document.querySelectorAll('.deck-container');
+    if (minimized) {
+      // Similar to focusDeck in focus-deck.jsx
+      // Focus last deck
+      const page = $deckContainers[$deckContainers.length - 1]; // last one
+      if (page && page.tabIndex === -1) {
+        page.focus();
+      }
+    } else {
+      if (children) {
+        $deckContainers.forEach(($deckContainer) => {
+          $deckContainer.setAttribute('inert', '');
+        });
+      } else {
+        $deckContainers.forEach(($deckContainer) => {
+          $deckContainer.removeAttribute('inert');
+        });
+      }
+    }
+    return () => {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    };
+  }, [children, minimized]);
+
   const Modal = (
     <div
       ref={(node) => {
@@ -54,7 +81,8 @@ function Modal({ children, onClose, onClick, class: className }) {
           onClose?.(e);
         }
       }}
-      tabIndex="-1"
+      tabIndex={minimized ? 0 : '-1'}
+      inert={minimized}
       onFocus={(e) => {
         try {
           if (e.target === e.currentTarget) {

@@ -33,7 +33,7 @@ import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
-const LIMIT = 30; // 30 is the maximum limit :(
+const LIMIT = 80;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
@@ -292,8 +292,13 @@ function Notifications({ columnMode }) {
       }
     }
   });
+  const firstLoad = useRef(true);
   useEffect(() => {
     let unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+      if (firstLoad.current) {
+        firstLoad.current = false;
+        return;
+      }
       if (uiState === 'loading') return;
       if (v) loadUpdates();
       setShowNew(v);

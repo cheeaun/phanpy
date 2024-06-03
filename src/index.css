@@ -547,3 +547,9 @@ kbd {
 .shazam-container-horizontal[hidden] {
   grid-template-columns: 0fr;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

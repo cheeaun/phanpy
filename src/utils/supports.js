@@ -18,6 +18,7 @@ const platformFeatures = {
   '@mastodon/profile-edit': notContainPixelfed,
   '@mastodon/profile-private-note': notContainPixelfed,
   '@pixelfed/trending': containPixelfed,
+  '@pixelfed/home-include-reblogs': containPixelfed,
 };
 const supportsCache = {};
 

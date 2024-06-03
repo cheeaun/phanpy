@@ -166,7 +166,7 @@ function Media({
     [to],
   );
 
-  const remoteMediaURLObj = remoteMediaURL ? new URL(remoteMediaURL) : null;
+  const remoteMediaURLObj = remoteMediaURL ? getURLObj(remoteMediaURL) : null;
   const isVideoMaybe =
     type === 'unknown' &&
     remoteMediaURLObj &&
@@ -379,26 +379,26 @@ function Media({
     const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
     const showProgress = original.duration > 5;
 
-    const videoHTML = `
-    <video
-      src="${url}"
-      poster="${previewUrl}"
-      width="${width}"
-      height="${height}"
-      data-orientation="${orientation}"
-      preload="auto"
-      autoplay
-      ${isGIF ? 'muted' : ''}
-      ${isGIF ? '' : 'controls'}
-      playsinline
-      loop="${loopable}"
-      ${isGIF ? 'ondblclick="this.paused ? this.play() : this.pause()"' : ''}
-      ${
-        isGIF && showProgress
-          ? "ontimeupdate=\"this.closest('.media-gif') && this.closest('.media-gif').style.setProperty('--progress', `${~~((this.currentTime / this.duration) * 100)}%`)\""
-          : ''
-      }
-    ></video>
+    // This string is only for autoplay + muted to work on Mobile Safari
+    const gifHTML = `
+      <video
+        src="${url}"
+        poster="${previewUrl}"
+        width="${width}"
+        height="${height}"
+        data-orientation="${orientation}"
+        preload="auto"
+        autoplay
+        muted
+        playsinline
+        loop="${loopable}"
+        ondblclick="this.paused ? this.play() : this.pause()"
+        ${
+          showProgress
+            ? "ontimeupdate=\"this.closest('.media-gif') && this.closest('.media-gif').style.setProperty('--progress', `${~~((this.currentTime / this.duration) * 100)}%`)\""
+            : ''
+        }
+      ></video>
   `;
 
     return (
@@ -461,17 +461,33 @@ function Media({
                 <div
                   ref={mediaRef}
                   dangerouslySetInnerHTML={{
-                    __html: videoHTML,
+                    __html: gifHTML,
                   }}
                 />
               </QuickPinchZoom>
-            ) : (
+            ) : isGIF ? (
               <div
                 class="video-container"
                 dangerouslySetInnerHTML={{
-                  __html: videoHTML,
+                  __html: gifHTML,
                 }}
               />
+            ) : (
+              <div class="video-container">
+                <video
+                  slot="media"
+                  src={url}
+                  poster={previewUrl}
+                  width={width}
+                  height={height}
+                  data-orientation={orientation}
+                  preload="auto"
+                  autoplay
+                  playsinline
+                  loop={loopable}
+                  controls
+                ></video>
+              </div>
             )
           ) : isGIF ? (
             <video
@@ -615,6 +631,15 @@ function Media({
         </Parent>
       </Figure>
     );
+  }
+}
+
+function getURLObj(url) {
+  try {
+    // Fake base URL if url doesn't have https:// prefix
+    return new URL(url, location.origin);
+  } catch (e) {
+    return null;
   }
 }
 

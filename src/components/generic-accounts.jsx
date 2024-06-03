@@ -20,6 +20,7 @@ export default function GenericAccounts({
   excludeRelationshipAttrs = [],
   postID,
   onClose = () => {},
+  blankCopy = 'Nothing to show',
 }) {
   const { masto, instance: currentInstance } = api();
   const isCurrentInstance = instance ? instance === currentInstance : true;
@@ -221,7 +222,7 @@ export default function GenericAccounts({
         ) : uiState === 'error' ? (
           <p class="ui-state">Error loading accounts</p>
         ) : (
-          <p class="ui-state insignificant">Nothing to show</p>
+          <p class="ui-state insignificant">{blankCopy}</p>
         )}
       </main>
     </div>

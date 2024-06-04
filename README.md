@@ -210,6 +210,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)
 - [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@mookiesplace.com](https://mookiesplace.com/@mookie)
 - [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
+- [phanpy.cz](https://phanpy.cz) by [@zdendys@mamutovo.cz](https://mamutovo.cz/@zdendys)
 
 > Note: Add yours by creating a pull request.
 

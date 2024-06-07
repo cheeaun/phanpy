@@ -11,6 +11,7 @@ import {
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import { shallowEqual } from 'fast-equals';
 import prettify from 'html-prettify';
+import pThrottle from 'p-throttle';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -77,10 +78,14 @@ import TranslationBlock from './translation-block';
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 
+const throttle = pThrottle({
+  limit: 1,
+  interval: 1000,
+});
 function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = pmem(fetchAccount);
+const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: 'Public',

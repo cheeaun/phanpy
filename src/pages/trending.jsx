@@ -3,7 +3,7 @@ import '../components/links-bar.css';
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useMemo, useRef, useState } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 

@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';

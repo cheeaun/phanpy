@@ -1071,7 +1071,7 @@
   width: min(var(--aspectWidth), var(--width), 100%);
   max-height: min(var(--height), 33vh);
 
-  &.has-natural-aspect-ratio {
+  &[data-has-natural-aspect-ratio] {
     --media-radius: 4px;
   }
 }

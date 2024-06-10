@@ -374,7 +374,7 @@ function Media({
                         Math.abs(naturalAspectRatio - displayAspectRatio) <
                           similarThreshold
                       ) {
-                        $media.classList.add('has-natural-aspect-ratio');
+                        $media.dataset.hasNaturalAspectRatio = true;
                       }
                       // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                     }

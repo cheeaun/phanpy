@@ -118,9 +118,10 @@ export default defineConfig({
         compose: resolve(__dirname, 'compose/index.html'),
       },
       output: {
-        // manualChunks: {
-        //   'intl-segmenter-polyfill': ['@formatjs/intl-segmenter/polyfill'],
-        // },
+        manualChunks: {
+          // 'intl-segmenter-polyfill': ['@formatjs/intl-segmenter/polyfill'],
+          'tinyld-light': ['tinyld/light'],
+        },
         chunkFileNames: (chunkInfo) => {
           const { facadeModuleId } = chunkInfo;
           if (facadeModuleId && facadeModuleId.includes('icon')) {

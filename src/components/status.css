@@ -1070,6 +1070,10 @@
   --aspectWidth: calc(--width / --height * var(--maxAspectHeight)); */
   width: min(var(--aspectWidth), var(--width), 100%);
   max-height: min(var(--height), 33vh);
+
+  &.has-natural-aspect-ratio {
+    --media-radius: 4px;
+  }
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {
   /* width: auto;

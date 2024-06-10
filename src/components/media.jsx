@@ -338,18 +338,45 @@ function Media({
                 onLoad={(e) => {
                   // e.target.closest('.media-image').style.backgroundImage = '';
                   e.target.dataset.loaded = true;
-                  if (!hasDimensions) {
-                    const $media = e.target.closest('.media');
-                    if ($media) {
-                      const { naturalWidth, naturalHeight } = e.target;
-                      $media.dataset.orientation =
-                        naturalWidth > naturalHeight ? 'landscape' : 'portrait';
-                      $media.style.setProperty('--width', `${naturalWidth}px`);
-                      $media.style.setProperty(
-                        '--height',
-                        `${naturalHeight}px`,
-                      );
-                      $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
+                  const $media = e.target.closest('.media');
+                  if (!hasDimensions && $media) {
+                    const { naturalWidth, naturalHeight } = e.target;
+                    $media.dataset.orientation =
+                      naturalWidth > naturalHeight ? 'landscape' : 'portrait';
+                    $media.style.setProperty('--width', `${naturalWidth}px`);
+                    $media.style.setProperty('--height', `${naturalHeight}px`);
+                    $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
+                  }
+
+                  // Check natural aspect ratio vs display aspect ratio
+                  if ($media) {
+                    const {
+                      clientWidth,
+                      clientHeight,
+                      naturalWidth,
+                      naturalHeight,
+                    } = e.target;
+                    if (
+                      clientWidth &&
+                      clientHeight &&
+                      naturalWidth &&
+                      naturalHeight
+                    ) {
+                      const naturalAspectRatio = (
+                        naturalWidth / naturalHeight
+                      ).toFixed(2);
+                      const displayAspectRatio = (
+                        clientWidth / clientHeight
+                      ).toFixed(2);
+                      const similarThreshold = 0.05;
+                      if (
+                        naturalAspectRatio === displayAspectRatio ||
+                        Math.abs(naturalAspectRatio - displayAspectRatio) <
+                          similarThreshold
+                      ) {
+                        $media.classList.add('has-natural-aspect-ratio');
+                      }
+                      // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                     }
                   }
                 }}

@@ -147,24 +147,28 @@ export async function initSubscription() {
   if (subscription && !backendSubscription) {
     // check if account's vapidKey is same as subscription's applicationServerKey
     const { vapidKey } = getCurrentAccount();
-    const { applicationServerKey } = subscription.options;
-    const vapidKeyStr = urlBase64ToUint8Array(vapidKey).toString();
-    const applicationServerKeyStr = new Uint8Array(
-      applicationServerKey,
-    ).toString();
-    const sameKey = vapidKeyStr === applicationServerKeyStr;
-    if (sameKey) {
-      // Subscription didn't change
+    if (vapidKey) {
+      const { applicationServerKey } = subscription.options;
+      const vapidKeyStr = urlBase64ToUint8Array(vapidKey).toString();
+      const applicationServerKeyStr = new Uint8Array(
+        applicationServerKey,
+      ).toString();
+      const sameKey = vapidKeyStr === applicationServerKeyStr;
+      if (sameKey) {
+        // Subscription didn't change
+      } else {
+        // Subscription changed
+        console.error('🔔 Subscription changed', {
+          vapidKeyStr,
+          applicationServerKeyStr,
+          sameKey,
+        });
+        // Unsubscribe since backend doesn't have a subscription
+        await subscription.unsubscribe();
+        throw new Error('Subscription key and vapid key changed');
+      }
     } else {
-      // Subscription changed
-      console.error('🔔 Subscription changed', {
-        vapidKeyStr,
-        applicationServerKeyStr,
-        sameKey,
-      });
-      // Unsubscribe since backend doesn't have a subscription
-      await subscription.unsubscribe();
-      throw new Error('Subscription key and vapid key changed');
+      console.warn('No vapidKey found');
     }
   }
 

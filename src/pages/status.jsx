@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { matchPath, useSearchParams } from 'react-router-dom';

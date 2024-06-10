@@ -11,6 +11,7 @@ import {
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import { shallowEqual } from 'fast-equals';
 import prettify from 'html-prettify';
+import pThrottle from 'p-throttle';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -21,7 +22,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
@@ -77,10 +78,14 @@ import TranslationBlock from './translation-block';
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 
+const throttle = pThrottle({
+  limit: 1,
+  interval: 1000,
+});
 function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = pmem(fetchAccount);
+const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: 'Public',
@@ -161,6 +166,13 @@ const SIZE_CLASS = {
 };
 
 const detectLang = mem((text) => {
+  text = text?.trim();
+
+  // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
+  // 500 should be enough for now, also the default max chars for Mastodon
+  if (text?.length > 500) {
+    return null;
+  }
   const langs = detectAll(text);
   const lang = langs[0];
   if (lang?.lang && lang?.accuracy > 0.5) {
@@ -279,7 +291,40 @@ function Status({
     emojiReactions,
   } = status;
 
-  let languageAutoDetected = content && detectLang(getHTMLText(content));
+  const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
+  useEffect(() => {
+    if (!content) return;
+    if (_language) return;
+    let timer;
+    timer = setTimeout(() => {
+      let detected = detectLang(
+        getHTMLText(content, {
+          preProcess: (dom) => {
+            // Remove anything that can skew the language detection
+
+            // Remove .mention, .hashtag, pre, code, a:has(.invisible)
+            dom
+              .querySelectorAll(
+                '.mention, .hashtag, pre, code, a:has(.invisible)',
+              )
+              .forEach((a) => {
+                a.remove();
+              });
+
+            // Remove links that contains text that starts with https?://
+            dom.querySelectorAll('a').forEach((a) => {
+              const text = a.innerText.trim();
+              if (text.startsWith('https://') || text.startsWith('http://')) {
+                a.remove();
+              }
+            });
+          },
+        }),
+      );
+      setLanguageAutoDetected(detected);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [content, _language]);
   const language = _language || languageAutoDetected;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
@@ -1945,50 +1990,74 @@ function Status({
                       {showSpoilerMedia ? 'Show less' : 'Show media'}
                     </button>
                   )}
-                {!!mediaAttachments.length && (
-                  <MultipleMediaFigure
-                    lang={language}
-                    enabled={showMultipleMediaCaptions}
-                    captionChildren={captionChildren}
-                  >
-                    <div
-                      ref={mediaContainerRef}
-                      class={`media-container media-eq${
-                        mediaAttachments.length
-                      } ${mediaAttachments.length > 2 ? 'media-gt2' : ''} ${
-                        mediaAttachments.length > 4 ? 'media-gt4' : ''
-                      }`}
-                    >
-                      {displayedMediaAttachments.map((media, i) => (
-                        <Media
-                          key={media.id}
-                          media={media}
-                          autoAnimate={isSizeLarge}
-                          showCaption={mediaAttachments.length === 1}
-                          allowLongerCaption={
-                            !content && mediaAttachments.length === 1
-                          }
-                          lang={language}
-                          altIndex={
-                            showMultipleMediaCaptions &&
-                            !!media.description &&
-                            i + 1
-                          }
-                          to={`/${instance}/s/${id}?${
-                            withinContext ? 'media' : 'media-only'
-                          }=${i + 1}`}
-                          onClick={
-                            onMediaClick
-                              ? (e) => {
-                                  onMediaClick(e, i, media, status);
-                                }
-                              : undefined
-                          }
-                        />
+                {!!mediaAttachments.length &&
+                  (mediaAttachments.length > 1 &&
+                  (isSizeLarge || (withinContext && size === 'm')) ? (
+                    <div class="media-large-container">
+                      {mediaAttachments.map((media, i) => (
+                        <div key={media.id} class={`media-container media-eq1`}>
+                          <Media
+                            media={media}
+                            autoAnimate
+                            showCaption
+                            allowLongerCaption={!content}
+                            lang={language}
+                            to={`/${instance}/s/${id}?${
+                              withinContext ? 'media' : 'media-only'
+                            }=${i + 1}`}
+                            onClick={
+                              onMediaClick
+                                ? (e) => onMediaClick(e, i, media, status)
+                                : undefined
+                            }
+                          />
+                        </div>
                       ))}
                     </div>
-                  </MultipleMediaFigure>
-                )}
+                  ) : (
+                    <MultipleMediaFigure
+                      lang={language}
+                      enabled={showMultipleMediaCaptions}
+                      captionChildren={captionChildren}
+                    >
+                      <div
+                        ref={mediaContainerRef}
+                        class={`media-container media-eq${
+                          mediaAttachments.length
+                        } ${mediaAttachments.length > 2 ? 'media-gt2' : ''} ${
+                          mediaAttachments.length > 4 ? 'media-gt4' : ''
+                        }`}
+                      >
+                        {displayedMediaAttachments.map((media, i) => (
+                          <Media
+                            key={media.id}
+                            media={media}
+                            autoAnimate={isSizeLarge}
+                            showCaption={mediaAttachments.length === 1}
+                            allowLongerCaption={
+                              !content && mediaAttachments.length === 1
+                            }
+                            lang={language}
+                            altIndex={
+                              showMultipleMediaCaptions &&
+                              !!media.description &&
+                              i + 1
+                            }
+                            to={`/${instance}/s/${id}?${
+                              withinContext ? 'media' : 'media-only'
+                            }=${i + 1}`}
+                            onClick={
+                              onMediaClick
+                                ? (e) => {
+                                    onMediaClick(e, i, media, status);
+                                  }
+                                : undefined
+                            }
+                          />
+                        ))}
+                      </div>
+                    </MultipleMediaFigure>
+                  ))}
                 {!!card &&
                   /^https/i.test(card?.url) &&
                   !sensitive &&
@@ -2487,12 +2556,21 @@ function Card({ card, selfReferential, instance }) {
       ctx.putImageData(imageData, 0, 0);
       blurhashImage = canvas.toDataURL();
     }
+
+    // "Post": Quote post + card link preview combo
+    // Assume all links from these domains are "posts"
+    // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+    // This is just "Progressive Enhancement"
+    const isPost = ['x.com', 'twitter.com', 'threads.net'].includes(domain);
+
     return (
       <a
         href={cardStatusURL || url}
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
-        class={`card link ${blurhashImage ? '' : size}`}
+        class={`card link ${isPost ? 'card-post' : ''} ${
+          blurhashImage ? '' : size
+        }`}
         lang={language}
         dir="auto"
         style={{
@@ -3143,7 +3221,7 @@ function StatusCompact({ sKey }) {
   const {
     sensitive,
     spoilerText,
-    account: { avatar, avatarStatic, bot },
+    account: { avatar, avatarStatic, bot } = {},
     visibility,
     content,
     language,

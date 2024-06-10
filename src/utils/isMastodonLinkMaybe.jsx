@@ -6,6 +6,7 @@ export default function isMastodonLinkMaybe(url) {
       /^\/(@[^/]+|users\/[^/]+)\/(statuses|posts)\/\w+\/?$/i.test(pathname) || // GoToSocial, Takahe
       /^\/notes\/[a-z0-9]+$/i.test(pathname) || // Misskey, Firefish
       /^\/(notice|objects)\/[a-z0-9-]+$/i.test(pathname) || // Pleroma
+      /^\/@[^/]+\/post\/[a-z0-9]+$/i.test(pathname) || // Threads
       /#\/[^\/]+\.[^\/]+\/s\/.+/i.test(hash) // Phanpy 🫣
     );
   } catch (e) {

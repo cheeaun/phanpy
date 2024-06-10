@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 

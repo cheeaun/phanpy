@@ -34,7 +34,7 @@ export default function Modals() {
   const location = useLocation();
 
   useEffect(() => {
-    queueMicrotask(preload);
+    setTimeout(preload, 1000);
   }, []);
 
   return (

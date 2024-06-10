@@ -63,7 +63,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
             if (alphaCache[url] !== undefined) return;
             if (isMissing) return;
-            queueMicrotask(() => {
+            setTimeout(() => {
               try {
                 // Check if image has alpha channel
                 const { width, height } = e.target;
@@ -88,7 +88,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
                 // Silent fail
                 alphaCache[url] = false;
               }
-            });
+            }, 1);
           }}
         />
       )}

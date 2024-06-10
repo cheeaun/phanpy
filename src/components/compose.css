@@ -111,8 +111,8 @@
 }
 
 #compose-container form {
-  --form-padding-inline: 12px;
-  --form-padding-block: 8px;
+  --form-padding-inline: 8px;
+  --form-padding-block: 0;
   /* border-radius: 16px; */
   padding: var(--form-padding-block) var(--form-padding-inline);
   background-color: var(--bg-blur-color);
@@ -521,8 +521,9 @@
   }
 }
 
-@media (min-width: 480px) {
-  #compose-container button[type='submit'] {
+#compose-container button[type='submit'] {
+  border-radius: 8px;
+  @media (min-width: 480px) {
     padding-inline: 24px;
   }
 }

@@ -13,7 +13,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';

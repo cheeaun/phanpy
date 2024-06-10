@@ -1293,7 +1293,7 @@ function Compose({
                   }}
                 />
                 <Icon icon="attachment" />
-              </label>{' '}
+              </label>
               {/* If maxOptions is not defined or defined and is greater than 1, show poll button */}
               {maxOptions == null ||
                 (maxOptions > 1 && (
@@ -1315,7 +1315,7 @@ function Compose({
                       }}
                     >
                       <Icon icon="poll" alt="Add poll" />
-                    </button>{' '}
+                    </button>
                   </>
                 ))}
               {/* <button
@@ -1342,7 +1342,11 @@ function Compose({
                 <button
                   type="button"
                   class="toolbar-button gif-picker-button"
-                  disabled={uiState === 'loading'}
+                  disabled={
+                    uiState === 'loading' ||
+                    mediaAttachments.length >= maxMediaAttachments ||
+                    !!poll
+                  }
                   onClick={() => {
                     setShowGIFPicker(true);
                   }}
@@ -1866,7 +1870,16 @@ const Textarea = forwardRef((props, ref) => {
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
-  const debouncedAutoDetectLanguage = useDebouncedCallback((text) => {
+  const debouncedAutoDetectLanguage = useDebouncedCallback(() => {
+    // Make use of the highlightRef to get the DOM
+    // Clone the dom
+    const dom = composeHighlightRef.current?.cloneNode(true);
+    if (!dom) return;
+    // Remove mark
+    dom.querySelectorAll('mark').forEach((mark) => {
+      mark.remove();
+    });
+    const text = dom.innerText?.trim();
     if (!text) return;
     const langs = detectLangs(text);
     if (langs?.length) {
@@ -1875,7 +1888,7 @@ const Textarea = forwardRef((props, ref) => {
         languages: langs,
       });
     }
-  }, 1000);
+  }, 2000);
 
   return (
     <text-expander
@@ -1944,7 +1957,7 @@ const Textarea = forwardRef((props, ref) => {
           autoResizeTextarea(target);
           props.onInput?.(e);
           throttleHighlightText(text);
-          debouncedAutoDetectLanguage(text);
+          debouncedAutoDetectLanguage();
         }}
         style={{
           width: '100%',

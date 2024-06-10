@@ -2532,12 +2532,21 @@ function Card({ card, selfReferential, instance }) {
       ctx.putImageData(imageData, 0, 0);
       blurhashImage = canvas.toDataURL();
     }
+
+    // "Post": Quote post + card link preview combo
+    // Assume all links from these domains are "posts"
+    // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+    // This is just "Progressive Enhancement"
+    const isPost = ['x.com', 'twitter.com', 'threads.net'].includes(domain);
+
     return (
       <a
         href={cardStatusURL || url}
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
-        class={`card link ${blurhashImage ? '' : size}`}
+        class={`card link ${isPost ? 'card-post' : ''} ${
+          blurhashImage ? '' : size
+        }`}
         lang={language}
         dir="auto"
         style={{

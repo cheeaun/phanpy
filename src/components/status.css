@@ -1899,6 +1899,26 @@ a.card:is(:hover, :focus):visited {
   width: 100%;
   height: 100%;
 }
+.card.card-post {
+  flex-direction: row-reverse;
+
+  .title {
+    font-weight: 500;
+  }
+
+  .meta {
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    opacity: 1;
+    font-size: inherit;
+  }
+}
+.status.large .card.large.card-post,
+.status-carousel
+  .content-container[data-content-text-weight='1']
+  .card.large.card-post {
+  flex-direction: column-reverse;
+}
 
 /* POLLS */
 

@@ -1349,6 +1349,26 @@ body:has(#modal-container .carousel) .status .media img:hover {
   background-color: var(--outline-color);
 }
 
+.status.large .media-large-container {
+  width: 100%;
+  max-width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+  flex-wrap: wrap;
+  text-align: center;
+
+  figure {
+    justify-content: center;
+
+    figcaption {
+      text-align: center;
+    }
+  }
+}
+
 @keyframes media-carousel-slide {
   0% {
     transform: translateX(calc(var(--dots-count, 1) * 2.5px));

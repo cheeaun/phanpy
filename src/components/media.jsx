@@ -362,21 +362,29 @@ function Media({
                       naturalWidth &&
                       naturalHeight
                     ) {
-                      const naturalAspectRatio = (
-                        naturalWidth / naturalHeight
-                      ).toFixed(2);
-                      const displayAspectRatio = (
-                        clientWidth / clientHeight
-                      ).toFixed(2);
-                      const similarThreshold = 0.05;
+                      const minDimension = 88;
                       if (
-                        naturalAspectRatio === displayAspectRatio ||
-                        Math.abs(naturalAspectRatio - displayAspectRatio) <
-                          similarThreshold
+                        naturalWidth < minDimension ||
+                        naturalHeight < minDimension
                       ) {
-                        $media.dataset.hasNaturalAspectRatio = true;
+                        $media.dataset.hasSmallDimension = true;
+                      } else {
+                        const naturalAspectRatio = (
+                          naturalWidth / naturalHeight
+                        ).toFixed(2);
+                        const displayAspectRatio = (
+                          clientWidth / clientHeight
+                        ).toFixed(2);
+                        const similarThreshold = 0.05;
+                        if (
+                          naturalAspectRatio === displayAspectRatio ||
+                          Math.abs(naturalAspectRatio - displayAspectRatio) <
+                            similarThreshold
+                        ) {
+                          $media.dataset.hasNaturalAspectRatio = true;
+                        }
+                        // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                       }
-                      // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                     }
                   }
                 }}

@@ -517,7 +517,7 @@ function Media({
                   height={height}
                   data-orientation={orientation}
                   preload="auto"
-                  autoplay
+                  autoPlay
                   playsinline
                   loop={loopable}
                   controls
@@ -636,7 +636,7 @@ function Media({
           style={!showOriginal && mediaStyles}
         >
           {showOriginal ? (
-            <audio src={remoteUrl || url} preload="none" controls autoplay />
+            <audio src={remoteUrl || url} preload="none" controls autoPlay />
           ) : previewUrl ? (
             <img
               src={previewUrl}

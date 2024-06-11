@@ -426,7 +426,7 @@ function Media({
         autoplay
         muted
         playsinline
-        loop="${loopable}"
+        ${loopable ? 'loop' : ''}
         ondblclick="this.paused ? this.play() : this.pause()"
         ${
           showProgress
@@ -435,6 +435,21 @@ function Media({
         }
       ></video>
   `;
+
+    const videoHTML = `
+      <video
+        src="${url}"
+        poster="${previewUrl}"
+        width="${width}"
+        height="${height}"
+        data-orientation="${orientation}"
+        preload="auto"
+        autoplay
+        playsinline
+        ${loopable ? 'loop' : ''}
+        controls
+      ></video>
+    `;
 
     return (
       <Figure>
@@ -508,21 +523,10 @@ function Media({
                 }}
               />
             ) : (
-              <div class="video-container">
-                <video
-                  slot="media"
-                  src={url}
-                  poster={previewUrl}
-                  width={width}
-                  height={height}
-                  data-orientation={orientation}
-                  preload="auto"
-                  autoPlay
-                  playsinline
-                  loop={loopable}
-                  controls
-                ></video>
-              </div>
+              <div
+                class="video-container"
+                dangerouslySetInnerHTML={{ __html: videoHTML }}
+              />
             )
           ) : isGIF ? (
             <video

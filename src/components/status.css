@@ -1025,6 +1025,10 @@
     background-color: var(--average-color, var(--bg-faded-color));
     background-clip: padding-box;
   }
+
+  &[data-has-small-dimension] img {
+    object-fit: scale-down;
+  }
 }
 .status .media-container:not(.media-eq1) .media {
   aspect-ratio: auto !important;
@@ -1073,11 +1077,6 @@
 
   &[data-has-natural-aspect-ratio] {
     --media-radius: 4px;
-  }
-
-  &[data-has-small-dimension] img {
-    object-fit: contain;
-    image-rendering: pixelated;
   }
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {
@@ -1365,7 +1364,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   flex-wrap: wrap;
 
   .media[data-has-small-dimension] {
-    width: auto !important;
+    width: var(--width, auto) !important;
   }
 
   figure {

@@ -362,21 +362,29 @@ function Media({
                       naturalWidth &&
                       naturalHeight
                     ) {
-                      const naturalAspectRatio = (
-                        naturalWidth / naturalHeight
-                      ).toFixed(2);
-                      const displayAspectRatio = (
-                        clientWidth / clientHeight
-                      ).toFixed(2);
-                      const similarThreshold = 0.05;
+                      const minDimension = 88;
                       if (
-                        naturalAspectRatio === displayAspectRatio ||
-                        Math.abs(naturalAspectRatio - displayAspectRatio) <
-                          similarThreshold
+                        naturalWidth < minDimension ||
+                        naturalHeight < minDimension
                       ) {
-                        $media.dataset.hasNaturalAspectRatio = true;
+                        $media.dataset.hasSmallDimension = true;
+                      } else {
+                        const naturalAspectRatio = (
+                          naturalWidth / naturalHeight
+                        ).toFixed(2);
+                        const displayAspectRatio = (
+                          clientWidth / clientHeight
+                        ).toFixed(2);
+                        const similarThreshold = 0.05;
+                        if (
+                          naturalAspectRatio === displayAspectRatio ||
+                          Math.abs(naturalAspectRatio - displayAspectRatio) <
+                            similarThreshold
+                        ) {
+                          $media.dataset.hasNaturalAspectRatio = true;
+                        }
+                        // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                       }
-                      // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                     }
                   }
                 }}
@@ -418,7 +426,7 @@ function Media({
         autoplay
         muted
         playsinline
-        loop="${loopable}"
+        ${loopable ? 'loop' : ''}
         ondblclick="this.paused ? this.play() : this.pause()"
         ${
           showProgress
@@ -427,6 +435,21 @@ function Media({
         }
       ></video>
   `;
+
+    const videoHTML = `
+      <video
+        src="${url}"
+        poster="${previewUrl}"
+        width="${width}"
+        height="${height}"
+        data-orientation="${orientation}"
+        preload="auto"
+        autoplay
+        playsinline
+        ${loopable ? 'loop' : ''}
+        controls
+      ></video>
+    `;
 
     return (
       <Figure>
@@ -500,21 +523,10 @@ function Media({
                 }}
               />
             ) : (
-              <div class="video-container">
-                <video
-                  slot="media"
-                  src={url}
-                  poster={previewUrl}
-                  width={width}
-                  height={height}
-                  data-orientation={orientation}
-                  preload="auto"
-                  autoplay
-                  playsinline
-                  loop={loopable}
-                  controls
-                ></video>
-              </div>
+              <div
+                class="video-container"
+                dangerouslySetInnerHTML={{ __html: videoHTML }}
+              />
             )
           ) : isGIF ? (
             <video
@@ -628,7 +640,7 @@ function Media({
           style={!showOriginal && mediaStyles}
         >
           {showOriginal ? (
-            <audio src={remoteUrl || url} preload="none" controls autoplay />
+            <audio src={remoteUrl || url} preload="none" controls autoPlay />
           ) : previewUrl ? (
             <img
               src={previewUrl}

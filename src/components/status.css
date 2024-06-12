@@ -1025,6 +1025,10 @@
     background-color: var(--average-color, var(--bg-faded-color));
     background-clip: padding-box;
   }
+
+  &[data-has-small-dimension] img {
+    object-fit: scale-down;
+  }
 }
 .status .media-container:not(.media-eq1) .media {
   aspect-ratio: auto !important;
@@ -1349,22 +1353,27 @@ body:has(#modal-container .carousel) .status .media img:hover {
   background-color: var(--outline-color);
 }
 
-.status.large .media-large-container {
+.status .media-large-container {
   width: 100%;
   max-width: 100%;
   display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  /* align-items: center;
+  justify-content: center; */
   column-gap: 8px;
   flex-wrap: wrap;
-  text-align: center;
+
+  .media[data-has-small-dimension] {
+    width: var(--width, auto) !important;
+  }
 
   figure {
-    justify-content: center;
+    flex-direction: column;
 
     figcaption {
-      text-align: center;
+      flex-grow: 0 !important;
+      flex-basis: auto !important;
+      align-self: flex-start !important;
     }
   }
 }

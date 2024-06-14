@@ -791,6 +791,10 @@
   max-height: 50vh;
   overflow: clip;
   position: relative;
+
+  &:has(.status-card):not(:has(+ .media-container)) {
+    max-height: 80vh;
+  }
 }
 .timeline-deck
   .status-reblog:not(.status-carousel .status-reblog)

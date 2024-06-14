@@ -674,12 +674,8 @@ function Media({
 }
 
 function getURLObj(url) {
-  try {
-    // Fake base URL if url doesn't have https:// prefix
-    return new URL(url, location.origin);
-  } catch (e) {
-    return null;
-  }
+  // Fake base URL if url doesn't have https:// prefix
+  return URL.parse(url, location.origin);
 }
 
 export default Media;

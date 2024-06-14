@@ -178,7 +178,9 @@ function Trending({ columnMode, ...props }) {
                 width,
               } = link;
               const domain = punycode.toUnicode(
-                new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+                URL.parse(url)
+                  .hostname.replace(/^www\./, '')
+                  .replace(/\/$/, ''),
               );
               let accentColor;
               if (blurhash) {

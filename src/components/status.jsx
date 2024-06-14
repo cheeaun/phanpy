@@ -2535,7 +2535,9 @@ function Card({ card, selfReferential, instance }) {
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = punycode.toUnicode(
-      new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+      URL.parse(url)
+        .hostname.replace(/^www\./, '')
+        .replace(/\/$/, ''),
     );
     let blurhashImage;
     const rgbAverageColor =
@@ -2662,7 +2664,7 @@ function Card({ card, selfReferential, instance }) {
     }
     if (hasText && !image) {
       const domain = punycode.toUnicode(
-        new URL(url).hostname.replace(/^www\./, ''),
+        URL.parse(url).hostname.replace(/^www\./, ''),
       );
       return (
         <a
@@ -2863,7 +2865,7 @@ function generateHTMLCode(post, instance, level = 0) {
             const mediaURL = previewMediaURL || sourceMediaURL;
 
             const sourceMediaURLObj = sourceMediaURL
-              ? new URL(sourceMediaURL)
+              ? URL.parse(sourceMediaURL)
               : null;
             const isVideoMaybe =
               type === 'unknown' &&
@@ -3188,7 +3190,7 @@ function StatusButton({
 
 function nicePostURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash

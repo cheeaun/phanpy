@@ -1111,8 +1111,8 @@ function Catchup() {
                         publishedAt,
                       } = card;
                       const domain = punycode.toUnicode(
-                        new URL(url).hostname
-                          .replace(/^www\./, '')
+                        URL.parse(url)
+                          .hostname.replace(/^www\./, '')
                           .replace(/\/$/, ''),
                       );
                       let accentColor;

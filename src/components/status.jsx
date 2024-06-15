@@ -2593,6 +2593,12 @@ function Card({ card, selfReferential, instance }) {
                 e.target.style.display = 'none';
               } catch (e) {}
             }}
+            style={{
+              '--anim-duration':
+                width &&
+                height &&
+                `${Math.min(Math.max(Math.max(width, height) / 100, 5), 120)}s`,
+            }}
           />
         </div>
         <div class="meta-container">

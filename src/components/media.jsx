@@ -248,6 +248,8 @@ function Media({
         );
       };
 
+  const [hasNaturalAspectRatio, setHasNaturalAspectRatio] = useState(undefined);
+
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
@@ -272,7 +274,8 @@ function Media({
           class={`media media-image ${className}`}
           onClick={onClick}
           data-orientation={orientation}
-          data-has-alt={!showInlineDesc}
+          data-has-alt={!showInlineDesc || undefined}
+          data-has-natural-aspect-ratio={hasNaturalAspectRatio || undefined}
           style={
             showOriginal
               ? {
@@ -381,7 +384,8 @@ function Media({
                           Math.abs(naturalAspectRatio - displayAspectRatio) <
                             similarThreshold
                         ) {
-                          $media.dataset.hasNaturalAspectRatio = true;
+                          // $media.dataset.hasNaturalAspectRatio = true;
+                          setHasNaturalAspectRatio(true);
                         }
                         // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                       }
@@ -461,8 +465,10 @@ function Media({
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined
           }
-          data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
-          data-has-alt={!showInlineDesc}
+          data-label={
+            isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : undefined
+          }
+          data-has-alt={!showInlineDesc || undefined}
           // style={{
           //   backgroundColor:
           //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -635,7 +641,7 @@ function Media({
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined
           }
-          data-has-alt={!showInlineDesc}
+          data-has-alt={!showInlineDesc || undefined}
           onClick={onClick}
           style={!showOriginal && mediaStyles}
         >

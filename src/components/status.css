@@ -453,6 +453,10 @@
 .status > .container > .meta .meta-name {
   mask-image: linear-gradient(to left, transparent, black 16px);
   flex-grow: 1;
+
+  .name-text b {
+    opacity: 0.75;
+  }
 }
 .status.large > .container > .meta {
   min-height: 50px;

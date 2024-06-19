@@ -372,22 +372,14 @@ function Media({
                       ) {
                         $media.dataset.hasSmallDimension = true;
                       } else {
-                        const naturalAspectRatio = (
-                          naturalWidth / naturalHeight
-                        ).toFixed(2);
-                        const displayAspectRatio = (
-                          clientWidth / clientHeight
-                        ).toFixed(2);
-                        const similarThreshold = 0.05;
-                        if (
-                          naturalAspectRatio === displayAspectRatio ||
-                          Math.abs(naturalAspectRatio - displayAspectRatio) <
-                            similarThreshold
-                        ) {
-                          // $media.dataset.hasNaturalAspectRatio = true;
+                        const displayNaturalHeight =
+                          (naturalHeight * clientWidth) / naturalWidth;
+                        const almostSimilarHeight =
+                          Math.abs(displayNaturalHeight - clientHeight) < 2;
+
+                        if (almostSimilarHeight) {
                           setHasNaturalAspectRatio(true);
                         }
-                        // $media.dataset.aspectRatios = `${naturalAspectRatio} ${displayAspectRatio}`;
                       }
                     }
                   }

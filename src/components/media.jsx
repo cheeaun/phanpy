@@ -375,7 +375,7 @@ function Media({
                         const displayNaturalHeight =
                           (naturalHeight * clientWidth) / naturalWidth;
                         const almostSimilarHeight =
-                          Math.abs(displayNaturalHeight - clientHeight) < 2;
+                          Math.abs(displayNaturalHeight - clientHeight) < 5;
 
                         if (almostSimilarHeight) {
                           setHasNaturalAspectRatio(true);

@@ -215,7 +215,7 @@
 }
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
-  max-height: 160px !important;
+  max-height: max(160px, 33vh) !important;
   overflow: hidden;
 }
 .status.small:not(.status-carousel .status, .status.large .status)

@@ -1371,9 +1371,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
   column-gap: 8px;
   flex-wrap: wrap;
 
-  .media[data-has-small-dimension] {
+  .media {
     width: var(--width, auto) !important;
   }
+
+  /* .media[data-has-small-dimension] {
+    width: var(--width, auto) !important;
+  } */
 
   figure {
     flex-direction: column;

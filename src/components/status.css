@@ -1217,8 +1217,8 @@
     }
   }
 }
-.status .media img:is(:hover, :focus),
-a:focus-visible .status .media img {
+.status .media:not([data-has-small-dimension]) img:is(:hover, :focus),
+a:focus-visible .status .media:not([data-has-small-dimension]) img {
   animation: position-object 5s ease-in-out 1s 5;
   animation-duration: var(--anim-duration, 5s);
 }

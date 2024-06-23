@@ -3292,11 +3292,11 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                   width = (width / height) * 100;
                   height = 100;
                 }
-                const urlObj = new URL(url);
+                const urlObj = URL.parse(url);
                 const strippedURL = urlObj.origin + urlObj.pathname;
                 let strippedWebP;
                 if (webp) {
-                  const webpObj = new URL(webp);
+                  const webpObj = URL.parse(webp);
                   strippedWebP = webpObj.origin + webpObj.pathname;
                 }
                 return (
@@ -3306,7 +3306,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                       onClick={() => {
                         const { mp4, url } = original;
                         const theURL = mp4 || url;
-                        const urlObj = new URL(theURL);
+                        const urlObj = URL.parse(theURL);
                         const strippedURL = urlObj.origin + urlObj.pathname;
                         onClose();
                         onSelect({

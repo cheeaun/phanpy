@@ -1,5 +1,5 @@
 export default function openCompose(opts) {
-  const url = new URL('/compose/', window.location);
+  const url = URL.parse('/compose/', window.location);
   const { width: screenWidth, height: screenHeight } = window.screen;
   const left = Math.max(0, (screenWidth - 600) / 2);
   const top = Math.max(0, (screenHeight - 450) / 2);

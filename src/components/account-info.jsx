@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -231,7 +231,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = punycode.toUnicode(new URL(url).hostname);
+    const domain = punycode.toUnicode(URL.parse(url).hostname);
     return domain;
   }, [url]);
 
@@ -1655,7 +1655,7 @@ function lightenRGB([r, g, b]) {
 
 function niceAccountURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (

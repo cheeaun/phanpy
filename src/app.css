@@ -1510,6 +1510,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 .media-modal-container + .status-deck {
   /* display: none; */
   position: absolute;
+  right: 0;
   z-index: -1;
   pointer-events: none;
   user-select: none;

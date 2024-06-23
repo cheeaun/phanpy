@@ -325,11 +325,11 @@ function App() {
 
         const client = initClient({ instance: instanceURL, accessToken });
         await Promise.allSettled([
+          initPreferences(client),
           initInstance(client, instanceURL),
           initAccount(client, instanceURL, accessToken, vapidKey),
         ]);
         initStates();
-        initPreferences(client);
 
         setIsLoggedIn(true);
         setUIState('default');
@@ -343,10 +343,10 @@ function App() {
         const { instance } = client;
         // console.log('masto', masto);
         initStates();
-        initPreferences(client);
         setUIState('loading');
         (async () => {
           try {
+            await initPreferences(client);
             await initInstance(client, instance);
           } catch (e) {
           } finally {

@@ -2,6 +2,7 @@ import './name-text.css';
 
 import { memo } from 'preact/compat';
 
+import { api } from '../utils/api';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -20,10 +21,20 @@ function NameText({
   external,
   onClick,
 }) {
-  const { acct, avatar, avatarStatic, id, url, displayName, emojis, bot } =
-    account;
-  let { username } = account;
+  const {
+    acct,
+    avatar,
+    avatarStatic,
+    id,
+    url,
+    displayName,
+    emojis,
+    bot,
+    username,
+  } = account;
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+
+  if (!instance) instance = api().instance;
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
@@ -35,16 +46,13 @@ function NameText({
     '',
   ); // Remove non-alphanumeric characters
 
-  if (
+  const hideUsername =
     (!short &&
       (trimmedUsername === trimmedDisplayName ||
         trimmedUsername === shortenedDisplayName ||
         trimmedUsername === shortenedAlphaNumericDisplayName ||
         nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)) ||
-    shortenedAlphaNumericDisplayName === acct.toLowerCase()
-  ) {
-    username = null;
-  }
+    shortenedAlphaNumericDisplayName === acct.toLowerCase();
 
   return (
     <a
@@ -83,7 +91,7 @@ function NameText({
           <b>
             <EmojiText text={displayName} emojis={emojis} />
           </b>
-          {!showAcct && username && (
+          {!showAcct && !hideUsername && (
             <>
               {' '}
               <i>@{username}</i>

@@ -285,7 +285,7 @@ function Notification({
         {type !== 'mention' && (
           <>
             <p>
-              {!/poll|update/i.test(type) && (
+              {!/poll|update|severed_relationships/i.test(type) && (
                 <>
                   {_accounts?.length > 1 ? (
                     <>

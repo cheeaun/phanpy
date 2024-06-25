@@ -7,7 +7,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "fetch-instances": "env $(cat .env.local | grep -v \"#\" | xargs) node scripts/fetch-instances-list.js",
-    "sourcemap": "npx source-map-explorer dist/assets/*.js"
+    "sourcemap": "npx source-map-explorer dist/assets/*.js",
+    "bundle-visualizer": "npx vite-bundle-visualizer"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "~0.5.4",

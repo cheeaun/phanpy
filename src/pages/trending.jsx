@@ -72,6 +72,8 @@ function Trending({ columnMode, ...props }) {
   // const navigate = useNavigate();
   const latestItem = useRef();
 
+  const sameCurrentInstance = instance === currentInstance;
+
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
   const trendIterator = useRef();
@@ -137,7 +139,8 @@ function Trending({ columnMode, ...props }) {
   const [currentLink, setCurrentLink] = useState(null);
   const hasCurrentLink = !!currentLink;
   const currentLinkRef = useRef();
-  const supportsTrendingLinkPosts = supports('@mastodon/trending-hashtags');
+  const supportsTrendingLinkPosts =
+    sameCurrentInstance && supports('@mastodon/trending-hashtags');
 
   useEffect(() => {
     if (currentLink && currentLinkRef.current) {

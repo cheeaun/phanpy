@@ -366,7 +366,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="shortcut" /> <span>Add to Shorcuts</span>
+            <Icon icon="shortcut" /> <span>Add to Shortcuts</span>
           </MenuItem>
           <MenuItem
             onClick={() => {

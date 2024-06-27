@@ -1159,8 +1159,8 @@ function RelatedActions({
                             setRelationshipUIState('default');
                             showToast(
                               rel.showingReblogs
-                                ? `Boosts from @${username} disabled.`
-                                : `Boosts from @${username} enabled.`,
+                                ? `Boosts from @${username} enabled.`
+                                : `Boosts from @${username} disabled.`,
                             );
                           } catch (e) {
                             alert(e);

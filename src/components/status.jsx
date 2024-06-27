@@ -2456,6 +2456,22 @@ function MediaFirstContainer(props) {
   );
 }
 
+function getDomain(url) {
+  return punycode.toUnicode(
+    URL.parse(url)
+      .hostname.replace(/^www\./, '')
+      .replace(/\/$/, ''),
+  );
+}
+
+// "Post": Quote post + card link preview combo
+// Assume all links from these domains are "posts"
+// Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+// This is just "Progressive Enhancement"
+function isCardPost(domain) {
+  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+}
+
 function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
@@ -2534,11 +2550,7 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = punycode.toUnicode(
-      URL.parse(url)
-        .hostname.replace(/^www\./, '')
-        .replace(/\/$/, ''),
-    );
+    const domain = getDomain(url);
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2559,11 +2571,7 @@ function Card({ card, selfReferential, instance }) {
       blurhashImage = canvas.toDataURL();
     }
 
-    // "Post": Quote post + card link preview combo
-    // Assume all links from these domains are "posts"
-    // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
-    // This is just "Progressive Enhancement"
-    const isPost = ['x.com', 'twitter.com', 'threads.net'].includes(domain);
+    const isPost = isCardPost(domain);
 
     return (
       <a
@@ -2669,15 +2677,14 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = punycode.toUnicode(
-        URL.parse(url).hostname.replace(/^www\./, ''),
-      );
+      const domain = getDomain(url);
+      const isPost = isCardPost(domain);
       return (
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener noreferrer"
-          class={`card link no-image`}
+          class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
           onClick={handleClick}
         >

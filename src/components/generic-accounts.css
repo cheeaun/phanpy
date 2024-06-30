@@ -17,6 +17,21 @@
       );
       filter: saturate(0.5);
     }
+
+    &:is(a) {
+      pointer-events: auto;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        border-color: var(--outline-hover-color);
+      }
+
+      > * {
+        pointer-events: none;
+      }
+    }
   }
 
   .accounts-list {

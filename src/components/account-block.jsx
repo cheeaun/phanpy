@@ -133,21 +133,18 @@ function AccountBlock({
           )}
         </span>
         {showActivity && (
-          <>
-            <br />
-            <small class="last-status-at insignificant">
-              Posts: {statusesCount}
-              {!!lastStatusAt && (
-                <>
-                  {' '}
-                  &middot; Last posted:{' '}
-                  {niceDateTime(lastStatusAt, {
-                    hideTime: true,
-                  })}
-                </>
-              )}
-            </small>
-          </>
+          <div class="account-block-stats">
+            Posts: {shortenNumber(statusesCount)}
+            {!!lastStatusAt && (
+              <>
+                {' '}
+                &middot; Last posted:{' '}
+                {niceDateTime(lastStatusAt, {
+                  hideTime: true,
+                })}
+              </>
+            )}
+          </div>
         )}
         {showStats && (
           <div class="account-block-stats">

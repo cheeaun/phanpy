@@ -166,7 +166,7 @@ function Media({
     [to],
   );
 
-  const remoteMediaURLObj = remoteMediaURL ? new URL(remoteMediaURL) : null;
+  const remoteMediaURLObj = remoteMediaURL ? getURLObj(remoteMediaURL) : null;
   const isVideoMaybe =
     type === 'unknown' &&
     remoteMediaURLObj &&
@@ -248,6 +248,8 @@ function Media({
         );
       };
 
+  const [hasNaturalAspectRatio, setHasNaturalAspectRatio] = useState(undefined);
+
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
@@ -272,7 +274,8 @@ function Media({
           class={`media media-image ${className}`}
           onClick={onClick}
           data-orientation={orientation}
-          data-has-alt={!showInlineDesc}
+          data-has-alt={!showInlineDesc || undefined}
+          data-has-natural-aspect-ratio={hasNaturalAspectRatio || undefined}
           style={
             showOriginal
               ? {
@@ -338,18 +341,46 @@ function Media({
                 onLoad={(e) => {
                   // e.target.closest('.media-image').style.backgroundImage = '';
                   e.target.dataset.loaded = true;
-                  if (!hasDimensions) {
-                    const $media = e.target.closest('.media');
-                    if ($media) {
-                      const { naturalWidth, naturalHeight } = e.target;
-                      $media.dataset.orientation =
-                        naturalWidth > naturalHeight ? 'landscape' : 'portrait';
-                      $media.style.setProperty('--width', `${naturalWidth}px`);
-                      $media.style.setProperty(
-                        '--height',
-                        `${naturalHeight}px`,
-                      );
-                      $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
+                  const $media = e.target.closest('.media');
+                  if (!hasDimensions && $media) {
+                    const { naturalWidth, naturalHeight } = e.target;
+                    $media.dataset.orientation =
+                      naturalWidth > naturalHeight ? 'landscape' : 'portrait';
+                    $media.style.setProperty('--width', `${naturalWidth}px`);
+                    $media.style.setProperty('--height', `${naturalHeight}px`);
+                    $media.style.aspectRatio = `${naturalWidth}/${naturalHeight}`;
+                  }
+
+                  // Check natural aspect ratio vs display aspect ratio
+                  if ($media) {
+                    const {
+                      clientWidth,
+                      clientHeight,
+                      naturalWidth,
+                      naturalHeight,
+                    } = e.target;
+                    if (
+                      clientWidth &&
+                      clientHeight &&
+                      naturalWidth &&
+                      naturalHeight
+                    ) {
+                      const minDimension = 88;
+                      if (
+                        naturalWidth < minDimension ||
+                        naturalHeight < minDimension
+                      ) {
+                        $media.dataset.hasSmallDimension = true;
+                      } else {
+                        const displayNaturalHeight =
+                          (naturalHeight * clientWidth) / naturalWidth;
+                        const almostSimilarHeight =
+                          Math.abs(displayNaturalHeight - clientHeight) < 5;
+
+                        if (almostSimilarHeight) {
+                          setHasNaturalAspectRatio(true);
+                        }
+                      }
                     }
                   }
                 }}
@@ -379,27 +410,42 @@ function Media({
     const autoGIFAnimate = !showOriginal && autoAnimate && isGIF;
     const showProgress = original.duration > 5;
 
-    const videoHTML = `
-    <video
-      src="${url}"
-      poster="${previewUrl}"
-      width="${width}"
-      height="${height}"
-      data-orientation="${orientation}"
-      preload="auto"
-      autoplay
-      ${isGIF ? 'muted' : ''}
-      ${isGIF ? '' : 'controls'}
-      playsinline
-      loop="${loopable}"
-      ${isGIF ? 'ondblclick="this.paused ? this.play() : this.pause()"' : ''}
-      ${
-        isGIF && showProgress
-          ? "ontimeupdate=\"this.closest('.media-gif') && this.closest('.media-gif').style.setProperty('--progress', `${~~((this.currentTime / this.duration) * 100)}%`)\""
-          : ''
-      }
-    ></video>
+    // This string is only for autoplay + muted to work on Mobile Safari
+    const gifHTML = `
+      <video
+        src="${url}"
+        poster="${previewUrl}"
+        width="${width}"
+        height="${height}"
+        data-orientation="${orientation}"
+        preload="auto"
+        autoplay
+        muted
+        playsinline
+        ${loopable ? 'loop' : ''}
+        ondblclick="this.paused ? this.play() : this.pause()"
+        ${
+          showProgress
+            ? "ontimeupdate=\"this.closest('.media-gif') && this.closest('.media-gif').style.setProperty('--progress', `${~~((this.currentTime / this.duration) * 100)}%`)\""
+            : ''
+        }
+      ></video>
   `;
+
+    const videoHTML = `
+      <video
+        src="${url}"
+        poster="${previewUrl}"
+        width="${width}"
+        height="${height}"
+        data-orientation="${orientation}"
+        preload="auto"
+        autoplay
+        playsinline
+        ${loopable ? 'loop' : ''}
+        controls
+      ></video>
+    `;
 
     return (
       <Figure>
@@ -411,8 +457,10 @@ function Media({
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined
           }
-          data-label={isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : ''}
-          data-has-alt={!showInlineDesc}
+          data-label={
+            isGIF && !showOriginal && !autoGIFAnimate ? 'GIF' : undefined
+          }
+          data-has-alt={!showInlineDesc || undefined}
           // style={{
           //   backgroundColor:
           //     rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -461,16 +509,21 @@ function Media({
                 <div
                   ref={mediaRef}
                   dangerouslySetInnerHTML={{
-                    __html: videoHTML,
+                    __html: gifHTML,
                   }}
                 />
               </QuickPinchZoom>
-            ) : (
+            ) : isGIF ? (
               <div
                 class="video-container"
                 dangerouslySetInnerHTML={{
-                  __html: videoHTML,
+                  __html: gifHTML,
                 }}
+              />
+            ) : (
+              <div
+                class="video-container"
+                dangerouslySetInnerHTML={{ __html: videoHTML }}
               />
             )
           ) : isGIF ? (
@@ -580,12 +633,12 @@ function Media({
           data-formatted-duration={
             !showOriginal ? formattedDuration : undefined
           }
-          data-has-alt={!showInlineDesc}
+          data-has-alt={!showInlineDesc || undefined}
           onClick={onClick}
           style={!showOriginal && mediaStyles}
         >
           {showOriginal ? (
-            <audio src={remoteUrl || url} preload="none" controls autoplay />
+            <audio src={remoteUrl || url} preload="none" controls autoPlay />
           ) : previewUrl ? (
             <img
               src={previewUrl}
@@ -616,6 +669,11 @@ function Media({
       </Figure>
     );
   }
+}
+
+function getURLObj(url) {
+  // Fake base URL if url doesn't have https:// prefix
+  return URL.parse(url, location.origin);
 }
 
 export default Media;

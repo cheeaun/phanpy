@@ -242,6 +242,17 @@ function _enhanceContent(content, opts = {}) {
     }
   }
 
+  // ADD ASPECT RATIO TO ALL IMAGES
+  if (enhancedContent.includes('<img')) {
+    dom.querySelectorAll('img').forEach((img) => {
+      const width = img.getAttribute('width') || img.naturalWidth;
+      const height = img.getAttribute('height') || img.naturalHeight;
+      if (width && height) {
+        img.style.setProperty('--original-aspect-ratio', `${width}/${height}`);
+      }
+    });
+  }
+
   if (postEnhanceDOM) {
     queueMicrotask(() => postEnhanceDOM(dom));
     // postEnhanceDOM(dom); // mutate dom

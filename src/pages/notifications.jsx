@@ -33,7 +33,7 @@ import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
-const LIMIT = 30; // 30 is the maximum limit :(
+const LIMIT = 80;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
@@ -99,6 +99,17 @@ function Notifications({ columnMode }) {
       //     targetName: 'mastodon.dev',
       //     followersCount: 0,
       //     followingCount: 0,
+      //   },
+      // });
+
+      // TEST: Slot in a fake notification to test 'moderation_warning'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'moderation_warning',
+      //   createdAt: new Date().toISOString(),
+      //   moderation_warning: {
+      //     id: '1231234',
+      //     action: 'mark_statuses_as_sensitive',
       //   },
       // });
 
@@ -281,8 +292,13 @@ function Notifications({ columnMode }) {
       }
     }
   });
+  const firstLoad = useRef(true);
   useEffect(() => {
     let unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+      if (firstLoad.current) {
+        firstLoad.current = false;
+        return;
+      }
       if (uiState === 'loading') return;
       if (v) loadUpdates();
       setShowNew(v);

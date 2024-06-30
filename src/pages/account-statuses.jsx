@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -467,7 +467,7 @@ function AccountStatuses() {
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;
-    const domain = new URL(account.url).hostname;
+    const domain = URL.parse(account.url).hostname;
     return domain;
   }, [account]);
   const sameInstance = instance === accountInstance;

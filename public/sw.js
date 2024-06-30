@@ -62,7 +62,7 @@ const iconsRoute = new Route(
     cacheName: 'icons',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 300,
         maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
         purgeOnQuotaError: true,
       }),
@@ -95,6 +95,25 @@ const apiExtendedRoute = new RegExpRoute(
   }),
 );
 registerRoute(apiExtendedRoute);
+
+const apiIntermediateRoute = new RegExpRoute(
+  // Matches:
+  // - trends/*
+  // - timelines/link
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
+  new StaleWhileRevalidate({
+    cacheName: 'api-intermediate',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 10 * 60, // 10 minutes
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(apiIntermediateRoute);
 
 const apiRoute = new RegExpRoute(
   // Matches:

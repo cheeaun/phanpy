@@ -55,6 +55,7 @@ function Timeline({
   filterContext,
   showFollowedTags,
   showReplyParent,
+  clearWhenRefresh,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -69,14 +70,17 @@ function Timeline({
   const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
   const allowGrouping = view !== 'media';
+  const loadItemsTS = useRef(0); // Ensures only one loadItems at a time
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);
-      if (uiState === 'loading') return;
+      // if (uiState === 'loading') return;
       setUIState('loading');
       (async () => {
         try {
+          const ts = (loadItemsTS.current = Date.now());
           let { done, value } = await fetchItems(firstLoad);
+          if (ts !== loadItemsTS.current) return;
           if (Array.isArray(value)) {
             // Avoid grouping for pinned posts
             const [pinnedPosts, otherPosts] = value.reduce(
@@ -120,10 +124,10 @@ function Timeline({
         }
       })();
     },
-    1500,
+    1_000,
     {
       leading: true,
-      trailing: false,
+      // trailing: false,
     },
   );
 
@@ -273,9 +277,18 @@ function Timeline({
     scrollableRef.current?.scrollTo({ top: 0 });
     loadItems(true);
   }, []);
+  const firstLoad = useRef(true);
   useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
+    if (clearWhenRefresh && items?.length) {
+      loadItems.cancel?.();
+      setItems([]);
+    }
     loadItems(true);
-  }, [refresh]);
+  }, [clearWhenRefresh, refresh]);
 
   // useEffect(() => {
   //   if (reachStart) {
@@ -646,7 +659,11 @@ const TimelineItem = memo(
           >
             <Link class="status-link timeline-item" to={url}>
               {showCompact ? (
-                <TimelineStatusCompact status={item} instance={instance} />
+                <TimelineStatusCompact
+                  status={item}
+                  instance={instance}
+                  filterContext={filterContext}
+                />
               ) : useItemID ? (
                 <Status
                   statusID={statusID}
@@ -820,11 +837,12 @@ function StatusCarousel({ title, class: className, children }) {
   );
 }
 
-function TimelineStatusCompact({ status, instance }) {
+function TimelineStatusCompact({ status, instance, filterContext }) {
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
+  const filterInfo = isFiltered(status.filtered, filterContext);
   return (
     <article
       class={`status compact-thread ${
@@ -850,13 +868,24 @@ function TimelineStatusCompact({ status, instance }) {
         lang={language}
         dir="auto"
       >
-        {statusPeekText}
-        {status.sensitive && status.spoilerText && (
+        {!!filterInfo ? (
+          <b
+            class="status-filtered-badge badge-meta horizontal"
+            title={filterInfo?.titlesStr || ''}
+          >
+            <span>Filtered</span>: <span>{filterInfo?.titlesStr || ''}</span>
+          </b>
+        ) : (
           <>
-            {' '}
-            <span class="spoiler-badge">
-              <Icon icon="eye-close" size="s" />
-            </span>
+            {statusPeekText}
+            {status.sensitive && status.spoilerText && (
+              <>
+                {' '}
+                <span class="spoiler-badge">
+                  <Icon icon="eye-close" size="s" />
+                </span>
+              </>
+            )}
           </>
         )}
       </div>

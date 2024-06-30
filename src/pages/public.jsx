@@ -10,6 +10,7 @@ import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states from '../utils/states';
 import { saveStatus } from '../utils/states';
+import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -30,11 +31,14 @@ function Public({ local, columnMode, ...props }) {
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
-      publicIterator.current = masto.v1.timelines.public.list({
+      const opts = {
         limit: LIMIT,
-        local: isLocal,
-        remote: !isLocal, // Pixelfed
-      });
+        local: isLocal || undefined,
+      };
+      if (!isLocal && supports('@pixelfed/global-feed')) {
+        opts.remote = true;
+      }
+      publicIterator.current = masto.v1.timelines.public.list(opts);
     }
     const results = await publicIterator.current.next();
     let { value } = results;

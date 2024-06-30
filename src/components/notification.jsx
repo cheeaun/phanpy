@@ -28,6 +28,7 @@ const NOTIFICATION_ICONS = {
   'admin.signup': 'account-edit',
   'admin.report': 'account-warning',
   severed_relationships: 'heart-break',
+  moderation_warning: 'alert',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
 };
@@ -45,6 +46,8 @@ poll = A poll you have voted in or created has ended
 update = A status you interacted with has been edited
 admin.sign_up = Someone signed up (optionally sent to admins)
 admin.report = A new report has been filed
+severed_relationships = Severed relationships
+moderation_warning = Moderation warning
 */
 
 function emojiText(emoji, emoji_url) {
@@ -91,6 +94,7 @@ const contentText = {
       Lost connections with <i>{name}</i>.
     </>
   ),
+  moderation_warning: <b>Moderation warning</b>,
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
 };
@@ -117,7 +121,18 @@ const SEVERED_RELATIONSHIPS_TEXT = {
   ),
 };
 
-const AVATARS_LIMIT = 50;
+const MODERATION_WARNING_TEXT = {
+  none: 'Your account has received a moderation warning.',
+  disable: 'Your account has been disabled.',
+  mark_statuses_as_sensitive:
+    'Some of your posts have been marked as sensitive.',
+  delete_statuses: 'Some of your posts have been deleted.',
+  sensitive: 'Your posts will be marked as sensitive from now on.',
+  silence: 'Your account has been limited.',
+  suspend: 'Your account has been suspended.',
+};
+
+const AVATARS_LIMIT = 30;
 
 function Notification({
   notification,
@@ -125,8 +140,16 @@ function Notification({
   isStatic,
   disableContextMenu,
 }) {
-  const { id, status, account, report, event, _accounts, _statuses } =
-    notification;
+  const {
+    id,
+    status,
+    account,
+    report,
+    event,
+    moderation_warning,
+    _accounts,
+    _statuses,
+  } = notification;
   let { type } = notification;
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
@@ -262,7 +285,7 @@ function Notification({
         {type !== 'mention' && (
           <>
             <p>
-              {!/poll|update/i.test(type) && (
+              {!/poll|update|severed_relationships/i.test(type) && (
                 <>
                   {_accounts?.length > 1 ? (
                     <>
@@ -314,6 +337,20 @@ function Notification({
                 .
               </div>
             )}
+            {type === 'moderation_warning' && !!moderation_warning && (
+              <div>
+                {MODERATION_WARNING_TEXT[moderation_warning.action]}
+                <br />
+                <a
+                  href={`/disputes/strikes/${moderation_warning.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more <Icon icon="external" size="s" />
+                </a>
+                .
+              </div>
+            )}
           </>
         )}
         {_accounts?.length > 1 && (
@@ -337,11 +374,7 @@ function Notification({
                         ? 'xxl'
                         : _accounts.length < 20
                         ? 'xl'
-                        : _accounts.length < 30
-                        ? 'l'
-                        : _accounts.length < 40
-                        ? 'm'
-                        : 's' // My god, this person is popular!
+                        : 'l'
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}

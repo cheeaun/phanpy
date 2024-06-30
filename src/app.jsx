@@ -126,13 +126,13 @@ setInterval(() => {
 // Related: https://github.com/vitejs/vite/issues/10600
 setTimeout(() => {
   for (const icon in ICONS) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       if (Array.isArray(ICONS[icon])) {
         ICONS[icon][0]?.();
       } else {
         ICONS[icon]?.();
       }
-    });
+    }, 1);
   }
 }, 5000);
 
@@ -325,11 +325,11 @@ function App() {
 
         const client = initClient({ instance: instanceURL, accessToken });
         await Promise.allSettled([
+          initPreferences(client),
           initInstance(client, instanceURL),
           initAccount(client, instanceURL, accessToken, vapidKey),
         ]);
         initStates();
-        initPreferences(client);
 
         setIsLoggedIn(true);
         setUIState('default');
@@ -343,10 +343,10 @@ function App() {
         const { instance } = client;
         // console.log('masto', masto);
         initStates();
-        initPreferences(client);
         setUIState('loading');
         (async () => {
           try {
+            await initPreferences(client);
             await initInstance(client, instance);
           } catch (e) {
           } finally {

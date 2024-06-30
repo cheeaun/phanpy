@@ -11,6 +11,7 @@ import {
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
 import { shallowEqual } from 'fast-equals';
 import prettify from 'html-prettify';
+import pThrottle from 'p-throttle';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -21,8 +22,9 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -46,11 +48,13 @@ import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
@@ -74,10 +78,14 @@ import TranslationBlock from './translation-block';
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 
+const throttle = pThrottle({
+  limit: 1,
+  interval: 1000,
+});
 function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = pmem(fetchAccount);
+const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: 'Public',
@@ -156,6 +164,25 @@ const SIZE_CLASS = {
   m: 'medium',
   l: 'large',
 };
+
+const detectLang = mem((text) => {
+  text = text?.trim();
+
+  // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
+  // 500 should be enough for now, also the default max chars for Mastodon
+  if (text?.length > 500) {
+    return null;
+  }
+  const langs = detectAll(text);
+  const lang = langs[0];
+  if (lang?.lang && lang?.accuracy > 0.5) {
+    // If > 50% accurate, use it
+    // It can be accurate if < 50% but better be safe
+    // Though > 50% also can be inaccurate 🤷‍♂️
+    return lang.lang;
+  }
+  return null;
+});
 
 function Status({
   statusID,
@@ -241,7 +268,7 @@ function Status({
     sensitive,
     spoilerText,
     visibility, // public, unlisted, private, direct
-    language,
+    language: _language,
     editedAt,
     filtered,
     card,
@@ -263,6 +290,42 @@ function Status({
     // Non-Mastodon
     emojiReactions,
   } = status;
+
+  const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
+  useEffect(() => {
+    if (!content) return;
+    if (_language) return;
+    let timer;
+    timer = setTimeout(() => {
+      let detected = detectLang(
+        getHTMLText(content, {
+          preProcess: (dom) => {
+            // Remove anything that can skew the language detection
+
+            // Remove .mention, .hashtag, pre, code, a:has(.invisible)
+            dom
+              .querySelectorAll(
+                '.mention, .hashtag, pre, code, a:has(.invisible)',
+              )
+              .forEach((a) => {
+                a.remove();
+              });
+
+            // Remove links that contains text that starts with https?://
+            dom.querySelectorAll('a').forEach((a) => {
+              const text = a.innerText.trim();
+              if (text.startsWith('https://') || text.startsWith('http://')) {
+                a.remove();
+              }
+            });
+          },
+        }),
+      );
+      setLanguageAutoDetected(detected);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [content, _language]);
+  const language = _language || languageAutoDetected;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -303,6 +366,7 @@ function Status({
           onMouseEnter: debugHover,
         }}
         showFollowedTags
+        quoted={quoted}
       />
     );
   }
@@ -523,9 +587,9 @@ function Status({
       });
       if (newWin) return;
     }
-    states.showCompose = {
+    showCompose({
       replyToStatus: status,
-    };
+    });
   };
 
   // Check if media has no descriptions
@@ -770,11 +834,11 @@ function Status({
               menuExtras={
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `\n${url}`,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="quote" />
@@ -1091,9 +1155,9 @@ function Status({
           {supports('@mastodon/post-edit') && (
             <MenuItem
               onClick={() => {
-                states.showCompose = {
+                showCompose({
                   editStatus: status,
-                };
+                });
               }}
             >
               <Icon icon="pencil" />
@@ -1896,6 +1960,7 @@ function Status({
                     forceTranslate={forceTranslate || inlineTranslate}
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
+                    autoDetected={languageAutoDetected}
                     text={getPostText(status)}
                   />
                 )}
@@ -1925,50 +1990,74 @@ function Status({
                       {showSpoilerMedia ? 'Show less' : 'Show media'}
                     </button>
                   )}
-                {!!mediaAttachments.length && (
-                  <MultipleMediaFigure
-                    lang={language}
-                    enabled={showMultipleMediaCaptions}
-                    captionChildren={captionChildren}
-                  >
-                    <div
-                      ref={mediaContainerRef}
-                      class={`media-container media-eq${
-                        mediaAttachments.length
-                      } ${mediaAttachments.length > 2 ? 'media-gt2' : ''} ${
-                        mediaAttachments.length > 4 ? 'media-gt4' : ''
-                      }`}
-                    >
-                      {displayedMediaAttachments.map((media, i) => (
-                        <Media
-                          key={media.id}
-                          media={media}
-                          autoAnimate={isSizeLarge}
-                          showCaption={mediaAttachments.length === 1}
-                          allowLongerCaption={
-                            !content && mediaAttachments.length === 1
-                          }
-                          lang={language}
-                          altIndex={
-                            showMultipleMediaCaptions &&
-                            !!media.description &&
-                            i + 1
-                          }
-                          to={`/${instance}/s/${id}?${
-                            withinContext ? 'media' : 'media-only'
-                          }=${i + 1}`}
-                          onClick={
-                            onMediaClick
-                              ? (e) => {
-                                  onMediaClick(e, i, media, status);
-                                }
-                              : undefined
-                          }
-                        />
+                {!!mediaAttachments.length &&
+                  (mediaAttachments.length > 1 &&
+                  (isSizeLarge || (withinContext && size === 'm')) ? (
+                    <div class="media-large-container">
+                      {mediaAttachments.map((media, i) => (
+                        <div key={media.id} class={`media-container media-eq1`}>
+                          <Media
+                            media={media}
+                            autoAnimate
+                            showCaption
+                            allowLongerCaption={!content}
+                            lang={language}
+                            to={`/${instance}/s/${id}?${
+                              withinContext ? 'media' : 'media-only'
+                            }=${i + 1}`}
+                            onClick={
+                              onMediaClick
+                                ? (e) => onMediaClick(e, i, media, status)
+                                : undefined
+                            }
+                          />
+                        </div>
                       ))}
                     </div>
-                  </MultipleMediaFigure>
-                )}
+                  ) : (
+                    <MultipleMediaFigure
+                      lang={language}
+                      enabled={showMultipleMediaCaptions}
+                      captionChildren={captionChildren}
+                    >
+                      <div
+                        ref={mediaContainerRef}
+                        class={`media-container media-eq${
+                          mediaAttachments.length
+                        } ${mediaAttachments.length > 2 ? 'media-gt2' : ''} ${
+                          mediaAttachments.length > 4 ? 'media-gt4' : ''
+                        }`}
+                      >
+                        {displayedMediaAttachments.map((media, i) => (
+                          <Media
+                            key={media.id}
+                            media={media}
+                            autoAnimate={isSizeLarge}
+                            showCaption={mediaAttachments.length === 1}
+                            allowLongerCaption={
+                              !content && mediaAttachments.length === 1
+                            }
+                            lang={language}
+                            altIndex={
+                              showMultipleMediaCaptions &&
+                              !!media.description &&
+                              i + 1
+                            }
+                            to={`/${instance}/s/${id}?${
+                              withinContext ? 'media' : 'media-only'
+                            }=${i + 1}`}
+                            onClick={
+                              onMediaClick
+                                ? (e) => {
+                                    onMediaClick(e, i, media, status);
+                                  }
+                                : undefined
+                            }
+                          />
+                        ))}
+                      </div>
+                    </MultipleMediaFigure>
+                  ))}
                 {!!card &&
                   /^https/i.test(card?.url) &&
                   !sensitive &&
@@ -2124,11 +2213,11 @@ function Status({
                   menuExtras={
                     <MenuItem
                       onClick={() => {
-                        states.showCompose = {
+                        showCompose({
                           draftStatus: {
                             status: `\n${url}`,
                           },
-                        };
+                        });
                       }}
                     >
                       <Icon icon="quote" />
@@ -2367,6 +2456,22 @@ function MediaFirstContainer(props) {
   );
 }
 
+function getDomain(url) {
+  return punycode.toUnicode(
+    URL.parse(url)
+      .hostname.replace(/^www\./, '')
+      .replace(/\/$/, ''),
+  );
+}
+
+// "Post": Quote post + card link preview combo
+// Assume all links from these domains are "posts"
+// Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+// This is just "Progressive Enhancement"
+function isCardPost(domain) {
+  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+}
+
 function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
@@ -2445,9 +2550,7 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = punycode.toUnicode(
-      new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
-    );
+    const domain = getDomain(url);
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2467,12 +2570,17 @@ function Card({ card, selfReferential, instance }) {
       ctx.putImageData(imageData, 0, 0);
       blurhashImage = canvas.toDataURL();
     }
+
+    const isPost = isCardPost(domain);
+
     return (
       <a
         href={cardStatusURL || url}
         target={cardStatusURL ? null : '_blank'}
         rel="nofollow noopener noreferrer"
-        class={`card link ${blurhashImage ? '' : size}`}
+        class={`card link ${isPost ? 'card-post' : ''} ${
+          blurhashImage ? '' : size
+        }`}
         lang={language}
         dir="auto"
         style={{
@@ -2492,6 +2600,12 @@ function Card({ card, selfReferential, instance }) {
               try {
                 e.target.style.display = 'none';
               } catch (e) {}
+            }}
+            style={{
+              '--anim-duration':
+                width &&
+                height &&
+                `${Math.min(Math.max(Math.max(width, height) / 100, 5), 120)}s`,
             }}
           />
         </div>
@@ -2563,15 +2677,14 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = punycode.toUnicode(
-        new URL(url).hostname.replace(/^www\./, ''),
-      );
+      const domain = getDomain(url);
+      const isPost = isCardPost(domain);
       return (
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener noreferrer"
-          class={`card link no-image`}
+          class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
           onClick={handleClick}
         >
@@ -2765,7 +2878,7 @@ function generateHTMLCode(post, instance, level = 0) {
             const mediaURL = previewMediaURL || sourceMediaURL;
 
             const sourceMediaURLObj = sourceMediaURL
-              ? new URL(sourceMediaURL)
+              ? URL.parse(sourceMediaURL)
               : null;
             const isVideoMaybe =
               type === 'unknown' &&
@@ -3090,7 +3203,7 @@ function StatusButton({
 
 function nicePostURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash
@@ -3123,7 +3236,7 @@ function StatusCompact({ sKey }) {
   const {
     sensitive,
     spoilerText,
-    account: { avatar, avatarStatic, bot },
+    account: { avatar, avatarStatic, bot } = {},
     visibility,
     content,
     language,
@@ -3176,6 +3289,7 @@ function FilteredStatus({
   instance,
   containerProps = {},
   showFollowedTags,
+  quoted,
 }) {
   const snapStates = useSnapshot(states);
   const {
@@ -3220,7 +3334,9 @@ function FilteredStatus({
   return (
     <div
       class={
-        isReblog
+        quoted
+          ? ''
+          : isReblog
           ? group
             ? 'status-group'
             : 'status-reblog'
@@ -3236,7 +3352,11 @@ function FilteredStatus({
       }}
       {...bindLongPressPeek()}
     >
-      <article data-state-post-id={ssKey} class="status filtered" tabindex="-1">
+      <article
+        data-state-post-id={ssKey}
+        class={`status filtered ${quoted ? 'status-card' : ''}`}
+        tabindex="-1"
+      >
         <b
           class="status-filtered-badge clickable badge-meta"
           title={filterTitleStr}

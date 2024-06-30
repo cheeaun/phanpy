@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode';
+import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -19,6 +19,7 @@ import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
@@ -186,6 +187,7 @@ function AccountInfo({
     memorial,
     moved,
     roles,
+    hideCollections,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -229,7 +231,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = punycode.toUnicode(new URL(url).hostname);
+    const domain = punycode.toUnicode(URL.parse(url).hostname);
     return domain;
   }, [url]);
 
@@ -677,6 +679,9 @@ function AccountInfo({
                           excludeRelationshipAttrs: isSelf
                             ? ['followedBy']
                             : [],
+                          blankCopy: hideCollections
+                            ? 'This user has chosen to not make this information available.'
+                            : undefined,
                         };
                       }, 0);
                     }}
@@ -712,6 +717,9 @@ function AccountInfo({
                           fetchAccounts: fetchFollowing,
                           instance,
                           excludeRelationshipAttrs: isSelf ? ['following'] : [],
+                          blankCopy: hideCollections
+                            ? 'This user has chosen to not make this information available.'
+                            : undefined,
                         };
                       }, 0);
                     }}
@@ -1074,11 +1082,11 @@ function RelatedActions({
               <>
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `@${currentInfo?.acct || acct} `,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="at" />
@@ -1151,8 +1159,8 @@ function RelatedActions({
                             setRelationshipUIState('default');
                             showToast(
                               rel.showingReblogs
-                                ? `Boosts from @${username} disabled.`
-                                : `Boosts from @${username} enabled.`,
+                                ? `Boosts from @${username} enabled.`
+                                : `Boosts from @${username} disabled.`,
                             );
                           } catch (e) {
                             alert(e);
@@ -1647,7 +1655,7 @@ function lightenRGB([r, g, b]) {
 
 function niceAccountURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (

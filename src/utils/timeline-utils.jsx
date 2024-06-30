@@ -4,6 +4,7 @@ import pmem from './pmem';
 import { fetchRelationships } from './relationships';
 import states, { saveStatus, statusKey } from './states';
 import store from './store';
+import supports from './supports';
 
 export function groupBoosts(values) {
   let newValues = [];
@@ -149,6 +150,7 @@ export function groupContext(items, instance) {
 
   const newItems = [];
   const appliedContextIndices = [];
+  const inReplyToIds = [];
   items.forEach((item) => {
     if (item.reblog) {
       newItems.push(item);
@@ -176,35 +178,105 @@ export function groupContext(items, instance) {
       }
     }
 
+    // PREPARE FOR REPLY HINTS
     if (item.inReplyToId && item.inReplyToAccountId !== item.account.id) {
       const sKey = statusKey(item.id, instance);
       if (!states.statusReply[sKey]) {
         // If it's a reply and not a thread
-        queueMicrotask(async () => {
-          try {
-            const { masto } = api({ instance });
-            // const replyToStatus = await masto.v1.statuses
-            //   .$select(item.inReplyToId)
-            //   .fetch();
-            const replyToStatus = await fetchStatus(item.inReplyToId, masto);
-            saveStatus(replyToStatus, instance, {
-              skipThreading: true,
-              skipUnfurling: true,
-            });
-            states.statusReply[sKey] = {
-              id: replyToStatus.id,
-              instance,
-            };
-          } catch (e) {
-            // Silently fail
-            console.error(e);
-          }
+        inReplyToIds.push({
+          sKey,
+          inReplyToId: item.inReplyToId,
         });
+        // queueMicrotask(async () => {
+        //   try {
+        //     const { masto } = api({ instance });
+        //     // const replyToStatus = await masto.v1.statuses
+        //     //   .$select(item.inReplyToId)
+        //     //   .fetch();
+        //     const replyToStatus = await fetchStatus(item.inReplyToId, masto);
+        //     saveStatus(replyToStatus, instance, {
+        //       skipThreading: true,
+        //       skipUnfurling: true,
+        //     });
+        //     states.statusReply[sKey] = {
+        //       id: replyToStatus.id,
+        //       instance,
+        //     };
+        //   } catch (e) {
+        //     // Silently fail
+        //     console.error(e);
+        //   }
+        // });
       }
     }
 
     newItems.push(item);
   });
+
+  // FETCH AND SHOW REPLY HINTS
+  if (inReplyToIds?.length) {
+    queueMicrotask(() => {
+      const { masto } = api({ instance });
+      console.log('REPLYHINT', inReplyToIds);
+
+      // Fallback if batch fetch fails or returns nothing or not supported
+      async function fallbackFetch() {
+        for (let i = 0; i < inReplyToIds.length; i++) {
+          const { sKey, inReplyToId } = inReplyToIds[i];
+          try {
+            const replyToStatus = await fetchStatus(inReplyToId, masto);
+            saveStatus(replyToStatus, instance, {
+              skipThreading: true,
+            });
+            states.statusReply[sKey] = {
+              id: replyToStatus.id,
+              instance,
+            };
+            // Pause 1s
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          } catch (e) {
+            // Silently fail
+            console.error(e);
+          }
+        }
+      }
+
+      if (supports('@mastodon/fetch-multiple-statuses')) {
+        // This is batch fetching yooo, woot
+        // Limit 20, returns 422 if exceeded https://github.com/mastodon/mastodon/pull/27871
+        const ids = inReplyToIds.map(({ inReplyToId }) => inReplyToId);
+        (async () => {
+          try {
+            const replyToStatuses = await masto.v1.statuses.list({ id: ids });
+            if (replyToStatuses?.length) {
+              for (const replyToStatus of replyToStatuses) {
+                saveStatus(replyToStatus, instance, {
+                  skipThreading: true,
+                });
+                const sKey = inReplyToIds.find(
+                  ({ inReplyToId }) => inReplyToId === replyToStatus.id,
+                )?.sKey;
+                if (sKey) {
+                  states.statusReply[sKey] = {
+                    id: replyToStatus.id,
+                    instance,
+                  };
+                }
+              }
+            } else {
+              fallbackFetch();
+            }
+          } catch (e) {
+            // Silently fail
+            console.error(e);
+            fallbackFetch();
+          }
+        })();
+      } else {
+        fallbackFetch();
+      }
+    });
+  }
 
   return newItems;
 }

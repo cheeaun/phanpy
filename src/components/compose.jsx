@@ -1,11 +1,10 @@
 import './compose.css';
-
 import '@github/text-expander-element';
+
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import Fuse from 'fuse.js';
-import { memo } from 'preact/compat';
-import { forwardRef } from 'preact/compat';
+import { forwardRef, memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,

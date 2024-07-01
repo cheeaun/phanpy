@@ -19,8 +19,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 

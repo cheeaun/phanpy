@@ -9,15 +9,14 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import Menu2 from '../components/menu2';
 import { SHORTCUTS_LIMIT } from '../components/shortcuts-settings';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 

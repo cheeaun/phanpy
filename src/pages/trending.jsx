@@ -19,8 +19,7 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 

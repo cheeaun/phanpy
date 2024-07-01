@@ -140,6 +140,26 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
 
   const reachLimit = hashtags.length >= TOTAL_TAGS_LIMIT;
 
+  const [featuredUIState, setFeaturedUIState] = useState('default');
+  const [featuredTags, setFeaturedTags] = useState([]);
+  const [isFeaturedTag, setIsFeaturedTag] = useState(false);
+  useEffect(() => {
+    if (!authenticated) return;
+    (async () => {
+      try {
+        const featuredTags = await masto.v1.featuredTags.list();
+        setFeaturedTags(featuredTags);
+        setIsFeaturedTag(
+          featuredTags.some(
+            (tag) => tag.name.toLowerCase() === hashtag.toLowerCase(),
+          ),
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
   return (
     <Timeline
       key={instance + hashtagTitle}
@@ -233,6 +253,69 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   </>
                 )}
               </MenuConfirm>
+              <MenuItem
+                type="checkbox"
+                checked={isFeaturedTag}
+                disabled={featuredUIState === 'loading' || !authenticated}
+                onClick={() => {
+                  setFeaturedUIState('loading');
+                  if (isFeaturedTag) {
+                    const featuredTagID = featuredTags.find(
+                      (tag) => tag.name.toLowerCase() === hashtag.toLowerCase(),
+                    ).id;
+                    if (featuredTagID) {
+                      masto.v1.featuredTags
+                        .$select(featuredTagID)
+                        .remove()
+                        .then(() => {
+                          setIsFeaturedTag(false);
+                          showToast('Unfeatured on profile');
+                          setFeaturedTags(
+                            featuredTags.filter(
+                              (tag) => tag.id !== featuredTagID,
+                            ),
+                          );
+                        })
+                        .catch((e) => {
+                          console.error(e);
+                        })
+                        .finally(() => {
+                          setFeaturedUIState('default');
+                        });
+                    } else {
+                      showToast('Unable to unfeature on profile');
+                    }
+                  } else {
+                    masto.v1.featuredTags
+                      .create({
+                        name: hashtag,
+                      })
+                      .then((value) => {
+                        setIsFeaturedTag(true);
+                        showToast('Featured on profile');
+                        setFeaturedTags(featuredTags.concat(value));
+                      })
+                      .catch((e) => {
+                        console.error(e);
+                      })
+                      .finally(() => {
+                        setFeaturedUIState('default');
+                      });
+                  }
+                }}
+              >
+                {isFeaturedTag ? (
+                  <>
+                    <Icon icon="check-circle" />
+                    <span>Featured on profile</span>
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="check-circle" />
+                    <span>Feature on profile</span>
+                  </>
+                )}
+              </MenuItem>
               <MenuDivider />
             </>
           )}
@@ -366,7 +449,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="shortcut" /> <span>Add to Shorcuts</span>
+            <Icon icon="shortcut" /> <span>Add to Shortcuts</span>
           </MenuItem>
           <MenuItem
             onClick={() => {

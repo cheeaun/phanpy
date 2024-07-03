@@ -388,6 +388,17 @@ function Timeline({
           dotRef.current = node;
         }}
         tabIndex="-1"
+        onClick={(e) => {
+          // If click on timeline item, unhide header
+          if (
+            headerRef.current &&
+            e.target.closest('.timeline-item, .timeline-item-alt')
+          ) {
+            setTimeout(() => {
+              headerRef.current.hidden = false;
+            }, 250);
+          }
+        }}
       >
         <div class="timeline-deck deck">
           <header

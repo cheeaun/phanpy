@@ -9,14 +9,17 @@ body.cloak,
   .status .content-container,
   .status .content-container *,
   .status .content-compact > *,
+  .account-container .actions small,
   .account-container :is(header, main > *:not(.actions)),
   .account-container :is(header, main > *:not(.actions)) *,
-  .header-double-lines,
+  .header-double-lines *,
   .account-block,
   .catchup-filters .filter-author *,
   .post-peek-html *,
   .post-peek-content > *,
-  .request-notifications-account * {
+  .request-notifications-account *,
+  .status.compact-thread *,
+  .status .content-compact {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
     /* text-rendering: optimizeSpeed; */
@@ -50,10 +53,19 @@ body.cloak,
 
 body.cloak,
 .cloak {
+  .header-double-lines *,
+  .account-container .profile-metadata b,
+  .account-container .actions small,
+  .account-container .stats *,
   .media-container figcaption,
   .media-container figcaption > *,
   .catchup-filters .filter-author *,
   .request-notifications-account * {
     color: var(--text-color) !important;
+  }
+
+  .account-container .actions small,
+  .status .content-compact {
+    background-color: currentColor !important;
   }
 }

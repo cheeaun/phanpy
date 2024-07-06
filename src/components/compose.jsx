@@ -2316,10 +2316,8 @@ function MediaAttachment({
       </div>
       {showModal && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowModal(false);
-            }
+          onClose={() => {
+            setShowModal(false);
           }}
         >
           <div id="media-sheet" class="sheet sheet-max">

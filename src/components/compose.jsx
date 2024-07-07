@@ -147,23 +147,22 @@ const SCAN_RE = new RegExp(
 );
 
 const segmenter = new Intl.Segmenter();
-function highlightText(text, { maxCharacters = Infinity }) {
-  // Accept text string, return formatted HTML string
-  // Escape all HTML special characters
-  let html = text
+function escapeHTML(text) {
+  return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
-
+}
+function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
   const { composerCharacterCount } = states;
   if (composerCharacterCount > maxCharacters) {
     // Highlight exceeded characters
     let withinLimitHTML = '',
       exceedLimitHTML = '';
-    const htmlSegments = segmenter.segment(html);
+    const htmlSegments = segmenter.segment(text);
     for (const { segment, index } of htmlSegments) {
       if (index < maxCharacters) {
         withinLimitHTML += segment;
@@ -174,13 +173,13 @@ function highlightText(text, { maxCharacters = Infinity }) {
     if (exceedLimitHTML) {
       exceedLimitHTML =
         '<mark class="compose-highlight-exceeded">' +
-        exceedLimitHTML +
+        escapeHTML(exceedLimitHTML) +
         '</mark>';
     }
-    return withinLimitHTML + exceedLimitHTML;
+    return escapeHTML(withinLimitHTML) + exceedLimitHTML;
   }
 
-  return html
+  return escapeHTML(text)
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
     .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
     .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags

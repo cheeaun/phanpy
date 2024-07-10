@@ -8,8 +8,7 @@ import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 

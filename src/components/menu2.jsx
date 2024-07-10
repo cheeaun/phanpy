@@ -1,8 +1,8 @@
 import { Menu } from '@szhsin/react-menu';
-import { useWindowSize } from '@uidotdev/usehooks';
 import { useRef } from 'preact/hooks';
 
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
+import useWindowSize from '../utils/useWindowSize';
 
 // It's like Menu but with sensible defaults, bug fixes and improvements.
 function Menu2(props) {

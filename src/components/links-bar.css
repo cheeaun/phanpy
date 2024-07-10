@@ -95,6 +95,29 @@
       filter: brightness(0.8);
     }
 
+    figure {
+      transition: 1s ease-out;
+      transition-property: opacity, mix-blend-mode;
+    }
+
+    &.inactive:not(:active, :hover) {
+      figure {
+        transition-duration: 0.3s;
+        opacity: 0.5;
+        mix-blend-mode: luminosity;
+      }
+    }
+
+    &.active {
+      border-color: var(--accent-color, var(--link-light-color));
+      height: 100%;
+      max-height: 100%;
+
+      + button[disabled] {
+        display: none;
+      }
+    }
+
     article {
       width: 100%;
       display: flex;

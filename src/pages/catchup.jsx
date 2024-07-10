@@ -1111,8 +1111,8 @@ function Catchup() {
                         publishedAt,
                       } = card;
                       const domain = punycode.toUnicode(
-                        new URL(url).hostname
-                          .replace(/^www\./, '')
+                        URL.parse(url)
+                          .hostname.replace(/^www\./, '')
                           .replace(/\/$/, ''),
                       );
                       let accentColor;
@@ -1765,6 +1765,12 @@ function PostPeek({ post, filterInfo }) {
             ? mediaAttachments.map((m) => {
                 const mediaURL = m.previewUrl || m.url;
                 const remoteMediaURL = m.previewRemoteUrl || m.remoteUrl;
+                const width = m.meta?.original
+                  ? m.meta.original.width
+                  : m.meta?.small?.width || m.meta?.original?.width;
+                const height = m.meta?.original
+                  ? m.meta.original.height
+                  : m.meta?.small?.height || m.meta?.original?.height;
                 return (
                   <span key={m.id} class="post-peek-media">
                     {{
@@ -1781,6 +1787,12 @@ function PostPeek({ post, filterInfo }) {
                               if (src === mediaURL) {
                                 e.target.src = remoteMediaURL;
                               }
+                            }}
+                            style={{
+                              '--anim-duration': `${Math.min(
+                                Math.max(Math.max(width, height) / 100, 5),
+                                120,
+                              )}s`,
                             }}
                           />
                         ) : (
@@ -1844,6 +1856,18 @@ function PostPeek({ post, filterInfo }) {
                         card.title || card.description || card.imageDescription
                       }
                       loading="lazy"
+                      style={{
+                        '--anim-duration':
+                          card.width &&
+                          card.height &&
+                          `${Math.min(
+                            Math.max(
+                              Math.max(card.width, card.height) / 100,
+                              5,
+                            ),
+                            120,
+                          )}s`,
+                      }}
                     />
                   ) : (
                     <span class="post-peek-faux-media">🔗</span>

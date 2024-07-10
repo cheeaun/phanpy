@@ -215,7 +215,7 @@
 }
 .status-card:not(.status-carousel .status)
   :is(.content, .poll, .media-container) {
-  max-height: 160px !important;
+  max-height: max(160px, 33vh) !important;
   overflow: hidden;
 }
 .status.small:not(.status-carousel .status, .status.large .status)
@@ -453,6 +453,10 @@
 .status > .container > .meta .meta-name {
   mask-image: linear-gradient(to left, transparent, black 16px);
   flex-grow: 1;
+
+  .name-text b {
+    opacity: 0.75;
+  }
 }
 .status.large > .container > .meta {
   min-height: 50px;
@@ -791,6 +795,10 @@
   max-height: 50vh;
   overflow: clip;
   position: relative;
+
+  &:has(.status-card):not(:has(+ .media-container)) {
+    max-height: 80vh;
+  }
 }
 .timeline-deck
   .status-reblog:not(.status-carousel .status-reblog)
@@ -1209,8 +1217,8 @@
     }
   }
 }
-.status .media img:is(:hover, :focus),
-a:focus-visible .status .media img {
+.status .media:not([data-has-small-dimension]) img:is(:hover, :focus),
+a:focus-visible .status .media:not([data-has-small-dimension]) img {
   animation: position-object 5s ease-in-out 1s 5;
   animation-duration: var(--anim-duration, 5s);
 }
@@ -1363,9 +1371,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
   column-gap: 8px;
   flex-wrap: wrap;
 
-  .media[data-has-small-dimension] {
+  .media {
     width: var(--width, auto) !important;
   }
+
+  /* .media[data-has-small-dimension] {
+    width: var(--width, auto) !important;
+  } */
 
   figure {
     flex-direction: column;

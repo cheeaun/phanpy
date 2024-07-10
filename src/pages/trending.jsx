@@ -1,14 +1,16 @@
 import '../components/links-bar.css';
+import './trending.css';
 
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
-import { useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import punycode from 'punycode/';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import Link from '../components/link';
+import Loader from '../components/loader';
 import Menu2 from '../components/menu2';
 import RelativeTime from '../components/relative-time';
 import Timeline from '../components/timeline';
@@ -17,24 +19,32 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
+const TREND_CACHE_TIME = 10 * 60 * 1000; // 10 minutes
 
 const fetchLinks = pmem(
   (masto) => {
     return masto.v1.trends.links.list().next();
   },
   {
-    // News last much longer
-    maxAge: 10 * 60 * 1000, // 10 minutes
+    maxAge: TREND_CACHE_TIME,
   },
 );
 
-function fetchTrends(masto) {
+const fetchHashtags = pmem(
+  (masto) => {
+    return masto.v1.trends.tags.list().next();
+  },
+  {
+    maxAge: TREND_CACHE_TIME,
+  },
+);
+
+function fetchTrendsStatuses(masto) {
   if (supports('@pixelfed/trending')) {
     return masto.pixelfed.v2.discover.posts.trending.list({
       range: 'daily',
@@ -43,6 +53,10 @@ function fetchTrends(masto) {
   return masto.v1.trends.statuses.list({
     limit: LIMIT,
   });
+}
+
+function fetchLinkList(masto, params) {
+  return masto.v1.timelines.link.list(params);
 }
 
 function Trending({ columnMode, ...props }) {
@@ -57,19 +71,22 @@ function Trending({ columnMode, ...props }) {
   // const navigate = useNavigate();
   const latestItem = useRef();
 
+  const sameCurrentInstance = instance === currentInstance;
+
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
   const trendIterator = useRef();
 
-  async function fetchTrend(firstLoad) {
+  async function fetchTrends(firstLoad) {
+    console.log('fetchTrend', firstLoad);
     if (firstLoad || !trendIterator.current) {
-      trendIterator.current = fetchTrends(masto);
+      trendIterator.current = fetchTrendsStatuses(masto);
 
       // Get hashtags
       if (supports('@mastodon/trending-hashtags')) {
         try {
-          const iterator = masto.v1.trends.tags.list();
-          const { value: tags } = await iterator.next();
+          // const iterator = masto.v1.trends.tags.list();
+          const { value: tags } = await fetchHashtags(masto);
           console.log('tags', tags);
           if (tags?.length) {
             setHashtags(tags);
@@ -106,6 +123,53 @@ function Trending({ columnMode, ...props }) {
       value.forEach((item) => {
         saveStatus(item, instance);
       });
+    }
+    return {
+      ...results,
+      value,
+    };
+  }
+
+  // Link mentions
+  // https://github.com/mastodon/mastodon/pull/30381
+  const [currentLinkMentionsLoading, setCurrentLinkMentionsLoading] =
+    useState(false);
+  const currentLinkMentionsIterator = useRef();
+  const [currentLink, setCurrentLink] = useState(null);
+  const hasCurrentLink = !!currentLink;
+  const currentLinkRef = useRef();
+  const supportsTrendingLinkPosts =
+    sameCurrentInstance && supports('@mastodon/trending-hashtags');
+
+  useEffect(() => {
+    if (currentLink && currentLinkRef.current) {
+      currentLinkRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  }, [currentLink]);
+
+  const prevCurrentLink = useRef();
+  async function fetchLinkMentions(firstLoad) {
+    if (firstLoad || !currentLinkMentionsIterator.current) {
+      setCurrentLinkMentionsLoading(true);
+      currentLinkMentionsIterator.current = fetchLinkList(masto, {
+        url: currentLink,
+      });
+    }
+    prevCurrentLink.current = currentLink;
+    const results = await currentLinkMentionsIterator.current.next();
+    let { value } = results;
+    if (value?.length) {
+      value = filteredItems(value, 'public');
+      value.forEach((item) => {
+        saveStatus(item, instance);
+      });
+    }
+    if (prevCurrentLink.current === currentLink) {
+      setCurrentLinkMentionsLoading(false);
     }
     return {
       ...results,
@@ -178,7 +242,9 @@ function Trending({ columnMode, ...props }) {
                 width,
               } = link;
               const domain = punycode.toUnicode(
-                new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
+                URL.parse(url)
+                  .hostname.replace(/^www\./, '')
+                  .replace(/\/$/, ''),
               );
               let accentColor;
               if (blurhash) {
@@ -192,77 +258,134 @@ function Trending({ columnMode, ...props }) {
               }
 
               return (
-                <a
-                  key={url}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={
-                    accentColor
-                      ? {
-                          '--accent-color': `rgb(${accentColor.join(',')})`,
-                          '--accent-alpha-color': `rgba(${accentColor.join(
-                            ',',
-                          )}, 0.4)`,
-                        }
-                      : {}
-                  }
-                >
-                  <article>
-                    <figure>
-                      <img
-                        src={image}
-                        alt={imageDescription}
-                        width={width}
-                        height={height}
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="article-body">
-                      <header>
-                        <div class="article-meta">
-                          <span class="domain">{domain}</span>{' '}
-                          {!!publishedAt && <>&middot; </>}
-                          {!!publishedAt && (
-                            <>
-                              <RelativeTime
-                                datetime={publishedAt}
-                                format="micro"
-                              />
-                            </>
+                <div key={url}>
+                  <a
+                    ref={currentLink === url ? currentLinkRef : null}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={
+                      hasCurrentLink
+                        ? currentLink === url
+                          ? 'active'
+                          : 'inactive'
+                        : ''
+                    }
+                    style={
+                      accentColor
+                        ? {
+                            '--accent-color': `rgb(${accentColor.join(',')})`,
+                            '--accent-alpha-color': `rgba(${accentColor.join(
+                              ',',
+                            )}, 0.4)`,
+                          }
+                        : {}
+                    }
+                  >
+                    <article>
+                      <figure>
+                        <img
+                          src={image}
+                          alt={imageDescription}
+                          width={width}
+                          height={height}
+                          loading="lazy"
+                        />
+                      </figure>
+                      <div class="article-body">
+                        <header>
+                          <div class="article-meta">
+                            <span class="domain">{domain}</span>{' '}
+                            {!!publishedAt && <>&middot; </>}
+                            {!!publishedAt && (
+                              <>
+                                <RelativeTime
+                                  datetime={publishedAt}
+                                  format="micro"
+                                />
+                              </>
+                            )}
+                          </div>
+                          {!!title && (
+                            <h1
+                              class="title"
+                              lang={language}
+                              dir="auto"
+                              title={title}
+                            >
+                              {title}
+                            </h1>
                           )}
-                        </div>
-                        {!!title && (
-                          <h1
-                            class="title"
+                        </header>
+                        {!!description && (
+                          <p
+                            class="description"
                             lang={language}
                             dir="auto"
-                            title={title}
+                            title={description}
                           >
-                            {title}
-                          </h1>
+                            {description}
+                          </p>
                         )}
-                      </header>
-                      {!!description && (
-                        <p
-                          class="description"
-                          lang={language}
-                          dir="auto"
-                          title={description}
-                        >
-                          {description}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                </a>
+                      </div>
+                    </article>
+                  </a>
+                  {supportsTrendingLinkPosts && (
+                    <button
+                      type="button"
+                      class="small plain4 block"
+                      onClick={() => {
+                        setCurrentLink(url);
+                      }}
+                      disabled={url === currentLink}
+                    >
+                      <Icon icon="comment2" /> <span>Mentions</span>{' '}
+                      <Icon icon="chevron-down" />
+                    </button>
+                  )}
+                </div>
               );
             })}
           </div>
         )}
+        {supportsTrendingLinkPosts && !!links.length && (
+          <div
+            class={`timeline-header-block ${hasCurrentLink ? 'blended' : ''}`}
+          >
+            {hasCurrentLink ? (
+              <>
+                <div style={{ width: 50, flexShrink: 0, textAlign: 'center' }}>
+                  {currentLinkMentionsLoading ? (
+                    <Loader abrupt />
+                  ) : (
+                    <button
+                      type="button"
+                      class="light"
+                      onClick={() => {
+                        setCurrentLink(null);
+                      }}
+                    >
+                      <Icon icon="x" />
+                    </button>
+                  )}
+                </div>
+                <p>
+                  Showing posts mentioning{' '}
+                  <span class="link-text">
+                    {currentLink
+                      .replace(/^https?:\/\/(www\.)?/i, '')
+                      .replace(/\/$/, '')}
+                  </span>
+                </p>
+              </>
+            ) : (
+              <p class="insignificant">Trending posts</p>
+            )}
+          </div>
+        )}
       </>
     );
-  }, [hashtags, links]);
+  }, [hashtags, links, currentLink, currentLinkMentionsLoading]);
 
   return (
     <Timeline
@@ -278,8 +401,8 @@ function Trending({ columnMode, ...props }) {
       instance={instance}
       emptyText="No trending posts."
       errorText="Unable to load posts"
-      fetchItems={fetchTrend}
-      checkForUpdates={checkForUpdates}
+      fetchItems={hasCurrentLink ? fetchLinkMentions : fetchTrends}
+      checkForUpdates={hasCurrentLink ? undefined : checkForUpdates}
       checkForUpdatesInterval={5 * 60 * 1000} // 5 minutes
       useItemID
       headerStart={<></>}
@@ -287,6 +410,9 @@ function Trending({ columnMode, ...props }) {
       // allowFilters
       filterContext="public"
       timelineStart={TimelineStart}
+      refresh={currentLink}
+      clearWhenRefresh
+      view={hasCurrentLink ? 'link-mentions' : undefined}
       headerEnd={
         <Menu2
           portal

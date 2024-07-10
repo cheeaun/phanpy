@@ -55,6 +55,7 @@ function Timeline({
   filterContext,
   showFollowedTags,
   showReplyParent,
+  clearWhenRefresh,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
@@ -69,14 +70,17 @@ function Timeline({
   const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
   const allowGrouping = view !== 'media';
+  const loadItemsTS = useRef(0); // Ensures only one loadItems at a time
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);
-      if (uiState === 'loading') return;
+      // if (uiState === 'loading') return;
       setUIState('loading');
       (async () => {
         try {
+          const ts = (loadItemsTS.current = Date.now());
           let { done, value } = await fetchItems(firstLoad);
+          if (ts !== loadItemsTS.current) return;
           if (Array.isArray(value)) {
             // Avoid grouping for pinned posts
             const [pinnedPosts, otherPosts] = value.reduce(
@@ -120,10 +124,10 @@ function Timeline({
         }
       })();
     },
-    1500,
+    1_000,
     {
       leading: true,
-      trailing: false,
+      // trailing: false,
     },
   );
 
@@ -273,9 +277,18 @@ function Timeline({
     scrollableRef.current?.scrollTo({ top: 0 });
     loadItems(true);
   }, []);
+  const firstLoad = useRef(true);
   useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
+    if (clearWhenRefresh && items?.length) {
+      loadItems.cancel?.();
+      setItems([]);
+    }
     loadItems(true);
-  }, [refresh]);
+  }, [clearWhenRefresh, refresh]);
 
   // useEffect(() => {
   //   if (reachStart) {
@@ -375,6 +388,17 @@ function Timeline({
           dotRef.current = node;
         }}
         tabIndex="-1"
+        onClick={(e) => {
+          // If click on timeline item, unhide header
+          if (
+            headerRef.current &&
+            e.target.closest('.timeline-item, .timeline-item-alt')
+          ) {
+            setTimeout(() => {
+              headerRef.current.hidden = false;
+            }, 250);
+          }
+        }}
       >
         <div class="timeline-deck deck">
           <header

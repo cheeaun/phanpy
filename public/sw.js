@@ -96,6 +96,25 @@ const apiExtendedRoute = new RegExpRoute(
 );
 registerRoute(apiExtendedRoute);
 
+const apiIntermediateRoute = new RegExpRoute(
+  // Matches:
+  // - trends/*
+  // - timelines/link
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
+  new StaleWhileRevalidate({
+    cacheName: 'api-intermediate',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 10 * 60, // 10 minutes
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(apiIntermediateRoute);
+
 const apiRoute = new RegExpRoute(
   // Matches:
   // - statuses/:id/context - some contexts are really huge

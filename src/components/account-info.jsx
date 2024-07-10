@@ -33,9 +33,9 @@ import Icon from './icon';
 import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
-import Menu2 from './menu2';
 import MenuConfirm from './menu-confirm';
 import MenuLink from './menu-link';
+import Menu2 from './menu2';
 import Modal from './modal';
 import SubMenu2 from './submenu2';
 import TranslationBlock from './translation-block';
@@ -231,7 +231,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = punycode.toUnicode(new URL(url).hostname);
+    const domain = punycode.toUnicode(URL.parse(url).hostname);
     return domain;
   }, [url]);
 
@@ -1159,8 +1159,8 @@ function RelatedActions({
                             setRelationshipUIState('default');
                             showToast(
                               rel.showingReblogs
-                                ? `Boosts from @${username} disabled.`
-                                : `Boosts from @${username} enabled.`,
+                                ? `Boosts from @${username} enabled.`
+                                : `Boosts from @${username} disabled.`,
                             );
                           } catch (e) {
                             alert(e);
@@ -1655,7 +1655,7 @@ function lightenRGB([r, g, b]) {
 
 function niceAccountURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (

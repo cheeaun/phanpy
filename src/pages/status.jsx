@@ -569,7 +569,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     if (!heroStatus) return;
     const { url } = heroStatus;
     if (!url) return;
-    return new URL(url).hostname;
+    return URL.parse(url).hostname;
   }, [heroStatus]);
   const postSameInstance = useMemo(() => {
     if (!postInstance) return;

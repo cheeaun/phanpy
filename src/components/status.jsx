@@ -1,6 +1,6 @@
 import './status.css';
-
 import '@justinribeiro/lite-youtube';
+
 import {
   ControlledMenu,
   Menu,
@@ -32,8 +32,8 @@ import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
 import LazyShazam from '../components/lazy-shazam';
 import Loader from '../components/loader';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
@@ -69,8 +69,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
-import Media from './media';
-import { isMediaCaptionLong } from './media';
+import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
@@ -2456,6 +2455,22 @@ function MediaFirstContainer(props) {
   );
 }
 
+function getDomain(url) {
+  return punycode.toUnicode(
+    URL.parse(url)
+      .hostname.replace(/^www\./, '')
+      .replace(/\/$/, ''),
+  );
+}
+
+// "Post": Quote post + card link preview combo
+// Assume all links from these domains are "posts"
+// Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+// This is just "Progressive Enhancement"
+function isCardPost(domain) {
+  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+}
+
 function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
@@ -2534,9 +2549,7 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = punycode.toUnicode(
-      new URL(url).hostname.replace(/^www\./, '').replace(/\/$/, ''),
-    );
+    const domain = getDomain(url);
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2557,11 +2570,7 @@ function Card({ card, selfReferential, instance }) {
       blurhashImage = canvas.toDataURL();
     }
 
-    // "Post": Quote post + card link preview combo
-    // Assume all links from these domains are "posts"
-    // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
-    // This is just "Progressive Enhancement"
-    const isPost = ['x.com', 'twitter.com', 'threads.net'].includes(domain);
+    const isPost = isCardPost(domain);
 
     return (
       <a
@@ -2590,6 +2599,12 @@ function Card({ card, selfReferential, instance }) {
               try {
                 e.target.style.display = 'none';
               } catch (e) {}
+            }}
+            style={{
+              '--anim-duration':
+                width &&
+                height &&
+                `${Math.min(Math.max(Math.max(width, height) / 100, 5), 120)}s`,
             }}
           />
         </div>
@@ -2661,15 +2676,14 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = punycode.toUnicode(
-        new URL(url).hostname.replace(/^www\./, ''),
-      );
+      const domain = getDomain(url);
+      const isPost = isCardPost(domain);
       return (
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener noreferrer"
-          class={`card link no-image`}
+          class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
           onClick={handleClick}
         >
@@ -2863,7 +2877,7 @@ function generateHTMLCode(post, instance, level = 0) {
             const mediaURL = previewMediaURL || sourceMediaURL;
 
             const sourceMediaURLObj = sourceMediaURL
-              ? new URL(sourceMediaURL)
+              ? URL.parse(sourceMediaURL)
               : null;
             const isVideoMaybe =
               type === 'unknown' &&
@@ -3188,7 +3202,7 @@ function StatusButton({
 
 function nicePostURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash

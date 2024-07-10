@@ -1,6 +1,6 @@
 import './index.css';
-
 import './app.css';
+import './polyfills';
 
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';

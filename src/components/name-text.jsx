@@ -2,6 +2,7 @@ import './name-text.css';
 
 import { memo } from 'preact/compat';
 
+import { api } from '../utils/api';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -32,6 +33,8 @@ function NameText({
     username,
   } = account;
   const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+
+  if (!instance) instance = api().instance;
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();

@@ -11,7 +11,7 @@ const statusPostRegexes = [
 
 export function getInstanceStatusObject(url) {
   // Regex /:username/:id, where username = @username or @username@domain, id = anything
-  const { hostname, pathname } = new URL(url);
+  const { hostname, pathname } = URL.parse(url);
   // const [, username, domain, id] = pathname.match(statusRegex) || [];
   for (const regex of statusPostRegexes) {
     const [, id] = pathname.match(regex) || [];

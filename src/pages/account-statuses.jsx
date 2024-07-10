@@ -19,8 +19,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
@@ -467,7 +466,7 @@ function AccountStatuses() {
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;
-    const domain = new URL(account.url).hostname;
+    const domain = URL.parse(account.url).hostname;
     return domain;
   }, [account]);
   const sameInstance = instance === accountInstance;

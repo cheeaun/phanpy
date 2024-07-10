@@ -59,12 +59,8 @@ function _unfurlMastodonLink(instance, url) {
     theURL = `https://${finalURL}`;
   }
 
-  let urlObj;
-  try {
-    urlObj = new URL(theURL);
-  } catch (e) {
-    return;
-  }
+  const urlObj = URL.parse(theURL);
+  if (!urlObj) return;
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   // Regex /:username/:id, where username = @username or @username@domain, id = post ID

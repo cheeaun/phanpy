@@ -4,8 +4,7 @@ import { useSnapshot } from 'valtio';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import states from '../utils/states';
-import { getStatus, saveStatus } from '../utils/states';
+import states, { getStatus, saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import {
   assignFollowedTags,

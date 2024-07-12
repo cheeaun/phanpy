@@ -20,8 +20,11 @@ import Notification from '../components/notification';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
-import groupNotifications from '../utils/group-notifications';
+import groupNotifications, {
+  groupNotifications2,
+} from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
 import shortenNumber from '../utils/shorten-number';
@@ -33,7 +36,8 @@ import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
-const LIMIT = 80;
+const NOTIFICATIONS_LIMIT = 80;
+const NOTIFICATIONS_GROUPED_LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
@@ -41,6 +45,43 @@ const scrollIntoViewOptions = {
   inline: 'center',
   behavior: 'smooth',
 };
+
+const memSupportsGroupedNotifications = mem(
+  () => supports('@mastodon/grouped-notifications'),
+  {
+    maxAge: 1000 * 60 * 5, // 5 minutes
+  },
+);
+
+export function mastoFetchNotifications(opts = {}) {
+  const { masto } = api();
+  if (
+    states.settings.groupedNotificationsAlpha &&
+    memSupportsGroupedNotifications()
+  ) {
+    // https://github.com/mastodon/mastodon/pull/29889
+    return masto.v2_alpha.notifications.list({
+      limit: NOTIFICATIONS_GROUPED_LIMIT,
+      ...opts,
+    });
+  } else {
+    return masto.v1.notifications.list({
+      limit: NOTIFICATIONS_LIMIT,
+      ...opts,
+    });
+  }
+}
+
+export function getGroupedNotifications(notifications) {
+  if (
+    states.settings.groupedNotificationsAlpha &&
+    memSupportsGroupedNotifications()
+  ) {
+    return groupNotifications2(notifications);
+  } else {
+    return groupNotifications(notifications);
+  }
+}
 
 function Notifications({ columnMode }) {
   useTitle('Notifications', '/notifications');
@@ -67,8 +108,7 @@ function Notifications({ columnMode }) {
   async function fetchNotifications(firstLoad) {
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
-      notificationsIterator.current = masto.v1.notifications.list({
-        limit: LIMIT,
+      notificationsIterator.current = mastoFetchNotifications({
         excludeTypes: ['follow_request'],
       });
     }
@@ -115,10 +155,10 @@ function Notifications({ columnMode }) {
 
       // console.log({ notifications });
 
-      const groupedNotifications = groupNotifications(notifications);
+      const groupedNotifications = getGroupedNotifications(notifications);
 
       if (firstLoad) {
-        states.notificationsLast = notifications[0];
+        states.notificationsLast = groupedNotifications[0];
         states.notifications = groupedNotifications;
 
         // Update last read marker

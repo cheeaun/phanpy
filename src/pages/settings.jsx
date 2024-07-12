@@ -21,6 +21,7 @@ import {
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
+import supports from '../utils/supports';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
@@ -492,6 +493,27 @@ function Settings({ onClose }) {
                       img-alt-api
                     </a>
                     . May not work well. Only for images and in English.
+                  </small>
+                </div>
+              </li>
+            )}
+            {authenticated && supports('@mastodon/grouped-notifications') && (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.groupedNotificationsAlpha}
+                    onChange={(e) => {
+                      states.settings.groupedNotificationsAlpha =
+                        e.target.checked;
+                    }}
+                  />{' '}
+                  Server-side grouped notifications
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    Alpha-stage feature. Potentially improved grouping window
+                    but basic grouping logic.
                   </small>
                 </div>
               </li>

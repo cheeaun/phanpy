@@ -378,9 +378,15 @@ textarea:disabled {
   width: 100%;
 }
 
-button.small {
+:is(button, .button).small {
   font-size: 90%;
   padding: 4px 8px;
+}
+
+.button.centered {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 select.plain {

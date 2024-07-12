@@ -295,6 +295,16 @@ export function unfurlStatus(status, instance) {
         unfurlMastodonLink(currentInstance, a.href).then((result) => {
           if (!result) return;
           if (!sKey) return;
+          if (result?.id === status.id) {
+            // Unfurled post is the post itself???
+            // Scenario:
+            // 1. Post with [URL]
+            // 2. Unfurl [URL], API returns the same post that contains [URL]
+            // 3. 💥 Recursive quote posts 💥
+            // Note: Mastodon search doesn't return posts that contains [URL], it's actually used to *resolve* the URL
+            // But some non-Mastodon servers, their search API will eventually search posts that contains [URL] and return them
+            return;
+          }
           if (!Array.isArray(states.statusQuotes[sKey])) {
             states.statusQuotes[sKey] = [];
           }

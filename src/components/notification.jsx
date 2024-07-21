@@ -147,9 +147,11 @@ function Notification({
     report,
     event,
     moderation_warning,
+    // Client-side grouped notification
+    _ids,
     _accounts,
     _statuses,
-    // Grouped notification
+    // Server-side grouped notification
     sampleAccounts,
     notificationsCount,
   } = notification;
@@ -266,7 +268,7 @@ function Notification({
   return (
     <div
       class={`notification notification-${type}`}
-      data-notification-id={id}
+      data-notification-id={_ids || id}
       tabIndex="0"
     >
       <div

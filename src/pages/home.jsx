@@ -177,7 +177,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
               .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
               .map((notification) => (
                 <Notification
-                  key={notification.ids || notification.id}
+                  key={notification._ids || notification.id}
                   instance={instance}
                   notification={notification}
                   disableContextMenu

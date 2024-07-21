@@ -716,12 +716,12 @@ function Notifications({ columnMode }) {
                         hideTime: true,
                       });
                 return (
-                  <Fragment key={notification.ids || notification.id}>
+                  <Fragment key={notification._ids || notification.id}>
                     {differentDay && <h2 class="timeline-header">{heading}</h2>}
                     <Notification
                       instance={instance}
                       notification={notification}
-                      key={notification.ids || notification.id}
+                      key={notification._ids || notification.id}
                     />
                   </Fragment>
                 );

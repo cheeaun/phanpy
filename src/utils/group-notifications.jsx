@@ -99,12 +99,12 @@ export function groupNotifications2(groupNotifications) {
       const mappedNotification = notificationsMap2[key];
       if (mappedNotification) {
         mappedNotification._statuses.push(gn.status);
-        mappedNotification.ids += `-${gn.id}`;
+        mappedNotification._ids += `-${gn.id}`;
       } else {
         let n = (notificationsMap2[key] = {
-          ids: gn.id,
           ...gn,
           type,
+          _ids: gn.id,
           _statuses: [gn.status],
         });
         newGroupNotifications2.push(n);
@@ -145,18 +145,18 @@ export default function groupNotifications(notifications) {
       if (mappedAccount) {
         mappedAccount._types.push(type);
         mappedAccount._types.sort().reverse();
-        mappedNotification.ids += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       } else {
         account._types = [type];
         mappedNotification._accounts.push(account);
-        mappedNotification.ids += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       }
     } else {
       if (account) account._types = [type];
       let n = (notificationsMap[key] = {
-        ids: id,
         ...notification,
         type: virtualType,
+        _ids: id,
         _accounts: account ? [account] : [],
       });
       cleanNotifications[j++] = n;
@@ -179,12 +179,12 @@ export default function groupNotifications(notifications) {
       const mappedNotification = notificationsMap2[key];
       if (mappedNotification) {
         mappedNotification._statuses.push(notification.status);
-        mappedNotification.ids += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       } else {
         let n = (notificationsMap2[key] = {
-          ids: id,
           ...notification,
           type,
+          _ids: id,
           _statuses: [notification.status],
         });
         cleanNotifications2[j++] = n;

@@ -109,14 +109,14 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
 
       const groupedNotifications = getGroupedNotifications(notifications);
 
-      states.notificationsLast = notifications[0];
+      states.notificationsLast = groupedNotifications[0];
       states.notifications = groupedNotifications;
 
       // Update last read marker
       masto.v1.markers
         .create({
           notifications: {
-            lastReadId: notifications[0].id,
+            lastReadId: groupedNotifications[0].id,
           },
         })
         .catch(() => {});
@@ -177,7 +177,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
               .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
               .map((notification) => (
                 <Notification
-                  key={notification.id}
+                  key={notification.ids || notification.id}
                   instance={instance}
                   notification={notification}
                   disableContextMenu

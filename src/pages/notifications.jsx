@@ -165,7 +165,7 @@ function Notifications({ columnMode }) {
         masto.v1.markers
           .create({
             notifications: {
-              lastReadId: notifications[0].id,
+              lastReadId: groupedNotifications[0].id,
             },
           })
           .catch(() => {});
@@ -716,12 +716,12 @@ function Notifications({ columnMode }) {
                         hideTime: true,
                       });
                 return (
-                  <Fragment key={notification.id}>
+                  <Fragment key={notification.ids || notification.id}>
                     {differentDay && <h2 class="timeline-header">{heading}</h2>}
                     <Notification
                       instance={instance}
                       notification={notification}
-                      key={notification.id}
+                      key={notification.ids || notification.id}
                     />
                   </Fragment>
                 );

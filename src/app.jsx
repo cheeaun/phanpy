@@ -9,7 +9,9 @@ import {
   useState,
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
+
 import 'swiped-events';
+
 import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
@@ -54,6 +56,7 @@ import focusDeck from './utils/focus-deck';
 import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import { getCurrentAccount, setCurrentAccountID } from './utils/store-utils';
+
 import './utils/toast-alert';
 
 window.__STATES__ = states;

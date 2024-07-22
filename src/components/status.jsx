@@ -1,6 +1,6 @@
 import './status.css';
-
 import '@justinribeiro/lite-youtube';
+
 import {
   ControlledMenu,
   Menu,
@@ -32,8 +32,8 @@ import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
 import LazyShazam from '../components/lazy-shazam';
 import Loader from '../components/loader';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
@@ -69,8 +69,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
-import Media from './media';
-import { isMediaCaptionLong } from './media';
+import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';

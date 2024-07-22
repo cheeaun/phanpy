@@ -147,8 +147,13 @@ function Notification({
     report,
     event,
     moderation_warning,
+    // Client-side grouped notification
+    _ids,
     _accounts,
     _statuses,
+    // Server-side grouped notification
+    sampleAccounts,
+    notificationsCount,
   } = notification;
   let { type } = notification;
 
@@ -167,12 +172,14 @@ function Notification({
   let favsCount = 0;
   let reblogsCount = 0;
   if (type === 'favourite+reblog') {
-    for (const account of _accounts) {
-      if (account._types?.includes('favourite')) {
-        favsCount++;
-      }
-      if (account._types?.includes('reblog')) {
-        reblogsCount++;
+    if (_accounts) {
+      for (const account of _accounts) {
+        if (account._types?.includes('favourite')) {
+          favsCount++;
+        }
+        if (account._types?.includes('reblog')) {
+          reblogsCount++;
+        }
       }
     }
     if (!reblogsCount && favsCount) type = 'favourite';
@@ -261,7 +268,7 @@ function Notification({
   return (
     <div
       class={`notification notification-${type}`}
-      data-notification-id={id}
+      data-notification-id={_ids || id}
       tabIndex="0"
     >
       <div
@@ -292,6 +299,15 @@ function Notification({
                       <b tabIndex="0" onClick={handleOpenGenericAccounts}>
                         <span title={_accounts.length}>
                           {shortenNumber(_accounts.length)}
+                        </span>{' '}
+                        people
+                      </b>{' '}
+                    </>
+                  ) : notificationsCount > 1 ? (
+                    <>
+                      <b>
+                        <span title={notificationsCount}>
+                          {shortenNumber(notificationsCount)}
                         </span>{' '}
                         people
                       </b>{' '}
@@ -403,6 +419,54 @@ function Notification({
                 `+${_accounts.length - AVATARS_LIMIT}`}
               <Icon icon="chevron-down" />
             </button>
+          </p>
+        )}
+        {!_accounts?.length && sampleAccounts?.length > 1 && (
+          <p class="avatars-stack">
+            {sampleAccounts.map((account) => (
+              <Fragment key={account.id}>
+                <a
+                  key={account.id}
+                  href={account.url}
+                  rel="noopener noreferrer"
+                  class="account-avatar-stack"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = account;
+                  }}
+                >
+                  <Avatar
+                    url={account.avatarStatic}
+                    size="xxl"
+                    key={account.id}
+                    alt={`${account.displayName} @${account.acct}`}
+                    squircle={account?.bot}
+                  />
+                  {/* {type === 'favourite+reblog' && (
+                    <div class="account-sub-icons">
+                      {account._types.map((type) => (
+                        <Icon
+                          icon={NOTIFICATION_ICONS[type]}
+                          size="s"
+                          class={`${type}-icon`}
+                        />
+                      ))}
+                    </div>
+                  )} */}
+                </a>{' '}
+              </Fragment>
+            ))}
+            {notificationsCount > sampleAccounts.length && (
+              <Link
+                to={
+                  instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
+                }
+                class="button small plain centered"
+              >
+                +{notificationsCount - sampleAccounts.length}
+                <Icon icon="chevron-right" />
+              </Link>
+            )}
           </p>
         )}
         {_statuses?.length > 1 && (

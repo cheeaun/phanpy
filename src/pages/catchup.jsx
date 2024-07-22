@@ -1257,6 +1257,10 @@ function Catchup() {
                             }
                             onChange={() => {
                               setSelectedFilterCategory(label);
+                              if (label === 'Boosts') {
+                                setSortBy('reblogsCount');
+                                setGroupBy(null);
+                              }
                               // setSelectedAuthor(null);
                             }}
                           />

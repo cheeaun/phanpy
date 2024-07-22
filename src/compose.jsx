@@ -1,7 +1,5 @@
 import './index.css';
-
 import './app.css';
-
 import './polyfills';
 
 import { render } from 'preact';

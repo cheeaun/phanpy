@@ -1113,6 +1113,15 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 6px;
 }
 
+.status-carousel.boosts-carousel .timeline-item-carousel-group {
+  flex-direction: column;
+  gap: 8px;
+
+  &:before {
+    content: '';
+  }
+}
+
 .ui-state {
   padding: 16px;
   text-align: center;

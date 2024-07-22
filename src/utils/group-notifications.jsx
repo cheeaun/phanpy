@@ -28,7 +28,96 @@ export function fixNotifications(notifications) {
   });
 }
 
-function groupNotifications(notifications) {
+export function groupNotifications2(groupNotifications) {
+  // Massage grouped notifications to look like faux grouped notifications above
+  const newGroupNotifications = groupNotifications.map((gn) => {
+    const {
+      latestPageNotificationAt,
+      mostRecentNotificationId,
+      sampleAccounts,
+      notificationsCount,
+    } = gn;
+
+    return {
+      id: '' + mostRecentNotificationId,
+      createdAt: latestPageNotificationAt,
+      account: sampleAccounts[0],
+      ...gn,
+    };
+  });
+
+  // DISABLED FOR NOW.
+  // Merge favourited and reblogged of same status into a single notification
+  // - new type: "favourite+reblog"
+  // - sum numbers for `notificationsCount` and `sampleAccounts`
+  // const mappedNotifications = {};
+  // const newNewGroupNotifications = [];
+  // for (let i = 0; i < newGroupNotifications.length; i++) {
+  //   const gn = newGroupNotifications[i];
+  //   const { type, status, createdAt, notificationsCount, sampleAccounts } = gn;
+  //   const date = createdAt ? new Date(createdAt).toLocaleDateString() : '';
+  //   let virtualType = type;
+  // if (type === 'favourite' || type === 'reblog') {
+  //   virtualType = 'favourite+reblog';
+  // }
+  //   const key = `${status?.id}-${virtualType}-${date}`;
+  //   const mappedNotification = mappedNotifications[key];
+  //   if (mappedNotification) {
+  //     const accountIDs = mappedNotification.sampleAccounts.map((a) => a.id);
+  //     sampleAccounts.forEach((a) => {
+  //       if (!accountIDs.includes(a.id)) {
+  //         mappedNotification.sampleAccounts.push(a);
+  //       }
+  //     });
+  //     mappedNotification.notificationsCount = Math.max(
+  //       mappedNotification.notificationsCount,
+  //       notificationsCount,
+  //       mappedNotification.sampleAccounts.length,
+  //     );
+  //   } else {
+  //     mappedNotifications[key] = {
+  //       ...gn,
+  //       type: virtualType,
+  //     };
+  //     newNewGroupNotifications.push(mappedNotifications[key]);
+  //   }
+  // }
+
+  // 2nd pass.
+  // - Group 1 account favourte/reblog multiple posts
+  //   - _statuses: [status, status, ...]
+  const notificationsMap2 = {};
+  const newGroupNotifications2 = [];
+  for (let i = 0; i < newGroupNotifications.length; i++) {
+    const gn = newGroupNotifications[i];
+    const { type, account, _accounts, sampleAccounts, createdAt } = gn;
+    const date = createdAt ? new Date(createdAt).toLocaleDateString() : '';
+    const hasOneAccount =
+      sampleAccounts?.length === 1 || _accounts?.length === 1;
+    if ((type === 'favourite' || type === 'reblog') && hasOneAccount) {
+      const key = `${account?.id}-${type}-${date}`;
+      const mappedNotification = notificationsMap2[key];
+      if (mappedNotification) {
+        mappedNotification._statuses.push(gn.status);
+        mappedNotification._ids += `-${gn.id}`;
+      } else {
+        let n = (notificationsMap2[key] = {
+          ...gn,
+          type,
+          _ids: gn.id,
+          _statuses: [gn.status],
+        });
+        newGroupNotifications2.push(n);
+      }
+    } else {
+      newGroupNotifications2.push(gn);
+    }
+  }
+
+  return newGroupNotifications2;
+}
+
+export default function groupNotifications(notifications) {
   // Filter out invalid notifications
   notifications = fixNotifications(notifications);
 
@@ -56,17 +145,18 @@ function groupNotifications(notifications) {
       if (mappedAccount) {
         mappedAccount._types.push(type);
         mappedAccount._types.sort().reverse();
-        mappedNotification.id += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       } else {
         account._types = [type];
         mappedNotification._accounts.push(account);
-        mappedNotification.id += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       }
     } else {
       if (account) account._types = [type];
       let n = (notificationsMap[key] = {
         ...notification,
         type: virtualType,
+        _ids: id,
         _accounts: account ? [account] : [],
       });
       cleanNotifications[j++] = n;
@@ -89,11 +179,12 @@ function groupNotifications(notifications) {
       const mappedNotification = notificationsMap2[key];
       if (mappedNotification) {
         mappedNotification._statuses.push(notification.status);
-        mappedNotification.id += `-${id}`;
+        mappedNotification._ids += `-${id}`;
       } else {
         let n = (notificationsMap2[key] = {
           ...notification,
           type,
+          _ids: id,
           _statuses: [notification.status],
         });
         cleanNotifications2[j++] = n;
@@ -108,5 +199,3 @@ function groupNotifications(notifications) {
   // return cleanNotifications;
   return cleanNotifications2;
 }
-
-export default groupNotifications;

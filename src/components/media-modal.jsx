@@ -16,8 +16,8 @@ import states from '../utils/states';
 import Icon from './icon';
 import Link from './link';
 import Media from './media';
-import Menu2 from './menu2';
 import MenuLink from './menu-link';
+import Menu2 from './menu2';
 
 const { PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL } = import.meta.env;
 

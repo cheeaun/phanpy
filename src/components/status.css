@@ -2039,7 +2039,8 @@ a.card:is(:hover, :focus):visited {
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
   margin: 0 3px;
-  min-height: 0.9em;
+  min-height: 1.15em;
+  accent-color: var(--link-color);
 }
 .poll-option-votes {
   flex-shrink: 0;

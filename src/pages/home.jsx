@@ -17,6 +17,10 @@ import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Following from './following';
+import {
+  getGroupedNotifications,
+  mastoFetchNotifications,
+} from './notifications';
 
 function Home() {
   const snapStates = useSnapshot(states);
@@ -84,16 +88,13 @@ function NotificationsLink() {
   );
 }
 
-const NOTIFICATIONS_LIMIT = 80;
 const NOTIFICATIONS_DISPLAY_LIMIT = 5;
 function NotificationsMenu({ anchorRef, state, onClose }) {
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
 
-  const notificationsIterator = masto.v1.notifications.list({
-    limit: NOTIFICATIONS_LIMIT,
-  });
+  const notificationsIterator = mastoFetchNotifications();
 
   async function fetchNotifications() {
     const allNotifications = await notificationsIterator.next();
@@ -106,16 +107,16 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         });
       });
 
-      const groupedNotifications = groupNotifications(notifications);
+      const groupedNotifications = getGroupedNotifications(notifications);
 
-      states.notificationsLast = notifications[0];
+      states.notificationsLast = groupedNotifications[0];
       states.notifications = groupedNotifications;
 
       // Update last read marker
       masto.v1.markers
         .create({
           notifications: {
-            lastReadId: notifications[0].id,
+            lastReadId: groupedNotifications[0].id,
           },
         })
         .catch(() => {});
@@ -176,7 +177,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
               .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
               .map((notification) => (
                 <Notification
-                  key={notification.id}
+                  key={notification._ids || notification.id}
                   instance={instance}
                   notification={notification}
                   disableContextMenu

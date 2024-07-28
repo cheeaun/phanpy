@@ -1,5 +1,6 @@
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { Fragment } from 'preact';
+import { memo } from 'preact/compat';
 import {
   useCallback,
   useLayoutEffect,
@@ -676,4 +677,14 @@ function getURLObj(url) {
   return URL.parse(url, location.origin);
 }
 
-export default Media;
+export default memo(Media, (oldProps, newProps) => {
+  const oldMedia = oldProps.media || {};
+  const newMedia = newProps.media || {};
+
+  return (
+    oldMedia?.id === newMedia?.id &&
+    oldMedia.url === newMedia.url &&
+    oldProps.to === newProps.to &&
+    oldProps.class === newProps.class
+  );
+});

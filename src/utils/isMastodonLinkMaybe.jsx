@@ -1,6 +1,6 @@
 export default function isMastodonLinkMaybe(url) {
   try {
-    const { pathname, hash } = URL.parse(url);
+    const { pathname, hash, hostname } = URL.parse(url);
     return (
       /^\/.*\/\d+$/i.test(pathname) ||
       /^\/(@[^/]+|users\/[^/]+)\/(statuses|posts)\/\w+\/?$/i.test(pathname) || // GoToSocial, Takahe
@@ -8,6 +8,7 @@ export default function isMastodonLinkMaybe(url) {
       /^\/(notice|objects)\/[a-z0-9-]+$/i.test(pathname) || // Pleroma
       /^\/@[^/]+\/post\/[a-z0-9]+$/i.test(pathname) || // Threads
       /^\/@[^/]+\/[a-z0-9]+[a-z0-9\-]+[a-z0-9]+$/i.test(pathname) || // Hollo
+      (hostname === 'fed.brid.gy' && pathname.startsWith('/r/http')) || // Bridgy Fed
       /#\/[^\/]+\.[^\/]+\/s\/.+/i.test(hash) // Phanpy 🫣
     );
   } catch (e) {

@@ -1949,6 +1949,10 @@ a.card:is(:hover, :focus):visited {
 
   .title {
     font-weight: 500;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .meta {

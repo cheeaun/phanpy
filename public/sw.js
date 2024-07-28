@@ -101,7 +101,7 @@ const apiIntermediateRoute = new RegExpRoute(
   // - trends/*
   // - timelines/link
   /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
-  new StaleWhileRevalidate({
+  new CacheFirst({
     cacheName: 'api-intermediate',
     plugins: [
       new ExpirationPlugin({

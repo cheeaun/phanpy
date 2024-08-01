@@ -22,6 +22,7 @@ import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import groupNotifications, {
   groupNotifications2,
+  massageNotifications2,
 } from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
 import mem from '../utils/mem';
@@ -120,7 +121,7 @@ function Notifications({ columnMode }) {
       };
     }
     const allNotifications = await notificationsIterator.current.next();
-    const notifications = allNotifications.value;
+    const notifications = massageNotifications2(allNotifications.value);
 
     if (notifications?.length) {
       notifications.forEach((notification) => {

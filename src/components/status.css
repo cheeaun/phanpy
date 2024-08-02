@@ -1949,6 +1949,10 @@ a.card:is(:hover, :focus):visited {
 
   .title {
     font-weight: 500;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .meta {
@@ -2039,7 +2043,8 @@ a.card:is(:hover, :focus):visited {
 .poll-label input:is([type='radio'], [type='checkbox']) {
   flex-shrink: 0;
   margin: 0 3px;
-  min-height: 0.9em;
+  min-height: 1.15em;
+  accent-color: var(--link-color);
 }
 .poll-option-votes {
   flex-shrink: 0;
@@ -2471,24 +2476,39 @@ a.card:is(:hover, :focus):visited {
 #edit-history {
   min-height: 50vh;
   min-height: 50dvh;
-}
 
-#edit-history h2 {
-  margin: 0;
-  padding: 0;
-}
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
 
-#edit-history ol,
-#edit-history ol li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+  ol,
+  ol li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-#edit-history .history-item .status {
-  border: 1px solid var(--outline-color);
-  border-radius: 8px;
-  pointer-events: none;
+  .history-item .status {
+    border: 1px solid var(--outline-color);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .status {
+    .invisible {
+      display: revert;
+    }
+
+    .hashtag-stuffing {
+      white-space: normal;
+      opacity: 1;
+    }
+
+    a {
+      color: var(--text-color);
+    }
+  }
 }
 
 /* EMBED */

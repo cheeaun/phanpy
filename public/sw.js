@@ -101,11 +101,11 @@ const apiIntermediateRoute = new RegExpRoute(
   // - trends/*
   // - timelines/link
   /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
-  new CacheFirst({
+  new StaleWhileRevalidate({
     cacheName: 'api-intermediate',
     plugins: [
       new ExpirationPlugin({
-        maxAgeSeconds: 10 * 60, // 10 minutes
+        maxAgeSeconds: 1 * 60, // 1min
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],

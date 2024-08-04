@@ -46,6 +46,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
 
   useEffect(() => {
     let sub;
+    let streamTimeout;
     let pollNotifications;
     if (isLoggedIn && visible) {
       const { masto, streaming, instance } = api();
@@ -56,7 +57,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
         let hasStreaming = false;
         // 2. Start streaming
         if (streaming) {
-          pollNotifications = setTimeout(() => {
+          streamTimeout = setTimeout(() => {
             (async () => {
               try {
                 hasStreaming = true;
@@ -94,7 +95,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     return () => {
       sub?.unsubscribe?.();
       sub = null;
-      clearTimeout(pollNotifications);
+      clearTimeout(streamTimeout);
       clearInterval(pollNotifications);
     };
   }, [visible, isLoggedIn]);

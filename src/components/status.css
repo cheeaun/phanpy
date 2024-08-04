@@ -1,22 +1,31 @@
 /* REBLOG + REPLY-TO */
 
+:root {
+  --post-gradient-angle: 160deg;
+  --post-gradient-chip-angle: -20deg;
+  &:dir(rtl) {
+    --post-gradient-angle: -160deg;
+    --post-gradient-chip-angle: 20deg;
+  }
+}
+
 .status-reblog {
   background: linear-gradient(
-    160deg,
+    var(--post-gradient-angle),
     var(--reblog-faded-color),
     transparent min(160px, 50%)
   );
 }
 .status-group {
   background: linear-gradient(
-    160deg,
+    var(--post-gradient-angle),
     var(--group-faded-color),
     transparent min(160px, 50%)
   );
 }
 .status-followed-tags {
   background: linear-gradient(
-    160deg,
+    var(--post-gradient-angle),
     var(--hashtag-faded-color),
     transparent min(160px, 50%)
   );
@@ -33,14 +42,14 @@
 }
 .status-reply-to {
   background: linear-gradient(
-    160deg,
+    var(--post-gradient-angle),
     var(--reply-to-faded-color),
     transparent min(160px, 50%)
   );
 }
 :is(.status-reblog, .status-group, .status-followed-tags) .status-reply-to {
   background: linear-gradient(
-    -20deg,
+    var(--post-gradient-chip-angle),
     var(--reply-to-faded-color),
     transparent min(160px, 50%)
   );
@@ -72,12 +81,12 @@
 }
 .status-reblog .status-pre-meta .icon {
   color: var(--reblog-color);
-  margin-right: 4px;
+  margin-inline-end: 4px;
   vertical-align: text-bottom;
 }
 .status-group .status-pre-meta .icon {
   color: var(--group-color);
-  margin-right: 4px;
+  margin-inline-end: 4px;
   vertical-align: text-bottom;
 }
 .status-followed-tags {
@@ -91,7 +100,7 @@
 
     .icon {
       color: var(--hashtag-color);
-      margin-right: 4px;
+      margin-inline-end: 4px;
       vertical-align: text-bottom;
     }
     a {
@@ -208,7 +217,7 @@
   /* filter: drop-shadow(0 2px 4px var(--bg-faded-color)); */
 }
 .status-card:has(.status-badge:not(:empty)) {
-  border-top-right-radius: 8px;
+  border-start-end-radius: 8px;
 }
 .status-card > * {
   pointer-events: none;
@@ -276,7 +285,8 @@
   align-items: center;
 
   .status-carousel & {
-    padding: 16px 16px 16px 24px;
+    padding: 16px;
+    padding-inline-start: 24px;
   }
 }
 .status.filtered .status-filtered-info {
@@ -286,7 +296,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  mask-image: linear-gradient(to right, black 90%, transparent);
+  mask-image: linear-gradient(var(--to-forward), black 90%, transparent);
   position: relative;
 }
 .status.filtered .avatar {
@@ -312,7 +322,7 @@
   opacity: 0;
   transform: translateX(8px);
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
 }
 .status.filtered:is(:hover, :focus, :active) .status-filtered-info-2 {
   opacity: 0.75;
@@ -353,7 +363,7 @@
   padding-bottom: 0;
   margin-bottom: calc(-1 * var(--top-padding) / 2);
   background-image: linear-gradient(
-    160deg,
+    var(--post-gradient-angle),
     transparent 2.5%,
     var(--reply-to-faded-color) 10%,
     transparent
@@ -381,7 +391,7 @@
     content: '';
     position: absolute;
     top: calc(var(--top-padding) + var(--avatar-size));
-    left: var(--line-start);
+    inset-inline-start: var(--line-start);
     width: var(--line-width);
     height: calc(
       100% - var(--top-padding) - var(--avatar-size) + (var(--top-padding) / 2)
@@ -392,7 +402,7 @@
   }
 
   .avatar {
-    margin-left: calc((50px - var(--avatar-size)) / 2);
+    margin-inline-start: calc((50px - var(--avatar-size)) / 2);
     justify-self: center;
     z-index: 1;
   }
@@ -433,7 +443,7 @@
   min-width: 0;
 }
 .status:not(.small) > .container {
-  padding-left: 12px;
+  padding-inline-start: 12px;
 }
 
 .status > .container > .meta {
@@ -451,7 +461,7 @@
   /* text-overflow: ellipsis; */
 }
 .status > .container > .meta .meta-name {
-  mask-image: linear-gradient(to left, transparent, black 16px);
+  mask-image: linear-gradient(var(--to-backward), transparent, black 16px);
   flex-grow: 1;
 
   .name-text b {
@@ -470,7 +480,7 @@
   text-align: end;
   text-decoration: none;
   flex-shrink: 0;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   white-space: nowrap;
 }
 .status > .container > .meta a.time {
@@ -482,7 +492,7 @@
   font-size: 90%;
 
   .more {
-    margin-left: 4px;
+    margin-inline-start: 4px;
     transition: transform 0.2s ease-out;
   }
 }
@@ -509,7 +519,8 @@
 
 .status-reply-badge {
   display: inline-flex;
-  margin: 2px 0 2px 4px;
+  margin: 2px 0;
+  margin-inline-start: 4px;
   gap: 4px;
   align-items: center;
   vertical-align: middle;
@@ -609,7 +620,7 @@
   position: absolute;
   width: 100%;
   top: calc(100% + 2px);
-  left: 0;
+  inset-inline-start: 0;
   text-align: center;
 }
 .status-filtered-badge.horizontal.badge-meta > span + span {
@@ -618,7 +629,7 @@
 }
 
 .status.large > .container > .content-container {
-  margin-left: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 16px);
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -1005,13 +1016,13 @@
     .media-gt2
   ) {
   /* 50px = avatar size */
-  margin-left: calc(-1 * ((50px / 2)));
+  margin-inline-start: calc(-1 * ((50px / 2)));
   /*
     outer padding = 16px
     gap = 12px
     so... 16 - 12 = 4
   */
-  margin-right: -4px;
+  margin-inline-end: -4px;
 }
 .status.large :is(.media-container, .media-container.media-gt2) {
   height: auto;
@@ -1121,40 +1132,46 @@
 }
 /* Special media borders */
 .status .media-container.media-eq2 .media:first-of-type {
-  border-radius: var(--media-radius) var(--media-radius-inner)
-    var(--media-radius-inner) var(--media-radius);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq2 .media:last-of-type {
-  border-radius: var(--media-radius-inner) var(--media-radius)
-    var(--media-radius) var(--media-radius-inner);
+  border-start-start-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:first-of-type {
-  border-radius: var(--media-radius) var(--media-radius-inner)
-    var(--media-radius-inner) var(--media-radius);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:nth-of-type(2) {
-  border-radius: var(--media-radius-inner) var(--media-radius)
-    var(--media-radius-inner) var(--media-radius-inner);
+  border-start-start-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq3 .media:last-of-type {
-  border-radius: var(--media-radius-inner) var(--media-radius-inner)
-    var(--media-radius) var(--media-radius-inner);
+  border-start-start-radius: var(--media-radius-inner);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:first-of-type {
-  border-radius: var(--media-radius) var(--media-radius-inner)
-    var(--media-radius-inner) var(--media-radius-inner);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(2) {
-  border-radius: var(--media-radius-inner) var(--media-radius)
-    var(--media-radius-inner) var(--media-radius-inner);
+  border-start-start-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:nth-of-type(3) {
-  border-radius: var(--media-radius-inner) var(--media-radius-inner)
-    var(--media-radius-inner) var(--media-radius);
+  border-start-start-radius: var(--media-radius-inner);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-end-radius: var(--media-radius-inner);
 }
 .status .media-container.media-eq4 .media:last-of-type {
-  border-radius: var(--media-radius-inner) var(--media-radius-inner)
-    var(--media-radius) var(--media-radius-inner);
+  border-start-start-radius: var(--media-radius-inner);
+  border-start-end-radius: var(--media-radius-inner);
+  border-end-start-radius: var(--media-radius-inner);
 }
 .status .media:only-child {
   grid-area: span 2 / span 2;
@@ -1207,7 +1224,7 @@
     .alt-badge {
       position: absolute;
       bottom: 8px;
-      left: 8px;
+      inset-inline-start: 8px;
 
       &:before {
         content: '';
@@ -1266,7 +1283,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   content: attr(data-formatted-duration);
   position: absolute;
   bottom: 8px;
-  right: 8px;
+  inset-inline-end: 8px;
   color: var(--media-fg-color);
   background-color: var(--media-bg-color);
   border: var(--hairline-width) solid var(--media-outline-color);
@@ -1283,7 +1300,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   content: attr(data-label);
   position: absolute;
   bottom: 8px;
-  right: 8px;
+  inset-inline-end: 8px;
   color: var(--media-fg-color);
   background-color: var(--media-bg-color);
   border: var(--hairline-width) solid var(--media-outline-color);
@@ -1456,7 +1473,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
       z-index: 1;
       position: absolute;
       top: 8px;
-      right: 8px;
+      inset-inline-end: 8px;
       color: var(--media-fg-color);
       background-color: var(--media-bg-color);
       padding: 2px 8px;
@@ -1484,8 +1501,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
       }
 
       + .carousel-button {
-        left: auto;
-        right: 8px;
+        inset-inline-start: auto;
+        inset-inline-end: 8px;
       }
     }
 
@@ -1655,7 +1672,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
     display: none;
 
     + * {
-      margin-left: 1ex;
+      margin-inline-start: 1ex;
     }
   }
 }
@@ -1746,9 +1763,9 @@ body:has(#modal-container .carousel) .status .media img:hover {
   --bottom: 16px;
   bottom: var(--bottom);
   bottom: calc(var(--bottom) + env(safe-area-inset-bottom));
-  left: 16px;
-  left: calc(16px + env(safe-area-inset-left));
-  text-align: left;
+  inset-inline-start: 16px;
+  inset-inline-start: calc(16px + env(safe-area-inset-left));
+  text-align: start;
   border-radius: 8px;
   color: var(--text-color);
   padding: 4px 8px;
@@ -2023,8 +2040,8 @@ a.card:is(:hover, :focus):visited {
   z-index: 0;
 }
 .poll-option:first-child:after {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-start-start-radius: 12px;
+  border-start-end-radius: 12px;
 }
 .poll-option:hover:after {
   opacity: 1;
@@ -2057,7 +2074,9 @@ a.card:is(:hover, :focus):visited {
   opacity: 1;
 }
 .poll-vote-button {
-  margin: 8px 8px 0 12px;
+  margin: 8px 0 0;
+  margin-inline-start: 12px;
+  margin-inline-end: 8px;
   /* padding-inline: 24px; */
   min-width: 160px;
 }
@@ -2066,6 +2085,10 @@ a.card:is(:hover, :focus):visited {
   margin: 8px 16px;
   font-size: 90%;
   user-select: none;
+
+  > button:first-child {
+    margin-inline-start: -8px;
+  }
 }
 .poll-option-title {
   text-shadow: 0 1px var(--bg-color);
@@ -2101,14 +2124,14 @@ a.card:is(:hover, :focus):visited {
 }
 .status.large .extra-meta {
   padding-top: 0;
-  margin-left: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 16px);
 }
 
 /* EMOJI REACTIONS */
 
 .status.large .emoji-reactions {
   cursor: default;
-  margin-left: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 16px);
 }
 
 /* ACTIONS */
@@ -2120,7 +2143,7 @@ a.card:is(:hover, :focus):visited {
 .status.large .actions {
   padding-top: 4px;
   padding-bottom: 16px;
-  margin-left: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 16px);
   color: var(--text-insignificant-color);
   border-top: var(--hairline-width) solid var(--outline-color);
   margin-top: 8px;
@@ -2279,7 +2302,7 @@ a.card:is(:hover, :focus):visited {
   width: 100%;
   border: 1px solid var(--outline-color);
   background: linear-gradient(
-    to bottom right,
+    to bottom var(--forward),
     var(--bg-faded-color),
     transparent 160px
   );
@@ -2297,7 +2320,7 @@ a.card:is(:hover, :focus):visited {
   display: flex;
   position: absolute;
   top: -6px;
-  right: 8px;
+  inset-inline-end: 8px;
   background-color: var(--bg-color);
   border-radius: 8px;
   z-index: 1;
@@ -2307,7 +2330,7 @@ a.card:is(:hover, :focus):visited {
   opacity: 0;
   pointer-events: none;
   transform: translate3d(0, 6px, 0);
-  transform-origin: right center;
+  transform-origin: var(--forward) center;
   transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
 
   .timeline.contextual .replies[data-comments-level='4'] & {
@@ -2386,8 +2409,13 @@ a.card:is(:hover, :focus):visited {
   }
 }
 .timeline.contextual .descendant .status {
+  --bg-gradient-rotation: -140deg;
+  :dir(rtl) & {
+    --bg-gradient-rotation: 140deg;
+  }
+
   --bg-gradient: linear-gradient(
-    -140deg,
+    var(--bg-gradient-rotation),
     var(--bg-faded-color),
     transparent 75%
   );
@@ -2414,7 +2442,7 @@ a.card:is(:hover, :focus):visited {
 .status-badge {
   position: absolute;
   top: 4px;
-  right: 4px;
+  inset-inline-end: 4px;
   line-height: 0;
   pointer-events: none;
   opacity: 0.75;
@@ -2441,8 +2469,21 @@ a.card:is(:hover, :focus):visited {
     transform: translateX(0);
   }
 }
+@keyframes swoosh-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-300%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .status-badge > * {
   animation: swoosh-from-right 1s cubic-bezier(0.51, 0.28, 0.16, 1.26) both;
+  :dir(rtl) & {
+    animation-name: swoosh-from-left;
+  }
 }
 .status-badge > *:nth-child(2) {
   animation-delay: 0.1s;
@@ -2457,7 +2498,8 @@ a.card:is(:hover, :focus):visited {
 /* MISC */
 
 .status-aside {
-  padding: 0 16px 16px 80px;
+  padding: 0 16px 16px;
+  padding-inline-start: 80px;
   color: var(--text-insignificant-color);
 }
 
@@ -2740,7 +2782,7 @@ a.card:is(:hover, :focus):visited {
     vertical-align: super;
     font-weight: normal;
     line-height: 0;
-    padding-left: 2px;
+    padding-inline-start: 2px;
   }
 
   &.clickable {

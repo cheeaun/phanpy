@@ -13,6 +13,7 @@ import { useSnapshot } from 'valtio';
 
 import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
+import isRTL from '../utils/is-rtl';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { isMediaFirstInstance } from '../utils/store-utils';
@@ -864,8 +865,11 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachStart}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? 1 : -1);
               carouselRef.current?.scrollBy({
-                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}
@@ -878,8 +882,11 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachEnd}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? -1 : 1);
               carouselRef.current?.scrollBy({
-                left: Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}

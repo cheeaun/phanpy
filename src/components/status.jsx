@@ -46,6 +46,7 @@ import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
@@ -2363,7 +2364,7 @@ function MediaFirstContainer(props) {
   useEffect(() => {
     let handleScroll = () => {
       const { clientWidth, scrollLeft } = carouselRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
+      const index = Math.round(Math.abs(scrollLeft) / clientWidth);
       setCurrentIndex(index);
     };
     if (carouselRef.current) {
@@ -2407,7 +2408,10 @@ function MediaFirstContainer(props) {
                   e.stopPropagation();
                   carouselRef.current.focus();
                   carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * (currentIndex - 1),
+                    left:
+                      carouselRef.current.clientWidth *
+                      (currentIndex - 1) *
+                      (isRTL() ? -1 : 1),
                     behavior: 'smooth',
                   });
                 }}
@@ -2425,7 +2429,10 @@ function MediaFirstContainer(props) {
                   e.stopPropagation();
                   carouselRef.current.focus();
                   carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * (currentIndex + 1),
+                    left:
+                      carouselRef.current.clientWidth *
+                      (currentIndex + 1) *
+                      (isRTL() ? -1 : 1),
                     behavior: 'smooth',
                   });
                 }}
@@ -2580,8 +2587,6 @@ function Card({ card, selfReferential, instance }) {
         class={`card link ${isPost ? 'card-post' : ''} ${
           blurhashImage ? '' : size
         }`}
-        lang={language}
-        dir="auto"
         style={{
           '--average-color':
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -2608,7 +2613,7 @@ function Card({ card, selfReferential, instance }) {
             }}
           />
         </div>
-        <div class="meta-container">
+        <div class="meta-container" lang={language}>
           <p class="meta domain">
             <span class="domain">{domain}</span>{' '}
             {!!publishedAt && <>&middot; </>}
@@ -2685,6 +2690,7 @@ function Card({ card, selfReferential, instance }) {
           rel="nofollow noopener noreferrer"
           class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
+          dir="auto"
           onClick={handleClick}
         >
           <div class="meta-container">
@@ -2987,6 +2993,7 @@ function EmbedModal({ post, instance, onClose }) {
           onClick={(e) => {
             e.target.select();
           }}
+          dir="auto"
         >
           {htmlCode}
         </textarea>
@@ -3133,6 +3140,7 @@ function EmbedModal({ post, instance, onClose }) {
         <output
           class="embed-preview"
           dangerouslySetInnerHTML={{ __html: htmlCode }}
+          dir="auto"
         />
         <p>
           <small>Note: This preview is lightly styled.</small>

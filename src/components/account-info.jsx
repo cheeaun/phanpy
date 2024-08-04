@@ -568,7 +568,9 @@ function AccountInfo({
                   </div>
                   <MenuItem
                     onClick={() => {
-                      const handleWithInstance = acct.includes('@') ? `@${acct}` : `@${acct}@${instance}`;
+                      const handleWithInstance = acct.includes('@')
+                        ? `@${acct}`
+                        : `@${acct}@${instance}`;
                       try {
                         navigator.clipboard.writeText(handleWithInstance);
                         showToast('Handle copied');
@@ -1221,7 +1223,7 @@ function RelatedActions({
               <small>
                 Copy handle
                 <br />
-                <span class="more-insignificant">
+                <span class="more-insignificant bidi-isolate">
                   @{currentInfo?.acct || acctWithInstance}
                 </span>
               </small>
@@ -1895,6 +1897,7 @@ function PrivateNoteSheet({
             ref={textareaRef}
             name="note"
             disabled={uiState === 'loading'}
+            dir="auto"
           >
             {initialNote}
           </textarea>
@@ -2017,6 +2020,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                   defaultValue={displayName}
                   maxLength={30}
                   disabled={uiState === 'loading'}
+                  dir="auto"
                 />
               </label>
             </p>
@@ -2029,6 +2033,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                   maxLength={500}
                   rows="5"
                   disabled={uiState === 'loading'}
+                  dir="auto"
                 />
               </label>
             </p>
@@ -2092,6 +2097,7 @@ function FieldsAttributesRow({ name, value, disabled, index: i }) {
           disabled={disabled}
           maxLength={255}
           required={hasValue}
+          dir="auto"
         />
       </td>
       <td>
@@ -2102,6 +2108,7 @@ function FieldsAttributesRow({ name, value, disabled, index: i }) {
           disabled={disabled}
           maxLength={255}
           onChange={(e) => setHasValue(!!e.currentTarget.value)}
+          dir="auto"
         />
       </td>
     </tr>

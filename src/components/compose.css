@@ -16,7 +16,6 @@
 }
 
 #compose-container .compose-top {
-  text-align: right;
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -62,7 +61,7 @@
   box-shadow: 0 -3px 12px -3px var(--drop-shadow-color);
 }
 #compose-container .status-preview:has(.status-badge:not(:empty)) {
-  border-top-right-radius: 8px;
+  border-start-end-radius: 8px;
 }
 #compose-container .status-preview :is(.content-container, .time) {
   pointer-events: none;
@@ -216,8 +215,8 @@
   line-height: 1em;
 }
 #compose-container .toolbar-button:not(.show-field) select {
-  right: 0;
-  left: auto !important;
+  inset-inline-end: 0;
+  inset-inline-start: auto !important;
 }
 #compose-container
   .toolbar-button:not(:disabled):is(
@@ -303,6 +302,9 @@
 }
 #compose-container .text-expander-menu li[aria-selected] {
   box-shadow: inset 4px 0 0 0 var(--button-bg-color);
+  :dir(rtl) & {
+    box-shadow: inset -4px 0 0 0 var(--button-bg-color);
+  }
 }
 #compose-container .text-expander-menu li[data-more] {
   &:not(:hover, :focus, [aria-selected]) {
@@ -494,14 +496,14 @@
   display: flex;
   gap: 4px;
   align-items: center;
-  border-left: 1px solid var(--outline-color);
-  padding-left: 8px;
+  border-inline-start: 1px solid var(--outline-color);
+  padding-inline-start: 8px;
 }
 
 #compose-container .expires-in {
   flex-grow: 1;
-  border-left: 1px solid var(--outline-color);
-  padding-left: 8px;
+  border-inline-start: 1px solid var(--outline-color);
+  padding-inline-start: 8px;
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
@@ -646,7 +648,7 @@
 
       &:hover {
         background-image: linear-gradient(
-          to right,
+          var(--to-forward),
           transparent 75%,
           var(--link-bg-color)
         );
@@ -654,7 +656,7 @@
 
       &.selected {
         background-image: linear-gradient(
-          to right,
+          var(--to-forward),
           var(--bg-faded-color) 75%,
           var(--link-bg-color)
         );
@@ -666,8 +668,8 @@
         border-top: var(--hairline-width) solid var(--divider-color);
         position: absolute;
         bottom: 0;
-        left: 58px;
-        right: 0;
+        inset-inline-start: 58px;
+        inset-inline-end: 0;
       }
 
       &:has(+ li:is(.selected, :hover)):before,
@@ -951,7 +953,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     mask-image: linear-gradient(
-      to right,
+      var(--to-forward),
       transparent 2px,
       black 16px,
       black calc(100% - 16px),

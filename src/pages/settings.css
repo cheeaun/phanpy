@@ -36,12 +36,12 @@
   border-bottom: var(--hairline-width) solid var(--outline-color);
 }
 #settings-container section > ul > li > div:last-child {
-  text-align: right;
+  text-align: end;
 }
 #settings-container section > ul > li .sub-section {
-  text-align: left !important;
+  text-align: start !important;
   margin-top: 8px;
-  margin-left: 24px;
+  margin-inline-start: 24px;
 }
 #settings-container section > ul > li .sub-section p {
   margin-block: 0.5em;
@@ -121,11 +121,11 @@
     grid-template-rows: 1fr 1fr;
 
     > span:first-child {
-      text-align: left;
+      text-align: start;
     }
 
     > span:last-child {
-      text-align: right;
+      text-align: end;
     }
   }
 }

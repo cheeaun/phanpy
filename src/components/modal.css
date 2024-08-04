@@ -1,7 +1,7 @@
 #modal-container > div {
   position: fixed;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   height: 100%;
   width: 100%;
   z-index: 1000;
@@ -26,21 +26,30 @@
     user-select: none;
     overflow: hidden;
     transform: scale(0);
-    --right: max(
+    --end: max(
       var(--compose-button-dimension-margin),
       env(safe-area-inset-right)
     );
+    :dir(rtl) & {
+      --end: max(
+        var(--compose-button-dimension-margin),
+        env(safe-area-inset-left)
+      );
+    }
     --bottom: max(
       var(--compose-button-dimension-margin),
       env(safe-area-inset-bottom)
     );
-    --origin-right: calc(
-      100% - var(--compose-button-dimension-half) - var(--right)
+    --origin-end: calc(
+      100% - var(--compose-button-dimension-half) - var(--end)
     );
+    :dir(rtl) & {
+      --origin-end: calc(var(--compose-button-dimension-half) + var(--end));
+    }
     --origin-bottom: calc(
       100% - var(--compose-button-dimension-half) - var(--bottom)
     );
-    transform-origin: var(--origin-right) var(--origin-bottom);
+    transform-origin: var(--origin-end) var(--origin-bottom);
   }
 
   .sheet {

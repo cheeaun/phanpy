@@ -152,14 +152,22 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     if (state === 'open') loadNotifications();
   }, [state]);
 
+  const menuRef = useRef();
+
   return (
     <ControlledMenu
+      ref={menuRef}
       menuClassName="notifications-menu"
       state={state}
       anchorRef={anchorRef}
       onClose={onClose}
       portal={{
         target: document.body,
+      }}
+      containerProps={{
+        onClick: () => {
+          menuRef.current?.closeMenu?.();
+        },
       }}
       overflow="auto"
       viewScroll="close"

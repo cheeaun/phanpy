@@ -1055,16 +1055,16 @@ function ImportExport({ shortcuts, onClose }) {
                       const { note = '' } = relationship;
                       // const newNote = `${note}\n\n\n$<phanpy-shortcuts-settings>{shortcutsStr}</phanpy-shortcuts-settings>`;
                       let newNote = '';
+                      const settingsJSON = JSON.stringify({
+                        v: '1', // version
+                        dt: Date.now(), // datetime stamp
+                        data: shortcutsStr, // shortcuts settings string
+                      });
                       if (
                         /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/.test(
                           note,
                         )
                       ) {
-                        const settingsJSON = JSON.stringify({
-                          v: '1', // version
-                          dt: Date.now(), // datetime stamp
-                          data: shortcutsStr, // shortcuts settings string
-                        });
                         newNote = note.replace(
                           /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/,
                           `<phanpy-shortcuts-settings>${settingsJSON}</phanpy-shortcuts-settings>`,

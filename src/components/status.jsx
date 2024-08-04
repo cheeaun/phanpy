@@ -283,6 +283,7 @@ function Status({
     url,
     emojis,
     tags,
+    pinned,
     // Non-API props
     _deleted,
     _pinned,
@@ -1122,22 +1123,20 @@ function Status({
             try {
               const newStatus = await masto.v1.statuses
                 .$select(id)
-                [_pinned ? 'unpin' : 'pin']();
-              // saveStatus(newStatus, instance);
+                [pinned ? 'unpin' : 'pin']();
+              saveStatus(newStatus, instance);
               showToast(
-                _pinned
+                pinned
                   ? 'Post unpinned from profile'
                   : 'Post pinned to profile',
               );
             } catch (e) {
               console.error(e);
-              showToast(
-                _pinned ? 'Unable to unpin post' : 'Unable to pin post',
-              );
+              showToast(pinned ? 'Unable to unpin post' : 'Unable to pin post');
             }
           }}
         >
-          {_pinned ? (
+          {pinned ? (
             <>
               <Icon icon="unpin" />
               <span>Unpin from profile</span>

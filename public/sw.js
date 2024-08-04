@@ -96,24 +96,27 @@ const apiExtendedRoute = new RegExpRoute(
 );
 registerRoute(apiExtendedRoute);
 
-const apiIntermediateRoute = new RegExpRoute(
-  // Matches:
-  // - trends/*
-  // - timelines/link
-  /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
-  new StaleWhileRevalidate({
-    cacheName: 'api-intermediate',
-    plugins: [
-      new ExpirationPlugin({
-        maxAgeSeconds: 1 * 60, // 1min
-      }),
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-    ],
-  }),
-);
-registerRoute(apiIntermediateRoute);
+// Note: expiration is not working as expected
+// https://github.com/GoogleChrome/workbox/issues/3316
+//
+// const apiIntermediateRoute = new RegExpRoute(
+//   // Matches:
+//   // - trends/*
+//   // - timelines/link
+//   /^https?:\/\/[^\/]+\/api\/v\d+\/(trends|timelines\/link)/,
+//   new StaleWhileRevalidate({
+//     cacheName: 'api-intermediate',
+//     plugins: [
+//       new ExpirationPlugin({
+//         maxAgeSeconds: 1 * 60, // 1min
+//       }),
+//       new CacheableResponsePlugin({
+//         statuses: [0, 200],
+//       }),
+//     ],
+//   }),
+// );
+// registerRoute(apiIntermediateRoute);
 
 const apiRoute = new RegExpRoute(
   // Matches:

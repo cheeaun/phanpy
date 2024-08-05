@@ -88,13 +88,13 @@ function NameText({
       )}
       {displayName && !short ? (
         <>
-          <b>
+          <b dir="auto">
             <EmojiText text={displayName} emojis={emojis} />
           </b>
           {!showAcct && !hideUsername && (
             <>
               {' '}
-              <i>@{username}</i>
+              <i class="bidi-isolate">@{username}</i>
             </>
           )}
         </>
@@ -106,7 +106,7 @@ function NameText({
       {showAcct && (
         <>
           <br />
-          <i>
+          <i class="bidi-isolate">
             {acct2 ? '' : '@'}
             {acct1}
             {!!acct2 && <span class="ib">{acct2}</span>}

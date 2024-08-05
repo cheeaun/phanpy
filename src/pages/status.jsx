@@ -1370,6 +1370,8 @@ function SubComments({
   const detailsRef = useRef();
   useLayoutEffect(() => {
     function handleScroll(e) {
+      // NOTE: this scrollLeft works for RTL too
+      // Browsers do the magic for us
       e.target.dataset.scrollLeft = e.target.scrollLeft;
     }
     detailsRef.current?.addEventListener('scroll', handleScroll, {

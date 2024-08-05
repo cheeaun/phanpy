@@ -11,7 +11,7 @@
     align-self: stretch;
   }
   header h1 .deck-back {
-    margin-left: -16px;
+    margin-inline-start: -16px;
   }
 
   .button-refresh .icon {
@@ -39,7 +39,7 @@
   font-size: 70% !important;
 
   & > .avatar ~ .avatar {
-    margin-left: -4px;
+    margin-inline-start: -4px;
   }
 }
 .ancestors-indicator:not([hidden]) {

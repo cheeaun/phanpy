@@ -273,6 +273,7 @@ const SearchForm = forwardRef((props, ref) => {
                 class={`search-popover-item ${i === 0 ? 'focus' : ''}`}
                 // hidden={hidden}
                 onClick={(e) => {
+                  console.log('onClick', e);
                   props?.onSubmit?.(e);
                 }}
               >

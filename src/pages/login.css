@@ -30,14 +30,15 @@
 
 #instances-suggestions {
   margin: 0.2em 0 0;
-  padding: 0 0 0 1.2em;
+  padding: 0;
+  padding-inline-start: 1.2em;
   list-style: none;
   width: 90vw;
   max-width: 40em;
   overflow: auto;
   white-space: nowrap;
   mask-image: linear-gradient(
-    to right,
+    var(--to-forward),
     transparent,
     black 1.2em,
     black calc(100% - 5em),

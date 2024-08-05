@@ -612,6 +612,7 @@ function ShortcutForm({
                 }}
                 defaultValue={editMode ? shortcut.type : undefined}
                 name="type"
+                dir="auto"
               >
                 <option></option>
                 {TYPES.map((type) => (
@@ -632,6 +633,7 @@ function ShortcutForm({
                         required={!notRequired}
                         disabled={disabled || uiState === 'loading'}
                         defaultValue={editMode ? shortcut.id : undefined}
+                        dir="auto"
                       >
                         <option value=""></option>
                         {lists.map((list) => (
@@ -663,6 +665,7 @@ function ShortcutForm({
                       autocapitalize="off"
                       spellCheck={false}
                       pattern={pattern}
+                      dir="auto"
                     />
                     {currentType === 'hashtag' &&
                       followedHashtags.length > 0 && (
@@ -780,6 +783,7 @@ function ImportExport({ shortcuts, onClose }) {
               onInput={(e) => {
                 setImportShortcutStr(e.target.value);
               }}
+              dir="auto"
             />
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
@@ -996,6 +1000,7 @@ function ImportExport({ shortcuts, onClose }) {
                   showToast('Unable to copy shortcuts');
                 }
               }}
+              dir="auto"
             />
           </p>
           <p>
@@ -1055,16 +1060,16 @@ function ImportExport({ shortcuts, onClose }) {
                       const { note = '' } = relationship;
                       // const newNote = `${note}\n\n\n$<phanpy-shortcuts-settings>{shortcutsStr}</phanpy-shortcuts-settings>`;
                       let newNote = '';
+                      const settingsJSON = JSON.stringify({
+                        v: '1', // version
+                        dt: Date.now(), // datetime stamp
+                        data: shortcutsStr, // shortcuts settings string
+                      });
                       if (
                         /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/.test(
                           note,
                         )
                       ) {
-                        const settingsJSON = JSON.stringify({
-                          v: '1', // version
-                          dt: Date.now(), // datetime stamp
-                          data: shortcutsStr, // shortcuts settings string
-                        });
                         newNote = note.replace(
                           /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/,
                           `<phanpy-shortcuts-settings>${settingsJSON}</phanpy-shortcuts-settings>`,

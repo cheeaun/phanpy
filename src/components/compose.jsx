@@ -27,6 +27,7 @@ import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import openCompose from '../utils/open-compose';
@@ -103,7 +104,8 @@ const observer = new IntersectionObserver((entries) => {
       const { left, width } = entry.boundingClientRect;
       const { innerWidth } = window;
       if (left + width > innerWidth) {
-        menu.style.left = innerWidth - width - windowMargin + 'px';
+        const insetInlineStart = isRTL() ? 'right' : 'left';
+        menu.style[insetInlineStart] = innerWidth - width - windowMargin + 'px';
       }
     }
   });
@@ -1127,6 +1129,7 @@ function Compose({
                   setVisibility(e.target.value);
                 }}
                 disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
               >
                 <option value="public">
                   Public <Icon icon="earth" />
@@ -1383,6 +1386,7 @@ function Compose({
                   store.session.set('currentLanguage', value || DEFAULT_LANG);
                 }}
                 disabled={uiState === 'loading'}
+                dir="auto"
               >
                 {topSupportedLanguages.map(([code, common, native]) => (
                   <option value={code} key={code}>
@@ -1716,7 +1720,9 @@ const Textarea = forwardRef((props, ref) => {
                       </span>
                       <span>
                         <b>${displayNameWithEmoji || username}</b>
-                        <br>@${encodeHTML(acct)}
+                        <br><span class="bidi-isolate">@${encodeHTML(
+                          acct,
+                        )}</span>
                       </span>
                     </li>
                   `;

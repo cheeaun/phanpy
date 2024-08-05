@@ -120,7 +120,7 @@ function AccountBlock({
             )}
           </>
         )}{' '}
-        <span class="account-block-acct">
+        <span class="account-block-acct bidi-isolate">
           {acct2 ? '' : '@'}
           {acct1}
           <wbr />

@@ -166,7 +166,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       titleComponent={
         !!instance && (
           <h1 class="header-double-lines">
-            <b>{hashtagTitle}</b>
+            <b dir="auto">{hashtagTitle}</b>
             <div>{instance}</div>
           </h1>
         )
@@ -379,6 +379,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   // no spaces, no hashtags
                   pattern="[^#][^\s#]+[^#]"
                   disabled={reachLimit}
+                  dir="auto"
                 />
               </form>
             )}
@@ -402,7 +403,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                 }}
               >
                 <Icon icon="x" alt="Remove hashtag" class="danger-icon" />
-                <span>
+                <span class="bidi-isolate">
                   <span class="more-insignificant">#</span>
                   {t}
                 </span>

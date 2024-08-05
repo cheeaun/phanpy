@@ -62,13 +62,13 @@
         border-top: var(--hairline-width) solid var(--divider-color);
         position: absolute;
         bottom: calc(-1 * var(--list-gap) / 2);
-        left: 40px;
-        right: 0;
+        inset-inline-start: 40px;
+        inset-inline-end: 0;
       }
 
       &:has(.reactions-block):before {
         /* avatar + reactions + gap */
-        left: calc(40px + 16px + 8px);
+        inset-inline-start: calc(40px + 16px + 8px);
       }
     }
 

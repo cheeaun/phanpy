@@ -29,8 +29,12 @@ export function fixNotifications(notifications) {
 }
 
 export function massageNotifications2(notifications) {
-  if (notifications?.accounts) {
-    const { accounts, notificationGroups, statuses } = notifications;
+  if (notifications?.notificationGroups) {
+    const {
+      accounts = [],
+      notificationGroups = [],
+      statuses = [],
+    } = notifications;
     return notificationGroups.map((group) => {
       const { sampleAccountIds, statusId } = group;
       const sampleAccounts =

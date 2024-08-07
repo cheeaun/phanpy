@@ -365,6 +365,7 @@ function FiltersAddEdit({ filter, onClose }) {
                         defaultValue={keyword}
                         disabled={uiState === 'loading'}
                         required
+                        dir="auto"
                       />
                       <div class="filter-keyword-actions">
                         <label>

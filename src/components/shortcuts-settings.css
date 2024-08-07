@@ -18,8 +18,8 @@
   counter-increment: index;
   display: inline-block;
   width: 1.2em;
-  text-align: right;
-  margin-right: 8px;
+  text-align: end;
+  margin-inline-end: 8px;
   color: var(--text-insignificant-color);
   font-size: 90%;
   flex-shrink: 0;
@@ -55,12 +55,12 @@
   justify-content: center;
 }
 #shortcuts-settings-container .shortcuts-view-mode label:first-child {
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+  border-start-start-radius: 16px;
+  border-end-start-radius: 16px;
 }
 #shortcuts-settings-container .shortcuts-view-mode label:last-child {
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
+  border-start-end-radius: 16px;
+  border-end-end-radius: 16px;
 }
 #shortcuts-settings-container .shortcuts-view-mode label img {
   max-height: 64px;
@@ -114,7 +114,7 @@
 }
 #shortcut-settings-form label > span:first-child {
   flex-basis: 5em;
-  text-align: right;
+  text-align: end;
 }
 #shortcut-settings-form :is(input[type='text'], select) {
   flex-grow: 1;
@@ -185,8 +185,8 @@
   counter-increment: index;
   display: inline-block;
   width: 1.2em;
-  text-align: right;
-  margin-right: 8px;
+  text-align: end;
+  margin-inline-end: 8px;
   color: var(--text-insignificant-color);
   font-size: 90%;
   flex-shrink: 0;

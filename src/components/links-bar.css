@@ -6,7 +6,7 @@
   overflow-x: auto;
   background-color: var(--bg-faded-color);
   mask-image: linear-gradient(
-    to right,
+    var(--to-forward),
     transparent,
     black 16px,
     black calc(100% - 16px),
@@ -20,6 +20,9 @@
       width: 95vw;
       max-width: calc(320px * 3.3);
       transform: translateX(calc(-50% + var(--main-width) / 2));
+      &:dir(rtl) {
+        transform: translateX(calc(50% - var(--main-width) / 2));
+      }
     }
   }
 
@@ -38,12 +41,16 @@
       color: var(--text-insignificant-color);
       position: absolute;
       top: 8px;
-      left: 0;
+      inset-inline-start: 0;
       transform-origin: top left;
       transform: rotate(-90deg) translateX(-100%);
+      &:dir(rtl) {
+        transform-origin: top right;
+        transform: rotate(90deg) translateX(100%);
+      }
       user-select: none;
       background-image: linear-gradient(
-        to left,
+        var(--to-backward),
         var(--text-color),
         var(--link-color)
       );

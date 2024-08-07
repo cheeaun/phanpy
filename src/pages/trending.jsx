@@ -209,7 +209,7 @@ function Trending({ columnMode, ...props }) {
               const total = history.reduce((acc, cur) => acc + +cur.uses, 0);
               return (
                 <Link to={`/${instance}/t/${name}`} key={name}>
-                  <span>
+                  <span dir="auto">
                     <span class="more-insignificant">#</span>
                     {name}
                   </span>

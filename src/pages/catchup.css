@@ -111,7 +111,7 @@
       margin-bottom: 8px;
       align-items: center;
       gap: 8px;
-      text-align: left;
+      text-align: start;
       justify-content: space-between;
 
       a {
@@ -146,6 +146,9 @@
   input[type='range'] {
     accent-color: var(--link-color);
     direction: rtl;
+    &:dir(rtl) {
+      direction: ltr;
+    }
   }
 }
 
@@ -251,7 +254,7 @@
   overflow-y: hidden;
   max-width: 100%;
   mask-image: linear-gradient(
-    to right,
+    var(--to-forward),
     transparent,
     black 16px calc(100% - 16px),
     transparent
@@ -315,7 +318,7 @@
 
       .count {
         font-size: 70%;
-        margin-left: 4px;
+        margin-inline-start: 4px;
         background-color: var(--bg-color);
         padding: 4px 6px;
         border-radius: 12px;
@@ -386,7 +389,7 @@
 
       .count {
         position: absolute;
-        right: -4px;
+        inset-inline-end: -4px;
         top: -4px;
         font-size: 10px;
         background-color: var(--bg-color);
@@ -406,7 +409,7 @@
         overflow: hidden;
         text-align: center;
         mask-image: linear-gradient(
-          to right,
+          var(--to-forward),
           black calc(100% - 0.5em),
           transparent 100%
         );
@@ -478,13 +481,13 @@
 
     > li {
       &:first-child > a {
-        border-top-left-radius: var(--corner-radius);
-        border-top-right-radius: var(--corner-radius);
+        border-start-start-radius: var(--corner-radius);
+        border-start-end-radius: var(--corner-radius);
       }
 
       &:last-child > a {
-        border-bottom-left-radius: var(--corner-radius);
-        border-bottom-right-radius: var(--corner-radius);
+        border-end-start-radius: var(--corner-radius);
+        border-end-end-radius: var(--corner-radius);
       }
     }
   }
@@ -502,13 +505,13 @@
 
     @media (min-width: 40em) {
       &.separator + li a {
-        border-top-left-radius: var(--corner-radius);
-        border-top-right-radius: var(--corner-radius);
+        border-start-start-radius: var(--corner-radius);
+        border-start-end-radius: var(--corner-radius);
       }
 
       &:has(+ .separator) a {
-        border-bottom-left-radius: var(--corner-radius);
-        border-bottom-right-radius: var(--corner-radius);
+        border-end-start-radius: var(--corner-radius);
+        border-end-end-radius: var(--corner-radius);
       }
     }
 
@@ -572,8 +575,12 @@
       'author meta'
       'content content';
     /* align-items: center; */
+    --bg-gradient-angle: 140deg;
+    &:dir(rtl) {
+      --bg-gradient-angle: -140deg;
+    }
     background-image: linear-gradient(
-      140deg,
+      var(--bg-gradient-angle),
       var(--post-bg-color),
       transparent min(160px, 50%)
     );
@@ -636,7 +643,7 @@
       }
 
       > .avatar ~ .avatar {
-        margin-left: -8px;
+        margin-inline-start: -8px;
       }
 
       > .icon {
@@ -655,7 +662,7 @@
       white-space: nowrap;
       overflow: hidden;
       mask-image: linear-gradient(
-        to right,
+        var(--to-forward),
         black calc(100% - 1em),
         transparent 100%
       );
@@ -887,12 +894,15 @@
         &:has(.post-peek-media),
         .post-peek-media:first-child img {
           transform-origin: left center;
+          :dir(rtl) & {
+            transform-origin: right center;
+          }
         }
       }
 
       @media (max-width: 480px) {
         .post-peek-media:not(:last-child) {
-          margin-right: -24px;
+          margin-inline-end: -24px;
           box-shadow: 0 0 0 2px var(--bg-blur-color);
         }
         /* Max 10, I'm not going to code more than this */

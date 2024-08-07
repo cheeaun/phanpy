@@ -158,6 +158,7 @@ function Login() {
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}
+            dir="auto"
           />
           {instancesSuggestions?.length > 0 ? (
             <ul id="instances-suggestions">

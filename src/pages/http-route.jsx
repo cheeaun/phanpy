@@ -24,11 +24,13 @@ export default function HttpRoute() {
       // Check if status returns 200
       try {
         const { instance, id } = statusObject;
-        const { masto } = api({ instance });
-        const status = await masto.v1.statuses.$select(id).fetch();
-        if (status) {
-          window.location.hash = statusURL + '?view=full';
-          return;
+        if (id) {
+          const { masto } = api({ instance });
+          const status = await masto.v1.statuses.$select(id).fetch();
+          if (status) {
+            window.location.hash = statusURL + '?view=full';
+            return;
+          }
         }
       } catch (e) {}
 

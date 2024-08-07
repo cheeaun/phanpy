@@ -12,7 +12,7 @@ import Loader from '../components/loader';
 import Notification from '../components/notification';
 import { api } from '../utils/api';
 import db from '../utils/db';
-import groupNotifications from '../utils/group-notifications';
+import { massageNotifications2 } from '../utils/group-notifications';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
@@ -98,7 +98,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
 
   async function fetchNotifications() {
     const allNotifications = await notificationsIterator.next();
-    const notifications = allNotifications.value;
+    const notifications = massageNotifications2(allNotifications.value);
 
     if (notifications?.length) {
       notifications.forEach((notification) => {
@@ -152,14 +152,22 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     if (state === 'open') loadNotifications();
   }, [state]);
 
+  const menuRef = useRef();
+
   return (
     <ControlledMenu
+      ref={menuRef}
       menuClassName="notifications-menu"
       state={state}
       anchorRef={anchorRef}
       onClose={onClose}
       portal={{
         target: document.body,
+      }}
+      containerProps={{
+        onClick: () => {
+          menuRef.current?.closeMenu?.();
+        },
       }}
       overflow="auto"
       viewScroll="close"

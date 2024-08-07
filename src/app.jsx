@@ -132,6 +132,8 @@ setTimeout(() => {
     setTimeout(() => {
       if (Array.isArray(ICONS[icon])) {
         ICONS[icon][0]?.();
+      } else if (typeof ICONS[icon] === 'object') {
+        ICONS[icon].module?.();
       } else {
         ICONS[icon]?.();
       }

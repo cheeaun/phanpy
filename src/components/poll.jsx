@@ -187,9 +187,6 @@ export default function Poll({
             type="button"
             class="plain small"
             disabled={uiState === 'loading'}
-            style={{
-              marginLeft: -8,
-            }}
             onClick={(e) => {
               e.preventDefault();
               setUIState('loading');

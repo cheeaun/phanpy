@@ -10,6 +10,7 @@ import {
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
+import isRTL from '../utils/is-rtl';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 
@@ -54,7 +55,7 @@ function MediaModal({
     const differentStatusID = prevStatusID.current !== statusID;
     if (differentStatusID) prevStatusID.current = statusID;
     carouselRef.current.scrollTo({
-      left: scrollLeft,
+      left: scrollLeft * (isRTL() ? -1 : 1),
       behavior: differentStatusID ? 'auto' : 'smooth',
     });
     carouselRef.current.focus();
@@ -91,7 +92,7 @@ function MediaModal({
   useEffect(() => {
     let handleScroll = () => {
       const { clientWidth, scrollLeft } = carouselRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
+      const index = Math.round(Math.abs(scrollLeft) / clientWidth);
       setCurrentIndex(index);
     };
     if (carouselRef.current) {
@@ -178,7 +179,7 @@ function MediaModal({
             ? {
                 backgroundAttachment: 'local',
                 backgroundImage: `linear-gradient(
-            to right, ${mediaAccentGradient})`,
+            to ${isRTL() ? 'left' : 'right'}, ${mediaAccentGradient})`,
               }
             : {}
         }
@@ -257,7 +258,8 @@ function MediaModal({
                   e.preventDefault();
                   e.stopPropagation();
                   carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * i,
+                    left:
+                      carouselRef.current.clientWidth * i * (isRTL() ? -1 : 1),
                     behavior: 'smooth',
                   });
                   carouselRef.current.focus();
@@ -368,7 +370,10 @@ function MediaModal({
               e.stopPropagation();
               carouselRef.current.focus();
               carouselRef.current.scrollTo({
-                left: carouselRef.current.clientWidth * (currentIndex - 1),
+                left:
+                  carouselRef.current.clientWidth *
+                  (currentIndex - 1) *
+                  (isRTL() ? -1 : 1),
                 behavior: 'smooth',
               });
             }}
@@ -384,7 +389,10 @@ function MediaModal({
               e.stopPropagation();
               carouselRef.current.focus();
               carouselRef.current.scrollTo({
-                left: carouselRef.current.clientWidth * (currentIndex + 1),
+                left:
+                  carouselRef.current.clientWidth *
+                  (currentIndex + 1) *
+                  (isRTL() ? -1 : 1),
                 behavior: 'smooth',
               });
             }}

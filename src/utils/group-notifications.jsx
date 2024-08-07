@@ -28,8 +28,30 @@ export function fixNotifications(notifications) {
   });
 }
 
+export function massageNotifications2(notifications) {
+  if (notifications?.notificationGroups) {
+    const {
+      accounts = [],
+      notificationGroups = [],
+      statuses = [],
+    } = notifications;
+    return notificationGroups.map((group) => {
+      const { sampleAccountIds, statusId } = group;
+      const sampleAccounts =
+        sampleAccountIds?.map((id) => accounts.find((a) => a.id === id)) || [];
+      const status = statuses?.find((s) => s.id === statusId) || null;
+      return {
+        ...group,
+        sampleAccounts,
+        status,
+      };
+    });
+  }
+  return notifications;
+}
+
 export function groupNotifications2(groupNotifications) {
-  // Massage grouped notifications to look like faux grouped notifications above
+  // Make grouped notifications to look like faux grouped notifications
   const newGroupNotifications = groupNotifications.map((gn) => {
     const {
       latestPageNotificationAt,

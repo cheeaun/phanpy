@@ -211,6 +211,7 @@ These are self-hosted by other wonderful folks.
 - [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@mookiesplace.com](https://mookiesplace.com/@mookie)
 - [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
 - [phanpy.cz](https://phanpy.cz) by [@zdendys@mamutovo.cz](https://mamutovo.cz/@zdendys)
+- [phanpy.social.tchncs.de](https://phanpy.social.tchncs.de) by [@milan@social.tchncs.de](https://social.tchncs.de/@milan)
 
 > Note: Add yours by creating a pull request.
 

@@ -1,6 +1,6 @@
 import mem from './mem';
 
-const IntlDN = new Intl.DisplayNames(navigator.languages, {
+const IntlDN = new Intl.DisplayNames(undefined, {
   type: 'language',
 });
 

@@ -4,12 +4,13 @@ let IS_RTL = false;
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.type === 'attributes') {
-      const { value } = mutation.target;
-      if (value === 'rtl') {
+      const { dir } = mutation.target;
+      if (dir === 'rtl') {
         IS_RTL = true;
       } else {
         IS_RTL = false;
       }
+      console.log({ IS_RTL });
       // Fire custom event 'dirchange' on document
       // document.dispatchEvent(new Event('dirchange'));
     }

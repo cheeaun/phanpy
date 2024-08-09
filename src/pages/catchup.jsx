@@ -1259,6 +1259,7 @@ function Catchup() {
                               setSelectedFilterCategory(label);
                               if (label === 'Boosts') {
                                 setSortBy('reblogsCount');
+                                setSortOrder('desc');
                                 setGroupBy(null);
                               }
                               // setSelectedAuthor(null);

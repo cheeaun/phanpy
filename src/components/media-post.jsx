@@ -108,7 +108,7 @@ function MediaPost({
   const readingExpandMedia = useMemo(() => {
     // default | show_all | hide_all
     const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media'] || 'default';
+    return prefs['reading:expand:media']?.toLowerCase() || 'default';
   }, []);
   const showSpoilerMedia = readingExpandMedia === 'show_all';
 

@@ -407,7 +407,7 @@ function Status({
     // default | show_all | hide_all
     // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
     const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media'] || 'default';
+    return prefs['reading:expand:media']?.toLowerCase() || 'default';
   }, []);
   // FOR TESTING:
   // const readingExpandSpoilers = true;

@@ -289,10 +289,14 @@ function Compose({
       focusTextarea();
       setVisibility(
         visibility === 'public' && prefs['posting:default:visibility']
-          ? prefs['posting:default:visibility']
+          ? prefs['posting:default:visibility'].toLowerCase()
           : visibility,
       );
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       setSensitive(sensitive && !!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
@@ -316,7 +320,11 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
+          setLanguage(
+            language ||
+              prefs['posting:default:language']?.toLowerCase() ||
+              DEFAULT_LANG,
+          );
           setSensitive(sensitive);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -331,13 +339,13 @@ function Compose({
       focusTextarea();
       console.log('Apply prefs', prefs);
       if (prefs['posting:default:visibility']) {
-        setVisibility(prefs['posting:default:visibility']);
+        setVisibility(prefs['posting:default:visibility'].toLowerCase());
       }
       if (prefs['posting:default:language']) {
-        setLanguage(prefs['posting:default:language']);
+        setLanguage(prefs['posting:default:language'].toLowerCase());
       }
       if (prefs['posting:default:sensitive']) {
-        setSensitive(prefs['posting:default:sensitive']);
+        setSensitive(!!prefs['posting:default:sensitive']);
       }
     }
     if (draftStatus) {
@@ -360,7 +368,11 @@ function Compose({
       focusTextarea();
       if (spoilerText) spoilerTextRef.current.value = spoilerText;
       if (visibility) setVisibility(visibility);
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);

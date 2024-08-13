@@ -311,7 +311,7 @@ function MediaModal({
                     onClick={() => {
                       setUIState('loading');
                       toastRef.current = showToast({
-                        text: t`Attempting to describe image. Please wait...`,
+                        text: t`Attempting to describe image. Please wait…`,
                         duration: -1,
                       });
                       (async function () {

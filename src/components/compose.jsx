@@ -2450,7 +2450,7 @@ function MediaAttachment({
                           onClick={() => {
                             setUIState('loading');
                             toastRef.current = showToast({
-                              text: t`Generating description. Please wait...`,
+                              text: t`Generating description. Please wait…`,
                               duration: -1,
                             });
                             // POST with multipart
@@ -2499,7 +2499,7 @@ function MediaAttachment({
                             onClick={() => {
                               setUIState('loading');
                               toastRef.current = showToast({
-                                text: t`Generating description. Please wait...`,
+                                text: t`Generating description. Please wait…`,
                                 duration: -1,
                               });
                               // POST with multipart

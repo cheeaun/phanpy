@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-13 14:54\n"
+"PO-Revision-Date: 2024-08-13 16:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1349,11 +1349,11 @@ msgstr "{account} 发布了一条嘟文。"
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, other {{postType, select, reply {<0><1>{0}</1> 人</0> 转嘟了你的回复。} other {<2><3>{1}</3> 人</2>转嘟了你的嘟文。}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, one {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, other {<0><1>{0}</1> 人</0>关注了你。}}"
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
@@ -1361,7 +1361,7 @@ msgstr "{account} 请求关注你。"
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, other {{postType, select, reply {<0><1>{0}</1> 人</0> 赞了你的回复。} other {<2><3>{1}</3> 人</2>赞了你的嘟文。}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1381,11 +1381,11 @@ msgstr "你互动过的嘟文已被编辑。"
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, other {{postType, select, reply {<0><1>{0}</1> 人</0>转嘟和点赞了你的回复。} other {<2><3>{1}</3> 人</2>转嘟和点赞了你的嘟文。}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
-msgstr "{account} 注册了 Ta 的账户。"
+msgstr "{account} 已注册。"
 
 #: src/components/notification.jsx:246
 msgid "{account} reported {targetAccount}"
@@ -1397,7 +1397,7 @@ msgstr "失去了与 <0>{name}</0> 的联系。"
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
-msgstr ""
+msgstr "管理警告"
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -1405,27 +1405,27 @@ msgstr "<0>{from}</0> 的一位管理员封禁了 <1>{targetName}</1> 的账户�
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "一名来自<0>{from}</0>的管理员已屏蔽<1>{targetName}</1>。受影响的粉丝数：{followersCount}，关注数：{followingCount}。"
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "你已屏蔽<0>{targetName}</0>。被移除的粉丝数：{followersCount}，关注数：{followingCount}。"
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "你的账号收到了一次管理警告。"
 
 #: src/components/notification.jsx:288
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "你的账号已被禁用。"
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr "你的一些嘟文被标记为了敏感内容。"
+msgstr "你的某些嘟文已被标记为敏感内容。"
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr "你的一些嘟文被删除了。"
+msgstr "你的某些嘟文已被删除。"
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
@@ -1441,25 +1441,25 @@ msgstr "你的账户已被封禁。"
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[未知通知类型：{type}]"
 
 #: src/components/notification.jsx:419
 #: src/components/status.jsx:941
 #: src/components/status.jsx:951
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "查看转嘟/点赞…"
 
 #: src/components/notification.jsx:420
 msgid "Liked by…"
-msgstr ""
+msgstr "查看点赞…"
 
 #: src/components/notification.jsx:421
 msgid "Boosted by…"
-msgstr ""
+msgstr "查看转嘟…"
 
 #: src/components/notification.jsx:422
 msgid "Followed by…"
-msgstr ""
+msgstr "被… 关注"
 
 #: src/components/notification.jsx:478
 #: src/components/notification.jsx:494
@@ -1682,11 +1682,11 @@ msgstr "话题标签"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "列表ID"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
-msgstr ""
+msgstr "仅限本站"
 
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
@@ -1729,23 +1729,23 @@ msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "指定一组快捷方式，显示样式为："
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "悬浮按钮"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "标签/菜单栏"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
-msgstr ""
+msgstr "多栏"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "在当前视图模式下不可用"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -2037,7 +2037,7 @@ msgstr "取消喜欢"
 #: src/components/status.jsx:2332
 #: src/components/status.jsx:2333
 msgid "Like"
-msgstr "喜欢"
+msgstr "赞"
 
 #: src/components/status.jsx:927
 #: src/components/status.jsx:2344

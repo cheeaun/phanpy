@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-13 13:40\n"
+"PO-Revision-Date: 2024-08-13 14:54\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -130,7 +130,7 @@ msgstr "更多"
 
 #: src/components/account-info.jsx:440
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> 已声明Ta现在的新账户是："
+msgstr "<0>{displayName}</0> 已声明 Ta 现在的新账户是："
 
 #: src/components/account-info.jsx:585
 #: src/components/account-info.jsx:1272
@@ -685,7 +685,7 @@ msgstr "正在下载 GIF…"
 
 #: src/components/compose.jsx:1622
 msgid "Failed to download GIF"
-msgstr "下载 GIF 失败"
+msgstr "GIF 下载失败"
 
 #: src/components/compose.jsx:1733
 #: src/components/compose.jsx:1810
@@ -807,7 +807,7 @@ msgstr "添加"
 #: src/components/compose.jsx:2944
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
-msgstr "加载帐户时出错"
+msgstr "加载账户时出错"
 
 #: src/components/compose.jsx:3087
 msgid "Custom emojis"
@@ -839,7 +839,7 @@ msgstr "搜索 GIF"
 
 #: src/components/compose.jsx:3341
 msgid "Powered by GIPHY"
-msgstr "由 GIPHY 支持"
+msgstr "由 GIPHY 驱动"
 
 #: src/components/compose.jsx:3349
 msgid "Type to search GIFs"
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} 请求关注你。"
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -1365,19 +1365,19 @@ msgstr ""
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "你参与或创建的投票已结束。"
 
 #: src/components/notification.jsx:192
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "你创建的投票已结束。"
 
 #: src/components/notification.jsx:193
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "你参与的投票已结束。"
 
 #: src/components/notification.jsx:194
 msgid "A post you interacted with has been edited."
-msgstr ""
+msgstr "你互动过的嘟文已被编辑。"
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
@@ -1385,15 +1385,15 @@ msgstr ""
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
-msgstr ""
+msgstr "{account} 注册了 Ta 的账户。"
 
 #: src/components/notification.jsx:246
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} 举报了 {targetAccount}"
 
 #: src/components/notification.jsx:251
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "失去了与 <0>{name}</0> 的联系。"
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
@@ -1401,7 +1401,7 @@ msgstr ""
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "<0>{from}</0> 的一位管理员封禁了 <1>{targetName}</1> 的账户，你不再能接收其更新或与之互动。"
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
@@ -1421,23 +1421,23 @@ msgstr ""
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "你的一些嘟文被标记为了敏感内容。"
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "你的一些嘟文被删除了。"
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "今后你的嘟文将被标记为敏感内容。"
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
-msgstr ""
+msgstr "你的账户已被限制。"
 
 #: src/components/notification.jsx:293
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "你的账户已被封禁。"
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
@@ -1464,12 +1464,12 @@ msgstr ""
 #: src/components/notification.jsx:478
 #: src/components/notification.jsx:494
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "了解更多 <0/>"
 
 #: src/components/notification.jsx:674
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr ""
+msgstr "继续阅读 →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
@@ -1693,13 +1693,13 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:146
 msgid "Instance"
-msgstr ""
+msgstr "实例"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr ""
+msgstr "可选，如 mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
@@ -1725,7 +1725,7 @@ msgstr "快捷方式"
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr "测试版"
+msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
@@ -1749,17 +1749,17 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
-msgstr ""
+msgstr "向上移动"
 
 #: src/components/shortcuts-settings.jsx:364
 msgid "Move down"
-msgstr ""
+msgstr "向下移动"
 
 #: src/components/shortcuts-settings.jsx:376
 #: src/components/status.jsx:1209
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
@@ -1787,7 +1787,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
-msgstr ""
+msgstr "导入/导出"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
@@ -2029,7 +2029,7 @@ msgstr ""
 #: src/components/status.jsx:1619
 #: src/components/status.jsx:2332
 msgid "Unlike"
-msgstr ""
+msgstr "取消喜欢"
 
 #: src/components/status.jsx:916
 #: src/components/status.jsx:1619
@@ -2037,7 +2037,7 @@ msgstr ""
 #: src/components/status.jsx:2332
 #: src/components/status.jsx:2333
 msgid "Like"
-msgstr ""
+msgstr "喜欢"
 
 #: src/components/status.jsx:927
 #: src/components/status.jsx:2344
@@ -3555,7 +3555,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:70
 msgid "Sign up"
-msgstr ""
+msgstr "注册"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."

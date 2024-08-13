@@ -1,5 +1,6 @@
 import './media-post.css';
 
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useContext, useMemo } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -123,11 +124,13 @@ function MediaPost({
         onMouseEnter={debugHover}
         key={mediaKey}
         data-spoiler-text={
-          spoilerText || (sensitive ? 'Sensitive media' : undefined)
+          spoilerText || (sensitive ? t`Sensitive media` : undefined)
         }
         data-filtered-text={
           filterInfo
-            ? `Filtered${filterTitleStr ? `: ${filterTitleStr}` : ''}`
+            ? filterTitleStr
+              ? t`Filtered: ${filterTitleStr}`
+              : t`Filtered`
             : undefined
         }
         class={`

@@ -1,5 +1,7 @@
 import './account-block.css';
 
+import { Plural, t, Trans } from '@lingui/macro';
+
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
 import niceDateTime from '../utils/nice-date-time';
@@ -128,20 +130,23 @@ function AccountBlock({
           {locked && (
             <>
               {' '}
-              <Icon icon="lock" size="s" alt="Locked" />
+              <Icon icon="lock" size="s" alt={t`Locked`} />
             </>
           )}
         </span>
         {showActivity && (
           <div class="account-block-stats">
-            Posts: {shortenNumber(statusesCount)}
+            <Trans>Posts: {shortenNumber(statusesCount)}</Trans>
             {!!lastStatusAt && (
               <>
                 {' '}
-                &middot; Last posted:{' '}
-                {niceDateTime(lastStatusAt, {
-                  hideTime: true,
-                })}
+                &middot;{' '}
+                <Trans>
+                  Last posted:{' '}
+                  {niceDateTime(lastStatusAt, {
+                    hideTime: true,
+                  })}
+                </Trans>
               </>
             )}
           </div>
@@ -151,14 +156,14 @@ function AccountBlock({
             {bot && (
               <>
                 <span class="tag collapsed">
-                  <Icon icon="bot" /> Automated
+                  <Icon icon="bot" /> <Trans>Automated</Trans>
                 </span>
               </>
             )}
             {!!group && (
               <>
                 <span class="tag collapsed">
-                  <Icon icon="group" /> Group
+                  <Icon icon="group" /> <Trans>Group</Trans>
                 </span>
               </>
             )}
@@ -167,26 +172,37 @@ function AccountBlock({
                 <div class="shazam-container-inner">
                   {excludedRelationship.following &&
                   excludedRelationship.followedBy ? (
-                    <span class="tag minimal">Mutual</span>
+                    <span class="tag minimal">
+                      <Trans>Mutual</Trans>
+                    </span>
                   ) : excludedRelationship.requested ? (
-                    <span class="tag minimal">Requested</span>
+                    <span class="tag minimal">
+                      <Trans>Requested</Trans>
+                    </span>
                   ) : excludedRelationship.following ? (
-                    <span class="tag minimal">Following</span>
+                    <span class="tag minimal">
+                      <Trans>Following</Trans>
+                    </span>
                   ) : excludedRelationship.followedBy ? (
-                    <span class="tag minimal">Follows you</span>
+                    <span class="tag minimal">
+                      <Trans>Follows you</Trans>
+                    </span>
                   ) : null}
                 </div>
               </div>
             )}
             {!!followersCount && (
               <span class="ib">
-                {shortenNumber(followersCount)}{' '}
-                {followersCount === 1 ? 'follower' : 'followers'}
+                <Plural
+                  value={followersCount}
+                  one="# follower"
+                  other="# followers"
+                />
               </span>
             )}
             {!!verifiedField && (
               <span class="verified-field">
-                <Icon icon="check-circle" size="s" />{' '}
+                <Icon icon="check-circle" size="s" alt={t`Verified`} />{' '}
                 <span
                   dangerouslySetInnerHTML={{
                     __html: enhanceContent(verifiedField.value, { emojis }),
@@ -201,12 +217,14 @@ function AccountBlock({
               !verifiedField &&
               !!createdAt && (
                 <span class="created-at">
-                  Joined{' '}
-                  <time datetime={createdAt}>
-                    {niceDateTime(createdAt, {
-                      hideTime: true,
-                    })}
-                  </time>
+                  <Trans>
+                    Joined{' '}
+                    <time datetime={createdAt}>
+                      {niceDateTime(createdAt, {
+                        hideTime: true,
+                      })}
+                    </time>
+                  </Trans>
                 </span>
               )}
           </div>

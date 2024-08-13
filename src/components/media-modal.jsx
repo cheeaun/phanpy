@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import {
@@ -243,7 +244,7 @@ function MediaModal({
             class="carousel-button"
             onClick={() => onClose()}
           >
-            <Icon icon="x" />
+            <Icon icon="x" alt={t`Close`} />
           </button>
         </span>
         {mediaAttachments?.length > 1 ? (
@@ -257,15 +258,13 @@ function MediaModal({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  carouselRef.current.scrollTo({
-                    left:
-                      carouselRef.current.clientWidth * i * (isRTL() ? -1 : 1),
-                    behavior: 'smooth',
-                  });
+                  const left =
+                    carouselRef.current.clientWidth * i * (isRTL() ? -1 : 1);
+                  carouselRef.current.scrollTo({ left, behavior: 'smooth' });
                   carouselRef.current.focus();
                 }}
               >
-                <Icon icon="round" size="s" />
+                <Icon icon="round" size="s" alt="⸱" />
               </button>
             ))}
           </span>
@@ -281,7 +280,7 @@ function MediaModal({
             menuClassName="glass-menu"
             menuButton={
               <button type="button" class="carousel-button">
-                <Icon icon="more" alt="More" />
+                <Icon icon="more" alt={t`More`} />
               </button>
             }
           >
@@ -292,10 +291,12 @@ function MediaModal({
               }
               class="carousel-button"
               target="_blank"
-              title="Open original media in new window"
+              title={t`Open original media in new window`}
             >
               <Icon icon="popout" />
-              <span>Open original media</span>
+              <span>
+                <Trans>Open original media</Trans>
+              </span>
             </MenuLink>
             {import.meta.env.DEV && // Only dev for now
               !!states.settings.mediaAltGenerator &&
@@ -310,7 +311,7 @@ function MediaModal({
                     onClick={() => {
                       setUIState('loading');
                       toastRef.current = showToast({
-                        text: 'Attempting to describe image. Please wait...',
+                        text: t`Attempting to describe image. Please wait...`,
                         duration: -1,
                       });
                       (async function () {
@@ -325,7 +326,7 @@ function MediaModal({
                           };
                         } catch (e) {
                           console.error(e);
-                          showToast('Failed to describe image');
+                          showToast(t`Failed to describe image`);
                         } finally {
                           setUIState('default');
                           toastRef.current?.hideToast?.();
@@ -334,7 +335,9 @@ function MediaModal({
                     }}
                   >
                     <Icon icon="sparkles2" />
-                    <span>Describe image…</span>
+                    <span>
+                      <Trans>Describe image…</Trans>
+                    </span>
                   </MenuItem>
                 </>
               )}
@@ -355,7 +358,10 @@ function MediaModal({
             //   }
             // }}
           >
-            <span class="button-label">View post </span>&raquo;
+            <span class="button-label">
+              <Trans>View post</Trans>{' '}
+            </span>
+            &raquo;
           </Link>
         </span>
       </div>
@@ -378,7 +384,7 @@ function MediaModal({
               });
             }}
           >
-            <Icon icon="arrow-left" />
+            <Icon icon="arrow-left" alt={t`Previous`} />
           </button>
           <button
             type="button"
@@ -397,7 +403,7 @@ function MediaModal({
               });
             }}
           >
-            <Icon icon="arrow-right" />
+            <Icon icon="arrow-right" alt={t`Next`} />
           </button>
         </div>
       )}

@@ -1,11 +1,13 @@
 import './login.css';
 
+import { t, Trans } from '@lingui/macro';
 import Fuse from 'fuse.js';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
 import logo from '../assets/logo.svg';
 
+import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import instancesListURL from '../data/instances.json?url';
@@ -137,10 +139,12 @@ function Login() {
         <h1>
           <img src={logo} alt="" width="80" height="80" />
           <br />
-          Log in
+          <Trans>Log in</Trans>
         </h1>
         <label>
-          <p>Instance</p>
+          <p>
+            <Trans>Instance</Trans>
+          </p>
           <input
             value={instanceText}
             required
@@ -154,7 +158,7 @@ function Login() {
             autocapitalize="off"
             autocomplete="off"
             spellCheck={false}
-            placeholder="instance domain"
+            placeholder={`instance domain`}
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}
@@ -177,7 +181,9 @@ function Login() {
               ))}
             </ul>
           ) : (
-            <div id="instances-eg">e.g. &ldquo;mastodon.social&rdquo;</div>
+            <div id="instances-eg">
+              <Trans>e.g. &ldquo;mastodon.social&rdquo;</Trans>
+            </div>
           )}
           {/* <datalist id="instances-list">
             {instancesList.map((instance) => (
@@ -187,7 +193,9 @@ function Login() {
         </label>
         {uiState === 'error' && (
           <p class="error">
-            Failed to log in. Please try again or another instance.
+            <Trans>
+              Failed to log in. Please try again or another instance.
+            </Trans>
           </p>
         )}
         <div>
@@ -197,8 +205,8 @@ function Login() {
             }
           >
             {selectedInstanceText
-              ? `Continue with ${selectedInstanceText}`
-              : 'Continue'}
+              ? t`Continue with ${selectedInstanceText}`
+              : t`Continue`}
           </button>{' '}
         </div>
         <Loader hidden={uiState !== 'loading'} />
@@ -206,13 +214,16 @@ function Login() {
         {!DEFAULT_INSTANCE && (
           <p>
             <a href="https://joinmastodon.org/servers" target="_blank">
-              Don't have an account? Create one!
+              <Trans>Don't have an account? Create one!</Trans>
             </a>
           </p>
         )}
         <p>
-          <Link to="/">Go home</Link>
+          <Link to="/">
+            <Trans>Go home</Trans>
+          </Link>
         </p>
+        <LangSelector />
       </form>
     </main>
   );

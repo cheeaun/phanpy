@@ -1,11 +1,13 @@
 import './settings.css';
 
+import { Plural, t, Trans } from '@lingui/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 
 import Icon from '../components/icon';
+import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
 import targetLanguages from '../data/lingva-target-languages';
@@ -64,18 +66,22 @@ function Settings({ onClose }) {
     <div id="settings-container" class="sheet" tabIndex="-1">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Settings</h2>
+        <h2>
+          <Trans>Settings</Trans>
+        </h2>
       </header>
       <main>
         <section>
           <ul>
             <li>
               <div>
-                <label>Appearance</label>
+                <label>
+                  <Trans>Appearance</Trans>
+                </label>
               </div>
               <div>
                 <form
@@ -149,7 +155,9 @@ function Settings({ onClose }) {
                         value="light"
                         defaultChecked={currentTheme === 'light'}
                       />
-                      <span>Light</span>
+                      <span>
+                        <Trans>Light</Trans>
+                      </span>
                     </label>
                     <label>
                       <input
@@ -158,7 +166,9 @@ function Settings({ onClose }) {
                         value="dark"
                         defaultChecked={currentTheme === 'dark'}
                       />
-                      <span>Dark</span>
+                      <span>
+                        <Trans>Dark</Trans>
+                      </span>
                     </label>
                     <label>
                       <input
@@ -169,7 +179,9 @@ function Settings({ onClose }) {
                           currentTheme !== 'light' && currentTheme !== 'dark'
                         }
                       />
-                      <span>Auto</span>
+                      <span>
+                        <Trans>Auto</Trans>
+                      </span>
                     </label>
                   </div>
                 </form>
@@ -177,10 +189,16 @@ function Settings({ onClose }) {
             </li>
             <li>
               <div>
-                <label>Text size</label>
+                <label>
+                  <Trans>Text size</Trans>
+                </label>
               </div>
               <div class="range-group">
-                <span style={{ fontSize: TEXT_SIZES[0] }}>A</span>{' '}
+                <span style={{ fontSize: TEXT_SIZES[0] }}>
+                  <Trans comment="Preview of one character, in smallest size">
+                    A
+                  </Trans>
+                </span>{' '}
                 <input
                   type="range"
                   min={TEXT_SIZES[0]}
@@ -202,7 +220,9 @@ function Settings({ onClose }) {
                   }}
                 />{' '}
                 <span style={{ fontSize: TEXT_SIZES[TEXT_SIZES.length - 1] }}>
-                  A
+                  <Trans comment="Preview of one character, in largest size">
+                    A
+                  </Trans>
                 </span>
                 <datalist id="sizes">
                   {TEXT_SIZES.map((size) => (
@@ -211,18 +231,26 @@ function Settings({ onClose }) {
                 </datalist>
               </div>
             </li>
+            <li>
+              <label>
+                <Trans>Display language</Trans>
+              </label>
+              <LangSelector />
+            </li>
           </ul>
         </section>
         {authenticated && (
           <>
-            <h3>Posting</h3>
+            <h3>
+              <Trans>Posting</Trans>
+            </h3>
             <section>
               <ul>
                 <li>
                   <div>
                     <label for="posting-privacy-field">
-                      Default visibility{' '}
-                      <Icon icon="cloud" alt="Synced" class="synced-icon" />
+                      <Trans>Default visibility</Trans>{' '}
+                      <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />
                     </label>
                   </div>
                   <div>
@@ -247,36 +275,46 @@ function Settings({ onClose }) {
                               'posting:default:visibility': value,
                             });
                           } catch (e) {
-                            alert('Failed to update posting privacy');
+                            alert(t`Failed to update posting privacy`);
                             console.error(e);
                           }
                         })();
                       }}
                     >
-                      <option value="public">Public</option>
-                      <option value="unlisted">Unlisted</option>
-                      <option value="private">Followers only</option>
+                      <option value="public">
+                        <Trans>Public</Trans>
+                      </option>
+                      <option value="unlisted">
+                        <Trans>Unlisted</Trans>
+                      </option>
+                      <option value="private">
+                        <Trans>Followers only</Trans>
+                      </option>
                     </select>
                   </div>
                 </li>
               </ul>
             </section>
             <p class="section-postnote">
-              <Icon icon="cloud" alt="Synced" class="synced-icon" />{' '}
+              <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />{' '}
               <small>
-                Synced to your instance server's settings.{' '}
-                <a
-                  href={`https://${instance}/`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Go to your instance ({instance}) for more settings.
-                </a>
+                <Trans>
+                  Synced to your instance server's settings.{' '}
+                  <a
+                    href={`https://${instance}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Go to your instance ({instance}) for more settings.
+                  </a>
+                </Trans>
               </small>
             </p>
           </>
         )}
-        <h3>Experiments</h3>
+        <h3>
+          <Trans>Experiments</Trans>
+        </h3>
         <section>
           <ul>
             <li>
@@ -288,7 +326,7 @@ function Settings({ onClose }) {
                     states.settings.autoRefresh = e.target.checked;
                   }}
                 />{' '}
-                Auto refresh timeline posts
+                <Trans>Auto refresh timeline posts</Trans>
               </label>
             </li>
             <li>
@@ -300,7 +338,7 @@ function Settings({ onClose }) {
                     states.settings.boostsCarousel = e.target.checked;
                   }}
                 />{' '}
-                Boosts carousel
+                <Trans>Boosts carousel</Trans>
               </label>
             </li>
             <li>
@@ -316,7 +354,7 @@ function Settings({ onClose }) {
                     }
                   }}
                 />{' '}
-                Post translation
+                <Trans>Post translation</Trans>
               </label>
               <div
                 class={`sub-section ${
@@ -327,7 +365,7 @@ function Settings({ onClose }) {
               >
                 <div>
                   <label>
-                    Translate to{' '}
+                    <Trans>Translate to </Trans>
                     <select
                       value={targetLanguage || ''}
                       disabled={!snapStates.settings.contentTranslation}
@@ -337,78 +375,99 @@ function Settings({ onClose }) {
                       }}
                     >
                       <option value="">
-                        System language ({systemTargetLanguageText})
+                        <Trans>
+                          System language ({systemTargetLanguageText})
+                        </Trans>
                       </option>
                       <option disabled>──────────</option>
-                      {targetLanguages.map((lang) => (
-                        <option value={lang.code}>{lang.name}</option>
-                      ))}
+                      {targetLanguages.map((lang) => {
+                        const common = localeCode2Text({
+                          code: lang.code,
+                          fallback: lang.name,
+                        });
+                        const native = localeCode2Text({
+                          code: lang.code,
+                          locale: lang.code,
+                        });
+                        const same = !native || common === native;
+                        return (
+                          <option value={lang.code}>
+                            {same ? common : `${common} (${native})`}
+                          </option>
+                        );
+                      })}
                     </select>
                   </label>
                 </div>
                 <hr />
-                <p class="checkbox-fieldset">
-                  Hide "Translate" button for
-                  {snapStates.settings.contentTranslationHideLanguages.length >
-                    0 && (
-                    <>
-                      {' '}
-                      (
-                      {
-                        snapStates.settings.contentTranslationHideLanguages
-                          .length
-                      }
-                      )
-                    </>
-                  )}
-                  :
+                <div class="checkbox-fieldset">
+                  <Plural
+                    value={
+                      snapStates.settings.contentTranslationHideLanguages.length
+                    }
+                    _0={`Hide "Translate" button for:`}
+                    other={`Hide "Translate" button for (#):`}
+                  />
                   <div class="checkbox-fields">
-                    {targetLanguages.map((lang) => (
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={snapStates.settings.contentTranslationHideLanguages.includes(
-                            lang.code,
-                          )}
-                          onChange={(e) => {
-                            const { checked } = e.target;
-                            if (checked) {
-                              states.settings.contentTranslationHideLanguages.push(
-                                lang.code,
-                              );
-                            } else {
-                              states.settings.contentTranslationHideLanguages =
-                                snapStates.settings.contentTranslationHideLanguages.filter(
-                                  (code) => code !== lang.code,
+                    {targetLanguages.map((lang) => {
+                      const common = localeCode2Text({
+                        code: lang.code,
+                        fallback: lang.name,
+                      });
+                      const native = localeCode2Text({
+                        code: lang.code,
+                        locale: lang.code,
+                      });
+                      const same = !native || common === native;
+                      return (
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={snapStates.settings.contentTranslationHideLanguages.includes(
+                              lang.code,
+                            )}
+                            onChange={(e) => {
+                              const { checked } = e.target;
+                              if (checked) {
+                                states.settings.contentTranslationHideLanguages.push(
+                                  lang.code,
                                 );
-                            }
-                          }}
-                        />{' '}
-                        {lang.name}
-                      </label>
-                    ))}
+                              } else {
+                                states.settings.contentTranslationHideLanguages =
+                                  snapStates.settings.contentTranslationHideLanguages.filter(
+                                    (code) => code !== lang.code,
+                                  );
+                              }
+                            }}
+                          />{' '}
+                          {same ? common : `${common} (${native})`}
+                        </label>
+                      );
+                    })}
                   </div>
-                </p>
+                </div>
                 <p class="insignificant">
                   <small>
-                    Note: This feature uses external translation services,
-                    powered by{' '}
-                    <a
-                      href="https://github.com/cheeaun/lingva-api"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Lingva API
-                    </a>{' '}
-                    &amp;{' '}
-                    <a
-                      href="https://github.com/thedaviddelta/lingva-translate"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Lingva Translate
-                    </a>
-                    .
+                    <Trans>
+                      Note: This feature uses external translation services,
+                      powered by{' '}
+                      <a
+                        href="https://github.com/cheeaun/lingva-api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Lingva API
+                      </a>{' '}
+                      &amp;{' '}
+                      <a
+                        href="https://github.com/thedaviddelta/lingva-translate"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Lingva Translate
+                      </a>
+                      .
+                    </Trans>
                   </small>
                 </p>
                 <hr />
@@ -423,13 +482,15 @@ function Settings({ onClose }) {
                           e.target.checked;
                       }}
                     />{' '}
-                    Auto inline translation
+                    <Trans>Auto inline translation</Trans>
                   </label>
                   <p class="insignificant">
                     <small>
-                      Automatically show translation for posts in timeline. Only
-                      works for <b>short</b> posts without content warning,
-                      media and poll.
+                      <Trans>
+                        Automatically show translation for posts in timeline.
+                        Only works for <b>short</b> posts without content
+                        warning, media and poll.
+                      </Trans>
                     </small>
                   </p>
                 </div>
@@ -445,23 +506,25 @@ function Settings({ onClose }) {
                       states.settings.composerGIFPicker = e.target.checked;
                     }}
                   />{' '}
-                  GIF Picker for composer
+                  <Trans>GIF Picker for composer</Trans>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
-                    Note: This feature uses external GIF search service, powered
-                    by{' '}
-                    <a
-                      href="https://developers.giphy.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GIPHY
-                    </a>
-                    . G-rated (suitable for viewing by all ages), tracking
-                    parameters are stripped, referrer information is omitted
-                    from requests, but search queries and IP address information
-                    will still reach their servers.
+                    <Trans>
+                      Note: This feature uses external GIF search service,
+                      powered by{' '}
+                      <a
+                        href="https://developers.giphy.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        GIPHY
+                      </a>
+                      . G-rated (suitable for viewing by all ages), tracking
+                      parameters are stripped, referrer information is omitted
+                      from requests, but search queries and IP address
+                      information will still reach their servers.
+                    </Trans>
                   </small>
                 </div>
               </li>
@@ -476,23 +539,29 @@ function Settings({ onClose }) {
                       states.settings.mediaAltGenerator = e.target.checked;
                     }}
                   />{' '}
-                  Image description generator{' '}
+                  <Trans>Image description generator</Trans>{' '}
                   <Icon icon="sparkles2" class="more-insignificant" />
                 </label>
                 <div class="sub-section insignificant">
-                  <small>Only for new images while composing new posts.</small>
+                  <small>
+                    <Trans>
+                      Only for new images while composing new posts.
+                    </Trans>
+                  </small>
                 </div>
                 <div class="sub-section insignificant">
                   <small>
-                    Note: This feature uses external AI service, powered by{' '}
-                    <a
-                      href="https://github.com/cheeaun/img-alt-api"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      img-alt-api
-                    </a>
-                    . May not work well. Only for images and in English.
+                    <Trans>
+                      Note: This feature uses external AI service, powered by{' '}
+                      <a
+                        href="https://github.com/cheeaun/img-alt-api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        img-alt-api
+                      </a>
+                      . May not work well. Only for images and in English.
+                    </Trans>
                   </small>
                 </div>
               </li>
@@ -508,12 +577,14 @@ function Settings({ onClose }) {
                         e.target.checked;
                     }}
                   />{' '}
-                  Server-side grouped notifications
+                  <Trans>Server-side grouped notifications</Trans>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
-                    Alpha-stage feature. Potentially improved grouping window
-                    but basic grouping logic.
+                    <Trans>
+                      Alpha-stage feature. Potentially improved grouping window
+                      but basic grouping logic.
+                    </Trans>
                   </small>
                 </div>
               </li>
@@ -531,22 +602,26 @@ function Settings({ onClose }) {
                         e.target.checked;
                     }}
                   />{' '}
-                  "Cloud" import/export for shortcuts settings{' '}
+                  <Trans>"Cloud" import/export for shortcuts settings</Trans>{' '}
                   <Icon icon="cloud" class="more-insignificant" />
                 </label>
                 <div class="sub-section insignificant">
                   <small>
-                    ⚠️⚠️⚠️ Very experimental.
-                    <br />
-                    Stored in your own profile’s notes. Profile (private) notes
-                    are mainly used for other profiles, and hidden for own
-                    profile.
+                    <Trans>
+                      ⚠️⚠️⚠️ Very experimental.
+                      <br />
+                      Stored in your own profile’s notes. Profile (private)
+                      notes are mainly used for other profiles, and hidden for
+                      own profile.
+                    </Trans>
                   </small>
                 </div>
                 <div class="sub-section insignificant">
                   <small>
-                    Note: This feature uses currently-logged-in instance server
-                    API.
+                    <Trans>
+                      Note: This feature uses currently-logged-in instance
+                      server API.
+                    </Trans>
                   </small>
                 </div>
               </li>
@@ -560,15 +635,19 @@ function Settings({ onClose }) {
                     states.settings.cloakMode = e.target.checked;
                   }}
                 />{' '}
-                Cloak mode{' '}
-                <span class="insignificant">
-                  (<samp>Text</samp> → <samp>████</samp>)
-                </span>
+                <Trans>
+                  Cloak mode{' '}
+                  <span class="insignificant">
+                    (<samp>Text</samp> → <samp>████</samp>)
+                  </span>
+                </Trans>
               </label>
               <div class="sub-section insignificant">
                 <small>
-                  Replace text as blocks, useful when taking screenshots, for
-                  privacy reasons.
+                  <Trans>
+                    Replace text as blocks, useful when taking screenshots, for
+                    privacy reasons.
+                  </Trans>
                 </small>
               </div>
             </li>
@@ -582,14 +661,16 @@ function Settings({ onClose }) {
                     states.showSettings = false;
                   }}
                 >
-                  Unsent drafts
+                  <Trans>Unsent drafts</Trans>
                 </button>
               </li>
             )}
           </ul>
         </section>
         {authenticated && <PushNotificationsSection onClose={onClose} />}
-        <h3>About</h3>
+        <h3>
+          <Trans>About</Trans>
+        </h3>
         <section>
           <div
             style={{
@@ -627,25 +708,27 @@ function Settings({ onClose }) {
                 @phanpy
               </a>
               <br />
-              <a
-                href="https://github.com/cheeaun/phanpy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Built
-              </a>{' '}
-              by{' '}
-              <a
-                href="https://mastodon.social/@cheeaun"
-                // target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  states.showAccount = 'cheeaun@mastodon.social';
-                }}
-              >
-                @cheeaun
-              </a>
+              <Trans>
+                <a
+                  href="https://github.com/cheeaun/phanpy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Built
+                </a>{' '}
+                by{' '}
+                <a
+                  href="https://mastodon.social/@cheeaun"
+                  // target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = 'cheeaun@mastodon.social';
+                  }}
+                >
+                  @cheeaun
+                </a>
+              </Trans>
             </div>
           </div>
           <p>
@@ -654,7 +737,7 @@ function Settings({ onClose }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Sponsor
+              <Trans>Sponsor</Trans>
             </a>{' '}
             &middot;{' '}
             <a
@@ -662,7 +745,7 @@ function Settings({ onClose }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Donate
+              <Trans>Donate</Trans>
             </a>{' '}
             &middot;{' '}
             <a
@@ -670,52 +753,56 @@ function Settings({ onClose }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Privacy Policy
+              <Trans>Privacy Policy</Trans>
             </a>
           </p>
           {__BUILD_TIME__ && (
             <p>
               {WEBSITE && (
                 <>
-                  <span class="insignificant">Site:</span>{' '}
-                  {WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')}
+                  <Trans>
+                    <span class="insignificant">Site:</span>{' '}
+                    {WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')}
+                  </Trans>
                   <br />
                 </>
               )}
-              <span class="insignificant">Version:</span>{' '}
-              <input
-                type="text"
-                class="version-string"
-                readOnly
-                size="18" // Manually calculated here
-                value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
-                  __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
-                }`}
-                onClick={(e) => {
-                  e.target.select();
-                  // Copy to clipboard
-                  try {
-                    navigator.clipboard.writeText(e.target.value);
-                    showToast('Version string copied');
-                  } catch (e) {
-                    console.warn(e);
-                    showToast('Unable to copy version string');
-                  }
-                }}
-              />{' '}
-              {!__FAKE_COMMIT_HASH__ && (
-                <span class="ib insignificant">
-                  (
-                  <a
-                    href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <RelativeTime datetime={new Date(__BUILD_TIME__)} />
-                  </a>
-                  )
-                </span>
-              )}
+              <Trans>
+                <span class="insignificant">Version:</span>{' '}
+                <input
+                  type="text"
+                  class="version-string"
+                  readOnly
+                  size="18" // Manually calculated here
+                  value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+                    __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
+                  }`}
+                  onClick={(e) => {
+                    e.target.select();
+                    // Copy to clipboard
+                    try {
+                      navigator.clipboard.writeText(e.target.value);
+                      showToast(t`Version string copied`);
+                    } catch (e) {
+                      console.warn(e);
+                      showToast(t`Unable to copy version string`);
+                    }
+                  }}
+                />{' '}
+                {!__FAKE_COMMIT_HASH__ && (
+                  <span class="ib insignificant">
+                    (
+                    <a
+                      href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <RelativeTime datetime={new Date(__BUILD_TIME__)} />
+                    </a>
+                    )
+                  </span>
+                )}
+              </Trans>
             </p>
           )}
         </section>
@@ -823,24 +910,26 @@ function PushNotificationsSection({ onClose }) {
                 })
                 .catch((err) => {
                   console.warn(err);
-                  alert('Failed to update subscription. Please try again.');
+                  alert(t`Failed to update subscription. Please try again.`);
                 });
             } else {
               updateSubscription(params).catch((err) => {
                 console.warn(err);
-                alert('Failed to update subscription. Please try again.');
+                alert(t`Failed to update subscription. Please try again.`);
               });
             }
           } else {
             removeSubscription().catch((err) => {
               console.warn(err);
-              alert('Failed to remove subscription. Please try again.');
+              alert(t`Failed to remove subscription. Please try again.`);
             });
           }
         }, 100);
       }}
     >
-      <h3>Push Notifications (beta)</h3>
+      <h3>
+        <Trans>Push Notifications (beta)</Trans>
+      </h3>
       <section>
         <ul>
           <li>
@@ -861,7 +950,7 @@ function PushNotificationsSection({ onClose }) {
                       setAllowNotifications(false);
                       if (permission === 'denied') {
                         alert(
-                          'Push notifications are blocked. Please enable them in your browser settings.',
+                          t`Push notifications are blocked. Please enable them in your browser settings.`,
                         );
                       }
                     }
@@ -870,28 +959,30 @@ function PushNotificationsSection({ onClose }) {
                   }
                 }}
               />{' '}
-              Allow from{' '}
-              <select
-                name="policy"
-                disabled={isLoading || needRelogin || !allowNotifications}
-              >
-                {[
-                  {
-                    value: 'all',
-                    label: 'anyone',
-                  },
-                  {
-                    value: 'followed',
-                    label: 'people I follow',
-                  },
-                  {
-                    value: 'follower',
-                    label: 'followers',
-                  },
-                ].map((type) => (
-                  <option value={type.value}>{type.label}</option>
-                ))}
-              </select>
+              <Trans>
+                Allow from{' '}
+                <select
+                  name="policy"
+                  disabled={isLoading || needRelogin || !allowNotifications}
+                >
+                  {[
+                    {
+                      value: 'all',
+                      label: t`anyone`,
+                    },
+                    {
+                      value: 'followed',
+                      label: t`people I follow`,
+                    },
+                    {
+                      value: 'follower',
+                      label: t`followers`,
+                    },
+                  ].map((type) => (
+                    <option value={type.value}>{type.label}</option>
+                  ))}
+                </select>
+              </Trans>
             </label>
             <div
               class="shazam-container no-animation"
@@ -906,35 +997,35 @@ function PushNotificationsSection({ onClose }) {
                     {[
                       {
                         value: 'mention',
-                        label: 'Mentions',
+                        label: t`Mentions`,
                       },
                       {
                         value: 'favourite',
-                        label: 'Likes',
+                        label: t`Likes`,
                       },
                       {
                         value: 'reblog',
-                        label: 'Boosts',
+                        label: t`Boosts`,
                       },
                       {
                         value: 'follow',
-                        label: 'Follows',
+                        label: t`Follows`,
                       },
                       {
                         value: 'followRequest',
-                        label: 'Follow requests',
+                        label: t`Follow requests`,
                       },
                       {
                         value: 'poll',
-                        label: 'Polls',
+                        label: t`Polls`,
                       },
                       {
                         value: 'update',
-                        label: 'Post edits',
+                        label: t`Post edits`,
                       },
                       {
                         value: 'status',
-                        label: 'New posts',
+                        label: t`New posts`,
                       },
                     ].map((alert) => (
                       <li>
@@ -951,12 +1042,14 @@ function PushNotificationsSection({ onClose }) {
             {needRelogin && (
               <div class="sub-section">
                 <p>
-                  Push permission was not granted since your last login. You'll
-                  need to{' '}
-                  <Link to={`/login?instance=${instance}`} onClick={onClose}>
-                    <b>log in</b> again to grant push permission
-                  </Link>
-                  .
+                  <Trans>
+                    Push permission was not granted since your last login.
+                    You'll need to{' '}
+                    <Link to={`/login?instance=${instance}`} onClick={onClose}>
+                      <b>log in</b> again to grant push permission
+                    </Link>
+                    .
+                  </Trans>
                 </p>
               </div>
             )}
@@ -965,7 +1058,9 @@ function PushNotificationsSection({ onClose }) {
       </section>
       <p class="section-postnote">
         <small>
-          NOTE: Push notifications only work for <b>one account</b>.
+          <Trans>
+            NOTE: Push notifications only work for <b>one account</b>.
+          </Trans>
         </small>
       </p>
     </form>

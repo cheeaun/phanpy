@@ -1,11 +1,14 @@
+import { i18n } from '@lingui/core';
+
 import mem from './mem';
 
-const { locale } = new Intl.DateTimeFormat().resolvedOptions();
+const defaultLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
 
 const _DateTimeFormat = (opts) => {
-  const { dateYear, hideTime, formatOpts } = opts || {};
+  const { locale, dateYear, hideTime, formatOpts } = opts || {};
+  const loc = locale && !/pseudo/i.test(locale) ? locale : defaultLocale;
   const currentYear = new Date().getFullYear();
-  return Intl.DateTimeFormat(locale, {
+  return Intl.DateTimeFormat(loc, {
     // Show year if not current year
     year: dateYear === currentYear ? undefined : 'numeric',
     month: 'short',
@@ -24,6 +27,7 @@ function niceDateTime(date, dtfOpts) {
   }
   const DTF = DateTimeFormat({
     dateYear: date.getFullYear(),
+    locale: i18n.locale,
     ...dtfOpts,
   });
   const dateText = DTF.format(date);

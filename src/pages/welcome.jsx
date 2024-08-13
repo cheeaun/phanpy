@@ -1,5 +1,7 @@
 import './welcome.css';
 
+import { t, Trans } from '@lingui/macro';
+
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
 import groupedNotificationsUrl from '../assets/features/grouped-notifications.jpg';
 import multiColumnUrl from '../assets/features/multi-column.jpg';
@@ -8,6 +10,7 @@ import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.j
 import logoText from '../assets/logo-text.svg';
 import logo from '../assets/logo.svg';
 
+import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
@@ -46,7 +49,9 @@ function Welcome() {
             />
             <img src={logoText} alt="Phanpy" width="200" />
           </h1>
-          <p class="desc">A minimalistic opinionated Mastodon web client.</p>
+          <p class="desc">
+            <Trans>A minimalistic opinionated Mastodon web client.</Trans>
+          </p>
           <p>
             <Link
               to={
@@ -56,22 +61,24 @@ function Welcome() {
               }
               class="button"
             >
-              {DEFAULT_INSTANCE ? 'Log in' : 'Log in with Mastodon'}
+              {DEFAULT_INSTANCE ? t`Log in` : t`Log in with Mastodon`}
             </Link>
           </p>
           {DEFAULT_INSTANCE && DEFAULT_INSTANCE_REGISTRATION_URL && (
             <p>
               <a href={DEFAULT_INSTANCE_REGISTRATION_URL} class="button plain5">
-                Sign up
+                <Trans>Sign up</Trans>
               </a>
             </p>
           )}
           {!DEFAULT_INSTANCE && (
             <p class="insignificant">
               <small>
-                Connect your existing Mastodon/Fediverse account.
-                <br />
-                Your credentials are not stored on this server.
+                <Trans>
+                  Connect your existing Mastodon/Fediverse account.
+                  <br />
+                  Your credentials are not stored on this server.
+                </Trans>
               </small>
             </p>
           )}
@@ -84,81 +91,107 @@ function Welcome() {
           </p>
         )}
         <p>
-          <a href="https://github.com/cheeaun/phanpy" target="_blank">
-            Built
-          </a>{' '}
-          by{' '}
-          <a
-            href="https://mastodon.social/@cheeaun"
-            target="_blank"
-            onClick={(e) => {
-              e.preventDefault();
-              states.showAccount = 'cheeaun@mastodon.social';
-            }}
-          >
-            @cheeaun
-          </a>
-          .{' '}
-          <a href={PRIVACY_POLICY_URL} target="_blank">
-            Privacy Policy
-          </a>
-          .
+          <Trans>
+            <a href="https://github.com/cheeaun/phanpy" target="_blank">
+              Built
+            </a>{' '}
+            by{' '}
+            <a
+              href="https://mastodon.social/@cheeaun"
+              target="_blank"
+              onClick={(e) => {
+                e.preventDefault();
+                states.showAccount = 'cheeaun@mastodon.social';
+              }}
+            >
+              @cheeaun
+            </a>
+            .{' '}
+            <a href={PRIVACY_POLICY_URL} target="_blank">
+              Privacy Policy
+            </a>
+            .
+          </Trans>
         </p>
+        <LangSelector />
       </div>
       <div id="why-container">
         <div class="sections">
           <section>
             <img
               src={boostsCarouselUrl}
-              alt="Screenshot of Boosts Carousel"
+              alt={t`Screenshot of Boosts Carousel`}
               loading="lazy"
             />
-            <h4>Boosts Carousel</h4>
+            <h4>
+              <Trans>Boosts Carousel</Trans>
+            </h4>
             <p>
-              Visually separate original posts and re-shared posts (boosted
-              posts).
+              <Trans>
+                Visually separate original posts and re-shared posts (boosted
+                posts).
+              </Trans>
             </p>
           </section>
           <section>
             <img
               src={nestedCommentsThreadUrl}
-              alt="Screenshot of nested comments thread"
+              alt={t`Screenshot of nested comments thread`}
               loading="lazy"
             />
-            <h4>Nested comments thread</h4>
-            <p>Effortlessly follow conversations. Semi-collapsible replies.</p>
+            <h4>
+              <Trans>Nested comments thread</Trans>
+            </h4>
+            <p>
+              <Trans>
+                Effortlessly follow conversations. Semi-collapsible replies.
+              </Trans>
+            </p>
           </section>
           <section>
             <img
               src={groupedNotificationsUrl}
-              alt="Screenshot of grouped notifications"
+              alt={t`Screenshot of grouped notifications`}
               loading="lazy"
             />
-            <h4>Grouped notifications</h4>
+            <h4>
+              <Trans>Grouped notifications</Trans>
+            </h4>
             <p>
-              Similar notifications are grouped and collapsed to reduce clutter.
+              <Trans>
+                Similar notifications are grouped and collapsed to reduce
+                clutter.
+              </Trans>
             </p>
           </section>
           <section>
             <img
               src={multiColumnUrl}
-              alt="Screenshot of multi-column UI"
+              alt={t`Screenshot of multi-column UI`}
               loading="lazy"
             />
-            <h4>Single or multi-column</h4>
+            <h4>
+              <Trans>Single or multi-column</Trans>
+            </h4>
             <p>
-              By default, single column for zen-mode seekers. Configurable
-              multi-column for power users.
+              <Trans>
+                By default, single column for zen-mode seekers. Configurable
+                multi-column for power users.
+              </Trans>
             </p>
           </section>
           <section>
             <img
               src={multiHashtagTimelineUrl}
-              alt="Screenshot of multi-hashtag timeline with a form to add more hashtags"
+              alt={t`Screenshot of multi-hashtag timeline with a form to add more hashtags`}
               loading="lazy"
             />
-            <h4>Multi-hashtag timeline</h4>
-            <p>Up to 5 hashtags combined into a single timeline.</p>
+            <h4>
+              <Trans>Multi-hashtag timeline</Trans>
+            </h4>
+            <p>
+              <Trans>Up to 5 hashtags combined into a single timeline.</Trans>
+            </p>
           </section>
         </div>
       </div>

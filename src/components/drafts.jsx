@@ -1,5 +1,6 @@
 import './drafts.css';
 
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useMemo, useReducer, useState } from 'react';
 
 import { api } from '../utils/api';
@@ -54,17 +55,20 @@ function Drafts({ onClose }) {
     <div class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
         <h2>
-          Unsent drafts <Loader abrupt hidden={uiState !== 'loading'} />
+          <Trans>Unsent drafts</Trans>{' '}
+          <Loader abrupt hidden={uiState !== 'loading'} />
         </h2>
         {hasDrafts && (
           <div class="insignificant">
-            Looks like you have unsent drafts. Let's continue where you left
-            off.
+            <Trans>
+              Looks like you have unsent drafts. Let's continue where you left
+              off.
+            </Trans>
           </div>
         )}
       </header>
@@ -91,7 +95,11 @@ function Drafts({ onClose }) {
                         </time>
                       </b>
                       <MenuConfirm
-                        confirmLabel={<span>Delete this draft?</span>}
+                        confirmLabel={
+                          <span>
+                            <Trans>Delete this draft?</Trans>
+                          </span>
+                        }
                         menuItemClassName="danger"
                         align="end"
                         disabled={uiState === 'loading'}
@@ -104,7 +112,7 @@ function Drafts({ onClose }) {
                               reload();
                               // }
                             } catch (e) {
-                              alert('Error deleting draft! Please try again.');
+                              alert(t`Error deleting draft! Please try again.`);
                             }
                           })();
                         }}
@@ -114,7 +122,7 @@ function Drafts({ onClose }) {
                           class="small light"
                           disabled={uiState === 'loading'}
                         >
-                          Delete&hellip;
+                          <Trans>Delete…</Trans>
                         </button>
                       </MenuConfirm>
                     </div>
@@ -133,7 +141,7 @@ function Drafts({ onClose }) {
                               .fetch();
                           } catch (e) {
                             console.error(e);
-                            alert('Error fetching reply-to status!');
+                            alert(t`Error fetching reply-to status!`);
                             setUIState('default');
                             return;
                           }
@@ -156,7 +164,11 @@ function Drafts({ onClose }) {
             {drafts.length > 1 && (
               <p>
                 <MenuConfirm
-                  confirmLabel={<span>Delete all drafts?</span>}
+                  confirmLabel={
+                    <span>
+                      <Trans>Delete all drafts?</Trans>
+                    </span>
+                  }
                   menuItemClassName="danger"
                   disabled={uiState === 'loading'}
                   onClick={() => {
@@ -172,7 +184,7 @@ function Drafts({ onClose }) {
                         reload();
                       } catch (e) {
                         console.error(e);
-                        alert('Error deleting drafts! Please try again.');
+                        alert(t`Error deleting drafts! Please try again.`);
                         setUIState('error');
                       }
                       // }
@@ -184,14 +196,16 @@ function Drafts({ onClose }) {
                     class="light danger"
                     disabled={uiState === 'loading'}
                   >
-                    Delete all&hellip;
+                    <Trans>Delete all…</Trans>
                   </button>
                 </MenuConfirm>
               </p>
             )}
           </>
         ) : (
-          <p>No drafts found.</p>
+          <p>
+            <Trans>No drafts found.</Trans>
+          </p>
         )}
       </main>
     </div>
@@ -226,10 +240,10 @@ function MiniDraft({ draft }) {
                 : {}
             }
           >
-            {hasPoll && <Icon icon="poll" />}
+            {hasPoll && <Icon icon="poll" alt={t`Poll`} />}
             {hasMedia && (
               <span>
-                <Icon icon="attachment" />{' '}
+                <Icon icon="attachment" alt={t`Media`} />{' '}
                 <small>{mediaAttachments?.length}</small>
               </span>
             )}

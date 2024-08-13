@@ -1,5 +1,6 @@
 import './notifications.css';
 
+import { Plural, t, Trans } from '@lingui/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
@@ -85,7 +86,7 @@ export function getGroupedNotifications(notifications) {
 }
 
 function Notifications({ columnMode }) {
-  useTitle('Notifications', '/notifications');
+  useTitle(t`Notifications`, '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
@@ -484,10 +485,12 @@ function Notifications({ columnMode }) {
             <div class="header-side">
               <NavMenu />
               <Link to="/" class="button plain">
-                <Icon icon="home" size="l" alt="Home" />
+                <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>
-            <h1>Notifications</h1>
+            <h1>
+              <Trans>Notifications</Trans>
+            </h1>
             <div class="header-side">
               {supportsFilteredNotifications && (
                 <button
@@ -497,7 +500,11 @@ function Notifications({ columnMode }) {
                     setShowNotificationsSettings(true);
                   }}
                 >
-                  <Icon icon="settings" size="l" alt="Notifications settings" />
+                  <Icon
+                    icon="settings"
+                    size="l"
+                    alt={t`Notifications settings`}
+                  />
                 </button>
               )}
             </div>
@@ -514,7 +521,7 @@ function Notifications({ columnMode }) {
                 });
               }}
             >
-              <Icon icon="arrow-up" /> New notifications
+              <Icon icon="arrow-up" /> <Trans>New notifications</Trans>
             </button>
           )}
         </header>
@@ -525,7 +532,11 @@ function Notifications({ columnMode }) {
                 <summary>
                   <span>
                     <Icon icon="announce" class="announcement-icon" size="l" />{' '}
-                    <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
+                    <Plural
+                      value={announcements.length}
+                      one="Announcement"
+                      other="Announcements"
+                    />{' '}
                     <small class="insignificant">{instance}</small>
                   </span>
                   {announcements.length > 1 && (
@@ -567,10 +578,18 @@ function Notifications({ columnMode }) {
         )}
         {followRequests.length > 0 && (
           <div class="follow-requests">
-            <h2 class="timeline-header">Follow requests</h2>
+            <h2 class="timeline-header">
+              <Trans>Follow requests</Trans>
+            </h2>
             {followRequests.length > 5 ? (
               <details>
-                <summary>{followRequests.length} follow requests</summary>
+                <summary>
+                  <Plural
+                    value={followRequests.length}
+                    one="# follow request"
+                    other="# follow requests"
+                  />
+                </summary>
                 <ul>
                   {followRequests.map((account) => (
                     <li key={account.id}>
@@ -620,8 +639,11 @@ function Notifications({ columnMode }) {
                     }}
                   >
                     <summary>
-                      Filtered notifications from{' '}
-                      {notificationsPolicy.summary.pendingRequestsCount} people
+                      <Plural
+                        value={notificationsPolicy.summary.pendingRequestsCount}
+                        one="Filtered notifications from # person"
+                        other="Filtered notifications from # people"
+                      />
                     </summary>
                     {!notificationsRequests ? (
                       <p class="ui-state">
@@ -683,13 +705,15 @@ function Notifications({ columnMode }) {
                 setOnlyMentions(e.target.checked);
               }}
             />{' '}
-            Only mentions
+            <Trans>Only mentions</Trans>
           </label>
         </div>
-        <h2 class="timeline-header">Today</h2>
+        <h2 class="timeline-header">
+          <Trans>Today</Trans>
+        </h2>
         {showTodayEmpty && (
           <p class="ui-state insignificant">
-            {uiState === 'default' ? "You're all caught up." : <>&hellip;</>}
+            {uiState === 'default' ? t`You're all caught up.` : <>&hellip;</>}
           </p>
         )}
         {snapStates.notifications.length ? (
@@ -712,7 +736,7 @@ function Notifications({ columnMode }) {
                 const heading =
                   notificationDay.toDateString() ===
                   yesterdayDate.toDateString()
-                    ? 'Yesterday'
+                    ? t`Yesterday`
                     : niceDateTime(currentDay, {
                         hideTime: true,
                       });
@@ -748,11 +772,11 @@ function Notifications({ columnMode }) {
             )}
             {uiState === 'error' && (
               <p class="ui-state">
-                Unable to load notifications
+                <Trans>Unable to load notifications</Trans>
                 <br />
                 <br />
                 <button type="button" onClick={() => loadNotifications(true)}>
-                  Try again
+                  <Trans>Try again</Trans>
                 </button>
               </p>
             )}
@@ -776,7 +800,7 @@ function Notifications({ columnMode }) {
               {uiState === 'loading' ? (
                 <Loader abrupt />
               ) : (
-                <>Show more&hellip;</>
+                <Trans>Show more…</Trans>
               )}
             </button>
           </InView>
@@ -796,10 +820,12 @@ function Notifications({ columnMode }) {
               class="sheet-close"
               onClick={() => setShowNotificationsSettings(false)}
             >
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
-              <h2>Notifications settings</h2>
+              <h2>
+                <Trans>Notifications settings</Trans>
+              </h2>
             </header>
             <main>
               <form
@@ -825,14 +851,16 @@ function Notifications({ columnMode }) {
                   (async () => {
                     try {
                       await masto.v1.notifications.policy.update(allFilters);
-                      showToast('Notifications settings updated');
+                      showToast(t`Notifications settings updated`);
                     } catch (e) {
                       console.error(e);
                     }
                   })();
                 }}
               >
-                <p>Filter out notifications from people:</p>
+                <p>
+                  <Trans>Filter out notifications from people:</Trans>
+                </p>
                 <p>
                   <label>
                     <input
@@ -841,7 +869,7 @@ function Notifications({ columnMode }) {
                       defaultChecked={notificationsPolicy.filterNotFollowing}
                       name="filterNotFollowing"
                     />{' '}
-                    You don't follow
+                    <Trans>You don't follow</Trans>
                   </label>
                 </p>
                 <p>
@@ -852,7 +880,7 @@ function Notifications({ columnMode }) {
                       defaultChecked={notificationsPolicy.filterNotFollowers}
                       name="filterNotFollowers"
                     />{' '}
-                    Who don't follow you
+                    <Trans>Who don't follow you</Trans>
                   </label>
                 </p>
                 <p>
@@ -863,7 +891,7 @@ function Notifications({ columnMode }) {
                       defaultChecked={notificationsPolicy.filterNewAccounts}
                       name="filterNewAccounts"
                     />{' '}
-                    With a new account
+                    <Trans>With a new account</Trans>
                   </label>
                 </p>
                 <p>
@@ -874,11 +902,13 @@ function Notifications({ columnMode }) {
                       defaultChecked={notificationsPolicy.filterPrivateMentions}
                       name="filterPrivateMentions"
                     />{' '}
-                    Who unsolicitedly private mention you
+                    <Trans>Who unsolicitedly private mention you</Trans>
                   </label>
                 </p>
                 <p>
-                  <button type="submit">Save</button>
+                  <button type="submit">
+                    <Trans>Save</Trans>
+                  </button>
                 </p>
               </form>
             </main>
@@ -940,10 +970,12 @@ function AnnouncementBlock({ announcement }) {
             {' '}
             &bull;{' '}
             <span class="ib">
-              Updated{' '}
-              <time datetime={updatedAtDate.toISOString()}>
-                {niceDateTime(updatedAtDate)}
-              </time>
+              <Trans>
+                Updated{' '}
+                <time datetime={updatedAtDate.toISOString()}>
+                  {niceDateTime(updatedAtDate)}
+                </time>
+              </Trans>
             </span>
           </>
         )}
@@ -1005,7 +1037,9 @@ function NotificationRequestModalButton({ request }) {
         }}
       >
         <Icon icon="notification" class="more-insignificant" />{' '}
-        <small>View notifications from @{account.username}</small>{' '}
+        <small>
+          <Trans>View notifications from @{account.username}</Trans>
+        </small>{' '}
         <Icon icon="chevron-down" />
       </button>
       {showModal && (
@@ -1018,10 +1052,12 @@ function NotificationRequestModalButton({ request }) {
         >
           <div class="sheet" tabIndex="-1">
             <button type="button" class="sheet-close" onClick={onClose}>
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
-              <b>Notifications from @{account.username}</b>
+              <b>
+                <Trans>Notifications from @{account.username}</Trans>
+              </b>
             </header>
             <main>
               {uiState === 'loading' ? (
@@ -1084,17 +1120,17 @@ function NotificationRequestButtons({ request, onChange }) {
                 state: 'accept',
               });
               showToast(
-                `Notifications from @${request.account.username} will not be filtered from now on.`,
+                t`Notifications from @${request.account.username} will not be filtered from now on.`,
               );
             } catch (error) {
               setUIState('error');
               console.error(error);
-              showToast(`Unable to accept notification request`);
+              showToast(t`Unable to accept notification request`);
             }
           })();
         }}
       >
-        Allow
+        <Trans>Allow</Trans>
       </button>{' '}
       <button
         type="button"
@@ -1114,17 +1150,17 @@ function NotificationRequestButtons({ request, onChange }) {
                 state: 'dismiss',
               });
               showToast(
-                `Notifications from @${request.account.username} will not show up in Filtered notifications from now on.`,
+                t`Notifications from @${request.account.username} will not show up in Filtered notifications from now on.`,
               );
             } catch (error) {
               setUIState('error');
               console.error(error);
-              showToast(`Unable to dismiss notification request`);
+              showToast(t`Unable to dismiss notification request`);
             }
           })();
         }}
       >
-        Dismiss
+        <Trans>Dismiss</Trans>
       </button>
       <span class="notification-request-states">
         {uiState === 'loading' ? (
@@ -1132,14 +1168,14 @@ function NotificationRequestButtons({ request, onChange }) {
         ) : requestState === 'accept' ? (
           <Icon
             icon="check-circle"
-            alt="Accepted"
+            alt={t`Accepted`}
             class="notification-accepted"
           />
         ) : (
           requestState === 'dismiss' && (
             <Icon
               icon="x-circle"
-              alt="Dismissed"
+              alt={t`Dismissed`}
               class="notification-dismissed"
             />
           )

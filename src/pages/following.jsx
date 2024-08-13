@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -16,7 +17,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
-  useTitle(title || 'Following', path || '/following');
+  useTitle(title || t`Following`, path || '/following');
   const { masto, streaming, instance } = api();
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
@@ -127,10 +128,10 @@ function Following({ title, path, id, ...props }) {
 
   return (
     <Timeline
-      title={title || 'Following'}
+      title={title || t`Following`}
       id={id || 'following'}
-      emptyText="Nothing to see here."
-      errorText="Unable to load posts."
+      emptyText={t`Nothing to see here.`}
+      errorText={t`Unable to load posts.`}
       instance={instance}
       fetchItems={fetchHome}
       checkForUpdates={checkForUpdates}

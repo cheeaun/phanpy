@@ -1,5 +1,6 @@
 import './notifications-menu.css';
 
+import { t, Trans } from '@lingui/macro';
 import { ControlledMenu } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -46,7 +47,7 @@ function Home() {
         <Columns />
       ) : (
         <Following
-          title="Home"
+          title={t`Home`}
           path="/"
           id="home"
           headerStart={false}
@@ -77,7 +78,7 @@ function NotificationsLink() {
           }
         }}
       >
-        <Icon icon="notification" size="l" alt="Notifications" />
+        <Icon icon="notification" size="l" alt={t`Notifications`} />
       </Link>
       <NotificationsMenu
         state={menuState}
@@ -176,7 +177,9 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       boundingBoxPadding="8 8 8 8"
     >
       <header>
-        <h2>Notifications</h2>
+        <h2>
+          <Trans>Notifications</Trans>
+        </h2>
       </header>
       <main>
         {snapStates.notifications.length ? (
@@ -199,10 +202,12 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         ) : (
           uiState === 'error' && (
             <div class="ui-state">
-              <p>Unable to fetch notifications.</p>
+              <p>
+                <Trans>Unable to fetch notifications.</Trans>
+              </p>
               <p>
                 <button type="button" onClick={loadNotifications}>
-                  Try again
+                  <Trans>Try again</Trans>
                 </button>
               </p>
             </div>
@@ -211,16 +216,21 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       </main>
       <footer>
         <Link to="/mentions" class="button plain">
-          <Icon icon="at" /> <span>Mentions</span>
+          <Icon icon="at" />{' '}
+          <span>
+            <Trans>Mentions</Trans>
+          </span>
         </Link>
         <Link to="/notifications" class="button plain2">
           {hasFollowRequests ? (
-            <>
+            <Trans>
               <span class="tag collapsed">New</span>{' '}
               <span>Follow Requests</span>
-            </>
+            </Trans>
           ) : (
-            <b>See all</b>
+            <b>
+              <Trans>See all</Trans>
+            </b>
           )}{' '}
           <Icon icon="arrow-right" />
         </Link>

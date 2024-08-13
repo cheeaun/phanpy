@@ -1,5 +1,7 @@
 import './embed-modal.css';
 
+import { t, Trans } from '@lingui/macro';
+
 import Icon from './icon';
 
 function EmbedModal({ html, url, width, height, onClose = () => {} }) {
@@ -7,7 +9,7 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
     <div class="embed-modal-container">
       <div class="top-controls">
         <button type="button" class="light" onClick={() => onClose()}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
         {url && (
           <a
@@ -16,7 +18,10 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
             rel="noopener noreferrer"
             class="button plain"
           >
-            <span>Open link</span> <Icon icon="external" />
+            <span>
+              <Trans>Open in new window</Trans>
+            </span>{' '}
+            <Icon icon="external" />
           </a>
         )}
       </div>

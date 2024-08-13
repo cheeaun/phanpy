@@ -2,6 +2,8 @@ import './index.css';
 import './cloak-mode.css';
 import './polyfills';
 
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 // Polyfill needed for Firefox < 122
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1423593
 // import '@formatjs/intl-segmenter/polyfill';
@@ -9,15 +11,20 @@ import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 
 import { App } from './app';
+import { initActivateLang } from './utils/lang';
+
+initActivateLang();
 
 if (import.meta.env.DEV) {
   import('preact/debug');
 }
 
 render(
-  <HashRouter>
-    <App />
-  </HashRouter>,
+  <I18nProvider i18n={i18n}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </I18nProvider>,
   document.getElementById('app'),
 );
 

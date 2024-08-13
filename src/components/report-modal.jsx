@@ -1,5 +1,7 @@
 import './report-modal.css';
 
+import { msg, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { useMemo, useRef, useState } from 'preact/hooks';
 
@@ -24,26 +26,27 @@ const CATEGORIES_INFO = {
   //   description: 'Not something you want to see',
   // },
   spam: {
-    label: 'Spam',
-    description: 'Malicious links, fake engagement, or repetitive replies',
+    label: msg`Spam`,
+    description: msg`Malicious links, fake engagement, or repetitive replies`,
   },
   legal: {
-    label: 'Illegal',
-    description: "Violates the law of your or the server's country",
+    label: msg`Illegal`,
+    description: msg`Violates the law of your or the server's country`,
   },
   violation: {
-    label: 'Server rule violation',
-    description: 'Breaks specific server rules',
-    stampLabel: 'Violation',
+    label: msg`Server rule violation`,
+    description: msg`Breaks specific server rules`,
+    stampLabel: msg`Violation`,
   },
   other: {
-    label: 'Other',
-    description: "Issue doesn't fit other categories",
+    label: msg`Other`,
+    description: msg`Issue doesn't fit other categories`,
     excludeStamp: true,
   },
 };
 
 function ReportModal({ account, post, onClose }) {
+  const { _ } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [username, domain] = account.acct.split('@');
@@ -62,14 +65,14 @@ function ReportModal({ account, post, onClose }) {
   return (
     <div class="report-modal-container">
       <div class="top-controls">
-        <h1>{post ? 'Report Post' : `Report @${username}`}</h1>
+        <h1>{post ? t`Report Post` : t`Report @${username}`}</h1>
         <button
           type="button"
           class="plain4 small"
           disabled={uiState === 'loading'}
           onClick={() => onClose()}
         >
-          <Icon icon="x" size="xl" />
+          <Icon icon="x" size="xl" alt={t`Close`} />
         </button>
       </div>
       <main>
@@ -93,9 +96,13 @@ function ReportModal({ account, post, onClose }) {
               key={selectedCategory}
               aria-hidden="true"
             >
-              {CATEGORIES_INFO[selectedCategory].stampLabel ||
-                CATEGORIES_INFO[selectedCategory].label}
-              <small>Pending review</small>
+              {_(
+                CATEGORIES_INFO[selectedCategory].stampLabel ||
+                  _(CATEGORIES_INFO[selectedCategory].label),
+              )}
+              <small>
+                <Trans>Pending review</Trans>
+              </small>
             </span>
           )}
         <form
@@ -136,7 +143,7 @@ function ReportModal({ account, post, onClose }) {
                   forward,
                 });
                 setUIState('success');
-                showToast(post ? 'Post reported' : 'Profile reported');
+                showToast(post ? t`Post reported` : t`Profile reported`);
                 onClose();
               } catch (error) {
                 console.error(error);
@@ -144,8 +151,8 @@ function ReportModal({ account, post, onClose }) {
                 showToast(
                   error?.message ||
                     (post
-                      ? 'Unable to report post'
-                      : 'Unable to report profile'),
+                      ? t`Unable to report post`
+                      : t`Unable to report profile`),
                 );
               }
             })();
@@ -153,8 +160,8 @@ function ReportModal({ account, post, onClose }) {
         >
           <p>
             {post
-              ? `What's the issue with this post?`
-              : `What's the issue with this profile?`}
+              ? t`What's the issue with this post?`
+              : t`What's the issue with this profile?`}
           </p>
           <section class="report-categories">
             {CATEGORIES.map((category) =>
@@ -173,9 +180,9 @@ function ReportModal({ account, post, onClose }) {
                       }}
                     />
                     <span>
-                      {CATEGORIES_INFO[category].label} &nbsp;
+                      {_(CATEGORIES_INFO[category].label)} &nbsp;
                       <small class="ib insignificant">
-                        {CATEGORIES_INFO[category].description}
+                        {_(CATEGORIES_INFO[category].description)}
                       </small>
                     </span>
                   </label>
@@ -222,7 +229,9 @@ function ReportModal({ account, post, onClose }) {
           </section>
           <section class="report-comment">
             <p>
-              <label for="report-comment">Additional info</label>
+              <label for="report-comment">
+                <Trans>Additional info</Trans>
+              </label>
             </p>
             <textarea
               maxlength="1000"
@@ -243,7 +252,9 @@ function ReportModal({ account, post, onClose }) {
                     disabled={uiState === 'loading'}
                   />{' '}
                   <span>
-                    Forward to <i>{domain}</i>
+                    <Trans>
+                      Forward to <i>{domain}</i>
+                    </Trans>
                   </span>
                 </label>
               </p>
@@ -251,7 +262,7 @@ function ReportModal({ account, post, onClose }) {
           )}
           <footer>
             <button type="submit" disabled={uiState === 'loading'}>
-              Send Report
+              <Trans>Send Report</Trans>
             </button>{' '}
             <button
               type="submit"
@@ -260,15 +271,17 @@ function ReportModal({ account, post, onClose }) {
               onClick={async () => {
                 try {
                   await masto.v1.accounts.$select(account.id).mute(); // Infinite duration
-                  showToast(`Muted ${username}`);
+                  showToast(t`Muted ${username}`);
                 } catch (e) {
                   console.error(e);
-                  showToast(`Unable to mute ${username}`);
+                  showToast(t`Unable to mute ${username}`);
                 }
                 // onSubmit will still run
               }}
             >
-              Send Report <small class="ib">+ Mute profile</small>
+              <Trans>
+                Send Report <small class="ib">+ Mute profile</small>
+              </Trans>
             </button>{' '}
             <button
               type="submit"
@@ -277,15 +290,17 @@ function ReportModal({ account, post, onClose }) {
               onClick={async () => {
                 try {
                   await masto.v1.accounts.$select(account.id).block();
-                  showToast(`Blocked ${username}`);
+                  showToast(t`Blocked ${username}`);
                 } catch (e) {
                   console.error(e);
-                  showToast(`Unable to block ${username}`);
+                  showToast(t`Unable to block ${username}`);
                 }
                 // onSubmit will still run
               }}
             >
-              Send Report <small class="ib">+ Block profile</small>
+              <Trans>
+                Send Report <small class="ib">+ Block profile</small>
+              </Trans>
             </button>
             <Loader hidden={uiState !== 'loading'} />
           </footer>

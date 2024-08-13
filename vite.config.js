@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import { resolve } from 'path';
 
+import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
 import { uid } from 'uid/single';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
@@ -55,8 +56,11 @@ export default defineConfig({
     preact({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
-      babel: {},
+      babel: {
+        plugins: ['macros'],
+      },
     }),
+    lingui(),
     splitVendorChunkPlugin(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],

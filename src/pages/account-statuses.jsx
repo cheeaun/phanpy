@@ -1,3 +1,5 @@
+import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -227,33 +229,32 @@ function AccountStatuses() {
   }
 
   const [featuredTags, setFeaturedTags] = useState([]);
-  useTitle(
-    account?.acct
-      ? `${
-          account?.displayName
-            ? `${account.displayName} (${/@/.test(account.acct) ? '' : '@'}${
-                account.acct
-              })`
-            : `${/@/.test(account.acct) ? '' : '@'}${account.acct}`
-        }${
-          !excludeReplies
-            ? ' (+ Replies)'
-            : excludeBoosts
-            ? ' (- Boosts)'
-            : tagged
-            ? ` (#${tagged})`
-            : media
-            ? ' (Media)'
-            : month
-            ? ` (${new Date(month).toLocaleString('default', {
-                month: 'long',
-                year: 'numeric',
-              })})`
-            : ''
-        }`
-      : 'Account posts',
-    '/:instance?/a/:id',
-  );
+  const { i18n } = useLingui();
+  let title = t`Account posts`;
+  if (account?.acct) {
+    const acctDisplay = /@/.test(account.acct) ? '' : '@' + account.acct;
+    const accountDisplay = account?.displayName
+      ? `${account.displayName} (${acctDisplay})`
+      : `${acctDisplay}`;
+    if (!excludeReplies) {
+      title = t`${accountDisplay} (+ Replies)`;
+    } else if (excludeBoosts) {
+      title = t`${accountDisplay} (- Boosts)`;
+    } else if (tagged) {
+      title = t`${accountDisplay} (#${tagged})`;
+    } else if (media) {
+      title = t`${accountDisplay} (Media)`;
+    } else if (month) {
+      const monthYear = new Date(month).toLocaleString(i18n.locale, {
+        month: 'long',
+        year: 'numeric',
+      });
+      title = t`${accountDisplay} (${monthYear})`;
+    } else {
+      title = accountDisplay;
+    }
+  }
+  useTitle(title, '/:instance?/a/:id');
 
   const fetchAccountPromiseRef = useRef();
   const fetchAccount = useCallback(() => {
@@ -317,46 +318,51 @@ function AccountStatuses() {
               <Link
                 to={`/${instance}/a/${id}`}
                 class="insignificant filter-clear"
-                title="Clear filters"
+                title={t`Clear filters`}
                 key="clear-filters"
               >
-                <Icon icon="x" size="l" />
+                <Icon icon="x" size="l" alt={t`Clear`} />
               </Link>
             ) : (
-              <Icon icon="filter" class="insignificant" size="l" />
+              <Icon
+                icon="filter"
+                class="insignificant"
+                size="l"
+                alt={t`Filters`}
+              />
             )}
             <Link
               to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
               onClick={() => {
                 if (excludeReplies) {
-                  showToast('Showing post with replies');
+                  showToast(t`Showing post with replies`);
                 }
               }}
               class={excludeReplies ? '' : 'is-active'}
             >
-              + Replies
+              <Trans>+ Replies</Trans>
             </Link>
             <Link
               to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
               onClick={() => {
                 if (!excludeBoosts) {
-                  showToast('Showing posts without boosts');
+                  showToast(t`Showing posts without boosts`);
                 }
               }}
               class={!excludeBoosts ? '' : 'is-active'}
             >
-              - Boosts
+              <Trans>- Boosts</Trans>
             </Link>
             <Link
               to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
               onClick={() => {
                 if (!media) {
-                  showToast('Showing posts with media');
+                  showToast(t`Showing posts with media`);
                 }
               }}
               class={media ? 'is-active' : ''}
             >
-              Media
+              <Trans>Media</Trans>
             </Link>
             {featuredTags.map((tag) => (
               <Link
@@ -368,7 +374,7 @@ function AccountStatuses() {
                 }`}
                 onClick={() => {
                   if (tagged !== tag.name) {
-                    showToast(`Showing posts tagged with #${tag.name}`);
+                    showToast(t`Showing posts tagged with #${tag.name}`);
                   }
                 }}
                 class={tagged === tag.name ? 'is-active' : ''}
@@ -407,7 +413,7 @@ function AccountStatuses() {
                       const monthIndex = parseInt(month, 10) - 1;
                       const date = new Date(year, monthIndex);
                       showToast(
-                        `Showing posts in ${date.toLocaleString('default', {
+                        t`Showing posts in ${date.toLocaleString(i18n.locale, {
                           month: 'long',
                           year: 'numeric',
                         })}`,
@@ -475,7 +481,7 @@ function AccountStatuses() {
   return (
     <Timeline
       key={id}
-      title={`${account?.acct ? '@' + account.acct : 'Posts'}`}
+      title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
       titleComponent={
         <h1
           class="header-double-lines header-account"
@@ -496,8 +502,8 @@ function AccountStatuses() {
       }
       id="account-statuses"
       instance={instance}
-      emptyText="Nothing to see here yet."
-      errorText="Unable to load posts"
+      emptyText={t`Nothing to see here yet.`}
+      errorText={t`Unable to load posts`}
       fetchItems={fetchAccountStatuses}
       useItemID
       view={media || mediaFirst ? 'media' : undefined}
@@ -519,7 +525,7 @@ function AccountStatuses() {
           position="anchor"
           menuButton={
             <button type="button" class="plain">
-              <Icon icon="more" size="l" />
+              <Icon icon="more" size="l" alt={t`More`} />
             </button>
           }
         >
@@ -538,20 +544,22 @@ function AccountStatuses() {
                   location.hash = `/${accountInstance}/a/${id}`;
                 } catch (e) {
                   console.error(e);
-                  alert('Unable to fetch account info');
+                  alert(t`Unable to fetch account info`);
                 }
               })();
             }}
           >
             <Icon icon="transfer" />{' '}
             <small class="menu-double-lines">
-              Switch to account's instance{' '}
-              {accountInstance ? (
-                <>
-                  {' '}
-                  (<b>{punycode.toUnicode(accountInstance)}</b>)
-                </>
-              ) : null}
+              <Trans>
+                Switch to account's instance{' '}
+                {accountInstance ? (
+                  <>
+                    {' '}
+                    (<b>{punycode.toUnicode(accountInstance)}</b>)
+                  </>
+                ) : null}
+              </Trans>
             </small>
           </MenuItem>
           {!sameCurrentInstance && (
@@ -566,14 +574,16 @@ function AccountStatuses() {
                     location.hash = `/${currentInstance}/a/${id}`;
                   } catch (e) {
                     console.error(e);
-                    alert('Unable to fetch account info');
+                    alert(t`Unable to fetch account info`);
                   }
                 })();
               }}
             >
               <Icon icon="transfer" />{' '}
               <small class="menu-double-lines">
-                Switch to my instance (<b>{currentInstance}</b>)
+                <Trans>
+                  Switch to my instance (<b>{currentInstance}</b>)
+                </Trans>
               </small>
             </MenuItem>
           )}
@@ -584,6 +594,7 @@ function AccountStatuses() {
 }
 
 function MonthPicker(props) {
+  const { i18n } = useLingui();
   const {
     class: className,
     disabled,
@@ -631,7 +642,9 @@ function MonthPicker(props) {
           });
         }}
       >
-        <option value="">Month</option>
+        <option value="">
+          <Trans>Month</Trans>
+        </option>
         <option disabled>-----</option>
         {Array.from({ length: 12 }, (_, i) => (
           <option
@@ -641,7 +654,7 @@ function MonthPicker(props) {
             }
             key={i}
           >
-            {new Date(0, i).toLocaleString('default', {
+            {new Date(0, i).toLocaleString(i18n.locale, {
               month: 'long',
             })}
           </option>

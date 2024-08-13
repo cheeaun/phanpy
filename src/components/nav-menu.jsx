@@ -1,5 +1,6 @@
 import './nav-menu.css';
 
+import { t, Trans } from '@lingui/macro';
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -122,7 +123,7 @@ function NavMenu(props) {
             squircle={currentAccount?.info?.bot}
           />
         )}
-        <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} />
+        <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} alt={t`Menu`} />
       </button>
       <ControlledMenu
         menuClassName="nav-menu"
@@ -158,7 +159,7 @@ function NavMenu(props) {
             <div class="top-menu">
               <MenuItem
                 onClick={() => {
-                  const yes = confirm('Reload page now to update?');
+                  const yes = confirm(t`Reload page now to update?`);
                   if (yes) {
                     (async () => {
                       try {
@@ -169,35 +170,51 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="sparkles" class="sparkle-icon" size="l" />{' '}
-                <span>New update available…</span>
+                <span>
+                  <Trans>New update available…</Trans>
+                </span>
               </MenuItem>
               <MenuDivider />
             </div>
           )}
         <section>
           <MenuLink to="/">
-            <Icon icon="home" size="l" /> <span>Home</span>
+            <Icon icon="home" size="l" />{' '}
+            <span>
+              <Trans>Home</Trans>
+            </span>
           </MenuLink>
           {authenticated ? (
             <>
               {showFollowing && (
                 <MenuLink to="/following">
-                  <Icon icon="following" size="l" /> <span>Following</span>
+                  <Icon icon="following" size="l" />{' '}
+                  <span>
+                    <Trans>Following</Trans>
+                  </span>
                 </MenuLink>
               )}
               <MenuLink to="/catchup">
                 <Icon icon="history2" size="l" />
-                <span>Catch-up</span>
+                <span>
+                  <Trans>Catch-up</Trans>
+                </span>
               </MenuLink>
               {supports('@mastodon/mentions') && (
                 <MenuLink to="/mentions">
-                  <Icon icon="at" size="l" /> <span>Mentions</span>
+                  <Icon icon="at" size="l" />{' '}
+                  <span>
+                    <Trans>Mentions</Trans>
+                  </span>
                 </MenuLink>
               )}
               <MenuLink to="/notifications">
-                <Icon icon="notification" size="l" /> <span>Notifications</span>
+                <Icon icon="notification" size="l" />{' '}
+                <span>
+                  <Trans>Notifications</Trans>
+                </span>
                 {snapStates.notificationsShowNew && (
-                  <sup title="New" style={{ opacity: 0.5 }}>
+                  <sup title={t`New`} style={{ opacity: 0.5 }}>
                     {' '}
                     &bull;
                   </sup>
@@ -206,7 +223,10 @@ function NavMenu(props) {
               <MenuDivider />
               {currentAccount?.info?.id && (
                 <MenuLink to={`/${instance}/a/${currentAccount.info.id}`}>
-                  <Icon icon="user" size="l" /> <span>Profile</span>
+                  <Icon icon="user" size="l" />{' '}
+                  <span>
+                    <Trans>Profile</Trans>
+                  </span>
                 </MenuLink>
               )}
               {lists?.length > 0 ? (
@@ -217,13 +237,17 @@ function NavMenu(props) {
                   label={
                     <>
                       <Icon icon="list" size="l" />
-                      <span class="menu-grow">Lists</span>
+                      <span class="menu-grow">
+                        <Trans>Lists</Trans>
+                      </span>
                       <Icon icon="chevron-right" />
                     </>
                   }
                 >
                   <MenuLink to="/l">
-                    <span>All Lists</span>
+                    <span>
+                      <Trans>All Lists</Trans>
+                    </span>
                   </MenuLink>
                   {lists?.length > 0 && (
                     <>
@@ -240,12 +264,17 @@ function NavMenu(props) {
                 supportsLists && (
                   <MenuLink to="/l">
                     <Icon icon="list" size="l" />
-                    <span>Lists</span>
+                    <span>
+                      <Trans>Lists</Trans>
+                    </span>
                   </MenuLink>
                 )
               )}
               <MenuLink to="/b">
-                <Icon icon="bookmark" size="l" /> <span>Bookmarks</span>
+                <Icon icon="bookmark" size="l" />{' '}
+                <span>
+                  <Trans>Bookmarks</Trans>
+                </span>
               </MenuLink>
               <SubMenu2
                 menuClassName="nav-submenu"
@@ -254,49 +283,56 @@ function NavMenu(props) {
                 label={
                   <>
                     <Icon icon="more" size="l" />
-                    <span class="menu-grow">More…</span>
+                    <span class="menu-grow">
+                      <Trans>More…</Trans>
+                    </span>
                     <Icon icon="chevron-right" />
                   </>
                 }
               >
                 <MenuLink to="/f">
-                  <Icon icon="heart" size="l" /> <span>Likes</span>
+                  <Icon icon="heart" size="l" />{' '}
+                  <span>
+                    <Trans>Likes</Trans>
+                  </span>
                 </MenuLink>
                 <MenuLink to="/fh">
                   <Icon icon="hashtag" size="l" />{' '}
-                  <span>Followed Hashtags</span>
+                  <span>
+                    <Trans>Followed Hashtags</Trans>
+                  </span>
                 </MenuLink>
                 <MenuDivider />
                 {supports('@mastodon/filters') && (
                   <MenuLink to="/ft">
                     <Icon icon="filters" size="l" />
-                    Filters
+                    <Trans>Filters</Trans>
                   </MenuLink>
                 )}
                 <MenuItem
                   onClick={() => {
                     states.showGenericAccounts = {
                       id: 'mute',
-                      heading: 'Muted users',
+                      heading: t`Muted users`,
                       fetchAccounts: fetchMutes,
                       excludeRelationshipAttrs: ['muting'],
                     };
                   }}
                 >
-                  <Icon icon="mute" size="l" /> Muted users&hellip;
+                  <Icon icon="mute" size="l" /> <Trans>Muted users…</Trans>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
                     states.showGenericAccounts = {
                       id: 'block',
-                      heading: 'Blocked users',
+                      heading: t`Blocked users`,
                       fetchAccounts: fetchBlocks,
                       excludeRelationshipAttrs: ['blocking'],
                     };
                   }}
                 >
                   <Icon icon="block" size="l" />
-                  Blocked users&hellip;
+                  <Trans>Blocked users…</Trans>
                 </MenuItem>{' '}
               </SubMenu2>
               <MenuDivider />
@@ -305,14 +341,20 @@ function NavMenu(props) {
                   states.showAccounts = true;
                 }}
               >
-                <Icon icon="group" size="l" /> <span>Accounts&hellip;</span>
+                <Icon icon="group" size="l" />{' '}
+                <span>
+                  <Trans>Accounts…</Trans>
+                </span>
               </MenuItem>
             </>
           ) : (
             <>
               <MenuDivider />
               <MenuLink to="/login">
-                <Icon icon="user" size="l" /> <span>Log in</span>
+                <Icon icon="user" size="l" />{' '}
+                <span>
+                  <Trans>Log in</Trans>
+                </span>
               </MenuLink>
             </>
           )}
@@ -320,16 +362,28 @@ function NavMenu(props) {
         <section>
           <MenuDivider />
           <MenuLink to={`/search`}>
-            <Icon icon="search" size="l" /> <span>Search</span>
+            <Icon icon="search" size="l" />{' '}
+            <span>
+              <Trans>Search</Trans>
+            </span>
           </MenuLink>
           <MenuLink to={`/${instance}/trending`}>
-            <Icon icon="chart" size="l" /> <span>Trending</span>
+            <Icon icon="chart" size="l" />{' '}
+            <span>
+              <Trans>Trending</Trans>
+            </span>
           </MenuLink>
           <MenuLink to={`/${instance}/p/l`}>
-            <Icon icon="building" size="l" /> <span>Local</span>
+            <Icon icon="building" size="l" />{' '}
+            <span>
+              <Trans>Local</Trans>
+            </span>
           </MenuLink>
           <MenuLink to={`/${instance}/p`}>
-            <Icon icon="earth" size="l" /> <span>Federated</span>
+            <Icon icon="earth" size="l" />{' '}
+            <span>
+              <Trans>Federated</Trans>
+            </span>
           </MenuLink>
           {authenticated ? (
             <>
@@ -340,7 +394,9 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="keyboard" size="l" />{' '}
-                <span>Keyboard shortcuts</span>
+                <span>
+                  <Trans>Keyboard shortcuts</Trans>
+                </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -348,14 +404,19 @@ function NavMenu(props) {
                 }}
               >
                 <Icon icon="shortcut" size="l" />{' '}
-                <span>Shortcuts / Columns&hellip;</span>
+                <span>
+                  <Trans>Shortcuts / Columns…</Trans>
+                </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   states.showSettings = true;
                 }}
               >
-                <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+                <Icon icon="gear" size="l" />{' '}
+                <span>
+                  <Trans>Settings…</Trans>
+                </span>
               </MenuItem>
             </>
           ) : (
@@ -366,7 +427,10 @@ function NavMenu(props) {
                   states.showSettings = true;
                 }}
               >
-                <Icon icon="gear" size="l" /> <span>Settings&hellip;</span>
+                <Icon icon="gear" size="l" />{' '}
+                <span>
+                  <Trans>Settings…</Trans>
+                </span>
               </MenuItem>
             </>
           )}

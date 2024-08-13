@@ -100,11 +100,13 @@ Everything is designed and engineered following my taste and vision. This is a p
 Prerequisites: Node.js 18+
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server and `messages:extract:watch` in parallel
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
+- `npm run messages:extract` - Extract messages from source files and update the locale message catalogs
+- `npm run messages:extract:watch` - Same as `messages:extract` but in watch mode
 
 ## Tech stack
 
@@ -115,9 +117,64 @@ Prerequisites: Node.js 18+
 - [masto.js](https://github.com/neet/masto.js/) - Mastodon API client
 - [Iconify](https://iconify.design/) - Icon library
   - [MingCute icons](https://www.mingcute.com/)
+- [Lingui](https://lingui.dev/) - Internationalization
 - Vanilla CSS - _Yes, I'm old school._
 
 Some of these may change in the future. The front-end world is ever-changing.
+
+## Internationalization
+
+All translations are available as [gettext](https://en.wikipedia.org/wiki/Gettext) `.po` files in the `src/locales` folder. The default language is English (`en`). [CLDR Plural Rules](https://cldr.unicode.org/index/cldr-spec/plural-rules) are used for pluralization. RTL (right-to-left) languages are also supported with proper text direction, icon rendering and layout.
+
+On page load, default language is detected via these methods, in order (first match is used):
+
+1. URL parameter `lang` e.g. `/?lang=zh-Hant`
+2. `localStorage` key `lang`
+3. Browser's `navigator.language`
+
+Users can change the language in the settings, which sets the `localStorage` key `lang`.
+
+### Guide for translators
+
+*Inspired by [Translate WordPress Handbook](https://make.wordpress.org/polyglots/handbook/):
+
+- [Don’t translate literally, translate organically](https://make.wordpress.org/polyglots/handbook/translating/expectations/#dont-translate-literally-translate-organically).
+- [Try to keep the same level of formality (or informality)](https://make.wordpress.org/polyglots/handbook/translating/expectations/#try-to-keep-the-same-level-of-formality-or-informality)
+- [Don’t use slang or audience-specific terms](https://make.wordpress.org/polyglots/handbook/translating/expectations/#try-to-keep-the-same-level-of-formality-or-informality)
+- Be attentive to placeholders for variables. Many strings have placesholders e.g. `{account}` (variable), `<0>{name}</0>` (tag with variable) and `#` (number placeholder).
+- [Ellipsis](https://en.wikipedia.org/wiki/Ellipsis) (…) is intentional. Don't remove it.
+  - Nielsen Norman Group: ["Include Ellipses in Command Text to Indicate When More Information Is Required"](https://www.nngroup.com/articles/ui-copy/)
+  - Apple Human Interface Guidelines: ["Append an ellipsis to a menu item’s label when the action requires more information before it can complete. The ellipsis character (…) signals that people need to input information or make additional choices, typically within another view."](https://developer.apple.com/design/human-interface-guidelines/menus)
+  - Windows App Development: ["Ellipses mean incompleteness."](https://learn.microsoft.com/en-us/windows/win32/uxguide/text-ui)
+- Date timestamps, date ranges, numbers, language names and text segmentation are handled by the [ECMAScript Internationalization API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+  - [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) - e.g. "8 Aug", "08/08/2024"
+  - [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat) - e.g. "2 days ago", "in 2 days"
+  - [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) - e.g. "1,000", "10K"
+  - [`Intl.DisplayNames`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames) - e.g. "English" (`en`) in Traditional Chinese (`zh-Hant`) is "英文"
+  - [`Intl.Locale`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) (with polyfill for older browsers)
+  - [`Intl.Segmenter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter) (with polyfill for older browsers)
+
+### Technical notes
+
+- IDs for strings are auto-generated instead of explicitly defined. Some of the [benefits](https://lingui.dev/tutorials/explicit-vs-generated-ids#benefits-of-generated-ids) are avoiding the "naming things" problem and avoiding duplicates.
+  - Explicit IDs might be introduced in the future when requirements and priorities change. The library (Lingui) allows both.
+  - Please report issues if certain strings are translated differently based on context, culture or region.
+- There are no strings for push notifications. The language is set on the instance server.
+- Native HTML date pickers, e.g. `<input type="month">` will always follow the system's locale and not the user's set locale.
+- "ALT" in ALT badge is not translated. It serves as a a recognizable standard across languages.
+- Custom emoji names are not localized, therefore searches don't work for non-English languages.
+- GIPHY API supports [a list of languages for searches](https://developers.giphy.com/docs/optional-settings/#language-support).
+- Unicode Right-to-left mark (RLM) (`U+200F`, `&rlm;`) may need to be used for mixed RTL/LTR text, especially for [`<title>` element](https://www.w3.org/International/questions/qa-html-dir.en.html#title_element) (`document.title`).
+- On development, there's an additional `pseudo-LOCALE` locale, used for [pseudolocalization](https://en.wikipedia.org/wiki/Pseudolocalization). It's for testing and won't show up on production.
+- When building for production, English (`en`) catalog messages are not bundled separatedly. Other locales are bundled as separate files and loaded on demand. This ensures that `en` is always available as fallback.
+
+### Volunteer translations
+
+[![Crowdin](https://badges.crowdin.net/phanpy/localized.svg)](https://crowdin.com/project/phanpy)
+
+Translations are managed on [Crowdin](https://crowdin.com/project/phanpy). You can help by volunteering translations.
+
+Read the [intro documentation](https://support.crowdin.com/for-volunteer-translators/) to get started.
 
 ## Self-hosting
 
@@ -174,6 +231,9 @@ Available variables:
 - `PHANPY_PRIVACY_POLICY_URL` (optional, default to official instance's privacy policy):
   - URL of the privacy policy page
   - May specify the instance's own privacy policy
+- `PHANPY_DEFAULT_LANG` (optional):
+  - Default language is English (`en`) if not specified.
+  - Fallback language after multiple detection methods (`lang` query parameter, `lang` key in `localStorage` and `navigator.language`)
 - `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)

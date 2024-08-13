@@ -2,12 +2,18 @@ import './index.css';
 import './app.css';
 import './polyfills';
 
+import { i18n } from '@lingui/core';
+import { t, Trans } from '@lingui/macro';
+import { I18nProvider } from '@lingui/react';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import ComposeSuspense from './components/compose-suspense';
+import { initActivateLang } from './utils/lang';
 import { initStates } from './utils/states';
 import useTitle from './utils/useTitle';
+
+initActivateLang();
 
 if (window.opener) {
   console = window.opener.console;
@@ -20,12 +26,12 @@ function App() {
 
   useTitle(
     editStatus
-      ? 'Editing source status'
+      ? t`Editing source status`
       : replyToStatus
-      ? `Replying to @${
+      ? t`Replying to @${
           replyToStatus.account?.acct || replyToStatus.account?.username
         }`
-      : 'Compose',
+      : t`Compose`,
   );
 
   useEffect(() => {
@@ -45,14 +51,16 @@ function App() {
   if (uiState === 'closed') {
     return (
       <div class="box">
-        <p>You may close this page now.</p>
+        <p>
+          <Trans>You may close this page now.</Trans>
+        </p>
         <p>
           <button
             onClick={() => {
               window.close();
             }}
           >
-            Close window
+            <Trans>Close window</Trans>
           </button>
         </p>
       </div>
@@ -82,4 +90,9 @@ function App() {
   );
 }
 
-render(<App />, document.getElementById('app-standalone'));
+render(
+  <I18nProvider i18n={i18n}>
+    <App />
+  </I18nProvider>,
+  document.getElementById('app-standalone'),
+);

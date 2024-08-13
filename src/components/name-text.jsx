@@ -1,16 +1,21 @@
 import './name-text.css';
 
+import { useLingui } from '@lingui/react';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import mem from '../utils/mem';
 import states from '../utils/states';
 
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 
-const nameCollator = new Intl.Collator('en', {
-  sensitivity: 'base',
-});
+const nameCollator = mem(
+  (locale) =>
+    new Intl.Collator(locale || undefined, {
+      sensitivity: 'base',
+    }),
+);
 
 function NameText({
   account,
@@ -21,6 +26,7 @@ function NameText({
   external,
   onClick,
 }) {
+  const { i18n } = useLingui();
   const {
     acct,
     avatar,
@@ -51,7 +57,10 @@ function NameText({
       (trimmedUsername === trimmedDisplayName ||
         trimmedUsername === shortenedDisplayName ||
         trimmedUsername === shortenedAlphaNumericDisplayName ||
-        nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)) ||
+        nameCollator(i18n.locale).compare(
+          trimmedUsername,
+          shortenedDisplayName,
+        ) === 0)) ||
     shortenedAlphaNumericDisplayName === acct.toLowerCase();
 
   return (

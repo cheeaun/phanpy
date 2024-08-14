@@ -33,9 +33,15 @@ export async function activateLang(lang) {
     i18n.activate(DEFAULT_LANG);
     console.log('💬 ACTIVATE LANG', DEFAULT_LANG, lang);
   } else {
-    const { messages } = await import(`../locales/${lang}.po`);
-    i18n.loadAndActivate({ locale: lang, messages });
-    console.log('💬 ACTIVATE LANG', lang, messages);
+    try {
+      const { messages } = await import(`../locales/${lang}.po`);
+      i18n.loadAndActivate({ locale: lang, messages });
+      console.log('💬 ACTIVATE LANG', lang, messages);
+    } catch (e) {
+      // Fallback to default language
+      i18n.activate(DEFAULT_LANG);
+      console.log('💬 ACTIVATE LANG', DEFAULT_LANG, lang);
+    }
   }
 }
 

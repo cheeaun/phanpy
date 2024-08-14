@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-14 14:05\n"
+"PO-Revision-Date: 2024-08-14 21:55\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/components/account-block.jsx:133
 msgid "Locked"
-msgstr "Blocat"
+msgstr "L'autenticador està blocat"
 
 #: src/components/account-block.jsx:139
 msgid "Posts: {0}"
@@ -49,7 +49,7 @@ msgstr "Mutu"
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1658
 msgid "Requested"
-msgstr ""
+msgstr "Sol·licitat per"
 
 #: src/components/account-block.jsx:184
 #: src/components/account-info.jsx:417
@@ -161,7 +161,7 @@ msgstr "Veure imatge de la capçalera"
 
 #: src/components/account-info.jsx:630
 msgid "In Memoriam"
-msgstr ""
+msgstr "En Memòria."
 
 #: src/components/account-info.jsx:710
 #: src/components/account-info.jsx:748
@@ -178,7 +178,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {Última publicació en el darrer any(s)} other {Últimes {1} publicacions en el darrer any(s)}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -205,15 +205,15 @@ msgstr "Impulsos"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
-msgstr ""
+msgstr "Les estadístiques de les publicacions no estan disponibles."
 
 #: src/components/account-info.jsx:901
 msgid "View post stats"
-msgstr ""
+msgstr "Veure estadístiques de les publicacions"
 
 #: src/components/account-info.jsx:1064
 msgid "Last post: <0>{0}</0>"
-msgstr ""
+msgstr "Última publicació: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
@@ -229,7 +229,7 @@ msgstr "Nota privada"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention @{username}"
-msgstr ""
+msgstr "Menció @{username}"
 
 #: src/components/account-info.jsx:1159
 msgid "Translate bio"
@@ -831,7 +831,7 @@ msgstr "Altres"
 
 #: src/components/compose.jsx:3188
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} més..."
 
 #: src/components/compose.jsx:3326
 msgid "Search GIFs"
@@ -1167,7 +1167,7 @@ msgstr "Tradueix"
 #: src/components/status.jsx:985
 #: src/components/status.jsx:1012
 msgid "Speak"
-msgstr ""
+msgstr "Pronuncia"
 
 #: src/components/media-modal.jsx:294
 msgid "Open original media in new window"
@@ -1209,7 +1209,7 @@ msgstr ""
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1843
 msgid "Filtered"
-msgstr ""
+msgstr "Filtrat"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
@@ -1519,7 +1519,7 @@ msgstr "Llegiu més →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr ""
+msgstr "Votat"
 
 #: src/components/poll.jsx:135
 #: src/components/poll.jsx:218
@@ -1529,7 +1529,7 @@ msgstr "Amaga els resultats"
 
 #: src/components/poll.jsx:184
 msgid "Vote"
-msgstr ""
+msgstr "Vota"
 
 #: src/components/poll.jsx:204
 #: src/components/poll.jsx:206
@@ -1584,7 +1584,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
-msgstr ""
+msgstr "Brossa"
 
 #: src/components/report-modal.jsx:30
 msgid "Malicious links, fake engagement, or repetitive replies"
@@ -1612,7 +1612,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
-msgstr ""
+msgstr "Altres"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
@@ -1946,11 +1946,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
-msgstr ""
+msgstr "Importa…"
 
 #: src/components/shortcuts-settings.jsx:1015
 msgid "Export"
-msgstr ""
+msgstr "Exporta"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
@@ -2038,7 +2038,7 @@ msgstr ""
 #: src/components/status.jsx:858
 #: src/components/status.jsx:2302
 msgid "Quote"
-msgstr ""
+msgstr "Citació"
 
 #: src/components/status.jsx:866
 #: src/components/status.jsx:2311
@@ -2088,7 +2088,7 @@ msgstr "M'agrada"
 #: src/components/status.jsx:927
 #: src/components/status.jsx:2344
 msgid "Unbookmark"
-msgstr ""
+msgstr "Suprimeix l'adreça d'interès"
 
 #: src/components/status.jsx:1035
 msgid "View post by @{0}"
@@ -2125,11 +2125,11 @@ msgstr ""
 
 #: src/components/status.jsx:1146
 msgid "Unmute conversation"
-msgstr ""
+msgstr "Deixa de silenciar la conversa"
 
 #: src/components/status.jsx:1153
 msgid "Mute conversation"
-msgstr ""
+msgstr "Silencia la conversa"
 
 #: src/components/status.jsx:1169
 msgid "Post unpinned from profile"
@@ -2180,7 +2180,7 @@ msgstr ""
 #: src/components/status.jsx:1653
 #: src/components/status.jsx:2320
 msgid "Boosted"
-msgstr ""
+msgstr "Millorats"
 
 #: src/components/status.jsx:1663
 #: src/components/status.jsx:2345
@@ -2189,7 +2189,7 @@ msgstr "Afegit a marcadors"
 
 #: src/components/status.jsx:1667
 msgid "Pinned"
-msgstr ""
+msgstr "Fixat"
 
 #: src/components/status.jsx:1712
 #: src/components/status.jsx:2164
@@ -2476,7 +2476,7 @@ msgstr "Tanca la sessió…"
 
 #: src/pages/accounts.jsx:174
 msgid "Add an existing account"
-msgstr ""
+msgstr "Afegeix un compte existent"
 
 #: src/pages/accounts.jsx:181
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
@@ -2741,7 +2741,7 @@ msgstr "Converses"
 
 #: src/pages/filters.jsx:27
 msgid "Profiles"
-msgstr ""
+msgstr "Perfils"
 
 #: src/pages/filters.jsx:42
 msgid "Never"
@@ -2750,7 +2750,7 @@ msgstr ""
 #: src/pages/filters.jsx:103
 #: src/pages/filters.jsx:228
 msgid "New filter"
-msgstr ""
+msgstr "Filtre nou"
 
 #: src/pages/filters.jsx:151
 msgid "{0, plural, one {# filter} other {# filters}}"
@@ -2782,7 +2782,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:355
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: src/pages/filters.jsx:396
 msgid "Whole word"
@@ -2818,7 +2818,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:507
 msgid "Expiry"
-msgstr ""
+msgstr "Caducitat"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
@@ -2826,7 +2826,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
-msgstr ""
+msgstr "minimitzat"
 
 #: src/pages/filters.jsx:546
 msgid "hidden"
@@ -2842,7 +2842,7 @@ msgstr "No ha estat possible esborrar el filtre."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
-msgstr ""
+msgstr "Ha vençut"
 
 #: src/pages/filters.jsx:610
 msgid "Expiring <0/>"
@@ -3018,7 +3018,7 @@ msgstr ""
 
 #: src/pages/list.jsx:356
 msgid "Remove…"
-msgstr ""
+msgstr "Suprimeix…"
 
 #: src/pages/lists.jsx:93
 msgid "{0, plural, one {# list} other {# lists}}"
@@ -3042,7 +3042,7 @@ msgstr ""
 
 #: src/pages/login.jsx:209
 msgid "Continue"
-msgstr ""
+msgstr "Continua"
 
 #: src/pages/login.jsx:217
 msgid "Don't have an account? Create one!"
@@ -3144,7 +3144,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:896
 msgid "Ignore"
-msgstr ""
+msgstr "Ignora"
 
 #: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"
@@ -3239,7 +3239,7 @@ msgstr "Etiquetes"
 #: src/pages/search.jsx:318
 #: src/pages/search.jsx:388
 msgid "See more"
-msgstr ""
+msgstr "Mostra'n més"
 
 #: src/pages/search.jsx:290
 msgid "See more accounts"
@@ -3275,7 +3275,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:83
 msgid "Appearance"
-msgstr ""
+msgstr "Aparença"
 
 #: src/pages/settings.jsx:159
 msgid "Light"
@@ -3283,7 +3283,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:170
 msgid "Dark"
-msgstr ""
+msgstr "Fosc"
 
 #: src/pages/settings.jsx:183
 msgid "Auto"
@@ -3291,7 +3291,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:193
 msgid "Text size"
-msgstr ""
+msgstr "Mida del text"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
@@ -3435,7 +3435,7 @@ msgstr "Política de privacitat"
 
 #: src/pages/settings.jsx:763
 msgid "<0>Site:</0> {0}"
-msgstr ""
+msgstr "<0>Lloc web:</0> {0}"
 
 #: src/pages/settings.jsx:770
 msgid "<0>Version:</0> <1/> {0}"

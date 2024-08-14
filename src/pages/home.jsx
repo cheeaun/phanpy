@@ -1,6 +1,7 @@
 import './notifications-menu.css';
 
-import { t, Trans } from '@lingui/macro';
+import { msg, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { ControlledMenu } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -24,6 +25,7 @@ import {
 } from './notifications';
 
 function Home() {
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   useEffect(() => {
     (async () => {
@@ -47,7 +49,7 @@ function Home() {
         <Columns />
       ) : (
         <Following
-          title={t`Home`}
+          title={_(msg`Home`)}
           path="/"
           id="home"
           headerStart={false}

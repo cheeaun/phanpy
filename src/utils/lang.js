@@ -13,7 +13,7 @@ import localeMatch from '../utils/locale-match';
 const { PHANPY_DEFAULT_LANG } = import.meta.env;
 
 export const DEFAULT_LANG = 'en';
-export const LOCALES = [DEFAULT_LANG, 'zh-CN'];
+export const LOCALES = [DEFAULT_LANG];
 if (import.meta.env.DEV) {
   LOCALES.push('pseudo-LOCALE');
 }

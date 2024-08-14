@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-14 12:32\n"
+"PO-Revision-Date: 2024-08-14 14:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -988,9 +988,17 @@ msgstr "上一条嘟文"
 msgid "Skip carousel to next post"
 msgstr "跳转到下一条嘟文"
 
+#: src/components/keyboard-shortcuts-help.jsx:65
+msgid "<0>Shift</0> + <1>j</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
 msgstr "跳转到上一条嘟文"
+
+#: src/components/keyboard-shortcuts-help.jsx:73
+msgid "<0>Shift</0> + <1>k</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:79
 msgid "Load new posts"
@@ -1001,6 +1009,10 @@ msgstr "加载新嘟文"
 msgid "Open post details"
 msgstr "打开嘟文详情页"
 
+#: src/components/keyboard-shortcuts-help.jsx:85
+msgid "<0>Enter</0> or <1>o</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:92
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
 msgstr "展开内容警告或<0/>展开/折叠嘟文串"
@@ -1009,9 +1021,17 @@ msgstr "展开内容警告或<0/>展开/折叠嘟文串"
 msgid "Close post or dialogs"
 msgstr "关闭嘟文或对话"
 
+#: src/components/keyboard-shortcuts-help.jsx:103
+msgid "<0>Esc</0> or <1>Backspace</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
 msgstr "在多栏模式中聚焦对应栏"
+
+#: src/components/keyboard-shortcuts-help.jsx:111
+msgid "<0>1</0> to <1>9</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
@@ -1021,9 +1041,17 @@ msgstr "撰写新嘟文"
 msgid "Compose new post (new window)"
 msgstr "撰写新嘟文(新窗口)"
 
+#: src/components/keyboard-shortcuts-help.jsx:124
+msgid "<0>Shift</0> + <1>c</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Send post"
 msgstr "发送嘟文"
+
+#: src/components/keyboard-shortcuts-help.jsx:132
+msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:139
 #: src/components/nav-menu.jsx:367
@@ -1039,9 +1067,17 @@ msgstr "搜索"
 msgid "Reply (new window)"
 msgstr "回复(新窗口)"
 
+#: src/components/keyboard-shortcuts-help.jsx:150
+msgid "<0>Shift</0> + <1>r</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:156
 msgid "Like (favourite)"
 msgstr "喜欢(点赞)"
+
+#: src/components/keyboard-shortcuts-help.jsx:158
+msgid "<0>l</0> or <1>f</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:842
@@ -1050,6 +1086,10 @@ msgstr "喜欢(点赞)"
 #: src/components/status.jsx:2320
 msgid "Boost"
 msgstr "转嘟"
+
+#: src/components/keyboard-shortcuts-help.jsx:166
+msgid "<0>Shift</0> + <1>b</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:172
 #: src/components/status.jsx:927
@@ -1061,6 +1101,10 @@ msgstr "收藏"
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
 msgstr "切换隐身模式"
+
+#: src/components/keyboard-shortcuts-help.jsx:178
+msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
+msgstr ""
 
 #: src/components/list-add-edit.jsx:37
 msgid "Edit list"
@@ -3037,7 +3081,7 @@ msgstr "不请自来地提及你的人"
 
 #: src/pages/notifications.jsx:101
 msgid "Who are limited by server moderators"
-msgstr ""
+msgstr "被实例管理员限制的人"
 
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
@@ -3095,11 +3139,11 @@ msgstr "过滤来自这些人的通知:"
 
 #: src/pages/notifications.jsx:893
 msgid "Filter"
-msgstr ""
+msgstr "过滤规则"
 
 #: src/pages/notifications.jsx:896
 msgid "Ignore"
-msgstr ""
+msgstr "忽略"
 
 #: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"

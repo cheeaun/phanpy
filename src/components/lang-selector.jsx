@@ -27,12 +27,12 @@ export default function LangSelector() {
               </>
             );
           }
-          const common = localeCode2Text(lang);
           const native = localeCode2Text({ code: lang, locale: lang });
-          const same = common === native;
+          const common = localeCode2Text(lang);
+          const showCommon = !!common && common !== native;
           return (
             <option value={lang} key={lang}>
-              {same ? common : `${common} (${native})`}
+              {showCommon ? `${native} (${common})` : native}
             </option>
           );
         })}

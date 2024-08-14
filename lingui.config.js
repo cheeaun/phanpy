@@ -10,7 +10,7 @@ const config = {
       include: ['src'],
     },
   ],
-  compileNamespace: 'es',
+  // compileNamespace: 'es',
   orderBy: 'origin',
 };
 

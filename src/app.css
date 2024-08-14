@@ -2042,7 +2042,7 @@ body > .szh-menu-container {
   }
 
   .menu-control-group-horizontal:first-child,
-  li[aria-hidden='true'] + .menu-control-group-horizontal {
+  li[role='none'] + .menu-control-group-horizontal {
     margin-top: -8px;
     margin-bottom: -4px;
 

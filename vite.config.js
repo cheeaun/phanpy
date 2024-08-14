@@ -136,6 +136,9 @@ export default defineConfig({
           if (facadeModuleId && facadeModuleId.includes('icon')) {
             return 'assets/icons/[name]-[hash].js';
           }
+          if (facadeModuleId && facadeModuleId.includes('locales')) {
+            return 'assets/locales/[name]-[hash].js';
+          }
           return 'assets/[name]-[hash].js';
         },
       },

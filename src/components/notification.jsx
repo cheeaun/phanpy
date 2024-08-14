@@ -82,10 +82,10 @@ const contentText = {
   }) => (
     <Plural
       value={count}
-      one={
+      _1={
         <Plural
           value={postsCount}
-          one={
+          _1={
             <Select
               value={postType}
               _reply={<Trans>{account} boosted your reply.</Trans>}
@@ -125,7 +125,7 @@ const contentText = {
   follow: ({ account, count, components: { Subject } }) => (
     <Plural
       value={count}
-      one={<Trans>{account} followed you.</Trans>}
+      _1={<Trans>{account} followed you.</Trans>}
       other={
         <Trans>
           <Subject clickable={count > 1}>
@@ -148,10 +148,10 @@ const contentText = {
   }) => (
     <Plural
       value={count}
-      one={
+      _1={
         <Plural
           value={postsCount}
-          one={
+          _1={
             <Select
               value={postType}
               _reply={<Trans>{account} liked your reply.</Trans>}
@@ -201,10 +201,10 @@ const contentText = {
   }) => (
     <Plural
       value={count}
-      one={
+      _1={
         <Plural
           value={postsCount}
-          one={
+          _1={
             <Select
               value={postType}
               _reply={<Trans>{account} boosted & liked your reply.</Trans>}
@@ -402,7 +402,13 @@ function Notification({
       text = text({ emoji: notification.emoji, emojiURL });
     } else {
       text = text({
-        account: account && <NameText account={account} showAvatar />,
+        account: account ? (
+          <NameText account={account} showAvatar />
+        ) : (
+          sampleAccounts?.[0] && (
+            <NameText account={sampleAccounts[0]} showAvatar />
+          )
+        ),
         count,
         postsCount,
         postType: isReplyToOthers ? 'reply' : 'post',

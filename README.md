@@ -100,13 +100,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 Prerequisites: Node.js 18+
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server and `messages:extract:watch` in parallel
+- `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 - `npm run messages:extract` - Extract messages from source files and update the locale message catalogs
-- `npm run messages:extract:watch` - Same as `messages:extract` but in watch mode
 
 ## Tech stack
 

@@ -4,14 +4,13 @@
   "type": "module",
   "scripts": {
     "dev:vite": "vite",
-    "dev": "run-p dev:vite messages:extract:watch",
+    "dev": "run-p dev:vite \"messages:extract:clean -- --watch\"",
     "build": "vite build",
     "preview": "vite preview",
     "fetch-instances": "env $(cat .env.local | grep -v \"#\" | xargs) node scripts/fetch-instances-list.js",
     "sourcemap": "npx source-map-explorer dist/assets/*.js",
     "bundle-visualizer": "npx vite-bundle-visualizer",
     "messages:extract": "lingui extract",
-    "messages:extract:watch": "lingui extract --watch",
     "messages:extract:clean": "lingui extract --clean",
     "messages:compile": "lingui compile"
   },

@@ -317,7 +317,7 @@ function Settings({ onClose }) {
         </h3>
         <section>
           <ul>
-            <li>
+            <li class="block">
               <label>
                 <input
                   type="checkbox"
@@ -329,7 +329,7 @@ function Settings({ onClose }) {
                 <Trans>Auto refresh timeline posts</Trans>
               </label>
             </li>
-            <li>
+            <li class="block">
               <label>
                 <input
                   type="checkbox"
@@ -341,7 +341,7 @@ function Settings({ onClose }) {
                 <Trans>Boosts carousel</Trans>
               </label>
             </li>
-            <li>
+            <li class="block">
               <label>
                 <input
                   type="checkbox"
@@ -497,7 +497,7 @@ function Settings({ onClose }) {
               </div>
             </li>
             {!!GIPHY_API_KEY && authenticated && (
-              <li>
+              <li class="block">
                 <label>
                   <input
                     type="checkbox"
@@ -530,7 +530,7 @@ function Settings({ onClose }) {
               </li>
             )}
             {!!IMG_ALT_API_URL && authenticated && (
-              <li>
+              <li class="block">
                 <label>
                   <input
                     type="checkbox"
@@ -567,7 +567,7 @@ function Settings({ onClose }) {
               </li>
             )}
             {authenticated && supports('@mastodon/grouped-notifications') && (
-              <li>
+              <li class="block">
                 <label>
                   <input
                     type="checkbox"
@@ -590,7 +590,7 @@ function Settings({ onClose }) {
               </li>
             )}
             {authenticated && (
-              <li>
+              <li class="block">
                 <label>
                   <input
                     type="checkbox"
@@ -626,7 +626,7 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            <li>
+            <li class="block">
               <label>
                 <input
                   type="checkbox"

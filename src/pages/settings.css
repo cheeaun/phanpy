@@ -34,6 +34,11 @@
   align-items: center;
   flex-wrap: wrap;
   border-bottom: var(--hairline-width) solid var(--outline-color);
+
+  &.block {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 #settings-container section > ul > li > div:last-child {
   text-align: end;

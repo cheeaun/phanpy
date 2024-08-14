@@ -62,17 +62,17 @@ export default memo(function KeyboardShortcutsHelp() {
                   {
                     action: t`Skip carousel to next post`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>j</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
                     action: t`Skip carousel to previous post`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>k</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
@@ -82,9 +82,9 @@ export default memo(function KeyboardShortcutsHelp() {
                   {
                     action: t`Open post details`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Enter</kbd> or <kbd>o</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
@@ -100,17 +100,17 @@ export default memo(function KeyboardShortcutsHelp() {
                   {
                     action: t`Close post or dialogs`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Esc</kbd> or <kbd>Backspace</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
                     action: t`Focus column in multi-column mode`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>1</kbd> to <kbd>9</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
@@ -121,18 +121,18 @@ export default memo(function KeyboardShortcutsHelp() {
                     action: t`Compose new post (new window)`,
                     className: 'insignificant',
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>c</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
                     action: t`Send post`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or <kbd>⌘</kbd> +{' '}
                         <kbd>Enter</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
@@ -147,25 +147,25 @@ export default memo(function KeyboardShortcutsHelp() {
                     action: t`Reply (new window)`,
                     className: 'insignificant',
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>r</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
                     action: t`Like (favourite)`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>l</kbd> or <kbd>f</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
                     action: t`Boost`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>b</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                   {
@@ -175,9 +175,9 @@ export default memo(function KeyboardShortcutsHelp() {
                   {
                     action: t`Toggle Cloak mode`,
                     keys: (
-                      <>
+                      <Trans>
                         <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>k</kbd>
-                      </>
+                      </Trans>
                     ),
                   },
                 ].map(({ action, className, keys }) => (

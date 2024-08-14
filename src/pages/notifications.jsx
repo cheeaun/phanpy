@@ -1,6 +1,7 @@
 import './notifications.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { msg, Plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
@@ -85,7 +86,23 @@ export function getGroupedNotifications(notifications) {
   }
 }
 
+const NOTIFICATIONS_POLICIES = [
+  'forNotFollowing',
+  'forNotFollowers',
+  'forNewAccounts',
+  'forPrivateMentions',
+  'forLimitedAccounts',
+];
+const NOTIFICATIONS_POLICIES_TEXT = {
+  forNotFollowing: msg`You don't follow`,
+  forNotFollowers: msg`Who don't follow you`,
+  forNewAccounts: msg`With a new account`,
+  forPrivateMentions: msg`Who unsolicitedly private mention you`,
+  forLimitedAccounts: msg`Who are limited by server moderators`,
+};
+
 function Notifications({ columnMode }) {
+  const { _ } = useLingui();
   useTitle(t`Notifications`, '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
@@ -222,7 +239,7 @@ function Notifications({ columnMode }) {
     useState(false);
   const [notificationsPolicy, setNotificationsPolicy] = useState({});
   function fetchNotificationsPolicy() {
-    return masto.v1.notifications.policy.fetch().catch(() => {});
+    return masto.v2.notifications.policy.fetch().catch(() => {});
   }
   function loadNotificationsPolicy() {
     fetchNotificationsPolicy()
@@ -832,25 +849,25 @@ function Notifications({ columnMode }) {
                 onSubmit={(e) => {
                   e.preventDefault();
                   const {
-                    filterNotFollowing,
-                    filterNotFollowers,
-                    filterNewAccounts,
-                    filterPrivateMentions,
+                    forNotFollowing,
+                    forNotFollowers,
+                    forNewAccounts,
+                    forPrivateMentions,
+                    forLimitedAccounts,
                   } = e.target;
-                  const allFilters = {
-                    filterNotFollowing: filterNotFollowing.checked,
-                    filterNotFollowers: filterNotFollowers.checked,
-                    filterNewAccounts: filterNewAccounts.checked,
-                    filterPrivateMentions: filterPrivateMentions.checked,
-                  };
-                  setNotificationsPolicy({
+                  const newPolicy = {
                     ...notificationsPolicy,
-                    ...allFilters,
-                  });
+                    forNotFollowing: forNotFollowing.value,
+                    forNotFollowers: forNotFollowers.value,
+                    forNewAccounts: forNewAccounts.value,
+                    forPrivateMentions: forPrivateMentions.value,
+                    forLimitedAccounts: forLimitedAccounts.value,
+                  };
+                  setNotificationsPolicy(newPolicy);
                   setShowNotificationsSettings(false);
                   (async () => {
                     try {
-                      await masto.v1.notifications.policy.update(allFilters);
+                      await masto.v2.notifications.policy.update(newPolicy);
                       showToast(t`Notifications settings updated`);
                     } catch (e) {
                       console.error(e);
@@ -861,50 +878,29 @@ function Notifications({ columnMode }) {
                 <p>
                   <Trans>Filter out notifications from people:</Trans>
                 </p>
-                <p>
-                  <label>
-                    <input
-                      type="checkbox"
-                      switch
-                      defaultChecked={notificationsPolicy.filterNotFollowing}
-                      name="filterNotFollowing"
-                    />{' '}
-                    <Trans>You don't follow</Trans>
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input
-                      type="checkbox"
-                      switch
-                      defaultChecked={notificationsPolicy.filterNotFollowers}
-                      name="filterNotFollowers"
-                    />{' '}
-                    <Trans>Who don't follow you</Trans>
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input
-                      type="checkbox"
-                      switch
-                      defaultChecked={notificationsPolicy.filterNewAccounts}
-                      name="filterNewAccounts"
-                    />{' '}
-                    <Trans>With a new account</Trans>
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input
-                      type="checkbox"
-                      switch
-                      defaultChecked={notificationsPolicy.filterPrivateMentions}
-                      name="filterPrivateMentions"
-                    />{' '}
-                    <Trans>Who unsolicitedly private mention you</Trans>
-                  </label>
-                </p>
+                <div class="notification-policy-fields">
+                  {NOTIFICATIONS_POLICIES.map((key) => {
+                    const value = notificationsPolicy[key];
+                    return (
+                      <div key={key}>
+                        <label>
+                          {_(NOTIFICATIONS_POLICIES_TEXT[key])}
+                          <select name={key} defaultValue={value} class="small">
+                            <option value="accept">
+                              <Trans>Accept</Trans>
+                            </option>
+                            <option value="filter">
+                              <Trans>Filter</Trans>
+                            </option>
+                            <option value="drop">
+                              <Trans>Ignore</Trans>
+                            </option>
+                          </select>
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
                 <p>
                   <button type="submit">
                     <Trans>Save</Trans>

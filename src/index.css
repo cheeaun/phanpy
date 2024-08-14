@@ -389,7 +389,7 @@ textarea:disabled {
   width: 100%;
 }
 
-:is(button, .button).small {
+:is(button, .button, select).small {
   font-size: 90%;
   padding: 4px 8px;
 }

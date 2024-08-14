@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-13 16:05\n"
+"PO-Revision-Date: 2024-08-14 00:45\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -24,11 +24,11 @@ msgstr "已锁嘟"
 
 #: src/components/account-block.jsx:139
 msgid "Posts: {0}"
-msgstr "嘟文： {0}"
+msgstr "嘟文: {0}"
 
 #: src/components/account-block.jsx:144
 msgid "Last posted: {0}"
-msgstr "上次发嘟： {0}"
+msgstr "上次发嘟: {0}"
 
 #: src/components/account-block.jsx:159
 #: src/components/account-info.jsx:635
@@ -213,7 +213,7 @@ msgstr "查看嘟文统计"
 
 #: src/components/account-info.jsx:1064
 msgid "Last post: <0>{0}</0>"
-msgstr "上次发嘟： <0>{0}</0>"
+msgstr "上次发嘟: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
@@ -754,7 +754,7 @@ msgstr "正在生成描述。请稍候…"
 
 #: src/components/compose.jsx:2473
 msgid "Failed to generate description: {0}"
-msgstr "描述生成失败： {0}"
+msgstr "描述生成失败: {0}"
 
 #: src/components/compose.jsx:2474
 msgid "Failed to generate description"
@@ -1154,7 +1154,7 @@ msgstr "敏感媒体"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr "已过滤： {filterTitleStr}"
+msgstr "已过滤: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status.jsx:3395
@@ -1405,11 +1405,11 @@ msgstr "<0>{from}</0> 的一位管理员封禁了 <1>{targetName}</1> 的账户�
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr "一名来自<0>{from}</0>的管理员已屏蔽<1>{targetName}</1>。受影响的粉丝数：{followersCount}，关注数：{followingCount}。"
+msgstr "一名来自<0>{from}</0>的管理员已屏蔽<1>{targetName}</1>。受影响的粉丝数:{followersCount}，关注数:{followingCount}。"
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr "你已屏蔽<0>{targetName}</0>。被移除的粉丝数：{followersCount}，关注数：{followingCount}。"
+msgstr "你已屏蔽<0>{targetName}</0>。被移除的粉丝数:{followersCount}，关注数:{followingCount}。"
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
@@ -1441,7 +1441,7 @@ msgstr "你的账户已被封禁。"
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
-msgstr "[未知通知类型：{type}]"
+msgstr "[未知通知类型:{type}]"
 
 #: src/components/notification.jsx:419
 #: src/components/status.jsx:941
@@ -1711,7 +1711,7 @@ msgstr "可选，除非为多栏模式"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr "例如：像素艺术 (最多 5 个，用空格分隔)"
+msgstr "例如:像素艺术 (最多 5 个，用空格分隔)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
@@ -1729,7 +1729,7 @@ msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr "指定一组快捷方式，显示样式为："
+msgstr "指定一组快捷方式，显示样式为:"
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
@@ -1763,27 +1763,27 @@ msgstr "编辑"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr ""
+msgstr "需要添加一个以上快捷方式/栏以使其正常工作。"
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
+msgstr "尚未添加任何栏。点击以添加栏。"
 
 #: src/components/shortcuts-settings.jsx:409
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "尚未添加任何快捷方式。点击以添加快捷方式。"
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "不确定要添加哪些？<0/>可以先尝试添加<1>首页 / 关注和通知</1>。"
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "最多 {SHORTCUTS_LIMIT} 栏"
 
 #: src/components/shortcuts-settings.jsx:441
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "最多 {SHORTCUTS_LIMIT} 个快捷方式"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
@@ -1791,104 +1791,104 @@ msgstr "导入/导出"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
-msgstr ""
+msgstr "添加栏…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
-msgstr ""
+msgstr "添加快捷方式…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr ""
+msgstr "特定的某个列表是可选的。但在多栏模式下，必须添加列表，否则对应的栏将不会显示。"
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr ""
+msgstr "在多栏模式下，搜索关键词是必须的，否则对应的栏将不会显示。"
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr ""
+msgstr "支持添加多个话题标签。以空格分隔。"
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
-msgstr ""
+msgstr "编辑快捷方式"
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Add shortcut"
-msgstr ""
+msgstr "添加快捷方式"
 
 #: src/components/shortcuts-settings.jsx:620
 msgid "Timeline"
-msgstr ""
+msgstr "时间线"
 
 #: src/components/shortcuts-settings.jsx:646
 msgid "List"
-msgstr ""
+msgstr "列表"
 
 #: src/components/shortcuts-settings.jsx:785
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr ""
+msgstr "导入/导出 <0>快捷方式</0>"
 
 #: src/components/shortcuts-settings.jsx:795
 msgid "Import"
-msgstr ""
+msgstr "导入"
 
 #: src/components/shortcuts-settings.jsx:803
 msgid "Paste shortcuts here"
-msgstr ""
+msgstr "在此粘贴快捷方式配置"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "从实例服务器下载保存的快捷方式…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "无法下载快捷方式"
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
-msgstr ""
+msgstr "从实例服务器下载快捷方式"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
-msgstr ""
+msgstr "* 已存在于当前快捷方式中"
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
-msgstr ""
+msgstr "如果列表来自不同的账户，则可能无法使用。"
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
-msgstr ""
+msgstr "设置格式非法"
 
 #: src/components/shortcuts-settings.jsx:932
 msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "是否追加到当前快捷方式？"
 
 #: src/components/shortcuts-settings.jsx:935
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr ""
+msgstr "只有不存在于当前快捷方式中的快捷方式才会被追加。"
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "没有新的快捷方式可供导入"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr ""
+msgstr "已导入快捷方式。但总数超出最大限制 {SHORTCUTS_LIMIT}，因此超出的部分未被导入。"
 
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "已导入快捷方式"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
-msgstr ""
+msgstr "导入并追加…"
 
 #: src/components/shortcuts-settings.jsx:991
 msgid "Override current shortcuts?"
-msgstr ""
+msgstr "是否覆盖当前快捷方式配置？"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
@@ -1952,78 +1952,78 @@ msgstr "原始快捷方式 JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "导入/导出配置到实例服务器(很不稳定)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
-msgstr ""
+msgstr "<0/> <1>已转嘟</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr ""
+msgstr "抱歉，你当前登录的实例无法与该外站嘟文互动。"
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
-msgstr ""
+msgstr "已取消点赞 @{0} 的嘟文"
 
 #: src/components/status.jsx:716
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "已点赞 @{0} 的嘟文"
 
 #: src/components/status.jsx:755
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "已取消收藏 @{0} 的嘟文"
 
 #: src/components/status.jsx:756
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "已收藏 @{0} 的嘟文"
 
 #: src/components/status.jsx:830
 msgid "{repliesCount, plural, =0 {Reply} other {{0}}}"
-msgstr ""
+msgstr "{repliesCount, plural, =0 {回复} other {{0}}}"
 
 #: src/components/status.jsx:842
 #: src/components/status.jsx:903
 #: src/components/status.jsx:2287
 #: src/components/status.jsx:2319
 msgid "Unboost"
-msgstr ""
+msgstr "取消转嘟"
 
 #: src/components/status.jsx:858
 #: src/components/status.jsx:2302
 msgid "Quote"
-msgstr ""
+msgstr "引用"
 
 #: src/components/status.jsx:866
 #: src/components/status.jsx:2311
 msgid "Some media have no descriptions."
-msgstr ""
+msgstr "某些媒体附件没有描述文本。"
 
 #: src/components/status.jsx:873
 msgid "Old post (<0>{0}</0>)"
-msgstr ""
+msgstr "旧嘟文 (<0>{0}</0>)"
 
 #: src/components/status.jsx:892
 #: src/components/status.jsx:1334
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "已取消转嘟 @{0} 的嘟文"
 
 #: src/components/status.jsx:893
 #: src/components/status.jsx:1335
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "已转嘟 @{0} 的嘟文"
 
 #: src/components/status.jsx:901
 msgid "{reblogsCount, plural, =0 {{0}} other {{1}}}"
-msgstr ""
+msgstr "{reblogsCount, plural, =0 {{0}} other {{1}}}"
 
 #: src/components/status.jsx:903
 msgid "Boost…"
-msgstr ""
+msgstr "转嘟…"
 
 #: src/components/status.jsx:914
 msgid "{favouritesCount, plural, =0 {{0}} other {{1}}}"
-msgstr ""
+msgstr "{favouritesCount, plural, =0 {{0}} other {{1}}}"
 
 #: src/components/status.jsx:916
 #: src/components/status.jsx:1619
@@ -2042,164 +2042,164 @@ msgstr "赞"
 #: src/components/status.jsx:927
 #: src/components/status.jsx:2344
 msgid "Unbookmark"
-msgstr ""
+msgstr "取消收藏"
 
 #: src/components/status.jsx:1035
 msgid "View post by @{0}"
-msgstr ""
+msgstr "查看 @{0} 的嘟文"
 
 #: src/components/status.jsx:1053
 msgid "Show Edit History"
-msgstr ""
+msgstr "显示编辑记录"
 
 #: src/components/status.jsx:1056
 msgid "Edited: {editedDateText}"
-msgstr ""
+msgstr "编辑于: {editedDateText}"
 
 #: src/components/status.jsx:1116
 #: src/components/status.jsx:3072
 msgid "Embed post"
-msgstr ""
+msgstr "嵌入嘟文"
 
 #: src/components/status.jsx:1130
 msgid "Conversation unmuted"
-msgstr ""
+msgstr "已取消静音该对话"
 
 #: src/components/status.jsx:1130
 msgid "Conversation muted"
-msgstr ""
+msgstr "已静音该对话"
 
 #: src/components/status.jsx:1136
 msgid "Unable to unmute conversation"
-msgstr ""
+msgstr "无法取消静音该对话"
 
 #: src/components/status.jsx:1137
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "无法静音该对话"
 
 #: src/components/status.jsx:1146
 msgid "Unmute conversation"
-msgstr ""
+msgstr "取消静音对话"
 
 #: src/components/status.jsx:1153
 msgid "Mute conversation"
-msgstr ""
+msgstr "静音对话"
 
 #: src/components/status.jsx:1169
 msgid "Post unpinned from profile"
-msgstr ""
+msgstr "已取消置顶该嘟文"
 
 #: src/components/status.jsx:1170
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "已置顶该嘟文"
 
 #: src/components/status.jsx:1175
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "无法取消置顶该嘟文"
 
 #: src/components/status.jsx:1175
 msgid "Unable to pin post"
-msgstr ""
+msgstr "无法置顶该嘟文"
 
 #: src/components/status.jsx:1184
 msgid "Unpin from profile"
-msgstr ""
+msgstr "取消置顶"
 
 #: src/components/status.jsx:1191
 msgid "Pin to profile"
-msgstr ""
+msgstr "置顶"
 
 #: src/components/status.jsx:1220
 msgid "Delete this post?"
-msgstr ""
+msgstr "是否删除此嘟文？"
 
 #: src/components/status.jsx:1233
 msgid "Post deleted"
-msgstr ""
+msgstr "嘟文已删除"
 
 #: src/components/status.jsx:1236
 msgid "Unable to delete post"
-msgstr ""
+msgstr "无法删除嘟文"
 
 #: src/components/status.jsx:1264
 msgid "Report post…"
-msgstr ""
+msgstr "举报嘟文…"
 
 #: src/components/status.jsx:1620
 #: src/components/status.jsx:1656
 #: src/components/status.jsx:2333
 msgid "Liked"
-msgstr ""
+msgstr "已点赞"
 
 #: src/components/status.jsx:1653
 #: src/components/status.jsx:2320
 msgid "Boosted"
-msgstr ""
+msgstr "已转嘟"
 
 #: src/components/status.jsx:1663
 #: src/components/status.jsx:2345
 msgid "Bookmarked"
-msgstr ""
+msgstr "已收藏"
 
 #: src/components/status.jsx:1667
 msgid "Pinned"
-msgstr ""
+msgstr "已置顶"
 
 #: src/components/status.jsx:1712
 #: src/components/status.jsx:2164
 msgid "Deleted"
-msgstr ""
+msgstr "已删除"
 
 #: src/components/status.jsx:1753
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
-msgstr ""
+msgstr "{repliesCount, plural, other {# 条回复}}"
 
 #: src/components/status.jsx:1842
 msgid "Thread{0}"
-msgstr ""
+msgstr "嘟文串{0}"
 
 #: src/components/status.jsx:1918
 #: src/components/status.jsx:1980
 #: src/components/status.jsx:2065
 msgid "Show less"
-msgstr ""
+msgstr "折叠"
 
 #: src/components/status.jsx:1918
 #: src/components/status.jsx:1980
 msgid "Show content"
-msgstr ""
+msgstr "显示内容"
 
 #: src/components/status.jsx:2065
 msgid "Show media"
-msgstr ""
+msgstr "显示媒体"
 
 #: src/components/status.jsx:2185
 msgid "Edited"
-msgstr ""
+msgstr "已编辑"
 
 #: src/components/status.jsx:2262
 msgid "Comments"
-msgstr ""
+msgstr "评论"
 
 #: src/components/status.jsx:2833
 msgid "Edit History"
-msgstr ""
+msgstr "编辑记录"
 
 #: src/components/status.jsx:2837
 msgid "Failed to load history"
-msgstr ""
+msgstr "无法加载编辑记录"
 
 #: src/components/status.jsx:2842
 msgid "Loading…"
-msgstr ""
+msgstr "正在加载…"
 
 #: src/components/status.jsx:3077
 msgid "HTML Code"
-msgstr ""
+msgstr "HTML 代码"
 
 #: src/components/status.jsx:3094
 msgid "HTML code copied"
-msgstr ""
+msgstr "已复制 HTML 代码"
 
 #: src/components/status.jsx:3097
 msgid "Unable to copy HTML code"

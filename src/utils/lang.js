@@ -13,22 +13,12 @@ import localeMatch from '../utils/locale-match';
 const { PHANPY_DEFAULT_LANG } = import.meta.env;
 
 export const DEFAULT_LANG = 'en';
-export const LOCALES = [DEFAULT_LANG];
+export const LOCALES = [DEFAULT_LANG, 'zh-CN'];
 if (import.meta.env.DEV) {
   LOCALES.push('pseudo-LOCALE');
 }
 
-export async function activateLang(lang) {
-  if (!lang || lang === DEFAULT_LANG) {
-    i18n.loadAndActivate({ locale: DEFAULT_LANG, messages });
-    console.log('💬 ACTIVATE LANG', lang);
-  } else {
-    const { messages } = await import(`../locales/${lang}.po`);
-    i18n.loadAndActivate({ locale: lang, messages });
-    console.log('💬 ACTIVATE LANG', lang);
-  }
-}
-
+i18n.load(DEFAULT_LANG, messages);
 i18n.on('change', () => {
   const lang = i18n.locale;
   if (lang) {
@@ -37,6 +27,17 @@ i18n.on('change', () => {
     document.documentElement.dir = direction;
   }
 });
+
+export async function activateLang(lang) {
+  if (!lang || lang === DEFAULT_LANG) {
+    i18n.activate(DEFAULT_LANG);
+    console.log('💬 ACTIVATE LANG', DEFAULT_LANG, lang);
+  } else {
+    const { messages } = await import(`../locales/${lang}.po`);
+    i18n.loadAndActivate({ locale: lang, messages });
+    console.log('💬 ACTIVATE LANG', lang, messages);
+  }
+}
 
 export function initActivateLang() {
   const lang = detect(

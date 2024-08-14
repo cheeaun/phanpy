@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-13 22:05\n"
+"PO-Revision-Date: 2024-08-14 07:15\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -531,7 +531,7 @@ msgstr "Mode de capa activat"
 #: src/pages/catchup.jsx:860
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
-#: src/pages/home.jsx:50
+#: src/pages/home.jsx:52
 #: src/pages/notifications.jsx:488
 msgid "Home"
 msgstr "Inici"
@@ -941,7 +941,7 @@ msgid "Nothing to show"
 msgstr "Res a mostrar"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:423
+#: src/components/notification.jsx:429
 #: src/pages/accounts.jsx:38
 #: src/pages/search.jsx:227
 #: src/pages/search.jsx:260
@@ -1198,7 +1198,7 @@ msgstr "Posada al dia"
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:143
-#: src/pages/home.jsx:221
+#: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
 #: src/pages/settings.jsx:1000
@@ -1210,8 +1210,8 @@ msgstr "Mencions"
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:149
 #: src/pages/filters.jsx:24
-#: src/pages/home.jsx:81
-#: src/pages/home.jsx:181
+#: src/pages/home.jsx:83
+#: src/pages/home.jsx:183
 #: src/pages/notifications.jsx:89
 #: src/pages/notifications.jsx:492
 msgid "Notifications"
@@ -1349,11 +1349,11 @@ msgid "{account} published a post."
 msgstr "{account} ha fet una publicació."
 
 #: src/components/notification.jsx:83
-msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
 #: src/components/notification.jsx:126
-msgid "{count, plural, one {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
+msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr ""
 
 #: src/components/notification.jsx:140
@@ -1361,7 +1361,7 @@ msgid "{account} requested to follow you."
 msgstr "{account} ha enviat una sol·licitud de seguiment."
 
 #: src/components/notification.jsx:149
-msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
 
 #: src/components/notification.jsx:191
@@ -1381,7 +1381,7 @@ msgid "A post you interacted with has been edited."
 msgstr "Una publicació amb què heu interactuat ha estat editada."
 
 #: src/components/notification.jsx:202
-msgid "{count, plural, one {{postsCount, plural, one {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
 
 #: src/components/notification.jsx:244
@@ -1444,30 +1444,30 @@ msgstr "El vostre compte ha estat suspès."
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:419
+#: src/components/notification.jsx:425
 #: src/components/status.jsx:941
 #: src/components/status.jsx:951
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:420
+#: src/components/notification.jsx:426
 msgid "Liked by…"
 msgstr "Li agrada a…"
 
-#: src/components/notification.jsx:421
+#: src/components/notification.jsx:427
 msgid "Boosted by…"
 msgstr "Impulsat per…"
 
-#: src/components/notification.jsx:422
+#: src/components/notification.jsx:428
 msgid "Followed by…"
 msgstr "Seguit per…"
 
-#: src/components/notification.jsx:478
-#: src/components/notification.jsx:494
+#: src/components/notification.jsx:484
+#: src/components/notification.jsx:500
 msgid "Learn more <0/>"
 msgstr ""
 
-#: src/components/notification.jsx:674
+#: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
 msgstr "Llegiu més →"
@@ -1611,7 +1611,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
-msgstr ""
+msgstr "Informació addicional"
 
 #: src/components/report-modal.jsx:255
 msgid "Forward to <0>{domain}</0>"
@@ -1742,7 +1742,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
-msgstr ""
+msgstr "Multi-columna"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
@@ -1925,7 +1925,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
-msgstr ""
+msgstr "Comparteix"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
@@ -2020,7 +2020,7 @@ msgstr ""
 
 #: src/components/status.jsx:903
 msgid "Boost…"
-msgstr ""
+msgstr "Impulsa…"
 
 #: src/components/status.jsx:914
 msgid "{favouritesCount, plural, =0 {{0}} other {{1}}}"
@@ -2096,11 +2096,11 @@ msgstr ""
 
 #: src/components/status.jsx:1175
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "No s'ha pogut desenganxar la publicació"
 
 #: src/components/status.jsx:1175
 msgid "Unable to pin post"
-msgstr ""
+msgstr "No s'ha pogut desenganxar la publicació"
 
 #: src/components/status.jsx:1184
 msgid "Unpin from profile"
@@ -2180,23 +2180,23 @@ msgstr "Editat"
 
 #: src/components/status.jsx:2262
 msgid "Comments"
-msgstr ""
+msgstr "Comentaris"
 
 #: src/components/status.jsx:2833
 msgid "Edit History"
-msgstr ""
+msgstr "Edita l'Historial"
 
 #: src/components/status.jsx:2837
 msgid "Failed to load history"
-msgstr ""
+msgstr "No s'ha pogut carregar l'historial"
 
 #: src/components/status.jsx:2842
 msgid "Loading…"
-msgstr ""
+msgstr "Carregant…"
 
 #: src/components/status.jsx:3077
 msgid "HTML Code"
-msgstr ""
+msgstr "Codi HTML"
 
 #: src/components/status.jsx:3094
 msgid "HTML code copied"
@@ -2261,7 +2261,7 @@ msgid "New posts"
 msgstr "Publicacions noves"
 
 #: src/components/timeline.jsx:548
-#: src/pages/home.jsx:210
+#: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:779
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
@@ -2933,15 +2933,15 @@ msgstr ""
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr ""
 
-#: src/pages/home.jsx:206
+#: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
 msgstr "No ha estat possible recuperar les notificacions."
 
-#: src/pages/home.jsx:226
+#: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr ""
 
-#: src/pages/home.jsx:232
+#: src/pages/home.jsx:234
 msgid "See all"
 msgstr ""
 

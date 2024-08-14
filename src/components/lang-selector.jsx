@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react';
 
-import { activateLang, DEFAULT_LANG, LOCALES } from '../utils/lang';
+import { DEFAULT_LANG, LOCALES } from '../locales';
+import { activateLang } from '../utils/lang';
 import localeCode2Text from '../utils/localeCode2Text';
 
 export default function LangSelector() {

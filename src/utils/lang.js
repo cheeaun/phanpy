@@ -7,16 +7,11 @@ import {
 } from '@lingui/detect-locale';
 import Locale from 'intl-locale-textinfo-polyfill';
 
+import { DEFAULT_LANG, LOCALES } from '../locales';
 import { messages } from '../locales/en.po';
 import localeMatch from '../utils/locale-match';
 
 const { PHANPY_DEFAULT_LANG } = import.meta.env;
-
-export const DEFAULT_LANG = 'en';
-export const LOCALES = [DEFAULT_LANG];
-if (import.meta.env.DEV) {
-  LOCALES.push('pseudo-LOCALE');
-}
 
 i18n.load(DEFAULT_LANG, messages);
 i18n.on('change', () => {

@@ -29,12 +29,15 @@ function _localeCode2Text(code) {
   } catch (e) {
     if (codeMappings[code]) {
       try {
-        const text = IntlDN(locale || i18n.locale).of(codeMappings[code]);
+        const text = IntlDN(codeMappings[locale] || locale || i18n.locale).of(
+          codeMappings[code],
+        );
         if (text !== codeMappings[code]) return text;
         return fallback || '';
-      } catch (e) {}
+      } catch (e2) {
+        console.warn(code, e2);
+      }
     }
-    console.warn(code, e);
     return fallback || '';
   }
 }

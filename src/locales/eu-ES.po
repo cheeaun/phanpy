@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-14 12:32\n"
+"PO-Revision-Date: 2024-08-14 14:05\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -178,7 +178,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {Azken bidalketa azken urte(et)an} other {Azken {1} bidalketak azken urte(et)an}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -988,8 +988,16 @@ msgstr "Aurreko bidalketa"
 msgid "Skip carousel to next post"
 msgstr ""
 
+#: src/components/keyboard-shortcuts-help.jsx:65
+msgid "<0>Shift</0> + <1>j</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:73
+msgid "<0>Shift</0> + <1>k</1>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:79
@@ -1001,6 +1009,10 @@ msgstr "Kargatu bidalketa berriak"
 msgid "Open post details"
 msgstr "Ireki bidalketaren xehetasunak"
 
+#: src/components/keyboard-shortcuts-help.jsx:85
+msgid "<0>Enter</0> or <1>o</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:92
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
 msgstr "Hedatu edukiaren abisua edo<0/>hedatu / tolestu haria"
@@ -1009,9 +1021,17 @@ msgstr "Hedatu edukiaren abisua edo<0/>hedatu / tolestu haria"
 msgid "Close post or dialogs"
 msgstr "Itxi bidalketa edo leihoa"
 
+#: src/components/keyboard-shortcuts-help.jsx:103
+msgid "<0>Esc</0> or <1>Backspace</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
 msgstr "Fokatu zutabea zutabe anitzeko moduan"
+
+#: src/components/keyboard-shortcuts-help.jsx:111
+msgid "<0>1</0> to <1>9</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
@@ -1021,9 +1041,17 @@ msgstr "Idatzi bidalketa berria"
 msgid "Compose new post (new window)"
 msgstr "Idatzi bidalketa berria (leiho berria)"
 
+#: src/components/keyboard-shortcuts-help.jsx:124
+msgid "<0>Shift</0> + <1>c</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Send post"
 msgstr "Bidali"
+
+#: src/components/keyboard-shortcuts-help.jsx:132
+msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:139
 #: src/components/nav-menu.jsx:367
@@ -1039,9 +1067,17 @@ msgstr "Bilatu"
 msgid "Reply (new window)"
 msgstr "Erantzun (leiho berria)"
 
+#: src/components/keyboard-shortcuts-help.jsx:150
+msgid "<0>Shift</0> + <1>r</1>"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.jsx:156
 msgid "Like (favourite)"
 msgstr "Egin gogoko"
+
+#: src/components/keyboard-shortcuts-help.jsx:158
+msgid "<0>l</0> or <1>f</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:842
@@ -1050,6 +1086,10 @@ msgstr "Egin gogoko"
 #: src/components/status.jsx:2320
 msgid "Boost"
 msgstr "Bultzatu"
+
+#: src/components/keyboard-shortcuts-help.jsx:166
+msgid "<0>Shift</0> + <1>b</1>"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:172
 #: src/components/status.jsx:927
@@ -1061,6 +1101,10 @@ msgstr "Jarri laster-marka"
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
 msgstr "Kapa modua bai/ez"
+
+#: src/components/keyboard-shortcuts-help.jsx:178
+msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
+msgstr ""
 
 #: src/components/list-add-edit.jsx:37
 msgid "Edit list"
@@ -1520,7 +1564,7 @@ msgstr "<0/>(e)an amaituko da"
 
 #: src/components/poll.jsx:275
 msgid "Ending"
-msgstr ""
+msgstr "Amaiera-data"
 
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:46
@@ -2249,7 +2293,7 @@ msgstr "Aurrebista"
 
 #: src/components/status.jsx:3257
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "Oharra: aurrebista honi estilo arin bat aplikatu zaio."
 
 #: src/components/status.jsx:3499
 msgid "<0/> <1/> boosted"
@@ -2380,7 +2424,7 @@ msgstr "{0}(e)ko bidalketak erakusten"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
-msgstr ""
+msgstr "Ez dago ikusteko ezer."
 
 #: src/pages/account-statuses.jsx:506
 #: src/pages/public.jsx:97
@@ -2525,7 +2569,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:910
 msgid "Preview of Catch-up UI"
-msgstr ""
+msgstr "Zer berri interfazearen aurrebista"
 
 #: src/pages/catchup.jsx:919
 msgid "Let's catch up"
@@ -2545,7 +2589,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:981
 msgid "Catch up"
-msgstr ""
+msgstr "Jarri egunean"
 
 #: src/pages/catchup.jsx:987
 msgid "Overlaps with your last catch-up"
@@ -2561,7 +2605,7 @@ msgstr "Oharra: litekeena da instantziak gehienez (gutxi gorabehera) 800 bidalke
 
 #: src/pages/catchup.jsx:1018
 msgid "Previously…"
-msgstr ""
+msgstr "Lehenago…"
 
 #: src/pages/catchup.jsx:1036
 msgid "{0, plural, one {# post} other {# posts}}"
@@ -2821,7 +2865,7 @@ msgstr "Oraindik ez duzu traolarik jarraitzen."
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
-msgstr ""
+msgstr "Ez dago ikusteko ezer."
 
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
@@ -2960,7 +3004,7 @@ msgstr "Joan etxera"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
-msgstr ""
+msgstr "Oraindik ezer ez."
 
 #: src/pages/list.jsx:176
 #: src/pages/list.jsx:279
@@ -3037,7 +3081,7 @@ msgstr "Nik nahi gabe era pribatuan aipatu nautenenak"
 
 #: src/pages/notifications.jsx:101
 msgid "Who are limited by server moderators"
-msgstr ""
+msgstr "Zerbitzariko moderatzaileek muga jarri dietenak"
 
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
@@ -3095,11 +3139,11 @@ msgstr "Ez erakutsi hauen jakinarazpenak:"
 
 #: src/pages/notifications.jsx:893
 msgid "Filter"
-msgstr ""
+msgstr "Iragazi"
 
 #: src/pages/notifications.jsx:896
 msgid "Ignore"
-msgstr ""
+msgstr "Ez hartu kontuan"
 
 #: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"
@@ -3302,7 +3346,7 @@ msgstr "Itzuli…"
 
 #: src/pages/settings.jsx:378
 msgid "System language ({systemTargetLanguageText})"
-msgstr ""
+msgstr "Sistemaren hizkuntza ({systemTargetLanguageText})"
 
 #: src/pages/settings.jsx:404
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
@@ -3310,7 +3354,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:451
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
-msgstr ""
+msgstr "Oharra: ezaugarri honek hirugarrenen itzulpen-zerbitzuak erabiltzen ditu, <0>Lingva API</0> eta <1>Lingva Translate</1>ek eskainiak."
 
 #: src/pages/settings.jsx:485
 msgid "Auto inline translation"
@@ -3322,7 +3366,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:509
 msgid "GIF Picker for composer"
-msgstr ""
+msgstr "GIF hautatzailea"
 
 #: src/pages/settings.jsx:513
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
@@ -3350,23 +3394,23 @@ msgstr ""
 
 #: src/pages/settings.jsx:605
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr ""
+msgstr "Laster-teklen hodeiko inportazio / esportazio ezarpenak"
 
 #: src/pages/settings.jsx:610
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr ""
+msgstr "⚠️⚠️⚠️ Oso esperimentala.<0/>Zure profileko oharretan gordetzen da. Profileko oharrak (pribatuak) beste profil batzuei buruzko oharretarako erabiltzen dira nagusiki, eta norberaren profilean ezkutatuta daude."
 
 #: src/pages/settings.jsx:621
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Oharra: ezaugarri honek saio hasita duzun zerbitzariaren APIa darabil."
 
 #: src/pages/settings.jsx:638
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr ""
+msgstr "Kapa modua <0>(<1>Testua</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:647
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "Testua blokeekin ordezkatzen du, erabilgarria dena pantaila-argazkiak egitean, pribatutasun arrazoiengatik."
 
 #: src/pages/settings.jsx:672
 msgid "About"
@@ -3455,7 +3499,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:1061
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "Oharra: push jakinarazpenak <0>kontu bakarrarekin</0> dabiltza."
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3463,7 +3507,7 @@ msgstr "Ez duzu saiorik hasi. Ezin duzu interaktuatu (erantzun, bultzatu...)"
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Bidalketa hau beste instantzia batekoa da (<0>{instance}</0>). Interakzioak (erantzunak, bultzadak, etab.) ez dira posible."
 
 #: src/pages/status.jsx:827
 msgid "Error: {e}"
@@ -3487,7 +3531,7 @@ msgstr "Joan bidalketa nagusira"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "{0} bidalketa goian ‒ Joan gora"
 
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208

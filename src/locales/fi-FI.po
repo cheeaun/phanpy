@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-14 07:15\n"
+"PO-Revision-Date: 2024-08-14 12:32\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -429,8 +429,8 @@ msgstr ""
 #: src/pages/catchup.jsx:1548
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
-#: src/pages/notifications.jsx:823
-#: src/pages/notifications.jsx:1055
+#: src/pages/notifications.jsx:840
+#: src/pages/notifications.jsx:1051
 #: src/pages/settings.jsx:69
 #: src/pages/status.jsx:1256
 msgid "Close"
@@ -504,7 +504,7 @@ msgstr ""
 #: src/components/list-add-edit.jsx:147
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/filters.jsx:554
-#: src/pages/notifications.jsx:910
+#: src/pages/notifications.jsx:906
 msgid "Save"
 msgstr ""
 
@@ -532,7 +532,7 @@ msgstr ""
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:52
-#: src/pages/notifications.jsx:488
+#: src/pages/notifications.jsx:505
 msgid "Home"
 msgstr ""
 
@@ -920,6 +920,7 @@ msgid "Open in new window"
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:42
+#: src/pages/notifications.jsx:890
 msgid "Accept"
 msgstr ""
 
@@ -928,7 +929,7 @@ msgid "Reject"
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1171
+#: src/pages/notifications.jsx:1167
 msgid "Accepted"
 msgstr ""
 
@@ -951,7 +952,7 @@ msgstr ""
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:513
 #: src/pages/list.jsx:293
-#: src/pages/notifications.jsx:803
+#: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
 #: src/pages/status.jsx:1289
 msgid "Show more…"
@@ -1212,8 +1213,8 @@ msgstr ""
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:83
 #: src/pages/home.jsx:183
-#: src/pages/notifications.jsx:89
-#: src/pages/notifications.jsx:492
+#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:509
 msgid "Notifications"
 msgstr ""
 
@@ -2261,7 +2262,7 @@ msgstr ""
 
 #: src/components/timeline.jsx:548
 #: src/pages/home.jsx:212
-#: src/pages/notifications.jsx:779
+#: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
 msgid "Try again"
@@ -3018,113 +3019,125 @@ msgstr ""
 msgid "Unable to load mentions."
 msgstr ""
 
-#: src/pages/notifications.jsx:506
-#: src/pages/notifications.jsx:827
+#: src/pages/notifications.jsx:97
+msgid "You don't follow"
+msgstr ""
+
+#: src/pages/notifications.jsx:98
+msgid "Who don't follow you"
+msgstr ""
+
+#: src/pages/notifications.jsx:99
+msgid "With a new account"
+msgstr ""
+
+#: src/pages/notifications.jsx:100
+msgid "Who unsolicitedly private mention you"
+msgstr ""
+
+#: src/pages/notifications.jsx:101
+msgid "Who are limited by server moderators"
+msgstr ""
+
+#: src/pages/notifications.jsx:523
+#: src/pages/notifications.jsx:844
 msgid "Notifications settings"
 msgstr ""
 
-#: src/pages/notifications.jsx:524
+#: src/pages/notifications.jsx:541
 msgid "New notifications"
 msgstr ""
 
-#: src/pages/notifications.jsx:535
+#: src/pages/notifications.jsx:552
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:582
+#: src/pages/notifications.jsx:599
 #: src/pages/settings.jsx:1016
 msgid "Follow requests"
 msgstr ""
 
-#: src/pages/notifications.jsx:587
+#: src/pages/notifications.jsx:604
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:642
+#: src/pages/notifications.jsx:659
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:708
+#: src/pages/notifications.jsx:725
 msgid "Only mentions"
 msgstr ""
 
-#: src/pages/notifications.jsx:712
+#: src/pages/notifications.jsx:729
 msgid "Today"
 msgstr ""
 
-#: src/pages/notifications.jsx:716
+#: src/pages/notifications.jsx:733
 msgid "You're all caught up."
 msgstr ""
 
-#: src/pages/notifications.jsx:739
+#: src/pages/notifications.jsx:756
 msgid "Yesterday"
 msgstr ""
 
-#: src/pages/notifications.jsx:775
+#: src/pages/notifications.jsx:792
 msgid "Unable to load notifications"
 msgstr ""
 
-#: src/pages/notifications.jsx:854
+#: src/pages/notifications.jsx:871
 msgid "Notifications settings updated"
 msgstr ""
 
-#: src/pages/notifications.jsx:862
+#: src/pages/notifications.jsx:879
 msgid "Filter out notifications from people:"
 msgstr ""
 
-#: src/pages/notifications.jsx:872
-msgid "You don't follow"
+#: src/pages/notifications.jsx:893
+msgid "Filter"
 msgstr ""
 
-#: src/pages/notifications.jsx:883
-msgid "Who don't follow you"
+#: src/pages/notifications.jsx:896
+msgid "Ignore"
 msgstr ""
 
-#: src/pages/notifications.jsx:894
-msgid "With a new account"
-msgstr ""
-
-#: src/pages/notifications.jsx:905
-msgid "Who unsolicitedly private mention you"
-msgstr ""
-
-#: src/pages/notifications.jsx:973
+#: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"
 msgstr ""
 
-#: src/pages/notifications.jsx:1041
+#: src/pages/notifications.jsx:1037
 msgid "View notifications from @{0}"
 msgstr ""
 
-#: src/pages/notifications.jsx:1059
+#: src/pages/notifications.jsx:1055
 msgid "Notifications from @{0}"
 msgstr ""
 
-#: src/pages/notifications.jsx:1123
+#: src/pages/notifications.jsx:1119
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1128
+#: src/pages/notifications.jsx:1124
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1133
+#: src/pages/notifications.jsx:1129
 msgid "Allow"
 msgstr ""
 
-#: src/pages/notifications.jsx:1153
+#: src/pages/notifications.jsx:1149
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1158
+#: src/pages/notifications.jsx:1154
 msgid "Unable to dismiss notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1163
+#: src/pages/notifications.jsx:1159
 msgid "Dismiss"
 msgstr ""
 
-#: src/pages/notifications.jsx:1178
+#: src/pages/notifications.jsx:1174
 msgid "Dismissed"
 msgstr ""
 

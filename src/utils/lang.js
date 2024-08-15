@@ -17,6 +17,8 @@ i18n.load(DEFAULT_LANG, messages);
 i18n.on('change', () => {
   const lang = i18n.locale;
   if (lang) {
+    // lang
+    document.documentElement.lang = lang;
     // LTR or RTL
     const { direction } = new Locale(lang).textInfo;
     document.documentElement.dir = direction;

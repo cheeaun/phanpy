@@ -5,5 +5,5 @@ append_commit_message: false
 files:
   - source: /src/locales/en.po
     translation: /src/locales/%locale%.po
-    export_languages:
-      - zh-CN
+    skip_untranslated_strings: true
+    skip_untranslated_files: true

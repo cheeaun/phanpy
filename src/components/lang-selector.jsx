@@ -11,6 +11,7 @@ export default function LangSelector() {
     <label class="lang-selector">
       🌐{' '}
       <select
+        class="small"
         value={i18n.locale || DEFAULT_LANG}
         onChange={(e) => {
           localStorage.setItem('lang', e.target.value);

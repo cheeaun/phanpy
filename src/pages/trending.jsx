@@ -140,7 +140,7 @@ function Trending({ columnMode, ...props }) {
   const hasCurrentLink = !!currentLink;
   const currentLinkRef = useRef();
   const supportsTrendingLinkPosts =
-    sameCurrentInstance && supports('@mastodon/trending-hashtags');
+    sameCurrentInstance && supports('@mastodon/trending-link-posts');
 
   useEffect(() => {
     if (currentLink && currentLinkRef.current) {

@@ -66,31 +66,31 @@ export default function RelativeTime({ datetime, format }) {
   const date = useMemo(() => dayjs(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
     if (!date.isValid()) return ['' + datetime, '', ''];
+    const realDate = date.toDate();
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year
-      const now = dayjs();
-      const dayDiff = now.diff(date, 'day');
+      const now = new Date();
+      const dayDiff = (now.getTime() - realDate.getTime()) / 1000 / day;
       if (dayDiff <= 1) {
-        str = twitterFromNow(date.toDate());
+        str = twitterFromNow(realDate);
       } else {
-        const currentYear = now.year();
-        const dateYear = date.year();
-        if (dateYear === currentYear) {
+        const sameYear = now.getFullYear() === realDate.getFullYear();
+        if (sameYear) {
           str = DTF(i18n.locale, {
             year: undefined,
             month: 'short',
             day: 'numeric',
-          }).format(date.toDate());
+          }).format(realDate);
         } else {
           str = DTF(i18n.locale, {
             dateStyle: 'short',
-          }).format(date.toDate());
+          }).format(realDate);
         }
       }
     }
-    if (!str) str = rtfFromNow(date.toDate());
-    return [str, date.toISOString(), date.toDate().toLocaleString()];
+    if (!str) str = rtfFromNow(realDate);
+    return [str, realDate.toISOString(), realDate.toLocaleString()];
   }, [date, format, renderCount]);
 
   useEffect(() => {

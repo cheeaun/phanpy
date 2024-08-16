@@ -305,8 +305,10 @@ function NavMenu(props) {
                 <MenuDivider />
                 {supports('@mastodon/filters') && (
                   <MenuLink to="/ft">
-                    <Icon icon="filters" size="l" />
-                    <Trans>Filters</Trans>
+                    <Icon icon="filters" size="l" />{' '}
+                    <span>
+                      <Trans>Filters</Trans>
+                    </span>
                   </MenuLink>
                 )}
                 <MenuItem
@@ -319,7 +321,10 @@ function NavMenu(props) {
                     };
                   }}
                 >
-                  <Icon icon="mute" size="l" /> <Trans>Muted users…</Trans>
+                  <Icon icon="mute" size="l" />{' '}
+                  <span>
+                    <Trans>Muted users…</Trans>
+                  </span>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -331,8 +336,10 @@ function NavMenu(props) {
                     };
                   }}
                 >
-                  <Icon icon="block" size="l" />
-                  <Trans>Blocked users…</Trans>
+                  <Icon icon="block" size="l" />{' '}
+                  <span>
+                    <Trans>Blocked users…</Trans>
+                  </span>
                 </MenuItem>{' '}
               </SubMenu2>
               <MenuDivider />

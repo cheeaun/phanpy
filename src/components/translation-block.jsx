@@ -206,19 +206,26 @@ function TranslationBlock({
                 translate();
               }}
             >
-              {sourceLanguages.map((l) => (
-                <option value={l.code}>
-                  {l.code === 'auto'
-                    ? t`Auto (${detectedLang ?? '…'})`
-                    : `${localeCode2Text({
-                        code: l.code,
-                        fallback: l.name,
-                      })} (${localeCode2Text({
-                        code: l.code,
-                        locale: l.code,
-                      })})`}
-                </option>
-              ))}
+              {sourceLanguages.map((l) => {
+                const common = localeCode2Text({
+                  code: l.code,
+                  fallback: l.name,
+                });
+                const native = localeCode2Text({
+                  code: l.code,
+                  locale: l.code,
+                });
+                const showCommon = common !== native;
+                return (
+                  <option value={l.code}>
+                    {l.code === 'auto'
+                      ? t`Auto (${detectedLang ?? '…'})`
+                      : showCommon
+                      ? `${native} - ${common}`
+                      : native}
+                  </option>
+                );
+              })}
             </select>{' '}
             <span>→ {targetLangText}</span>
             <Loader abrupt hidden={uiState !== 'loading'} />

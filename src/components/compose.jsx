@@ -1439,10 +1439,10 @@ function Compose({
                     code,
                     fallback: common,
                   });
-                  const same = commonText === native;
+                  const showCommon = commonText !== native;
                   return (
                     <option value={code} key={code}>
-                      {same ? commonText : `${commonText} (${native})`}
+                      {showCommon ? `${native} - ${commonText}` : commonText}
                     </option>
                   );
                 })}
@@ -1452,10 +1452,10 @@ function Compose({
                     code,
                     fallback: common,
                   });
-                  const same = commonText === native;
+                  const showCommon = commonText !== native;
                   return (
                     <option value={code} key={code}>
-                      {same ? commonText : `${commonText} (${native})`}
+                      {showCommon ? `${native} - ${commonText}` : commonText}
                     </option>
                   );
                 })}

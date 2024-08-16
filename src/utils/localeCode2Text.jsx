@@ -25,6 +25,10 @@ function _localeCode2Text(code) {
   try {
     const text = IntlDN(locale || i18n.locale).of(code);
     if (text !== code) return text;
+    if (!fallback) {
+      const anotherText = IntlDN(code).of(code);
+      if (anotherText !== code) return anotherText;
+    }
     return fallback || '';
   } catch (e) {
     if (codeMappings[code]) {

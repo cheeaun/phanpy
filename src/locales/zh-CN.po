@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-16 09:22\n"
+"PO-Revision-Date: 2024-08-16 12:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -199,7 +199,7 @@ msgstr "回复"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1414
 #: src/pages/catchup.jsx:2035
-#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1015
 msgid "Boosts"
 msgstr "转嘟"
 
@@ -863,7 +863,7 @@ msgid "Error loading GIFs"
 msgstr "加载 GIF 时出错"
 
 #: src/components/drafts.jsx:63
-#: src/pages/settings.jsx:664
+#: src/pages/settings.jsx:671
 msgid "Unsent drafts"
 msgstr "未发送的草稿"
 
@@ -1247,7 +1247,7 @@ msgstr "补看"
 #: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1000
+#: src/pages/settings.jsx:1007
 #: src/pages/trending.jsx:347
 msgid "Mentions"
 msgstr "提及"
@@ -1302,7 +1302,7 @@ msgstr "收藏夹"
 #: src/pages/catchup.jsx:2029
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1004
+#: src/pages/settings.jsx:1011
 msgid "Likes"
 msgstr "点赞列表"
 
@@ -2289,7 +2289,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 转嘟了"
 
 #: src/components/timeline.jsx:447
-#: src/pages/settings.jsx:1028
+#: src/pages/settings.jsx:1035
 msgid "New posts"
 msgstr "新嘟文"
 
@@ -2327,11 +2327,11 @@ msgstr "已自动从 {sourceLangText} 翻译 (语言为自动检测)"
 msgid "Translate from {sourceLangText}"
 msgstr "从 {sourceLangText} 翻译"
 
-#: src/components/translation-block.jsx:212
+#: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
 msgstr "自动 ({0})"
 
-#: src/components/translation-block.jsx:228
+#: src/components/translation-block.jsx:235
 msgid "Failed to translate"
 msgstr "翻译失败"
 
@@ -3086,7 +3086,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {公告}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1016
+#: src/pages/settings.jsx:1023
 msgid "Follow requests"
 msgstr "关注请求"
 
@@ -3341,152 +3341,152 @@ msgstr "系统语言 ({systemTargetLanguageText})"
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, =0 {对下列语言隐藏“翻译”按钮: } other {对下列语言隐藏“翻译”按钮 (#):}}"
 
-#: src/pages/settings.jsx:451
+#: src/pages/settings.jsx:458
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
 msgstr "注意: 此功能使用外部翻译服务，由 <0>Lingva API</0> 和 <1>Lingva 翻译</1> 驱动。"
 
-#: src/pages/settings.jsx:485
+#: src/pages/settings.jsx:492
 msgid "Auto inline translation"
 msgstr "自动翻译"
 
-#: src/pages/settings.jsx:489
+#: src/pages/settings.jsx:496
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "自动显示时间线中的嘟文的翻译。仅适用于不含内容警告、媒体或投票的<0>短</0>嘟文。"
 
-#: src/pages/settings.jsx:509
+#: src/pages/settings.jsx:516
 msgid "GIF Picker for composer"
 msgstr "为嘟文撰写框集成 GIF 选择器"
 
-#: src/pages/settings.jsx:513
+#: src/pages/settings.jsx:520
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "注意: 此功能使用外部 GIF 搜索服务，由 <0>GIPHY</0> 驱动。该服务为 G 级(适合所有年龄浏览)，请求已去除跟踪参数，并省略了 referrer 信息，但搜索关键词和 IP 地址信息仍会到达 GIPHY 的服务器。"
 
-#: src/pages/settings.jsx:542
+#: src/pages/settings.jsx:549
 msgid "Image description generator"
 msgstr "图片描述文本生成器"
 
-#: src/pages/settings.jsx:547
+#: src/pages/settings.jsx:554
 msgid "Only for new images while composing new posts."
 msgstr "仅适用于发布新嘟文时新插入的图片。"
 
-#: src/pages/settings.jsx:554
+#: src/pages/settings.jsx:561
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "注意: 此功能使用外部人工智能服务，由 <0>img-alt-api</0> 驱动。可能效果不佳。仅适用于图像，描述文本内容为英文。"
 
-#: src/pages/settings.jsx:580
+#: src/pages/settings.jsx:587
 msgid "Server-side grouped notifications"
 msgstr "服务端通知分组"
 
-#: src/pages/settings.jsx:584
+#: src/pages/settings.jsx:591
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr "开发阶段特性。启用该功能可能会为通知窗口的分组带来改进，但分组逻辑较为简单。"
 
-#: src/pages/settings.jsx:605
+#: src/pages/settings.jsx:612
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "“云”导入/导出快捷方式配置。"
 
-#: src/pages/settings.jsx:610
+#: src/pages/settings.jsx:617
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ 非常不稳定。<0/>配置存储于你对自己账户的备注中。账户的(私人)备注主要用于其他账户，对自己的账户是隐藏的。"
 
-#: src/pages/settings.jsx:621
+#: src/pages/settings.jsx:628
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "注意: 此功能使用了当前登录实例的服务端 API。"
 
-#: src/pages/settings.jsx:638
+#: src/pages/settings.jsx:645
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "文字打码模式 <0>(<1>文本</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:647
+#: src/pages/settings.jsx:654
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "将文字替换为块，在截图时保护隐私。"
 
-#: src/pages/settings.jsx:672
+#: src/pages/settings.jsx:679
 msgid "About"
 msgstr "关于"
 
-#: src/pages/settings.jsx:711
+#: src/pages/settings.jsx:718
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "由 <1>@cheeaun</1> <0>开发</0>"
 
-#: src/pages/settings.jsx:740
+#: src/pages/settings.jsx:747
 msgid "Sponsor"
 msgstr "赞助者"
 
-#: src/pages/settings.jsx:748
+#: src/pages/settings.jsx:755
 msgid "Donate"
 msgstr "赞助"
 
-#: src/pages/settings.jsx:756
+#: src/pages/settings.jsx:763
 msgid "Privacy Policy"
 msgstr "隐私政策"
 
-#: src/pages/settings.jsx:763
+#: src/pages/settings.jsx:770
 msgid "<0>Site:</0> {0}"
 msgstr "<0>站点: </0> {0}"
 
-#: src/pages/settings.jsx:770
+#: src/pages/settings.jsx:777
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0> 版本: </0> <1/> {0}"
 
-#: src/pages/settings.jsx:785
+#: src/pages/settings.jsx:792
 msgid "Version string copied"
 msgstr "已复制版本号"
 
-#: src/pages/settings.jsx:788
+#: src/pages/settings.jsx:795
 msgid "Unable to copy version string"
 msgstr "无法复制版本号"
 
-#: src/pages/settings.jsx:913
-#: src/pages/settings.jsx:918
+#: src/pages/settings.jsx:920
+#: src/pages/settings.jsx:925
 msgid "Failed to update subscription. Please try again."
 msgstr "订阅更新失败。请重试。"
 
-#: src/pages/settings.jsx:924
+#: src/pages/settings.jsx:931
 msgid "Failed to remove subscription. Please try again."
 msgstr "订阅删除失败。请重试。"
 
-#: src/pages/settings.jsx:931
+#: src/pages/settings.jsx:938
 msgid "Push Notifications (beta)"
 msgstr "通知推送 (beta)"
 
-#: src/pages/settings.jsx:953
+#: src/pages/settings.jsx:960
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "通知推送已被阻止。请在你的浏览器设置中授予相关权限。"
 
-#: src/pages/settings.jsx:962
+#: src/pages/settings.jsx:969
 msgid "Allow from <0>{0}</0>"
 msgstr "推送范围 <0>{0}</0>"
 
-#: src/pages/settings.jsx:971
+#: src/pages/settings.jsx:978
 msgid "anyone"
 msgstr "任何人"
 
-#: src/pages/settings.jsx:975
+#: src/pages/settings.jsx:982
 msgid "people I follow"
 msgstr "我关注的人"
 
-#: src/pages/settings.jsx:979
+#: src/pages/settings.jsx:986
 msgid "followers"
 msgstr "粉丝"
 
-#: src/pages/settings.jsx:1012
+#: src/pages/settings.jsx:1019
 msgid "Follows"
 msgstr "关注"
 
-#: src/pages/settings.jsx:1020
+#: src/pages/settings.jsx:1027
 msgid "Polls"
 msgstr "投票"
 
-#: src/pages/settings.jsx:1024
+#: src/pages/settings.jsx:1031
 msgid "Post edits"
 msgstr "嘟文被编辑"
 
-#: src/pages/settings.jsx:1045
+#: src/pages/settings.jsx:1052
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "本次登录未授予通知推送权限。你需要<0>再次<1>登录</1>以授予推送权限</0>。"
 
-#: src/pages/settings.jsx:1061
+#: src/pages/settings.jsx:1068
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 

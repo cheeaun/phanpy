@@ -2854,3 +2854,15 @@ ul.link-list li a .icon {
     }
   }
 }
+
+/* LANG SELECTOR */
+
+.lang-selector {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  select {
+    width: 10em;
+  }
+}

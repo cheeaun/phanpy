@@ -10,6 +10,7 @@ import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
+import { run } from 'vite-plugin-run';
 
 const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
@@ -61,6 +62,16 @@ export default defineConfig({
       },
     }),
     lingui(),
+    run({
+      silent: false,
+      input: [
+        {
+          name: 'messages:extract:clean',
+          run: ['npm', 'run', 'messages:extract:clean'],
+          pattern: 'src/**/*.{js,jsx,ts,tsx}',
+        },
+      ],
+    }),
     splitVendorChunkPlugin(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],

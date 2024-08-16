@@ -827,11 +827,7 @@ function Status({
             <MenuItem onClick={replyStatus}>
               <Icon icon="comment" />
               <span>
-                <Plural
-                  value={repliesCount}
-                  _0="Reply"
-                  other={shortenNumber(repliesCount)}
-                />
+                {repliesCount > 0 ? shortenNumber(repliesCount) : t`Reply`}
               </span>
             </MenuItem>
             <MenuConfirm
@@ -898,11 +894,11 @@ function Status({
             >
               <Icon icon="rocket" />
               <span>
-                <Plural
-                  value={reblogsCount}
-                  _0={reblogged ? t`Unboost` : t`Boost…`}
-                  other={shortenNumber(reblogsCount)}
-                />
+                {reblogsCount > 0
+                  ? shortenNumber(reblogsCount)
+                  : reblogged
+                  ? t`Unboost`
+                  : t`Boost…`}
               </span>
             </MenuConfirm>
             <MenuItem
@@ -911,11 +907,11 @@ function Status({
             >
               <Icon icon="heart" />
               <span>
-                <Plural
-                  value={favouritesCount}
-                  _0={favourited ? t`Unlike` : t`Like`}
-                  other={shortenNumber(favouritesCount)}
-                />
+                {favouritesCount > 0
+                  ? shortenNumber(favouritesCount)
+                  : favourited
+                  ? t`Unlike`
+                  : t`Like`}
               </span>
             </MenuItem>
             {supports('@mastodon/post-bookmark') && (

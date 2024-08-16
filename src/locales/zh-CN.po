@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-16 04:56\n"
+"PO-Revision-Date: 2024-08-16 08:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -44,7 +44,7 @@ msgstr "群组"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
-msgstr "互关"
+msgstr "互相关注"
 
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1658
@@ -966,7 +966,7 @@ msgid "The end."
 msgstr "到底了。"
 
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/nav-menu.jsx:398
+#: src/components/nav-menu.jsx:405
 #: src/pages/catchup.jsx:1586
 msgid "Keyboard shortcuts"
 msgstr "快捷键"
@@ -1055,7 +1055,7 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> 或 <2>⌘</2> + <3>Enter</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:139
-#: src/components/nav-menu.jsx:367
+#: src/components/nav-menu.jsx:374
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:176
@@ -1312,7 +1312,7 @@ msgstr "点赞列表"
 msgid "Followed Hashtags"
 msgstr "关注的话题标签"
 
-#: src/components/nav-menu.jsx:309
+#: src/components/nav-menu.jsx:310
 #: src/pages/account-statuses.jsx:331
 #: src/pages/filters.jsx:54
 #: src/pages/filters.jsx:93
@@ -1320,56 +1320,56 @@ msgstr "关注的话题标签"
 msgid "Filters"
 msgstr "过滤规则"
 
-#: src/components/nav-menu.jsx:316
+#: src/components/nav-menu.jsx:318
 msgid "Muted users"
 msgstr "已静音的用户"
 
-#: src/components/nav-menu.jsx:322
+#: src/components/nav-menu.jsx:326
 msgid "Muted users…"
 msgstr "已静音的用户…"
 
-#: src/components/nav-menu.jsx:328
+#: src/components/nav-menu.jsx:333
 msgid "Blocked users"
 msgstr "已屏蔽的用户"
 
-#: src/components/nav-menu.jsx:335
+#: src/components/nav-menu.jsx:341
 msgid "Blocked users…"
 msgstr "已屏蔽的用户…"
 
-#: src/components/nav-menu.jsx:346
+#: src/components/nav-menu.jsx:353
 msgid "Accounts…"
 msgstr "账号…"
 
-#: src/components/nav-menu.jsx:356
+#: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:142
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "登录"
 
-#: src/components/nav-menu.jsx:373
+#: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:407
 msgid "Trending"
 msgstr "热门"
 
-#: src/components/nav-menu.jsx:379
+#: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
 msgid "Local"
 msgstr "本站"
 
-#: src/components/nav-menu.jsx:385
+#: src/components/nav-menu.jsx:392
 #: src/components/shortcuts-settings.jsx:162
 msgid "Federated"
 msgstr "跨站"
 
-#: src/components/nav-menu.jsx:408
+#: src/components/nav-menu.jsx:415
 msgid "Shortcuts / Columns…"
 msgstr "快捷方式 / 栏…"
 
-#: src/components/nav-menu.jsx:418
-#: src/components/nav-menu.jsx:432
+#: src/components/nav-menu.jsx:425
+#: src/components/nav-menu.jsx:439
 msgid "Settings…"
 msgstr "设置…"
 
@@ -1604,7 +1604,7 @@ msgstr "违反实例规则"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
-msgstr "违反了特定的实例规则"
+msgstr "违反特定的实例规则"
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
@@ -1676,7 +1676,7 @@ msgstr "无法静音 {username}"
 
 #: src/components/report-modal.jsx:282
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr "发送举报 <0>并静音账户</0>"
+msgstr "发送举报 <0>+ 静音账户</0>"
 
 #: src/components/report-modal.jsx:293
 msgid "Blocked {username}"

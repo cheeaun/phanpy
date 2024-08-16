@@ -1,10 +1,18 @@
 import { i18n } from '@lingui/core';
 import { t, Trans } from '@lingui/macro';
-import dayjs from 'dayjs';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
+
+function isValidDate(value) {
+  if (value instanceof Date) {
+    return !isNaN(value.getTime());
+  } else {
+    const date = new Date(value);
+    return !isNaN(date.getTime());
+  }
+}
 
 const resolvedLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
 const DTF = mem((locale, opts = {}) => {
@@ -63,38 +71,37 @@ const twitterFromNow = (date) => {
 export default function RelativeTime({ datetime, format }) {
   if (!datetime) return null;
   const [renderCount, rerender] = useReducer((x) => x + 1, 0);
-  const date = useMemo(() => dayjs(datetime), [datetime]);
+  const date = useMemo(() => new Date(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
-    if (!date.isValid()) return ['' + datetime, '', ''];
-    const realDate = date.toDate();
+    if (!isValidDate(date)) return ['' + datetime, '', ''];
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year
       const now = new Date();
-      const dayDiff = (now.getTime() - realDate.getTime()) / 1000 / day;
+      const dayDiff = (now.getTime() - date.getTime()) / 1000 / day;
       if (dayDiff <= 1) {
-        str = twitterFromNow(realDate);
+        str = twitterFromNow(date);
       } else {
-        const sameYear = now.getFullYear() === realDate.getFullYear();
+        const sameYear = now.getFullYear() === date.getFullYear();
         if (sameYear) {
           str = DTF(i18n.locale, {
             year: undefined,
             month: 'short',
             day: 'numeric',
-          }).format(realDate);
+          }).format(date);
         } else {
           str = DTF(i18n.locale, {
             dateStyle: 'short',
-          }).format(realDate);
+          }).format(date);
         }
       }
     }
-    if (!str) str = rtfFromNow(realDate);
-    return [str, realDate.toISOString(), realDate.toLocaleString()];
+    if (!str) str = rtfFromNow(date);
+    return [str, date.toISOString(), date.toLocaleString()];
   }, [date, format, renderCount]);
 
   useEffect(() => {
-    if (!date.isValid()) return;
+    if (!isValidDate(date)) return;
     let timeout;
     let raf;
     function rafRerender() {
@@ -107,9 +114,10 @@ export default function RelativeTime({ datetime, format }) {
       // If less than 1 minute, rerender every 10s
       // If less than 1 hour rerender every 1m
       // Else, don't need to rerender
-      if (date.diff(dayjs(), 'minute', true) < 1) {
+      const seconds = (Date.now() - date.getTime()) / 1000;
+      if (seconds < minute) {
         timeout = setTimeout(rafRerender, 10_000);
-      } else if (date.diff(dayjs(), 'hour', true) < 1) {
+      } else if (seconds < hour) {
         timeout = setTimeout(rafRerender, 60_000);
       }
     }

@@ -113,7 +113,9 @@ function Welcome() {
             .
           </Trans>
         </p>
-        <LangSelector />
+        <div>
+          <LangSelector />
+        </div>
       </div>
       <div id="why-container">
         <div class="sections">

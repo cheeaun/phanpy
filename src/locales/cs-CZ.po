@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 09:41\n"
+"PO-Revision-Date: 2024-08-17 10:44\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -351,23 +351,23 @@ msgstr ""
 
 #: src/components/account-info.jsx:1504
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "Uživatel @{username} zablokován"
 
 #: src/components/account-info.jsx:1512
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Nelze odblokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1514
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Nelze zablokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1524
 msgid "Unblock @{username}"
-msgstr ""
+msgstr "Odblokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1531
 msgid "Block @{username}…"
-msgstr ""
+msgstr "Zablokovat uživatele @{username}…"
 
 #: src/components/account-info.jsx:1546
 msgid "Report @{username}…"
@@ -384,7 +384,7 @@ msgstr "Zrušit žádost o sledování?"
 
 #: src/components/account-info.jsx:1601
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Chcete přestat sledovat {0}?"
 
 #: src/components/account-info.jsx:1652
 msgid "Unfollow…"
@@ -738,11 +738,11 @@ msgstr "Chyba"
 
 #: src/components/compose.jsx:2406
 msgid "Edit image description"
-msgstr ""
+msgstr "Upravit popis obrázku"
 
 #: src/components/compose.jsx:2407
 msgid "Edit video description"
-msgstr ""
+msgstr "Upravit popis videa"
 
 #: src/components/compose.jsx:2408
 msgid "Edit audio description"
@@ -777,7 +777,7 @@ msgstr ""
 
 #: src/components/compose.jsx:2559
 msgid "Done"
-msgstr ""
+msgstr "Hotovo"
 
 #: src/components/compose.jsx:2595
 msgid "Choice {0}"
@@ -803,16 +803,16 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:356
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: src/components/compose.jsx:2944
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Chyba při načítání účtů"
 
 #: src/components/compose.jsx:3087
 msgid "Custom emojis"
-msgstr ""
+msgstr "Vlastní emoji"
 
 #: src/components/compose.jsx:3107
 msgid "Search emoji"
@@ -820,11 +820,11 @@ msgstr ""
 
 #: src/components/compose.jsx:3138
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "Chyba při načítání vlastních emoji"
 
 #: src/components/compose.jsx:3149
 msgid "Recently used"
-msgstr ""
+msgstr "Nedávno použité"
 
 #: src/components/compose.jsx:3150
 msgid "Others"
@@ -850,13 +850,13 @@ msgstr ""
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:880
 msgid "Previous"
-msgstr ""
+msgstr "Zpět"
 
 #: src/components/compose.jsx:3465
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:897
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #: src/components/compose.jsx:3482
 msgid "Error loading GIFs"
@@ -884,7 +884,7 @@ msgstr ""
 #: src/components/status.jsx:1240
 #: src/pages/filters.jsx:587
 msgid "Delete…"
-msgstr ""
+msgstr "Smazat…"
 
 #: src/components/drafts.jsx:144
 msgid "Error fetching reply-to status!"
@@ -892,7 +892,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:169
 msgid "Delete all drafts?"
-msgstr ""
+msgstr "Smazat všechny koncepty?"
 
 #: src/components/drafts.jsx:187
 msgid "Error deleting drafts! Please try again."
@@ -900,7 +900,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:199
 msgid "Delete all…"
-msgstr ""
+msgstr "Smazat vše…"
 
 #: src/components/drafts.jsx:207
 msgid "No drafts found."
@@ -909,16 +909,16 @@ msgstr ""
 #: src/components/drafts.jsx:243
 #: src/pages/catchup.jsx:1895
 msgid "Poll"
-msgstr ""
+msgstr "Anketa"
 
 #: src/components/drafts.jsx:246
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
-msgstr ""
+msgstr "Média"
 
 #: src/components/embed-modal.jsx:22
 msgid "Open in new window"
-msgstr ""
+msgstr "Otevřít v novém okně"
 
 #: src/components/follow-request-buttons.jsx:42
 #: src/pages/notifications.jsx:890
@@ -927,7 +927,7 @@ msgstr ""
 
 #: src/components/follow-request-buttons.jsx:68
 msgid "Reject"
-msgstr ""
+msgstr "Odmítnout"
 
 #: src/components/follow-request-buttons.jsx:75
 #: src/pages/notifications.jsx:1167
@@ -2887,7 +2887,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} již není sledován"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"

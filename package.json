@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "fetch-instances": "env $(cat .env.local | grep -v \"#\" | xargs) node scripts/fetch-instances-list.js",
+    "fetch-instances": "node scripts/fetch-instances-list.js",
     "sourcemap": "npx source-map-explorer dist/assets/*.js",
     "bundle-visualizer": "npx vite-bundle-visualizer",
     "messages:extract": "lingui extract",

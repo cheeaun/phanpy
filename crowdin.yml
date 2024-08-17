@@ -2,13 +2,6 @@ pull_request_labels:
   - i18n
 commit_message: New translations (%language%)
 append_commit_message: false
-export_languages:
-  - zh-CN
-  - eu-ES
-  - es-ES
-  - fi-FI
-  - gl-ES
-  - de-DE
 files:
   - source: /src/locales/en.po
     translation: /src/locales/%locale%.po

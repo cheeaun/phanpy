@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 12:49\n"
+"PO-Revision-Date: 2024-08-17 17:44\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -249,7 +249,7 @@ msgstr "Upozornění povolena pro příspěvky @{username}."
 
 #: src/components/account-info.jsx:1191
 msgid "Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr "Upozornění zakázána pro příspěvky @{username}."
 
 #: src/components/account-info.jsx:1203
 msgid "Disable notifications"
@@ -319,11 +319,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1374
 msgid "Mute @{username}…"
-msgstr ""
+msgstr "Ztlumit na @{username}…"
 
 #: src/components/account-info.jsx:1404
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "Ztlumený @{username} pro {0}"
 
 #: src/components/account-info.jsx:1416
 msgid "Unable to mute @{username}"
@@ -335,7 +335,7 @@ msgstr "Odstranit @{username} z sledujících?"
 
 #: src/components/account-info.jsx:1454
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} odebrán ze sledujících"
 
 #: src/components/account-info.jsx:1466
 msgid "Remove follower…"
@@ -486,19 +486,19 @@ msgstr "Nelze aktualizovat profil.."
 
 #: src/components/account-info.jsx:2143
 msgid "Bio"
-msgstr ""
+msgstr "O mně"
 
 #: src/components/account-info.jsx:2156
 msgid "Extra fields"
-msgstr ""
+msgstr "Extra pole"
 
 #: src/components/account-info.jsx:2162
 msgid "Label"
-msgstr ""
+msgstr "Štítek"
 
 #: src/components/account-info.jsx:2165
 msgid "Content"
-msgstr ""
+msgstr "Obsah"
 
 #: src/components/account-info.jsx:2198
 #: src/components/list-add-edit.jsx:147
@@ -514,7 +514,7 @@ msgstr "uživatelské jméno"
 
 #: src/components/account-info.jsx:2255
 msgid "server domain name"
-msgstr ""
+msgstr "jméno domény serveru"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode disabled"
@@ -534,7 +534,7 @@ msgstr ""
 #: src/pages/home.jsx:52
 #: src/pages/notifications.jsx:505
 msgid "Home"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:34
@@ -543,7 +543,7 @@ msgstr ""
 
 #: src/components/compose.jsx:392
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "Máte neuložené změny. Zrušit tento příspěvek?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
@@ -562,27 +562,27 @@ msgstr "Minimalizovat"
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Zdá se, že jste zavřeli nadřazené okno."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Vypadá to, že již máte složené pole otevřené v nadřazeném okně a aktuálně publikované. Počkejte prosím, než se to udělá a zkuste to znovu později."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Vypadá to, že již máte v nadřazeném okně otevřené políčko. Vyskakování v tomto okně zruší změny, které jste provedli v nadřazeném okně. Pokračovat?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
-msgstr ""
+msgstr "Ukázat v"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "Odpověděd na @{0}’s příspěvek (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "Odpovídám na příspěvek uživatele @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -590,25 +590,25 @@ msgstr ""
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "Anketa musí mít alespoň dvě možnosti"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Některé volby anket jsou prázdné"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "Některá média jsou bez popisu. Pokračovat?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
-msgstr ""
+msgstr "Příloha #{i} selhala"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1951
 #: src/components/timeline.jsx:975
 msgid "Content warning"
-msgstr ""
+msgstr "Varování o obsahu"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
@@ -624,7 +624,7 @@ msgstr "Veřejný"
 #: src/components/status.jsx:94
 #: src/pages/settings.jsx:288
 msgid "Unlisted"
-msgstr ""
+msgstr "Neveřejný"
 
 #: src/components/compose.jsx:1176
 #: src/components/status.jsx:95
@@ -640,7 +640,7 @@ msgstr "Soukromá zmínka"
 
 #: src/components/compose.jsx:1188
 msgid "Post your reply"
-msgstr ""
+msgstr "Poslat odpověď"
 
 #: src/components/compose.jsx:1190
 msgid "Edit your post"
@@ -648,7 +648,7 @@ msgstr "Upravit příspěvek"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr ""
+msgstr "Co děláte??"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
@@ -660,7 +660,7 @@ msgstr "Přidat anketu"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Přidat vlastní emoji"
 
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
@@ -673,38 +673,38 @@ msgstr "Odpověděť"
 
 #: src/components/compose.jsx:1469
 msgid "Update"
-msgstr ""
+msgstr "Aktualizovat"
 
 #: src/components/compose.jsx:1469
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr ""
+msgstr "Příspěvky"
 
 #: src/components/compose.jsx:1594
 msgid "Downloading GIF…"
-msgstr ""
+msgstr "Stahování GIF…"
 
 #: src/components/compose.jsx:1622
 msgid "Failed to download GIF"
-msgstr ""
+msgstr "Nepodařilo se stáhnout GIF"
 
 #: src/components/compose.jsx:1733
 #: src/components/compose.jsx:1810
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Více…"
 
 #: src/components/compose.jsx:2213
 msgid "Uploaded"
-msgstr ""
+msgstr "Odesláno"
 
 #: src/components/compose.jsx:2226
 msgid "Image description"
-msgstr ""
+msgstr "Popis obrázku"
 
 #: src/components/compose.jsx:2227
 msgid "Video description"
-msgstr ""
+msgstr "Popis videa"
 
 #: src/components/compose.jsx:2228
 msgid "Audio description"
@@ -713,16 +713,16 @@ msgstr ""
 #: src/components/compose.jsx:2264
 #: src/components/compose.jsx:2284
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "Velikost souboru je příliš velká. Nahrávání může narazit na potíže. Zkuste zmenšit velikost souboru z {0} na {1} nebo nižší."
 
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Velikost je příliš velká. Nahrávání může narazit na problémy. Zkuste zmenšit rozměr z {0}×{1}px na {2}×{3}px."
 
 #: src/components/compose.jsx:2304
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr ""
+msgstr "Sazba snímků je příliš vysoká. Nahrávání může narazit na problémy."
 
 #: src/components/compose.jsx:2364
 #: src/components/compose.jsx:2614
@@ -746,12 +746,12 @@ msgstr "Upravit popis videa"
 
 #: src/components/compose.jsx:2408
 msgid "Edit audio description"
-msgstr ""
+msgstr "Upravit popis audia"
 
 #: src/components/compose.jsx:2453
 #: src/components/compose.jsx:2502
 msgid "Generating description. Please wait…"
-msgstr ""
+msgstr "Generování popisu. Počkejte prosím,…"
 
 #: src/components/compose.jsx:2473
 msgid "Failed to generate description: {0}"

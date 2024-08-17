@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 15:35\n"
+"PO-Revision-Date: 2024-08-17 16:35\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:378
 msgid "Unable to load account."
-msgstr "Le chargement du compte a échoué."
+msgstr "Le compte n’a pas pu être chargé."
 
 #: src/components/account-info.jsx:386
 msgid "Go to account page"
@@ -140,7 +140,7 @@ msgstr "Identifiant copié"
 #: src/components/account-info.jsx:588
 #: src/components/account-info.jsx:1275
 msgid "Unable to copy handle"
-msgstr "La copie de l’identifiant a échouée"
+msgstr "L’identifiant n’a pas pu être copié."
 
 #: src/components/account-info.jsx:594
 #: src/components/account-info.jsx:1281
@@ -289,7 +289,7 @@ msgstr "Lien copié"
 #: src/components/account-info.jsx:1301
 #: src/components/status.jsx:1071
 msgid "Unable to copy link"
-msgstr "La copie du lien a échouée"
+msgstr "Le lien n’a pas pu être copié."
 
 #: src/components/account-info.jsx:1307
 #: src/components/shortcuts-settings.jsx:1056
@@ -451,7 +451,7 @@ msgstr "Impossible d’ajouter à la liste."
 #: src/components/account-info.jsx:1902
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
-msgstr "Impossible de charger les listes."
+msgstr "Les listes n’ont pas pu être chargées."
 
 #: src/components/account-info.jsx:1906
 msgid "No lists."
@@ -469,7 +469,7 @@ msgstr "Notes personnelles à propos de @{0}"
 
 #: src/components/account-info.jsx:2002
 msgid "Unable to update private note."
-msgstr "L’enregistrement des notes personnelles a échoué."
+msgstr "Les notes personnelles n’ont pas pu être enregistrées."
 
 #: src/components/account-info.jsx:2025
 #: src/components/account-info.jsx:2195
@@ -482,7 +482,7 @@ msgstr "Enregistrer et quitter"
 
 #: src/components/account-info.jsx:2123
 msgid "Unable to update profile."
-msgstr "L’enregistrement du profil a échoué."
+msgstr "Le profil n’a pas pu être enregistré."
 
 #: src/components/account-info.jsx:2143
 msgid "Bio"
@@ -494,11 +494,11 @@ msgstr "Champs personnalisés"
 
 #: src/components/account-info.jsx:2162
 msgid "Label"
-msgstr ""
+msgstr "Titre"
 
 #: src/components/account-info.jsx:2165
 msgid "Content"
-msgstr ""
+msgstr "Contenu"
 
 #: src/components/account-info.jsx:2198
 #: src/components/list-add-edit.jsx:147
@@ -506,15 +506,15 @@ msgstr ""
 #: src/pages/filters.jsx:554
 #: src/pages/notifications.jsx:906
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: src/components/account-info.jsx:2251
 msgid "username"
-msgstr ""
+msgstr "identifiant"
 
 #: src/components/account-info.jsx:2255
 msgid "server domain name"
-msgstr ""
+msgstr "nom de domaine"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode disabled"
@@ -550,7 +550,7 @@ msgstr "Le message n’est pas sauvegardé. Annuler sa rédaction ?"
 #: src/components/compose.jsx:1328
 #: src/components/compose.jsx:1582
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, one {Vous ne pouvez joindre qu’un seul fichier.} other {Vous pouvez joindre jusqu’à # fichiers.}}"
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
@@ -562,27 +562,27 @@ msgstr "Minimiser"
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Il semblerait que vous ayez fermé la fenêtre d’origine."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Il semblerait que vous ayez déjà un message en cours de publication ouvert dans la fenêtre d’origine. Merci de réessayer une fois ce message publié."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Il semblerait que vous ayez déjà un message en cours de rédaction dans la fenêtre d’origine. Restaurer cette fenêtre annulera la rédaction du message de la fenêtre d’origine sans sauvegarder. Continuer ?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
-msgstr "Restaurer dans la fenêtre principale"
+msgstr "Restaurer dans la fenêtre d’origine"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "En réponse au message de @{0} (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "En réponse au message de @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -590,29 +590,29 @@ msgstr "Modification du message d’origine"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "Au moins deux choix sont nécessaires pour un sondage"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Tous les choix du sondage ne sont pas renseignés"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "Les médias n’ont pas tous de descriptions renseignées. Continuer ?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
-msgstr ""
+msgstr "#{i} n’a pas pu être joint au message"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1951
 #: src/components/timeline.jsx:975
 msgid "Content warning"
-msgstr ""
+msgstr "Avertissement de contenu"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr ""
+msgstr "Avertissement de contenu ou média délicat"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
@@ -648,19 +648,19 @@ msgstr "Modifier votre message"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr ""
+msgstr "Quoi de neuf ?"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Marquer le média comme délicat"
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr ""
+msgstr "Insérer un sondage"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Insérer un émoji personnalisé"
 
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
@@ -669,11 +669,11 @@ msgstr ""
 #: src/components/status.jsx:1606
 #: src/components/status.jsx:2257
 msgid "Reply"
-msgstr ""
+msgstr "Répondre"
 
 #: src/components/compose.jsx:1469
 msgid "Update"
-msgstr ""
+msgstr "Mettre à jour"
 
 #: src/components/compose.jsx:1469
 #: src/pages/status.jsx:565
@@ -682,47 +682,47 @@ msgstr "Publier"
 
 #: src/components/compose.jsx:1594
 msgid "Downloading GIF…"
-msgstr ""
+msgstr "Téléchargement du GIF…"
 
 #: src/components/compose.jsx:1622
 msgid "Failed to download GIF"
-msgstr ""
+msgstr "Le GIF n’a pas pu être téléchargé."
 
 #: src/components/compose.jsx:1733
 #: src/components/compose.jsx:1810
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Plus…"
 
 #: src/components/compose.jsx:2213
 msgid "Uploaded"
-msgstr ""
+msgstr "Chargé"
 
 #: src/components/compose.jsx:2226
 msgid "Image description"
-msgstr ""
+msgstr "Description de l’image"
 
 #: src/components/compose.jsx:2227
 msgid "Video description"
-msgstr ""
+msgstr "Description de la vidéo"
 
 #: src/components/compose.jsx:2228
 msgid "Audio description"
-msgstr ""
+msgstr "Description de l’audio"
 
 #: src/components/compose.jsx:2264
 #: src/components/compose.jsx:2284
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "Ce fichier est trop lourd. Son chargement pourrait échouer. Essayez de réduire son poids de {0} à {1} ou moins."
 
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Ce média est trop grand. Son chargement pourrait échouer. Essayez de réduire sa taille de {0}×{1} px à {2}×{3} px."
 
 #: src/components/compose.jsx:2304
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr ""
+msgstr "Ce média a une fréquence trop élevée. Son chargement pourrait échouer."
 
 #: src/components/compose.jsx:2364
 #: src/components/compose.jsx:2614
@@ -730,7 +730,7 @@ msgstr ""
 #: src/pages/catchup.jsx:1058
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr "Retirer"
+msgstr "Supprimer"
 
 #: src/components/compose.jsx:2381
 msgid "Error"
@@ -777,62 +777,62 @@ msgstr "({0}) <0>— expérimental</0>"
 
 #: src/components/compose.jsx:2559
 msgid "Done"
-msgstr ""
+msgstr "Enregistrer"
 
 #: src/components/compose.jsx:2595
 msgid "Choice {0}"
-msgstr ""
+msgstr "Choix {0}"
 
 #: src/components/compose.jsx:2642
 msgid "Multiple choices"
-msgstr ""
+msgstr "Choix multiples"
 
 #: src/components/compose.jsx:2645
 msgid "Duration"
-msgstr ""
+msgstr "Durée"
 
 #: src/components/compose.jsx:2676
 msgid "Remove poll"
-msgstr ""
+msgstr "Supprimer le sondage"
 
 #: src/components/compose.jsx:2890
 msgid "Search accounts"
-msgstr ""
+msgstr "Chercher des comptes"
 
 #: src/components/compose.jsx:2931
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:356
 msgid "Add"
-msgstr ""
+msgstr "Insérer"
 
 #: src/components/compose.jsx:2944
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Les comptes n’ont pas pu être chargés"
 
 #: src/components/compose.jsx:3087
 msgid "Custom emojis"
-msgstr ""
+msgstr "Émojis personnalisés"
 
 #: src/components/compose.jsx:3107
 msgid "Search emoji"
-msgstr ""
+msgstr "Chercher un émoji"
 
 #: src/components/compose.jsx:3138
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "Les émojis personnalisés n’ont pas pu être chargés"
 
 #: src/components/compose.jsx:3149
 msgid "Recently used"
-msgstr ""
+msgstr "Récemment insérés"
 
 #: src/components/compose.jsx:3150
 msgid "Others"
-msgstr ""
+msgstr "Autres"
 
 #: src/components/compose.jsx:3188
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} de plus…"
 
 #: src/components/compose.jsx:3326
 msgid "Search GIFs"
@@ -957,13 +957,13 @@ msgstr ""
 #: src/pages/search.jsx:454
 #: src/pages/status.jsx:1289
 msgid "Show more…"
-msgstr ""
+msgstr "Voir plus…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:518
 #: src/pages/search.jsx:459
 msgid "The end."
-msgstr ""
+msgstr "La fin."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
@@ -1003,7 +1003,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:79
 msgid "Load new posts"
-msgstr ""
+msgstr "Charger de nouveaux messages"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
 #: src/pages/catchup.jsx:1643
@@ -1113,7 +1113,7 @@ msgstr "Modifier la liste"
 
 #: src/components/list-add-edit.jsx:93
 msgid "Unable to edit list."
-msgstr "La modification de la liste a échoué."
+msgstr "La liste n’a pas pu être modifiée."
 
 #: src/components/list-add-edit.jsx:94
 msgid "Unable to create list."
@@ -1196,7 +1196,7 @@ msgstr ""
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
-msgstr ""
+msgstr "Média délicat"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
@@ -1395,7 +1395,7 @@ msgstr ""
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} a partagé votre réponse.} other {{account} a partagé votre message.}}} other {{account} a partagé {postsCount} de vos messages.}}} other {{postType, select, reply {<0><1>{0}</1> personnes </0> ont partagé votre réponse.} other {<2><3>{1}</3> personnes</2> ont partagé votre message.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1467,7 +1467,7 @@ msgstr ""
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "Certains de vos messages ont été marqués comme délicats."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
@@ -1475,7 +1475,7 @@ msgstr ""
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Vos messages seront dorénavant marqués comme délicats."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Accueil / Abonnements"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -1739,7 +1739,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:146
 msgid "Instance"
-msgstr ""
+msgstr "Instance"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
@@ -1885,7 +1885,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "Chargement des raccourcis depuis votre instance…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
@@ -1893,7 +1893,7 @@ msgstr "Les raccourcis n’ont pas pu être chargés."
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
-msgstr ""
+msgstr "Charger les raccourcis depuis votre instance"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
@@ -1974,7 +1974,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "Enregistrement des raccourcis sur votre instance…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
@@ -1986,7 +1986,7 @@ msgstr "Les raccourcis n’ont pas pu être sauvegardés."
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr ""
+msgstr "Synchroniser avec votre instance"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
@@ -2291,7 +2291,7 @@ msgstr "<0/> <1/> partagé"
 #: src/components/timeline.jsx:447
 #: src/pages/settings.jsx:1036
 msgid "New posts"
-msgstr ""
+msgstr "Nouveaux messages"
 
 #: src/components/timeline.jsx:548
 #: src/pages/home.jsx:212
@@ -2299,7 +2299,7 @@ msgstr ""
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
 msgid "Try again"
-msgstr ""
+msgstr "Essayez à nouveau"
 
 #: src/components/timeline.jsx:937
 #: src/components/timeline.jsx:944
@@ -2309,7 +2309,7 @@ msgstr "Fils"
 
 #: src/components/timeline.jsx:959
 msgid "<0>Filtered</0>: <1>{0}</1>"
-msgstr ""
+msgstr "<0>Filtré</0> : <1>{0}</1>"
 
 #: src/components/translation-block.jsx:152
 msgid "Auto-translated from {sourceLangText}"
@@ -2762,7 +2762,7 @@ msgstr "Modifier le filtre"
 
 #: src/pages/filters.jsx:345
 msgid "Unable to edit filter"
-msgstr "La modification du filtre a échoué."
+msgstr "Le filtre n’a pas pu être modifié."
 
 #: src/pages/filters.jsx:346
 msgid "Unable to create filter"
@@ -2854,7 +2854,7 @@ msgstr ""
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
-msgstr ""
+msgstr "Rien à voir ici."
 
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
@@ -2903,7 +2903,7 @@ msgstr "Retiré du profil"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr ""
+msgstr "Le mot-clé n’a pas pu être retiré du profil."
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
@@ -2928,7 +2928,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
-msgstr ""
+msgstr "{SHORTCUTS_LIMIT, plural, one {La limite de # raccourci a été atteinte. Le raccourci n’a pas pu être ajouté.} other {La limite de # raccourcis a été atteinte. Le raccourci n’a pas pu être ajouté.}}"
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
@@ -2952,23 +2952,23 @@ msgstr "Indiquer une nouvelle instance, par exemple “mastodon.social”"
 #: src/pages/public.jsx:142
 #: src/pages/trending.jsx:447
 msgid "Invalid instance"
-msgstr ""
+msgstr "Instance incorrecte"
 
 #: src/pages/hashtag.jsx:503
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:459
 msgid "Go to another instance…"
-msgstr ""
+msgstr "Afficher une autre instance…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:470
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Afficher mon instance (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
-msgstr "Le chargement des notifications a échoué."
+msgstr "Les notification n’ont pas pu être chargées."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
@@ -2984,7 +2984,7 @@ msgstr ""
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr ""
+msgstr "L’URL n’a pas été trouvée."
 
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:223
@@ -3050,7 +3050,7 @@ msgstr ""
 
 #: src/pages/mentions.jsx:170
 msgid "Unable to load mentions."
-msgstr ""
+msgstr "Les mentions n’ont pas pu être chargées."
 
 #: src/pages/notifications.jsx:97
 msgid "You don't follow"
@@ -3116,7 +3116,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:792
 msgid "Unable to load notifications"
-msgstr "Le chargement des notifications a échoué"
+msgstr "Les notifications n’ont pas pu être chargées."
 
 #: src/pages/notifications.jsx:871
 msgid "Notifications settings updated"
@@ -3164,7 +3164,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1154
 msgid "Unable to dismiss notification request"
-msgstr ""
+msgstr "La demande de notification n’a pas pu être annulée."
 
 #: src/pages/notifications.jsx:1159
 msgid "Dismiss"
@@ -3192,15 +3192,15 @@ msgstr "Fil fédéré"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
-msgstr ""
+msgstr "Personne n’a encore rien publié."
 
 #: src/pages/public.jsx:123
 msgid "Switch to Federated"
-msgstr ""
+msgstr "Passer au fil fédéré"
 
 #: src/pages/public.jsx:130
 msgid "Switch to Local"
-msgstr ""
+msgstr "Passer au fil local"
 
 #: src/pages/search.jsx:43
 msgid "Search: {q} (Posts)"
@@ -3435,7 +3435,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:796
 msgid "Unable to copy version string"
-msgstr ""
+msgstr "Le numéro de version n’a pas pu être copié."
 
 #: src/pages/settings.jsx:921
 #: src/pages/settings.jsx:926
@@ -3468,7 +3468,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:987
 msgid "followers"
-msgstr ""
+msgstr "abonné⋅es"
 
 #: src/pages/settings.jsx:1020
 msgid "Follows"
@@ -3508,7 +3508,7 @@ msgstr ""
 
 #: src/pages/status.jsx:936
 msgid "Unable to load replies."
-msgstr ""
+msgstr "Les réponses n’ont pas pu être chargées."
 
 #: src/pages/status.jsx:1048
 msgid "Back"
@@ -3533,7 +3533,7 @@ msgstr "Passer en vue pleine page"
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
-msgstr ""
+msgstr "Afficher tous les contenus délicats"
 
 #: src/pages/status.jsx:1232
 msgid "Experimental"
@@ -3553,7 +3553,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
-msgstr ""
+msgstr "Le message n’a pas pu être chargé."
 
 #: src/pages/status.jsx:1426
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"

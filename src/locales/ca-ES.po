@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 18:50\n"
+"PO-Revision-Date: 2024-08-17 20:23\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -170,7 +170,7 @@ msgstr "Aquest usuari ha decidit no mostrar aquesta informació."
 
 #: src/components/account-info.jsx:803
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "{0} tuts originals, {1} respostes, {2} impulsos"
+msgstr "{0} publicacions originals, {1} respostes, {2} impulsos"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
@@ -586,7 +586,7 @@ msgstr "En resposta a la publicació de @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr "Editant tut original"
+msgstr "Editant la publicació original"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
@@ -1192,7 +1192,7 @@ msgstr "Descriu la imatge…"
 
 #: src/components/media-modal.jsx:362
 msgid "View post"
-msgstr "Mostra el tut"
+msgstr "Mostra la publicació"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
@@ -1396,7 +1396,7 @@ msgstr "{account} ha fet una publicació."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat la teva resposta.} other {{account} ha impulsat el teu tut.}}} other {{account} ha impulsat {postsCount} dels teus tuts.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat el teu tut.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat la teva resposta.} other {{account} ha impulsat el teu tut.}}} other {{account} ha impulsat {postsCount} de les teves publicacions.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat la teva publicació.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1408,7 +1408,7 @@ msgstr "{account} ha enviat una sol·licitud de seguiment."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} li agrada la teva resposta.} other {{account} li agrada el teu tut.}}} other {{account} li agrada {postsCount} dels teus tuts.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> els agrada la teva resposta.} other {<2><3>{1}</3> persones</2> els agrada el teu tut.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} li agrada la teva resposta.} other {{account} li agrada la teva publicació.}}} other {{account} li agrada {postsCount} de les teves publicacions.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> els agrada la teva resposta.} other {<2><3>{1}</3> persones</2> els agrada la teva publicació.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1428,7 +1428,7 @@ msgstr "Una publicació amb què heu interactuat ha estat editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat i li agrada la teva resposta.} other {{account} ha impulsat i li agrada el teu tut.}}} other {{account} ha impulsat i li agrada {postsCount} dels teus tuts.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat i els agraden la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat i els agraden el teu tut.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat i li agrada la teva resposta.} other {{account} ha impulsat i li agrada la teva publicació.}}} other {{account} ha impulsat i li agrada {postsCount} de les teves publicacions.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat i els agrada la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat i els agrada la teva publicació.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1669,7 +1669,7 @@ msgstr "Envia informe"
 
 #: src/components/report-modal.jsx:274
 msgid "Muted {username}"
-msgstr ""
+msgstr "@{username} silenciat"
 
 #: src/components/report-modal.jsx:277
 msgid "Unable to mute {username}"
@@ -2110,7 +2110,7 @@ msgstr ""
 
 #: src/components/status.jsx:1133
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "No ha estat possible silenciar la conversa"
 
 #: src/components/status.jsx:1142
 msgid "Unmute conversation"
@@ -2142,7 +2142,7 @@ msgstr "Desfixa del perfil"
 
 #: src/components/status.jsx:1187
 msgid "Pin to profile"
-msgstr ""
+msgstr "Fixa al perfil"
 
 #: src/components/status.jsx:1216
 msgid "Delete this post?"
@@ -2164,7 +2164,7 @@ msgstr "Denuncia la publicació…"
 #: src/components/status.jsx:1652
 #: src/components/status.jsx:2329
 msgid "Liked"
-msgstr ""
+msgstr "M'ha agradat"
 
 #: src/components/status.jsx:1649
 #: src/components/status.jsx:2316
@@ -2238,7 +2238,7 @@ msgstr "Codi HTML copiat"
 
 #: src/components/status.jsx:3093
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "No ha estat possible copiar el codi HTML"
 
 #: src/components/status.jsx:3105
 msgid "Media attachments:"
@@ -2358,11 +2358,11 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
-msgstr ""
+msgstr "{accountDisplay} (+ Respostes)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr ""
+msgstr "{accountDisplay} (- Impulsos)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
@@ -2420,7 +2420,7 @@ msgstr "No hi ha res a veure encara."
 #: src/pages/public.jsx:97
 #: src/pages/trending.jsx:415
 msgid "Unable to load posts"
-msgstr ""
+msgstr "No ha estat possible carregar les publicacions"
 
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
@@ -2433,7 +2433,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Canvia a la meva instància (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:646
 msgid "Month"
@@ -2658,7 +2658,7 @@ msgstr "Autors"
 
 #: src/pages/catchup.jsx:1454
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #: src/pages/catchup.jsx:1470
 msgid "Show all authors"
@@ -2674,7 +2674,7 @@ msgstr "Això és tot."
 
 #: src/pages/catchup.jsx:1530
 msgid "Back to top"
-msgstr ""
+msgstr "Torna a dalt"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
@@ -2690,7 +2690,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1577
 msgid "Group: Authors"
-msgstr ""
+msgstr "Grup: Autors"
 
 #: src/pages/catchup.jsx:1580
 msgid "Posts are grouped by authors, sorted by posts count per author."
@@ -2698,11 +2698,11 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1627
 msgid "Next author"
-msgstr ""
+msgstr "Actor següent"
 
 #: src/pages/catchup.jsx:1635
 msgid "Previous author"
-msgstr ""
+msgstr "Autor anterior"
 
 #: src/pages/catchup.jsx:1651
 msgid "Scroll to top"
@@ -2714,7 +2714,7 @@ msgstr "Filtrat: {0}"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
-msgstr ""
+msgstr "No ha estat possible carregar els favorits."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
@@ -2847,7 +2847,7 @@ msgstr ""
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "No ha estat possible carregar les etiquetes seguides."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
@@ -2896,7 +2896,7 @@ msgstr "Etiquetes seguides #{hashtag}"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr ""
+msgstr "Seguint…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"
@@ -2973,7 +2973,7 @@ msgstr "No ha estat possible recuperar les notificacions."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr ""
+msgstr "<0>Noves</0> <1>sol·licituds de seguiment</1>"
 
 #: src/pages/home.jsx:234
 msgid "See all"
@@ -3015,11 +3015,11 @@ msgstr ""
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
-msgstr ""
+msgstr "Encara no hi ha cap llista."
 
 #: src/pages/login.jsx:185
 msgid "e.g. “mastodon.social”"
-msgstr ""
+msgstr "p. ex. \"mastodont.social\""
 
 #: src/pages/login.jsx:196
 msgid "Failed to log in. Please try again or another instance."
@@ -3035,7 +3035,7 @@ msgstr "Continua"
 
 #: src/pages/login.jsx:217
 msgid "Don't have an account? Create one!"
-msgstr ""
+msgstr "No hi teniu compte? Creeu-n'hi un!"
 
 #: src/pages/mentions.jsx:20
 msgid "Private mentions"
@@ -3051,7 +3051,7 @@ msgstr "Ningú us ha esmentat :("
 
 #: src/pages/mentions.jsx:170
 msgid "Unable to load mentions."
-msgstr ""
+msgstr "No ha estat possible carregar les mencions."
 
 #: src/pages/notifications.jsx:97
 msgid "You don't follow"
@@ -3205,15 +3205,15 @@ msgstr "Canvia a local"
 
 #: src/pages/search.jsx:43
 msgid "Search: {q} (Posts)"
-msgstr ""
+msgstr "Cerca: {q} (publicacions)"
 
 #: src/pages/search.jsx:46
 msgid "Search: {q} (Accounts)"
-msgstr ""
+msgstr "Cerca: {q} (comptes)"
 
 #: src/pages/search.jsx:49
 msgid "Search: {q} (Hashtags)"
-msgstr ""
+msgstr "Cerca: {q} (etiquetes)"
 
 #: src/pages/search.jsx:52
 msgid "Search: {q}"
@@ -3244,7 +3244,7 @@ msgstr ""
 
 #: src/pages/search.jsx:374
 msgid "No hashtags found."
-msgstr ""
+msgstr "No s'ha trobat cap etiqueta."
 
 #: src/pages/search.jsx:418
 msgid "See more posts"

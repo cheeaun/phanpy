@@ -365,10 +365,11 @@ function Settings({ onClose }) {
               >
                 <div>
                   <label>
-                    <Trans>Translate to </Trans>
+                    <Trans>Translate to </Trans>{' '}
                     <select
                       value={targetLanguage || ''}
                       disabled={!snapStates.settings.contentTranslation}
+                      style={{ width: '10em' }}
                       onChange={(e) => {
                         states.settings.contentTranslationTargetLanguage =
                           e.target.value || null;

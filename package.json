@@ -10,7 +10,7 @@
     "sourcemap": "npx source-map-explorer dist/assets/*.js",
     "bundle-visualizer": "npx vite-bundle-visualizer",
     "messages:extract": "lingui extract",
-    "messages:extract:clean": "lingui extract --clean",
+    "messages:extract:clean": "lingui extract --locale en --clean",
     "messages:compile": "lingui compile"
   },
   "dependencies": {

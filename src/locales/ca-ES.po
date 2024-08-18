@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 21:30\n"
+"PO-Revision-Date: 2024-08-18 23:47\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -518,11 +518,11 @@ msgstr "nom de domini del servidor"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode disabled"
-msgstr "Mode de capa desactivat"
+msgstr "Mode d'ocult desactivat"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode enabled"
-msgstr "Mode de capa activat"
+msgstr "Mode ocult activat"
 
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
@@ -1101,7 +1101,7 @@ msgstr "Afegeix als marcadors"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
-msgstr "Alterna el mode incògnit"
+msgstr "Alterna el mode ocult"
 
 #: src/components/keyboard-shortcuts-help.jsx:178
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
@@ -1754,7 +1754,7 @@ msgstr "Cerca terme"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr "Opcional, tret que sigui per al mode de diverses columnes"
+msgstr "Opcional, tret que sigui per al mode de múltiples columnes"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
@@ -1850,7 +1850,7 @@ msgstr "La llista específica és opcional. Per al mode de múltiples columnes, 
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr "Per al mode de diverses columnes, cal un terme de cerca, en cas contrari la columna no es mostrarà."
+msgstr "Per al mode de múltiples columnes, cal un terme de cerca, en cas contrari la columna no es mostrarà."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
@@ -2035,7 +2035,7 @@ msgstr "Desfés l'impuls"
 #: src/components/status.jsx:854
 #: src/components/status.jsx:2298
 msgid "Quote"
-msgstr "Citació"
+msgstr "Cita"
 
 #: src/components/status.jsx:862
 #: src/components/status.jsx:2307
@@ -2469,7 +2469,7 @@ msgstr "Afegeix un compte existent"
 
 #: src/pages/accounts.jsx:181
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr ""
+msgstr "Nota: el compte <0>Per defecte</0> sempre s'utilitzarà per a la primera càrrega. Si canvieu de compte, aquest es mantindrà durant la sessió."
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2567,7 +2567,7 @@ msgstr "Posem-nos al dia"
 
 #: src/pages/catchup.jsx:924
 msgid "Let's catch up on the posts from your followings."
-msgstr ""
+msgstr "Poseu-vos al dia amb les publicacions de les persones que segueixes."
 
 #: src/pages/catchup.jsx:928
 msgid "Show me all posts from…"
@@ -2591,7 +2591,7 @@ msgstr "Fins a l'última posada al dia ({0})"
 
 #: src/pages/catchup.jsx:1008
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: la vostra instància només pot mostrar un màxim de 800 publicacions a la línia de temps d'inici, independentment de l'interval de temps. Aquest valor podria variar."
 
 #: src/pages/catchup.jsx:1018
 msgid "Previously…"
@@ -2607,7 +2607,7 @@ msgstr "Voleu eliminar aquesta posada al dia?"
 
 #: src/pages/catchup.jsx:1067
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr ""
+msgstr "Nota: només s'emmagatzemaran un màxim de 3. La resta s'eliminarà automàticament."
 
 #: src/pages/catchup.jsx:1082
 msgid "Fetching posts…"
@@ -2678,7 +2678,7 @@ msgstr "Torna a dalt"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr ""
+msgstr "Enllaços compartits per seguidors, ordenats per recomptes de compartits, impulsos i M'agrada."
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
@@ -2686,7 +2686,7 @@ msgstr "Ordre: Densitat"
 
 #: src/pages/catchup.jsx:1570
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr ""
+msgstr "Les publicacions s'ordenen per densitat o quantitat d'informació. Les publicacions més curtes són \"més lleugeres\" mentre que les publicacions més llargues són \"més pesades\". Les publicacions amb fotos són \"més pesades\" que les publicacions sense fotos."
 
 #: src/pages/catchup.jsx:1577
 msgid "Group: Authors"
@@ -2694,7 +2694,7 @@ msgstr "Grup: Autors"
 
 #: src/pages/catchup.jsx:1580
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr ""
+msgstr "Les publicacions s'agrupen per autors, ordenades pel nombre de publicacions per autor."
 
 #: src/pages/catchup.jsx:1627
 msgid "Next author"
@@ -2779,7 +2779,7 @@ msgstr "Paraula sencera"
 
 #: src/pages/filters.jsx:422
 msgid "No keywords. Add one."
-msgstr ""
+msgstr "No hi ha paraules clau. Afegiu-ne una."
 
 #: src/pages/filters.jsx:449
 msgid "Add keyword"
@@ -2787,11 +2787,11 @@ msgstr "Afegeix una paraula clau"
 
 #: src/pages/filters.jsx:453
 msgid "{0, plural, one {# keyword} other {# keywords}}"
-msgstr ""
+msgstr "{0, plural, one {# paraula clau} other {# paraules clau}}"
 
 #: src/pages/filters.jsx:466
 msgid "Filter from…"
-msgstr ""
+msgstr "Filtra des de…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
@@ -2909,7 +2909,7 @@ msgstr ""
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
 msgid "Featured on profile"
-msgstr ""
+msgstr "Destacades al perfil"
 
 #: src/pages/hashtag.jsx:328
 msgid "Feature on profile"
@@ -3396,7 +3396,7 @@ msgstr "Nota: Aquesta funcionalitat utilitza l'API del servidor on l'usuari ha i
 
 #: src/pages/settings.jsx:646
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr "Mode d'incògnit <0>(<1>Text</1> → <2>████</2>)</0>"
+msgstr "Mode ocult <0>(<1>Text</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
@@ -3453,7 +3453,7 @@ msgstr "Notificacions (beta)"
 
 #: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
-msgstr "Les notificacions push estan bloquejades. Si us plau, habilita-les al teu navegador."
+msgstr "Les notificacions estan bloquejades. Si us plau, activeu-les al vostre navegador."
 
 #: src/pages/settings.jsx:970
 msgid "Allow from <0>{0}</0>"
@@ -3493,11 +3493,11 @@ msgstr "NOTA: les notificacions només funcionen per a <0>un compte</0>."
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "No heu iniciat la sessió. Les interaccions (resposta, impuls, etc.) no són possibles."
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Aquesta publicació és d'una altra instància (<0>{instance}</0>). Les interaccions (resposta, impuls, etc.) no són possibles."
 
 #: src/pages/status.jsx:827
 msgid "Error: {e}"
@@ -3521,7 +3521,7 @@ msgstr "Ves a la publicació principal"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "{0} publicacions més amunt ‒ Ves a la part superior"
 
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208
@@ -3606,7 +3606,7 @@ msgstr "Registreu-vos"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
-msgstr "Connecta el teu compte de Mastodon/Fediverse.<0/>Les teves credencials no s'emmagatzemaran en aquest servidor."
+msgstr "Connecta el teu compte de Mastodon/Fedivers.<0/>Les teves credencials no s'emmagatzemaran en aquest servidor."
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
@@ -3614,7 +3614,7 @@ msgstr "<0>Creat</0> per <1>@cheeaun</1>. <2>Política de Privacitat</2>."
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
-msgstr ""
+msgstr "Captura del Carrusel d'impulsos"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
@@ -3622,7 +3622,7 @@ msgstr "Carrusel d'impulsos"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr ""
+msgstr "Separeu visualment les publicacions originals de les compartides (impulsos)."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
@@ -3638,7 +3638,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
-msgstr ""
+msgstr "Captura de les notificacions agrupades"
 
 #: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
@@ -3646,19 +3646,19 @@ msgstr "Notificacions agrupades"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr ""
+msgstr "Les notificacions similars s'agrupen i es contrauen per reduir el desordre."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
-msgstr ""
+msgstr "Captura de la interfície d'usuari del mode de múltiples columnes"
 
 #: src/pages/welcome.jsx:176
 msgid "Single or multi-column"
-msgstr "Única o"
+msgstr "Única o múltiples columnes"
 
 #: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
-msgstr ""
+msgstr "Per defecte, una única columna per qui busca tranquil·litat. Múltiples columnes configurables per a usuaris avançats."
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
@@ -3670,7 +3670,7 @@ msgstr "Línia de temps de diverses etiquetes"
 
 #: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr ""
+msgstr "Fins a 5 etiquetes combinades en una única línia de temps."
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."
@@ -3678,9 +3678,9 @@ msgstr "Sembla que el vostre navegador bloca les finestres emergents."
 
 #: src/utils/show-compose.js:16
 msgid "A draft post is currently minimized. Post or discard it before creating a new one."
-msgstr ""
+msgstr "Actualment hi ha un esborrany minimitzat. Publiqueu-lo o descarteu-lo abans de crear-ne un de nou."
 
 #: src/utils/show-compose.js:21
 msgid "A post is currently open. Post or discard it before creating a new one."
-msgstr ""
+msgstr "Actualment hi ha una publicació oberta. Publiqueu-la o descarteu-la abans de crear-ne una de nova."
 

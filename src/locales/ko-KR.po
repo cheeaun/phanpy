@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 10:44\n"
+"PO-Revision-Date: 2024-08-18 04:11\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -80,7 +80,7 @@ msgstr "인증됨"
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:778
 msgid "Joined <0>{0}</0>"
-msgstr "<0>{0}</0>에 가입"
+msgstr "<0>{0}</0> 가입"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
@@ -339,7 +339,7 @@ msgstr "@{username} 님이 팔로워에서 빠짐"
 
 #: src/components/account-info.jsx:1466
 msgid "Remove follower…"
-msgstr "팔로워에서 빼기…"
+msgstr "그만 팔로하기…"
 
 #: src/components/account-info.jsx:1477
 msgid "Block @{username}?"
@@ -534,7 +534,7 @@ msgstr "가리기 모드 켜짐"
 #: src/pages/home.jsx:52
 #: src/pages/notifications.jsx:505
 msgid "Home"
-msgstr "처음"
+msgstr "홈"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:34
@@ -1016,7 +1016,7 @@ msgstr "<0>Enter</0> 또는 <1>o</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:92
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
-msgstr ""
+msgstr "열람 주의를 펼치거나</0>글타래 펼치기·접기"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "홈·팔로잉"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -1821,7 +1821,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "뭘 넣어야 할 지 모르겠나요?<0/>우선 <1>홈·팔로잉과 알림</1>부터 넣어보세요."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2444,7 +2444,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:98
 msgid "Default"
-msgstr ""
+msgstr "기본 계정"
 
 #: src/pages/accounts.jsx:117
 msgid "View profile…"
@@ -2452,7 +2452,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:134
 msgid "Set as default"
-msgstr ""
+msgstr "기본 계정으로 삼기"
 
 #: src/pages/accounts.jsx:144
 msgid "Log out @{0}?"
@@ -2464,11 +2464,11 @@ msgstr ""
 
 #: src/pages/accounts.jsx:174
 msgid "Add an existing account"
-msgstr ""
+msgstr "다른 계정 추가"
 
 #: src/pages/accounts.jsx:181
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr ""
+msgstr "참고: <0>기본 계정</0>은 언제나 가장 먼저 뜹니다. 교체한 계정들은 세션 내내 유지됩니다."
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2717,7 +2717,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
-msgstr ""
+msgstr "홈 및 리스트"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
@@ -2972,11 +2972,11 @@ msgstr "알림을 불러 올 수 없습니다."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr ""
+msgstr "<0>새</0> <1>팔로 요청</1>"
 
 #: src/pages/home.jsx:234
 msgid "See all"
-msgstr ""
+msgstr "모두 보기"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
@@ -2989,7 +2989,7 @@ msgstr ""
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:223
 msgid "Go home"
-msgstr ""
+msgstr "홈 가기"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
@@ -3100,7 +3100,7 @@ msgstr "{0, plural, other {#사람으로부터 필터된 알림}}"
 
 #: src/pages/notifications.jsx:725
 msgid "Only mentions"
-msgstr "언급만"
+msgstr "내 언급만"
 
 #: src/pages/notifications.jsx:729
 msgid "Today"
@@ -3351,7 +3351,7 @@ msgstr "자동 번역"
 
 #: src/pages/settings.jsx:497
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "타임라인에서 게시물에 번역을 자동으로 보여줍니다. 내용 경고나 매체, 설문 조사가 없는 <0>짧은</0> 게시물에만 적용 됩니다."
+msgstr "타임라인에서 게시물에 번역을 자동으로 보여줍니다. 열람 주의나 매체, 설문 조사가 없는 <0>짧은</0> 게시물에만 적용 됩니다."
 
 #: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"
@@ -3395,7 +3395,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:646
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr "가리기 모드 <0>(<1>글</1> → <2>████</2>)</0>"
+msgstr "가리기 모드 <0>(<1>글자들</1> → <2>███</2>)</0>"
 
 #: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
@@ -3611,63 +3611,63 @@ msgstr ""
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
 msgstr ""
 
-#: src/pages/welcome.jsx:123
+#: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
 msgstr "부스트 캐러셀의 스크린숏"
 
-#: src/pages/welcome.jsx:127
+#: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
 msgstr "부스트 캐러셀"
 
-#: src/pages/welcome.jsx:130
+#: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
 msgstr ""
 
-#: src/pages/welcome.jsx:139
+#: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
 msgstr ""
 
-#: src/pages/welcome.jsx:143
+#: src/pages/welcome.jsx:145
 msgid "Nested comments thread"
 msgstr ""
 
-#: src/pages/welcome.jsx:146
+#: src/pages/welcome.jsx:148
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
 msgstr ""
 
-#: src/pages/welcome.jsx:154
+#: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
 msgstr ""
 
-#: src/pages/welcome.jsx:158
+#: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
 msgstr ""
 
-#: src/pages/welcome.jsx:161
+#: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
 msgstr ""
 
-#: src/pages/welcome.jsx:170
+#: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
 msgstr ""
 
-#: src/pages/welcome.jsx:174
+#: src/pages/welcome.jsx:176
 msgid "Single or multi-column"
 msgstr "한 칼럼 혹은 멀티칼럼"
 
-#: src/pages/welcome.jsx:177
+#: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
 msgstr "기본적으로는 젠 모드를 추구하는 분들을 위해 한 칼럼으로 보입니다. 고급 사용자들을 위한 멀티 칼럼도 설정 가능합니다."
 
-#: src/pages/welcome.jsx:186
+#: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
 msgstr ""
 
-#: src/pages/welcome.jsx:190
+#: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"
 msgstr "다중 해시태그 타임라인"
 
-#: src/pages/welcome.jsx:193
+#: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
 msgstr "한 타임라인에 최대 5개 해시태그까지 지정할 수 있습니다."
 

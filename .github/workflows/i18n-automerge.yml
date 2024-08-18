@@ -42,12 +42,12 @@ jobs:
 
           echo "Total lines changed: $LINES_CHANGED"
 
-          # Check if the number of lines changed is more than 20
-          if [ "$LINES_CHANGED" -le 20 ]; then
-            echo "ERROR: 20 or fewer lines have been changed. Failing the check."
+          # Check if the number of lines changed is more than 50
+          if [ "$LINES_CHANGED" -le 50 ]; then
+            echo "ERROR: 50 or fewer lines have been changed. Failing the check."
             exit 1
           else
-            echo "Success: More than 20 lines have been changed."
+            echo "Success: More than 50 lines have been changed."
           fi
 
       - name: Merge pull request

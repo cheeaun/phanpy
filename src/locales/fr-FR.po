@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 16:42\n"
+"PO-Revision-Date: 2024-08-18 18:57\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -44,7 +44,7 @@ msgstr "Groupe"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
-msgstr "Réciproque"
+msgstr "Suivi mutuel"
 
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1658
@@ -178,7 +178,7 @@ msgstr "{0, plural, one {{1, plural, one {Dernier message aujourd’hui} other {
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {Dernier 1 message dans les dernières années} other {Derniers {1} messages dans les dernières années}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -225,7 +225,7 @@ msgstr "Bloqué⋅e"
 
 #: src/components/account-info.jsx:1092
 msgid "Private note"
-msgstr "Notes personnelles"
+msgstr "Note personnelle"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention @{username}"
@@ -241,7 +241,7 @@ msgstr "Modifier les notes personnelles"
 
 #: src/components/account-info.jsx:1170
 msgid "Add private note"
-msgstr "Ajouter des notes personnelles"
+msgstr "Ajouter une note personnelle"
 
 #: src/components/account-info.jsx:1190
 msgid "Notifications enabled for @{username}'s posts."
@@ -888,7 +888,7 @@ msgstr "Supprimer…"
 
 #: src/components/drafts.jsx:144
 msgid "Error fetching reply-to status!"
-msgstr ""
+msgstr "Erreur lors de la récupération du statut de la réponse !"
 
 #: src/components/drafts.jsx:169
 msgid "Delete all drafts?"
@@ -987,7 +987,7 @@ msgstr "Message précédent"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
-msgstr ""
+msgstr "Passer le carrousel au message suivant"
 
 #: src/components/keyboard-shortcuts-help.jsx:65
 msgid "<0>Shift</0> + <1>j</1>"
@@ -995,7 +995,7 @@ msgstr "<0>Maj</0> + <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
-msgstr ""
+msgstr "Passer le carrousel au message précédent"
 
 #: src/components/keyboard-shortcuts-help.jsx:73
 msgid "<0>Shift</0> + <1>k</1>"
@@ -1016,7 +1016,7 @@ msgstr "<0>Entrée</0> ou <1>o</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:92
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
-msgstr ""
+msgstr "Développer l'avertissement de contenu ou<0/>activer/désactiver le fil étendu/réduit"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
@@ -1028,7 +1028,7 @@ msgstr "<0>Échap</0> ou <1>Retour arrière</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
-msgstr ""
+msgstr "Focus colonne en mode multi-colonnes"
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
@@ -1048,7 +1048,7 @@ msgstr "<0>Maj</0> + <1>c</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Send post"
-msgstr ""
+msgstr "Publier message"
 
 #: src/components/keyboard-shortcuts-help.jsx:132
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
@@ -1125,11 +1125,11 @@ msgstr "Nom"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr ""
+msgstr "Afficher les réponses aux membres de la liste"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr ""
+msgstr "Afficher les réponses aux personnes que je suis"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
@@ -1137,7 +1137,7 @@ msgstr "Ne pas afficher les réponses"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr ""
+msgstr "Masquer les messages de cette liste sur l'Accueil/Abonnements"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
@@ -1407,19 +1407,19 @@ msgstr "{account} a demandé à vous suivre."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} a aimé votre réponse.} other {{account} a aimé votre message.}}} other {{account} ont aimé {postsCount} de vos messages.}}} other {{postType, select, reply {<0><1>{0}</1> personnes </0> ont aimé votre réponse.} other {<2><3>{1}</3> personnes</2> ont aimé votre message.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "Un sondage que vous avez créé ou auquel vous avez répondu est terminé."
 
 #: src/components/notification.jsx:192
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "Un sondage que vous avez créé est terminé."
 
 #: src/components/notification.jsx:193
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "Un sondage auquel vous avez répondu est maintenant terminé."
 
 #: src/components/notification.jsx:194
 msgid "A post you interacted with has been edited."
@@ -1427,7 +1427,7 @@ msgstr "Un message auquel vous avez réagi a été modifié."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} a boosté et aimé votre réponse.} other {{account} a boosté et aimé votre message.}}} other {{account} a boosté et aimé {postsCount} de vos messages.}}} other {{postType, select, reply {<0><1>{0}</1> personnes </0> ont boosté et aimé votre réponse.} other {<2><3>{1}</3> personnes</2> ont boosté et aimé votre message.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1519,7 +1519,7 @@ msgstr "Lire la suite →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr ""
+msgstr "A voté"
 
 #: src/components/poll.jsx:135
 #: src/components/poll.jsx:218
@@ -1616,7 +1616,7 @@ msgstr "Autre"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
-msgstr ""
+msgstr "Le problème ne correspond pas aux autres catégories"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
@@ -1905,11 +1905,11 @@ msgstr "La liste pourrait ne pas fonctionner si elle provient d'un autre compte.
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
-msgstr ""
+msgstr "Format de paramètres non valide"
 
 #: src/components/shortcuts-settings.jsx:932
 msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "Remplacer les raccourcis actuels ?"
 
 #: src/components/shortcuts-settings.jsx:935
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
@@ -3010,7 +3010,7 @@ msgstr ""
 
 #: src/pages/lists.jsx:93
 msgid "{0, plural, one {# list} other {# lists}}"
-msgstr ""
+msgstr "{0, plural, one {# liste} other {# listes}}"
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
@@ -3083,7 +3083,7 @@ msgstr "Nouvelles notifications"
 
 #: src/pages/notifications.jsx:552
 msgid "{0, plural, one {Announcement} other {Announcements}}"
-msgstr ""
+msgstr "{0, plural, one {Annonce} other {Annonces}}"
 
 #: src/pages/notifications.jsx:599
 #: src/pages/settings.jsx:1024
@@ -3092,7 +3092,7 @@ msgstr "Demandes d’abonnement"
 
 #: src/pages/notifications.jsx:604
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
-msgstr ""
+msgstr "{0, plural, one {# demande d'abonnement} other {# demandes d'abonnement}}"
 
 #: src/pages/notifications.jsx:659
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
@@ -3168,7 +3168,7 @@ msgstr "La demande de notification n’a pas pu être annulée."
 
 #: src/pages/notifications.jsx:1159
 msgid "Dismiss"
-msgstr ""
+msgstr "Ignorer"
 
 #: src/pages/notifications.jsx:1174
 msgid "Dismissed"
@@ -3577,7 +3577,7 @@ msgstr "Actualités en tendance"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
-msgstr ""
+msgstr "Retour à l'affichage des publications en tendance"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"

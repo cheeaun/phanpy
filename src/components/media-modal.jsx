@@ -55,11 +55,11 @@ function MediaModal({
     const scrollLeft = index * carouselRef.current.clientWidth;
     const differentStatusID = prevStatusID.current !== statusID;
     if (differentStatusID) prevStatusID.current = statusID;
+    carouselRef.current.focus();
     carouselRef.current.scrollTo({
       left: scrollLeft * (isRTL() ? -1 : 1),
       behavior: differentStatusID ? 'auto' : 'smooth',
     });
-    carouselRef.current.focus();
   }, [index, statusID]);
 
   const [showControls, setShowControls] = useState(true);

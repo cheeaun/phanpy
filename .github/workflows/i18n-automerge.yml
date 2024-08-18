@@ -3,6 +3,7 @@ name: i18n PR auto-merge
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
 
 jobs:
   run-and-merge:

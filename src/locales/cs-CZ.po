@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 06:03\n"
+"PO-Revision-Date: 2024-08-18 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -1399,7 +1399,7 @@ msgstr ""
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} vás začal sledovat.} other {<0><1>{0}</1> lidé</0> vás začali sledovat.}}"
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
@@ -1688,7 +1688,7 @@ msgstr "Nelze zablokovat {username}"
 
 #: src/components/report-modal.jsx:301
 msgid "Send Report <0>+ Block profile</0>"
-msgstr ""
+msgstr "Odeslat hlášení <0>+ Blokovat profil</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -1696,7 +1696,7 @@ msgstr ""
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "Příspěvky obsahující <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
@@ -1704,7 +1704,7 @@ msgstr ""
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Vyhledat <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
@@ -1720,36 +1720,36 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Účet"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "Hashtag"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "ID seznamu"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
-msgstr ""
+msgstr "Pouze místní"
 
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:146
 msgid "Instance"
-msgstr ""
+msgstr "Instance"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr ""
+msgstr "Nepovinné, např. mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Hledaný výraz"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
@@ -1771,7 +1771,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr ""
+msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
@@ -1795,17 +1795,17 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
-msgstr ""
+msgstr "Nahoru"
 
 #: src/components/shortcuts-settings.jsx:364
 msgid "Move down"
-msgstr ""
+msgstr "Dolů"
 
 #: src/components/shortcuts-settings.jsx:376
 #: src/components/status.jsx:1205
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
@@ -1833,11 +1833,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
-msgstr ""
+msgstr "Import/export"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
-msgstr ""
+msgstr "Přidat sloupec…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
@@ -1869,7 +1869,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:646
 msgid "List"
-msgstr ""
+msgstr "Seznam"
 
 #: src/components/shortcuts-settings.jsx:785
 msgid "Import/Export <0>Shortcuts</0>"
@@ -1905,7 +1905,7 @@ msgstr "Seznam nemusí fungovat, pokud je z jiného účtu."
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
-msgstr ""
+msgstr "Neplatný formát nastavení"
 
 #: src/components/shortcuts-settings.jsx:932
 msgid "Append to current shortcuts?"
@@ -1970,7 +1970,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
-msgstr ""
+msgstr "Sdílet"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
@@ -2084,7 +2084,7 @@ msgstr ""
 
 #: src/components/status.jsx:1049
 msgid "Show Edit History"
-msgstr ""
+msgstr "Ukázat historii úprav"
 
 #: src/components/status.jsx:1052
 msgid "Edited: {editedDateText}"
@@ -2117,7 +2117,7 @@ msgstr ""
 
 #: src/components/status.jsx:1149
 msgid "Mute conversation"
-msgstr ""
+msgstr "Ztlumit konverzaci"
 
 #: src/components/status.jsx:1165
 msgid "Post unpinned from profile"
@@ -2145,7 +2145,7 @@ msgstr ""
 
 #: src/components/status.jsx:1216
 msgid "Delete this post?"
-msgstr ""
+msgstr "Smazat tento příspěvek?"
 
 #: src/components/status.jsx:1229
 msgid "Post deleted"
@@ -2213,11 +2213,11 @@ msgstr ""
 
 #: src/components/status.jsx:2258
 msgid "Comments"
-msgstr ""
+msgstr "Komentáře"
 
 #: src/components/status.jsx:2829
 msgid "Edit History"
-msgstr ""
+msgstr "Historie úprav"
 
 #: src/components/status.jsx:2833
 msgid "Failed to load history"
@@ -2229,7 +2229,7 @@ msgstr ""
 
 #: src/components/status.jsx:3073
 msgid "HTML Code"
-msgstr ""
+msgstr "HTML kód"
 
 #: src/components/status.jsx:3090
 msgid "HTML code copied"
@@ -2254,11 +2254,11 @@ msgstr ""
 
 #: src/components/status.jsx:3172
 msgid "Emojis:"
-msgstr ""
+msgstr "Emoji:"
 
 #: src/components/status.jsx:3217
 msgid "Notes:"
-msgstr ""
+msgstr "Poznámky:"
 
 #: src/components/status.jsx:3221
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
@@ -2278,7 +2278,7 @@ msgstr ""
 
 #: src/components/status.jsx:3244
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: src/components/status.jsx:3253
 msgid "Note: This preview is lightly styled."
@@ -2291,7 +2291,7 @@ msgstr ""
 #: src/components/timeline.jsx:447
 #: src/pages/settings.jsx:1036
 msgid "New posts"
-msgstr ""
+msgstr "Nové příspěvky"
 
 #: src/components/timeline.jsx:548
 #: src/pages/home.jsx:212
@@ -2299,13 +2299,13 @@ msgstr ""
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
 msgid "Try again"
-msgstr ""
+msgstr "Zkuste to znovu"
 
 #: src/components/timeline.jsx:937
 #: src/components/timeline.jsx:944
 #: src/pages/catchup.jsx:1860
 msgid "Thread"
-msgstr ""
+msgstr "Vlákno"
 
 #: src/components/timeline.jsx:959
 msgid "<0>Filtered</0>: <1>{0}</1>"
@@ -2333,7 +2333,7 @@ msgstr ""
 
 #: src/components/translation-block.jsx:235
 msgid "Failed to translate"
-msgstr ""
+msgstr "Překlad se nezdařil"
 
 #: src/compose.jsx:29
 msgid "Editing source status"
@@ -2389,7 +2389,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
-msgstr ""
+msgstr "+ Odpovědi"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
@@ -2397,7 +2397,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
-msgstr ""
+msgstr "- Boosty"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
@@ -2476,55 +2476,55 @@ msgstr ""
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
-msgstr ""
+msgstr "poslední hodina"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr ""
+msgstr "poslední 2 hodiny"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr ""
+msgstr "poslední 3 hodiny"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr ""
+msgstr "poslední 4 hodiny"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
-msgstr ""
+msgstr "posledních 5 hodin"
 
 #: src/pages/catchup.jsx:59
 msgid "last 6 hours"
-msgstr ""
+msgstr "posledních 6 hodin"
 
 #: src/pages/catchup.jsx:60
 msgid "last 7 hours"
-msgstr ""
+msgstr "posledních 7 hodin"
 
 #: src/pages/catchup.jsx:61
 msgid "last 8 hours"
-msgstr ""
+msgstr "posledních 8 hodin"
 
 #: src/pages/catchup.jsx:62
 msgid "last 9 hours"
-msgstr ""
+msgstr "posledních 9 hodin"
 
 #: src/pages/catchup.jsx:63
 msgid "last 10 hours"
-msgstr ""
+msgstr "posledních 10 hodin"
 
 #: src/pages/catchup.jsx:64
 msgid "last 11 hours"
-msgstr ""
+msgstr "posledních 11 hodin"
 
 #: src/pages/catchup.jsx:65
 msgid "last 12 hours"
-msgstr ""
+msgstr "posledních 12 hodin"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "starší než 12 hodin"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
@@ -2532,7 +2532,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "Skupiny"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
@@ -2546,11 +2546,11 @@ msgstr ""
 #: src/pages/catchup.jsx:880
 #: src/pages/catchup.jsx:1552
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: src/pages/catchup.jsx:896
 msgid "What is this?"
-msgstr ""
+msgstr "Co je tohle?"
 
 #: src/pages/catchup.jsx:899
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."

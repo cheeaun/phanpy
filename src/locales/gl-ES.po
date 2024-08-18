@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 03:31\n"
+"PO-Revision-Date: 2024-08-18 06:03\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -199,7 +199,7 @@ msgstr "Respostas"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1414
 #: src/pages/catchup.jsx:2035
-#: src/pages/settings.jsx:1015
+#: src/pages/settings.jsx:1016
 msgid "Boosts"
 msgstr "Promocións"
 
@@ -863,7 +863,7 @@ msgid "Error loading GIFs"
 msgstr "Erro ao cargar GIFs"
 
 #: src/components/drafts.jsx:63
-#: src/pages/settings.jsx:671
+#: src/pages/settings.jsx:672
 msgid "Unsent drafts"
 msgstr "Borradores non enviados"
 
@@ -1247,7 +1247,7 @@ msgstr "Ponte ao día"
 #: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1007
+#: src/pages/settings.jsx:1008
 #: src/pages/trending.jsx:347
 msgid "Mentions"
 msgstr "Mencións"
@@ -1302,7 +1302,7 @@ msgstr "Marcadores"
 #: src/pages/catchup.jsx:2029
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1011
+#: src/pages/settings.jsx:1012
 msgid "Likes"
 msgstr "Favorecementos"
 
@@ -2289,7 +2289,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> promovida"
 
 #: src/components/timeline.jsx:447
-#: src/pages/settings.jsx:1035
+#: src/pages/settings.jsx:1036
 msgid "New posts"
 msgstr "Novas publicacións"
 
@@ -2536,7 +2536,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Móstrase {selectedFilterCategory, select, all {todas as publicacións} original {publicacións orixinais} replies {respostas} boosts {promocións} followedTags {cancelos seguidos} groups {grupos} filtered {publicacións filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {máis antigo} desc {máis recente}}} reblogsCount {{sortOrder, select, asc {con menos promocións} desc {con máis promocións}}} favouritesCount {{sortOrder, select, asc {con menos favorecementos} desc {con máis favorecementos}}} repliesCount {{sortOrder, select, asc {con menos respostas} desc {con máis respostas}}} density {{sortOrder, select, asc {menor densidade} desc {maior densidade}}}} first{groupBy, select, account {, agrupado por autoría} other {}}"
+msgstr "Móstrase {selectedFilterCategory, select, all {todas as publicacións} original {publicacións orixinais} replies {respostas} boosts {promocións} followedTags {cancelos seguidos} groups {grupos} filtered {publicacións filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {máis antigo} desc {máis recente}}} reblogsCount {{sortOrder, select, asc {con menos promocións} desc {con máis promocións}}} favouritesCount {{sortOrder, select, asc {con menos favorecementos} desc {con máis favorecementos}}} repliesCount {{sortOrder, select, asc {con menos respostas} desc {con máis respostas}}} density {{sortOrder, select, asc {menor densidade} desc {maior densidade}}}} primeiro{groupBy, select, account {, agrupado por autoría} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
@@ -3086,7 +3086,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anuncio} other {Anuncios}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1023
+#: src/pages/settings.jsx:1024
 msgid "Follow requests"
 msgstr "Solicitudes de seguimento"
 
@@ -3333,160 +3333,160 @@ msgstr "Tradución das publicacións"
 msgid "Translate to"
 msgstr "Traducir ao"
 
-#: src/pages/settings.jsx:378
+#: src/pages/settings.jsx:379
 msgid "System language ({systemTargetLanguageText})"
 msgstr "Idioma do sistema ({systemTargetLanguageText})"
 
-#: src/pages/settings.jsx:404
+#: src/pages/settings.jsx:405
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, one {}=0 {Ocultar o botón \"Traducir\" para:} other {Ocultar o botón \"Traducir\" para (#):}}"
 
-#: src/pages/settings.jsx:458
+#: src/pages/settings.jsx:459
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
 msgstr "Nota: esta ferramenta usa servizos externos para traducir, depende de <0>Lingva API</0> e <1>Lingva Translate</1>."
 
-#: src/pages/settings.jsx:492
+#: src/pages/settings.jsx:493
 msgid "Auto inline translation"
 msgstr "Tradución automática en liña"
 
-#: src/pages/settings.jsx:496
+#: src/pages/settings.jsx:497
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "Mostra automaticamente na cronoloxía a tradución das publicacións. Só funciona para publicacións <0>curtas</0> sen aviso sobre o contido, multimedia ou enquisa."
 
-#: src/pages/settings.jsx:516
+#: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"
 msgstr "Selector de GIF para o editor"
 
-#: src/pages/settings.jsx:520
+#: src/pages/settings.jsx:521
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "Nota: Esta ferramenta usa un servizo externo para buscar GIF, proporcionado por <0>GIPHY</0>. G-rated (axeitado para todas as idades), quítanse todos os parámetros de seguimento, omítese na solicitude a información da orixe da mesma, pero os termos da consulta e o enderezo IP acadan igualmente o seu servidor."
 
-#: src/pages/settings.jsx:549
+#: src/pages/settings.jsx:550
 msgid "Image description generator"
 msgstr "Xerador da descrición de imaxes"
 
-#: src/pages/settings.jsx:554
+#: src/pages/settings.jsx:555
 msgid "Only for new images while composing new posts."
 msgstr "Só para novas imaxes ao redactar novas publicacións."
 
-#: src/pages/settings.jsx:561
+#: src/pages/settings.jsx:562
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "Nota: esta ferramenta usa un servizo de IA externo, proporcionado por <0>img-alt-api</0>. Pode que non funcione moi ben. Só para imaxes e Inglés."
 
-#: src/pages/settings.jsx:587
+#: src/pages/settings.jsx:588
 msgid "Server-side grouped notifications"
 msgstr "Notificacións agrupadas polo servidor"
 
-#: src/pages/settings.jsx:591
+#: src/pages/settings.jsx:592
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr "Característica en fase Alpha. Mellora potencial no agrupamento cunha lóxica básica para agrupar."
 
-#: src/pages/settings.jsx:612
+#: src/pages/settings.jsx:613
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "Importar/exportar na \"Nube\" os axustes dos atallos"
 
-#: src/pages/settings.jsx:617
+#: src/pages/settings.jsx:618
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ Moi experimental.<0/>Gárdase nas notas do teu propio perfil. As notasdo perfil (privadas) normalmente úsanse para outras contas e están ocultas no teu perfil."
 
-#: src/pages/settings.jsx:628
+#: src/pages/settings.jsx:629
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "Nota: Esta ferramenta usa a API do servidor da instancia con sesión iniciada actualmente."
 
-#: src/pages/settings.jsx:645
+#: src/pages/settings.jsx:646
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "Modo Capa <0>(<1>Texto</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:654
+#: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "Substitúe texto por bloques, útil para facer capturas de pantalla, por privacidade."
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:680
 msgid "About"
 msgstr "Sobre"
 
-#: src/pages/settings.jsx:718
+#: src/pages/settings.jsx:719
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<0>Creado</0> por <1>@cheeaun</1>"
 
-#: src/pages/settings.jsx:747
+#: src/pages/settings.jsx:748
 msgid "Sponsor"
 msgstr "Patrocinios"
 
-#: src/pages/settings.jsx:755
+#: src/pages/settings.jsx:756
 msgid "Donate"
 msgstr "Doar"
 
-#: src/pages/settings.jsx:763
+#: src/pages/settings.jsx:764
 msgid "Privacy Policy"
 msgstr "Política de Privacidade"
 
-#: src/pages/settings.jsx:770
+#: src/pages/settings.jsx:771
 msgid "<0>Site:</0> {0}"
 msgstr "<0>Web:</0> {0}"
 
-#: src/pages/settings.jsx:777
+#: src/pages/settings.jsx:778
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>Versión:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:792
+#: src/pages/settings.jsx:793
 msgid "Version string copied"
 msgstr "Copiouse o número de versión"
 
-#: src/pages/settings.jsx:795
+#: src/pages/settings.jsx:796
 msgid "Unable to copy version string"
 msgstr "Non se copiou a cadea coa versión"
 
-#: src/pages/settings.jsx:920
-#: src/pages/settings.jsx:925
+#: src/pages/settings.jsx:921
+#: src/pages/settings.jsx:926
 msgid "Failed to update subscription. Please try again."
 msgstr "Fallou a actualización da subscrición. Inténtao outra vez."
 
-#: src/pages/settings.jsx:931
+#: src/pages/settings.jsx:932
 msgid "Failed to remove subscription. Please try again."
 msgstr "Fallou a retirada da subscrición. Inténtao outra vez."
 
-#: src/pages/settings.jsx:938
+#: src/pages/settings.jsx:939
 msgid "Push Notifications (beta)"
 msgstr "Notificacións Push (beta)"
 
-#: src/pages/settings.jsx:960
+#: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "As notificacións Push están bloqueadas. Actívaas nos axustes do teu navegador."
 
-#: src/pages/settings.jsx:969
+#: src/pages/settings.jsx:970
 msgid "Allow from <0>{0}</0>"
 msgstr "Permitir de <0>{0}</0>"
 
-#: src/pages/settings.jsx:978
+#: src/pages/settings.jsx:979
 msgid "anyone"
 msgstr "calquera"
 
-#: src/pages/settings.jsx:982
+#: src/pages/settings.jsx:983
 msgid "people I follow"
 msgstr "persoas que sigo"
 
-#: src/pages/settings.jsx:986
+#: src/pages/settings.jsx:987
 msgid "followers"
 msgstr "seguidoras"
 
-#: src/pages/settings.jsx:1019
+#: src/pages/settings.jsx:1020
 msgid "Follows"
 msgstr "Segue"
 
-#: src/pages/settings.jsx:1027
+#: src/pages/settings.jsx:1028
 msgid "Polls"
 msgstr "Enquisas"
 
-#: src/pages/settings.jsx:1031
+#: src/pages/settings.jsx:1032
 msgid "Post edits"
 msgstr "Edicións de publicacións"
 
-#: src/pages/settings.jsx:1052
+#: src/pages/settings.jsx:1053
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Non se concedeu o permiso para Push desde o último acceso. Terás que <0><1>acceder</1> outra vez para conceder o permiso</0>."
 
-#: src/pages/settings.jsx:1068
+#: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: As notificacións Push só funcionan para <0>unha conta</0>."
 
@@ -3611,63 +3611,63 @@ msgstr "Conecta a túa conta Mastodon/Fediverso. <0/>As credenciais non se garda
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
 msgstr "<0>Creado</0> por <1>@cheeaun</1>. <2>Política de Privacidade</2>."
 
-#: src/pages/welcome.jsx:123
+#: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
 msgstr "Captura de pantalla do Carrusel de Promocións"
 
-#: src/pages/welcome.jsx:127
+#: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
 msgstr "Carrusel de Promocións"
 
-#: src/pages/welcome.jsx:130
+#: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
 msgstr "Separa visualmente as publicacións orixinais daquelas que foron compartidas (publicacións promovidas)."
 
-#: src/pages/welcome.jsx:139
+#: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
 msgstr "Captura de pantalla dos comentarios do tema agrupados"
 
-#: src/pages/welcome.jsx:143
+#: src/pages/welcome.jsx:145
 msgid "Nested comments thread"
 msgstr "Tema cos comentarios agrupados"
 
-#: src/pages/welcome.jsx:146
+#: src/pages/welcome.jsx:148
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
 msgstr "Sigue as conversas fácilmente. Respostas semicontraídas."
 
-#: src/pages/welcome.jsx:154
+#: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
 msgstr "Captura de pantalla das notificacións agrupadas"
 
-#: src/pages/welcome.jsx:158
+#: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
 msgstr "Notificacións agrupadas"
 
-#: src/pages/welcome.jsx:161
+#: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
 msgstr "As notificacións que se parecen agrúpanse e contráense para reducir o barullo."
 
-#: src/pages/welcome.jsx:170
+#: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
 msgstr "Captura de pantalla da interface con varias columnas"
 
-#: src/pages/welcome.jsx:174
+#: src/pages/welcome.jsx:176
 msgid "Single or multi-column"
 msgstr "Unha ou Varias columnas"
 
-#: src/pages/welcome.jsx:177
+#: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
 msgstr "Para quen busca tranquilidade temos por defecto unha soa columna. Se te atreves podes configurar varias."
 
-#: src/pages/welcome.jsx:186
+#: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
 msgstr "Captura de pantalla dunha cronoloxía con varios cancelos co formulario para engadir máis cancelos"
 
-#: src/pages/welcome.jsx:190
+#: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"
 msgstr "Cronoloxía con varios cancelos"
 
-#: src/pages/welcome.jsx:193
+#: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
 msgstr "Podes combinar ata 5 cancelos na mesma cronoloxía."
 

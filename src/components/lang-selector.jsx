@@ -44,8 +44,8 @@ export default function LangSelector() {
       if (a.code === 'pseudo-LOCALE') return 1;
       if (b.code === 'pseudo-LOCALE') return -1;
       // Sort by common name
-      if (a._common < b._common) return -1;
-      if (a._common > b._common) return 1;
+      const order = a._common.localeCompare(b._common, i18n.locale);
+      if (order !== 0) return order;
       // Sort by code (fallback)
       if (a.code < b.code) return -1;
       if (a.code > b.code) return 1;

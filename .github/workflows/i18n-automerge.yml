@@ -18,8 +18,20 @@ jobs:
 
       - name: Count lines changed
         run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Debug: Show the base and head SHA
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
           # Calculate the total number of lines changed (added, removed, or modified)
-          LINES_CHANGED=$(git diff --shortstat ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | awk '{print $4 + $6 + $8}')
+          LINES_CHANGED=$(git diff --shortstat $BASE_SHA $HEAD_SHA | awk '{print $4 + $6 + $8}')
+
+          if [ -z "$LINES_CHANGED" ]; then
+            LINES_CHANGED=0
+          fi
+
           echo "Total lines changed: $LINES_CHANGED"
 
           # Check if the number of lines changed is more than 20

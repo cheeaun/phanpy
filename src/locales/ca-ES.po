@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 11:27\n"
+"PO-Revision-Date: 2024-08-18 21:30\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1396,7 +1396,7 @@ msgstr "{account} ha fet una publicació."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat la teva resposta.} other {{account} ha impulsat el teu tut.}}} other {{account} ha impulsat {postsCount} de les teves publicacions.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat la teva publicació.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha impulsat la teva resposta.} other {{account} ha impulsat la teva publicació.}}} other {{account} ha impulsat {postsCount} de les teves publicacions.}}} other {{postType, select, reply {<0><1>{0}</1> persones</0> han impulsat la teva resposta.} other {<2><3>{1}</3> persones</2> han impulsat la teva publicació.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -2197,7 +2197,7 @@ msgstr "Fil{0}"
 #: src/components/status.jsx:1976
 #: src/components/status.jsx:2061
 msgid "Show less"
-msgstr "Mostra menys"
+msgstr "Mostra'n menys"
 
 #: src/components/status.jsx:1914
 #: src/components/status.jsx:1976
@@ -2354,7 +2354,7 @@ msgstr "Tanca la finestra"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "Publicacions del compte"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2406,11 +2406,11 @@ msgstr "Es mostren les publicacions amb mèdia"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr ""
+msgstr "Es mostren les publicacions etiquetades amb #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Es mostren publicacions a {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2429,7 +2429,7 @@ msgstr "No ha estat possible la informació del compte"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr ""
+msgstr "Canvia a la instància del compte {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
@@ -2537,7 +2537,7 @@ msgstr "Grups"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Mostrant {selectedFilterCategory, select, all {totes les publicacions} original {publicacions originals} replies {respostes} boosts {impulsos} followedTags {etiquetes seguides} groups {grups} filtered {publicacions filtrades}}, {sortBy, select, createdAt {{sortOrder, select, asc {més antic} desc {més recent}}} reblogsCount {{sortOrder, select, asc {amb menys impulsos} desc {amb més impulsos}}} favouritesCount {{sortOrder, select, asc {amb menys favorits} desc {amb més favorits}}} repliesCount {{sortOrder, select, asc {amb menys respostes} desc {amb més respostes}}} density {{sortOrder, select, asc {amb fils menys llargs} desc {amb fils més llargs}}}} first{groupBy, select, account {, agrupat per autors} other {}}"
+msgstr "Es mostren {selectedFilterCategory, select, all {totes les publicacions} original {publicacions originals} replies {respostes} boosts {impulsos} followedTags {etiquetes seguides} groups {grups} filtered {publicacions filtrades}}, {sortBy, select, createdAt {{sortOrder, select, asc {més antic} desc {més recent}}} reblogsCount {{sortOrder, select, asc {amb menys impulsos} desc {amb més impulsos}}} favouritesCount {{sortOrder, select, asc {amb menys favorits} desc {amb més favorits}}} repliesCount {{sortOrder, select, asc {amb menys respostes} desc {amb més respostes}}} density {{sortOrder, select, asc {amb menys densitat} desc {amb més densitat}}}} first{groupBy, select, account {, agrupat per autors} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
@@ -2563,7 +2563,7 @@ msgstr "Vista prèvia de la interfície de Posada al dia"
 
 #: src/pages/catchup.jsx:919
 msgid "Let's catch up"
-msgstr ""
+msgstr "Posem-nos al dia"
 
 #: src/pages/catchup.jsx:924
 msgid "Let's catch up on the posts from your followings."
@@ -2595,11 +2595,11 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1018
 msgid "Previously…"
-msgstr ""
+msgstr "Anteriorment…"
 
 #: src/pages/catchup.jsx:1036
 msgid "{0, plural, one {# post} other {# posts}}"
-msgstr ""
+msgstr "{0, plural, one {# publicació} other {# publicacions}}"
 
 #: src/pages/catchup.jsx:1046
 msgid "Remove this catch-up?"
@@ -2718,7 +2718,7 @@ msgstr "No ha estat possible carregar els favorits."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
-msgstr ""
+msgstr "Inici i llistes"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
@@ -2743,7 +2743,7 @@ msgstr "Filtre nou"
 
 #: src/pages/filters.jsx:151
 msgid "{0, plural, one {# filter} other {# filters}}"
-msgstr ""
+msgstr "{0 , plural, one {# filtre} other {# filtres}}"
 
 #: src/pages/filters.jsx:166
 msgid "Unable to load filters."
@@ -2977,20 +2977,20 @@ msgstr "<0>Noves</0> <1>sol·licituds de seguiment</1>"
 
 #: src/pages/home.jsx:234
 msgid "See all"
-msgstr ""
+msgstr "Veure-ho tot"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr ""
+msgstr "S'està resolent…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr ""
+msgstr "No es pot resoldre l'URL"
 
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:223
 msgid "Go home"
-msgstr ""
+msgstr "Ves a la pàgina d'inici"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
@@ -3173,7 +3173,7 @@ msgstr "Ometre"
 
 #: src/pages/notifications.jsx:1174
 msgid "Dismissed"
-msgstr ""
+msgstr "Omeses"
 
 #: src/pages/public.jsx:27
 msgid "Local timeline ({instance})"
@@ -3232,7 +3232,7 @@ msgstr "Mostra'n més"
 
 #: src/pages/search.jsx:290
 msgid "See more accounts"
-msgstr ""
+msgstr "Veure més comptes"
 
 #: src/pages/search.jsx:304
 msgid "No accounts found."
@@ -3240,7 +3240,7 @@ msgstr "No s'ha trobat cap compte."
 
 #: src/pages/search.jsx:360
 msgid "See more hashtags"
-msgstr ""
+msgstr "Veure més etiquetes"
 
 #: src/pages/search.jsx:374
 msgid "No hashtags found."
@@ -3248,7 +3248,7 @@ msgstr "No s'ha trobat cap etiqueta."
 
 #: src/pages/search.jsx:418
 msgid "See more posts"
-msgstr ""
+msgstr "Veure més publicacions"
 
 #: src/pages/search.jsx:432
 msgid "No posts found."
@@ -3316,15 +3316,15 @@ msgstr ""
 
 #: src/pages/settings.jsx:316
 msgid "Experiments"
-msgstr ""
+msgstr "Experiments"
 
 #: src/pages/settings.jsx:329
 msgid "Auto refresh timeline posts"
-msgstr ""
+msgstr "Actualitza automàticament les publicacions de la línia de temps"
 
 #: src/pages/settings.jsx:341
 msgid "Boosts carousel"
-msgstr ""
+msgstr "Carrusel d'impulsos"
 
 #: src/pages/settings.jsx:357
 msgid "Post translation"
@@ -3368,11 +3368,11 @@ msgstr "Generador de descripcions d'imatges"
 
 #: src/pages/settings.jsx:555
 msgid "Only for new images while composing new posts."
-msgstr ""
+msgstr "Només per a imatges noves mentre es redacten publicacions noves."
 
 #: src/pages/settings.jsx:562
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr ""
+msgstr "Nota: aquesta funcionalitat utilitza un servei d'IA extern, impulsat per <0>img-alt-api</0>. Pot ser que no funcioni bé. Només per a imatges i en anglès."
 
 #: src/pages/settings.jsx:588
 msgid "Server-side grouped notifications"
@@ -3380,7 +3380,7 @@ msgstr "Notificacions agrupades del servidor"
 
 #: src/pages/settings.jsx:592
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr ""
+msgstr "Funcionalitat en fase alfa. Finestra d'agrupació potencialment millorada, però amb una lògica d'agrupació bàsica."
 
 #: src/pages/settings.jsx:613
 msgid "\"Cloud\" import/export for shortcuts settings"
@@ -3449,7 +3449,7 @@ msgstr "No s'ha eliminat la subscripció. Si us plau, intenta-ho de nou."
 
 #: src/pages/settings.jsx:939
 msgid "Push Notifications (beta)"
-msgstr "Notificacions push (beta)"
+msgstr "Notificacions (beta)"
 
 #: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
@@ -3485,11 +3485,11 @@ msgstr "Edició de publicacions"
 
 #: src/pages/settings.jsx:1053
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr ""
+msgstr "No s'ha concedit el permís d'enviar notificacions des del darrer inici de sessió. Haureu d'<0><1>iniciar la sessió</1> de nou per concedir aquest permís</0>."
 
 #: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "NOTA: les notificacions només funcionen per a <0>un compte</0>."
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3618,7 +3618,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "Carrusel d'impulsos"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."

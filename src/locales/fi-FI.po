@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 16:42\n"
+"PO-Revision-Date: 2024-08-18 17:41\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -40,7 +40,7 @@ msgstr "Botti"
 #: src/components/status.jsx:439
 #: src/pages/catchup.jsx:1438
 msgid "Group"
-msgstr "Ryhmittele"
+msgstr "Ryhmä"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
@@ -1239,7 +1239,7 @@ msgstr "Uusi päivitys saatavilla…"
 #: src/components/nav-menu.jsx:200
 #: src/pages/catchup.jsx:855
 msgid "Catch-up"
-msgstr "Kiinniotto"
+msgstr "Kiinnikuronta"
 
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
@@ -2532,16 +2532,16 @@ msgstr "Seuratut tunnisteet"
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "Ryhmät"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Näytetään {selectedFilterCategory, select, all {kaikki julkaisut} original {alkuperäiset julkaisut} replies {vastaukset} boosts {tehostukset} followedTags {seuratut aihetunnisteet} groups {ryhmät} filtered {suodatetut julkaisut}}, {sortBy, select, createdAt {{sortOrder, select, asc {vanhimmat} desc {uusimmat}}} reblogsCount {{sortOrder, select, asc {vähiten tehostuksia saaneet} desc {eniten tehostuksia saaneet}}} favouritesCount {{sortOrder, select, asc {vähiten tykkäyksiä saaneet} desc {eniten tykkäyksiä saaneet}}} repliesCount {{sortOrder, select, asc {vähiten vastauksia saaneet} desc {eniten vastauksia saanteet}}} density {{sortOrder, select, asc {vähiten tiheät} desc {tiheimmät}}}} ensin{groupBy, select, account {, tekijöittäin ryhmiteltyinä} other {}}"
+msgstr "Näytetään {selectedFilterCategory, select, all {kaikki julkaisut} original {alkuperäiset julkaisut} replies {vastaukset} boosts {tehostukset} followedTags {seuratut aihetunnisteet} groups {ryhmät} filtered {suodatetut julkaisut}}, {sortBy, select, createdAt {{sortOrder, select, asc {vanhimmat} desc {uusimmat}}} reblogsCount {{sortOrder, select, asc {vähiten tehostetut} desc {eniten tehostetut}}} favouritesCount {{sortOrder, select, asc {vähiten tykätyt} desc {eniten tykätyt}}} repliesCount {{sortOrder, select, asc {vähiten vastauksia saaneet} desc {eniten vastauksia saanteet}}} density {{sortOrder, select, asc {vähiten tiheät} desc {tiheimmät}}}} ensin{groupBy, select, account {, tekijöittäin ryhmiteltynä} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
 msgid "Catch-up <0>beta</0>"
-msgstr "Kiinniotto <0>beeta</0>"
+msgstr "Kiinnikuronta <0>beeta</0>"
 
 #: src/pages/catchup.jsx:880
 #: src/pages/catchup.jsx:1552
@@ -2558,15 +2558,15 @@ msgstr ""
 
 #: src/pages/catchup.jsx:910
 msgid "Preview of Catch-up UI"
-msgstr ""
+msgstr "Kiinnikuronnan käyttöliittymän esikatselu"
 
 #: src/pages/catchup.jsx:919
 msgid "Let's catch up"
-msgstr "Otetaanpa kiinni"
+msgstr "Kurotaanpa kiinni"
 
 #: src/pages/catchup.jsx:924
 msgid "Let's catch up on the posts from your followings."
-msgstr ""
+msgstr "Kurotaanpa seurattusi julkaisut kiinni."
 
 #: src/pages/catchup.jsx:928
 msgid "Show me all posts from…"
@@ -2574,19 +2574,19 @@ msgstr "Näytä kaikki julkaisut…"
 
 #: src/pages/catchup.jsx:951
 msgid "until the max"
-msgstr ""
+msgstr "enimmäisaikaan asti"
 
 #: src/pages/catchup.jsx:981
 msgid "Catch up"
-msgstr "Ota kiinni"
+msgstr "Kuro kiinni"
 
 #: src/pages/catchup.jsx:987
 msgid "Overlaps with your last catch-up"
-msgstr ""
+msgstr "Menee edellisen kiinnikurontasi päälle"
 
 #: src/pages/catchup.jsx:999
 msgid "Until the last catch-up ({0})"
-msgstr ""
+msgstr "Edelliseen kiinnikurontaasi asti ({0})"
 
 #: src/pages/catchup.jsx:1008
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
@@ -2594,7 +2594,7 @@ msgstr "Huomaa: Instanssisi saattaa näyttää kotiaikajanalla enintään vain 8
 
 #: src/pages/catchup.jsx:1018
 msgid "Previously…"
-msgstr ""
+msgstr "Aiemmin…"
 
 #: src/pages/catchup.jsx:1036
 msgid "{0, plural, one {# post} other {# posts}}"
@@ -2602,7 +2602,7 @@ msgstr "{0, plural, one {# julkaisu} other {# julkaisua}}"
 
 #: src/pages/catchup.jsx:1046
 msgid "Remove this catch-up?"
-msgstr "Poistetaanko tämä kiinniotto?"
+msgstr "Poistetaanko tämä kiinnikuronta?"
 
 #: src/pages/catchup.jsx:1067
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -2641,7 +2641,7 @@ msgstr "{0, plural, one {# tekijä} other {# tekijää}}"
 
 #: src/pages/catchup.jsx:1380
 msgid "Sort"
-msgstr ""
+msgstr "Järjestys"
 
 #: src/pages/catchup.jsx:1411
 msgid "Date"
@@ -2673,7 +2673,7 @@ msgstr "Siinä kaikki."
 
 #: src/pages/catchup.jsx:1530
 msgid "Back to top"
-msgstr ""
+msgstr "Takaisin ylös"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
@@ -2681,19 +2681,19 @@ msgstr "Seurattujen jakamat linkit, järjestettynä jakomäärän mukaan, tehost
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
-msgstr ""
+msgstr "Järjestys: Tiheys"
 
 #: src/pages/catchup.jsx:1570
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr ""
+msgstr "Julkaisut järjestellään informaatiotiheyden tai -syvyyden mukaan. Lyhyemmät julkaisut ovat ”kevyempiä”, pidemmät taas ”painavampia”. Kuvan sisältävät julkaisut ovat ”paivavampia” kuin kuvattomat."
 
 #: src/pages/catchup.jsx:1577
 msgid "Group: Authors"
-msgstr ""
+msgstr "Ryhmä: Tekijät"
 
 #: src/pages/catchup.jsx:1580
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr ""
+msgstr "Julkaisut ryhmitellään tekijän mukaan ja järjestellään tekijäkohtaisen julkaisumäärän perusteella."
 
 #: src/pages/catchup.jsx:1627
 msgid "Next author"
@@ -2705,7 +2705,7 @@ msgstr "Edellinen tekijä"
 
 #: src/pages/catchup.jsx:1651
 msgid "Scroll to top"
-msgstr ""
+msgstr "Vieritä ylös"
 
 #: src/pages/catchup.jsx:1842
 msgid "Filtered: {0}"
@@ -3367,7 +3367,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:555
 msgid "Only for new images while composing new posts."
-msgstr ""
+msgstr "Vain uusille kuville, uutta julkaisua luotaessa."
 
 #: src/pages/settings.jsx:562
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
@@ -3391,7 +3391,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:629
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Huomaa: Tämä ominaisuus käyttää parhaillaan kirjautuneena olevan instanssin ohjelmointirajapintaa."
 
 #: src/pages/settings.jsx:646
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3399,7 +3399,7 @@ msgstr "Peittotila <0>(<1>Teksti</1> → <2>██████</2>)</0>"
 
 #: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "Korvaa tekstin lohkoilla, hyödyllinen näyttökuvia otettaessa, yksityisyyssyistä."
 
 #: src/pages/settings.jsx:680
 msgid "About"
@@ -3520,7 +3520,7 @@ msgstr "Siirry pääjulkaisuun"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "{0} julkaisua yläpuolella – Siitty ylös"
 
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208

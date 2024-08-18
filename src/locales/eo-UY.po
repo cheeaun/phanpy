@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 14:19\n"
+"PO-Revision-Date: 2024-08-18 15:27\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -70,7 +70,7 @@ msgstr "Sekvantoj"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {# sekvanto} other {# sekvantoj}}"
 
 #: src/components/account-block.jsx:205
 #: src/components/account-info.jsx:681
@@ -153,11 +153,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:607
 msgid "View profile image"
-msgstr "Rigardu rolfiguro"
+msgstr "Rigardu rolfiguron"
 
 #: src/components/account-info.jsx:613
 msgid "View profile header"
-msgstr "Rigardu profilkapon"
+msgstr "Rigardu fonbildon"
 
 #: src/components/account-info.jsx:630
 msgid "In Memoriam"
@@ -170,7 +170,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:803
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr ""
+msgstr "{0} originalaj afiŝoj, {1} respondoj, {2} diskonigoj"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
@@ -229,7 +229,7 @@ msgstr "Privata noto"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention @{username}"
-msgstr ""
+msgstr "Mencii @{username}"
 
 #: src/components/account-info.jsx:1159
 msgid "Translate bio"
@@ -279,7 +279,7 @@ msgstr ""
 #: src/components/account-info.jsx:1259
 #: src/components/account-info.jsx:1842
 msgid "Add/Remove from Lists"
-msgstr ""
+msgstr "Aldoni / Forigi el listoj"
 
 #: src/components/account-info.jsx:1298
 #: src/components/status.jsx:1068
@@ -319,7 +319,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1374
 msgid "Mute @{username}…"
-msgstr ""
+msgstr "Silengiti @{username}…"
 
 #: src/components/account-info.jsx:1404
 msgid "Muted @{username} for {0}"
@@ -343,7 +343,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1477
 msgid "Block @{username}?"
-msgstr ""
+msgstr "Ĉu bloki @{username}?"
 
 #: src/components/account-info.jsx:1496
 msgid "Unblocked @{username}"
@@ -367,11 +367,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1531
 msgid "Block @{username}…"
-msgstr ""
+msgstr "Bloki @{username}…"
 
 #: src/components/account-info.jsx:1546
 msgid "Report @{username}…"
-msgstr ""
+msgstr "Raporti @{username}…"
 
 #: src/components/account-info.jsx:1564
 #: src/components/account-info.jsx:2072
@@ -384,11 +384,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1601
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Ĉu malaboni @{0}?"
 
 #: src/components/account-info.jsx:1652
 msgid "Unfollow…"
-msgstr ""
+msgstr "Malaboni…"
 
 #: src/components/account-info.jsx:1661
 msgid "Withdraw…"
@@ -434,7 +434,7 @@ msgstr ""
 #: src/pages/settings.jsx:69
 #: src/pages/status.jsx:1256
 msgid "Close"
-msgstr ""
+msgstr "Fermi"
 
 #: src/components/account-info.jsx:1788
 msgid "Translated Bio"
@@ -446,7 +446,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1883
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Ne eblas aldoni al listo."
 
 #: src/components/account-info.jsx:1902
 #: src/pages/lists.jsx:104
@@ -465,7 +465,7 @@ msgstr "Nova listo"
 
 #: src/components/account-info.jsx:1975
 msgid "Private note about @{0}"
-msgstr ""
+msgstr "Privata noto pri @{0}"
 
 #: src/components/account-info.jsx:2002
 msgid "Unable to update private note."
@@ -534,7 +534,7 @@ msgstr ""
 #: src/pages/home.jsx:52
 #: src/pages/notifications.jsx:505
 msgid "Home"
-msgstr ""
+msgstr "Hejmo"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:34
@@ -618,7 +618,7 @@ msgstr ""
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:285
 msgid "Public"
-msgstr ""
+msgstr "Publika"
 
 #: src/components/compose.jsx:1173
 #: src/components/status.jsx:94
@@ -630,13 +630,13 @@ msgstr ""
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:291
 msgid "Followers only"
-msgstr ""
+msgstr "Nur sekvantoj"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:96
 #: src/components/status.jsx:1829
 msgid "Private mention"
-msgstr ""
+msgstr "Privata mencio"
 
 #: src/components/compose.jsx:1188
 msgid "Post your reply"
@@ -656,7 +656,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr ""
+msgstr "Aldoni balotenketon"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
@@ -669,7 +669,7 @@ msgstr ""
 #: src/components/status.jsx:1606
 #: src/components/status.jsx:2257
 msgid "Reply"
-msgstr ""
+msgstr "Respondi"
 
 #: src/components/compose.jsx:1469
 msgid "Update"
@@ -678,7 +678,7 @@ msgstr ""
 #: src/components/compose.jsx:1469
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr ""
+msgstr "Afiŝo"
 
 #: src/components/compose.jsx:1594
 msgid "Downloading GIF…"
@@ -692,7 +692,7 @@ msgstr ""
 #: src/components/compose.jsx:1810
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Pli…"
 
 #: src/components/compose.jsx:2213
 msgid "Uploaded"
@@ -832,7 +832,7 @@ msgstr ""
 
 #: src/components/compose.jsx:3188
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} pli…"
 
 #: src/components/compose.jsx:3326
 msgid "Search GIFs"
@@ -850,13 +850,13 @@ msgstr ""
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:880
 msgid "Previous"
-msgstr ""
+msgstr "Antaŭa"
 
 #: src/components/compose.jsx:3465
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:897
 msgid "Next"
-msgstr ""
+msgstr "Sekva"
 
 #: src/components/compose.jsx:3482
 msgid "Error loading GIFs"
@@ -900,7 +900,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:199
 msgid "Delete all…"
-msgstr ""
+msgstr "Forigu ĉiujn…"
 
 #: src/components/drafts.jsx:207
 msgid "No drafts found."
@@ -909,21 +909,21 @@ msgstr ""
 #: src/components/drafts.jsx:243
 #: src/pages/catchup.jsx:1895
 msgid "Poll"
-msgstr ""
+msgstr "Balotenketo"
 
 #: src/components/drafts.jsx:246
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
-msgstr ""
+msgstr "Aŭdovidaĵo"
 
 #: src/components/embed-modal.jsx:22
 msgid "Open in new window"
-msgstr ""
+msgstr "Malfermu en nova fenestro"
 
 #: src/components/follow-request-buttons.jsx:42
 #: src/pages/notifications.jsx:890
 msgid "Accept"
-msgstr ""
+msgstr "Akceptu"
 
 #: src/components/follow-request-buttons.jsx:68
 msgid "Reject"
@@ -932,7 +932,7 @@ msgstr ""
 #: src/components/follow-request-buttons.jsx:75
 #: src/pages/notifications.jsx:1167
 msgid "Accepted"
-msgstr ""
+msgstr "Akceptita"
 
 #: src/components/follow-request-buttons.jsx:79
 msgid "Rejected"
@@ -948,7 +948,7 @@ msgstr ""
 #: src/pages/search.jsx:227
 #: src/pages/search.jsx:260
 msgid "Accounts"
-msgstr ""
+msgstr "Kontoj"
 
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:513
@@ -963,7 +963,7 @@ msgstr "Montri pli…"
 #: src/components/timeline.jsx:518
 #: src/pages/search.jsx:459
 msgid "The end."
-msgstr ""
+msgstr "La fino."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
@@ -978,12 +978,12 @@ msgstr ""
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr ""
+msgstr "Sekva afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
 msgid "Previous post"
-msgstr ""
+msgstr "Antaŭa afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
@@ -1008,7 +1008,7 @@ msgstr ""
 #: src/components/keyboard-shortcuts-help.jsx:83
 #: src/pages/catchup.jsx:1643
 msgid "Open post details"
-msgstr ""
+msgstr "Malfermu detalojn pri afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:85
 msgid "<0>Enter</0> or <1>o</1>"
@@ -1020,7 +1020,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
-msgstr ""
+msgstr "Fermi afiŝon aŭ dialogojn"
 
 #: src/components/keyboard-shortcuts-help.jsx:103
 msgid "<0>Esc</0> or <1>Backspace</1>"
@@ -1036,11 +1036,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
-msgstr ""
+msgstr "Redakti novan afiŝon"
 
 #: src/components/keyboard-shortcuts-help.jsx:121
 msgid "Compose new post (new window)"
-msgstr ""
+msgstr "Redakti novan afiŝon (nova fenestro)"
 
 #: src/components/keyboard-shortcuts-help.jsx:124
 msgid "<0>Shift</0> + <1>c</1>"
@@ -1048,7 +1048,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Send post"
-msgstr ""
+msgstr "Sendi afiŝon"
 
 #: src/components/keyboard-shortcuts-help.jsx:132
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
@@ -1062,11 +1062,11 @@ msgstr ""
 #: src/pages/search.jsx:39
 #: src/pages/search.jsx:209
 msgid "Search"
-msgstr ""
+msgstr "Serĉu"
 
 #: src/components/keyboard-shortcuts-help.jsx:147
 msgid "Reply (new window)"
-msgstr ""
+msgstr "Respondi (nova fenestro)"
 
 #: src/components/keyboard-shortcuts-help.jsx:150
 msgid "<0>Shift</0> + <1>r</1>"
@@ -1086,7 +1086,7 @@ msgstr ""
 #: src/components/status.jsx:2315
 #: src/components/status.jsx:2316
 msgid "Boost"
-msgstr ""
+msgstr "Diskonigi"
 
 #: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>Shift</0> + <1>b</1>"
@@ -1097,7 +1097,7 @@ msgstr ""
 #: src/components/status.jsx:2340
 #: src/components/status.jsx:2341
 msgid "Bookmark"
-msgstr ""
+msgstr "Legosigno"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
@@ -1109,15 +1109,15 @@ msgstr ""
 
 #: src/components/list-add-edit.jsx:37
 msgid "Edit list"
-msgstr ""
+msgstr "Redaktu liston"
 
 #: src/components/list-add-edit.jsx:93
 msgid "Unable to edit list."
-msgstr ""
+msgstr "Ne eblas redakti liston."
 
 #: src/components/list-add-edit.jsx:94
 msgid "Unable to create list."
-msgstr ""
+msgstr "Ne eblas krei liston."
 
 #: src/components/list-add-edit.jsx:102
 msgid "Name"
@@ -1125,15 +1125,15 @@ msgstr "Nomo"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr ""
+msgstr "Montru respondoj al listmembroj"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr ""
+msgstr "Montru respondojn al homoj, kiujn mi sekvas"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
-msgstr ""
+msgstr "Ne montru respondojn"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
@@ -1146,11 +1146,11 @@ msgstr ""
 
 #: src/components/list-add-edit.jsx:154
 msgid "Delete this list?"
-msgstr ""
+msgstr "Ĉu forigi ĉi tiun liston?"
 
 #: src/components/list-add-edit.jsx:173
 msgid "Unable to delete list."
-msgstr ""
+msgstr "Ne eblas forigi liston."
 
 #: src/components/media-alt-modal.jsx:38
 #: src/components/media.jsx:50
@@ -1162,13 +1162,13 @@ msgstr ""
 #: src/components/status.jsx:994
 #: src/components/translation-block.jsx:195
 msgid "Translate"
-msgstr ""
+msgstr "Traduki"
 
 #: src/components/media-alt-modal.jsx:68
 #: src/components/status.jsx:981
 #: src/components/status.jsx:1008
 msgid "Speak"
-msgstr ""
+msgstr "Paroli"
 
 #: src/components/media-modal.jsx:294
 msgid "Open original media in new window"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
-msgstr ""
+msgstr "Menuo"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
@@ -1250,7 +1250,7 @@ msgstr ""
 #: src/pages/settings.jsx:1008
 #: src/pages/trending.jsx:347
 msgid "Mentions"
-msgstr ""
+msgstr "Mencioj"
 
 #: src/components/nav-menu.jsx:214
 #: src/components/shortcuts-settings.jsx:49
@@ -1261,11 +1261,11 @@ msgstr ""
 #: src/pages/notifications.jsx:106
 #: src/pages/notifications.jsx:509
 msgid "Notifications"
-msgstr ""
+msgstr "Sciigoj"
 
 #: src/components/nav-menu.jsx:217
 msgid "New"
-msgstr ""
+msgstr "Nova"
 
 #: src/components/nav-menu.jsx:228
 msgid "Profile"
@@ -1293,7 +1293,7 @@ msgstr "Ĉiuj listoj"
 #: src/pages/bookmarks.jsx:11
 #: src/pages/bookmarks.jsx:23
 msgid "Bookmarks"
-msgstr ""
+msgstr "Legosignoj"
 
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
@@ -1304,7 +1304,7 @@ msgstr ""
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1012
 msgid "Likes"
-msgstr ""
+msgstr "Stemuloj"
 
 #: src/components/nav-menu.jsx:302
 #: src/pages/followed-hashtags.jsx:14
@@ -1510,12 +1510,12 @@ msgstr ""
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "Lernu pli <0/>"
 
 #: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr ""
+msgstr "Legu pli →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
@@ -1541,7 +1541,7 @@ msgstr ""
 #: src/components/poll.jsx:218
 #: src/components/poll.jsx:222
 msgid "Show results"
-msgstr ""
+msgstr "Montru rezultojn"
 
 #: src/components/poll.jsx:227
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
@@ -1570,17 +1570,17 @@ msgstr ""
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:54
 msgid "{0}s"
-msgstr ""
+msgstr "{0}s"
 
 #. Relative time in minutes, as short as possible
 #: src/components/relative-time.jsx:59
 msgid "{0}m"
-msgstr ""
+msgstr "{0}m"
 
 #. Relative time in hours, as short as possible
 #: src/components/relative-time.jsx:64
 msgid "{0}h"
-msgstr ""
+msgstr "{0}h"
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
@@ -1612,7 +1612,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
-msgstr ""
+msgstr "Alia"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
@@ -1656,7 +1656,7 @@ msgstr "Kio estas la problemo kun ĉi tiu profilo?"
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
-msgstr ""
+msgstr "Pliaj informoj"
 
 #: src/components/report-modal.jsx:255
 msgid "Forward to <0>{domain}</0>"
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
@@ -2145,11 +2145,11 @@ msgstr ""
 
 #: src/components/status.jsx:1216
 msgid "Delete this post?"
-msgstr ""
+msgstr "Ĉu forigi ĉi tiun afiŝon?"
 
 #: src/components/status.jsx:1229
 msgid "Post deleted"
-msgstr ""
+msgstr "Afiŝo forigita"
 
 #: src/components/status.jsx:1232
 msgid "Unable to delete post"
@@ -2258,7 +2258,7 @@ msgstr ""
 
 #: src/components/status.jsx:3217
 msgid "Notes:"
-msgstr ""
+msgstr "Notoj:"
 
 #: src/components/status.jsx:3221
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
@@ -2448,7 +2448,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:117
 msgid "View profile…"
-msgstr ""
+msgstr "Rigardu profilon…"
 
 #: src/pages/accounts.jsx:134
 msgid "Set as default"
@@ -3104,7 +3104,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:729
 msgid "Today"
-msgstr ""
+msgstr "Hodiaŭ"
 
 #: src/pages/notifications.jsx:733
 msgid "You're all caught up."
@@ -3112,7 +3112,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:756
 msgid "Yesterday"
-msgstr ""
+msgstr "Hieraŭ"
 
 #: src/pages/notifications.jsx:792
 msgid "Unable to load notifications"

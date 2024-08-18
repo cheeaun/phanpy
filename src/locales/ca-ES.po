@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 22:24\n"
+"PO-Revision-Date: 2024-08-18 00:11\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -718,7 +718,7 @@ msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Prov
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr "La resolució del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la dimensió de {0}×{1}px a {2}×{3}px."
+msgstr "La resolució del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la resolució de {0}×{1}px a {2}×{3}px."
 
 #: src/components/compose.jsx:2304
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -1906,28 +1906,28 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
-msgstr ""
+msgstr "Format de configuració no vàlid"
 
 #: src/components/shortcuts-settings.jsx:932
 msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "Voleu afegir-hi les dreceres actuals?"
 
 #: src/components/shortcuts-settings.jsx:935
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr ""
+msgstr "Només s'afegiran les dreceres que no existeixen a les dreceres actuals."
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "No hi ha dreceres noves per importar"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr ""
+msgstr "Dreceres importades. S'ha superat el màxim de {SHORTCUTS_LIMIT}, de manera que la resta no s'importaran."
 
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "Dreceres importades"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
@@ -1935,15 +1935,15 @@ msgstr "Importa i annexa…"
 
 #: src/components/shortcuts-settings.jsx:991
 msgid "Override current shortcuts?"
-msgstr ""
+msgstr "Voleu reemplaçar les dreceres actuals?"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "Voleu importar les dreceres?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
-msgstr ""
+msgstr "o reemplaçar-les…"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
@@ -1955,19 +1955,19 @@ msgstr "Exporta"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
-msgstr ""
+msgstr "S'han copiat les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Unable to copy shortcuts"
-msgstr ""
+msgstr "No es poden copiar les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1047
 msgid "Shortcut settings copied"
-msgstr ""
+msgstr "S'ha copiat la configuració de la drecera"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "No es pot copiar la configuració de la drecera"
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
@@ -1975,23 +1975,23 @@ msgstr "Comparteix"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "S'estan desant les dreceres a la instància del servidor…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "S'han desat les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "No es poden desar les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr ""
+msgstr "Sincronitza amb la instància del servidor"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0 , plural, one {# caràcter} other {# caràcters}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
@@ -2094,7 +2094,7 @@ msgstr "Editat: {editedDateText}"
 #: src/components/status.jsx:1112
 #: src/components/status.jsx:3068
 msgid "Embed post"
-msgstr ""
+msgstr "Insereix la publicació"
 
 #: src/components/status.jsx:1126
 msgid "Conversation unmuted"
@@ -2473,7 +2473,7 @@ msgstr ""
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "No es poden carregar les adreces d'interès."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
@@ -2525,7 +2525,7 @@ msgstr "de les últimes 12 hores"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "més de 12 hores"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
@@ -2537,7 +2537,7 @@ msgstr "Grups"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Mostrant {selectedFilterCategory, select, all {totes les publicacions} original {publicacions originals} replies {respostes} boosts {impulsos} followedTags {etiquetes seguides} groups {grups} filtered {publicacions filtrades}}, {sortBy, select, createdAt {{sortOrder, select, asc {més antic} desc {més recent}}} reblogsCount {{sortOrder, select, asc {amb menys impulsos} desc {amb més impulsos}}} favouritesCount {{sortOrder, select, asc {amb menys favorits} desc {amb més favorits}}} repliesCount {{sortOrder, select, asc {amb menys respostes} desc {amb més respostes}}} density {{sortOrder, select, asc {amb fils menys llargs} desc {amb fils més llargs}}}} first{groupBy, select, account {, agrupat per autors} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
@@ -2575,7 +2575,7 @@ msgstr "Mostra'm totes les publicacions de…"
 
 #: src/pages/catchup.jsx:951
 msgid "until the max"
-msgstr ""
+msgstr "fins al màxim"
 
 #: src/pages/catchup.jsx:981
 msgid "Catch up"
@@ -2611,24 +2611,24 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1082
 msgid "Fetching posts…"
-msgstr ""
+msgstr "Recuperant publicacions…"
 
 #: src/pages/catchup.jsx:1085
 msgid "This might take a while."
-msgstr ""
+msgstr "Això pot trigar una estona."
 
 #: src/pages/catchup.jsx:1120
 msgid "Reset filters"
-msgstr ""
+msgstr "Restableix els filtres"
 
 #: src/pages/catchup.jsx:1128
 #: src/pages/catchup.jsx:1558
 msgid "Top links"
-msgstr ""
+msgstr "Enllaços populars"
 
 #: src/pages/catchup.jsx:1244
 msgid "Shared by {0}"
-msgstr ""
+msgstr "Compartit per {0}"
 
 #: src/pages/catchup.jsx:1283
 #: src/pages/mentions.jsx:147
@@ -2638,7 +2638,7 @@ msgstr "Totes"
 
 #: src/pages/catchup.jsx:1368
 msgid "{0, plural, one {# author} other {# authors}}"
-msgstr ""
+msgstr "{0 , plural, one {# autor} other {# autors}}"
 
 #: src/pages/catchup.jsx:1380
 msgid "Sort"
@@ -2682,7 +2682,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
-msgstr ""
+msgstr "Ordre: Densitat"
 
 #: src/pages/catchup.jsx:1570
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
@@ -2706,7 +2706,7 @@ msgstr "Autor anterior"
 
 #: src/pages/catchup.jsx:1651
 msgid "Scroll to top"
-msgstr ""
+msgstr "Torna a dalt"
 
 #: src/pages/catchup.jsx:1842
 msgid "Filtered: {0}"
@@ -3328,7 +3328,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:357
 msgid "Post translation"
-msgstr ""
+msgstr "Traducció de les publicacions"
 
 #: src/pages/settings.jsx:368
 msgid "Translate to"
@@ -3526,7 +3526,7 @@ msgstr ""
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208
 msgid "Switch to Side Peek view"
-msgstr ""
+msgstr "Canvia a vista lateral"
 
 #: src/pages/status.jsx:1209
 msgid "Switch to Full view"
@@ -3594,7 +3594,7 @@ msgstr "No hi ha publicacions influents."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."
-msgstr "Un client web per Mastodon minimalista."
+msgstr "Un client web per Mastodon minimalista i original."
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"

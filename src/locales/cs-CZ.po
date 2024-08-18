@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-17 03:31\n"
+"PO-Revision-Date: 2024-08-17 18:50\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -20,36 +20,36 @@ msgstr ""
 
 #: src/components/account-block.jsx:133
 msgid "Locked"
-msgstr ""
+msgstr "uzamčeno"
 
 #: src/components/account-block.jsx:139
 msgid "Posts: {0}"
-msgstr ""
+msgstr "Příspěvky: {0}"
 
 #: src/components/account-block.jsx:144
 msgid "Last posted: {0}"
-msgstr ""
+msgstr "Poslední příspěvek: {0}"
 
 #: src/components/account-block.jsx:159
 #: src/components/account-info.jsx:635
 msgid "Automated"
-msgstr ""
+msgstr "Automaticky"
 
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:640
 #: src/components/status.jsx:439
 #: src/pages/catchup.jsx:1438
 msgid "Group"
-msgstr ""
+msgstr "Skupina"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
-msgstr ""
+msgstr "Vzájemné"
 
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1658
 msgid "Requested"
-msgstr ""
+msgstr "Vyžadováno"
 
 #: src/components/account-block.jsx:184
 #: src/components/account-info.jsx:417
@@ -61,44 +61,44 @@ msgstr ""
 #: src/pages/following.jsx:20
 #: src/pages/following.jsx:131
 msgid "Following"
-msgstr ""
+msgstr "Sleduji"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1060
 msgid "Follows you"
-msgstr ""
+msgstr "Sleduje vás"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {# odpověď} few {# odpovědi} many {# odpovědi} other {# odpovědi}}"
 
 #: src/components/account-block.jsx:205
 #: src/components/account-info.jsx:681
 msgid "Verified"
-msgstr ""
+msgstr "Ověřeno"
 
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:778
 msgid "Joined <0>{0}</0>"
-msgstr ""
+msgstr "Připojeno <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
-msgstr ""
+msgstr "Navždy"
 
 #: src/components/account-info.jsx:378
 msgid "Unable to load account."
-msgstr ""
+msgstr "Účet nelze načíst."
 
 #: src/components/account-info.jsx:386
 msgid "Go to account page"
-msgstr ""
+msgstr "Přejít na stránku účtu"
 
 #: src/components/account-info.jsx:414
 #: src/components/account-info.jsx:703
 #: src/components/account-info.jsx:733
 msgid "Followers"
-msgstr ""
+msgstr "Sledující"
 
 #: src/components/account-info.jsx:420
 #: src/components/account-info.jsx:774
@@ -106,7 +106,7 @@ msgstr ""
 #: src/pages/search.jsx:237
 #: src/pages/search.jsx:384
 msgid "Posts"
-msgstr ""
+msgstr "Příspěvky"
 
 #: src/components/account-info.jsx:428
 #: src/components/account-info.jsx:1116
@@ -126,51 +126,51 @@ msgstr ""
 #: src/pages/status.jsx:1169
 #: src/pages/trending.jsx:437
 msgid "More"
-msgstr ""
+msgstr "Více"
 
 #: src/components/account-info.jsx:440
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr ""
+msgstr "<0>{displayName}</0> naznačil, že jejich nový účet je nyní:"
 
 #: src/components/account-info.jsx:585
 #: src/components/account-info.jsx:1272
 msgid "Handle copied"
-msgstr ""
+msgstr "Uživatelské jméno X zkopírováno"
 
 #: src/components/account-info.jsx:588
 #: src/components/account-info.jsx:1275
 msgid "Unable to copy handle"
-msgstr ""
+msgstr "Nepodařilo se zkopírovat uživatelské jméno"
 
 #: src/components/account-info.jsx:594
 #: src/components/account-info.jsx:1281
 msgid "Copy handle"
-msgstr ""
+msgstr "Zkopírovat uživatelské jméno"
 
 #: src/components/account-info.jsx:600
 msgid "Go to original profile page"
-msgstr ""
+msgstr "Přejít na původní stránku profilu"
 
 #: src/components/account-info.jsx:607
 msgid "View profile image"
-msgstr ""
+msgstr "Zobrazit profilový obrázek"
 
 #: src/components/account-info.jsx:613
 msgid "View profile header"
-msgstr ""
+msgstr "Zobrazit hlavičku profilu"
 
 #: src/components/account-info.jsx:630
 msgid "In Memoriam"
-msgstr ""
+msgstr "In Memoriam"
 
 #: src/components/account-info.jsx:710
 #: src/components/account-info.jsx:748
 msgid "This user has chosen to not make this information available."
-msgstr ""
+msgstr "Tento uživatel se rozhodl nezpřístupnit tyto informace."
 
 #: src/components/account-info.jsx:803
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr ""
+msgstr "{0} původní příspěvky, {1} odpovědi, {2} zvyšuje"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
@@ -183,7 +183,7 @@ msgstr ""
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
 msgid "Original"
-msgstr ""
+msgstr "Originál"
 
 #: src/components/account-info.jsx:860
 #: src/components/status.jsx:2152
@@ -193,121 +193,121 @@ msgstr ""
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
-msgstr ""
+msgstr "Odpovědi"
 
 #: src/components/account-info.jsx:864
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1414
 #: src/pages/catchup.jsx:2035
-#: src/pages/settings.jsx:1015
+#: src/pages/settings.jsx:1016
 msgid "Boosts"
-msgstr ""
+msgstr "Boosty"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
-msgstr ""
+msgstr "Statistiky příspěvku nejsou k dispozici."
 
 #: src/components/account-info.jsx:901
 msgid "View post stats"
-msgstr ""
+msgstr "Zobrazit statistiky příspěvku"
 
 #: src/components/account-info.jsx:1064
 msgid "Last post: <0>{0}</0>"
-msgstr ""
+msgstr "Poslední příspěvek: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
-msgstr ""
+msgstr "Ztlumeno"
 
 #: src/components/account-info.jsx:1083
 msgid "Blocked"
-msgstr ""
+msgstr "Blokováno"
 
 #: src/components/account-info.jsx:1092
 msgid "Private note"
-msgstr ""
+msgstr "Soukromá poznámka"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention @{username}"
-msgstr ""
+msgstr "Zmínit @{username}"
 
 #: src/components/account-info.jsx:1159
 msgid "Translate bio"
-msgstr ""
+msgstr "Přeložit bio"
 
 #: src/components/account-info.jsx:1170
 msgid "Edit private note"
-msgstr ""
+msgstr "Upravit soukromou poznámku"
 
 #: src/components/account-info.jsx:1170
 msgid "Add private note"
-msgstr ""
+msgstr "Přidat soukromou poznámku"
 
 #: src/components/account-info.jsx:1190
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "Upozornění povolena pro příspěvky @{username}."
 
 #: src/components/account-info.jsx:1191
 msgid "Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr "Upozornění zakázána pro příspěvky @{username}."
 
 #: src/components/account-info.jsx:1203
 msgid "Disable notifications"
-msgstr ""
+msgstr "Vypnout oznámení"
 
 #: src/components/account-info.jsx:1204
 msgid "Enable notifications"
-msgstr ""
+msgstr "Povolit oznámení"
 
 #: src/components/account-info.jsx:1221
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Boosty z @{username} povoleny."
 
 #: src/components/account-info.jsx:1222
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Boosty z @{username} zakázány."
 
 #: src/components/account-info.jsx:1233
 msgid "Disable boosts"
-msgstr ""
+msgstr "Zakázat boosty"
 
 #: src/components/account-info.jsx:1233
 msgid "Enable boosts"
-msgstr ""
+msgstr "Povolit boosty"
 
 #: src/components/account-info.jsx:1249
 #: src/components/account-info.jsx:1259
 #: src/components/account-info.jsx:1842
 msgid "Add/Remove from Lists"
-msgstr ""
+msgstr "Přidat/Odebrat ze seznamu"
 
 #: src/components/account-info.jsx:1298
 #: src/components/status.jsx:1068
 msgid "Link copied"
-msgstr ""
+msgstr "Odkaz zkopírován"
 
 #: src/components/account-info.jsx:1301
 #: src/components/status.jsx:1071
 msgid "Unable to copy link"
-msgstr ""
+msgstr "Nebylo možné zkopírovat soubor"
 
 #: src/components/account-info.jsx:1307
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1077
 #: src/components/status.jsx:3099
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: src/components/account-info.jsx:1322
 #: src/components/shortcuts-settings.jsx:1074
 #: src/components/status.jsx:1093
 msgid "Sharing doesn't seem to work."
-msgstr ""
+msgstr "Sdílení zřejmě nefunguje."
 
 #: src/components/account-info.jsx:1328
 #: src/components/status.jsx:1099
 msgid "Share…"
-msgstr ""
+msgstr "Sdílet…"
 
 #: src/components/account-info.jsx:1348
 msgid "Unmuted @{username}"
@@ -319,86 +319,86 @@ msgstr ""
 
 #: src/components/account-info.jsx:1374
 msgid "Mute @{username}…"
-msgstr ""
+msgstr "Ztlumit na @{username}…"
 
 #: src/components/account-info.jsx:1404
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "Ztlumený @{username} pro {0}"
 
 #: src/components/account-info.jsx:1416
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Nelze ztlumit @{username}"
 
 #: src/components/account-info.jsx:1437
 msgid "Remove @{username} from followers?"
-msgstr ""
+msgstr "Odstranit @{username} z sledujících?"
 
 #: src/components/account-info.jsx:1454
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} odebrán ze sledujících"
 
 #: src/components/account-info.jsx:1466
 msgid "Remove follower…"
-msgstr ""
+msgstr "Odstranit sledujícího…"
 
 #: src/components/account-info.jsx:1477
 msgid "Block @{username}?"
-msgstr ""
+msgstr "Blokovat @{username}?"
 
 #: src/components/account-info.jsx:1496
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "Odblokován @{username}"
 
 #: src/components/account-info.jsx:1504
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "Uživatel @{username} zablokován"
 
 #: src/components/account-info.jsx:1512
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Nelze odblokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1514
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Nelze zablokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1524
 msgid "Unblock @{username}"
-msgstr ""
+msgstr "Odblokovat uživatele @{username}"
 
 #: src/components/account-info.jsx:1531
 msgid "Block @{username}…"
-msgstr ""
+msgstr "Zablokovat uživatele @{username}…"
 
 #: src/components/account-info.jsx:1546
 msgid "Report @{username}…"
-msgstr ""
+msgstr "Nahlásit @{username}…"
 
 #: src/components/account-info.jsx:1564
 #: src/components/account-info.jsx:2072
 msgid "Edit profile"
-msgstr ""
+msgstr "Upravit profil"
 
 #: src/components/account-info.jsx:1600
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Zrušit žádost o sledování?"
 
 #: src/components/account-info.jsx:1601
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Chcete přestat sledovat {0}?"
 
 #: src/components/account-info.jsx:1652
 msgid "Unfollow…"
-msgstr ""
+msgstr "Přestat sledovat…"
 
 #: src/components/account-info.jsx:1661
 msgid "Withdraw…"
-msgstr ""
+msgstr "Vybrat…"
 
 #: src/components/account-info.jsx:1668
 #: src/components/account-info.jsx:1672
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
-msgstr ""
+msgstr "Sledovat"
 
 #: src/components/account-info.jsx:1783
 #: src/components/account-info.jsx:1837
@@ -434,71 +434,71 @@ msgstr ""
 #: src/pages/settings.jsx:69
 #: src/pages/status.jsx:1256
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: src/components/account-info.jsx:1788
 msgid "Translated Bio"
-msgstr ""
+msgstr "Přeložit bio"
 
 #: src/components/account-info.jsx:1882
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Nelze odstranit ze seznamu."
 
 #: src/components/account-info.jsx:1883
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Nelze přidat do seznamu."
 
 #: src/components/account-info.jsx:1902
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
-msgstr ""
+msgstr "Nelze načíst seznamy."
 
 #: src/components/account-info.jsx:1906
 msgid "No lists."
-msgstr ""
+msgstr "Žádné seznamy."
 
 #: src/components/account-info.jsx:1917
 #: src/components/list-add-edit.jsx:37
 #: src/pages/lists.jsx:58
 msgid "New list"
-msgstr ""
+msgstr "Nový seznam"
 
 #: src/components/account-info.jsx:1975
 msgid "Private note about @{0}"
-msgstr ""
+msgstr "Soukromá poznámka o @{0}"
 
 #: src/components/account-info.jsx:2002
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Nelze aktualizovat soukromou poznámku."
 
 #: src/components/account-info.jsx:2025
 #: src/components/account-info.jsx:2195
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: src/components/account-info.jsx:2030
 msgid "Save & close"
-msgstr ""
+msgstr "Uložit & zavřít"
 
 #: src/components/account-info.jsx:2123
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Nelze aktualizovat profil.."
 
 #: src/components/account-info.jsx:2143
 msgid "Bio"
-msgstr ""
+msgstr "O mně"
 
 #: src/components/account-info.jsx:2156
 msgid "Extra fields"
-msgstr ""
+msgstr "Extra pole"
 
 #: src/components/account-info.jsx:2162
 msgid "Label"
-msgstr ""
+msgstr "Štítek"
 
 #: src/components/account-info.jsx:2165
 msgid "Content"
-msgstr ""
+msgstr "Obsah"
 
 #: src/components/account-info.jsx:2198
 #: src/components/list-add-edit.jsx:147
@@ -506,19 +506,19 @@ msgstr ""
 #: src/pages/filters.jsx:554
 #: src/pages/notifications.jsx:906
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: src/components/account-info.jsx:2251
 msgid "username"
-msgstr ""
+msgstr "uživatelské jméno"
 
 #: src/components/account-info.jsx:2255
 msgid "server domain name"
-msgstr ""
+msgstr "jméno domény serveru"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode disabled"
-msgstr ""
+msgstr "Režim zavření zakázán"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode enabled"
@@ -534,7 +534,7 @@ msgstr ""
 #: src/pages/home.jsx:52
 #: src/pages/notifications.jsx:505
 msgid "Home"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:34
@@ -543,7 +543,7 @@ msgstr ""
 
 #: src/components/compose.jsx:392
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "Máte neuložené změny. Zrušit tento příspěvek?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
@@ -554,35 +554,35 @@ msgstr ""
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
-msgstr ""
+msgstr "Vyskakovací okno"
 
 #: src/components/compose.jsx:785
 msgid "Minimize"
-msgstr ""
+msgstr "Minimalizovat"
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Zdá se, že jste zavřeli nadřazené okno."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Vypadá to, že již máte složené pole otevřené v nadřazeném okně a aktuálně publikované. Počkejte prosím, než se to udělá a zkuste to znovu později."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Vypadá to, že již máte v nadřazeném okně otevřené políčko. Vyskakování v tomto okně zruší změny, které jste provedli v nadřazeném okně. Pokračovat?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
-msgstr ""
+msgstr "Ukázat v"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "Odpověděd na @{0}’s příspěvek (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "Odpovídám na příspěvek uživatele @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -590,77 +590,77 @@ msgstr ""
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "Anketa musí mít alespoň dvě možnosti"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Některé volby anket jsou prázdné"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "Některá média jsou bez popisu. Pokračovat?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
-msgstr ""
+msgstr "Příloha #{i} selhala"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1951
 #: src/components/timeline.jsx:975
 msgid "Content warning"
-msgstr ""
+msgstr "Varování o obsahu"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr ""
+msgstr "Upozornění na obsah nebo citlivá média"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:285
 msgid "Public"
-msgstr ""
+msgstr "Veřejný"
 
 #: src/components/compose.jsx:1173
 #: src/components/status.jsx:94
 #: src/pages/settings.jsx:288
 msgid "Unlisted"
-msgstr ""
+msgstr "Neveřejný"
 
 #: src/components/compose.jsx:1176
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:291
 msgid "Followers only"
-msgstr ""
+msgstr "Pouze pro sledující"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:96
 #: src/components/status.jsx:1829
 msgid "Private mention"
-msgstr ""
+msgstr "Soukromá zmínka"
 
 #: src/components/compose.jsx:1188
 msgid "Post your reply"
-msgstr ""
+msgstr "Poslat odpověď"
 
 #: src/components/compose.jsx:1190
 msgid "Edit your post"
-msgstr ""
+msgstr "Upravit příspěvek"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr ""
+msgstr "Co děláte??"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Označit média jako citlivá"
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr ""
+msgstr "Přidat anketu"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Přidat vlastní emoji"
 
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
@@ -669,42 +669,42 @@ msgstr ""
 #: src/components/status.jsx:1606
 #: src/components/status.jsx:2257
 msgid "Reply"
-msgstr ""
+msgstr "Odpověděť"
 
 #: src/components/compose.jsx:1469
 msgid "Update"
-msgstr ""
+msgstr "Aktualizovat"
 
 #: src/components/compose.jsx:1469
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr ""
+msgstr "Příspěvky"
 
 #: src/components/compose.jsx:1594
 msgid "Downloading GIF…"
-msgstr ""
+msgstr "Stahování GIF…"
 
 #: src/components/compose.jsx:1622
 msgid "Failed to download GIF"
-msgstr ""
+msgstr "Nepodařilo se stáhnout GIF"
 
 #: src/components/compose.jsx:1733
 #: src/components/compose.jsx:1810
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Více…"
 
 #: src/components/compose.jsx:2213
 msgid "Uploaded"
-msgstr ""
+msgstr "Odesláno"
 
 #: src/components/compose.jsx:2226
 msgid "Image description"
-msgstr ""
+msgstr "Popis obrázku"
 
 #: src/components/compose.jsx:2227
 msgid "Video description"
-msgstr ""
+msgstr "Popis videa"
 
 #: src/components/compose.jsx:2228
 msgid "Audio description"
@@ -713,16 +713,16 @@ msgstr ""
 #: src/components/compose.jsx:2264
 #: src/components/compose.jsx:2284
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "Velikost souboru je příliš velká. Nahrávání může narazit na potíže. Zkuste zmenšit velikost souboru z {0} na {1} nebo nižší."
 
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Velikost je příliš velká. Nahrávání může narazit na problémy. Zkuste zmenšit rozměr z {0}×{1}px na {2}×{3}px."
 
 #: src/components/compose.jsx:2304
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr ""
+msgstr "Sazba snímků je příliš vysoká. Nahrávání může narazit na problémy."
 
 #: src/components/compose.jsx:2364
 #: src/components/compose.jsx:2614
@@ -730,28 +730,28 @@ msgstr ""
 #: src/pages/catchup.jsx:1058
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr ""
+msgstr "Odstranit"
 
 #: src/components/compose.jsx:2381
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #: src/components/compose.jsx:2406
 msgid "Edit image description"
-msgstr ""
+msgstr "Upravit popis obrázku"
 
 #: src/components/compose.jsx:2407
 msgid "Edit video description"
-msgstr ""
+msgstr "Upravit popis videa"
 
 #: src/components/compose.jsx:2408
 msgid "Edit audio description"
-msgstr ""
+msgstr "Upravit popis audia"
 
 #: src/components/compose.jsx:2453
 #: src/components/compose.jsx:2502
 msgid "Generating description. Please wait…"
-msgstr ""
+msgstr "Generování popisu. Počkejte prosím,…"
 
 #: src/components/compose.jsx:2473
 msgid "Failed to generate description: {0}"
@@ -765,126 +765,126 @@ msgstr ""
 #: src/components/compose.jsx:2492
 #: src/components/compose.jsx:2538
 msgid "Generate description…"
-msgstr ""
+msgstr "Vytvořit popis…"
 
 #: src/components/compose.jsx:2525
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Nepodařilo se vytvořit popis{0}"
 
 #: src/components/compose.jsx:2540
 msgid "({0}) <0>— experimental</0>"
-msgstr ""
+msgstr "({0}) <0>– experimentální</0>"
 
 #: src/components/compose.jsx:2559
 msgid "Done"
-msgstr ""
+msgstr "Hotovo"
 
 #: src/components/compose.jsx:2595
 msgid "Choice {0}"
-msgstr ""
+msgstr "Volba {0}"
 
 #: src/components/compose.jsx:2642
 msgid "Multiple choices"
-msgstr ""
+msgstr "Více možností"
 
 #: src/components/compose.jsx:2645
 msgid "Duration"
-msgstr ""
+msgstr "Trvání"
 
 #: src/components/compose.jsx:2676
 msgid "Remove poll"
-msgstr ""
+msgstr "Odstranit anketu"
 
 #: src/components/compose.jsx:2890
 msgid "Search accounts"
-msgstr ""
+msgstr "Vyhledat účty"
 
 #: src/components/compose.jsx:2931
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:356
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: src/components/compose.jsx:2944
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Chyba při načítání účtů"
 
 #: src/components/compose.jsx:3087
 msgid "Custom emojis"
-msgstr ""
+msgstr "Vlastní emoji"
 
 #: src/components/compose.jsx:3107
 msgid "Search emoji"
-msgstr ""
+msgstr "Vyhledat Emoji"
 
 #: src/components/compose.jsx:3138
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "Chyba při načítání vlastních emoji"
 
 #: src/components/compose.jsx:3149
 msgid "Recently used"
-msgstr ""
+msgstr "Nedávno použité"
 
 #: src/components/compose.jsx:3150
 msgid "Others"
-msgstr ""
+msgstr "Ostatní"
 
 #: src/components/compose.jsx:3188
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} další…"
 
 #: src/components/compose.jsx:3326
 msgid "Search GIFs"
-msgstr ""
+msgstr "Hledat GIFy"
 
 #: src/components/compose.jsx:3341
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Poháněno GIPHY"
 
 #: src/components/compose.jsx:3349
 msgid "Type to search GIFs"
-msgstr ""
+msgstr "Zadejte pro vyhledávání GIFů"
 
 #: src/components/compose.jsx:3447
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:880
 msgid "Previous"
-msgstr ""
+msgstr "Zpět"
 
 #: src/components/compose.jsx:3465
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:897
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #: src/components/compose.jsx:3482
 msgid "Error loading GIFs"
-msgstr ""
+msgstr "Chyba při načítání GIFu"
 
 #: src/components/drafts.jsx:63
-#: src/pages/settings.jsx:671
+#: src/pages/settings.jsx:672
 msgid "Unsent drafts"
-msgstr ""
+msgstr "Neodeslané koncepty"
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "Vypadá to, že máte neodeslané koncepty. Pojďme pokračovat tam, kde jste skončili."
 
 #: src/components/drafts.jsx:100
 msgid "Delete this draft?"
-msgstr ""
+msgstr "Smazat koncept?"
 
 #: src/components/drafts.jsx:115
 msgid "Error deleting draft! Please try again."
-msgstr ""
+msgstr "Chyba při ukládání konceptu. Zkuste to prosím znovu."
 
 #: src/components/drafts.jsx:125
 #: src/components/list-add-edit.jsx:183
 #: src/components/status.jsx:1240
 #: src/pages/filters.jsx:587
 msgid "Delete…"
-msgstr ""
+msgstr "Smazat…"
 
 #: src/components/drafts.jsx:144
 msgid "Error fetching reply-to status!"
@@ -892,15 +892,15 @@ msgstr ""
 
 #: src/components/drafts.jsx:169
 msgid "Delete all drafts?"
-msgstr ""
+msgstr "Smazat všechny koncepty?"
 
 #: src/components/drafts.jsx:187
 msgid "Error deleting drafts! Please try again."
-msgstr ""
+msgstr "Chyba při odstraňování konceptů! Zkuste to prosím znovu."
 
 #: src/components/drafts.jsx:199
 msgid "Delete all…"
-msgstr ""
+msgstr "Smazat vše…"
 
 #: src/components/drafts.jsx:207
 msgid "No drafts found."
@@ -909,38 +909,38 @@ msgstr ""
 #: src/components/drafts.jsx:243
 #: src/pages/catchup.jsx:1895
 msgid "Poll"
-msgstr ""
+msgstr "Anketa"
 
 #: src/components/drafts.jsx:246
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
-msgstr ""
+msgstr "Média"
 
 #: src/components/embed-modal.jsx:22
 msgid "Open in new window"
-msgstr ""
+msgstr "Otevřít v novém okně"
 
 #: src/components/follow-request-buttons.jsx:42
 #: src/pages/notifications.jsx:890
 msgid "Accept"
-msgstr ""
+msgstr "Přijmout"
 
 #: src/components/follow-request-buttons.jsx:68
 msgid "Reject"
-msgstr ""
+msgstr "Odmítnout"
 
 #: src/components/follow-request-buttons.jsx:75
 #: src/pages/notifications.jsx:1167
 msgid "Accepted"
-msgstr ""
+msgstr "Přijato"
 
 #: src/components/follow-request-buttons.jsx:79
 msgid "Rejected"
-msgstr ""
+msgstr "Odmítnout"
 
 #: src/components/generic-accounts.jsx:24
 msgid "Nothing to show"
-msgstr ""
+msgstr "Nic k zobrazení"
 
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:429
@@ -948,7 +948,7 @@ msgstr ""
 #: src/pages/search.jsx:227
 #: src/pages/search.jsx:260
 msgid "Accounts"
-msgstr ""
+msgstr "Účty"
 
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:513
@@ -957,41 +957,41 @@ msgstr ""
 #: src/pages/search.jsx:454
 #: src/pages/status.jsx:1289
 msgid "Show more…"
-msgstr ""
+msgstr "Zobrazit více…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:518
 #: src/pages/search.jsx:459
 msgid "The end."
-msgstr ""
+msgstr "Konec."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
 #: src/pages/catchup.jsx:1586
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: src/components/keyboard-shortcuts-help.jsx:51
 msgid "Keyboard shortcuts help"
-msgstr ""
+msgstr "Nápověda pro klávesové zkratky"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr ""
+msgstr "Následující příspěvek"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
 msgid "Previous post"
-msgstr ""
+msgstr "Předchozí příspěvek"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
-msgstr ""
+msgstr "Přeskočit carousel na další příspěvek"
 
 #: src/components/keyboard-shortcuts-help.jsx:65
 msgid "<0>Shift</0> + <1>j</1>"
-msgstr ""
+msgstr "<0>Shift</0>+ <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
@@ -1003,7 +1003,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:79
 msgid "Load new posts"
-msgstr ""
+msgstr "Načíst nové příspěvky"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
 #: src/pages/catchup.jsx:1643
@@ -1247,7 +1247,7 @@ msgstr ""
 #: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1007
+#: src/pages/settings.jsx:1008
 #: src/pages/trending.jsx:347
 msgid "Mentions"
 msgstr ""
@@ -1302,7 +1302,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2029
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1011
+#: src/pages/settings.jsx:1012
 msgid "Likes"
 msgstr ""
 
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
-msgstr ""
+msgstr "Seznam nemusí fungovat, pokud je z jiného účtu."
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
@@ -2186,7 +2186,7 @@ msgstr ""
 
 #: src/components/status.jsx:1749
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
-msgstr ""
+msgstr "{repliesCount, plural, one {# odpověď} few {# odpovědi} many {# odpovědi} other {# odpovědi}}"
 
 #: src/components/status.jsx:1838
 msgid "Thread{0}"
@@ -2196,7 +2196,7 @@ msgstr ""
 #: src/components/status.jsx:1976
 #: src/components/status.jsx:2061
 msgid "Show less"
-msgstr ""
+msgstr "Zobrazit méně"
 
 #: src/components/status.jsx:1914
 #: src/components/status.jsx:1976
@@ -2205,7 +2205,7 @@ msgstr ""
 
 #: src/components/status.jsx:2061
 msgid "Show media"
-msgstr ""
+msgstr "Zobrazit média"
 
 #: src/components/status.jsx:2181
 msgid "Edited"
@@ -2289,7 +2289,7 @@ msgid "<0/> <1/> boosted"
 msgstr ""
 
 #: src/components/timeline.jsx:447
-#: src/pages/settings.jsx:1035
+#: src/pages/settings.jsx:1036
 msgid "New posts"
 msgstr ""
 
@@ -2353,7 +2353,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "Příspěvky účtu"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2887,7 +2887,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} již není sledován"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
@@ -3086,7 +3086,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1023
+#: src/pages/settings.jsx:1024
 msgid "Follow requests"
 msgstr ""
 
@@ -3333,160 +3333,160 @@ msgstr ""
 msgid "Translate to"
 msgstr ""
 
-#: src/pages/settings.jsx:378
+#: src/pages/settings.jsx:379
 msgid "System language ({systemTargetLanguageText})"
 msgstr ""
 
-#: src/pages/settings.jsx:404
+#: src/pages/settings.jsx:405
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr ""
 
-#: src/pages/settings.jsx:458
+#: src/pages/settings.jsx:459
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
 msgstr ""
 
-#: src/pages/settings.jsx:492
+#: src/pages/settings.jsx:493
 msgid "Auto inline translation"
 msgstr ""
 
-#: src/pages/settings.jsx:496
+#: src/pages/settings.jsx:497
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr ""
 
-#: src/pages/settings.jsx:516
+#: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"
 msgstr ""
 
-#: src/pages/settings.jsx:520
+#: src/pages/settings.jsx:521
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr ""
 
-#: src/pages/settings.jsx:549
+#: src/pages/settings.jsx:550
 msgid "Image description generator"
 msgstr ""
 
-#: src/pages/settings.jsx:554
+#: src/pages/settings.jsx:555
 msgid "Only for new images while composing new posts."
 msgstr ""
 
-#: src/pages/settings.jsx:561
+#: src/pages/settings.jsx:562
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr ""
 
-#: src/pages/settings.jsx:587
+#: src/pages/settings.jsx:588
 msgid "Server-side grouped notifications"
 msgstr ""
 
-#: src/pages/settings.jsx:591
+#: src/pages/settings.jsx:592
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr ""
 
-#: src/pages/settings.jsx:612
+#: src/pages/settings.jsx:613
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr ""
 
-#: src/pages/settings.jsx:617
+#: src/pages/settings.jsx:618
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:628
+#: src/pages/settings.jsx:629
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr ""
 
-#: src/pages/settings.jsx:645
+#: src/pages/settings.jsx:646
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:654
+#: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:680
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:718
+#: src/pages/settings.jsx:719
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr ""
 
-#: src/pages/settings.jsx:747
+#: src/pages/settings.jsx:748
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:755
+#: src/pages/settings.jsx:756
 msgid "Donate"
 msgstr ""
 
-#: src/pages/settings.jsx:763
+#: src/pages/settings.jsx:764
 msgid "Privacy Policy"
 msgstr ""
 
-#: src/pages/settings.jsx:770
+#: src/pages/settings.jsx:771
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:777
+#: src/pages/settings.jsx:778
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:792
+#: src/pages/settings.jsx:793
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:795
+#: src/pages/settings.jsx:796
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:920
-#: src/pages/settings.jsx:925
+#: src/pages/settings.jsx:921
+#: src/pages/settings.jsx:926
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:931
+#: src/pages/settings.jsx:932
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:938
+#: src/pages/settings.jsx:939
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:960
+#: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
-#: src/pages/settings.jsx:969
+#: src/pages/settings.jsx:970
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:978
+#: src/pages/settings.jsx:979
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:982
+#: src/pages/settings.jsx:983
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:986
+#: src/pages/settings.jsx:987
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1019
+#: src/pages/settings.jsx:1020
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1027
+#: src/pages/settings.jsx:1028
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1031
+#: src/pages/settings.jsx:1032
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1052
+#: src/pages/settings.jsx:1053
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1068
+#: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

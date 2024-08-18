@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 10:17\n"
+"PO-Revision-Date: 2024-08-18 11:27\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -170,7 +170,7 @@ msgstr "Erabiltzaileak informazio hau publiko ez egitea aukeratu du."
 
 #: src/components/account-info.jsx:803
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "jatorrizko {0} bidalketa, {1} erantzun, {2} bultzada"
+msgstr "{0} bidalketa original, {1} erantzun, {2} bultzada"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
@@ -183,7 +183,7 @@ msgstr "{0, plural, one {Azken bidalketa azken urte(et)an} other {Azken {1} bida
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
 msgid "Original"
-msgstr "Jatorrizkoa"
+msgstr "Originala"
 
 #: src/components/account-info.jsx:860
 #: src/components/status.jsx:2152
@@ -2536,7 +2536,7 @@ msgstr "Taldeak"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "{selectedFilterCategory, select, all {Bidalketa guztiak} original {Jatorrizko bidalketak} replies {Erantzunak} boosts {Bultzadak} followedTags {Jarraitutako traolak} groups {Taldeak} filtered {Iragazitako bidalketak}} erakusten, {sortBy, select, createdAt {{sortOrder, select, asc {zaharrena} desc {berriena}}} reblogsCount {{sortOrder, select, asc {bultzada gutxien dituena} desc {bultzada gehien dituena}}} favouritesCount {{sortOrder, select, asc {gogoko gutxien dituena} desc {gogoko gehien dituena}}} repliesCount {{sortOrder, select, asc {erantzun gutxien dituena} desc {erantzun gehien dituena}}} density {{sortOrder, select, asc {dentsitate txikiena duena} desc {dentsitate handiena duena}}}}ren arabera sailkatuta lehenengo{groupBy, select, account {, egilearen arabera aldekatuta} other {}}"
+msgstr "{selectedFilterCategory, select, all {Bidalketa guztiak} original {Bidalketa originalak} replies {Erantzunak} boosts {Bultzadak} followedTags {Jarraitutako traolak} groups {Taldeak} filtered {Iragazitako bidalketak}} erakusten, {sortBy, select, createdAt {{sortOrder, select, asc {zaharrena} desc {berriena}}} reblogsCount {{sortOrder, select, asc {bultzada gutxien dituena} desc {bultzada gehien dituena}}} favouritesCount {{sortOrder, select, asc {gogoko gutxien dituena} desc {gogoko gehien dituena}}} repliesCount {{sortOrder, select, asc {erantzun gutxien dituena} desc {erantzun gehien dituena}}} density {{sortOrder, select, asc {dentsitate txikiena duena} desc {dentsitate handiena duena}}}}ren arabera sailkatuta lehenengo{groupBy, select, account {, egilearen arabera aldekatuta} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
@@ -3593,7 +3593,7 @@ msgstr "Ez dago bogadn dagoen joerarik."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."
-msgstr "Mastodon erabiltzeko web-bezero minimalista eta tematia."
+msgstr "Mastodon erabiltzeko web-bezero minimalista eta aparta."
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
@@ -3621,7 +3621,7 @@ msgstr "Bultzaden karrusela"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr "Bereizi bisualki jatorrizko bidalketak eta partekatutakoak (bultzadak)."
+msgstr "Bereizi bisualki bidalketa originalak eta partekatutakoak (bultzadak)."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"

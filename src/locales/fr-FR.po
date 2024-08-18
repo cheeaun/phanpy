@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 10:17\n"
+"PO-Revision-Date: 2024-08-18 12:31\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -40,7 +40,7 @@ msgstr "Automatisé"
 #: src/components/status.jsx:439
 #: src/pages/catchup.jsx:1438
 msgid "Group"
-msgstr "Grouper"
+msgstr "Groupe"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
@@ -84,7 +84,7 @@ msgstr "Inscrit depuis le <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
-msgstr ""
+msgstr "Pour toujours"
 
 #: src/components/account-info.jsx:378
 msgid "Unable to load account."
@@ -840,7 +840,7 @@ msgstr "Chercher des GIFs"
 
 #: src/components/compose.jsx:3341
 msgid "Powered by GIPHY"
-msgstr "Alimenté par GIPHY"
+msgstr "Propulsé par GIPHY"
 
 #: src/components/compose.jsx:3349
 msgid "Type to search GIFs"
@@ -963,7 +963,7 @@ msgstr "Voir plus…"
 #: src/components/timeline.jsx:518
 #: src/pages/search.jsx:459
 msgid "The end."
-msgstr "La fin."
+msgstr "C'est fini."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
@@ -1230,7 +1230,7 @@ msgstr "Menu"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr ""
+msgstr "Recharger la page maintenant pour la mettre à jour ?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
@@ -1493,11 +1493,11 @@ msgstr "[Notification de type inconnu : {type}]"
 #: src/components/status.jsx:937
 #: src/components/status.jsx:947
 msgid "Boosted/Liked by…"
-msgstr "Partagé par/Favori de…"
+msgstr "Partagée par / Aimée par …"
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
-msgstr "Favori de…"
+msgstr "Aimée par…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
@@ -1938,11 +1938,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "Importer les raccourcis ?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
-msgstr ""
+msgstr "ou remplacer…"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
@@ -1954,7 +1954,7 @@ msgstr "Exporter"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
-msgstr ""
+msgstr "Raccourcis copiés"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Unable to copy shortcuts"
@@ -1962,7 +1962,7 @@ msgstr "Les raccourcis n’ont pas pu être copiés."
 
 #: src/components/shortcuts-settings.jsx:1047
 msgid "Shortcut settings copied"
-msgstr ""
+msgstr "Les paramètres des raccourcis ont été copiés"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Unable to copy shortcut settings"
@@ -1978,7 +1978,7 @@ msgstr "Enregistrement des raccourcis sur votre instance…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "Raccourcis enregistrés"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
@@ -1990,11 +1990,11 @@ msgstr "Synchroniser avec votre instance"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0,plural, one{# caractère} other{# caractères}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "Raccourcis JSON bruts"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
@@ -2080,7 +2080,7 @@ msgstr "Retirer des signets"
 
 #: src/components/status.jsx:1031
 msgid "View post by @{0}"
-msgstr ""
+msgstr "Voir la publication de @{0}"
 
 #: src/components/status.jsx:1049
 msgid "Show Edit History"
@@ -2980,7 +2980,7 @@ msgstr "Tout voir"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr ""
+msgstr "Résolution en cours …"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
@@ -3070,7 +3070,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:101
 msgid "Who are limited by server moderators"
-msgstr ""
+msgstr "Qui sont limité·e·s par les modérateur·rice·s du serveur"
 
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
@@ -3100,7 +3100,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:725
 msgid "Only mentions"
-msgstr ""
+msgstr "Mentions seulement"
 
 #: src/pages/notifications.jsx:729
 msgid "Today"
@@ -3351,7 +3351,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:497
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Traduire automatiquement les messages du fil d’actualité. Ne fonctionne seulement qu’avec les messages <0>short</0> et sans avertissements, médias, ni sondages."
+msgstr "Affiche automatiquement la traduction des messages sur le fil d’actualité. Ne fonctionne qu’avec les messages <0>short</0> sans avertissement de contenu, médias, ni sondages."
 
 #: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fa\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 16:42\n"
+"PO-Revision-Date: 2024-08-19 14:40\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -47,7 +47,7 @@ msgid "Mutual"
 msgstr "متقابل"
 
 #: src/components/account-block.jsx:180
-#: src/components/account-info.jsx:1658
+#: src/components/account-info.jsx:1675
 msgid "Requested"
 msgstr "درخواست‌شده"
 
@@ -55,22 +55,22 @@ msgstr "درخواست‌شده"
 #: src/components/account-info.jsx:417
 #: src/components/account-info.jsx:743
 #: src/components/account-info.jsx:757
-#: src/components/account-info.jsx:1649
+#: src/components/account-info.jsx:1666
 #: src/components/nav-menu.jsx:193
 #: src/components/shortcuts-settings.jsx:137
 #: src/pages/following.jsx:20
 #: src/pages/following.jsx:131
 msgid "Following"
-msgstr "دنبال‌کننده"
+msgstr "پی‌گرفته"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1060
 msgid "Follows you"
-msgstr "شما را دنبال میکند"
+msgstr "شما را پی میگیرد"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
-msgstr "{followersCount, plural,one {# دنبال‌کننده} other {# دنبال‌کننده‌ها}}"
+msgstr "{followersCount, plural,one {# پی‌گرفته} other {# پی‌گرفته‌ها}}"
 
 #: src/components/account-block.jsx:205
 #: src/components/account-info.jsx:681
@@ -98,7 +98,7 @@ msgstr "برو به صفحهٔ حساب کاربری"
 #: src/components/account-info.jsx:703
 #: src/components/account-info.jsx:733
 msgid "Followers"
-msgstr "دنبال‌کننده‌ها"
+msgstr "پی‌گیرنده‌ها"
 
 #: src/components/account-info.jsx:420
 #: src/components/account-info.jsx:774
@@ -113,11 +113,11 @@ msgstr "فرسته‌ها"
 #: src/components/compose.jsx:2444
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
-#: src/components/status.jsx:1625
-#: src/components/status.jsx:1642
-#: src/components/status.jsx:1766
-#: src/components/status.jsx:2361
+#: src/components/status.jsx:1628
+#: src/components/status.jsx:1645
+#: src/components/status.jsx:1769
 #: src/components/status.jsx:2364
+#: src/components/status.jsx:2367
 #: src/pages/account-statuses.jsx:528
 #: src/pages/accounts.jsx:106
 #: src/pages/hashtag.jsx:199
@@ -133,17 +133,17 @@ msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr ""
 
 #: src/components/account-info.jsx:585
-#: src/components/account-info.jsx:1272
+#: src/components/account-info.jsx:1274
 msgid "Handle copied"
 msgstr ""
 
 #: src/components/account-info.jsx:588
-#: src/components/account-info.jsx:1275
+#: src/components/account-info.jsx:1277
 msgid "Unable to copy handle"
 msgstr ""
 
 #: src/components/account-info.jsx:594
-#: src/components/account-info.jsx:1281
+#: src/components/account-info.jsx:1283
 msgid "Copy handle"
 msgstr ""
 
@@ -174,11 +174,11 @@ msgstr "{0} فرسته‌های اصلی، {1} پاسخ‌ها، {2} تقویت�
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr ""
+msgstr "{0, plural, one {{1, plural, one {۱ فرستهٔ آخر در ۱ روز گذشته} other {۱ فرستهٔ آخر در {2} روز گذشته}}} other {{3, plural, one {{4} فرستهٔ آخر در ۱ روز گذشته} other {{5} فرستهٔ آخر در {6} روز گذشته}}}}"
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {۱ فرستهٔ آخر در سال گذشته} other {{1} فرستهٔ آخر در سال گذشته}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -186,7 +186,7 @@ msgid "Original"
 msgstr "اصلی"
 
 #: src/components/account-info.jsx:860
-#: src/components/status.jsx:2152
+#: src/components/status.jsx:2155
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1412
 #: src/pages/catchup.jsx:2023
@@ -217,7 +217,7 @@ msgstr "آخرین فرسته: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
-msgstr "ساکت‌شده"
+msgstr "خموشانده"
 
 #: src/components/account-info.jsx:1083
 msgid "Blocked"
@@ -228,182 +228,182 @@ msgid "Private note"
 msgstr "یادداشت خصوصی"
 
 #: src/components/account-info.jsx:1149
-msgid "Mention @{username}"
-msgstr "یادکردن @{username}"
+msgid "Mention <0>@{username}</0>"
+msgstr "اشاره به <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1159
+#: src/components/account-info.jsx:1161
 msgid "Translate bio"
 msgstr "ترجمهٔ شرح حال"
 
-#: src/components/account-info.jsx:1170
+#: src/components/account-info.jsx:1172
 msgid "Edit private note"
 msgstr "ویرایش یادداشت خصوصی"
 
-#: src/components/account-info.jsx:1170
+#: src/components/account-info.jsx:1172
 msgid "Add private note"
 msgstr "اضافه کردن یادداشت خصوصی"
 
-#: src/components/account-info.jsx:1190
+#: src/components/account-info.jsx:1192
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "آگاهی‌ها برای فرسته‌های @{username} فعال شدند."
 
-#: src/components/account-info.jsx:1191
+#: src/components/account-info.jsx:1193
 msgid "Notifications disabled for @{username}'s posts."
 msgstr "آگاهی‌ها برای فرسته‌های @{username} غیرفعال شدند."
 
-#: src/components/account-info.jsx:1203
+#: src/components/account-info.jsx:1205
 msgid "Disable notifications"
 msgstr "غیرفعال کردن آگاهی‌ها"
 
-#: src/components/account-info.jsx:1204
+#: src/components/account-info.jsx:1206
 msgid "Enable notifications"
 msgstr "فعال‌سازی آگاهی‌ها"
 
-#: src/components/account-info.jsx:1221
+#: src/components/account-info.jsx:1223
 msgid "Boosts from @{username} enabled."
 msgstr "تقویت‌های @{username} فعال شدند."
 
-#: src/components/account-info.jsx:1222
+#: src/components/account-info.jsx:1224
 msgid "Boosts from @{username} disabled."
 msgstr "تقویت‌های @{username} غیرفعال شدند."
 
-#: src/components/account-info.jsx:1233
+#: src/components/account-info.jsx:1235
 msgid "Disable boosts"
 msgstr "غیرفعال کردن تقویت‌ها"
 
-#: src/components/account-info.jsx:1233
+#: src/components/account-info.jsx:1235
 msgid "Enable boosts"
 msgstr "فعال کردن تقویت‌ها"
 
-#: src/components/account-info.jsx:1249
-#: src/components/account-info.jsx:1259
-#: src/components/account-info.jsx:1842
+#: src/components/account-info.jsx:1251
+#: src/components/account-info.jsx:1261
+#: src/components/account-info.jsx:1859
 msgid "Add/Remove from Lists"
 msgstr "اضافه/حذف کردن از سیاهه‌ها"
 
-#: src/components/account-info.jsx:1298
-#: src/components/status.jsx:1068
+#: src/components/account-info.jsx:1300
+#: src/components/status.jsx:1071
 msgid "Link copied"
 msgstr "پیوند رونوشت شد"
 
-#: src/components/account-info.jsx:1301
-#: src/components/status.jsx:1071
+#: src/components/account-info.jsx:1303
+#: src/components/status.jsx:1074
 msgid "Unable to copy link"
 msgstr "ناتوان در رونوشت برداشتن از پیوند"
 
-#: src/components/account-info.jsx:1307
+#: src/components/account-info.jsx:1309
 #: src/components/shortcuts-settings.jsx:1056
-#: src/components/status.jsx:1077
-#: src/components/status.jsx:3099
+#: src/components/status.jsx:1080
+#: src/components/status.jsx:3102
 msgid "Copy"
 msgstr "رونوشت"
 
-#: src/components/account-info.jsx:1322
+#: src/components/account-info.jsx:1324
 #: src/components/shortcuts-settings.jsx:1074
-#: src/components/status.jsx:1093
+#: src/components/status.jsx:1096
 msgid "Sharing doesn't seem to work."
 msgstr "انگار همرسانی کار نمیکند."
 
-#: src/components/account-info.jsx:1328
-#: src/components/status.jsx:1099
+#: src/components/account-info.jsx:1330
+#: src/components/status.jsx:1102
 msgid "Share…"
 msgstr "همرسانی…"
 
-#: src/components/account-info.jsx:1348
+#: src/components/account-info.jsx:1350
 msgid "Unmuted @{username}"
-msgstr "ساکت‌نشده @{username}"
+msgstr "ناخموشیده @{username}"
 
-#: src/components/account-info.jsx:1360
-msgid "Unmute @{username}"
-msgstr "ساکت نکردن @{username}"
+#: src/components/account-info.jsx:1362
+msgid "Unmute <0>@{username}</0>"
+msgstr "ناخموشاندن <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1374
-msgid "Mute @{username}…"
-msgstr "ساکت کردن @{username}…"
+#: src/components/account-info.jsx:1378
+msgid "Mute <0>@{username}</0>…"
+msgstr "خموشاندن <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1404
+#: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
-msgstr "@{username} برای {0} ساکت شده"
+msgstr "@{username} برای {0} خموشیده"
 
-#: src/components/account-info.jsx:1416
+#: src/components/account-info.jsx:1422
 msgid "Unable to mute @{username}"
-msgstr "ناتوانی در ساکت کردن @{username}"
+msgstr "ناتوانی در خموشاندن @{username}"
 
-#: src/components/account-info.jsx:1437
-msgid "Remove @{username} from followers?"
-msgstr "@{username} را از دنبال‌کنندگان حذف میکنید؟"
+#: src/components/account-info.jsx:1443
+msgid "Remove <0>@{username}</0> from followers?"
+msgstr "<0>@{username}</0> را از پی‌گرفتگان حذف میکنید؟"
 
-#: src/components/account-info.jsx:1454
+#: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
-msgstr "@{username} از دنبال‌کنندگان حذف شد"
+msgstr "@{username} از پی‌گیرنده حذف شد"
 
-#: src/components/account-info.jsx:1466
+#: src/components/account-info.jsx:1475
 msgid "Remove follower…"
-msgstr "حذف کردن دنبال‌کننده…"
+msgstr "حذف کردن پی‌گرفته…"
 
-#: src/components/account-info.jsx:1477
-msgid "Block @{username}?"
-msgstr "مسدود کردن @{username}؟"
+#: src/components/account-info.jsx:1486
+msgid "Block <0>@{username}</0>?"
+msgstr ""
 
-#: src/components/account-info.jsx:1496
+#: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
 msgstr "نامسدود کردن @{username}"
 
-#: src/components/account-info.jsx:1504
+#: src/components/account-info.jsx:1515
 msgid "Blocked @{username}"
 msgstr "@{username} مسدود شد"
 
-#: src/components/account-info.jsx:1512
+#: src/components/account-info.jsx:1523
 msgid "Unable to unblock @{username}"
 msgstr "ناتوانی در نامسدود کردن @{username}"
 
-#: src/components/account-info.jsx:1514
+#: src/components/account-info.jsx:1525
 msgid "Unable to block @{username}"
 msgstr "ناتوانی در مسدود کردن @{username}"
 
-#: src/components/account-info.jsx:1524
-msgid "Unblock @{username}"
-msgstr "نامسدود کردن @{username}"
+#: src/components/account-info.jsx:1535
+msgid "Unblock <0>@{username}</0>"
+msgstr ""
 
-#: src/components/account-info.jsx:1531
-msgid "Block @{username}…"
-msgstr "مسدود کردن @{username}…"
+#: src/components/account-info.jsx:1544
+msgid "Block <0>@{username}</0>…"
+msgstr ""
 
-#: src/components/account-info.jsx:1546
-msgid "Report @{username}…"
-msgstr "گزارش کردن @{username}…"
+#: src/components/account-info.jsx:1561
+msgid "Report <0>@{username}</0>…"
+msgstr ""
 
-#: src/components/account-info.jsx:1564
-#: src/components/account-info.jsx:2072
+#: src/components/account-info.jsx:1581
+#: src/components/account-info.jsx:2092
 msgid "Edit profile"
 msgstr "ویرایش نمایه"
 
-#: src/components/account-info.jsx:1600
+#: src/components/account-info.jsx:1617
 msgid "Withdraw follow request?"
-msgstr "برگرداندن درخواست دنبال؟"
+msgstr "برگرداندن درخواست پی‌گیری؟"
 
-#: src/components/account-info.jsx:1601
+#: src/components/account-info.jsx:1618
 msgid "Unfollow @{0}?"
-msgstr "دنبال نکردن @{0}؟"
+msgstr "پی نگرفتن @{0}؟"
 
-#: src/components/account-info.jsx:1652
+#: src/components/account-info.jsx:1669
 msgid "Unfollow…"
-msgstr "دنبال نکردن…"
+msgstr "پی نگرفتن…"
 
-#: src/components/account-info.jsx:1661
+#: src/components/account-info.jsx:1678
 msgid "Withdraw…"
 msgstr "برگرداندن…"
 
-#: src/components/account-info.jsx:1668
-#: src/components/account-info.jsx:1672
+#: src/components/account-info.jsx:1685
+#: src/components/account-info.jsx:1689
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
-msgstr "دنبال کردن"
+msgstr "پی گرفتن"
 
-#: src/components/account-info.jsx:1783
-#: src/components/account-info.jsx:1837
-#: src/components/account-info.jsx:1970
-#: src/components/account-info.jsx:2067
+#: src/components/account-info.jsx:1800
+#: src/components/account-info.jsx:1854
+#: src/components/account-info.jsx:1987
+#: src/components/account-info.jsx:2087
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
 #: src/components/compose.jsx:2400
@@ -422,85 +422,85 @@ msgstr "دنبال کردن"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2824
-#: src/components/status.jsx:3063
-#: src/components/status.jsx:3561
+#: src/components/status.jsx:2827
+#: src/components/status.jsx:3066
+#: src/components/status.jsx:3564
 #: src/pages/accounts.jsx:33
 #: src/pages/catchup.jsx:1548
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
-#: src/pages/notifications.jsx:1051
+#: src/pages/notifications.jsx:1054
 #: src/pages/settings.jsx:69
 #: src/pages/status.jsx:1256
 msgid "Close"
 msgstr "بستن"
 
-#: src/components/account-info.jsx:1788
+#: src/components/account-info.jsx:1805
 msgid "Translated Bio"
 msgstr "شرح حال ترجمه شد"
 
-#: src/components/account-info.jsx:1882
+#: src/components/account-info.jsx:1899
 msgid "Unable to remove from list."
 msgstr "ناتوانی در حذف از سیاهه."
 
-#: src/components/account-info.jsx:1883
+#: src/components/account-info.jsx:1900
 msgid "Unable to add to list."
 msgstr "ناتوانی در اضافه کردن به سیاهه."
 
-#: src/components/account-info.jsx:1902
+#: src/components/account-info.jsx:1919
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
 msgstr "ناتوانی در بارگذاری سیاهه‌ها."
 
-#: src/components/account-info.jsx:1906
+#: src/components/account-info.jsx:1923
 msgid "No lists."
 msgstr "سیاهه‌ای نیست."
 
-#: src/components/account-info.jsx:1917
+#: src/components/account-info.jsx:1934
 #: src/components/list-add-edit.jsx:37
 #: src/pages/lists.jsx:58
 msgid "New list"
 msgstr "سیاهه جدید"
 
-#: src/components/account-info.jsx:1975
-msgid "Private note about @{0}"
-msgstr "یادداشت خصوصی دربارهٔ @{0}"
+#: src/components/account-info.jsx:1992
+msgid "Private note about <0>@{0}</0>"
+msgstr ""
 
-#: src/components/account-info.jsx:2002
+#: src/components/account-info.jsx:2022
 msgid "Unable to update private note."
 msgstr "ناتوانی در بروزرسانی یادداشت خصوصی."
 
-#: src/components/account-info.jsx:2025
-#: src/components/account-info.jsx:2195
+#: src/components/account-info.jsx:2045
+#: src/components/account-info.jsx:2215
 msgid "Cancel"
 msgstr "لغو"
 
-#: src/components/account-info.jsx:2030
+#: src/components/account-info.jsx:2050
 msgid "Save & close"
 msgstr "ذخیره و بستن"
 
-#: src/components/account-info.jsx:2123
+#: src/components/account-info.jsx:2143
 msgid "Unable to update profile."
 msgstr "ناتوانی در بروزرسانی نمایه."
 
-#: src/components/account-info.jsx:2143
+#: src/components/account-info.jsx:2163
 msgid "Bio"
 msgstr "شرح حال"
 
-#: src/components/account-info.jsx:2156
+#: src/components/account-info.jsx:2176
 msgid "Extra fields"
 msgstr "مورد اضافی"
 
-#: src/components/account-info.jsx:2162
+#: src/components/account-info.jsx:2182
 msgid "Label"
 msgstr "برچسب"
 
-#: src/components/account-info.jsx:2165
+#: src/components/account-info.jsx:2185
 msgid "Content"
 msgstr "محتوا"
 
-#: src/components/account-info.jsx:2198
+#: src/components/account-info.jsx:2218
 #: src/components/list-add-edit.jsx:147
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/filters.jsx:554
@@ -508,11 +508,11 @@ msgstr "محتوا"
 msgid "Save"
 msgstr "ذخیره"
 
-#: src/components/account-info.jsx:2251
+#: src/components/account-info.jsx:2271
 msgid "username"
 msgstr "نام کاربری"
 
-#: src/components/account-info.jsx:2255
+#: src/components/account-info.jsx:2275
 msgid "server domain name"
 msgstr "سامانهٔ نام دامنه"
 
@@ -605,7 +605,7 @@ msgid "Attachment #{i} failed"
 msgstr "پیوست #{i} شکست خورد"
 
 #: src/components/compose.jsx:1118
-#: src/components/status.jsx:1951
+#: src/components/status.jsx:1954
 #: src/components/timeline.jsx:975
 msgid "Content warning"
 msgstr "هشدار محتوا"
@@ -618,7 +618,7 @@ msgstr "هشدار محتوا یا رسانهٔ حساس"
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:285
 msgid "Public"
-msgstr "عمومی"
+msgstr "همگانی"
 
 #: src/components/compose.jsx:1173
 #: src/components/status.jsx:94
@@ -630,11 +630,11 @@ msgstr "فهرست‌نشده"
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:291
 msgid "Followers only"
-msgstr "فقط دنبال‌کنندگان"
+msgstr "فقط پی‌گیرنده‌ها"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:96
-#: src/components/status.jsx:1829
+#: src/components/status.jsx:1832
 msgid "Private mention"
 msgstr "اشارهٔ خصوصی"
 
@@ -665,9 +665,9 @@ msgstr "اضافه کردن شکلک شخصی‌سازی‌شده"
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:830
-#: src/components/status.jsx:1605
-#: src/components/status.jsx:1606
-#: src/components/status.jsx:2257
+#: src/components/status.jsx:1608
+#: src/components/status.jsx:1609
+#: src/components/status.jsx:2260
 msgid "Reply"
 msgstr "پاسخ دادن"
 
@@ -801,7 +801,7 @@ msgstr "جستجوی حساب‌ها"
 
 #: src/components/compose.jsx:2931
 #: src/components/shortcuts-settings.jsx:712
-#: src/pages/list.jsx:356
+#: src/pages/list.jsx:359
 msgid "Add"
 msgstr "اضافه کردن"
 
@@ -871,47 +871,47 @@ msgstr "پیش‌نویس‌های ارسال‌نشده"
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
 msgstr "انگار پیش‌نویس‌های ارسال‌نشده دارید. بیایید از جایی که رها کرده‌اید ادامه دهیم."
 
-#: src/components/drafts.jsx:100
+#: src/components/drafts.jsx:102
 msgid "Delete this draft?"
 msgstr "این پیش‌نویس را حذف میکنید؟"
 
-#: src/components/drafts.jsx:115
+#: src/components/drafts.jsx:117
 msgid "Error deleting draft! Please try again."
 msgstr "خطا در حذف پیش‌نویس! لطفا دوباره تلاش کنید."
 
-#: src/components/drafts.jsx:125
+#: src/components/drafts.jsx:127
 #: src/components/list-add-edit.jsx:183
-#: src/components/status.jsx:1240
+#: src/components/status.jsx:1243
 #: src/pages/filters.jsx:587
 msgid "Delete…"
 msgstr "حذف…"
 
-#: src/components/drafts.jsx:144
+#: src/components/drafts.jsx:146
 msgid "Error fetching reply-to status!"
 msgstr ""
 
-#: src/components/drafts.jsx:169
+#: src/components/drafts.jsx:171
 msgid "Delete all drafts?"
 msgstr "حذف کل پیش‌نویس‌ها؟"
 
-#: src/components/drafts.jsx:187
+#: src/components/drafts.jsx:189
 msgid "Error deleting drafts! Please try again."
 msgstr "خطا در حذف پیش‌نویس‌ها! لطفا دوباره تلاش کنید."
 
-#: src/components/drafts.jsx:199
+#: src/components/drafts.jsx:201
 msgid "Delete all…"
 msgstr "حذف همه…"
 
-#: src/components/drafts.jsx:207
+#: src/components/drafts.jsx:209
 msgid "No drafts found."
 msgstr "پیش‌نویسی یافت نشد."
 
-#: src/components/drafts.jsx:243
+#: src/components/drafts.jsx:245
 #: src/pages/catchup.jsx:1895
 msgid "Poll"
 msgstr "نظرسنجی"
 
-#: src/components/drafts.jsx:246
+#: src/components/drafts.jsx:248
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
 msgstr "رسانه"
@@ -930,7 +930,7 @@ msgid "Reject"
 msgstr "رد کردن"
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1167
+#: src/pages/notifications.jsx:1173
 msgid "Accepted"
 msgstr "قبول شده"
 
@@ -1082,9 +1082,9 @@ msgstr "<0>م</0> یا <1>ب</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:838
-#: src/components/status.jsx:2283
-#: src/components/status.jsx:2315
-#: src/components/status.jsx:2316
+#: src/components/status.jsx:2286
+#: src/components/status.jsx:2318
+#: src/components/status.jsx:2319
 msgid "Boost"
 msgstr "تقویت کردن"
 
@@ -1094,8 +1094,8 @@ msgstr "<0>دگرساز</0> + <1>ذ</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:172
 #: src/components/status.jsx:923
-#: src/components/status.jsx:2340
-#: src/components/status.jsx:2341
+#: src/components/status.jsx:2343
+#: src/components/status.jsx:2344
 msgid "Bookmark"
 msgstr "نشانک‌گذاری"
 
@@ -1129,7 +1129,7 @@ msgstr "نمایش پاسخ‌ها به سیاههٔ اعضا"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr "نمایش پاسخ‌ها به افرادی که دنبال میکنم"
+msgstr "نمایش پاسخ‌ها به افرادی که پی میگیرم"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
@@ -1137,7 +1137,7 @@ msgstr "پاسخ‌ها را نمایش نده"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr "پنهان کردن فرسته‌ها در این سیاهه از خانه/دنبال‌شده"
+msgstr "پنهان کردن فرسته‌ها در این سیاهه از خانه/پی‌گرفته"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
@@ -1203,9 +1203,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "پالایش‌شده: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3391
-#: src/components/status.jsx:3487
-#: src/components/status.jsx:3565
+#: src/components/status.jsx:3394
+#: src/components/status.jsx:3490
+#: src/components/status.jsx:3568
 #: src/components/timeline.jsx:964
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1843
@@ -1310,7 +1310,7 @@ msgstr "برگزیده‌ها"
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
-msgstr "برچسب‌های دنبال‌شده"
+msgstr "برچسب‌های پی‌گرفته‌شده"
 
 #: src/components/nav-menu.jsx:310
 #: src/pages/account-statuses.jsx:331
@@ -1322,11 +1322,11 @@ msgstr "پالایه‌ها"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
-msgstr "کاربران ساکت‌شده"
+msgstr "کاربران خموشیده‌شده"
 
 #: src/components/nav-menu.jsx:326
 msgid "Muted users…"
-msgstr "کاربران ساکت‌شده…"
+msgstr "کاربران خموشیده‌شده…"
 
 #: src/components/nav-menu.jsx:333
 msgid "Blocked users"
@@ -1403,7 +1403,7 @@ msgstr ""
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr "{account} درخواست کرد شما را دنبال کند."
+msgstr "{account} درخواست کرد شما را پی‌گیری کند."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -1451,11 +1451,11 @@ msgstr "یک مدیر از <0>{from}</0> <1>{targetName}</1> را تعلیق ک�
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr "یک مدیر از <0>{from}</0> <1>{targetName}</1> را مسدود کرده است. دنبال‌کننده‌های تأثیرپذیرفته: {followersCount}، دنبال‌شده‌های تأثیرپذیرفته: {followingCount}."
+msgstr "یک مدیر از <0>{from}</0> <1>{targetName}</1> را مسدود کرده است. پی‌گیرنده‌های تأثیرپذیرفته: {followersCount}، پی‌گرفته‌های تأثیرپذیرفته: {followingCount}."
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr "شما <0>{targetName}</0> را مسدود کرده‌اید. دنبال‌کننده‌های حذف‌شده: {followersCount}، دنبال‌شده‌های حذف‌شده: {followingCount}."
+msgstr "شما <0>{targetName}</0> را مسدود کرده‌اید. پی‌گیرنده حذف‌شده: {followersCount}، پی‌گرفته‌های حذف‌شده: {followingCount}."
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
@@ -1505,7 +1505,7 @@ msgstr "تقویت‌شده توسط…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr "دنبال‌شده توسط…"
+msgstr "پی‌گرفته‌شده توسط…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
@@ -1668,7 +1668,7 @@ msgstr "ارسال کردن گزارش"
 
 #: src/components/report-modal.jsx:274
 msgid "Muted {username}"
-msgstr "ساکت‌شده {username}"
+msgstr "خموشیده {username}"
 
 #: src/components/report-modal.jsx:277
 msgid "Unable to mute {username}"
@@ -1692,39 +1692,39 @@ msgstr ""
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
+msgstr "{query} <0>‒ حساب‌های کاربری، برچسب‌ها و فرسته‌ها</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "فرسته‌هایی با <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr ""
+msgstr "فرسته‌هایی که با <0>#{0}</0> برچسب‌گذاری شده‌اند"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "بررسی کردن <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
-msgstr ""
+msgstr "حساب‌های کاربری با <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "خانه/پی‌گرفته"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
-msgstr ""
+msgstr "همگانی (محلی/نامتمرکز)"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "حساب کاربری"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "برچسب"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
@@ -1802,7 +1802,7 @@ msgid "Move down"
 msgstr "حرکت به پایین"
 
 #: src/components/shortcuts-settings.jsx:376
-#: src/components/status.jsx:1205
+#: src/components/status.jsx:1208
 #: src/pages/list.jsx:170
 msgid "Edit"
 msgstr "ویرایش"
@@ -2026,18 +2026,18 @@ msgstr "فرستهٔ @{0} نشانک‌گذاری شد"
 
 #: src/components/status.jsx:838
 #: src/components/status.jsx:900
-#: src/components/status.jsx:2283
-#: src/components/status.jsx:2315
+#: src/components/status.jsx:2286
+#: src/components/status.jsx:2318
 msgid "Unboost"
 msgstr "ناتقویت"
 
 #: src/components/status.jsx:854
-#: src/components/status.jsx:2298
+#: src/components/status.jsx:2301
 msgid "Quote"
 msgstr "نقل قول"
 
 #: src/components/status.jsx:862
-#: src/components/status.jsx:2307
+#: src/components/status.jsx:2310
 msgid "Some media have no descriptions."
 msgstr "بعضی از رسانه‌ها شرح ندارند."
 
@@ -2046,12 +2046,12 @@ msgid "Old post (<0>{0}</0>)"
 msgstr "فرستهٔ قدیمی (<0>{0}</0>)"
 
 #: src/components/status.jsx:888
-#: src/components/status.jsx:1330
+#: src/components/status.jsx:1333
 msgid "Unboosted @{0}'s post"
 msgstr "فرستهٔ @{0} ناتقویت شد"
 
 #: src/components/status.jsx:889
-#: src/components/status.jsx:1331
+#: src/components/status.jsx:1334
 msgid "Boosted @{0}'s post"
 msgstr "فرستهٔ @{0} تقویت شد"
 
@@ -2060,238 +2060,238 @@ msgid "Boost…"
 msgstr "تقویت…"
 
 #: src/components/status.jsx:913
-#: src/components/status.jsx:1615
-#: src/components/status.jsx:2328
+#: src/components/status.jsx:1618
+#: src/components/status.jsx:2331
 msgid "Unlike"
 msgstr "نابرگزیدن"
 
 #: src/components/status.jsx:914
-#: src/components/status.jsx:1615
-#: src/components/status.jsx:1616
-#: src/components/status.jsx:2328
-#: src/components/status.jsx:2329
+#: src/components/status.jsx:1618
+#: src/components/status.jsx:1619
+#: src/components/status.jsx:2331
+#: src/components/status.jsx:2332
 msgid "Like"
 msgstr "برگزیدن"
 
 #: src/components/status.jsx:923
-#: src/components/status.jsx:2340
+#: src/components/status.jsx:2343
 msgid "Unbookmark"
 msgstr "نانشانک‌گذاری"
 
 #: src/components/status.jsx:1031
-msgid "View post by @{0}"
+msgid "View post by <0>@{0}</0>"
 msgstr ""
 
-#: src/components/status.jsx:1049
+#: src/components/status.jsx:1052
 msgid "Show Edit History"
 msgstr "نمایش تاریخچهٔ ویرایش"
 
-#: src/components/status.jsx:1052
+#: src/components/status.jsx:1055
 msgid "Edited: {editedDateText}"
 msgstr "ویرایش‌شده: {editedDateText}"
 
-#: src/components/status.jsx:1112
-#: src/components/status.jsx:3068
+#: src/components/status.jsx:1115
+#: src/components/status.jsx:3071
 msgid "Embed post"
-msgstr "فرستهٔ توکار"
+msgstr "فرستهٔ جاسازی‌شده"
 
-#: src/components/status.jsx:1126
+#: src/components/status.jsx:1129
 msgid "Conversation unmuted"
-msgstr "گفتگو ناساکت شد"
+msgstr "گفتگو ناخموشیده شد"
 
-#: src/components/status.jsx:1126
+#: src/components/status.jsx:1129
 msgid "Conversation muted"
-msgstr "گفتگو ساکت شد"
+msgstr "گفتگو خموشیده شد"
 
-#: src/components/status.jsx:1132
+#: src/components/status.jsx:1135
 msgid "Unable to unmute conversation"
-msgstr "ناتوان در ناساکت کردن گفتگو"
+msgstr "ناتوان در ناخموشاندن گفتگو"
 
-#: src/components/status.jsx:1133
+#: src/components/status.jsx:1136
 msgid "Unable to mute conversation"
-msgstr "ناتوان در ساکت کردن گفتگو"
+msgstr "ناتوان در خموشاندن گفتگو"
 
-#: src/components/status.jsx:1142
+#: src/components/status.jsx:1145
 msgid "Unmute conversation"
-msgstr "ناساکت کردن گفتگو"
+msgstr "ناخموشاندن گفتگو"
 
-#: src/components/status.jsx:1149
+#: src/components/status.jsx:1152
 msgid "Mute conversation"
-msgstr "ساکت کردن گفتگو"
+msgstr "خموشاندن گفتگو"
 
-#: src/components/status.jsx:1165
+#: src/components/status.jsx:1168
 msgid "Post unpinned from profile"
 msgstr "سنجاق فرسته از نمایه برداشته شد"
 
-#: src/components/status.jsx:1166
+#: src/components/status.jsx:1169
 msgid "Post pinned to profile"
 msgstr "فرسته به نمایه سنجاق شد"
 
-#: src/components/status.jsx:1171
+#: src/components/status.jsx:1174
 msgid "Unable to unpin post"
 msgstr "ناتوان در برداشتن سنجاق فرسته"
 
-#: src/components/status.jsx:1171
+#: src/components/status.jsx:1174
 msgid "Unable to pin post"
 msgstr "ناتوان در سنجاق کردن فرسته"
 
-#: src/components/status.jsx:1180
+#: src/components/status.jsx:1183
 msgid "Unpin from profile"
 msgstr ""
 
-#: src/components/status.jsx:1187
+#: src/components/status.jsx:1190
 msgid "Pin to profile"
 msgstr ""
 
-#: src/components/status.jsx:1216
+#: src/components/status.jsx:1219
 msgid "Delete this post?"
 msgstr ""
 
-#: src/components/status.jsx:1229
+#: src/components/status.jsx:1232
 msgid "Post deleted"
 msgstr ""
 
-#: src/components/status.jsx:1232
+#: src/components/status.jsx:1235
 msgid "Unable to delete post"
 msgstr ""
 
-#: src/components/status.jsx:1260
+#: src/components/status.jsx:1263
 msgid "Report post…"
 msgstr ""
 
-#: src/components/status.jsx:1616
-#: src/components/status.jsx:1652
-#: src/components/status.jsx:2329
+#: src/components/status.jsx:1619
+#: src/components/status.jsx:1655
+#: src/components/status.jsx:2332
 msgid "Liked"
 msgstr ""
 
-#: src/components/status.jsx:1649
-#: src/components/status.jsx:2316
+#: src/components/status.jsx:1652
+#: src/components/status.jsx:2319
 msgid "Boosted"
 msgstr ""
 
-#: src/components/status.jsx:1659
-#: src/components/status.jsx:2341
+#: src/components/status.jsx:1662
+#: src/components/status.jsx:2344
 msgid "Bookmarked"
 msgstr ""
 
-#: src/components/status.jsx:1663
+#: src/components/status.jsx:1666
 msgid "Pinned"
 msgstr ""
 
-#: src/components/status.jsx:1708
-#: src/components/status.jsx:2160
+#: src/components/status.jsx:1711
+#: src/components/status.jsx:2163
 msgid "Deleted"
 msgstr ""
 
-#: src/components/status.jsx:1749
+#: src/components/status.jsx:1752
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr ""
 
-#: src/components/status.jsx:1838
+#: src/components/status.jsx:1841
 msgid "Thread{0}"
 msgstr ""
 
-#: src/components/status.jsx:1914
-#: src/components/status.jsx:1976
-#: src/components/status.jsx:2061
+#: src/components/status.jsx:1917
+#: src/components/status.jsx:1979
+#: src/components/status.jsx:2064
 msgid "Show less"
 msgstr ""
 
-#: src/components/status.jsx:1914
-#: src/components/status.jsx:1976
+#: src/components/status.jsx:1917
+#: src/components/status.jsx:1979
 msgid "Show content"
 msgstr ""
 
-#: src/components/status.jsx:2061
+#: src/components/status.jsx:2064
 msgid "Show media"
 msgstr ""
 
-#: src/components/status.jsx:2181
+#: src/components/status.jsx:2184
 msgid "Edited"
 msgstr ""
 
-#: src/components/status.jsx:2258
+#: src/components/status.jsx:2261
 msgid "Comments"
 msgstr ""
 
-#: src/components/status.jsx:2829
+#: src/components/status.jsx:2832
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:2833
+#: src/components/status.jsx:2836
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:2838
+#: src/components/status.jsx:2841
 msgid "Loading…"
 msgstr ""
 
-#: src/components/status.jsx:3073
+#: src/components/status.jsx:3076
 msgid "HTML Code"
 msgstr ""
 
-#: src/components/status.jsx:3090
+#: src/components/status.jsx:3093
 msgid "HTML code copied"
 msgstr ""
 
-#: src/components/status.jsx:3093
+#: src/components/status.jsx:3096
 msgid "Unable to copy HTML code"
 msgstr ""
 
-#: src/components/status.jsx:3105
+#: src/components/status.jsx:3108
 msgid "Media attachments:"
 msgstr ""
 
-#: src/components/status.jsx:3127
+#: src/components/status.jsx:3130
 msgid "Account Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3158
-#: src/components/status.jsx:3203
+#: src/components/status.jsx:3161
+#: src/components/status.jsx:3206
 msgid "static URL"
 msgstr ""
 
-#: src/components/status.jsx:3172
+#: src/components/status.jsx:3175
 msgid "Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3217
+#: src/components/status.jsx:3220
 msgid "Notes:"
 msgstr ""
 
-#: src/components/status.jsx:3221
+#: src/components/status.jsx:3224
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr ""
 
-#: src/components/status.jsx:3227
+#: src/components/status.jsx:3230
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr ""
 
-#: src/components/status.jsx:3232
+#: src/components/status.jsx:3235
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr ""
 
-#: src/components/status.jsx:3238
+#: src/components/status.jsx:3241
 msgid "Post could be edited or deleted later."
 msgstr ""
 
-#: src/components/status.jsx:3244
+#: src/components/status.jsx:3247
 msgid "Preview"
 msgstr ""
 
-#: src/components/status.jsx:3253
+#: src/components/status.jsx:3256
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "نکته: این پیش‌نمایش بصورت طراحی سبک است."
 
-#: src/components/status.jsx:3495
+#: src/components/status.jsx:3498
 msgid "<0/> <1/> boosted"
-msgstr ""
+msgstr "<0/> <1/> تقویت‌شده"
 
 #: src/components/timeline.jsx:447
 #: src/pages/settings.jsx:1036
 msgid "New posts"
-msgstr ""
+msgstr "فرسته‌های جدید"
 
 #: src/components/timeline.jsx:548
 #: src/pages/home.jsx:212
@@ -2299,127 +2299,127 @@ msgstr ""
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
 msgid "Try again"
-msgstr ""
+msgstr "تلاش مجدد"
 
 #: src/components/timeline.jsx:937
 #: src/components/timeline.jsx:944
 #: src/pages/catchup.jsx:1860
 msgid "Thread"
-msgstr ""
+msgstr "رشته"
 
 #: src/components/timeline.jsx:959
 msgid "<0>Filtered</0>: <1>{0}</1>"
-msgstr ""
+msgstr "<0>پالایش‌شده</0>: <1>{0}</1>"
 
 #: src/components/translation-block.jsx:152
 msgid "Auto-translated from {sourceLangText}"
-msgstr ""
+msgstr "ترجمهٔ خودکار از {sourceLangText}"
 
 #: src/components/translation-block.jsx:190
 msgid "Translating…"
-msgstr ""
+msgstr "درحال ترجمه…"
 
 #: src/components/translation-block.jsx:193
 msgid "Translate from {sourceLangText} (auto-detected)"
-msgstr ""
+msgstr "ترجمه از {sourceLangText} (تشخیص خودکار)"
 
 #: src/components/translation-block.jsx:194
 msgid "Translate from {sourceLangText}"
-msgstr ""
+msgstr "ترجمه از {sourceLangText}"
 
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
-msgstr ""
+msgstr "خودکار ({0})"
 
 #: src/components/translation-block.jsx:235
 msgid "Failed to translate"
-msgstr ""
+msgstr "شکست در ترجمه"
 
 #: src/compose.jsx:29
 msgid "Editing source status"
-msgstr ""
+msgstr "ویرایش وضعیت منبع"
 
 #: src/compose.jsx:31
 msgid "Replying to @{0}"
-msgstr ""
+msgstr "درحال پاسخ دادن به @{0}"
 
 #: src/compose.jsx:55
 msgid "You may close this page now."
-msgstr ""
+msgstr "احتمالا باید این صفحه را الآن ببندید."
 
 #: src/compose.jsx:63
 msgid "Close window"
-msgstr ""
+msgstr "بستن پنجره"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "فرسته‌های حساب کاربری"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
-msgstr ""
+msgstr "{accountDisplay} (+ پاسخ‌ها)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr ""
+msgstr "{accountDisplay} (- تقویت‌ها)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
-msgstr ""
+msgstr "{accountDisplay} (#{tagged})"
 
 #: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (Media)"
-msgstr ""
+msgstr "{accountDisplay} (رسانه)"
 
 #: src/pages/account-statuses.jsx:252
 msgid "{accountDisplay} ({monthYear})"
-msgstr ""
+msgstr "{accountDisplay} ({monthYear})"
 
 #: src/pages/account-statuses.jsx:321
 msgid "Clear filters"
-msgstr ""
+msgstr "پاک کردن پالایه‌ها"
 
 #: src/pages/account-statuses.jsx:324
 msgid "Clear"
-msgstr ""
+msgstr "پاک کردن"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr ""
+msgstr "نمایش فرسته با پاسخ‌ها"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
-msgstr ""
+msgstr "+ پاسخ‌ها"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
-msgstr ""
+msgstr "نمایش فرسته‌ها بدون تقویت‌ها"
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
-msgstr ""
+msgstr "- تقویت‌ها"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr ""
+msgstr "نمایش فرسته‌های دارای رسانه"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr ""
+msgstr "نمایش فرسته‌هایی که با #{0} برچسب‌گذاری شده‌اند"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "نمایش فرسته‌ها در {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
-msgstr ""
+msgstr "اینجا چیزی برای دیدن نیست."
 
 #: src/pages/account-statuses.jsx:506
 #: src/pages/public.jsx:97
 #: src/pages/trending.jsx:415
 msgid "Unable to load posts"
-msgstr ""
+msgstr "ناتوان در بارگذاری فرسته‌ها"
 
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
@@ -2428,67 +2428,67 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr ""
+msgstr "انتقال به نمونهٔ حساب کاربری {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "انتقال به نمونهٔ من (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:646
 msgid "Month"
-msgstr ""
+msgstr "ماه"
 
 #: src/pages/accounts.jsx:52
 msgid "Current"
-msgstr ""
+msgstr "کنونی"
 
 #: src/pages/accounts.jsx:98
 msgid "Default"
-msgstr ""
+msgstr "پیش‌گزیده"
 
 #: src/pages/accounts.jsx:117
 msgid "View profile…"
-msgstr ""
+msgstr "نمایش نمایه…"
 
 #: src/pages/accounts.jsx:134
 msgid "Set as default"
-msgstr ""
+msgstr "تنظیم به عنوان پیش‌گزیده"
 
 #: src/pages/accounts.jsx:144
-msgid "Log out @{0}?"
-msgstr ""
+msgid "Log out <0>@{0}</0>?"
+msgstr "از <0>@{0}</0> خارج میشوید؟"
 
-#: src/pages/accounts.jsx:161
+#: src/pages/accounts.jsx:167
 msgid "Log out…"
-msgstr ""
+msgstr "خروج…"
 
-#: src/pages/accounts.jsx:174
+#: src/pages/accounts.jsx:180
 msgid "Add an existing account"
-msgstr ""
+msgstr "اضافه کردن یک حساب کاربری موجود"
 
-#: src/pages/accounts.jsx:181
+#: src/pages/accounts.jsx:187
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr ""
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "ناتوان در بارگذاری نشانک‌ها."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
-msgstr ""
+msgstr "۱ ساعت گذشته"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr ""
+msgstr "۲ ساعت گذشته"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr ""
+msgstr "۳ ساعت گذشته"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr ""
+msgstr "۴ ساعت گذشته"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
@@ -2677,7 +2677,7 @@ msgstr "برگشتن به بالا"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr "پیوندهایی که توسط دنبال‌شده‌ها همرسانی شده‌اند، مرتب‌شده طبق شمارش همرسانی‌شده، تقویت‌ها و برگزیده‌ها."
+msgstr "پیوندهایی که توسط پی‌گرفته‌ها همرسانی شده‌اند، مرتب‌شده طبق شمارش همرسانی‌شده، تقویت‌ها و برگزیده‌ها."
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
@@ -2721,7 +2721,7 @@ msgstr "خانه و سیاهه‌ها"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr "خط زمانی عمومی"
+msgstr "خط زمانی همگانی"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
@@ -2838,44 +2838,44 @@ msgstr ""
 
 #: src/pages/filters.jsx:614
 msgid "Never expires"
-msgstr ""
+msgstr "هرگز منقضی نمیشود"
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
-msgstr ""
+msgstr "{0, plural, one {# برچسب} other {# برچسب‌ها}}"
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "ناتوان در بارگذاری برچسب‌های پی‌گرفته."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "هنوز برچسبی پی‌گرفته نشده."
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
-msgstr ""
+msgstr "اینجا چیزی برای دیدن وجود ندارد."
 
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
-msgstr ""
+msgstr "ناتوان در بارگذاری فرسته‌ها."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} (فقط رسانه) در {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} در {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr ""
+msgstr "{hashtagTitle} (فقط رسانه)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
@@ -3001,10 +3001,10 @@ msgid "Manage members"
 msgstr ""
 
 #: src/pages/list.jsx:313
-msgid "Remove @{0} from list?"
+msgid "Remove <0>@{0}</0> from list?"
 msgstr ""
 
-#: src/pages/list.jsx:356
+#: src/pages/list.jsx:359
 msgid "Remove…"
 msgstr ""
 
@@ -3139,38 +3139,38 @@ msgid "Updated <0>{0}</0>"
 msgstr ""
 
 #: src/pages/notifications.jsx:1037
-msgid "View notifications from @{0}"
+msgid "View notifications from <0>@{0}</0>"
 msgstr ""
 
-#: src/pages/notifications.jsx:1055
-msgid "Notifications from @{0}"
+#: src/pages/notifications.jsx:1058
+msgid "Notifications from <0>@{0}</0>"
 msgstr ""
 
-#: src/pages/notifications.jsx:1119
+#: src/pages/notifications.jsx:1125
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1124
+#: src/pages/notifications.jsx:1130
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1129
+#: src/pages/notifications.jsx:1135
 msgid "Allow"
 msgstr ""
 
-#: src/pages/notifications.jsx:1149
+#: src/pages/notifications.jsx:1155
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1154
+#: src/pages/notifications.jsx:1160
 msgid "Unable to dismiss notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1159
+#: src/pages/notifications.jsx:1165
 msgid "Dismiss"
 msgstr ""
 
-#: src/pages/notifications.jsx:1174
+#: src/pages/notifications.jsx:1180
 msgid "Dismissed"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-19 14:40\n"
+"PO-Revision-Date: 2024-08-19 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -24,7 +24,7 @@ msgstr "Bloqueado"
 
 #: src/components/account-block.jsx:139
 msgid "Posts: {0}"
-msgstr "Mensajes: {0}"
+msgstr "Publicaciones: {0}"
 
 #: src/components/account-block.jsx:144
 msgid "Last posted: {0}"
@@ -106,7 +106,7 @@ msgstr "Seguidores"
 #: src/pages/search.jsx:237
 #: src/pages/search.jsx:384
 msgid "Posts"
-msgstr "Mensajes"
+msgstr "Publicaciones"
 
 #: src/components/account-info.jsx:428
 #: src/components/account-info.jsx:1116
@@ -174,11 +174,11 @@ msgstr "{0} originales, {1} respuestas, {2} impulsos"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Último mensaje en el último día} other {Último mensaje en los últimos {2} días}}} other {{3, plural, one {Últimos {4} mensajes en el último día} other {Últimos {5} mensajes en los últimos {6} días}}}}"
+msgstr "{0, plural, one {{1, plural, one {Última publicación en el último día} other {Última publicación en los últimos {2} días}}} other {{3, plural, one {Últimas {4} publicaciones en el último día} other {Últimas {5} publicaciones en los últimos {6} días}}}}"
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr "{0, plural, one {Último mensaje en el último año(s)} other {Últimos {1} mensajes en el último año(s)}}"
+msgstr "{0, plural, one {Última publicación en el último año(s)} other {Últimas {1} publicaciones en el último año(s)}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -205,15 +205,15 @@ msgstr "Impulsos"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
-msgstr "Estadísticas de mensajes no disponibles."
+msgstr "Las estadísticas de las publicaciones no están disponibles."
 
 #: src/components/account-info.jsx:901
 msgid "View post stats"
-msgstr "Ver estadísticas de los mensajes"
+msgstr "Ver estadísticas de las publicaciones"
 
 #: src/components/account-info.jsx:1064
 msgid "Last post: <0>{0}</0>"
-msgstr "Último mensaje: <0>{0}</0>"
+msgstr "Última publicación: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
@@ -543,7 +543,7 @@ msgstr "Redactar"
 
 #: src/components/compose.jsx:392
 msgid "You have unsaved changes. Discard this post?"
-msgstr "Tienes cambios sin guardar. ¿Quieres descartar este mensaje?"
+msgstr "Tienes cambios sin guardar. ¿Deseas descartar esta publicación?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
@@ -586,7 +586,7 @@ msgstr "Respondiendo al mensaje de @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr "Editando el mensaje original"
+msgstr "Editando la publicación original"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
@@ -594,15 +594,15 @@ msgstr "La encuesta debe tener al menos 2 opciones"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr "Algunas opciones de encuesta están vacías"
+msgstr "Algunas opciones de la encuesta están vacías"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr "Algunos archivos no tienen descripciones. ¿Continuar?"
+msgstr "Algunos archivos no tienen descripciones. ¿Desear continuar?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
-msgstr "El adjunto #{i} ha fallado"
+msgstr "Error al adjuntar #{i}"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1954
@@ -612,7 +612,7 @@ msgstr "Advertencia de contenido"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr "Advertencia de contenido o medios sensibles"
+msgstr "Advertencia de contenido o medio sensible"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
@@ -644,23 +644,23 @@ msgstr "Publica tu respuesta"
 
 #: src/components/compose.jsx:1190
 msgid "Edit your post"
-msgstr "Edita tu mensaje"
+msgstr "Edita tu publicación"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr "¿Qué estás haciendo?"
+msgstr "¿En qué estás pensando?"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
-msgstr "Marcar archivo como sensible"
+msgstr "Añadir advertencia de contenido"
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr "Añadir encuesta"
+msgstr "Añadir una encuesta"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
-msgstr "Agregar emoji personalizado"
+msgstr "Insertar emoji personalizado"
 
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
@@ -978,16 +978,16 @@ msgstr "Ayuda de atajos de teclado"
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr "Siguiente mensaje"
+msgstr "Siguiente publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
 msgid "Previous post"
-msgstr "Anterior mensaje"
+msgstr "Anterior publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
-msgstr "Saltar carrusel al siguiente mensaje"
+msgstr "Saltar carrusel a la siguiente publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:65
 msgid "<0>Shift</0> + <1>j</1>"
@@ -995,7 +995,7 @@ msgstr "<0>Mayús</0> + <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
-msgstr "Saltar carrusel al anterior mensaje"
+msgstr "Saltar carrusel a la anterior publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:73
 msgid "<0>Shift</0> + <1>k</1>"
@@ -1008,7 +1008,7 @@ msgstr "Cargar nuevos mensajes"
 #: src/components/keyboard-shortcuts-help.jsx:83
 #: src/pages/catchup.jsx:1643
 msgid "Open post details"
-msgstr "Abrir detalles del mensaje"
+msgstr "Abrir detalles de la publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:85
 msgid "<0>Enter</0> or <1>o</1>"
@@ -1020,7 +1020,7 @@ msgstr "Expandir advertencia de contenido o<0/>alternar hilo ampliado/colapsado"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
-msgstr "Cerrar mensaje o diálogo"
+msgstr "Cerrar publicación o diálogo"
 
 #: src/components/keyboard-shortcuts-help.jsx:103
 msgid "<0>Esc</0> or <1>Backspace</1>"
@@ -1036,7 +1036,7 @@ msgstr "<0>1</0> a <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
-msgstr "Redactar nuevo mensaje"
+msgstr "Redactar nueva"
 
 #: src/components/keyboard-shortcuts-help.jsx:121
 msgid "Compose new post (new window)"
@@ -1048,7 +1048,7 @@ msgstr "<0>Mayús</0> + <1>c</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Send post"
-msgstr "Enviar mensaje"
+msgstr "Enviar publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:132
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
@@ -1137,7 +1137,7 @@ msgstr "No mostrar respuestas"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr "Ocultar mensajes en esta lista de Inicio/Siguiendo"
+msgstr "Ocultar publicaciones en esta lista de Inicio/Siguiendo"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
@@ -1214,7 +1214,7 @@ msgstr "Filtrado"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
-msgstr "Mensaje publicado. Échale un vistazo."
+msgstr "Publicado. Échale un vistazo."
 
 #: src/components/modals.jsx:73
 msgid "Reply posted. Check it out."
@@ -1222,7 +1222,7 @@ msgstr "Respuesta publicada. Compruébala."
 
 #: src/components/modals.jsx:74
 msgid "Post updated. Check it out."
-msgstr "Mensaje actualizado. Échale un vistazo."
+msgstr "Publicación actualizada. Compruébala."
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
@@ -1391,11 +1391,11 @@ msgstr "{account} reaccionó a tu mensaje con {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
-msgstr "{account} publicó un mensaje."
+msgstr "{account} ha publicado un mensaje."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta.} other {{account} impulsó tus mensajes.}}} other {{account} impulsó {postsCount} de tus mensajes.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron tu respuesta.} other {<2><3>{1}</3> persona</2> impulsaron tu mensaje.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta.} other {{account} impulsó tus publicaciones.}}} other {{account} impulsó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron tu respuesta.} other {<2><3>{1}</3> persona</2> impulsaron tu publicación.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1407,7 +1407,7 @@ msgstr "{account} ha solicitado seguirte."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {A {account} le gustó tu respuesta.} other {A {account} le gustó tu mensaje.}}} other {A {account} le gustó {postsCount} de tus mensajes.}}} other {{postType, select, reply {A <0><1>{0}</1> personas</0> les gustó tu respuesta.} other {A <2><3>{1}</3> personas</2> les gustó tu mensaje.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {A {account} le gustó tu respuesta.} other {A {account} le gustó tu publicación.}}} other {A {account} le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {A <0><1>{0}</1> personas</0> les gustó tu respuesta.} other {A <2><3>{1}</3> personas</2> les gustó tu publicación.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1423,11 +1423,11 @@ msgstr "Una encuesta en la que has votado ha finalizado."
 
 #: src/components/notification.jsx:194
 msgid "A post you interacted with has been edited."
-msgstr "Un mensaje con el que interactuaste ha sido editado."
+msgstr "Una publicación con la que interactuaste ha sido editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó y le gustó tu respuesta.} other {{account} impulsó y le gustó tu mensaje.}}} other {{account} impulsó y le gustó {postsCount} de tus mensajes.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuestas.} other {<2><3>{1}</3> personas</2> impulsaron y les gustó tu mensaje.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta y le gustó.} other {{account} impulsó tu publicación y le gustó.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron tu publicación y le gustó.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1467,15 +1467,15 @@ msgstr "Tu cuenta ha sido desactivada."
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr "Se han marcado como sensibles algunos de tus mensajes."
+msgstr "Se han marcado como sensibles algunas de tus publicaciones."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr "Algunos de tus mensajes han sido eliminados."
+msgstr "Algunas de tus publicaciones han sido eliminadas."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr "De ahora en adelante, todos tus mensajes se marcarán como sensibles."
+msgstr "De ahora en adelante, todas tus publicaciones se marcarán como sensibles."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
@@ -1620,7 +1620,7 @@ msgstr "El problema no encaja en otras categorías"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
-msgstr "Denunciar mensaje"
+msgstr "Denunciar esta publicación"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
@@ -1632,7 +1632,7 @@ msgstr "Revisiones pendientes"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
-msgstr "Mensaje reportado"
+msgstr "Publicación denunciada"
 
 #: src/components/report-modal.jsx:146
 msgid "Profile reported"
@@ -1640,7 +1640,7 @@ msgstr "Perfil reportado"
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr "No se ha podido reportar el mensaje"
+msgstr "No se ha podido denunciar la publicación"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
@@ -1648,7 +1648,7 @@ msgstr "No se ha podido reportar el perfil"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr "¿Cuál es el problema con este mensaje?"
+msgstr "¿Cuál es el problema con esta publicación?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
@@ -1692,15 +1692,15 @@ msgstr "Enviar reporte <0>+ Bloquear perfil</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr "{query} <0>‒ cuentas, etiquetas y mensajes</0>"
+msgstr "{query} <0>‒ cuentas, etiquetas y publicaciones</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr "Mensajes con <0>{query}</0>"
+msgstr "Publicaciones con <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr "Mensajes etiquetados con <0>#{0}</0>"
+msgstr "Publicaciones etiquetadas con <0>#{0}</0>"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
@@ -2006,23 +2006,23 @@ msgstr "<0/> <1>impulsó</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr "Lo sentimos, la instancia en la que estás conectado no te permite interactuar con este mensaje de otra instancia."
+msgstr "Lo sentimos, la instancia en la que estás conectado no te permite interactuar con esta publicación de otra instancia."
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
-msgstr "No me gustó el mensaje de {0}"
+msgstr "No me gustó la publicación de {0}"
 
 #: src/components/status.jsx:716
 msgid "Liked @{0}'s post"
-msgstr "Me gustó el mensaje de {0}"
+msgstr "Me gustó la publicación de {0}"
 
 #: src/components/status.jsx:755
 msgid "Unbookmarked @{0}'s post"
-msgstr "Dejar de guardar como marcador el mensaje de {0}"
+msgstr "Dejar de guardar como marcador la publicación de {0}"
 
 #: src/components/status.jsx:756
 msgid "Bookmarked @{0}'s post"
-msgstr "Guardado como marcador el mensaje de {0}"
+msgstr "Guardado como marcador la publicación de {0}"
 
 #: src/components/status.jsx:838
 #: src/components/status.jsx:900
@@ -2043,17 +2043,17 @@ msgstr "Algunos archivos no tienen descripción."
 
 #: src/components/status.jsx:869
 msgid "Old post (<0>{0}</0>)"
-msgstr "Antiguos mensajes (<0>{0}</0>)"
+msgstr "Antiguas publicaciones (<0>{0}</0>)"
 
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1333
 msgid "Unboosted @{0}'s post"
-msgstr "Ya no impulsas el post de @{0}"
+msgstr "Ya no impulsas la publicación de @{0}"
 
 #: src/components/status.jsx:889
 #: src/components/status.jsx:1334
 msgid "Boosted @{0}'s post"
-msgstr "Has impulsado el post de @{0}"
+msgstr "Has impulsado la publicación de @{0}"
 
 #: src/components/status.jsx:901
 msgid "Boost…"
@@ -2080,7 +2080,7 @@ msgstr "Desmarcar"
 
 #: src/components/status.jsx:1031
 msgid "View post by <0>@{0}</0>"
-msgstr "Ver mensaje de <0>@{0}</0>"
+msgstr "Ver publicación de <0>@{0}</0>"
 
 #: src/components/status.jsx:1052
 msgid "Show Edit History"
@@ -2093,7 +2093,7 @@ msgstr "Editado: {editedDateText}"
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:3071
 msgid "Embed post"
-msgstr "Insertar mensaje"
+msgstr "Insertar publicación"
 
 #: src/components/status.jsx:1129
 msgid "Conversation unmuted"
@@ -2121,19 +2121,19 @@ msgstr "Silenciar conversación"
 
 #: src/components/status.jsx:1168
 msgid "Post unpinned from profile"
-msgstr "Mensaje no anclado del perfil"
+msgstr "Publicación no anclada del perfil"
 
 #: src/components/status.jsx:1169
 msgid "Post pinned to profile"
-msgstr "Mensaje fijado en el perfil"
+msgstr "Publicación fijada en el perfil"
 
 #: src/components/status.jsx:1174
 msgid "Unable to unpin post"
-msgstr "Falló desanclar el mensaje"
+msgstr "No se ha podido dejar sin fijar la publicación"
 
 #: src/components/status.jsx:1174
 msgid "Unable to pin post"
-msgstr "Falló anclar el mensaje"
+msgstr "No se ha podido fijar la publicación"
 
 #: src/components/status.jsx:1183
 msgid "Unpin from profile"
@@ -2145,19 +2145,19 @@ msgstr "Anclar al perfil"
 
 #: src/components/status.jsx:1219
 msgid "Delete this post?"
-msgstr "¿Eliminar este mensaje?"
+msgstr "¿Deseas eliminar esta publicación?"
 
 #: src/components/status.jsx:1232
 msgid "Post deleted"
-msgstr "Mensaje eliminado"
+msgstr "Publicación eliminada"
 
 #: src/components/status.jsx:1235
 msgid "Unable to delete post"
-msgstr "No se ha podido eliminar el mensaje"
+msgstr "No se ha podido eliminar la publicación"
 
 #: src/components/status.jsx:1263
 msgid "Report post…"
-msgstr "Denunciar mensaje…"
+msgstr "Denunciar publicación…"
 
 #: src/components/status.jsx:1619
 #: src/components/status.jsx:1655
@@ -2274,7 +2274,7 @@ msgstr "Los adjuntos multimedia pueden ser imágenes, vídeos, audios o cualquie
 
 #: src/components/status.jsx:3241
 msgid "Post could be edited or deleted later."
-msgstr "El mensaje podría ser editado o eliminado más tarde."
+msgstr "La publicación podría ser editada o eliminada más adelante."
 
 #: src/components/status.jsx:3247
 msgid "Preview"
@@ -2291,7 +2291,7 @@ msgstr "<0/> <1/> impulsó"
 #: src/components/timeline.jsx:447
 #: src/pages/settings.jsx:1036
 msgid "New posts"
-msgstr "Nuevos mensajes"
+msgstr "Nuevas publicaciones"
 
 #: src/components/timeline.jsx:548
 #: src/pages/home.jsx:212
@@ -2353,7 +2353,7 @@ msgstr "Cerrar la ventana"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr "Mensajes de la cuenta"
+msgstr "Publicaciones de la cuenta"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2385,7 +2385,7 @@ msgstr "Limpiar"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr "Mostrar mensaje con respuestas"
+msgstr "Mostrar publicación con respuestas"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
@@ -2401,15 +2401,15 @@ msgstr "- Impulsos"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr "Mostrar mensajes con archivos"
+msgstr "Mostrar publicaciones con archivos"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr "Mostrando mensajes etiquetados con #{0}"
+msgstr "Mostrando publicaciones etiquetadas con #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr "Mostrando mensajes en {0}"
+msgstr "Mostrando publicaciones en {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2419,7 +2419,7 @@ msgstr "No hay nada que ver aquí… todavía."
 #: src/pages/public.jsx:97
 #: src/pages/trending.jsx:415
 msgid "Unable to load posts"
-msgstr "No se han podido cargar los mensajes"
+msgstr "No se han podido cargar las publicaciones"
 
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
@@ -2536,7 +2536,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Mostrando {selectedFilterCategory, select, all {todos los mensajes} original {mensajes originales} replies {respuestas} boosts {impulsos} followedTags {etiquetas seguidas} groups {grupos} filtered {mensajes filtrados}}, {sortBy, select, createdAt {{sortOrder, select, asc {más antiguos} desc {más recientes}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {más impulsos}}} favouritesCount {{sortOrder, select, asc {menos likes} desc {más likes}}} repliesCount {{sortOrder, select, asc {menos respuestas} desc {más respuestas}}} density {{sortOrder, select, asc {menos denso} desc {más denso}}}} first{groupBy, select, account {, agrupado por autores} other {}}"
+msgstr "Mostrando {selectedFilterCategory, select, all {todas las publicaciones} original {publicaciones originales} replies {respuestas} boosts {impulsos} followedTags {etiquetas seguidas} groups {grupos} filtered {publicaciones filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {más antiguos} desc {más recientes}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {más impulsos}}} favouritesCount {{sortOrder, select, asc {menos likes} desc {más likes}}} repliesCount {{sortOrder, select, asc {menos respuestas} desc {más respuestas}}} density {{sortOrder, select, asc {menos denso} desc {más denso}}}} first{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:866
 #: src/pages/catchup.jsx:890
@@ -2554,7 +2554,7 @@ msgstr "¿Qué es esto?"
 
 #: src/pages/catchup.jsx:899
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr "La puesta al día es una línea de tiempo independiente para tus seguidores, ofreciendo una vista de alto nivel de un vistazo, con una interfaz simple inspirada en el correo electrónico para ordenar y filtrar sin esfuerzo a través de los mensajes."
+msgstr "La puesta al día es una línea de tiempo independiente para tus seguidores, ofreciendo una vista de alto nivel de un vistazo, con una interfaz simple inspirada en el correo electrónico para ordenar y filtrar sin esfuerzo a través de las publicaciones."
 
 #: src/pages/catchup.jsx:910
 msgid "Preview of Catch-up UI"
@@ -2566,11 +2566,11 @@ msgstr "Pongámonos al día"
 
 #: src/pages/catchup.jsx:924
 msgid "Let's catch up on the posts from your followings."
-msgstr "Pongámonos al día con los mensajes de las cuentas que sigues."
+msgstr "Pongámonos al día con las publicaciones de las cuentas que sigues."
 
 #: src/pages/catchup.jsx:928
 msgid "Show me all posts from…"
-msgstr "Muéstrame todos los mensajes de…"
+msgstr "Muéstrame todas las publicaciones de…"
 
 #: src/pages/catchup.jsx:951
 msgid "until the max"
@@ -2598,7 +2598,7 @@ msgstr "Anteriormente…"
 
 #: src/pages/catchup.jsx:1036
 msgid "{0, plural, one {# post} other {# posts}}"
-msgstr "{0, plural, one {# mensaje} other {# mensajes}}"
+msgstr "{0, plural, one {# publicación} other {# publicaciones}}"
 
 #: src/pages/catchup.jsx:1046
 msgid "Remove this catch-up?"
@@ -2610,7 +2610,7 @@ msgstr "Nota: Solo se almacenará el máximo 3. El resto se eliminará automáti
 
 #: src/pages/catchup.jsx:1082
 msgid "Fetching posts…"
-msgstr "Obteniendo mensajes…"
+msgstr "Obteniendo publicaciones…"
 
 #: src/pages/catchup.jsx:1085
 msgid "This might take a while."
@@ -2685,7 +2685,7 @@ msgstr "Ordenar: densidad"
 
 #: src/pages/catchup.jsx:1570
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "Los mensajes están ordenados por densidad de información o profundidad. Los mensajes más cortos son \"más ligeros\" mientras que los mensajes más largos son \"más pesados\". Los mensajes con fotos son \"más pesados\" que los mensajes sin fotos."
+msgstr "Las publicaciones están ordenadas por densidad de información o profundidad. Las publicaciones más cortas son \"más ligeras\" mientras que las publicaciones más largas son \"más pesadas\". Las publicaciones con fotos son \"más pesadas\" que los mensajes sin fotos."
 
 #: src/pages/catchup.jsx:1577
 msgid "Group: Authors"
@@ -2693,7 +2693,7 @@ msgstr "Grupo: Autores"
 
 #: src/pages/catchup.jsx:1580
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr "Los mensajes están agrupados por autores, ordenadas por conteo de mensajes por autor."
+msgstr "Las publicaciones están agrupadas por autores, ordenadas por conteo de publicaciones por autor."
 
 #: src/pages/catchup.jsx:1627
 msgid "Next author"
@@ -2810,7 +2810,7 @@ msgstr "Caducidad"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr "El mensaje filtrado será…"
+msgstr "La publicación filtrada será…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
@@ -2859,7 +2859,7 @@ msgstr "No hay resultados para mostrar."
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
-msgstr "No se han podido cargar los mensajes."
+msgstr "No se han podido cargar las publicaciones."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -2883,7 +2883,7 @@ msgstr "Nadie ha publicado nada con esta etiqueta todavía."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr "No se han podido cargar los mensajes con esta etiqueta"
+msgstr "No se han podido cargar las publicaciones con esta etiqueta"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3204,7 +3204,7 @@ msgstr "Cambiar a Local"
 
 #: src/pages/search.jsx:43
 msgid "Search: {q} (Posts)"
-msgstr "Buscar: {q} (Mensajes)"
+msgstr "Buscar: {q} (Publicaciones)"
 
 #: src/pages/search.jsx:46
 msgid "Search: {q} (Accounts)"
@@ -3247,11 +3247,11 @@ msgstr "No se han encontrado hashtags."
 
 #: src/pages/search.jsx:418
 msgid "See more posts"
-msgstr "Ver más mensajes"
+msgstr "Ver más publicaciones"
 
 #: src/pages/search.jsx:432
 msgid "No posts found."
-msgstr "No hay mensajes."
+msgstr "No hay publicaciones."
 
 #: src/pages/search.jsx:476
 msgid "Enter your search term or paste a URL above to get started."
@@ -3307,7 +3307,7 @@ msgstr "Sincronizado"
 
 #: src/pages/settings.jsx:278
 msgid "Failed to update posting privacy"
-msgstr "Error al actualizar la privacidad del mensaje"
+msgstr "Ha ocurrido un error al actualizar la privacidad de la publicación"
 
 #: src/pages/settings.jsx:301
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
@@ -3319,7 +3319,7 @@ msgstr "Experimentos"
 
 #: src/pages/settings.jsx:329
 msgid "Auto refresh timeline posts"
-msgstr "Refrescar automáticamente los mensajes de tu línea de tiempo"
+msgstr "Actualizar automáticamente las publicaciones de tu línea de tiempo"
 
 #: src/pages/settings.jsx:341
 msgid "Boosts carousel"
@@ -3327,7 +3327,7 @@ msgstr "Carrusel de impulsos"
 
 #: src/pages/settings.jsx:357
 msgid "Post translation"
-msgstr "Traducción de mensajes"
+msgstr "Traducción de publicaciones"
 
 #: src/pages/settings.jsx:368
 msgid "Translate to"
@@ -3351,7 +3351,7 @@ msgstr "Traducción automática"
 
 #: src/pages/settings.jsx:497
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Mostrar automáticamente la traducción para los mensajes en la línea de tiempo. Solo funciona para mensajes <0>cortos</0> sin advertencias de contenido, archivos multimedia o encuestas."
+msgstr "Mostrar automáticamente la traducción para las publicaciones en la línea de tiempo. Solo funciona para mensajes <0>cortos</0> sin advertencias de contenido, archivos multimedia o encuestas."
 
 #: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"
@@ -3367,7 +3367,7 @@ msgstr "Generador de descripción de imagen"
 
 #: src/pages/settings.jsx:555
 msgid "Only for new images while composing new posts."
-msgstr "Solo para imágenes nuevas mientras se componen nuevos mensajes."
+msgstr "Solo para imágenes nuevas mientras se componen nuevas publicaciones."
 
 #: src/pages/settings.jsx:562
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 18:57\n"
+"PO-Revision-Date: 2024-08-19 04:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -1545,11 +1545,11 @@ msgstr "Montrer les résultats"
 
 #: src/components/poll.jsx:227
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
-msgstr ""
+msgstr "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 
 #: src/components/poll.jsx:244
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> votant} other {<1>{1}</1> votants}}"
 
 #: src/components/poll.jsx:264
 msgid "Ended <0/>"
@@ -1570,17 +1570,17 @@ msgstr "Sera clos"
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:54
 msgid "{0}s"
-msgstr ""
+msgstr "{0}s"
 
 #. Relative time in minutes, as short as possible
 #: src/components/relative-time.jsx:59
 msgid "{0}m"
-msgstr ""
+msgstr "{0}m"
 
 #. Relative time in hours, as short as possible
 #: src/components/relative-time.jsx:64
 msgid "{0}h"
-msgstr ""
+msgstr "{0}h"
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
@@ -1704,7 +1704,7 @@ msgstr "Messages avec le mot-clé <0>#{0}</0>"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Rechercher <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
@@ -1749,7 +1749,7 @@ msgstr "Facultatif, par exemple “mastodon.social”"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Terme de recherche"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"

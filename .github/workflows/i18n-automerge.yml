@@ -51,6 +51,15 @@ jobs:
             exit 1
           else
             echo "Success: More than 50 lines have been changed."
+            node scripts/catalogs.js
+            if git diff --quiet src/data/catalogs.json; then
+              echo "No changes to catalogs.json"
+            else
+              echo "Changes to catalogs.json"
+              git add src/data/catalogs.json
+              git commit -m "Update catalogs.json"
+              git push
+            fi
           fi
 
       - name: Merge pull request

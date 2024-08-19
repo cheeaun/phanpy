@@ -496,7 +496,7 @@ function AccountStatuses() {
             <EmojiText text={displayName} emojis={emojis} />
           </b>
           <div>
-            <span>@{acct}</span>
+            <span class="bidi-isolate">@{acct}</span>
           </div>
         </h1>
       }

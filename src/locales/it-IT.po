@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-19 11:16\n"
+"PO-Revision-Date: 2024-08-19 12:40\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -229,7 +229,7 @@ msgstr "Nota privata"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "Menziona  <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1161
 msgid "Translate bio"
@@ -315,11 +315,11 @@ msgstr "@{username} riattivato"
 
 #: src/components/account-info.jsx:1362
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Riattiva <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1378
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "Silenzia <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
@@ -331,7 +331,7 @@ msgstr "Impossibile silenziare @{username}"
 
 #: src/components/account-info.jsx:1443
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "Rimuovere <0>@{username}</0> dai seguaci?"
 
 #: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "Rimuovi seguace…"
 
 #: src/components/account-info.jsx:1486
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "Bloccare <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
@@ -363,15 +363,15 @@ msgstr "Impossibile bloccare @{username}"
 
 #: src/components/account-info.jsx:1535
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "Sblocca <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1544
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "Blocca <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1561
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "Segnala <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1581
 #: src/components/account-info.jsx:2092
@@ -446,12 +446,12 @@ msgstr "Impossibile rimuovere da lista."
 
 #: src/components/account-info.jsx:1900
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Impossibile aggiungere alla lista."
 
 #: src/components/account-info.jsx:1919
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
-msgstr ""
+msgstr "Impossibile caricare lista."
 
 #: src/components/account-info.jsx:1923
 msgid "No lists."
@@ -465,16 +465,16 @@ msgstr "Nuova lista"
 
 #: src/components/account-info.jsx:1992
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "Nota privata su <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2022
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Impossibile aggiornare nota privata."
 
 #: src/components/account-info.jsx:2045
 #: src/components/account-info.jsx:2215
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #: src/components/account-info.jsx:2050
 msgid "Save & close"
@@ -482,7 +482,7 @@ msgstr "Salva e chiudi"
 
 #: src/components/account-info.jsx:2143
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Impossibile aggiornare profilo."
 
 #: src/components/account-info.jsx:2163
 msgid "Bio"
@@ -490,15 +490,15 @@ msgstr "Bio"
 
 #: src/components/account-info.jsx:2176
 msgid "Extra fields"
-msgstr ""
+msgstr "Campi extra"
 
 #: src/components/account-info.jsx:2182
 msgid "Label"
-msgstr ""
+msgstr "Etichetta"
 
 #: src/components/account-info.jsx:2185
 msgid "Content"
-msgstr ""
+msgstr "Contenuto"
 
 #: src/components/account-info.jsx:2218
 #: src/components/list-add-edit.jsx:147
@@ -506,15 +506,15 @@ msgstr ""
 #: src/pages/filters.jsx:554
 #: src/pages/notifications.jsx:906
 msgid "Save"
-msgstr ""
+msgstr "Salva"
 
 #: src/components/account-info.jsx:2271
 msgid "username"
-msgstr ""
+msgstr "nome utente"
 
 #: src/components/account-info.jsx:2275
 msgid "server domain name"
-msgstr ""
+msgstr "nome dominio del server"
 
 #: src/components/background-service.jsx:138
 msgid "Cloak mode disabled"
@@ -562,11 +562,11 @@ msgstr "Contrai"
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Sembra tu abbia chiuso la finestra genitore."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Sembra tu abbia già un campo di composizione aperto nella finestra genitore e sia in fase di pubblicazione. Attendi il completamento e riprova."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
@@ -578,89 +578,89 @@ msgstr ""
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "In risposta al post di @{0} (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "In risposta al post di @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr ""
+msgstr "Modificando post originale"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "Il sondaggio deve avere almeno 2 opzioni"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Alcune scelte del sondaggio sono vuote"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "Alcuni media sono senza descrizione. Continuare?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
-msgstr ""
+msgstr "Allegato #{i} fallito"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1954
 #: src/components/timeline.jsx:975
 msgid "Content warning"
-msgstr ""
+msgstr "Avviso contenuto"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr ""
+msgstr "Avviso contenuto o media sensibili"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:285
 msgid "Public"
-msgstr ""
+msgstr "Pubblico"
 
 #: src/components/compose.jsx:1173
 #: src/components/status.jsx:94
 #: src/pages/settings.jsx:288
 msgid "Unlisted"
-msgstr ""
+msgstr "Non in lista"
 
 #: src/components/compose.jsx:1176
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:291
 msgid "Followers only"
-msgstr ""
+msgstr "Solo seguaci"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:96
 #: src/components/status.jsx:1832
 msgid "Private mention"
-msgstr ""
+msgstr "Menzione privata"
 
 #: src/components/compose.jsx:1188
 msgid "Post your reply"
-msgstr ""
+msgstr "Pubblica la tua risposta"
 
 #: src/components/compose.jsx:1190
 msgid "Edit your post"
-msgstr ""
+msgstr "Modifica il tuo post"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr ""
+msgstr "Che stai facendo?"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Contrassegna media come sensibili"
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr ""
+msgstr "Aggiungi sondaggio"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Aggiungo emoji personalizzata"
 
 #: src/components/compose.jsx:1469
 #: src/components/keyboard-shortcuts-help.jsx:143
@@ -669,46 +669,46 @@ msgstr ""
 #: src/components/status.jsx:1609
 #: src/components/status.jsx:2260
 msgid "Reply"
-msgstr ""
+msgstr "Rispondi"
 
 #: src/components/compose.jsx:1469
 msgid "Update"
-msgstr ""
+msgstr "Aggiorna"
 
 #: src/components/compose.jsx:1469
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr ""
+msgstr "Pubblica"
 
 #: src/components/compose.jsx:1594
 msgid "Downloading GIF…"
-msgstr ""
+msgstr "Scarico GIF…"
 
 #: src/components/compose.jsx:1622
 msgid "Failed to download GIF"
-msgstr ""
+msgstr "Download GIF fallito"
 
 #: src/components/compose.jsx:1733
 #: src/components/compose.jsx:1810
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Altro…"
 
 #: src/components/compose.jsx:2213
 msgid "Uploaded"
-msgstr ""
+msgstr "Caricato"
 
 #: src/components/compose.jsx:2226
 msgid "Image description"
-msgstr ""
+msgstr "Descrizione immagine"
 
 #: src/components/compose.jsx:2227
 msgid "Video description"
-msgstr ""
+msgstr "Descrizione video"
 
 #: src/components/compose.jsx:2228
 msgid "Audio description"
-msgstr ""
+msgstr "Descrizione audio"
 
 #: src/components/compose.jsx:2264
 #: src/components/compose.jsx:2284
@@ -869,74 +869,74 @@ msgstr ""
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "Sembra tu abbia delle bozze non inviate. Riprendiamo da lì."
 
 #: src/components/drafts.jsx:102
 msgid "Delete this draft?"
-msgstr ""
+msgstr "Eliminare questa bozza?"
 
 #: src/components/drafts.jsx:117
 msgid "Error deleting draft! Please try again."
-msgstr ""
+msgstr "Errore nell'eliminazione della bozza! Riprova."
 
 #: src/components/drafts.jsx:127
 #: src/components/list-add-edit.jsx:183
 #: src/components/status.jsx:1243
 #: src/pages/filters.jsx:587
 msgid "Delete…"
-msgstr ""
+msgstr "Elimina…"
 
 #: src/components/drafts.jsx:146
 msgid "Error fetching reply-to status!"
-msgstr ""
+msgstr "Errore nel recupero dello stato rispondi-a!"
 
 #: src/components/drafts.jsx:171
 msgid "Delete all drafts?"
-msgstr ""
+msgstr "Eliminare tutte le bozze?"
 
 #: src/components/drafts.jsx:189
 msgid "Error deleting drafts! Please try again."
-msgstr ""
+msgstr "Errore nell'eliminazione delle bozze! Riprova."
 
 #: src/components/drafts.jsx:201
 msgid "Delete all…"
-msgstr ""
+msgstr "Elimina tutte…"
 
 #: src/components/drafts.jsx:209
 msgid "No drafts found."
-msgstr ""
+msgstr "Nessuna bozza."
 
 #: src/components/drafts.jsx:245
 #: src/pages/catchup.jsx:1895
 msgid "Poll"
-msgstr ""
+msgstr "Sondaggio"
 
 #: src/components/drafts.jsx:248
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
-msgstr ""
+msgstr "Media"
 
 #: src/components/embed-modal.jsx:22
 msgid "Open in new window"
-msgstr ""
+msgstr "Apri in nuova finestra"
 
 #: src/components/follow-request-buttons.jsx:42
 #: src/pages/notifications.jsx:890
 msgid "Accept"
-msgstr ""
+msgstr "Accetta"
 
 #: src/components/follow-request-buttons.jsx:68
 msgid "Reject"
-msgstr ""
+msgstr "Rifiuta"
 
 #: src/components/follow-request-buttons.jsx:75
 #: src/pages/notifications.jsx:1173
 msgid "Accepted"
-msgstr ""
+msgstr "Accettata"
 
 #: src/components/follow-request-buttons.jsx:79
 msgid "Rejected"
-msgstr ""
+msgstr "Rifiutata"
 
 #: src/components/generic-accounts.jsx:24
 msgid "Nothing to show"
@@ -957,33 +957,33 @@ msgstr "Account"
 #: src/pages/search.jsx:454
 #: src/pages/status.jsx:1289
 msgid "Show more…"
-msgstr ""
+msgstr "Mostra altro…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:518
 #: src/pages/search.jsx:459
 msgid "The end."
-msgstr ""
+msgstr "Fine."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
 #: src/pages/catchup.jsx:1586
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Abbreviazioni da tastiera"
 
 #: src/components/keyboard-shortcuts-help.jsx:51
 msgid "Keyboard shortcuts help"
-msgstr ""
+msgstr "Aiuto abbreviazioni da tastiera"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr ""
+msgstr "Post successivo"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
 msgid "Previous post"
-msgstr ""
+msgstr "Post precedente"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"

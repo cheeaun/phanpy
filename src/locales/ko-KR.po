@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-18 10:17\n"
+"PO-Revision-Date: 2024-08-19 04:17\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1545,11 +1545,11 @@ msgstr "결과 보기"
 
 #: src/components/poll.jsx:227
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
-msgstr "{votesCount, plural, other {<1>{1}</1>명 투표}}"
+msgstr "{votesCount, plural, other {총 <1>{1}</1>표}}"
 
 #: src/components/poll.jsx:244
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr "{votersCount, plural, other {<1>{1}</1>명 투표}}"
+msgstr "{votersCount, plural, other {총 <1>{1}</1>명}}"
 
 #: src/components/poll.jsx:264
 msgid "Ended <0/>"

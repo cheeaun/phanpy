@@ -1034,7 +1034,10 @@ function NotificationRequestModalButton({ request }) {
       >
         <Icon icon="notification" class="more-insignificant" />{' '}
         <small>
-          <Trans>View notifications from @{account.username}</Trans>
+          <Trans>
+            View notifications from{' '}
+            <span class="bidi-isolate">@{account.username}</span>
+          </Trans>
         </small>{' '}
         <Icon icon="chevron-down" />
       </button>
@@ -1052,7 +1055,10 @@ function NotificationRequestModalButton({ request }) {
             </button>
             <header>
               <b>
-                <Trans>Notifications from @{account.username}</Trans>
+                <Trans>
+                  Notifications from{' '}
+                  <span class="bidi-isolate">@{account.username}</span>
+                </Trans>
               </b>
             </header>
             <main>

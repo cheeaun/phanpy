@@ -87,7 +87,9 @@ function Drafts({ onClose }) {
                         <time>
                           {!!replyTo && (
                             <>
-                              @{replyTo.account.acct}
+                              <span class="bidi-isolate">
+                                @{replyTo.account.acct}
+                              </span>
                               <br />
                             </>
                           )}

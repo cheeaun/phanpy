@@ -310,7 +310,10 @@ function RemoveAddButton({ account, listID }) {
       confirm={!removed}
       confirmLabel={
         <span>
-          <Trans>Remove @{account.username} from list?</Trans>
+          <Trans>
+            Remove <span class="bidi-isolate">@{account.username}</span> from
+            list?
+          </Trans>
         </span>
       }
       align="end"

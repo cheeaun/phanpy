@@ -141,7 +141,13 @@ function Accounts({ onClose }) {
                           <>
                             <Icon icon="exit" />
                             <span>
-                              <Trans>Log out @{account.info.acct}?</Trans>
+                              <Trans>
+                                Log out{' '}
+                                <span class="bidi-isolate">
+                                  @{account.info.acct}
+                                </span>
+                                ?
+                              </Trans>
                             </span>
                           </>
                         }

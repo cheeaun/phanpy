@@ -1028,7 +1028,10 @@ function Status({
           >
             <Icon icon="arrows-right" />
             <small>
-              <Trans>View post by @{username || acct}</Trans>
+              <Trans>
+                View post by{' '}
+                <span class="bidi-isolate">@{username || acct}</span>
+              </Trans>
               <br />
               <span class="more-insignificant">
                 {_(visibilityText[visibility])} • {createdDateText}

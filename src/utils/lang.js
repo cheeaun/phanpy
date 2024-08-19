@@ -46,8 +46,8 @@ export function initActivateLang() {
   const lang = detect(
     fromUrl('lang'),
     fromStorage('lang'),
-    fromNavigator(),
     PHANPY_DEFAULT_LANG,
+    fromNavigator(),
     DEFAULT_LANG,
   );
   const matchedLang = localeMatch(lang, LOCALES);

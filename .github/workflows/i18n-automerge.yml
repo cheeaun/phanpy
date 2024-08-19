@@ -63,7 +63,7 @@ jobs:
               git config --global user.name "github-actions[bot]"
               git add src/data/catalogs.json
               git commit -m "Update catalogs.json"
-              git push
+              git push origin HEAD:l10n_main
               echo "Merging pull request"
               PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
               gh pr merge $PR_NUMBER --auto --squash

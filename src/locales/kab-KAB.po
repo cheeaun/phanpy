@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-19 17:15\n"
+"PO-Revision-Date: 2024-08-19 22:15\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -130,7 +130,7 @@ msgstr "Ugar"
 
 #: src/components/account-info.jsx:440
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr ""
+msgstr "<0>{displayName}</0> ɣur-s tura amiḍan-a amaynut:"
 
 #: src/components/account-info.jsx:585
 #: src/components/account-info.jsx:1274
@@ -178,7 +178,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:832
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {1 tsuffeɣt taneggarut deg yiseggasen-a ineggura} other {{1} tsuffaɣ deg yiseggasen-a ineggura}}"
 
 #: src/components/account-info.jsx:856
 #: src/pages/catchup.jsx:70
@@ -205,7 +205,7 @@ msgstr "Isnerniyen"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
-msgstr ""
+msgstr "Tidaddanin n yizen-a ulac-itent."
 
 #: src/components/account-info.jsx:901
 msgid "View post stats"
@@ -229,7 +229,7 @@ msgstr "Tazmilt tusligt"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "Bder <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1161
 msgid "Translate bio"
@@ -261,11 +261,11 @@ msgstr "Rmed ulɣuten"
 
 #: src/components/account-info.jsx:1223
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Ibeṭṭuyen seg @{username} ttwaremden."
 
 #: src/components/account-info.jsx:1224
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Ibeṭṭuyen seg @{username} ttwasensen."
 
 #: src/components/account-info.jsx:1235
 msgid "Disable boosts"
@@ -550,11 +550,11 @@ msgstr "Ɣur-k isenfal ur yettwaskelsen ara. Sefsex tasuffeɣt-a?"
 #: src/components/compose.jsx:1328
 #: src/components/compose.jsx:1582
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, one {Tzemreḍ ad tsedduḍ 1 ufaylu kan.} other {Tzemreḍ ad tsedduḍ # yifuyla.}}"
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
-msgstr ""
+msgstr "Ldi deg ufaylu udhim"
 
 #: src/components/compose.jsx:785
 msgid "Minimize"
@@ -574,15 +574,15 @@ msgstr ""
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
-msgstr ""
+msgstr "Err-d seg usfaylu agejdan"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "Tiririt ɣef tsuffeɣt n @{0} (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "Tiririt ɣef tsuffeɣt n @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -1322,19 +1322,19 @@ msgstr "Imzizdigen"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
-msgstr ""
+msgstr "Sgugem"
 
 #: src/components/nav-menu.jsx:326
 msgid "Muted users…"
-msgstr ""
+msgstr "Sgugem iseqdacen…"
 
 #: src/components/nav-menu.jsx:333
 msgid "Blocked users"
-msgstr ""
+msgstr "Imiḍanen yettusḥebsen"
 
 #: src/components/nav-menu.jsx:341
 msgid "Blocked users…"
-msgstr ""
+msgstr "Imiḍanen yettusḥebsen…"
 
 #: src/components/nav-menu.jsx:353
 msgid "Accounts…"
@@ -1497,15 +1497,15 @@ msgstr ""
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
-msgstr ""
+msgstr "Iεǧeb-as i…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr ""
+msgstr "Yebḍa-t…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr ""
+msgstr "Iḍfer-it…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
@@ -1696,7 +1696,7 @@ msgstr ""
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "Tisuffaɣ yesɛan <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
@@ -1712,7 +1712,7 @@ msgstr "Imiḍanen yesɛan <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Agejdan / Aḍfar"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -1762,7 +1762,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
 msgid "Media only"
-msgstr ""
+msgstr "Amidya kan"
 
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
@@ -1771,7 +1771,7 @@ msgstr "Inegzumen"
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr ""
+msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
@@ -1779,15 +1779,15 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "Tiqeffilt yettifliwen"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Iccer/Afeggag n wumuɣ"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
-msgstr ""
+msgstr "Aṭas n tgejdiyin"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
@@ -1926,7 +1926,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "Inegzumen ttwaketren"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"

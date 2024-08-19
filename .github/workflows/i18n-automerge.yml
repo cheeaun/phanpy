@@ -3,7 +3,6 @@ name: i18n PR auto-merge
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
-  workflow_dispatch:
 
 jobs:
   run-and-merge:
@@ -21,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Count lines changed
+      - name: Merge PR if there are significant changes
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
@@ -48,7 +47,7 @@ jobs:
           # Check if the number of lines changed is more than 50
           if [ "$LINES_CHANGED" -le 50 ]; then
             echo "ERROR: 50 or fewer lines have been changed. Failing the check."
-            exit 1
+            exit 0
           else
             echo "Success: More than 50 lines have been changed."
             node scripts/catalogs.js
@@ -59,13 +58,10 @@ jobs:
               git add src/data/catalogs.json
               git commit -m "Update catalogs.json"
               git push
+              echo "Merging pull request"
+              PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
+              gh pr merge $PR_NUMBER --auto --squash
             fi
           fi
-
-      - name: Merge pull request
-        if: ${{ success() }}
-        run: |
-          PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
-          gh pr merge $PR_NUMBER --auto --squash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

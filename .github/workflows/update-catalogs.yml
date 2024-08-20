@@ -4,10 +4,13 @@ on:
   pull_request:
     types:
       - closed
+    branches:
+      - l10n_main
   workflow_dispatch:
 
 jobs:
   update-catalogs:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

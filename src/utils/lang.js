@@ -14,7 +14,7 @@ import localeMatch from '../utils/locale-match';
 const { PHANPY_DEFAULT_LANG } = import.meta.env;
 
 const langFileMaps = {
-  kab: 'kab-KAB',
+  // kab: 'kab-KAB',
 };
 
 i18n.load(DEFAULT_LANG, messages);

@@ -27,7 +27,7 @@ export default function LangSelector() {
       const native = localeCode2Text({
         code: regionlessCode,
         locale: lang,
-        fallback: CATALOGS[lang]?.nativeName || lang,
+        fallback: CATALOGS.find((c) => c.code === lang)?.nativeName,
       });
 
       // Not used when rendering because it'll change based on current locale
@@ -35,6 +35,7 @@ export default function LangSelector() {
       const _common = localeCode2Text({
         code: regionlessCode,
         locale: i18n.locale,
+        fallback: CATALOGS.find((c) => c.code === lang)?.name,
       });
 
       return {
@@ -83,6 +84,7 @@ export default function LangSelector() {
           const common = localeCode2Text({
             code: regionlessCode,
             locale: i18n.locale,
+            fallback: CATALOGS.find((c) => c.code === code)?.name,
           });
           const showCommon = !!common && common !== native;
           return (

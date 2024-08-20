@@ -4,8 +4,6 @@ on:
   pull_request_target:
     types:
       - closed
-    branches:
-      - l10n_main
   workflow_dispatch:
 
 jobs:

@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react';
 import { useMemo } from 'preact/hooks';
 
-import { DEFAULT_LANG, LOCALES } from '../locales';
+import { CATALOGS, DEFAULT_LANG, LOCALES } from '../locales';
 import { activateLang } from '../utils/lang';
 import localeCode2Text from '../utils/localeCode2Text';
 
@@ -24,7 +24,11 @@ export default function LangSelector() {
       // Wait till there's too many languages and there are regional clashes
       const regionlessCode = regionMaps[lang] || lang.replace(/-[a-z]+$/i, '');
 
-      const native = localeCode2Text({ code: regionlessCode, locale: lang });
+      const native = localeCode2Text({
+        code: regionlessCode,
+        locale: lang,
+        fallback: CATALOGS[lang]?.nativeName || lang,
+      });
 
       // Not used when rendering because it'll change based on current locale
       // Only used for sorting on render

@@ -15,6 +15,10 @@ const enPo = PO.parse(enContent);
 const total = enPo.items.length;
 console.log('Total strings:', total);
 
+const codeMaps = {
+  'kab-KAB': 'kab',
+};
+
 files.forEach((file) => {
   if (file.endsWith('.po')) {
     const code = file.replace(/\.po$/, '');
@@ -30,31 +34,57 @@ files.forEach((file) => {
     po.percentage = percentage;
     if (percentage > 0) {
       // Ignore empty catalogs
-      catalogs[code] = percentage;
+      catalogs[codeMaps[code] || code] = percentage;
     }
   }
 });
 
+const regionMaps = {
+  'zh-CN': 'zh-Hans',
+  'zh-TW': 'zh-Hant',
+};
+
+function IDN(inputCode, outputCode) {
+  let result;
+  const regionlessInputCode =
+    regionMaps[inputCode] || inputCode.replace(/-[a-z]+$/i, '');
+  const regionlessOutputCode =
+    regionMaps[outputCode] || outputCode.replace(/-[a-z]+$/i, '');
+  const inputCodes =
+    regionlessInputCode !== inputCode
+      ? [inputCode, regionlessInputCode]
+      : [inputCode];
+  const outputCodes =
+    regionlessOutputCode !== outputCode
+      ? [regionlessOutputCode, outputCode]
+      : [outputCode];
+
+  for (const inputCode of inputCodes) {
+    for (const outputCode of outputCodes) {
+      try {
+        result = new Intl.DisplayNames([inputCode], {
+          type: 'language',
+        }).of(outputCode);
+        break;
+      } catch (e) {}
+    }
+    if (result) break;
+  }
+  return result;
+}
+
 // Sort by percentage
 const sortedCatalogs = Object.entries(catalogs)
   .sort((a, b) => b[1] - a[1])
-  .map(([code, percentage]) => {
-    const name = new Intl.DisplayNames(['en'], { type: 'language' }).of(code);
-    return { code, name, percentage };
+  .map(([code, completion]) => {
+    const nativeName = IDN(code, code);
+    const name = IDN('en', code);
+    // let names = {};
+    return { code, nativeName, name, completion };
   });
 
 console.table(sortedCatalogs);
 
 const path = 'src/data/catalogs.json';
-fs.writeFileSync(
-  path,
-  JSON.stringify(
-    Object.entries(catalogs).map(([code, percentage]) => ({
-      code,
-      completion: percentage,
-    })),
-    null,
-    2,
-  ),
-);
+fs.writeFileSync(path, JSON.stringify(sortedCatalogs, null, 2));
 console.log('File written:', path);

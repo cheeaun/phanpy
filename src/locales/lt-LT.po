@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 05:45\n"
+"PO-Revision-Date: 2024-08-20 13:13\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -84,7 +84,7 @@ msgstr "Prisijungė <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
-msgstr "Visam laikui "
+msgstr "Visam laikui"
 
 #: src/components/account-info.jsx:378
 msgid "Unable to load account."
@@ -229,7 +229,7 @@ msgstr "Privati pastaba"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "Paminėti <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1161
 msgid "Translate bio"
@@ -315,11 +315,11 @@ msgstr "Atšauktas @{username} nutildymas"
 
 #: src/components/account-info.jsx:1362
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Atšaukti nutildymą <0>@{username}></0>"
 
 #: src/components/account-info.jsx:1378
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "Nutildyti <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
@@ -327,11 +327,11 @@ msgstr "Nutildytas @{username} dėl {0}"
 
 #: src/components/account-info.jsx:1422
 msgid "Unable to mute @{username}"
-msgstr "Nepavyksta nutildyti @{username}"
+msgstr "Nepavyksta nutildyti @{username}."
 
 #: src/components/account-info.jsx:1443
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "Pašalinti <0>@{username}</0> iš sekėjų?"
 
 #: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "Pašalinti sekėją…"
 
 #: src/components/account-info.jsx:1486
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "Bluokuoti <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
@@ -363,15 +363,15 @@ msgstr "Nepavyksta užblokuoti @{username}."
 
 #: src/components/account-info.jsx:1535
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "Atblokuoti <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1544
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "Bluokuoti <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1561
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "Pranešti apie <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1581
 #: src/components/account-info.jsx:2092
@@ -465,7 +465,7 @@ msgstr "Naujas sąrašas"
 
 #: src/components/account-info.jsx:1992
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "Privati pastaba apie <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2022
 msgid "Unable to update private note."
@@ -554,7 +554,7 @@ msgstr "{maxMediaAttachments, plural, one {Gali pridėti tik iki # failo.} few {
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
-msgstr ""
+msgstr "Išskleisti"
 
 #: src/components/compose.jsx:785
 msgid "Minimize"
@@ -562,43 +562,43 @@ msgstr "Sumažinti"
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Atrodo, kad uždarei pirminį langą."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Atrodo, kad pirminiame lange jau atidarytas sukūrimo laukas ir šiuo metu skelbiamas. Palauk, kol jis bus baigtas, ir pabandyk dar kartą vėliau."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Atrodo, kad pirminiame lange jau yra atidarytas sukūrimo laukas. Suskleisčius šiame lange, bus atmesti pakeitimai, kuriuos padarėte pirminiame lange. Tęsti?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
-msgstr ""
+msgstr "Suskleisti"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "Atsakant į @{0} įrašą (<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "Atsakant į @{0} įrašą"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr ""
+msgstr "Redaguojamas šaltinio įrašas"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "Apklausa turi turėti bent 2 parinktis."
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Kai kurie apklausos pasirinkimai yra tušti."
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "Kai kurios medijos neturi aprašymų. Tęsti?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
@@ -1658,35 +1658,35 @@ msgstr ""
 msgid "Additional info"
 msgstr ""
 
-#: src/components/report-modal.jsx:255
+#: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
 msgstr ""
 
-#: src/components/report-modal.jsx:265
+#: src/components/report-modal.jsx:266
 msgid "Send Report"
 msgstr ""
 
-#: src/components/report-modal.jsx:274
+#: src/components/report-modal.jsx:275
 msgid "Muted {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:277
+#: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:282
+#: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr ""
 
-#: src/components/report-modal.jsx:293
+#: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:296
+#: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:301
+#: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
 msgstr ""
 

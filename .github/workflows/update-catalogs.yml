@@ -1,14 +1,10 @@
 name: Update catalogs
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/locales/**'
+  pull_request:
+    types:
+      - closed
   workflow_dispatch:
-  # pull_request:
-  #   types: [closed]
 
 jobs:
   update-catalogs:

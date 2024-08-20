@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 01:39\n"
+"PO-Revision-Date: 2024-08-20 02:35\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -229,7 +229,7 @@ msgstr "Yksityinen merkintä"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "Mainitse <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1161
 msgid "Translate bio"
@@ -315,11 +315,11 @@ msgstr "Kumottu käyttäjän @{username} mykistys"
 
 #: src/components/account-info.jsx:1362
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Kumoa käyttäjän <0>@{username}</0> mykistys"
 
 #: src/components/account-info.jsx:1378
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "Mykistä <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
@@ -331,7 +331,7 @@ msgstr "Käyttäjää @{username} ei voitu mykistää"
 
 #: src/components/account-info.jsx:1443
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "Poistetaanko <0>@{username}</0> seuraajista?"
 
 #: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "Poista seuraaja…"
 
 #: src/components/account-info.jsx:1486
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "Estetäänkö <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
@@ -363,15 +363,15 @@ msgstr "Käyttäjää @{username} ei voitu estää"
 
 #: src/components/account-info.jsx:1535
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "Kumoa käyttäjän <0>@{username}</0> esto"
 
 #: src/components/account-info.jsx:1544
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "Estä <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1561
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "Raportoi <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1581
 #: src/components/account-info.jsx:2092
@@ -465,7 +465,7 @@ msgstr "Uusi lista"
 
 #: src/components/account-info.jsx:1992
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "Yksityinen merkintä käyttäjästä <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2022
 msgid "Unable to update private note."
@@ -2080,7 +2080,7 @@ msgstr "Poista kirjanmerkeistä"
 
 #: src/components/status.jsx:1031
 msgid "View post by <0>@{0}</0>"
-msgstr ""
+msgstr "Näytä käyttäjän <0>@{0}</0> julkaisu"
 
 #: src/components/status.jsx:1052
 msgid "Show Edit History"
@@ -2456,7 +2456,7 @@ msgstr "Aseta oletukseksi"
 
 #: src/pages/accounts.jsx:144
 msgid "Log out <0>@{0}</0>?"
-msgstr ""
+msgstr "Kirjataanko <0>@{0}</0> ulos?"
 
 #: src/pages/accounts.jsx:167
 msgid "Log out…"
@@ -2677,7 +2677,7 @@ msgstr "Takaisin ylös"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr "Seurattujen jakamat linkit, järjestettynä jakomäärän mukaan, tehostukset ja tykkäykset."
+msgstr "Seurattujen jakamat linkit järjestettynä jakomäärän mukaan, tehostukset ja tykkäykset."
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
@@ -2685,7 +2685,7 @@ msgstr "Järjestys: Tiheys"
 
 #: src/pages/catchup.jsx:1570
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "Julkaisut järjestellään informaatiotiheyden tai -syvyyden mukaan. Lyhyemmät julkaisut ovat ”kevyempiä”, pidemmät taas ”painavampia”. Kuvan sisältävät julkaisut ovat ”paivavampia” kuin kuvattomat."
+msgstr "Julkaisut järjestetään informaatiotiheyden tai -syvyyden mukaan. Lyhyemmät julkaisut ovat ”kevyempiä”, pidemmät taas ”painavampia”. Kuvan sisältävät julkaisut ovat ”paivavampia” kuin kuvattomat."
 
 #: src/pages/catchup.jsx:1577
 msgid "Group: Authors"
@@ -3002,7 +3002,7 @@ msgstr "Hallitse jäseniä"
 
 #: src/pages/list.jsx:313
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "Poistetaanko <0>@{0}</0> listasta?"
 
 #: src/pages/list.jsx:359
 msgid "Remove…"
@@ -3014,7 +3014,7 @@ msgstr "{0, plural, one {# lista} other {# listaa}}"
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
-msgstr "Ei listoja vielä."
+msgstr "Ei vielä listoja."
 
 #: src/pages/login.jsx:185
 msgid "e.g. “mastodon.social”"
@@ -3042,7 +3042,7 @@ msgstr "Yksityismaininnat"
 
 #: src/pages/mentions.jsx:159
 msgid "Private"
-msgstr "Yksityinen"
+msgstr "Yksityiset"
 
 #: src/pages/mentions.jsx:169
 msgid "No one mentioned you :("

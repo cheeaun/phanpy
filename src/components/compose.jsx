@@ -1178,6 +1178,11 @@ function Compose({
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>
+                {supports('@akkoma/local-only') &&
+                  <option value="local">
+			        <Trans>Local instance</Trans>
+		          </option>
+                }
               </select>
             </label>{' '}
           </div>

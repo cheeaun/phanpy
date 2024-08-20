@@ -94,6 +94,7 @@ const visibilityText = {
   unlisted: msg`Unlisted`,
   private: msg`Followers only`,
   direct: msg`Private mention`,
+  local: msg`Local instance`,
 };
 
 const isIOS =

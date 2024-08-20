@@ -7,6 +7,8 @@ import { getCurrentInstance } from './store-utils';
 // Non-semver(?) UA string detection
 const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
+const containAkkoma = /akkoma/i
+const notContainAkkoma = /^(?! *akkoma) *$/i
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,
@@ -20,6 +22,7 @@ const platformFeatures = {
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,
+  '@akkoma/local-only': containAkkoma,
 };
 const supportsCache = {};
 

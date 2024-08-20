@@ -48,7 +48,7 @@ jobs:
           else
             echo "More than 50 lines have been changed. Merging pull request."
             PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
-            gh pr merge $PR_NUMBER --auto --squash
+            gh pr merge $PR_NUMBER --auto --squash || true
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

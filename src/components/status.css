@@ -598,6 +598,7 @@
   position: relative;
   top: calc((9px + 2px) / 2 * -1);
   min-width: 50px;
+  max-width: 100px;
   text-align: center;
 }
 .status-filtered-badge.clickable:hover {
@@ -607,6 +608,8 @@
   background: var(--bg-color);
 }
 .status-filtered-badge:not(.horizontal).badge-meta > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .status-filtered-badge:not(.horizontal).badge-meta > span + span {

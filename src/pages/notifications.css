@@ -560,9 +560,26 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: space-between;
 
     input[type='checkbox'] {
       flex-shrink: 0;
+    }
+  }
+
+  .notification-policy-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    select:has(option[value='accept']:checked) {
+      box-shadow: 0 0 0 2px var(--green-color);
+    }
+    select:has(option[value='filter']:checked) {
+      box-shadow: 0 0 0 2px var(--orange-color);
+    }
+    select:has(option[value='drop']:checked) {
+      box-shadow: 0 0 0 2px var(--red-color);
     }
   }
 }

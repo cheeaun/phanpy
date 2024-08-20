@@ -1,3 +1,5 @@
+// NOTE: UNUSED
+
 import Link from '../components/link';
 
 export default function NotFound() {

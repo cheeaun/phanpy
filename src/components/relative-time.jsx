@@ -1,44 +1,107 @@
-// Twitter-style relative time component
-// Seconds = 1s
-// Minutes = 1m
-// Hours = 1h
-// Days = 1d
-// After 7 days, use DD/MM/YYYY or MM/DD/YYYY
-import dayjs from 'dayjs';
-import dayjsTwitter from 'dayjs-twitter';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { i18n } from '@lingui/core';
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
-dayjs.extend(dayjsTwitter);
-dayjs.extend(localizedFormat);
-dayjs.extend(relativeTime);
+import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 
-const dtf = new Intl.DateTimeFormat();
+function isValidDate(value) {
+  if (value instanceof Date) {
+    return !isNaN(value.getTime());
+  } else {
+    const date = new Date(value);
+    return !isNaN(date.getTime());
+  }
+}
+
+const resolvedLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+const DTF = mem((locale, opts = {}) => {
+  const lang = localeMatch([locale], [resolvedLocale]);
+  try {
+    return new Intl.DateTimeFormat(lang, opts);
+  } catch (e) {}
+  try {
+    return new Intl.DateTimeFormat(locale, opts);
+  } catch (e) {}
+  return new Intl.DateTimeFormat(undefined, opts);
+});
+const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
+
+const minute = 60;
+const hour = 60 * minute;
+const day = 24 * hour;
+
+const rtfFromNow = (date) => {
+  // date = Date object
+  const rtf = RTF(i18n.locale);
+  const seconds = (date.getTime() - Date.now()) / 1000;
+  const absSeconds = Math.abs(seconds);
+  if (absSeconds < minute) {
+    return rtf.format(seconds, 'second');
+  } else if (absSeconds < hour) {
+    return rtf.format(Math.floor(seconds / minute), 'minute');
+  } else if (absSeconds < day) {
+    return rtf.format(Math.floor(seconds / hour), 'hour');
+  } else {
+    return rtf.format(Math.floor(seconds / day), 'day');
+  }
+};
+
+const twitterFromNow = (date) => {
+  // date = Date object
+  const seconds = (Date.now() - date.getTime()) / 1000;
+  if (seconds < minute) {
+    return t({
+      comment: 'Relative time in seconds, as short as possible',
+      message: `${seconds < 1 ? 1 : Math.floor(seconds)}s`,
+    });
+  } else if (seconds < hour) {
+    return t({
+      comment: 'Relative time in minutes, as short as possible',
+      message: `${Math.floor(seconds / minute)}m`,
+    });
+  } else {
+    return t({
+      comment: 'Relative time in hours, as short as possible',
+      message: `${Math.floor(seconds / hour)}h`,
+    });
+  }
+};
 
 export default function RelativeTime({ datetime, format }) {
   if (!datetime) return null;
   const [renderCount, rerender] = useReducer((x) => x + 1, 0);
-  const date = useMemo(() => dayjs(datetime), [datetime]);
+  const date = useMemo(() => new Date(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
-    if (!date.isValid()) return ['' + datetime, '', ''];
+    if (!isValidDate(date)) return ['' + datetime, '', ''];
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year
-      const now = dayjs();
-      const dayDiff = now.diff(date, 'day');
-      if (dayDiff <= 1 || now.year() === date.year()) {
-        str = date.twitter();
+      const now = new Date();
+      const dayDiff = (now.getTime() - date.getTime()) / 1000 / day;
+      if (dayDiff <= 1) {
+        str = twitterFromNow(date);
       } else {
-        str = dtf.format(date.toDate());
+        const sameYear = now.getFullYear() === date.getFullYear();
+        if (sameYear) {
+          str = DTF(i18n.locale, {
+            year: undefined,
+            month: 'short',
+            day: 'numeric',
+          }).format(date);
+        } else {
+          str = DTF(i18n.locale, {
+            dateStyle: 'short',
+          }).format(date);
+        }
       }
     }
-    if (!str) str = date.fromNow();
-    return [str, date.toISOString(), date.format('LLLL')];
+    if (!str) str = rtfFromNow(date);
+    return [str, date.toISOString(), date.toLocaleString()];
   }, [date, format, renderCount]);
 
   useEffect(() => {
-    if (!date.isValid()) return;
+    if (!isValidDate(date)) return;
     let timeout;
     let raf;
     function rafRerender() {
@@ -51,9 +114,10 @@ export default function RelativeTime({ datetime, format }) {
       // If less than 1 minute, rerender every 10s
       // If less than 1 hour rerender every 1m
       // Else, don't need to rerender
-      if (date.diff(dayjs(), 'minute', true) < 1) {
+      const seconds = (Date.now() - date.getTime()) / 1000;
+      if (seconds < minute) {
         timeout = setTimeout(rafRerender, 10_000);
-      } else if (date.diff(dayjs(), 'hour', true) < 1) {
+      } else if (seconds < hour) {
         timeout = setTimeout(rafRerender, 60_000);
       }
     }

@@ -1,5 +1,8 @@
 import './filters.css';
 
+import { i18n } from '@lingui/core';
+import { msg, Plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
@@ -10,17 +13,18 @@ import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
+import i18nDuration from '../utils/i18n-duration';
 import useInterval from '../utils/useInterval';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = ['home', 'public', 'notifications', 'thread', 'account'];
 const FILTER_CONTEXT_UNIMPLEMENTED = ['notifications', 'thread', 'account'];
 const FILTER_CONTEXT_LABELS = {
-  home: 'Home and lists',
-  notifications: 'Notifications',
-  public: 'Public timelines',
-  thread: 'Conversations',
-  account: 'Profiles',
+  home: msg`Home and lists`,
+  notifications: msg`Notifications`,
+  public: msg`Public timelines`,
+  thread: msg`Conversations`,
+  account: msg`Profiles`,
 };
 
 const EXPIRY_DURATIONS = [
@@ -33,20 +37,21 @@ const EXPIRY_DURATIONS = [
   60 * 60 * 24 * 7, // 7 days
   60 * 60 * 24 * 30, // 30 days
 ];
+
 const EXPIRY_DURATIONS_LABELS = {
-  0: 'Never',
-  1800: '30 minutes',
-  3600: '1 hour',
-  21600: '6 hours',
-  43200: '12 hours',
-  86_400: '24 hours',
-  604_800: '7 days',
-  2_592_000: '30 days',
+  0: msg`Never`,
+  1800: i18nDuration(30, 'minute'),
+  3600: i18nDuration(1, 'hour'),
+  21600: i18nDuration(6, 'hour'),
+  43200: i18nDuration(12, 'hour'),
+  86_400: i18nDuration(24, 'hour'),
+  604_800: i18nDuration(7, 'day'),
+  2_592_000: i18nDuration(30, 'day'),
 };
 
 function Filters() {
   const { masto } = api();
-  useTitle(`Filters`, `/ft`);
+  useTitle(t`Filters`, `/ft`);
   const [uiState, setUIState] = useState('default');
   const [showFiltersAddEditModal, setShowFiltersAddEditModal] = useState(false);
 
@@ -81,10 +86,12 @@ function Filters() {
             <div class="header-side">
               <NavMenu />
               <Link to="/" class="button plain">
-                <Icon icon="home" size="l" />
+                <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>
-            <h1>Filters</h1>
+            <h1>
+              <Trans>Filters</Trans>
+            </h1>
             <div class="header-side">
               <button
                 type="button"
@@ -93,7 +100,7 @@ function Filters() {
                   setShowFiltersAddEditModal(true);
                 }}
               >
-                <Icon icon="plus" size="l" alt="New filter" />
+                <Icon icon="plus" size="l" alt={t`New filter`} />
               </button>
             </div>
           </div>
@@ -141,8 +148,11 @@ function Filters() {
               {filters.length > 1 && (
                 <footer class="ui-state">
                   <small class="insignificant">
-                    {filters.length} filter
-                    {filters.length === 1 ? '' : 's'}
+                    <Plural
+                      value={filters.length}
+                      one="# filter"
+                      other="# filters"
+                    />
                   </small>
                 </footer>
               )}
@@ -152,15 +162,19 @@ function Filters() {
               <Loader />
             </p>
           ) : uiState === 'error' ? (
-            <p class="ui-state">Unable to load filters.</p>
+            <p class="ui-state">
+              <Trans>Unable to load filters.</Trans>
+            </p>
           ) : (
-            <p class="ui-state">No filters yet.</p>
+            <p class="ui-state">
+              <Trans>No filters yet.</Trans>
+            </p>
           )}
         </main>
       </div>
       {!!showFiltersAddEditModal && (
         <Modal
-          title="Add filter"
+          title={t`Add filter`}
           onClose={() => {
             setShowFiltersAddEditModal(false);
           }}
@@ -183,6 +197,7 @@ function Filters() {
 let _id = 1;
 const incID = () => _id++;
 function FiltersAddEdit({ filter, onClose }) {
+  const { _ } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const editMode = !!filter;
@@ -206,11 +221,11 @@ function FiltersAddEdit({ filter, onClose }) {
     <div class="sheet" id="filters-add-edit-modal">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>{editMode ? 'Edit filter' : 'New filter'}</h2>
+        <h2>{editMode ? t`Edit filter` : t`New filter`}</h2>
       </header>
       <main>
         <form
@@ -327,8 +342,8 @@ function FiltersAddEdit({ filter, onClose }) {
                 setUIState('error');
                 alert(
                   editMode
-                    ? 'Unable to edit filter'
-                    : 'Unable to create filter',
+                    ? t`Unable to edit filter`
+                    : t`Unable to create filter`,
                 );
               }
             })();
@@ -336,7 +351,9 @@ function FiltersAddEdit({ filter, onClose }) {
         >
           <div class="filter-form-row">
             <label>
-              <b>Title</b>
+              <b>
+                <Trans>Title</Trans>
+              </b>
               <input
                 type="text"
                 name="title"
@@ -376,7 +393,7 @@ function FiltersAddEdit({ filter, onClose }) {
                             defaultChecked={wholeWord}
                             disabled={uiState === 'loading'}
                           />{' '}
-                          Whole word
+                          <Trans>Whole word</Trans>
                         </label>
                         <button
                           type="button"
@@ -392,7 +409,7 @@ function FiltersAddEdit({ filter, onClose }) {
                             }
                           }}
                         >
-                          <Icon icon="x" />
+                          <Icon icon="x" alt={t`Remove`} />
                         </button>
                       </div>
                     </li>
@@ -401,7 +418,9 @@ function FiltersAddEdit({ filter, onClose }) {
               </ul>
             ) : (
               <div class="filter-keywords">
-                <div class="insignificant">No keywords. Add one.</div>
+                <div class="insignificant">
+                  <Trans>No keywords. Add one.</Trans>
+                </div>
               </div>
             )}
             <footer class="filter-keywords-footer">
@@ -427,12 +446,15 @@ function FiltersAddEdit({ filter, onClose }) {
                   }, 10);
                 }}
               >
-                Add keyword
+                <Trans>Add keyword</Trans>
               </button>{' '}
               {filteredEditKeywords?.length > 1 && (
                 <small class="insignificant">
-                  {filteredEditKeywords.length} keyword
-                  {filteredEditKeywords.length === 1 ? '' : 's'}
+                  <Plural
+                    value={filteredEditKeywords.length}
+                    one="# keyword"
+                    other="# keywords"
+                  />
                 </small>
               )}
             </footer>
@@ -440,7 +462,9 @@ function FiltersAddEdit({ filter, onClose }) {
           <div class="filter-form-cols">
             <div class="filter-form-col">
               <div>
-                <b>Filter from…</b>
+                <b>
+                  <Trans>Filter from…</Trans>
+                </b>
               </div>
               {FILTER_CONTEXT.map((ctx) => (
                 <div>
@@ -458,27 +482,29 @@ function FiltersAddEdit({ filter, onClose }) {
                       defaultChecked={!!context ? context.includes(ctx) : true}
                       disabled={uiState === 'loading'}
                     />{' '}
-                    {FILTER_CONTEXT_LABELS[ctx]}
+                    {_(FILTER_CONTEXT_LABELS[ctx])}
                     {FILTER_CONTEXT_UNIMPLEMENTED.includes(ctx) ? '*' : ''}
                   </label>{' '}
                 </div>
               ))}
               <p>
-                <small class="insignificant">* Not implemented yet</small>
+                <small class="insignificant">
+                  <Trans>* Not implemented yet</Trans>
+                </small>
               </p>
             </div>
             <div class="filter-form-col">
               {editMode && (
-                <>
+                <Trans>
                   Status:{' '}
                   <b>
                     <ExpiryStatus expiresAt={expiresAt} showNeverExpires />
                   </b>
-                </>
+                </Trans>
               )}
               <div>
                 <label for="filters-expires_in">
-                  {editMode ? 'Change expiry' : 'Expiry'}
+                  {editMode ? t`Change expiry` : t`Expiry`}
                 </label>
                 <select
                   id="filters-expires_in"
@@ -488,12 +514,16 @@ function FiltersAddEdit({ filter, onClose }) {
                 >
                   {editMode && <option></option>}
                   {EXPIRY_DURATIONS.map((v) => (
-                    <option value={v}>{EXPIRY_DURATIONS_LABELS[v]}</option>
+                    <option value={v}>
+                      {typeof EXPIRY_DURATIONS_LABELS[v] === 'function'
+                        ? EXPIRY_DURATIONS_LABELS[v]()
+                        : _(EXPIRY_DURATIONS_LABELS[v])}
+                    </option>
                   ))}
                 </select>
               </div>
               <p>
-                Filtered post will be…
+                <Trans>Filtered post will be…</Trans>
                 <br />
                 <label class="ib">
                   <input
@@ -503,7 +533,7 @@ function FiltersAddEdit({ filter, onClose }) {
                     defaultChecked={filterAction === 'warn' || !editMode}
                     disabled={uiState === 'loading'}
                   />{' '}
-                  minimized
+                  <Trans>minimized</Trans>
                 </label>{' '}
                 <label class="ib">
                   <input
@@ -513,7 +543,7 @@ function FiltersAddEdit({ filter, onClose }) {
                     defaultChecked={filterAction === 'hide'}
                     disabled={uiState === 'loading'}
                   />{' '}
-                  hidden
+                  <Trans>hidden</Trans>
                 </label>
               </p>
             </div>
@@ -521,7 +551,7 @@ function FiltersAddEdit({ filter, onClose }) {
           <footer class="filter-form-footer">
             <span>
               <button type="submit" disabled={uiState === 'loading'}>
-                {editMode ? 'Save' : 'Create'}
+                {editMode ? t`Save` : t`Create`}
               </button>{' '}
               <Loader abrupt hidden={uiState !== 'loading'} />
             </span>
@@ -530,7 +560,7 @@ function FiltersAddEdit({ filter, onClose }) {
                 disabled={uiState === 'loading'}
                 align="end"
                 menuItemClassName="danger"
-                confirmLabel="Delete this filter?"
+                confirmLabel={t`Delete this filter?`}
                 onClick={() => {
                   setUIState('loading');
                   (async () => {
@@ -543,7 +573,7 @@ function FiltersAddEdit({ filter, onClose }) {
                     } catch (e) {
                       console.error(e);
                       setUIState('error');
-                      alert('Unable to delete filter.');
+                      alert(t`Unable to delete filter.`);
                     }
                   })();
                 }}
@@ -554,7 +584,7 @@ function FiltersAddEdit({ filter, onClose }) {
                   onClick={() => {}}
                   disabled={uiState === 'loading'}
                 >
-                  Delete…
+                  <Trans>Delete…</Trans>
                 </button>
               </MenuConfirm>
             )}
@@ -575,13 +605,13 @@ function ExpiryStatus({ expiresAt, showNeverExpires }) {
   useInterval(rerender, expired || 30_000);
 
   return expired ? (
-    'Expired'
+    t`Expired`
   ) : hasExpiry ? (
-    <>
+    <Trans>
       Expiring <RelativeTime datetime={expiresAtDate} />
-    </>
+    </Trans>
   ) : (
-    showNeverExpires && 'Never expires'
+    showNeverExpires && t`Never expires`
   );
 }
 

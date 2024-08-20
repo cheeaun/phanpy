@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useRef } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,7 +23,9 @@ function Public({ local, columnMode, ...props }) {
     instance: props?.instance || params.instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();
-  const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
+  const title = isLocal
+    ? t`Local timeline (${instance})`
+    : t`Federated timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   // const navigate = useNavigate();
   const latestItem = useRef();
@@ -84,14 +87,14 @@ function Public({ local, columnMode, ...props }) {
       title={title}
       titleComponent={
         <h1 class="header-double-lines">
-          <b>{isLocal ? 'Local timeline' : 'Federated timeline'}</b>
+          <b>{isLocal ? t`Local timeline` : t`Federated timeline`}</b>
           <div>{instance}</div>
         </h1>
       }
       id="public"
       instance={instance}
-      emptyText="No one has posted anything yet."
-      errorText="Unable to load posts"
+      emptyText={t`No one has posted anything yet.`}
+      errorText={t`Unable to load posts`}
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
       useItemID
@@ -108,18 +111,24 @@ function Public({ local, columnMode, ...props }) {
           position="anchor"
           menuButton={
             <button type="button" class="plain">
-              <Icon icon="more" size="l" />
+              <Icon icon="more" size="l" alt={t`More`} />
             </button>
           }
         >
           <MenuItem href={isLocal ? `/#/${instance}/p` : `/#/${instance}/p/l`}>
             {isLocal ? (
               <>
-                <Icon icon="transfer" /> <span>Switch to Federated</span>
+                <Icon icon="transfer" />{' '}
+                <span>
+                  <Trans>Switch to Federated</Trans>
+                </span>
               </>
             ) : (
               <>
-                <Icon icon="transfer" /> <span>Switch to Local</span>
+                <Icon icon="transfer" />{' '}
+                <span>
+                  <Trans>Switch to Local</Trans>
+                </span>
               </>
             )}
           </MenuItem>
@@ -127,10 +136,10 @@ function Public({ local, columnMode, ...props }) {
           <MenuItem
             onClick={() => {
               let newInstance = prompt(
-                'Enter a new instance e.g. "mastodon.social"',
+                t`Enter a new instance e.g. "mastodon.social"`,
               );
               if (!/\./.test(newInstance)) {
-                if (newInstance) alert('Invalid instance');
+                if (newInstance) alert(t`Invalid instance`);
                 return;
               }
               if (newInstance) {
@@ -142,7 +151,10 @@ function Public({ local, columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="bus" /> <span>Go to another instance…</span>
+            <Icon icon="bus" />{' '}
+            <span>
+              <Trans>Go to another instance…</Trans>
+            </span>
           </MenuItem>
           {currentInstance !== instance && (
             <MenuItem
@@ -154,7 +166,9 @@ function Public({ local, columnMode, ...props }) {
             >
               <Icon icon="bus" />{' '}
               <small class="menu-double-lines">
-                Go to my instance (<b>{currentInstance}</b>)
+                <Trans>
+                  Go to my instance (<b>{currentInstance}</b>)
+                </Trans>
               </small>
             </MenuItem>
           )}

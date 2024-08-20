@@ -2042,7 +2042,7 @@ body > .szh-menu-container {
   }
 
   .menu-control-group-horizontal:first-child,
-  li[aria-hidden='true'] + .menu-control-group-horizontal {
+  li[role='none'] + .menu-control-group-horizontal {
     margin-top: -8px;
     margin-bottom: -4px;
 
@@ -2401,6 +2401,7 @@ ul.link-list li a .icon {
 /* COLUMNS */
 
 #columns {
+  --column-size: 360px;
   display: flex;
   width: 100vw;
   overflow-y: hidden;
@@ -2412,6 +2413,11 @@ ul.link-list li a .icon {
   overscroll-behavior-x: contain;
   /* This `transform` fixes horizontal scrolling for pointer devices on iPad */
   transform: translateZ(0);
+
+  /* 360px * 2 */
+  @media (min-width: 720px) {
+    scroll-snap-type: none;
+  }
 }
 /* #columns::-webkit-scrollbar {
   display: none;
@@ -2421,7 +2427,7 @@ ul.link-list li a .icon {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   overscroll-behavior: auto;
-  flex-basis: min(100vw, 360px);
+  flex-basis: min(100vw, var(--column-size));
   flex-shrink: 0;
   box-shadow: -1px 0 var(--bg-color), -2px 0 var(--drop-shadow-color),
     -3px 0 var(--bg-color);
@@ -2846,5 +2852,17 @@ ul.link-list li a .icon {
     &:dir(rtl) {
       transform: translateX(calc(50% - var(--main-width) / 2));
     }
+  }
+}
+
+/* LANG SELECTOR */
+
+.lang-selector {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+
+  select {
+    width: 10em;
   }
 }

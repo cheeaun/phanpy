@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import { resolve } from 'path';
 
+import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
 import { uid } from 'uid/single';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
@@ -9,6 +10,7 @@ import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
+import { run } from 'vite-plugin-run';
 
 const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
@@ -55,7 +57,20 @@ export default defineConfig({
     preact({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
-      babel: {},
+      babel: {
+        plugins: ['macros'],
+      },
+    }),
+    lingui(),
+    run({
+      silent: false,
+      input: [
+        {
+          name: 'messages:extract:clean',
+          run: ['npm', 'run', 'messages:extract:clean'],
+          pattern: 'src/**/*.{js,jsx,ts,tsx}',
+        },
+      ],
     }),
     splitVendorChunkPlugin(),
     removeConsole({
@@ -131,6 +146,9 @@ export default defineConfig({
           const { facadeModuleId } = chunkInfo;
           if (facadeModuleId && facadeModuleId.includes('icon')) {
             return 'assets/icons/[name]-[hash].js';
+          }
+          if (facadeModuleId && facadeModuleId.includes('locales')) {
+            return 'assets/locales/[name]-[hash].js';
           }
           return 'assets/[name]-[hash].js';
         },

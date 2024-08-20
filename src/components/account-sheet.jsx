@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro';
 import { useEffect } from 'preact/hooks';
 
 import { api } from '../utils/api';
@@ -33,7 +34,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
     >
       {!!onClose && (
         <button type="button" class="sheet-close outer" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <AccountInfo

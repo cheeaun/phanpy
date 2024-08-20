@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -134,7 +135,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     const currentCloakMode = states.settings.cloakMode;
     states.settings.cloakMode = !currentCloakMode;
     showToast({
-      text: `Cloak mode ${currentCloakMode ? 'disabled' : 'enabled'}`,
+      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
     });
   });
 

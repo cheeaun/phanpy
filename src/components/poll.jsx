@@ -1,3 +1,4 @@
+import { Plural, t, Trans } from '@lingui/macro';
 import { useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
@@ -75,11 +76,15 @@ export default function Poll({
           <div class="poll-options">
             {options.map((option, i) => {
               const { title, votesCount: optionVotesCount } = option;
-              const percentage = pollVotesCount
-                ? ((optionVotesCount / pollVotesCount) * 100).toFixed(
-                    roundPrecision,
-                  )
-                : 0; // check if current poll choice is the leading one
+              const ratio = pollVotesCount
+                ? optionVotesCount / pollVotesCount
+                : 0;
+              const percentage = ratio
+                ? ratio.toLocaleString(i18n.locale || undefined, {
+                    style: 'percent',
+                    maximumFractionDigits: roundPrecision,
+                  })
+                : '0%';
 
               const isLeading =
                 optionVotesCount > 0 &&
@@ -92,7 +97,7 @@ export default function Poll({
                     isLeading ? 'poll-option-leading' : ''
                   }`}
                   style={{
-                    '--percentage': `${percentage}%`,
+                    '--percentage': `${ratio * 100}%`,
                   }}
                 >
                   <div class="poll-option-title">
@@ -102,7 +107,7 @@ export default function Poll({
                     {voted && ownVotes.includes(i) && (
                       <>
                         {' '}
-                        <Icon icon="check-circle" />
+                        <Icon icon="check-circle" alt={t`Voted`} />
                       </>
                     )}
                   </div>
@@ -112,7 +117,7 @@ export default function Poll({
                       optionVotesCount === 1 ? '' : 's'
                     }`}
                   >
-                    {percentage}%
+                    {percentage}
                   </div>
                 </div>
               );
@@ -127,7 +132,7 @@ export default function Poll({
                 setShowResults(false);
               }}
             >
-              <Icon icon="arrow-left" size="s" /> Hide results
+              <Icon icon="arrow-left" size="s" /> <Trans>Hide results</Trans>
             </button>
           )}
         </>
@@ -176,7 +181,7 @@ export default function Poll({
               type="submit"
               disabled={uiState === 'loading'}
             >
-              Vote
+              <Trans>Vote</Trans>
             </button>
           )}
         </form>
@@ -196,9 +201,9 @@ export default function Poll({
                 setUIState('default');
               })();
             }}
-            title="Refresh"
+            title={t`Refresh`}
           >
-            <Icon icon="refresh" alt="Refresh" />
+            <Icon icon="refresh" alt={t`Refresh`} />
           </button>
         )}
         {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
@@ -210,30 +215,66 @@ export default function Poll({
               e.preventDefault();
               setShowResults(!showResults);
             }}
-            title={showResults ? 'Hide results' : 'Show results'}
+            title={showResults ? t`Hide results` : t`Show results`}
           >
             <Icon
               icon={showResults ? 'eye-open' : 'eye-close'}
-              alt={showResults ? 'Hide results' : 'Show results'}
+              alt={showResults ? t`Hide results` : t`Show results`}
             />{' '}
           </button>
         )}
         {!expired && !readOnly && ' '}
-        <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
-        {votesCount === 1 ? '' : 's'}
+        <Plural
+          value={votesCount}
+          one={
+            <Trans>
+              <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
+            </Trans>
+          }
+          other={
+            <Trans>
+              <span title={votesCount}>{shortenNumber(votesCount)}</span> votes
+            </Trans>
+          }
+        />
         {!!votersCount && votersCount !== votesCount && (
           <>
             {' '}
-            &bull; <span title={votersCount}>
-              {shortenNumber(votersCount)}
-            </span>{' '}
-            voter
-            {votersCount === 1 ? '' : 's'}
+            &bull;{' '}
+            <Plural
+              value={votersCount}
+              one={
+                <Trans>
+                  <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
+                  voter
+                </Trans>
+              }
+              other={
+                <Trans>
+                  <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
+                  voters
+                </Trans>
+              }
+            />
           </>
         )}{' '}
-        &bull; {expired ? 'Ended' : 'Ending'}{' '}
-        {!!expiresAtDate && <RelativeTime datetime={expiresAtDate} />}
-      </p>{' '}
+        &bull;{' '}
+        {expired ? (
+          !!expiresAtDate ? (
+            <Trans>
+              Ended <RelativeTime datetime={expiresAtDate} />
+            </Trans>
+          ) : (
+            t`Ended`
+          )
+        ) : !!expiresAtDate ? (
+          <Trans>
+            Ending <RelativeTime datetime={expiresAtDate} />
+          </Trans>
+        ) : (
+          t`Ending`
+        )}
+      </p>
     </div>
   );
 }

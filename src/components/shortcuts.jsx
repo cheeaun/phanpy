@@ -1,5 +1,7 @@
 import './shortcuts.css';
 
+import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { MenuDivider } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
@@ -20,6 +22,7 @@ import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
 
 function Shortcuts() {
+  const { _ } = useLingui();
   const { instance } = api();
   const snapStates = useSnapshot(states);
   const { shortcuts, settings } = snapStates;
@@ -57,9 +60,13 @@ function Shortcuts() {
       }
       if (typeof title === 'function') {
         title = title(data, i);
+      } else {
+        title = _(title);
       }
       if (typeof subtitle === 'function') {
         subtitle = subtitle(data, i);
+      } else {
+        subtitle = _(subtitle);
       }
       if (typeof icon === 'function') {
         icon = icon(data, i);
@@ -176,7 +183,7 @@ function Shortcuts() {
                 } catch (e) {}
               }}
             >
-              <Icon icon="shortcut" size="xl" alt="Shortcuts" />
+              <Icon icon="shortcut" size="xl" alt={t`Shortcuts`} />
             </button>
           }
         >
@@ -198,7 +205,9 @@ function Shortcuts() {
                   }
                 >
                   <MenuLink to="/l">
-                    <span>All Lists</span>
+                    <span>
+                      <Trans>All Lists</Trans>
+                    </span>
                   </MenuLink>
                   <MenuDivider />
                   {lists?.map((list) => (

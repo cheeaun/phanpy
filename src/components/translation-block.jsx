@@ -1,5 +1,6 @@
 import './translation-block.css';
 
+import { t, Trans } from '@lingui/macro';
 import pRetry from 'p-retry';
 import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -148,7 +149,7 @@ function TranslationBlock({
           <div class="status-translation-block-mini">
             <Icon
               icon="translate"
-              alt={`Auto-translated from ${sourceLangText}`}
+              alt={t`Auto-translated from ${sourceLangText}`}
             />
             <output
               lang={targetLang}
@@ -186,12 +187,12 @@ function TranslationBlock({
             <Icon icon="translate" />{' '}
             <span>
               {uiState === 'loading'
-                ? 'Translating…'
+                ? t`Translating…`
                 : sourceLanguage && sourceLangText && !detectedLang
                 ? autoDetected
-                  ? `Translate from ${sourceLangText} (auto-detected)`
-                  : `Translate from ${sourceLangText}`
-                : `Translate`}
+                  ? t`Translate from ${sourceLangText} (auto-detected)`
+                  : t`Translate from ${sourceLangText}`
+                : t`Translate`}
             </span>
           </button>
         </summary>
@@ -205,17 +206,34 @@ function TranslationBlock({
                 translate();
               }}
             >
-              {sourceLanguages.map((l) => (
-                <option value={l.code}>
-                  {l.code === 'auto' ? `Auto (${detectedLang ?? '…'})` : l.name}
-                </option>
-              ))}
+              {sourceLanguages.map((l) => {
+                const common = localeCode2Text({
+                  code: l.code,
+                  fallback: l.name,
+                });
+                const native = localeCode2Text({
+                  code: l.code,
+                  locale: l.code,
+                });
+                const showCommon = common !== native;
+                return (
+                  <option value={l.code}>
+                    {l.code === 'auto'
+                      ? t`Auto (${detectedLang ?? '…'})`
+                      : showCommon
+                      ? `${native} - ${common}`
+                      : native}
+                  </option>
+                );
+              })}
             </select>{' '}
             <span>→ {targetLangText}</span>
             <Loader abrupt hidden={uiState !== 'loading'} />
           </div>
           {uiState === 'error' ? (
-            <p class="ui-state">Failed to translate</p>
+            <p class="ui-state">
+              <Trans>Failed to translate</Trans>
+            </p>
           ) : (
             !!translatedContent && (
               <>

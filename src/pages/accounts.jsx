@@ -1,6 +1,7 @@
 import './accounts.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
+import { t, Trans } from '@lingui/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer } from 'preact/hooks';
 
@@ -29,11 +30,13 @@ function Accounts({ onClose }) {
     <div id="accounts-container" class="sheet" tabIndex="-1">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header class="header-grid">
-        <h2>Accounts</h2>
+        <h2>
+          <Trans>Accounts</Trans>
+        </h2>
       </header>
       <main>
         <section>
@@ -46,7 +49,7 @@ function Accounts({ onClose }) {
                   <div>
                     {moreThanOneAccount && (
                       <span class={`current ${isCurrent ? 'is-current' : ''}`}>
-                        <Icon icon="check-circle" alt="Current" />
+                        <Icon icon="check-circle" alt={t`Current`} />
                       </span>
                     )}
                     <Avatar
@@ -91,18 +94,16 @@ function Accounts({ onClose }) {
                   <div class="actions">
                     {isDefault && moreThanOneAccount && (
                       <>
-                        <span class="tag">Default</span>{' '}
+                        <span class="tag">
+                          <Trans>Default</Trans>
+                        </span>{' '}
                       </>
                     )}
                     <Menu2
                       align="end"
                       menuButton={
-                        <button
-                          type="button"
-                          title="More"
-                          class="plain more-button"
-                        >
-                          <Icon icon="more" size="l" alt="More" />
+                        <button type="button" class="plain more-button">
+                          <Icon icon="more" size="l" alt={t`More`} />
                         </button>
                       }
                     >
@@ -112,7 +113,9 @@ function Accounts({ onClose }) {
                         }}
                       >
                         <Icon icon="user" />
-                        <span>View profile…</span>
+                        <span>
+                          <Trans>View profile…</Trans>
+                        </span>
                       </MenuItem>
                       <MenuDivider />
                       {moreThanOneAccount && (
@@ -127,7 +130,9 @@ function Accounts({ onClose }) {
                           }}
                         >
                           <Icon icon="check-circle" />
-                          <span>Set as default</span>
+                          <span>
+                            <Trans>Set as default</Trans>
+                          </span>
                         </MenuItem>
                       )}
                       <MenuConfirm
@@ -135,7 +140,15 @@ function Accounts({ onClose }) {
                         confirmLabel={
                           <>
                             <Icon icon="exit" />
-                            <span>Log out @{account.info.acct}?</span>
+                            <span>
+                              <Trans>
+                                Log out{' '}
+                                <span class="bidi-isolate">
+                                  @{account.info.acct}
+                                </span>
+                                ?
+                              </Trans>
+                            </span>
                           </>
                         }
                         disabled={!isCurrent}
@@ -150,7 +163,9 @@ function Accounts({ onClose }) {
                         }}
                       >
                         <Icon icon="exit" />
-                        <span>Log out…</span>
+                        <span>
+                          <Trans>Log out…</Trans>
+                        </span>
                       </MenuConfirm>
                     </Menu2>
                   </div>
@@ -160,14 +175,19 @@ function Accounts({ onClose }) {
           </ul>
           <p>
             <Link to="/login" class="button plain2" onClick={onClose}>
-              <Icon icon="plus" /> <span>Add an existing account</span>
+              <Icon icon="plus" />{' '}
+              <span>
+                <Trans>Add an existing account</Trans>
+              </span>
             </Link>
           </p>
           {moreThanOneAccount && (
             <p>
               <small>
-                Note: <i>Default</i> account will always be used for first load.
-                Switched accounts will persist during the session.
+                <Trans>
+                  Note: <i>Default</i> account will always be used for first
+                  load. Switched accounts will persist during the session.
+                </Trans>
               </small>
             </p>
           )}

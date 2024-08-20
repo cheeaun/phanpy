@@ -1,5 +1,6 @@
 import './app.css';
 
+import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
 import {
   useEffect,
@@ -299,6 +300,7 @@ subscribe(states, (changes) => {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
+  useLingui();
 
   useEffect(() => {
     const instanceURL = store.local.get('instanceURL');

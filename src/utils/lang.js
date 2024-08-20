@@ -20,8 +20,12 @@ i18n.on('change', () => {
     // lang
     document.documentElement.lang = lang;
     // LTR or RTL
-    const { direction } = new Locale(lang).textInfo;
-    document.documentElement.dir = direction;
+    try {
+      const { direction } = new Locale(lang).textInfo;
+      document.documentElement.dir = direction;
+    } catch (e) {
+      console.error(e);
+    }
   }
 });
 

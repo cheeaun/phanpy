@@ -8,7 +8,7 @@ const _DateTimeFormat = (opts) => {
   const { locale, dateYear, hideTime, formatOpts } = opts || {};
   const loc = locale && !/pseudo/i.test(locale) ? locale : defaultLocale;
   const currentYear = new Date().getFullYear();
-  return Intl.DateTimeFormat(loc, {
+  const options = {
     // Show year if not current year
     year: dateYear === currentYear ? undefined : 'numeric',
     month: 'short',
@@ -17,7 +17,12 @@ const _DateTimeFormat = (opts) => {
     hour: hideTime ? undefined : 'numeric',
     minute: hideTime ? undefined : 'numeric',
     ...formatOpts,
-  });
+  };
+  try {
+    return Intl.DateTimeFormat(loc, opts);
+  } catch (e) {
+    return Intl.DateTimeFormat(undefined, opts);
+  }
 };
 const DateTimeFormat = mem(_DateTimeFormat);
 

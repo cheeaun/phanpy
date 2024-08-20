@@ -10,12 +10,16 @@ import states from '../utils/states';
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 
-const nameCollator = mem(
-  (locale) =>
-    new Intl.Collator(locale || undefined, {
-      sensitivity: 'base',
-    }),
-);
+const nameCollator = mem((locale) => {
+  const options = {
+    sensitivity: 'base',
+  };
+  try {
+    return new Intl.Collator(locale || undefined, options);
+  } catch (e) {
+    return new Intl.Collator(undefined, options);
+  }
+});
 
 function NameText({
   account,

@@ -19,9 +19,9 @@ const _DateTimeFormat = (opts) => {
     ...formatOpts,
   };
   try {
-    return Intl.DateTimeFormat(loc, opts);
+    return Intl.DateTimeFormat(loc, options);
   } catch (e) {
-    return Intl.DateTimeFormat(undefined, opts);
+    return Intl.DateTimeFormat(undefined, options);
   }
 };
 const DateTimeFormat = mem(_DateTimeFormat);

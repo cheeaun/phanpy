@@ -194,7 +194,7 @@ function Login() {
         {uiState === 'error' && (
           <p class="error">
             <Trans>
-              Failed to log in. Please try again or another instance.
+              Failed to log in. Please try again or try another instance.
             </Trans>
           </p>
         )}

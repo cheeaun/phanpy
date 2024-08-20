@@ -239,6 +239,7 @@ function ReportModal({ account, post, onClose }) {
               name="comment"
               id="report-comment"
               disabled={uiState === 'loading'}
+              required={!post} // Required if not reporting a post
             />
           </section>
           {!!domain && domain !== currentDomain && (

@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 10:38\n"
+"PO-Revision-Date: 2024-08-20 11:43\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -315,11 +315,11 @@ msgstr "Atšauktas @{username} nutildymas"
 
 #: src/components/account-info.jsx:1362
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Atšaukti nutildymą <0>@{username}></0>"
 
 #: src/components/account-info.jsx:1378
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "Nutildyti <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
@@ -327,11 +327,11 @@ msgstr "Nutildytas @{username} dėl {0}"
 
 #: src/components/account-info.jsx:1422
 msgid "Unable to mute @{username}"
-msgstr "Nepavyksta nutildyti @{username}"
+msgstr "Nepavyksta nutildyti @{username}."
 
 #: src/components/account-info.jsx:1443
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "Pašalinti <0>@{username}</0> iš sekėjų?"
 
 #: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "Pašalinti sekėją…"
 
 #: src/components/account-info.jsx:1486
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "Bluokuoti <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
@@ -363,15 +363,15 @@ msgstr "Nepavyksta užblokuoti @{username}."
 
 #: src/components/account-info.jsx:1535
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "Atblokuoti <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1544
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "Bluokuoti <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1561
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "Pranešti apie <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1581
 #: src/components/account-info.jsx:2092
@@ -465,7 +465,7 @@ msgstr "Naujas sąrašas"
 
 #: src/components/account-info.jsx:1992
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "Privati pastaba apie <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2022
 msgid "Unable to update private note."

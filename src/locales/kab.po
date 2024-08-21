@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 18:35\n"
+"PO-Revision-Date: 2024-08-21 21:06\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -170,7 +170,7 @@ msgstr "Aseqdac-a yefren ur tettili ara telɣut-a."
 
 #: src/components/account-info.jsx:803
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "{0} iznan ineṣliyen, {1} tiririyin, {2} ibeṭṭuten"
+msgstr "{0} tisuffaɣ tiɣbula, {1} tiririyin, {2} izuzar"
 
 #: src/components/account-info.jsx:819
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
@@ -201,7 +201,7 @@ msgstr "Tiririt"
 #: src/pages/catchup.jsx:2035
 #: src/pages/settings.jsx:1016
 msgid "Boosts"
-msgstr "Isnernuyen"
+msgstr "Izuzar"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
@@ -261,19 +261,19 @@ msgstr "Rmed ulɣuten"
 
 #: src/components/account-info.jsx:1223
 msgid "Boosts from @{username} enabled."
-msgstr "Ibeṭṭuyen seg @{username} ttwaremden."
+msgstr "Izuzar seg @{username} ttwaremden."
 
 #: src/components/account-info.jsx:1224
 msgid "Boosts from @{username} disabled."
-msgstr "Ibeṭṭuyen seg @{username} ttwasensen."
+msgstr "Izuzar seg @{username} ttwasensen."
 
 #: src/components/account-info.jsx:1235
 msgid "Disable boosts"
-msgstr "Sens ibeṭṭuten"
+msgstr "Sens izuzar"
 
 #: src/components/account-info.jsx:1235
 msgid "Enable boosts"
-msgstr "Sken ibeṭṭuten"
+msgstr "Sken izuzar"
 
 #: src/components/account-info.jsx:1251
 #: src/components/account-info.jsx:1261
@@ -1086,7 +1086,7 @@ msgstr "<0>l</0> or <1>f</1>"
 #: src/components/status.jsx:2318
 #: src/components/status.jsx:2319
 msgid "Boost"
-msgstr "Bḍu"
+msgstr "Zuzer"
 
 #: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>Shift</0> + <1>b</1>"
@@ -1395,7 +1395,7 @@ msgstr "Y·Tesuffeɣ-d {account} tasuffeɣt."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} yesnerna tiririt-ik·im.} other {{account} yesnerna tasuffeɣt-ik·im.}}} other {{account} yesnerna {postsCount} n tsuffaɣ-ik.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> snernan tiririt-ik·im.} other {<2><3>{1}</3> imdanen</2> snernan tasuffeɣt-ik·im.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} yesnerna tiririt-ik·im.} other {{account} yesnerna tasuffeɣt-ik·im.}}} other {{account} yesnerna {postsCount} n tsuffaɣ-ik.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> snernan tiririt-ik·im.} other {<2><3>{1}</3> imdanen</2> zuzren tasuffeɣt-ik·im.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1427,7 +1427,7 @@ msgstr "Tasuffeɣt iɣef twennteḍ tettwaẓreg."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} yesnerna & teεǧeb-as tririt-ik·im.} other {{account} yesnerna & teεǧeb-as tsuffeɣt-ik·im.}}} other {{account} yesnerna & εeǧbent-as {postsCount} n tsuffaɣ-ik·im.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> snernan & teεǧeb-asen·t tririt-ik·im.} other {<2><3>{1}</3> imdanen</2> snernan & teεǧeb-asen·t tsuffeɣt-ik·im.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} izuzer & teεǧeb-as tririt-ik·im.} other {{account} izuzer & teεǧeb-as tsuffeɣt-ik·im.}}} other {{account} izuzer & εeǧbent-as {postsCount} n tsuffaɣ-ik·im.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> zuzren & teεǧeb-asen·t tririt-ik·im.} other {<2><3>{1}</3> imdanen</2> zuzren& teεǧeb-asen·t tsuffeɣt-ik·im.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1493,7 +1493,7 @@ msgstr "[Anaw n wulɣu d arussin: {type}]"
 #: src/components/status.jsx:937
 #: src/components/status.jsx:947
 msgid "Boosted/Liked by…"
-msgstr "Yebḍa-t/Iḥemel-it…"
+msgstr "Izuzer-it/Iḥemmel-it…"
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
@@ -1501,7 +1501,7 @@ msgstr "Iεǧeb-as i…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr "Yebḍa-t…"
+msgstr "Izuzer-it…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
@@ -2002,7 +2002,7 @@ msgstr "Kter/sifeḍ iɣewwaren seg/ɣer uqeddac n tummant (d armitan ugar)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
-msgstr "<1>Yebḍa-t</1> <0/>"
+msgstr "<0/><1>izuzer-it</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
@@ -2029,7 +2029,7 @@ msgstr "Tettwacreḍ tsuffeɣt @{0}"
 #: src/components/status.jsx:2286
 #: src/components/status.jsx:2318
 msgid "Unboost"
-msgstr "Fsi beṭṭu"
+msgstr "Sefsex azuzer"
 
 #: src/components/status.jsx:854
 #: src/components/status.jsx:2301
@@ -2048,16 +2048,16 @@ msgstr "Tasuffeɣt taqburt (<0>{0}</0>)"
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1333
 msgid "Unboosted @{0}'s post"
-msgstr "Tefsiḍ beṭṭu n tsuffeɣt n @{0}"
+msgstr "Tesfesxeḍ azuzer n tsuffeɣt n @{0}"
 
 #: src/components/status.jsx:889
 #: src/components/status.jsx:1334
 msgid "Boosted @{0}'s post"
-msgstr "Tebḍiḍ tasuffeɣt n @{0}"
+msgstr "Tezzuzreḍ tasuffeɣt n @{0}"
 
 #: src/components/status.jsx:901
 msgid "Boost…"
-msgstr "Snernu…"
+msgstr "Zuzer…"
 
 #: src/components/status.jsx:913
 #: src/components/status.jsx:1618
@@ -2168,7 +2168,7 @@ msgstr "Iḥemmel"
 #: src/components/status.jsx:1652
 #: src/components/status.jsx:2319
 msgid "Boosted"
-msgstr "Yettwabḍa"
+msgstr "Tettwazuzer"
 
 #: src/components/status.jsx:1662
 #: src/components/status.jsx:2344
@@ -2286,7 +2286,7 @@ msgstr "Tamawt: Taskant-a tettufeṣṣel s wudem afessas."
 
 #: src/components/status.jsx:3498
 msgid "<0/> <1/> boosted"
-msgstr "Yebḍa-tt <0/><1/>"
+msgstr "Izuzer-itt <0/><1/>"
 
 #: src/components/timeline.jsx:447
 #: src/pages/settings.jsx:1036
@@ -2361,7 +2361,7 @@ msgstr "{accountDisplay} (+ tririyin)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- ibeṭṭuyen)"
+msgstr "{accountDisplay} (- izuzar)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
@@ -2393,11 +2393,11 @@ msgstr "ugar n tririyin"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
-msgstr "Sken tisuffaɣ war ibeṭṭuyen"
+msgstr "Sken tisuffaɣ war azuzer"
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
-msgstr "- Isnernuyen"
+msgstr "- Izuzar"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
@@ -2677,7 +2677,7 @@ msgstr "Uɣal ar tqacuct"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr "Iseɣwan yettwabḍan sɣur yineḍfaren, myezwaren almend n umḍan n beṭṭu, isnerniyen d yismenyifen."
+msgstr "Iseɣwan yettwabḍan sɣur yineḍfaren, myezwaren almend n umḍan n beṭṭu, izuzar d yismenyifen."
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
@@ -3323,7 +3323,7 @@ msgstr "Asmiren awurman n tsuffaɣ n tesnimirt"
 
 #: src/pages/settings.jsx:341
 msgid "Boosts carousel"
-msgstr "Kaṛusel n yibeṭṭuyen"
+msgstr "Kaṛusel n yizuzar"
 
 #: src/pages/settings.jsx:357
 msgid "Post translation"
@@ -3496,11 +3496,11 @@ msgstr "Suffeɣ"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr "Ur teqqineḍ ara. Amiyigew (tiririt, beṭṭu, rtg) ur teddun ara."
+msgstr "Ur teqqineḍ ara. Amiyigew (tiririt, azuzer, rtg) ur teddun ara."
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr "Tasuffeɣt-a seg tummant niḍen (<0>{instance}</0>). Amyigew (tiririt, asnerni, rtg) ur ddint ara."
+msgstr "Tasuffeɣt-a seg tummant niḍen (<0>{instance}</0>). Amyigew (tiririt, azuzer, rtg) ur ddint ara."
 
 #: src/pages/status.jsx:827
 msgid "Error: {e}"
@@ -3617,15 +3617,15 @@ msgstr "<0>Yettwabna</0> sɣur <1>@cheeaun</1>. <2>Tasertit n tbaḍnit</2>."
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
-msgstr "Tuṭṭfa n ugdil n kaṛusel n yisnerniyen"
+msgstr "Tuṭṭfa n ugdil n kaṛusel n yizuzar"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr "Kaṛusel n yisnerniyen"
+msgstr "Kaṛusel n yizuzar"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr "Freq s tmuɣli tisuffaɣ tiɣbula akked tsufaɣ yettwalsen beṭṭu (tisuffaɣ yennernan)."
+msgstr "Freq s tmuɣli tisuffaɣ tiɣbula akked tsufaɣ yettwalsen beṭṭu (tisuffaɣ yettwazuzren)."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"

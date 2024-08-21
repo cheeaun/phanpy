@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
     branches:
-      - l10n_main
+      - main
 
 jobs:
   run-and-merge:

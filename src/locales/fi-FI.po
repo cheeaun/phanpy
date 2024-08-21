@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 13:13\n"
+"PO-Revision-Date: 2024-08-21 06:52\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -110,7 +110,7 @@ msgstr "Julkaisut"
 
 #: src/components/account-info.jsx:428
 #: src/components/account-info.jsx:1116
-#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2451
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1628
@@ -406,10 +406,10 @@ msgstr "Seuraa"
 #: src/components/account-info.jsx:2087
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
-#: src/components/compose.jsx:2400
-#: src/components/compose.jsx:2873
-#: src/components/compose.jsx:3081
-#: src/components/compose.jsx:3311
+#: src/components/compose.jsx:2407
+#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:3088
+#: src/components/compose.jsx:3318
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -548,7 +548,7 @@ msgstr "Sinulla on tallentamattomia muutoksia. Hylätäänkö julkaisu?"
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
 #: src/components/compose.jsx:1328
-#: src/components/compose.jsx:1582
+#: src/components/compose.jsx:1589
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Voit liittää enintään 1 tiedoston.} other {Voit liittää enintään # tiedostoa.}}"
 
@@ -662,7 +662,7 @@ msgstr "Lisää äänestys"
 msgid "Add custom emoji"
 msgstr "Lisää mukautettu emoji"
 
-#: src/components/compose.jsx:1469
+#: src/components/compose.jsx:1470
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:830
 #: src/components/status.jsx:1608
@@ -671,194 +671,194 @@ msgstr "Lisää mukautettu emoji"
 msgid "Reply"
 msgstr "Vastaa"
 
-#: src/components/compose.jsx:1469
+#: src/components/compose.jsx:1472
 msgid "Update"
 msgstr "Päivitä"
 
-#: src/components/compose.jsx:1469
-#: src/pages/status.jsx:565
+#: src/components/compose.jsx:1473
+msgctxt "Submit button in composer"
 msgid "Post"
-msgstr "Julkaise"
+msgstr ""
 
-#: src/components/compose.jsx:1594
+#: src/components/compose.jsx:1601
 msgid "Downloading GIF…"
 msgstr "Ladataan GIF-kuvaa…"
 
-#: src/components/compose.jsx:1622
+#: src/components/compose.jsx:1629
 msgid "Failed to download GIF"
 msgstr "GIF-kuvan lataus epäonnistui"
 
-#: src/components/compose.jsx:1733
-#: src/components/compose.jsx:1810
+#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1817
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "Lisää…"
 
-#: src/components/compose.jsx:2213
+#: src/components/compose.jsx:2220
 msgid "Uploaded"
 msgstr "Ladattu"
 
-#: src/components/compose.jsx:2226
+#: src/components/compose.jsx:2233
 msgid "Image description"
 msgstr "Kuvan kuvaus"
 
-#: src/components/compose.jsx:2227
+#: src/components/compose.jsx:2234
 msgid "Video description"
 msgstr "Videon kuvaus"
 
-#: src/components/compose.jsx:2228
+#: src/components/compose.jsx:2235
 msgid "Audio description"
 msgstr "Äänen kuvaus"
 
-#: src/components/compose.jsx:2264
-#: src/components/compose.jsx:2284
+#: src/components/compose.jsx:2271
+#: src/components/compose.jsx:2291
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Liian suuri tiedostokoko. Lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää koosta {0} kokoon {1} tai pienemmäksi."
 
-#: src/components/compose.jsx:2276
-#: src/components/compose.jsx:2296
+#: src/components/compose.jsx:2283
+#: src/components/compose.jsx:2303
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Liian suuret mitat. Lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää mitoista {0}×{1} px mittoihin {2}×{3} px."
 
-#: src/components/compose.jsx:2304
+#: src/components/compose.jsx:2311
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Liian suuri kuvataajuus. Lataaminen saattaa aiheuttaa ongelmia."
 
-#: src/components/compose.jsx:2364
-#: src/components/compose.jsx:2614
+#: src/components/compose.jsx:2371
+#: src/components/compose.jsx:2621
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1058
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Poista"
 
-#: src/components/compose.jsx:2381
+#: src/components/compose.jsx:2388
 msgid "Error"
 msgstr "Virhe"
 
-#: src/components/compose.jsx:2406
+#: src/components/compose.jsx:2413
 msgid "Edit image description"
 msgstr "Muokkaa kuvan kuvausta"
 
-#: src/components/compose.jsx:2407
+#: src/components/compose.jsx:2414
 msgid "Edit video description"
 msgstr "Muokkaa videon kuvausta"
 
-#: src/components/compose.jsx:2408
+#: src/components/compose.jsx:2415
 msgid "Edit audio description"
 msgstr "Muokkaa äänen kuvausta"
 
-#: src/components/compose.jsx:2453
-#: src/components/compose.jsx:2502
+#: src/components/compose.jsx:2460
+#: src/components/compose.jsx:2509
 msgid "Generating description. Please wait…"
 msgstr "Luodaan kuvausta. Odota hetki…"
 
-#: src/components/compose.jsx:2473
+#: src/components/compose.jsx:2480
 msgid "Failed to generate description: {0}"
 msgstr "Kuvauksen luonti epäonnistui: {0}"
 
-#: src/components/compose.jsx:2474
+#: src/components/compose.jsx:2481
 msgid "Failed to generate description"
 msgstr "Kuvauksen luonti epäonnistui"
 
-#: src/components/compose.jsx:2486
-#: src/components/compose.jsx:2492
-#: src/components/compose.jsx:2538
+#: src/components/compose.jsx:2493
+#: src/components/compose.jsx:2499
+#: src/components/compose.jsx:2545
 msgid "Generate description…"
 msgstr "Luo kuvaus…"
 
-#: src/components/compose.jsx:2525
+#: src/components/compose.jsx:2532
 msgid "Failed to generate description{0}"
 msgstr "Kuvauksen luonti epäonnistui{0}"
 
-#: src/components/compose.jsx:2540
+#: src/components/compose.jsx:2547
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— kokeellinen</0>"
 
-#: src/components/compose.jsx:2559
+#: src/components/compose.jsx:2566
 msgid "Done"
 msgstr "Valmis"
 
-#: src/components/compose.jsx:2595
+#: src/components/compose.jsx:2602
 msgid "Choice {0}"
 msgstr "Vaihtoehto {0}"
 
-#: src/components/compose.jsx:2642
+#: src/components/compose.jsx:2649
 msgid "Multiple choices"
 msgstr "Monivalinta"
 
-#: src/components/compose.jsx:2645
+#: src/components/compose.jsx:2652
 msgid "Duration"
 msgstr "Kesto"
 
-#: src/components/compose.jsx:2676
+#: src/components/compose.jsx:2683
 msgid "Remove poll"
 msgstr "Poista äänestys"
 
-#: src/components/compose.jsx:2890
+#: src/components/compose.jsx:2897
 msgid "Search accounts"
 msgstr "Hae tilejä"
 
-#: src/components/compose.jsx:2931
+#: src/components/compose.jsx:2938
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "Lisää"
 
-#: src/components/compose.jsx:2944
+#: src/components/compose.jsx:2951
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "Virhe ladattaessa tilejä"
 
-#: src/components/compose.jsx:3087
+#: src/components/compose.jsx:3094
 msgid "Custom emojis"
 msgstr "Mukautetut emojit"
 
-#: src/components/compose.jsx:3107
+#: src/components/compose.jsx:3114
 msgid "Search emoji"
 msgstr "Hae emojia"
 
-#: src/components/compose.jsx:3138
+#: src/components/compose.jsx:3145
 msgid "Error loading custom emojis"
 msgstr "Virhe ladattaessa mukautettuja emojeita"
 
-#: src/components/compose.jsx:3149
+#: src/components/compose.jsx:3156
 msgid "Recently used"
 msgstr "Viimeaikaiset"
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3157
 msgid "Others"
 msgstr "Muut"
 
-#: src/components/compose.jsx:3188
+#: src/components/compose.jsx:3195
 msgid "{0} more…"
 msgstr "{0} lisää…"
 
-#: src/components/compose.jsx:3326
+#: src/components/compose.jsx:3333
 msgid "Search GIFs"
 msgstr "Hae GIF-kuvia"
 
-#: src/components/compose.jsx:3341
+#: src/components/compose.jsx:3348
 msgid "Powered by GIPHY"
 msgstr "Palvelun tarjoaa GIPHY"
 
-#: src/components/compose.jsx:3349
+#: src/components/compose.jsx:3356
 msgid "Type to search GIFs"
 msgstr "Hae GIF-kuvia kirjoittamalla"
 
-#: src/components/compose.jsx:3447
+#: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:880
 msgid "Previous"
 msgstr "Edellinen"
 
-#: src/components/compose.jsx:3465
+#: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:897
 msgid "Next"
 msgstr "Seuraava"
 
-#: src/components/compose.jsx:3482
+#: src/components/compose.jsx:3489
 msgid "Error loading GIFs"
 msgstr "Virhe ladattaessa GIF-kuvia"
 
@@ -3489,6 +3489,10 @@ msgstr "Puskulupaa ei myönnetty viimeisen kirjautumisesi jälkeen. Sinun täyty
 #: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "HUOMAA: Puskuilmoitukset toimivat vain <0>yhdellä tilillä</0>."
+
+#: src/pages/status.jsx:565
+msgid "Post"
+msgstr "Julkaise"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."

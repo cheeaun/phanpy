@@ -1,5 +1,8 @@
-const { PHANPY_CLIENT_NAME: CLIENT_NAME, PHANPY_WEBSITE: WEBSITE } = import.meta
-  .env;
+const {
+  PHANPY_CLIENT_NAME: CLIENT_NAME,
+  PHANPY_WEBSITE: WEBSITE,
+  PHANPY_SCHEME: SCHEME = 'https',
+} = import.meta.env;
 
 const SCOPES = 'read write follow push';
 
@@ -11,7 +14,7 @@ export async function registerApplication({ instanceURL }) {
     website: WEBSITE,
   });
   const registrationResponse = await fetch(
-    `https://${instanceURL}/api/v1/apps`,
+    `${SCHEME}://${instanceURL}/api/v1/apps`,
     {
       method: 'POST',
       headers: {
@@ -33,7 +36,7 @@ export async function getAuthorizationURL({ instanceURL, client_id }) {
     // redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
     response_type: 'code',
   });
-  const authorizationURL = `https://${instanceURL}/oauth/authorize?${authorizationParams.toString()}`;
+  const authorizationURL = `${SCHEME}://${instanceURL}/oauth/authorize?${authorizationParams.toString()}`;
   return authorizationURL;
 }
 
@@ -51,7 +54,7 @@ export async function getAccessToken({
     code,
     scope: SCOPES,
   });
-  const tokenResponse = await fetch(`https://${instanceURL}/oauth/token`, {
+  const tokenResponse = await fetch(`${SCHEME}://${instanceURL}/oauth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

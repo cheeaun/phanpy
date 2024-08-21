@@ -15,7 +15,7 @@ import { getAuthorizationURL, registerApplication } from '../utils/auth';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
-const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
+const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE, PHANPY_SCHEME: SCHEME = 'https' } = import.meta.env;
 
 function Login() {
   useTitle('Log in');
@@ -90,9 +90,11 @@ function Login() {
         .replace(/^@?[^@]+@/, '') // Remove @?acct@
         .trim()
     : null;
-  const instanceTextLooksLikeDomain =
-    /[^\s\r\n\t\/\\]+\.[^\s\r\n\t\/\\]+/.test(cleanInstanceText) &&
-    !/[\s\/\\@]/.test(cleanInstanceText);
+  const instanceTextLooksLikeDomain = 
+    (/[^\s\r\n\t\/\\]+\.[^\s\r\n\t\/\\]+/.test(cleanInstanceText) &&
+    !/[\s\/\\@]/.test(cleanInstanceText)) || SCHEME === "http";
+
+  console.log(SCHEME)
 
   const instancesSuggestions = cleanInstanceText
     ? searcher.current

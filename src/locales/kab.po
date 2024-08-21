@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 12:20\n"
+"PO-Revision-Date: 2024-08-21 13:28\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2590,7 +2590,7 @@ msgstr "Alamma d alukem aneggaru ({0})"
 
 #: src/pages/catchup.jsx:1008
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Tamawt: tummant-ik tezmer kan ad tesken ugar n 800 tsuffaɣ deg tesnimirt n ugejdan akken yebɣu yili uzrar n wakud. Aya yezmer ad yili ugar neɣ drus."
 
 #: src/pages/catchup.jsx:1018
 msgid "Previously…"
@@ -2606,7 +2606,7 @@ msgstr "Kkes alukem-a?"
 
 #: src/pages/catchup.jsx:1067
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr ""
+msgstr "Tamawt: Ugar kan n 3 ad d-ttwarrent. Ayen d-yeqqimen ad ttwakksent s wudem awurman."
 
 #: src/pages/catchup.jsx:1082
 msgid "Fetching posts…"
@@ -2928,7 +2928,7 @@ msgstr "Kkes ahacṭag"
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
-msgstr ""
+msgstr "{SHORTCUTS_LIMIT, plural, one {Amḍan afellay n # unegzum yewweḍ. D awezɣi timerna n unegzum.} other {Amḍan afellay # yinegzumen yewweḍ. D awezɣi timerna n unegzum.}}"
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
@@ -3160,7 +3160,7 @@ msgstr "Sireg"
 
 #: src/pages/notifications.jsx:1155
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Ilɣa sɣur @{0} ur d-ttwaskanen ara deg yilɣa yettwaszedgen sya d afella."
 
 #: src/pages/notifications.jsx:1160
 msgid "Unable to dismiss notification request"
@@ -3355,7 +3355,7 @@ msgstr "Sken tisuqilin s wudem awurman i tsuffaɣ deg tesnimirt. Tetteddu kan i 
 
 #: src/pages/settings.jsx:517
 msgid "GIF Picker for composer"
-msgstr ""
+msgstr "Amefran n GIF i umsuddes"
 
 #: src/pages/settings.jsx:521
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
@@ -3375,19 +3375,19 @@ msgstr ""
 
 #: src/pages/settings.jsx:588
 msgid "Server-side grouped notifications"
-msgstr ""
+msgstr "Ilɣa ttusgarwen deg yidis n uqeddac"
 
 #: src/pages/settings.jsx:592
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr ""
+msgstr "Tamahilt deg takkayt n Alfa. Asfaylu n usegrew abruyan tettwasnerna d acu tameẓla n usegrew tazadurt."
 
 #: src/pages/settings.jsx:613
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr ""
+msgstr "Aktar/asifeḍ n \"Asigna\" i yiɣewwaren n yinegzumen"
 
 #: src/pages/settings.jsx:618
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr ""
+msgstr "⚠️⚠️⚠️ D armitan ugar.<0/>Yettwasekles deg tezmilin n umaɣnu-k. Tizmilin-a n umaɣnu (tusligin) ttuseqdacent s umata ɣef yimuɣna niḍen, ffrent ɣef umaɣnu-k."
 
 #: src/pages/settings.jsx:629
 msgid "Note: This feature uses currently-logged-in instance server API."
@@ -3399,7 +3399,7 @@ msgstr "Askar uffir <0>(<1>Aḍris</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:655
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "Semselsi aḍris s yiḥedren, lhan i tuṭṭfiwin n ugdil, i tiɣẓinin n tbaḍnit."
 
 #: src/pages/settings.jsx:680
 msgid "About"
@@ -3452,7 +3452,7 @@ msgstr "Ilɣa Push (beta)"
 
 #: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
-msgstr ""
+msgstr "Ilɣa Push ttusweḥlen. Ttxil-k rmed-iten deg yiɣewwaren n yiminig."
 
 #: src/pages/settings.jsx:970
 msgid "Allow from <0>{0}</0>"
@@ -3484,7 +3484,7 @@ msgstr "Ibeddilen n tsuffeɣt"
 
 #: src/pages/settings.jsx:1053
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr ""
+msgstr "Tisirag Push ur ttwamuddent ara seg unekcum aneggaru. Tesriḍ <0><1>ad teqqneḍ</1> tikkelt niḍen i wakken ad tmuddeḍ tisirag push</0>."
 
 #: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
@@ -3609,7 +3609,7 @@ msgstr "Jerred"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
-msgstr ""
+msgstr "Qqen amiḍan-ik Mastodon/Fedivers i yellan.<0/>Inekcam-ik ur ttwaskelsen ara ɣef uqeddac-a."
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
@@ -3629,7 +3629,7 @@ msgstr "Freq s tmuɣli tisuffaɣ tiɣbula akked tsufaɣ yettwalsen beṭṭu (ti
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
-msgstr ""
+msgstr "Tuṭṭfa n ugdil n yiwenniten yimyikcamen"
 
 #: src/pages/welcome.jsx:145
 msgid "Nested comments thread"
@@ -3637,7 +3637,7 @@ msgstr "Azrar n yiwenniten yemyikcamen"
 
 #: src/pages/welcome.jsx:148
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
-msgstr ""
+msgstr "Ḍfer idiwenniyen war ussis. Tiririt s uzgen-afnaẓ."
 
 #: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
@@ -3649,7 +3649,7 @@ msgstr "Ilɣa ttusgarwen"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr ""
+msgstr "Ilɣa uluten ttusgarwen syen ttufenẓen i usenqes seg temterwit."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"

@@ -3,6 +3,8 @@ name: i18n PR auto-merge
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+    branches:
+      - l10n_main
 
 jobs:
   run-and-merge:

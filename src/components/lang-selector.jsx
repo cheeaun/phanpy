@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react';
 import { useMemo } from 'preact/hooks';
 
-import { CATALOGS, DEFAULT_LANG, LOCALES } from '../locales';
+import { CATALOGS, DEFAULT_LANG, DEV_LOCALES, LOCALES } from '../locales';
 import { activateLang } from '../utils/lang';
 import localeCode2Text from '../utils/localeCode2Text';
 
@@ -16,10 +16,6 @@ export default function LangSelector() {
   // Sorted on render, so the order won't suddenly change based on current locale
   const populatedLocales = useMemo(() => {
     return LOCALES.map((lang) => {
-      if (lang === 'pseudo-LOCALE') {
-        return { code: lang, native: 'Pseudolocalization (test)' };
-      }
-
       // Don't need regions for now, it makes text too noisy
       // Wait till there's too many languages and there are regional clashes
       const regionlessCode = regionMaps[lang] || lang.replace(/-[a-z]+$/i, '');
@@ -45,9 +41,6 @@ export default function LangSelector() {
         native,
       };
     }).sort((a, b) => {
-      // If pseudo-LOCALE, always put it at the bottom
-      if (a.code === 'pseudo-LOCALE') return 1;
-      if (b.code === 'pseudo-LOCALE') return -1;
       // Sort by common name
       const order = a._common.localeCompare(b._common, i18n.locale);
       if (order !== 0) return order;
@@ -70,16 +63,6 @@ export default function LangSelector() {
         }}
       >
         {populatedLocales.map(({ code, regionlessCode, native }) => {
-          if (code === 'pseudo-LOCALE') {
-            return (
-              <>
-                <hr />
-                <option value={code} key={code}>
-                  {native}
-                </option>
-              </>
-            );
-          }
           // Common name changes based on current locale
           const common = localeCode2Text({
             code: regionlessCode,
@@ -97,6 +80,33 @@ export default function LangSelector() {
             </option>
           );
         })}
+        {(import.meta.env.DEV || import.meta.env.PHANPY_SHOW_DEV_LOCALES) && (
+          <optgroup label="🚧 Development (<50% translated)">
+            {DEV_LOCALES.map((code) => {
+              if (code === 'pseudo-LOCALE') {
+                return (
+                  <>
+                    <hr />
+                    <option value={code} key={code}>
+                      Pseudolocalization (test)
+                    </option>
+                  </>
+                );
+              }
+              const nativeName = CATALOGS.find(
+                (c) => c.code === code,
+              )?.nativeName;
+              const completion = CATALOGS.find(
+                (c) => c.code === code,
+              )?.completion;
+              return (
+                <option value={code} key={code}>
+                  {nativeName || code} &lrm;[{completion}%]
+                </option>
+              );
+            })}
+          </optgroup>
+        )}
       </select>
     </label>
   );

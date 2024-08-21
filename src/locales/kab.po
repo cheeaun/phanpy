@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 08:47\n"
+"PO-Revision-Date: 2024-08-21 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1403,7 +1403,7 @@ msgstr ""
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} yessuter ad k-yeḍfer."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -1431,15 +1431,15 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
-msgstr ""
+msgstr "{account} yeffeɣ."
 
 #: src/components/notification.jsx:246
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} yettwasmater {targetAccount}"
 
 #: src/components/notification.jsx:251
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Ruḥent tuqqniwin akked <0>{name}</0>."
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
@@ -1447,43 +1447,43 @@ msgstr ""
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "Anedbal seg <0>{from}</0> yettwaḥbes <1>{targetName}</1>, dayen ulac ileqman ara d-yawḍen sɣur-s neɣ amyigew yid-s."
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Anedbal seg <0>{from}</0> yettusewḥel <1>{targetName}</1>. Ineḍfaren yettwaḥuzan: {followersCount}, ineḍfaren: {followingCount}."
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Tesweḥleḍ <0>{targetName}</0>. Ineḍfaren yettwakksen: {followersCount}, ineḍfaren: {followingCount}."
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "Amiḍan-ik yeṭṭef-d alɣu n uqeεεed."
 
 #: src/components/notification.jsx:288
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "Amiḍan-ik yensa."
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "Kra seg tsuffaɣ-ik ttwacerḍent d timḥulfa."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "Kra seg tsuffaɣ-ik ttwakksent."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Tisuffaɣ-ik ad ttwacerḍent d tisuffaɣ timṣulfa sya d asawen."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
-msgstr ""
+msgstr "Amiḍan-ik yesεa tilas."
 
 #: src/components/notification.jsx:293
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Yettwaseḥbes umiḍan-ik."
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
@@ -1596,19 +1596,19 @@ msgstr "Arusḍif"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
-msgstr ""
+msgstr "Ur iquder ara asaḍuf n tmurt-ik neɣ asaḍuf n uqeddac"
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
-msgstr ""
+msgstr "Takriṭ n ulugen n uqeddac"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
-msgstr ""
+msgstr "Yerẓa ilugan uzzigen n uqeddac"
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
-msgstr ""
+msgstr "Takriṭ"
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
@@ -1616,7 +1616,7 @@ msgstr "Ayen nniḍen"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
-msgstr ""
+msgstr "Ugur ur yemmezg ara d taggayin niḍen"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
@@ -2721,7 +2721,7 @@ msgstr "Agejdan akked tebdarin"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr ""
+msgstr "Tisnimirin tizayazin"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
@@ -2794,7 +2794,7 @@ msgstr "Sizdeg seg…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
-msgstr ""
+msgstr "* Mazal ur yebdid ara ar tura"
 
 #: src/pages/filters.jsx:498
 msgid "Status: <0><1/></0>"
@@ -2846,11 +2846,11 @@ msgstr "{0, plural, one {# ahacṭag} other {# ihacṭagen}}"
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "D awezɣi asali n yihacṭagen i yettwaḍfaren."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Ulac ihacṭagen i yettwaḍfaren akka ar tura."
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
@@ -2936,7 +2936,7 @@ msgstr "Anegzum-a yella yakan"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr ""
+msgstr "Anegzum n uhacṭag yettwarna"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
@@ -3066,11 +3066,11 @@ msgstr "S umiḍan amaynut"
 
 #: src/pages/notifications.jsx:100
 msgid "Who unsolicitedly private mention you"
-msgstr ""
+msgstr "D anwa i k-id-ibedren s wudem uslig war ma yessuter-ak-d"
 
 #: src/pages/notifications.jsx:101
 msgid "Who are limited by server moderators"
-msgstr ""
+msgstr "D anwi iwumi gan imḍebbren n uqeddac tilas"
 
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
@@ -3096,7 +3096,7 @@ msgstr "{0, plural, one {# ḍfer assuter} other {# ḍfer issutar}}"
 
 #: src/pages/notifications.jsx:659
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
-msgstr ""
+msgstr "{0, plural, one {Ttwasezdgen yilɣa sɣur # amdan} other {Ttwasezdgen yilɣa sɣur # imdanen}}"
 
 #: src/pages/notifications.jsx:725
 msgid "Only mentions"
@@ -3124,7 +3124,7 @@ msgstr "Iɣewwaṛen n wulɣu ttwaleqqmen"
 
 #: src/pages/notifications.jsx:879
 msgid "Filter out notifications from people:"
-msgstr ""
+msgstr "Sizdeg ilɣa n yimdanen:"
 
 #: src/pages/notifications.jsx:893
 msgid "Filter"
@@ -3192,7 +3192,7 @@ msgstr "Tasuddemt tazayezt tamatut"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
-msgstr ""
+msgstr "Ulac win i d-isuffɣen kra akka ar tura."
 
 #: src/pages/public.jsx:123
 msgid "Switch to Federated"

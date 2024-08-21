@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 17:33\n"
+"PO-Revision-Date: 2024-08-20 22:38\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -570,7 +570,7 @@ msgstr "Yettban-d ɣur-k yakan urti ideg turiḍ yeldi deg usfaylu amaraw, ha-t-
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Yettban tesεiḍ yakan urti ideg turiḍ yeldi deg usfaylu amaraw. Tiririt n usfaylu-a ad issefsex tira n tsuffeɣt deg usfaylu-a war asekles. Kemmel?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
@@ -594,7 +594,7 @@ msgstr "Xerṣum snat n textiṛiyin laqent i usisten"
 
 #: src/components/compose.jsx:959
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "Kra n yifranen n usisten d ilmawen"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
@@ -612,7 +612,7 @@ msgstr "Yir agbur"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr ""
+msgstr "Yir agbur neɣ amidya amḥulfu"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
@@ -713,16 +713,16 @@ msgstr "Aglam n useklas ameslaw"
 #: src/components/compose.jsx:2264
 #: src/components/compose.jsx:2284
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "Teɣzi n ufaylu meqqret aṭas. asali-ines yezmer ad yesεu uguren. Ԑreḍ ad tesneqseḍ deg teɣzi seg {0} ɣer {1} neɣ ugar."
 
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Amidya-a meqqer aṭas. asali-ines yezmer ad yesεu uguren. Ԑreḍ ad tesneqseḍ deg teɣzi seg {0}×{1}px ɣer {2}×{3}px."
 
 #: src/components/compose.jsx:2304
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr ""
+msgstr "Afmiḍi meqqer aṭas. Asali-s yezmer ad d-yeglu s wuguren."
 
 #: src/components/compose.jsx:2364
 #: src/components/compose.jsx:2614
@@ -869,7 +869,7 @@ msgstr "Ur ttazen ara irewwayen"
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "Yettban ɣur-k irewwayen ur yettwaznen ara. Kemmel ansi i ten-teǧǧiḍ."
 
 #: src/components/drafts.jsx:102
 msgid "Delete this draft?"
@@ -888,7 +888,7 @@ msgstr "Kkes…"
 
 #: src/components/drafts.jsx:146
 msgid "Error fetching reply-to status!"
-msgstr ""
+msgstr "Tuccḍa deg tririt n waddad n tririt!"
 
 #: src/components/drafts.jsx:171
 msgid "Delete all drafts?"
@@ -987,7 +987,7 @@ msgstr "Tasuffeɣt iɛeddan"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
-msgstr ""
+msgstr "Zgel akarusel ɣer tsuffeɣt tuḍfirt"
 
 #: src/components/keyboard-shortcuts-help.jsx:65
 msgid "<0>Shift</0> + <1>j</1>"
@@ -995,7 +995,7 @@ msgstr "<0>Shift</0> + <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:71
 msgid "Skip carousel to previous post"
-msgstr ""
+msgstr "Zgel akarusel ɣer tsuffeɣt tudfirt"
 
 #: src/components/keyboard-shortcuts-help.jsx:73
 msgid "<0>Shift</0> + <1>k</1>"
@@ -1395,7 +1395,7 @@ msgstr "Y·Tesuffeɣ-d {account} tasuffeɣt."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} yesnerna tiririt-ik.} other {{account} yesnerna tasuffeɣt-ik.}}} other {{account} yesnerna {postsCount} n tsuffaɣ-ik.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> yesnerna tiririt-ik.} other {<2><3>{1}</3> imdanen</2> yesnerna tasuffeɣt-ik.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1427,7 +1427,7 @@ msgstr ""
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} yesnerna & teεǧeb-as tririt-ik.} other {{account} yesnerna & teεǧeb-as tsuffeɣt-ik.}}} other {{account} yesnerna & εeǧbent-as {postsCount} n tsuffaɣ-ik.}}} other {{postType, select, reply {<0><1>{0}</1> imdanen</0> yesnerna & teεǧeb-as tririt-ik.} other {<2><3>{1}</3> imdanen</2> yesnerna & teεǧeb-as tsuffeɣt-ik.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1885,7 +1885,7 @@ msgstr "Senṭeḍ inegzumen da"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "Asader inegzumen i yettwaskelsen seg uqeddac n tummant…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
@@ -1917,7 +1917,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "Ulac inegzumen imaynuten i uktar"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
@@ -1966,7 +1966,7 @@ msgstr "Iɣewwaren n unegzum ttwaneɣlen"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "D awezɣi anɣal n yiɣewwaren n yinegzumen"
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
@@ -1974,7 +1974,7 @@ msgstr "Bḍu"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "Asekles n yinegzumen ɣef uqeddac n tummant…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
@@ -1982,23 +1982,23 @@ msgstr "Inegzumen ttwaskelsen"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "D awezɣi asekles n yinegzumen"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr ""
+msgstr "Mtawi akked uqeddac n tummant"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0, plural, one {# asekkil} other {# isekkilen}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "Inegzumen n yizirig JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "Kter/sifeḍ iɣewwaren seg/ɣer uqeddac n tummant (d armitan ugar)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
@@ -2006,23 +2006,23 @@ msgstr "<1>Yebḍa-t</1> <0/>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr ""
+msgstr "Nesḥassef, tummant-ik tamirantur yeqqnen ur tezmir ara ad temyigewt akked tsuffaɣt -a seg tummant tayeḍ."
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
-msgstr ""
+msgstr "Yekkes-as uεǧab i tsuffeɣt n @{0}"
 
 #: src/components/status.jsx:716
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Teεǧeb-as tsuffeɣt n @{0}"
 
 #: src/components/status.jsx:755
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Yekkes-as acraḍ i tsuffeɣt n @{0}"
 
 #: src/components/status.jsx:756
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Tettwacreḍ tsuffeɣt @{0}"
 
 #: src/components/status.jsx:838
 #: src/components/status.jsx:900
@@ -2039,11 +2039,11 @@ msgstr "Tanebdurt"
 #: src/components/status.jsx:862
 #: src/components/status.jsx:2310
 msgid "Some media have no descriptions."
-msgstr ""
+msgstr "Kra yimidyaten ulac ɣer-sen aglam."
 
 #: src/components/status.jsx:869
 msgid "Old post (<0>{0}</0>)"
-msgstr ""
+msgstr "Tasuffeɣt taqburt (<0>{0}</0>)"
 
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1333
@@ -2063,7 +2063,7 @@ msgstr "Snernu…"
 #: src/components/status.jsx:1618
 #: src/components/status.jsx:2331
 msgid "Unlike"
-msgstr ""
+msgstr "Kkes aεǧab"
 
 #: src/components/status.jsx:914
 #: src/components/status.jsx:1618
@@ -2071,7 +2071,7 @@ msgstr ""
 #: src/components/status.jsx:2331
 #: src/components/status.jsx:2332
 msgid "Like"
-msgstr ""
+msgstr "Ḥemmel"
 
 #: src/components/status.jsx:923
 #: src/components/status.jsx:2343
@@ -2105,11 +2105,11 @@ msgstr "Yettwasgugem udiwenni"
 
 #: src/components/status.jsx:1135
 msgid "Unable to unmute conversation"
-msgstr ""
+msgstr "D awezɣi tukksa n usgugem i udiwenni"
 
 #: src/components/status.jsx:1136
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "D awezɣi asgugem n udiwenni"
 
 #: src/components/status.jsx:1145
 msgid "Unmute conversation"
@@ -2121,11 +2121,11 @@ msgstr "Sgugem adiwenni"
 
 #: src/components/status.jsx:1168
 msgid "Post unpinned from profile"
-msgstr ""
+msgstr "Tasuffeɣt tettwakkes seg umaɣnu"
 
 #: src/components/status.jsx:1169
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "Tasuffeɣt tettwasenteḍ ɣer umaɣnu"
 
 #: src/components/status.jsx:1174
 msgid "Unable to unpin post"
@@ -2282,7 +2282,7 @@ msgstr "Askan"
 
 #: src/components/status.jsx:3256
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "Tamawt: Taskant-a tettufeṣṣel s wudem afessas."
 
 #: src/components/status.jsx:3498
 msgid "<0/> <1/> boosted"
@@ -2405,7 +2405,7 @@ msgstr "Askan n tisuffaɣ s umidya"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr ""
+msgstr "Askan n tsuffaɣ yettwabdaren s #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
@@ -2570,7 +2570,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:928
 msgid "Show me all posts from…"
-msgstr ""
+msgstr "Sken-iyi-d akk tisuffaɣ sɣur…"
 
 #: src/pages/catchup.jsx:951
 msgid "until the max"
@@ -2677,7 +2677,7 @@ msgstr "Uɣal ar tqacuct"
 
 #: src/pages/catchup.jsx:1561
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr ""
+msgstr "Iseɣwan yettwabḍan sɣur yineḍfaren, myezwaren almend n umḍan n beṭṭu, isnerniyen d yismenyifen."
 
 #: src/pages/catchup.jsx:1567
 msgid "Sort: Density"
@@ -3298,7 +3298,7 @@ msgstr "Asuffeɣ"
 
 #: src/pages/settings.jsx:252
 msgid "Default visibility"
-msgstr ""
+msgstr "Abani amezwer"
 
 #: src/pages/settings.jsx:253
 #: src/pages/settings.jsx:299
@@ -3311,11 +3311,11 @@ msgstr "Ur yessaweḍ ara ad ileqqem tabaḍnit n usuffeɣ"
 
 #: src/pages/settings.jsx:301
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Yemtawa akked yiɣewwaren n uqeddac n tummant-ik. <0>Ddu ɣer tummant-ik ({instance}) i wugar n yiɣewwaren.</0>"
 
 #: src/pages/settings.jsx:316
 msgid "Experiments"
-msgstr ""
+msgstr "Tirmatin"
 
 #: src/pages/settings.jsx:329
 msgid "Auto refresh timeline posts"
@@ -3323,7 +3323,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:341
 msgid "Boosts carousel"
-msgstr ""
+msgstr "Kaṛusel n yibeṭṭuyen"
 
 #: src/pages/settings.jsx:357
 msgid "Post translation"
@@ -3496,7 +3496,7 @@ msgstr "Ur teqqineḍ ara. Amiyigew (tiririt, beṭṭu, rtg) ur teddun ara."
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Tasuffeɣt-a seg tummant niḍen (<0>{instance}</0>). Amyigew (tiririt, asnerni, rtg) ur ddint ara."
 
 #: src/pages/status.jsx:827
 msgid "Error: {e}"
@@ -3613,15 +3613,15 @@ msgstr "<0>Yettwabna</0> sɣur <1>@cheeaun</1>. <2>Tasertit n tbaḍnit</2>."
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
-msgstr ""
+msgstr "Tuṭṭfa n ugdil n kaṛusel n yisnerniyen"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "Kaṛusel n yisnerniyen"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr ""
+msgstr "Freq s tmuɣli tisuffaɣ tiɣbula akked tsufaɣ yettwalsen beṭṭu (tisuffaɣ yennernan)."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"

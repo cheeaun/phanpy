@@ -1466,7 +1466,14 @@ function Compose({
               class="large"
               disabled={uiState === 'loading'}
             >
-              {replyToStatus ? t`Reply` : editStatus ? t`Update` : t`Post`}
+              {replyToStatus
+                ? t`Reply`
+                : editStatus
+                ? t`Update`
+                : t({
+                    message: 'Post',
+                    context: 'Submit button in composer',
+                  })}
             </button>
           </div>
         </form>

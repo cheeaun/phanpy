@@ -1,14 +1,13 @@
 name: Update catalogs
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
   workflow_dispatch:
 
 jobs:
   update-catalogs:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

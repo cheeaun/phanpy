@@ -2,6 +2,7 @@ import { LOCALES } from './src/locales';
 
 const config = {
   locales: LOCALES,
+  sourceLocale: 'en',
   pseudoLocale: 'pseudo-LOCALE',
   fallbackLocales: {
     default: 'en',

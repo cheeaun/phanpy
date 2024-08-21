@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-20 05:45\n"
+"PO-Revision-Date: 2024-08-21 08:47\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -110,7 +110,7 @@ msgstr "게시물"
 
 #: src/components/account-info.jsx:428
 #: src/components/account-info.jsx:1116
-#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2451
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1628
@@ -406,10 +406,10 @@ msgstr "팔로"
 #: src/components/account-info.jsx:2087
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
-#: src/components/compose.jsx:2400
-#: src/components/compose.jsx:2873
-#: src/components/compose.jsx:3081
-#: src/components/compose.jsx:3311
+#: src/components/compose.jsx:2407
+#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:3088
+#: src/components/compose.jsx:3318
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -548,7 +548,7 @@ msgstr "저장되지 않은 변경 사항이 있습니다. 해당 게시물을 �
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
 #: src/components/compose.jsx:1328
-#: src/components/compose.jsx:1582
+#: src/components/compose.jsx:1589
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
@@ -662,7 +662,7 @@ msgstr "설문 넣기"
 msgid "Add custom emoji"
 msgstr "커스텀 에모지 더하기"
 
-#: src/components/compose.jsx:1469
+#: src/components/compose.jsx:1470
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:830
 #: src/components/status.jsx:1608
@@ -671,194 +671,194 @@ msgstr "커스텀 에모지 더하기"
 msgid "Reply"
 msgstr "댓글"
 
-#: src/components/compose.jsx:1469
+#: src/components/compose.jsx:1472
 msgid "Update"
 msgstr "업데이트"
 
-#: src/components/compose.jsx:1469
-#: src/pages/status.jsx:565
+#: src/components/compose.jsx:1473
+msgctxt "Submit button in composer"
 msgid "Post"
-msgstr "게시물"
+msgstr ""
 
-#: src/components/compose.jsx:1594
+#: src/components/compose.jsx:1601
 msgid "Downloading GIF…"
 msgstr "움짤 받는 중…"
 
-#: src/components/compose.jsx:1622
+#: src/components/compose.jsx:1629
 msgid "Failed to download GIF"
 msgstr "움짤 받기 실패"
 
-#: src/components/compose.jsx:1733
-#: src/components/compose.jsx:1810
+#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1817
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "더 보기…"
 
-#: src/components/compose.jsx:2213
+#: src/components/compose.jsx:2220
 msgid "Uploaded"
 msgstr "올라감"
 
-#: src/components/compose.jsx:2226
+#: src/components/compose.jsx:2233
 msgid "Image description"
 msgstr "이미지 설명"
 
-#: src/components/compose.jsx:2227
+#: src/components/compose.jsx:2234
 msgid "Video description"
 msgstr "동영상 설명"
 
-#: src/components/compose.jsx:2228
+#: src/components/compose.jsx:2235
 msgid "Audio description"
 msgstr "오디오 설명"
 
-#: src/components/compose.jsx:2264
-#: src/components/compose.jsx:2284
+#: src/components/compose.jsx:2271
+#: src/components/compose.jsx:2291
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "파일 크기가 너무 큽니다. 올리다가 문제가 생길 수 있습니다. 파일 크기를 {0}에서 {1} 이하로 줄여보세요."
 
-#: src/components/compose.jsx:2276
-#: src/components/compose.jsx:2296
+#: src/components/compose.jsx:2283
+#: src/components/compose.jsx:2303
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "이미지 또는 동영상의 너비나 높이가 너무 큽니다. 올리다가 문제가 생길 수 있습니다. 너비와 높이를 {0}×{1} 픽셀에서 {2}×{3} 픽셀로 줄여보세요."
 
-#: src/components/compose.jsx:2304
+#: src/components/compose.jsx:2311
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "초당 프레임 수가 너무 많습니다. 올리다가 문제가 생길 수 있습니다."
 
-#: src/components/compose.jsx:2364
-#: src/components/compose.jsx:2614
+#: src/components/compose.jsx:2371
+#: src/components/compose.jsx:2621
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1058
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "지우기"
 
-#: src/components/compose.jsx:2381
+#: src/components/compose.jsx:2388
 msgid "Error"
 msgstr "오류"
 
-#: src/components/compose.jsx:2406
+#: src/components/compose.jsx:2413
 msgid "Edit image description"
 msgstr "이미지 설명 고치기"
 
-#: src/components/compose.jsx:2407
+#: src/components/compose.jsx:2414
 msgid "Edit video description"
 msgstr "동영상 설명 고치기"
 
-#: src/components/compose.jsx:2408
+#: src/components/compose.jsx:2415
 msgid "Edit audio description"
 msgstr "오디오 설명 고치기"
 
-#: src/components/compose.jsx:2453
-#: src/components/compose.jsx:2502
+#: src/components/compose.jsx:2460
+#: src/components/compose.jsx:2509
 msgid "Generating description. Please wait…"
 msgstr "설명을 자동 생성중. 잠시 기다려 주세요…"
 
-#: src/components/compose.jsx:2473
+#: src/components/compose.jsx:2480
 msgid "Failed to generate description: {0}"
 msgstr "설명을 자동 생성하는 데 실패했습니다: {0}"
 
-#: src/components/compose.jsx:2474
+#: src/components/compose.jsx:2481
 msgid "Failed to generate description"
 msgstr "설명을 자동 생성하는 데 실패"
 
-#: src/components/compose.jsx:2486
-#: src/components/compose.jsx:2492
-#: src/components/compose.jsx:2538
+#: src/components/compose.jsx:2493
+#: src/components/compose.jsx:2499
+#: src/components/compose.jsx:2545
 msgid "Generate description…"
 msgstr "설명 자동 생성…"
 
-#: src/components/compose.jsx:2525
+#: src/components/compose.jsx:2532
 msgid "Failed to generate description{0}"
 msgstr "설명을 자동 생성하는 데 실패{0}"
 
-#: src/components/compose.jsx:2540
+#: src/components/compose.jsx:2547
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— 시범중</0>"
 
-#: src/components/compose.jsx:2559
+#: src/components/compose.jsx:2566
 msgid "Done"
 msgstr "완료"
 
-#: src/components/compose.jsx:2595
+#: src/components/compose.jsx:2602
 msgid "Choice {0}"
 msgstr "선택지 {0}"
 
-#: src/components/compose.jsx:2642
+#: src/components/compose.jsx:2649
 msgid "Multiple choices"
 msgstr "선다형 질문"
 
-#: src/components/compose.jsx:2645
+#: src/components/compose.jsx:2652
 msgid "Duration"
 msgstr "기간"
 
-#: src/components/compose.jsx:2676
+#: src/components/compose.jsx:2683
 msgid "Remove poll"
 msgstr "설문 지우기"
 
-#: src/components/compose.jsx:2890
+#: src/components/compose.jsx:2897
 msgid "Search accounts"
 msgstr "계정 검색"
 
-#: src/components/compose.jsx:2931
+#: src/components/compose.jsx:2938
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "더하기"
 
-#: src/components/compose.jsx:2944
+#: src/components/compose.jsx:2951
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "계정 불러오기 오류"
 
-#: src/components/compose.jsx:3087
+#: src/components/compose.jsx:3094
 msgid "Custom emojis"
 msgstr "커스텀 에모지"
 
-#: src/components/compose.jsx:3107
+#: src/components/compose.jsx:3114
 msgid "Search emoji"
 msgstr "에모지 검색"
 
-#: src/components/compose.jsx:3138
+#: src/components/compose.jsx:3145
 msgid "Error loading custom emojis"
 msgstr "커스텀 에모지 불러오기 오류"
 
-#: src/components/compose.jsx:3149
+#: src/components/compose.jsx:3156
 msgid "Recently used"
 msgstr "최근 사용"
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3157
 msgid "Others"
 msgstr "기타"
 
-#: src/components/compose.jsx:3188
+#: src/components/compose.jsx:3195
 msgid "{0} more…"
 msgstr "{0}개 더…"
 
-#: src/components/compose.jsx:3326
+#: src/components/compose.jsx:3333
 msgid "Search GIFs"
 msgstr "움짤 검색"
 
-#: src/components/compose.jsx:3341
+#: src/components/compose.jsx:3348
 msgid "Powered by GIPHY"
 msgstr "GIPHY 제공"
 
-#: src/components/compose.jsx:3349
+#: src/components/compose.jsx:3356
 msgid "Type to search GIFs"
 msgstr "움짤을 검색하려면 입력하세요"
 
-#: src/components/compose.jsx:3447
+#: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:880
 msgid "Previous"
 msgstr "이전"
 
-#: src/components/compose.jsx:3465
+#: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:897
 msgid "Next"
 msgstr "다음"
 
-#: src/components/compose.jsx:3482
+#: src/components/compose.jsx:3489
 msgid "Error loading GIFs"
 msgstr "GIF 불러오기 오류"
 
@@ -1366,7 +1366,7 @@ msgstr "연합"
 
 #: src/components/nav-menu.jsx:415
 msgid "Shortcuts / Columns…"
-msgstr ""
+msgstr "바로 가기·칼럼…"
 
 #: src/components/nav-menu.jsx:425
 #: src/components/nav-menu.jsx:439
@@ -1658,35 +1658,35 @@ msgstr "이 프로필에 어떤 문제가 있나요?"
 msgid "Additional info"
 msgstr "추가 정보"
 
-#: src/components/report-modal.jsx:255
+#: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
 msgstr "<0>{domain}</0>에 전달"
 
-#: src/components/report-modal.jsx:265
+#: src/components/report-modal.jsx:266
 msgid "Send Report"
 msgstr "신고하기"
 
-#: src/components/report-modal.jsx:274
+#: src/components/report-modal.jsx:275
 msgid "Muted {username}"
 msgstr "{username} 님 뮤트함"
 
-#: src/components/report-modal.jsx:277
+#: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
 msgstr "{username} 님을 뮤트할 수 없음"
 
-#: src/components/report-modal.jsx:282
+#: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr "신고 <0>및 프로필 뮤트</0>"
 
-#: src/components/report-modal.jsx:293
+#: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
 msgstr "{username} 님 차단함"
 
-#: src/components/report-modal.jsx:296
+#: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
 msgstr "{username} 님을 차단할 수 없음"
 
-#: src/components/report-modal.jsx:301
+#: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
 msgstr "신고 <0>및 프로필 차단</0>"
 
@@ -1813,11 +1813,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
+msgstr "아직 아무 칼럼도 없습니다. 칼럼 추가 버튼을 눌러 보세요."
 
 #: src/components/shortcuts-settings.jsx:409
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "아직 아무 바로 가기도 없습니다. 바로 가기 추가 버튼을 눌러 보세요."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
@@ -1829,7 +1829,7 @@ msgstr "최대 {SHORTCUTS_LIMIT} 칼럼"
 
 #: src/components/shortcuts-settings.jsx:441
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "최다 {SHORTCUTS_LIMIT}개의 바로 가기"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
@@ -1841,7 +1841,7 @@ msgstr "칼럼 추가…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
-msgstr ""
+msgstr "바로 가기 추가…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
@@ -1857,11 +1857,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
-msgstr ""
+msgstr "바로 가기 고치기"
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Add shortcut"
-msgstr ""
+msgstr "바로 가기 추가"
 
 #: src/components/shortcuts-settings.jsx:620
 msgid "Timeline"
@@ -1873,7 +1873,7 @@ msgstr "리스트"
 
 #: src/components/shortcuts-settings.jsx:785
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr ""
+msgstr "<0>바로 가기</0> 가져오기·내보내기"
 
 #: src/components/shortcuts-settings.jsx:795
 msgid "Import"
@@ -1881,15 +1881,15 @@ msgstr "가져오기"
 
 #: src/components/shortcuts-settings.jsx:803
 msgid "Paste shortcuts here"
-msgstr ""
+msgstr "여기에 바로 가기를 붙이세요"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "인스턴스 서버에서 저장된 바로 가기를 받는 중…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "바로 가기 받을 수 없음"
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
@@ -1938,11 +1938,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "바로 가기를 가져올까요?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
-msgstr ""
+msgstr "또는 덮어쓰기…"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
@@ -1954,19 +1954,19 @@ msgstr "내보내기"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
-msgstr ""
+msgstr "바로 가기 복사됨"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Unable to copy shortcuts"
-msgstr ""
+msgstr "바로 가기를 복사할 수 없음"
 
 #: src/components/shortcuts-settings.jsx:1047
 msgid "Shortcut settings copied"
-msgstr ""
+msgstr "바로 가기 설정을 복사함"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "바로 가기 설정을 복사할 수 없음"
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
@@ -1974,19 +1974,19 @@ msgstr "공유"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "바로 가기를 인스턴스 서버에 저장중…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "바로 가기 저장됨"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "바로 가기를 저장할 수 없음"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr ""
+msgstr "인스턴스 서버에 동기화"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
@@ -1994,15 +1994,15 @@ msgstr "{0, plural, other {# 글자}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "바로 가기 JSON 코드"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "인스턴스 서버에서 설정 가져오기·인스턴스 서버에 설정 내보내기 (매우 시범적)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
-msgstr ""
+msgstr "<0/> 님이 <1>부스트 함</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
@@ -2413,7 +2413,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
-msgstr ""
+msgstr "아직 표시할 내용이 없습니다."
 
 #: src/pages/account-statuses.jsx:506
 #: src/pages/public.jsx:97
@@ -2424,15 +2424,15 @@ msgstr "게시물을 불러 올 수 없습니다"
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
 msgid "Unable to fetch account info"
-msgstr ""
+msgstr "계정 정보를 가져올 수 없음"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr ""
+msgstr "해당 계정의 인스턴스로 전환 {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "내 인스턴스로 전환 (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:646
 msgid "Month"
@@ -2524,7 +2524,7 @@ msgstr "지난 12시간"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "12시간 이상"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
@@ -2637,7 +2637,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1368
 msgid "{0, plural, one {# author} other {# authors}}"
-msgstr ""
+msgstr "{0, plural, other {글쓴이 #명}}"
 
 #: src/pages/catchup.jsx:1380
 msgid "Sort"
@@ -2661,7 +2661,7 @@ msgstr "안 묶음"
 
 #: src/pages/catchup.jsx:1470
 msgid "Show all authors"
-msgstr ""
+msgstr "모든 글쓴이 보기"
 
 #: src/pages/catchup.jsx:1521
 msgid "You don't have to read everything."
@@ -2794,7 +2794,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
-msgstr ""
+msgstr "※ 아직 미구현"
 
 #: src/pages/filters.jsx:498
 msgid "Status: <0><1/></0>"
@@ -2814,7 +2814,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
-msgstr ""
+msgstr "최소화됨"
 
 #: src/pages/filters.jsx:546
 msgid "hidden"
@@ -2908,11 +2908,11 @@ msgstr ""
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
 msgid "Featured on profile"
-msgstr ""
+msgstr "프로필에 내보임"
 
 #: src/pages/hashtag.jsx:328
 msgid "Feature on profile"
-msgstr ""
+msgstr "프로필에 내보이기"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
@@ -2932,21 +2932,21 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
-msgstr ""
+msgstr "이 바로 가기는 이미 있습니다"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr ""
+msgstr "해시태그 바로 가기가 추가됨"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
-msgstr ""
+msgstr "바로 가기 추가"
 
 #: src/pages/hashtag.jsx:486
 #: src/pages/public.jsx:139
 #: src/pages/trending.jsx:444
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr ""
+msgstr "새 인스턴스 입력 (예: mastodon.social)"
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
@@ -2980,11 +2980,11 @@ msgstr "모두 보기"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr ""
+msgstr "불러오는 중…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr ""
+msgstr "URL을 불러올 수 없음"
 
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:223
@@ -2993,16 +2993,16 @@ msgstr "홈 가기"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
-msgstr ""
+msgstr "아직 아무 것도 없습니다."
 
 #: src/pages/list.jsx:176
 #: src/pages/list.jsx:279
 msgid "Manage members"
-msgstr ""
+msgstr "구성원 관리"
 
 #: src/pages/list.jsx:313
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "<0>@{0}</0> 님을 리스트에서 뺄까요?"
 
 #: src/pages/list.jsx:359
 msgid "Remove…"
@@ -3010,7 +3010,7 @@ msgstr "지우기…"
 
 #: src/pages/lists.jsx:93
 msgid "{0, plural, one {# list} other {# lists}}"
-msgstr ""
+msgstr "{0, plural, other {리스트 #개}}"
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
@@ -3136,7 +3136,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"
-msgstr ""
+msgstr "<0>{0}</0> 업데이트됨"
 
 #: src/pages/notifications.jsx:1037
 msgid "View notifications from <0>@{0}</0>"
@@ -3168,11 +3168,11 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1165
 msgid "Dismiss"
-msgstr ""
+msgstr "닫기"
 
 #: src/pages/notifications.jsx:1180
 msgid "Dismissed"
-msgstr ""
+msgstr "닫힘"
 
 #: src/pages/public.jsx:27
 msgid "Local timeline ({instance})"
@@ -3448,7 +3448,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:939
 msgid "Push Notifications (beta)"
-msgstr ""
+msgstr "푸시 알림 (베타)"
 
 #: src/pages/settings.jsx:961
 msgid "Push notifications are blocked. Please enable them in your browser settings."
@@ -3488,7 +3488,11 @@ msgstr ""
 
 #: src/pages/settings.jsx:1069
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "주의: 푸시 알림은 <0>단 하나의 계정</0>에만 작동합니다."
+
+#: src/pages/status.jsx:565
+msgid "Post"
+msgstr "게시물"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3541,15 +3545,15 @@ msgstr ""
 
 #: src/pages/status.jsx:1241
 msgid "Unable to switch"
-msgstr ""
+msgstr "전환할 수 없음"
 
 #: src/pages/status.jsx:1248
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "게시물의 인스턴스로 전환 ({0})"
 
 #: src/pages/status.jsx:1251
 msgid "Switch to post's instance"
-msgstr ""
+msgstr "게시물의 인스턴스로 전환"
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
@@ -3557,11 +3561,11 @@ msgstr "게시물을 불러 올 수 없습니다."
 
 #: src/pages/status.jsx:1426
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
-msgstr ""
+msgstr "{0, plural, other {댓글 <0>{1}</0>개}}"
 
 #: src/pages/status.jsx:1444
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
-msgstr ""
+msgstr "{totalComments, plural, other {댓글 <0>{0}</0>개}}"
 
 #: src/pages/status.jsx:1466
 msgid "View post with its replies"
@@ -3569,7 +3573,7 @@ msgstr "답글이 달린 게시물 보기"
 
 #: src/pages/trending.jsx:70
 msgid "Trending ({instance})"
-msgstr ""
+msgstr "인기 ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
@@ -3577,11 +3581,11 @@ msgstr "실시간 인기 뉴스"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
-msgstr ""
+msgstr "인기 게시물 보기로 되돌아가기"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"
-msgstr ""
+msgstr "<0>{0}</0> 님을 언급하는 게시물 보기"
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"

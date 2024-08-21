@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 14:59\n"
+"PO-Revision-Date: 2024-08-21 16:44\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1399,7 +1399,7 @@ msgstr ""
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr "{count, plural, one {{0} seka tave.} few {{0} žmonės seka tave.} many {{0} žmones seka tave.}=1 {{account}} other {{0} žmonių seka tave.}}"
+msgstr "{count, plural, one {{0} seka tave.} few {<0><1>{0}</1> žmonės</0> seka tave.} many {<0><1>{0}</1> žmones</0> seka tave.}=1 {{account}} other {<0><1>{0}</1> žmonių</0> seka tave.}}"
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
@@ -1411,7 +1411,7 @@ msgstr ""
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "Baigėsi apklausa, kurioje balsavai arba kurią sukūrei."
 
 #: src/components/notification.jsx:192
 msgid "A poll you have created has ended."
@@ -1447,7 +1447,7 @@ msgstr "Prižiūrėjimo įspėjimas"
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "Administratorius (-ė) iš <0>{from}</0> pristabdė <1>{targetName}</1>, o tai reiškia, kad nebegali gauti iš jų naujienų ir su jais bendrauti."
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
@@ -1459,11 +1459,11 @@ msgstr ""
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "Tavo paskyra gavo prižiūrėjimo įspėjimą."
 
 #: src/components/notification.jsx:288
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "Tavo paskyra buvo išjungta."
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
@@ -1471,51 +1471,51 @@ msgstr "Kai kurie tavo įrašai buvo pažymėtos kaip jautrios."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "Kai kurios tavo įrašai buvo ištrinti."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Nuo šiol tavo įrašai bus pažymėti kaip jautrūs."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
-msgstr ""
+msgstr "Tavo paskyra buvo apribota."
 
 #: src/components/notification.jsx:293
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Tavo paskyra buvo pristabdyta."
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[Nežinomas pranešimo tipas: {type}]"
 
 #: src/components/notification.jsx:425
 #: src/components/status.jsx:937
 #: src/components/status.jsx:947
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "Pasidalino / patiko…"
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
-msgstr ""
+msgstr "Patiko…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr ""
+msgstr "Pasidalino…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr ""
+msgstr "Seka…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "Sužinoti daugiau <0/>"
 
 #: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr ""
+msgstr "Skaityti daugiau →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"

@@ -70,6 +70,11 @@ export default defineConfig({
           run: ['npm', 'run', 'messages:extract:clean'],
           pattern: 'src/**/*.{js,jsx,ts,tsx}',
         },
+        {
+          name: 'update-catalogs',
+          run: ['node', 'scripts/catalogs.js'],
+          pattern: 'src/locales/*.po',
+        },
       ],
     }),
     splitVendorChunkPlugin(),

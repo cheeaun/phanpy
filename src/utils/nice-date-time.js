@@ -9,7 +9,7 @@ const _DateTimeFormat = (opts) => {
   const { locale, dateYear, hideTime, formatOpts } = opts || {};
   const loc =
     locale && !/pseudo/i.test(locale)
-      ? localeMatch([locale], [defaultLocale])
+      ? localeMatch([locale], [defaultLocale], locale)
       : defaultLocale;
   const currentYear = new Date().getFullYear();
   const options = {

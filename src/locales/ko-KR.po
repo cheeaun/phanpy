@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 08:47\n"
+"PO-Revision-Date: 2024-08-22 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -84,7 +84,7 @@ msgstr "<0>{0}</0> 가입"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
-msgstr ""
+msgstr "무기한"
 
 #: src/components/account-info.jsx:378
 msgid "Unable to load account."
@@ -229,7 +229,7 @@ msgstr "비공개 메모"
 
 #: src/components/account-info.jsx:1149
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> 님 언급하기"
 
 #: src/components/account-info.jsx:1161
 msgid "Translate bio"
@@ -315,11 +315,11 @@ msgstr "@{username} 님 뮤트 풂"
 
 #: src/components/account-info.jsx:1362
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> 님 뮤트 풀기"
 
 #: src/components/account-info.jsx:1378
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> 님 뮤트…"
 
 #: src/components/account-info.jsx:1410
 msgid "Muted @{username} for {0}"
@@ -331,7 +331,7 @@ msgstr "@{username} 님을 뮤트할 수 없음"
 
 #: src/components/account-info.jsx:1443
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "<0>@{username}</0> 님을 팔로워에서 뺄까요?"
 
 #: src/components/account-info.jsx:1463
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "그만 팔로하기…"
 
 #: src/components/account-info.jsx:1486
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "<0>@{username}</0> 님을 차단할까요?"
 
 #: src/components/account-info.jsx:1507
 msgid "Unblocked @{username}"
@@ -363,15 +363,15 @@ msgstr "@{username} 님을 차단할 수 없음"
 
 #: src/components/account-info.jsx:1535
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> 님 차단 풀기"
 
 #: src/components/account-info.jsx:1544
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> 님 차단…"
 
 #: src/components/account-info.jsx:1561
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> 님 신고…"
 
 #: src/components/account-info.jsx:1581
 #: src/components/account-info.jsx:2092
@@ -465,7 +465,7 @@ msgstr "새 리스트"
 
 #: src/components/account-info.jsx:1992
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "<0>@{0}</0> 님에 관한 비공개 메모"
 
 #: src/components/account-info.jsx:2022
 msgid "Unable to update private note."
@@ -678,7 +678,7 @@ msgstr "업데이트"
 #: src/components/compose.jsx:1473
 msgctxt "Submit button in composer"
 msgid "Post"
-msgstr ""
+msgstr "올리기"
 
 #: src/components/compose.jsx:1601
 msgid "Downloading GIF…"
@@ -1767,7 +1767,7 @@ msgstr "매체만"
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
 msgid "Shortcuts"
-msgstr ""
+msgstr "바로 가기"
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
@@ -1775,11 +1775,11 @@ msgstr "베타"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "표시할 바로 가기 목록을 지정합니다:"
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "구석에 떠 있는 버튼"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
@@ -1897,19 +1897,19 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
-msgstr ""
+msgstr "* 현재 바로 가기에 이미 있음"
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
-msgstr ""
+msgstr "다른 계정에서 온 리스트는 못 가져올 수 있습니다."
 
 #: src/components/shortcuts-settings.jsx:924
 msgid "Invalid settings format"
-msgstr ""
+msgstr "잘못된 설정 형식"
 
 #: src/components/shortcuts-settings.jsx:932
 msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "현재 바로 가기에 덧붙일까요?"
 
 #: src/components/shortcuts-settings.jsx:935
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
@@ -1921,7 +1921,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr ""
+msgstr "바로 가기를 가져왔습니다. 최다치인 {SHORTCUTS_LIMIT}개를 넘겼으므로, 나머지는 가져오지 못했습니다."
 
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
@@ -1930,7 +1930,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
-msgstr ""
+msgstr "가져와서 덧붙이기…"
 
 #: src/components/shortcuts-settings.jsx:991
 msgid "Override current shortcuts?"

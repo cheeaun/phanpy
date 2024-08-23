@@ -8,7 +8,7 @@ msgstr ""
 "Language: ar\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-21 18:35\n"
+"PO-Revision-Date: 2024-08-23 09:10\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
@@ -201,7 +201,7 @@ msgstr "الردود"
 #: src/pages/catchup.jsx:2035
 #: src/pages/settings.jsx:1016
 msgid "Boosts"
-msgstr ""
+msgstr "المعاد نشرها"
 
 #: src/components/account-info.jsx:870
 msgid "Post stats unavailable."
@@ -213,7 +213,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1064
 msgid "Last post: <0>{0}</0>"
-msgstr ""
+msgstr "آخر منشور: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1078
 msgid "Muted"
@@ -618,7 +618,7 @@ msgstr ""
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:285
 msgid "Public"
-msgstr ""
+msgstr "للعامة"
 
 #: src/components/compose.jsx:1173
 #: src/components/status.jsx:94
@@ -640,7 +640,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1188
 msgid "Post your reply"
-msgstr ""
+msgstr "انشر ردّك"
 
 #: src/components/compose.jsx:1190
 msgid "Edit your post"
@@ -648,7 +648,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr ""
+msgstr "ما الجديد؟"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
@@ -678,7 +678,7 @@ msgstr "تحديث"
 #: src/components/compose.jsx:1473
 msgctxt "Submit button in composer"
 msgid "Post"
-msgstr ""
+msgstr "انشر"
 
 #: src/components/compose.jsx:1601
 msgid "Downloading GIF…"
@@ -978,12 +978,12 @@ msgstr ""
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr ""
+msgstr "المنشور التالي"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
 msgid "Previous post"
-msgstr ""
+msgstr "المنشور السابق"
 
 #: src/components/keyboard-shortcuts-help.jsx:63
 msgid "Skip carousel to next post"
@@ -1086,7 +1086,7 @@ msgstr ""
 #: src/components/status.jsx:2318
 #: src/components/status.jsx:2319
 msgid "Boost"
-msgstr ""
+msgstr "إعادة نشر"
 
 #: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>Shift</0> + <1>b</1>"
@@ -1338,7 +1338,7 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:353
 msgid "Accounts…"
-msgstr ""
+msgstr "الحسابات…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:142
@@ -2029,12 +2029,12 @@ msgstr ""
 #: src/components/status.jsx:2286
 #: src/components/status.jsx:2318
 msgid "Unboost"
-msgstr ""
+msgstr "إلغاء إعادة النشر"
 
 #: src/components/status.jsx:854
 #: src/components/status.jsx:2301
 msgid "Quote"
-msgstr ""
+msgstr "اقتباس"
 
 #: src/components/status.jsx:862
 #: src/components/status.jsx:2310
@@ -2048,7 +2048,7 @@ msgstr ""
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1333
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "ألغيت إعادة نشر منشور @{0}"
 
 #: src/components/status.jsx:889
 #: src/components/status.jsx:1334
@@ -2057,7 +2057,7 @@ msgstr ""
 
 #: src/components/status.jsx:901
 msgid "Boost…"
-msgstr ""
+msgstr "إعادة نشر…"
 
 #: src/components/status.jsx:913
 #: src/components/status.jsx:1618
@@ -2168,7 +2168,7 @@ msgstr ""
 #: src/components/status.jsx:1652
 #: src/components/status.jsx:2319
 msgid "Boosted"
-msgstr ""
+msgstr "أعيد نشره"
 
 #: src/components/status.jsx:1662
 #: src/components/status.jsx:2344
@@ -2353,7 +2353,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "منشورات الحساب"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2397,7 +2397,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
-msgstr ""
+msgstr "- المعاد نشرها"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
@@ -2958,13 +2958,13 @@ msgstr ""
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:459
 msgid "Go to another instance…"
-msgstr ""
+msgstr "الذهاب إلى خادم آخر…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:470
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "الانتقال إلى خادمي (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
@@ -3176,19 +3176,19 @@ msgstr ""
 
 #: src/pages/public.jsx:27
 msgid "Local timeline ({instance})"
-msgstr ""
+msgstr "الخط الزمني المحلي ({instance})"
 
 #: src/pages/public.jsx:28
 msgid "Federated timeline ({instance})"
-msgstr ""
+msgstr "الخيط الزمني الفدرالي ({instance})"
 
 #: src/pages/public.jsx:90
 msgid "Local timeline"
-msgstr ""
+msgstr "الخيط الزمني المحلي"
 
 #: src/pages/public.jsx:90
 msgid "Federated timeline"
-msgstr ""
+msgstr "الخيط الفيدرالي"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
@@ -3480,7 +3480,7 @@ msgstr "استطلاعات الرأي"
 
 #: src/pages/settings.jsx:1032
 msgid "Post edits"
-msgstr ""
+msgstr "تعديلات المنشور"
 
 #: src/pages/settings.jsx:1053
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
@@ -3492,7 +3492,7 @@ msgstr ""
 
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr ""
+msgstr "منشور"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3589,7 +3589,7 @@ msgstr ""
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr ""
+msgstr "المنشورات الرائجة"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."

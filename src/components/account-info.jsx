@@ -63,7 +63,6 @@ const MUTE_DURATIONS_LABELS = {
   259_200: i18nDuration(3, 'day'),
   604_800: i18nDuration(1, 'week'),
 };
-console.log({ MUTE_DURATIONS_LABELS });
 
 const LIMIT = 80;
 

@@ -16,7 +16,8 @@ function isValidDate(value) {
 
 const resolvedLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
 const DTF = mem((locale, opts = {}) => {
-  const lang = localeMatch([locale], [resolvedLocale], locale);
+  const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
+  const lang = localeMatch([regionlessLocale], [resolvedLocale], locale);
   try {
     return new Intl.DateTimeFormat(lang, opts);
   } catch (e) {}

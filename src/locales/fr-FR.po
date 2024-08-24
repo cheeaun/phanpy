@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-24 10:25\n"
+"PO-Revision-Date: 2024-08-24 18:50\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -1931,7 +1931,7 @@ msgstr "Raccourcis importés"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
-msgstr "…………"
+msgstr "Importer et ajouter…"
 
 #: src/components/shortcuts-settings.jsx:991
 msgid "Override current shortcuts?"
@@ -2044,7 +2044,7 @@ msgstr "Certains médias n'ont pas de descriptions."
 
 #: src/components/status.jsx:869
 msgid "Old post (<0>{0}</0>)"
-msgstr ""
+msgstr "Ancien message (<0>{0}</0>)"
 
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1340
@@ -2354,7 +2354,7 @@ msgstr "Fermer la fenêtre"
 
 #: src/compose.jsx:86
 msgid "Login required."
-msgstr ""
+msgstr "Connexion requise."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
@@ -2459,7 +2459,7 @@ msgstr "Par défaut"
 
 #: src/pages/accounts.jsx:121
 msgid "Switch to this account"
-msgstr ""
+msgstr "Basculer vers ce compte"
 
 #: src/pages/accounts.jsx:130
 msgid "Switch in new tab/window"
@@ -2809,7 +2809,7 @@ msgstr "{0, plural, one {# mot-clé} other {# mots-clés}}"
 
 #: src/pages/filters.jsx:466
 msgid "Filter from…"
-msgstr ""
+msgstr "Filtrer depuis…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
@@ -2906,7 +2906,7 @@ msgstr "Les messages avec ce mot-clé n’ont pas pu être chargés."
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "Arrêt du suivi de #{hashtag}"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
@@ -2914,7 +2914,7 @@ msgstr "Abonné·e à #{hashtag}"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr ""
+msgstr "Suivre…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"
@@ -3036,7 +3036,7 @@ msgstr "Par exemple “mastodon.social”"
 
 #: src/pages/login.jsx:196
 msgid "Failed to log in. Please try again or try another instance."
-msgstr ""
+msgstr "Connexion échouée. Essayez à nouveau, ou avec une autre instance."
 
 #: src/pages/login.jsx:208
 msgid "Continue with {selectedInstanceText}"
@@ -3369,7 +3369,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:509
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Affiche automatiquement la traduction des messages sur le fil d’actualité. Ne fonctionne qu’avec les messages <0>short</0> sans avertissement de contenu, médias, ni sondages."
+msgstr "Affiche automatiquement la traduction des messages sur le fil d’actualité. Ne fonctionne qu’avec les messages <0>courts</0> sans médias, ni sondages, ni avertissement de contenu."
 
 #: src/pages/settings.jsx:529
 msgid "GIF Picker for composer"
@@ -3401,7 +3401,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:625
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr ""
+msgstr "Import/export \"Cloud\" pour les paramètres des raccourcis"
 
 #: src/pages/settings.jsx:630
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
@@ -3409,7 +3409,7 @@ msgstr "⚠️⚠️⚠️ Très expérimental.<0/>Enregistré dans les notes pe
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Note : Cette fonction utilise l'API du serveur d'instance auquel vous êtes actuellement connecté."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3502,11 +3502,11 @@ msgstr "Modifications du message"
 
 #: src/pages/settings.jsx:1065
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr ""
+msgstr "L'autorisation des notifications Push n'a pas été accordée depuis votre dernière connexion. Vous devrez <0><1>vous connecter</1> à nouveau pour accorder l'autorisation Push</0>."
 
 #: src/pages/settings.jsx:1081
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "NOTE : Les notifications Push ne fonctionnent que pour <0>un compte</0>."
 
 #: src/pages/status.jsx:565
 msgid "Post"
@@ -3542,7 +3542,7 @@ msgstr "Aller au message principal"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "{0} messages plus haut ‒ Remonter"
 
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208

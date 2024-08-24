@@ -1060,7 +1060,14 @@ function Status({
       )}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
-        <small class="menu-double-lines">{nicePostURL(url)}</small>
+        <small
+          class="menu-double-lines"
+          style={{
+            maxWidth: '16em',
+          }}
+        >
+          {nicePostURL(url)}
+        </small>
       </MenuItem>
       <div class="menu-horizontal">
         <MenuItem

@@ -1819,7 +1819,7 @@ body > .szh-menu-container {
   box-shadow: 0 3px 16px -3px var(--drop-shadow-color);
   text-align: start;
   /* animation: appear-smooth 0.15s ease-in-out; */
-  width: 16em;
+  min-width: 16em;
   max-width: 90vw;
   /* overflow: hidden; */
 }
@@ -2078,6 +2078,8 @@ body > .szh-menu-container {
 }
 
 .szh-menu .menu-wrap {
+  min-width: 16em;
+  width: min-content;
   display: flex;
   flex-wrap: wrap;
 }

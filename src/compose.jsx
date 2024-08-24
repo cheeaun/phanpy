@@ -9,8 +9,10 @@ import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import ComposeSuspense from './components/compose-suspense';
+import Loader from './components/loader';
 import { initActivateLang } from './utils/lang';
 import { initStates } from './utils/states';
+import { getCurrentAccount, setCurrentAccountID } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 initActivateLang();
@@ -21,6 +23,7 @@ if (window.opener) {
 
 function App() {
   const [uiState, setUIState] = useState('default');
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   const { editStatus, replyToStatus, draftStatus } = window.__COMPOSE__ || {};
 
@@ -35,7 +38,11 @@ function App() {
   );
 
   useEffect(() => {
-    initStates();
+    const account = getCurrentAccount();
+    setIsLoggedIn(!!account);
+    if (account) {
+      initStates();
+    }
   }, []);
 
   useEffect(() => {
@@ -69,24 +76,50 @@ function App() {
 
   console.debug('OPEN COMPOSE');
 
+  if (isLoggedIn === false) {
+    return (
+      <div class="box">
+        <h1>
+          <Trans>Error</Trans>
+        </h1>
+        <p>
+          <Trans>Login required.</Trans>
+        </p>
+        <p>
+          <a href="/">
+            <Trans>Go home</Trans>
+          </a>
+        </p>
+      </div>
+    );
+  }
+
+  if (isLoggedIn) {
+    return (
+      <ComposeSuspense
+        editStatus={editStatus}
+        replyToStatus={replyToStatus}
+        draftStatus={draftStatus}
+        standalone
+        hasOpener={window.opener}
+        onClose={(results) => {
+          const { newStatus, fn = () => {} } = results || {};
+          try {
+            if (newStatus) {
+              window.opener.__STATES__.reloadStatusPage++;
+            }
+            fn();
+            setUIState('closed');
+          } catch (e) {}
+        }}
+      />
+    );
+  }
+
   return (
-    <ComposeSuspense
-      editStatus={editStatus}
-      replyToStatus={replyToStatus}
-      draftStatus={draftStatus}
-      standalone
-      hasOpener={window.opener}
-      onClose={(results) => {
-        const { newStatus, fn = () => {} } = results || {};
-        try {
-          if (newStatus) {
-            window.opener.__STATES__.reloadStatusPage++;
-          }
-          fn();
-          setUIState('closed');
-        } catch (e) {}
-      }}
-    />
+    <div class="box">
+      <Loader />
+    </div>
   );
 }
 

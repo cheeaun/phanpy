@@ -73,18 +73,21 @@ function IDN(inputCode, outputCode) {
   return result;
 }
 
-// Sort by percentage
-const sortedCatalogs = Object.entries(catalogs)
-  .sort((a, b) => b[1] - a[1])
+const fullCatalogs = Object.entries(catalogs)
+  // sort by key
+  .sort((a, b) => a[0].localeCompare(b[0]))
   .map(([code, completion]) => {
     const nativeName = IDN(code, code);
     const name = IDN('en', code);
-    // let names = {};
     return { code, nativeName, name, completion };
   });
 
+// Sort by completion
+const sortedCatalogs = [...fullCatalogs].sort(
+  (a, b) => b.completion - a.completion,
+);
 console.table(sortedCatalogs);
 
 const path = 'src/data/catalogs.json';
-fs.writeFileSync(path, JSON.stringify(sortedCatalogs, null, 2));
+fs.writeFileSync(path, JSON.stringify(fullCatalogs, null, 2));
 console.log('File written:', path);

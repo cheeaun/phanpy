@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-24 07:49\n"
+"PO-Revision-Date: 2024-08-24 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -66,7 +66,7 @@ msgstr "팔로잉"
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
 msgid "Follows you"
-msgstr "날 팔로우 함"
+msgstr "날 팔로 함"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
@@ -578,11 +578,11 @@ msgstr "창 합치기"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr "@{0} 게시물에 답글 달기(<0>{1}</0>)"
+msgstr "@{0} 님 게시물에 답글 달기(<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr "@{0} 게시물의 답글 달기"
+msgstr "@{0} 님 게시물에 답글 달기"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -1471,7 +1471,7 @@ msgstr "일부 게시물이 민감한 게시물로 처리되었습니다."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr "게시물 몇 개가 삭제되었습니다."
+msgstr "내 게시물 몇 개가 지워졌습니다."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
@@ -1501,11 +1501,11 @@ msgstr "좋아한 사람:"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr "...에 의해 부스트 됨"
+msgstr "부스트한 사람:"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr "...에 의해 팔로우 됨"
+msgstr "팔로한 사람:"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
@@ -1519,7 +1519,7 @@ msgstr "더 보기 →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr "투표 완료"
+msgstr "투표함"
 
 #: src/components/poll.jsx:135
 #: src/components/poll.jsx:218
@@ -1536,7 +1536,7 @@ msgstr "투표"
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
-msgstr "새로고침"
+msgstr "새로 고침"
 
 #: src/components/poll.jsx:218
 #: src/components/poll.jsx:222
@@ -1783,7 +1783,7 @@ msgstr "구석에 떠 있는 버튼"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr "탭/메뉴"
+msgstr "탭·메뉴 바"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
@@ -2043,7 +2043,7 @@ msgstr "첨부한 매체 중에 설명이 없는 게 있습니다."
 
 #: src/components/status.jsx:869
 msgid "Old post (<0>{0}</0>)"
-msgstr "오래된 게시물(<0>{0}</0>)"
+msgstr "오래된 게시물 (<0>{0}</0>)"
 
 #: src/components/status.jsx:888
 #: src/components/status.jsx:1333
@@ -2385,7 +2385,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr "답글이 달린 게시물 보기"
+msgstr "댓글이 달린 게시물 보기"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
@@ -2460,7 +2460,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:167
 msgid "Log out…"
-msgstr "로그아웃..."
+msgstr "로그아웃…"
 
 #: src/pages/accounts.jsx:180
 msgid "Add an existing account"
@@ -2472,7 +2472,7 @@ msgstr "참고: <0>기본 계정</0>은 언제나 가장 먼저 뜹니다. 교�
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr "북마크를 불러 올 수 없습니다."
+msgstr "책갈피를 불러 올 수 없습니다."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
@@ -2758,7 +2758,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:228
 msgid "Edit filter"
-msgstr "필터 수정"
+msgstr "필터 고치기"
 
 #: src/pages/filters.jsx:345
 msgid "Unable to edit filter"
@@ -2883,7 +2883,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr "해당 태그를 포함된 게시물을 불러올 수 없습니다."
+msgstr "해당 태그를 포함한 게시물을 불러올 수 없습니다"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3227,7 +3227,7 @@ msgstr "해시태그"
 #: src/pages/search.jsx:318
 #: src/pages/search.jsx:388
 msgid "See more"
-msgstr "더보기"
+msgstr "더 보기"
 
 #: src/pages/search.jsx:290
 msgid "See more accounts"
@@ -3294,7 +3294,7 @@ msgstr "표시 언어"
 
 #: src/pages/settings.jsx:246
 msgid "Volunteer translations"
-msgstr ""
+msgstr "번역 참여하기"
 
 #: src/pages/settings.jsx:257
 msgid "Posting"
@@ -3468,7 +3468,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:995
 msgid "people I follow"
-msgstr "내가 팔로우 하는 사람들"
+msgstr "내가 팔로하는 사람들"
 
 #: src/pages/settings.jsx:999
 msgid "followers"
@@ -3476,7 +3476,7 @@ msgstr "팔로워"
 
 #: src/pages/settings.jsx:1032
 msgid "Follows"
-msgstr ""
+msgstr "팔로"
 
 #: src/pages/settings.jsx:1040
 msgid "Polls"
@@ -3516,15 +3516,15 @@ msgstr ""
 
 #: src/pages/status.jsx:936
 msgid "Unable to load replies."
-msgstr "답글을 불러 올 수 없습니다."
+msgstr "댓글을 불러 올 수 없습니다."
 
 #: src/pages/status.jsx:1048
 msgid "Back"
-msgstr "뒤로가기"
+msgstr "뒤로"
 
 #: src/pages/status.jsx:1079
 msgid "Go to main post"
-msgstr "메인 게시물로 이동하기"
+msgstr "원 게시물로 이동하기"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
@@ -3561,7 +3561,7 @@ msgstr "게시물의 인스턴스로 전환"
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
-msgstr "게시물을 불러 올 수 없습니다."
+msgstr "게시물을 불러 올 수 없습니다"
 
 #: src/pages/status.jsx:1426
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
@@ -3573,7 +3573,7 @@ msgstr "{totalComments, plural, other {댓글 <0>{0}</0>개}}"
 
 #: src/pages/status.jsx:1466
 msgid "View post with its replies"
-msgstr "답글이 달린 게시물 보기"
+msgstr "게시물과 댓글 보기"
 
 #: src/pages/trending.jsx:70
 msgid "Trending ({instance})"
@@ -3581,7 +3581,7 @@ msgstr "인기 ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
-msgstr "실시간 인기 뉴스"
+msgstr "인기 뉴스"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
@@ -3593,11 +3593,11 @@ msgstr "<0>{0}</0> 님을 언급하는 게시물 보기"
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr "실시간 인기 게시물"
+msgstr "인기 게시물"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."
-msgstr "실시간 인기 게시물이 없음"
+msgstr "인기 게시물이 없음."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."

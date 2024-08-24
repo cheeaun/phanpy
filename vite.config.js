@@ -12,9 +12,12 @@ import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
 import { run } from 'vite-plugin-run';
 
+import { ALL_LOCALES } from './src/locales';
+
 const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
 const {
+  PHANPY_WEBSITE: WEBSITE,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
@@ -83,6 +86,20 @@ export default defineConfig({
     }),
     htmlPlugin({
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
+      links: [
+        ...ALL_LOCALES.map((lang) => ({
+          rel: 'alternate',
+          hreflang: lang,
+          // *Fully-qualified* URLs
+          href: `${WEBSITE}/?lang=${lang}`,
+        })),
+        // https://developers.google.com/search/docs/specialty/international/localized-versions#xdefault
+        {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          href: `${WEBSITE}`,
+        },
+      ],
     }),
     generateFile([
       {

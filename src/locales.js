@@ -15,7 +15,7 @@ const locales = [
 export const LOCALES = locales;
 
 let devLocales = [];
-if (import.meta.env.DEV || import.meta.env.PHANPY_SHOW_DEV_LOCALES) {
+if (import.meta.env?.DEV || import.meta.env?.PHANPY_SHOW_DEV_LOCALES) {
   devLocales = catalogs
     .filter(({ completion }) => completion < PERCENTAGE_THRESHOLD)
     .map(({ code }) => code);

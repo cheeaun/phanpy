@@ -9,12 +9,15 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import MenuConfirm from '../components/menu-confirm';
+import MenuLink from '../components/menu-link';
 import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
 import { api } from '../utils/api';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
+
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
 function Accounts({ onClose }) {
   const { masto } = api();
@@ -107,6 +110,28 @@ function Accounts({ onClose }) {
                         </button>
                       }
                     >
+                      <MenuItem
+                        disabled={isCurrent}
+                        onClick={() => {
+                          setCurrentAccountID(account.info.id);
+                          location.reload();
+                        }}
+                      >
+                        <Icon icon="transfer" />{' '}
+                        <Trans>Switch to this account</Trans>
+                      </MenuItem>
+                      {!isStandalone && !isCurrent && (
+                        <MenuLink
+                          href={`./?account=${account.info.id}`}
+                          target="_blank"
+                        >
+                          <Icon icon="external" />
+                          <span>
+                            <Trans>Switch in new tab/window</Trans>
+                          </span>
+                        </MenuLink>
+                      )}
+                      <MenuDivider />
                       <MenuItem
                         onClick={() => {
                           states.showAccount = `${account.info.username}@${account.instanceURL}`;

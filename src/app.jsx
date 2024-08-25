@@ -321,9 +321,9 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.session.get('clientID');
-      const clientSecret = store.session.get('clientSecret');
-      const vapidKey = store.session.get('vapidKey');
+      const clientID = store.sessionCookie.get('clientID');
+      const clientSecret = store.sessionCookie.get('clientSecret');
+      const vapidKey = store.sessionCookie.get('vapidKey');
 
       (async () => {
         setUIState('loading');

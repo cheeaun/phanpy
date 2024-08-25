@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-24 10:25\n"
+"PO-Revision-Date: 2024-08-25 17:43\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -28,7 +28,7 @@ msgstr "Publicaciones: {0}"
 
 #: src/components/account-block.jsx:144
 msgid "Last posted: {0}"
-msgstr "Último mensaje: {0}"
+msgstr "Última publicación: {0}"
 
 #: src/components/account-block.jsx:159
 #: src/components/account-info.jsx:634
@@ -245,11 +245,11 @@ msgstr "Añadir nota privada"
 
 #: src/components/account-info.jsx:1191
 msgid "Notifications enabled for @{username}'s posts."
-msgstr "Notificaciones habilitadas para los mensajes de @{username}."
+msgstr "Notificaciones habilitadas para las publicaciones de @{username}."
 
 #: src/components/account-info.jsx:1192
 msgid "Notifications disabled for @{username}'s posts."
-msgstr "Notificaciones desactivadas para los mensajes de @{username}."
+msgstr "Notificaciones desactivadas para las publicaciones de @{username}."
 
 #: src/components/account-info.jsx:1204
 msgid "Disable notifications"
@@ -490,7 +490,7 @@ msgstr "Biografía"
 
 #: src/components/account-info.jsx:2175
 msgid "Extra fields"
-msgstr "Campos extras"
+msgstr "Campos adicionales"
 
 #: src/components/account-info.jsx:2181
 msgid "Label"
@@ -582,7 +582,7 @@ msgstr "Respondiendo al mensaje de @{0}(<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr "Respondiendo al mensaje de @{0}"
+msgstr "Respondiendo a la publicación de @{0}"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -1004,7 +1004,7 @@ msgstr "<0>Mayús</0> + <1>k</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:79
 msgid "Load new posts"
-msgstr "Cargar nuevos mensajes"
+msgstr "Cargar nuevas publicaciones"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
 #: src/pages/catchup.jsx:1643
@@ -1029,7 +1029,7 @@ msgstr "<0>Esc</0> o <1>Retroceso</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
-msgstr "Enfocar columna en modo multicolumna"
+msgstr "Enfocar columna en el modo de múltiples columnas"
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
@@ -1037,11 +1037,11 @@ msgstr "<0>1</0> a <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
-msgstr "Redactar nueva"
+msgstr "Redactar nueva publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:121
 msgid "Compose new post (new window)"
-msgstr "Redactar nuevo mensaje (nueva ventana)"
+msgstr "Redactar nueva publicación (nueva ventana)"
 
 #: src/components/keyboard-shortcuts-help.jsx:124
 msgid "<0>Shift</0> + <1>c</1>"
@@ -1193,7 +1193,7 @@ msgstr "Describe la imagen…"
 
 #: src/components/media-modal.jsx:362
 msgid "View post"
-msgstr "Ver mensajes"
+msgstr "Ver publicaciones"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
@@ -1388,11 +1388,11 @@ msgstr "Ver todas las notificaciones"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr "{account} reaccionó a tu mensaje con {emojiObject}"
+msgstr "{account} reaccionó a tu publicación con {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
-msgstr "{account} ha publicado un mensaje."
+msgstr "{account} ha hecho una publicación."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
@@ -1400,7 +1400,7 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr "{count, plural, =1 {{account} te siguió.} other {<0><1>{0}</1> personas</0> te siguieron.}}"
+msgstr "{count, plural, =1 {{account} te comenzó a seguir.} other {<0><1>{0}</1> personas</0> te comenzaron a seguir.}}"
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
@@ -1428,7 +1428,7 @@ msgstr "Una publicación con la que interactuaste ha sido editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta y le gustó.} other {{account} impulsó tu publicación y le gustó.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron tu publicación y le gustó.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta y le gustó.} other {{account} impulsó tu publicación y le gustó.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron tu publicación y les gustó.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1754,7 +1754,7 @@ msgstr "Buscar término"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr "Opcional, excepto para el modo multicolumna"
+msgstr "Opcional, excepto para el modo de múltiples columnas"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
@@ -1846,11 +1846,11 @@ msgstr "Añadir atajo…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr "La lista específica es opcional. Para el modo multicolumna, es necesaria una lista; sin ella, no se mostrará la columna."
+msgstr "La lista específica es opcional. Para el modo de múltiples columnas, es necesaria una lista; sin ella, no se mostrará la columna."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr "Para el modo multicolumna, es necesario un término de búsqueda; sin él, no se mostrará la columna."
+msgstr "Para el modo de múltiples columnas, es necesario un término de búsqueda; sin él, no se mostrará la columna."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
@@ -2354,7 +2354,7 @@ msgstr "Cerrar la ventana"
 
 #: src/compose.jsx:86
 msgid "Login required."
-msgstr ""
+msgstr "Se requiere iniciar sesión."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
@@ -2372,7 +2372,7 @@ msgstr "{accountDisplay} (+ Respuestas)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- Reposteos)"
+msgstr "{accountDisplay} (- Impulsos)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
@@ -2457,35 +2457,35 @@ msgstr "Actual"
 msgid "Default"
 msgstr "Por defecto"
 
-#: src/pages/accounts.jsx:121
+#: src/pages/accounts.jsx:123
 msgid "Switch to this account"
-msgstr ""
+msgstr "Cambiar a esta cuenta"
 
-#: src/pages/accounts.jsx:130
+#: src/pages/accounts.jsx:132
 msgid "Switch in new tab/window"
-msgstr ""
+msgstr "Cambiar a una nueva pestaña/ventana"
 
-#: src/pages/accounts.jsx:142
+#: src/pages/accounts.jsx:146
 msgid "View profile…"
 msgstr "Ver perfil…"
 
-#: src/pages/accounts.jsx:159
+#: src/pages/accounts.jsx:163
 msgid "Set as default"
 msgstr "Establecer por defecto"
 
-#: src/pages/accounts.jsx:169
+#: src/pages/accounts.jsx:173
 msgid "Log out <0>@{0}</0>?"
 msgstr "¿Cerrar sesión <0>@{0}</0>?"
 
-#: src/pages/accounts.jsx:192
+#: src/pages/accounts.jsx:196
 msgid "Log out…"
 msgstr "Cerrar sesión…"
 
-#: src/pages/accounts.jsx:205
+#: src/pages/accounts.jsx:209
 msgid "Add an existing account"
 msgstr "Añadir una cuenta ya existente"
 
-#: src/pages/accounts.jsx:212
+#: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Aviso: la cuenta <0>Default</0> se cargará siempre primero. Si cambias de cuenta, esta se mantendrá durante la sesión."
 
@@ -3308,7 +3308,7 @@ msgstr "Mostrar idioma"
 
 #: src/pages/settings.jsx:246
 msgid "Volunteer translations"
-msgstr ""
+msgstr "Traducciones voluntarias"
 
 #: src/pages/settings.jsx:257
 msgid "Posting"
@@ -3341,7 +3341,7 @@ msgstr "Actualizar automáticamente las publicaciones de tu línea de tiempo"
 
 #: src/pages/settings.jsx:353
 msgid "Boosts carousel"
-msgstr "Carrusel de impulsos"
+msgstr "Carrusel de publicaciones impulsadas"
 
 #: src/pages/settings.jsx:369
 msgid "Post translation"
@@ -3385,7 +3385,7 @@ msgstr "Generador de descripción de imagen"
 
 #: src/pages/settings.jsx:567
 msgid "Only for new images while composing new posts."
-msgstr "Solo para imágenes nuevas mientras se componen nuevas publicaciones."
+msgstr "Solo para imágenes nuevas mientras se redactan nuevas publicaciones."
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
@@ -3417,7 +3417,7 @@ msgstr "Modo de ocultación <0>(<1>Texto</1> → <2>. </2>)</0>"
 
 #: src/pages/settings.jsx:667
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr "Reemplaza texto por bloques, útil al tomar capturas de pantalla, por razones de privacidad."
+msgstr "Reemplazar el texto por bloques, útil al tomar capturas de pantalla, por motivos de privacidad."
 
 #: src/pages/settings.jsx:692
 msgid "About"
@@ -3639,7 +3639,7 @@ msgstr "Captura de pantalla del carrusel de impulsos"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr "Carrusel de impulsos"
+msgstr "Carrusel de publicaciones impulsadas"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
@@ -3671,7 +3671,7 @@ msgstr "Las notificaciones similares se agrupan y contraen para reducir el desor
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
-msgstr "Captura de pantalla de la interfaz de usuario multi-columna"
+msgstr "Captura de pantalla de la interfaz de usuario con múltiples columnas"
 
 #: src/pages/welcome.jsx:176
 msgid "Single or multi-column"
@@ -3679,7 +3679,7 @@ msgstr "Columna simple o múltiple"
 
 #: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
-msgstr "Por defecto, una sola columna para los amantes del modo zen. Multi-columna ajustable para usuarios avanzados."
+msgstr "Por defecto, una sola columna para los amantes del modo zen. Modo de múltiples columnas ajustable para usuarios avanzados."
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"

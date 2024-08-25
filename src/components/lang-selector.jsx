@@ -4,6 +4,7 @@ import { useMemo } from 'preact/hooks';
 import { CATALOGS, DEFAULT_LANG, DEV_LOCALES, LOCALES } from '../locales';
 import { activateLang } from '../utils/lang';
 import localeCode2Text from '../utils/localeCode2Text';
+import store from '../utils/store';
 
 const regionMaps = {
   'zh-CN': 'zh-Hans',
@@ -58,7 +59,7 @@ export default function LangSelector() {
         class="small"
         value={i18n.locale || DEFAULT_LANG}
         onChange={(e) => {
-          localStorage.setItem('lang', e.target.value);
+          store.local.set('lang', e.target.value);
           activateLang(e.target.value);
         }}
       >

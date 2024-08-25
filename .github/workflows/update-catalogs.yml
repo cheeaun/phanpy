@@ -28,5 +28,5 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git add src/data/catalogs.json
             git commit -m "Update catalogs.json"
-            git push origin HEAD:l10n_main
+            git push origin HEAD:l10n_main || true
           fi

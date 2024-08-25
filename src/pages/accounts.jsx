@@ -110,28 +110,32 @@ function Accounts({ onClose }) {
                         </button>
                       }
                     >
-                      <MenuItem
-                        disabled={isCurrent}
-                        onClick={() => {
-                          setCurrentAccountID(account.info.id);
-                          location.reload();
-                        }}
-                      >
-                        <Icon icon="transfer" />{' '}
-                        <Trans>Switch to this account</Trans>
-                      </MenuItem>
-                      {!isStandalone && !isCurrent && (
-                        <MenuLink
-                          href={`./?account=${account.info.id}`}
-                          target="_blank"
-                        >
-                          <Icon icon="external" />
-                          <span>
-                            <Trans>Switch in new tab/window</Trans>
-                          </span>
-                        </MenuLink>
+                      {moreThanOneAccount && (
+                        <>
+                          <MenuItem
+                            disabled={isCurrent}
+                            onClick={() => {
+                              setCurrentAccountID(account.info.id);
+                              location.reload();
+                            }}
+                          >
+                            <Icon icon="transfer" />{' '}
+                            <Trans>Switch to this account</Trans>
+                          </MenuItem>
+                          {!isStandalone && !isCurrent && (
+                            <MenuLink
+                              href={`./?account=${account.info.id}`}
+                              target="_blank"
+                            >
+                              <Icon icon="external" />
+                              <span>
+                                <Trans>Switch in new tab/window</Trans>
+                              </span>
+                            </MenuLink>
+                          )}
+                          <MenuDivider />
+                        </>
                       )}
-                      <MenuDivider />
                       <MenuItem
                         onClick={() => {
                           states.showAccount = `${account.info.username}@${account.instanceURL}`;

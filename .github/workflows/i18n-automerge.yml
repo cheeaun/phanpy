@@ -12,14 +12,21 @@ jobs:
       github.event.pull_request.base.ref == 'main' &&
       github.event.pull_request.head.ref == 'l10n_main'
     runs-on: ubuntu-latest
-    # concurrency:
-    #   group: ${{ github.workflow }}-${{ github.ref }}
-    #   cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: sleep 15
+
+      - name: Check if the branch is dirty
+        run: |
+          git fetch origin ${{ github.event.pull_request.head.ref }}
+          if [ $(git rev-parse HEAD) != $(git rev-parse origin/${{ github.event.pull_request.head.ref }}) ]; then
+            echo "Branch is dirty. Exiting..."
+            exit 0
+          fi
+
       - name: Check auto-merge conditions
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"

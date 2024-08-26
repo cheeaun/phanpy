@@ -154,6 +154,13 @@ export function getCurrentInstanceConfiguration() {
   return getInstanceConfiguration(instance);
 }
 
+export function getVapidKey() {
+  // Vapid key has moved from account to instance config
+  const config = getCurrentInstanceConfiguration();
+  const vapidKey = config?.vapid?.publicKey || config?.vapid?.public_key;
+  return vapidKey || getCurrentAccount()?.vapidKey;
+}
+
 export function isMediaFirstInstance() {
   const instance = getCurrentInstance();
   return /pixelfed/i.test(instance?.version);

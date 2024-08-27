@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-27 06:16\n"
+"PO-Revision-Date: 2024-08-27 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -44,7 +44,7 @@ msgstr "Группа"
 
 #: src/components/account-block.jsx:176
 msgid "Mutual"
-msgstr "Взаимно подписаны"
+msgstr "Взаимная подписка"
 
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1674
@@ -516,11 +516,11 @@ msgstr "имя пользователя"
 msgid "server domain name"
 msgstr "доменное имя сервера"
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
 msgstr "Режим маскировки отключён"
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode enabled"
 msgstr "Режим маскировки включён"
 
@@ -3033,7 +3033,7 @@ msgstr "Пока нет списков."
 #: src/pages/login.jsx:86
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
-msgstr ""
+msgstr "Не удалось зарегистрировать приложение"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-27 09:54\n"
+"PO-Revision-Date: 2024-08-27 21:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -516,11 +516,11 @@ msgstr "utilizador"
 msgid "server domain name"
 msgstr "nome de domínio do servidor"
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
 msgstr "Modo oculto desativado"
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode enabled"
 msgstr "Modo oculto ativado"
 
@@ -979,7 +979,7 @@ msgstr "Ajuda em atalhos do teclado"
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1611
 msgid "Next post"
-msgstr "Próxima publicação"
+msgstr "Publicação seguinte"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
 #: src/pages/catchup.jsx:1619
@@ -1353,7 +1353,7 @@ msgstr "Iniciar sessão"
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:407
 msgid "Trending"
-msgstr "Em alta"
+msgstr "Tendência"
 
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
@@ -1392,7 +1392,7 @@ msgstr "{account} reagiu a tua publicação com {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
-msgstr "{account} publicou uma publicação."
+msgstr "{account} fez uma publicação."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
@@ -2850,15 +2850,15 @@ msgstr "Impossível eliminar filtro."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
-msgstr "Vencido"
+msgstr "Expirado"
 
 #: src/pages/filters.jsx:610
 msgid "Expiring <0/>"
-msgstr "Vencendo <0/>"
+msgstr "Expirando <0/>"
 
 #: src/pages/filters.jsx:614
 msgid "Never expires"
-msgstr "Nunca se vence"
+msgstr "Nunca expira"
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"

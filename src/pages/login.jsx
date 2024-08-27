@@ -11,7 +11,12 @@ import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import instancesListURL from '../data/instances.json?url';
-import { getAuthorizationURL, registerApplication } from '../utils/auth';
+import {
+  getAuthorizationURL,
+  getPKCEAuthorizationURL,
+  registerApplication,
+} from '../utils/auth';
+import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
@@ -63,17 +68,36 @@ function Login() {
             instanceURL,
           });
 
-        if (client_id && client_secret) {
-          store.sessionCookie.set('clientID', client_id);
-          store.sessionCookie.set('clientSecret', client_secret);
-          store.sessionCookie.set('vapidKey', vapid_key);
+        const authPKCE = await supportsPKCE({ instanceURL });
+        console.log({ authPKCE });
+        if (authPKCE) {
+          if (client_id && client_secret) {
+            store.sessionCookie.set('clientID', client_id);
+            store.sessionCookie.set('clientSecret', client_secret);
+            store.sessionCookie.set('vapidKey', vapid_key);
 
-          location.href = await getAuthorizationURL({
-            instanceURL,
-            client_id,
-          });
+            const [url, verifier] = await getPKCEAuthorizationURL({
+              instanceURL,
+              client_id,
+            });
+            store.sessionCookie.set('codeVerifier', verifier);
+            location.href = url;
+          } else {
+            alert(t`Failed to register application`);
+          }
         } else {
-          alert('Failed to register application');
+          if (client_id && client_secret) {
+            store.sessionCookie.set('clientID', client_id);
+            store.sessionCookie.set('clientSecret', client_secret);
+            store.sessionCookie.set('vapidKey', vapid_key);
+
+            location.href = await getAuthorizationURL({
+              instanceURL,
+              client_id,
+            });
+          } else {
+            alert(t`Failed to register application`);
+          }
         }
         setUIState('default');
       } catch (e) {

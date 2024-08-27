@@ -324,6 +324,7 @@ function App() {
       const clientID = store.sessionCookie.get('clientID');
       const clientSecret = store.sessionCookie.get('clientSecret');
       const vapidKey = store.sessionCookie.get('vapidKey');
+      const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {
         setUIState('loading');
@@ -332,18 +333,24 @@ function App() {
           client_id: clientID,
           client_secret: clientSecret,
           code,
+          code_verifier: verifier || undefined,
         });
 
-        const client = initClient({ instance: instanceURL, accessToken });
-        await Promise.allSettled([
-          initPreferences(client),
-          initInstance(client, instanceURL),
-          initAccount(client, instanceURL, accessToken, vapidKey),
-        ]);
-        initStates();
+        if (accessToken) {
+          const client = initClient({ instance: instanceURL, accessToken });
+          await Promise.allSettled([
+            initPreferences(client),
+            initInstance(client, instanceURL),
+            initAccount(client, instanceURL, accessToken, vapidKey),
+          ]);
+          initStates();
+          window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
 
-        setIsLoggedIn(true);
-        setUIState('default');
+          setIsLoggedIn(true);
+          setUIState('default');
+        } else {
+          setUIState('error');
+        }
       })();
     } else {
       window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
@@ -387,6 +394,11 @@ function App() {
         setUIState('default');
       }
     }
+
+    // Cleanup
+    store.sessionCookie.del('clientID');
+    store.sessionCookie.del('clientSecret');
+    store.sessionCookie.del('codeVerifier');
   }, []);
 
   let location = useLocation();

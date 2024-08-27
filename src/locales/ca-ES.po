@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-26 01:17\n"
+"PO-Revision-Date: 2024-08-27 06:16\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1342,7 +1342,7 @@ msgid "Accounts…"
 msgstr "Comptes…"
 
 #: src/components/nav-menu.jsx:363
-#: src/pages/login.jsx:142
+#: src/pages/login.jsx:166
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
@@ -1739,7 +1739,7 @@ msgstr "Només local"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:146
+#: src/pages/login.jsx:170
 msgid "Instance"
 msgstr "Instància"
 
@@ -2359,7 +2359,7 @@ msgstr "Cal iniciar sessió."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:223
+#: src/pages/login.jsx:247
 msgid "Go home"
 msgstr "Ves a la pàgina d'inici"
 
@@ -3031,23 +3031,28 @@ msgstr "{0, plural, one {# llista} other {# llistes}}"
 msgid "No lists yet."
 msgstr "Encara no hi ha cap llista."
 
-#: src/pages/login.jsx:185
+#: src/pages/login.jsx:86
+#: src/pages/login.jsx:99
+msgid "Failed to register application"
+msgstr ""
+
+#: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"
 msgstr "p. ex. \"mastodont.social\""
 
-#: src/pages/login.jsx:196
+#: src/pages/login.jsx:220
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "No s'ha pogut iniciar la sessió. Torneu-ho a provar o canvieu d'instància."
 
-#: src/pages/login.jsx:208
+#: src/pages/login.jsx:232
 msgid "Continue with {selectedInstanceText}"
 msgstr "Continueu amb {selectedInstanceText}"
 
-#: src/pages/login.jsx:209
+#: src/pages/login.jsx:233
 msgid "Continue"
 msgstr "Continua"
 
-#: src/pages/login.jsx:217
+#: src/pages/login.jsx:241
 msgid "Don't have an account? Create one!"
 msgstr "No hi teniu compte? Creeu-n'hi un!"
 

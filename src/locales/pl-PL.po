@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-26 11:21\n"
+"PO-Revision-Date: 2024-08-27 06:16\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -1342,7 +1342,7 @@ msgid "Accounts…"
 msgstr ""
 
 #: src/components/nav-menu.jsx:363
-#: src/pages/login.jsx:142
+#: src/pages/login.jsx:166
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
@@ -1738,7 +1738,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:146
+#: src/pages/login.jsx:170
 msgid "Instance"
 msgstr ""
 
@@ -2358,7 +2358,7 @@ msgstr ""
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:223
+#: src/pages/login.jsx:247
 msgid "Go home"
 msgstr ""
 
@@ -3030,23 +3030,28 @@ msgstr ""
 msgid "No lists yet."
 msgstr ""
 
-#: src/pages/login.jsx:185
-msgid "e.g. “mastodon.social”"
-msgstr ""
-
-#: src/pages/login.jsx:196
-msgid "Failed to log in. Please try again or try another instance."
-msgstr ""
-
-#: src/pages/login.jsx:208
-msgid "Continue with {selectedInstanceText}"
+#: src/pages/login.jsx:86
+#: src/pages/login.jsx:99
+msgid "Failed to register application"
 msgstr ""
 
 #: src/pages/login.jsx:209
+msgid "e.g. “mastodon.social”"
+msgstr ""
+
+#: src/pages/login.jsx:220
+msgid "Failed to log in. Please try again or try another instance."
+msgstr ""
+
+#: src/pages/login.jsx:232
+msgid "Continue with {selectedInstanceText}"
+msgstr ""
+
+#: src/pages/login.jsx:233
 msgid "Continue"
 msgstr ""
 
-#: src/pages/login.jsx:217
+#: src/pages/login.jsx:241
 msgid "Don't have an account? Create one!"
 msgstr ""
 

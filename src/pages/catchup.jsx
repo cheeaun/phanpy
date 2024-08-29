@@ -822,6 +822,22 @@ function Catchup() {
     },
   );
 
+  const handleArrowKeys = useCallback((e) => {
+    const activeElement = document.activeElement;
+    const isRadio =
+      activeElement?.tagName === 'INPUT' && activeElement.type === 'radio';
+    const isArrowKeys =
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowRight';
+    if (isArrowKeys && isRadio) {
+      // Note: page scroll won't trigger on first arrow key press due to this. Subsequent presses will.
+      activeElement.blur();
+      return;
+    }
+  }, []);
+
   return (
     <div
       ref={(node) => {
@@ -883,7 +899,7 @@ function Catchup() {
             </div>
           </div>
         </header>
-        <main>
+        <main onKeyDown={handleArrowKeys}>
           {uiState === 'start' && (
             <div class="catchup-start">
               <h1>

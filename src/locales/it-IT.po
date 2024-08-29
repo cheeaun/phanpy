@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-27 06:16\n"
+"PO-Revision-Date: 2024-08-29 14:15\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Automatizzato"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:439
-#: src/pages/catchup.jsx:1438
+#: src/pages/catchup.jsx:1454
 msgid "Group"
 msgstr "Gruppo"
 
@@ -188,8 +188,8 @@ msgstr "Originale"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2162
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1412
-#: src/pages/catchup.jsx:2023
+#: src/pages/catchup.jsx:1428
+#: src/pages/catchup.jsx:2039
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Risposte"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1414
-#: src/pages/catchup.jsx:2035
+#: src/pages/catchup.jsx:1430
+#: src/pages/catchup.jsx:2051
 #: src/pages/settings.jsx:1028
 msgid "Boosts"
 msgstr "Potenziamenti"
@@ -426,7 +426,7 @@ msgstr "Segui"
 #: src/components/status.jsx:3073
 #: src/components/status.jsx:3571
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1548
+#: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -516,19 +516,19 @@ msgstr "nome utente"
 msgid "server domain name"
 msgstr "nome dominio del server"
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
 msgstr ""
 
-#: src/components/background-service.jsx:138
+#: src/components/background-service.jsx:149
 msgid "Cloak mode enabled"
 msgstr ""
 
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:431
-#: src/pages/catchup.jsx:860
+#: src/components/timeline.jsx:434
+#: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:52
@@ -606,7 +606,7 @@ msgstr "Allegato #{i} fallito"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:975
+#: src/components/timeline.jsx:978
 msgid "Content warning"
 msgstr "Avviso contenuto"
 
@@ -727,7 +727,7 @@ msgstr "Frequenza fotogrammi troppo alta. Il caricamento potrebbe riscontrare de
 #: src/components/compose.jsx:2371
 #: src/components/compose.jsx:2621
 #: src/components/shortcuts-settings.jsx:723
-#: src/pages/catchup.jsx:1058
+#: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Rimuovi"
@@ -849,13 +849,13 @@ msgstr "Scrivi per cercare GIF"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:880
+#: src/components/timeline.jsx:883
 msgid "Previous"
 msgstr "Indietro"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:897
+#: src/components/timeline.jsx:900
 msgid "Next"
 msgstr "Avanti"
 
@@ -908,7 +908,7 @@ msgid "No drafts found."
 msgstr "Nessuna bozza."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1895
+#: src/pages/catchup.jsx:1911
 msgid "Poll"
 msgstr "Sondaggio"
 
@@ -952,7 +952,7 @@ msgid "Accounts"
 msgstr "Account"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:513
+#: src/components/timeline.jsx:516
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -961,14 +961,14 @@ msgid "Show more…"
 msgstr "Mostra altro…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:518
+#: src/components/timeline.jsx:521
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "Fine."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Keyboard shortcuts"
 msgstr "Abbreviazioni da tastiera"
 
@@ -977,12 +977,12 @@ msgid "Keyboard shortcuts help"
 msgstr "Aiuto abbreviazioni da tastiera"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1611
+#: src/pages/catchup.jsx:1627
 msgid "Next post"
 msgstr "Post successivo"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1619
+#: src/pages/catchup.jsx:1635
 msgid "Previous post"
 msgstr "Post precedente"
 
@@ -1007,7 +1007,7 @@ msgid "Load new posts"
 msgstr "Carica nuovi post"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Open post details"
 msgstr "Apri dettagli post"
 
@@ -1197,50 +1197,50 @@ msgstr "Visualizza post"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
-msgstr ""
+msgstr "Media sensibili"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "Filtrato: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status.jsx:3401
 #: src/components/status.jsx:3497
 #: src/components/status.jsx:3575
-#: src/components/timeline.jsx:964
+#: src/components/timeline.jsx:967
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1843
+#: src/pages/catchup.jsx:1859
 msgid "Filtered"
-msgstr ""
+msgstr "Filtrato"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "Post pubblicato. Dai un'occhiata."
 
 #: src/components/modals.jsx:73
 msgid "Reply posted. Check it out."
-msgstr ""
+msgstr "Risposta pubblicata. Dai un'occhiata."
 
 #: src/components/modals.jsx:74
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "Post aggiornato. Dai un'occhiata."
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr ""
+msgstr "Ricaricare pagina ora per aggiornare?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
-msgstr ""
+msgstr "Nuovo aggiornamento disponibile…"
 
 #: src/components/nav-menu.jsx:200
-#: src/pages/catchup.jsx:855
+#: src/pages/catchup.jsx:871
 msgid "Catch-up"
-msgstr ""
+msgstr "Recupera"
 
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
@@ -1251,7 +1251,7 @@ msgstr ""
 #: src/pages/settings.jsx:1020
 #: src/pages/trending.jsx:347
 msgid "Mentions"
-msgstr ""
+msgstr "Menzioni"
 
 #: src/components/nav-menu.jsx:214
 #: src/components/shortcuts-settings.jsx:49
@@ -1262,15 +1262,15 @@ msgstr ""
 #: src/pages/notifications.jsx:106
 #: src/pages/notifications.jsx:509
 msgid "Notifications"
-msgstr ""
+msgstr "Notifiche"
 
 #: src/components/nav-menu.jsx:217
 msgid "New"
-msgstr ""
+msgstr "Nuovo"
 
 #: src/components/nav-menu.jsx:228
 msgid "Profile"
-msgstr ""
+msgstr "Profilo"
 
 #: src/components/nav-menu.jsx:241
 #: src/components/nav-menu.jsx:268
@@ -1280,13 +1280,13 @@ msgstr ""
 #: src/pages/lists.jsx:16
 #: src/pages/lists.jsx:50
 msgid "Lists"
-msgstr ""
+msgstr "Liste"
 
 #: src/components/nav-menu.jsx:249
 #: src/components/shortcuts.jsx:209
 #: src/pages/list.jsx:133
 msgid "All Lists"
-msgstr ""
+msgstr "Tutte le liste"
 
 #: src/components/nav-menu.jsx:276
 #: src/components/shortcuts-settings.jsx:54
@@ -1294,24 +1294,24 @@ msgstr ""
 #: src/pages/bookmarks.jsx:11
 #: src/pages/bookmarks.jsx:23
 msgid "Bookmarks"
-msgstr ""
+msgstr "Segnalibri"
 
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1413
-#: src/pages/catchup.jsx:2029
+#: src/pages/catchup.jsx:1429
+#: src/pages/catchup.jsx:2045
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1024
 msgid "Likes"
-msgstr ""
+msgstr "Mi piace"
 
 #: src/components/nav-menu.jsx:302
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
-msgstr ""
+msgstr "Hashtag seguiti"
 
 #: src/components/nav-menu.jsx:310
 #: src/pages/account-statuses.jsx:331
@@ -1319,80 +1319,80 @@ msgstr ""
 #: src/pages/filters.jsx:93
 #: src/pages/hashtag.jsx:339
 msgid "Filters"
-msgstr ""
+msgstr "FIltri"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
-msgstr ""
+msgstr "Utenti silenziati"
 
 #: src/components/nav-menu.jsx:326
 msgid "Muted users…"
-msgstr ""
+msgstr "Utenti silenziati…"
 
 #: src/components/nav-menu.jsx:333
 msgid "Blocked users"
-msgstr ""
+msgstr "Utenti bloccati"
 
 #: src/components/nav-menu.jsx:341
 msgid "Blocked users…"
-msgstr ""
+msgstr "Utenti bloccati…"
 
 #: src/components/nav-menu.jsx:353
 msgid "Accounts…"
-msgstr ""
+msgstr "Account…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:166
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
-msgstr ""
+msgstr "Accedi"
 
 #: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:407
 msgid "Trending"
-msgstr ""
+msgstr "Tendenze"
 
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
 msgid "Local"
-msgstr ""
+msgstr "Locale"
 
 #: src/components/nav-menu.jsx:392
 #: src/components/shortcuts-settings.jsx:162
 msgid "Federated"
-msgstr ""
+msgstr "Federata"
 
 #: src/components/nav-menu.jsx:415
 msgid "Shortcuts / Columns…"
-msgstr ""
+msgstr "Scorciatoie / Colonne…"
 
 #: src/components/nav-menu.jsx:425
 #: src/components/nav-menu.jsx:439
 msgid "Settings…"
-msgstr ""
+msgstr "Impostazioni…"
 
 #: src/components/notification-service.jsx:160
 msgid "Notification"
-msgstr ""
+msgstr "Notifica"
 
 #: src/components/notification-service.jsx:166
 msgid "This notification is from your other account."
-msgstr ""
+msgstr "Questa notifica viene da un altro account."
 
 #: src/components/notification-service.jsx:195
 msgid "View all notifications"
-msgstr ""
+msgstr "Visualizza tutte le notifiche"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr ""
+msgstr "{account} ha reagito al tuo post con {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
-msgstr ""
+msgstr "{account} ha pubblicato un post."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
@@ -1404,7 +1404,7 @@ msgstr ""
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} ha richiesto di seguirti."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -2289,12 +2289,12 @@ msgstr ""
 msgid "<0/> <1/> boosted"
 msgstr ""
 
-#: src/components/timeline.jsx:447
+#: src/components/timeline.jsx:450
 #: src/pages/settings.jsx:1048
 msgid "New posts"
 msgstr ""
 
-#: src/components/timeline.jsx:548
+#: src/components/timeline.jsx:551
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2302,13 +2302,13 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
-#: src/components/timeline.jsx:937
-#: src/components/timeline.jsx:944
-#: src/pages/catchup.jsx:1860
+#: src/components/timeline.jsx:940
+#: src/components/timeline.jsx:947
+#: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr ""
 
-#: src/components/timeline.jsx:959
+#: src/components/timeline.jsx:962
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
@@ -2557,176 +2557,176 @@ msgstr "Gruppi"
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
 msgstr ""
 
-#: src/pages/catchup.jsx:866
-#: src/pages/catchup.jsx:890
+#: src/pages/catchup.jsx:882
+#: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
 msgstr ""
 
-#: src/pages/catchup.jsx:880
-#: src/pages/catchup.jsx:1552
+#: src/pages/catchup.jsx:896
+#: src/pages/catchup.jsx:1568
 msgid "Help"
 msgstr ""
 
-#: src/pages/catchup.jsx:896
+#: src/pages/catchup.jsx:912
 msgid "What is this?"
 msgstr ""
 
-#: src/pages/catchup.jsx:899
+#: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
 msgstr ""
 
-#: src/pages/catchup.jsx:910
+#: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
 msgstr ""
 
-#: src/pages/catchup.jsx:919
+#: src/pages/catchup.jsx:935
 msgid "Let's catch up"
 msgstr ""
 
-#: src/pages/catchup.jsx:924
+#: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
 msgstr ""
 
-#: src/pages/catchup.jsx:928
+#: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
 msgstr ""
 
-#: src/pages/catchup.jsx:951
+#: src/pages/catchup.jsx:967
 msgid "until the max"
 msgstr ""
 
-#: src/pages/catchup.jsx:981
+#: src/pages/catchup.jsx:997
 msgid "Catch up"
 msgstr ""
 
-#: src/pages/catchup.jsx:987
+#: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
 msgstr ""
 
-#: src/pages/catchup.jsx:999
+#: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
 msgstr ""
 
-#: src/pages/catchup.jsx:1008
+#: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
 msgstr ""
 
-#: src/pages/catchup.jsx:1018
+#: src/pages/catchup.jsx:1034
 msgid "Previously…"
 msgstr ""
 
-#: src/pages/catchup.jsx:1036
+#: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr ""
 
-#: src/pages/catchup.jsx:1046
+#: src/pages/catchup.jsx:1062
 msgid "Remove this catch-up?"
 msgstr ""
 
-#: src/pages/catchup.jsx:1067
+#: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
 msgstr ""
 
-#: src/pages/catchup.jsx:1082
+#: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
 msgstr ""
 
-#: src/pages/catchup.jsx:1085
+#: src/pages/catchup.jsx:1101
 msgid "This might take a while."
 msgstr ""
 
-#: src/pages/catchup.jsx:1120
+#: src/pages/catchup.jsx:1136
 msgid "Reset filters"
 msgstr ""
 
-#: src/pages/catchup.jsx:1128
-#: src/pages/catchup.jsx:1558
+#: src/pages/catchup.jsx:1144
+#: src/pages/catchup.jsx:1574
 msgid "Top links"
 msgstr ""
 
-#: src/pages/catchup.jsx:1244
+#: src/pages/catchup.jsx:1260
 msgid "Shared by {0}"
 msgstr ""
 
-#: src/pages/catchup.jsx:1283
+#: src/pages/catchup.jsx:1299
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr ""
 
-#: src/pages/catchup.jsx:1368
+#: src/pages/catchup.jsx:1384
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr ""
 
-#: src/pages/catchup.jsx:1380
+#: src/pages/catchup.jsx:1396
 msgid "Sort"
 msgstr ""
 
-#: src/pages/catchup.jsx:1411
+#: src/pages/catchup.jsx:1427
 msgid "Date"
 msgstr ""
 
-#: src/pages/catchup.jsx:1415
+#: src/pages/catchup.jsx:1431
 msgid "Density"
 msgstr ""
 
-#: src/pages/catchup.jsx:1453
+#: src/pages/catchup.jsx:1469
 msgid "Authors"
 msgstr ""
 
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "None"
 msgstr ""
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "Show all authors"
 msgstr ""
 
-#: src/pages/catchup.jsx:1521
+#: src/pages/catchup.jsx:1537
 msgid "You don't have to read everything."
 msgstr ""
 
-#: src/pages/catchup.jsx:1522
+#: src/pages/catchup.jsx:1538
 msgid "That's all."
 msgstr ""
 
-#: src/pages/catchup.jsx:1530
+#: src/pages/catchup.jsx:1546
 msgid "Back to top"
 msgstr ""
 
-#: src/pages/catchup.jsx:1561
+#: src/pages/catchup.jsx:1577
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr ""
 
-#: src/pages/catchup.jsx:1567
+#: src/pages/catchup.jsx:1583
 msgid "Sort: Density"
 msgstr ""
 
-#: src/pages/catchup.jsx:1570
+#: src/pages/catchup.jsx:1586
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr ""
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Group: Authors"
 msgstr ""
 
-#: src/pages/catchup.jsx:1580
+#: src/pages/catchup.jsx:1596
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr ""
 
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next author"
 msgstr ""
 
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous author"
 msgstr ""
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Scroll to top"
 msgstr ""
 
-#: src/pages/catchup.jsx:1842
+#: src/pages/catchup.jsx:1858
 msgid "Filtered: {0}"
 msgstr ""
 

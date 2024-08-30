@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-30 09:50\n"
+"PO-Revision-Date: 2024-08-30 23:09\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -539,7 +539,7 @@ msgstr "Início"
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:37
 msgid "Compose"
-msgstr "Compor"
+msgstr "Escrever"
 
 #: src/components/compose.jsx:392
 msgid "You have unsaved changes. Discard this post?"
@@ -566,11 +566,11 @@ msgstr "Parece que fechaste a janela principal."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr "Parece que já tens um campo de composição aberto na janela principal e atualmente está a publicar. Espera até que esteja concluído e tenta novamente mais tarde."
+msgstr "Parece que já tens um campo de edição aberto na janela principal e atualmente está a publicar. Espera até que esteja concluído e tenta novamente mais tarde."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr "Parece que já tens um campo de composição aberto na janela principal. Abrindo esta janela irá desfazer as alterações que fizeste na janela principal. Prosseguir?"
+msgstr "Parece que já tens um campo de edição aberto na janela principal. Abrindo esta janela irá desfazer as alterações que fizeste na janela principal. Prosseguir?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
@@ -1037,11 +1037,11 @@ msgstr "<0>1</0> a <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
-msgstr "Compor nova publicação"
+msgstr "Escrever nova publicação"
 
 #: src/components/keyboard-shortcuts-help.jsx:121
 msgid "Compose new post (new window)"
-msgstr "Compor nova publicação (nova janela)"
+msgstr "Escrever nova publicação (nova janela)"
 
 #: src/components/keyboard-shortcuts-help.jsx:124
 msgid "<0>Shift</0> + <1>c</1>"
@@ -3379,7 +3379,7 @@ msgstr "Automaticamente exibe tradução para publicações na linha de tempo. S
 
 #: src/pages/settings.jsx:529
 msgid "GIF Picker for composer"
-msgstr "Selecionador de GIF para compositor"
+msgstr "Selecionador de GIF para escrita"
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
@@ -3391,7 +3391,7 @@ msgstr "Gerador de descrição de imagem"
 
 #: src/pages/settings.jsx:567
 msgid "Only for new images while composing new posts."
-msgstr "Apenas para novas imagens enquanto compõe novas publicações."
+msgstr "Apenas para novas imagens enquanto escreve novas publicações."
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
@@ -3524,7 +3524,7 @@ msgstr "Não estás conectado. Interações como (respostas, impulsos, etc.) nã
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr "Está publicação é de outra instância (<0>{instance}</0>). Interações como (respostas, impulsos, etc.) não são possíveis."
+msgstr "Esta publicação é de outra instância (<0>{instance}</0>). Interações como (respostas, impulsos, etc.) não são possíveis."
 
 #: src/pages/status.jsx:827
 msgid "Error: {e}"

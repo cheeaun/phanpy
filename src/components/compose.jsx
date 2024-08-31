@@ -1154,7 +1154,7 @@ function Compose({
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
               } ${visibility !== 'public' ? 'highlight' : ''}`}
-              title={`Visibility: ${visibility}`}
+              title={visibility}
             >
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
               <select

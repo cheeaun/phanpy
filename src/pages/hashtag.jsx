@@ -205,7 +205,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               <MenuConfirm
                 subMenu
                 confirm={info.following}
-                confirmLabel={`Unfollow #${hashtag}?`}
+                confirmLabel={t`Unfollow #${hashtag}?`}
                 disabled={followUIState === 'loading' || !authenticated}
                 onClick={() => {
                   setFollowUIState('loading');

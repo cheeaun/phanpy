@@ -182,7 +182,7 @@ function Login() {
             autocapitalize="off"
             autocomplete="off"
             spellCheck={false}
-            placeholder={`instance domain`}
+            placeholder={t`instance domain`}
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}

@@ -1517,49 +1517,53 @@ msgstr ""
 msgid "Voted"
 msgstr ""
 
-#: src/components/poll.jsx:135
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:116
+msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
+msgstr "{optionVotesCount, plural, one {# vote} other {# votes}}"
+
+#: src/components/poll.jsx:136
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Hide results"
 msgstr ""
 
-#: src/components/poll.jsx:184
+#: src/components/poll.jsx:185
 msgid "Vote"
 msgstr ""
 
-#: src/components/poll.jsx:204
-#: src/components/poll.jsx:206
+#: src/components/poll.jsx:205
+#: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
 msgstr ""
 
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Show results"
 msgstr ""
 
-#: src/components/poll.jsx:227
+#: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr ""
 
-#: src/components/poll.jsx:244
+#: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr ""
 
-#: src/components/poll.jsx:264
+#: src/components/poll.jsx:265
 msgid "Ended <0/>"
 msgstr ""
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:269
 msgid "Ended"
 msgstr ""
 
-#: src/components/poll.jsx:271
+#: src/components/poll.jsx:272
 msgid "Ending <0/>"
 msgstr ""
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:276
 msgid "Ending"
 msgstr ""
 
@@ -2484,6 +2488,10 @@ msgstr ""
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr ""
 
+#: src/pages/bookmarks.jsx:25
+msgid "No bookmarks yet. Go bookmark something!"
+msgstr "No bookmarks yet. Go bookmark something!"
+
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
 msgstr ""
@@ -2725,6 +2733,10 @@ msgstr ""
 msgid "Filtered: {0}"
 msgstr ""
 
+#: src/pages/favourites.jsx:25
+msgid "No likes yet. Go like something!"
+msgstr "No likes yet. Go like something!"
+
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
 msgstr ""
@@ -2899,6 +2911,10 @@ msgstr ""
 msgid "Unable to load posts with this tag"
 msgstr ""
 
+#: src/pages/hashtag.jsx:208
+msgid "Unfollow #{hashtag}?"
+msgstr "Unfollow #{hashtag}?"
+
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
 msgstr ""
@@ -3029,6 +3045,10 @@ msgstr ""
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
 msgstr "Failed to register application"
+
+#: src/pages/login.jsx:185
+msgid "instance domain"
+msgstr "instance domain"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

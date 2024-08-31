@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-29 07:18\n"
+"PO-Revision-Date: 2024-08-31 07:39\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Automatizada"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:439
-#: src/pages/catchup.jsx:1438
+#: src/pages/catchup.jsx:1454
 msgid "Group"
 msgstr "Grupo"
 
@@ -61,7 +61,7 @@ msgstr "Solicitado"
 #: src/pages/following.jsx:20
 #: src/pages/following.jsx:131
 msgid "Following"
-msgstr "A seguir"
+msgstr "Seguindo"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
@@ -188,8 +188,8 @@ msgstr "Orixinal"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2162
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1412
-#: src/pages/catchup.jsx:2023
+#: src/pages/catchup.jsx:1428
+#: src/pages/catchup.jsx:2039
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Respostas"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1414
-#: src/pages/catchup.jsx:2035
+#: src/pages/catchup.jsx:1430
+#: src/pages/catchup.jsx:2051
 #: src/pages/settings.jsx:1028
 msgid "Boosts"
 msgstr "Promocións"
@@ -426,7 +426,7 @@ msgstr "Seguir"
 #: src/components/status.jsx:3073
 #: src/components/status.jsx:3571
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1548
+#: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -527,8 +527,8 @@ msgstr "Capa activada"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:431
-#: src/pages/catchup.jsx:860
+#: src/components/timeline.jsx:434
+#: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:52
@@ -606,7 +606,7 @@ msgstr "Fallou o anexo #{i}"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:975
+#: src/components/timeline.jsx:978
 msgid "Content warning"
 msgstr "Aviso sobre o contido"
 
@@ -727,7 +727,7 @@ msgstr "Taxa de imaxes demasiado alta. Podería dar problemas ao cargalo."
 #: src/components/compose.jsx:2371
 #: src/components/compose.jsx:2621
 #: src/components/shortcuts-settings.jsx:723
-#: src/pages/catchup.jsx:1058
+#: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Retirar"
@@ -849,13 +849,13 @@ msgstr "Escribe para buscar GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:880
+#: src/components/timeline.jsx:883
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:897
+#: src/components/timeline.jsx:900
 msgid "Next"
 msgstr "Seguinte"
 
@@ -908,7 +908,7 @@ msgid "No drafts found."
 msgstr "Non hai borradores."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1895
+#: src/pages/catchup.jsx:1911
 msgid "Poll"
 msgstr "Enquisa"
 
@@ -952,7 +952,7 @@ msgid "Accounts"
 msgstr "Contas"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:513
+#: src/components/timeline.jsx:516
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -961,14 +961,14 @@ msgid "Show more…"
 msgstr "Mostrar máis…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:518
+#: src/components/timeline.jsx:521
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "Fin."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Keyboard shortcuts"
 msgstr "Atallos do teclado"
 
@@ -977,12 +977,12 @@ msgid "Keyboard shortcuts help"
 msgstr "Axuda sobre atallos do teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1611
+#: src/pages/catchup.jsx:1627
 msgid "Next post"
 msgstr "Seguinte publicación"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1619
+#: src/pages/catchup.jsx:1635
 msgid "Previous post"
 msgstr "Publicación anterior"
 
@@ -1007,7 +1007,7 @@ msgid "Load new posts"
 msgstr "Cargar novas publicacións"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Open post details"
 msgstr "Abrir detalles da publicación"
 
@@ -1138,7 +1138,7 @@ msgstr "Non mostrar respostas"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr "Nesta lista, agochar as publicacións que están en Inicio/A Seguir"
+msgstr "Nesta lista, agochar as publicacións que están en Inicio/Seguindo"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
@@ -1207,9 +1207,9 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3401
 #: src/components/status.jsx:3497
 #: src/components/status.jsx:3575
-#: src/components/timeline.jsx:964
+#: src/components/timeline.jsx:967
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1843
+#: src/pages/catchup.jsx:1859
 msgid "Filtered"
 msgstr "Filtrado"
 
@@ -1238,7 +1238,7 @@ msgid "New update available…"
 msgstr "Nova actualización dispoñible…"
 
 #: src/components/nav-menu.jsx:200
-#: src/pages/catchup.jsx:855
+#: src/pages/catchup.jsx:871
 msgid "Catch-up"
 msgstr "Ponte ao día"
 
@@ -1299,8 +1299,8 @@ msgstr "Marcadores"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1413
-#: src/pages/catchup.jsx:2029
+#: src/pages/catchup.jsx:1429
+#: src/pages/catchup.jsx:2045
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1024
@@ -1713,7 +1713,7 @@ msgstr "Contas con <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr "Inicio / A Seguir"
+msgstr "Inicio / Seguindo"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -1822,7 +1822,7 @@ msgstr "Aínda non hai atallos. Toca no botón Engadir atallo."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Non sabes que engadir?<0/>Intenta engadir <1>Inicio / A Seguir e Notificacións</1>."
+msgstr "Non sabes que engadir?<0/>Intenta engadir <1>Inicio / Seguindo e Notificacións</1>."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2289,12 +2289,12 @@ msgstr "Nota: a vista previa está lixeiramente editada."
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> promovida"
 
-#: src/components/timeline.jsx:447
+#: src/components/timeline.jsx:450
 #: src/pages/settings.jsx:1048
 msgid "New posts"
 msgstr "Novas publicacións"
 
-#: src/components/timeline.jsx:548
+#: src/components/timeline.jsx:551
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2302,13 +2302,13 @@ msgstr "Novas publicacións"
 msgid "Try again"
 msgstr "Inténtao outra vez"
 
-#: src/components/timeline.jsx:937
-#: src/components/timeline.jsx:944
-#: src/pages/catchup.jsx:1860
+#: src/components/timeline.jsx:940
+#: src/components/timeline.jsx:947
+#: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Fío"
 
-#: src/components/timeline.jsx:959
+#: src/components/timeline.jsx:962
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2557,176 +2557,176 @@ msgstr "Grupos"
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
 msgstr "Móstrase {selectedFilterCategory, select, all {todas as publicacións} original {publicacións orixinais} replies {respostas} boosts {promocións} followedTags {cancelos seguidos} groups {grupos} filtered {publicacións filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {máis antigo} desc {máis recente}}} reblogsCount {{sortOrder, select, asc {con menos promocións} desc {con máis promocións}}} favouritesCount {{sortOrder, select, asc {con menos favorecementos} desc {con máis favorecementos}}} repliesCount {{sortOrder, select, asc {con menos respostas} desc {con máis respostas}}} density {{sortOrder, select, asc {menor densidade} desc {maior densidade}}}} primeiro{groupBy, select, account {, agrupado por autoría} other {}}"
 
-#: src/pages/catchup.jsx:866
-#: src/pages/catchup.jsx:890
+#: src/pages/catchup.jsx:882
+#: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
 msgstr "Ponte ao día <0>beta</0>"
 
-#: src/pages/catchup.jsx:880
-#: src/pages/catchup.jsx:1552
+#: src/pages/catchup.jsx:896
+#: src/pages/catchup.jsx:1568
 msgid "Help"
 msgstr "Axuda"
 
-#: src/pages/catchup.jsx:896
+#: src/pages/catchup.jsx:912
 msgid "What is this?"
 msgstr "Que é isto?"
 
-#: src/pages/catchup.jsx:899
+#: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
 msgstr "Ponte ao Día é unha cronoloxía separada para os teus seguimentos onde obter unha visión rápida e doada do publicado, cunha interface inspirada na do correo electrónico para organizar e filtrar as publicacións."
 
-#: src/pages/catchup.jsx:910
+#: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
 msgstr "Vista previa da interface de Ponte ao día"
 
-#: src/pages/catchup.jsx:919
+#: src/pages/catchup.jsx:935
 msgid "Let's catch up"
 msgstr "Poñámonos ao día"
 
-#: src/pages/catchup.jsx:924
+#: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
 msgstr "Vexamos o que publicaron as persoas que segues."
 
-#: src/pages/catchup.jsx:928
+#: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
 msgstr "Móstrame todas as publicacións das…"
 
-#: src/pages/catchup.jsx:951
+#: src/pages/catchup.jsx:967
 msgid "until the max"
 msgstr "o máximo"
 
-#: src/pages/catchup.jsx:981
+#: src/pages/catchup.jsx:997
 msgid "Catch up"
 msgstr "Obter"
 
-#: src/pages/catchup.jsx:987
+#: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
 msgstr "Entraría na túa última posta ao día"
 
-#: src/pages/catchup.jsx:999
+#: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
 msgstr "Ata a última posta ao día ({0})"
 
-#: src/pages/catchup.jsx:1008
+#: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
 msgstr "Nota: pode que a túa instancia mostre un máximo de 800 publicacións na cronoloxía de Inicio independentemente do tempo que marques. Podería variar."
 
-#: src/pages/catchup.jsx:1018
+#: src/pages/catchup.jsx:1034
 msgid "Previously…"
 msgstr "Anteriormente…"
 
-#: src/pages/catchup.jsx:1036
+#: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr "{0, plural, one {# publicación} other {# publicacións}}"
 
-#: src/pages/catchup.jsx:1046
+#: src/pages/catchup.jsx:1062
 msgid "Remove this catch-up?"
 msgstr "Retirar esta posta ao día?"
 
-#: src/pages/catchup.jsx:1067
+#: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
 msgstr "Nota: só se gardan 3 postas ao día. O resto elimínanse automaticamente."
 
-#: src/pages/catchup.jsx:1082
+#: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
 msgstr "Obtendo as publicacións…"
 
-#: src/pages/catchup.jsx:1085
+#: src/pages/catchup.jsx:1101
 msgid "This might take a while."
 msgstr "Podería levarlle un anaco."
 
-#: src/pages/catchup.jsx:1120
+#: src/pages/catchup.jsx:1136
 msgid "Reset filters"
 msgstr "Restablecer filtros"
 
-#: src/pages/catchup.jsx:1128
-#: src/pages/catchup.jsx:1558
+#: src/pages/catchup.jsx:1144
+#: src/pages/catchup.jsx:1574
 msgid "Top links"
 msgstr "O máis compartido"
 
-#: src/pages/catchup.jsx:1244
+#: src/pages/catchup.jsx:1260
 msgid "Shared by {0}"
 msgstr "Compartido por {0}"
 
-#: src/pages/catchup.jsx:1283
+#: src/pages/catchup.jsx:1299
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "Todo"
 
-#: src/pages/catchup.jsx:1368
+#: src/pages/catchup.jsx:1384
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# autora} other {# autoras}}"
 
-#: src/pages/catchup.jsx:1380
+#: src/pages/catchup.jsx:1396
 msgid "Sort"
 msgstr "Orde"
 
-#: src/pages/catchup.jsx:1411
+#: src/pages/catchup.jsx:1427
 msgid "Date"
 msgstr "Data"
 
-#: src/pages/catchup.jsx:1415
+#: src/pages/catchup.jsx:1431
 msgid "Density"
 msgstr "Densidade"
 
-#: src/pages/catchup.jsx:1453
+#: src/pages/catchup.jsx:1469
 msgid "Authors"
 msgstr "Autoría"
 
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "None"
 msgstr "Ningún"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "Show all authors"
 msgstr "Mostra todas as autoras"
 
-#: src/pages/catchup.jsx:1521
+#: src/pages/catchup.jsx:1537
 msgid "You don't have to read everything."
 msgstr "Non tes que ler todo."
 
-#: src/pages/catchup.jsx:1522
+#: src/pages/catchup.jsx:1538
 msgid "That's all."
 msgstr "Isto é todo."
 
-#: src/pages/catchup.jsx:1530
+#: src/pages/catchup.jsx:1546
 msgid "Back to top"
 msgstr "Volver arriba"
 
-#: src/pages/catchup.jsx:1561
+#: src/pages/catchup.jsx:1577
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "Ligazóns compartidas polos teus seguimentos, organizados por contas compartidas, promocións e favorecementos."
 
-#: src/pages/catchup.jsx:1567
+#: src/pages/catchup.jsx:1583
 msgid "Sort: Density"
 msgstr "Orde: Densidade"
 
-#: src/pages/catchup.jsx:1570
+#: src/pages/catchup.jsx:1586
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr "As publicacións están ordenadas pola densidade de información, pola cantidade relativa. As publicacións curtas son «lixeiras» mentres que as máis longas «pesan máis». As publicacións con fotos «pesan máis» que as que non as teñen."
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Group: Authors"
 msgstr "Agrupar: Autoría"
 
-#: src/pages/catchup.jsx:1580
+#: src/pages/catchup.jsx:1596
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr "As publicacións están agrupadas pola autoría, e ordenadas por número de publicacións por autora."
 
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next author"
 msgstr "Seguinte autora"
 
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous author"
 msgstr "Autora anterior"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Scroll to top"
 msgstr "Ir arriba"
 
-#: src/pages/catchup.jsx:1842
+#: src/pages/catchup.jsx:1858
 msgid "Filtered: {0}"
 msgstr "Filtrado: {0}"
 
@@ -2914,7 +2914,7 @@ msgstr "Seguiches a #{hashtag}"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr "A seguir…"
+msgstr "Seguindo…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"

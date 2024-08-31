@@ -1,7 +1,18 @@
-.nav-menu section:last-child {
-  background-color: var(--bg-faded-color);
-  margin-bottom: -8px;
-  padding-bottom: 8px;
+.nav-menu {
+  overflow: hidden;
+
+  section:last-child {
+    background-color: var(--bg-faded-color);
+    margin-bottom: -4px;
+    padding-bottom: 4px;
+
+    .szh-menu__item:before {
+      z-index: 0;
+    }
+    .szh-menu__item > * {
+      z-index: 1;
+    }
+  }
 }
 
 @media (min-width: 23em) {

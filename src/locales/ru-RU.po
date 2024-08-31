@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-30 16:40\n"
+"PO-Revision-Date: 2024-08-31 15:34\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -294,7 +294,7 @@ msgstr "Не удалось скопировать ссылку"
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1087
-#: src/components/status.jsx:3109
+#: src/components/status.jsx:3114
 msgid "Copy"
 msgstr "Копировать"
 
@@ -422,9 +422,9 @@ msgstr "Подписаться"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2834
-#: src/components/status.jsx:3073
-#: src/components/status.jsx:3571
+#: src/components/status.jsx:2839
+#: src/components/status.jsx:3078
+#: src/components/status.jsx:3576
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
@@ -527,7 +527,7 @@ msgstr "Режим маскировки включён"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:434
+#: src/components/timeline.jsx:435
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -606,7 +606,7 @@ msgstr "Не удалось прикрепить вложение №{i}"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:978
+#: src/components/timeline.jsx:979
 msgid "Content warning"
 msgstr "Предупреждение о содержании"
 
@@ -849,13 +849,13 @@ msgstr "Начните набирать для поиска GIF-анимаций
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:883
+#: src/components/timeline.jsx:884
 msgid "Previous"
 msgstr "Назад"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:900
+#: src/components/timeline.jsx:901
 msgid "Next"
 msgstr "Вперёд"
 
@@ -952,7 +952,7 @@ msgid "Accounts"
 msgstr "Учётные записи"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:516
+#: src/components/timeline.jsx:517
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -961,7 +961,7 @@ msgid "Show more…"
 msgstr "Показать ещё…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:521
+#: src/components/timeline.jsx:522
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "Конец."
@@ -1204,10 +1204,10 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Отфильтровано: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3401
-#: src/components/status.jsx:3497
-#: src/components/status.jsx:3575
-#: src/components/timeline.jsx:967
+#: src/components/status.jsx:3406
+#: src/components/status.jsx:3502
+#: src/components/status.jsx:3580
+#: src/components/timeline.jsx:968
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -1522,49 +1522,53 @@ msgstr "Читать дальше →"
 msgid "Voted"
 msgstr "Проголосовали"
 
-#: src/components/poll.jsx:135
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:116
+msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
+msgstr ""
+
+#: src/components/poll.jsx:136
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Hide results"
 msgstr "Скрыть результаты"
 
-#: src/components/poll.jsx:184
+#: src/components/poll.jsx:185
 msgid "Vote"
 msgstr "Голосовать"
 
-#: src/components/poll.jsx:204
-#: src/components/poll.jsx:206
+#: src/components/poll.jsx:205
+#: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
 msgstr "Обновить"
 
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Show results"
 msgstr "Показать результаты"
 
-#: src/components/poll.jsx:227
+#: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> проголосовал(а)} other {<1>{1}</1> проголосовали}}"
 
-#: src/components/poll.jsx:244
+#: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> голосующ(ий/ая)} other {<1>{1}</1> голосующих}}"
 
-#: src/components/poll.jsx:264
+#: src/components/poll.jsx:265
 msgid "Ended <0/>"
 msgstr "Завершено <0/>"
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:269
 msgid "Ended"
 msgstr "Завершено"
 
-#: src/components/poll.jsx:271
+#: src/components/poll.jsx:272
 msgid "Ending <0/>"
 msgstr "Завершение <0/>"
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:276
 msgid "Ending"
 msgstr "Завершение"
 
@@ -2092,7 +2096,7 @@ msgid "Edited: {editedDateText}"
 msgstr "Отредактировано: {editedDateText}"
 
 #: src/components/status.jsx:1122
-#: src/components/status.jsx:3078
+#: src/components/status.jsx:3083
 msgid "Embed post"
 msgstr "Встроить пост"
 
@@ -2216,85 +2220,85 @@ msgstr "Отредактировано"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: src/components/status.jsx:2839
+#: src/components/status.jsx:2844
 msgid "Edit History"
 msgstr "История изменений"
 
-#: src/components/status.jsx:2843
+#: src/components/status.jsx:2848
 msgid "Failed to load history"
 msgstr "Не удалось загрузить историю"
 
-#: src/components/status.jsx:2848
+#: src/components/status.jsx:2853
 msgid "Loading…"
 msgstr "Загрузка…"
 
-#: src/components/status.jsx:3083
+#: src/components/status.jsx:3088
 msgid "HTML Code"
 msgstr "HTML-код"
 
-#: src/components/status.jsx:3100
+#: src/components/status.jsx:3105
 msgid "HTML code copied"
 msgstr "HTML-код скопирован"
 
-#: src/components/status.jsx:3103
+#: src/components/status.jsx:3108
 msgid "Unable to copy HTML code"
 msgstr "Не удалось скопировать HTML-код"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3120
 msgid "Media attachments:"
 msgstr "Медиа-вложения:"
 
-#: src/components/status.jsx:3137
+#: src/components/status.jsx:3142
 msgid "Account Emojis:"
 msgstr "Эмодзи пользователя:"
 
-#: src/components/status.jsx:3168
-#: src/components/status.jsx:3213
+#: src/components/status.jsx:3173
+#: src/components/status.jsx:3218
 msgid "static URL"
 msgstr "статический URL"
 
-#: src/components/status.jsx:3182
+#: src/components/status.jsx:3187
 msgid "Emojis:"
 msgstr "Эмодзи:"
 
-#: src/components/status.jsx:3227
+#: src/components/status.jsx:3232
 msgid "Notes:"
 msgstr "Заметки:"
 
-#: src/components/status.jsx:3231
+#: src/components/status.jsx:3236
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Это статическое, нестилизованное и не требующее сценариев. Возможно, вам придется применить свои собственные стили и отредактировать их по мере необходимости."
 
-#: src/components/status.jsx:3237
+#: src/components/status.jsx:3242
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Опросы не интерактивны, они представляют собой список с подсчетом голосов."
 
-#: src/components/status.jsx:3242
+#: src/components/status.jsx:3247
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Медиа-вложения могут быть изображениями, видео, аудио или определёнными типами файлов."
 
-#: src/components/status.jsx:3248
+#: src/components/status.jsx:3253
 msgid "Post could be edited or deleted later."
 msgstr "Пост может быть отредактирован или удален позже."
 
-#: src/components/status.jsx:3254
+#: src/components/status.jsx:3259
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: src/components/status.jsx:3263
+#: src/components/status.jsx:3268
 msgid "Note: This preview is lightly styled."
 msgstr "Примечание: Этот предварительный просмотр слегка стилизован."
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3510
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> продвинули"
 
-#: src/components/timeline.jsx:450
+#: src/components/timeline.jsx:451
 #: src/pages/settings.jsx:1048
 msgid "New posts"
 msgstr "Новые посты"
 
-#: src/components/timeline.jsx:551
+#: src/components/timeline.jsx:552
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2302,13 +2306,13 @@ msgstr "Новые посты"
 msgid "Try again"
 msgstr "Повторите попытку"
 
-#: src/components/timeline.jsx:940
-#: src/components/timeline.jsx:947
+#: src/components/timeline.jsx:941
+#: src/components/timeline.jsx:948
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Обсуждение"
 
-#: src/components/timeline.jsx:962
+#: src/components/timeline.jsx:963
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Отфильтровано</0>: <1>{0}</1>"
 
@@ -2488,6 +2492,10 @@ msgstr "Добавить существующую учетную запись"
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Примечание. Учетная запись <0>по умолчанию</0> всегда будет использоваться для первой загрузки. Переключенные учетные записи будут сохраняться в течение сеанса."
+
+#: src/pages/bookmarks.jsx:25
+msgid "No bookmarks yet. Go bookmark something!"
+msgstr ""
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2730,6 +2738,10 @@ msgstr "Прокрутка к началу"
 msgid "Filtered: {0}"
 msgstr "Отфильтровано: {0}"
 
+#: src/pages/favourites.jsx:25
+msgid "No likes yet. Go like something!"
+msgstr ""
+
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
 msgstr "Не удалось загрузить отметки \"нравится\"."
@@ -2904,6 +2916,10 @@ msgstr "Никто еще ничего не написал с этим тего�
 msgid "Unable to load posts with this tag"
 msgstr "Не удается загрузить записи с этим тегом"
 
+#: src/pages/hashtag.jsx:208
+msgid "Unfollow #{hashtag}?"
+msgstr ""
+
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
 msgstr "Отписаться от #{hashtag}"
@@ -3034,6 +3050,10 @@ msgstr "Пока нет списков."
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
 msgstr "Не удалось зарегистрировать приложение"
+
+#: src/pages/login.jsx:185
+msgid "instance domain"
+msgstr ""
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

@@ -1,0 +1,3712 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-08-04 21:58+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+"Project-Id-Version: phanpy\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-30 16:40\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: phanpy\n"
+"X-Crowdin-Project-ID: 703337\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /main/src/locales/en.po\n"
+"X-Crowdin-File-ID: 18\n"
+
+#: src/components/account-block.jsx:133
+msgid "Locked"
+msgstr "Закрытый профиль"
+
+#: src/components/account-block.jsx:139
+msgid "Posts: {0}"
+msgstr "Посты: {0}"
+
+#: src/components/account-block.jsx:144
+msgid "Last posted: {0}"
+msgstr "Последний пост: {0}"
+
+#: src/components/account-block.jsx:159
+#: src/components/account-info.jsx:634
+msgid "Automated"
+msgstr "Бот"
+
+#: src/components/account-block.jsx:166
+#: src/components/account-info.jsx:639
+#: src/components/status.jsx:439
+#: src/pages/catchup.jsx:1454
+msgid "Group"
+msgstr "Группа"
+
+#: src/components/account-block.jsx:176
+msgid "Mutual"
+msgstr "Взаимная подписка"
+
+#: src/components/account-block.jsx:180
+#: src/components/account-info.jsx:1674
+msgid "Requested"
+msgstr "Запрос отправлен"
+
+#: src/components/account-block.jsx:184
+#: src/components/account-info.jsx:416
+#: src/components/account-info.jsx:742
+#: src/components/account-info.jsx:756
+#: src/components/account-info.jsx:1665
+#: src/components/nav-menu.jsx:193
+#: src/components/shortcuts-settings.jsx:137
+#: src/pages/following.jsx:20
+#: src/pages/following.jsx:131
+msgid "Following"
+msgstr "Подписк(и/a)"
+
+#: src/components/account-block.jsx:188
+#: src/components/account-info.jsx:1059
+msgid "Follows you"
+msgstr "Подписан(а) на вас"
+
+#: src/components/account-block.jsx:196
+msgid "{followersCount, plural, one {# follower} other {# followers}}"
+msgstr "{followersCount, plural, one {# подписчик} many {# подписчиков} other {# подписчика}}"
+
+#: src/components/account-block.jsx:205
+#: src/components/account-info.jsx:680
+msgid "Verified"
+msgstr "Подтверждено"
+
+#: src/components/account-block.jsx:220
+#: src/components/account-info.jsx:777
+msgid "Joined <0>{0}</0>"
+msgstr "Присоединил(ся/ась) <0>{0}</0>"
+
+#: src/components/account-info.jsx:57
+msgid "Forever"
+msgstr "Навсегда"
+
+#: src/components/account-info.jsx:377
+msgid "Unable to load account."
+msgstr "Не удалось загрузить учётную запись."
+
+#: src/components/account-info.jsx:385
+msgid "Go to account page"
+msgstr "Перейти на страницу учётной записи"
+
+#: src/components/account-info.jsx:413
+#: src/components/account-info.jsx:702
+#: src/components/account-info.jsx:732
+msgid "Followers"
+msgstr "Подписчик(а/ов)"
+
+#: src/components/account-info.jsx:419
+#: src/components/account-info.jsx:773
+#: src/pages/account-statuses.jsx:484
+#: src/pages/search.jsx:237
+#: src/pages/search.jsx:384
+msgid "Posts"
+msgstr "Посты"
+
+#: src/components/account-info.jsx:427
+#: src/components/account-info.jsx:1115
+#: src/components/compose.jsx:2451
+#: src/components/media-alt-modal.jsx:45
+#: src/components/media-modal.jsx:283
+#: src/components/status.jsx:1635
+#: src/components/status.jsx:1652
+#: src/components/status.jsx:1776
+#: src/components/status.jsx:2371
+#: src/components/status.jsx:2374
+#: src/pages/account-statuses.jsx:528
+#: src/pages/accounts.jsx:109
+#: src/pages/hashtag.jsx:199
+#: src/pages/list.jsx:157
+#: src/pages/public.jsx:114
+#: src/pages/status.jsx:1169
+#: src/pages/trending.jsx:437
+msgid "More"
+msgstr "Ещё"
+
+#: src/components/account-info.jsx:439
+msgid "<0>{displayName}</0> has indicated that their new account is now:"
+msgstr "<0>{displayName}</0> указал(а), что теперь использует новую учётную запись:"
+
+#: src/components/account-info.jsx:584
+#: src/components/account-info.jsx:1273
+msgid "Handle copied"
+msgstr "Имя пользователя скопировано"
+
+#: src/components/account-info.jsx:587
+#: src/components/account-info.jsx:1276
+msgid "Unable to copy handle"
+msgstr "Не удалось скопировать имя пользователя"
+
+#: src/components/account-info.jsx:593
+#: src/components/account-info.jsx:1282
+msgid "Copy handle"
+msgstr "Копировать имя пользователя"
+
+#: src/components/account-info.jsx:599
+msgid "Go to original profile page"
+msgstr "Перейти на страницу оригинального профиля"
+
+#: src/components/account-info.jsx:606
+msgid "View profile image"
+msgstr "Просмотр изображения профиля"
+
+#: src/components/account-info.jsx:612
+msgid "View profile header"
+msgstr "Открыть изображение-шапку"
+
+#: src/components/account-info.jsx:629
+msgid "In Memoriam"
+msgstr "Вечная память"
+
+#: src/components/account-info.jsx:709
+#: src/components/account-info.jsx:747
+msgid "This user has chosen to not make this information available."
+msgstr "Этот пользователь предпочёл не раскрывать эту информацию."
+
+#: src/components/account-info.jsx:802
+msgid "{0} original posts, {1} replies, {2} boosts"
+msgstr "Оригинальные посты: {0}. Ответы: {1}. Продвижения: {2}"
+
+#: src/components/account-info.jsx:818
+msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
+msgstr "{0, plural, one {{1, plural, one {1 последний пост за 1 последний день} other {1 последний пост за {2} последних ден(я/ей)}}} other {{3, plural, one {Последние {4} пост(а/ов) за 1 последний день} other {Последние {5} пост(а/ов) за {6} последних ден(я/ей)}}}}"
+
+#: src/components/account-info.jsx:831
+msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
+msgstr "{0, plural, one {{1} пост} few {{1} поста} many {{1} постов} other {{1} поста}} за последний год или годы"
+
+#: src/components/account-info.jsx:855
+#: src/pages/catchup.jsx:70
+msgid "Original"
+msgstr "Оригинальные"
+
+#: src/components/account-info.jsx:859
+#: src/components/status.jsx:2162
+#: src/pages/catchup.jsx:71
+#: src/pages/catchup.jsx:1428
+#: src/pages/catchup.jsx:2039
+#: src/pages/status.jsx:892
+#: src/pages/status.jsx:1494
+msgid "Replies"
+msgstr "Ответы"
+
+#: src/components/account-info.jsx:863
+#: src/pages/catchup.jsx:72
+#: src/pages/catchup.jsx:1430
+#: src/pages/catchup.jsx:2051
+#: src/pages/settings.jsx:1028
+msgid "Boosts"
+msgstr "Продвижения"
+
+#: src/components/account-info.jsx:869
+msgid "Post stats unavailable."
+msgstr "Статистика публикации постов недоступна."
+
+#: src/components/account-info.jsx:900
+msgid "View post stats"
+msgstr "Показать статистику публикации постов"
+
+#: src/components/account-info.jsx:1063
+msgid "Last post: <0>{0}</0>"
+msgstr "Последний пост: <0>{0}</0>"
+
+#: src/components/account-info.jsx:1077
+msgid "Muted"
+msgstr "Игнорируется"
+
+#: src/components/account-info.jsx:1082
+msgid "Blocked"
+msgstr "Заблокирован(а)"
+
+#: src/components/account-info.jsx:1091
+msgid "Private note"
+msgstr "Личная заметка"
+
+#: src/components/account-info.jsx:1148
+msgid "Mention <0>@{username}</0>"
+msgstr "Упомянуть <0>@{username}</0>"
+
+#: src/components/account-info.jsx:1160
+msgid "Translate bio"
+msgstr "Перевести поле «О себе»"
+
+#: src/components/account-info.jsx:1171
+msgid "Edit private note"
+msgstr "Редактировать личную заметку"
+
+#: src/components/account-info.jsx:1171
+msgid "Add private note"
+msgstr "Добавить личную заметку"
+
+#: src/components/account-info.jsx:1191
+msgid "Notifications enabled for @{username}'s posts."
+msgstr "Уведомления о новых постах @{username} включены."
+
+#: src/components/account-info.jsx:1192
+msgid "Notifications disabled for @{username}'s posts."
+msgstr "Уведомления о новых постах @{username} отключены."
+
+#: src/components/account-info.jsx:1204
+msgid "Disable notifications"
+msgstr "Отключить уведомления"
+
+#: src/components/account-info.jsx:1205
+msgid "Enable notifications"
+msgstr "Включить уведомления"
+
+#: src/components/account-info.jsx:1222
+msgid "Boosts from @{username} enabled."
+msgstr "Продвижения @{username} видны."
+
+#: src/components/account-info.jsx:1223
+msgid "Boosts from @{username} disabled."
+msgstr "Продвижения @{username} скрыты."
+
+#: src/components/account-info.jsx:1234
+msgid "Disable boosts"
+msgstr "Скрыть продвижения"
+
+#: src/components/account-info.jsx:1234
+msgid "Enable boosts"
+msgstr "Включить продвижения"
+
+#: src/components/account-info.jsx:1250
+#: src/components/account-info.jsx:1260
+#: src/components/account-info.jsx:1858
+msgid "Add/Remove from Lists"
+msgstr "Управление списками"
+
+#: src/components/account-info.jsx:1299
+#: src/components/status.jsx:1078
+msgid "Link copied"
+msgstr "Ссылка скопирована"
+
+#: src/components/account-info.jsx:1302
+#: src/components/status.jsx:1081
+msgid "Unable to copy link"
+msgstr "Не удалось скопировать ссылку"
+
+#: src/components/account-info.jsx:1308
+#: src/components/shortcuts-settings.jsx:1056
+#: src/components/status.jsx:1087
+#: src/components/status.jsx:3109
+msgid "Copy"
+msgstr "Копировать"
+
+#: src/components/account-info.jsx:1323
+#: src/components/shortcuts-settings.jsx:1074
+#: src/components/status.jsx:1103
+msgid "Sharing doesn't seem to work."
+msgstr "Кажется, функция «Поделиться» не работает."
+
+#: src/components/account-info.jsx:1329
+#: src/components/status.jsx:1109
+msgid "Share…"
+msgstr "Поделиться…"
+
+#: src/components/account-info.jsx:1349
+msgid "Unmuted @{username}"
+msgstr "@{username} убран(а) из списка игнорируемых"
+
+#: src/components/account-info.jsx:1361
+msgid "Unmute <0>@{username}</0>"
+msgstr "Убрать <0>@{username}</0> из игнорируемых"
+
+#: src/components/account-info.jsx:1377
+msgid "Mute <0>@{username}</0>…"
+msgstr "Игнорировать <0>@{username}</0>…"
+
+#: src/components/account-info.jsx:1409
+msgid "Muted @{username} for {0}"
+msgstr "@{username} добавлен(а) в список игнорируемых на {0}"
+
+#: src/components/account-info.jsx:1421
+msgid "Unable to mute @{username}"
+msgstr "Не удалось добавить @{username} в список игнорируемых"
+
+#: src/components/account-info.jsx:1442
+msgid "Remove <0>@{username}</0> from followers?"
+msgstr "Удалить <0>@{username}</0> из подписчиков?"
+
+#: src/components/account-info.jsx:1462
+msgid "@{username} removed from followers"
+msgstr "@{username} убран из подписчиков"
+
+#: src/components/account-info.jsx:1474
+msgid "Remove follower…"
+msgstr "Убрать подписчика…"
+
+#: src/components/account-info.jsx:1485
+msgid "Block <0>@{username}</0>?"
+msgstr "Заблокировать <0>@{username}</0>?"
+
+#: src/components/account-info.jsx:1506
+msgid "Unblocked @{username}"
+msgstr "@{username} разблокирован(а)"
+
+#: src/components/account-info.jsx:1514
+msgid "Blocked @{username}"
+msgstr "@{username} заблокирован(а)"
+
+#: src/components/account-info.jsx:1522
+msgid "Unable to unblock @{username}"
+msgstr "Не удалось разблокировать @{username}"
+
+#: src/components/account-info.jsx:1524
+msgid "Unable to block @{username}"
+msgstr "Не удалось заблокировать @{username}"
+
+#: src/components/account-info.jsx:1534
+msgid "Unblock <0>@{username}</0>"
+msgstr "Разблокировать <0>@{username}</0>"
+
+#: src/components/account-info.jsx:1543
+msgid "Block <0>@{username}</0>…"
+msgstr "Заблокировать <0>@{username}</0>…"
+
+#: src/components/account-info.jsx:1560
+msgid "Report <0>@{username}</0>…"
+msgstr "Пожаловаться на <0>@{username}</0>…"
+
+#: src/components/account-info.jsx:1580
+#: src/components/account-info.jsx:2091
+msgid "Edit profile"
+msgstr "Редактировать профиль"
+
+#: src/components/account-info.jsx:1616
+msgid "Withdraw follow request?"
+msgstr "Отозвать запрос на подписку?"
+
+#: src/components/account-info.jsx:1617
+msgid "Unfollow @{0}?"
+msgstr "Отписаться от @{0}?"
+
+#: src/components/account-info.jsx:1668
+msgid "Unfollow…"
+msgstr "Отписаться…"
+
+#: src/components/account-info.jsx:1677
+msgid "Withdraw…"
+msgstr "Отозвать…"
+
+#: src/components/account-info.jsx:1684
+#: src/components/account-info.jsx:1688
+#: src/pages/hashtag.jsx:261
+msgid "Follow"
+msgstr "Подписаться"
+
+#: src/components/account-info.jsx:1799
+#: src/components/account-info.jsx:1853
+#: src/components/account-info.jsx:1986
+#: src/components/account-info.jsx:2086
+#: src/components/account-sheet.jsx:37
+#: src/components/compose.jsx:797
+#: src/components/compose.jsx:2407
+#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:3088
+#: src/components/compose.jsx:3318
+#: src/components/drafts.jsx:58
+#: src/components/embed-modal.jsx:12
+#: src/components/generic-accounts.jsx:142
+#: src/components/keyboard-shortcuts-help.jsx:39
+#: src/components/list-add-edit.jsx:33
+#: src/components/media-alt-modal.jsx:33
+#: src/components/media-modal.jsx:247
+#: src/components/notification-service.jsx:156
+#: src/components/report-modal.jsx:75
+#: src/components/shortcuts-settings.jsx:227
+#: src/components/shortcuts-settings.jsx:580
+#: src/components/shortcuts-settings.jsx:780
+#: src/components/status.jsx:2834
+#: src/components/status.jsx:3073
+#: src/components/status.jsx:3571
+#: src/pages/accounts.jsx:36
+#: src/pages/catchup.jsx:1564
+#: src/pages/filters.jsx:224
+#: src/pages/list.jsx:274
+#: src/pages/notifications.jsx:840
+#: src/pages/notifications.jsx:1054
+#: src/pages/settings.jsx:69
+#: src/pages/status.jsx:1256
+msgid "Close"
+msgstr "Закрыть"
+
+#: src/components/account-info.jsx:1804
+msgid "Translated Bio"
+msgstr "Перевод поля «О себе»"
+
+#: src/components/account-info.jsx:1898
+msgid "Unable to remove from list."
+msgstr "Не удалось убрать из списка."
+
+#: src/components/account-info.jsx:1899
+msgid "Unable to add to list."
+msgstr "Не удалось добавить в список."
+
+#: src/components/account-info.jsx:1918
+#: src/pages/lists.jsx:104
+msgid "Unable to load lists."
+msgstr "Не удалось загрузить списки."
+
+#: src/components/account-info.jsx:1922
+msgid "No lists."
+msgstr "Списки отсутствуют."
+
+#: src/components/account-info.jsx:1933
+#: src/components/list-add-edit.jsx:37
+#: src/pages/lists.jsx:58
+msgid "New list"
+msgstr "Новый список"
+
+#: src/components/account-info.jsx:1991
+msgid "Private note about <0>@{0}</0>"
+msgstr "Личная заметка о <0>@{0}</0>"
+
+#: src/components/account-info.jsx:2021
+msgid "Unable to update private note."
+msgstr "Не удалось обновить личную заметку."
+
+#: src/components/account-info.jsx:2044
+#: src/components/account-info.jsx:2214
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/components/account-info.jsx:2049
+msgid "Save & close"
+msgstr "Сохранить и закрыть"
+
+#: src/components/account-info.jsx:2142
+msgid "Unable to update profile."
+msgstr "Не удалось обновить профиль."
+
+#: src/components/account-info.jsx:2162
+msgid "Bio"
+msgstr "О себе"
+
+#: src/components/account-info.jsx:2175
+msgid "Extra fields"
+msgstr "Дополнительные поля"
+
+#: src/components/account-info.jsx:2181
+msgid "Label"
+msgstr "Заголовок"
+
+#: src/components/account-info.jsx:2184
+msgid "Content"
+msgstr "Содержание"
+
+#: src/components/account-info.jsx:2217
+#: src/components/list-add-edit.jsx:147
+#: src/components/shortcuts-settings.jsx:712
+#: src/pages/filters.jsx:554
+#: src/pages/notifications.jsx:906
+msgid "Save"
+msgstr "Сохранить"
+
+#: src/components/account-info.jsx:2270
+msgid "username"
+msgstr "имя пользователя"
+
+#: src/components/account-info.jsx:2274
+msgid "server domain name"
+msgstr "доменное имя сервера"
+
+#: src/components/background-service.jsx:149
+msgid "Cloak mode disabled"
+msgstr "Режим маскировки отключён"
+
+#: src/components/background-service.jsx:149
+msgid "Cloak mode enabled"
+msgstr "Режим маскировки включён"
+
+#: src/components/columns.jsx:19
+#: src/components/nav-menu.jsx:184
+#: src/components/shortcuts-settings.jsx:137
+#: src/components/timeline.jsx:434
+#: src/pages/catchup.jsx:876
+#: src/pages/filters.jsx:89
+#: src/pages/followed-hashtags.jsx:40
+#: src/pages/home.jsx:52
+#: src/pages/notifications.jsx:505
+msgid "Home"
+msgstr "Домашняя"
+
+#: src/components/compose-button.jsx:49
+#: src/compose.jsx:37
+msgid "Compose"
+msgstr "Написать"
+
+#: src/components/compose.jsx:392
+msgid "You have unsaved changes. Discard this post?"
+msgstr "У вас есть несохраненные изменения. Отменить этот пост?"
+
+#: src/components/compose.jsx:614
+#: src/components/compose.jsx:630
+#: src/components/compose.jsx:1328
+#: src/components/compose.jsx:1589
+msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
+msgstr "{maxMediaAttachments, plural, one {Вы можете прикрепить только 1 файл.} other {Вы можете прикрепить до # файлов.}}"
+
+#: src/components/compose.jsx:778
+msgid "Pop out"
+msgstr "Открыть в отдельном окне"
+
+#: src/components/compose.jsx:785
+msgid "Minimize"
+msgstr "Свернуть"
+
+#: src/components/compose.jsx:821
+msgid "Looks like you closed the parent window."
+msgstr "Похоже, вы закрыли родительское окно."
+
+#: src/components/compose.jsx:828
+msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
+msgstr "Похоже, вы уже публикуете пост в родительском окне. Дождитесь публикации и попробуйте снова."
+
+#: src/components/compose.jsx:833
+msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
+msgstr "Похоже, вы уже пишите или редактируете пост в родительском окне. Возвращение этого окна отменит изменения в родительском окне. Продолжить?"
+
+#: src/components/compose.jsx:875
+msgid "Pop in"
+msgstr "Вернуть в родительское окно"
+
+#: src/components/compose.jsx:885
+msgid "Replying to @{0}’s post (<0>{1}</0>)"
+msgstr "Отвечаем пост @{0}(<0>{1}</0>)"
+
+#: src/components/compose.jsx:895
+msgid "Replying to @{0}’s post"
+msgstr "Отвечаем на пост @{0}"
+
+#: src/components/compose.jsx:908
+msgid "Editing source post"
+msgstr "Редактирование исходного поста"
+
+#: src/components/compose.jsx:955
+msgid "Poll must have at least 2 options"
+msgstr "Опрос должен иметь не менее 2 вариантов ответа"
+
+#: src/components/compose.jsx:959
+msgid "Some poll choices are empty"
+msgstr "Некоторые варианты ответа пусты"
+
+#: src/components/compose.jsx:972
+msgid "Some media have no descriptions. Continue?"
+msgstr "У некоторых медиафайлов нет описаний. Продолжить?"
+
+#: src/components/compose.jsx:1024
+msgid "Attachment #{i} failed"
+msgstr "Не удалось прикрепить вложение №{i}"
+
+#: src/components/compose.jsx:1118
+#: src/components/status.jsx:1961
+#: src/components/timeline.jsx:978
+msgid "Content warning"
+msgstr "Предупреждение о содержании"
+
+#: src/components/compose.jsx:1134
+msgid "Content warning or sensitive media"
+msgstr "Предупреждение о содержании или медиафайлах деликатного характера"
+
+#: src/components/compose.jsx:1170
+#: src/components/status.jsx:93
+#: src/pages/settings.jsx:297
+msgid "Public"
+msgstr "Публичный"
+
+#: src/components/compose.jsx:1173
+#: src/components/status.jsx:94
+#: src/pages/settings.jsx:300
+msgid "Unlisted"
+msgstr "Без включения в поиск"
+
+#: src/components/compose.jsx:1176
+#: src/components/status.jsx:95
+#: src/pages/settings.jsx:303
+msgid "Followers only"
+msgstr "Только для подписчиков"
+
+#: src/components/compose.jsx:1179
+#: src/components/status.jsx:96
+#: src/components/status.jsx:1839
+msgid "Private mention"
+msgstr "Личное упоминание"
+
+#: src/components/compose.jsx:1188
+msgid "Post your reply"
+msgstr "Опубликовать ответ"
+
+#: src/components/compose.jsx:1190
+msgid "Edit your post"
+msgstr "Редактировать свой пост"
+
+#: src/components/compose.jsx:1191
+msgid "What are you doing?"
+msgstr "Начните писать свои мысли"
+
+#: src/components/compose.jsx:1266
+msgid "Mark media as sensitive"
+msgstr "Отметить медиафайл как деликатный"
+
+#: src/components/compose.jsx:1364
+msgid "Add poll"
+msgstr "Добавить голосование"
+
+#: src/components/compose.jsx:1386
+msgid "Add custom emoji"
+msgstr "Добавить пользовательские эмодзи"
+
+#: src/components/compose.jsx:1470
+#: src/components/keyboard-shortcuts-help.jsx:143
+#: src/components/status.jsx:830
+#: src/components/status.jsx:1615
+#: src/components/status.jsx:1616
+#: src/components/status.jsx:2267
+msgid "Reply"
+msgstr "Ответить"
+
+#: src/components/compose.jsx:1472
+msgid "Update"
+msgstr "Сохранить"
+
+#: src/components/compose.jsx:1473
+msgctxt "Submit button in composer"
+msgid "Post"
+msgstr "Опубликовать"
+
+#: src/components/compose.jsx:1601
+msgid "Downloading GIF…"
+msgstr "Загружаем GIF-анимацию…"
+
+#: src/components/compose.jsx:1629
+msgid "Failed to download GIF"
+msgstr "Не удалось загрузить GIF-анимацию"
+
+#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1817
+#: src/components/nav-menu.jsx:287
+msgid "More…"
+msgstr "Ещё…"
+
+#: src/components/compose.jsx:2220
+msgid "Uploaded"
+msgstr "Загружено"
+
+#: src/components/compose.jsx:2233
+msgid "Image description"
+msgstr "Описание изображения"
+
+#: src/components/compose.jsx:2234
+msgid "Video description"
+msgstr "Описание видео"
+
+#: src/components/compose.jsx:2235
+msgid "Audio description"
+msgstr "Описание аудио"
+
+#: src/components/compose.jsx:2271
+#: src/components/compose.jsx:2291
+msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
+msgstr "Файл слишком большой — при загрузке могут возникнуть проблемы. Попробуйте уменьшить размер с {0} до {1} или меньше."
+
+#: src/components/compose.jsx:2283
+#: src/components/compose.jsx:2303
+msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
+msgstr "Сильно большое разрешение — при загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {0}×{1}px до {2}×{3}px."
+
+#: src/components/compose.jsx:2311
+msgid "Frame rate too high. Uploading might encounter issues."
+msgstr "Слишком высокая частота кадров — при загрузке могут возникнуть проблемы."
+
+#: src/components/compose.jsx:2371
+#: src/components/compose.jsx:2621
+#: src/components/shortcuts-settings.jsx:723
+#: src/pages/catchup.jsx:1074
+#: src/pages/filters.jsx:412
+msgid "Remove"
+msgstr "Убрать"
+
+#: src/components/compose.jsx:2388
+#: src/compose.jsx:83
+msgid "Error"
+msgstr "Ошибка"
+
+#: src/components/compose.jsx:2413
+msgid "Edit image description"
+msgstr "Редактировать описание изображения"
+
+#: src/components/compose.jsx:2414
+msgid "Edit video description"
+msgstr "Редактировать описание видео"
+
+#: src/components/compose.jsx:2415
+msgid "Edit audio description"
+msgstr "Редактировать описание аудио"
+
+#: src/components/compose.jsx:2460
+#: src/components/compose.jsx:2509
+msgid "Generating description. Please wait…"
+msgstr "Создаём описание. Один момент, пожалуйста…"
+
+#: src/components/compose.jsx:2480
+msgid "Failed to generate description: {0}"
+msgstr "Не удалось создать описание: {0}"
+
+#: src/components/compose.jsx:2481
+msgid "Failed to generate description"
+msgstr "Не удалось создать описание"
+
+#: src/components/compose.jsx:2493
+#: src/components/compose.jsx:2499
+#: src/components/compose.jsx:2545
+msgid "Generate description…"
+msgstr "Автоматическое описание…"
+
+#: src/components/compose.jsx:2532
+msgid "Failed to generate description{0}"
+msgstr "Не удалось создать описание: {0}"
+
+#: src/components/compose.jsx:2547
+msgid "({0}) <0>— experimental</0>"
+msgstr "({0}) <0>— экспериментальная функция</0>"
+
+#: src/components/compose.jsx:2566
+msgid "Done"
+msgstr "Готово"
+
+#: src/components/compose.jsx:2602
+msgid "Choice {0}"
+msgstr "Вариант №{0}"
+
+#: src/components/compose.jsx:2649
+msgid "Multiple choices"
+msgstr "Разрешить несколько ответов"
+
+#: src/components/compose.jsx:2652
+msgid "Duration"
+msgstr "Продолжительность"
+
+#: src/components/compose.jsx:2683
+msgid "Remove poll"
+msgstr "Убрать опрос"
+
+#: src/components/compose.jsx:2897
+msgid "Search accounts"
+msgstr "Поиск пользователей"
+
+#: src/components/compose.jsx:2938
+#: src/components/shortcuts-settings.jsx:712
+#: src/pages/list.jsx:359
+msgid "Add"
+msgstr "Добавить"
+
+#: src/components/compose.jsx:2951
+#: src/components/generic-accounts.jsx:227
+msgid "Error loading accounts"
+msgstr "Ошибка поиска пользователей"
+
+#: src/components/compose.jsx:3094
+msgid "Custom emojis"
+msgstr "Пользовательские эмодзи"
+
+#: src/components/compose.jsx:3114
+msgid "Search emoji"
+msgstr "Поиск эмодзи"
+
+#: src/components/compose.jsx:3145
+msgid "Error loading custom emojis"
+msgstr "Ошибка загрузки пользовательских эмодзи"
+
+#: src/components/compose.jsx:3156
+msgid "Recently used"
+msgstr "Недавно использованные"
+
+#: src/components/compose.jsx:3157
+msgid "Others"
+msgstr "Прочие"
+
+#: src/components/compose.jsx:3195
+msgid "{0} more…"
+msgstr "Ещё {0}…"
+
+#: src/components/compose.jsx:3333
+msgid "Search GIFs"
+msgstr "Поиск GIF-анимации"
+
+#: src/components/compose.jsx:3348
+msgid "Powered by GIPHY"
+msgstr "При помощи GIPHY"
+
+#: src/components/compose.jsx:3356
+msgid "Type to search GIFs"
+msgstr "Начните набирать для поиска GIF-анимаций"
+
+#: src/components/compose.jsx:3454
+#: src/components/media-modal.jsx:387
+#: src/components/timeline.jsx:883
+msgid "Previous"
+msgstr "Назад"
+
+#: src/components/compose.jsx:3472
+#: src/components/media-modal.jsx:406
+#: src/components/timeline.jsx:900
+msgid "Next"
+msgstr "Вперёд"
+
+#: src/components/compose.jsx:3489
+msgid "Error loading GIFs"
+msgstr "Ошибка поиска GIF-анимаций"
+
+#: src/components/drafts.jsx:63
+#: src/pages/settings.jsx:684
+msgid "Unsent drafts"
+msgstr "Черновики"
+
+#: src/components/drafts.jsx:68
+msgid "Looks like you have unsent drafts. Let's continue where you left off."
+msgstr "У вас есть незаконченные черновики. Давайте продолжим с места, где вы остановились."
+
+#: src/components/drafts.jsx:102
+msgid "Delete this draft?"
+msgstr "Удалить этот черновик?"
+
+#: src/components/drafts.jsx:117
+msgid "Error deleting draft! Please try again."
+msgstr "Не удалось удалить черновик. Попробуйте снова, пожалуйста."
+
+#: src/components/drafts.jsx:127
+#: src/components/list-add-edit.jsx:183
+#: src/components/status.jsx:1250
+#: src/pages/filters.jsx:587
+msgid "Delete…"
+msgstr "Удалить…"
+
+#: src/components/drafts.jsx:146
+msgid "Error fetching reply-to status!"
+msgstr "Не удалось найти пост, к которому относится этот ответ."
+
+#: src/components/drafts.jsx:171
+msgid "Delete all drafts?"
+msgstr "Очистить черновики?"
+
+#: src/components/drafts.jsx:189
+msgid "Error deleting drafts! Please try again."
+msgstr "Не удалось очистить черновики. Попробуйте снова, пожалуйста."
+
+#: src/components/drafts.jsx:201
+msgid "Delete all…"
+msgstr "Удалить все…"
+
+#: src/components/drafts.jsx:209
+msgid "No drafts found."
+msgstr "У вас пока нет черновиков."
+
+#: src/components/drafts.jsx:245
+#: src/pages/catchup.jsx:1911
+msgid "Poll"
+msgstr "Опрос"
+
+#: src/components/drafts.jsx:248
+#: src/pages/account-statuses.jsx:365
+msgid "Media"
+msgstr "Медиафайлы"
+
+#: src/components/embed-modal.jsx:22
+msgid "Open in new window"
+msgstr "Открыть в новом окне"
+
+#: src/components/follow-request-buttons.jsx:42
+#: src/pages/notifications.jsx:890
+msgid "Accept"
+msgstr "Принять"
+
+#: src/components/follow-request-buttons.jsx:68
+msgid "Reject"
+msgstr "Отклонить"
+
+#: src/components/follow-request-buttons.jsx:75
+#: src/pages/notifications.jsx:1173
+msgid "Accepted"
+msgstr "Принят"
+
+#: src/components/follow-request-buttons.jsx:79
+msgid "Rejected"
+msgstr "Отклонён"
+
+#: src/components/generic-accounts.jsx:24
+msgid "Nothing to show"
+msgstr "Нечего отображать"
+
+#: src/components/generic-accounts.jsx:145
+#: src/components/notification.jsx:429
+#: src/pages/accounts.jsx:41
+#: src/pages/search.jsx:227
+#: src/pages/search.jsx:260
+msgid "Accounts"
+msgstr "Учётные записи"
+
+#: src/components/generic-accounts.jsx:205
+#: src/components/timeline.jsx:516
+#: src/pages/list.jsx:293
+#: src/pages/notifications.jsx:820
+#: src/pages/search.jsx:454
+#: src/pages/status.jsx:1289
+msgid "Show more…"
+msgstr "Показать ещё…"
+
+#: src/components/generic-accounts.jsx:210
+#: src/components/timeline.jsx:521
+#: src/pages/search.jsx:459
+msgid "The end."
+msgstr "Конец."
+
+#: src/components/keyboard-shortcuts-help.jsx:43
+#: src/components/nav-menu.jsx:405
+#: src/pages/catchup.jsx:1602
+msgid "Keyboard shortcuts"
+msgstr "Горячие клавиши"
+
+#: src/components/keyboard-shortcuts-help.jsx:51
+msgid "Keyboard shortcuts help"
+msgstr "Справка по горячим клавишам"
+
+#: src/components/keyboard-shortcuts-help.jsx:55
+#: src/pages/catchup.jsx:1627
+msgid "Next post"
+msgstr "Следующий пост"
+
+#: src/components/keyboard-shortcuts-help.jsx:59
+#: src/pages/catchup.jsx:1635
+msgid "Previous post"
+msgstr "Предыдущий пост"
+
+#: src/components/keyboard-shortcuts-help.jsx:63
+msgid "Skip carousel to next post"
+msgstr "Перейти к следующему посту в карусели"
+
+#: src/components/keyboard-shortcuts-help.jsx:65
+msgid "<0>Shift</0> + <1>j</1>"
+msgstr "<0>Shift</0> + <1>j</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:71
+msgid "Skip carousel to previous post"
+msgstr "Перейти к предыдущему посту в карусели"
+
+#: src/components/keyboard-shortcuts-help.jsx:73
+msgid "<0>Shift</0> + <1>k</1>"
+msgstr "<0>Shift</0> + <1>k</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:79
+msgid "Load new posts"
+msgstr "Обновить ленту"
+
+#: src/components/keyboard-shortcuts-help.jsx:83
+#: src/pages/catchup.jsx:1659
+msgid "Open post details"
+msgstr "Раскрыть пост"
+
+#: src/components/keyboard-shortcuts-help.jsx:85
+msgid "<0>Enter</0> or <1>o</1>"
+msgstr "<0>Enter</0> или <1>o</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:92
+msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
+msgstr "Развернуть предупреждение о содержимом или<0/>свернуть/развернуть обсуждение"
+
+#: src/components/keyboard-shortcuts-help.jsx:101
+msgid "Close post or dialogs"
+msgstr "Закрыть пост или диалоги"
+
+#: src/components/keyboard-shortcuts-help.jsx:103
+msgid "<0>Esc</0> or <1>Backspace</1>"
+msgstr "<0>Esc</0> или <1>Backspace</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:109
+msgid "Focus column in multi-column mode"
+msgstr "Фокус столбца в многоколоночном режиме"
+
+#: src/components/keyboard-shortcuts-help.jsx:111
+msgid "<0>1</0> to <1>9</1>"
+msgstr "<0>1</0> по <1>9</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:117
+msgid "Compose new post"
+msgstr "Новый пост"
+
+#: src/components/keyboard-shortcuts-help.jsx:121
+msgid "Compose new post (new window)"
+msgstr "Создать новый пост (новое окно)"
+
+#: src/components/keyboard-shortcuts-help.jsx:124
+msgid "<0>Shift</0> + <1>c</1>"
+msgstr "<0>Shift</0> + <1>c</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:130
+msgid "Send post"
+msgstr "Отправить пост"
+
+#: src/components/keyboard-shortcuts-help.jsx:132
+msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
+msgstr "<0>Ctrl</0> + <1>Enter</1> или <2>⌘</2> + <3>Enter</3>"
+
+#: src/components/keyboard-shortcuts-help.jsx:139
+#: src/components/nav-menu.jsx:374
+#: src/components/search-form.jsx:72
+#: src/components/shortcuts-settings.jsx:52
+#: src/components/shortcuts-settings.jsx:176
+#: src/pages/search.jsx:39
+#: src/pages/search.jsx:209
+msgid "Search"
+msgstr "Поиск"
+
+#: src/components/keyboard-shortcuts-help.jsx:147
+msgid "Reply (new window)"
+msgstr "Ответить (в новом окне)"
+
+#: src/components/keyboard-shortcuts-help.jsx:150
+msgid "<0>Shift</0> + <1>r</1>"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:156
+msgid "Like (favourite)"
+msgstr "Нравится (избранное)"
+
+#: src/components/keyboard-shortcuts-help.jsx:158
+msgid "<0>l</0> or <1>f</1>"
+msgstr "<0>l</0> или <1>f</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:164
+#: src/components/status.jsx:838
+#: src/components/status.jsx:2293
+#: src/components/status.jsx:2325
+#: src/components/status.jsx:2326
+msgid "Boost"
+msgstr "Продвинуть"
+
+#: src/components/keyboard-shortcuts-help.jsx:166
+msgid "<0>Shift</0> + <1>b</1>"
+msgstr "<0>Shift</0> + <1>b</1>"
+
+#: src/components/keyboard-shortcuts-help.jsx:172
+#: src/components/status.jsx:923
+#: src/components/status.jsx:2350
+#: src/components/status.jsx:2351
+msgid "Bookmark"
+msgstr "Закладка"
+
+#: src/components/keyboard-shortcuts-help.jsx:176
+msgid "Toggle Cloak mode"
+msgstr "Включить \"приватный\" режим"
+
+#: src/components/keyboard-shortcuts-help.jsx:178
+msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
+msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
+
+#: src/components/list-add-edit.jsx:37
+msgid "Edit list"
+msgstr "Редактировать список"
+
+#: src/components/list-add-edit.jsx:93
+msgid "Unable to edit list."
+msgstr "Не удалось изменить список."
+
+#: src/components/list-add-edit.jsx:94
+msgid "Unable to create list."
+msgstr "Не удалось создать список."
+
+#: src/components/list-add-edit.jsx:102
+msgid "Name"
+msgstr "Название"
+
+#: src/components/list-add-edit.jsx:122
+msgid "Show replies to list members"
+msgstr "Показать ответы участникам списка"
+
+#: src/components/list-add-edit.jsx:125
+msgid "Show replies to people I follow"
+msgstr "Показать ответы людям, на которых я подписан(а)"
+
+#: src/components/list-add-edit.jsx:128
+msgid "Don't show replies"
+msgstr "Не показывать ответы"
+
+#: src/components/list-add-edit.jsx:141
+msgid "Hide posts on this list from Home/Following"
+msgstr "Скрыть посты этого списка из Домашней ленты/Подписок"
+
+#: src/components/list-add-edit.jsx:147
+#: src/pages/filters.jsx:554
+msgid "Create"
+msgstr "Создать"
+
+#: src/components/list-add-edit.jsx:154
+msgid "Delete this list?"
+msgstr "Удалить этот список?"
+
+#: src/components/list-add-edit.jsx:173
+msgid "Unable to delete list."
+msgstr "Не удалось удалить список."
+
+#: src/components/media-alt-modal.jsx:38
+#: src/components/media.jsx:50
+msgid "Media description"
+msgstr "Описание медиа"
+
+#: src/components/media-alt-modal.jsx:57
+#: src/components/status.jsx:967
+#: src/components/status.jsx:994
+#: src/components/translation-block.jsx:195
+msgid "Translate"
+msgstr "Перевести"
+
+#: src/components/media-alt-modal.jsx:68
+#: src/components/status.jsx:981
+#: src/components/status.jsx:1008
+msgid "Speak"
+msgstr "Произнести"
+
+#: src/components/media-modal.jsx:294
+msgid "Open original media in new window"
+msgstr "Открыть исходный файл в новом окне"
+
+#: src/components/media-modal.jsx:298
+msgid "Open original media"
+msgstr "Открыть исходный файл"
+
+#: src/components/media-modal.jsx:314
+msgid "Attempting to describe image. Please wait…"
+msgstr "Попытка описать изображение. Пожалуйста, подождите…"
+
+#: src/components/media-modal.jsx:329
+msgid "Failed to describe image"
+msgstr "Не удалось описать изображение"
+
+#: src/components/media-modal.jsx:339
+msgid "Describe image…"
+msgstr "Опишите изображение…"
+
+#: src/components/media-modal.jsx:362
+msgid "View post"
+msgstr "Просмотреть публикацию"
+
+#: src/components/media-post.jsx:127
+msgid "Sensitive media"
+msgstr "Деликатный контент"
+
+#: src/components/media-post.jsx:132
+msgid "Filtered: {filterTitleStr}"
+msgstr "Отфильтровано: {filterTitleStr}"
+
+#: src/components/media-post.jsx:133
+#: src/components/status.jsx:3401
+#: src/components/status.jsx:3497
+#: src/components/status.jsx:3575
+#: src/components/timeline.jsx:967
+#: src/pages/catchup.jsx:75
+#: src/pages/catchup.jsx:1859
+msgid "Filtered"
+msgstr "Отфильтровано"
+
+#: src/components/modals.jsx:72
+msgid "Post published. Check it out."
+msgstr "Пост опубликован. Проверьте его."
+
+#: src/components/modals.jsx:73
+msgid "Reply posted. Check it out."
+msgstr "Ответ опубликован. Проверьте его."
+
+#: src/components/modals.jsx:74
+msgid "Post updated. Check it out."
+msgstr "Пост обновлен. Проверьте его."
+
+#: src/components/nav-menu.jsx:126
+msgid "Menu"
+msgstr "Меню"
+
+#: src/components/nav-menu.jsx:162
+msgid "Reload page now to update?"
+msgstr "Перезагрузить страницу для обновления?"
+
+#: src/components/nav-menu.jsx:174
+msgid "New update available…"
+msgstr "Доступно обновление…"
+
+#: src/components/nav-menu.jsx:200
+#: src/pages/catchup.jsx:871
+msgid "Catch-up"
+msgstr "Catch-up"
+
+#: src/components/nav-menu.jsx:207
+#: src/components/shortcuts-settings.jsx:58
+#: src/components/shortcuts-settings.jsx:143
+#: src/pages/home.jsx:223
+#: src/pages/mentions.jsx:20
+#: src/pages/mentions.jsx:167
+#: src/pages/settings.jsx:1020
+#: src/pages/trending.jsx:347
+msgid "Mentions"
+msgstr "Упоминания"
+
+#: src/components/nav-menu.jsx:214
+#: src/components/shortcuts-settings.jsx:49
+#: src/components/shortcuts-settings.jsx:149
+#: src/pages/filters.jsx:24
+#: src/pages/home.jsx:83
+#: src/pages/home.jsx:183
+#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:509
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: src/components/nav-menu.jsx:217
+msgid "New"
+msgstr "Новые"
+
+#: src/components/nav-menu.jsx:228
+msgid "Profile"
+msgstr "Профиль"
+
+#: src/components/nav-menu.jsx:241
+#: src/components/nav-menu.jsx:268
+#: src/components/shortcuts-settings.jsx:50
+#: src/components/shortcuts-settings.jsx:155
+#: src/pages/list.jsx:126
+#: src/pages/lists.jsx:16
+#: src/pages/lists.jsx:50
+msgid "Lists"
+msgstr "Списки"
+
+#: src/components/nav-menu.jsx:249
+#: src/components/shortcuts.jsx:209
+#: src/pages/list.jsx:133
+msgid "All Lists"
+msgstr "Все списки"
+
+#: src/components/nav-menu.jsx:276
+#: src/components/shortcuts-settings.jsx:54
+#: src/components/shortcuts-settings.jsx:192
+#: src/pages/bookmarks.jsx:11
+#: src/pages/bookmarks.jsx:23
+msgid "Bookmarks"
+msgstr "Закладки"
+
+#: src/components/nav-menu.jsx:296
+#: src/components/shortcuts-settings.jsx:55
+#: src/components/shortcuts-settings.jsx:198
+#: src/pages/catchup.jsx:1429
+#: src/pages/catchup.jsx:2045
+#: src/pages/favourites.jsx:11
+#: src/pages/favourites.jsx:23
+#: src/pages/settings.jsx:1024
+msgid "Likes"
+msgstr "Отметки \"нравится\""
+
+#: src/components/nav-menu.jsx:302
+#: src/pages/followed-hashtags.jsx:14
+#: src/pages/followed-hashtags.jsx:44
+msgid "Followed Hashtags"
+msgstr "Хэштеги (подписки)"
+
+#: src/components/nav-menu.jsx:310
+#: src/pages/account-statuses.jsx:331
+#: src/pages/filters.jsx:54
+#: src/pages/filters.jsx:93
+#: src/pages/hashtag.jsx:339
+msgid "Filters"
+msgstr "Фильтры"
+
+#: src/components/nav-menu.jsx:318
+msgid "Muted users"
+msgstr "Игнорируемые пользователи"
+
+#: src/components/nav-menu.jsx:326
+msgid "Muted users…"
+msgstr "Игнорируемые пользователи…"
+
+#: src/components/nav-menu.jsx:333
+msgid "Blocked users"
+msgstr "Заблокированные пользователи"
+
+#: src/components/nav-menu.jsx:341
+msgid "Blocked users…"
+msgstr "Заблокированные пользователи…"
+
+#: src/components/nav-menu.jsx:353
+msgid "Accounts…"
+msgstr "Учётные записи…"
+
+#: src/components/nav-menu.jsx:363
+#: src/pages/login.jsx:166
+#: src/pages/status.jsx:792
+#: src/pages/welcome.jsx:64
+msgid "Log in"
+msgstr "Войти"
+
+#: src/components/nav-menu.jsx:380
+#: src/components/shortcuts-settings.jsx:57
+#: src/components/shortcuts-settings.jsx:169
+#: src/pages/trending.jsx:407
+msgid "Trending"
+msgstr "В тренде"
+
+#: src/components/nav-menu.jsx:386
+#: src/components/shortcuts-settings.jsx:162
+msgid "Local"
+msgstr "Локальная"
+
+#: src/components/nav-menu.jsx:392
+#: src/components/shortcuts-settings.jsx:162
+msgid "Federated"
+msgstr "Федеративная"
+
+#: src/components/nav-menu.jsx:415
+msgid "Shortcuts / Columns…"
+msgstr "Ярлыки / Столбцы…"
+
+#: src/components/nav-menu.jsx:425
+#: src/components/nav-menu.jsx:439
+msgid "Settings…"
+msgstr "Параметры…"
+
+#: src/components/notification-service.jsx:160
+msgid "Notification"
+msgstr "Уведомление"
+
+#: src/components/notification-service.jsx:166
+msgid "This notification is from your other account."
+msgstr "Это уведомление от вашей другой учетной записи."
+
+#: src/components/notification-service.jsx:195
+msgid "View all notifications"
+msgstr "Просмотреть все уведомления"
+
+#: src/components/notification.jsx:68
+msgid "{account} reacted to your post with {emojiObject}"
+msgstr "{account} отреагировал(а) на ваш пост при помощи {emojiObject}"
+
+#: src/components/notification.jsx:75
+msgid "{account} published a post."
+msgstr "{account} опубликовал(а) пост."
+
+#: src/components/notification.jsx:83
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} продвинул(а) ваш ответ.} other {{account} продвинул(а) ваш пост.}}} other {{account} продвинул(а) {postsCount} ваших пост(а/ов).}}} other {{postType, select, reply {<0><1>{0}</1> человек</0> продвинули ваш ответ.} other {<2><3>{1}</3> человек</2> продвинули ваш пост.}}}}"
+
+#: src/components/notification.jsx:126
+msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
+msgstr "{count, plural, =1 {{account} подписал(ся/ась) на вас.} other {<0><1>{0}</1> человек(а)</0> подписалось на вас.}}"
+
+#: src/components/notification.jsx:140
+msgid "{account} requested to follow you."
+msgstr "{account} запросил(а) разрешение на подписку."
+
+#: src/components/notification.jsx:149
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} понравился ваш ответ.} other {{account} понравился ваш пост.}}} other {{account} понравилось {postsCount} ваших пост(а/ов).}}} other {{postType, select, reply {<0><1>{0}</1> человекам</0> понравился ваш ответ.} other {<2><3>{1}</3> человекам</2> понравился ваш пост.}}}}"
+
+#: src/components/notification.jsx:191
+msgid "A poll you have voted in or created has ended."
+msgstr "Опрос, который вы создавали или в котором принимали участие, был завершён."
+
+#: src/components/notification.jsx:192
+msgid "A poll you have created has ended."
+msgstr "Созданный вами опрос завершился."
+
+#: src/components/notification.jsx:193
+msgid "A poll you have voted in has ended."
+msgstr "Опрос, в котором вы проголосовали, завершен."
+
+#: src/components/notification.jsx:194
+msgid "A post you interacted with has been edited."
+msgstr "Пост, с которым вы ранее взаимодействовали, был отредактирован."
+
+#: src/components/notification.jsx:202
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} продвинул(а) ваш ответ и поставил(а) ему отметку \"нравится\".} other {{account} продвинул(а) ваш пост и поставил(а) ему отметку \"нравится\".}}} other {{account} продвинул(а) и поставил(а) отметку \"нравится\" {postsCount} вашим постам.}}} other {{postType, select, reply {<0><1>{0}</1> человек(а)</0> продвинули ваш ответ и поставили ему отметку \"нравится\".} other {<2><3>{1}</3> человек(а)</2> продвинули ваш пост и поставили ему отметку \"нравится\".}}}}"
+
+#: src/components/notification.jsx:244
+msgid "{account} signed up."
+msgstr "{account} зарегистрировал(ся/ась)."
+
+#: src/components/notification.jsx:246
+msgid "{account} reported {targetAccount}"
+msgstr "{account} пожаловался на {targetAccount}"
+
+#: src/components/notification.jsx:251
+msgid "Lost connections with <0>{name}</0>."
+msgstr "Потеряны соединения с <0>{name}</0>."
+
+#: src/components/notification.jsx:257
+msgid "Moderation warning"
+msgstr "Предупреждение о модерации"
+
+#: src/components/notification.jsx:267
+msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
+msgstr "Администратор <0>{from}</0> приостановил учётную запись <1>{targetName}</1>, что означает, что вы больше не можете получать обновления или взаимодействовать с этой учётной записи."
+
+#: src/components/notification.jsx:273
+msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
+msgstr "Администратор <0>{from}</0> заблокировал <1>{targetName}</1>. Затронуло подписок: {followersCount}, подписок всего: {followingCount}."
+
+#: src/components/notification.jsx:279
+msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
+msgstr "Вы заблокировали <0>{targetName}</0>. Удалено {followersCount} подпис(ок/ки), подписок всего: {followingCount}."
+
+#: src/components/notification.jsx:287
+msgid "Your account has received a moderation warning."
+msgstr "Ваша учетная запись получила предупреждение о модерации."
+
+#: src/components/notification.jsx:288
+msgid "Your account has been disabled."
+msgstr "Ваша учётная запись была отключена."
+
+#: src/components/notification.jsx:289
+msgid "Some of your posts have been marked as sensitive."
+msgstr "Некоторые из ваших сообщений были отмечены как деликатные."
+
+#: src/components/notification.jsx:290
+msgid "Some of your posts have been deleted."
+msgstr "Некоторые из ваших записей были удалены."
+
+#: src/components/notification.jsx:291
+msgid "Your posts will be marked as sensitive from now on."
+msgstr "С этого момента ваши сообщения будут помечены как деликатные."
+
+#: src/components/notification.jsx:292
+msgid "Your account has been limited."
+msgstr "Ваша учётная запись была ограничена."
+
+#: src/components/notification.jsx:293
+msgid "Your account has been suspended."
+msgstr "Действие вашей учётной записи приостановлено."
+
+#: src/components/notification.jsx:364
+msgid "[Unknown notification type: {type}]"
+msgstr "[Неизвестный тип уведомления: {type}]"
+
+#: src/components/notification.jsx:425
+#: src/components/status.jsx:937
+#: src/components/status.jsx:947
+msgid "Boosted/Liked by…"
+msgstr "Продвинули/Отметили как \"нравится\"…"
+
+#: src/components/notification.jsx:426
+msgid "Liked by…"
+msgstr "Нравится…"
+
+#: src/components/notification.jsx:427
+msgid "Boosted by…"
+msgstr "Продвинули…"
+
+#: src/components/notification.jsx:428
+msgid "Followed by…"
+msgstr "Подписались…"
+
+#: src/components/notification.jsx:484
+#: src/components/notification.jsx:500
+msgid "Learn more <0/>"
+msgstr "Подробнее <0/>"
+
+#: src/components/notification.jsx:680
+#: src/components/status.jsx:189
+msgid "Read more →"
+msgstr "Читать дальше →"
+
+#: src/components/poll.jsx:110
+msgid "Voted"
+msgstr "Проголосовали"
+
+#: src/components/poll.jsx:135
+#: src/components/poll.jsx:218
+#: src/components/poll.jsx:222
+msgid "Hide results"
+msgstr "Скрыть результаты"
+
+#: src/components/poll.jsx:184
+msgid "Vote"
+msgstr "Голосовать"
+
+#: src/components/poll.jsx:204
+#: src/components/poll.jsx:206
+#: src/pages/status.jsx:1158
+#: src/pages/status.jsx:1181
+msgid "Refresh"
+msgstr "Обновить"
+
+#: src/components/poll.jsx:218
+#: src/components/poll.jsx:222
+msgid "Show results"
+msgstr "Показать результаты"
+
+#: src/components/poll.jsx:227
+msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
+msgstr "{votesCount, plural, one {<0>{0}</0> проголосовал(а)} other {<1>{1}</1> проголосовали}}"
+
+#: src/components/poll.jsx:244
+msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
+msgstr "{votersCount, plural, one {<0>{0}</0> голосующ(ий/ая)} other {<1>{1}</1> голосующих}}"
+
+#: src/components/poll.jsx:264
+msgid "Ended <0/>"
+msgstr "Завершено <0/>"
+
+#: src/components/poll.jsx:268
+msgid "Ended"
+msgstr "Завершено"
+
+#: src/components/poll.jsx:271
+msgid "Ending <0/>"
+msgstr "Завершение <0/>"
+
+#: src/components/poll.jsx:275
+msgid "Ending"
+msgstr "Завершение"
+
+#. Relative time in seconds, as short as possible
+#: src/components/relative-time.jsx:55
+msgid "{0}s"
+msgstr "{0}с"
+
+#. Relative time in minutes, as short as possible
+#: src/components/relative-time.jsx:60
+msgid "{0}m"
+msgstr "{0}м"
+
+#. Relative time in hours, as short as possible
+#: src/components/relative-time.jsx:65
+msgid "{0}h"
+msgstr "{0}ч"
+
+#: src/components/report-modal.jsx:29
+msgid "Spam"
+msgstr "Спам"
+
+#: src/components/report-modal.jsx:30
+msgid "Malicious links, fake engagement, or repetitive replies"
+msgstr "Вредоносные ссылки, поддельные действия или повторяющиеся ответы"
+
+#: src/components/report-modal.jsx:33
+msgid "Illegal"
+msgstr "Нарушение закона/правил"
+
+#: src/components/report-modal.jsx:34
+msgid "Violates the law of your or the server's country"
+msgstr "Нарушает закон вашей страны или сервера"
+
+#: src/components/report-modal.jsx:37
+msgid "Server rule violation"
+msgstr "Нарушение правил сервера"
+
+#: src/components/report-modal.jsx:38
+msgid "Breaks specific server rules"
+msgstr "Нарушение определённых правил сервера"
+
+#: src/components/report-modal.jsx:39
+msgid "Violation"
+msgstr "Нарушение"
+
+#: src/components/report-modal.jsx:42
+msgid "Other"
+msgstr "Другое"
+
+#: src/components/report-modal.jsx:43
+msgid "Issue doesn't fit other categories"
+msgstr "Проблема не соответствует другим категориям"
+
+#: src/components/report-modal.jsx:68
+msgid "Report Post"
+msgstr "Пожаловаться на публикацию"
+
+#: src/components/report-modal.jsx:68
+msgid "Report @{username}"
+msgstr "Пожаловаться на @{username}"
+
+#: src/components/report-modal.jsx:104
+msgid "Pending review"
+msgstr "Ожидает рассмотрения"
+
+#: src/components/report-modal.jsx:146
+msgid "Post reported"
+msgstr "Жалоба на публикацию была отправлена"
+
+#: src/components/report-modal.jsx:146
+msgid "Profile reported"
+msgstr "Жалоба на профиль была отправлена"
+
+#: src/components/report-modal.jsx:154
+msgid "Unable to report post"
+msgstr "Не удалось пожаловаться на публикацию"
+
+#: src/components/report-modal.jsx:155
+msgid "Unable to report profile"
+msgstr "Не удалось пожаловаться на профиль"
+
+#: src/components/report-modal.jsx:163
+msgid "What's the issue with this post?"
+msgstr "В чем проблема с этой публикацией?"
+
+#: src/components/report-modal.jsx:164
+msgid "What's the issue with this profile?"
+msgstr "В чем проблема с этим профилем?"
+
+#: src/components/report-modal.jsx:233
+msgid "Additional info"
+msgstr "Дополнительная информация"
+
+#: src/components/report-modal.jsx:256
+msgid "Forward to <0>{domain}</0>"
+msgstr "Переслать <0>{domain}</0>"
+
+#: src/components/report-modal.jsx:266
+msgid "Send Report"
+msgstr "Пожаловаться"
+
+#: src/components/report-modal.jsx:275
+msgid "Muted {username}"
+msgstr "Добавить @{username} в игнорируемые"
+
+#: src/components/report-modal.jsx:278
+msgid "Unable to mute {username}"
+msgstr "Не удалось добавить @{username} в список игнорируемых"
+
+#: src/components/report-modal.jsx:283
+msgid "Send Report <0>+ Mute profile</0>"
+msgstr "Отправить жалобу <0>+ Заглушить профиль</0>"
+
+#: src/components/report-modal.jsx:294
+msgid "Blocked {username}"
+msgstr "{username} заблокирован(а)"
+
+#: src/components/report-modal.jsx:297
+msgid "Unable to block {username}"
+msgstr "Не удалось заблокировать {username}"
+
+#: src/components/report-modal.jsx:302
+msgid "Send Report <0>+ Block profile</0>"
+msgstr "Отправить жалобу <0>+ Заблокировать профиль</0>"
+
+#: src/components/search-form.jsx:202
+msgid "{query} <0>‒ accounts, hashtags & posts</0>"
+msgstr "{query} <0>- аккаунтов, хэштегов и постов</0>"
+
+#: src/components/search-form.jsx:215
+msgid "Posts with <0>{query}</0>"
+msgstr "Посты с <0>{query}</0>"
+
+#: src/components/search-form.jsx:227
+msgid "Posts tagged with <0>#{0}</0>"
+msgstr "Посты, помеченные <0>#{0}</0>"
+
+#: src/components/search-form.jsx:241
+msgid "Look up <0>{query}</0>"
+msgstr "Посмотреть <0>{query}</0>"
+
+#: src/components/search-form.jsx:252
+msgid "Accounts with <0>{query}</0>"
+msgstr "Учетные записи с <0>{query}</0>"
+
+#: src/components/shortcuts-settings.jsx:48
+msgid "Home / Following"
+msgstr "Домашняя / Подписки"
+
+#: src/components/shortcuts-settings.jsx:51
+msgid "Public (Local / Federated)"
+msgstr "Публичная (Локальная / Федеративная)"
+
+#: src/components/shortcuts-settings.jsx:53
+msgid "Account"
+msgstr "Учетная запись"
+
+#: src/components/shortcuts-settings.jsx:56
+msgid "Hashtag"
+msgstr "Хэштег"
+
+#: src/components/shortcuts-settings.jsx:63
+msgid "List ID"
+msgstr "ID списка"
+
+#: src/components/shortcuts-settings.jsx:70
+msgid "Local only"
+msgstr "Только локальная"
+
+#: src/components/shortcuts-settings.jsx:75
+#: src/components/shortcuts-settings.jsx:84
+#: src/components/shortcuts-settings.jsx:122
+#: src/pages/login.jsx:170
+msgid "Instance"
+msgstr "Инстанс"
+
+#: src/components/shortcuts-settings.jsx:78
+#: src/components/shortcuts-settings.jsx:87
+#: src/components/shortcuts-settings.jsx:125
+msgid "Optional, e.g. mastodon.social"
+msgstr "Необязательно, например, mastodon.social"
+
+#: src/components/shortcuts-settings.jsx:93
+msgid "Search term"
+msgstr "Поисковый запрос"
+
+#: src/components/shortcuts-settings.jsx:96
+msgid "Optional, unless for multi-column mode"
+msgstr "Необязательно, если не выбран многоколоночный режим"
+
+#: src/components/shortcuts-settings.jsx:113
+msgid "e.g. PixelArt (Max 5, space-separated)"
+msgstr "напр. PixelArt (Макс 5, разделенные пробелом)"
+
+#: src/components/shortcuts-settings.jsx:117
+#: src/pages/hashtag.jsx:355
+msgid "Media only"
+msgstr "Только с медиафайлами"
+
+#: src/components/shortcuts-settings.jsx:232
+#: src/components/shortcuts.jsx:186
+msgid "Shortcuts"
+msgstr "Ярлыки"
+
+#: src/components/shortcuts-settings.jsx:240
+msgid "beta"
+msgstr "бета-версия"
+
+#: src/components/shortcuts-settings.jsx:246
+msgid "Specify a list of shortcuts that'll appear as:"
+msgstr "Укажите список ярлыков, которые будут отображаться как:"
+
+#: src/components/shortcuts-settings.jsx:252
+msgid "Floating button"
+msgstr "Плавающая кнопка"
+
+#: src/components/shortcuts-settings.jsx:257
+msgid "Tab/Menu bar"
+msgstr "Вкладки/Меню"
+
+#: src/components/shortcuts-settings.jsx:262
+msgid "Multi-column"
+msgstr "Многоколоночный"
+
+#: src/components/shortcuts-settings.jsx:329
+msgid "Not available in current view mode"
+msgstr "Недоступно в текущем режиме просмотра"
+
+#: src/components/shortcuts-settings.jsx:348
+msgid "Move up"
+msgstr "Переместить вверх"
+
+#: src/components/shortcuts-settings.jsx:364
+msgid "Move down"
+msgstr "Переместить вниз"
+
+#: src/components/shortcuts-settings.jsx:376
+#: src/components/status.jsx:1215
+#: src/pages/list.jsx:170
+msgid "Edit"
+msgstr "Редактировать"
+
+#: src/components/shortcuts-settings.jsx:397
+msgid "Add more than one shortcut/column to make this work."
+msgstr "Добавьте более одного ярлыка/столбца, чтобы сделать это."
+
+#: src/components/shortcuts-settings.jsx:408
+msgid "No columns yet. Tap on the Add column button."
+msgstr "Еще нет столбцов. Нажмите на кнопку Добавить столбец."
+
+#: src/components/shortcuts-settings.jsx:409
+msgid "No shortcuts yet. Tap on the Add shortcut button."
+msgstr "Пока нет ярлыков. Нажмите на кнопку Добавить ярлык."
+
+#: src/components/shortcuts-settings.jsx:412
+msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
+msgstr "Не уверены, что добавить? <0/>Попробуйте добавить <1>Домашняя / Подписки и Уведомления</1>."
+
+#: src/components/shortcuts-settings.jsx:440
+msgid "Max {SHORTCUTS_LIMIT} columns"
+msgstr "Макс. {SHORTCUTS_LIMIT} столбцов"
+
+#: src/components/shortcuts-settings.jsx:441
+msgid "Max {SHORTCUTS_LIMIT} shortcuts"
+msgstr "Макс. {SHORTCUTS_LIMIT} ярлыков"
+
+#: src/components/shortcuts-settings.jsx:455
+msgid "Import/export"
+msgstr "Импорт/экспорт"
+
+#: src/components/shortcuts-settings.jsx:465
+msgid "Add column…"
+msgstr "Добавить столбец…"
+
+#: src/components/shortcuts-settings.jsx:466
+msgid "Add shortcut…"
+msgstr "Добавить ярлык…"
+
+#: src/components/shortcuts-settings.jsx:513
+msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
+msgstr "Определенный список является необязательным. Для многоколоночного режима требуется список, иначе столбец не будет показан."
+
+#: src/components/shortcuts-settings.jsx:514
+msgid "For multi-column mode, search term is required, else the column will not be shown."
+msgstr "Для многоколоночного режима требуется поисковый запрос, иначе столбец не будет показан."
+
+#: src/components/shortcuts-settings.jsx:515
+msgid "Multiple hashtags are supported. Space-separated."
+msgstr "Поддерживаются несколько хэштегов. Разделенные пробелами."
+
+#: src/components/shortcuts-settings.jsx:584
+msgid "Edit shortcut"
+msgstr "Редактировать ярлык"
+
+#: src/components/shortcuts-settings.jsx:584
+msgid "Add shortcut"
+msgstr "Добавить ярлык"
+
+#: src/components/shortcuts-settings.jsx:620
+msgid "Timeline"
+msgstr "Лента"
+
+#: src/components/shortcuts-settings.jsx:646
+msgid "List"
+msgstr "Список"
+
+#: src/components/shortcuts-settings.jsx:785
+msgid "Import/Export <0>Shortcuts</0>"
+msgstr "Импорт/Экспорт <0>Ярлыков</0>"
+
+#: src/components/shortcuts-settings.jsx:795
+msgid "Import"
+msgstr "Импорт"
+
+#: src/components/shortcuts-settings.jsx:803
+msgid "Paste shortcuts here"
+msgstr "Вставьте ярлыки сюда"
+
+#: src/components/shortcuts-settings.jsx:819
+msgid "Downloading saved shortcuts from instance server…"
+msgstr "Загрузка сохраненных ярлыков с сервера инстанса…"
+
+#: src/components/shortcuts-settings.jsx:848
+msgid "Unable to download shortcuts"
+msgstr "Не удается загрузить ярлыки"
+
+#: src/components/shortcuts-settings.jsx:851
+msgid "Download shortcuts from instance server"
+msgstr "Скачать ярлыки с сервера инстанса"
+
+#: src/components/shortcuts-settings.jsx:909
+msgid "* Exists in current shortcuts"
+msgstr "* Существуют в текущем ярлыке"
+
+#: src/components/shortcuts-settings.jsx:914
+msgid "List may not work if it's from a different account."
+msgstr "Список не может работать, если он из другой учетной записи."
+
+#: src/components/shortcuts-settings.jsx:924
+msgid "Invalid settings format"
+msgstr "Недопустимый формат настроек"
+
+#: src/components/shortcuts-settings.jsx:932
+msgid "Append to current shortcuts?"
+msgstr "Добавить в текущие ярлыки?"
+
+#: src/components/shortcuts-settings.jsx:935
+msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
+msgstr "Будут добавлены только ярлыки, которые не существуют в текущем ярлыке."
+
+#: src/components/shortcuts-settings.jsx:957
+msgid "No new shortcuts to import"
+msgstr "Нет новых ярлыков для импорта"
+
+#: src/components/shortcuts-settings.jsx:972
+msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
+msgstr "Ярлыки импортированы. Превышен максимальный размер ({SHORTCUTS_LIMIT}), поэтому остальные не импортируются."
+
+#: src/components/shortcuts-settings.jsx:973
+#: src/components/shortcuts-settings.jsx:997
+msgid "Shortcuts imported"
+msgstr "Ярлыков импортировано"
+
+#: src/components/shortcuts-settings.jsx:983
+msgid "Import & append…"
+msgstr "Импортировать и добавить…"
+
+#: src/components/shortcuts-settings.jsx:991
+msgid "Override current shortcuts?"
+msgstr "Заменить текущие ярлыки?"
+
+#: src/components/shortcuts-settings.jsx:992
+msgid "Import shortcuts?"
+msgstr "Импортировать ярлыки?"
+
+#: src/components/shortcuts-settings.jsx:1006
+msgid "or override…"
+msgstr "или заменить…"
+
+#: src/components/shortcuts-settings.jsx:1006
+msgid "Import…"
+msgstr "Импортировать…"
+
+#: src/components/shortcuts-settings.jsx:1015
+msgid "Export"
+msgstr "Экспорт"
+
+#: src/components/shortcuts-settings.jsx:1030
+msgid "Shortcuts copied"
+msgstr "Ярлыки скопированы"
+
+#: src/components/shortcuts-settings.jsx:1033
+msgid "Unable to copy shortcuts"
+msgstr "Не удалось скопировать ярлыки"
+
+#: src/components/shortcuts-settings.jsx:1047
+msgid "Shortcut settings copied"
+msgstr "Настройки ярлыков скопированы"
+
+#: src/components/shortcuts-settings.jsx:1050
+msgid "Unable to copy shortcut settings"
+msgstr "Не удалось скопировать настройки ярлыка"
+
+#: src/components/shortcuts-settings.jsx:1080
+msgid "Share"
+msgstr "Поделиться"
+
+#: src/components/shortcuts-settings.jsx:1119
+msgid "Saving shortcuts to instance server…"
+msgstr "Сохранение ярлыков на сервер инстанса…"
+
+#: src/components/shortcuts-settings.jsx:1126
+msgid "Shortcuts saved"
+msgstr "Ярлыки сохранены"
+
+#: src/components/shortcuts-settings.jsx:1131
+msgid "Unable to save shortcuts"
+msgstr "Не удалось сохранить ярлыки"
+
+#: src/components/shortcuts-settings.jsx:1134
+msgid "Sync to instance server"
+msgstr "Синхронизировать с сервером инстанса"
+
+#: src/components/shortcuts-settings.jsx:1142
+msgid "{0, plural, one {# character} other {# characters}}"
+msgstr "{0, plural, one {# символ} other {# символов}}"
+
+#: src/components/shortcuts-settings.jsx:1154
+msgid "Raw Shortcuts JSON"
+msgstr "Исходный JSON ярлыков"
+
+#: src/components/shortcuts-settings.jsx:1167
+msgid "Import/export settings from/to instance server (Very experimental)"
+msgstr "Импорт/экспорт настроек с сервера инстанса (Очень экспериментально)"
+
+#: src/components/status.jsx:463
+msgid "<0/> <1>boosted</1>"
+msgstr "<0/> <1>продвинул(а)</1>"
+
+#: src/components/status.jsx:562
+msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
+msgstr "К сожалению, ваша текущая учетная запись не может взаимодействовать с этим постом из другого инстанса."
+
+#: src/components/status.jsx:715
+msgid "Unliked @{0}'s post"
+msgstr "Удалена отметка \"нравится\" у поста от @{0}"
+
+#: src/components/status.jsx:716
+msgid "Liked @{0}'s post"
+msgstr "Понравился пост от @{0}"
+
+#: src/components/status.jsx:755
+msgid "Unbookmarked @{0}'s post"
+msgstr "Удалена закладка поста от @{0}"
+
+#: src/components/status.jsx:756
+msgid "Bookmarked @{0}'s post"
+msgstr "Добавлена закладка поста от @{0}"
+
+#: src/components/status.jsx:838
+#: src/components/status.jsx:900
+#: src/components/status.jsx:2293
+#: src/components/status.jsx:2325
+msgid "Unboost"
+msgstr "Прекратить продвигать"
+
+#: src/components/status.jsx:854
+#: src/components/status.jsx:2308
+msgid "Quote"
+msgstr "Цитировать"
+
+#: src/components/status.jsx:862
+#: src/components/status.jsx:2317
+msgid "Some media have no descriptions."
+msgstr "Некоторые медиа не имеют описаний."
+
+#: src/components/status.jsx:869
+msgid "Old post (<0>{0}</0>)"
+msgstr "Старый пост (<0>{0}</0>)"
+
+#: src/components/status.jsx:888
+#: src/components/status.jsx:1340
+msgid "Unboosted @{0}'s post"
+msgstr "Прекратил(а) продвигать пост @{0}"
+
+#: src/components/status.jsx:889
+#: src/components/status.jsx:1341
+msgid "Boosted @{0}'s post"
+msgstr "Продвинул(а) пост @{0}"
+
+#: src/components/status.jsx:901
+msgid "Boost…"
+msgstr "Продвинуть…"
+
+#: src/components/status.jsx:913
+#: src/components/status.jsx:1625
+#: src/components/status.jsx:2338
+msgid "Unlike"
+msgstr "Не нравится"
+
+#: src/components/status.jsx:914
+#: src/components/status.jsx:1625
+#: src/components/status.jsx:1626
+#: src/components/status.jsx:2338
+#: src/components/status.jsx:2339
+msgid "Like"
+msgstr "Нравится"
+
+#: src/components/status.jsx:923
+#: src/components/status.jsx:2350
+msgid "Unbookmark"
+msgstr "Удалить закладку"
+
+#: src/components/status.jsx:1031
+msgid "View post by <0>@{0}</0>"
+msgstr "Посмотреть пост <0>@{0}</0>"
+
+#: src/components/status.jsx:1052
+msgid "Show Edit History"
+msgstr "Показать историю редактирования"
+
+#: src/components/status.jsx:1055
+msgid "Edited: {editedDateText}"
+msgstr "Отредактировано: {editedDateText}"
+
+#: src/components/status.jsx:1122
+#: src/components/status.jsx:3078
+msgid "Embed post"
+msgstr "Встроить пост"
+
+#: src/components/status.jsx:1136
+msgid "Conversation unmuted"
+msgstr "Обсуждение не игнорируется"
+
+#: src/components/status.jsx:1136
+msgid "Conversation muted"
+msgstr "Обсуждение игнорируется"
+
+#: src/components/status.jsx:1142
+msgid "Unable to unmute conversation"
+msgstr "Не удалось прекратить игнорировать обсуждение"
+
+#: src/components/status.jsx:1143
+msgid "Unable to mute conversation"
+msgstr "Не удалось игнорировать обсуждение"
+
+#: src/components/status.jsx:1152
+msgid "Unmute conversation"
+msgstr "Не игнорировать обсуждение"
+
+#: src/components/status.jsx:1159
+msgid "Mute conversation"
+msgstr "Игнорировать обсуждение"
+
+#: src/components/status.jsx:1175
+msgid "Post unpinned from profile"
+msgstr "Пост откреплён из профиля"
+
+#: src/components/status.jsx:1176
+msgid "Post pinned to profile"
+msgstr "Пост прикреплён к профилю"
+
+#: src/components/status.jsx:1181
+msgid "Unable to unpin post"
+msgstr "Не удалось открепить пост"
+
+#: src/components/status.jsx:1181
+msgid "Unable to pin post"
+msgstr "Не удалось закрепить пост"
+
+#: src/components/status.jsx:1190
+msgid "Unpin from profile"
+msgstr "Открепить от профиля"
+
+#: src/components/status.jsx:1197
+msgid "Pin to profile"
+msgstr "Закрепить в профиле"
+
+#: src/components/status.jsx:1226
+msgid "Delete this post?"
+msgstr "Удалить этот пост?"
+
+#: src/components/status.jsx:1239
+msgid "Post deleted"
+msgstr "Пост удален"
+
+#: src/components/status.jsx:1242
+msgid "Unable to delete post"
+msgstr "Не удалось удалить пост"
+
+#: src/components/status.jsx:1270
+msgid "Report post…"
+msgstr "Пожаловаться на пост…"
+
+#: src/components/status.jsx:1626
+#: src/components/status.jsx:1662
+#: src/components/status.jsx:2339
+msgid "Liked"
+msgstr "Нравится"
+
+#: src/components/status.jsx:1659
+#: src/components/status.jsx:2326
+msgid "Boosted"
+msgstr "Продвинут"
+
+#: src/components/status.jsx:1669
+#: src/components/status.jsx:2351
+msgid "Bookmarked"
+msgstr "Добавлен в закладки"
+
+#: src/components/status.jsx:1673
+msgid "Pinned"
+msgstr "Закреплён"
+
+#: src/components/status.jsx:1718
+#: src/components/status.jsx:2170
+msgid "Deleted"
+msgstr "Удалён"
+
+#: src/components/status.jsx:1759
+msgid "{repliesCount, plural, one {# reply} other {# replies}}"
+msgstr "{repliesCount, plural, one {# ответ} other {# ответ(а/ов)}}"
+
+#: src/components/status.jsx:1848
+msgid "Thread{0}"
+msgstr "Обсуждение{0}"
+
+#: src/components/status.jsx:1924
+#: src/components/status.jsx:1986
+#: src/components/status.jsx:2071
+msgid "Show less"
+msgstr "Свернуть/скрыть"
+
+#: src/components/status.jsx:1924
+#: src/components/status.jsx:1986
+msgid "Show content"
+msgstr "Показать содержимое"
+
+#: src/components/status.jsx:2071
+msgid "Show media"
+msgstr "Показать медиа"
+
+#: src/components/status.jsx:2191
+msgid "Edited"
+msgstr "Отредактировано"
+
+#: src/components/status.jsx:2268
+msgid "Comments"
+msgstr "Комментарии"
+
+#: src/components/status.jsx:2839
+msgid "Edit History"
+msgstr "История изменений"
+
+#: src/components/status.jsx:2843
+msgid "Failed to load history"
+msgstr "Не удалось загрузить историю"
+
+#: src/components/status.jsx:2848
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: src/components/status.jsx:3083
+msgid "HTML Code"
+msgstr "HTML-код"
+
+#: src/components/status.jsx:3100
+msgid "HTML code copied"
+msgstr "HTML-код скопирован"
+
+#: src/components/status.jsx:3103
+msgid "Unable to copy HTML code"
+msgstr "Не удалось скопировать HTML-код"
+
+#: src/components/status.jsx:3115
+msgid "Media attachments:"
+msgstr "Медиа-вложения:"
+
+#: src/components/status.jsx:3137
+msgid "Account Emojis:"
+msgstr "Эмодзи пользователя:"
+
+#: src/components/status.jsx:3168
+#: src/components/status.jsx:3213
+msgid "static URL"
+msgstr "статический URL"
+
+#: src/components/status.jsx:3182
+msgid "Emojis:"
+msgstr "Эмодзи:"
+
+#: src/components/status.jsx:3227
+msgid "Notes:"
+msgstr "Заметки:"
+
+#: src/components/status.jsx:3231
+msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
+msgstr "Это статическое, нестилизованное и не требующее сценариев. Возможно, вам придется применить свои собственные стили и отредактировать их по мере необходимости."
+
+#: src/components/status.jsx:3237
+msgid "Polls are not interactive, becomes a list with vote counts."
+msgstr "Опросы не интерактивны, они представляют собой список с подсчетом голосов."
+
+#: src/components/status.jsx:3242
+msgid "Media attachments can be images, videos, audios or any file types."
+msgstr "Медиа-вложения могут быть изображениями, видео, аудио или определёнными типами файлов."
+
+#: src/components/status.jsx:3248
+msgid "Post could be edited or deleted later."
+msgstr "Пост может быть отредактирован или удален позже."
+
+#: src/components/status.jsx:3254
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: src/components/status.jsx:3263
+msgid "Note: This preview is lightly styled."
+msgstr "Примечание: Этот предварительный просмотр слегка стилизован."
+
+#: src/components/status.jsx:3505
+msgid "<0/> <1/> boosted"
+msgstr "<0/> <1/> продвинули"
+
+#: src/components/timeline.jsx:450
+#: src/pages/settings.jsx:1048
+msgid "New posts"
+msgstr "Новые посты"
+
+#: src/components/timeline.jsx:551
+#: src/pages/home.jsx:212
+#: src/pages/notifications.jsx:796
+#: src/pages/status.jsx:945
+#: src/pages/status.jsx:1318
+msgid "Try again"
+msgstr "Повторите попытку"
+
+#: src/components/timeline.jsx:940
+#: src/components/timeline.jsx:947
+#: src/pages/catchup.jsx:1876
+msgid "Thread"
+msgstr "Обсуждение"
+
+#: src/components/timeline.jsx:962
+msgid "<0>Filtered</0>: <1>{0}</1>"
+msgstr "<0>Отфильтровано</0>: <1>{0}</1>"
+
+#: src/components/translation-block.jsx:152
+msgid "Auto-translated from {sourceLangText}"
+msgstr "Автоперевод с {sourceLangText}"
+
+#: src/components/translation-block.jsx:190
+msgid "Translating…"
+msgstr "Переводим…"
+
+#: src/components/translation-block.jsx:193
+msgid "Translate from {sourceLangText} (auto-detected)"
+msgstr "Перевод с {sourceLangText} (автоопределение)"
+
+#: src/components/translation-block.jsx:194
+msgid "Translate from {sourceLangText}"
+msgstr "Перевод с {sourceLangText}"
+
+#: src/components/translation-block.jsx:222
+msgid "Auto ({0})"
+msgstr "Авто ({0})"
+
+#: src/components/translation-block.jsx:235
+msgid "Failed to translate"
+msgstr "Не удалось перевести"
+
+#: src/compose.jsx:32
+msgid "Editing source status"
+msgstr "Редактирование статуса источника"
+
+#: src/compose.jsx:34
+msgid "Replying to @{0}"
+msgstr "Ответить @{0}"
+
+#: src/compose.jsx:62
+msgid "You may close this page now."
+msgstr "Теперь вы можете закрыть эту страницу."
+
+#: src/compose.jsx:70
+msgid "Close window"
+msgstr "Закрыть окно"
+
+#: src/compose.jsx:86
+msgid "Login required."
+msgstr "Требуется авторизация."
+
+#: src/compose.jsx:90
+#: src/pages/http-route.jsx:91
+#: src/pages/login.jsx:247
+msgid "Go home"
+msgstr "Вернуться на главную"
+
+#: src/pages/account-statuses.jsx:233
+msgid "Account posts"
+msgstr "Посты пользователя"
+
+#: src/pages/account-statuses.jsx:240
+msgid "{accountDisplay} (+ Replies)"
+msgstr "{accountDisplay} (+ Ответы)"
+
+#: src/pages/account-statuses.jsx:242
+msgid "{accountDisplay} (- Boosts)"
+msgstr "{accountDisplay} (- Продвижения)"
+
+#: src/pages/account-statuses.jsx:244
+msgid "{accountDisplay} (#{tagged})"
+msgstr "{accountDisplay} (#{tagged})"
+
+#: src/pages/account-statuses.jsx:246
+msgid "{accountDisplay} (Media)"
+msgstr "{accountDisplay} (Медиа)"
+
+#: src/pages/account-statuses.jsx:252
+msgid "{accountDisplay} ({monthYear})"
+msgstr "{accountDisplay} ({monthYear})"
+
+#: src/pages/account-statuses.jsx:321
+msgid "Clear filters"
+msgstr "Очистить фильтры"
+
+#: src/pages/account-statuses.jsx:324
+msgid "Clear"
+msgstr "Очистить"
+
+#: src/pages/account-statuses.jsx:338
+msgid "Showing post with replies"
+msgstr "Посты с ответами"
+
+#: src/pages/account-statuses.jsx:343
+msgid "+ Replies"
+msgstr "+ Ответы"
+
+#: src/pages/account-statuses.jsx:349
+msgid "Showing posts without boosts"
+msgstr "Посты без продвижений"
+
+#: src/pages/account-statuses.jsx:354
+msgid "- Boosts"
+msgstr "- Продвижения"
+
+#: src/pages/account-statuses.jsx:360
+msgid "Showing posts with media"
+msgstr "Посты с медиа-контентом"
+
+#: src/pages/account-statuses.jsx:377
+msgid "Showing posts tagged with #{0}"
+msgstr "Посты, помеченные #{0}"
+
+#: src/pages/account-statuses.jsx:416
+msgid "Showing posts in {0}"
+msgstr "Посты с {0}"
+
+#: src/pages/account-statuses.jsx:505
+msgid "Nothing to see here yet."
+msgstr "Здесь пока ничего нет."
+
+#: src/pages/account-statuses.jsx:506
+#: src/pages/public.jsx:97
+#: src/pages/trending.jsx:415
+msgid "Unable to load posts"
+msgstr "Не удается загрузить посты"
+
+#: src/pages/account-statuses.jsx:547
+#: src/pages/account-statuses.jsx:577
+msgid "Unable to fetch account info"
+msgstr "Не удалось получить информацию об учетной записи"
+
+#: src/pages/account-statuses.jsx:554
+msgid "Switch to account's instance {0}"
+msgstr "Переключиться на инстанс {0} учетной записи"
+
+#: src/pages/account-statuses.jsx:584
+msgid "Switch to my instance (<0>{currentInstance}</0>)"
+msgstr "Переключиться на мой инстанс (<0>{currentInstance}</0>)"
+
+#: src/pages/account-statuses.jsx:646
+msgid "Month"
+msgstr "Месяц"
+
+#: src/pages/accounts.jsx:55
+msgid "Current"
+msgstr "Текущий"
+
+#: src/pages/accounts.jsx:101
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/pages/accounts.jsx:123
+msgid "Switch to this account"
+msgstr "Переключить на этот аккаунт"
+
+#: src/pages/accounts.jsx:132
+msgid "Switch in new tab/window"
+msgstr "Переключиться в новой вкладке/окне"
+
+#: src/pages/accounts.jsx:146
+msgid "View profile…"
+msgstr "Посмотреть профиль…"
+
+#: src/pages/accounts.jsx:163
+msgid "Set as default"
+msgstr "Установить по умолчанию"
+
+#: src/pages/accounts.jsx:173
+msgid "Log out <0>@{0}</0>?"
+msgstr "Выйти из<0>@{0}</0>?"
+
+#: src/pages/accounts.jsx:196
+msgid "Log out…"
+msgstr "Выйти…"
+
+#: src/pages/accounts.jsx:209
+msgid "Add an existing account"
+msgstr "Добавить существующую учетную запись"
+
+#: src/pages/accounts.jsx:216
+msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
+msgstr "Примечание. Учетная запись <0>по умолчанию</0> всегда будет использоваться для первой загрузки. Переключенные учетные записи будут сохраняться в течение сеанса."
+
+#: src/pages/bookmarks.jsx:26
+msgid "Unable to load bookmarks."
+msgstr "Не удалось загрузить закладки."
+
+#: src/pages/catchup.jsx:54
+msgid "last 1 hour"
+msgstr "за последний час"
+
+#: src/pages/catchup.jsx:55
+msgid "last 2 hours"
+msgstr "за последние 2 часа"
+
+#: src/pages/catchup.jsx:56
+msgid "last 3 hours"
+msgstr "за последние 3 часа"
+
+#: src/pages/catchup.jsx:57
+msgid "last 4 hours"
+msgstr "за последние 4 часа"
+
+#: src/pages/catchup.jsx:58
+msgid "last 5 hours"
+msgstr "за последние 5 часов"
+
+#: src/pages/catchup.jsx:59
+msgid "last 6 hours"
+msgstr "за последние 6 часов"
+
+#: src/pages/catchup.jsx:60
+msgid "last 7 hours"
+msgstr "за последние 7 часов"
+
+#: src/pages/catchup.jsx:61
+msgid "last 8 hours"
+msgstr "за последние 8 часов"
+
+#: src/pages/catchup.jsx:62
+msgid "last 9 hours"
+msgstr "за последние 9 часов"
+
+#: src/pages/catchup.jsx:63
+msgid "last 10 hours"
+msgstr "за последние 10 часов"
+
+#: src/pages/catchup.jsx:64
+msgid "last 11 hours"
+msgstr "за последние 11 часов"
+
+#: src/pages/catchup.jsx:65
+msgid "last 12 hours"
+msgstr "за последние 12 часов"
+
+#: src/pages/catchup.jsx:66
+msgid "beyond 12 hours"
+msgstr "более 12 часов"
+
+#: src/pages/catchup.jsx:73
+msgid "Followed tags"
+msgstr "Отслеживаемые хэштеги"
+
+#: src/pages/catchup.jsx:74
+msgid "Groups"
+msgstr "Группы"
+
+#: src/pages/catchup.jsx:596
+msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
+msgstr "Отображается {selectedFilterCategory, select, all {все посты} original {оригинальные посты} replies {ответы} boosts {продвижения} followedTags {отслеживаемые тэги} groups {группы} filtered {отфильтрованные посты}}, {sortBy, select, createdAt {{sortOrder, select, asc {старые} desc {новейшие}}} reblogsCount {{sortOrder, select, asc {меньше всего продвижений} desc {больше всего продвижений}}} favouritesCount {{sortOrder, select, asc {меньше всего отметок \"нравится\"} desc {больше всего отметок \"нравится\"}}} repliesCount {{sortOrder, select, asc {меньше всего ответов} desc {больше всего ответов}}} density {{sortOrder, select, asc {менее плотные} desc {более плотные}}}} первые{groupBy, select, account {, сгруппированы по авторам} other {}}"
+
+#: src/pages/catchup.jsx:882
+#: src/pages/catchup.jsx:906
+msgid "Catch-up <0>beta</0>"
+msgstr "Catch-up <0>бета</0>"
+
+#: src/pages/catchup.jsx:896
+#: src/pages/catchup.jsx:1568
+msgid "Help"
+msgstr "Справка"
+
+#: src/pages/catchup.jsx:912
+msgid "What is this?"
+msgstr "Что это?"
+
+#: src/pages/catchup.jsx:915
+msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
+msgstr "Catch-up — это отдельная лента для ваших подписок, предлагающая на первый взгляд высокоуровневый вид, с простым и вдохновленным почтой интерфейсом, позволяющим легко сортировать и фильтровать по постам."
+
+#: src/pages/catchup.jsx:926
+msgid "Preview of Catch-up UI"
+msgstr "Предпросмотр интерфейса Catch-up"
+
+#: src/pages/catchup.jsx:935
+msgid "Let's catch up"
+msgstr "Давайте приступим"
+
+#: src/pages/catchup.jsx:940
+msgid "Let's catch up on the posts from your followings."
+msgstr "Давай посмотрим на посты из ваших подписок."
+
+#: src/pages/catchup.jsx:944
+msgid "Show me all posts from…"
+msgstr "Покажи мне все посты…"
+
+#: src/pages/catchup.jsx:967
+msgid "until the max"
+msgstr "до максимума"
+
+#: src/pages/catchup.jsx:997
+msgid "Catch up"
+msgstr "Наверстать упущенное"
+
+#: src/pages/catchup.jsx:1003
+msgid "Overlaps with your last catch-up"
+msgstr "Перепишет ваш последний catch-up"
+
+#: src/pages/catchup.jsx:1015
+msgid "Until the last catch-up ({0})"
+msgstr "До последнего catch-up ({0})"
+
+#: src/pages/catchup.jsx:1024
+msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
+msgstr "Примечание: Ваш инстанс может показывать не более 800 сообщений в домашней ленте, независимо от диапазона времени. Может быть меньше или больше."
+
+#: src/pages/catchup.jsx:1034
+msgid "Previously…"
+msgstr "Ранее…"
+
+#: src/pages/catchup.jsx:1052
+msgid "{0, plural, one {# post} other {# posts}}"
+msgstr "{0, plural, one {# пост} other {# посты}}"
+
+#: src/pages/catchup.jsx:1062
+msgid "Remove this catch-up?"
+msgstr "Удалить этот catch-up?"
+
+#: src/pages/catchup.jsx:1083
+msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
+msgstr "Внимание: Будут сохранены только не более 3. Остальные будут автоматически удалены."
+
+#: src/pages/catchup.jsx:1098
+msgid "Fetching posts…"
+msgstr "Подгружаем посты…"
+
+#: src/pages/catchup.jsx:1101
+msgid "This might take a while."
+msgstr "Это займет некоторое время."
+
+#: src/pages/catchup.jsx:1136
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+#: src/pages/catchup.jsx:1144
+#: src/pages/catchup.jsx:1574
+msgid "Top links"
+msgstr "Самые популярные ссылки"
+
+#: src/pages/catchup.jsx:1260
+msgid "Shared by {0}"
+msgstr "Поделил(ся/ась) {0}"
+
+#: src/pages/catchup.jsx:1299
+#: src/pages/mentions.jsx:147
+#: src/pages/search.jsx:222
+msgid "All"
+msgstr "Все"
+
+#: src/pages/catchup.jsx:1384
+msgid "{0, plural, one {# author} other {# authors}}"
+msgstr "{0, plural, one {# автор} other {# авторы}}"
+
+#: src/pages/catchup.jsx:1396
+msgid "Sort"
+msgstr "Сортировка"
+
+#: src/pages/catchup.jsx:1427
+msgid "Date"
+msgstr "Дата"
+
+#: src/pages/catchup.jsx:1431
+msgid "Density"
+msgstr "Плотность"
+
+#: src/pages/catchup.jsx:1469
+msgid "Authors"
+msgstr "Авторы"
+
+#: src/pages/catchup.jsx:1470
+msgid "None"
+msgstr "Отсутствует"
+
+#: src/pages/catchup.jsx:1486
+msgid "Show all authors"
+msgstr "Показать всех авторов"
+
+#: src/pages/catchup.jsx:1537
+msgid "You don't have to read everything."
+msgstr "Вы не обязаны читать всё."
+
+#: src/pages/catchup.jsx:1538
+msgid "That's all."
+msgstr "Вот и всё!"
+
+#: src/pages/catchup.jsx:1546
+msgid "Back to top"
+msgstr "Вернуться к началу"
+
+#: src/pages/catchup.jsx:1577
+msgid "Links shared by followings, sorted by shared counts, boosts and likes."
+msgstr "Ссылки, которыми поделились подписчики, отсортированы по количеству взаимодействий, продвижений и отметок \"нравится\"."
+
+#: src/pages/catchup.jsx:1583
+msgid "Sort: Density"
+msgstr "Сортировка: Плотность"
+
+#: src/pages/catchup.jsx:1586
+msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
+msgstr "Посты сортируются по плотности или глубине информации. Более короткие сообщения \"легкие\", в то время как длинные сообщения \"тяжелее\". Сообщения с фотографиями \"тяжелее\", чем сообщения без фотографий."
+
+#: src/pages/catchup.jsx:1593
+msgid "Group: Authors"
+msgstr "Группа: Авторы"
+
+#: src/pages/catchup.jsx:1596
+msgid "Posts are grouped by authors, sorted by posts count per author."
+msgstr "Посты группируются по авторам, сортируются по количеству сообщений на автора."
+
+#: src/pages/catchup.jsx:1643
+msgid "Next author"
+msgstr "Следующий автор"
+
+#: src/pages/catchup.jsx:1651
+msgid "Previous author"
+msgstr "Предыдущий автор"
+
+#: src/pages/catchup.jsx:1667
+msgid "Scroll to top"
+msgstr "Прокрутка к началу"
+
+#: src/pages/catchup.jsx:1858
+msgid "Filtered: {0}"
+msgstr "Отфильтровано: {0}"
+
+#: src/pages/favourites.jsx:26
+msgid "Unable to load likes."
+msgstr "Не удалось загрузить отметки \"нравится\"."
+
+#: src/pages/filters.jsx:23
+msgid "Home and lists"
+msgstr "Домашняя лента и списки"
+
+#: src/pages/filters.jsx:25
+msgid "Public timelines"
+msgstr "Публичные ленты"
+
+#: src/pages/filters.jsx:26
+msgid "Conversations"
+msgstr "Диалоги"
+
+#: src/pages/filters.jsx:27
+msgid "Profiles"
+msgstr "Профили"
+
+#: src/pages/filters.jsx:42
+msgid "Never"
+msgstr "Никогда"
+
+#: src/pages/filters.jsx:103
+#: src/pages/filters.jsx:228
+msgid "New filter"
+msgstr "Новый фильтр"
+
+#: src/pages/filters.jsx:151
+msgid "{0, plural, one {# filter} other {# filters}}"
+msgstr "{0, plural, one {# фильтр} other {# фильтр(а/ов)}}"
+
+#: src/pages/filters.jsx:166
+msgid "Unable to load filters."
+msgstr "Не удалось загрузить фильтры."
+
+#: src/pages/filters.jsx:170
+msgid "No filters yet."
+msgstr "Пока нет фильтров."
+
+#: src/pages/filters.jsx:177
+msgid "Add filter"
+msgstr "Добавить фильтр"
+
+#: src/pages/filters.jsx:228
+msgid "Edit filter"
+msgstr "Редактировать фильтр"
+
+#: src/pages/filters.jsx:345
+msgid "Unable to edit filter"
+msgstr "Не удалось изменить фильтр"
+
+#: src/pages/filters.jsx:346
+msgid "Unable to create filter"
+msgstr "Не удалось создать фильтр"
+
+#: src/pages/filters.jsx:355
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/pages/filters.jsx:396
+msgid "Whole word"
+msgstr "Слово целиком"
+
+#: src/pages/filters.jsx:422
+msgid "No keywords. Add one."
+msgstr "Нет ключевых слов. Добавьте их."
+
+#: src/pages/filters.jsx:449
+msgid "Add keyword"
+msgstr "Добавить ключевое слово"
+
+#: src/pages/filters.jsx:453
+msgid "{0, plural, one {# keyword} other {# keywords}}"
+msgstr "{0, plural, one {# ключевое слово} other {# ключевых слов(а)}}"
+
+#: src/pages/filters.jsx:466
+msgid "Filter from…"
+msgstr "Фильтр от…"
+
+#: src/pages/filters.jsx:492
+msgid "* Not implemented yet"
+msgstr "* Ещё не реализовано"
+
+#: src/pages/filters.jsx:498
+msgid "Status: <0><1/></0>"
+msgstr "Состояние: <0><1/></0>"
+
+#: src/pages/filters.jsx:507
+msgid "Change expiry"
+msgstr "Изменить срок действия"
+
+#: src/pages/filters.jsx:507
+msgid "Expiry"
+msgstr "Срок действия"
+
+#: src/pages/filters.jsx:526
+msgid "Filtered post will be…"
+msgstr "Отфильтрованный пост будет…"
+
+#: src/pages/filters.jsx:536
+msgid "minimized"
+msgstr "свернуто"
+
+#: src/pages/filters.jsx:546
+msgid "hidden"
+msgstr "скрыто"
+
+#: src/pages/filters.jsx:563
+msgid "Delete this filter?"
+msgstr "Удалить этот фильтр?"
+
+#: src/pages/filters.jsx:576
+msgid "Unable to delete filter."
+msgstr "Не удалось удалить фильтр."
+
+#: src/pages/filters.jsx:608
+msgid "Expired"
+msgstr "Срок действия истёк"
+
+#: src/pages/filters.jsx:610
+msgid "Expiring <0/>"
+msgstr "Истекает <0/>"
+
+#: src/pages/filters.jsx:614
+msgid "Never expires"
+msgstr "Никогда не истекает"
+
+#: src/pages/followed-hashtags.jsx:70
+msgid "{0, plural, one {# hashtag} other {# hashtags}}"
+msgstr "{0, plural, one {# хэштег} other {# хэштеги}}"
+
+#: src/pages/followed-hashtags.jsx:85
+msgid "Unable to load followed hashtags."
+msgstr "Не удалось загрузить отслеживаемые хэштеги."
+
+#: src/pages/followed-hashtags.jsx:89
+msgid "No hashtags followed yet."
+msgstr "Вы не отслеживаете ни одного хэштега."
+
+#: src/pages/following.jsx:133
+msgid "Nothing to see here."
+msgstr "Здесь пусто."
+
+#: src/pages/following.jsx:134
+#: src/pages/list.jsx:108
+msgid "Unable to load posts."
+msgstr "Не удалось загрузить посты."
+
+#: src/pages/hashtag.jsx:55
+msgid "{hashtagTitle} (Media only) on {instance}"
+msgstr "{hashtagTitle} (только медиа) на {instance}"
+
+#: src/pages/hashtag.jsx:56
+msgid "{hashtagTitle} on {instance}"
+msgstr "{hashtagTitle} на {instance}"
+
+#: src/pages/hashtag.jsx:58
+msgid "{hashtagTitle} (Media only)"
+msgstr "{hashtagTitle} (только медиа)"
+
+#: src/pages/hashtag.jsx:59
+msgid "{hashtagTitle}"
+msgstr "{hashtagTitle}"
+
+#: src/pages/hashtag.jsx:181
+msgid "No one has posted anything with this tag yet."
+msgstr "Никто еще ничего не написал с этим тегом."
+
+#: src/pages/hashtag.jsx:182
+msgid "Unable to load posts with this tag"
+msgstr "Не удается загрузить записи с этим тегом"
+
+#: src/pages/hashtag.jsx:223
+msgid "Unfollowed #{hashtag}"
+msgstr "Отписаться от #{hashtag}"
+
+#: src/pages/hashtag.jsx:238
+msgid "Followed #{hashtag}"
+msgstr "Подписаться на #{hashtag}"
+
+#: src/pages/hashtag.jsx:254
+msgid "Following…"
+msgstr "Подписка…"
+
+#: src/pages/hashtag.jsx:282
+msgid "Unfeatured on profile"
+msgstr "Не рекомендуется в профиле"
+
+#: src/pages/hashtag.jsx:296
+msgid "Unable to unfeature on profile"
+msgstr "Не удалось отменить рекомендацию в профиле"
+
+#: src/pages/hashtag.jsx:305
+#: src/pages/hashtag.jsx:321
+msgid "Featured on profile"
+msgstr "Рекомендуется в профиле"
+
+#: src/pages/hashtag.jsx:328
+msgid "Feature on profile"
+msgstr "Рекомендовать в профиле"
+
+#: src/pages/hashtag.jsx:393
+msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
+msgstr "{TOTAL_TAGS_LIMIT, plural, other {Предел - # тэг(а/ов)}}"
+
+#: src/pages/hashtag.jsx:396
+msgid "Add hashtag"
+msgstr "Добавить хэштег"
+
+#: src/pages/hashtag.jsx:428
+msgid "Remove hashtag"
+msgstr "Удалить хэштег"
+
+#: src/pages/hashtag.jsx:442
+msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
+msgstr "{SHORTCUTS_LIMIT, plural, one {Достигнут предел в # ярлык. Не удалось добавить ярлык.} other {Достигнут предел в # ярлык(а/ов). Не удалось добавить ярлык.}}"
+
+#: src/pages/hashtag.jsx:471
+msgid "This shortcut already exists"
+msgstr "Ярлык уже существует"
+
+#: src/pages/hashtag.jsx:474
+msgid "Hashtag shortcut added"
+msgstr "Ярлык для хэштега добавлен"
+
+#: src/pages/hashtag.jsx:480
+msgid "Add to Shortcuts"
+msgstr "Добавить в ярлыки"
+
+#: src/pages/hashtag.jsx:486
+#: src/pages/public.jsx:139
+#: src/pages/trending.jsx:444
+msgid "Enter a new instance e.g. \"mastodon.social\""
+msgstr "Введите новый инстанс, например \"mastodon.social\""
+
+#: src/pages/hashtag.jsx:489
+#: src/pages/public.jsx:142
+#: src/pages/trending.jsx:447
+msgid "Invalid instance"
+msgstr "Некорректный инстанс"
+
+#: src/pages/hashtag.jsx:503
+#: src/pages/public.jsx:156
+#: src/pages/trending.jsx:459
+msgid "Go to another instance…"
+msgstr "Перейти к другому инстансу…"
+
+#: src/pages/hashtag.jsx:516
+#: src/pages/public.jsx:169
+#: src/pages/trending.jsx:470
+msgid "Go to my instance (<0>{currentInstance}</0>)"
+msgstr "Переключиться на мой инстанс (<0>{currentInstance}</0>)"
+
+#: src/pages/home.jsx:208
+msgid "Unable to fetch notifications."
+msgstr "Не удалось загрузить уведомления."
+
+#: src/pages/home.jsx:228
+msgid "<0>New</0> <1>Follow Requests</1>"
+msgstr "<0>Новые</0> <1>запросы на подписку</1>"
+
+#: src/pages/home.jsx:234
+msgid "See all"
+msgstr "Показать все"
+
+#: src/pages/http-route.jsx:68
+msgid "Resolving…"
+msgstr "Определение…"
+
+#: src/pages/http-route.jsx:79
+msgid "Unable to resolve URL"
+msgstr "Не удается определить URL"
+
+#: src/pages/list.jsx:107
+msgid "Nothing yet."
+msgstr "Пока что ничего нет."
+
+#: src/pages/list.jsx:176
+#: src/pages/list.jsx:279
+msgid "Manage members"
+msgstr "Управление участниками"
+
+#: src/pages/list.jsx:313
+msgid "Remove <0>@{0}</0> from list?"
+msgstr "Удалить <0>@{0}</0> из списка?"
+
+#: src/pages/list.jsx:359
+msgid "Remove…"
+msgstr "Удалить…"
+
+#: src/pages/lists.jsx:93
+msgid "{0, plural, one {# list} other {# lists}}"
+msgstr "{0, plural, one {# список} other {# списк(а/ов)}}"
+
+#: src/pages/lists.jsx:108
+msgid "No lists yet."
+msgstr "Пока нет списков."
+
+#: src/pages/login.jsx:86
+#: src/pages/login.jsx:99
+msgid "Failed to register application"
+msgstr "Не удалось зарегистрировать приложение"
+
+#: src/pages/login.jsx:209
+msgid "e.g. “mastodon.social”"
+msgstr "например “mastodon.social”"
+
+#: src/pages/login.jsx:220
+msgid "Failed to log in. Please try again or try another instance."
+msgstr "Не удалось войти. Пожалуйста, попробуйте еще раз или попробуйте другой инстанс."
+
+#: src/pages/login.jsx:232
+msgid "Continue with {selectedInstanceText}"
+msgstr "Продолжить на {selectedInstanceText}"
+
+#: src/pages/login.jsx:233
+msgid "Continue"
+msgstr "Продолжить"
+
+#: src/pages/login.jsx:241
+msgid "Don't have an account? Create one!"
+msgstr "Нет учетной записи? Создайте её!"
+
+#: src/pages/mentions.jsx:20
+msgid "Private mentions"
+msgstr "Личные упоминания"
+
+#: src/pages/mentions.jsx:159
+msgid "Private"
+msgstr "Личные"
+
+#: src/pages/mentions.jsx:169
+msgid "No one mentioned you :("
+msgstr "Никто не упомянул вас :("
+
+#: src/pages/mentions.jsx:170
+msgid "Unable to load mentions."
+msgstr "Не удалось загрузить упоминания."
+
+#: src/pages/notifications.jsx:97
+msgid "You don't follow"
+msgstr "Которых вы не читаете"
+
+#: src/pages/notifications.jsx:98
+msgid "Who don't follow you"
+msgstr "Кто не подписан на вас"
+
+#: src/pages/notifications.jsx:99
+msgid "With a new account"
+msgstr "С новой учетной записью"
+
+#: src/pages/notifications.jsx:100
+msgid "Who unsolicitedly private mention you"
+msgstr "Кому нежелательно лично упоминать вас"
+
+#: src/pages/notifications.jsx:101
+msgid "Who are limited by server moderators"
+msgstr "Кто ограничен модераторами сервера"
+
+#: src/pages/notifications.jsx:523
+#: src/pages/notifications.jsx:844
+msgid "Notifications settings"
+msgstr "Параметры уведомлений"
+
+#: src/pages/notifications.jsx:541
+msgid "New notifications"
+msgstr "Новые уведомления"
+
+#: src/pages/notifications.jsx:552
+msgid "{0, plural, one {Announcement} other {Announcements}}"
+msgstr "{0, plural, one {Оповещение} other {Оповещени(я/й)}}"
+
+#: src/pages/notifications.jsx:599
+#: src/pages/settings.jsx:1036
+msgid "Follow requests"
+msgstr "Запросы на подписку"
+
+#: src/pages/notifications.jsx:604
+msgid "{0, plural, one {# follow request} other {# follow requests}}"
+msgstr "{0, plural, one {# запрос на подписку} other {# запрос(а/ов) на подписку}}"
+
+#: src/pages/notifications.jsx:659
+msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
+msgstr "{0, plural, one {Отфильтрованные уведомления от # человека} other {Отфильтрованные уведомления от # человек}}"
+
+#: src/pages/notifications.jsx:725
+msgid "Only mentions"
+msgstr "Только упоминания"
+
+#: src/pages/notifications.jsx:729
+msgid "Today"
+msgstr "Сегодня"
+
+#: src/pages/notifications.jsx:733
+msgid "You're all caught up."
+msgstr "Вы уловили всё."
+
+#: src/pages/notifications.jsx:756
+msgid "Yesterday"
+msgstr "Вчера"
+
+#: src/pages/notifications.jsx:792
+msgid "Unable to load notifications"
+msgstr "Не удалось загрузить уведомления"
+
+#: src/pages/notifications.jsx:871
+msgid "Notifications settings updated"
+msgstr "Параметры уведомлений обновлены"
+
+#: src/pages/notifications.jsx:879
+msgid "Filter out notifications from people:"
+msgstr "Отфильтровать уведомления от людей:"
+
+#: src/pages/notifications.jsx:893
+msgid "Filter"
+msgstr "Фильтр"
+
+#: src/pages/notifications.jsx:896
+msgid "Ignore"
+msgstr "Игнорировать"
+
+#: src/pages/notifications.jsx:969
+msgid "Updated <0>{0}</0>"
+msgstr "Обновлено <0>{0}</0>"
+
+#: src/pages/notifications.jsx:1037
+msgid "View notifications from <0>@{0}</0>"
+msgstr "Просмотр уведомлений от <0>@{0}</0>"
+
+#: src/pages/notifications.jsx:1058
+msgid "Notifications from <0>@{0}</0>"
+msgstr "Уведомления от <0>@{0}</0>"
+
+#: src/pages/notifications.jsx:1125
+msgid "Notifications from @{0} will not be filtered from now on."
+msgstr "Уведомления от @{0} теперь не будут отфильтрованы."
+
+#: src/pages/notifications.jsx:1130
+msgid "Unable to accept notification request"
+msgstr "Не удалось принять запрос на уведомление"
+
+#: src/pages/notifications.jsx:1135
+msgid "Allow"
+msgstr "Разрешить"
+
+#: src/pages/notifications.jsx:1155
+msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
+msgstr "Уведомления от @{0} теперь не будут отображаться в отфильтрованных уведомлениях."
+
+#: src/pages/notifications.jsx:1160
+msgid "Unable to dismiss notification request"
+msgstr "Не удалось отклонить запрос на уведомление"
+
+#: src/pages/notifications.jsx:1165
+msgid "Dismiss"
+msgstr "Отклонить"
+
+#: src/pages/notifications.jsx:1180
+msgid "Dismissed"
+msgstr "Отклонено"
+
+#: src/pages/public.jsx:27
+msgid "Local timeline ({instance})"
+msgstr "Локальная лента ({instance})"
+
+#: src/pages/public.jsx:28
+msgid "Federated timeline ({instance})"
+msgstr "Федеративная лента ({instance})"
+
+#: src/pages/public.jsx:90
+msgid "Local timeline"
+msgstr "Локальная лента"
+
+#: src/pages/public.jsx:90
+msgid "Federated timeline"
+msgstr "Федеративная лента"
+
+#: src/pages/public.jsx:96
+msgid "No one has posted anything yet."
+msgstr "Никто ещё ничего не опубликовал."
+
+#: src/pages/public.jsx:123
+msgid "Switch to Federated"
+msgstr "Переключиться на Федеративную"
+
+#: src/pages/public.jsx:130
+msgid "Switch to Local"
+msgstr "Переключиться на локальную"
+
+#: src/pages/search.jsx:43
+msgid "Search: {q} (Posts)"
+msgstr "Поиск: {q} (Посты)"
+
+#: src/pages/search.jsx:46
+msgid "Search: {q} (Accounts)"
+msgstr "Поиск: {q} (Учетные записи)"
+
+#: src/pages/search.jsx:49
+msgid "Search: {q} (Hashtags)"
+msgstr "Поиск: {q} (Хэштеги)"
+
+#: src/pages/search.jsx:52
+msgid "Search: {q}"
+msgstr "Поиск: {q}"
+
+#: src/pages/search.jsx:232
+#: src/pages/search.jsx:314
+msgid "Hashtags"
+msgstr "Хэштеги"
+
+#: src/pages/search.jsx:264
+#: src/pages/search.jsx:318
+#: src/pages/search.jsx:388
+msgid "See more"
+msgstr "Показать больше"
+
+#: src/pages/search.jsx:290
+msgid "See more accounts"
+msgstr "Показать больше учётных записей"
+
+#: src/pages/search.jsx:304
+msgid "No accounts found."
+msgstr "Учетные записи не найдены."
+
+#: src/pages/search.jsx:360
+msgid "See more hashtags"
+msgstr "Показать больше хэштегов"
+
+#: src/pages/search.jsx:374
+msgid "No hashtags found."
+msgstr "Хэштеги не найдены."
+
+#: src/pages/search.jsx:418
+msgid "See more posts"
+msgstr "Показать больше постов"
+
+#: src/pages/search.jsx:432
+msgid "No posts found."
+msgstr "Публикации не найдены."
+
+#: src/pages/search.jsx:476
+msgid "Enter your search term or paste a URL above to get started."
+msgstr "Введите слово для поиска или вставьте URL выше, чтобы начать."
+
+#: src/pages/settings.jsx:74
+msgid "Settings"
+msgstr "Параметры"
+
+#: src/pages/settings.jsx:83
+msgid "Appearance"
+msgstr "Тема"
+
+#: src/pages/settings.jsx:159
+msgid "Light"
+msgstr "Светлая"
+
+#: src/pages/settings.jsx:170
+msgid "Dark"
+msgstr "Тёмная"
+
+#: src/pages/settings.jsx:183
+msgid "Auto"
+msgstr "Устройство"
+
+#: src/pages/settings.jsx:193
+msgid "Text size"
+msgstr "Размер текста"
+
+#. Preview of one character, in smallest size
+#. Preview of one character, in largest size
+#: src/pages/settings.jsx:198
+#: src/pages/settings.jsx:223
+msgid "A"
+msgstr "A"
+
+#: src/pages/settings.jsx:237
+msgid "Display language"
+msgstr "Язык интерфейса"
+
+#: src/pages/settings.jsx:246
+msgid "Volunteer translations"
+msgstr "Вы можете помочь с переводом"
+
+#: src/pages/settings.jsx:257
+msgid "Posting"
+msgstr "Публикация сообщений"
+
+#: src/pages/settings.jsx:264
+msgid "Default visibility"
+msgstr "Видимость поста по умолчанию"
+
+#: src/pages/settings.jsx:265
+#: src/pages/settings.jsx:311
+msgid "Synced"
+msgstr "Синхронизировано"
+
+#: src/pages/settings.jsx:290
+msgid "Failed to update posting privacy"
+msgstr "Не удалось обновить информацию о постах"
+
+#: src/pages/settings.jsx:313
+msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
+msgstr "Синхронизировано с настройками сервера инстанса. <0>Перейдите к инстансу ({instance}) для дополнительных настроек.</0>"
+
+#: src/pages/settings.jsx:328
+msgid "Experiments"
+msgstr "Э-э-эксперименты"
+
+#: src/pages/settings.jsx:341
+msgid "Auto refresh timeline posts"
+msgstr "Автоматически обновлять ленту с постами"
+
+#: src/pages/settings.jsx:353
+msgid "Boosts carousel"
+msgstr "Карусель продвижений"
+
+#: src/pages/settings.jsx:369
+msgid "Post translation"
+msgstr "Перевод поста"
+
+#: src/pages/settings.jsx:380
+msgid "Translate to"
+msgstr "Перевести на"
+
+#: src/pages/settings.jsx:391
+msgid "System language ({systemTargetLanguageText})"
+msgstr "Системный язык ({systemTargetLanguageText})"
+
+#: src/pages/settings.jsx:417
+msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
+msgstr "{0, plural, =0 {Скрыть кнопку \"Перевести\" для:} other {Скрыть кнопку \"Перевести\" для (#):}}"
+
+#: src/pages/settings.jsx:471
+msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
+msgstr "Примечание: Эта функция использует услуги сторонних сервисов перевода, основанных на <0>Lingva API</0> и <1>Lingva Translate</1>."
+
+#: src/pages/settings.jsx:505
+msgid "Auto inline translation"
+msgstr "Автоматический встроенный перевод"
+
+#: src/pages/settings.jsx:509
+msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
+msgstr "Автоматически показывать перевод постов на ленте. Работает только для <0>коротких</0> постов без предупреждения о содержимом, медиа и опросов."
+
+#: src/pages/settings.jsx:529
+msgid "GIF Picker for composer"
+msgstr "Выбор GIF для исполнителя"
+
+#: src/pages/settings.jsx:533
+msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
+msgstr "Примечание: Эта функция использует внешний сервис поиска GIF, работающий на <0>GIPHY</0>. Имеет рейтинг G (подходит для просмотра всем возрастам), параметры отслеживания удалены, информация о использовании отсутствует в запросах, но поисковые запросы и информация об IP-адресе все равно будут поступать на их серверы."
+
+#: src/pages/settings.jsx:562
+msgid "Image description generator"
+msgstr "Генератор описания изображения"
+
+#: src/pages/settings.jsx:567
+msgid "Only for new images while composing new posts."
+msgstr "Только для новых изображений при написании новых постов."
+
+#: src/pages/settings.jsx:574
+msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
+msgstr "Примечание: Эта функция использует внешний сервис искусственного интеллекта, работающий на <0>img-alt-api</0>. Может работать некорректно. Только для изображений и на английском языке."
+
+#: src/pages/settings.jsx:600
+msgid "Server-side grouped notifications"
+msgstr "Группировка уведомлений на стороне сервера"
+
+#: src/pages/settings.jsx:604
+msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
+msgstr "Функция находится в состоянии альфа. Потенциально улучшает группировку, однако логика группировки базовая."
+
+#: src/pages/settings.jsx:625
+msgid "\"Cloud\" import/export for shortcuts settings"
+msgstr "Облачный \"импорт/экспорт\" для настроек ярлыков"
+
+#: src/pages/settings.jsx:630
+msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
+msgstr "⚠️⚠️⚠️ Очень экспериментально.<0/>Хранится в заметках вашего профиля. Личные заметки (которые в профиле) в основном используются для других профилей и скрыты для собственного профиля."
+
+#: src/pages/settings.jsx:641
+msgid "Note: This feature uses currently-logged-in instance server API."
+msgstr "Примечание: Эта функция использует текущий авторизованный API сервера инстанса."
+
+#: src/pages/settings.jsx:658
+msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
+msgstr "Режим маскировки <0>(<1>Текст</1> → <2>████</2>)</0>"
+
+#: src/pages/settings.jsx:667
+msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
+msgstr "Замените текст блоками, полезными для изготовления скриншотов по соображениям конфиденциальности."
+
+#: src/pages/settings.jsx:692
+msgid "About"
+msgstr "О приложении"
+
+#: src/pages/settings.jsx:731
+msgid "<0>Built</0> by <1>@cheeaun</1>"
+msgstr "<0>Собрано</0> <1>@cheeaun</1>"
+
+#: src/pages/settings.jsx:760
+msgid "Sponsor"
+msgstr "Стать спонсором"
+
+#: src/pages/settings.jsx:768
+msgid "Donate"
+msgstr "Поддержать монеткой"
+
+#: src/pages/settings.jsx:776
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
+#: src/pages/settings.jsx:783
+msgid "<0>Site:</0> {0}"
+msgstr "<0>Сайт:</0> {0}"
+
+#: src/pages/settings.jsx:790
+msgid "<0>Version:</0> <1/> {0}"
+msgstr "<0>Версия:</0> <1/> {0}"
+
+#: src/pages/settings.jsx:805
+msgid "Version string copied"
+msgstr "Строка версии скопирована"
+
+#: src/pages/settings.jsx:808
+msgid "Unable to copy version string"
+msgstr "Не удалось скопировать строку версии"
+
+#: src/pages/settings.jsx:933
+#: src/pages/settings.jsx:938
+msgid "Failed to update subscription. Please try again."
+msgstr "Не удалось обновить подписку. Пожалуйста, попробуйте еще раз."
+
+#: src/pages/settings.jsx:944
+msgid "Failed to remove subscription. Please try again."
+msgstr "Не удалось удалить подписку. Пожалуйста, попробуйте еще раз."
+
+#: src/pages/settings.jsx:951
+msgid "Push Notifications (beta)"
+msgstr "Push-уведомления (бета)"
+
+#: src/pages/settings.jsx:973
+msgid "Push notifications are blocked. Please enable them in your browser settings."
+msgstr "Push-уведомления заблокированы. Пожалуйста, включите их в настройках браузера."
+
+#: src/pages/settings.jsx:982
+msgid "Allow from <0>{0}</0>"
+msgstr "Разрешить от <0>{0}</0>"
+
+#: src/pages/settings.jsx:991
+msgid "anyone"
+msgstr "кто угодно"
+
+#: src/pages/settings.jsx:995
+msgid "people I follow"
+msgstr "людей, на которых я подписан(а)"
+
+#: src/pages/settings.jsx:999
+msgid "followers"
+msgstr "подписчиков"
+
+#: src/pages/settings.jsx:1032
+msgid "Follows"
+msgstr "Подписки"
+
+#: src/pages/settings.jsx:1040
+msgid "Polls"
+msgstr "Опросы"
+
+#: src/pages/settings.jsx:1044
+msgid "Post edits"
+msgstr "Редактирование постов"
+
+#: src/pages/settings.jsx:1065
+msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
+msgstr "Разрешение для Push не было предоставлено с момента вашего последнего входа в систему. Чтобы предоставить разрешение на push-уведомление, вам нужно будет <0><1>войти</1> еще раз</0>."
+
+#: src/pages/settings.jsx:1081
+msgid "NOTE: Push notifications only work for <0>one account</0>."
+msgstr "ПРИМЕЧАНИЕ: Push-уведомления работают только для <0>одного аккаунта</0>."
+
+#: src/pages/status.jsx:565
+msgid "Post"
+msgstr "Опубликовать"
+
+#: src/pages/status.jsx:786
+msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
+msgstr "Вы не вошли в систему. Взаимодействия (ответы, продвижения и т. п.) невозможны."
+
+#: src/pages/status.jsx:799
+msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
+msgstr "Это сообщение с другого инстанса (<0>{instance}</0>). Взаимодействия (ответ, продвижение и т. д.) невозможны."
+
+#: src/pages/status.jsx:827
+msgid "Error: {e}"
+msgstr "Ошибка: {e}"
+
+#: src/pages/status.jsx:834
+msgid "Switch to my instance to enable interactions"
+msgstr "Переключиться на мой инстанс для включения взаимодействий"
+
+#: src/pages/status.jsx:936
+msgid "Unable to load replies."
+msgstr "Не удалось загрузить ответы."
+
+#: src/pages/status.jsx:1048
+msgid "Back"
+msgstr "Назад"
+
+#: src/pages/status.jsx:1079
+msgid "Go to main post"
+msgstr "Перейти к главному посту"
+
+#: src/pages/status.jsx:1102
+msgid "{0} posts above ‒ Go to top"
+msgstr "{0} постов выше - Перейти к началу"
+
+#: src/pages/status.jsx:1145
+#: src/pages/status.jsx:1208
+msgid "Switch to Side Peek view"
+msgstr "Переключиться на боковую панель"
+
+#: src/pages/status.jsx:1209
+msgid "Switch to Full view"
+msgstr "Переключиться на полный вид"
+
+#: src/pages/status.jsx:1227
+msgid "Show all sensitive content"
+msgstr "Показать весь деликатный контент"
+
+#: src/pages/status.jsx:1232
+msgid "Experimental"
+msgstr "Экспериментальные"
+
+#: src/pages/status.jsx:1241
+msgid "Unable to switch"
+msgstr "Не удалось переключиться"
+
+#: src/pages/status.jsx:1248
+msgid "Switch to post's instance ({0})"
+msgstr "Переключиться на инстанс поста ({0})"
+
+#: src/pages/status.jsx:1251
+msgid "Switch to post's instance"
+msgstr "Переключиться на инстанс поста"
+
+#: src/pages/status.jsx:1309
+msgid "Unable to load post"
+msgstr "Не удалось загрузить пост"
+
+#: src/pages/status.jsx:1426
+msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
+msgstr "{0, plural, one {# ответ} other {<0>{1}</0> ответ(а/ов)}}"
+
+#: src/pages/status.jsx:1444
+msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
+msgstr "{totalComments, plural, one {# комментарий} other {<0>{0}</0> комментари(я/ев)}}"
+
+#: src/pages/status.jsx:1466
+msgid "View post with its replies"
+msgstr "Просмотреть пост и ответы на него"
+
+#: src/pages/trending.jsx:70
+msgid "Trending ({instance})"
+msgstr "Популярное ({instance})"
+
+#: src/pages/trending.jsx:227
+msgid "Trending News"
+msgstr "Популярные новости"
+
+#: src/pages/trending.jsx:374
+msgid "Back to showing trending posts"
+msgstr "Назад к показу популярных сообщений"
+
+#: src/pages/trending.jsx:379
+msgid "Showing posts mentioning <0>{0}</0>"
+msgstr "Сообщения, упоминающие <0>{0}</0>"
+
+#: src/pages/trending.jsx:391
+msgid "Trending posts"
+msgstr "Популярные посты"
+
+#: src/pages/trending.jsx:414
+msgid "No trending posts."
+msgstr "Нет популярных постов."
+
+#: src/pages/welcome.jsx:53
+msgid "A minimalistic opinionated Mastodon web client."
+msgstr "Минималистичный веб-клиент Mastodon со своим видением интерфейса."
+
+#: src/pages/welcome.jsx:64
+msgid "Log in with Mastodon"
+msgstr "Войти через Mastodon"
+
+#: src/pages/welcome.jsx:70
+msgid "Sign up"
+msgstr "Регистрация"
+
+#: src/pages/welcome.jsx:77
+msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
+msgstr "Подключите ваш существующий аккаунт Mastodon/Fediverse.<0/>Ваши учетные данные не хранятся на этом сервере."
+
+#: src/pages/welcome.jsx:94
+msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
+msgstr "<0>Собран</0> <1>@cheeaun</1>. <2>Политика конфиденциальности</2>."
+
+#: src/pages/welcome.jsx:125
+msgid "Screenshot of Boosts Carousel"
+msgstr "Скриншот Карусели продвижений"
+
+#: src/pages/welcome.jsx:129
+msgid "Boosts Carousel"
+msgstr "Карусель продвижений"
+
+#: src/pages/welcome.jsx:132
+msgid "Visually separate original posts and re-shared posts (boosted posts)."
+msgstr "Визуально разделять оригинальные посты и повторно распределяемые посты (посты, которые были продвинуты)."
+
+#: src/pages/welcome.jsx:141
+msgid "Screenshot of nested comments thread"
+msgstr "Скриншот вложенных комментариев обсуждения"
+
+#: src/pages/welcome.jsx:145
+msgid "Nested comments thread"
+msgstr "Вложенные комментарии обсуждения"
+
+#: src/pages/welcome.jsx:148
+msgid "Effortlessly follow conversations. Semi-collapsible replies."
+msgstr "Легко следить за разговорами. Сворачиваемые ответы."
+
+#: src/pages/welcome.jsx:156
+msgid "Screenshot of grouped notifications"
+msgstr "Скриншот сгруппированных уведомлений"
+
+#: src/pages/welcome.jsx:160
+msgid "Grouped notifications"
+msgstr "Сгруппированные уведомления"
+
+#: src/pages/welcome.jsx:163
+msgid "Similar notifications are grouped and collapsed to reduce clutter."
+msgstr "Похожие уведомления сгруппированы и свернуты для сокращения путаницы."
+
+#: src/pages/welcome.jsx:172
+msgid "Screenshot of multi-column UI"
+msgstr "Скриншот многоколоночного интерфейса"
+
+#: src/pages/welcome.jsx:176
+msgid "Single or multi-column"
+msgstr "Одна или несколько колонок"
+
+#: src/pages/welcome.jsx:179
+msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
+msgstr "По умолчанию один столбец для искателей в режиме дзен. Настраиваемая многоколоночная система для опытных пользователей."
+
+#: src/pages/welcome.jsx:188
+msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
+msgstr "Скриншот мульти-хэштег ленты с формой, чтобы добавить больше хэштегов"
+
+#: src/pages/welcome.jsx:192
+msgid "Multi-hashtag timeline"
+msgstr "Мульти-хэштег лента"
+
+#: src/pages/welcome.jsx:195
+msgid "Up to 5 hashtags combined into a single timeline."
+msgstr "До 5 хэштегов, объединенных в одну ленту."
+
+#: src/utils/open-compose.js:24
+msgid "Looks like your browser is blocking popups."
+msgstr "Похоже, что ваш браузер блокирует всплывающие окна."
+
+#: src/utils/show-compose.js:16
+msgid "A draft post is currently minimized. Post or discard it before creating a new one."
+msgstr "Черновик сообщения в настоящее время минимизирован. Отправьте или удалите его перед созданием нового."
+
+#: src/utils/show-compose.js:21
+msgid "A post is currently open. Post or discard it before creating a new one."
+msgstr "В настоящее время открыт пост. Опубликуйте его или отмените его перед созданием нового."
+

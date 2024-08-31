@@ -121,13 +121,31 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+#shortcuts .tab-bar li a {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 4px 0;
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    z-index: -1;
+    transform: scale(0.5);
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+  }
+}
 #shortcuts .tab-bar li a.is-active {
   color: var(--link-color);
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     closest-side at 50% 50%,
     var(--bg-color),
     transparent
-  );
+  ); */
+  &:before {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(header[hidden])
   #shortcuts

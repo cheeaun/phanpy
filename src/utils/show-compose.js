@@ -1,3 +1,5 @@
+import { t, Trans } from '@lingui/macro';
+
 import openOSK from './open-osk';
 import showToast from './show-toast';
 import states from './states';
@@ -11,12 +13,12 @@ export default function showCompose(opts) {
     if (states.composerState.minimized) {
       showToast({
         duration: TOAST_DURATION,
-        text: `A draft post is currently minimized. Post or discard it before creating a new one.`,
+        text: t`A draft post is currently minimized. Post or discard it before creating a new one.`,
       });
     } else {
       showToast({
         duration: TOAST_DURATION,
-        text: `A post is currently open. Post or discard it before creating a new one.`,
+        text: t`A post is currently open. Post or discard it before creating a new one.`,
       });
     }
     return;

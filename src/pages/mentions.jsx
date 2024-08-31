@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
@@ -16,7 +17,7 @@ function Mentions({ columnMode, ...props }) {
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const [stateType, setStateType] = useState(null);
   const type = props?.type || searchParams.get('type') || stateType;
-  useTitle(`Mentions${type === 'private' ? ' (Private)' : ''}`, '/mentions');
+  useTitle(type === 'private' ? t`Private mentions` : t`Mentions`, '/mentions');
 
   const mentionsIterator = useRef();
   const latestItem = useRef();
@@ -143,7 +144,7 @@ function Mentions({ columnMode, ...props }) {
             }
           }}
         >
-          All
+          <Trans>All</Trans>
         </Link>
         <Link
           to="/mentions?type=private"
@@ -155,7 +156,7 @@ function Mentions({ columnMode, ...props }) {
             }
           }}
         >
-          Private
+          <Trans>Private</Trans>
         </Link>
       </div>
     );
@@ -163,10 +164,10 @@ function Mentions({ columnMode, ...props }) {
 
   return (
     <Timeline
-      title="Mentions"
+      title={t`Mentions`}
       id="mentions"
-      emptyText="No one mentioned you :("
-      errorText="Unable to load mentions."
+      emptyText={t`No one mentioned you :(`}
+      errorText={t`Unable to load mentions.`}
       instance={instance}
       fetchItems={fetchItems}
       checkForUpdates={checkForUpdates}

@@ -1,0 +1,63 @@
+name: i18n PR auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+    branches:
+      - main
+
+jobs:
+  run-and-merge:
+    if: contains(github.event.pull_request.labels.*.name, 'i18n') &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.head.ref == 'l10n_main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: sleep 15
+
+      - name: Check if the branch is dirty
+        run: |
+          git fetch origin ${{ github.event.pull_request.head.ref }}
+          if [ $(git rev-parse HEAD) != $(git rev-parse origin/${{ github.event.pull_request.head.ref }}) ]; then
+            echo "Branch is dirty. Exiting..."
+            exit 0
+          fi
+
+      - name: Check auto-merge conditions
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Debug: Show the base and head SHA
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
+          # Check if the commits exist
+          if ! git cat-file -e $BASE_SHA || ! git cat-file -e $HEAD_SHA; then
+            echo "ERROR: One or both of the commits are not available."
+            exit 1
+          fi
+
+          # Calculate the total number of lines changed (added, removed, or modified)
+          LINES_CHANGED=$(git diff --shortstat $BASE_SHA $HEAD_SHA | awk '{print $4 + $6 + $8}')
+
+          if [ -z "$LINES_CHANGED" ]; then
+            LINES_CHANGED=0
+          fi
+
+          echo "Total lines changed: $LINES_CHANGED"
+
+          # Check if the number of lines changed is more than 50
+          if [ "$LINES_CHANGED" -le 50 ]; then
+            exit 0
+          else
+            echo "More than 50 lines have been changed. Merging pull request."
+            PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
+            gh pr merge $PR_NUMBER --auto --squash || true
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

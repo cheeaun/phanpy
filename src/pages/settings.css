@@ -34,6 +34,11 @@
   align-items: center;
   flex-wrap: wrap;
   border-bottom: var(--hairline-width) solid var(--outline-color);
+
+  &.block {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 #settings-container section > ul > li > div:last-child {
   text-align: end;
@@ -143,14 +148,14 @@
   background-color: var(--bg-faded-color);
   border-radius: 8px;
   margin: 8px 0;
-  max-height: 6.5em;
+  max-height: 10em;
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
   font-size: 90%;
 }
 #settings-container .checkbox-fieldset label {
-  flex: 1 0 10em;
+  flex: 1 0 12em;
   padding: 4px;
   display: flex;
   gap: 4px;

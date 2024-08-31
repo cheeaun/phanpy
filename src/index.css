@@ -84,6 +84,7 @@
     var(--text-color) 60%
   );
   --outline-color: rgba(128, 128, 128, 0.2);
+  --outline-stronger-color: rgba(128, 128, 128, 0.4);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
@@ -148,6 +149,11 @@
       in lch,
       mediumslateblue 70%,
       var(--text-color) 30%
+    );
+    --button-bg-color: color-mix(
+      in srgb,
+      var(--blue-color) 80%,
+      var(--bg-color) 20%
     );
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
@@ -389,7 +395,7 @@ textarea:disabled {
   width: 100%;
 }
 
-:is(button, .button).small {
+:is(button, .button, select).small {
   font-size: 90%;
   padding: 4px 8px;
 }

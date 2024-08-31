@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -15,7 +16,18 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   // Notifications service
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
-  usePageVisibility(setVisible);
+  const visibleTimeout = useRef();
+  usePageVisibility((visible) => {
+    clearTimeout(visibleTimeout.current);
+    if (visible) {
+      setVisible(true);
+    } else {
+      visibleTimeout.current = setTimeout(() => {
+        setVisible(false);
+      }, POLL_INTERVAL);
+    }
+  });
+
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
       const notificationsIterator = masto.v1.notifications.list({
@@ -134,7 +146,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     const currentCloakMode = states.settings.cloakMode;
     states.settings.cloakMode = !currentCloakMode;
     showToast({
-      text: `Cloak mode ${currentCloakMode ? 'disabled' : 'enabled'}`,
+      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
     });
   });
 

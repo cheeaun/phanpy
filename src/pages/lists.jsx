@@ -1,6 +1,7 @@
 import './lists.css';
 
-import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
+import { Plural, t, Trans } from '@lingui/macro';
+import { useEffect, useReducer, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -12,7 +13,7 @@ import { fetchLists } from '../utils/lists';
 import useTitle from '../utils/useTitle';
 
 function Lists() {
-  useTitle(`Lists`, `/l`);
+  useTitle(t`Lists`, `/l`);
   const [uiState, setUIState] = useState('default');
 
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);
@@ -45,14 +46,16 @@ function Lists() {
                 <Icon icon="home" size="l" />
               </Link>
             </div>
-            <h1>Lists</h1>
+            <h1>
+              <Trans>Lists</Trans>
+            </h1>
             <div class="header-side">
               <button
                 type="button"
                 class="plain"
                 onClick={() => setShowListAddEditModal(true)}
               >
-                <Icon icon="plus" size="l" alt="New list" />
+                <Icon icon="plus" size="l" alt={t`New list`} />
               </button>
             </div>
           </div>
@@ -87,8 +90,7 @@ function Lists() {
               {lists.length > 1 && (
                 <footer class="ui-state">
                   <small class="insignificant">
-                    {lists.length} list
-                    {lists.length === 1 ? '' : 's'}
+                    <Plural value={lists.length} one="# list" other="# lists" />
                   </small>
                 </footer>
               )}
@@ -98,9 +100,13 @@ function Lists() {
               <Loader />
             </p>
           ) : uiState === 'error' ? (
-            <p class="ui-state">Unable to load lists.</p>
+            <p class="ui-state">
+              <Trans>Unable to load lists.</Trans>
+            </p>
           ) : (
-            <p class="ui-state">No lists yet.</p>
+            <p class="ui-state">
+              <Trans>No lists yet.</Trans>
+            </p>
           )}
         </main>
       </div>

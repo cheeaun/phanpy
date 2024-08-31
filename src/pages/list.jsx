@@ -1,5 +1,6 @@
 import './lists.css';
 
+import { t, Trans } from '@lingui/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
@@ -103,8 +104,8 @@ function List(props) {
         key={id}
         title={list.title}
         id="list"
-        emptyText="Nothing yet."
-        errorText="Unable to load posts."
+        emptyText={t`Nothing yet.`}
+        errorText={t`Unable to load posts.`}
         instance={instance}
         fetchItems={fetchList}
         checkForUpdates={checkForUpdates}
@@ -122,13 +123,15 @@ function List(props) {
             overflow="auto"
             menuButton={
               <button type="button" class="plain">
-                <Icon icon="list" size="l" alt="Lists" />
+                <Icon icon="list" size="l" alt={t`Lists`} />
                 <Icon icon="chevron-down" size="s" />
               </button>
             }
           >
             <MenuLink to="/l">
-              <span>All Lists</span>
+              <span>
+                <Trans>All Lists</Trans>
+              </span>
             </MenuLink>
             {lists?.length > 0 && (
               <>
@@ -151,7 +154,7 @@ function List(props) {
             position="anchor"
             menuButton={
               <button type="button" class="plain">
-                <Icon icon="more" size="l" />
+                <Icon icon="more" size="l" alt={t`More`} />
               </button>
             }
           >
@@ -163,11 +166,15 @@ function List(props) {
               }
             >
               <Icon icon="pencil" size="l" />
-              <span>Edit</span>
+              <span>
+                <Trans>Edit</Trans>
+              </span>
             </MenuItem>
             <MenuItem onClick={() => setShowManageMembersModal(true)}>
               <Icon icon="group" size="l" />
-              <span>Manage members</span>
+              <span>
+                <Trans>Manage members</Trans>
+              </span>
             </MenuItem>
           </Menu2>
         }
@@ -264,11 +271,13 @@ function ListManageMembers({ listID, onClose }) {
     <div class="sheet" id="list-manage-members-container">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Manage members</h2>
+        <h2>
+          <Trans>Manage members</Trans>
+        </h2>
       </header>
       <main>
         <ul>
@@ -281,7 +290,7 @@ function ListManageMembers({ listID, onClose }) {
           {showMore && uiState === 'default' && (
             <InView as="li" onChange={(inView) => inView && fetchMembers()}>
               <button type="button" class="light block" onClick={fetchMembers}>
-                Show more&hellip;
+                <Trans>Show more…</Trans>
               </button>
             </InView>
           )}
@@ -299,7 +308,14 @@ function RemoveAddButton({ account, listID }) {
   return (
     <MenuConfirm
       confirm={!removed}
-      confirmLabel={<span>Remove @{account.username} from list?</span>}
+      confirmLabel={
+        <span>
+          <Trans>
+            Remove <span class="bidi-isolate">@{account.username}</span> from
+            list?
+          </Trans>
+        </span>
+      }
       align="end"
       menuItemClassName="danger"
       onClick={() => {
@@ -340,7 +356,7 @@ function RemoveAddButton({ account, listID }) {
         class={`light ${removed ? '' : 'danger'}`}
         disabled={uiState === 'loading'}
       >
-        {removed ? 'Add' : 'Remove…'}
+        {removed ? t`Add` : t`Remove…`}
       </button>
     </MenuConfirm>
   );

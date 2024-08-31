@@ -2,6 +2,8 @@ import '../components/links-bar.css';
 import './catchup.css';
 
 import autoAnimate from '@formkit/auto-animate';
+import { msg, Plural, select, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
@@ -34,6 +36,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
 import htmlContentLength from '../utils/html-content-length';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -48,29 +51,29 @@ import useTitle from '../utils/useTitle';
 const FILTER_CONTEXT = 'home';
 
 const RANGES = [
-  { label: 'last 1 hour', value: 1 },
-  { label: 'last 2 hours', value: 2 },
-  { label: 'last 3 hours', value: 3 },
-  { label: 'last 4 hours', value: 4 },
-  { label: 'last 5 hours', value: 5 },
-  { label: 'last 6 hours', value: 6 },
-  { label: 'last 7 hours', value: 7 },
-  { label: 'last 8 hours', value: 8 },
-  { label: 'last 9 hours', value: 9 },
-  { label: 'last 10 hours', value: 10 },
-  { label: 'last 11 hours', value: 11 },
-  { label: 'last 12 hours', value: 12 },
-  { label: 'beyond 12 hours', value: 13 },
+  { label: msg`last 1 hour`, value: 1 },
+  { label: msg`last 2 hours`, value: 2 },
+  { label: msg`last 3 hours`, value: 3 },
+  { label: msg`last 4 hours`, value: 4 },
+  { label: msg`last 5 hours`, value: 5 },
+  { label: msg`last 6 hours`, value: 6 },
+  { label: msg`last 7 hours`, value: 7 },
+  { label: msg`last 8 hours`, value: 8 },
+  { label: msg`last 9 hours`, value: 9 },
+  { label: msg`last 10 hours`, value: 10 },
+  { label: msg`last 11 hours`, value: 11 },
+  { label: msg`last 12 hours`, value: 12 },
+  { label: msg`beyond 12 hours`, value: 13 },
 ];
 
-const FILTER_LABELS = [
-  'Original',
-  'Replies',
-  'Boosts',
-  'Followed tags',
-  'Groups',
-  'Filtered',
-];
+const FILTER_KEYS = {
+  original: msg`Original`,
+  replies: msg`Replies`,
+  boosts: msg`Boosts`,
+  followedTags: msg`Followed tags`,
+  groups: msg`Groups`,
+  filtered: msg`Filtered`,
+};
 const FILTER_SORTS = [
   'createdAt',
   'repliesCount',
@@ -79,33 +82,23 @@ const FILTER_SORTS = [
   'density',
 ];
 const FILTER_GROUPS = [null, 'account'];
-const FILTER_VALUES = {
-  Filtered: 'filtered',
-  Groups: 'group',
-  Boosts: 'boost',
-  Replies: 'reply',
-  'Followed tags': 'followedTags',
-  Original: 'original',
-};
-const FILTER_CATEGORY_TEXT = {
-  Filtered: 'filtered posts',
-  Groups: 'group posts',
-  Boosts: 'boosts',
-  Replies: 'replies',
-  'Followed tags': 'followed-tag posts',
-  Original: 'original posts',
-};
-const SORT_BY_TEXT = {
-  // asc, desc
-  createdAt: ['oldest', 'latest'],
-  repliesCount: ['fewest replies', 'most replies'],
-  favouritesCount: ['fewest likes', 'most likes'],
-  reblogsCount: ['fewest boosts', 'most boosts'],
-  density: ['least dense', 'most dense'],
-};
+
+const DTF = mem(
+  (locale) =>
+    new Intl.DateTimeFormat(locale || undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }),
+);
 
 function Catchup() {
-  useTitle('Catch-up', '/catchup');
+  const { i18n, _ } = useLingui();
+  const dtf = DTF(i18n.locale);
+
+  useTitle(`Catch-up`, '/catchup');
   const { masto, instance } = api();
   const [searchParams, setSearchParams] = useSearchParams();
   const id = searchParams.get('id');
@@ -307,23 +300,23 @@ function Catchup() {
   }, [uiState === 'start']);
 
   const [filterCounts, links] = useMemo(() => {
-    let filtereds = 0,
+    let filtered = 0,
       groups = 0,
       boosts = 0,
       replies = 0,
       followedTags = 0,
-      originals = 0;
+      original = 0;
     const links = {};
     for (const post of posts) {
       if (post._filtered) {
-        filtereds++;
+        filtered++;
         post.__FILTER = 'filtered';
       } else if (post.group) {
         groups++;
-        post.__FILTER = 'group';
+        post.__FILTER = 'groups';
       } else if (post.reblog) {
         boosts++;
-        post.__FILTER = 'boost';
+        post.__FILTER = 'boosts';
       } else if (post._followedTags?.length) {
         followedTags++;
         post.__FILTER = 'followedTags';
@@ -332,9 +325,9 @@ function Catchup() {
         post.inReplyToAccountId !== post.account?.id
       ) {
         replies++;
-        post.__FILTER = 'reply';
+        post.__FILTER = 'replies';
       } else {
-        originals++;
+        original++;
         post.__FILTER = 'original';
       }
 
@@ -401,18 +394,18 @@ function Catchup() {
 
     return [
       {
-        Filtered: filtereds,
-        Groups: groups,
-        Boosts: boosts,
-        Replies: replies,
-        'Followed tags': followedTags,
-        Original: originals,
+        filtered,
+        groups,
+        boosts,
+        replies,
+        followedTags,
+        original,
       },
       topLinks,
     ];
   }, [posts]);
 
-  const [selectedFilterCategory, setSelectedFilterCategory] = useState('All');
+  const [selectedFilterCategory, setSelectedFilterCategory] = useState('all');
   const [selectedAuthor, setSelectedAuthor] = useState(null);
 
   const [range, setRange] = useState(1);
@@ -427,8 +420,8 @@ function Catchup() {
 
     let filteredPosts = posts.filter((post) => {
       const postFilterMatches =
-        selectedFilterCategory === 'All' ||
-        post.__FILTER === FILTER_VALUES[selectedFilterCategory];
+        selectedFilterCategory === 'all' ||
+        post.__FILTER === selectedFilterCategory;
 
       if (postFilterMatches) {
         authorsHash[post.account.id] = post.account;
@@ -599,15 +592,37 @@ function Catchup() {
     };
     let toast = showToast({
       duration: 5_000, // 5 seconds
-      text: `Showing ${
-        FILTER_CATEGORY_TEXT[selectedFilterCategory] || 'all posts'
-      }${authorUsername ? ` by @${authorUsername}` : ''}, ${
-        SORT_BY_TEXT[sortBy][sortOrderIndex]
-      } first${
-        !!groupBy
-          ? `, grouped by ${groupBy === 'account' ? groupByText[groupBy] : ''}`
-          : ''
-      }`,
+      // Note: I'm sorry, translators
+      text: t`Showing ${select(selectedFilterCategory, {
+        all: 'all posts',
+        original: 'original posts',
+        replies: 'replies',
+        boosts: 'boosts',
+        followedTags: 'followed tags',
+        groups: 'groups',
+        filtered: 'filtered posts',
+      })}, ${select(sortBy, {
+        createdAt: select(sortOrder, {
+          asc: 'oldest',
+          desc: 'latest',
+        }),
+        reblogsCount: select(sortOrder, {
+          asc: 'fewest boosts',
+          desc: 'most boosts',
+        }),
+        favouritesCount: select(sortOrder, {
+          asc: 'fewest likes',
+          desc: 'most likes',
+        }),
+        repliesCount: select(sortOrder, {
+          asc: 'fewest replies',
+          desc: 'most replies',
+        }),
+        density: select(sortOrder, { asc: 'least dense', desc: 'most dense' }),
+      })} first${select(groupBy, {
+        account: ', grouped by authors',
+        other: '',
+      })}`,
     });
     return () => {
       toast?.hideToast?.();
@@ -807,6 +822,22 @@ function Catchup() {
     },
   );
 
+  const handleArrowKeys = useCallback((e) => {
+    const activeElement = document.activeElement;
+    const isRadio =
+      activeElement?.tagName === 'INPUT' && activeElement.type === 'radio';
+    const isArrowKeys =
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowRight';
+    if (isArrowKeys && isRadio) {
+      // Note: page scroll won't trigger on first arrow key press due to this. Subsequent presses will.
+      activeElement.blur();
+      return;
+    }
+  }, []);
+
   return (
     <div
       ref={(node) => {
@@ -837,20 +868,20 @@ function Catchup() {
               <NavMenu />
               {uiState === 'results' && (
                 <Link to="/catchup" class="button plain">
-                  <Icon icon="history2" size="l" />
+                  <Icon icon="history2" size="l" alt={t`Catch-up`} />
                 </Link>
               )}
               {uiState === 'start' && (
                 <Link to="/" class="button plain">
-                  <Icon icon="home" size="l" />
+                  <Icon icon="home" size="l" alt={t`Home`} />
                 </Link>
               )}
             </div>
             <h1>
               {uiState !== 'start' && (
-                <>
+                <Trans>
                   Catch-up <sup>beta</sup>
-                </>
+                </Trans>
               )}
             </h1>
             <div class="header-side">
@@ -862,30 +893,37 @@ function Catchup() {
                     setShowHelp(true);
                   }}
                 >
-                  Help
+                  <Trans>Help</Trans>
                 </button>
               )}
             </div>
           </div>
         </header>
-        <main>
+        <main onKeyDown={handleArrowKeys}>
           {uiState === 'start' && (
             <div class="catchup-start">
               <h1>
-                Catch-up <sup>beta</sup>
+                <Trans>
+                  Catch-up <sup>beta</sup>
+                </Trans>
               </h1>
               <details>
-                <summary>What is this?</summary>
+                <summary>
+                  <Trans>What is this?</Trans>
+                </summary>
                 <p>
-                  Catch-up is a separate timeline for your followings, offering
-                  a high-level view at a glance, with a simple, email-inspired
-                  interface to effortlessly sort and filter through posts.
+                  <Trans>
+                    Catch-up is a separate timeline for your followings,
+                    offering a high-level view at a glance, with a simple,
+                    email-inspired interface to effortlessly sort and filter
+                    through posts.
+                  </Trans>
                 </p>
                 <img
                   src={catchupUrl}
                   width="1200"
                   height="900"
-                  alt="Preview of Catch-up UI"
+                  alt={t`Preview of Catch-up UI`}
                 />
                 <p>
                   <button
@@ -894,13 +932,17 @@ function Catchup() {
                       e.target.closest('details').open = false;
                     }}
                   >
-                    Let's catch up
+                    <Trans>Let's catch up</Trans>
                   </button>
                 </p>
               </details>
-              <p>Let's catch up on the posts from your followings.</p>
               <p>
-                <b>Show me all posts from…</b>
+                <Trans>Let's catch up on the posts from your followings.</Trans>
+              </p>
+              <p>
+                <b>
+                  <Trans>Show me all posts from…</Trans>
+                </b>
               </p>
               <div class="catchup-form">
                 <input
@@ -918,11 +960,11 @@ function Catchup() {
                     width: '8em',
                   }}
                 >
-                  {RANGES[range - 1].label}
+                  {_(RANGES[range - 1].label)}
                   <br />
                   <small class="insignificant">
                     {range == RANGES[RANGES.length - 1].value
-                      ? 'until the max'
+                      ? t`until the max`
                       : niceDateTime(
                           new Date(Date.now() - range * 60 * 60 * 1000),
                         )}
@@ -930,7 +972,7 @@ function Catchup() {
                 </span>
                 <datalist id="catchup-ranges">
                   {RANGES.map(({ label, value }) => (
-                    <option value={value} label={label} />
+                    <option value={value} label={_(label)} />
                   ))}
                 </datalist>{' '}
                 <button
@@ -952,12 +994,13 @@ function Catchup() {
                     }
                   }}
                 >
-                  Catch up
+                  <Trans>Catch up</Trans>
                 </button>
               </div>
               {lastCatchupRange && range > lastCatchupRange ? (
                 <p class="catchup-info">
-                  <Icon icon="info" /> Overlaps with your last catch-up
+                  <Icon icon="info" />{' '}
+                  <Trans>Overlaps with your last catch-up</Trans>
                 </p>
               ) : range === RANGES[RANGES.length - 1].value &&
                 lastCatchupEndAt ? (
@@ -969,21 +1012,27 @@ function Catchup() {
                       checked
                       ref={catchupLastRef}
                     />{' '}
-                    Until the last catch-up (
-                    {dtf.format(new Date(lastCatchupEndAt))})
+                    <Trans>
+                      Until the last catch-up (
+                      {dtf.format(new Date(lastCatchupEndAt))})
+                    </Trans>
                   </label>
                 </p>
               ) : null}
               <p class="insignificant">
                 <small>
-                  Note: your instance might only show a maximum of 800 posts in
-                  the Home timeline regardless of the time range. Could be less
-                  or more.
+                  <Trans>
+                    Note: your instance might only show a maximum of 800 posts
+                    in the Home timeline regardless of the time range. Could be
+                    less or more.
+                  </Trans>
                 </small>
               </p>
               {!!prevCatchups?.length && (
                 <div class="catchup-prev">
-                  <p>Previously…</p>
+                  <p>
+                    <Trans>Previously…</Trans>
+                  </p>
                   <ul>
                     {prevCatchups.map((pc) => (
                       <li key={pc.id}>
@@ -1000,23 +1049,29 @@ function Catchup() {
                         </Link>{' '}
                         <span>
                           <small class="ib insignificant">
-                            {pc.count} posts
+                            <Plural
+                              value={pc.count}
+                              one="# post"
+                              other="# posts"
+                            />
                           </small>{' '}
                           <button
                             type="button"
                             class="light danger small"
                             onClick={async () => {
-                              const yes = confirm('Remove this catch-up?');
+                              const yes = confirm(t`Remove this catch-up?`);
                               if (yes) {
-                                let t = showToast(`Removing Catch-up ${pc.id}`);
+                                let t = showToast(
+                                  t`Removing Catch-up ${pc.id}`,
+                                );
                                 await db.catchup.del(pc.id);
                                 t?.hideToast?.();
-                                showToast(`Catch-up ${pc.id} removed`);
+                                showToast(t`Catch-up ${pc.id} removed`);
                                 reloadCatchups();
                               }
                             }}
                           >
-                            <Icon icon="x" />
+                            <Icon icon="x" alt={t`Remove`} />
                           </button>
                         </span>
                       </li>
@@ -1025,8 +1080,10 @@ function Catchup() {
                   {prevCatchups.length >= 3 && (
                     <p>
                       <small>
-                        Note: Only max 3 will be stored. The rest will be
-                        automatically removed.
+                        <Trans>
+                          Note: Only max 3 will be stored. The rest will be
+                          automatically removed.
+                        </Trans>
                       </small>
                     </p>
                   )}
@@ -1037,8 +1094,12 @@ function Catchup() {
           {uiState === 'loading' && (
             <div class="ui-state catchup-start">
               <Loader abrupt />
-              <p class="insignificant">Fetching posts…</p>
-              <p class="insignificant">This might take a while.</p>
+              <p class="insignificant">
+                <Trans>Fetching posts…</Trans>
+              </p>
+              <p class="insignificant">
+                <Trans>This might take a while.</Trans>
+              </p>
             </div>
           )}
           {uiState === 'results' && (
@@ -1057,7 +1118,7 @@ function Catchup() {
                 <aside>
                   <button
                     hidden={
-                      selectedFilterCategory === 'All' &&
+                      selectedFilterCategory === 'all' &&
                       !selectedAuthor &&
                       sortBy === 'createdAt' &&
                       sortOrder === 'asc'
@@ -1065,14 +1126,14 @@ function Catchup() {
                     type="button"
                     class="plain4 small"
                     onClick={() => {
-                      setSelectedFilterCategory('All');
+                      setSelectedFilterCategory('all');
                       setSelectedAuthor(null);
                       setSortBy('createdAt');
                       setGroupBy(null);
                       setSortOrder('asc');
                     }}
                   >
-                    Reset filters
+                    <Trans>Reset filters</Trans>
                   </button>
                   {links?.length > 0 && (
                     <button
@@ -1080,7 +1141,7 @@ function Catchup() {
                       class="plain small"
                       onClick={() => setShowTopLinks(!showTopLinks)}
                     >
-                      Top links{' '}
+                      <Trans>Top links</Trans>{' '}
                       <Icon
                         icon="chevron-down"
                         style={{
@@ -1196,17 +1257,19 @@ function Catchup() {
                                   whiteSpace: 'nowrap',
                                 }}
                               >
-                                Shared by{' '}
-                                {sharers.map((s) => {
-                                  const { avatarStatic, displayName } = s;
-                                  return (
-                                    <Avatar
-                                      url={avatarStatic}
-                                      size="s"
-                                      alt={displayName}
-                                    />
-                                  );
-                                })}
+                                <Trans>
+                                  Shared by{' '}
+                                  {sharers.map((s) => {
+                                    const { avatarStatic, displayName } = s;
+                                    return (
+                                      <Avatar
+                                        url={avatarStatic}
+                                        size="s"
+                                        alt={displayName}
+                                      />
+                                    );
+                                  })}
+                                </Trans>
                               </p>
                             </div>
                           </article>
@@ -1230,22 +1293,21 @@ function Catchup() {
                       name="filter-cat"
                       checked={selectedFilterCategory.toLowerCase() === 'all'}
                       onChange={() => {
-                        setSelectedFilterCategory('All');
+                        setSelectedFilterCategory('all');
                       }}
                     />
-                    All <span class="count">{posts.length}</span>
+                    <Trans>All</Trans> <span class="count">{posts.length}</span>
                   </label>
-                  {FILTER_LABELS.map(
-                    (label) =>
-                      !!filterCounts[label] && (
+                  {Object.entries(FILTER_KEYS).map(
+                    ([key, label]) =>
+                      !!filterCounts[key] && (
                         <label
                           class="filter-cat"
-                          key={label}
+                          key={_(label)}
                           title={
-                            (
-                              (filterCounts[label] / posts.length) *
-                              100
-                            ).toFixed(2) + '%'
+                            ((filterCounts[key] / posts.length) * 100).toFixed(
+                              2,
+                            ) + '%'
                           }
                         >
                           <input
@@ -1253,11 +1315,11 @@ function Catchup() {
                             name="filter-cat"
                             checked={
                               selectedFilterCategory.toLowerCase() ===
-                              label.toLowerCase()
+                              key.toLowerCase()
                             }
                             onChange={() => {
-                              setSelectedFilterCategory(label);
-                              if (label === 'Boosts') {
+                              setSelectedFilterCategory(key);
+                              if (key === 'boosts') {
                                 setSortBy('reblogsCount');
                                 setSortOrder('desc');
                                 setGroupBy(null);
@@ -1265,8 +1327,8 @@ function Catchup() {
                               // setSelectedAuthor(null);
                             }}
                           />
-                          {label}{' '}
-                          <span class="count">{filterCounts[label]}</span>
+                          {_(label)}{' '}
+                          <span class="count">{filterCounts[key]}</span>
                         </label>
                       ),
                   )}
@@ -1319,14 +1381,20 @@ function Catchup() {
                         opacity: 0.33,
                       }}
                     >
-                      {authorCountsList.length} authors
+                      <Plural
+                        value={authorCountsList.length}
+                        one="# author"
+                        other="# authors"
+                      />
                     </small>
                   )}
                 </div>
               )}
               {posts.length >= 2 && (
                 <div class="catchup-filters">
-                  <span class="filter-label">Sort</span>{' '}
+                  <span class="filter-label">
+                    <Trans>Sort</Trans>
+                  </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_SORTS.map((key) => (
                       <label
@@ -1356,11 +1424,11 @@ function Catchup() {
                         />
                         {
                           {
-                            createdAt: 'Date',
-                            repliesCount: 'Replies',
-                            favouritesCount: 'Likes',
-                            reblogsCount: 'Boosts',
-                            density: 'Density',
+                            createdAt: t`Date`,
+                            repliesCount: t`Replies`,
+                            favouritesCount: t`Likes`,
+                            reblogsCount: t`Boosts`,
+                            density: t`Density`,
                           }[key]
                         }
                         {sortBy === key && (sortOrder === 'asc' ? ' ↑' : ' ↓')}
@@ -1382,7 +1450,9 @@ function Catchup() {
                       </label>
                     ))}
                   </fieldset> */}
-                  <span class="filter-label">Group</span>{' '}
+                  <span class="filter-label">
+                    <Trans>Group</Trans>
+                  </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_GROUPS.map((key) => (
                       <label class="filter-group" key={key || 'none'}>
@@ -1396,8 +1466,8 @@ function Catchup() {
                           disabled={key === 'account' && selectedAuthor}
                         />
                         {{
-                          account: 'Authors',
-                        }[key] || 'None'}
+                          account: t`Authors`,
+                        }[key] || t`None`}
                       </label>
                     ))}
                   </fieldset>
@@ -1413,7 +1483,7 @@ function Catchup() {
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        Show all authors
+                        <Trans>Show all authors</Trans>
                       </button>
                     ) : null
                     // <button
@@ -1428,7 +1498,7 @@ function Catchup() {
               )}
               <ul
                 class={`catchup-list catchup-filter-${
-                  FILTER_VALUES[selectedFilterCategory] || ''
+                  selectedFilterCategory || ''
                 } ${sortBy ? `catchup-sort-${sortBy}` : ''} ${
                   selectedAuthor && authors[selectedAuthor]
                     ? `catchup-selected-author`
@@ -1463,9 +1533,9 @@ function Catchup() {
               <footer>
                 {filteredPosts.length > 5 && (
                   <p>
-                    {selectedFilterCategory === 'Boosts'
-                      ? "You don't have to read everything."
-                      : "That's all."}{' '}
+                    {selectedFilterCategory === 'boosts'
+                      ? t`You don't have to read everything.`
+                      : t`That's all.`}{' '}
                     <button
                       type="button"
                       class="textual"
@@ -1473,7 +1543,7 @@ function Catchup() {
                         scrollableRef.current.scrollTop = 0;
                       }}
                     >
-                      Back to top
+                      <Trans>Back to top</Trans>
                     </button>
                     .
                   </p>
@@ -1491,47 +1561,117 @@ function Catchup() {
               class="sheet-close"
               onClick={() => setShowHelp(false)}
             >
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
-              <h2>Help</h2>
+              <h2>
+                <Trans>Help</Trans>
+              </h2>
             </header>
             <main>
               <dl>
-                <dt>Top links</dt>
+                <dt>
+                  <Trans>Top links</Trans>
+                </dt>
                 <dd>
-                  Links shared by followings, sorted by shared counts, boosts
-                  and likes.
+                  <Trans>
+                    Links shared by followings, sorted by shared counts, boosts
+                    and likes.
+                  </Trans>
                 </dd>
-                <dt>Sort: Density</dt>
+                <dt>
+                  <Trans>Sort: Density</Trans>
+                </dt>
                 <dd>
-                  Posts are sorted by information density or depth. Shorter
-                  posts are "lighter" while longer posts are "heavier". Posts
-                  with photos are "heavier" than posts without photos.
+                  <Trans>
+                    Posts are sorted by information density or depth. Shorter
+                    posts are "lighter" while longer posts are "heavier". Posts
+                    with photos are "heavier" than posts without photos.
+                  </Trans>
                 </dd>
-                <dt>Group: Authors</dt>
+                <dt>
+                  <Trans>Group: Authors</Trans>
+                </dt>
                 <dd>
-                  Posts are grouped by authors, sorted by posts count per
-                  author.
+                  <Trans>
+                    Posts are grouped by authors, sorted by posts count per
+                    author.
+                  </Trans>
                 </dd>
-                <dt>Keyboard shortcuts</dt>
-                <dd>
-                  <kbd>j</kbd>: Next post
-                </dd>
-                <dd>
-                  <kbd>k</kbd>: Previous post
-                </dd>
-                <dd>
-                  <kbd>l</kbd>: Next author
-                </dd>
-                <dd>
-                  <kbd>h</kbd>: Previous author
-                </dd>
-                <dd>
-                  <kbd>Enter</kbd>: Open post details
+                <dt>
+                  <Trans>Keyboard shortcuts</Trans>
+                </dt>
+                {/* <dd>
+                  <kbd>j</kbd>: <Trans>Next post</Trans>
                 </dd>
                 <dd>
-                  <kbd>.</kbd>: Scroll to top
+                  <kbd>k</kbd>: <Trans>Previous post</Trans>
+                </dd>
+                <dd>
+                  <kbd>l</kbd>: <Trans>Next author</Trans>
+                </dd>
+                <dd>
+                  <kbd>h</kbd>: <Trans>Previous author</Trans>
+                </dd>
+                <dd>
+                  <kbd>Enter</kbd>: <Trans>Open post details</Trans>
+                </dd>
+                <dd>
+                  <kbd>.</kbd>: <Trans>Scroll to top</Trans>
+                </dd> */}
+                <dd>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Trans>Next post</Trans>
+                        </td>
+                        <td>
+                          <kbd>j</kbd>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Trans>Previous post</Trans>
+                        </td>
+                        <td>
+                          <kbd>k</kbd>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Trans>Next author</Trans>
+                        </td>
+                        <td>
+                          <kbd>l</kbd>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Trans>Previous author</Trans>
+                        </td>
+                        <td>
+                          <kbd>h</kbd>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Trans>Open post details</Trans>
+                        </td>
+                        <td>
+                          <kbd>Enter</kbd>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Trans>Scroll to top</Trans>
+                        </td>
+                        <td>
+                          <kbd>.</kbd>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </dd>
               </dl>
             </main>
@@ -1713,7 +1853,10 @@ function PostPeek({ post, filterInfo }) {
         )}
         {!!filterInfo ? (
           <span class="post-peek-filtered">
-            Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''}
+            {/* Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''} */}
+            {filterInfo?.titlesStr
+              ? t`Filtered: ${filterInfo.titlesStr}`
+              : t`Filtered`}
           </span>
         ) : (
           <>
@@ -1729,7 +1872,9 @@ function PostPeek({ post, filterInfo }) {
               <div class="post-peek-html">
                 {isThread && (
                   <>
-                    <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
+                    <span class="post-peek-tag post-peek-thread">
+                      <Trans>Thread</Trans>
+                    </span>{' '}
                   </>
                 )}
                 {!!content && (
@@ -1763,7 +1908,7 @@ function PostPeek({ post, filterInfo }) {
           {!!poll && (
             <span class="post-peek-tag post-peek-poll">
               <Icon icon="poll" size="s" />
-              Poll
+              <Trans>Poll</Trans>
             </span>
           )}
           {!!mediaAttachments?.length
@@ -1891,31 +2036,25 @@ function PostStats({ post }) {
     <span class="post-stats">
       {repliesCount > 0 && (
         <span class="post-stat-replies">
-          <Icon icon="comment2" size="s" /> {shortenNumber(repliesCount)}
+          <Icon icon="comment2" size="s" alt={t`Replies`} />{' '}
+          {shortenNumber(repliesCount)}
         </span>
       )}
       {favouritesCount > 0 && (
         <span class="post-stat-likes">
-          <Icon icon="heart" size="s" /> {shortenNumber(favouritesCount)}
+          <Icon icon="heart" size="s" alt={t`Likes`} />{' '}
+          {shortenNumber(favouritesCount)}
         </span>
       )}
       {reblogsCount > 0 && (
         <span class="post-stat-boosts">
-          <Icon icon="rocket" size="s" /> {shortenNumber(reblogsCount)}
+          <Icon icon="rocket" size="s" alt={t`Boosts`} />{' '}
+          {shortenNumber(reblogsCount)}
         </span>
       )}
     </span>
   );
 }
-
-const { locale } = new Intl.DateTimeFormat().resolvedOptions();
-const dtf = new Intl.DateTimeFormat(locale, {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-});
 
 function binByTime(data, key, numBins) {
   // Extract dates from data objects

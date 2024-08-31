@@ -150,6 +150,11 @@
       mediumslateblue 70%,
       var(--text-color) 30%
     );
+    --button-bg-color: color-mix(
+      in srgb,
+      var(--blue-color) 80%,
+      var(--bg-color) 20%
+    );
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
     --reply-to-faded-color: #ffa60017;

@@ -26,7 +26,7 @@ export async function generateCodeChallenge(v) {
   return base64urlencode(hashed);
 }
 
-// If https://mastodon.social/.well-known/oauth-authorization-server exists, means support PKCE
+// If /.well-known/oauth-authorization-server exists and code_challenge_methods_supported includes "S256", means support PKCE
 export async function supportsPKCE({ instanceURL }) {
   if (!instanceURL) return false;
   try {
@@ -34,7 +34,9 @@ export async function supportsPKCE({ instanceURL }) {
       `https://${instanceURL}/.well-known/oauth-authorization-server`,
     );
     if (!res.ok || res.status !== 200) return false;
-    return true;
+    const json = await res.json();
+    if (json.code_challenge_methods_supported?.includes('S256')) return true;
+    return false;
   } catch (e) {
     return false;
   }

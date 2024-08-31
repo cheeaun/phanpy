@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 16:29\n"
+"PO-Revision-Date: 2024-08-31 22:48\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -80,11 +80,11 @@ msgstr "Verificado"
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:777
 msgid "Joined <0>{0}</0>"
-msgstr "Entrou em <0>{0}</0>"
+msgstr "Se juntou em <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
-msgstr "Para sempre"
+msgstr "Permanentemente"
 
 #: src/components/account-info.jsx:377
 msgid "Unable to load account."
@@ -174,7 +174,7 @@ msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 
 #: src/components/account-info.jsx:818
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Última publicação no último 1 dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último 1 dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
+msgstr "{0, plural, one {{1, plural, one {Última publicação no último dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
 
 #: src/components/account-info.jsx:831
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
@@ -205,11 +205,11 @@ msgstr "Impulsos"
 
 #: src/components/account-info.jsx:869
 msgid "Post stats unavailable."
-msgstr "As estatísticas da publicação estão indisponíveis."
+msgstr "As estatísticas estão indisponíveis."
 
 #: src/components/account-info.jsx:900
 msgid "View post stats"
-msgstr "Ver estatísticas da publicação"
+msgstr "Ver estatísticas"
 
 #: src/components/account-info.jsx:1063
 msgid "Last post: <0>{0}</0>"
@@ -566,11 +566,11 @@ msgstr "Parece que você fechou a janela principal."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr "Parece que você já tem um campo de edição aberta na janela principal e atualmente está publicando. Espere até terminar e tente novamente mais tarde."
+msgstr "Parece que você já tem um campo de edição aberto na janela principal e atualmente está publicando. Espere até terminar e tente novamente mais tarde."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr "Parece que você já tem um campo de edição aberta na janela principal. Abrir esta janela irá desfazer as mudanças que você fez na janela principal. Continuar?"
+msgstr "Parece que você já tem um campo de edição aberto na janela principal. Abrir esta janela irá desfazer as mudanças que você fez na janela principal. Continuar?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
@@ -648,7 +648,7 @@ msgstr "Editar publicação"
 
 #: src/components/compose.jsx:1191
 msgid "What are you doing?"
-msgstr "O que está fazendo?"
+msgstr "O que você está fazendo?"
 
 #: src/components/compose.jsx:1266
 msgid "Mark media as sensitive"
@@ -2377,7 +2377,7 @@ msgstr "{accountDisplay} (+ respostas)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- impulsos)"
+msgstr "{accountDisplay} (- Impulsos)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
@@ -2496,7 +2496,7 @@ msgstr "Nota: contas <0>padrões</0> sempre serão as primeiras usadas para carr
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr "Nenhum favorito ainda. Vá favoritar algo!"
+msgstr "Sem favoritos ainda. Favorite algo primeiramente!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2741,7 +2741,7 @@ msgstr "Filtrado: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr "Nenhuma curtida ainda. Vá curtir algo!"
+msgstr "Sem curtidas ainda. Curta algo primeiramente!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."

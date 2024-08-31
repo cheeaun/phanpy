@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 15:33\n"
+"PO-Revision-Date: 2024-08-31 19:00\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1098,7 +1098,7 @@ msgstr "<0>Mayús</0> + <1>b</1>"
 #: src/components/status.jsx:2350
 #: src/components/status.jsx:2351
 msgid "Bookmark"
-msgstr "Marcar"
+msgstr "Añadir marcador"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
@@ -1524,7 +1524,7 @@ msgstr "Votado"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# voto} other {# votos}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -2081,7 +2081,7 @@ msgstr "Me gusta"
 #: src/components/status.jsx:923
 #: src/components/status.jsx:2350
 msgid "Unbookmark"
-msgstr "Desmarcar"
+msgstr "Quitar marcador"
 
 #: src/components/status.jsx:1031
 msgid "View post by <0>@{0}</0>"
@@ -2475,7 +2475,7 @@ msgstr "Ver perfil…"
 
 #: src/pages/accounts.jsx:163
 msgid "Set as default"
-msgstr "Establecer por defecto"
+msgstr "Establecer como predefinido"
 
 #: src/pages/accounts.jsx:173
 msgid "Log out <0>@{0}</0>?"
@@ -2495,7 +2495,7 @@ msgstr "Aviso: la cuenta <0>Default</0> se cargará siempre primero. Si cambias 
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "No hay marcadores todavía. ¡Busca algo que marcar!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2740,7 +2740,7 @@ msgstr "Filtrado: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "No hay me gustas todavía. ¡Busca algo que te guste!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2918,7 +2918,7 @@ msgstr "No se han podido cargar las publicaciones con esta etiqueta"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "¿Dejar de seguir la etiqueta #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3053,7 +3053,7 @@ msgstr "No se pudo registrar la aplicación"
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
-msgstr ""
+msgstr "dominio de la instancia"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"
@@ -3620,7 +3620,7 @@ msgstr "Tendencias ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
-msgstr "Noticias"
+msgstr "Noticias populares"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"

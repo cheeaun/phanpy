@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 15:34\n"
+"PO-Revision-Date: 2024-08-31 17:49\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1524,7 +1524,7 @@ msgstr "Проголосовали"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# голос} other {# голос(а/ов)}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -2495,7 +2495,7 @@ msgstr "Примечание. Учетная запись <0>по умолчан
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "Нет закладок. Добавьте какую-нибудь!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2740,7 +2740,7 @@ msgstr "Отфильтровано: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Нет отметок \"нравится\". Лайкните что-нибудь!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2918,7 +2918,7 @@ msgstr "Не удается загрузить записи с этим тего
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "Отписаться от #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3053,7 +3053,7 @@ msgstr "Не удалось зарегистрировать приложени�
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
-msgstr ""
+msgstr "домен инстанса"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

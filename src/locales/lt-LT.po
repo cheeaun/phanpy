@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 14:17\n"
+"PO-Revision-Date: 2024-08-31 15:34\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1522,49 +1522,53 @@ msgstr "Skaityti daugiau →"
 msgid "Voted"
 msgstr ""
 
-#: src/components/poll.jsx:135
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:116
+msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
+msgstr ""
+
+#: src/components/poll.jsx:136
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Hide results"
 msgstr ""
 
-#: src/components/poll.jsx:184
+#: src/components/poll.jsx:185
 msgid "Vote"
 msgstr ""
 
-#: src/components/poll.jsx:204
-#: src/components/poll.jsx:206
+#: src/components/poll.jsx:205
+#: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
 msgstr "Atnaujinti"
 
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Show results"
 msgstr "Rodyti rezultatus"
 
-#: src/components/poll.jsx:227
+#: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> balsas} few {<1>{1}</1> balsai} many {<1>{1}</1> balso} other {<1>{1}</1> balsų}}"
 
-#: src/components/poll.jsx:244
+#: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr ""
 
-#: src/components/poll.jsx:264
+#: src/components/poll.jsx:265
 msgid "Ended <0/>"
 msgstr ""
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:269
 msgid "Ended"
 msgstr ""
 
-#: src/components/poll.jsx:271
+#: src/components/poll.jsx:272
 msgid "Ending <0/>"
 msgstr ""
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:276
 msgid "Ending"
 msgstr ""
 
@@ -2489,6 +2493,10 @@ msgstr ""
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr ""
 
+#: src/pages/bookmarks.jsx:25
+msgid "No bookmarks yet. Go bookmark something!"
+msgstr ""
+
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
 msgstr ""
@@ -2730,6 +2738,10 @@ msgstr ""
 msgid "Filtered: {0}"
 msgstr ""
 
+#: src/pages/favourites.jsx:25
+msgid "No likes yet. Go like something!"
+msgstr ""
+
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
 msgstr ""
@@ -2904,6 +2916,10 @@ msgstr ""
 msgid "Unable to load posts with this tag"
 msgstr ""
 
+#: src/pages/hashtag.jsx:208
+msgid "Unfollow #{hashtag}?"
+msgstr ""
+
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
 msgstr ""
@@ -3033,6 +3049,10 @@ msgstr "Kol kas nėra sąrašų."
 #: src/pages/login.jsx:86
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
+msgstr ""
+
+#: src/pages/login.jsx:185
+msgid "instance domain"
 msgstr ""
 
 #: src/pages/login.jsx:209
@@ -3560,7 +3580,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
-msgstr ""
+msgstr "Rodyti visą jautrų turinį"
 
 #: src/pages/status.jsx:1232
 msgid "Experimental"
@@ -3568,31 +3588,31 @@ msgstr "Eksperimentinis"
 
 #: src/pages/status.jsx:1241
 msgid "Unable to switch"
-msgstr ""
+msgstr "Nepavyksta perjungti."
 
 #: src/pages/status.jsx:1248
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Perjungti į įrašo serverį ({0})"
 
 #: src/pages/status.jsx:1251
 msgid "Switch to post's instance"
-msgstr ""
+msgstr "Perjungti į įrašo serverį"
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
-msgstr ""
+msgstr "Nepavyksta įkelti įrašo."
 
 #: src/pages/status.jsx:1426
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
-msgstr ""
+msgstr "{0, plural, one {# atsakymas} few {<0>{1}</0> atsakymai} many {<0>{1}</0> atsakymo} other {<0>{1}</0> atsakymų}}"
 
 #: src/pages/status.jsx:1444
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
-msgstr ""
+msgstr "{totalComments, plural, one {# komentaras} few {<0>{0}</0> komentarai} many {<0>{0}</0> komentaro} other {<0>{0}</0> komentarų}}"
 
 #: src/pages/status.jsx:1466
 msgid "View post with its replies"
-msgstr ""
+msgstr "Peržiūrėti įrašą su jo atsakymais"
 
 #: src/pages/trending.jsx:70
 msgid "Trending ({instance})"
@@ -3684,7 +3704,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
-msgstr ""
+msgstr "Pagal numatytuosius nustatymus – vienas stulpelis zeno režimo ieškikliams. Galimybė konfigūruoti daugiasluoksnius stulpelius patyrusiems naudotojams."
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"

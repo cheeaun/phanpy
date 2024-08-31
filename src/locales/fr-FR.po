@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 13:08\n"
+"PO-Revision-Date: 2024-08-31 15:33\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -1522,49 +1522,53 @@ msgstr "Lire la suite →"
 msgid "Voted"
 msgstr "A voté"
 
-#: src/components/poll.jsx:135
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:116
+msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
+msgstr ""
+
+#: src/components/poll.jsx:136
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Hide results"
 msgstr "Masquer les résultats"
 
-#: src/components/poll.jsx:184
+#: src/components/poll.jsx:185
 msgid "Vote"
 msgstr "Voter"
 
-#: src/components/poll.jsx:204
-#: src/components/poll.jsx:206
+#: src/components/poll.jsx:205
+#: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
 msgstr "Actualiser"
 
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Show results"
 msgstr "Montrer les résultats"
 
-#: src/components/poll.jsx:227
+#: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 
-#: src/components/poll.jsx:244
+#: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> votant} other {<1>{1}</1> votants}}"
 
-#: src/components/poll.jsx:264
+#: src/components/poll.jsx:265
 msgid "Ended <0/>"
 msgstr "Est clôturé <0/>"
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:269
 msgid "Ended"
 msgstr "Est clos"
 
-#: src/components/poll.jsx:271
+#: src/components/poll.jsx:272
 msgid "Ending <0/>"
 msgstr "Se termine <0/>"
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:276
 msgid "Ending"
 msgstr "Sera clos"
 
@@ -2489,6 +2493,10 @@ msgstr "Ajouter un compte existant"
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr ""
 
+#: src/pages/bookmarks.jsx:25
+msgid "No bookmarks yet. Go bookmark something!"
+msgstr ""
+
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
 msgstr "Les signets n’ont pas pu être chargés."
@@ -2730,6 +2738,10 @@ msgstr "Remonter"
 msgid "Filtered: {0}"
 msgstr "Filtré : {0}"
 
+#: src/pages/favourites.jsx:25
+msgid "No likes yet. Go like something!"
+msgstr ""
+
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
 msgstr "Les favoris n’ont pas pu être chargés."
@@ -2904,6 +2916,10 @@ msgstr "Personne n'a encore publié de message avec ce mot croisillon."
 msgid "Unable to load posts with this tag"
 msgstr "Les messages avec ce mot-clé n’ont pas pu être chargés."
 
+#: src/pages/hashtag.jsx:208
+msgid "Unfollow #{hashtag}?"
+msgstr ""
+
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
 msgstr "Arrêt du suivi de #{hashtag}"
@@ -3033,6 +3049,10 @@ msgstr "Aucune liste pour le moment."
 #: src/pages/login.jsx:86
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
+msgstr ""
+
+#: src/pages/login.jsx:185
+msgid "instance domain"
 msgstr ""
 
 #: src/pages/login.jsx:209

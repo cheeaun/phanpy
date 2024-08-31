@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 00:56\n"
+"PO-Revision-Date: 2024-08-31 15:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -294,7 +294,7 @@ msgstr "Impossível copiar ligação"
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1087
-#: src/components/status.jsx:3109
+#: src/components/status.jsx:3114
 msgid "Copy"
 msgstr "Copiar"
 
@@ -422,9 +422,9 @@ msgstr "Seguir"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2834
-#: src/components/status.jsx:3073
-#: src/components/status.jsx:3571
+#: src/components/status.jsx:2839
+#: src/components/status.jsx:3078
+#: src/components/status.jsx:3576
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
@@ -527,7 +527,7 @@ msgstr "Modo oculto ativado"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:434
+#: src/components/timeline.jsx:435
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -606,7 +606,7 @@ msgstr "Anexo #{i} falhou"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:978
+#: src/components/timeline.jsx:979
 msgid "Content warning"
 msgstr "Alerta de conteúdo"
 
@@ -849,13 +849,13 @@ msgstr "Digite para buscar GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:883
+#: src/components/timeline.jsx:884
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:900
+#: src/components/timeline.jsx:901
 msgid "Next"
 msgstr "Seguinte"
 
@@ -952,7 +952,7 @@ msgid "Accounts"
 msgstr "Contas"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:516
+#: src/components/timeline.jsx:517
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -961,7 +961,7 @@ msgid "Show more…"
 msgstr "Mostrar mais…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:521
+#: src/components/timeline.jsx:522
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "O fim."
@@ -1204,10 +1204,10 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrado: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3401
-#: src/components/status.jsx:3497
-#: src/components/status.jsx:3575
-#: src/components/timeline.jsx:967
+#: src/components/status.jsx:3406
+#: src/components/status.jsx:3502
+#: src/components/status.jsx:3580
+#: src/components/timeline.jsx:968
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -1523,49 +1523,53 @@ msgstr "Leia mais →"
 msgid "Voted"
 msgstr "Votado"
 
-#: src/components/poll.jsx:135
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:116
+msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
+msgstr ""
+
+#: src/components/poll.jsx:136
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Hide results"
 msgstr "Ocultar resultado"
 
-#: src/components/poll.jsx:184
+#: src/components/poll.jsx:185
 msgid "Vote"
 msgstr "Votar"
 
-#: src/components/poll.jsx:204
-#: src/components/poll.jsx:206
+#: src/components/poll.jsx:205
+#: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: src/components/poll.jsx:218
-#: src/components/poll.jsx:222
+#: src/components/poll.jsx:219
+#: src/components/poll.jsx:223
 msgid "Show results"
 msgstr "Exibir resultado"
 
-#: src/components/poll.jsx:227
+#: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> voto} other {<1>{1}</1> votos}}"
 
-#: src/components/poll.jsx:244
+#: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> votante} other {<1>{1}</1> votantes}}"
 
-#: src/components/poll.jsx:264
+#: src/components/poll.jsx:265
 msgid "Ended <0/>"
 msgstr "Acabou <0/>"
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:269
 msgid "Ended"
 msgstr "Acabou"
 
-#: src/components/poll.jsx:271
+#: src/components/poll.jsx:272
 msgid "Ending <0/>"
 msgstr "Acabando <0/>"
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:276
 msgid "Ending"
 msgstr "Acabando"
 
@@ -2093,7 +2097,7 @@ msgid "Edited: {editedDateText}"
 msgstr "Editado: {editedDateText}"
 
 #: src/components/status.jsx:1122
-#: src/components/status.jsx:3078
+#: src/components/status.jsx:3083
 msgid "Embed post"
 msgstr "Incorporar publicação"
 
@@ -2217,85 +2221,85 @@ msgstr "Editado"
 msgid "Comments"
 msgstr "Comentários"
 
-#: src/components/status.jsx:2839
+#: src/components/status.jsx:2844
 msgid "Edit History"
 msgstr "Histórico de edições"
 
-#: src/components/status.jsx:2843
+#: src/components/status.jsx:2848
 msgid "Failed to load history"
 msgstr "Falhou ao carregar histórico"
 
-#: src/components/status.jsx:2848
+#: src/components/status.jsx:2853
 msgid "Loading…"
 msgstr "A carregar…"
 
-#: src/components/status.jsx:3083
+#: src/components/status.jsx:3088
 msgid "HTML Code"
 msgstr "Código HTML"
 
-#: src/components/status.jsx:3100
+#: src/components/status.jsx:3105
 msgid "HTML code copied"
 msgstr "Código HTML copiado"
 
-#: src/components/status.jsx:3103
+#: src/components/status.jsx:3108
 msgid "Unable to copy HTML code"
 msgstr "Impossível copiar código HTML"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3120
 msgid "Media attachments:"
 msgstr "Anexos de media:"
 
-#: src/components/status.jsx:3137
+#: src/components/status.jsx:3142
 msgid "Account Emojis:"
 msgstr "Emojis da conta:"
 
-#: src/components/status.jsx:3168
-#: src/components/status.jsx:3213
+#: src/components/status.jsx:3173
+#: src/components/status.jsx:3218
 msgid "static URL"
 msgstr "URL estático"
 
-#: src/components/status.jsx:3182
+#: src/components/status.jsx:3187
 msgid "Emojis:"
 msgstr "Emojis:"
 
-#: src/components/status.jsx:3227
+#: src/components/status.jsx:3232
 msgid "Notes:"
 msgstr "Notas:"
 
-#: src/components/status.jsx:3231
+#: src/components/status.jsx:3236
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Isto é estático, instável e sem script. Podes precisar para aplicar os teus próprios estilos e editar se necessário."
 
-#: src/components/status.jsx:3237
+#: src/components/status.jsx:3242
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "As votações não são interativas, ela vira uma lista com contador de votos."
 
-#: src/components/status.jsx:3242
+#: src/components/status.jsx:3247
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Anexos de media pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
 
-#: src/components/status.jsx:3248
+#: src/components/status.jsx:3253
 msgid "Post could be edited or deleted later."
 msgstr "Publicações podem ser editadas ou eliminadas depois."
 
-#: src/components/status.jsx:3254
+#: src/components/status.jsx:3259
 msgid "Preview"
 msgstr "Prévia"
 
-#: src/components/status.jsx:3263
+#: src/components/status.jsx:3268
 msgid "Note: This preview is lightly styled."
 msgstr "Nota: Esta prévia é levemente estilizada."
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3510
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsionado"
 
-#: src/components/timeline.jsx:450
+#: src/components/timeline.jsx:451
 #: src/pages/settings.jsx:1048
 msgid "New posts"
 msgstr "Novas publicações"
 
-#: src/components/timeline.jsx:551
+#: src/components/timeline.jsx:552
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2303,13 +2307,13 @@ msgstr "Novas publicações"
 msgid "Try again"
 msgstr "Tente novamente"
 
-#: src/components/timeline.jsx:940
-#: src/components/timeline.jsx:947
+#: src/components/timeline.jsx:941
+#: src/components/timeline.jsx:948
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Tópico"
 
-#: src/components/timeline.jsx:962
+#: src/components/timeline.jsx:963
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2489,6 +2493,10 @@ msgstr "Adicionar conta existente"
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Nota: contas <0>padrões</0> sempre serão as primeiras usadas para carregar. Contas alteradas permaneceram durante a sessão."
+
+#: src/pages/bookmarks.jsx:25
+msgid "No bookmarks yet. Go bookmark something!"
+msgstr ""
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2731,6 +2739,10 @@ msgstr "Rolar até o topo"
 msgid "Filtered: {0}"
 msgstr "Filtrado: {0}"
 
+#: src/pages/favourites.jsx:25
+msgid "No likes yet. Go like something!"
+msgstr ""
+
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
 msgstr "Impossível carregar gostos."
@@ -2905,6 +2917,10 @@ msgstr "Ninguém publicou nada com esta tag ainda."
 msgid "Unable to load posts with this tag"
 msgstr "Impossível carregar publicações com esta tag"
 
+#: src/pages/hashtag.jsx:208
+msgid "Unfollow #{hashtag}?"
+msgstr ""
+
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
 msgstr "Deixou de seguir #{hashtag}"
@@ -3035,6 +3051,10 @@ msgstr "Nenhuma lista ainda."
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
 msgstr "Falhou ao registrar aplicação"
+
+#: src/pages/login.jsx:185
+msgid "instance domain"
+msgstr ""
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

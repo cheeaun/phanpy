@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 15:33\n"
+"PO-Revision-Date: 2024-08-31 16:29\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1098,7 +1098,7 @@ msgstr "<0>Shift</0> + <1>b</1>"
 #: src/components/status.jsx:2350
 #: src/components/status.jsx:2351
 msgid "Bookmark"
-msgstr "Marcar"
+msgstr "Marcar como favorito"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
@@ -1294,7 +1294,7 @@ msgstr "Todas as listas"
 #: src/pages/bookmarks.jsx:11
 #: src/pages/bookmarks.jsx:23
 msgid "Bookmarks"
-msgstr "Marcadores"
+msgstr "Favoritos"
 
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
@@ -1525,7 +1525,7 @@ msgstr "Votado"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# voto} other {# votos}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -2082,7 +2082,7 @@ msgstr "Gosto"
 #: src/components/status.jsx:923
 #: src/components/status.jsx:2350
 msgid "Unbookmark"
-msgstr "Desmarcar"
+msgstr "Eliminar dos favoritos"
 
 #: src/components/status.jsx:1031
 msgid "View post by <0>@{0}</0>"
@@ -2179,7 +2179,7 @@ msgstr "Impulsionado"
 #: src/components/status.jsx:1669
 #: src/components/status.jsx:2351
 msgid "Bookmarked"
-msgstr "Marcado"
+msgstr "Adicionado aos favoritos"
 
 #: src/components/status.jsx:1673
 msgid "Pinned"
@@ -2496,7 +2496,7 @@ msgstr "Nota: contas <0>padrões</0> sempre serão as primeiras usadas para carr
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "Nenhum favorito ainda. Adiciona algo aos favoritos!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2741,7 +2741,7 @@ msgstr "Filtrado: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Nenhum gosto ainda. Vá gostar de algo!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2919,7 +2919,7 @@ msgstr "Impossível carregar publicações com esta tag"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "Deixar de seguir #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3054,7 +3054,7 @@ msgstr "Falhou ao registrar aplicação"
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
-msgstr ""
+msgstr "domínio de instância"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"

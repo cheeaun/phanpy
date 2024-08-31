@@ -2659,7 +2659,12 @@ function Card({ card, selfReferential, instance }) {
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
-      blurhashImage = canvas.toDataURL();
+      if (window.OffscreenCanvas) {
+        const blob = canvas.convertToBlob();
+        blurhashImage = URL.createObjectURL(blob);
+      } else {
+        blurhashImage = canvas.toDataURL();
+      }
     }
 
     const isPost = isCardPost(domain);

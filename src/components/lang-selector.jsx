@@ -9,6 +9,7 @@ import store from '../utils/store';
 const regionMaps = {
   'zh-CN': 'zh-Hans',
   'zh-TW': 'zh-Hant',
+  'pt-BR': 'pt-BR',
 };
 
 export default function LangSelector() {

@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 15:33\n"
+"PO-Revision-Date: 2024-09-01 01:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1516,7 +1516,7 @@ msgstr "了解更多 <0/>"
 #: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr "继续阅读 →"
+msgstr "阅读更多 →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
@@ -1524,7 +1524,7 @@ msgstr "已投票"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, other {# 票}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -2495,7 +2495,7 @@ msgstr "注意: 首次加载时始终使用<0>默认</0>帐户。当前帐户被
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "尚无收藏。去收藏一些嘟文吧！"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2601,7 +2601,7 @@ msgstr "选择要显示的嘟文的时间范围…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
-msgstr "直至达到最大值"
+msgstr "尽可能多"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
@@ -2740,7 +2740,7 @@ msgstr "已过滤: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "尚无点赞。去点赞一些嘟文吧！"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2918,7 +2918,7 @@ msgstr "无法加载此话题标签下的嘟文"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "是否取关 #{hashtag}？"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -3053,7 +3053,7 @@ msgstr "注册应用失败"
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
-msgstr ""
+msgstr "实例域名"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"
@@ -3539,7 +3539,7 @@ msgstr "发布"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr "你尚未登录，无法进行互动 (回复、转嘟等)。"
+msgstr "你尚未登录。互动 ()"
 
 #: src/pages/status.jsx:799
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
@@ -3656,7 +3656,7 @@ msgstr "连接你现有的 Mastodon/Fediverse 账户。<0/>你的凭据不会在
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
-msgstr "由 <1>@cheeaun</1> <0>编写构建</0>。 <2>隐私政策</2>。"
+msgstr "由 <1>@cheeaun</1> <0>开发</0>。<2>隐私政策</2>。"
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"

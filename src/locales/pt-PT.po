@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 16:33\n"
+"PO-Revision-Date: 2024-09-01 21:02\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -28,7 +28,7 @@ msgstr "Publicações: {0}"
 
 #: src/components/account-block.jsx:144
 msgid "Last posted: {0}"
-msgstr "Publicado ultimamente: {0}"
+msgstr "Última publicação: {0}"
 
 #: src/components/account-block.jsx:159
 #: src/components/account-info.jsx:634
@@ -49,7 +49,7 @@ msgstr "Mutuo"
 #: src/components/account-block.jsx:180
 #: src/components/account-info.jsx:1674
 msgid "Requested"
-msgstr "Solicitado"
+msgstr "Pedido"
 
 #: src/components/account-block.jsx:184
 #: src/components/account-info.jsx:416
@@ -66,7 +66,7 @@ msgstr "A seguir"
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
 msgid "Follows you"
-msgstr "Segue-te"
+msgstr "Te segue"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
@@ -130,7 +130,7 @@ msgstr "Mais"
 
 #: src/components/account-info.jsx:439
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> indicou que a nova conta é agora:"
+msgstr "<0>{displayName}</0> indicou que a nova conta é:"
 
 #: src/components/account-info.jsx:584
 #: src/components/account-info.jsx:1273
@@ -157,7 +157,7 @@ msgstr "Ver foto de perfil"
 
 #: src/components/account-info.jsx:612
 msgid "View profile header"
-msgstr "Ver cabeçalho do perfil"
+msgstr "Ver banner do perfil"
 
 #: src/components/account-info.jsx:629
 msgid "In Memoriam"
@@ -166,7 +166,7 @@ msgstr "Em memorial"
 #: src/components/account-info.jsx:709
 #: src/components/account-info.jsx:747
 msgid "This user has chosen to not make this information available."
-msgstr "Este utilizador decidiu não fazer esta informação disponível."
+msgstr "Este utilizador decidiu não fazer esta informação visível."
 
 #: src/components/account-info.jsx:802
 msgid "{0} original posts, {1} replies, {2} boosts"
@@ -174,7 +174,7 @@ msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 
 #: src/components/account-info.jsx:818
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Última publicação no último 1 dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último 1 dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
+msgstr "{0, plural, one {{1, plural, one {Última publicação no último dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
 
 #: src/components/account-info.jsx:831
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
@@ -380,7 +380,7 @@ msgstr "Editar perfil"
 
 #: src/components/account-info.jsx:1616
 msgid "Withdraw follow request?"
-msgstr "Eliminar pedido de seguir?"
+msgstr "Eliminar pedido de seguimento?"
 
 #: src/components/account-info.jsx:1617
 msgid "Unfollow @{0}?"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 16:33\n"
+"PO-Revision-Date: 2024-09-01 17:35\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1372,27 +1372,27 @@ msgstr ""
 #: src/components/nav-menu.jsx:425
 #: src/components/nav-menu.jsx:439
 msgid "Settings…"
-msgstr ""
+msgstr "Налаштування…"
 
 #: src/components/notification-service.jsx:160
 msgid "Notification"
-msgstr ""
+msgstr "Сповіщення"
 
 #: src/components/notification-service.jsx:166
 msgid "This notification is from your other account."
-msgstr ""
+msgstr "Це сповіщення з вашого іншого облікового запису."
 
 #: src/components/notification-service.jsx:195
 msgid "View all notifications"
-msgstr ""
+msgstr "Переглянути всі сповіщення"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr ""
+msgstr "{account} відреагував {emojiObject} на ваш допис "
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
-msgstr ""
+msgstr "{account} опублікував допис"
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
@@ -1404,7 +1404,7 @@ msgstr ""
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} подав запит на підписку"
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -1412,19 +1412,19 @@ msgstr ""
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "Опитування, в якому ви проголосували або яке створили, закінчилося."
 
 #: src/components/notification.jsx:192
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "Опитування, яке ви створили, завершено."
 
 #: src/components/notification.jsx:193
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "Опитування, в якому ви проголосували, закінчилося"
 
 #: src/components/notification.jsx:194
 msgid "A post you interacted with has been edited."
-msgstr ""
+msgstr "Допис, з яким ви взаємодіяли, був відредагований."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
@@ -1432,95 +1432,95 @@ msgstr ""
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
-msgstr ""
+msgstr "{account} зареєструвався(-лась)"
 
 #: src/components/notification.jsx:246
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} поскаржився(-лась) на {targetAccount}"
 
 #: src/components/notification.jsx:251
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Втрачено з'єднання з <0>{name}</0>."
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
-msgstr ""
+msgstr "Попередження про модерацію"
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "Адміністратор з <0>{from}</0> призупинив <1>{targetName}</1>, що означає, що ви більше не зможете отримувати оновлення від них або взаємодіяти з ними."
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Адміністратор з <0>{from}</0> заблокував <1>{targetName}</1>. Торкнулося підписників: {followersCount}, підписки: {followingCount}."
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Ви заблокували <0>{targetName}</0>. Видалені підписники: {followersCount}, підписки: {followingCount}."
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "Ваш обліковий запис отримав попередження про модерацію."
 
 #: src/components/notification.jsx:288
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "Ваш обліковий запис було вимкнено."
 
 #: src/components/notification.jsx:289
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "Деякі з ваших дописів було позначено як чутливі."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "Деякі з ваших дописів було видалено."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Відтепер ваші дописи будуть позначатися як чутливі."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
-msgstr ""
+msgstr "Ваш обліковий запис було обмежено."
 
 #: src/components/notification.jsx:293
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Ваш обліковий запис було призупинено."
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[Невідомий тип сповіщення: {type}]"
 
 #: src/components/notification.jsx:425
 #: src/components/status.jsx:937
 #: src/components/status.jsx:947
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "Поширили/Вподобали…"
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
-msgstr ""
+msgstr "Вподобали…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr ""
+msgstr "Поширили…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr ""
+msgstr "Підписалися…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "Дізнайтеся більше <0/>"
 
 #: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr ""
+msgstr "Читати більше →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr ""
+msgstr "Проголосував(-ла)"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1530,23 +1530,23 @@ msgstr ""
 #: src/components/poll.jsx:219
 #: src/components/poll.jsx:223
 msgid "Hide results"
-msgstr ""
+msgstr "Приховати результати"
 
 #: src/components/poll.jsx:185
 msgid "Vote"
-msgstr ""
+msgstr "Проголосувати"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
 #: src/pages/status.jsx:1158
 #: src/pages/status.jsx:1181
 msgid "Refresh"
-msgstr ""
+msgstr "Оновити"
 
 #: src/components/poll.jsx:219
 #: src/components/poll.jsx:223
 msgid "Show results"
-msgstr ""
+msgstr "Показати результати"
 
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
@@ -1558,29 +1558,29 @@ msgstr ""
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
-msgstr ""
+msgstr "Завершено <0/>"
 
 #: src/components/poll.jsx:269
 msgid "Ended"
-msgstr ""
+msgstr "Завершено"
 
 #: src/components/poll.jsx:272
 msgid "Ending <0/>"
-msgstr ""
+msgstr "Завершення <0/>"
 
 #: src/components/poll.jsx:276
 msgid "Ending"
-msgstr ""
+msgstr "Завершення"
 
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:55
 msgid "{0}s"
-msgstr ""
+msgstr "{0}с"
 
 #. Relative time in minutes, as short as possible
 #: src/components/relative-time.jsx:60
 msgid "{0}m"
-msgstr ""
+msgstr "{0}хв"
 
 #. Relative time in hours, as short as possible
 #: src/components/relative-time.jsx:65

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 01:06\n"
+"PO-Revision-Date: 2024-09-01 11:50\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1396,11 +1396,11 @@ msgstr "{account} 님이 게시물을 올렸습니다."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 님이 내 댓글을 부스트했습니다.} other {{account} 님이 내 게시물을 부스트했습니다.}}} other {{account} 님이 내 게시물 {postsCount}개를 부스트했습니다.}}} other {{postType, select, reply {<0><1>{0}</1> 사람</0>이 내 댓글을 부스트했습니다.} other {<2><3>{1}</3> 사람</2>이 내 게시물을 부스트했습니다.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} 님이 나를 팔로합니다.} other {<0><1>{0}</1> 사람</0>이 나를 팔로합니다.}}"
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
@@ -1408,7 +1408,7 @@ msgstr "{account} 님이 나를 팔로하고 싶어합니다."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 님이 당신의 답글을 좋아함.} other {{account} 님이 당신의 게시물을 좋아함.}}} other {{account} 님이 당신의 게시물 {postsCount}개를 좋아함.}}} other {{postType, select, reply {<0><1>{0}</1> 명의 사람들이</0> 당신의 답글을 좋아함.} other {<2><3>{1}</3>명의 사람들이</2> 당신의 게시글을 좋아함.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 님이 내 댓글을 좋아합니다.} other {{account} 님이 내 게시물을 좋아합니다.}}} other {{account} 님이 내 게시물 {postsCount}개를 좋아합니다.}}} other {{postType, select, reply {<0><1>{0}</1> 사람</0>이 내 댓글을 좋아합니다.} other {<2><3>{1}</3> 사람</2>이 내 게시물을 좋아합니다.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1428,7 +1428,7 @@ msgstr "좋아했거나 부스트 한 게시물이 고쳐졌습니다."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account}님이 당신의 답글을 부스트 및 좋아함.} other {{account}님이 당신의 게시물을 부스트 및 좋아함.}}} other {{account}님이 당신의 게시물 {postsCount}개를 부스트 및 좋아함.}}} other {{postType, select, reply {<0><1>{0}</1>명의 사람들이</0> 당신의 답글을 부스트 및 좋아함.} other {<2><3>{1}</3>명의 사람들이</2> 당신의 게시물을 부스트 및 좋아함.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account}님이 내 댓글을 부스트 및 좋아합니다.} other {{account}님이 내 게시물을 부스트 및 좋아합니다.}}} other {{account}님이 내 게시물 {postsCount}개를 부스트 및 좋아함.}}} other {{postType, select, reply {<0><1>{0}</1>명의 사람들이</0> 내 댓글을 부스트 및 좋아합니다.} other {<2><3>{1}</3>명의 사람들이</2> 내 게시물을 부스트 및 좋아합니다.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -2455,7 +2455,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:55
 msgid "Current"
-msgstr ""
+msgstr "현재 계정"
 
 #: src/pages/accounts.jsx:101
 msgid "Default"
@@ -2841,7 +2841,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr ""
+msgstr "필터된 게시글은..."
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
@@ -3652,7 +3652,7 @@ msgstr "가입"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
-msgstr ""
+msgstr "기존 Mastodon/Fediverse 계정을 연결하세요.<0/>당신의 인증 수단은 이 서버에 저장되지 않습니다."
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."

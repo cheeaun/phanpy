@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-02 22:22\n"
+"PO-Revision-Date: 2024-09-02 23:18\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1126,11 +1126,11 @@ msgstr "Nome"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr "Mostrar respostas para membros da lista"
+msgstr "Mostrar respostas aos membros da lista"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr "Mostrar respostas para pessoas que sigo"
+msgstr "Mostrar respostas para quem sigo"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
@@ -1231,7 +1231,7 @@ msgstr "Menu"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr "Recarregar página agora para atualizar?"
+msgstr "Recarregar página para atualizar?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
@@ -1380,7 +1380,7 @@ msgstr "Notificação"
 
 #: src/components/notification-service.jsx:166
 msgid "This notification is from your other account."
-msgstr "Esta notificação é da outra conta."
+msgstr "Esta notificação é da tua outra conta."
 
 #: src/components/notification-service.jsx:195
 msgid "View all notifications"
@@ -1396,7 +1396,7 @@ msgstr "{account} fez uma publicação."
 
 #: src/components/notification.jsx:83
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a tua resposta.} other {{account} impulsionou a tua publicação.}}} other {{account} impulsionou {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a tua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a tua resposta.} other {{account} impulsionou a tua publicação.}}} other {{account} impulsionou {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou(aram) a tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou(aram) a tua publicação.}}}}"
 
 #: src/components/notification.jsx:126
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
@@ -1404,11 +1404,11 @@ msgstr "{count, plural, =1 {{account} seguiu você.} other {<0><1>{0}</1> pessoa
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr "{account} pediu para seguir você."
+msgstr "{account} pediu para seguir-te."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da tua resposta.} other {{account} gostou de tua publicação.}}} other {{account} gostou {postsCount} de tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da tua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da tua resposta.} other {{account} gostou de tua publicação.}}} other {{account} gostou de {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da tua publicação.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1428,7 +1428,7 @@ msgstr "Uma publicação que interagiste foi editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da tua resposta.} other {{account} impulsionou e gostou da tua publicação.}}} other {{account} impulsionou e gostou {postsCount} de tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionaram e gostaram da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionaram e gostaram de tua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da tua resposta.} other {{account} impulsionou e gostou da tua publicação.}}} other {{account} impulsionou e gostou de {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou de tua publicação.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."

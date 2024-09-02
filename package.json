@@ -11,7 +11,9 @@
     "bundle-visualizer": "npx vite-bundle-visualizer",
     "messages:extract": "lingui extract",
     "messages:extract:clean": "lingui extract --locale en --clean",
-    "messages:compile": "lingui compile"
+    "messages:compile": "lingui compile",
+    "fetch-i18n-volunteers": "env $(cat .env.local | grep -v \"#\" | xargs) node scripts/fetch-i18n-volunteers.js",
+    "readme:i18n-volunteers": "node scripts/update-i18n-volunteers-readme.js"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "~0.5.4",

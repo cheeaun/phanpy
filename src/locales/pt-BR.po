@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-02 11:38\n"
+"PO-Revision-Date: 2024-09-02 15:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -455,7 +455,7 @@ msgstr "Não foi possível carregar listas."
 
 #: src/components/account-info.jsx:1922
 msgid "No lists."
-msgstr "Sem listas."
+msgstr "Não há listas."
 
 #: src/components/account-info.jsx:1933
 #: src/components/list-add-edit.jsx:37
@@ -656,7 +656,7 @@ msgstr "Marcar mídia como sensível"
 
 #: src/components/compose.jsx:1364
 msgid "Add poll"
-msgstr "Criar enquete"
+msgstr "Adicionar enquete"
 
 #: src/components/compose.jsx:1386
 msgid "Add custom emoji"
@@ -905,7 +905,7 @@ msgstr "Excluir tudo…"
 
 #: src/components/drafts.jsx:209
 msgid "No drafts found."
-msgstr "Nenhum rascunho encontrado."
+msgstr "Não há rascunho encontrado."
 
 #: src/components/drafts.jsx:245
 #: src/pages/catchup.jsx:1911
@@ -2268,7 +2268,7 @@ msgstr "Notas:"
 
 #: src/components/status.jsx:3236
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr "Isso é estático, instável e sem script. Você pode precisar para aplicar seus próprios estilos e editar caso necessário."
+msgstr "Isso é estático, instável e sem guião. Você pode precisar para aplicar seus próprios estilos e editar caso necessário."
 
 #: src/components/status.jsx:3242
 msgid "Polls are not interactive, becomes a list with vote counts."
@@ -2327,11 +2327,11 @@ msgstr "Traduzindo…"
 
 #: src/components/translation-block.jsx:193
 msgid "Translate from {sourceLangText} (auto-detected)"
-msgstr "Tradução de {sourceLangText} (detectado automaticamente)"
+msgstr "Traduzir do {sourceLangText} (detectado automaticamente)"
 
 #: src/components/translation-block.jsx:194
 msgid "Translate from {sourceLangText}"
-msgstr "Tradução de {sourceLangText}"
+msgstr "Traduzir do {sourceLangText}"
 
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
@@ -2343,7 +2343,7 @@ msgstr "Falhou ao traduzir"
 
 #: src/compose.jsx:32
 msgid "Editing source status"
-msgstr "Editando mensagem original"
+msgstr "Editando a mensagem original"
 
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
@@ -2359,7 +2359,7 @@ msgstr "Fechar janela"
 
 #: src/compose.jsx:86
 msgid "Login required."
-msgstr "Requer registro."
+msgstr "Requer iniciar sessão."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
@@ -2373,7 +2373,7 @@ msgstr "Publicações da conta"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
-msgstr "{accountDisplay} (+ respostas)"
+msgstr "{accountDisplay} (+ Respostas)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
@@ -2385,7 +2385,7 @@ msgstr "{accountDisplay} (#{tagged})"
 
 #: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (Media)"
-msgstr "{accountDisplay} (mídia)"
+msgstr "{accountDisplay} (Mídia)"
 
 #: src/pages/account-statuses.jsx:252
 msgid "{accountDisplay} ({monthYear})"
@@ -2444,7 +2444,7 @@ msgstr "Não foi possível obter informações da conta"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr "Alterar para instância de conta {0}"
+msgstr "Alterar a instância da conta {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
@@ -2689,7 +2689,7 @@ msgstr "Nenhum"
 
 #: src/pages/catchup.jsx:1486
 msgid "Show all authors"
-msgstr "Exibir autores"
+msgstr "Mostrar autores"
 
 #: src/pages/catchup.jsx:1537
 msgid "You don't have to read everything."
@@ -2713,7 +2713,7 @@ msgstr "Ordenar: Densidade"
 
 #: src/pages/catchup.jsx:1586
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "Publicações são ordenadas por informações de densidade ou profundidade. As curtas são mais \"leves\" enquanto as maiores são mais \"pesadas\". Publicações com fotos são mais \"pesadas\" do que elas sem fotos."
+msgstr "As publicações são ordenadas por informações de densidade ou profundidade. As curtas são mais \"leves\" enquanto as longas são mais \"pesadas\". Publicações com fotos são mais \"pesadas\" do que elas sem fotos."
 
 #: src/pages/catchup.jsx:1593
 msgid "Group: Authors"
@@ -2733,7 +2733,7 @@ msgstr "Autor anterior"
 
 #: src/pages/catchup.jsx:1667
 msgid "Scroll to top"
-msgstr "Rolar até o topo"
+msgstr "Subir"
 
 #: src/pages/catchup.jsx:1858
 msgid "Filtered: {0}"
@@ -2741,7 +2741,7 @@ msgstr "Filtrado: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr "Sem curtidas ainda. Curta algo primeiramente!"
+msgstr "Não há curtidas ainda. Curta algo primeiramente!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2782,7 +2782,7 @@ msgstr "Não foi possível carregar filtros."
 
 #: src/pages/filters.jsx:170
 msgid "No filters yet."
-msgstr "Sem filtro ainda."
+msgstr "Não há filtros ainda."
 
 #: src/pages/filters.jsx:177
 msgid "Add filter"
@@ -2806,11 +2806,11 @@ msgstr "Título"
 
 #: src/pages/filters.jsx:396
 msgid "Whole word"
-msgstr "Palavra toda"
+msgstr "Palavra completa"
 
 #: src/pages/filters.jsx:422
 msgid "No keywords. Add one."
-msgstr "Sem palavras-chave. Adicione uma."
+msgstr "Não há palavras-chave. Adicione uma."
 
 #: src/pages/filters.jsx:449
 msgid "Add keyword"
@@ -2826,7 +2826,7 @@ msgstr "Filtrar de…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
-msgstr "* Ainda não implementado"
+msgstr "* Não implementado ainda"
 
 #: src/pages/filters.jsx:498
 msgid "Status: <0><1/></0>"
@@ -2882,7 +2882,7 @@ msgstr "Não foi possível carregar hashtags seguidas."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr "Nenhuma hashtag seguida ainda."
+msgstr "Não há hashtags seguidas ainda."
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
@@ -2895,7 +2895,7 @@ msgstr "Não foi possível carregar publicações."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr "{hashtagTitle} (apenas mídia) em {instance}"
+msgstr "{hashtagTitle} (Apenas mídia) em {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
@@ -2903,7 +2903,7 @@ msgstr "{hashtagTitle} em {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr "{hashtagTitle} (apenas mídia)"
+msgstr "{hashtagTitle} (Apenas mídia)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
@@ -2911,7 +2911,7 @@ msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr "Ninguém publicou nada com esta tag ainda."
+msgstr "Ninguém publicou nada com esta tag."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
@@ -2939,7 +2939,7 @@ msgstr "Não destacado no perfil"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr "Não foi possível parar de destacar no perfil"
+msgstr "Não foi possível remover destaque do perfil"
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
@@ -2952,7 +2952,7 @@ msgstr "Destacar no perfil"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
-msgstr "{TOTAL_TAGS_LIMIT, plural, other {Máx. # tags}}"
+msgstr "{TOTAL_TAGS_LIMIT, plural, other {Máx. # tag(s)}}"
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
@@ -2972,7 +2972,7 @@ msgstr "Este atalho já existe"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr "Atalho da hashtag adicionada"
+msgstr "Atalho de hashtag adicionada"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
@@ -2994,13 +2994,13 @@ msgstr "Instância inválida"
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:459
 msgid "Go to another instance…"
-msgstr "Vá para outra instância…"
+msgstr "Ir à outra instância…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:470
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr "Vá para minha instância (<0>{currentInstance}</0>)"
+msgstr "Ir à minha instância (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
@@ -3008,7 +3008,7 @@ msgstr "Não foi possível obter notificações."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr "<0>Nova(s)</0> <1>Solicitação(ões) de seguimento</1>"
+msgstr "<0>Novas</0> <1>Solicitações de seguimento</1>"
 
 #: src/pages/home.jsx:234
 msgid "See all"
@@ -3045,12 +3045,12 @@ msgstr "{0, plural, one {# lista} other {# listas}}"
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
-msgstr "Nenhuma lista ainda."
+msgstr "Não há listas ainda."
 
 #: src/pages/login.jsx:86
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
-msgstr "Falhou ao registrar aplicativo"
+msgstr "Falhou ao registrar aplicação"
 
 #: src/pages/login.jsx:185
 msgid "instance domain"

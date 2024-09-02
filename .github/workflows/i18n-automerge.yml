@@ -56,8 +56,16 @@ jobs:
             exit 0
           else
             echo "More than 50 lines have been changed. Merging pull request."
+
+            # List of locales changed
+            LOCALES_CHANGED=$(git diff --name-only $BASE_SHA $HEAD_SHA | grep '\.po$' | awk -F '/' '{print $NF}' | sed 's/\.po$//' | tr '\n' ',' | sed 's/,$//')
+
+            # Better subject
+            # "i18n updates ([LOCALES_CHANGED])"
+            SUBJECT="i18n updates ($LOCALES_CHANGED)"
+
             PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
-            gh pr merge $PR_NUMBER --auto --squash || true
+            gh pr merge $PR_NUMBER --squash --subject "$SUBJECT" || true
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

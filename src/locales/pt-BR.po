@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 22:08\n"
+"PO-Revision-Date: 2024-09-02 11:38\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1517,7 +1517,7 @@ msgstr "Saiba mais <0/>"
 #: src/components/notification.jsx:680
 #: src/components/status.jsx:189
 msgid "Read more →"
-msgstr "Leia mais →"
+msgstr "Ler mais →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
@@ -1559,19 +1559,19 @@ msgstr "{votersCount, plural, one {<0>{0}</0> votante} other {<1>{1}</1> votante
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
-msgstr "Acabou <0/>"
+msgstr "Terminou <0/>"
 
 #: src/components/poll.jsx:269
 msgid "Ended"
-msgstr "Acabou"
+msgstr "Terminou"
 
 #: src/components/poll.jsx:272
 msgid "Ending <0/>"
-msgstr "Acabando <0/>"
+msgstr "Terminando <0/>"
 
 #: src/components/poll.jsx:276
 msgid "Ending"
-msgstr "Acabando"
+msgstr "Terminando"
 
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:55
@@ -1598,11 +1598,11 @@ msgstr "Links falsos, interações falsas, ou respostas repetitivas"
 
 #: src/components/report-modal.jsx:33
 msgid "Illegal"
-msgstr "Illegal"
+msgstr "Ilegal"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
-msgstr "Viola a lei do seu ou do país do servidor"
+msgstr "Viola a lei do seu país ou do servidor"
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
@@ -1670,7 +1670,7 @@ msgstr "Encaminhar à <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
-msgstr "Enviar denuncia"
+msgstr "Enviar relatório"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
@@ -1682,7 +1682,7 @@ msgstr "Não foi possível silenciar {username}"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr "Enviar denuncia <0>+ Silenciar perfil</0>"
+msgstr "Enviar relatório <0>+ Silenciar perfil</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
@@ -1694,7 +1694,7 @@ msgstr "Não foi possível bloquear {username}"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
-msgstr "Enviar denuncia <0>+ Bloquear perfil</0>"
+msgstr "Enviar relatório <0>+ Bloquear perfil</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -1763,7 +1763,7 @@ msgstr "Opcional, menos para o modo multi-coluna"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr "ex.: PixelArt (Máx. 5, separado por espaço)"
+msgstr "ex.: PixelArt (Máx. 5, espaço separado)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
@@ -1797,7 +1797,7 @@ msgstr "Multi-coluna"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr "Indisponível no modo atual de visualização"
+msgstr "Indisponível no modo de vista atual"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -1815,19 +1815,19 @@ msgstr "Editar"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr "Adicione mais de um(a) atalho/coluna para fazer funcionar."
+msgstr "Adicione mais de um atalho ou coluna para fazer funcionar."
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
-msgstr "Nenhuma coluna ainda. Clique no botão de adicionar coluna."
+msgstr "Não há colunas ainda. Clique no botão de adicionar coluna."
 
 #: src/components/shortcuts-settings.jsx:409
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr "Nenhum atalho ainda. Clique no botão de adicionar atalho."
+msgstr "Não há atalhos ainda. Clique no botão de adicionar atalho."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Sem certeza do que adicionar?<0/>Tente adicionando <1>Notificações do Início / Seguindo </1> primeiramente."
+msgstr "Sem certeza do que adicionar?<0/>Tente adicionando as <1>Notificações do Início / Seguindo </1> primeiramente."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -1851,15 +1851,15 @@ msgstr "Adicionar atalho…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr "A lista específica é opcional. Para o modo multi-coluna, a lista é necessária, ou a coluna não será exibida."
+msgstr "A lista específica é opcional. Para o modo multi-coluna a lista é necessária, ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr "Para o modo multi-coluna, procurar o termo é necessário, ou a coluna não será exibida."
+msgstr "Para o modo multi-coluna, procurar o termo é necessário ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr "Várias hashtags são suportadas. Separado por espaço."
+msgstr "Várias hashtags são suportadas. Espaço separado."
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
@@ -1891,7 +1891,7 @@ msgstr "Cole atalhos aqui"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr "Baixando salvou atalhos do servidor de instância…"
+msgstr "Baixando atalhos salvos do servidor de instância…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
@@ -1903,7 +1903,7 @@ msgstr "Baixar atalhos do servidor de instância"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
-msgstr "* Existe nos atuais atalhos"
+msgstr "* Existem nos atuais atalhos"
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
@@ -1923,7 +1923,7 @@ msgstr "Apenas atalhos que não existem no atalho atual serão anexados."
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr "Nenhum atalho novo para importar"
+msgstr "Não há atalhos novos para importar"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
@@ -1992,7 +1992,7 @@ msgstr "Não foi possível salvar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr "Sincronizar para o servidor de instância"
+msgstr "Sincronizar ao servidor de instância"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
@@ -2004,7 +2004,7 @@ msgstr "Atalhos brutos JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr "Importar/exportar opções de/para servidor de instância (Muito experimental)"
+msgstr "Importar/exportar opções do/para servidor de instância (Muito experimental)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
@@ -2012,11 +2012,11 @@ msgstr "<0/> <1>impulsionou</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr "Desculpa, a atual instância registrada não pode interagir com esta publicação de outra instância."
+msgstr "Desculpe, a atual instância registrada não pode interagir com esta publicação de outra instância."
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
-msgstr "Não gostou da publicação de @{0}"
+msgstr "Não curtiu a publicação de @{0}"
 
 #: src/components/status.jsx:716
 msgid "Liked @{0}'s post"
@@ -2115,7 +2115,7 @@ msgstr "Não foi possível dessilenciar conversa"
 
 #: src/components/status.jsx:1143
 msgid "Unable to mute conversation"
-msgstr "Não foi possível silenciar a conversa"
+msgstr "Não foi possível silenciar conversa"
 
 #: src/components/status.jsx:1152
 msgid "Unmute conversation"
@@ -2179,7 +2179,7 @@ msgstr "Impulsionado"
 #: src/components/status.jsx:1669
 #: src/components/status.jsx:2351
 msgid "Bookmarked"
-msgstr "Favorito"
+msgstr "Favoritado"
 
 #: src/components/status.jsx:1673
 msgid "Pinned"
@@ -2464,7 +2464,7 @@ msgstr "Padrão"
 
 #: src/pages/accounts.jsx:123
 msgid "Switch to this account"
-msgstr "Alterar para esta conta"
+msgstr "Alterar para essa conta"
 
 #: src/pages/accounts.jsx:132
 msgid "Switch in new tab/window"
@@ -2496,7 +2496,7 @@ msgstr "Nota: contas <0>padrões</0> sempre serão as primeiras usadas para carr
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr "Sem favoritos ainda. Favorite algo primeiramente!"
+msgstr "Não há favoritos ainda. Favorite algo primeiramente!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2598,7 +2598,7 @@ msgstr "Vamos acompanhar as publicações de seus seguidores."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr "Mostre-me todas as publicações de…"
+msgstr "Me mostre todas as publicações de…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
@@ -2634,7 +2634,7 @@ msgstr "Excluir acompanhamento?"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr "Nota: Somente armazenará um máximo de 3. O resto será automaticamente excluído."
+msgstr "Nota: Só armazenará um máximo de 3. O resto será automaticamente excluído."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"

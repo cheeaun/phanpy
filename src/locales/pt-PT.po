@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-03 09:57\n"
+"PO-Revision-Date: 2024-09-03 17:42\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1797,7 +1797,7 @@ msgstr "Multi-coluna"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr "Indisponível no modo atual de visualização"
+msgstr "Indisponível no modo de visualização atual"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -1815,7 +1815,7 @@ msgstr "Editar"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr "Adicione mais de um(a) atalho/coluna para fazer funcionar."
+msgstr "Adicione mais de um atalho/coluna para fazer funcionar."
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
@@ -1827,7 +1827,7 @@ msgstr "Nenhum atalho ainda. Clique no botão de adicionar atalho."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Sem certeza do que adicionar?<0/>Tente a adicionar <1>Notificações do Início / A seguir</1> primeiramente."
+msgstr "Sem certeza do que adicionar?<0/>Tente adicionar as <1>Notificações do Início / A seguir</1> primeiramente."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -1851,15 +1851,15 @@ msgstr "Adicionar atalho…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr "A lista específica é opcional. Para o modo multi-coluna, a lista é necessária, ou a coluna não será exibida."
+msgstr "A lista específica é opcional. Para o modo multi-coluna a lista é necessária, ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr "Para o modo multi-coluna, buscar o termo é necessário, ou a coluna não será exibida."
+msgstr "Para o modo multi-coluna, buscar o termo é necessário ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr "Várias hashtags são suportadas. Espaço separado."
+msgstr "Várias hashtags são suportadas. Separado por espaço."
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
@@ -1891,7 +1891,7 @@ msgstr "Cole atalhos aqui"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr "A transferência guardou atalhos do servidor de instância…"
+msgstr "A transferir atalhos guardados do servidor de instância…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
@@ -1903,7 +1903,7 @@ msgstr "Transferir atalhos do servidor de instância"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
-msgstr "* Existe nos atuais atalhos"
+msgstr "* Existem nos atuais atalhos"
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
@@ -2012,7 +2012,7 @@ msgstr "<0/> <1>impulsionou</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr "Desculpe, a tua atual instância registrada não pode interagir com esta publicação de outra instância."
+msgstr "Desculpe, a atual instância registrada não pode interagir com esta publicação de outra instância."
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
@@ -2024,11 +2024,11 @@ msgstr "Gostou da publicação de @{0}"
 
 #: src/components/status.jsx:755
 msgid "Unbookmarked @{0}'s post"
-msgstr "Desmarcou a publicação de @{0}"
+msgstr "Removeu dos favoritos a publicação de @{0}"
 
 #: src/components/status.jsx:756
 msgid "Bookmarked @{0}'s post"
-msgstr "Marcou a publicação de @{0}"
+msgstr "Adicionou aos favoritos a publicação de @{0}"
 
 #: src/components/status.jsx:838
 #: src/components/status.jsx:900
@@ -2069,7 +2069,7 @@ msgstr "Impulsionar…"
 #: src/components/status.jsx:1625
 #: src/components/status.jsx:2338
 msgid "Unlike"
-msgstr "Não gosto"
+msgstr "Remover gosto"
 
 #: src/components/status.jsx:914
 #: src/components/status.jsx:1625
@@ -2127,11 +2127,11 @@ msgstr "Silenciar conversa"
 
 #: src/components/status.jsx:1175
 msgid "Post unpinned from profile"
-msgstr "Publicação desfixada do perfil"
+msgstr "Publicação desafixada do perfil"
 
 #: src/components/status.jsx:1176
 msgid "Post pinned to profile"
-msgstr "Publicação fixada no perfil"
+msgstr "Publicação fixada ao perfil"
 
 #: src/components/status.jsx:1181
 msgid "Unable to unpin post"
@@ -2163,7 +2163,7 @@ msgstr "Impossível eliminar publicação"
 
 #: src/components/status.jsx:1270
 msgid "Report post…"
-msgstr "Reportar publicação…"
+msgstr "Relatar publicação…"
 
 #: src/components/status.jsx:1626
 #: src/components/status.jsx:1662
@@ -2268,11 +2268,11 @@ msgstr "Notas:"
 
 #: src/components/status.jsx:3236
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr "Isto é estático, instável e sem script. Podes precisar para aplicar os teus próprios estilos e editar se necessário."
+msgstr "Isto é estático, instável e sem guião. Podes precisar para aplicar os teus próprios estilos e editar caso necessário."
 
 #: src/components/status.jsx:3242
 msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr "As votações não são interativas, ela vira uma lista com contador de votos."
+msgstr "Votações não são interativas, ela vira uma lista com contador de votos."
 
 #: src/components/status.jsx:3247
 msgid "Media attachments can be images, videos, audios or any file types."
@@ -2327,11 +2327,11 @@ msgstr "A traduzir…"
 
 #: src/components/translation-block.jsx:193
 msgid "Translate from {sourceLangText} (auto-detected)"
-msgstr "Tradução de {sourceLangText} (detetado automaticamente)"
+msgstr "Traduzir do {sourceLangText} (detetado automaticamente)"
 
 #: src/components/translation-block.jsx:194
 msgid "Translate from {sourceLangText}"
-msgstr "Tradução de {sourceLangText}"
+msgstr "Traduzir do {sourceLangText}"
 
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
@@ -2347,7 +2347,7 @@ msgstr "A editar mensagem original"
 
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
-msgstr "Respondendo @{0}"
+msgstr "Respondendo à @{0}"
 
 #: src/compose.jsx:62
 msgid "You may close this page now."
@@ -2401,7 +2401,7 @@ msgstr "Limpar"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr "Exibindo publicação com respostas"
+msgstr "A exibir publicação com respostas"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
@@ -2417,15 +2417,15 @@ msgstr "- Impulsos"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr "Exibindo publicações com media"
+msgstr "A exibir publicações com media"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr "Exibindo publicações marcadas com #{0}"
+msgstr "A exibir publicações marcadas com #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr "Exibindo publicações em {0}"
+msgstr "A exibir publicações em {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2444,7 +2444,7 @@ msgstr "Impossível obter informações da conta"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr "Alterar para instância de conta {0}"
+msgstr "Alterar a instância da conta {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"

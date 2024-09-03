@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 12:49\n"
+"PO-Revision-Date: 2024-09-03 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -566,11 +566,11 @@ msgstr ""
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Parent window에 이미 작성 필드가 열려 있고 현재 게시 중인 것 같습니다. 완료될 때까지 기다렸다가 나중에 다시 시도하세요."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "Parent window에 이미 작성 필드가 열려 있는 것 같습니다. 이 창을 열면 Parent window에서 변경한 내용이 취소됩니다. 계속하시겠습니까?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
@@ -1201,7 +1201,7 @@ msgstr "민감한 매체"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "필터됨: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status.jsx:3406
@@ -1448,15 +1448,15 @@ msgstr "조정 경고"
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "<0>{from}</0> 의 관리자가 <1>{targetName}</1> 를 일시 중단하였습니다, 이는 더 이상 업데이트를 받거나 상호 작용할 수 없다는 의미입니다."
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "<0>{from}</0>의 관리자가 <1>{targetName}</1>를 차단하였습니다. 영향을 받는 팔로워: {followersCount}, 팔로잉: {followingCount}."
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "당신은 <0>{targetName}</0>를 차단하였습니다. 제거된 팔로워: {followersCount}, 팔로잉: {followingCount}."
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
@@ -1524,7 +1524,7 @@ msgstr "투표함"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# vote} other {# votes}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -1922,7 +1922,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "가져올 바로가기가 없습니다"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
@@ -1931,7 +1931,7 @@ msgstr "바로 가기를 가져왔습니다. 최다치인 {SHORTCUTS_LIMIT}개�
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "바로가기 복사됨"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
@@ -2451,7 +2451,7 @@ msgstr "내 인스턴스로 전환 (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:646
 msgid "Month"
-msgstr ""
+msgstr "월"
 
 #: src/pages/accounts.jsx:55
 msgid "Current"
@@ -2467,7 +2467,7 @@ msgstr "이 계정으로 전환"
 
 #: src/pages/accounts.jsx:132
 msgid "Switch in new tab/window"
-msgstr ""
+msgstr "새 탭/창으로 변경하기"
 
 #: src/pages/accounts.jsx:146
 msgid "View profile…"
@@ -2479,7 +2479,7 @@ msgstr "기본 계정으로 삼기"
 
 #: src/pages/accounts.jsx:173
 msgid "Log out <0>@{0}</0>?"
-msgstr ""
+msgstr "로그아웃 <0>@{0}</0>?"
 
 #: src/pages/accounts.jsx:196
 msgid "Log out…"
@@ -2495,7 +2495,7 @@ msgstr "참고: <0>기본 계정</0>은 언제나 가장 먼저 뜹니다. 교�
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "아직 북마크한 것이 없습니다. 북마크 하나 해보세요!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2555,11 +2555,11 @@ msgstr "12시간 이상"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
-msgstr ""
+msgstr "팔로우한 태그"
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "그룹"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
@@ -2654,13 +2654,13 @@ msgstr "인기 링크"
 
 #: src/pages/catchup.jsx:1260
 msgid "Shared by {0}"
-msgstr ""
+msgstr "{0} 이 공유함"
 
 #: src/pages/catchup.jsx:1299
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
-msgstr ""
+msgstr "전체"
 
 #: src/pages/catchup.jsx:1384
 msgid "{0, plural, one {# author} other {# authors}}"
@@ -2736,7 +2736,7 @@ msgstr "맨 위로"
 
 #: src/pages/catchup.jsx:1858
 msgid "Filtered: {0}"
-msgstr ""
+msgstr "필터됨: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"

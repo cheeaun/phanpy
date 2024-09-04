@@ -584,7 +584,15 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedMimeTypes.includes(file.type)) {
+          if (!file) {
+            alert(`Could not access the given attachment.`);
+            return;
+          }
+          else if (!supportedMimeTypes.includes(file.type)) {
+            alert(`Your instance does not allow attachments of type "${file.type}".`);
+            return;
+          }
+          else {
             files.push(file);
           }
         }

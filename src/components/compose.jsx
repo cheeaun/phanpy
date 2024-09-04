@@ -222,7 +222,7 @@ function Compose({
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes = [],
+      supportedMimeTypes,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -588,7 +588,7 @@ function Compose({
             alert(`Could not access the given attachment.`);
             return;
           }
-          else if (!supportedMimeTypes.includes(file.type)) {
+          else if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
             alert(`Your instance does not allow attachments of type "${file.type}".`);
             return;
           }
@@ -1262,7 +1262,7 @@ function Compose({
               <label class="toolbar-button">
                 <input
                   type="file"
-                  accept={supportedMimeTypes.join(',')}
+                  accept={supportedMimeTypes?.join(',')}
                   multiple={mediaAttachments.length < maxMediaAttachments - 1}
                   disabled={
                     uiState === 'loading' ||

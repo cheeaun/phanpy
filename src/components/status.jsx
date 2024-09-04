@@ -1,6 +1,8 @@
 import './status.css';
-
 import '@justinribeiro/lite-youtube';
+
+import { msg, plural, Plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import {
   ControlledMenu,
   Menu,
@@ -32,8 +34,8 @@ import CustomEmoji from '../components/custom-emoji';
 import EmojiText from '../components/emoji-text';
 import LazyShazam from '../components/lazy-shazam';
 import Loader from '../components/loader';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
@@ -46,6 +48,7 @@ import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
+import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
@@ -69,8 +72,7 @@ import visibilityIconsMap from '../utils/visibility-icons-map';
 import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
-import Media from './media';
-import { isMediaCaptionLong } from './media';
+import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import TranslationBlock from './translation-block';
@@ -88,10 +90,10 @@ function fetchAccount(id, masto) {
 const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
-  public: 'Public',
-  unlisted: 'Unlisted',
-  private: 'Followers only',
-  direct: 'Private mention',
+  public: msg`Public`,
+  unlisted: msg`Unlisted`,
+  private: msg`Followers only`,
+  direct: msg`Private mention`,
 };
 
 const isIOS =
@@ -184,6 +186,8 @@ const detectLang = mem((text) => {
   return null;
 });
 
+const readMoreText = msg`Read more →`;
+
 function Status({
   statusID,
   status,
@@ -207,6 +211,8 @@ function Status({
   showReplyParent,
   mediaFirst,
 }) {
+  const { _ } = useLingui();
+
   if (skeleton) {
     return (
       <div
@@ -283,6 +289,7 @@ function Status({
     url,
     emojis,
     tags,
+    pinned,
     // Non-API props
     _deleted,
     _pinned,
@@ -406,7 +413,7 @@ function Status({
     // default | show_all | hide_all
     // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
     const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media'] || 'default';
+    return prefs['reading:expand:media']?.toLowerCase() || 'default';
   }, []);
   // FOR TESTING:
   // const readingExpandSpoilers = true;
@@ -429,7 +436,7 @@ function Status({
           onMouseEnter={debugHover}
         >
           <div class="status-pre-meta">
-            <Icon icon="group" size="l" alt="Group" />{' '}
+            <Icon icon="group" size="l" alt={t`Group`} />{' '}
             <NameText account={status.account} instance={instance} showAvatar />
           </div>
           <Status
@@ -453,8 +460,10 @@ function Status({
       >
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
-          <NameText account={status.account} instance={instance} showAvatar />{' '}
-          <span>boosted</span>
+          <Trans>
+            <NameText account={status.account} instance={instance} showAvatar />{' '}
+            <span>boosted</span>
+          </Trans>
         </div>
         <Status
           status={statusID ? null : reblog}
@@ -547,11 +556,10 @@ function Status({
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
   const mediaContainerRef = useTruncated();
-  const readMoreText = 'Read more →';
 
   const statusRef = useRef(null);
 
-  const unauthInteractionErrorMessage = `Sorry, your current logged-in instance can't interact with this post from another instance.`;
+  const unauthInteractionErrorMessage = t`Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
   const textWeight = useCallback(
     () =>
@@ -605,44 +613,44 @@ function Status({
     );
   }, [createdAtDate]);
 
-  const boostStatus = async () => {
-    if (!sameInstance || !authenticated) {
-      alert(unauthInteractionErrorMessage);
-      return false;
-    }
-    try {
-      if (!reblogged) {
-        let confirmText = 'Boost this post?';
-        if (mediaNoDesc) {
-          confirmText += '\n\n⚠️ Some media have no descriptions.';
-        }
-        const yes = confirm(confirmText);
-        if (!yes) {
-          return false;
-        }
-      }
-      // Optimistic
-      states.statuses[sKey] = {
-        ...status,
-        reblogged: !reblogged,
-        reblogsCount: reblogsCount + (reblogged ? -1 : 1),
-      };
-      if (reblogged) {
-        const newStatus = await masto.v1.statuses.$select(id).unreblog();
-        saveStatus(newStatus, instance);
-        return true;
-      } else {
-        const newStatus = await masto.v1.statuses.$select(id).reblog();
-        saveStatus(newStatus, instance);
-        return true;
-      }
-    } catch (e) {
-      console.error(e);
-      // Revert optimistism
-      states.statuses[sKey] = status;
-      return false;
-    }
-  };
+  // const boostStatus = async () => {
+  //   if (!sameInstance || !authenticated) {
+  //     alert(unauthInteractionErrorMessage);
+  //     return false;
+  //   }
+  //   try {
+  //     if (!reblogged) {
+  //       let confirmText = 'Boost this post?';
+  //       if (mediaNoDesc) {
+  //         confirmText += '\n\n⚠️ Some media have no descriptions.';
+  //       }
+  //       const yes = confirm(confirmText);
+  //       if (!yes) {
+  //         return false;
+  //       }
+  //     }
+  //     // Optimistic
+  //     states.statuses[sKey] = {
+  //       ...status,
+  //       reblogged: !reblogged,
+  //       reblogsCount: reblogsCount + (reblogged ? -1 : 1),
+  //     };
+  //     if (reblogged) {
+  //       const newStatus = await masto.v1.statuses.$select(id).unreblog();
+  //       saveStatus(newStatus, instance);
+  //       return true;
+  //     } else {
+  //       const newStatus = await masto.v1.statuses.$select(id).reblog();
+  //       saveStatus(newStatus, instance);
+  //       return true;
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //     // Revert optimistism
+  //     states.statuses[sKey] = status;
+  //     return false;
+  //   }
+  // };
   const confirmBoostStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -704,8 +712,8 @@ function Status({
       if (!isSizeLarge && done) {
         showToast(
           favourited
-            ? `Unliked @${username || acct}'s post`
-            : `Liked @${username || acct}'s post`,
+            ? t`Unliked @${username || acct}'s post`
+            : t`Liked @${username || acct}'s post`,
         );
       }
     } catch (e) {}
@@ -744,8 +752,8 @@ function Status({
       if (!isSizeLarge && done) {
         showToast(
           bookmarked
-            ? `Unbookmarked @${username || acct}'s post`
-            : `Bookmarked @${username || acct}'s post`,
+            ? t`Unbookmarked @${username || acct}'s post`
+            : t`Bookmarked @${username || acct}'s post`,
         );
       }
     } catch (e) {}
@@ -819,7 +827,7 @@ function Status({
             <MenuItem onClick={replyStatus}>
               <Icon icon="comment" />
               <span>
-                {repliesCount > 0 ? shortenNumber(repliesCount) : 'Reply'}
+                {repliesCount > 0 ? shortenNumber(repliesCount) : t`Reply`}
               </span>
             </MenuItem>
             <MenuConfirm
@@ -827,7 +835,7 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="rocket" />
-                  <span>{reblogged ? 'Unboost' : 'Boost'}</span>
+                  <span>{reblogged ? t`Unboost` : t`Boost`}</span>
                 </>
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
@@ -842,23 +850,29 @@ function Status({
                   }}
                 >
                   <Icon icon="quote" />
-                  <span>Quote</span>
+                  <span>
+                    <Trans>Quote</Trans>
+                  </span>
                 </MenuItem>
               }
               menuFooter={
                 mediaNoDesc && !reblogged ? (
                   <div class="footer">
                     <Icon icon="alert" />
-                    Some media have no descriptions.
+                    <Trans>Some media have no descriptions.</Trans>
                   </div>
                 ) : (
                   statusMonthsAgo >= 3 && (
                     <div class="footer">
                       <Icon icon="info" />
                       <span>
-                        Old post (
-                        <strong>{rtf.format(-statusMonthsAgo, 'month')}</strong>
-                        )
+                        <Trans>
+                          Old post (
+                          <strong>
+                            {rtf.format(-statusMonthsAgo, 'month')}
+                          </strong>
+                          )
+                        </Trans>
                       </span>
                     </div>
                   )
@@ -871,8 +885,8 @@ function Status({
                   if (!isSizeLarge && done) {
                     showToast(
                       reblogged
-                        ? `Unboosted @${username || acct}'s post`
-                        : `Boosted @${username || acct}'s post`,
+                        ? t`Unboosted @${username || acct}'s post`
+                        : t`Boosted @${username || acct}'s post`,
                     );
                   }
                 } catch (e) {}
@@ -883,8 +897,8 @@ function Status({
                 {reblogsCount > 0
                   ? shortenNumber(reblogsCount)
                   : reblogged
-                  ? 'Unboost'
-                  : 'Boost…'}
+                  ? t`Unboost`
+                  : t`Boost…`}
               </span>
             </MenuConfirm>
             <MenuItem
@@ -896,8 +910,8 @@ function Status({
                 {favouritesCount > 0
                   ? shortenNumber(favouritesCount)
                   : favourited
-                  ? 'Unlike'
-                  : 'Like'}
+                  ? t`Unlike`
+                  : t`Like`}
               </span>
             </MenuItem>
             {supports('@mastodon/post-bookmark') && (
@@ -906,7 +920,7 @@ function Status({
                 className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
               >
                 <Icon icon="bookmark" />
-                <span>{bookmarked ? 'Unbookmark' : 'Bookmark'}</span>
+                <span>{bookmarked ? t`Unbookmark` : t`Bookmark`}</span>
               </MenuItem>
             )}
           </div>
@@ -920,7 +934,7 @@ function Status({
           <MenuItem
             onClick={() => {
               states.showGenericAccounts = {
-                heading: 'Boosted/Liked by…',
+                heading: t`Boosted/Liked by…`,
                 fetchAccounts: fetchBoostedLikedByAccounts,
                 instance,
                 showReactions: true,
@@ -930,7 +944,7 @@ function Status({
           >
             <Icon icon="react" />
             <span>
-              Boosted/Liked by<span class="more-insignificant">…</span>
+              <Trans>Boosted/Liked by…</Trans>
             </span>
           </MenuItem>
         </>
@@ -949,7 +963,9 @@ function Status({
                 }}
               >
                 <Icon icon="translate" />
-                <span>Translate</span>
+                <span>
+                  <Trans>Translate</Trans>
+                </span>
               </MenuItem>
               {supportsTTS && (
                 <MenuItem
@@ -961,7 +977,9 @@ function Status({
                   }}
                 >
                   <Icon icon="speak" />
-                  <span>Speak</span>
+                  <span>
+                    <Trans>Speak</Trans>
+                  </span>
                 </MenuItem>
               )}
             </div>
@@ -972,7 +990,9 @@ function Status({
                   to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
                 >
                   <Icon icon="translate" />
-                  <span>Translate</span>
+                  <span>
+                    <Trans>Translate</Trans>
+                  </span>
                 </MenuLink>
                 {supportsTTS && (
                   <MenuItem
@@ -984,7 +1004,9 @@ function Status({
                     }}
                   >
                     <Icon icon="speak" />
-                    <span>Speak</span>
+                    <span>
+                      <Trans>Speak</Trans>
+                    </span>
                   </MenuItem>
                 )}
               </div>
@@ -1006,10 +1028,13 @@ function Status({
           >
             <Icon icon="arrows-right" />
             <small>
-              View post by @{username || acct}
+              <Trans>
+                View post by{' '}
+                <span class="bidi-isolate">@{username || acct}</span>
+              </Trans>
               <br />
               <span class="more-insignificant">
-                {visibilityText[visibility]} • {createdDateText}
+                {_(visibilityText[visibility])} • {createdDateText}
               </span>
             </small>
           </MenuLink>
@@ -1024,16 +1049,25 @@ function Status({
           >
             <Icon icon="history" />
             <small>
-              Show Edit History
+              <Trans>Show Edit History</Trans>
               <br />
-              <span class="more-insignificant">Edited: {editedDateText}</span>
+              <span class="more-insignificant">
+                <Trans>Edited: {editedDateText}</Trans>
+              </span>
             </small>
           </MenuItem>
         </>
       )}
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
-        <small class="menu-double-lines">{nicePostURL(url)}</small>
+        <small
+          class="menu-double-lines"
+          style={{
+            maxWidth: '16em',
+          }}
+        >
+          {nicePostURL(url)}
+        </small>
       </MenuItem>
       <div class="menu-horizontal">
         <MenuItem
@@ -1041,15 +1075,17 @@ function Status({
             // Copy url to clipboard
             try {
               navigator.clipboard.writeText(url);
-              showToast('Link copied');
+              showToast(t`Link copied`);
             } catch (e) {
               console.error(e);
-              showToast('Unable to copy link');
+              showToast(t`Unable to copy link`);
             }
           }}
         >
           <Icon icon="link" />
-          <span>Copy</span>
+          <span>
+            <Trans>Copy</Trans>
+          </span>
         </MenuItem>
         {isPublic &&
           navigator?.share &&
@@ -1064,12 +1100,14 @@ function Status({
                   });
                 } catch (e) {
                   console.error(e);
-                  alert("Sharing doesn't seem to work.");
+                  alert(t`Sharing doesn't seem to work.`);
                 }
               }}
             >
               <Icon icon="share" />
-              <span>Share…</span>
+              <span>
+                <Trans>Share…</Trans>
+              </span>
             </MenuItem>
           )}
       </div>
@@ -1080,7 +1118,9 @@ function Status({
           }}
         >
           <Icon icon="code" />
-          <span>Embed post</span>
+          <span>
+            <Trans>Embed post</Trans>
+          </span>
         </MenuItem>
       )}
       {(isSelf || mentionSelf) && <MenuDivider />}
@@ -1092,13 +1132,15 @@ function Status({
                 .$select(id)
                 [muted ? 'unmute' : 'mute']();
               saveStatus(newStatus, instance);
-              showToast(muted ? 'Conversation unmuted' : 'Conversation muted');
+              showToast(
+                muted ? t`Conversation unmuted` : t`Conversation muted`,
+              );
             } catch (e) {
               console.error(e);
               showToast(
                 muted
-                  ? 'Unable to unmute conversation'
-                  : 'Unable to mute conversation',
+                  ? t`Unable to unmute conversation`
+                  : t`Unable to mute conversation`,
               );
             }
           }}
@@ -1106,12 +1148,16 @@ function Status({
           {muted ? (
             <>
               <Icon icon="unmute" />
-              <span>Unmute conversation</span>
+              <span>
+                <Trans>Unmute conversation</Trans>
+              </span>
             </>
           ) : (
             <>
               <Icon icon="mute" />
-              <span>Mute conversation</span>
+              <span>
+                <Trans>Mute conversation</Trans>
+              </span>
             </>
           )}
         </MenuItem>
@@ -1122,30 +1168,34 @@ function Status({
             try {
               const newStatus = await masto.v1.statuses
                 .$select(id)
-                [_pinned ? 'unpin' : 'pin']();
-              // saveStatus(newStatus, instance);
+                [pinned ? 'unpin' : 'pin']();
+              saveStatus(newStatus, instance);
               showToast(
-                _pinned
-                  ? 'Post unpinned from profile'
-                  : 'Post pinned to profile',
+                pinned
+                  ? t`Post unpinned from profile`
+                  : t`Post pinned to profile`,
               );
             } catch (e) {
               console.error(e);
               showToast(
-                _pinned ? 'Unable to unpin post' : 'Unable to pin post',
+                pinned ? t`Unable to unpin post` : t`Unable to pin post`,
               );
             }
           }}
         >
-          {_pinned ? (
+          {pinned ? (
             <>
               <Icon icon="unpin" />
-              <span>Unpin from profile</span>
+              <span>
+                <Trans>Unpin from profile</Trans>
+              </span>
             </>
           ) : (
             <>
               <Icon icon="pin" />
-              <span>Pin to profile</span>
+              <span>
+                <Trans>Pin to profile</Trans>
+              </span>
             </>
           )}
         </MenuItem>
@@ -1161,7 +1211,9 @@ function Status({
               }}
             >
               <Icon icon="pencil" />
-              <span>Edit</span>
+              <span>
+                <Trans>Edit</Trans>
+              </span>
             </MenuItem>
           )}
           {isSizeLarge && (
@@ -1170,7 +1222,9 @@ function Status({
               confirmLabel={
                 <>
                   <Icon icon="trash" />
-                  <span>Delete this post?</span>
+                  <span>
+                    <Trans>Delete this post?</Trans>
+                  </span>
                 </>
               }
               menuItemClassName="danger"
@@ -1182,17 +1236,19 @@ function Status({
                     await masto.v1.statuses.$select(id).remove();
                     const cachedStatus = getStatus(id, instance);
                     cachedStatus._deleted = true;
-                    showToast('Deleted');
+                    showToast(t`Post deleted`);
                   } catch (e) {
                     console.error(e);
-                    showToast('Unable to delete');
+                    showToast(t`Unable to delete post`);
                   }
                 })();
                 // }
               }}
             >
               <Icon icon="trash" />
-              <span>Delete…</span>
+              <span>
+                <Trans>Delete…</Trans>
+              </span>
             </MenuConfirm>
           )}
         </div>
@@ -1210,7 +1266,9 @@ function Status({
             }}
           >
             <Icon icon="flag" />
-            <span>Report post…</span>
+            <span>
+              <Trans>Report post…</Trans>
+            </span>
           </MenuItem>
         </>
       )}
@@ -1279,8 +1337,8 @@ function Status({
           if (!isSizeLarge && done) {
             showToast(
               reblogged
-                ? `Unboosted @${username || acct}'s post`
-                : `Boosted @${username || acct}'s post`,
+                ? t`Unboosted @${username || acct}'s post`
+                : t`Boosted @${username || acct}'s post`,
             );
           }
         } catch (e) {}
@@ -1554,8 +1612,8 @@ function Status({
             >
               <StatusButton
                 size="s"
-                title="Reply"
-                alt="Reply"
+                title={t`Reply`}
+                alt={t`Reply`}
                 class="reply-button"
                 icon="comment"
                 iconSize="m"
@@ -1564,8 +1622,8 @@ function Status({
               <StatusButton
                 size="s"
                 checked={favourited}
-                title={['Like', 'Unlike']}
-                alt={['Like', 'Liked']}
+                title={[t`Like`, t`Unlike`]}
+                alt={[t`Like`, t`Liked`]}
                 class="favourite-button"
                 icon="heart"
                 iconSize="m"
@@ -1574,7 +1632,7 @@ function Status({
               />
               <button
                 type="button"
-                title="More"
+                title={t`More`}
                 class="plain more-button"
                 onClick={(e) => {
                   e.preventDefault();
@@ -1591,16 +1649,29 @@ function Status({
                   setIsContextMenuOpen('actions-bar');
                 }}
               >
-                <Icon icon="more2" size="m" alt="More" />
+                <Icon icon="more2" size="m" alt={t`More`} />
               </button>
             </div>
           )}
         {size !== 'l' && (
           <div class="status-badge">
-            {reblogged && <Icon class="reblog" icon="rocket" size="s" />}
-            {favourited && <Icon class="favourite" icon="heart" size="s" />}
-            {bookmarked && <Icon class="bookmark" icon="bookmark" size="s" />}
-            {_pinned && <Icon class="pin" icon="pin" size="s" />}
+            {reblogged && (
+              <Icon class="reblog" icon="rocket" size="s" alt={t`Boosted`} />
+            )}
+            {favourited && (
+              <Icon class="favourite" icon="heart" size="s" alt={t`Liked`} />
+            )}
+            {bookmarked && (
+              <Icon
+                class="bookmark"
+                icon="bookmark"
+                size="s"
+                alt={t`Bookmarked`}
+              />
+            )}
+            {_pinned && (
+              <Icon class="pin" icon="pin" size="s" alt={t`Pinned`} />
+            )}
           </div>
         )}
         {size !== 's' && (
@@ -1643,7 +1714,9 @@ function Status({
             {/* </span> */}{' '}
             {size !== 'l' &&
               (_deleted ? (
-                <span class="status-deleted-tag">Deleted</span>
+                <span class="status-deleted-tag">
+                  <Trans>Deleted</Trans>
+                </span>
               ) : url && !previewMode && !readOnly && !quoted ? (
                 <Link
                   to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
@@ -1680,23 +1753,27 @@ function Status({
                     <Icon
                       icon="comment2"
                       size="s"
-                      alt={`${repliesCount} ${
-                        repliesCount === 1 ? 'reply' : 'replies'
-                      }`}
+                      // alt={`${repliesCount} ${
+                      //   repliesCount === 1 ? 'reply' : 'replies'
+                      // }`}
+                      alt={plural(repliesCount, {
+                        one: '# reply',
+                        other: '# replies',
+                      })}
                     />
                   ) : (
                     visibility !== 'public' &&
                     visibility !== 'direct' && (
                       <Icon
                         icon={visibilityIconsMap[visibility]}
-                        alt={visibilityText[visibility]}
+                        alt={_(visibilityText[visibility])}
                         size="s"
                       />
                     )
                   )}{' '}
                   <RelativeTime datetime={createdAtDate} format="micro" />
                   {!previewMode && !readOnly && (
-                    <Icon icon="more2" class="more" />
+                    <Icon icon="more2" class="more" alt={t`More`} />
                   )}
                 </Link>
               ) : (
@@ -1747,7 +1824,7 @@ function Status({
                     <>
                       <Icon
                         icon={visibilityIconsMap[visibility]}
-                        alt={visibilityText[visibility]}
+                        alt={_(visibilityText[visibility])}
                         size="s"
                       />{' '}
                     </>
@@ -1758,7 +1835,9 @@ function Status({
           </div>
           {visibility === 'direct' && (
             <>
-              <div class="status-direct-badge">Private mention</div>{' '}
+              <div class="status-direct-badge">
+                <Trans>Private mention</Trans>
+              </div>{' '}
             </>
           )}
           {!withinContext && (
@@ -1766,10 +1845,12 @@ function Status({
               {isThread ? (
                 <div class="status-thread-badge">
                   <Icon icon="thread" size="s" />
-                  Thread
-                  {snapStates.statusThreadNumber[sKey]
-                    ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-                    : ''}
+                  <Trans>
+                    Thread
+                    {snapStates.statusThreadNumber[sKey]
+                      ? ` ${snapStates.statusThreadNumber[sKey]}/X`
+                      : ''}
+                  </Trans>
                 </div>
               ) : (
                 !!inReplyToId &&
@@ -1813,7 +1894,7 @@ function Status({
                         lang={language}
                         dir="auto"
                         ref={spoilerContentRef}
-                        data-read-more={readMoreText}
+                        data-read-more={_(readMoreText)}
                       >
                         <EmojiText text={spoilerText} emojis={emojis} />{' '}
                       </span>
@@ -1840,7 +1921,7 @@ function Status({
                       }}
                     >
                       <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                      {showSpoiler ? 'Show less' : 'Show content'}
+                      {showSpoiler ? t`Show less` : t`Show content`}
                     </button>
                   </>
                 )}
@@ -1869,7 +1950,7 @@ function Status({
                       lang={language}
                       dir="auto"
                       ref={spoilerContentRef}
-                      data-read-more={readMoreText}
+                      data-read-more={_(readMoreText)}
                     >
                       <p>
                         <EmojiText text={spoilerText} emojis={emojis} />
@@ -1877,7 +1958,7 @@ function Status({
                     </div>
                     {readingExpandSpoilers || previewMode ? (
                       <div class="spoiler-divider">
-                        <Icon icon="eye-open" /> Content warning
+                        <Icon icon="eye-open" /> <Trans>Content warning</Trans>
                       </div>
                     ) : (
                       <button
@@ -1902,7 +1983,7 @@ function Status({
                         }}
                       >
                         <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                        {showSpoiler ? 'Show less' : 'Show content'}
+                        {showSpoiler ? t`Show less` : t`Show content`}
                       </button>
                     )}
                   </>
@@ -1911,7 +1992,7 @@ function Status({
                   <div
                     class="content"
                     ref={contentRef}
-                    data-read-more={readMoreText}
+                    data-read-more={_(readMoreText)}
                   >
                     <PostContent
                       post={status}
@@ -1987,7 +2068,7 @@ function Status({
                       <Icon
                         icon={showSpoilerMedia ? 'eye-open' : 'eye-close'}
                       />{' '}
-                      {showSpoilerMedia ? 'Show less' : 'Show media'}
+                      {showSpoilerMedia ? t`Show less` : t`Show media`}
                     </button>
                   )}
                 {!!mediaAttachments.length &&
@@ -2078,21 +2159,23 @@ function Status({
           </div>
           {!isSizeLarge && showCommentCount && (
             <div class="content-comment-hint insignificant">
-              <Icon icon="comment2" alt="Replies" /> {repliesCount}
+              <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
             </div>
           )}
           {isSizeLarge && (
             <>
               <div class="extra-meta">
                 {_deleted ? (
-                  <span class="status-deleted-tag">Deleted</span>
+                  <span class="status-deleted-tag">
+                    <Trans>Deleted</Trans>
+                  </span>
                 ) : (
                   <>
                     {/* <Icon
                       icon={visibilityIconsMap[visibility]}
                       alt={visibilityText[visibility]}
                     /> */}
-                    <span>{visibilityText[visibility]}</span> &bull;{' '}
+                    <span>{_(visibilityText[visibility])}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener noreferrer">
                       <time
                         class="created"
@@ -2105,7 +2188,7 @@ function Status({
                     {editedAt && (
                       <>
                         {' '}
-                        &bull; <Icon icon="pencil" alt="Edited" />{' '}
+                        &bull; <Icon icon="pencil" alt={t`Edited`} />{' '}
                         <time
                           tabIndex="0"
                           class="edited"
@@ -2181,8 +2264,8 @@ function Status({
               <div class={`actions ${_deleted ? 'disabled' : ''}`}>
                 <div class="action has-count">
                   <StatusButton
-                    title="Reply"
-                    alt="Comments"
+                    title={t`Reply`}
+                    alt={t`Comments`}
                     class="reply-button"
                     icon="comment"
                     count={repliesCount}
@@ -2207,7 +2290,7 @@ function Status({
                   confirmLabel={
                     <>
                       <Icon icon="rocket" />
-                      <span>{reblogged ? 'Unboost' : 'Boost'}</span>
+                      <span>{reblogged ? t`Unboost` : t`Boost`}</span>
                     </>
                   }
                   menuExtras={
@@ -2221,7 +2304,9 @@ function Status({
                       }}
                     >
                       <Icon icon="quote" />
-                      <span>Quote</span>
+                      <span>
+                        <Trans>Quote</Trans>
+                      </span>
                     </MenuItem>
                   }
                   menuFooter={
@@ -2229,7 +2314,7 @@ function Status({
                     !reblogged && (
                       <div class="footer">
                         <Icon icon="alert" />
-                        Some media have no descriptions.
+                        <Trans>Some media have no descriptions.</Trans>
                       </div>
                     )
                   }
@@ -2237,8 +2322,8 @@ function Status({
                   <div class="action has-count">
                     <StatusButton
                       checked={reblogged}
-                      title={['Boost', 'Unboost']}
-                      alt={['Boost', 'Boosted']}
+                      title={[t`Boost`, t`Unboost`]}
+                      alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
                       icon="rocket"
                       count={reblogsCount}
@@ -2250,8 +2335,8 @@ function Status({
                 <div class="action has-count">
                   <StatusButton
                     checked={favourited}
-                    title={['Like', 'Unlike']}
-                    alt={['Like', 'Liked']}
+                    title={[t`Like`, t`Unlike`]}
+                    alt={[t`Like`, t`Liked`]}
                     class="favourite-button"
                     icon="heart"
                     count={favouritesCount}
@@ -2262,8 +2347,8 @@ function Status({
                   <div class="action">
                     <StatusButton
                       checked={bookmarked}
-                      title={['Bookmark', 'Unbookmark']}
-                      alt={['Bookmark', 'Bookmarked']}
+                      title={[t`Bookmark`, t`Unbookmark`]}
+                      alt={[t`Bookmark`, t`Bookmarked`]}
                       class="bookmark-button"
                       icon="bookmark"
                       onClick={bookmarkStatus}
@@ -2283,10 +2368,10 @@ function Status({
                     <div class="action">
                       <button
                         type="button"
-                        title="More"
+                        title={t`More`}
                         class="plain more-button"
                       >
-                        <Icon icon="more" size="l" alt="More" />
+                        <Icon icon="more" size="l" alt={t`More`} />
                       </button>
                     </div>
                   }
@@ -2364,7 +2449,7 @@ function MediaFirstContainer(props) {
   useEffect(() => {
     let handleScroll = () => {
       const { clientWidth, scrollLeft } = carouselRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
+      const index = Math.round(Math.abs(scrollLeft) / clientWidth);
       setCurrentIndex(index);
     };
     if (carouselRef.current) {
@@ -2408,7 +2493,10 @@ function MediaFirstContainer(props) {
                   e.stopPropagation();
                   carouselRef.current.focus();
                   carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * (currentIndex - 1),
+                    left:
+                      carouselRef.current.clientWidth *
+                      (currentIndex - 1) *
+                      (isRTL() ? -1 : 1),
                     behavior: 'smooth',
                   });
                 }}
@@ -2426,7 +2514,10 @@ function MediaFirstContainer(props) {
                   e.stopPropagation();
                   carouselRef.current.focus();
                   carouselRef.current.scrollTo({
-                    left: carouselRef.current.clientWidth * (currentIndex + 1),
+                    left:
+                      carouselRef.current.clientWidth *
+                      (currentIndex + 1) *
+                      (isRTL() ? -1 : 1),
                     behavior: 'smooth',
                   });
                 }}
@@ -2454,6 +2545,22 @@ function MediaFirstContainer(props) {
       )}
     </>
   );
+}
+
+function getDomain(url) {
+  return punycode.toUnicode(
+    URL.parse(url)
+      .hostname.replace(/^www\./, '')
+      .replace(/\/$/, ''),
+  );
+}
+
+// "Post": Quote post + card link preview combo
+// Assume all links from these domains are "posts"
+// Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
+// This is just "Progressive Enhancement"
+function isCardPost(domain) {
+  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
 }
 
 function Card({ card, selfReferential, instance }) {
@@ -2534,11 +2641,7 @@ function Card({ card, selfReferential, instance }) {
   );
 
   if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = punycode.toUnicode(
-      URL.parse(url)
-        .hostname.replace(/^www\./, '')
-        .replace(/\/$/, ''),
-    );
+    const domain = getDomain(url);
     let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
@@ -2556,14 +2659,15 @@ function Card({ card, selfReferential, instance }) {
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
-      blurhashImage = canvas.toDataURL();
+      if (window.OffscreenCanvas) {
+        const blob = canvas.convertToBlob();
+        blurhashImage = URL.createObjectURL(blob);
+      } else {
+        blurhashImage = canvas.toDataURL();
+      }
     }
 
-    // "Post": Quote post + card link preview combo
-    // Assume all links from these domains are "posts"
-    // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
-    // This is just "Progressive Enhancement"
-    const isPost = ['x.com', 'twitter.com', 'threads.net'].includes(domain);
+    const isPost = isCardPost(domain);
 
     return (
       <a
@@ -2573,8 +2677,6 @@ function Card({ card, selfReferential, instance }) {
         class={`card link ${isPost ? 'card-post' : ''} ${
           blurhashImage ? '' : size
         }`}
-        lang={language}
-        dir="auto"
         style={{
           '--average-color':
             rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -2601,7 +2703,7 @@ function Card({ card, selfReferential, instance }) {
             }}
           />
         </div>
-        <div class="meta-container">
+        <div class="meta-container" lang={language}>
           <p class="meta domain">
             <span class="domain">{domain}</span>{' '}
             {!!publishedAt && <>&middot; </>}
@@ -2669,16 +2771,16 @@ function Card({ card, selfReferential, instance }) {
       // );
     }
     if (hasText && !image) {
-      const domain = punycode.toUnicode(
-        URL.parse(url).hostname.replace(/^www\./, ''),
-      );
+      const domain = getDomain(url);
+      const isPost = isCardPost(domain);
       return (
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener noreferrer"
-          class={`card link no-image`}
+          class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
+          dir="auto"
           onClick={handleClick}
         >
           <div class="meta-container">
@@ -2734,15 +2836,21 @@ function EditedAtModal({
     <div id="edit-history" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Edit History</h2>
-        {uiState === 'error' && <p>Failed to load history</p>}
+        <h2>
+          <Trans>Edit History</Trans>
+        </h2>
+        {uiState === 'error' && (
+          <p>
+            <Trans>Failed to load history</Trans>
+          </p>
+        )}
         {uiState === 'loading' && (
           <p>
-            <Loader abrupt /> Loading&hellip;
+            <Loader abrupt /> <Trans>Loading…</Trans>
           </p>
         )}
       </header>
@@ -2967,20 +3075,25 @@ function EmbedModal({ post, instance, onClose }) {
     <div id="embed-post" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Embed post</h2>
+        <h2>
+          <Trans>Embed post</Trans>
+        </h2>
       </header>
       <main tabIndex="-1">
-        <h3>HTML Code</h3>
+        <h3>
+          <Trans>HTML Code</Trans>
+        </h3>
         <textarea
           class="embed-code"
           readonly
           onClick={(e) => {
             e.target.select();
           }}
+          dir="auto"
         >
           {htmlCode}
         </textarea>
@@ -2989,18 +3102,23 @@ function EmbedModal({ post, instance, onClose }) {
           onClick={() => {
             try {
               navigator.clipboard.writeText(htmlCode);
-              showToast('HTML code copied');
+              showToast(t`HTML code copied`);
             } catch (e) {
               console.error(e);
-              showToast('Unable to copy HTML code');
+              showToast(t`Unable to copy HTML code`);
             }
           }}
         >
-          <Icon icon="clipboard" /> <span>Copy</span>
+          <Icon icon="clipboard" />{' '}
+          <span>
+            <Trans>Copy</Trans>
+          </span>
         </button>
         {!!mediaAttachments?.length && (
           <section>
-            <p>Media attachments:</p>
+            <p>
+              <Trans>Media attachments:</Trans>
+            </p>
             <ol class="links-list">
               {mediaAttachments.map((media) => {
                 return (
@@ -3020,7 +3138,9 @@ function EmbedModal({ post, instance, onClose }) {
         )}
         {!!accountEmojis?.length && (
           <section>
-            <p>Account Emojis:</p>
+            <p>
+              <Trans>Account Emojis:</Trans>
+            </p>
             <ul>
               {accountEmojis.map((emoji) => {
                 return (
@@ -3042,7 +3162,7 @@ function EmbedModal({ post, instance, onClose }) {
                     </picture>{' '}
                     <code>:{emoji.shortcode}:</code> (
                     <a href={emoji.url} target="_blank" download>
-                      url
+                      URL
                     </a>
                     )
                     {emoji.staticUrl ? (
@@ -3050,7 +3170,7 @@ function EmbedModal({ post, instance, onClose }) {
                         {' '}
                         (
                         <a href={emoji.staticUrl} target="_blank" download>
-                          static
+                          <Trans>static URL</Trans>
                         </a>
                         )
                       </>
@@ -3063,7 +3183,9 @@ function EmbedModal({ post, instance, onClose }) {
         )}
         {!!emojis?.length && (
           <section>
-            <p>Emojis:</p>
+            <p>
+              <Trans>Emojis:</Trans>
+            </p>
             <ul>
               {emojis.map((emoji) => {
                 return (
@@ -3085,7 +3207,7 @@ function EmbedModal({ post, instance, onClose }) {
                     </picture>{' '}
                     <code>:{emoji.shortcode}:</code> (
                     <a href={emoji.url} target="_blank" download>
-                      url
+                      URL
                     </a>
                     )
                     {emoji.staticUrl ? (
@@ -3093,7 +3215,7 @@ function EmbedModal({ post, instance, onClose }) {
                         {' '}
                         (
                         <a href={emoji.staticUrl} target="_blank" download>
-                          static
+                          <Trans>static URL</Trans>
                         </a>
                         )
                       </>
@@ -3106,30 +3228,45 @@ function EmbedModal({ post, instance, onClose }) {
         )}
         <section>
           <small>
-            <p>Notes:</p>
+            <p>
+              <Trans>Notes:</Trans>
+            </p>
             <ul>
               <li>
-                This is static, unstyled and scriptless. You may need to apply
-                your own styles and edit as needed.
+                <Trans>
+                  This is static, unstyled and scriptless. You may need to apply
+                  your own styles and edit as needed.
+                </Trans>
               </li>
               <li>
-                Polls are not interactive, becomes a list with vote counts.
+                <Trans>
+                  Polls are not interactive, becomes a list with vote counts.
+                </Trans>
               </li>
               <li>
-                Media attachments can be images, videos, audios or any file
-                types.
+                <Trans>
+                  Media attachments can be images, videos, audios or any file
+                  types.
+                </Trans>
               </li>
-              <li>Post could be edited or deleted later.</li>
+              <li>
+                <Trans>Post could be edited or deleted later.</Trans>
+              </li>
             </ul>
           </small>
         </section>
-        <h3>Preview</h3>
+        <h3>
+          <Trans>Preview</Trans>
+        </h3>
         <output
           class="embed-preview"
           dangerouslySetInnerHTML={{ __html: htmlCode }}
+          dir="auto"
         />
         <p>
-          <small>Note: This preview is lightly styled.</small>
+          <small>
+            <Trans>Note: This preview is lightly styled.</Trans>
+          </small>
         </p>
       </main>
     </div>
@@ -3265,7 +3402,9 @@ function StatusCompact({ sKey }) {
       >
         {filterInfo ? (
           <b class="status-filtered-badge badge-meta" title={filterTitleStr}>
-            <span>Filtered</span>
+            <span>
+              <Trans>Filtered</Trans>
+            </span>
             <span>{filterTitleStr}</span>
           </b>
         ) : (
@@ -3284,6 +3423,7 @@ function FilteredStatus({
   showFollowedTags,
   quoted,
 }) {
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const {
     id: statusID,
@@ -3358,30 +3498,52 @@ function FilteredStatus({
             setShowPeek(true);
           }}
         >
-          <span>Filtered</span>
+          <span>
+            <Trans>Filtered</Trans>
+          </span>
           <span>{filterTitleStr}</span>
         </b>{' '}
         <Avatar url={avatarStatic || avatar} squircle={bot} />
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
-            <NameText account={status.account} instance={instance} />{' '}
-            <Icon
-              icon={visibilityIconsMap[visibility]}
-              alt={visibilityText[visibility]}
-              size="s"
-            />{' '}
             {isReblog ? (
-              'boosted'
+              <Trans>
+                <NameText account={status.account} instance={instance} />{' '}
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                  size="s"
+                />{' '}
+                boosted
+              </Trans>
             ) : isFollowedTags ? (
-              <span>
-                {snapStates.statusFollowedTags[sKey].slice(0, 3).map((tag) => (
-                  <span key={tag} class="status-followed-tag-item">
-                    #{tag}
-                  </span>
-                ))}
-              </span>
+              <>
+                <NameText account={status.account} instance={instance} />{' '}
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                  size="s"
+                />{' '}
+                <span>
+                  {snapStates.statusFollowedTags[sKey]
+                    .slice(0, 3)
+                    .map((tag) => (
+                      <span key={tag} class="status-followed-tag-item">
+                        #{tag}
+                      </span>
+                    ))}
+                </span>
+              </>
             ) : (
-              <RelativeTime datetime={createdAtDate} format="micro" />
+              <>
+                <NameText account={status.account} instance={instance} />{' '}
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                  size="s"
+                />{' '}
+                <RelativeTime datetime={createdAtDate} format="micro" />
+              </>
             )}
           </span>
           <span class="status-filtered-info-2">
@@ -3411,10 +3573,13 @@ function FilteredStatus({
               class="sheet-close"
               onClick={() => setShowPeek(false)}
             >
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
-              <b class="status-filtered-badge">Filtered</b> {filterTitleStr}
+              <b class="status-filtered-badge">
+                <Trans>Filtered</Trans>
+              </b>{' '}
+              {filterTitleStr}
             </header>
             <main tabIndex="-1">
               <Link
@@ -3424,7 +3589,7 @@ function FilteredStatus({
                 onClick={() => {
                   setShowPeek(false);
                 }}
-                data-read-more="Read more →"
+                data-read-more={_(readMoreText)}
               >
                 <Status status={status} instance={instance} size="s" readOnly />
               </Link>
@@ -3438,6 +3603,7 @@ function FilteredStatus({
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (!id || !instance) return;
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
@@ -3455,7 +3621,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
           key={q.instance + q.id}
           to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
           class="status-card-link"
-          data-read-more="Read more →"
+          data-read-more={_(readMoreText)}
         >
           <Status
             statusID={q.id}

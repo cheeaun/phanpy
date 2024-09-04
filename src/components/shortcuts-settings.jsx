@@ -1,6 +1,8 @@
 import './shortcuts-settings.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
+import { msg, Plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
@@ -43,55 +45,55 @@ const TYPES = [
   // 'account-statuses', // Need @acct search first
 ];
 const TYPE_TEXT = {
-  following: 'Home / Following',
-  notifications: 'Notifications',
-  list: 'Lists',
-  public: 'Public (Local / Federated)',
-  search: 'Search',
-  'account-statuses': 'Account',
-  bookmarks: 'Bookmarks',
-  favourites: 'Likes',
-  hashtag: 'Hashtag',
-  trending: 'Trending',
-  mentions: 'Mentions',
+  following: msg`Home / Following`,
+  notifications: msg`Notifications`,
+  list: msg`Lists`,
+  public: msg`Public (Local / Federated)`,
+  search: msg`Search`,
+  'account-statuses': msg`Account`,
+  bookmarks: msg`Bookmarks`,
+  favourites: msg`Likes`,
+  hashtag: msg`Hashtag`,
+  trending: msg`Trending`,
+  mentions: msg`Mentions`,
 };
 const TYPE_PARAMS = {
   list: [
     {
-      text: 'List ID',
+      text: msg`List ID`,
       name: 'id',
       notRequired: true,
     },
   ],
   public: [
     {
-      text: 'Local only',
+      text: msg`Local only`,
       name: 'local',
       type: 'checkbox',
     },
     {
-      text: 'Instance',
+      text: msg`Instance`,
       name: 'instance',
       type: 'text',
-      placeholder: 'Optional, e.g. mastodon.social',
+      placeholder: msg`Optional, e.g. mastodon.social`,
       notRequired: true,
     },
   ],
   trending: [
     {
-      text: 'Instance',
+      text: msg`Instance`,
       name: 'instance',
       type: 'text',
-      placeholder: 'Optional, e.g. mastodon.social',
+      placeholder: msg`Optional, e.g. mastodon.social`,
       notRequired: true,
     },
   ],
   search: [
     {
-      text: 'Search term',
+      text: msg`Search term`,
       name: 'query',
       type: 'text',
-      placeholder: 'Optional, unless for multi-column mode',
+      placeholder: msg`Optional, unless for multi-column mode`,
       notRequired: true,
     },
   ],
@@ -108,19 +110,19 @@ const TYPE_PARAMS = {
       text: '#',
       name: 'hashtag',
       type: 'text',
-      placeholder: 'e.g. PixelArt (Max 5, space-separated)',
+      placeholder: msg`e.g. PixelArt (Max 5, space-separated)`,
       pattern: '[^#]+',
     },
     {
-      text: 'Media only',
+      text: msg`Media only`,
       name: 'media',
       type: 'checkbox',
     },
     {
-      text: 'Instance',
+      text: msg`Instance`,
       name: 'instance',
       type: 'text',
-      placeholder: 'Optional, e.g. mastodon.social',
+      placeholder: msg`Optional, e.g. mastodon.social`,
       notRequired: true,
     },
   ],
@@ -132,46 +134,46 @@ const fetchAccountTitle = pmem(async ({ id }) => {
 export const SHORTCUTS_META = {
   following: {
     id: 'home',
-    title: (_, index) => (index === 0 ? 'Home' : 'Following'),
+    title: (_, index) => (index === 0 ? t`Home` : t`Following`),
     path: '/',
     icon: 'home',
   },
   mentions: {
     id: 'mentions',
-    title: 'Mentions',
+    title: msg`Mentions`,
     path: '/mentions',
     icon: 'at',
   },
   notifications: {
     id: 'notifications',
-    title: 'Notifications',
+    title: msg`Notifications`,
     path: '/notifications',
     icon: 'notification',
   },
   list: {
     id: ({ id }) => (id ? 'list' : 'lists'),
-    title: ({ id }) => (id ? getListTitle(id) : 'Lists'),
+    title: ({ id }) => (id ? getListTitle(id) : t`Lists`),
     path: ({ id }) => (id ? `/l/${id}` : '/l'),
     icon: 'list',
     excludeViewMode: ({ id }) => (!id ? ['multi-column'] : []),
   },
   public: {
     id: 'public',
-    title: ({ local }) => (local ? 'Local' : 'Federated'),
+    title: ({ local }) => (local ? t`Local` : t`Federated`),
     subtitle: ({ instance }) => instance || api().instance,
     path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
     icon: ({ local }) => (local ? 'building' : 'earth'),
   },
   trending: {
     id: 'trending',
-    title: 'Trending',
+    title: msg`Trending`,
     subtitle: ({ instance }) => instance || api().instance,
     path: ({ instance }) => `/${instance}/trending`,
     icon: 'chart',
   },
   search: {
     id: 'search',
-    title: ({ query }) => (query ? `“${query}”` : 'Search'),
+    title: ({ query }) => (query ? `“${query}”` : t`Search`),
     path: ({ query }) =>
       query
         ? `/search?q=${encodeURIComponent(query)}&type=statuses`
@@ -187,13 +189,13 @@ export const SHORTCUTS_META = {
   },
   bookmarks: {
     id: 'bookmarks',
-    title: 'Bookmarks',
+    title: msg`Bookmarks`,
     path: '/b',
     icon: 'bookmark',
   },
   favourites: {
     id: 'favourites',
-    title: 'Likes',
+    title: msg`Likes`,
     path: '/f',
     icon: 'heart',
   },
@@ -210,6 +212,7 @@ export const SHORTCUTS_META = {
 };
 
 function ShortcutsSettings({ onClose }) {
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
   const [showForm, setShowForm] = useState(false);
@@ -221,12 +224,12 @@ function ShortcutsSettings({ onClose }) {
     <div id="shortcuts-settings-container" class="sheet" tabindex="-1">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
         <h2>
-          <Icon icon="shortcut" /> Shortcuts{' '}
+          <Icon icon="shortcut" /> <Trans>Shortcuts</Trans>{' '}
           <sup
             style={{
               fontSize: 12,
@@ -234,27 +237,29 @@ function ShortcutsSettings({ onClose }) {
               textTransform: 'uppercase',
             }}
           >
-            beta
+            <Trans>beta</Trans>
           </sup>
         </h2>
       </header>
       <main>
-        <p>Specify a list of shortcuts that'll appear&nbsp;as:</p>
+        <p>
+          <Trans>Specify a list of shortcuts that'll appear&nbsp;as:</Trans>
+        </p>
         <div class="shortcuts-view-mode">
           {[
             {
               value: 'float-button',
-              label: 'Floating button',
+              label: t`Floating button`,
               imgURL: floatingButtonUrl,
             },
             {
               value: 'tab-menu-bar',
-              label: 'Tab/Menu bar',
+              label: t`Tab/Menu bar`,
               imgURL: tabMenuBarUrl,
             },
             {
               value: 'multi-column',
-              label: 'Multi-column',
+              label: t`Multi-column`,
               imgURL: multiColumnUrl,
             },
           ].map(({ value, label, imgURL }) => {
@@ -291,9 +296,13 @@ function ShortcutsSettings({ onClose }) {
                   SHORTCUTS_META[type];
                 if (typeof title === 'function') {
                   title = title(shortcut, i);
+                } else {
+                  title = _(title);
                 }
                 if (typeof subtitle === 'function') {
                   subtitle = subtitle(shortcut, i);
+                } else {
+                  subtitle = _(subtitle);
                 }
                 if (typeof icon === 'function') {
                   icon = icon(shortcut, i);
@@ -317,7 +326,7 @@ function ShortcutsSettings({ onClose }) {
                       )}
                       {excludedViewMode && (
                         <span class="tag">
-                          Not available in current view mode
+                          <Trans>Not available in current view mode</Trans>
                         </span>
                       )}
                     </span>
@@ -336,7 +345,7 @@ function ShortcutsSettings({ onClose }) {
                           }
                         }}
                       >
-                        <Icon icon="arrow-up" alt="Move up" />
+                        <Icon icon="arrow-up" alt={t`Move up`} />
                       </button>
                       <button
                         type="button"
@@ -352,7 +361,7 @@ function ShortcutsSettings({ onClose }) {
                           }
                         }}
                       >
-                        <Icon icon="arrow-down" alt="Move down" />
+                        <Icon icon="arrow-down" alt={t`Move down`} />
                       </button>
                       <button
                         type="button"
@@ -364,7 +373,7 @@ function ShortcutsSettings({ onClose }) {
                           });
                         }}
                       >
-                        <Icon icon="pencil" alt="Edit" />
+                        <Icon icon="pencil" alt={t`Edit`} />
                       </button>
                       {/* <button
                       type="button"
@@ -385,7 +394,9 @@ function ShortcutsSettings({ onClose }) {
                 <div class="ui-state insignificant">
                   <Icon icon="info" />{' '}
                   <small>
-                    Add more than one shortcut/column to make this work.
+                    <Trans>
+                      Add more than one shortcut/column to make this work.
+                    </Trans>
                   </small>
                 </div>
               )}
@@ -394,38 +405,40 @@ function ShortcutsSettings({ onClose }) {
           <div class="ui-state insignificant">
             <p>
               {snapStates.settings.shortcutsViewMode === 'multi-column'
-                ? 'No columns yet. Tap on the Add column button.'
-                : 'No shortcuts yet. Tap on the Add shortcut button.'}
+                ? t`No columns yet. Tap on the Add column button.`
+                : t`No shortcuts yet. Tap on the Add shortcut button.`}
             </p>
             <p>
-              Not sure what to add?
-              <br />
-              Try adding{' '}
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  states.shortcuts = [
-                    {
-                      type: 'following',
-                    },
-                    {
-                      type: 'notifications',
-                    },
-                  ];
-                }}
-              >
-                Home / Following and Notifications
-              </a>{' '}
-              first.
+              <Trans>
+                Not sure what to add?
+                <br />
+                Try adding{' '}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.shortcuts = [
+                      {
+                        type: 'following',
+                      },
+                      {
+                        type: 'notifications',
+                      },
+                    ];
+                  }}
+                >
+                  Home / Following and Notifications
+                </a>{' '}
+                first.
+              </Trans>
             </p>
           </div>
         )}
         <p class="insignificant">
           {shortcuts.length >= SHORTCUTS_LIMIT &&
             (snapStates.settings.shortcutsViewMode === 'multi-column'
-              ? `Max ${SHORTCUTS_LIMIT} columns`
-              : `Max ${SHORTCUTS_LIMIT} shortcuts`)}
+              ? t`Max ${SHORTCUTS_LIMIT} columns`
+              : t`Max ${SHORTCUTS_LIMIT} shortcuts`)}
         </p>
         <p
           style={{
@@ -439,7 +452,7 @@ function ShortcutsSettings({ onClose }) {
             class="light"
             onClick={() => setShowImportExport(true)}
           >
-            Import/export
+            <Trans>Import/export</Trans>
           </button>
           <button
             type="button"
@@ -449,8 +462,8 @@ function ShortcutsSettings({ onClose }) {
             <Icon icon="plus" />{' '}
             <span>
               {snapStates.settings.shortcutsViewMode === 'multi-column'
-                ? 'Add column…'
-                : 'Add shortcut…'}
+                ? t`Add column…`
+                : t`Add shortcut…`}
             </span>
           </button>
         </p>
@@ -497,9 +510,9 @@ function ShortcutsSettings({ onClose }) {
 }
 
 const FORM_NOTES = {
-  list: `Specific list is optional. For multi-column mode, list is required, else the column will not be shown.`,
-  search: `For multi-column mode, search term is required, else the column will not be shown.`,
-  hashtag: 'Multiple hashtags are supported. Space-separated.',
+  list: msg`Specific list is optional. For multi-column mode, list is required, else the column will not be shown.`,
+  search: msg`For multi-column mode, search term is required, else the column will not be shown.`,
+  hashtag: msg`Multiple hashtags are supported. Space-separated.`,
 };
 
 function ShortcutForm({
@@ -509,10 +522,10 @@ function ShortcutForm({
   shortcutIndex,
   onClose,
 }) {
+  const { _ } = useLingui();
   console.log('shortcut', shortcut);
   const editMode = !!shortcut;
   const [currentType, setCurrentType] = useState(shortcut?.type || null);
-  const { masto } = api();
 
   const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -564,11 +577,11 @@ function ShortcutForm({
     <div id="shortcut-settings-form" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>{editMode ? 'Edit' : 'Add'} shortcut</h2>
+        <h2>{editMode ? t`Edit shortcut` : t`Add shortcut`}</h2>
       </header>
       <main tabindex="-1">
         <form
@@ -603,7 +616,9 @@ function ShortcutForm({
         >
           <p>
             <label>
-              <span>Timeline</span>
+              <span>
+                <Trans>Timeline</Trans>
+              </span>
               <select
                 required
                 disabled={disabled}
@@ -612,10 +627,11 @@ function ShortcutForm({
                 }}
                 defaultValue={editMode ? shortcut.type : undefined}
                 name="type"
+                dir="auto"
               >
                 <option></option>
                 {TYPES.map((type) => (
-                  <option value={type}>{TYPE_TEXT[type]}</option>
+                  <option value={type}>{_(TYPE_TEXT[type])}</option>
                 ))}
               </select>
             </label>
@@ -626,12 +642,15 @@ function ShortcutForm({
                 return (
                   <p>
                     <label>
-                      <span>List</span>
+                      <span>
+                        <Trans>List</Trans>
+                      </span>
                       <select
                         name="id"
                         required={!notRequired}
                         disabled={disabled || uiState === 'loading'}
                         defaultValue={editMode ? shortcut.id : undefined}
+                        dir="auto"
                       >
                         <option value=""></option>
                         {lists.map((list) => (
@@ -646,12 +665,12 @@ function ShortcutForm({
               return (
                 <p>
                   <label>
-                    <span>{text}</span>{' '}
+                    <span>{_(text)}</span>{' '}
                     <input
                       type={type}
                       switch={type === 'checkbox' || undefined}
                       name={name}
-                      placeholder={placeholder}
+                      placeholder={_(placeholder)}
                       required={type === 'text' && !notRequired}
                       disabled={disabled}
                       list={
@@ -663,6 +682,7 @@ function ShortcutForm({
                       autocapitalize="off"
                       spellCheck={false}
                       pattern={pattern}
+                      dir="auto"
                     />
                     {currentType === 'hashtag' &&
                       followedHashtags.length > 0 && (
@@ -680,7 +700,7 @@ function ShortcutForm({
           {!!FORM_NOTES[currentType] && (
             <p class="form-note insignificant">
               <Icon icon="info" />
-              {FORM_NOTES[currentType]}
+              {_(FORM_NOTES[currentType])}
             </p>
           )}
           <footer>
@@ -689,7 +709,7 @@ function ShortcutForm({
               class="block"
               disabled={disabled || uiState === 'loading'}
             >
-              {editMode ? 'Save' : 'Add'}
+              {editMode ? t`Save` : t`Add`}
             </button>
             {editMode && (
               <button
@@ -700,7 +720,7 @@ function ShortcutForm({
                   onClose?.();
                 }}
               >
-                Remove
+                <Trans>Remove</Trans>
               </button>
             )}
           </footer>
@@ -711,6 +731,7 @@ function ShortcutForm({
 }
 
 function ImportExport({ shortcuts, onClose }) {
+  const { _ } = useLingui();
   const { masto } = api();
   const shortcutsStr = useMemo(() => {
     if (!shortcuts) return '';
@@ -756,30 +777,35 @@ function ImportExport({ shortcuts, onClose }) {
     <div id="import-export-container" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
         <h2>
-          Import/Export <small class="ib insignificant">Shortcuts</small>
+          <Trans>
+            Import/Export <small class="ib insignificant">Shortcuts</small>
+          </Trans>
         </h2>
       </header>
       <main tabindex="-1">
         <section>
           <h3>
             <Icon icon="arrow-down-circle" size="l" class="insignificant" />{' '}
-            <span>Import</span>
+            <span>
+              <Trans>Import</Trans>
+            </span>
           </h3>
           <p class="field-button">
             <input
               ref={shortcutsImportFieldRef}
               type="text"
               name="import"
-              placeholder="Paste shortcuts here"
+              placeholder={t`Paste shortcuts here`}
               class="block"
               onInput={(e) => {
                 setImportShortcutStr(e.target.value);
               }}
+              dir="auto"
             />
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
@@ -790,7 +816,7 @@ function ImportExport({ shortcuts, onClose }) {
                   setImportUIState('cloud-downloading');
                   const currentAccount = getCurrentAccountID();
                   showToast(
-                    'Downloading saved shortcuts from instance server…',
+                    t`Downloading saved shortcuts from instance server…`,
                   );
                   try {
                     const relationships =
@@ -819,10 +845,10 @@ function ImportExport({ shortcuts, onClose }) {
                   } catch (e) {
                     console.error(e);
                     setImportUIState('error');
-                    showToast('Unable to download shortcuts');
+                    showToast(t`Unable to download shortcuts`);
                   }
                 }}
-                title="Download shortcuts from instance server"
+                title={t`Download shortcuts from instance server`}
               >
                 <Icon icon="cloud" />
                 <Icon icon="arrow-down" />
@@ -857,7 +883,7 @@ function ImportExport({ shortcuts, onClose }) {
                         *
                       </span>
                       <span>
-                        {TYPE_TEXT[shortcut.type]}
+                        {_(TYPE_TEXT[shortcut.type])}
                         {shortcut.type === 'list' && ' ⚠️'}{' '}
                         {TYPE_PARAMS[shortcut.type]?.map?.(
                           ({ text, name, type }) =>
@@ -879,28 +905,37 @@ function ImportExport({ shortcuts, onClose }) {
                   ))}
                 </ol>
                 <p>
-                  <small>* Exists in current shortcuts</small>
+                  <small>
+                    <Trans>* Exists in current shortcuts</Trans>
+                  </small>
                   <br />
                   <small>
-                    ⚠️ List may not work if it's from a different account.
+                    ⚠️{' '}
+                    <Trans>
+                      List may not work if it's from a different account.
+                    </Trans>
                   </small>
                 </p>
               </>
             )}
           {importUIState === 'error' && (
             <p class="error">
-              <small>⚠️ Invalid settings format</small>
+              <small>
+                ⚠️ <Trans>Invalid settings format</Trans>
+              </small>
             </p>
           )}
           <p>
             {hasCurrentSettings && (
               <>
                 <MenuConfirm
-                  confirmLabel="Append to current shortcuts?"
+                  confirmLabel={t`Append to current shortcuts?`}
                   menuFooter={
                     <div class="footer">
-                      Only shortcuts that don’t exist in current shortcuts will
-                      be appended.
+                      <Trans>
+                        Only shortcuts that don’t exist in current shortcuts
+                        will be appended.
+                      </Trans>
                     </div>
                   }
                   onClick={() => {
@@ -919,7 +954,7 @@ function ImportExport({ shortcuts, onClose }) {
                         ),
                     );
                     if (!nonUniqueShortcuts.length) {
-                      showToast('No new shortcuts to import');
+                      showToast(t`No new shortcuts to import`);
                       return;
                     }
                     let newShortcuts = [
@@ -934,8 +969,8 @@ function ImportExport({ shortcuts, onClose }) {
                     states.shortcuts = newShortcuts;
                     showToast(
                       exceededLimit
-                        ? `Shortcuts imported. Exceeded max ${SHORTCUTS_LIMIT}, so the rest are not imported.`
-                        : 'Shortcuts imported',
+                        ? t`Shortcuts imported. Exceeded max ${SHORTCUTS_LIMIT}, so the rest are not imported.`
+                        : t`Shortcuts imported`,
                     );
                     onClose?.();
                   }}
@@ -945,7 +980,7 @@ function ImportExport({ shortcuts, onClose }) {
                     class="plain2"
                     disabled={!parsedImportShortcutStr}
                   >
-                    Import & append…
+                    <Trans>Import & append…</Trans>
                   </button>
                 </MenuConfirm>{' '}
               </>
@@ -953,13 +988,13 @@ function ImportExport({ shortcuts, onClose }) {
             <MenuConfirm
               confirmLabel={
                 hasCurrentSettings
-                  ? 'Override current shortcuts?'
-                  : 'Import shortcuts?'
+                  ? t`Override current shortcuts?`
+                  : t`Import shortcuts?`
               }
               menuItemClassName={hasCurrentSettings ? 'danger' : undefined}
               onClick={() => {
                 states.shortcuts = parsedImportShortcutStr;
-                showToast('Shortcuts imported');
+                showToast(t`Shortcuts imported`);
                 onClose?.();
               }}
             >
@@ -968,7 +1003,7 @@ function ImportExport({ shortcuts, onClose }) {
                 class="plain2"
                 disabled={!parsedImportShortcutStr}
               >
-                {hasCurrentSettings ? 'or override…' : 'Import…'}
+                {hasCurrentSettings ? t`or override…` : t`Import…`}
               </button>
             </MenuConfirm>
           </p>
@@ -976,7 +1011,9 @@ function ImportExport({ shortcuts, onClose }) {
         <section>
           <h3>
             <Icon icon="arrow-up-circle" size="l" class="insignificant" />{' '}
-            <span>Export</span>
+            <span>
+              <Trans>Export</Trans>
+            </span>
           </h3>
           <p>
             <input
@@ -990,12 +1027,13 @@ function ImportExport({ shortcuts, onClose }) {
                 // Copy url to clipboard
                 try {
                   navigator.clipboard.writeText(e.target.value);
-                  showToast('Shortcuts copied');
+                  showToast(t`Shortcuts copied`);
                 } catch (e) {
                   console.error(e);
-                  showToast('Unable to copy shortcuts');
+                  showToast(t`Unable to copy shortcuts`);
                 }
               }}
+              dir="auto"
             />
           </p>
           <p>
@@ -1006,14 +1044,17 @@ function ImportExport({ shortcuts, onClose }) {
               onClick={() => {
                 try {
                   navigator.clipboard.writeText(shortcutsStr);
-                  showToast('Shortcut settings copied');
+                  showToast(t`Shortcut settings copied`);
                 } catch (e) {
                   console.error(e);
-                  showToast('Unable to copy shortcut settings');
+                  showToast(t`Unable to copy shortcut settings`);
                 }
               }}
             >
-              <Icon icon="clipboard" /> <span>Copy</span>
+              <Icon icon="clipboard" />{' '}
+              <span>
+                <Trans>Copy</Trans>
+              </span>
             </button>{' '}
             {navigator?.share &&
               navigator?.canShare?.({
@@ -1030,11 +1071,14 @@ function ImportExport({ shortcuts, onClose }) {
                       });
                     } catch (e) {
                       console.error(e);
-                      alert("Sharing doesn't seem to work.");
+                      alert(t`Sharing doesn't seem to work.`);
                     }
                   }}
                 >
-                  <Icon icon="share" /> <span>Share</span>
+                  <Icon icon="share" />{' '}
+                  <span>
+                    <Trans>Share</Trans>
+                  </span>
                 </button>
               )}{' '}
             {states.settings.shortcutSettingsCloudImportExport && (
@@ -1055,16 +1099,16 @@ function ImportExport({ shortcuts, onClose }) {
                       const { note = '' } = relationship;
                       // const newNote = `${note}\n\n\n$<phanpy-shortcuts-settings>{shortcutsStr}</phanpy-shortcuts-settings>`;
                       let newNote = '';
+                      const settingsJSON = JSON.stringify({
+                        v: '1', // version
+                        dt: Date.now(), // datetime stamp
+                        data: shortcutsStr, // shortcuts settings string
+                      });
                       if (
                         /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/.test(
                           note,
                         )
                       ) {
-                        const settingsJSON = JSON.stringify({
-                          v: '1', // version
-                          dt: Date.now(), // datetime stamp
-                          data: shortcutsStr, // shortcuts settings string
-                        });
                         newNote = note.replace(
                           /<phanpy-shortcuts-settings>(.*)<\/phanpy-shortcuts-settings>/,
                           `<phanpy-shortcuts-settings>${settingsJSON}</phanpy-shortcuts-settings>`,
@@ -1072,22 +1116,22 @@ function ImportExport({ shortcuts, onClose }) {
                       } else {
                         newNote = `${note}\n\n\n<phanpy-shortcuts-settings>${settingsJSON}</phanpy-shortcuts-settings>`;
                       }
-                      showToast('Saving shortcuts to instance server…');
+                      showToast(t`Saving shortcuts to instance server…`);
                       await masto.v1.accounts
                         .$select(currentAccount)
                         .note.create({
                           comment: newNote,
                         });
                       setImportUIState('default');
-                      showToast('Shortcuts saved');
+                      showToast(t`Shortcuts saved`);
                     }
                   } catch (e) {
                     console.error(e);
                     setImportUIState('error');
-                    showToast('Unable to save shortcuts');
+                    showToast(t`Unable to save shortcuts`);
                   }
                 }}
-                title="Sync to instance server"
+                title={t`Sync to instance server`}
               >
                 <Icon icon="cloud" />
                 <Icon icon="arrow-up" />
@@ -1095,14 +1139,20 @@ function ImportExport({ shortcuts, onClose }) {
             )}{' '}
             {shortcutsStr.length > 0 && (
               <small class="insignificant ib">
-                {shortcutsStr.length} characters
+                <Plural
+                  value={shortcutsStr.length}
+                  one="# character"
+                  other="# characters"
+                />
               </small>
             )}
           </p>
           {!!shortcutsStr && (
             <details>
               <summary class="insignificant">
-                <small>Raw Shortcuts JSON</small>
+                <small>
+                  <Trans>Raw Shortcuts JSON</Trans>
+                </small>
               </summary>
               <textarea style={{ width: '100%' }} rows={10} readOnly>
                 {JSON.stringify(shortcuts.filter(Boolean), null, 2)}
@@ -1113,8 +1163,11 @@ function ImportExport({ shortcuts, onClose }) {
         {states.settings.shortcutSettingsCloudImportExport && (
           <footer>
             <p>
-              <Icon icon="cloud" /> Import/export settings from/to instance
-              server (Very experimental)
+              <Icon icon="cloud" />{' '}
+              <Trans>
+                Import/export settings from/to instance server (Very
+                experimental)
+              </Trans>
             </p>
           </footer>
         )}

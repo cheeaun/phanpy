@@ -1,3 +1,5 @@
+import { plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import {
   FocusableItem,
   MenuDivider,
@@ -9,15 +11,14 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import Icon from '../components/icon';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import Menu2 from '../components/menu2';
 import { SHORTCUTS_LIMIT } from '../components/shortcuts-settings';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
@@ -49,10 +50,13 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
     authenticated: currentAuthenticated,
   } = api();
   const hashtagTitle = hashtags.map((t) => `#${t}`).join(' ');
-  const hashtagPostTitle = media ? ` (Media only)` : '';
   const title = instance
-    ? `${hashtagTitle}${hashtagPostTitle} on ${instance}`
-    : `${hashtagTitle}${hashtagPostTitle}`;
+    ? media
+      ? t`${hashtagTitle} (Media only) on ${instance}`
+      : t`${hashtagTitle} on ${instance}`
+    : media
+    ? t`${hashtagTitle} (Media only)`
+    : t`${hashtagTitle}`;
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 
@@ -140,6 +144,26 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
 
   const reachLimit = hashtags.length >= TOTAL_TAGS_LIMIT;
 
+  const [featuredUIState, setFeaturedUIState] = useState('default');
+  const [featuredTags, setFeaturedTags] = useState([]);
+  const [isFeaturedTag, setIsFeaturedTag] = useState(false);
+  useEffect(() => {
+    if (!authenticated) return;
+    (async () => {
+      try {
+        const featuredTags = await masto.v1.featuredTags.list();
+        setFeaturedTags(featuredTags);
+        setIsFeaturedTag(
+          featuredTags.some(
+            (tag) => tag.name.toLowerCase() === hashtag.toLowerCase(),
+          ),
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
   return (
     <Timeline
       key={instance + hashtagTitle}
@@ -147,15 +171,15 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       titleComponent={
         !!instance && (
           <h1 class="header-double-lines">
-            <b>{hashtagTitle}</b>
+            <b dir="auto">{hashtagTitle}</b>
             <div>{instance}</div>
           </h1>
         )
       }
       id="hashtag"
       instance={instance}
-      emptyText="No one has posted anything with this tag yet."
-      errorText="Unable to load posts with this tag"
+      emptyText={t`No one has posted anything with this tag yet.`}
+      errorText={t`Unable to load posts with this tag`}
       fetchItems={fetchHashtags}
       checkForUpdates={checkForUpdates}
       useItemID
@@ -172,7 +196,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           position="anchor"
           menuButton={
             <button type="button" class="plain">
-              <Icon icon="more" size="l" />
+              <Icon icon="more" size="l" alt={t`More`} />
             </button>
           }
         >
@@ -181,7 +205,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               <MenuConfirm
                 subMenu
                 confirm={info.following}
-                confirmLabel={`Unfollow #${hashtag}?`}
+                confirmLabel={t`Unfollow #${hashtag}?`}
                 disabled={followUIState === 'loading' || !authenticated}
                 onClick={() => {
                   setFollowUIState('loading');
@@ -196,7 +220,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                       .unfollow()
                       .then(() => {
                         setInfo({ ...info, following: false });
-                        showToast(`Unfollowed #${hashtag}`);
+                        showToast(t`Unfollowed #${hashtag}`);
                       })
                       .catch((e) => {
                         alert(e);
@@ -211,7 +235,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                       .follow()
                       .then(() => {
                         setInfo({ ...info, following: true });
-                        showToast(`Followed #${hashtag}`);
+                        showToast(t`Followed #${hashtag}`);
                       })
                       .catch((e) => {
                         alert(e);
@@ -225,20 +249,95 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               >
                 {info.following ? (
                   <>
-                    <Icon icon="check-circle" /> <span>Following…</span>
+                    <Icon icon="check-circle" />{' '}
+                    <span>
+                      <Trans>Following…</Trans>
+                    </span>
                   </>
                 ) : (
                   <>
-                    <Icon icon="plus" /> <span>Follow</span>
+                    <Icon icon="plus" />{' '}
+                    <span>
+                      <Trans>Follow</Trans>
+                    </span>
                   </>
                 )}
               </MenuConfirm>
+              <MenuItem
+                type="checkbox"
+                checked={isFeaturedTag}
+                disabled={featuredUIState === 'loading' || !authenticated}
+                onClick={() => {
+                  setFeaturedUIState('loading');
+                  if (isFeaturedTag) {
+                    const featuredTagID = featuredTags.find(
+                      (tag) => tag.name.toLowerCase() === hashtag.toLowerCase(),
+                    ).id;
+                    if (featuredTagID) {
+                      masto.v1.featuredTags
+                        .$select(featuredTagID)
+                        .remove()
+                        .then(() => {
+                          setIsFeaturedTag(false);
+                          showToast(t`Unfeatured on profile`);
+                          setFeaturedTags(
+                            featuredTags.filter(
+                              (tag) => tag.id !== featuredTagID,
+                            ),
+                          );
+                        })
+                        .catch((e) => {
+                          console.error(e);
+                        })
+                        .finally(() => {
+                          setFeaturedUIState('default');
+                        });
+                    } else {
+                      showToast(t`Unable to unfeature on profile`);
+                    }
+                  } else {
+                    masto.v1.featuredTags
+                      .create({
+                        name: hashtag,
+                      })
+                      .then((value) => {
+                        setIsFeaturedTag(true);
+                        showToast(t`Featured on profile`);
+                        setFeaturedTags(featuredTags.concat(value));
+                      })
+                      .catch((e) => {
+                        console.error(e);
+                      })
+                      .finally(() => {
+                        setFeaturedUIState('default');
+                      });
+                  }
+                }}
+              >
+                {isFeaturedTag ? (
+                  <>
+                    <Icon icon="check-circle" />
+                    <span>
+                      <Trans>Featured on profile</Trans>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="check-circle" />
+                    <span>
+                      <Trans>Feature on profile</Trans>
+                    </span>
+                  </>
+                )}
+              </MenuItem>
               <MenuDivider />
             </>
           )}
           {!mediaFirst && (
             <>
-              <MenuHeader className="plain">Filters</MenuHeader>
+              <MenuHeader className="plain">
+                <Trans>Filters</Trans>
+              </MenuHeader>
               <MenuItem
                 type="checkbox"
                 checked={!!media}
@@ -251,8 +350,10 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   setSearchParams(searchParams);
                 }}
               >
-                <Icon icon="check-circle" />{' '}
-                <span class="menu-grow">Media only</span>
+                <Icon icon="check-circle" alt="☑️" />{' '}
+                <span class="menu-grow">
+                  <Trans>Media only</Trans>
+                </span>
               </MenuItem>
               <MenuDivider />
             </>
@@ -288,7 +389,11 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   ref={ref}
                   type="text"
                   placeholder={
-                    reachLimit ? `Max ${TOTAL_TAGS_LIMIT} tags` : 'Add hashtag'
+                    reachLimit
+                      ? plural(TOTAL_TAGS_LIMIT, {
+                          other: 'Max # tags',
+                        })
+                      : t`Add hashtag`
                   }
                   required
                   autocorrect="off"
@@ -297,14 +402,15 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   // no spaces, no hashtags
                   pattern="[^#][^\s#]+[^#]"
                   disabled={reachLimit}
+                  dir="auto"
                 />
               </form>
             )}
           </FocusableItem>
           <MenuGroup takeOverflow>
-            {hashtags.map((t, i) => (
+            {hashtags.map((tag, i) => (
               <MenuItem
-                key={t}
+                key={tag}
                 disabled={hashtags.length === 1}
                 onClick={(e) => {
                   hashtags.splice(i, 1);
@@ -319,10 +425,10 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                     : `/t/${hashtags.join('+')}${linkParams}`;
                 }}
               >
-                <Icon icon="x" alt="Remove hashtag" class="danger-icon" />
-                <span>
+                <Icon icon="x" alt={t`Remove hashtag`} class="danger-icon" />
+                <span class="bidi-isolate">
                   <span class="more-insignificant">#</span>
-                  {t}
+                  {tag}
                 </span>
               </MenuItem>
             ))}
@@ -333,7 +439,10 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
             onClick={() => {
               if (states.shortcuts.length >= SHORTCUTS_LIMIT) {
                 alert(
-                  `Max ${SHORTCUTS_LIMIT} shortcuts reached. Unable to add shortcut.`,
+                  plural(SHORTCUTS_LIMIT, {
+                    one: 'Max # shortcut reached. Unable to add shortcut.',
+                    other: 'Max # shortcuts reached. Unable to add shortcut.',
+                  }),
                 );
                 return;
               }
@@ -359,22 +468,25 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                   (s.media ? !!s.media === !!shortcut.media : true),
               );
               if (exists) {
-                alert('This shortcut already exists');
+                alert(t`This shortcut already exists`);
               } else {
                 states.shortcuts.push(shortcut);
-                showToast(`Hashtag shortcut added`);
+                showToast(t`Hashtag shortcut added`);
               }
             }}
           >
-            <Icon icon="shortcut" /> <span>Add to Shorcuts</span>
+            <Icon icon="shortcut" />{' '}
+            <span>
+              <Trans>Add to Shortcuts</Trans>
+            </span>
           </MenuItem>
           <MenuItem
             onClick={() => {
               let newInstance = prompt(
-                'Enter a new instance e.g. "mastodon.social"',
+                t`Enter a new instance e.g. "mastodon.social"`,
               );
               if (!/\./.test(newInstance)) {
-                if (newInstance) alert('Invalid instance');
+                if (newInstance) alert(t`Invalid instance`);
                 return;
               }
               if (newInstance) {
@@ -386,7 +498,10 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="bus" /> <span>Go to another instance…</span>
+            <Icon icon="bus" />{' '}
+            <span>
+              <Trans>Go to another instance…</Trans>
+            </span>
           </MenuItem>
           {currentInstance !== instance && (
             <MenuItem
@@ -398,7 +513,9 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
             >
               <Icon icon="bus" />{' '}
               <small class="menu-double-lines">
-                Go to my instance (<b>{currentInstance}</b>)
+                <Trans>
+                  Go to my instance (<b>{currentInstance}</b>)
+                </Trans>
               </small>
             </MenuItem>
           )}

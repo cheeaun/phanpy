@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
@@ -7,7 +8,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Favourites() {
-  useTitle('Likes', '/f');
+  useTitle(t`Likes`, '/favourites');
   const { masto, instance } = api();
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
@@ -19,10 +20,10 @@ function Favourites() {
 
   return (
     <Timeline
-      title="Likes"
+      title={t`Likes`}
       id="favourites"
-      emptyText="No likes yet. Go like something!"
-      errorText="Unable to load likes"
+      emptyText={t`No likes yet. Go like something!`}
+      errorText={t`Unable to load likes.`}
       instance={instance}
       fetchItems={fetchFavourites}
     />

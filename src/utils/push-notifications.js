@@ -1,6 +1,6 @@
 // Utils for push notifications
 import { api } from './api';
-import { getCurrentAccount } from './store-utils';
+import { getVapidKey } from './store-utils';
 
 // Subscription is an object with the following structure:
 // {
@@ -113,7 +113,7 @@ export async function initSubscription() {
   // Check if the subscription changed
   if (backendSubscription && subscription) {
     const sameEndpoint = backendSubscription.endpoint === subscription.endpoint;
-    const { vapidKey } = getCurrentAccount();
+    const vapidKey = getVapidKey();
     const sameKey = backendSubscription.serverKey === vapidKey;
     if (!sameEndpoint) {
       throw new Error('Backend subscription endpoint changed');
@@ -146,7 +146,7 @@ export async function initSubscription() {
 
   if (subscription && !backendSubscription) {
     // check if account's vapidKey is same as subscription's applicationServerKey
-    const { vapidKey } = getCurrentAccount();
+    const vapidKey = getVapidKey();
     if (vapidKey) {
       const { applicationServerKey } = subscription.options;
       const vapidKeyStr = urlBase64ToUint8Array(vapidKey).toString();
@@ -210,7 +210,7 @@ export async function updateSubscription({ data, policy }) {
     }
   } else {
     // User is not subscribed
-    const { vapidKey } = getCurrentAccount();
+    const vapidKey = getVapidKey();
     if (!vapidKey) throw new Error('No server key found');
     subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,

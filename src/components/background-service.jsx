@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -9,13 +10,24 @@ import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 
 const STREAMING_TIMEOUT = 1000 * 3; // 3 seconds
-const POLL_INTERVAL = 15_000; // 15 seconds
+const POLL_INTERVAL = 20_000; // 20 seconds
 
 export default memo(function BackgroundService({ isLoggedIn }) {
   // Notifications service
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
-  usePageVisibility(setVisible);
+  const visibleTimeout = useRef();
+  usePageVisibility((visible) => {
+    clearTimeout(visibleTimeout.current);
+    if (visible) {
+      setVisible(true);
+    } else {
+      visibleTimeout.current = setTimeout(() => {
+        setVisible(false);
+      }, POLL_INTERVAL);
+    }
+  });
+
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
       const notificationsIterator = masto.v1.notifications.list({
@@ -46,6 +58,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
 
   useEffect(() => {
     let sub;
+    let streamTimeout;
     let pollNotifications;
     if (isLoggedIn && visible) {
       const { masto, streaming, instance } = api();
@@ -56,7 +69,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
         let hasStreaming = false;
         // 2. Start streaming
         if (streaming) {
-          pollNotifications = setTimeout(() => {
+          streamTimeout = setTimeout(() => {
             (async () => {
               try {
                 hasStreaming = true;
@@ -94,7 +107,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     return () => {
       sub?.unsubscribe?.();
       sub = null;
-      clearTimeout(pollNotifications);
+      clearTimeout(streamTimeout);
       clearInterval(pollNotifications);
     };
   }, [visible, isLoggedIn]);
@@ -133,7 +146,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     const currentCloakMode = states.settings.cloakMode;
     states.settings.cloakMode = !currentCloakMode;
     showToast({
-      text: `Cloak mode ${currentCloakMode ? 'disabled' : 'enabled'}`,
+      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
     });
   });
 

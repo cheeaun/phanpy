@@ -1,6 +1,7 @@
 import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -35,22 +36,23 @@ function Search({ columnMode, ...props }) {
   const type = columnMode
     ? 'statuses'
     : props?.type || searchParams.get('type');
-  useTitle(
-    q
-      ? `Search: ${q}${
-          type
-            ? ` (${
-                {
-                  statuses: 'Posts',
-                  accounts: 'Accounts',
-                  hashtags: 'Hashtags',
-                }[type]
-              })`
-            : ''
-        }`
-      : 'Search',
-    `/search`,
-  );
+  let title = t`Search`;
+  if (q) {
+    switch (type) {
+      case 'statuses':
+        title = t`Search: ${q} (Posts)`;
+        break;
+      case 'accounts':
+        title = t`Search: ${q} (Accounts)`;
+        break;
+      case 'hashtags':
+        title = t`Search: ${q} (Hashtags)`;
+        break;
+      default:
+        title = t`Search: ${q}`;
+    }
+  }
+  useTitle(title, `/search`);
 
   const [showMore, setShowMore] = useState(false);
   const offsetRef = useRef(0);
@@ -204,7 +206,7 @@ function Search({ columnMode, ...props }) {
                 }}
                 disabled={uiState === 'loading'}
               >
-                <Icon icon="search" size="l" />
+                <Icon icon="search" size="l" alt={t`Search`} />
               </button>
             </div>
           </div>
@@ -217,22 +219,22 @@ function Search({ columnMode, ...props }) {
             >
               {!!type && (
                 <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
-                  ‹ All
+                  <Icon icon="chevron-left" /> <Trans>All</Trans>
                 </Link>
               )}
               {[
                 {
-                  label: 'Accounts',
+                  label: t`Accounts`,
                   type: 'accounts',
                   to: `/search?q=${encodeURIComponent(q)}&type=accounts`,
                 },
                 {
-                  label: 'Hashtags',
+                  label: t`Hashtags`,
                   type: 'hashtags',
                   to: `/search?q=${encodeURIComponent(q)}&type=hashtags`,
                 },
                 {
-                  label: 'Posts',
+                  label: t`Posts`,
                   type: 'statuses',
                   to: `/search?q=${encodeURIComponent(q)}&type=statuses`,
                 },
@@ -255,11 +257,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'accounts' && (
                     <h2 class="timeline-header">
-                      Accounts{' '}
+                      <Trans>Accounts</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=accounts`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -285,7 +287,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=accounts`}
                           >
-                            See more accounts <Icon icon="arrow-right" />
+                            <Trans>See more accounts</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -297,7 +300,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No accounts found.</p>
+                      <p class="ui-state">
+                        <Trans>No accounts found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -306,11 +311,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'hashtags' && (
                     <h2 class="timeline-header">
-                      Hashtags{' '}
+                      <Trans>Hashtags</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=hashtags`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -332,7 +337,7 @@ function Search({ columnMode, ...props }) {
                                     : `/t/${name}`
                                 }
                               >
-                                <Icon icon="hashtag" />
+                                <Icon icon="hashtag" alt="#" />
                                 <span>{name}</span>
                                 {!!total && (
                                   <span class="count">
@@ -352,7 +357,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=hashtags`}
                           >
-                            See more hashtags <Icon icon="arrow-right" />
+                            <Trans>See more hashtags</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -364,7 +370,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No hashtags found.</p>
+                      <p class="ui-state">
+                        <Trans>No hashtags found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -373,11 +381,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'statuses' && (
                     <h2 class="timeline-header">
-                      Posts{' '}
+                      <Trans>Posts</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=statuses`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -407,7 +415,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=statuses`}
                           >
-                            See more posts <Icon icon="arrow-right" />
+                            <Trans>See more posts</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -419,7 +428,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No posts found.</p>
+                      <p class="ui-state">
+                        <Trans>No posts found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -440,11 +451,13 @@ function Search({ columnMode, ...props }) {
                         onClick={() => loadResults()}
                         style={{ marginBlockEnd: '6em' }}
                       >
-                        Show more&hellip;
+                        <Trans>Show more…</Trans>
                       </button>
                     </InView>
                   ) : (
-                    <p class="ui-state insignificant">The end.</p>
+                    <p class="ui-state insignificant">
+                      <Trans>The end.</Trans>
+                    </p>
                   )
                 ) : (
                   uiState === 'loading' && (
@@ -460,7 +473,9 @@ function Search({ columnMode, ...props }) {
             </p>
           ) : (
             <p class="ui-state">
-              Enter your search term or paste a URL above to get started.
+              <Trans>
+                Enter your search term or paste a URL above to get started.
+              </Trans>
             </p>
           )}
         </main>

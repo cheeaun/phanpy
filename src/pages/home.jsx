@@ -1,5 +1,7 @@
 import './notifications-menu.css';
 
+import { msg, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { ControlledMenu } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -12,13 +14,18 @@ import Loader from '../components/loader';
 import Notification from '../components/notification';
 import { api } from '../utils/api';
 import db from '../utils/db';
-import groupNotifications from '../utils/group-notifications';
+import { massageNotifications2 } from '../utils/group-notifications';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Following from './following';
+import {
+  getGroupedNotifications,
+  mastoFetchNotifications,
+} from './notifications';
 
 function Home() {
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   useEffect(() => {
     (async () => {
@@ -42,7 +49,7 @@ function Home() {
         <Columns />
       ) : (
         <Following
-          title="Home"
+          title={_(msg`Home`)}
           path="/"
           id="home"
           headerStart={false}
@@ -73,7 +80,7 @@ function NotificationsLink() {
           }
         }}
       >
-        <Icon icon="notification" size="l" alt="Notifications" />
+        <Icon icon="notification" size="l" alt={t`Notifications`} />
       </Link>
       <NotificationsMenu
         state={menuState}
@@ -84,20 +91,17 @@ function NotificationsLink() {
   );
 }
 
-const NOTIFICATIONS_LIMIT = 80;
 const NOTIFICATIONS_DISPLAY_LIMIT = 5;
 function NotificationsMenu({ anchorRef, state, onClose }) {
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
 
-  const notificationsIterator = masto.v1.notifications.list({
-    limit: NOTIFICATIONS_LIMIT,
-  });
+  const notificationsIterator = mastoFetchNotifications();
 
   async function fetchNotifications() {
     const allNotifications = await notificationsIterator.next();
-    const notifications = allNotifications.value;
+    const notifications = massageNotifications2(allNotifications.value);
 
     if (notifications?.length) {
       notifications.forEach((notification) => {
@@ -106,16 +110,16 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         });
       });
 
-      const groupedNotifications = groupNotifications(notifications);
+      const groupedNotifications = getGroupedNotifications(notifications);
 
-      states.notificationsLast = notifications[0];
+      states.notificationsLast = groupedNotifications[0];
       states.notifications = groupedNotifications;
 
       // Update last read marker
       masto.v1.markers
         .create({
           notifications: {
-            lastReadId: notifications[0].id,
+            lastReadId: groupedNotifications[0].id,
           },
         })
         .catch(() => {});
@@ -151,14 +155,22 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     if (state === 'open') loadNotifications();
   }, [state]);
 
+  const menuRef = useRef();
+
   return (
     <ControlledMenu
+      ref={menuRef}
       menuClassName="notifications-menu"
       state={state}
       anchorRef={anchorRef}
       onClose={onClose}
       portal={{
         target: document.body,
+      }}
+      containerProps={{
+        onClick: () => {
+          menuRef.current?.closeMenu?.();
+        },
       }}
       overflow="auto"
       viewScroll="close"
@@ -167,7 +179,9 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       boundingBoxPadding="8 8 8 8"
     >
       <header>
-        <h2>Notifications</h2>
+        <h2>
+          <Trans>Notifications</Trans>
+        </h2>
       </header>
       <main>
         {snapStates.notifications.length ? (
@@ -176,7 +190,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
               .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
               .map((notification) => (
                 <Notification
-                  key={notification.id}
+                  key={notification._ids || notification.id}
                   instance={instance}
                   notification={notification}
                   disableContextMenu
@@ -190,10 +204,12 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         ) : (
           uiState === 'error' && (
             <div class="ui-state">
-              <p>Unable to fetch notifications.</p>
+              <p>
+                <Trans>Unable to fetch notifications.</Trans>
+              </p>
               <p>
                 <button type="button" onClick={loadNotifications}>
-                  Try again
+                  <Trans>Try again</Trans>
                 </button>
               </p>
             </div>
@@ -202,16 +218,21 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
       </main>
       <footer>
         <Link to="/mentions" class="button plain">
-          <Icon icon="at" /> <span>Mentions</span>
+          <Icon icon="at" />{' '}
+          <span>
+            <Trans>Mentions</Trans>
+          </span>
         </Link>
         <Link to="/notifications" class="button plain2">
           {hasFollowRequests ? (
-            <>
+            <Trans>
               <span class="tag collapsed">New</span>{' '}
               <span>Follow Requests</span>
-            </>
+            </Trans>
           ) : (
-            <b>See all</b>
+            <b>
+              <Trans>See all</Trans>
+            </b>
           )}{' '}
           <Icon icon="arrow-right" />
         </Link>

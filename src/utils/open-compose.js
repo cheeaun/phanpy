@@ -1,3 +1,5 @@
+import { t, Trans } from '@lingui/macro';
+
 export default function openCompose(opts) {
   const url = URL.parse('/compose/', window.location);
   const { width: screenWidth, height: screenHeight } = window.screen;
@@ -19,7 +21,7 @@ export default function openCompose(opts) {
 
     newWin.__COMPOSE__ = opts;
   } else {
-    alert('Looks like your browser is blocking popups.');
+    alert(t`Looks like your browser is blocking popups.`);
   }
 
   return newWin;

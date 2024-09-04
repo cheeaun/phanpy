@@ -1,6 +1,12 @@
-const { locale } = Intl.NumberFormat().resolvedOptions();
-const shortenNumber = Intl.NumberFormat(locale, {
-  notation: 'compact',
-  roundingMode: 'floor',
-}).format;
-export default shortenNumber;
+import { i18n } from '@lingui/core';
+
+export default function shortenNumber(num) {
+  try {
+    return i18n.number(num, {
+      notation: 'compact',
+      roundingMode: 'floor',
+    });
+  } catch (e) {
+    return num;
+  }
+}

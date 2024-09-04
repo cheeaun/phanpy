@@ -92,7 +92,7 @@
     pointer-events: none;
     user-select: none;
     position: absolute;
-    right: 32px;
+    inset-inline-end: 32px;
     margin-top: -48px;
     animation: rubber-stamp 0.3s ease-in both;
     position: absolute;
@@ -148,7 +148,7 @@
     }
 
     .report-rules {
-      margin-left: 1.75em;
+      margin-inline-start: 1.75em;
     }
   }
 

@@ -227,7 +227,6 @@ export function groupContext(items, instance) {
             const replyToStatus = await fetchStatus(inReplyToId, masto);
             saveStatus(replyToStatus, instance, {
               skipThreading: true,
-              skipUnfurling: true,
             });
             states.statusReply[sKey] = {
               id: replyToStatus.id,
@@ -253,7 +252,6 @@ export function groupContext(items, instance) {
               for (const replyToStatus of replyToStatuses) {
                 saveStatus(replyToStatus, instance, {
                   skipThreading: true,
-                  skipUnfurling: true,
                 });
                 const sKey = inReplyToIds.find(
                   ({ inReplyToId }) => inReplyToId === replyToStatus.id,

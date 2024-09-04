@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -13,6 +14,8 @@ import { useSnapshot } from 'valtio';
 
 import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
+import isRTL from '../utils/is-rtl';
+import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { isMediaFirstInstance } from '../utils/store-utils';
@@ -119,6 +122,9 @@ function Timeline({
         } catch (e) {
           console.error(e);
           setUIState('error');
+          if (firstLoad && !items.length && errorText) {
+            showToast(errorText);
+          }
         } finally {
           loadItems.cancel();
         }
@@ -388,6 +394,17 @@ function Timeline({
           dotRef.current = node;
         }}
         tabIndex="-1"
+        onClick={(e) => {
+          // If click on timeline item, unhide header
+          if (
+            headerRef.current &&
+            e.target.closest('.timeline-item, .timeline-item-alt')
+          ) {
+            setTimeout(() => {
+              headerRef.current.hidden = false;
+            }, 250);
+          }
+        }}
       >
         <div class="timeline-deck deck">
           <header
@@ -415,7 +432,7 @@ function Timeline({
                   headerStart
                 ) : (
                   <Link to="/" class="button plain home-button">
-                    <Icon icon="home" size="l" />
+                    <Icon icon="home" size="l" alt={t`Home`} />
                   </Link>
                 )}
               </div>
@@ -431,7 +448,7 @@ function Timeline({
                 type="button"
                 onClick={handleLoadNewPosts}
               >
-                <Icon icon="arrow-up" /> New posts
+                <Icon icon="arrow-up" /> <Trans>New posts</Trans>
               </button>
             )}
           </header>
@@ -497,11 +514,13 @@ function Timeline({
                       onClick={() => loadItems()}
                       style={{ marginBlockEnd: '6em' }}
                     >
-                      Show more&hellip;
+                      <Trans>Show more…</Trans>
                     </button>
                   </InView>
                 ) : (
-                  <p class="ui-state insignificant">The end.</p>
+                  <p class="ui-state insignificant">
+                    <Trans>The end.</Trans>
+                  </p>
                 ))}
             </>
           ) : uiState === 'loading' ? (
@@ -530,7 +549,7 @@ function Timeline({
               <br />
               <br />
               <button type="button" onClick={() => loadItems(!items.length)}>
-                Try again
+                <Trans>Try again</Trans>
               </button>
             </p>
           )}
@@ -561,7 +580,7 @@ const TimelineItem = memo(
       : `/s/${actualStatusID}`;
 
     if (items) {
-      const fItems = filteredItems(items, filterContext);
+      let fItems = filteredItems(items, filterContext);
       let title = '';
       if (type === 'boosts') {
         title = `${fItems.length} Boosts`;
@@ -570,6 +589,7 @@ const TimelineItem = memo(
       }
       const isCarousel = type === 'boosts' || type === 'pinned';
       if (isCarousel) {
+        const filteredItemsIDs = new Set();
         // Here, we don't hide filtered posts, but we sort them last
         fItems.sort((a, b) => {
           // if (a._filtered && !b._filtered) {
@@ -580,6 +600,8 @@ const TimelineItem = memo(
           // }
           const aFiltered = isFiltered(a.filtered, filterContext);
           const bFiltered = isFiltered(b.filtered, filterContext);
+          if (aFiltered) filteredItemsIDs.add(a.id);
+          if (bFiltered) filteredItemsIDs.add(b.id);
           if (aFiltered && !bFiltered) {
             return 1;
           }
@@ -588,11 +610,69 @@ const TimelineItem = memo(
           }
           return 0;
         });
+
+        if (filteredItemsIDs.size >= 2) {
+          const GROUP_SIZE = 5;
+          // If 2 or more, group filtered items into one, limit to GROUP_SIZE in a group
+          const unfiltered = [];
+          const filtered = [];
+          fItems.forEach((item) => {
+            if (filteredItemsIDs.has(item.id)) {
+              filtered.push(item);
+            } else {
+              unfiltered.push(item);
+            }
+          });
+          const filteredItems = [];
+          for (let i = 0; i < filtered.length; i += GROUP_SIZE) {
+            filteredItems.push({
+              _grouped: true,
+              posts: filtered.slice(i, i + GROUP_SIZE),
+            });
+          }
+          fItems = unfiltered.concat(filteredItems);
+        }
+
         return (
           <li key={`timeline-${statusID}`} class="timeline-item-carousel">
             <StatusCarousel title={title} class={`${type}-carousel`}>
               {fItems.map((item) => {
-                const { id: statusID, reblog, _pinned } = item;
+                const { id: statusID, reblog, _pinned, _grouped } = item;
+                if (_grouped) {
+                  return (
+                    <li key={statusID} class="timeline-item-carousel-group">
+                      {item.posts.map((item) => {
+                        const { id: statusID, reblog, _pinned } = item;
+                        const actualStatusID = reblog?.id || statusID;
+                        const url = instance
+                          ? `/${instance}/s/${actualStatusID}`
+                          : `/s/${actualStatusID}`;
+                        if (_pinned) useItemID = false;
+                        return (
+                          <Link
+                            class="status-carousel-link timeline-item-alt"
+                            to={url}
+                          >
+                            {useItemID ? (
+                              <Status
+                                statusID={statusID}
+                                instance={instance}
+                                size="s"
+                              />
+                            ) : (
+                              <Status
+                                status={item}
+                                instance={instance}
+                                size="s"
+                              />
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </li>
+                  );
+                }
+
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
                   ? `/${instance}/s/${actualStatusID}`
@@ -792,13 +872,16 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachStart}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? 1 : -1);
               carouselRef.current?.scrollBy({
-                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}
           >
-            <Icon icon="chevron-left" />
+            <Icon icon="chevron-left" alt={t`Previous`} />
           </button>{' '}
           <button
             ref={endButtonRef}
@@ -806,13 +889,16 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachEnd}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? -1 : 1);
               carouselRef.current?.scrollBy({
-                left: Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}
           >
-            <Icon icon="chevron-right" />
+            <Icon icon="chevron-right" alt={t`Next`} />
           </button>
         </span>
       </header>
@@ -852,14 +938,14 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
     >
       {!!snapStates.statusThreadNumber[sKey] ? (
         <div class="status-thread-badge">
-          <Icon icon="thread" size="s" />
+          <Icon icon="thread" size="s" alt={t`Thread`} />
           {snapStates.statusThreadNumber[sKey]
             ? ` ${snapStates.statusThreadNumber[sKey]}/X`
             : ''}
         </div>
       ) : (
         <div class="status-thread-badge">
-          <Icon icon="thread" size="s" />
+          <Icon icon="thread" size="s" alt={t`Thread`} />
         </div>
       )}
       <div
@@ -873,7 +959,15 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
             class="status-filtered-badge badge-meta horizontal"
             title={filterInfo?.titlesStr || ''}
           >
-            <span>Filtered</span>: <span>{filterInfo?.titlesStr || ''}</span>
+            {filterInfo?.titlesStr ? (
+              <Trans>
+                <span>Filtered</span>: <span>{filterInfo.titlesStr}</span>
+              </Trans>
+            ) : (
+              <span>
+                <Trans>Filtered</Trans>
+              </span>
+            )}
           </b>
         ) : (
           <>
@@ -882,7 +976,7 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
               <>
                 {' '}
                 <span class="spoiler-badge">
-                  <Icon icon="eye-close" size="s" />
+                  <Icon icon="eye-close" size="s" alt={t`Content warning`} />
                 </span>
               </>
             )}

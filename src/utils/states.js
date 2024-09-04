@@ -70,6 +70,7 @@ const states = proxy({
     mediaAltGenerator: false,
     composerGIFPicker: false,
     cloakMode: false,
+    groupedNotificationsAlpha: false,
   },
 });
 
@@ -104,6 +105,8 @@ export function initStates() {
   states.settings.composerGIFPicker =
     store.account.get('settings-composerGIFPicker') ?? false;
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
+  states.settings.groupedNotificationsAlpha =
+    store.account.get('settings-groupedNotificationsAlpha') ?? false;
 }
 
 subscribeKey(states, 'notificationsLast', (v) => {
@@ -152,6 +155,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.cloakMode') {
       store.account.set('settings-cloakMode', !!value);
+    }
+    if (path.join('.') === 'settings.groupedNotificationsAlpha') {
+      store.account.set('settings-groupedNotificationsAlpha', !!value);
     }
   }
 });
@@ -295,6 +301,16 @@ export function unfurlStatus(status, instance) {
         unfurlMastodonLink(currentInstance, a.href).then((result) => {
           if (!result) return;
           if (!sKey) return;
+          if (result?.id === status.id) {
+            // Unfurled post is the post itself???
+            // Scenario:
+            // 1. Post with [URL]
+            // 2. Unfurl [URL], API returns the same post that contains [URL]
+            // 3. 💥 Recursive quote posts 💥
+            // Note: Mastodon search doesn't return posts that contains [URL], it's actually used to *resolve* the URL
+            // But some non-Mastodon servers, their search API will eventually search posts that contains [URL] and return them
+            return;
+          }
           if (!Array.isArray(states.statusQuotes[sKey])) {
             states.statusQuotes[sKey] = [];
           }

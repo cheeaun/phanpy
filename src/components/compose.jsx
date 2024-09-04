@@ -1,11 +1,12 @@
 import './compose.css';
-
 import '@github/text-expander-element';
+
+import { msg, plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import Fuse from 'fuse.js';
-import { memo } from 'preact/compat';
-import { forwardRef } from 'preact/compat';
+import { forwardRef, memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,
@@ -28,10 +29,14 @@ import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import i18nDuration from '../utils/i18n-duration';
+import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
+import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
+import prettyBytes from '../utils/pretty-bytes';
 import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -74,16 +79,15 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
 */
 
 const expiryOptions = {
-  '5 minutes': 5 * 60,
-  '30 minutes': 30 * 60,
-  '1 hour': 60 * 60,
-  '6 hours': 6 * 60 * 60,
-  '12 hours': 12 * 60 * 60,
-  '1 day': 24 * 60 * 60,
-  '3 days': 3 * 24 * 60 * 60,
-  '7 days': 7 * 24 * 60 * 60,
+  300: i18nDuration(5, 'minute'),
+  1_800: i18nDuration(30, 'minute'),
+  3_600: i18nDuration(1, 'hour'),
+  21_600: i18nDuration(6, 'hour'),
+  86_400: i18nDuration(1, 'day'),
+  259_200: i18nDuration(3, 'day'),
+  604_800: i18nDuration(1, 'week'),
 };
-const expirySeconds = Object.values(expiryOptions);
+const expirySeconds = Object.keys(expiryOptions);
 const oneDay = 24 * 60 * 60;
 
 const expiresInFromExpiresAt = (expiresAt) => {
@@ -104,7 +108,8 @@ const observer = new IntersectionObserver((entries) => {
       const { left, width } = entry.boundingClientRect;
       const { innerWidth } = window;
       if (left + width > innerWidth) {
-        menu.style.left = innerWidth - width - windowMargin + 'px';
+        const insetInlineStart = isRTL() ? 'right' : 'left';
+        menu.style[insetInlineStart] = innerWidth - width - windowMargin + 'px';
       }
     }
   });
@@ -148,23 +153,22 @@ const SCAN_RE = new RegExp(
 );
 
 const segmenter = new Intl.Segmenter();
-function highlightText(text, { maxCharacters = Infinity }) {
-  // Accept text string, return formatted HTML string
-  // Escape all HTML special characters
-  let html = text
+function escapeHTML(text) {
+  return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
-
+}
+function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
   const { composerCharacterCount } = states;
   if (composerCharacterCount > maxCharacters) {
     // Highlight exceeded characters
     let withinLimitHTML = '',
       exceedLimitHTML = '';
-    const htmlSegments = segmenter.segment(html);
+    const htmlSegments = segmenter.segment(text);
     for (const { segment, index } of htmlSegments) {
       if (index < maxCharacters) {
         withinLimitHTML += segment;
@@ -175,13 +179,13 @@ function highlightText(text, { maxCharacters = Infinity }) {
     if (exceedLimitHTML) {
       exceedLimitHTML =
         '<mark class="compose-highlight-exceeded">' +
-        exceedLimitHTML +
+        escapeHTML(exceedLimitHTML) +
         '</mark>';
     }
-    return withinLimitHTML + exceedLimitHTML;
+    return escapeHTML(withinLimitHTML) + exceedLimitHTML;
   }
 
-  return html
+  return escapeHTML(text)
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
     .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
     .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags
@@ -191,7 +195,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
     ); // Emoji shortcodes
 }
 
-const rtf = new Intl.RelativeTimeFormat();
+// const rtf = new Intl.RelativeTimeFormat();
+const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const CUSTOM_EMOJIS_COUNT = 100;
 
@@ -203,6 +208,9 @@ function Compose({
   standalone,
   hasOpener,
 }) {
+  const { i18n } = useLingui();
+  const rtf = RTF(i18n.locale);
+
   console.warn('RENDER COMPOSER');
   const { masto, instance } = api();
   const [uiState, setUIState] = useState('default');
@@ -289,10 +297,14 @@ function Compose({
       focusTextarea();
       setVisibility(
         visibility === 'public' && prefs['posting:default:visibility']
-          ? prefs['posting:default:visibility']
+          ? prefs['posting:default:visibility'].toLowerCase()
           : visibility,
       );
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       setSensitive(sensitive && !!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
@@ -316,7 +328,11 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
+          setLanguage(
+            language ||
+              prefs['posting:default:language']?.toLowerCase() ||
+              DEFAULT_LANG,
+          );
           setSensitive(sensitive);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -331,13 +347,13 @@ function Compose({
       focusTextarea();
       console.log('Apply prefs', prefs);
       if (prefs['posting:default:visibility']) {
-        setVisibility(prefs['posting:default:visibility']);
+        setVisibility(prefs['posting:default:visibility'].toLowerCase());
       }
       if (prefs['posting:default:language']) {
-        setLanguage(prefs['posting:default:language']);
+        setLanguage(prefs['posting:default:language'].toLowerCase());
       }
       if (prefs['posting:default:sensitive']) {
-        setSensitive(prefs['posting:default:sensitive']);
+        setSensitive(!!prefs['posting:default:sensitive']);
       }
     }
     if (draftStatus) {
@@ -360,7 +376,11 @@ function Compose({
       focusTextarea();
       if (spoilerText) spoilerTextRef.current.value = spoilerText;
       if (visibility) setVisibility(visibility);
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
@@ -369,7 +389,7 @@ function Compose({
 
   const formRef = useRef();
 
-  const beforeUnloadCopy = 'You have unsaved changes. Discard this post?';
+  const beforeUnloadCopy = t`You have unsaved changes. Discard this post?`;
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
@@ -598,7 +618,12 @@ function Compose({
         }
       }
       if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
-        alert(`You can only attach up to ${maxMediaAttachments} files.`);
+        alert(
+          plural(maxMediaAttachments, {
+            one: 'You can only attach up to 1 file.',
+            other: 'You can only attach up to # files.',
+          }),
+        );
         return;
       }
       console.log({ files });
@@ -609,7 +634,12 @@ function Compose({
         const max = maxMediaAttachments - mediaAttachments.length;
         const allowedFiles = files.slice(0, max);
         if (allowedFiles.length <= 0) {
-          alert(`You can only attach up to ${maxMediaAttachments} files.`);
+          alert(
+            plural(maxMediaAttachments, {
+              one: 'You can only attach up to 1 file.',
+              other: 'You can only attach up to # files.',
+            }),
+          );
           return;
         }
         const mediaFiles = allowedFiles.map((file) => ({
@@ -753,14 +783,14 @@ function Compose({
                   onClose();
                 }}
               >
-                <Icon icon="popout" alt="Pop out" />
+                <Icon icon="popout" alt={t`Pop out`} />
               </button>
               <button
                 type="button"
                 class="plain4 min-button"
                 onClick={onMinimize}
               >
-                <Icon icon="minimize" alt="Minimize" />
+                <Icon icon="minimize" alt={t`Minimize`} />
               </button>{' '}
               <button
                 type="button"
@@ -772,7 +802,7 @@ function Compose({
                   }
                 }}
               >
-                <Icon icon="x" />
+                <Icon icon="x" alt={t`Close`} />
               </button>
             </span>
           ) : (
@@ -796,20 +826,19 @@ function Compose({
                   // }
 
                   if (!window.opener) {
-                    alert('Looks like you closed the parent window.');
+                    alert(t`Looks like you closed the parent window.`);
                     return;
                   }
 
                   if (window.opener.__STATES__.showCompose) {
                     if (window.opener.__STATES__.composerState?.publishing) {
                       alert(
-                        'Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.',
+                        t`Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.`,
                       );
                       return;
                     }
 
-                    let confirmText =
-                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?';
+                    let confirmText = t`Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?`;
                     const yes = confirm(confirmText);
                     if (!yes) return;
                   }
@@ -851,7 +880,7 @@ function Compose({
                   });
                 }}
               >
-                <Icon icon="popin" alt="Pop in" />
+                <Icon icon="popin" alt={t`Pop in`} />
               </button>
             )
           )}
@@ -860,18 +889,22 @@ function Compose({
           <div class="status-preview">
             <Status status={replyToStatus} size="s" previewMode />
             <div class="status-preview-legend reply-to">
-              Replying to @
-              {replyToStatus.account.acct || replyToStatus.account.username}
-              &rsquo;s post
-              {replyToStatusMonthsAgo >= 3 && (
-                <>
-                  {' '}
-                  (
+              {replyToStatusMonthsAgo > 0 ? (
+                <Trans>
+                  Replying to @
+                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  &rsquo;s post (
                   <strong>
                     {rtf.format(-replyToStatusMonthsAgo, 'month')}
                   </strong>
                   )
-                </>
+                </Trans>
+              ) : (
+                <Trans>
+                  Replying to @
+                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  &rsquo;s post
+                </Trans>
               )}
             </div>
           </div>
@@ -879,7 +912,9 @@ function Compose({
         {!!editStatus && (
           <div class="status-preview">
             <Status status={editStatus} size="s" previewMode />
-            <div class="status-preview-legend">Editing source post</div>
+            <div class="status-preview-legend">
+              <Trans>Editing source post</Trans>
+            </div>
           </div>
         )}
         <form
@@ -925,11 +960,11 @@ function Compose({
           */
             if (poll) {
               if (poll.options.length < 2) {
-                alert('Poll must have at least 2 options');
+                alert(t`Poll must have at least 2 options`);
                 return;
               }
               if (poll.options.some((option) => option === '')) {
-                alert('Some poll choices are empty');
+                alert(t`Some poll choices are empty`);
                 return;
               }
             }
@@ -942,7 +977,7 @@ function Compose({
               );
               if (hasNoDescriptions) {
                 const yes = confirm(
-                  'Some media have no descriptions. Continue?',
+                  t`Some media have no descriptions. Continue?`,
                 );
                 if (!yes) return;
               }
@@ -994,7 +1029,7 @@ function Compose({
                     results.forEach((result) => {
                       if (result.status === 'rejected') {
                         console.error(result);
-                        alert(result.reason || `Attachment #${i} failed`);
+                        alert(result.reason || t`Attachment #${i} failed`);
                       }
                     });
                     return;
@@ -1088,7 +1123,7 @@ function Compose({
               ref={spoilerTextRef}
               type="text"
               name="spoilerText"
-              placeholder="Content warning"
+              placeholder={t`Content warning`}
               disabled={uiState === 'loading'}
               class="spoiler-text-field"
               lang={language}
@@ -1104,7 +1139,7 @@ function Compose({
             />
             <label
               class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
-              title="Content warning or sensitive media"
+              title={t`Content warning or sensitive media`}
             >
               <input
                 name="sensitive"
@@ -1127,7 +1162,7 @@ function Compose({
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
               } ${visibility !== 'public' ? 'highlight' : ''}`}
-              title={`Visibility: ${visibility}`}
+              title={visibility}
             >
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
               <select
@@ -1137,13 +1172,20 @@ function Compose({
                   setVisibility(e.target.value);
                 }}
                 disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
               >
                 <option value="public">
-                  Public <Icon icon="earth" />
+                  <Trans>Public</Trans>
                 </option>
-                <option value="unlisted">Unlisted</option>
-                <option value="private">Followers only</option>
-                <option value="direct">Private mention</option>
+                <option value="unlisted">
+                  <Trans>Unlisted</Trans>
+                </option>
+                <option value="private">
+                  <Trans>Followers only</Trans>
+                </option>
+                <option value="direct">
+                  <Trans>Private mention</Trans>
+                </option>
               </select>
             </label>{' '}
           </div>
@@ -1151,10 +1193,10 @@ function Compose({
             ref={textareaRef}
             placeholder={
               replyToStatus
-                ? 'Post your reply'
+                ? t`Post your reply`
                 : editStatus
-                ? 'Edit your post'
-                : 'What are you doing?'
+                ? t`Edit your post`
+                : t`What are you doing?`
             }
             required={mediaAttachments?.length === 0}
             disabled={uiState === 'loading'}
@@ -1228,7 +1270,9 @@ function Compose({
                     setSensitive(sensitive);
                   }}
                 />{' '}
-                <span>Mark media as sensitive</span>{' '}
+                <span>
+                  <Trans>Mark media as sensitive</Trans>
+                </span>{' '}
                 <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
               </label>
             </div>
@@ -1289,7 +1333,10 @@ function Compose({
                       maxMediaAttachments
                     ) {
                       alert(
-                        `You can only attach up to ${maxMediaAttachments} files.`,
+                        plural(maxMediaAttachments, {
+                          one: 'You can only attach up to 1 file.',
+                          other: 'You can only attach up to # files.',
+                        }),
                       );
                     } else {
                       setMediaAttachments((attachments) => {
@@ -1322,7 +1369,7 @@ function Compose({
                         });
                       }}
                     >
-                      <Icon icon="poll" alt="Add poll" />
+                      <Icon icon="poll" alt={t`Add poll`} />
                     </button>
                   </>
                 ))}
@@ -1344,7 +1391,7 @@ function Compose({
                   setShowEmoji2Picker(true);
                 }}
               >
-                <Icon icon="emoji2" />
+                <Icon icon="emoji2" alt={t`Add custom emoji`} />
               </button>
               {!!states.settings.composerGIFPicker && (
                 <button
@@ -1393,18 +1440,33 @@ function Compose({
                   store.session.set('currentLanguage', value || DEFAULT_LANG);
                 }}
                 disabled={uiState === 'loading'}
+                dir="auto"
               >
-                {topSupportedLanguages.map(([code, common, native]) => (
-                  <option value={code} key={code}>
-                    {common} ({native})
-                  </option>
-                ))}
+                {topSupportedLanguages.map(([code, common, native]) => {
+                  const commonText = localeCode2Text({
+                    code,
+                    fallback: common,
+                  });
+                  const showCommon = commonText !== native;
+                  return (
+                    <option value={code} key={code}>
+                      {showCommon ? `${native} - ${commonText}` : commonText}
+                    </option>
+                  );
+                })}
                 <hr />
-                {restSupportedLanguages.map(([code, common, native]) => (
-                  <option value={code} key={code}>
-                    {common} ({native})
-                  </option>
-                ))}
+                {restSupportedLanguages.map(([code, common, native]) => {
+                  const commonText = localeCode2Text({
+                    code,
+                    fallback: common,
+                  });
+                  const showCommon = commonText !== native;
+                  return (
+                    <option value={code} key={code}>
+                      {showCommon ? `${native} - ${commonText}` : commonText}
+                    </option>
+                  );
+                })}
               </select>
             </label>{' '}
             <button
@@ -1412,7 +1474,14 @@ function Compose({
               class="large"
               disabled={uiState === 'loading'}
             >
-              {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
+              {replyToStatus
+                ? t`Reply`
+                : editStatus
+                ? t`Update`
+                : t({
+                    message: 'Post',
+                    context: 'Submit button in composer',
+                  })}
             </button>
           </div>
         </form>
@@ -1525,7 +1594,10 @@ function Compose({
               console.log('GIF URL', url);
               if (mediaAttachments.length >= maxMediaAttachments) {
                 alert(
-                  `You can only attach up to ${maxMediaAttachments} files.`,
+                  plural(maxMediaAttachments, {
+                    one: 'You can only attach up to 1 file.',
+                    other: 'You can only attach up to # files.',
+                  }),
                 );
                 return;
               }
@@ -1534,7 +1606,7 @@ function Compose({
                 let theToast;
                 try {
                   theToast = showToast({
-                    text: 'Downloading GIF…',
+                    text: t`Downloading GIF…`,
                     duration: -1,
                   });
                   const blob = await fetch(url, {
@@ -1562,7 +1634,7 @@ function Compose({
                 } catch (err) {
                   console.error(err);
                   theToast?.hideToast?.();
-                  showToast('Failed to download GIF');
+                  showToast(t`Failed to download GIF`);
                 }
               })();
             }}
@@ -1673,7 +1745,7 @@ const Textarea = forwardRef((props, ref) => {
                 ${encodeHTML(shortcode)}
               </li>`;
           });
-          html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+          html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
           // console.log({ emojis, html });
           menu.innerHTML = html;
           provide(
@@ -1726,7 +1798,9 @@ const Textarea = forwardRef((props, ref) => {
                       </span>
                       <span>
                         <b>${displayNameWithEmoji || username}</b>
-                        <br>@${encodeHTML(acct)}
+                        <br><span class="bidi-isolate">@${encodeHTML(
+                          acct,
+                        )}</span>
                       </span>
                     </li>
                   `;
@@ -1748,7 +1822,7 @@ const Textarea = forwardRef((props, ref) => {
                 }
               });
               if (type === 'accounts') {
-                html += `<li role="option" data-value="" data-more="${text}">More…</li>`;
+                html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
               }
               menu.innerHTML = html;
               console.log('MENU', results, menu);
@@ -2021,16 +2095,6 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   );
 }
 
-function prettyBytes(bytes) {
-  const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  let unitIndex = 0;
-  while (bytes >= 1024) {
-    bytes /= 1024;
-    unitIndex++;
-  }
-  return `${bytes.toFixed(0).toLocaleString()} ${units[unitIndex]}`;
-}
-
 function scaleDimension(matrix, matrixLimit, width, height) {
   // matrix = number of pixels
   // matrixLimit = max number of pixels
@@ -2048,6 +2112,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
+  const { i18n } = useLingui();
   const [uiState, setUIState] = useState('default');
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
@@ -2159,7 +2224,9 @@ function MediaAttachment({
     <>
       {!!id && !supportsEdit ? (
         <div class="media-desc">
-          <span class="tag">Uploaded</span>
+          <span class="tag">
+            <Trans>Uploaded</Trans>
+          </span>
           <p title={description}>
             {attachment.description || <i>No description</i>}
           </p>
@@ -2171,9 +2238,9 @@ function MediaAttachment({
           lang={lang}
           placeholder={
             {
-              image: 'Image description',
-              video: 'Video description',
-              audio: 'Audio description',
+              image: t`Image description`,
+              video: t`Video description`,
+              audio: t`Audio description`,
             }[suffixType]
           }
           autoCapitalize="sentences"
@@ -2209,7 +2276,7 @@ function MediaAttachment({
     switch (type) {
       case 'imageSizeLimit': {
         const { imageSize, imageSizeLimit } = details;
-        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+        return t`File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
           imageSize,
         )} to ${prettyBytes(imageSizeLimit)} or lower.`;
       }
@@ -2221,11 +2288,15 @@ function MediaAttachment({
           width,
           height,
         );
-        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+          width,
+        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
+          newHeight,
+        )}px.`;
       }
       case 'videoSizeLimit': {
         const { videoSize, videoSizeLimit } = details;
-        return `File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+        return t`File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
           videoSize,
         )} to ${prettyBytes(videoSizeLimit)} or lower.`;
       }
@@ -2237,11 +2308,15 @@ function MediaAttachment({
           width,
           height,
         );
-        return `Dimension too large. Uploading might encounter issues. Try reduce dimension from ${width.toLocaleString()}×${height.toLocaleString()}px to ${newWidth.toLocaleString()}×${newHeight.toLocaleString()}px.`;
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+          width,
+        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
+          newHeight,
+        )}px.`;
       }
       case 'videoFrameRateLimit': {
         // Not possible to detect this on client-side for now
-        return 'Frame rate too high. Uploading might encounter issues.';
+        return t`Frame rate too high. Uploading might encounter issues.`;
       }
     }
   };
@@ -2301,7 +2376,7 @@ function MediaAttachment({
             disabled={disabled}
             onClick={onRemove}
           >
-            <Icon icon="x" />
+            <Icon icon="x" alt={t`Remove`} />
           </button>
           {!!maxError && (
             <button
@@ -2318,17 +2393,15 @@ function MediaAttachment({
                 });
               }}
             >
-              <Icon icon="alert" />
+              <Icon icon="alert" alt={t`Error`} />
             </button>
           )}
         </div>
       </div>
       {showModal && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowModal(false);
-            }
+          onClose={() => {
+            setShowModal(false);
           }}
         >
           <div id="media-sheet" class="sheet sheet-max">
@@ -2339,15 +2412,15 @@ function MediaAttachment({
                 setShowModal(false);
               }}
             >
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
               <h2>
                 {
                   {
-                    image: 'Edit image description',
-                    video: 'Edit video description',
-                    audio: 'Edit audio description',
+                    image: t`Edit image description`,
+                    video: t`Edit video description`,
+                    audio: t`Edit audio description`,
                   }[suffixType]
                 }
               </h2>
@@ -2382,8 +2455,8 @@ function MediaAttachment({
                         position="anchor"
                         overflow="auto"
                         menuButton={
-                          <button type="button" title="More" class="plain">
-                            <Icon icon="more" size="l" alt="More" />
+                          <button type="button" class="plain">
+                            <Icon icon="more" size="l" alt={t`More`} />
                           </button>
                         }
                       >
@@ -2392,7 +2465,7 @@ function MediaAttachment({
                           onClick={() => {
                             setUIState('loading');
                             toastRef.current = showToast({
-                              text: 'Generating description. Please wait...',
+                              text: t`Generating description. Please wait…`,
                               duration: -1,
                             });
                             // POST with multipart
@@ -2411,9 +2484,9 @@ function MediaAttachment({
                               } catch (e) {
                                 console.error(e);
                                 showToast(
-                                  `Failed to generate description${
-                                    e?.message ? `: ${e.message}` : ''
-                                  }`,
+                                  e.message
+                                    ? t`Failed to generate description: ${e.message}`
+                                    : t`Failed to generate description`,
                                 );
                               } finally {
                                 setUIState('default');
@@ -2425,12 +2498,14 @@ function MediaAttachment({
                           <Icon icon="sparkles2" />
                           {lang && lang !== 'en' ? (
                             <small>
-                              Generate description…
+                              <Trans>Generate description…</Trans>
                               <br />
                               (English)
                             </small>
                           ) : (
-                            <span>Generate description…</span>
+                            <span>
+                              <Trans>Generate description…</Trans>
+                            </span>
                           )}
                         </MenuItem>
                         {!!lang && lang !== 'en' && (
@@ -2439,7 +2514,7 @@ function MediaAttachment({
                             onClick={() => {
                               setUIState('loading');
                               toastRef.current = showToast({
-                                text: 'Generating description. Please wait...',
+                                text: t`Generating description. Please wait…`,
                                 duration: -1,
                               });
                               // POST with multipart
@@ -2462,7 +2537,7 @@ function MediaAttachment({
                                 } catch (e) {
                                   console.error(e);
                                   showToast(
-                                    `Failed to generate description${
+                                    t`Failed to generate description${
                                       e?.message ? `: ${e.message}` : ''
                                     }`,
                                   );
@@ -2475,11 +2550,14 @@ function MediaAttachment({
                           >
                             <Icon icon="sparkles2" />
                             <small>
-                              Generate description…
-                              <br />({localeCode2Text(lang)}){' '}
-                              <span class="more-insignificant">
-                                — experimental
-                              </span>
+                              <Trans>Generate description…</Trans>
+                              <br />
+                              <Trans>
+                                ({localeCode2Text(lang)}){' '}
+                                <span class="more-insignificant">
+                                  — experimental
+                                </span>
+                              </Trans>
                             </small>
                           </MenuItem>
                         )}
@@ -2493,7 +2571,7 @@ function MediaAttachment({
                     }}
                     disabled={uiState === 'loading'}
                   >
-                    Done
+                    <Trans>Done</Trans>
                   </button>
                 </footer>
               </div>
@@ -2515,6 +2593,7 @@ function Poll({
   minExpiration,
   maxCharactersPerOption,
 }) {
+  const { _ } = useLingui();
   const { options, expiresIn, multiple } = poll;
 
   return (
@@ -2528,7 +2607,7 @@ function Poll({
               value={option}
               disabled={disabled}
               maxlength={maxCharactersPerOption}
-              placeholder={`Choice ${i + 1}`}
+              placeholder={t`Choice ${i + 1}`}
               lang={lang}
               spellCheck="true"
               dir="auto"
@@ -2547,7 +2626,7 @@ function Poll({
                 onInput(poll);
               }}
             >
-              <Icon icon="x" size="s" />
+              <Icon icon="x" size="s" alt={t`Remove`} />
             </button>
           </div>
         ))}
@@ -2575,10 +2654,10 @@ function Poll({
               onInput(poll);
             }}
           />{' '}
-          Multiple choices
+          <Trans>Multiple choices</Trans>
         </label>
         <label class="expires-in">
-          Duration{' '}
+          <Trans>Duration</Trans>{' '}
           <select
             value={expiresIn}
             disabled={disabled}
@@ -2589,12 +2668,12 @@ function Poll({
             }}
           >
             {Object.entries(expiryOptions)
-              .filter(([label, value]) => {
+              .filter(([value]) => {
                 return value >= minExpiration && value <= maxExpiration;
               })
-              .map(([label, value]) => (
+              .map(([value, label]) => (
                 <option value={value} key={value}>
-                  {label}
+                  {label()}
                 </option>
               ))}
           </select>
@@ -2609,7 +2688,7 @@ function Poll({
             onInput(null);
           }}
         >
-          Remove poll
+          <Trans>Remove poll</Trans>
         </button>
       </div>
     </div>
@@ -2806,7 +2885,7 @@ function MentionModal({
     <div id="mention-sheet" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
@@ -2823,7 +2902,7 @@ function MentionModal({
             required
             type="search"
             class="block"
-            placeholder="Search accounts"
+            placeholder={t`Search accounts`}
             onInput={(e) => {
               const { value } = e.target;
               debouncedLoadAccounts(value);
@@ -2864,7 +2943,7 @@ function MentionModal({
                       selectAccount(account);
                     }}
                   >
-                    <Icon icon="plus" size="xl" />
+                    <Icon icon="plus" size="xl" alt={t`Add`} />
                   </button>
                 </li>
               );
@@ -2876,7 +2955,9 @@ function MentionModal({
           </div>
         ) : uiState === 'error' ? (
           <div class="ui-state">
-            <p>Error loading accounts</p>
+            <p>
+              <Trans>Error loading accounts</Trans>
+            </p>
           </div>
         ) : null}
       </main>
@@ -3012,12 +3093,14 @@ function CustomEmojisModal({
     <div id="custom-emojis-sheet" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
         <div>
-          <b>Custom emojis</b>{' '}
+          <b>
+            <Trans>Custom emojis</Trans>
+          </b>{' '}
           {uiState === 'loading' ? (
             <Loader />
           ) : (
@@ -3036,7 +3119,7 @@ function CustomEmojisModal({
           <input
             ref={inputRef}
             type="search"
-            placeholder="Search emoji"
+            placeholder={t`Search emoji`}
             onInput={onFind}
             autocomplete="off"
             autocorrect="off"
@@ -3066,7 +3149,9 @@ function CustomEmojisModal({
           <div class="custom-emojis-list">
             {uiState === 'error' && (
               <div class="ui-state">
-                <p>Error loading custom emojis</p>
+                <p>
+                  <Trans>Error loading custom emojis</Trans>
+                </p>
               </div>
             )}
             {uiState === 'default' &&
@@ -3076,8 +3161,8 @@ function CustomEmojisModal({
                     <>
                       <div class="section-header">
                         {{
-                          '--recent--': 'Recently used',
-                          '--others--': 'Others',
+                          '--recent--': t`Recently used`,
+                          '--others--': t`Others`,
                         }[category] || category}
                       </div>
                       <CustomEmojisList
@@ -3095,6 +3180,7 @@ function CustomEmojisModal({
 }
 
 const CustomEmojisList = memo(({ emojis, onSelect }) => {
+  const { i18n } = useLingui();
   const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
   const showMore = emojis.length > max;
   return (
@@ -3114,7 +3200,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
           class="plain small"
           onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
         >
-          {(emojis.length - max).toLocaleString()} more…
+          <Trans>{i18n.number(emojis.length - max)} more…</Trans>
         </button>
       )}
     </section>
@@ -3181,6 +3267,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
 
 const GIFS_PER_PAGE = 20;
 function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
+  const { i18n } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [results, setResults] = useState([]);
   const formRef = useRef(null);
@@ -3206,6 +3293,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
           limit: GIFS_PER_PAGE,
           bundle: 'messaging_non_clips',
           offset,
+          lang: i18n.locale || 'en',
         };
         const response = await fetch(
           'https://api.giphy.com/v1/gifs/search?' + new URLSearchParams(query),
@@ -3235,7 +3323,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
     <div id="gif-picker-sheet" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
@@ -3250,7 +3338,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
             ref={qRef}
             type="search"
             name="q"
-            placeholder="Search GIFs"
+            placeholder={t`Search GIFs`}
             required
             autocomplete="off"
             autocorrect="off"
@@ -3265,13 +3353,16 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
             src={poweredByGiphyURL}
             width="86"
             height="30"
+            alt={t`Powered by GIPHY`}
           />
         </form>
       </header>
       <main ref={scrollableRef} class={uiState === 'loading' ? 'loading' : ''}>
         {uiState === 'default' && (
           <div class="ui-state">
-            <p class="insignificant">Type to search GIFs</p>
+            <p class="insignificant">
+              <Trans>Type to search GIFs</Trans>
+            </p>
           </div>
         )}
         {uiState === 'loading' && !results?.data?.length && (
@@ -3367,7 +3458,9 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                   }}
                 >
                   <Icon icon="chevron-left" />
-                  <span>Previous</span>
+                  <span>
+                    <Trans>Previous</Trans>
+                  </span>
                 </button>
               )}
               <span />
@@ -3383,7 +3476,10 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                     });
                   }}
                 >
-                  <span>Next</span> <Icon icon="chevron-right" />
+                  <span>
+                    <Trans>Next</Trans>
+                  </span>{' '}
+                  <Icon icon="chevron-right" />
                 </button>
               )}
             </p>
@@ -3397,7 +3493,9 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
         )}
         {uiState === 'error' && (
           <div class="ui-state">
-            <p>Error loading GIFs</p>
+            <p>
+              <Trans>Error loading GIFs</Trans>
+            </p>
           </div>
         )}
       </main>

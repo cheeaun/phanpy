@@ -1,15 +1,24 @@
 import './name-text.css';
 
+import { useLingui } from '@lingui/react';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import mem from '../utils/mem';
 import states from '../utils/states';
 
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 
-const nameCollator = new Intl.Collator('en', {
-  sensitivity: 'base',
+const nameCollator = mem((locale) => {
+  const options = {
+    sensitivity: 'base',
+  };
+  try {
+    return new Intl.Collator(locale || undefined, options);
+  } catch (e) {
+    return new Intl.Collator(undefined, options);
+  }
 });
 
 function NameText({
@@ -21,6 +30,7 @@ function NameText({
   external,
   onClick,
 }) {
+  const { i18n } = useLingui();
   const {
     acct,
     avatar,
@@ -51,7 +61,10 @@ function NameText({
       (trimmedUsername === trimmedDisplayName ||
         trimmedUsername === shortenedDisplayName ||
         trimmedUsername === shortenedAlphaNumericDisplayName ||
-        nameCollator.compare(trimmedUsername, shortenedDisplayName) === 0)) ||
+        nameCollator(i18n.locale).compare(
+          trimmedUsername,
+          shortenedDisplayName,
+        ) === 0)) ||
     shortenedAlphaNumericDisplayName === acct.toLowerCase();
 
   return (
@@ -88,13 +101,13 @@ function NameText({
       )}
       {displayName && !short ? (
         <>
-          <b>
+          <b dir="auto">
             <EmojiText text={displayName} emojis={emojis} />
           </b>
           {!showAcct && !hideUsername && (
             <>
               {' '}
-              <i>@{username}</i>
+              <i class="bidi-isolate">@{username}</i>
             </>
           )}
         </>
@@ -106,7 +119,7 @@ function NameText({
       {showAcct && (
         <>
           <br />
-          <i>
+          <i class="bidi-isolate">
             {acct2 ? '' : '@'}
             {acct1}
             {!!acct2 && <span class="ib">{acct2}</span>}

@@ -1,9 +1,10 @@
+import { msg, Plural, Select, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
-import store from '../utils/store';
 import { getCurrentAccountID } from '../utils/store-utils';
 import useTruncated from '../utils/useTruncated';
 
@@ -13,7 +14,6 @@ import FollowRequestButtons from './follow-request-buttons';
 import Icon from './icon';
 import Link from './link';
 import NameText from './name-text';
-import RelativeTime from './relative-time';
 import Status from './status';
 
 const NOTIFICATION_ICONS = {
@@ -50,7 +50,7 @@ severed_relationships = Severed relationships
 moderation_warning = Moderation warning
 */
 
-function emojiText(emoji, emoji_url) {
+function emojiText({ account, emoji, emoji_url }) {
   let url;
   let staticUrl;
   if (typeof emoji_url === 'string') {
@@ -59,42 +59,204 @@ function emojiText(emoji, emoji_url) {
     url = emoji_url?.url;
     staticUrl = emoji_url?.staticUrl;
   }
-  return url ? (
-    <>
-      reacted to your post with{' '}
-      <CustomEmoji url={url} staticUrl={staticUrl} alt={emoji} />
-    </>
+  const emojiObject = url ? (
+    <CustomEmoji url={url} staticUrl={staticUrl} alt={emoji} />
   ) : (
-    `reacted to your post with ${emoji}.`
+    emoji
+  );
+  return (
+    <Trans>
+      {account} reacted to your post with {emojiObject}
+    </Trans>
   );
 }
+
 const contentText = {
-  mention: 'mentioned you in their post.',
-  status: 'published a post.',
-  reblog: 'boosted your post.',
-  'reblog+account': (count) => `boosted ${count} of your posts.`,
-  reblog_reply: 'boosted your reply.',
-  follow: 'followed you.',
-  follow_request: 'requested to follow you.',
-  favourite: 'liked your post.',
-  'favourite+account': (count) => `liked ${count} of your posts.`,
-  favourite_reply: 'liked your reply.',
-  poll: 'A poll you have voted in or created has ended.',
-  'poll-self': 'A poll you have created has ended.',
-  'poll-voted': 'A poll you have voted in has ended.',
-  update: 'A post you interacted with has been edited.',
-  'favourite+reblog': 'boosted & liked your post.',
-  'favourite+reblog+account': (count) =>
-    `boosted & liked ${count} of your posts.`,
-  'favourite+reblog_reply': 'boosted & liked your reply.',
-  'admin.sign_up': 'signed up.',
-  'admin.report': (targetAccount) => <>reported {targetAccount}</>,
-  severed_relationships: (name) => (
-    <>
-      Lost connections with <i>{name}</i>.
-    </>
+  status: ({ account }) => <Trans>{account} published a post.</Trans>,
+  reblog: ({
+    count,
+    account,
+    postsCount,
+    postType,
+    components: { Subject },
+  }) => (
+    <Plural
+      value={count}
+      _1={
+        <Plural
+          value={postsCount}
+          _1={
+            <Select
+              value={postType}
+              _reply={<Trans>{account} boosted your reply.</Trans>}
+              other={<Trans>{account} boosted your post.</Trans>}
+            />
+          }
+          other={
+            <Trans>
+              {account} boosted {postsCount} of your posts.
+            </Trans>
+          }
+        />
+      }
+      other={
+        <Select
+          value={postType}
+          _reply={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              boosted your reply.
+            </Trans>
+          }
+          other={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              boosted your post.
+            </Trans>
+          }
+        />
+      }
+    />
   ),
-  moderation_warning: <b>Moderation warning</b>,
+  follow: ({ account, count, components: { Subject } }) => (
+    <Plural
+      value={count}
+      _1={<Trans>{account} followed you.</Trans>}
+      other={
+        <Trans>
+          <Subject clickable={count > 1}>
+            <span title={count}>{shortenNumber(count)}</span> people
+          </Subject>{' '}
+          followed you.
+        </Trans>
+      }
+    />
+  ),
+  follow_request: ({ account }) => (
+    <Trans>{account} requested to follow you.</Trans>
+  ),
+  favourite: ({
+    account,
+    count,
+    postsCount,
+    postType,
+    components: { Subject },
+  }) => (
+    <Plural
+      value={count}
+      _1={
+        <Plural
+          value={postsCount}
+          _1={
+            <Select
+              value={postType}
+              _reply={<Trans>{account} liked your reply.</Trans>}
+              other={<Trans>{account} liked your post.</Trans>}
+            />
+          }
+          other={
+            <Trans>
+              {account} liked {postsCount} of your posts.
+            </Trans>
+          }
+        />
+      }
+      other={
+        <Select
+          value={postType}
+          _reply={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              liked your reply.
+            </Trans>
+          }
+          other={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              liked your post.
+            </Trans>
+          }
+        />
+      }
+    />
+  ),
+  poll: () => t`A poll you have voted in or created has ended.`,
+  'poll-self': () => t`A poll you have created has ended.`,
+  'poll-voted': () => t`A poll you have voted in has ended.`,
+  update: () => t`A post you interacted with has been edited.`,
+  'favourite+reblog': ({
+    count,
+    account,
+    postsCount,
+    postType,
+    components: { Subject },
+  }) => (
+    <Plural
+      value={count}
+      _1={
+        <Plural
+          value={postsCount}
+          _1={
+            <Select
+              value={postType}
+              _reply={<Trans>{account} boosted & liked your reply.</Trans>}
+              other={<Trans>{account} boosted & liked your post.</Trans>}
+            />
+          }
+          other={
+            <Trans>
+              {account} boosted & liked {postsCount} of your posts.
+            </Trans>
+          }
+        />
+      }
+      other={
+        <Select
+          value={postType}
+          _reply={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              boosted & liked your reply.
+            </Trans>
+          }
+          other={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              boosted & liked your post.
+            </Trans>
+          }
+        />
+      }
+    />
+  ),
+  'admin.sign_up': ({ account }) => <Trans>{account} signed up.</Trans>,
+  'admin.report': ({ account, targetAccount }) => (
+    <Trans>
+      {account} reported {targetAccount}
+    </Trans>
+  ),
+  severed_relationships: ({ name }) => (
+    <Trans>
+      Lost connections with <i>{name}</i>.
+    </Trans>
+  ),
+  moderation_warning: () => (
+    <b>
+      <Trans>Moderation warning</Trans>
+    </b>
+  ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
 };
@@ -102,34 +264,33 @@ const contentText = {
 // account_suspension, domain_block, user_domain_block
 const SEVERED_RELATIONSHIPS_TEXT = {
   account_suspension: ({ from, targetName }) => (
-    <>
+    <Trans>
       An admin from <i>{from}</i> has suspended <i>{targetName}</i>, which means
       you can no longer receive updates from them or interact with them.
-    </>
+    </Trans>
   ),
   domain_block: ({ from, targetName, followersCount, followingCount }) => (
-    <>
+    <Trans>
       An admin from <i>{from}</i> has blocked <i>{targetName}</i>. Affected
       followers: {followersCount}, followings: {followingCount}.
-    </>
+    </Trans>
   ),
   user_domain_block: ({ targetName, followersCount, followingCount }) => (
-    <>
+    <Trans>
       You have blocked <i>{targetName}</i>. Removed followers: {followersCount},
       followings: {followingCount}.
-    </>
+    </Trans>
   ),
 };
 
 const MODERATION_WARNING_TEXT = {
-  none: 'Your account has received a moderation warning.',
-  disable: 'Your account has been disabled.',
-  mark_statuses_as_sensitive:
-    'Some of your posts have been marked as sensitive.',
-  delete_statuses: 'Some of your posts have been deleted.',
-  sensitive: 'Your posts will be marked as sensitive from now on.',
-  silence: 'Your account has been limited.',
-  suspend: 'Your account has been suspended.',
+  none: msg`Your account has received a moderation warning.`,
+  disable: msg`Your account has been disabled.`,
+  mark_statuses_as_sensitive: msg`Some of your posts have been marked as sensitive.`,
+  delete_statuses: msg`Some of your posts have been deleted.`,
+  sensitive: msg`Your posts will be marked as sensitive from now on.`,
+  silence: msg`Your account has been limited.`,
+  suspend: msg`Your account has been suspended.`,
 };
 
 const AVATARS_LIMIT = 30;
@@ -140,6 +301,7 @@ function Notification({
   isStatic,
   disableContextMenu,
 }) {
+  const { _ } = useLingui();
   const {
     id,
     status,
@@ -147,10 +309,20 @@ function Notification({
     report,
     event,
     moderation_warning,
+    // Client-side grouped notification
+    _ids,
     _accounts,
     _statuses,
+    // Server-side grouped notification
+    sampleAccounts,
+    notificationsCount,
   } = notification;
   let { type } = notification;
+
+  if (type === 'mention' && !status) {
+    // Could be deleted
+    return null;
+  }
 
   // status = Attached when type of the notification is favourite, reblog, status, mention, poll, or update
   const actualStatus = status?.reblog || status;
@@ -167,12 +339,14 @@ function Notification({
   let favsCount = 0;
   let reblogsCount = 0;
   if (type === 'favourite+reblog') {
-    for (const account of _accounts) {
-      if (account._types?.includes('favourite')) {
-        favsCount++;
-      }
-      if (account._types?.includes('reblog')) {
-        reblogsCount++;
+    if (_accounts) {
+      for (const account of _accounts) {
+        if (account._types?.includes('favourite')) {
+          favsCount++;
+        }
+        if (account._types?.includes('reblog')) {
+          reblogsCount++;
+        }
       }
     }
     if (!reblogsCount && favsCount) type = 'favourite';
@@ -182,37 +356,37 @@ function Notification({
   let text;
   if (type === 'poll') {
     text = contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll'];
-  } else if (
-    type === 'reblog' ||
-    type === 'favourite' ||
-    type === 'favourite+reblog'
-  ) {
-    if (_statuses?.length > 1) {
-      text = contentText[`${type}+account`];
-    } else if (isReplyToOthers) {
-      text = contentText[`${type}_reply`];
-    } else {
-      text = contentText[type];
-    }
   } else if (contentText[type]) {
     text = contentText[type];
   } else {
     // Anticipate unhandled notification types, possibly from Mastodon forks or non-Mastodon instances
     // This surfaces the error to the user, hoping that users will report it
-    text = `[Unknown notification type: ${type}]`;
+    text = t`[Unknown notification type: ${type}]`;
   }
 
+  const Subject = ({ clickable, ...props }) =>
+    clickable ? (
+      <b tabIndex="0" onClick={handleOpenGenericAccounts} {...props} />
+    ) : (
+      <b {...props} />
+    );
+
   if (typeof text === 'function') {
-    const count = _statuses?.length || _accounts?.length;
+    const count =
+      _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
+    const postsCount = _statuses?.length || 0;
     if (type === 'admin.report') {
       const targetAccount = report?.targetAccount;
       if (targetAccount) {
-        text = text(<NameText account={targetAccount} showAvatar />);
+        text = text({
+          account: <NameText account={account} showAvatar />,
+          targetAccount: <NameText account={targetAccount} showAvatar />,
+        });
       }
     } else if (type === 'severed_relationships') {
       const targetName = event?.targetName;
       if (targetName) {
-        text = text(targetName);
+        text = text({ name: targetName });
       }
     } else if (
       (type === 'emoji_reaction' || type === 'pleroma:emoji_reaction') &&
@@ -225,15 +399,22 @@ function Notification({
             emoji?.shortcode ===
             notification.emoji.replace(/^:/, '').replace(/:$/, ''),
         ); // Emoji object instead of string
-      text = text(notification.emoji, emojiURL);
-    } else if (count) {
-      text = text(count);
+      text = text({ emoji: notification.emoji, emojiURL });
+    } else {
+      text = text({
+        account: account ? (
+          <NameText account={account} showAvatar />
+        ) : (
+          sampleAccounts?.[0] && (
+            <NameText account={sampleAccounts[0]} showAvatar />
+          )
+        ),
+        count,
+        postsCount,
+        postType: isReplyToOthers ? 'reply' : 'post',
+        components: { Subject },
+      });
     }
-  }
-
-  if (type === 'mention' && !status) {
-    // Could be deleted
-    return null;
   }
 
   const formattedCreatedAt =
@@ -241,11 +422,11 @@ function Notification({
 
   const genericAccountsHeading =
     {
-      'favourite+reblog': 'Boosted/Liked by…',
-      favourite: 'Liked by…',
-      reblog: 'Boosted by…',
-      follow: 'Followed by…',
-    }[type] || 'Accounts';
+      'favourite+reblog': t`Boosted/Liked by…`,
+      favourite: t`Liked by…`,
+      reblog: t`Boosted by…`,
+      follow: t`Followed by…`,
+    }[type] || t`Accounts`;
   const handleOpenGenericAccounts = () => {
     states.showGenericAccounts = {
       heading: genericAccountsHeading,
@@ -261,7 +442,7 @@ function Notification({
   return (
     <div
       class={`notification notification-${type}`}
-      data-notification-id={id}
+      data-notification-id={_ids || id}
       tabIndex="0"
     >
       <div
@@ -284,39 +465,7 @@ function Notification({
       <div class="notification-content">
         {type !== 'mention' && (
           <>
-            <p>
-              {!/poll|update/i.test(type) && (
-                <>
-                  {_accounts?.length > 1 ? (
-                    <>
-                      <b tabIndex="0" onClick={handleOpenGenericAccounts}>
-                        <span title={_accounts.length}>
-                          {shortenNumber(_accounts.length)}
-                        </span>{' '}
-                        people
-                      </b>{' '}
-                    </>
-                  ) : (
-                    account && (
-                      <>
-                        <NameText account={account} showAvatar />{' '}
-                      </>
-                    )
-                  )}
-                </>
-              )}
-              {text}
-              {type === 'mention' && (
-                <span class="insignificant">
-                  {' '}
-                  •{' '}
-                  <RelativeTime
-                    datetime={notification.createdAt}
-                    format="micro"
-                  />
-                </span>
-              )}
-            </p>
+            <p>{text}</p>
             {type === 'follow_request' && (
               <FollowRequestButtons accountID={account.id} />
             )}
@@ -332,23 +481,26 @@ function Notification({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Learn more <Icon icon="external" size="s" />
+                  <Trans>
+                    Learn more <Icon icon="external" size="s" />
+                  </Trans>
                 </a>
                 .
               </div>
             )}
             {type === 'moderation_warning' && !!moderation_warning && (
               <div>
-                {MODERATION_WARNING_TEXT[moderation_warning.action]}
+                {_(MODERATION_WARNING_TEXT[moderation_warning.action]())}
                 <br />
                 <a
                   href={`/disputes/strikes/${moderation_warning.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Learn more <Icon icon="external" size="s" />
+                  <Trans>
+                    Learn more <Icon icon="external" size="s" />
+                  </Trans>
                 </a>
-                .
               </div>
             )}
           </>
@@ -403,6 +555,54 @@ function Notification({
                 `+${_accounts.length - AVATARS_LIMIT}`}
               <Icon icon="chevron-down" />
             </button>
+          </p>
+        )}
+        {!_accounts?.length && sampleAccounts?.length > 1 && (
+          <p class="avatars-stack">
+            {sampleAccounts.map((account) => (
+              <Fragment key={account.id}>
+                <a
+                  key={account.id}
+                  href={account.url}
+                  rel="noopener noreferrer"
+                  class="account-avatar-stack"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    states.showAccount = account;
+                  }}
+                >
+                  <Avatar
+                    url={account.avatarStatic}
+                    size="xxl"
+                    key={account.id}
+                    alt={`${account.displayName} @${account.acct}`}
+                    squircle={account?.bot}
+                  />
+                  {/* {type === 'favourite+reblog' && (
+                    <div class="account-sub-icons">
+                      {account._types.map((type) => (
+                        <Icon
+                          icon={NOTIFICATION_ICONS[type]}
+                          size="s"
+                          class={`${type}-icon`}
+                        />
+                      ))}
+                    </div>
+                  )} */}
+                </a>{' '}
+              </Fragment>
+            ))}
+            {notificationsCount > sampleAccounts.length && (
+              <Link
+                to={
+                  instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
+                }
+                class="button small plain centered"
+              >
+                +{notificationsCount - sampleAccounts.length}
+                <Icon icon="chevron-right" />
+              </Link>
+            )}
           </p>
         )}
         {_statuses?.length > 1 && (
@@ -477,7 +677,7 @@ function Notification({
 
 function TruncatedLink(props) {
   const ref = useTruncated();
-  return <Link {...props} data-read-more="Read more →" ref={ref} />;
+  return <Link {...props} data-read-more={t`Read more →`} ref={ref} />;
 }
 
 export default memo(Notification, (oldProps, newProps) => {

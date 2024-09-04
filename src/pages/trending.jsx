@@ -1,6 +1,7 @@
 import '../components/links-bar.css';
 import './trending.css';
 
+import { t, Trans } from '@lingui/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -19,8 +20,7 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
@@ -67,10 +67,12 @@ function Trending({ columnMode, ...props }) {
     instance: props?.instance || params.instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();
-  const title = `Trending (${instance})`;
+  const title = t`Trending (${instance})`;
   useTitle(title, `/:instance?/trending`);
   // const navigate = useNavigate();
   const latestItem = useRef();
+
+  const sameCurrentInstance = instance === currentInstance;
 
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
@@ -137,7 +139,8 @@ function Trending({ columnMode, ...props }) {
   const [currentLink, setCurrentLink] = useState(null);
   const hasCurrentLink = !!currentLink;
   const currentLinkRef = useRef();
-  const supportsTrendingLinkPosts = supports('@mastodon/trending-hashtags');
+  const supportsTrendingLinkPosts =
+    sameCurrentInstance && supports('@mastodon/trending-link-posts');
 
   useEffect(() => {
     if (currentLink && currentLinkRef.current) {
@@ -207,7 +210,7 @@ function Trending({ columnMode, ...props }) {
               const total = history.reduce((acc, cur) => acc + +cur.uses, 0);
               return (
                 <Link to={`/${instance}/t/${name}`} key={name}>
-                  <span>
+                  <span dir="auto">
                     <span class="more-insignificant">#</span>
                     {name}
                   </span>
@@ -220,7 +223,9 @@ function Trending({ columnMode, ...props }) {
         {!!links.length && (
           <div class="links-bar">
             <header>
-              <h3>Trending News</h3>
+              <h3>
+                <Trans>Trending News</Trans>
+              </h3>
             </header>
             {links.map((link) => {
               const {
@@ -337,7 +342,10 @@ function Trending({ columnMode, ...props }) {
                       }}
                       disabled={url === currentLink}
                     >
-                      <Icon icon="comment2" /> <span>Mentions</span>{' '}
+                      <Icon icon="comment2" />{' '}
+                      <span>
+                        <Trans>Mentions</Trans>
+                      </span>{' '}
                       <Icon icon="chevron-down" />
                     </button>
                   )}
@@ -363,21 +371,25 @@ function Trending({ columnMode, ...props }) {
                         setCurrentLink(null);
                       }}
                     >
-                      <Icon icon="x" />
+                      <Icon icon="x" alt={t`Back to showing trending posts`} />
                     </button>
                   )}
                 </div>
                 <p>
-                  Showing posts mentioning{' '}
-                  <span class="link-text">
-                    {currentLink
-                      .replace(/^https?:\/\/(www\.)?/i, '')
-                      .replace(/\/$/, '')}
-                  </span>
+                  <Trans>
+                    Showing posts mentioning{' '}
+                    <span class="link-text">
+                      {currentLink
+                        .replace(/^https?:\/\/(www\.)?/i, '')
+                        .replace(/\/$/, '')}
+                    </span>
+                  </Trans>
                 </p>
               </>
             ) : (
-              <p class="insignificant">Trending posts</p>
+              <p class="insignificant">
+                <Trans>Trending posts</Trans>
+              </p>
             )}
           </div>
         )}
@@ -391,14 +403,16 @@ function Trending({ columnMode, ...props }) {
       title={title}
       titleComponent={
         <h1 class="header-double-lines">
-          <b>Trending</b>
+          <b>
+            <Trans>Trending</Trans>
+          </b>
           <div>{instance}</div>
         </h1>
       }
       id="trending"
       instance={instance}
-      emptyText="No trending posts."
-      errorText="Unable to load posts"
+      emptyText={t`No trending posts.`}
+      errorText={t`Unable to load posts`}
       fetchItems={hasCurrentLink ? fetchLinkMentions : fetchTrends}
       checkForUpdates={hasCurrentLink ? undefined : checkForUpdates}
       checkForUpdatesInterval={5 * 60 * 1000} // 5 minutes
@@ -420,17 +434,17 @@ function Trending({ columnMode, ...props }) {
           position="anchor"
           menuButton={
             <button type="button" class="plain">
-              <Icon icon="more" size="l" />
+              <Icon icon="more" size="l" alt={t`More`} />
             </button>
           }
         >
           <MenuItem
             onClick={() => {
               let newInstance = prompt(
-                'Enter a new instance e.g. "mastodon.social"',
+                t`Enter a new instance e.g. "mastodon.social"`,
               );
               if (!/\./.test(newInstance)) {
-                if (newInstance) alert('Invalid instance');
+                if (newInstance) alert(t`Invalid instance`);
                 return;
               }
               if (newInstance) {
@@ -440,7 +454,10 @@ function Trending({ columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="bus" /> <span>Go to another instance…</span>
+            <Icon icon="bus" />{' '}
+            <span>
+              <Trans>Go to another instance…</Trans>
+            </span>
           </MenuItem>
           {currentInstance !== instance && (
             <MenuItem
@@ -450,7 +467,9 @@ function Trending({ columnMode, ...props }) {
             >
               <Icon icon="bus" />{' '}
               <small class="menu-double-lines">
-                Go to my instance (<b>{currentInstance}</b>)
+                <Trans>
+                  Go to my instance (<b>{currentInstance}</b>)
+                </Trans>
               </small>
             </MenuItem>
           )}

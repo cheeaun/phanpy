@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -15,7 +16,7 @@ import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 function Columns() {
-  useTitle('Home', '/');
+  useTitle(t`Home`, '/');
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 

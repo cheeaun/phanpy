@@ -84,6 +84,7 @@
     var(--text-color) 60%
   );
   --outline-color: rgba(128, 128, 128, 0.2);
+  --outline-stronger-color: rgba(128, 128, 128, 0.4);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
@@ -110,6 +111,17 @@
   --spring-timing-funtion: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   --min-dimension: 88px;
+
+  --forward: right;
+  --backward: left;
+  --to-forward: to right;
+  --to-backward: to left;
+  &:dir(rtl) {
+    --forward: left;
+    --backward: right;
+    --to-forward: to left;
+    --to-backward: to right;
+  }
 }
 
 @media (min-resolution: 2dppx) {
@@ -137,6 +149,11 @@
       in lch,
       mediumslateblue 70%,
       var(--text-color) 30%
+    );
+    --button-bg-color: color-mix(
+      in srgb,
+      var(--blue-color) 80%,
+      var(--bg-color) 20%
     );
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
@@ -378,9 +395,15 @@ textarea:disabled {
   width: 100%;
 }
 
-button.small {
+:is(button, .button, select).small {
   font-size: 90%;
   padding: 4px 8px;
+}
+
+.button.centered {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 select.plain {
@@ -434,6 +457,11 @@ kbd {
 }
 :has(:focus-visible) .hide-until-focus-visible {
   display: initial;
+}
+
+.bidi-isolate {
+  direction: initial;
+  unicode-bidi: isolate;
 }
 
 /* KEYFRAMES */

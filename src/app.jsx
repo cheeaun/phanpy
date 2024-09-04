@@ -1,5 +1,6 @@
 import './app.css';
 
+import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
 import {
   useEffect,
@@ -9,7 +10,9 @@ import {
   useState,
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
+
 import 'swiped-events';
+
 import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
@@ -53,7 +56,12 @@ import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
 import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
-import { getCurrentAccount, setCurrentAccountID } from './utils/store-utils';
+import {
+  getAccount,
+  getCurrentAccount,
+  setCurrentAccountID,
+} from './utils/store-utils';
+
 import './utils/toast-alert';
 
 window.__STATES__ = states;
@@ -129,6 +137,8 @@ setTimeout(() => {
     setTimeout(() => {
       if (Array.isArray(ICONS[icon])) {
         ICONS[icon][0]?.();
+      } else if (typeof ICONS[icon] === 'object') {
+        ICONS[icon].module?.();
       } else {
         ICONS[icon]?.();
       }
@@ -294,6 +304,7 @@ subscribe(states, (changes) => {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
+  useLingui();
 
   useEffect(() => {
     const instanceURL = store.local.get('instanceURL');
@@ -310,9 +321,10 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.session.get('clientID');
-      const clientSecret = store.session.get('clientSecret');
-      const vapidKey = store.session.get('vapidKey');
+      const clientID = store.sessionCookie.get('clientID');
+      const clientSecret = store.sessionCookie.get('clientSecret');
+      const vapidKey = store.sessionCookie.get('vapidKey');
+      const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {
         setUIState('loading');
@@ -321,22 +333,46 @@ function App() {
           client_id: clientID,
           client_secret: clientSecret,
           code,
+          code_verifier: verifier || undefined,
         });
 
-        const client = initClient({ instance: instanceURL, accessToken });
-        await Promise.allSettled([
-          initPreferences(client),
-          initInstance(client, instanceURL),
-          initAccount(client, instanceURL, accessToken, vapidKey),
-        ]);
-        initStates();
+        if (accessToken) {
+          const client = initClient({ instance: instanceURL, accessToken });
+          await Promise.allSettled([
+            initPreferences(client),
+            initInstance(client, instanceURL),
+            initAccount(client, instanceURL, accessToken, vapidKey),
+          ]);
+          initStates();
+          window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
 
-        setIsLoggedIn(true);
-        setUIState('default');
+          setIsLoggedIn(true);
+          setUIState('default');
+        } else {
+          setUIState('error');
+        }
       })();
     } else {
       window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
-      const account = getCurrentAccount();
+      const searchAccount = decodeURIComponent(
+        (window.location.search.match(/account=([^&]+)/) || [, ''])[1],
+      );
+      let account;
+      if (searchAccount) {
+        account = getAccount(searchAccount);
+        console.log('searchAccount', searchAccount, account);
+        if (account) {
+          setCurrentAccountID(account.info.id);
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname || '/',
+          );
+        }
+      }
+      if (!account) {
+        account = getCurrentAccount();
+      }
       if (account) {
         setCurrentAccountID(account.info.id);
         const { client } = api({ account });
@@ -358,6 +394,11 @@ function App() {
         setUIState('default');
       }
     }
+
+    // Cleanup
+    store.sessionCookie.del('clientID');
+    store.sessionCookie.del('clientSecret');
+    store.sessionCookie.del('codeVerifier');
   }, []);
 
   let location = useLocation();

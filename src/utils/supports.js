@@ -8,7 +8,6 @@ import { getCurrentInstance } from './store-utils';
 const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containAnyOma = /(?:pler|akk)oma/i
-const notContainAnyOma = /^(?! *(?:pler|akk)oma) *$/i
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,

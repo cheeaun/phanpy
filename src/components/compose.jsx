@@ -605,11 +605,11 @@ function Compose({
         if (item.kind === 'file') {
           const file = item.getAsFile();
           if (!file) {
-            alert(`Could not access the given attachment.`);
+            alert(t`Unable to attach file.`);
             return;
           }
           else if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
-            alert(`Your instance does not allow attachments of type "${file.type}".`);
+            alert(t`File "${file.name}" is not supported by your instance.`);
             return;
           }
           else {

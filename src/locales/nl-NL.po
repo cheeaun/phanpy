@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 15:33\n"
+"PO-Revision-Date: 2024-09-04 01:59\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -327,7 +327,7 @@ msgstr "@{username} gedempt voor {0}"
 
 #: src/components/account-info.jsx:1421
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Kan @{username} niet dempen"
 
 #: src/components/account-info.jsx:1442
 msgid "Remove <0>@{username}</0> from followers?"
@@ -355,11 +355,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1522
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Kan @{username} niet ontblokkeren"
 
 #: src/components/account-info.jsx:1524
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Kan @{username} niet blokkeren"
 
 #: src/components/account-info.jsx:1534
 msgid "Unblock <0>@{username}</0>"
@@ -388,11 +388,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1668
 msgid "Unfollow…"
-msgstr ""
+msgstr "Ontvolg…"
 
 #: src/components/account-info.jsx:1677
 msgid "Withdraw…"
-msgstr ""
+msgstr "Neem terug…"
 
 #: src/components/account-info.jsx:1684
 #: src/components/account-info.jsx:1688
@@ -442,16 +442,16 @@ msgstr "Vertaalde bio"
 
 #: src/components/account-info.jsx:1898
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Kan niet uit lijst verwijderen."
 
 #: src/components/account-info.jsx:1899
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Kan niet aan lijst toevoegen."
 
 #: src/components/account-info.jsx:1918
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
-msgstr ""
+msgstr "Kan lijsten niet laden."
 
 #: src/components/account-info.jsx:1922
 msgid "No lists."
@@ -482,7 +482,7 @@ msgstr "Opslaan & sluiten"
 
 #: src/components/account-info.jsx:2142
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Kan profiel niet bijwerken."
 
 #: src/components/account-info.jsx:2162
 msgid "Bio"
@@ -586,7 +586,7 @@ msgstr ""
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr ""
+msgstr "Bewerk bronbericht"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
@@ -678,7 +678,7 @@ msgstr "Werk bij"
 #: src/components/compose.jsx:1473
 msgctxt "Submit button in composer"
 msgid "Post"
-msgstr ""
+msgstr "Plaats"
 
 #: src/components/compose.jsx:1601
 msgid "Downloading GIF…"
@@ -782,7 +782,7 @@ msgstr "Gereed"
 
 #: src/components/compose.jsx:2602
 msgid "Choice {0}"
-msgstr ""
+msgstr "Keuze {0}"
 
 #: src/components/compose.jsx:2649
 msgid "Multiple choices"
@@ -1021,11 +1021,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
-msgstr ""
+msgstr "Sluit bericht of dialoogvenster"
 
 #: src/components/keyboard-shortcuts-help.jsx:103
 msgid "<0>Esc</0> or <1>Backspace</1>"
-msgstr ""
+msgstr "<0>Esc</0> of <1>Backspace</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
@@ -1033,7 +1033,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
-msgstr ""
+msgstr "<0>1</0> tot <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Compose new post"
@@ -1126,11 +1126,11 @@ msgstr "Naam"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr ""
+msgstr "Toon antwoorden aan ledenlijst"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr ""
+msgstr "Toon antwoorden aan mensen die ik volg"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
@@ -1151,7 +1151,7 @@ msgstr "Deze lijst verwijderen?"
 
 #: src/components/list-add-edit.jsx:173
 msgid "Unable to delete list."
-msgstr ""
+msgstr "Kan lijst niet verwijderen."
 
 #: src/components/media-alt-modal.jsx:38
 #: src/components/media.jsx:50
@@ -1231,7 +1231,7 @@ msgstr "Menu"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr ""
+msgstr "Pagina herladen om bij te werken?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
@@ -1323,19 +1323,19 @@ msgstr "Filters"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
-msgstr ""
+msgstr "Gedempte gebruikers"
 
 #: src/components/nav-menu.jsx:326
 msgid "Muted users…"
-msgstr ""
+msgstr "Gedempte gebruikers…"
 
 #: src/components/nav-menu.jsx:333
 msgid "Blocked users"
-msgstr ""
+msgstr "Geblokkeerde gebruikers"
 
 #: src/components/nav-menu.jsx:341
 msgid "Blocked users…"
-msgstr ""
+msgstr "Geblokkeerde gebruikers…"
 
 #: src/components/nav-menu.jsx:353
 msgid "Accounts…"
@@ -1353,7 +1353,7 @@ msgstr "Inloggen"
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:407
 msgid "Trending"
-msgstr ""
+msgstr "Populair"
 
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
@@ -1440,27 +1440,27 @@ msgstr ""
 
 #: src/components/notification.jsx:251
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Verbindingen verbroken met <0>{name}</0>."
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
-msgstr ""
+msgstr "Moderatie-waarschuwing"
 
 #: src/components/notification.jsx:267
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "Een beheerder van <0>{from}</0> heeft <1>{targetName}</1> geschorst, wat betekent dat u geen updates meer van hen kunt ontvangen of met hen kunt communiceren."
 
 #: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Een admin van <0>{from}</0> heeft <1>{targetName}</1> geblokkeerd. Getroffen volgers: {followersCount}, volgt: {followingCount}."
 
 #: src/components/notification.jsx:279
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Je hebt <0>{targetName}</0> geblokkeerd. Verwijderde volgers: {followersCount}, volgt: {followingCount}."
 
 #: src/components/notification.jsx:287
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "Jouw account heeft een moderatie-waarschuwing ontvangen."
 
 #: src/components/notification.jsx:288
 msgid "Your account has been disabled."
@@ -1480,15 +1480,15 @@ msgstr ""
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
-msgstr ""
+msgstr "Je account is beperkt."
 
 #: src/components/notification.jsx:293
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Je account is geschorst."
 
 #: src/components/notification.jsx:364
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[Onbekend meldingstype: {type}]"
 
 #: src/components/notification.jsx:425
 #: src/components/status.jsx:937
@@ -1506,7 +1506,7 @@ msgstr "Geboost door…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr ""
+msgstr "Gevolgd door…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
@@ -1524,7 +1524,7 @@ msgstr "Gestemd"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# stem} other {# stemmen}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -1550,11 +1550,11 @@ msgstr "Toon uitslagen"
 
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
-msgstr ""
+msgstr "{votesCount, plural, one {<0>{0}</0> stem} other {<1>{1}</1> stemmen}}"
 
 #: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> stemmer} other {<1>{1}</1> stemmers}}"
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
@@ -1597,7 +1597,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:33
 msgid "Illegal"
-msgstr ""
+msgstr "Illegaal"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
@@ -1613,11 +1613,11 @@ msgstr ""
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
-msgstr ""
+msgstr "Overtreding"
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
-msgstr ""
+msgstr "Overig"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
@@ -1625,7 +1625,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
-msgstr ""
+msgstr "Rapporteer bericht"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
@@ -1633,7 +1633,7 @@ msgstr "Rapporteer @{username}"
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
-msgstr ""
+msgstr "Openstaande review"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
@@ -1673,11 +1673,11 @@ msgstr ""
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
-msgstr ""
+msgstr "{username} gedempt"
 
 #: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
-msgstr ""
+msgstr "Kan {username} niet dempen"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
@@ -1689,7 +1689,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
-msgstr ""
+msgstr "Kan {username} niet blokkeren"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
@@ -2158,7 +2158,7 @@ msgstr ""
 
 #: src/components/status.jsx:1242
 msgid "Unable to delete post"
-msgstr ""
+msgstr "Kan bericht niet verwijderen"
 
 #: src/components/status.jsx:1270
 msgid "Report post…"
@@ -2187,7 +2187,7 @@ msgstr ""
 #: src/components/status.jsx:1718
 #: src/components/status.jsx:2170
 msgid "Deleted"
-msgstr ""
+msgstr "Verwijderd"
 
 #: src/components/status.jsx:1759
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
@@ -2201,12 +2201,12 @@ msgstr ""
 #: src/components/status.jsx:1986
 #: src/components/status.jsx:2071
 msgid "Show less"
-msgstr ""
+msgstr "Toon minder"
 
 #: src/components/status.jsx:1924
 #: src/components/status.jsx:1986
 msgid "Show content"
-msgstr ""
+msgstr "Toon inhoud"
 
 #: src/components/status.jsx:2071
 msgid "Show media"
@@ -2214,15 +2214,15 @@ msgstr ""
 
 #: src/components/status.jsx:2191
 msgid "Edited"
-msgstr ""
+msgstr "Bewerkt"
 
 #: src/components/status.jsx:2268
 msgid "Comments"
-msgstr ""
+msgstr "Antwoorden"
 
 #: src/components/status.jsx:2844
 msgid "Edit History"
-msgstr ""
+msgstr "Bewerkingsgeschiedenis"
 
 #: src/components/status.jsx:2848
 msgid "Failed to load history"
@@ -2242,7 +2242,7 @@ msgstr ""
 
 #: src/components/status.jsx:3108
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "Kan HTML-code niet kopiëren"
 
 #: src/components/status.jsx:3120
 msgid "Media attachments:"
@@ -2434,12 +2434,12 @@ msgstr ""
 #: src/pages/public.jsx:97
 #: src/pages/trending.jsx:415
 msgid "Unable to load posts"
-msgstr ""
+msgstr "Kan berichten niet laden"
 
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
 msgid "Unable to fetch account info"
-msgstr ""
+msgstr "Kan accountgegevens niet ophalen"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
@@ -2499,7 +2499,7 @@ msgstr ""
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "Kan bladwijzers niet laden."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
@@ -2777,7 +2777,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:166
 msgid "Unable to load filters."
-msgstr ""
+msgstr "Kan filters niet laden."
 
 #: src/pages/filters.jsx:170
 msgid "No filters yet."
@@ -2857,7 +2857,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:576
 msgid "Unable to delete filter."
-msgstr ""
+msgstr "Kan filter niet verwijderen."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
@@ -2890,7 +2890,7 @@ msgstr ""
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
-msgstr ""
+msgstr "Kan berichten niet laden."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -2914,7 +2914,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr ""
+msgstr "Kan berichten met deze tag niet laden"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
@@ -3003,7 +3003,7 @@ msgstr ""
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
-msgstr ""
+msgstr "Kan meldingen niet ophalen."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
@@ -3019,7 +3019,7 @@ msgstr ""
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr ""
+msgstr "Kan URL niet vinden"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
@@ -3155,7 +3155,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:792
 msgid "Unable to load notifications"
-msgstr ""
+msgstr "Kan meldingen niet laden"
 
 #: src/pages/notifications.jsx:871
 msgid "Notifications settings updated"
@@ -3588,7 +3588,7 @@ msgstr "Experimenteel"
 
 #: src/pages/status.jsx:1241
 msgid "Unable to switch"
-msgstr ""
+msgstr "Kan niet overschakelen"
 
 #: src/pages/status.jsx:1248
 msgid "Switch to post's instance ({0})"
@@ -3600,7 +3600,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
-msgstr ""
+msgstr "Kan bericht niet laden"
 
 #: src/pages/status.jsx:1426
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"

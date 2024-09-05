@@ -1410,7 +1410,7 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    mediaAttachments.length >= maxMediaAttachments ||
+                    (maxMediaAttachments ? mediaAttachments.length >= maxMediaAttachments : true) ||
                     !!poll
                   }
                   onClick={() => {

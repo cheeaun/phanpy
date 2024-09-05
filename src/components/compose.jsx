@@ -1178,7 +1178,7 @@ function Compose({
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>
-                {supports('@pleroma/local-only') &&
+                {supports('@pleroma/local-visibility-post') &&
                   <option value="local">
 			        <Trans>Local instance</Trans>
 		          </option>

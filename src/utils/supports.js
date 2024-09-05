@@ -21,7 +21,7 @@ const platformFeatures = {
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,
-  '@pleroma/local-only': containAnyOma,
+  '@pleroma/local-visibility-post': containAnyOma,
 };
 const supportsCache = {};
 

@@ -122,7 +122,6 @@ function getInstanceConfiguration(instance) {
     configuration,
     maxMediaAttachments,
     maxTootChars,
-    pleroma,
     pollLimits,
   } = instance;
 

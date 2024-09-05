@@ -1318,7 +1318,7 @@ function Compose({
                 <input
                   type="file"
                   accept={supportedMimeTypes?.join(',')}
-                  multiple={mediaAttachments.length < maxMediaAttachments - 1}
+                  multiple={maxMediaAttachments ? mediaAttachments.length < maxMediaAttachments - 1 : true}
                   disabled={
                     uiState === 'loading' ||
                     mediaAttachments.length >= maxMediaAttachments ||

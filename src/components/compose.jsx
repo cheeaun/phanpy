@@ -226,7 +226,7 @@ function Compose({
   const {
     statuses: {
       maxCharacters,
-      maxMediaAttachments,
+      maxMediaAttachments,  // Beware: it can be undefined on *oma instances!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
@@ -1318,7 +1318,7 @@ function Compose({
                 <input
                   type="file"
                   accept={supportedMimeTypes?.join(',')}
-                  multiple={maxMediaAttachments ? mediaAttachments.length < maxMediaAttachments - 1 : true}
+                  multiple={!(mediaAttachments.length > maxMediaAttachments)}
                   disabled={
                     uiState === 'loading' ||
                     mediaAttachments.length >= maxMediaAttachments ||
@@ -1410,7 +1410,7 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    (maxMediaAttachments ? mediaAttachments.length >= maxMediaAttachments : true) ||
+                    !(mediaAttachments.length < maxMediaAttachments) ||
                     !!poll
                   }
                   onClick={() => {

@@ -639,16 +639,19 @@ function Compose({
         e.preventDefault();
         e.stopPropagation();
         // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        const max = maxMediaAttachments - mediaAttachments.length;
-        const allowedFiles = files.slice(0, max);
-        if (allowedFiles.length <= 0) {
-          alert(
-            plural(maxMediaAttachments, {
-              one: 'You can only attach up to 1 file.',
-              other: 'You can only attach up to # files.',
-            }),
-          );
-          return;
+        let allowedFiles = files;
+        if(maxMediaAttachments !== undefined) {
+          const max = maxMediaAttachments - mediaAttachments.length;
+          allowedFiles = allowedFiles.slice(0, max);
+          if(allowedFiles.length <= 0) {
+            alert(
+              plural(maxMediaAttachments, {
+                one: 'You can only attach up to 1 file.',
+                other: 'You can only attach up to # files.',
+              }),
+            );
+            return;
+          }
         }
         const mediaFiles = allowedFiles.map((file) => ({
           file,

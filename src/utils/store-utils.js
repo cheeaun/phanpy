@@ -130,10 +130,6 @@ function getInstanceConfiguration(instance) {
   if (maxMediaAttachments) {
     statuses.maxMediaAttachments ??= maxMediaAttachments;
   }
-  if(pleroma) {
-    // Set an arbitrary high attachment limit, since neither Akkoma nor Pleroma have an attachment limit.
-    statuses.maxMediaAttachments ??= 1000;
-  }
   
   if (maxTootChars) {
     statuses.maxCharacters ??= maxTootChars;

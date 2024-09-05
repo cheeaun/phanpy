@@ -600,6 +600,7 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
+      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
@@ -609,13 +610,20 @@ function Compose({
             return;
           }
           else if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
-            alert(t`File "${file.name}" is not supported by your instance.`);
-            return;
+            unsupportedFiles.push(file);
           }
           else {
             files.push(file);
           }
         }
+      }
+      if (unsupportedFiles.length > 0) {
+        alert(
+          plural(unsupportedFiles.length, {
+            one: `File ${unsupportedFiles[0]} is not supported by your instance.`,
+            other: `Files ${unsupportedFiles.join(", ")} are not supported by your instance.`,
+          }),
+        );
       }
       if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
         alert(

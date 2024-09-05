@@ -22,7 +22,7 @@ function Bookmarks() {
     <Timeline
       title={t`Bookmarks`}
       id="bookmarks"
-      emptyText={`No bookmarks yet. Go bookmark something!`}
+      emptyText={t`No bookmarks yet. Go bookmark something!`}
       errorText={t`Unable to load bookmarks.`}
       instance={instance}
       fetchItems={fetchBookmarks}

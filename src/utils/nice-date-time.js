@@ -1,12 +1,14 @@
 import { i18n } from '@lingui/core';
 
+import localeMatch from './locale-match';
 import mem from './mem';
 
 const defaultLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
 
 const _DateTimeFormat = (opts) => {
   const { locale, dateYear, hideTime, formatOpts } = opts || {};
-  const loc = locale && !/pseudo/i.test(locale) ? locale : defaultLocale;
+  const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
+  const loc = localeMatch([regionlessLocale], [defaultLocale], locale);
   const currentYear = new Date().getFullYear();
   const options = {
     // Show year if not current year
@@ -20,9 +22,11 @@ const _DateTimeFormat = (opts) => {
   };
   try {
     return Intl.DateTimeFormat(loc, options);
-  } catch (e) {
-    return Intl.DateTimeFormat(undefined, options);
-  }
+  } catch (e) {}
+  try {
+    return Intl.DateTimeFormat(locale, options);
+  } catch (e) {}
+  return Intl.DateTimeFormat(undefined, options);
 };
 const DateTimeFormat = mem(_DateTimeFormat);
 

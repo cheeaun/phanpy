@@ -3,6 +3,8 @@ name: i18n PR auto-merge
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+    branches:
+      - main
 
 jobs:
   run-and-merge:
@@ -10,14 +12,21 @@ jobs:
       github.event.pull_request.base.ref == 'main' &&
       github.event.pull_request.head.ref == 'l10n_main'
     runs-on: ubuntu-latest
-    # concurrency:
-    #   group: ${{ github.workflow }}-${{ github.ref }}
-    #   cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - run: sleep 15
+
+      - name: Check if the branch is dirty
+        run: |
+          git fetch origin ${{ github.event.pull_request.head.ref }}
+          if [ $(git rev-parse HEAD) != $(git rev-parse origin/${{ github.event.pull_request.head.ref }}) ]; then
+            echo "Branch is dirty. Exiting..."
+            exit 0
+          fi
+
       - name: Check auto-merge conditions
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
@@ -47,8 +56,16 @@ jobs:
             exit 0
           else
             echo "More than 50 lines have been changed. Merging pull request."
+
+            # List of locales changed
+            LOCALES_CHANGED=$(git diff --name-only $BASE_SHA $HEAD_SHA | grep '\.po$' | awk -F '/' '{print $NF}' | sed 's/\.po$//' | tr '\n' ',' | sed 's/,$//')
+
+            # Better subject
+            # "i18n updates ([LOCALES_CHANGED])"
+            SUBJECT="i18n updates ($LOCALES_CHANGED)"
+
             PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
-            gh pr merge $PR_NUMBER --auto --squash || true
+            gh pr merge $PR_NUMBER --author "github-actions[bot]@users.noreply.github.com" --squash --subject "$SUBJECT" || true
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

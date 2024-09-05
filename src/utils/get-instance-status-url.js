@@ -5,6 +5,7 @@ const statusPostRegexes = [
   /^\/@[^@\/]+\/(?:statuses|posts)\/([^\/]+)/i, // GoToSocial, Takahe
   /\/notes\/([^\/]+)/i, // Misskey, Firefish
   /^\/(?:notice|objects)\/([a-z0-9-]+)/i, // Pleroma
+  /\/@[^@\/]+\/post\/([^\/]+)/i, // Threads
   /\/@[^@\/]+@?[^\/]+?\/([^\/]+)/i, // Mastodon
   /^\/p\/[^\/]+\/([^\/]+)/i, // Pixelfed
 ];

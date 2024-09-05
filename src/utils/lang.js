@@ -7,7 +7,7 @@ import {
 } from '@lingui/detect-locale';
 import Locale from 'intl-locale-textinfo-polyfill';
 
-import { DEFAULT_LANG, LOCALES } from '../locales';
+import { ALL_LOCALES, DEFAULT_LANG } from '../locales';
 import { messages } from '../locales/en.po';
 import localeMatch from '../utils/locale-match';
 
@@ -62,7 +62,7 @@ export function initActivateLang() {
     DEFAULT_LANG,
   );
   const matchedLang =
-    LOCALES.find((l) => l === lang) || localeMatch(lang, LOCALES);
+    ALL_LOCALES.find((l) => l === lang) || localeMatch(lang, ALL_LOCALES);
   activateLang(matchedLang);
 
   // const yes = confirm(t`Reload to apply language setting?`);

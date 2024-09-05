@@ -1154,7 +1154,7 @@ function Compose({
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
               } ${visibility !== 'public' ? 'highlight' : ''}`}
-              title={`Visibility: ${visibility}`}
+              title={visibility}
             >
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
               <select
@@ -1471,7 +1471,14 @@ function Compose({
               class="large"
               disabled={uiState === 'loading'}
             >
-              {replyToStatus ? t`Reply` : editStatus ? t`Update` : t`Post`}
+              {replyToStatus
+                ? t`Reply`
+                : editStatus
+                ? t`Update`
+                : t({
+                    message: 'Post',
+                    context: 'Submit button in composer',
+                  })}
             </button>
           </div>
         </form>

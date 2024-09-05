@@ -16,7 +16,18 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   // Notifications service
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
-  usePageVisibility(setVisible);
+  const visibleTimeout = useRef();
+  usePageVisibility((visible) => {
+    clearTimeout(visibleTimeout.current);
+    if (visible) {
+      setVisible(true);
+    } else {
+      visibleTimeout.current = setTimeout(() => {
+        setVisible(false);
+      }, POLL_INTERVAL);
+    }
+  });
+
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
       const notificationsIterator = masto.v1.notifications.list({

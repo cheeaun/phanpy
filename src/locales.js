@@ -12,7 +12,15 @@ const locales = [
     .filter(({ completion }) => completion >= PERCENTAGE_THRESHOLD)
     .map(({ code }) => code),
 ];
-if (import.meta.env.DEV) {
-  locales.push('pseudo-LOCALE');
-}
 export const LOCALES = locales;
+
+let devLocales = [];
+if (import.meta.env?.DEV || import.meta.env?.PHANPY_SHOW_DEV_LOCALES) {
+  devLocales = catalogs
+    .filter(({ completion }) => completion < PERCENTAGE_THRESHOLD)
+    .map(({ code }) => code);
+  devLocales.push('pseudo-LOCALE');
+}
+export const DEV_LOCALES = devLocales;
+
+export const ALL_LOCALES = [...locales, ...devLocales];

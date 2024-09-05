@@ -232,9 +232,21 @@ function Settings({ onClose }) {
               </div>
             </li>
             <li>
-              <label>
-                <Trans>Display language</Trans>
-              </label>
+              <span>
+                <label>
+                  <Trans>Display language</Trans>
+                </label>
+                <br />
+                <small>
+                  <a
+                    href="https://crowdin.com/project/phanpy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Trans>Volunteer translations</Trans>
+                  </a>
+                </small>
+              </span>
               <LangSelector />
             </li>
           </ul>

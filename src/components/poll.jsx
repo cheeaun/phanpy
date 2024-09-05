@@ -1,4 +1,4 @@
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, plural, t, Trans } from '@lingui/macro';
 import { useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
@@ -113,9 +113,10 @@ export default function Poll({
                   </div>
                   <div
                     class="poll-option-votes"
-                    title={`${optionVotesCount} vote${
-                      optionVotesCount === 1 ? '' : 's'
-                    }`}
+                    title={plural(optionVotesCount, {
+                      one: `# vote`,
+                      other: `# votes`,
+                    })}
                   >
                     {percentage}
                   </div>

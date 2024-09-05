@@ -1,7 +1,8 @@
-import { LOCALES } from './src/locales';
+import { ALL_LOCALES } from './src/locales';
 
 const config = {
-  locales: LOCALES,
+  locales: ALL_LOCALES,
+  sourceLocale: 'en',
   pseudoLocale: 'pseudo-LOCALE',
   fallbackLocales: {
     default: 'en',

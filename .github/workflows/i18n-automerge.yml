@@ -62,9 +62,9 @@ jobs:
 
             # Better subject
             # "i18n updates ([LOCALES_CHANGED])"
-            SUBJECT="i18n updates ($LOCALES_CHANGED)"
-
             PR_NUMBER=$(echo ${{ github.event.pull_request.number }})
+            SUBJECT="i18n updates ($LOCALES_CHANGED) (#$PR_NUMBER)"
+
             gh pr merge $PR_NUMBER --squash --subject "$SUBJECT" || true
           fi
         env:

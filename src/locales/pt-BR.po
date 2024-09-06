@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-03 23:16\n"
+"PO-Revision-Date: 2024-09-06 02:32\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -606,7 +606,7 @@ msgstr "Anexo #{i} falhou"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "Aviso de conteúdo"
 
@@ -849,13 +849,13 @@ msgstr "Escreva para pesquisar GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "Seguinte"
 
@@ -1207,7 +1207,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -2307,13 +2307,21 @@ msgstr "Novas publicações"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr ""
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr ""
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Tópico"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2564,7 +2572,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} followedTags {tags seguidas} groups {grupos} filtered {publicações filtradas}}{sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos curtidas} desc {mais curtidas}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
+msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} followedTags {tags seguidas} groups {grupos} filtered {publicações filtradas}},{sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos curtidas} desc {mais curtidas}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
@@ -3383,7 +3391,7 @@ msgstr "Idioma do sistema ({systemTargetLanguageText})"
 
 #: src/pages/settings.jsx:417
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" por:} other {Ocultar o botão de \"Traduzir\" por (#):}}"
+msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" em:} other {Ocultar o botão de \"Traduzir\" por (#):}}"
 
 #: src/pages/settings.jsx:471
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
@@ -3455,7 +3463,7 @@ msgstr "<0>Feito</0> por <1>@cheeaun</1>"
 
 #: src/pages/settings.jsx:760
 msgid "Sponsor"
-msgstr "Tornar-se patrocinador"
+msgstr "Virar patrocinador"
 
 #: src/pages/settings.jsx:768
 msgid "Donate"

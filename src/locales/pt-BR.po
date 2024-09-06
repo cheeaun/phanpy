@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-05 22:27\n"
+"PO-Revision-Date: 2024-09-06 02:32\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -606,7 +606,7 @@ msgstr "Anexo #{i} falhou"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "Aviso de conteúdo"
 
@@ -849,13 +849,13 @@ msgstr "Escreva para pesquisar GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "Seguinte"
 
@@ -1207,7 +1207,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -2307,13 +2307,21 @@ msgstr "Novas publicações"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr ""
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr ""
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Tópico"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 

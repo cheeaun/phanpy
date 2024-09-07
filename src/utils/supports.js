@@ -30,7 +30,6 @@ const supportsCache = {};
 function supports(feature) {
   try {
     const { version, domain } = getCurrentInstance();
-    console.debug(version)
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
 

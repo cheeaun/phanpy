@@ -600,14 +600,14 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
+      const unattachableFiles = [];
       const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
           if (!file) {
-            alert(t`Unable to attach file.`);
-            return;
+            unattachableFiles.push(file);
           }
           else if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
             unsupportedFiles.push(file);
@@ -616,6 +616,14 @@ function Compose({
             files.push(file);
           }
         }
+      }
+      if (unattachableFiles.length > 0) {
+        alert(
+          plural(unattachableFiles.length, {
+            one: `Couldn't attach file ${unsupportedFiles[0]}.`,
+            other: `Couldn't attach files ${unsupportedFiles.join(", ")}.`,
+          })
+        )
       }
       if (unsupportedFiles.length > 0) {
         alert(

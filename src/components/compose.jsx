@@ -226,7 +226,7 @@ function Compose({
   const {
     statuses: {
       maxCharacters,
-      maxMediaAttachments,  // Beware: it can be undefined on *oma instances!
+      maxMediaAttachments,  // Beware: it can be undefined!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {

@@ -197,6 +197,7 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
 // const rtf = new Intl.RelativeTimeFormat();
 const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
+const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 
 const CUSTOM_EMOJIS_COUNT = 100;
 
@@ -210,6 +211,7 @@ function Compose({
 }) {
   const { i18n } = useLingui();
   const rtf = RTF(i18n.locale);
+  const lf = LF(i18n.locale);
 
   console.warn('RENDER COMPOSER');
   const { masto, instance } = api();
@@ -617,19 +619,20 @@ function Compose({
           }
         }
       }
+      console.error(unattachableFiles, unsupportedFiles)
       if (unattachableFiles.length > 0) {
         alert(
           plural(unattachableFiles.length, {
-            one: `Couldn't attach file ${unsupportedFiles[0]}.`,
-            other: `Couldn't attach files ${unsupportedFiles.join(", ")}.`,
-          })
-        )
+            one: `Couldn't attach file ${unattachableFiles[0].name}.`,
+            other: `Couldn't attach files ${lf.format(unattachableFiles.map(f => f.name))}.`,
+          }),
+        );
       }
       if (unsupportedFiles.length > 0) {
         alert(
           plural(unsupportedFiles.length, {
-            one: `File ${unsupportedFiles[0]} is not supported.`,
-            other: `Files ${unsupportedFiles.join(", ")} are not supported.`,
+            one: `File ${unsupportedFiles[0].name} is not supported.`,
+            other: `Files ${lf.format(unsupportedFiles.map(f => f.name))} are not supported.`,
           }),
         );
       }

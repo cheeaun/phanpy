@@ -3,4 +3,5 @@ export default {
   unlisted: 'group',
   private: 'lock',
   direct: 'message',
+  local: 'building',
 };

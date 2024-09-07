@@ -1169,6 +1169,11 @@ function Compose({
                 <option value="public">
                   <Trans>Public</Trans>
                 </option>
+                {(supports('@pleroma/local-visibility-post') || supports('@akkoma/local-visibility-post')) &&
+                  <option value="local">
+                    <Trans>Local</Trans>
+                  </option>
+                }
                 <option value="unlisted">
                   <Trans>Unlisted</Trans>
                 </option>

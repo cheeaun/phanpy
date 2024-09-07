@@ -91,6 +91,7 @@ const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: msg`Public`,
+  local: msg`Local`,
   unlisted: msg`Unlisted`,
   private: msg`Followers only`,
   direct: msg`Private mention`,

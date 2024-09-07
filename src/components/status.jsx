@@ -93,6 +93,7 @@ const visibilityText = {
   public: msg`Public`,
   unlisted: msg`Unlisted`,
   private: msg`Followers only`,
+  list: msg`Restricted`,
   direct: msg`Private mention`,
 };
 

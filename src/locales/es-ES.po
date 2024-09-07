@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-07 05:11\n"
+"PO-Revision-Date: 2024-09-07 12:11\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -294,7 +294,7 @@ msgstr "No se ha podido copiar el enlace"
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1088
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3121
 msgid "Copy"
 msgstr "Copiar"
 
@@ -422,9 +422,9 @@ msgstr "Seguir"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2840
-#: src/components/status.jsx:3079
-#: src/components/status.jsx:3577
+#: src/components/status.jsx:2846
+#: src/components/status.jsx:3085
+#: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
@@ -469,7 +469,7 @@ msgstr "Nota privada acerca de <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2021
 msgid "Unable to update private note."
-msgstr "No se pudo actualizar la nota privada."
+msgstr "No se ha podido actualizar la nota privada."
 
 #: src/components/account-info.jsx:2044
 #: src/components/account-info.jsx:2214
@@ -559,7 +559,7 @@ msgstr "{maxMediaAttachments, plural, one {Solo puedes adjuntar hasta 1 archivo.
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
-msgstr "Sacar"
+msgstr "Salir"
 
 #: src/components/compose.jsx:785
 msgid "Minimize"
@@ -698,7 +698,7 @@ msgstr "Descargando GIF…"
 
 #: src/components/compose.jsx:1634
 msgid "Failed to download GIF"
-msgstr "Fallo al descargar"
+msgstr "Hubo un fallo al descargar el GIF"
 
 #: src/components/compose.jsx:1745
 #: src/components/compose.jsx:1822
@@ -725,12 +725,12 @@ msgstr "Descripción del audio"
 #: src/components/compose.jsx:2276
 #: src/components/compose.jsx:2296
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr "El tamaño del archivo es demasiado grande. Puede que haya problemas al cargar el archivo. Intente reducir el tamaño de {0} a {1} o menos."
+msgstr "El tamaño del archivo es demasiado grande. Puede que haya problemas al cargar el archivo. Intenta reducir el tamaño de {0} a {1} o menos."
 
 #: src/components/compose.jsx:2288
 #: src/components/compose.jsx:2308
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr "Dimensión demasiado grande. La carga puede encontrar problemas. Intente reducir la dimensión de {0}×{1}px a {2}×{3}px."
+msgstr "Dimensión demasiado grande. La carga puede encontrar problemas. Intenta reducir la dimensión de {0}×{1}px a {2}×{3}px."
 
 #: src/components/compose.jsx:2316
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -1212,9 +1212,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrado: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3407
-#: src/components/status.jsx:3503
-#: src/components/status.jsx:3581
+#: src/components/status.jsx:3413
+#: src/components/status.jsx:3509
+#: src/components/status.jsx:3587
 #: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
@@ -1350,7 +1350,7 @@ msgid "Accounts…"
 msgstr "Cuentas…"
 
 #: src/components/nav-menu.jsx:363
-#: src/pages/login.jsx:166
+#: src/pages/login.jsx:189
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
@@ -1745,7 +1745,7 @@ msgstr "Solo local"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:170
+#: src/pages/login.jsx:193
 msgid "Instance"
 msgstr "Instancia"
 
@@ -2099,7 +2099,7 @@ msgid "Edited: {editedDateText}"
 msgstr "Editado: {editedDateText}"
 
 #: src/components/status.jsx:1123
-#: src/components/status.jsx:3084
+#: src/components/status.jsx:3090
 msgid "Embed post"
 msgstr "Insertar publicación"
 
@@ -2223,76 +2223,76 @@ msgstr "Se editó"
 msgid "Comments"
 msgstr "Comentarios"
 
-#: src/components/status.jsx:2845
+#: src/components/status.jsx:2851
 msgid "Edit History"
 msgstr "Mostrar historial de edición"
 
-#: src/components/status.jsx:2849
+#: src/components/status.jsx:2855
 msgid "Failed to load history"
 msgstr "Error al cargar el historial"
 
-#: src/components/status.jsx:2854
+#: src/components/status.jsx:2860
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: src/components/status.jsx:3089
+#: src/components/status.jsx:3095
 msgid "HTML Code"
 msgstr "Código HTML"
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3112
 msgid "HTML code copied"
 msgstr "Código HTML copiado"
 
-#: src/components/status.jsx:3109
+#: src/components/status.jsx:3115
 msgid "Unable to copy HTML code"
 msgstr "No se ha podido copiar el código HTML"
 
-#: src/components/status.jsx:3121
+#: src/components/status.jsx:3127
 msgid "Media attachments:"
 msgstr "Archivos adjuntos:"
 
-#: src/components/status.jsx:3143
+#: src/components/status.jsx:3149
 msgid "Account Emojis:"
 msgstr "Emojis de esta cuenta:"
 
-#: src/components/status.jsx:3174
-#: src/components/status.jsx:3219
+#: src/components/status.jsx:3180
+#: src/components/status.jsx:3225
 msgid "static URL"
 msgstr "URL estática"
 
-#: src/components/status.jsx:3188
+#: src/components/status.jsx:3194
 msgid "Emojis:"
 msgstr "Emojis:"
 
-#: src/components/status.jsx:3233
+#: src/components/status.jsx:3239
 msgid "Notes:"
 msgstr "Notas:"
 
-#: src/components/status.jsx:3237
+#: src/components/status.jsx:3243
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Esto es estático, sin estilos y sin guion. Necesitarás añadir tus propios estilos y edición si lo necesitas."
 
-#: src/components/status.jsx:3243
+#: src/components/status.jsx:3249
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Las encuestas no son interactivas y se convertirán en una lista con recuento de votos."
 
-#: src/components/status.jsx:3248
+#: src/components/status.jsx:3254
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Los archivos adjuntos pueden ser imágenes, vídeos, audios o cualquier tipo de archivo."
 
-#: src/components/status.jsx:3254
+#: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
 msgstr "La publicación podría ser editada o eliminada más adelante."
 
-#: src/components/status.jsx:3260
+#: src/components/status.jsx:3266
 msgid "Preview"
 msgstr "Vista previa"
 
-#: src/components/status.jsx:3269
+#: src/components/status.jsx:3275
 msgid "Note: This preview is lightly styled."
 msgstr "Nota: Esta vista previa está ligeramente definida."
 
-#: src/components/status.jsx:3511
+#: src/components/status.jsx:3517
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsó"
 
@@ -2373,7 +2373,7 @@ msgstr "Se requiere iniciar sesión."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:247
+#: src/pages/login.jsx:270
 msgid "Go home"
 msgstr "Vuelve a la página de inicio"
 
@@ -3057,32 +3057,32 @@ msgstr "{0, plural, one {# lista} other {# listas}}"
 msgid "No lists yet."
 msgstr "Aún no hay listas."
 
-#: src/pages/login.jsx:86
-#: src/pages/login.jsx:99
+#: src/pages/login.jsx:109
+#: src/pages/login.jsx:122
 msgid "Failed to register application"
 msgstr "No se pudo registrar la aplicación"
 
-#: src/pages/login.jsx:185
+#: src/pages/login.jsx:208
 msgid "instance domain"
 msgstr "dominio de la instancia"
 
-#: src/pages/login.jsx:209
+#: src/pages/login.jsx:232
 msgid "e.g. “mastodon.social”"
 msgstr "ejemplo \"mastodon.social\""
 
-#: src/pages/login.jsx:220
+#: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "Error al iniciar sesión. Por favor, inténtalo de nuevo o usa otra instancia."
 
-#: src/pages/login.jsx:232
+#: src/pages/login.jsx:255
 msgid "Continue with {selectedInstanceText}"
 msgstr "Continuar con {selectedInstanceText}"
 
-#: src/pages/login.jsx:233
+#: src/pages/login.jsx:256
 msgid "Continue"
 msgstr "Continuar"
 
-#: src/pages/login.jsx:241
+#: src/pages/login.jsx:264
 msgid "Don't have an account? Create one!"
 msgstr "¿No tienes una cuenta? ¡Crea una!"
 

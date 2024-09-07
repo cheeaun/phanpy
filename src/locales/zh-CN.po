@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 02:36\n"
+"PO-Revision-Date: 2024-09-06 06:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -606,7 +606,7 @@ msgstr "附加附件 #{i} 失败"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "内容警告"
 
@@ -849,13 +849,13 @@ msgstr "输入以搜索 GIF"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "上一页"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "下一页"
 
@@ -1207,7 +1207,7 @@ msgstr "已过滤: {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -2306,13 +2306,21 @@ msgstr "新嘟文"
 msgid "Try again"
 msgstr "重试"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr "{0, plural, other {# 转嘟}}"
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr "置顶嘟文"
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "嘟文串"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>已过滤</0>: <1>{0}</1>"
 

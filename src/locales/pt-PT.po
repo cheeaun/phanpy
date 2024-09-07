@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 21:02\n"
+"PO-Revision-Date: 2024-09-06 09:29\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -66,7 +66,7 @@ msgstr "A seguir"
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
 msgid "Follows you"
-msgstr "Te segue"
+msgstr "Segue-te"
 
 #: src/components/account-block.jsx:196
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
@@ -80,7 +80,7 @@ msgstr "Verificado"
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:777
 msgid "Joined <0>{0}</0>"
-msgstr "Juntou-se em:<0>{0}</0>"
+msgstr "Juntou-se em <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
@@ -161,7 +161,7 @@ msgstr "Ver banner do perfil"
 
 #: src/components/account-info.jsx:629
 msgid "In Memoriam"
-msgstr "Em memorial"
+msgstr "Em memória"
 
 #: src/components/account-info.jsx:709
 #: src/components/account-info.jsx:747
@@ -245,11 +245,11 @@ msgstr "Adicionar nota privada"
 
 #: src/components/account-info.jsx:1191
 msgid "Notifications enabled for @{username}'s posts."
-msgstr "Notificações ativadas para publicações de @{username}."
+msgstr "Notificações ativadas para as publicações de @{username}."
 
 #: src/components/account-info.jsx:1192
 msgid "Notifications disabled for @{username}'s posts."
-msgstr "Notificações desativadas para publicações de @{username}."
+msgstr "Notificações desativadas para as publicações de @{username}."
 
 #: src/components/account-info.jsx:1204
 msgid "Disable notifications"
@@ -606,7 +606,7 @@ msgstr "Anexo #{i} falhou"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "Alerta de conteúdo"
 
@@ -630,7 +630,7 @@ msgstr "Não listado"
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:303
 msgid "Followers only"
-msgstr "Apenas seguidores"
+msgstr "Somente seguidores"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:96
@@ -730,7 +730,7 @@ msgstr "A taxa de quadros está muito alta. Ao enviar podes enfrentar problemas.
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr "Remover"
+msgstr "Eliminar"
 
 #: src/components/compose.jsx:2388
 #: src/compose.jsx:83
@@ -849,13 +849,13 @@ msgstr "Digite para buscar GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "Seguinte"
 
@@ -878,7 +878,7 @@ msgstr "Eliminar rascunho?"
 
 #: src/components/drafts.jsx:117
 msgid "Error deleting draft! Please try again."
-msgstr "Erro ao eliminar rascunho! Tente novamente."
+msgstr "Erro ao eliminar rascunho. Tente novamente."
 
 #: src/components/drafts.jsx:127
 #: src/components/list-add-edit.jsx:183
@@ -893,11 +893,11 @@ msgstr "Erro ao obter estado de resposta!"
 
 #: src/components/drafts.jsx:171
 msgid "Delete all drafts?"
-msgstr "Eliminar todos os rascunhos?"
+msgstr "Eliminar rascunhos?"
 
 #: src/components/drafts.jsx:189
 msgid "Error deleting drafts! Please try again."
-msgstr "Erro ao eliminar rascunhos! Tente novamente."
+msgstr "Erro ao eliminar rascunhos. Tente novamente."
 
 #: src/components/drafts.jsx:201
 msgid "Delete all…"
@@ -974,7 +974,7 @@ msgstr "Atalhos do teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:51
 msgid "Keyboard shortcuts help"
-msgstr "Ajuda em atalhos do teclado"
+msgstr "Ajuda com atalhos do teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1627
@@ -1126,11 +1126,11 @@ msgstr "Nome"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr "Mostrar respostas para membros da lista"
+msgstr "Mostrar respostas aos membros da lista"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr "Mostrar respostas para pessoas que sigo"
+msgstr "Mostrar respostas para quem sigo"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
@@ -1207,7 +1207,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -1231,7 +1231,7 @@ msgstr "Menu"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr "Recarregar página agora para atualizar?"
+msgstr "Recarregar página para atualizar?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
@@ -1380,7 +1380,7 @@ msgstr "Notificação"
 
 #: src/components/notification-service.jsx:166
 msgid "This notification is from your other account."
-msgstr "Esta notificação é da outra conta."
+msgstr "Esta notificação é da tua outra conta."
 
 #: src/components/notification-service.jsx:195
 msgid "View all notifications"
@@ -1404,11 +1404,11 @@ msgstr "{count, plural, =1 {{account} seguiu você.} other {<0><1>{0}</1> pessoa
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr "{account} pediu para seguir você."
+msgstr "{account} pediu para seguir-te."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da tua resposta.} other {{account} gostou de tua publicação.}}} other {{account} gostou {postsCount} de tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da tua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da tua resposta.} other {{account} gostou de tua publicação.}}} other {{account} gostou de {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da tua publicação.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1428,7 +1428,7 @@ msgstr "Uma publicação que interagiste foi editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da tua resposta.} other {{account} impulsionou e gostou da tua publicação.}}} other {{account} impulsionou e gostou {postsCount} de tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionaram e gostaram da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionaram e gostaram de tua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da tua resposta.} other {{account} impulsionou e gostou da tua publicação.}}} other {{account} impulsionou e gostou de {postsCount} das tuas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da tua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou de tua publicação.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1547,7 +1547,7 @@ msgstr "Atualizar"
 #: src/components/poll.jsx:219
 #: src/components/poll.jsx:223
 msgid "Show results"
-msgstr "Exibir resultado"
+msgstr "Mostrar resultado"
 
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
@@ -1594,11 +1594,11 @@ msgstr "Spam"
 
 #: src/components/report-modal.jsx:30
 msgid "Malicious links, fake engagement, or repetitive replies"
-msgstr "Ligações maliciosas, falsas interações ou respostas repetitivas"
+msgstr "Ligações maliciosas, interações falsas ou respostas repetitivas"
 
 #: src/components/report-modal.jsx:33
 msgid "Illegal"
-msgstr "Illegal"
+msgstr "Ilegal"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
@@ -1626,11 +1626,11 @@ msgstr "O problema não se encaixa em outras categorias"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
-msgstr "Reportar publicação"
+msgstr "Relatar publicação"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
-msgstr "Reportar @{username}"
+msgstr "Relatar @{username}"
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
@@ -1638,11 +1638,11 @@ msgstr "Revisão pendente"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
-msgstr "Publicação reportada"
+msgstr "Publicação relatada"
 
 #: src/components/report-modal.jsx:146
 msgid "Profile reported"
-msgstr "Perfil reportado"
+msgstr "Perfil relatado"
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
@@ -1670,7 +1670,7 @@ msgstr "Encaminhar para <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
-msgstr "Enviar reporte"
+msgstr "Enviar relato"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
@@ -1682,7 +1682,7 @@ msgstr "Impossível silenciar {username}"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr "Enviar reporte <0>+ silenciar perfil</0>"
+msgstr "Enviar relato <0>+ Silenciar perfil</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
@@ -1694,7 +1694,7 @@ msgstr "Impossível bloquear {username}"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
-msgstr "Enviar reporte <0>+ Bloquear perfil</0>"
+msgstr "Enviar relato <0>+ Bloquear perfil</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -1797,7 +1797,7 @@ msgstr "Multi-coluna"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr "Indisponível no modo atual de visualização"
+msgstr "Indisponível no modo de visualização atual"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -1815,7 +1815,7 @@ msgstr "Editar"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr "Adicione mais de um(a) atalho/coluna para fazer funcionar."
+msgstr "Adicione mais de um atalho/coluna para fazer funcionar."
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
@@ -1827,7 +1827,7 @@ msgstr "Nenhum atalho ainda. Clique no botão de adicionar atalho."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Sem certeza do que adicionar?<0/>Tente a adicionar <1>Notificações do Início / A seguir</1> primeiramente."
+msgstr "Sem certeza do que adicionar?<0/>Tente adicionar as <1>Notificações do Início / A seguir</1> primeiramente."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -1851,15 +1851,15 @@ msgstr "Adicionar atalho…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr "A lista específica é opcional. Para o modo multi-coluna, a lista é necessária, ou a coluna não será exibida."
+msgstr "A lista específica é opcional. Para o modo multi-coluna a lista é necessária, ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr "Para o modo multi-coluna, buscar o termo é necessário, ou a coluna não será exibida."
+msgstr "Para o modo multi-coluna, buscar o termo é necessário ou a coluna não será exibida."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr "Várias hashtags são suportadas. Espaço separado."
+msgstr "Várias hashtags são suportadas. Separado por espaço."
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
@@ -1891,7 +1891,7 @@ msgstr "Cole atalhos aqui"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr "A transferência guardou atalhos do servidor de instância…"
+msgstr "A transferir atalhos guardados do servidor de instância…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
@@ -1903,7 +1903,7 @@ msgstr "Transferir atalhos do servidor de instância"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
-msgstr "* Existe nos atuais atalhos"
+msgstr "* Existem nos atuais atalhos"
 
 #: src/components/shortcuts-settings.jsx:914
 msgid "List may not work if it's from a different account."
@@ -1992,7 +1992,7 @@ msgstr "Impossível guardar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr "Sincronizar para o servidor de instância"
+msgstr "Sincronizar ao servidor de instância"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
@@ -2004,7 +2004,7 @@ msgstr "Atalhos brutos JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr "Importar/exportar definições de/para servidor de instância (Muito experimental)"
+msgstr "Importar/exportar definições do/para servidor de instância (Muito experimental)"
 
 #: src/components/status.jsx:463
 msgid "<0/> <1>boosted</1>"
@@ -2012,7 +2012,7 @@ msgstr "<0/> <1>impulsionou</1>"
 
 #: src/components/status.jsx:562
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr "Desculpe, a tua atual instância registrada não pode interagir com esta publicação de outra instância."
+msgstr "Desculpe, a atual instância registrada não pode interagir com esta publicação de outra instância."
 
 #: src/components/status.jsx:715
 msgid "Unliked @{0}'s post"
@@ -2024,11 +2024,11 @@ msgstr "Gostou da publicação de @{0}"
 
 #: src/components/status.jsx:755
 msgid "Unbookmarked @{0}'s post"
-msgstr "Desmarcou a publicação de @{0}"
+msgstr "Removeu dos favoritos a publicação de @{0}"
 
 #: src/components/status.jsx:756
 msgid "Bookmarked @{0}'s post"
-msgstr "Marcou a publicação de @{0}"
+msgstr "Adicionou aos favoritos a publicação de @{0}"
 
 #: src/components/status.jsx:838
 #: src/components/status.jsx:900
@@ -2069,7 +2069,7 @@ msgstr "Impulsionar…"
 #: src/components/status.jsx:1625
 #: src/components/status.jsx:2338
 msgid "Unlike"
-msgstr "Não gosto"
+msgstr "Remover gosto"
 
 #: src/components/status.jsx:914
 #: src/components/status.jsx:1625
@@ -2127,11 +2127,11 @@ msgstr "Silenciar conversa"
 
 #: src/components/status.jsx:1175
 msgid "Post unpinned from profile"
-msgstr "Publicação desfixada do perfil"
+msgstr "Publicação desafixada do perfil"
 
 #: src/components/status.jsx:1176
 msgid "Post pinned to profile"
-msgstr "Publicação fixada no perfil"
+msgstr "Publicação fixada ao perfil"
 
 #: src/components/status.jsx:1181
 msgid "Unable to unpin post"
@@ -2163,7 +2163,7 @@ msgstr "Impossível eliminar publicação"
 
 #: src/components/status.jsx:1270
 msgid "Report post…"
-msgstr "Reportar publicação…"
+msgstr "Relatar publicação…"
 
 #: src/components/status.jsx:1626
 #: src/components/status.jsx:1662
@@ -2268,11 +2268,11 @@ msgstr "Notas:"
 
 #: src/components/status.jsx:3236
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr "Isto é estático, instável e sem script. Podes precisar para aplicar os teus próprios estilos e editar se necessário."
+msgstr "Isto é estático, instável e sem guião. Podes precisar para aplicar os teus próprios estilos e editar caso necessário."
 
 #: src/components/status.jsx:3242
 msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr "As votações não são interativas, ela vira uma lista com contador de votos."
+msgstr "Votações não são interativas, ela vira uma lista com contador de votos."
 
 #: src/components/status.jsx:3247
 msgid "Media attachments can be images, videos, audios or any file types."
@@ -2307,13 +2307,21 @@ msgstr "Novas publicações"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr "{0, plural, one {# Impulso} other {# Impulsos}}"
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr "Publicações fixadas"
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Tópico"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2327,11 +2335,11 @@ msgstr "A traduzir…"
 
 #: src/components/translation-block.jsx:193
 msgid "Translate from {sourceLangText} (auto-detected)"
-msgstr "Tradução de {sourceLangText} (detetado automaticamente)"
+msgstr "Traduzir do {sourceLangText} (detetado automaticamente)"
 
 #: src/components/translation-block.jsx:194
 msgid "Translate from {sourceLangText}"
-msgstr "Tradução de {sourceLangText}"
+msgstr "Traduzir do {sourceLangText}"
 
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
@@ -2347,7 +2355,7 @@ msgstr "A editar mensagem original"
 
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
-msgstr "Respondendo @{0}"
+msgstr "Respondendo à @{0}"
 
 #: src/compose.jsx:62
 msgid "You may close this page now."
@@ -2401,7 +2409,7 @@ msgstr "Limpar"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr "Exibindo publicação com respostas"
+msgstr "A exibir publicação com respostas"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
@@ -2417,15 +2425,15 @@ msgstr "- Impulsos"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr "Exibindo publicações com media"
+msgstr "A exibir publicações com media"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr "Exibindo publicações marcadas com #{0}"
+msgstr "A exibir publicações marcadas com #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr "Exibindo publicações em {0}"
+msgstr "A exibir publicações em {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2444,7 +2452,7 @@ msgstr "Impossível obter informações da conta"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr "Alterar para instância de conta {0}"
+msgstr "Alterar a instância da conta {0}"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
@@ -2500,7 +2508,7 @@ msgstr "Sem favoritos ainda. Favorita algo primeiramente!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr "Impossível carregar marcações."
+msgstr "Impossível carregar favoritos."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
@@ -2564,7 +2572,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} followedTags {marcações seguidas} groups {grupos} filtered {publicações filtradas}}{sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos gostos} desc {mais gostos}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
+msgstr "A exibir {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} followedTags {marcações seguidas} groups {grupos} filtered {publicações filtradas}},{sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos gostos} desc {mais gostos}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
@@ -2582,7 +2590,7 @@ msgstr "O que é isto?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr "Acompanhar é uma linha de tempo separada dos teus seguidores, oferecendo uma visualização de alto-nível num relance, com uma simples, interface inspirado em e-mail para ordenar e filtrar sem esforço através das publicações."
+msgstr "Acompanhar é uma linha de tempo separada dos teus seguidores, oferecendo uma visualização de alto-nível num relance, com uma simples interface inspirada em e-mails, para ordenar e filtrar sem esforço através das publicações."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
@@ -2598,11 +2606,11 @@ msgstr "Vamos acompanhar as publicações dos teus seguidores."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr "Mostre-me todas as publicações de…"
+msgstr "Mostra-me todas as publicações de…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
-msgstr "até o máx."
+msgstr "até o máximo"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
@@ -2634,7 +2642,7 @@ msgstr "Eliminar acompanhamento?"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr "Nota: Só o máximo 3 será guardado. O resto será automaticamente eliminado."
+msgstr "Nota: Só guardará um máximo de 3. O resto será automaticamente eliminado."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
@@ -2713,7 +2721,7 @@ msgstr "Ordenar: Densidade"
 
 #: src/pages/catchup.jsx:1586
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "Publicações são ordenadas por informações de densidade ou profundidade. Publicações curtas são mais \"leves\" enquanto as maiores são mais \"pesadas\". Elas com fotos são mais \"pesadas\" do que elas sem fotos."
+msgstr "Publicações são ordenadas por informações de densidade ou profundidade. Publicações curtas são mais \"leves\" enquanto as longas são mais \"pesadas\". Elas com fotos são mais \"pesadas\" do que elas sem fotos."
 
 #: src/pages/catchup.jsx:1593
 msgid "Group: Authors"
@@ -2741,7 +2749,7 @@ msgstr "Filtrado: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr "Sem gostos ainda. Marca um gosto em algo primeiramente!"
+msgstr "Sem gostos ainda. Dá um gosto em algo primeiramente!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2806,7 +2814,7 @@ msgstr "Título"
 
 #: src/pages/filters.jsx:396
 msgid "Whole word"
-msgstr "Palavra toda"
+msgstr "Palavra completa"
 
 #: src/pages/filters.jsx:422
 msgid "No keywords. Add one."
@@ -2834,15 +2842,15 @@ msgstr "Estado: <0><1/></0>"
 
 #: src/pages/filters.jsx:507
 msgid "Change expiry"
-msgstr "Alterar vencimento"
+msgstr "Alterar expiração"
 
 #: src/pages/filters.jsx:507
 msgid "Expiry"
-msgstr "Vencimento"
+msgstr "Expiração"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr "Publicação filtrada será…"
+msgstr "A publicação filtrada será…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
@@ -2862,15 +2870,15 @@ msgstr "Impossível eliminar filtro."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
-msgstr "Vencido"
+msgstr "Expirado"
 
 #: src/pages/filters.jsx:610
 msgid "Expiring <0/>"
-msgstr "Vencendo <0/>"
+msgstr "A expirar <0/>"
 
 #: src/pages/filters.jsx:614
 msgid "Never expires"
-msgstr "Nunca se vence"
+msgstr "Nunca expira"
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
@@ -2895,7 +2903,7 @@ msgstr "Impossível carregar publicações."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr "{hashtagTitle} (apenas media) em {instance}"
+msgstr "{hashtagTitle} (Apenas media) em {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
@@ -2903,7 +2911,7 @@ msgstr "{hashtagTitle} em {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr "{hashtagTitle} (apenas media)"
+msgstr "{hashtagTitle} (Apenas media)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
@@ -2911,11 +2919,11 @@ msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr "Ninguém publicou nada com esta tag ainda."
+msgstr "Ninguém publicou nada com esta marcação ainda."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr "Impossível carregar publicações com esta tag"
+msgstr "Impossível carregar publicações com esta marcação"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
@@ -2927,7 +2935,7 @@ msgstr "Deixou de seguir #{hashtag}"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
-msgstr "Seguido #{hashtag}"
+msgstr "#{hashtag} seguido"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
@@ -2939,7 +2947,7 @@ msgstr "Não destacado no perfil"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr "Impossível parar de destacar no perfil"
+msgstr "Impossível remover destaque do perfil"
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
@@ -2952,7 +2960,7 @@ msgstr "Destacar no perfil"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
-msgstr "{TOTAL_TAGS_LIMIT, plural, other {Máx. # tags}}"
+msgstr "{TOTAL_TAGS_LIMIT, plural, other {Máx. # marcações}}"
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
@@ -2994,13 +3002,13 @@ msgstr "Instância inválida"
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:459
 msgid "Go to another instance…"
-msgstr "Vá para outra instância…"
+msgstr "Ir à outra instância…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:470
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr "Vá para minha instância (<0>{currentInstance}</0>)"
+msgstr "Ir à minha instância (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
@@ -3008,7 +3016,7 @@ msgstr "Impossível obter notificações."
 
 #: src/pages/home.jsx:228
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr "<0>Novo(s)</0> <1>Pedido(s) de seguir</1>"
+msgstr "<0>Novos</0> <1>Pedidos de seguir</1>"
 
 #: src/pages/home.jsx:234
 msgid "See all"
@@ -3050,7 +3058,7 @@ msgstr "Nenhuma lista ainda."
 #: src/pages/login.jsx:86
 #: src/pages/login.jsx:99
 msgid "Failed to register application"
-msgstr "Falhou ao registrar aplicação"
+msgstr "Falhou ao registar aplicação"
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
@@ -3098,7 +3106,7 @@ msgstr "Não segues"
 
 #: src/pages/notifications.jsx:98
 msgid "Who don't follow you"
-msgstr "Quem não te segues"
+msgstr "Quem não te segue"
 
 #: src/pages/notifications.jsx:99
 msgid "With a new account"
@@ -3220,7 +3228,7 @@ msgstr "Linha de tempo local ({instance})"
 
 #: src/pages/public.jsx:28
 msgid "Federated timeline ({instance})"
-msgstr "Linha de tempo federada ({instance})"
+msgstr "Linha de tempo federado ({instance})"
 
 #: src/pages/public.jsx:90
 msgid "Local timeline"
@@ -3228,7 +3236,7 @@ msgstr "Linha de tempo local"
 
 #: src/pages/public.jsx:90
 msgid "Federated timeline"
-msgstr "Linha de tempo federada"
+msgstr "Linha de tempo federado"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
@@ -3244,7 +3252,7 @@ msgstr "Alterar para local"
 
 #: src/pages/search.jsx:43
 msgid "Search: {q} (Posts)"
-msgstr "Buscar: {q} (publicações)"
+msgstr "Buscar: {q} (Publicações)"
 
 #: src/pages/search.jsx:46
 msgid "Search: {q} (Accounts)"
@@ -3338,7 +3346,7 @@ msgstr "Traduções voluntárias"
 
 #: src/pages/settings.jsx:257
 msgid "Posting"
-msgstr "Publicando"
+msgstr "A publicar"
 
 #: src/pages/settings.jsx:264
 msgid "Default visibility"
@@ -3383,7 +3391,7 @@ msgstr "Idioma do sistema ({systemTargetLanguageText})"
 
 #: src/pages/settings.jsx:417
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" por:} other {Ocultar o botão de \"Traduzir\" por (#):}}"
+msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" em:} other {Ocultar o botão de \"Traduzir\" por (#):}}"
 
 #: src/pages/settings.jsx:471
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
@@ -3423,7 +3431,7 @@ msgstr "Notificações agrupadas do servidor"
 
 #: src/pages/settings.jsx:604
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr "Recurso em estágio Alpha. Janela potencialmente agrupada e melhorada, porém lógica básica de agrupamento."
+msgstr "Recurso em estágio alpha. Janela potencialmente agrupada e melhorada, porém lógica básica de agrupamento."
 
 #: src/pages/settings.jsx:625
 msgid "\"Cloud\" import/export for shortcuts settings"
@@ -3455,7 +3463,7 @@ msgstr "<0>Feito</0> por <1>@cheeaun</1>"
 
 #: src/pages/settings.jsx:760
 msgid "Sponsor"
-msgstr "Patrocínio"
+msgstr "Virar patrocinador"
 
 #: src/pages/settings.jsx:768
 msgid "Donate"
@@ -3516,7 +3524,7 @@ msgstr "seguidores"
 
 #: src/pages/settings.jsx:1032
 msgid "Follows"
-msgstr "A seguir"
+msgstr "Segue"
 
 #: src/pages/settings.jsx:1040
 msgid "Polls"
@@ -3524,11 +3532,11 @@ msgstr "Votações"
 
 #: src/pages/settings.jsx:1044
 msgid "Post edits"
-msgstr "Edições de publicação"
+msgstr "Publicar edições"
 
 #: src/pages/settings.jsx:1065
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr "A permissão de push não foi concedida desde a última sessão. Precisas <0><1>iniciar sessão</1> novamente para conceder permissão</0>."
+msgstr "A permissão de push não foi concedida desde a última sessão. Precisas <0><1>iniciar sessão</1> novamente para conceder a permissão</0>."
 
 #: src/pages/settings.jsx:1081
 msgid "NOTE: Push notifications only work for <0>one account</0>."
@@ -3552,7 +3560,7 @@ msgstr "Erro: {e}"
 
 #: src/pages/status.jsx:834
 msgid "Switch to my instance to enable interactions"
-msgstr "Alterar para minha instância para ativar interações"
+msgstr "Alterar para a minha instância para ativar interações"
 
 #: src/pages/status.jsx:936
 msgid "Unable to load replies."
@@ -3564,7 +3572,7 @@ msgstr "Voltar"
 
 #: src/pages/status.jsx:1079
 msgid "Go to main post"
-msgstr "Ir para à publicação principal"
+msgstr "Ir à publicação principal"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
@@ -3573,11 +3581,11 @@ msgstr "{0} publicações acima – Voltar ao topo"
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208
 msgid "Switch to Side Peek view"
-msgstr "Alterar para vista lateral"
+msgstr "Alterar para visualização lateral"
 
 #: src/pages/status.jsx:1209
 msgid "Switch to Full view"
-msgstr "Alterar para vista completa"
+msgstr "Alterar para visualização completa"
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
@@ -3621,7 +3629,7 @@ msgstr "Tendência ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
-msgstr "Notícias"
+msgstr "Notícias em tendência"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
@@ -3641,7 +3649,7 @@ msgstr "Nenhuma publicação em tendência."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."
-msgstr "Um cliente web para Mastodon minimalista e original."
+msgstr "Um cliente web minimalista e original para Mastodon."
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
@@ -3693,7 +3701,7 @@ msgstr "Notificações agrupadas"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr "Notificações similares são agrupadas e contraídas para evitar desordem."
+msgstr "Notificações similares são agrupadas e colapsadas para evitar desordem."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
@@ -3717,11 +3725,11 @@ msgstr "Linha de tempo multi-hashtag"
 
 #: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr "Até 5 hashtags combinadas numa única linha do tempo."
+msgstr "Até 5 hashtags combinadas em uma única linha do tempo."
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."
-msgstr "Parece que o teu navegador está a bloquear pop-ups."
+msgstr "Parece que o teu navegador está a bloquear popups."
 
 #: src/utils/show-compose.js:16
 msgid "A draft post is currently minimized. Post or discard it before creating a new one."

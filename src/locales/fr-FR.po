@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-31 23:56\n"
+"PO-Revision-Date: 2024-09-06 14:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -209,7 +209,7 @@ msgstr "Les statistiques de ce message ne sont pas disponibles."
 
 #: src/components/account-info.jsx:900
 msgid "View post stats"
-msgstr "Voir les statistiques de publication"
+msgstr "Afficher les statistiques du message"
 
 #: src/components/account-info.jsx:1063
 msgid "Last post: <0>{0}</0>"
@@ -606,7 +606,7 @@ msgstr "#{i} n’a pas pu être joint au message"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "Avertissement de contenu"
 
@@ -849,13 +849,13 @@ msgstr "Entrez votre recherche pour trouver des GIFs"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "Précédent"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "Suivant"
 
@@ -1021,7 +1021,7 @@ msgstr "Développer l'avertissement de contenu ou<0/>activer/désactiver le fil 
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Close post or dialogs"
-msgstr "Fermer la publication ou les boîtes de dialogue"
+msgstr "Fermer le message ou les boîtes de dialogue"
 
 #: src/components/keyboard-shortcuts-help.jsx:103
 msgid "<0>Esc</0> or <1>Backspace</1>"
@@ -1193,7 +1193,7 @@ msgstr "Décrivez l'image…"
 
 #: src/components/media-modal.jsx:362
 msgid "View post"
-msgstr "Voir la publication"
+msgstr "Voir le message"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
@@ -1207,7 +1207,7 @@ msgstr "Filtré : {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -1388,7 +1388,7 @@ msgstr "Voir toutes les notifications"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr "{account} a réagi à votre publication avec {emojiObject}"
+msgstr "{account} a réagi à votre message avec {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
@@ -1472,7 +1472,7 @@ msgstr "Certains de vos messages ont été marqués comme délicats."
 
 #: src/components/notification.jsx:290
 msgid "Some of your posts have been deleted."
-msgstr "Certaines de vos publications ont été supprimées."
+msgstr "Certaines de vos messages ont été supprimés."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
@@ -1524,7 +1524,7 @@ msgstr "A voté"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# vote} other {# votes}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -1653,7 +1653,7 @@ msgstr "Le profil n’a pas pu être signalé."
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr "Quel est le problème avec cette publication ?"
+msgstr "Quel est le problème avec ce message ?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
@@ -1697,7 +1697,7 @@ msgstr "Signaler <0>+ Bloquer le profil</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr "{query} <0>‒ comptes, hashtags et publications</0>"
+msgstr "{query} <0>‒ comptes, hashtags et messages</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
@@ -1918,7 +1918,7 @@ msgstr "Remplacer les raccourcis actuels ?"
 
 #: src/components/shortcuts-settings.jsx:935
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr ""
+msgstr "Seuls les raccourcis qui n'existent pas dans les raccourcis actuels seront ajoutés."
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
@@ -2085,7 +2085,7 @@ msgstr "Retirer des signets"
 
 #: src/components/status.jsx:1031
 msgid "View post by <0>@{0}</0>"
-msgstr "Voir la publication de <0>@{0}</0>"
+msgstr "Voir le message de <0>@{0}</0>"
 
 #: src/components/status.jsx:1052
 msgid "Show Edit History"
@@ -2098,7 +2098,7 @@ msgstr "Modifié : {editedDateText}"
 #: src/components/status.jsx:1122
 #: src/components/status.jsx:3083
 msgid "Embed post"
-msgstr "Intégrer la publication"
+msgstr "Intégrer le message"
 
 #: src/components/status.jsx:1136
 msgid "Conversation unmuted"
@@ -2150,7 +2150,7 @@ msgstr "Épingler à votre profil"
 
 #: src/components/status.jsx:1226
 msgid "Delete this post?"
-msgstr "Supprimer cette publication ?"
+msgstr "Supprimer ce message ?"
 
 #: src/components/status.jsx:1239
 msgid "Post deleted"
@@ -2162,7 +2162,7 @@ msgstr "Le message n’a pas pu être supprimé."
 
 #: src/components/status.jsx:1270
 msgid "Report post…"
-msgstr "Signaler la publication…"
+msgstr "Signaler le message …"
 
 #: src/components/status.jsx:1626
 #: src/components/status.jsx:1662
@@ -2306,13 +2306,21 @@ msgstr "Nouveaux messages"
 msgid "Try again"
 msgstr "Essayez à nouveau"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr "{0, plural, one {# partage} other {# partages}}"
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr "Messages épinglés"
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Fils"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtré</0> : <1>{0}</1>"
 
@@ -2368,7 +2376,7 @@ msgstr "Retour à l’accueil"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr "Publications du compte"
+msgstr "Messages du compte"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2400,7 +2408,7 @@ msgstr "Effacer"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr "Voir la publication avec ses réponses"
+msgstr "Voir le message avec les réponses"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
@@ -2416,7 +2424,7 @@ msgstr "− Partages"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr "Afficher les publications avec médias"
+msgstr "Afficher les messages avec médias"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
@@ -2720,7 +2728,7 @@ msgstr "Groupé par personne"
 
 #: src/pages/catchup.jsx:1596
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr "Les publications sont regroupées par auteur·ice·s, triées par nombre de messages par auteur·ice."
+msgstr "Les messages sont regroupées par auteur·ice·s, triés par nombre de messages par auteur·ice."
 
 #: src/pages/catchup.jsx:1643
 msgid "Next author"
@@ -3053,7 +3061,7 @@ msgstr ""
 
 #: src/pages/login.jsx:185
 msgid "instance domain"
-msgstr ""
+msgstr "domaine de l’instance"
 
 #: src/pages/login.jsx:209
 msgid "e.g. “mastodon.social”"
@@ -3286,11 +3294,11 @@ msgstr "Aucun hashtag trouvé."
 
 #: src/pages/search.jsx:418
 msgid "See more posts"
-msgstr "Voir plus de publications"
+msgstr "Voir plus de messages"
 
 #: src/pages/search.jsx:432
 msgid "No posts found."
-msgstr "Aucune publication trouvée."
+msgstr "Aucun message trouvé."
 
 #: src/pages/search.jsx:476
 msgid "Enter your search term or paste a URL above to get started."
@@ -3410,7 +3418,7 @@ msgstr "Générateur de description d'images"
 
 #: src/pages/settings.jsx:567
 msgid "Only for new images while composing new posts."
-msgstr "Uniquement pour les nouvelles images lors de la rédaction de nouvelles publications."
+msgstr "Uniquement pour les nouvelles images lors de la rédaction de nouveaux messages."
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
@@ -3535,7 +3543,7 @@ msgstr "NOTE : Les notifications Push ne fonctionnent que pour <0>un compte</0>.
 
 #: src/pages/status.jsx:565
 msgid "Post"
-msgstr "Publication"
+msgstr "Message"
 
 #: src/pages/status.jsx:786
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3592,11 +3600,11 @@ msgstr "Impossible de basculer"
 
 #: src/pages/status.jsx:1248
 msgid "Switch to post's instance ({0})"
-msgstr "Basculer vers l'instance de la publication ({0})"
+msgstr "Basculer vers l'instance du message ({0})"
 
 #: src/pages/status.jsx:1251
 msgid "Switch to post's instance"
-msgstr "Basculer vers l'instance de la publication"
+msgstr "Basculer vers l'instance du message"
 
 #: src/pages/status.jsx:1309
 msgid "Unable to load post"
@@ -3612,7 +3620,7 @@ msgstr "{totalComments, plural, one {# commentaire} other {<0>{0}</0> commentair
 
 #: src/pages/status.jsx:1466
 msgid "View post with its replies"
-msgstr "Voir la publication avec ses réponses"
+msgstr "Voir le message avec ses réponses"
 
 #: src/pages/trending.jsx:70
 msgid "Trending ({instance})"
@@ -3624,7 +3632,7 @@ msgstr "Actualités en tendance"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
-msgstr "Retour à l'affichage des publications en tendance"
+msgstr "Retour à l'affichage des messages en tendance"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"
@@ -3632,11 +3640,11 @@ msgstr "Affichage des messages mentionnant <0>{0}</0>"
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr "Publications en tendance"
+msgstr "Messages en tendance"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."
-msgstr "Pas de publications en tendance."
+msgstr "Pas de messages en tendance."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."

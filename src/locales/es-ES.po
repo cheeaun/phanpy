@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 21:02\n"
+"PO-Revision-Date: 2024-09-06 17:58\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -331,7 +331,7 @@ msgstr "No se ha podido silenciar a @{username}"
 
 #: src/components/account-info.jsx:1442
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr "¿Eliminar a <0>@{username}</0> de los seguidores?"
+msgstr "¿Deseas eliminar a <0>@{username}</0> de los seguidores?"
 
 #: src/components/account-info.jsx:1462
 msgid "@{username} removed from followers"
@@ -343,7 +343,7 @@ msgstr "Eliminar seguidor…"
 
 #: src/components/account-info.jsx:1485
 msgid "Block <0>@{username}</0>?"
-msgstr "¿Bloquear a <0>@{username}</0>?"
+msgstr "¿Deseas bloquear a <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1506
 msgid "Unblocked @{username}"
@@ -380,11 +380,11 @@ msgstr "Editar perfil"
 
 #: src/components/account-info.jsx:1616
 msgid "Withdraw follow request?"
-msgstr "¿Retirar la solicitud de seguimiento?"
+msgstr "¿Deseas retirar la solicitud de seguimiento?"
 
 #: src/components/account-info.jsx:1617
 msgid "Unfollow @{0}?"
-msgstr "¿Dejar de seguir a @{0}?"
+msgstr "¿Deseas dejar de seguir a @{0}?"
 
 #: src/components/account-info.jsx:1668
 msgid "Unfollow…"
@@ -482,7 +482,7 @@ msgstr "Guardar y cerrar"
 
 #: src/components/account-info.jsx:2142
 msgid "Unable to update profile."
-msgstr "El perfil no ha podido ser actualizado."
+msgstr "No se ha podido actualizar el perfil."
 
 #: src/components/account-info.jsx:2162
 msgid "Bio"
@@ -570,7 +570,7 @@ msgstr "Parece que ya tienes una ventana de edición abierta en la ventana princ
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr "Parece que ya tienes una ventana de edición abierta en la ventana principal. Entrando en esta ventana se descartarán los cambios que hiciste. ¿Continuar?"
+msgstr "Parece que ya tienes una ventana de edición abierta en la ventana principal. Entrando en esta ventana se descartarán los cambios que hiciste. ¿Deseas continuar?"
 
 #: src/components/compose.jsx:875
 msgid "Pop in"
@@ -578,7 +578,7 @@ msgstr "Mostrar"
 
 #: src/components/compose.jsx:885
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr "Respondiendo al mensaje de @{0}(<0>{1}</0>)"
+msgstr "Respondiendo a la publicación de @{0}(<0>{1}</0>)"
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
@@ -606,7 +606,7 @@ msgstr "Error al adjuntar #{i}"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "Advertencia de contenido"
 
@@ -849,13 +849,13 @@ msgstr "Escriba para buscar un GIF"
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "Siguiente"
 
@@ -1207,7 +1207,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -1215,15 +1215,15 @@ msgstr "Filtrado"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
-msgstr "Publicado. Échale un vistazo."
+msgstr "Publicada. Compruébala."
 
 #: src/components/modals.jsx:73
 msgid "Reply posted. Check it out."
-msgstr "Respuesta publicada. Échale un vistazo."
+msgstr "Respuesta publicada. Compruébala."
 
 #: src/components/modals.jsx:74
 msgid "Post updated. Check it out."
-msgstr "Publicación actualizada. Échale un vistazo."
+msgstr "Publicación actualizada. Compruébala."
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
@@ -1346,7 +1346,7 @@ msgstr "Cuentas…"
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
-msgstr "Inicie sesión"
+msgstr "Inicia sesión"
 
 #: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
@@ -2110,11 +2110,11 @@ msgstr "Conversación silenciada"
 
 #: src/components/status.jsx:1142
 msgid "Unable to unmute conversation"
-msgstr "No se puede quitar el silencio de la conversación"
+msgstr "No se ha podido dejar de silenciar la conversación"
 
 #: src/components/status.jsx:1143
 msgid "Unable to mute conversation"
-msgstr "No se puede silenciar la conversación"
+msgstr "No se ha podido silenciar la conversación"
 
 #: src/components/status.jsx:1152
 msgid "Unmute conversation"
@@ -2306,13 +2306,21 @@ msgstr "Nuevas publicaciones"
 msgid "Try again"
 msgstr "Inténtalo de nuevo"
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr "{0, plural, one {# Impulso} other {# Impulsos}}"
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr "Publicaciones fijadas"
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr "Hilo"
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2364,7 +2372,7 @@ msgstr "Se requiere iniciar sesión."
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:247
 msgid "Go home"
-msgstr "Ir al inicio"
+msgstr "Vuelve a la página de inicio"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
@@ -2744,7 +2752,7 @@ msgstr "No hay me gustas todavía. ¡Busca algo que te guste!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
-msgstr "No se pueden cargar los \"me gustas\"."
+msgstr "No se ha podido cargar los \"me gustas\"."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
@@ -2918,7 +2926,7 @@ msgstr "No se han podido cargar las publicaciones con esta etiqueta"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr "¿Dejar de seguir la etiqueta #{hashtag}?"
+msgstr "¿Deseas dejar de seguir la etiqueta #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
@@ -2938,7 +2946,7 @@ msgstr "No destacado en el perfil"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr "No se puede desactivar en el perfil"
+msgstr "No se ha podido desactivar en el perfil"
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
@@ -3019,7 +3027,7 @@ msgstr "Resolviendo…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr "No se puede determinar la URL"
+msgstr "No se ha podido determinar la URL"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
@@ -3061,7 +3069,7 @@ msgstr "ejemplo \"mastodon.social\""
 
 #: src/pages/login.jsx:220
 msgid "Failed to log in. Please try again or try another instance."
-msgstr "Error al iniciar sesión. Por favor, inténtelo de nuevo o use otra instancia."
+msgstr "Error al iniciar sesión. Por favor, inténtalo de nuevo o usa otra instancia."
 
 #: src/pages/login.jsx:232
 msgid "Continue with {selectedInstanceText}"
@@ -3191,7 +3199,7 @@ msgstr "Las notificaciones de @{0} no serán filtradas a partir de ahora."
 
 #: src/pages/notifications.jsx:1130
 msgid "Unable to accept notification request"
-msgstr "No se puede aceptar la solicitud de notificación"
+msgstr "No se ha podido aceptar la solicitud de notificación"
 
 #: src/pages/notifications.jsx:1135
 msgid "Allow"
@@ -3203,7 +3211,7 @@ msgstr "Las notificaciones de @{0} no se mostrarán en las notificaciones Filtra
 
 #: src/pages/notifications.jsx:1160
 msgid "Unable to dismiss notification request"
-msgstr "Imposible descartar el pedido de notificación"
+msgstr "No se ha podido descartar el pedido de notificación"
 
 #: src/pages/notifications.jsx:1165
 msgid "Dismiss"
@@ -3644,7 +3652,7 @@ msgstr "Un cliente web minimalista para Mastodon que hace las cosas a su manera.
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
-msgstr "Inicie sesión con Mastodon"
+msgstr "Inicia sesión con Mastodon"
 
 #: src/pages/welcome.jsx:70
 msgid "Sign up"

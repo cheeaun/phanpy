@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { plural, t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -583,9 +583,12 @@ const TimelineItem = memo(
       let fItems = filteredItems(items, filterContext);
       let title = '';
       if (type === 'boosts') {
-        title = `${fItems.length} Boosts`;
+        title = plural(fItems.length, {
+          one: '# Boost',
+          other: '# Boosts',
+        });
       } else if (type === 'pinned') {
-        title = 'Pinned posts';
+        title = t`Pinned posts`;
       }
       const isCarousel = type === 'boosts' || type === 'pinned';
       if (isCarousel) {

@@ -1171,7 +1171,7 @@ function Compose({
                 </option>
                 {supports('@pleroma/local-visibility-post') &&
                   <option value="local">
-                    <Trans>Local instance</Trans>
+                    <Trans>Local</Trans>
                   </option>
                 }
                 <option value="unlisted">

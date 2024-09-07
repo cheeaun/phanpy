@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-07 05:11\n"
+"PO-Revision-Date: 2024-09-07 09:58\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -294,7 +294,7 @@ msgstr "Impossível copiar ligação"
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1088
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3121
 msgid "Copy"
 msgstr "Copiar"
 
@@ -422,9 +422,9 @@ msgstr "Seguir"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2840
-#: src/components/status.jsx:3079
-#: src/components/status.jsx:3577
+#: src/components/status.jsx:2846
+#: src/components/status.jsx:3085
+#: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1564
 #: src/pages/filters.jsx:224
@@ -1212,9 +1212,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrado: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3407
-#: src/components/status.jsx:3503
-#: src/components/status.jsx:3581
+#: src/components/status.jsx:3413
+#: src/components/status.jsx:3509
+#: src/components/status.jsx:3587
 #: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
@@ -1350,7 +1350,7 @@ msgid "Accounts…"
 msgstr "Contas…"
 
 #: src/components/nav-menu.jsx:363
-#: src/pages/login.jsx:166
+#: src/pages/login.jsx:189
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
@@ -1746,7 +1746,7 @@ msgstr "Apenas local"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:170
+#: src/pages/login.jsx:193
 msgid "Instance"
 msgstr "Instância"
 
@@ -2100,7 +2100,7 @@ msgid "Edited: {editedDateText}"
 msgstr "Editado: {editedDateText}"
 
 #: src/components/status.jsx:1123
-#: src/components/status.jsx:3084
+#: src/components/status.jsx:3090
 msgid "Embed post"
 msgstr "Incorporar publicação"
 
@@ -2224,76 +2224,76 @@ msgstr "Editado"
 msgid "Comments"
 msgstr "Comentários"
 
-#: src/components/status.jsx:2845
+#: src/components/status.jsx:2851
 msgid "Edit History"
 msgstr "Histórico de edições"
 
-#: src/components/status.jsx:2849
+#: src/components/status.jsx:2855
 msgid "Failed to load history"
 msgstr "Falhou ao carregar histórico"
 
-#: src/components/status.jsx:2854
+#: src/components/status.jsx:2860
 msgid "Loading…"
 msgstr "A carregar…"
 
-#: src/components/status.jsx:3089
+#: src/components/status.jsx:3095
 msgid "HTML Code"
 msgstr "Código HTML"
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3112
 msgid "HTML code copied"
 msgstr "Código HTML copiado"
 
-#: src/components/status.jsx:3109
+#: src/components/status.jsx:3115
 msgid "Unable to copy HTML code"
 msgstr "Impossível copiar código HTML"
 
-#: src/components/status.jsx:3121
+#: src/components/status.jsx:3127
 msgid "Media attachments:"
 msgstr "Anexos de media:"
 
-#: src/components/status.jsx:3143
+#: src/components/status.jsx:3149
 msgid "Account Emojis:"
 msgstr "Emojis da conta:"
 
-#: src/components/status.jsx:3174
-#: src/components/status.jsx:3219
+#: src/components/status.jsx:3180
+#: src/components/status.jsx:3225
 msgid "static URL"
 msgstr "URL estático"
 
-#: src/components/status.jsx:3188
+#: src/components/status.jsx:3194
 msgid "Emojis:"
 msgstr "Emojis:"
 
-#: src/components/status.jsx:3233
+#: src/components/status.jsx:3239
 msgid "Notes:"
 msgstr "Notas:"
 
-#: src/components/status.jsx:3237
+#: src/components/status.jsx:3243
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Isto é estático, instável e sem guião. Podes precisar para aplicar os teus próprios estilos e editar caso necessário."
 
-#: src/components/status.jsx:3243
+#: src/components/status.jsx:3249
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Votações não são interativas, ela vira uma lista com contador de votos."
 
-#: src/components/status.jsx:3248
+#: src/components/status.jsx:3254
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Anexos de media pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
 
-#: src/components/status.jsx:3254
+#: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
 msgstr "Publicações podem ser editadas ou eliminadas depois."
 
-#: src/components/status.jsx:3260
+#: src/components/status.jsx:3266
 msgid "Preview"
 msgstr "Prévia"
 
-#: src/components/status.jsx:3269
+#: src/components/status.jsx:3275
 msgid "Note: This preview is lightly styled."
 msgstr "Nota: Esta prévia é levemente estilizada."
 
-#: src/components/status.jsx:3511
+#: src/components/status.jsx:3517
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsionou"
 
@@ -2374,7 +2374,7 @@ msgstr "Requer iniciar sessão."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:247
+#: src/pages/login.jsx:270
 msgid "Go home"
 msgstr "Voltar ao início"
 
@@ -3058,32 +3058,32 @@ msgstr "{0, plural, one {# lista} other {# listas}}"
 msgid "No lists yet."
 msgstr "Nenhuma lista ainda."
 
-#: src/pages/login.jsx:86
-#: src/pages/login.jsx:99
+#: src/pages/login.jsx:109
+#: src/pages/login.jsx:122
 msgid "Failed to register application"
 msgstr "Falhou ao registar aplicação"
 
-#: src/pages/login.jsx:185
+#: src/pages/login.jsx:208
 msgid "instance domain"
 msgstr "domínio de instância"
 
-#: src/pages/login.jsx:209
+#: src/pages/login.jsx:232
 msgid "e.g. “mastodon.social”"
 msgstr "ex. “mastodon.social”"
 
-#: src/pages/login.jsx:220
+#: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "Falhou ao iniciar sessão. Tente novamente ou tente outra instância."
 
-#: src/pages/login.jsx:232
+#: src/pages/login.jsx:255
 msgid "Continue with {selectedInstanceText}"
 msgstr "Continuar com {selectedInstanceText}"
 
-#: src/pages/login.jsx:233
+#: src/pages/login.jsx:256
 msgid "Continue"
 msgstr "Continuar"
 
-#: src/pages/login.jsx:241
+#: src/pages/login.jsx:264
 msgid "Don't have an account? Create one!"
 msgstr "Não tens uma conta? Cria uma!"
 
@@ -3466,7 +3466,7 @@ msgstr "<0>Feito</0> por <1>@cheeaun</1>"
 
 #: src/pages/settings.jsx:760
 msgid "Sponsor"
-msgstr "Virar patrocinador"
+msgstr "Patrocinar"
 
 #: src/pages/settings.jsx:768
 msgid "Donate"

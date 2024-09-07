@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-06 02:32\n"
+"PO-Revision-Date: 2024-09-07 04:12\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -483,6 +483,11 @@ msgstr "Desa i tanca"
 #: src/components/account-info.jsx:2142
 msgid "Unable to update profile."
 msgstr "No ha estat possible actualitzar el perfil."
+
+#: src/components/account-info.jsx:2149
+#: src/components/list-add-edit.jsx:102
+msgid "Name"
+msgstr "Nom"
 
 #: src/components/account-info.jsx:2162
 msgid "Bio"
@@ -1119,10 +1124,6 @@ msgstr "No s'ha pogut editar la llista."
 #: src/components/list-add-edit.jsx:94
 msgid "Unable to create list."
 msgstr "No s'ha pogut crear la llista."
-
-#: src/components/list-add-edit.jsx:102
-msgid "Name"
-msgstr "Nom"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
@@ -2309,11 +2310,11 @@ msgstr "Torna-ho a provar"
 
 #: src/components/timeline.jsx:586
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
-msgstr ""
+msgstr "{0, plural, one {# impuls} other {# impulsos}}"
 
 #: src/components/timeline.jsx:591
 msgid "Pinned posts"
-msgstr ""
+msgstr "Publicacions fixades"
 
 #: src/components/timeline.jsx:944
 #: src/components/timeline.jsx:951

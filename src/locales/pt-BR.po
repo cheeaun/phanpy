@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-07 11:05\n"
+"PO-Revision-Date: 2024-09-07 22:38\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -80,7 +80,7 @@ msgstr "Verificado"
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:777
 msgid "Joined <0>{0}</0>"
-msgstr "Se juntou em:<0>{0}</0>"
+msgstr "Se juntou em <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
@@ -698,7 +698,7 @@ msgstr "Baixando GIF…"
 
 #: src/components/compose.jsx:1634
 msgid "Failed to download GIF"
-msgstr "Falhou ao baixar GIF"
+msgstr "Houve um erro ao baixar GIF"
 
 #: src/components/compose.jsx:1745
 #: src/components/compose.jsx:1822
@@ -768,11 +768,11 @@ msgstr "Gerando descrição. Por favor, espere…"
 
 #: src/components/compose.jsx:2485
 msgid "Failed to generate description: {0}"
-msgstr "Falhou ao gerar descrição: {0}"
+msgstr "Houve um erro ao gerar descrição: {0}"
 
 #: src/components/compose.jsx:2486
 msgid "Failed to generate description"
-msgstr "Falhou ao gerar descrição"
+msgstr "Houve um erro ao gerar descrição"
 
 #: src/components/compose.jsx:2498
 #: src/components/compose.jsx:2504
@@ -782,7 +782,7 @@ msgstr "Gerar descrição…"
 
 #: src/components/compose.jsx:2537
 msgid "Failed to generate description{0}"
-msgstr "Falhou ao gerar descrição{0}"
+msgstr "Houve um erro ao gerar descrição{0}"
 
 #: src/components/compose.jsx:2552
 msgid "({0}) <0>— experimental</0>"
@@ -1075,7 +1075,7 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> ou <2>⌘</2> + <3>Enter</3>"
 #: src/pages/search.jsx:39
 #: src/pages/search.jsx:209
 msgid "Search"
-msgstr "Pesquisar"
+msgstr "Buscar"
 
 #: src/components/keyboard-shortcuts-help.jsx:147
 msgid "Reply (new window)"
@@ -1193,7 +1193,7 @@ msgstr "Tentando descrever imagem. Por favor, espere…"
 
 #: src/components/media-modal.jsx:329
 msgid "Failed to describe image"
-msgstr "Falhou ao descrever imagem"
+msgstr "Houve um erro ao descrever imagem"
 
 #: src/components/media-modal.jsx:339
 msgid "Describe image…"
@@ -2230,7 +2230,7 @@ msgstr "Histórico de edições"
 
 #: src/components/status.jsx:2855
 msgid "Failed to load history"
-msgstr "Falhou ao carregar histórico"
+msgstr "Houve um erro ao carregar histórico"
 
 #: src/components/status.jsx:2860
 msgid "Loading…"
@@ -2350,7 +2350,7 @@ msgstr "Auto ({0})"
 
 #: src/components/translation-block.jsx:235
 msgid "Failed to translate"
-msgstr "Falhou ao traduzir"
+msgstr "Houve um erro ao traduzir"
 
 #: src/compose.jsx:32
 msgid "Editing source status"
@@ -3061,7 +3061,7 @@ msgstr "Não há listas ainda."
 #: src/pages/login.jsx:109
 #: src/pages/login.jsx:122
 msgid "Failed to register application"
-msgstr "Falhou ao registrar aplicação"
+msgstr "Houve um erro ao registrar aplicação"
 
 #: src/pages/login.jsx:208
 msgid "instance domain"
@@ -3073,7 +3073,7 @@ msgstr "ex. “mastodon.social”"
 
 #: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."
-msgstr "Falhou ao iniciar sessão. Tente novamente ou tente outra instância."
+msgstr "Houve um erro ao iniciar sessão. Tente novamente ou tente outra instância."
 
 #: src/pages/login.jsx:255
 msgid "Continue with {selectedInstanceText}"
@@ -3259,15 +3259,15 @@ msgstr "Procurar: {q} (Publicações)"
 
 #: src/pages/search.jsx:46
 msgid "Search: {q} (Accounts)"
-msgstr "Pesquisar: {q} (Contas)"
+msgstr "Buscar: {q} (Contas)"
 
 #: src/pages/search.jsx:49
 msgid "Search: {q} (Hashtags)"
-msgstr "Pesquisar: {q} (Hashtags)"
+msgstr "Buscar: {q} (Hashtags)"
 
 #: src/pages/search.jsx:52
 msgid "Search: {q}"
-msgstr "Pesquisar: {q}"
+msgstr "Buscar: {q}"
 
 #: src/pages/search.jsx:232
 #: src/pages/search.jsx:314
@@ -3306,7 +3306,7 @@ msgstr "Nenhuma publicação encontrada."
 
 #: src/pages/search.jsx:476
 msgid "Enter your search term or paste a URL above to get started."
-msgstr "Insira o termo de sua pesquisa ou copie um URL acima para iniciar."
+msgstr "Insira o termo de sua busca ou copie um URL acima para iniciar."
 
 #: src/pages/settings.jsx:74
 msgid "Settings"
@@ -3345,7 +3345,7 @@ msgstr "Idioma de exibição"
 
 #: src/pages/settings.jsx:246
 msgid "Volunteer translations"
-msgstr "Traduções voluntárias"
+msgstr "Traduções de voluntários"
 
 #: src/pages/settings.jsx:257
 msgid "Posting"
@@ -3362,7 +3362,7 @@ msgstr "Sincronizado"
 
 #: src/pages/settings.jsx:290
 msgid "Failed to update posting privacy"
-msgstr "Falhou ao atualizar privacidade de publicação"
+msgstr "Houve um erro ao atualizar privacidade de publicação"
 
 #: src/pages/settings.jsx:313
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
@@ -3414,7 +3414,7 @@ msgstr "Selecionador de GIF para escrita"
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr "Nota: Este recurso usa serviços externos de pesquisa de GIF, desenvolvido por <0>GIPHY</0>. Avaliado bem (adequado para visualização de todas as idades), rastreando parâmetros são despojados, informação de referência é omitida de solicitações, porém consultas de busca e informação de endereço IP ainda poderá alcançar os servidores deles."
+msgstr "Nota: Este recurso usa serviços externos de busca de GIF, desenvolvido por <0>GIPHY</0>. Avaliado bem (adequado para visualização de todas as idades), rastreando parâmetros são despojados, informação de referência é omitida de solicitações, porém consultas de busca e informação de endereço IP ainda poderá alcançar os servidores deles."
 
 #: src/pages/settings.jsx:562
 msgid "Image description generator"
@@ -3495,11 +3495,11 @@ msgstr "Não foi possível copiar versão"
 #: src/pages/settings.jsx:933
 #: src/pages/settings.jsx:938
 msgid "Failed to update subscription. Please try again."
-msgstr "Falhou ao atualizar inscrição. Tente novamente."
+msgstr "Houve um erro ao atualizar inscrição. Tente novamente."
 
 #: src/pages/settings.jsx:944
 msgid "Failed to remove subscription. Please try again."
-msgstr "Falhou ao cancelar inscrição. Tente novamente."
+msgstr "Houve um erro ao cancelar inscrição. Tente novamente."
 
 #: src/pages/settings.jsx:951
 msgid "Push Notifications (beta)"

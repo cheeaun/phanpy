@@ -620,8 +620,8 @@ function Compose({
       if (unsupportedFiles.length > 0) {
         alert(
           plural(unsupportedFiles.length, {
-            one: `File ${unsupportedFiles[0]} is not supported by your instance.`,
-            other: `Files ${unsupportedFiles.join(", ")} are not supported by your instance.`,
+            one: `File ${unsupportedFiles[0]} is not supported.`,
+            other: `Files ${unsupportedFiles.join(", ")} are not supported.`,
           }),
         );
       }

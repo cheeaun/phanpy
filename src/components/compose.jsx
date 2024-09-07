@@ -1169,6 +1169,11 @@ function Compose({
                 <option value="public">
                   <Trans>Public</Trans>
                 </option>
+                {supports('@pleroma/local-visibility-post') &&
+                  <option value="local">
+                    <Trans>Local instance</Trans>
+                  </option>
+                }
                 <option value="unlisted">
                   <Trans>Unlisted</Trans>
                 </option>
@@ -1178,11 +1183,6 @@ function Compose({
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>
-                {supports('@pleroma/local-visibility-post') &&
-                  <option value="local">
-			        <Trans>Local instance</Trans>
-		          </option>
-                }
               </select>
             </label>{' '}
           </div>

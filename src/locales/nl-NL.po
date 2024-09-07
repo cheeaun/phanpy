@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-07 21:07\n"
+"PO-Revision-Date: 2024-09-07 22:38\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -311,11 +311,11 @@ msgstr "Delen…"
 
 #: src/components/account-info.jsx:1349
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Dempen van @{username} opgeheven"
 
 #: src/components/account-info.jsx:1361
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Dempen van <0>@{username}</0> opheffen"
 
 #: src/components/account-info.jsx:1377
 msgid "Mute <0>@{username}</0>…"
@@ -347,7 +347,7 @@ msgstr "Blokkeer <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1506
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "Blokkeren van @{username} opgeheven"
 
 #: src/components/account-info.jsx:1514
 msgid "Blocked @{username}"
@@ -363,7 +363,7 @@ msgstr "Kan @{username} niet blokkeren"
 
 #: src/components/account-info.jsx:1534
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "Blokkeren van <0>@{username}</0> opheffen"
 
 #: src/components/account-info.jsx:1543
 msgid "Block <0>@{username}</0>…"
@@ -548,7 +548,7 @@ msgstr "Opstellen"
 
 #: src/components/compose.jsx:392
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "Je hebt niet-opgeslagen wijzigingen. Wil je dit bericht weggooien?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
@@ -591,7 +591,7 @@ msgstr "Antwoord op @{0}'s bericht"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
-msgstr "Bewerk bronbericht"
+msgstr "Bronbericht bewerken"
 
 #: src/components/compose.jsx:955
 msgid "Poll must have at least 2 options"
@@ -1209,7 +1209,7 @@ msgstr "Gevoelige media"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "Gefilterd: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status.jsx:3413
@@ -1219,19 +1219,19 @@ msgstr ""
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
-msgstr ""
+msgstr "Gefilterd"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "Bericht geplaatst. Bekijk het eens."
 
 #: src/components/modals.jsx:73
 msgid "Reply posted. Check it out."
-msgstr "Antwoord geplaatst. Kijk eens."
+msgstr "Antwoord geplaatst. Bekijk het eens."
 
 #: src/components/modals.jsx:74
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "Bericht bijgewerkt. Bekijk het eens."
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
@@ -1411,7 +1411,7 @@ msgstr "{account} heeft verzocht je te volgen."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} heeft je antwoord geliket.} other {{account} heeft je bericht geliket.}}} other {{account} heeft {postsCount} van je berichten geliket.}}} other {{postType, select, reply {<0><1>{0}</1> mensen</0> hebben je antwoord geliket.} other {<2><3>{1}</3> mensen</2> hebben je bericht geliket.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1431,7 +1431,7 @@ msgstr ""
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} heeft je antwoord geboost & geliket.} other {{account} heeft je bericht geboost & geliket.}}} other {{account} heeft {postsCount} van je berichten geboost & geliket.}}} other {{postType, select, reply {<0><1>{0}</1> mensen</0> hebben je antwoord geboost & geliket.} other {<2><3>{1}</3> mensen</2> hebben je bericht geboost & geliket.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1833,11 +1833,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "Max. {SHORTCUTS_LIMIT} kolommen"
 
 #: src/components/shortcuts-settings.jsx:441
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "Max. {SHORTCUTS_LIMIT} snelkoppelingen"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
@@ -1849,7 +1849,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
-msgstr ""
+msgstr "Voeg snelkoppeling toe…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
@@ -1893,15 +1893,15 @@ msgstr "Plak snelkoppelingen hier"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr "Opgeslagen snelkoppelingen downloaden van instance server…"
+msgstr "Download opgeslagen snelkoppelingen van de instance server…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "Kan snelkoppelingen niet downloaden"
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
-msgstr ""
+msgstr "Download snelkoppelingen van de instance server"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
@@ -1982,7 +1982,7 @@ msgstr "Delen"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr "Snelkoppelingen opslaan naar instance server…"
+msgstr "Snelkoppelingen opslaan naar de instance server…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
@@ -2006,7 +2006,7 @@ msgstr "Ruwe Snelkoppelingen JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr "Importeer/exporteer instellingen van/naar instance server (zeer experimenteel)"
+msgstr "Importeer/exporteer instellingen van/naar de instance server (zeer experimenteel)"
 
 #: src/components/status.jsx:464
 msgid "<0/> <1>boosted</1>"
@@ -2181,11 +2181,11 @@ msgstr "Geboost"
 #: src/components/status.jsx:1670
 #: src/components/status.jsx:2352
 msgid "Bookmarked"
-msgstr ""
+msgstr "Bladwijzer opgeslagen"
 
 #: src/components/status.jsx:1674
 msgid "Pinned"
-msgstr ""
+msgstr "Vastgezet"
 
 #: src/components/status.jsx:1719
 #: src/components/status.jsx:2171
@@ -2194,11 +2194,11 @@ msgstr "Verwijderd"
 
 #: src/components/status.jsx:1760
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
-msgstr ""
+msgstr "{repliesCount, plural, one {# antwoord} other {# antwoorden}}"
 
 #: src/components/status.jsx:1849
 msgid "Thread{0}"
-msgstr ""
+msgstr "Draad{0}"
 
 #: src/components/status.jsx:1925
 #: src/components/status.jsx:1987
@@ -2213,7 +2213,7 @@ msgstr "Toon inhoud"
 
 #: src/components/status.jsx:2072
 msgid "Show media"
-msgstr ""
+msgstr "Toon media"
 
 #: src/components/status.jsx:2192
 msgid "Edited"
@@ -2229,19 +2229,19 @@ msgstr "Bewerkingsgeschiedenis"
 
 #: src/components/status.jsx:2855
 msgid "Failed to load history"
-msgstr ""
+msgstr "Kon geschiedenis niet laden"
 
 #: src/components/status.jsx:2860
 msgid "Loading…"
-msgstr ""
+msgstr "Laden…"
 
 #: src/components/status.jsx:3095
 msgid "HTML Code"
-msgstr ""
+msgstr "HTML code"
 
 #: src/components/status.jsx:3112
 msgid "HTML code copied"
-msgstr ""
+msgstr "HTML code gekopieerd"
 
 #: src/components/status.jsx:3115
 msgid "Unable to copy HTML code"
@@ -2249,28 +2249,28 @@ msgstr "Kan HTML-code niet kopiëren"
 
 #: src/components/status.jsx:3127
 msgid "Media attachments:"
-msgstr ""
+msgstr "Mediabijlagen:"
 
 #: src/components/status.jsx:3149
 msgid "Account Emojis:"
-msgstr ""
+msgstr "Account emoji's:"
 
 #: src/components/status.jsx:3180
 #: src/components/status.jsx:3225
 msgid "static URL"
-msgstr ""
+msgstr "statische URL"
 
 #: src/components/status.jsx:3194
 msgid "Emojis:"
-msgstr ""
+msgstr "Emoji's:"
 
 #: src/components/status.jsx:3239
 msgid "Notes:"
-msgstr ""
+msgstr "Notities:"
 
 #: src/components/status.jsx:3243
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr ""
+msgstr "Dit is statisch, zonder vormgeving en scriptloos. Je moet mogelijk je eigen vormgeving toepassen en bewerken waar nodig."
 
 #: src/components/status.jsx:3249
 msgid "Polls are not interactive, becomes a list with vote counts."
@@ -2311,7 +2311,7 @@ msgstr ""
 
 #: src/components/timeline.jsx:586
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
-msgstr ""
+msgstr "{0, plural, one {# Boost} other {# Boosts}}"
 
 #: src/components/timeline.jsx:591
 msgid "Pinned posts"
@@ -2353,7 +2353,7 @@ msgstr ""
 
 #: src/compose.jsx:32
 msgid "Editing source status"
-msgstr ""
+msgstr "Bron status bewerken"
 
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
@@ -2375,11 +2375,11 @@ msgstr ""
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
-msgstr ""
+msgstr "Naar startpagina"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "Berichten van account"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
@@ -2435,7 +2435,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Berichten worden getoond in {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2574,7 +2574,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Toon {selectedFilterCategory, select, all {alle berichten} original {originele berichten} replies {antwoorden} boosts {boosts} followedTags {gevolgde tags} groups {groepen} filtered {gefilterde berichten}},{sortBy, select, createdAt {{sortOrder, select, asc {oudste} desc {nieuwste}}} reblogsCount {{sortOrder, select, asc {minste boosts} desc {meeste boosts}}} favouritesCount {{sortOrder, select, asc {minste likes} desc {meeste likes}}} repliesCount {{sortOrder, select, asc {minste antwoorden} desc {meeste antwoorden}}} density {{sortOrder, select, asc {minste dichte} desc {meeste dichte}}}} first{groupBy, select, account {, gegroepeerd per schrijver} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
@@ -3365,7 +3365,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:313
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Gesynchroniseerd met de instellingen van je instance server. <0>Ga naar je instance ({instance}) voor meer instellingen.</0>"
 
 #: src/pages/settings.jsx:328
 msgid "Experiments"
@@ -3445,7 +3445,7 @@ msgstr "⚠️⚠️⚠️ Zeer experimenteel.<0/>Opgeslagen in je eigen profiel
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Opmerking: Deze functie maakt gebruik van de API van de instance server waar je momenteel bent ingelogd."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3566,7 +3566,7 @@ msgstr ""
 
 #: src/pages/status.jsx:936
 msgid "Unable to load replies."
-msgstr ""
+msgstr "Kan antwoorden niet laden."
 
 #: src/pages/status.jsx:1048
 msgid "Back"

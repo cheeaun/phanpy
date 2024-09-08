@@ -306,6 +306,8 @@ window.__BENCH_RESULTS = new Map();
 window.__BENCHMARK = {
   start(name) {
     if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
+    // If already started, ignore
+    if (BENCHES.has(name)) return;
     const start = performance.now();
     BENCHES.set(name, start);
   },

@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 00:05\n"
+"PO-Revision-Date: 2024-09-08 09:50\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2419,7 +2419,7 @@ msgstr "+ Antwoorden"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
-msgstr "Berichten zonder boosts worden nu getoond"
+msgstr "Alle berichten zonder boosts"
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
@@ -2431,11 +2431,11 @@ msgstr "Berichten met media worden nu getoond"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr "Berichten met tag #{0} worden nu getoond"
+msgstr "Alle berichten met tag #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr "Berichten worden getoond in {0}"
+msgstr "Alle berichten uit {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
@@ -2574,7 +2574,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Toon {selectedFilterCategory, select, all {alle berichten} original {originele berichten} replies {antwoorden} boosts {boosts} followedTags {gevolgde tags} groups {groepen} filtered {gefilterde berichten}},{sortBy, select, createdAt {{sortOrder, select, asc {oudste} desc {nieuwste}}} reblogsCount {{sortOrder, select, asc {minste boosts} desc {meeste boosts}}} favouritesCount {{sortOrder, select, asc {minste likes} desc {meeste likes}}} repliesCount {{sortOrder, select, asc {minste antwoorden} desc {meeste antwoorden}}} density {{sortOrder, select, asc {minste dichte} desc {meeste dichte}}}} first{groupBy, select, account {, gegroepeerd per schrijver} other {}}"
+msgstr "{selectedFilterCategory, select, all {Alle berichten} original {Alle originele berichten} replies {Alle antwoorden} boosts {Alle boosts} followedTags {Alle gevolgde tags} groups {Alle groepen} filtered {Alle gefilterde berichten}},{sortBy, select, createdAt {{sortOrder, select, asc {oudste} desc {nieuwste}}} reblogsCount {{sortOrder, select, asc {minste boosts} desc {meeste boosts}}} favouritesCount {{sortOrder, select, asc {minste likes} desc {meeste likes}}} repliesCount {{sortOrder, select, asc {minste antwoorden} desc {meeste antwoorden}}} density {{sortOrder, select, asc {minste dichte} desc {meeste dichte}}}} first{groupBy, select, account {, gegroepeerd per schrijver} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
@@ -2992,25 +2992,25 @@ msgstr "Voeg aan Snelkoppelingen toe"
 #: src/pages/public.jsx:139
 #: src/pages/trending.jsx:444
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Voer een nieuwe instantie in, bijv. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
 #: src/pages/trending.jsx:447
 msgid "Invalid instance"
-msgstr ""
+msgstr "Ongeldige instantie"
 
 #: src/pages/hashtag.jsx:503
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:459
 msgid "Go to another instance…"
-msgstr ""
+msgstr "Ga naar een andere instantie…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:470
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Ga naar mijn instantie (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:208
 msgid "Unable to fetch notifications."
@@ -3631,23 +3631,23 @@ msgstr "Populair ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
-msgstr ""
+msgstr "Populair nieuws"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
-msgstr ""
+msgstr "Terug naar alle populaire berichten"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"
-msgstr ""
+msgstr "Alle berichten over <0>{0}</0>"
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr ""
+msgstr "Populaire berichten"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."
-msgstr ""
+msgstr "Geen populaire berichten."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."

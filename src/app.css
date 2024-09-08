@@ -2907,3 +2907,25 @@ ul.link-list li a .icon {
     width: 10em;
   }
 }
+
+/* DEBUG */
+
+.debug-info {
+  font-size: smaller;
+  summary {
+    height: 1em;
+    width: 100%;
+    list-style: none;
+    display: inline-block;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  p,
+  ol,
+  ul {
+    margin-block-start: 0;
+    padding-block-start: 0;
+  }
+}

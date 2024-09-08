@@ -826,7 +826,7 @@ function Settings({ onClose }) {
             </p>
           )}
         </section>
-        {import.meta.env.DEV && (
+        {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
           <details class="debug-info">
             <summary></summary>
             <p>Debugging</p>

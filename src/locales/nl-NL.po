@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 09:50\n"
+"PO-Revision-Date: 2024-09-08 11:25\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -199,7 +199,7 @@ msgstr "Antwoorden"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1430
 #: src/pages/catchup.jsx:2051
-#: src/pages/settings.jsx:1028
+#: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "Boosts"
 
@@ -555,7 +555,7 @@ msgstr "Je hebt niet-opgeslagen wijzigingen. Wil je dit bericht weggooien?"
 #: src/components/compose.jsx:1333
 #: src/components/compose.jsx:1594
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, one {Je kunt slechts 1 bestand bijvoegen.} other {Je kunt slechts # bestanden bijvoegen.}}"
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
@@ -1256,7 +1256,7 @@ msgstr "Inhalen"
 #: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1020
+#: src/pages/settings.jsx:1037
 #: src/pages/trending.jsx:347
 msgid "Mentions"
 msgstr "Vermeldingen"
@@ -1311,7 +1311,7 @@ msgstr "Bladwijzers"
 #: src/pages/catchup.jsx:2045
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1024
+#: src/pages/settings.jsx:1041
 msgid "Likes"
 msgstr "Likes"
 
@@ -1720,11 +1720,11 @@ msgstr "Accounts met <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Startpagina / Volgend"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
-msgstr ""
+msgstr "Openbaar (Lokaal / Gefederaliseerd)"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
@@ -1787,11 +1787,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "Zwevende knop"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Tab-/Menubalk"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
@@ -1799,7 +1799,7 @@ msgstr "Multi-kolom"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "Niet beschikbaar in huidige weergavemodus"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -1841,11 +1841,11 @@ msgstr "Max. {SHORTCUTS_LIMIT} snelkoppelingen"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
-msgstr ""
+msgstr "Importeer/Exporteer"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
-msgstr ""
+msgstr "Voeg kolom toe…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
@@ -1925,7 +1925,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:957
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "Geen nieuwe snelkoppelingen om te importeren"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
@@ -2278,7 +2278,7 @@ msgstr "Peilingen zijn niet interactief, wordt een lijst met uitslagen."
 
 #: src/components/status.jsx:3254
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr ""
+msgstr "Mediabijlagen kunnen afbeeldingen, video's, audiobestanden of andere bestandstypes zijn."
 
 #: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
@@ -2290,16 +2290,16 @@ msgstr ""
 
 #: src/components/status.jsx:3275
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "Let op: Deze voorvertoning is licht vormgegeven."
 
 #: src/components/status.jsx:3517
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> geboost"
 
 #: src/components/timeline.jsx:451
-#: src/pages/settings.jsx:1048
+#: src/pages/settings.jsx:1065
 msgid "New posts"
-msgstr ""
+msgstr "Nieuwe berichten"
 
 #: src/components/timeline.jsx:552
 #: src/pages/home.jsx:212
@@ -2502,7 +2502,7 @@ msgstr ""
 
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr ""
+msgstr "Let op: <0>Standaard</0> account zal altijd bij het het eerste laden worden gebruikt. Overgeschakelde accounts worden onthouden tijdens je sessie."
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
@@ -2562,53 +2562,53 @@ msgstr ""
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "meer dan 12 uur"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
-msgstr ""
+msgstr "Gevolgde hashtags"
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "Groepen"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "{selectedFilterCategory, select, all {Alle berichten} original {Alle originele berichten} replies {Alle antwoorden} boosts {Alle boosts} followedTags {Alle gevolgde tags} groups {Alle groepen} filtered {Alle gefilterde berichten}},{sortBy, select, createdAt {{sortOrder, select, asc {oudste} desc {nieuwste}}} reblogsCount {{sortOrder, select, asc {minste boosts} desc {meeste boosts}}} favouritesCount {{sortOrder, select, asc {minste likes} desc {meeste likes}}} repliesCount {{sortOrder, select, asc {minste antwoorden} desc {meeste antwoorden}}} density {{sortOrder, select, asc {minste dichte} desc {meeste dichte}}}} first{groupBy, select, account {, gegroepeerd per schrijver} other {}}"
+msgstr "{selectedFilterCategory, select, all {Alle berichten} original {Alle originele berichten} replies {Alle antwoorden} boosts {Alle boosts} followedTags {Alle gevolgde tags} groups {Alle groepen} filtered {Alle gefilterde berichten}}, {sortBy, select, createdAt {{sortOrder, select, asc {oudste} desc {nieuwste}}} reblogsCount {{sortOrder, select, asc {minste boosts} desc {meeste boosts}}} favouritesCount {{sortOrder, select, asc {minste likes} desc {meeste likes}}} repliesCount {{sortOrder, select, asc {minste antwoorden} desc {meeste antwoorden}}} density {{sortOrder, select, asc {minst dichte} desc {meest dichte}}}} first{groupBy, select, account {, gegroepeerd per schrijver} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
-msgstr ""
+msgstr "Inhalen <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
 #: src/pages/catchup.jsx:1568
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
 #: src/pages/catchup.jsx:912
 msgid "What is this?"
-msgstr ""
+msgstr "What betekent dit?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr ""
+msgstr "Inhalen is een aparte tijdlijn voor de accounts die je volgt, dat een weergave op hoog niveau in één oogopslag biedt met een eenvoudige, e-mailgeïnspireerde interface om moeiteloos door berichten te sorteren en filteren."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
-msgstr ""
+msgstr "Voorbeeld van Inhalen UI"
 
 #: src/pages/catchup.jsx:935
 msgid "Let's catch up"
-msgstr ""
+msgstr "Laten we inhalen"
 
 #: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
-msgstr ""
+msgstr "Laten we de posts van je de accounts die je volgt inhalen."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr ""
+msgstr "Toon me alle berichten van…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
@@ -2644,7 +2644,7 @@ msgstr "Deze catch-up verwijderen?"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr ""
+msgstr "Let op: Max. 3 worden opgeslagen. De rest wordt automatisch verwijderd."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
@@ -2751,7 +2751,7 @@ msgstr "Gefilterd: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Nog geen likes. Ga iets liken!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
@@ -2784,7 +2784,7 @@ msgstr "Nieuw filter"
 
 #: src/pages/filters.jsx:151
 msgid "{0, plural, one {# filter} other {# filters}}"
-msgstr ""
+msgstr "{0, plural, one {# filter} other {# filters}}"
 
 #: src/pages/filters.jsx:166
 msgid "Unable to load filters."
@@ -2832,39 +2832,39 @@ msgstr "{0, plural, one {# trefwoord} other {# trefwoorden}}"
 
 #: src/pages/filters.jsx:466
 msgid "Filter from…"
-msgstr ""
+msgstr "Filter op…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
-msgstr ""
+msgstr "* Nog niet geïmplementeerd"
 
 #: src/pages/filters.jsx:498
 msgid "Status: <0><1/></0>"
-msgstr ""
+msgstr "Status: <0><1/></0>"
 
 #: src/pages/filters.jsx:507
 msgid "Change expiry"
-msgstr ""
+msgstr "Wijzig vervaldatum"
 
 #: src/pages/filters.jsx:507
 msgid "Expiry"
-msgstr ""
+msgstr "Vervaldatum"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr ""
+msgstr "Gefilterd bericht zal worden…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
-msgstr ""
+msgstr "geminimaliseerd"
 
 #: src/pages/filters.jsx:546
 msgid "hidden"
-msgstr ""
+msgstr "verborgen"
 
 #: src/pages/filters.jsx:563
 msgid "Delete this filter?"
-msgstr ""
+msgstr "Verwijder dit filter?"
 
 #: src/pages/filters.jsx:576
 msgid "Unable to delete filter."
@@ -2872,31 +2872,31 @@ msgstr "Kan filter niet verwijderen."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
-msgstr ""
+msgstr "Vervallen"
 
 #: src/pages/filters.jsx:610
 msgid "Expiring <0/>"
-msgstr ""
+msgstr "Vervalt op <0/>"
 
 #: src/pages/filters.jsx:614
 msgid "Never expires"
-msgstr ""
+msgstr "Vervalt nooit"
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
-msgstr ""
+msgstr "{0, plural, one {# hashtag} other {# hashtags}}"
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "Kan gevolgde hashtags niet laden."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Nog geen hashtags gevolgd."
 
 #: src/pages/following.jsx:133
 msgid "Nothing to see here."
-msgstr ""
+msgstr "Niets te zien hier."
 
 #: src/pages/following.jsx:134
 #: src/pages/list.jsx:108
@@ -2905,23 +2905,23 @@ msgstr "Kan berichten niet laden."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} (Alleen media) uit {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} uit {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr ""
+msgstr "{hashtagTitle} (Alleen media)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr ""
+msgstr "Nog niemand heeft iets met deze hashtag geplaatst."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
@@ -2929,19 +2929,19 @@ msgstr "Kan berichten met deze tag niet laden"
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "Ontvolg #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} ontvolgd"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} gevolgd"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr ""
+msgstr "Volgend…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"
@@ -2966,11 +2966,11 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
-msgstr ""
+msgstr "Voeg hashtag toe"
 
 #: src/pages/hashtag.jsx:428
 msgid "Remove hashtag"
-msgstr ""
+msgstr "Verwijder hashtag"
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
@@ -3022,11 +3022,11 @@ msgstr ""
 
 #: src/pages/home.jsx:234
 msgid "See all"
-msgstr ""
+msgstr "Bekijk alles"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr ""
+msgstr "Bezig met verwerken…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
@@ -3043,7 +3043,7 @@ msgstr "Beheer leden"
 
 #: src/pages/list.jsx:313
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "Verwijder <0>@{0}</0> van lijst?"
 
 #: src/pages/list.jsx:359
 msgid "Remove…"
@@ -3125,7 +3125,7 @@ msgstr ""
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
 msgid "Notifications settings"
-msgstr ""
+msgstr "Meldingsinstellingen"
 
 #: src/pages/notifications.jsx:541
 msgid "New notifications"
@@ -3136,7 +3136,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Mededeling} other {Mededelingen}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1036
+#: src/pages/settings.jsx:1053
 msgid "Follow requests"
 msgstr "Volgverzoeken"
 
@@ -3158,11 +3158,11 @@ msgstr "Vandaag"
 
 #: src/pages/notifications.jsx:733
 msgid "You're all caught up."
-msgstr ""
+msgstr "Je bent weer helemaal bij."
 
 #: src/pages/notifications.jsx:756
 msgid "Yesterday"
-msgstr ""
+msgstr "Gisteren"
 
 #: src/pages/notifications.jsx:792
 msgid "Unable to load notifications"
@@ -3170,7 +3170,7 @@ msgstr "Kan meldingen niet laden"
 
 #: src/pages/notifications.jsx:871
 msgid "Notifications settings updated"
-msgstr ""
+msgstr "Meldingsinstellingen bijgewerkt"
 
 #: src/pages/notifications.jsx:879
 msgid "Filter out notifications from people:"
@@ -3178,11 +3178,11 @@ msgstr ""
 
 #: src/pages/notifications.jsx:893
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: src/pages/notifications.jsx:896
 msgid "Ignore"
-msgstr ""
+msgstr "Negeren"
 
 #: src/pages/notifications.jsx:969
 msgid "Updated <0>{0}</0>"
@@ -3266,12 +3266,12 @@ msgstr "Zoek: {q} (Hashtags)"
 
 #: src/pages/search.jsx:52
 msgid "Search: {q}"
-msgstr ""
+msgstr "Zoeken: {q}"
 
 #: src/pages/search.jsx:232
 #: src/pages/search.jsx:314
 msgid "Hashtags"
-msgstr ""
+msgstr "Hashtags"
 
 #: src/pages/search.jsx:264
 #: src/pages/search.jsx:318
@@ -3285,7 +3285,7 @@ msgstr "Bekijk meer accounts"
 
 #: src/pages/search.jsx:304
 msgid "No accounts found."
-msgstr ""
+msgstr "Geen accounts gevonden."
 
 #: src/pages/search.jsx:360
 msgid "See more hashtags"
@@ -3293,7 +3293,7 @@ msgstr "Bekijk meer hashtags"
 
 #: src/pages/search.jsx:374
 msgid "No hashtags found."
-msgstr ""
+msgstr "Geen hashtags gevonden."
 
 #: src/pages/search.jsx:418
 msgid "See more posts"
@@ -3301,7 +3301,7 @@ msgstr "Bekijk meer berichten"
 
 #: src/pages/search.jsx:432
 msgid "No posts found."
-msgstr ""
+msgstr "Geen berichten gevonden."
 
 #: src/pages/search.jsx:476
 msgid "Enter your search term or paste a URL above to get started."
@@ -3309,55 +3309,55 @@ msgstr ""
 
 #: src/pages/settings.jsx:74
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: src/pages/settings.jsx:83
 msgid "Appearance"
-msgstr ""
+msgstr "Weergave"
 
 #: src/pages/settings.jsx:159
 msgid "Light"
-msgstr ""
+msgstr "Licht"
 
 #: src/pages/settings.jsx:170
 msgid "Dark"
-msgstr ""
+msgstr "Donker"
 
 #: src/pages/settings.jsx:183
 msgid "Auto"
-msgstr ""
+msgstr "Automatisch"
 
 #: src/pages/settings.jsx:193
 msgid "Text size"
-msgstr ""
+msgstr "Lettergrootte"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
 #: src/pages/settings.jsx:198
 #: src/pages/settings.jsx:223
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: src/pages/settings.jsx:237
 msgid "Display language"
-msgstr ""
+msgstr "Weergavetaal"
 
 #: src/pages/settings.jsx:246
 msgid "Volunteer translations"
-msgstr ""
+msgstr "Vertalingen van vrijwilligers"
 
 #: src/pages/settings.jsx:257
 msgid "Posting"
-msgstr ""
+msgstr "Plaatsen"
 
 #: src/pages/settings.jsx:264
 msgid "Default visibility"
-msgstr ""
+msgstr "Standaard zichtbaarheid"
 
 #: src/pages/settings.jsx:265
 #: src/pages/settings.jsx:311
 msgid "Synced"
-msgstr ""
+msgstr "Gesynchroniseerd"
 
 #: src/pages/settings.jsx:290
 msgid "Failed to update posting privacy"
@@ -3369,7 +3369,7 @@ msgstr "Gesynchroniseerd met de instellingen van je instance server. <0>Ga naar 
 
 #: src/pages/settings.jsx:328
 msgid "Experiments"
-msgstr ""
+msgstr "Experimenten"
 
 #: src/pages/settings.jsx:341
 msgid "Auto refresh timeline posts"
@@ -3381,15 +3381,15 @@ msgstr "Boosts carrousel"
 
 #: src/pages/settings.jsx:369
 msgid "Post translation"
-msgstr ""
+msgstr "Berichtvertaling"
 
 #: src/pages/settings.jsx:380
 msgid "Translate to"
-msgstr ""
+msgstr "Vertaal naar"
 
 #: src/pages/settings.jsx:391
 msgid "System language ({systemTargetLanguageText})"
-msgstr ""
+msgstr "Systeemtaal ({systemTargetLanguageText})"
 
 #: src/pages/settings.jsx:417
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
@@ -3397,7 +3397,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:471
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
-msgstr ""
+msgstr "Let op: Deze functie maakt gebruik van externe vertaaldiensten, mede mogelijk gemaakt door <0>Lingva API</0> & <1>Lingva Translate</1>."
 
 #: src/pages/settings.jsx:505
 msgid "Auto inline translation"
@@ -3413,7 +3413,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr ""
+msgstr "Let op: Deze functie maakt gebruik van een externe GIF zoekdienst, mede mogelijk gemaakt door <0>GIPHY</0>. Geschikt voor alle leeftijden, tracking parameters worden geschrapt, verwijzerinformatie wordt weggelaten uit verzoeken, maar zoekopdrachten en het IP-adres zullen hun servers nog steeds bereiken."
 
 #: src/pages/settings.jsx:562
 msgid "Image description generator"
@@ -3425,7 +3425,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr ""
+msgstr "Let op: Deze functie maakt gebruik van externe AI-service, gevoed door <0>img-alt-api</0>. Kan mogelijk niet goed werken. Alleen voor afbeeldingen in het Engels."
 
 #: src/pages/settings.jsx:600
 msgid "Server-side grouped notifications"
@@ -3445,7 +3445,7 @@ msgstr "⚠️⚠️⚠️ Zeer experimenteel.<0/>Opgeslagen in je eigen profiel
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr "Opmerking: Deze functie maakt gebruik van de API van de instance server waar je momenteel bent ingelogd."
+msgstr "Let op: Deze functie maakt gebruik van de API van de instance server waar je momenteel bent ingelogd."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3491,58 +3491,58 @@ msgstr "Versiestring gekopieerd"
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:933
-#: src/pages/settings.jsx:938
+#: src/pages/settings.jsx:950
+#: src/pages/settings.jsx:955
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:944
+#: src/pages/settings.jsx:961
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:951
+#: src/pages/settings.jsx:968
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:973
+#: src/pages/settings.jsx:990
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
-#: src/pages/settings.jsx:982
-msgid "Allow from <0>{0}</0>"
-msgstr ""
-
-#: src/pages/settings.jsx:991
-msgid "anyone"
-msgstr ""
-
-#: src/pages/settings.jsx:995
-msgid "people I follow"
-msgstr ""
-
 #: src/pages/settings.jsx:999
+msgid "Allow from <0>{0}</0>"
+msgstr "Sta toe van <0>{0}</0>"
+
+#: src/pages/settings.jsx:1008
+msgid "anyone"
+msgstr "iedereen"
+
+#: src/pages/settings.jsx:1012
+msgid "people I follow"
+msgstr "mensen die ik volg"
+
+#: src/pages/settings.jsx:1016
 msgid "followers"
 msgstr "volgers"
 
-#: src/pages/settings.jsx:1032
+#: src/pages/settings.jsx:1049
 msgid "Follows"
 msgstr "Volgend"
 
-#: src/pages/settings.jsx:1040
+#: src/pages/settings.jsx:1057
 msgid "Polls"
 msgstr "Peilingen"
 
-#: src/pages/settings.jsx:1044
+#: src/pages/settings.jsx:1061
 msgid "Post edits"
 msgstr "Plaats bewerkingen"
 
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1082
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1081
+#: src/pages/settings.jsx:1098
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "LET OP: Push meldingen werken alleen voor <0>één account</0>."
 
 #: src/pages/status.jsx:565
 msgid "Post"

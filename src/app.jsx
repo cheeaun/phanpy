@@ -305,12 +305,12 @@ const BENCHES = new Map();
 window.__BENCH_RESULTS = new Map();
 window.__BENCHMARK = {
   start(name) {
-    if (!import.meta.env.DEV) return;
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
     const start = performance.now();
     BENCHES.set(name, start);
   },
   end(name) {
-    if (!import.meta.env.DEV) return;
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
     const start = BENCHES.get(name);
     if (start) {
       const end = performance.now();

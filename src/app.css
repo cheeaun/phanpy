@@ -366,11 +366,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 0;
   border-bottom: var(--hairline-width) solid var(--divider-color);
   --line-dir: var(--to-forward);
-
-  + li:not(.hero) {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 160px;
-  }
+}
+.timeline:not(.contextual) > li + li {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 160px;
 }
 .timeline.flat > li {
   border-bottom: none;

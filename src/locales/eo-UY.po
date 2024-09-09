@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 18:15\n"
+"PO-Revision-Date: 2024-09-09 13:55\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Aŭtomatigita"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "Group"
 msgstr "Grupo"
 
@@ -59,9 +59,9 @@ msgstr "Petita"
 #: src/components/nav-menu.jsx:193
 #: src/components/shortcuts-settings.jsx:137
 #: src/pages/following.jsx:20
-#: src/pages/following.jsx:131
+#: src/pages/following.jsx:134
 msgid "Following"
-msgstr "Sekvanto"
+msgstr "Sekvante"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
@@ -75,7 +75,7 @@ msgstr "{followersCount, plural, one {# sekvanto} other {# sekvantoj}}"
 #: src/components/account-block.jsx:205
 #: src/components/account-info.jsx:680
 msgid "Verified"
-msgstr ""
+msgstr "Kontrolita"
 
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:777
@@ -130,7 +130,7 @@ msgstr "Pli"
 
 #: src/components/account-info.jsx:439
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr ""
+msgstr "<0>{displayName}</0> indikis, ke ilia nova konto nun estas:"
 
 #: src/components/account-info.jsx:584
 #: src/components/account-info.jsx:1273
@@ -188,8 +188,8 @@ msgstr "Originala"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1428
-#: src/pages/catchup.jsx:2039
+#: src/pages/catchup.jsx:1444
+#: src/pages/catchup.jsx:2055
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Respondoj"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1430
-#: src/pages/catchup.jsx:2051
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "Diskonigoj"
@@ -284,7 +284,7 @@ msgstr "Aldoni / Forigi el listoj"
 #: src/components/account-info.jsx:1299
 #: src/components/status.jsx:1079
 msgid "Link copied"
-msgstr ""
+msgstr "Ligilo kopiita"
 
 #: src/components/account-info.jsx:1302
 #: src/components/status.jsx:1082
@@ -302,7 +302,7 @@ msgstr "Kopii"
 #: src/components/shortcuts-settings.jsx:1074
 #: src/components/status.jsx:1104
 msgid "Sharing doesn't seem to work."
-msgstr ""
+msgstr "Kunhavigo ŝajnas ne funkcii."
 
 #: src/components/account-info.jsx:1329
 #: src/components/status.jsx:1110
@@ -426,7 +426,7 @@ msgstr "Sekvi"
 #: src/components/status.jsx:3085
 #: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1564
+#: src/pages/catchup.jsx:1580
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -438,7 +438,7 @@ msgstr "Fermi"
 
 #: src/components/account-info.jsx:1804
 msgid "Translated Bio"
-msgstr ""
+msgstr "Tradukita biografio"
 
 #: src/components/account-info.jsx:1898
 msgid "Unable to remove from list."
@@ -519,7 +519,7 @@ msgstr "uzantnomo"
 
 #: src/components/account-info.jsx:2274
 msgid "server domain name"
-msgstr ""
+msgstr "servila domajna nomo"
 
 #: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
@@ -532,7 +532,7 @@ msgstr ""
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:435
+#: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -611,7 +611,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1962
-#: src/components/timeline.jsx:982
+#: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr ""
 
@@ -630,7 +630,7 @@ msgstr "Publika"
 #: src/components/shortcuts-settings.jsx:162
 #: src/components/status.jsx:94
 msgid "Local"
-msgstr ""
+msgstr "Loka"
 
 #: src/components/compose.jsx:1178
 #: src/components/status.jsx:95
@@ -861,13 +861,13 @@ msgstr "Tajpu por serĉi movbildojn"
 
 #: src/components/compose.jsx:3459
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:887
+#: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Antaŭa"
 
 #: src/components/compose.jsx:3477
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:904
+#: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Sekva"
 
@@ -920,7 +920,7 @@ msgid "No drafts found."
 msgstr "Neniuj malnetoj trovitaj."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1911
+#: src/pages/catchup.jsx:1927
 msgid "Poll"
 msgstr "Balotenketo"
 
@@ -964,7 +964,7 @@ msgid "Accounts"
 msgstr "Kontoj"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:517
+#: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -973,14 +973,14 @@ msgid "Show more…"
 msgstr "Montri pli…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:522
+#: src/components/timeline.jsx:524
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "La fino."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1618
 msgid "Keyboard shortcuts"
 msgstr ""
 
@@ -989,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next post"
 msgstr "Sekva afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous post"
 msgstr "Antaŭa afiŝo"
 
@@ -1019,7 +1019,7 @@ msgid "Load new posts"
 msgstr "Ŝargi novajn afiŝojn"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1675
 msgid "Open post details"
 msgstr "Malfermu detalojn pri afiŝo"
 
@@ -1209,17 +1209,17 @@ msgstr ""
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "Filtrila: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status.jsx:3413
 #: src/components/status.jsx:3509
 #: src/components/status.jsx:3587
-#: src/components/timeline.jsx:971
+#: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1859
+#: src/pages/catchup.jsx:1875
 msgid "Filtered"
-msgstr ""
+msgstr "Filtrila"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
@@ -1307,8 +1307,8 @@ msgstr "Legosignoj"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1429
-#: src/pages/catchup.jsx:2045
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2061
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1041
@@ -1327,7 +1327,7 @@ msgstr "Sekvataj kradvortoj"
 #: src/pages/filters.jsx:93
 #: src/pages/hashtag.jsx:339
 msgid "Filters"
-msgstr ""
+msgstr "Filtriloj"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
@@ -1361,7 +1361,7 @@ msgstr "Ensaluti"
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:407
 msgid "Trending"
-msgstr ""
+msgstr "Populara"
 
 #: src/components/nav-menu.jsx:392
 #: src/components/shortcuts-settings.jsx:162
@@ -1608,7 +1608,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
-msgstr ""
+msgstr "Malobservo de servila regulo"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
@@ -2296,12 +2296,12 @@ msgstr ""
 msgid "<0/> <1/> boosted"
 msgstr ""
 
-#: src/components/timeline.jsx:451
+#: src/components/timeline.jsx:453
 #: src/pages/settings.jsx:1065
 msgid "New posts"
 msgstr "Novaj afiŝoj"
 
-#: src/components/timeline.jsx:552
+#: src/components/timeline.jsx:554
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2309,21 +2309,21 @@ msgstr "Novaj afiŝoj"
 msgid "Try again"
 msgstr "Provu denove"
 
-#: src/components/timeline.jsx:586
+#: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr ""
 
-#: src/components/timeline.jsx:591
+#: src/components/timeline.jsx:593
 msgid "Pinned posts"
 msgstr ""
 
-#: src/components/timeline.jsx:944
-#: src/components/timeline.jsx:951
-#: src/pages/catchup.jsx:1876
+#: src/components/timeline.jsx:946
+#: src/components/timeline.jsx:953
+#: src/pages/catchup.jsx:1892
 msgid "Thread"
 msgstr ""
 
-#: src/components/timeline.jsx:966
+#: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
@@ -2582,7 +2582,7 @@ msgid "Catch-up <0>beta</0>"
 msgstr ""
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1568
+#: src/pages/catchup.jsx:1584
 msgid "Help"
 msgstr "Helpo"
 
@@ -2659,7 +2659,7 @@ msgid "Reset filters"
 msgstr ""
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1574
+#: src/pages/catchup.jsx:1590
 msgid "Top links"
 msgstr ""
 
@@ -2667,85 +2667,85 @@ msgstr ""
 msgid "Shared by {0}"
 msgstr ""
 
-#: src/pages/catchup.jsx:1299
+#: src/pages/catchup.jsx:1315
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "Ĉiuj"
 
-#: src/pages/catchup.jsx:1384
+#: src/pages/catchup.jsx:1400
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# aŭtoro} other {# aŭtoroj}}"
 
-#: src/pages/catchup.jsx:1396
+#: src/pages/catchup.jsx:1412
 msgid "Sort"
 msgstr "Ordigi"
 
-#: src/pages/catchup.jsx:1427
+#: src/pages/catchup.jsx:1443
 msgid "Date"
 msgstr "Dato"
 
-#: src/pages/catchup.jsx:1431
+#: src/pages/catchup.jsx:1447
 msgid "Density"
 msgstr ""
 
-#: src/pages/catchup.jsx:1469
+#: src/pages/catchup.jsx:1485
 msgid "Authors"
 msgstr "Aŭtoroj"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "None"
 msgstr "Nenio"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1502
 msgid "Show all authors"
 msgstr "Montru ĉiujn aŭtorojn"
 
-#: src/pages/catchup.jsx:1537
+#: src/pages/catchup.jsx:1553
 msgid "You don't have to read everything."
 msgstr ""
 
-#: src/pages/catchup.jsx:1538
+#: src/pages/catchup.jsx:1554
 msgid "That's all."
 msgstr "Jen ĉio."
 
-#: src/pages/catchup.jsx:1546
+#: src/pages/catchup.jsx:1562
 msgid "Back to top"
 msgstr ""
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr ""
 
-#: src/pages/catchup.jsx:1583
+#: src/pages/catchup.jsx:1599
 msgid "Sort: Density"
 msgstr ""
 
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr ""
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1609
 msgid "Group: Authors"
 msgstr "Grupo: Aŭtoroj"
 
-#: src/pages/catchup.jsx:1596
+#: src/pages/catchup.jsx:1612
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr ""
 
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Next author"
 msgstr "Sekva aŭtoro"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Previous author"
 msgstr "Antaŭa aŭtoro"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1683
 msgid "Scroll to top"
 msgstr ""
 
-#: src/pages/catchup.jsx:1858
+#: src/pages/catchup.jsx:1874
 msgid "Filtered: {0}"
 msgstr ""
 
@@ -2894,11 +2894,11 @@ msgstr "Ne eblas ŝargi sekvatajn kradvortojn."
 msgid "No hashtags followed yet."
 msgstr ""
 
-#: src/pages/following.jsx:133
+#: src/pages/following.jsx:136
 msgid "Nothing to see here."
 msgstr ""
 
-#: src/pages/following.jsx:134
+#: src/pages/following.jsx:137
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
 msgstr "Ne eblas ŝargi afiŝojn."
@@ -3627,15 +3627,15 @@ msgstr ""
 
 #: src/pages/trending.jsx:70
 msgid "Trending ({instance})"
-msgstr ""
+msgstr "Populara ({instance})"
 
 #: src/pages/trending.jsx:227
 msgid "Trending News"
-msgstr ""
+msgstr "Popularaj Novaĵoj"
 
 #: src/pages/trending.jsx:374
 msgid "Back to showing trending posts"
-msgstr ""
+msgstr "Reen al montrado de popularaj afiŝoj"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"
@@ -3643,7 +3643,7 @@ msgstr ""
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr ""
+msgstr "Popularaj afiŝoj"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."

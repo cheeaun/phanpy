@@ -8,7 +8,7 @@ msgstr ""
 "Language: fa\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 17:15\n"
+"PO-Revision-Date: 2024-09-09 13:55\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "خودکارشده"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "Group"
 msgstr "گروه"
 
@@ -59,7 +59,7 @@ msgstr "درخواست‌شده"
 #: src/components/nav-menu.jsx:193
 #: src/components/shortcuts-settings.jsx:137
 #: src/pages/following.jsx:20
-#: src/pages/following.jsx:131
+#: src/pages/following.jsx:134
 msgid "Following"
 msgstr "پی‌گرفته"
 
@@ -188,8 +188,8 @@ msgstr "اصلی"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1428
-#: src/pages/catchup.jsx:2039
+#: src/pages/catchup.jsx:1444
+#: src/pages/catchup.jsx:2055
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "پاسخ‌ها"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1430
-#: src/pages/catchup.jsx:2051
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "تقویت‌ها"
@@ -426,7 +426,7 @@ msgstr "پی گرفتن"
 #: src/components/status.jsx:3085
 #: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1564
+#: src/pages/catchup.jsx:1580
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -532,7 +532,7 @@ msgstr "حالت پوشش فعال شد"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:435
+#: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -611,7 +611,7 @@ msgstr "پیوست #{i} شکست خورد"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1962
-#: src/components/timeline.jsx:982
+#: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "هشدار محتوا"
 
@@ -861,13 +861,13 @@ msgstr "برای جستجوی جیف‌ها بنویسید"
 
 #: src/components/compose.jsx:3459
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:887
+#: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "پیشین"
 
 #: src/components/compose.jsx:3477
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:904
+#: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "پسین"
 
@@ -920,7 +920,7 @@ msgid "No drafts found."
 msgstr "پیش‌نویسی یافت نشد."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1911
+#: src/pages/catchup.jsx:1927
 msgid "Poll"
 msgstr "نظرسنجی"
 
@@ -964,7 +964,7 @@ msgid "Accounts"
 msgstr "حساب‌های کاربری"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:517
+#: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -973,14 +973,14 @@ msgid "Show more…"
 msgstr "نمایش بیشتر…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:522
+#: src/components/timeline.jsx:524
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "آخر."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1618
 msgid "Keyboard shortcuts"
 msgstr "میانبرهای صفحه کلید"
 
@@ -989,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr "راهنمای میانبرهای صفحه کلید"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next post"
 msgstr "فرستهٔ پسین"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous post"
 msgstr "فرستهٔ پیشین"
 
@@ -1019,7 +1019,7 @@ msgid "Load new posts"
 msgstr "بارگذاری فرسته‌های جدید"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1675
 msgid "Open post details"
 msgstr "باز کردن اطلاعات فرسته"
 
@@ -1099,7 +1099,7 @@ msgstr "<0>م</0> یا <1>ب</1>"
 #: src/components/status.jsx:2326
 #: src/components/status.jsx:2327
 msgid "Boost"
-msgstr "تقویت کردن"
+msgstr "تقویت"
 
 #: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>Shift</0> + <1>b</1>"
@@ -1215,9 +1215,9 @@ msgstr "پالایش‌شده: {filterTitleStr}"
 #: src/components/status.jsx:3413
 #: src/components/status.jsx:3509
 #: src/components/status.jsx:3587
-#: src/components/timeline.jsx:971
+#: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1859
+#: src/pages/catchup.jsx:1875
 msgid "Filtered"
 msgstr "پالایش‌شده"
 
@@ -1307,8 +1307,8 @@ msgstr "نشانک‌گذاری‌ها"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1429
-#: src/pages/catchup.jsx:2045
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2061
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1041
@@ -2296,12 +2296,12 @@ msgstr "نکته: این پیش‌نمایش بصورت طراحی سبک است
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> تقویت‌شده"
 
-#: src/components/timeline.jsx:451
+#: src/components/timeline.jsx:453
 #: src/pages/settings.jsx:1065
 msgid "New posts"
 msgstr "فرسته‌های جدید"
 
-#: src/components/timeline.jsx:552
+#: src/components/timeline.jsx:554
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2309,21 +2309,21 @@ msgstr "فرسته‌های جدید"
 msgid "Try again"
 msgstr "تلاش مجدد"
 
-#: src/components/timeline.jsx:586
+#: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr ""
 
-#: src/components/timeline.jsx:591
+#: src/components/timeline.jsx:593
 msgid "Pinned posts"
 msgstr ""
 
-#: src/components/timeline.jsx:944
-#: src/components/timeline.jsx:951
-#: src/pages/catchup.jsx:1876
+#: src/components/timeline.jsx:946
+#: src/components/timeline.jsx:953
+#: src/pages/catchup.jsx:1892
 msgid "Thread"
 msgstr "رشته"
 
-#: src/components/timeline.jsx:966
+#: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>پالایش‌شده</0>: <1>{0}</1>"
 
@@ -2582,7 +2582,7 @@ msgid "Catch-up <0>beta</0>"
 msgstr ""
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1568
+#: src/pages/catchup.jsx:1584
 msgid "Help"
 msgstr "راهنما"
 
@@ -2659,7 +2659,7 @@ msgid "Reset filters"
 msgstr "تنظیم مجدد پالایه‌ها"
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1574
+#: src/pages/catchup.jsx:1590
 msgid "Top links"
 msgstr ""
 
@@ -2667,85 +2667,85 @@ msgstr ""
 msgid "Shared by {0}"
 msgstr "همرسانی‌شده توسط {0}"
 
-#: src/pages/catchup.jsx:1299
+#: src/pages/catchup.jsx:1315
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "همه"
 
-#: src/pages/catchup.jsx:1384
+#: src/pages/catchup.jsx:1400
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural,one {# نویسنده} other {# نویسنده‌ها}}"
 
-#: src/pages/catchup.jsx:1396
+#: src/pages/catchup.jsx:1412
 msgid "Sort"
 msgstr "مرتب‌سازی"
 
-#: src/pages/catchup.jsx:1427
+#: src/pages/catchup.jsx:1443
 msgid "Date"
 msgstr "تاریخ"
 
-#: src/pages/catchup.jsx:1431
+#: src/pages/catchup.jsx:1447
 msgid "Density"
 msgstr "تراکم"
 
-#: src/pages/catchup.jsx:1469
+#: src/pages/catchup.jsx:1485
 msgid "Authors"
 msgstr "نویسنده‌ها"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1502
 msgid "Show all authors"
 msgstr "نمایش همهٔ نویسنده‌ها"
 
-#: src/pages/catchup.jsx:1537
+#: src/pages/catchup.jsx:1553
 msgid "You don't have to read everything."
 msgstr "نیازی نیست همه چیز را بخوانید."
 
-#: src/pages/catchup.jsx:1538
+#: src/pages/catchup.jsx:1554
 msgid "That's all."
 msgstr "کافیست."
 
-#: src/pages/catchup.jsx:1546
+#: src/pages/catchup.jsx:1562
 msgid "Back to top"
 msgstr "برگشتن به بالا"
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "پیوندهایی که توسط پی‌گرفته‌ها همرسانی شده‌اند، مرتب‌شده طبق شمارش همرسانی‌شده، تقویت‌ها و برگزیده‌ها."
 
-#: src/pages/catchup.jsx:1583
+#: src/pages/catchup.jsx:1599
 msgid "Sort: Density"
 msgstr "مرتب‌سازی: تراکم"
 
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr "فرسته‌ها با تراکم یا عمق اطلاعات مرتب‌شده‌اند. فرسته‌های کوتاه‌تر «سبک‌تر» هستند درحالیکه فرسته‌های طولانی‌تر «سنگین‌تر» هستند. فرسته‌هایی با تصاویر از فرسته‌های بدون تصویر «سنگین‌تر» هستند."
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1609
 msgid "Group: Authors"
 msgstr "گروه: نویسندگان"
 
-#: src/pages/catchup.jsx:1596
+#: src/pages/catchup.jsx:1612
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr "فرسته‌ها طبق نویسنده‌ها دسته‌بندی شده‌اند، طبق فرسته بر حسب نویسنده مرتب شده‌اند."
 
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Next author"
 msgstr "نویسندهٔ پسین"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Previous author"
 msgstr "نویسندهٔ پیشین"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1683
 msgid "Scroll to top"
 msgstr "پیمایش به بالا"
 
-#: src/pages/catchup.jsx:1858
+#: src/pages/catchup.jsx:1874
 msgid "Filtered: {0}"
 msgstr "پالایش‌شده: {0}"
 
@@ -2894,11 +2894,11 @@ msgstr "ناتوان در بارگذاری برچسب‌های پی‌گرفته
 msgid "No hashtags followed yet."
 msgstr "هنوز برچسبی پی‌گرفته نشده."
 
-#: src/pages/following.jsx:133
+#: src/pages/following.jsx:136
 msgid "Nothing to see here."
 msgstr "اینجا چیزی برای دیدن وجود ندارد."
 
-#: src/pages/following.jsx:134
+#: src/pages/following.jsx:137
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
 msgstr "ناتوان در بارگذاری فرسته‌ها."

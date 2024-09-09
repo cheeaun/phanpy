@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 11:25\n"
+"PO-Revision-Date: 2024-09-09 13:55\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Geautomatiseerd"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "Group"
 msgstr "Groep"
 
@@ -59,7 +59,7 @@ msgstr "Aangevraagd"
 #: src/components/nav-menu.jsx:193
 #: src/components/shortcuts-settings.jsx:137
 #: src/pages/following.jsx:20
-#: src/pages/following.jsx:131
+#: src/pages/following.jsx:134
 msgid "Following"
 msgstr "Volgend"
 
@@ -188,8 +188,8 @@ msgstr "Origineel"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1428
-#: src/pages/catchup.jsx:2039
+#: src/pages/catchup.jsx:1444
+#: src/pages/catchup.jsx:2055
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Antwoorden"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1430
-#: src/pages/catchup.jsx:2051
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "Boosts"
@@ -426,7 +426,7 @@ msgstr "Volg"
 #: src/components/status.jsx:3085
 #: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1564
+#: src/pages/catchup.jsx:1580
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -532,7 +532,7 @@ msgstr "Cloak-modus ingeschakeld"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:435
+#: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -611,7 +611,7 @@ msgstr "Bijlage #{i} is mislukt"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1962
-#: src/components/timeline.jsx:982
+#: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "Inhoudswaarschuwing"
 
@@ -861,13 +861,13 @@ msgstr "Typ om GIF's te zoeken"
 
 #: src/components/compose.jsx:3459
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:887
+#: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Vorige"
 
 #: src/components/compose.jsx:3477
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:904
+#: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Volgende"
 
@@ -920,7 +920,7 @@ msgid "No drafts found."
 msgstr "Geen concepten gevonden."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1911
+#: src/pages/catchup.jsx:1927
 msgid "Poll"
 msgstr "Peiling"
 
@@ -964,7 +964,7 @@ msgid "Accounts"
 msgstr "Accounts"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:517
+#: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -973,14 +973,14 @@ msgid "Show more…"
 msgstr "Toon meer…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:522
+#: src/components/timeline.jsx:524
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "Het einde."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1618
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
@@ -989,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr "Sneltoetsen help"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next post"
 msgstr "Volgend bericht"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous post"
 msgstr "Vorig bericht"
 
@@ -1019,7 +1019,7 @@ msgid "Load new posts"
 msgstr "Laad nieuwe berichten"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1675
 msgid "Open post details"
 msgstr "Open berichtdetails"
 
@@ -1215,9 +1215,9 @@ msgstr "Gefilterd: {filterTitleStr}"
 #: src/components/status.jsx:3413
 #: src/components/status.jsx:3509
 #: src/components/status.jsx:3587
-#: src/components/timeline.jsx:971
+#: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1859
+#: src/pages/catchup.jsx:1875
 msgid "Filtered"
 msgstr "Gefilterd"
 
@@ -1307,8 +1307,8 @@ msgstr "Bladwijzers"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1429
-#: src/pages/catchup.jsx:2045
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2061
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1041
@@ -1656,11 +1656,11 @@ msgstr ""
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr ""
+msgstr "Wat is het probleem met dit bericht?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
-msgstr ""
+msgstr "Wat is het probleem met dit profiel?"
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Zoek <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
@@ -1829,7 +1829,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "Geen idee wat je kunt toevoegen?<0/>Probeer eerst <1>Startpagina/Volgend of Meldingen</1>."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2296,12 +2296,12 @@ msgstr "Let op: Deze voorvertoning is licht vormgegeven."
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> geboost"
 
-#: src/components/timeline.jsx:451
+#: src/components/timeline.jsx:453
 #: src/pages/settings.jsx:1065
 msgid "New posts"
 msgstr "Nieuwe berichten"
 
-#: src/components/timeline.jsx:552
+#: src/components/timeline.jsx:554
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2309,21 +2309,21 @@ msgstr "Nieuwe berichten"
 msgid "Try again"
 msgstr ""
 
-#: src/components/timeline.jsx:586
+#: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr "{0, plural, one {# Boost} other {# Boosts}}"
 
-#: src/components/timeline.jsx:591
+#: src/components/timeline.jsx:593
 msgid "Pinned posts"
 msgstr ""
 
-#: src/components/timeline.jsx:944
-#: src/components/timeline.jsx:951
-#: src/pages/catchup.jsx:1876
+#: src/components/timeline.jsx:946
+#: src/components/timeline.jsx:953
+#: src/pages/catchup.jsx:1892
 msgid "Thread"
 msgstr ""
 
-#: src/components/timeline.jsx:966
+#: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
@@ -2514,55 +2514,55 @@ msgstr "Kan bladwijzers niet laden."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
-msgstr ""
+msgstr "het afgelopen uur"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr ""
+msgstr "de afgelopen 2 uur"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr ""
+msgstr "de afgelopen 3 uur"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr ""
+msgstr "de afgelopen 4 uur"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
-msgstr ""
+msgstr "de afgelopen 5 uur"
 
 #: src/pages/catchup.jsx:59
 msgid "last 6 hours"
-msgstr ""
+msgstr "de afgelopen 6 uur"
 
 #: src/pages/catchup.jsx:60
 msgid "last 7 hours"
-msgstr ""
+msgstr "de afgelopen 7 uur"
 
 #: src/pages/catchup.jsx:61
 msgid "last 8 hours"
-msgstr ""
+msgstr "de afgelopen 8 uur"
 
 #: src/pages/catchup.jsx:62
 msgid "last 9 hours"
-msgstr ""
+msgstr "de afgelopen 9 uur"
 
 #: src/pages/catchup.jsx:63
 msgid "last 10 hours"
-msgstr ""
+msgstr "de afgelopen 10 uur"
 
 #: src/pages/catchup.jsx:64
 msgid "last 11 hours"
-msgstr ""
+msgstr "de afgelopen 11 uur"
 
 #: src/pages/catchup.jsx:65
 msgid "last 12 hours"
-msgstr ""
+msgstr "de afgelopen 12 uur"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr "meer dan 12 uur"
+msgstr "meer dan 12 uur geleden"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
@@ -2582,13 +2582,13 @@ msgid "Catch-up <0>beta</0>"
 msgstr "Inhalen <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1568
+#: src/pages/catchup.jsx:1584
 msgid "Help"
 msgstr "Hulp"
 
 #: src/pages/catchup.jsx:912
 msgid "What is this?"
-msgstr "What betekent dit?"
+msgstr "Wat is dit?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
@@ -2596,7 +2596,7 @@ msgstr "Inhalen is een aparte tijdlijn voor de accounts die je volgt, dat een we
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
-msgstr "Voorbeeld van Inhalen UI"
+msgstr "Voorbeeld van de Inhalen UI"
 
 #: src/pages/catchup.jsx:935
 msgid "Let's catch up"
@@ -2620,15 +2620,15 @@ msgstr "Catch up"
 
 #: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
-msgstr "Overlapt met je laatste catch-up"
+msgstr "Overlapt met je laatste Inhalen"
 
 #: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
-msgstr "Tot aan de laatste catch-up ({0})"
+msgstr "Tot aan de laatste Inhalen ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr "Opmerking: je instantie mag max. 800 berichten in de startpaginatijdlijn tonen, ongeacht het tijdsbereik. Kan minder of meer berichten zijn."
+msgstr "Let op: je instantie mag max. 800 berichten in de startpaginatijdlijn tonen, ongeacht het tijdsbereik. Kan minder of meer berichten zijn."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
@@ -2640,7 +2640,7 @@ msgstr "{0, plural, one {# bericht} other {# berichten}}"
 
 #: src/pages/catchup.jsx:1062
 msgid "Remove this catch-up?"
-msgstr "Deze catch-up verwijderen?"
+msgstr "Deze Inhalen verwijderen?"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -2659,7 +2659,7 @@ msgid "Reset filters"
 msgstr "Filters terug zetten"
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1574
+#: src/pages/catchup.jsx:1590
 msgid "Top links"
 msgstr "Top links"
 
@@ -2667,85 +2667,85 @@ msgstr "Top links"
 msgid "Shared by {0}"
 msgstr "Gedeeld door {0}"
 
-#: src/pages/catchup.jsx:1299
+#: src/pages/catchup.jsx:1315
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "Alles"
 
-#: src/pages/catchup.jsx:1384
+#: src/pages/catchup.jsx:1400
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# auteur} other {# auteurs}}"
 
-#: src/pages/catchup.jsx:1396
+#: src/pages/catchup.jsx:1412
 msgid "Sort"
 msgstr "Sorteer"
 
-#: src/pages/catchup.jsx:1427
+#: src/pages/catchup.jsx:1443
 msgid "Date"
 msgstr "Datum"
 
-#: src/pages/catchup.jsx:1431
+#: src/pages/catchup.jsx:1447
 msgid "Density"
 msgstr "Dichtheid"
 
-#: src/pages/catchup.jsx:1469
+#: src/pages/catchup.jsx:1485
 msgid "Authors"
 msgstr "Auteurs"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "None"
 msgstr "Geen"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1502
 msgid "Show all authors"
 msgstr "Toon alle auteurs"
 
-#: src/pages/catchup.jsx:1537
+#: src/pages/catchup.jsx:1553
 msgid "You don't have to read everything."
 msgstr "Je hoeft niet alles te lezen."
 
-#: src/pages/catchup.jsx:1538
+#: src/pages/catchup.jsx:1554
 msgid "That's all."
 msgstr "Dat was het."
 
-#: src/pages/catchup.jsx:1546
+#: src/pages/catchup.jsx:1562
 msgid "Back to top"
 msgstr "Terug naar boven"
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "Links gedeeld door volgenden, gesorteerd op hoe vaak het is gedeeld, geboost en geliket."
 
-#: src/pages/catchup.jsx:1583
+#: src/pages/catchup.jsx:1599
 msgid "Sort: Density"
 msgstr "Sorteer: Dichtheid"
 
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr ""
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1609
 msgid "Group: Authors"
 msgstr "Groep: Auteurs"
 
-#: src/pages/catchup.jsx:1596
+#: src/pages/catchup.jsx:1612
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr ""
 
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Next author"
 msgstr "Volgende auteur"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Previous author"
 msgstr "Vorige auteur"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1683
 msgid "Scroll to top"
 msgstr "Scroll naar boven"
 
-#: src/pages/catchup.jsx:1858
+#: src/pages/catchup.jsx:1874
 msgid "Filtered: {0}"
 msgstr "Gefilterd: {0}"
 
@@ -2894,11 +2894,11 @@ msgstr "Kan gevolgde hashtags niet laden."
 msgid "No hashtags followed yet."
 msgstr "Nog geen hashtags gevolgd."
 
-#: src/pages/following.jsx:133
+#: src/pages/following.jsx:136
 msgid "Nothing to see here."
 msgstr "Niets te zien hier."
 
-#: src/pages/following.jsx:134
+#: src/pages/following.jsx:137
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
 msgstr "Kan berichten niet laden."
@@ -3502,7 +3502,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:968
 msgid "Push Notifications (beta)"
-msgstr ""
+msgstr "Pushmeldingen (bèta)"
 
 #: src/pages/settings.jsx:990
 msgid "Push notifications are blocked. Please enable them in your browser settings."
@@ -3591,7 +3591,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
-msgstr ""
+msgstr "Toon alle gevoelige inhoud"
 
 #: src/pages/status.jsx:1232
 msgid "Experimental"
@@ -3619,7 +3619,7 @@ msgstr "{0, plural, one {# antwoord} other {<0>{1}</0> antwoorden}}"
 
 #: src/pages/status.jsx:1444
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
-msgstr ""
+msgstr "{totalComments, plural, one {# opmerking} other {<0>{0}</0> opmerkingen}}"
 
 #: src/pages/status.jsx:1466
 msgid "View post with its replies"
@@ -3655,11 +3655,11 @@ msgstr ""
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
-msgstr ""
+msgstr "Aanmelden met Mastodon"
 
 #: src/pages/welcome.jsx:70
 msgid "Sign up"
-msgstr ""
+msgstr "Inschrijven"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
@@ -3699,7 +3699,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
-msgstr ""
+msgstr "Gegroepeerde meldingen"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."

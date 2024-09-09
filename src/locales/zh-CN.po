@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-06 06:33\n"
+"PO-Revision-Date: 2024-09-09 07:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -37,8 +37,8 @@ msgstr "机器人"
 
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
-#: src/components/status.jsx:439
-#: src/pages/catchup.jsx:1454
+#: src/components/status.jsx:440
+#: src/pages/catchup.jsx:1470
 msgid "Group"
 msgstr "群组"
 
@@ -106,18 +106,18 @@ msgstr "粉丝"
 #: src/pages/search.jsx:237
 #: src/pages/search.jsx:384
 msgid "Posts"
-msgstr "条嘟文"
+msgstr "嘟文"
 
 #: src/components/account-info.jsx:427
 #: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2451
+#: src/components/compose.jsx:2456
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
-#: src/components/status.jsx:1635
-#: src/components/status.jsx:1652
-#: src/components/status.jsx:1776
-#: src/components/status.jsx:2371
-#: src/components/status.jsx:2374
+#: src/components/status.jsx:1636
+#: src/components/status.jsx:1653
+#: src/components/status.jsx:1777
+#: src/components/status.jsx:2372
+#: src/components/status.jsx:2375
 #: src/pages/account-statuses.jsx:528
 #: src/pages/accounts.jsx:109
 #: src/pages/hashtag.jsx:199
@@ -186,10 +186,10 @@ msgid "Original"
 msgstr "原创"
 
 #: src/components/account-info.jsx:859
-#: src/components/status.jsx:2162
+#: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1428
-#: src/pages/catchup.jsx:2039
+#: src/pages/catchup.jsx:1444
+#: src/pages/catchup.jsx:2055
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,9 +197,9 @@ msgstr "回复"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1430
-#: src/pages/catchup.jsx:2051
-#: src/pages/settings.jsx:1028
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2067
+#: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "转嘟"
 
@@ -282,30 +282,30 @@ msgid "Add/Remove from Lists"
 msgstr "加入/移出列表"
 
 #: src/components/account-info.jsx:1299
-#: src/components/status.jsx:1078
+#: src/components/status.jsx:1079
 msgid "Link copied"
 msgstr "已复制链接"
 
 #: src/components/account-info.jsx:1302
-#: src/components/status.jsx:1081
+#: src/components/status.jsx:1082
 msgid "Unable to copy link"
 msgstr "无法复制链接"
 
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
-#: src/components/status.jsx:1087
-#: src/components/status.jsx:3114
+#: src/components/status.jsx:1088
+#: src/components/status.jsx:3121
 msgid "Copy"
 msgstr "复制"
 
 #: src/components/account-info.jsx:1323
 #: src/components/shortcuts-settings.jsx:1074
-#: src/components/status.jsx:1103
+#: src/components/status.jsx:1104
 msgid "Sharing doesn't seem to work."
 msgstr "分享似乎无法正常工作。"
 
 #: src/components/account-info.jsx:1329
-#: src/components/status.jsx:1109
+#: src/components/status.jsx:1110
 msgid "Share…"
 msgstr "分享…"
 
@@ -406,10 +406,10 @@ msgstr "关注"
 #: src/components/account-info.jsx:2086
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
-#: src/components/compose.jsx:2407
-#: src/components/compose.jsx:2880
-#: src/components/compose.jsx:3088
-#: src/components/compose.jsx:3318
+#: src/components/compose.jsx:2412
+#: src/components/compose.jsx:2885
+#: src/components/compose.jsx:3093
+#: src/components/compose.jsx:3323
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -422,11 +422,11 @@ msgstr "关注"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2839
-#: src/components/status.jsx:3078
-#: src/components/status.jsx:3576
+#: src/components/status.jsx:2846
+#: src/components/status.jsx:3085
+#: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1564
+#: src/pages/catchup.jsx:1580
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -483,6 +483,11 @@ msgstr "保存并关闭"
 #: src/components/account-info.jsx:2142
 msgid "Unable to update profile."
 msgstr "无法更新个人资料。"
+
+#: src/components/account-info.jsx:2149
+#: src/components/list-add-edit.jsx:102
+msgid "Name"
+msgstr "名称"
 
 #: src/components/account-info.jsx:2162
 msgid "Bio"
@@ -547,8 +552,8 @@ msgstr "你有尚未保存的更改。是否丢弃这条嘟文？"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
-#: src/components/compose.jsx:1328
-#: src/components/compose.jsx:1589
+#: src/components/compose.jsx:1333
+#: src/components/compose.jsx:1594
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, other {你最多可以添加 # 个附件。}}"
 
@@ -605,7 +610,7 @@ msgid "Attachment #{i} failed"
 msgstr "附加附件 #{i} 失败"
 
 #: src/components/compose.jsx:1118
-#: src/components/status.jsx:1961
+#: src/components/status.jsx:1962
 #: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr "内容警告"
@@ -620,246 +625,253 @@ msgstr "内容警告或敏感媒体"
 msgid "Public"
 msgstr "公开"
 
-#: src/components/compose.jsx:1173
+#: src/components/compose.jsx:1174
+#: src/components/nav-menu.jsx:386
+#: src/components/shortcuts-settings.jsx:162
 #: src/components/status.jsx:94
+msgid "Local"
+msgstr "本站"
+
+#: src/components/compose.jsx:1178
+#: src/components/status.jsx:95
 #: src/pages/settings.jsx:300
 msgid "Unlisted"
 msgstr "未列出"
 
-#: src/components/compose.jsx:1176
-#: src/components/status.jsx:95
+#: src/components/compose.jsx:1181
+#: src/components/status.jsx:96
 #: src/pages/settings.jsx:303
 msgid "Followers only"
 msgstr "仅粉丝"
 
-#: src/components/compose.jsx:1179
-#: src/components/status.jsx:96
-#: src/components/status.jsx:1839
+#: src/components/compose.jsx:1184
+#: src/components/status.jsx:97
+#: src/components/status.jsx:1840
 msgid "Private mention"
 msgstr "私信"
 
-#: src/components/compose.jsx:1188
+#: src/components/compose.jsx:1193
 msgid "Post your reply"
 msgstr "发送回复"
 
-#: src/components/compose.jsx:1190
+#: src/components/compose.jsx:1195
 msgid "Edit your post"
 msgstr "编辑嘟文"
 
-#: src/components/compose.jsx:1191
+#: src/components/compose.jsx:1196
 msgid "What are you doing?"
 msgstr "在做什么呢？"
 
-#: src/components/compose.jsx:1266
+#: src/components/compose.jsx:1271
 msgid "Mark media as sensitive"
 msgstr "将媒体标记为敏感"
 
-#: src/components/compose.jsx:1364
+#: src/components/compose.jsx:1369
 msgid "Add poll"
 msgstr "发起投票"
 
-#: src/components/compose.jsx:1386
+#: src/components/compose.jsx:1391
 msgid "Add custom emoji"
 msgstr "添加自定义表情"
 
-#: src/components/compose.jsx:1470
+#: src/components/compose.jsx:1475
 #: src/components/keyboard-shortcuts-help.jsx:143
-#: src/components/status.jsx:830
-#: src/components/status.jsx:1615
+#: src/components/status.jsx:831
 #: src/components/status.jsx:1616
-#: src/components/status.jsx:2267
+#: src/components/status.jsx:1617
+#: src/components/status.jsx:2268
 msgid "Reply"
 msgstr "回复"
 
-#: src/components/compose.jsx:1472
+#: src/components/compose.jsx:1477
 msgid "Update"
 msgstr "更新"
 
-#: src/components/compose.jsx:1473
+#: src/components/compose.jsx:1478
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "发布"
 
-#: src/components/compose.jsx:1601
+#: src/components/compose.jsx:1606
 msgid "Downloading GIF…"
 msgstr "正在下载 GIF…"
 
-#: src/components/compose.jsx:1629
+#: src/components/compose.jsx:1634
 msgid "Failed to download GIF"
 msgstr "GIF 下载失败"
 
-#: src/components/compose.jsx:1740
-#: src/components/compose.jsx:1817
+#: src/components/compose.jsx:1745
+#: src/components/compose.jsx:1822
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "更多…"
 
-#: src/components/compose.jsx:2220
+#: src/components/compose.jsx:2225
 msgid "Uploaded"
 msgstr "已上传"
 
-#: src/components/compose.jsx:2233
+#: src/components/compose.jsx:2238
 msgid "Image description"
 msgstr "图片描述"
 
-#: src/components/compose.jsx:2234
+#: src/components/compose.jsx:2239
 msgid "Video description"
 msgstr "视频描述"
 
-#: src/components/compose.jsx:2235
+#: src/components/compose.jsx:2240
 msgid "Audio description"
 msgstr "音频描述"
 
-#: src/components/compose.jsx:2271
-#: src/components/compose.jsx:2291
+#: src/components/compose.jsx:2276
+#: src/components/compose.jsx:2296
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "文件大小过大。上传将有可能出现问题。可尝试将文件大小从 {0} 压缩至 {1} 或更小。"
 
-#: src/components/compose.jsx:2283
-#: src/components/compose.jsx:2303
+#: src/components/compose.jsx:2288
+#: src/components/compose.jsx:2308
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "文件尺寸过大。上传将有可能出现问题。可尝试将尺寸从 {0}×{1}px 裁剪至 {2}×{3}px。"
 
-#: src/components/compose.jsx:2311
+#: src/components/compose.jsx:2316
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "帧率过高。上传将有可能出现问题。"
 
-#: src/components/compose.jsx:2371
-#: src/components/compose.jsx:2621
+#: src/components/compose.jsx:2376
+#: src/components/compose.jsx:2626
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "移除"
 
-#: src/components/compose.jsx:2388
+#: src/components/compose.jsx:2393
 #: src/compose.jsx:83
 msgid "Error"
 msgstr "错误"
 
-#: src/components/compose.jsx:2413
+#: src/components/compose.jsx:2418
 msgid "Edit image description"
 msgstr "编辑图片描述"
 
-#: src/components/compose.jsx:2414
+#: src/components/compose.jsx:2419
 msgid "Edit video description"
 msgstr "编辑视频描述"
 
-#: src/components/compose.jsx:2415
+#: src/components/compose.jsx:2420
 msgid "Edit audio description"
 msgstr "编辑音频描述"
 
-#: src/components/compose.jsx:2460
-#: src/components/compose.jsx:2509
+#: src/components/compose.jsx:2465
+#: src/components/compose.jsx:2514
 msgid "Generating description. Please wait…"
 msgstr "正在生成描述。请稍候…"
 
-#: src/components/compose.jsx:2480
+#: src/components/compose.jsx:2485
 msgid "Failed to generate description: {0}"
 msgstr "描述生成失败: {0}"
 
-#: src/components/compose.jsx:2481
+#: src/components/compose.jsx:2486
 msgid "Failed to generate description"
 msgstr "描述生成失败"
 
-#: src/components/compose.jsx:2493
-#: src/components/compose.jsx:2499
-#: src/components/compose.jsx:2545
+#: src/components/compose.jsx:2498
+#: src/components/compose.jsx:2504
+#: src/components/compose.jsx:2550
 msgid "Generate description…"
 msgstr "生成描述…"
 
-#: src/components/compose.jsx:2532
+#: src/components/compose.jsx:2537
 msgid "Failed to generate description{0}"
 msgstr "描述生成失败{0}"
 
-#: src/components/compose.jsx:2547
+#: src/components/compose.jsx:2552
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— 实验性功能</0>"
 
-#: src/components/compose.jsx:2566
+#: src/components/compose.jsx:2571
 msgid "Done"
 msgstr "已完成"
 
-#: src/components/compose.jsx:2602
+#: src/components/compose.jsx:2607
 msgid "Choice {0}"
 msgstr "选项 {0}"
 
-#: src/components/compose.jsx:2649
+#: src/components/compose.jsx:2654
 msgid "Multiple choices"
 msgstr "多选"
 
-#: src/components/compose.jsx:2652
+#: src/components/compose.jsx:2657
 msgid "Duration"
 msgstr "时长"
 
-#: src/components/compose.jsx:2683
+#: src/components/compose.jsx:2688
 msgid "Remove poll"
 msgstr "删除投票"
 
-#: src/components/compose.jsx:2897
+#: src/components/compose.jsx:2902
 msgid "Search accounts"
 msgstr "搜索账户"
 
-#: src/components/compose.jsx:2938
+#: src/components/compose.jsx:2943
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "添加"
 
-#: src/components/compose.jsx:2951
+#: src/components/compose.jsx:2956
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "加载账户时出错"
 
-#: src/components/compose.jsx:3094
+#: src/components/compose.jsx:3099
 msgid "Custom emojis"
 msgstr "自定义表情"
 
-#: src/components/compose.jsx:3114
+#: src/components/compose.jsx:3119
 msgid "Search emoji"
 msgstr "搜索表情"
 
-#: src/components/compose.jsx:3145
+#: src/components/compose.jsx:3150
 msgid "Error loading custom emojis"
 msgstr "加载自定义表情时出错"
 
-#: src/components/compose.jsx:3156
+#: src/components/compose.jsx:3161
 msgid "Recently used"
 msgstr "最近使用"
 
-#: src/components/compose.jsx:3157
+#: src/components/compose.jsx:3162
 msgid "Others"
 msgstr "其它"
 
-#: src/components/compose.jsx:3195
+#: src/components/compose.jsx:3200
 msgid "{0} more…"
 msgstr "更多 {0} 个…"
 
-#: src/components/compose.jsx:3333
+#: src/components/compose.jsx:3338
 msgid "Search GIFs"
 msgstr "搜索 GIF"
 
-#: src/components/compose.jsx:3348
+#: src/components/compose.jsx:3353
 msgid "Powered by GIPHY"
 msgstr "由 GIPHY 驱动"
 
-#: src/components/compose.jsx:3356
+#: src/components/compose.jsx:3361
 msgid "Type to search GIFs"
 msgstr "输入以搜索 GIF"
 
-#: src/components/compose.jsx:3454
+#: src/components/compose.jsx:3459
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr "上一页"
 
-#: src/components/compose.jsx:3472
+#: src/components/compose.jsx:3477
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:904
 msgid "Next"
 msgstr "下一页"
 
-#: src/components/compose.jsx:3489
+#: src/components/compose.jsx:3494
 msgid "Error loading GIFs"
 msgstr "加载 GIF 时出错"
 
@@ -882,7 +894,7 @@ msgstr "删除草稿时出错！请重试。"
 
 #: src/components/drafts.jsx:127
 #: src/components/list-add-edit.jsx:183
-#: src/components/status.jsx:1250
+#: src/components/status.jsx:1251
 #: src/pages/filters.jsx:587
 msgid "Delete…"
 msgstr "删除…"
@@ -908,7 +920,7 @@ msgid "No drafts found."
 msgstr "暂无草稿。"
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1911
+#: src/pages/catchup.jsx:1927
 msgid "Poll"
 msgstr "投票"
 
@@ -968,7 +980,7 @@ msgstr "到底了。"
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1618
 msgid "Keyboard shortcuts"
 msgstr "快捷键"
 
@@ -977,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr "快捷键帮助"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next post"
 msgstr "下一条嘟文"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous post"
 msgstr "上一条嘟文"
 
@@ -1007,7 +1019,7 @@ msgid "Load new posts"
 msgstr "加载新嘟文"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1675
 msgid "Open post details"
 msgstr "打开嘟文详情页"
 
@@ -1082,10 +1094,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> 或 <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:164
-#: src/components/status.jsx:838
-#: src/components/status.jsx:2293
-#: src/components/status.jsx:2325
+#: src/components/status.jsx:839
+#: src/components/status.jsx:2294
 #: src/components/status.jsx:2326
+#: src/components/status.jsx:2327
 msgid "Boost"
 msgstr "转嘟"
 
@@ -1094,9 +1106,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:172
-#: src/components/status.jsx:923
-#: src/components/status.jsx:2350
+#: src/components/status.jsx:924
 #: src/components/status.jsx:2351
+#: src/components/status.jsx:2352
 msgid "Bookmark"
 msgstr "收藏"
 
@@ -1119,10 +1131,6 @@ msgstr "无法编辑列表。"
 #: src/components/list-add-edit.jsx:94
 msgid "Unable to create list."
 msgstr "无法创建列表。"
-
-#: src/components/list-add-edit.jsx:102
-msgid "Name"
-msgstr "名称"
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
@@ -1159,15 +1167,15 @@ msgid "Media description"
 msgstr "媒体描述"
 
 #: src/components/media-alt-modal.jsx:57
-#: src/components/status.jsx:967
-#: src/components/status.jsx:994
+#: src/components/status.jsx:968
+#: src/components/status.jsx:995
 #: src/components/translation-block.jsx:195
 msgid "Translate"
 msgstr "翻译"
 
 #: src/components/media-alt-modal.jsx:68
-#: src/components/status.jsx:981
-#: src/components/status.jsx:1008
+#: src/components/status.jsx:982
+#: src/components/status.jsx:1009
 msgid "Speak"
 msgstr "朗读"
 
@@ -1204,12 +1212,12 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "已过滤: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3406
-#: src/components/status.jsx:3502
-#: src/components/status.jsx:3580
+#: src/components/status.jsx:3413
+#: src/components/status.jsx:3509
+#: src/components/status.jsx:3587
 #: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1859
+#: src/pages/catchup.jsx:1875
 msgid "Filtered"
 msgstr "已过滤"
 
@@ -1248,7 +1256,7 @@ msgstr "补看"
 #: src/pages/home.jsx:223
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1020
+#: src/pages/settings.jsx:1037
 #: src/pages/trending.jsx:347
 msgid "Mentions"
 msgstr "提及"
@@ -1299,11 +1307,11 @@ msgstr "收藏夹"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1429
-#: src/pages/catchup.jsx:2045
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2061
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1024
+#: src/pages/settings.jsx:1041
 msgid "Likes"
 msgstr "点赞列表"
 
@@ -1342,7 +1350,7 @@ msgid "Accounts…"
 msgstr "账号…"
 
 #: src/components/nav-menu.jsx:363
-#: src/pages/login.jsx:166
+#: src/pages/login.jsx:189
 #: src/pages/status.jsx:792
 #: src/pages/welcome.jsx:64
 msgid "Log in"
@@ -1354,11 +1362,6 @@ msgstr "登录"
 #: src/pages/trending.jsx:407
 msgid "Trending"
 msgstr "热门"
-
-#: src/components/nav-menu.jsx:386
-#: src/components/shortcuts-settings.jsx:162
-msgid "Local"
-msgstr "本站"
 
 #: src/components/nav-menu.jsx:392
 #: src/components/shortcuts-settings.jsx:162
@@ -1491,8 +1494,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[未知通知类型:{type}]"
 
 #: src/components/notification.jsx:425
-#: src/components/status.jsx:937
-#: src/components/status.jsx:947
+#: src/components/status.jsx:938
+#: src/components/status.jsx:948
 msgid "Boosted/Liked by…"
 msgstr "查看转嘟/点赞…"
 
@@ -1514,7 +1517,7 @@ msgid "Learn more <0/>"
 msgstr "了解更多 <0/>"
 
 #: src/components/notification.jsx:680
-#: src/components/status.jsx:189
+#: src/components/status.jsx:190
 msgid "Read more →"
 msgstr "阅读更多 →"
 
@@ -1742,7 +1745,7 @@ msgstr "仅限本站"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:170
+#: src/pages/login.jsx:193
 msgid "Instance"
 msgstr "实例"
 
@@ -1807,7 +1810,7 @@ msgid "Move down"
 msgstr "向下移动"
 
 #: src/components/shortcuts-settings.jsx:376
-#: src/components/status.jsx:1215
+#: src/components/status.jsx:1216
 #: src/pages/list.jsx:170
 msgid "Edit"
 msgstr "编辑"
@@ -2005,296 +2008,296 @@ msgstr "原始快捷方式 JSON"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "导入/导出配置到实例服务器(很不稳定)"
 
-#: src/components/status.jsx:463
+#: src/components/status.jsx:464
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>转嘟了</1>"
 
-#: src/components/status.jsx:562
+#: src/components/status.jsx:563
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "抱歉，你当前登录的实例无法与该外站嘟文互动。"
 
-#: src/components/status.jsx:715
+#: src/components/status.jsx:716
 msgid "Unliked @{0}'s post"
 msgstr "已取消点赞 @{0} 的嘟文"
 
-#: src/components/status.jsx:716
+#: src/components/status.jsx:717
 msgid "Liked @{0}'s post"
 msgstr "已点赞 @{0} 的嘟文"
 
-#: src/components/status.jsx:755
+#: src/components/status.jsx:756
 msgid "Unbookmarked @{0}'s post"
 msgstr "已取消收藏 @{0} 的嘟文"
 
-#: src/components/status.jsx:756
+#: src/components/status.jsx:757
 msgid "Bookmarked @{0}'s post"
 msgstr "已收藏 @{0} 的嘟文"
 
-#: src/components/status.jsx:838
-#: src/components/status.jsx:900
-#: src/components/status.jsx:2293
-#: src/components/status.jsx:2325
+#: src/components/status.jsx:839
+#: src/components/status.jsx:901
+#: src/components/status.jsx:2294
+#: src/components/status.jsx:2326
 msgid "Unboost"
 msgstr "取消转嘟"
 
-#: src/components/status.jsx:854
-#: src/components/status.jsx:2308
+#: src/components/status.jsx:855
+#: src/components/status.jsx:2309
 msgid "Quote"
 msgstr "引用"
 
-#: src/components/status.jsx:862
-#: src/components/status.jsx:2317
+#: src/components/status.jsx:863
+#: src/components/status.jsx:2318
 msgid "Some media have no descriptions."
 msgstr "某些媒体附件没有描述文本。"
 
-#: src/components/status.jsx:869
+#: src/components/status.jsx:870
 msgid "Old post (<0>{0}</0>)"
 msgstr "旧嘟文 (<0>{0}</0>)"
 
-#: src/components/status.jsx:888
-#: src/components/status.jsx:1340
+#: src/components/status.jsx:889
+#: src/components/status.jsx:1341
 msgid "Unboosted @{0}'s post"
 msgstr "已取消转嘟 @{0} 的嘟文"
 
-#: src/components/status.jsx:889
-#: src/components/status.jsx:1341
+#: src/components/status.jsx:890
+#: src/components/status.jsx:1342
 msgid "Boosted @{0}'s post"
 msgstr "已转嘟 @{0} 的嘟文"
 
-#: src/components/status.jsx:901
+#: src/components/status.jsx:902
 msgid "Boost…"
 msgstr "转嘟…"
 
-#: src/components/status.jsx:913
-#: src/components/status.jsx:1625
-#: src/components/status.jsx:2338
+#: src/components/status.jsx:914
+#: src/components/status.jsx:1626
+#: src/components/status.jsx:2339
 msgid "Unlike"
 msgstr "取消喜欢"
 
-#: src/components/status.jsx:914
-#: src/components/status.jsx:1625
+#: src/components/status.jsx:915
 #: src/components/status.jsx:1626
-#: src/components/status.jsx:2338
+#: src/components/status.jsx:1627
 #: src/components/status.jsx:2339
+#: src/components/status.jsx:2340
 msgid "Like"
 msgstr "赞"
 
-#: src/components/status.jsx:923
-#: src/components/status.jsx:2350
+#: src/components/status.jsx:924
+#: src/components/status.jsx:2351
 msgid "Unbookmark"
 msgstr "取消收藏"
 
-#: src/components/status.jsx:1031
+#: src/components/status.jsx:1032
 msgid "View post by <0>@{0}</0>"
 msgstr "查看 <0>@{0}</0> 的嘟文"
 
-#: src/components/status.jsx:1052
+#: src/components/status.jsx:1053
 msgid "Show Edit History"
 msgstr "显示编辑记录"
 
-#: src/components/status.jsx:1055
+#: src/components/status.jsx:1056
 msgid "Edited: {editedDateText}"
 msgstr "编辑于: {editedDateText}"
 
-#: src/components/status.jsx:1122
-#: src/components/status.jsx:3083
+#: src/components/status.jsx:1123
+#: src/components/status.jsx:3090
 msgid "Embed post"
 msgstr "嵌入嘟文"
 
-#: src/components/status.jsx:1136
+#: src/components/status.jsx:1137
 msgid "Conversation unmuted"
 msgstr "已取消静音该对话"
 
-#: src/components/status.jsx:1136
+#: src/components/status.jsx:1137
 msgid "Conversation muted"
 msgstr "已静音该对话"
 
-#: src/components/status.jsx:1142
+#: src/components/status.jsx:1143
 msgid "Unable to unmute conversation"
 msgstr "无法取消静音该对话"
 
-#: src/components/status.jsx:1143
+#: src/components/status.jsx:1144
 msgid "Unable to mute conversation"
 msgstr "无法静音该对话"
 
-#: src/components/status.jsx:1152
+#: src/components/status.jsx:1153
 msgid "Unmute conversation"
 msgstr "取消静音对话"
 
-#: src/components/status.jsx:1159
+#: src/components/status.jsx:1160
 msgid "Mute conversation"
 msgstr "静音对话"
 
-#: src/components/status.jsx:1175
+#: src/components/status.jsx:1176
 msgid "Post unpinned from profile"
 msgstr "已取消置顶该嘟文"
 
-#: src/components/status.jsx:1176
+#: src/components/status.jsx:1177
 msgid "Post pinned to profile"
 msgstr "已置顶该嘟文"
 
-#: src/components/status.jsx:1181
+#: src/components/status.jsx:1182
 msgid "Unable to unpin post"
 msgstr "无法取消置顶该嘟文"
 
-#: src/components/status.jsx:1181
+#: src/components/status.jsx:1182
 msgid "Unable to pin post"
 msgstr "无法置顶该嘟文"
 
-#: src/components/status.jsx:1190
+#: src/components/status.jsx:1191
 msgid "Unpin from profile"
 msgstr "取消置顶"
 
-#: src/components/status.jsx:1197
+#: src/components/status.jsx:1198
 msgid "Pin to profile"
 msgstr "置顶"
 
-#: src/components/status.jsx:1226
+#: src/components/status.jsx:1227
 msgid "Delete this post?"
 msgstr "是否删除此嘟文？"
 
-#: src/components/status.jsx:1239
+#: src/components/status.jsx:1240
 msgid "Post deleted"
 msgstr "嘟文已删除"
 
-#: src/components/status.jsx:1242
+#: src/components/status.jsx:1243
 msgid "Unable to delete post"
 msgstr "无法删除嘟文"
 
-#: src/components/status.jsx:1270
+#: src/components/status.jsx:1271
 msgid "Report post…"
 msgstr "举报嘟文…"
 
-#: src/components/status.jsx:1626
-#: src/components/status.jsx:1662
-#: src/components/status.jsx:2339
+#: src/components/status.jsx:1627
+#: src/components/status.jsx:1663
+#: src/components/status.jsx:2340
 msgid "Liked"
 msgstr "已点赞"
 
-#: src/components/status.jsx:1659
-#: src/components/status.jsx:2326
+#: src/components/status.jsx:1660
+#: src/components/status.jsx:2327
 msgid "Boosted"
 msgstr "已转嘟"
 
-#: src/components/status.jsx:1669
-#: src/components/status.jsx:2351
+#: src/components/status.jsx:1670
+#: src/components/status.jsx:2352
 msgid "Bookmarked"
 msgstr "已收藏"
 
-#: src/components/status.jsx:1673
+#: src/components/status.jsx:1674
 msgid "Pinned"
 msgstr "已置顶"
 
-#: src/components/status.jsx:1718
-#: src/components/status.jsx:2170
+#: src/components/status.jsx:1719
+#: src/components/status.jsx:2171
 msgid "Deleted"
 msgstr "已删除"
 
-#: src/components/status.jsx:1759
+#: src/components/status.jsx:1760
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, other {# 条回复}}"
 
-#: src/components/status.jsx:1848
+#: src/components/status.jsx:1849
 msgid "Thread{0}"
 msgstr "嘟文串{0}"
 
-#: src/components/status.jsx:1924
-#: src/components/status.jsx:1986
-#: src/components/status.jsx:2071
+#: src/components/status.jsx:1925
+#: src/components/status.jsx:1987
+#: src/components/status.jsx:2072
 msgid "Show less"
 msgstr "折叠"
 
-#: src/components/status.jsx:1924
-#: src/components/status.jsx:1986
+#: src/components/status.jsx:1925
+#: src/components/status.jsx:1987
 msgid "Show content"
 msgstr "显示内容"
 
-#: src/components/status.jsx:2071
+#: src/components/status.jsx:2072
 msgid "Show media"
 msgstr "显示媒体"
 
-#: src/components/status.jsx:2191
+#: src/components/status.jsx:2192
 msgid "Edited"
 msgstr "已编辑"
 
-#: src/components/status.jsx:2268
+#: src/components/status.jsx:2269
 msgid "Comments"
 msgstr "评论"
 
-#: src/components/status.jsx:2844
+#: src/components/status.jsx:2851
 msgid "Edit History"
 msgstr "编辑记录"
 
-#: src/components/status.jsx:2848
+#: src/components/status.jsx:2855
 msgid "Failed to load history"
 msgstr "无法加载编辑记录"
 
-#: src/components/status.jsx:2853
+#: src/components/status.jsx:2860
 msgid "Loading…"
 msgstr "正在加载…"
 
-#: src/components/status.jsx:3088
+#: src/components/status.jsx:3095
 msgid "HTML Code"
 msgstr "HTML 代码"
 
-#: src/components/status.jsx:3105
+#: src/components/status.jsx:3112
 msgid "HTML code copied"
 msgstr "已复制 HTML 代码"
 
-#: src/components/status.jsx:3108
+#: src/components/status.jsx:3115
 msgid "Unable to copy HTML code"
 msgstr "无法复制 HTML 代码"
 
-#: src/components/status.jsx:3120
+#: src/components/status.jsx:3127
 msgid "Media attachments:"
 msgstr "媒体附件:"
 
-#: src/components/status.jsx:3142
+#: src/components/status.jsx:3149
 msgid "Account Emojis:"
 msgstr "账户表情:"
 
-#: src/components/status.jsx:3173
-#: src/components/status.jsx:3218
+#: src/components/status.jsx:3180
+#: src/components/status.jsx:3225
 msgid "static URL"
 msgstr "静态URL"
 
-#: src/components/status.jsx:3187
+#: src/components/status.jsx:3194
 msgid "Emojis:"
 msgstr "表情:"
 
-#: src/components/status.jsx:3232
+#: src/components/status.jsx:3239
 msgid "Notes:"
 msgstr "注意:"
 
-#: src/components/status.jsx:3236
+#: src/components/status.jsx:3243
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "此代码是静态代码，不包含样式和脚本。你可能需要进行编辑并按需应用自己的样式。"
 
-#: src/components/status.jsx:3242
+#: src/components/status.jsx:3249
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "代码中的投票无法交互，将显示为一个带有投票数的列表。"
 
-#: src/components/status.jsx:3247
+#: src/components/status.jsx:3254
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "媒体附件可以是图片、视频、音频或任何文件类型。"
 
-#: src/components/status.jsx:3253
+#: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
 msgstr "嘟文可以稍后编辑或删除。"
 
-#: src/components/status.jsx:3259
+#: src/components/status.jsx:3266
 msgid "Preview"
 msgstr "预览"
 
-#: src/components/status.jsx:3268
+#: src/components/status.jsx:3275
 msgid "Note: This preview is lightly styled."
 msgstr "注意: 此预览带有少量额外的样式"
 
-#: src/components/status.jsx:3510
+#: src/components/status.jsx:3517
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 转嘟了"
 
 #: src/components/timeline.jsx:451
-#: src/pages/settings.jsx:1048
+#: src/pages/settings.jsx:1065
 msgid "New posts"
 msgstr "新嘟文"
 
@@ -2316,7 +2319,7 @@ msgstr "置顶嘟文"
 
 #: src/components/timeline.jsx:944
 #: src/components/timeline.jsx:951
-#: src/pages/catchup.jsx:1876
+#: src/pages/catchup.jsx:1892
 msgid "Thread"
 msgstr "嘟文串"
 
@@ -2370,7 +2373,7 @@ msgstr "需要登录。"
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:247
+#: src/pages/login.jsx:270
 msgid "Go home"
 msgstr "返回主页"
 
@@ -2579,7 +2582,7 @@ msgid "Catch-up <0>beta</0>"
 msgstr "补看 <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1568
+#: src/pages/catchup.jsx:1584
 msgid "Help"
 msgstr "帮助"
 
@@ -2656,7 +2659,7 @@ msgid "Reset filters"
 msgstr "重置过滤规则"
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1574
+#: src/pages/catchup.jsx:1590
 msgid "Top links"
 msgstr "热门链接"
 
@@ -2664,85 +2667,85 @@ msgstr "热门链接"
 msgid "Shared by {0}"
 msgstr "由 {0} 分享"
 
-#: src/pages/catchup.jsx:1299
+#: src/pages/catchup.jsx:1315
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "全部"
 
-#: src/pages/catchup.jsx:1384
+#: src/pages/catchup.jsx:1400
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, other {# 名作者}}"
 
-#: src/pages/catchup.jsx:1396
+#: src/pages/catchup.jsx:1412
 msgid "Sort"
 msgstr "排序"
 
-#: src/pages/catchup.jsx:1427
+#: src/pages/catchup.jsx:1443
 msgid "Date"
 msgstr "日期"
 
-#: src/pages/catchup.jsx:1431
+#: src/pages/catchup.jsx:1447
 msgid "Density"
 msgstr "内容"
 
-#: src/pages/catchup.jsx:1469
+#: src/pages/catchup.jsx:1485
 msgid "Authors"
 msgstr "作者"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "None"
 msgstr "无"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1502
 msgid "Show all authors"
 msgstr "显示所有作者"
 
-#: src/pages/catchup.jsx:1537
+#: src/pages/catchup.jsx:1553
 msgid "You don't have to read everything."
 msgstr "你不必阅读所有内容。"
 
-#: src/pages/catchup.jsx:1538
+#: src/pages/catchup.jsx:1554
 msgid "That's all."
 msgstr "这就是全部内容。"
 
-#: src/pages/catchup.jsx:1546
+#: src/pages/catchup.jsx:1562
 msgid "Back to top"
 msgstr "返回顶部"
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "你关注的人分享的链接，按分享次数、转嘟次数和点赞数排序。"
 
-#: src/pages/catchup.jsx:1583
+#: src/pages/catchup.jsx:1599
 msgid "Sort: Density"
 msgstr "排序: 内容"
 
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr "嘟文按信息密度或深度排序。较短的嘟文“更轻”，而较长的嘟文“更重”。带图嘟文比不带图的嘟文“更重”。"
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1609
 msgid "Group: Authors"
 msgstr "排序: 作者"
 
-#: src/pages/catchup.jsx:1596
+#: src/pages/catchup.jsx:1612
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr "嘟文按作者分组，按每位作者的嘟文数量排序。"
 
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Next author"
 msgstr "下一位作者"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Previous author"
 msgstr "上一位作者"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1683
 msgid "Scroll to top"
 msgstr "返回顶部"
 
-#: src/pages/catchup.jsx:1858
+#: src/pages/catchup.jsx:1874
 msgid "Filtered: {0}"
 msgstr "已过滤: {0}"
 
@@ -3054,32 +3057,32 @@ msgstr "{0, plural, other {# 个列表}}"
 msgid "No lists yet."
 msgstr "尚无列表。"
 
-#: src/pages/login.jsx:86
-#: src/pages/login.jsx:99
+#: src/pages/login.jsx:109
+#: src/pages/login.jsx:122
 msgid "Failed to register application"
 msgstr "注册应用失败"
 
-#: src/pages/login.jsx:185
+#: src/pages/login.jsx:208
 msgid "instance domain"
 msgstr "实例域名"
 
-#: src/pages/login.jsx:209
+#: src/pages/login.jsx:232
 msgid "e.g. “mastodon.social”"
 msgstr "例如：“mastodon.social”"
 
-#: src/pages/login.jsx:220
+#: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "登录失败。请重试或登录其它实例。"
 
-#: src/pages/login.jsx:232
+#: src/pages/login.jsx:255
 msgid "Continue with {selectedInstanceText}"
 msgstr "继续登录并使用 {selectedInstanceText}"
 
-#: src/pages/login.jsx:233
+#: src/pages/login.jsx:256
 msgid "Continue"
 msgstr "继续"
 
-#: src/pages/login.jsx:241
+#: src/pages/login.jsx:264
 msgid "Don't have an account? Create one!"
 msgstr "还没有账户？创建一个吧！"
 
@@ -3133,7 +3136,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {公告}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1036
+#: src/pages/settings.jsx:1053
 msgid "Follow requests"
 msgstr "关注请求"
 
@@ -3488,56 +3491,56 @@ msgstr "已复制版本号"
 msgid "Unable to copy version string"
 msgstr "无法复制版本号"
 
-#: src/pages/settings.jsx:933
-#: src/pages/settings.jsx:938
+#: src/pages/settings.jsx:950
+#: src/pages/settings.jsx:955
 msgid "Failed to update subscription. Please try again."
 msgstr "订阅更新失败。请重试。"
 
-#: src/pages/settings.jsx:944
+#: src/pages/settings.jsx:961
 msgid "Failed to remove subscription. Please try again."
 msgstr "订阅删除失败。请重试。"
 
-#: src/pages/settings.jsx:951
+#: src/pages/settings.jsx:968
 msgid "Push Notifications (beta)"
 msgstr "通知推送 (beta)"
 
-#: src/pages/settings.jsx:973
+#: src/pages/settings.jsx:990
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "通知推送已被阻止。请在你的浏览器设置中授予相关权限。"
 
-#: src/pages/settings.jsx:982
+#: src/pages/settings.jsx:999
 msgid "Allow from <0>{0}</0>"
 msgstr "推送范围 <0>{0}</0>"
 
-#: src/pages/settings.jsx:991
+#: src/pages/settings.jsx:1008
 msgid "anyone"
 msgstr "任何人"
 
-#: src/pages/settings.jsx:995
+#: src/pages/settings.jsx:1012
 msgid "people I follow"
 msgstr "我关注的人"
 
-#: src/pages/settings.jsx:999
+#: src/pages/settings.jsx:1016
 msgid "followers"
 msgstr "粉丝"
 
-#: src/pages/settings.jsx:1032
+#: src/pages/settings.jsx:1049
 msgid "Follows"
 msgstr "关注"
 
-#: src/pages/settings.jsx:1040
+#: src/pages/settings.jsx:1057
 msgid "Polls"
 msgstr "投票"
 
-#: src/pages/settings.jsx:1044
+#: src/pages/settings.jsx:1061
 msgid "Post edits"
 msgstr "嘟文被编辑"
 
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1082
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "本次登录未授予通知推送权限。你需要<0>再次<1>登录</1>以授予推送权限</0>。"
 
-#: src/pages/settings.jsx:1081
+#: src/pages/settings.jsx:1098
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 

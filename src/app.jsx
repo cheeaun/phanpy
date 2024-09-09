@@ -327,6 +327,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
   __BENCHMARK.start('app-init');
+  __BENCHMARK.start('time-to-home');
   useLingui();
 
   useEffect(() => {

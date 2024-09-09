@@ -66,6 +66,7 @@ function Following({ title, path, id, ...props }) {
       });
     }
     __BENCHMARK.end('fetch-home-first');
+    __BENCHMARK.end('time-to-home');
     return {
       ...results,
       value,

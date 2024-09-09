@@ -28,6 +28,7 @@ function Following({ title, path, id, ...props }) {
 
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
+      __BENCHMARK.start('fetch-home-first');
       homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
     }
     if (supportsPixelfed && homeIterator.current?.nextParams) {
@@ -64,6 +65,7 @@ function Following({ title, path, id, ...props }) {
         return bDate - aDate;
       });
     }
+    __BENCHMARK.end('fetch-home-first');
     return {
       ...results,
       value,

@@ -1262,11 +1262,27 @@ function Catchup() {
                                   {sharers.map((s) => {
                                     const { avatarStatic, displayName } = s;
                                     return (
-                                      <Avatar
-                                        url={avatarStatic}
-                                        size="s"
-                                        alt={displayName}
-                                      />
+                                      <button
+                                        type="button"
+                                        class="plain"
+                                        style={{
+                                          padding: 0,
+                                        }}
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          e.stopPropagation();
+                                          // Reset and filter to author
+                                          const { id } = s;
+                                          setSelectedAuthor(id);
+                                          setSelectedFilterCategory('all');
+                                        }}
+                                      >
+                                        <Avatar
+                                          url={avatarStatic}
+                                          size="s"
+                                          alt={displayName}
+                                        />
+                                      </button>
                                     );
                                   })}
                                 </Trans>

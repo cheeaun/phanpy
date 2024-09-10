@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-09 23:39\n"
+"PO-Revision-Date: 2024-09-10 14:52\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -174,11 +174,11 @@ msgstr "{0} originalaj afiŝoj, {1} respondoj, {2} diskonigoj"
 
 #: src/components/account-info.jsx:818
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr ""
+msgstr "{0, plural, one {{1, plural, one {Lasta afiŝo en la lasta tago} other {Lasta afiŝo en la pasintaj {2} tagoj}}} other {{3, plural, one {Lastaj {4} afiŝoj en la lasta tago} other {Lastaj {5} afiŝoj en la pasintaj {6} tagoj}}}}"
 
 #: src/components/account-info.jsx:831
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr ""
+msgstr "{0, plural, one {Lasta afiŝo en la pasinta(j) jaro(j)} other {Lastaj {1} afiŝoj en la pasinta(j) jaro(j)}}"
 
 #: src/components/account-info.jsx:855
 #: src/pages/catchup.jsx:70
@@ -555,7 +555,7 @@ msgstr "Vi havas nekonservitajn ŝanĝojn. Ĉu forĵeti ĉi tiun afiŝon?"
 #: src/components/compose.jsx:1333
 #: src/components/compose.jsx:1594
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, one {Vi povas nur kunsendi ĝis 1 dosieron.} other {Vi povas nur kunsendi ĝis # dosierojn.}}"
 
 #: src/components/compose.jsx:778
 msgid "Pop out"
@@ -567,7 +567,7 @@ msgstr ""
 
 #: src/components/compose.jsx:821
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Ŝajnas, ke vi fermis la patran fenestron."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
@@ -613,11 +613,11 @@ msgstr ""
 #: src/components/status.jsx:1962
 #: src/components/timeline.jsx:984
 msgid "Content warning"
-msgstr ""
+msgstr "Enhava averto"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr ""
+msgstr "Enhava averto aŭ sentema plurmedio"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
@@ -764,25 +764,25 @@ msgstr "Redakti aŭdpriskribon"
 #: src/components/compose.jsx:2465
 #: src/components/compose.jsx:2514
 msgid "Generating description. Please wait…"
-msgstr ""
+msgstr "Kreante priskribon. Bonvolu atendi…"
 
 #: src/components/compose.jsx:2485
 msgid "Failed to generate description: {0}"
-msgstr "Malsukcesis generi priskribon: {0}"
+msgstr "Malsukcesis krei priskribon: {0}"
 
 #: src/components/compose.jsx:2486
 msgid "Failed to generate description"
-msgstr "Malsukcesis generi priskribon"
+msgstr "Malsukcesis krei priskribon"
 
 #: src/components/compose.jsx:2498
 #: src/components/compose.jsx:2504
 #: src/components/compose.jsx:2550
 msgid "Generate description…"
-msgstr ""
+msgstr "Krei priskribon…"
 
 #: src/components/compose.jsx:2537
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Malsukcesis krei priskribon{0}"
 
 #: src/components/compose.jsx:2552
 msgid "({0}) <0>— experimental</0>"
@@ -833,7 +833,7 @@ msgstr "Serĉi emoĝion"
 
 #: src/components/compose.jsx:3150
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "Eraro dum ŝarĝo de propraj emoĝioj"
 
 #: src/components/compose.jsx:3161
 msgid "Recently used"
@@ -1189,7 +1189,7 @@ msgstr "Malfermi originalan plurmedion"
 
 #: src/components/media-modal.jsx:314
 msgid "Attempting to describe image. Please wait…"
-msgstr ""
+msgstr "Provante priskribi bildon. Bonvolu atendi…"
 
 #: src/components/media-modal.jsx:329
 msgid "Failed to describe image"
@@ -1391,7 +1391,7 @@ msgstr "Rigardi ĉiujn sciigojn"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr ""
+msgstr "{account} reagis al via afiŝo kun {emojiObject}"
 
 #: src/components/notification.jsx:75
 msgid "{account} published a post."
@@ -1407,7 +1407,7 @@ msgstr "{count, plural, =1 {{account} sekvis vin.} other {<0><1>{0}</1> homoj</0
 
 #: src/components/notification.jsx:140
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} petis sekvi vin."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
@@ -1415,15 +1415,15 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "Balotenketo, kiun vi voĉdonis aŭ kreis, finiĝis."
 
 #: src/components/notification.jsx:192
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "Balotenketo, kiun vi kreis, finiĝis."
 
 #: src/components/notification.jsx:193
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "Balotenketo, pri kiu vi voĉdonis, finiĝis."
 
 #: src/components/notification.jsx:194
 msgid "A post you interacted with has been edited."
@@ -1439,11 +1439,11 @@ msgstr ""
 
 #: src/components/notification.jsx:246
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} raportis {targetAccount}"
 
 #: src/components/notification.jsx:251
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Perditaj konektoj kun <0>{name}</0>."
 
 #: src/components/notification.jsx:257
 msgid "Moderation warning"
@@ -1509,7 +1509,7 @@ msgstr ""
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
-msgstr ""
+msgstr "Sekvita de…"
 
 #: src/components/notification.jsx:484
 #: src/components/notification.jsx:500
@@ -1783,15 +1783,15 @@ msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "Indiki liston de fulmoklavoj, kiuj aperos kiel:"
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "Flosanta butono"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Langetaro/Menubreto"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
@@ -1998,7 +1998,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0, plural, one {# skribsigno} other {# skribsignoj}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
@@ -2026,11 +2026,11 @@ msgstr "Ŝatis la afiŝon de {0}"
 
 #: src/components/status.jsx:756
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Ne plu legosignis la afiŝon de @{0}"
 
 #: src/components/status.jsx:757
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Legosignis la afiŝon de @{0}"
 
 #: src/components/status.jsx:839
 #: src/components/status.jsx:901
@@ -2042,7 +2042,7 @@ msgstr "Ne plu diskonigi"
 #: src/components/status.jsx:855
 #: src/components/status.jsx:2309
 msgid "Quote"
-msgstr ""
+msgstr "Citaĵo"
 
 #: src/components/status.jsx:863
 #: src/components/status.jsx:2318
@@ -2084,7 +2084,7 @@ msgstr "Ŝatata"
 #: src/components/status.jsx:924
 #: src/components/status.jsx:2351
 msgid "Unbookmark"
-msgstr ""
+msgstr "Ne plu legosignis"
 
 #: src/components/status.jsx:1032
 msgid "View post by <0>@{0}</0>"
@@ -2129,27 +2129,27 @@ msgstr "Silentigi konversacion"
 
 #: src/components/status.jsx:1176
 msgid "Post unpinned from profile"
-msgstr ""
+msgstr "Afiŝo depinglinta de profilo"
 
 #: src/components/status.jsx:1177
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "Afiŝo alpinglita al profilo"
 
 #: src/components/status.jsx:1182
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "Ne eblas depingli afiŝon"
 
 #: src/components/status.jsx:1182
 msgid "Unable to pin post"
-msgstr ""
+msgstr "Ne eblas alpingli afiŝon"
 
 #: src/components/status.jsx:1191
 msgid "Unpin from profile"
-msgstr ""
+msgstr "Depingli de profilo"
 
 #: src/components/status.jsx:1198
 msgid "Pin to profile"
-msgstr ""
+msgstr "Alpingli al la profilo"
 
 #: src/components/status.jsx:1227
 msgid "Delete this post?"
@@ -2181,16 +2181,16 @@ msgstr ""
 #: src/components/status.jsx:1670
 #: src/components/status.jsx:2352
 msgid "Bookmarked"
-msgstr ""
+msgstr "Legosignita"
 
 #: src/components/status.jsx:1674
 msgid "Pinned"
-msgstr ""
+msgstr "Alpinglita"
 
 #: src/components/status.jsx:1719
 #: src/components/status.jsx:2171
 msgid "Deleted"
-msgstr ""
+msgstr "Forigita"
 
 #: src/components/status.jsx:1760
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
@@ -2282,7 +2282,7 @@ msgstr ""
 
 #: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
-msgstr ""
+msgstr "Afiŝo povus esti redaktita aŭ forigita poste."
 
 #: src/components/status.jsx:3266
 msgid "Preview"
@@ -2361,7 +2361,7 @@ msgstr "Respondi al @{0}"
 
 #: src/compose.jsx:62
 msgid "You may close this page now."
-msgstr ""
+msgstr "Vi povas fermi ĉi tiun paĝon nun."
 
 #: src/compose.jsx:70
 msgid "Close window"
@@ -2506,7 +2506,7 @@ msgstr ""
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "Ankoraŭ neniuj legosignoj. Iru legosigni ion!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2518,15 +2518,15 @@ msgstr "lastan 1 horon"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr ""
+msgstr "lastajn 2 horojn"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr ""
+msgstr "lastajn 3 horojn"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr ""
+msgstr "lastajn 4 horojn"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
@@ -2892,7 +2892,7 @@ msgstr "Ne eblas ŝargi sekvatajn kradvortojn."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Neniuj kradvortoj ankoraŭ sekvis."
 
 #: src/pages/following.jsx:136
 msgid "Nothing to see here."
@@ -2909,7 +2909,7 @@ msgstr "{hashtagTitle} (Nur plurmedio) en {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} en {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
@@ -2917,11 +2917,11 @@ msgstr "{hashtagTitle} (Nur plurmedio)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr ""
+msgstr "Neniu ankoraŭ afiŝis ion kun ĉi tiu kradvorto."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
@@ -2933,11 +2933,11 @@ msgstr "Ĉu ĉesi sekvi #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "Nesekvita #{hashtag}"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
-msgstr ""
+msgstr "Sekvita #{hashtag}"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
@@ -2954,15 +2954,15 @@ msgstr ""
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
 msgid "Featured on profile"
-msgstr ""
+msgstr "Montrita en profilo"
 
 #: src/pages/hashtag.jsx:328
 msgid "Feature on profile"
-msgstr ""
+msgstr "Montri en profilo"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
-msgstr ""
+msgstr "{TOTAL_TAGS_LIMIT, plural, other {Maks. # kradvortoj}}"
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
@@ -3591,7 +3591,7 @@ msgstr "Ŝalti al Plena Vido"
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
-msgstr ""
+msgstr "Montri ĉiujn sentemajn enhavojn"
 
 #: src/pages/status.jsx:1232
 msgid "Experimental"

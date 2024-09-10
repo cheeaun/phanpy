@@ -9,12 +9,13 @@ const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
+const notContainPixelfedAkkomaPleroma = /^(?!.*pixelfed|.*akkoma|.*pleroma).*$/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
-  '@mastodon/filters': notContainPixelfed,
+  '@mastodon/filters': notContainPixelfedAkkomaPleroma,
   '@mastodon/mentions': notContainPixelfed,
-  '@mastodon/trending-hashtags': notContainPixelfed,
-  '@mastodon/trending-links': notContainPixelfed,
+  '@mastodon/trending-hashtags': notContainPixelfedAkkomaPleroma,
+  '@mastodon/trending-links': notContainPixelfedAkkomaPleroma,
   '@mastodon/post-bookmark': notContainPixelfed,
   '@mastodon/post-edit': notContainPixelfed,
   '@mastodon/profile-edit': notContainPixelfed,

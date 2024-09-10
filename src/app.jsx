@@ -301,9 +301,33 @@ subscribe(states, (changes) => {
   }
 });
 
+const BENCHES = new Map();
+window.__BENCH_RESULTS = new Map();
+window.__BENCHMARK = {
+  start(name) {
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
+    // If already started, ignore
+    if (BENCHES.has(name)) return;
+    const start = performance.now();
+    BENCHES.set(name, start);
+  },
+  end(name) {
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
+    const start = BENCHES.get(name);
+    if (start) {
+      const end = performance.now();
+      const duration = end - start;
+      __BENCH_RESULTS.set(name, duration);
+      BENCHES.delete(name);
+    }
+  },
+};
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
+  __BENCHMARK.start('app-init');
+  __BENCHMARK.start('time-to-home');
   useLingui();
 
   useEffect(() => {
@@ -351,6 +375,7 @@ function App() {
         } else {
           setUIState('error');
         }
+        __BENCHMARK.end('app-init');
       })();
     } else {
       window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
@@ -393,6 +418,7 @@ function App() {
       } else {
         setUIState('default');
       }
+      __BENCHMARK.end('app-init');
     }
 
     // Cleanup

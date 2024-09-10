@@ -91,6 +91,7 @@ const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: msg`Public`,
+  local: msg`Local`,
   unlisted: msg`Unlisted`,
   private: msg`Followers only`,
   direct: msg`Private mention`,
@@ -2640,9 +2641,9 @@ function Card({ card, selfReferential, instance }) {
     [hasIframeHTML],
   );
 
+  const [blurhashImage, setBlurhashImage] = useState(null);
   if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = getDomain(url);
-    let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
     if (!image) {
@@ -2659,11 +2660,17 @@ function Card({ card, selfReferential, instance }) {
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
-      if (window.OffscreenCanvas) {
-        const blob = canvas.convertToBlob();
-        blurhashImage = URL.createObjectURL(blob);
-      } else {
-        blurhashImage = canvas.toDataURL();
+      try {
+        if (window.OffscreenCanvas) {
+          canvas.convertToBlob().then((blob) => {
+            setBlurhashImage(URL.createObjectURL(blob));
+          });
+        } else {
+          setBlurhashImage(canvas.toDataURL());
+        }
+      } catch (e) {
+        // Silently fail
+        console.error(e);
       }
     }
 

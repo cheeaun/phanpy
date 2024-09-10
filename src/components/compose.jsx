@@ -602,31 +602,18 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
-      const unattachableFiles = [];
       const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (!file) {
-            unattachableFiles.push(file);
-          }
-          else if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
+          if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
             unsupportedFiles.push(file);
           }
           else {
             files.push(file);
           }
         }
-      }
-      console.error(unattachableFiles, unsupportedFiles)
-      if (unattachableFiles.length > 0) {
-        alert(
-          plural(unattachableFiles.length, {
-            one: `Couldn't attach file ${unattachableFiles[0].name}.`,
-            other: `Couldn't attach files ${lf.format(unattachableFiles.map(f => f.name))}.`,
-          }),
-        );
       }
       if (unsupportedFiles.length > 0) {
         alert(

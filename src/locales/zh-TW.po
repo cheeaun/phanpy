@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-01 12:49\n"
+"PO-Revision-Date: 2024-09-06 02:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -284,7 +284,7 @@ msgstr "從列表中新增/刪除"
 #: src/components/account-info.jsx:1299
 #: src/components/status.jsx:1078
 msgid "Link copied"
-msgstr ""
+msgstr "連結已複製"
 
 #: src/components/account-info.jsx:1302
 #: src/components/status.jsx:1081
@@ -331,15 +331,15 @@ msgstr ""
 
 #: src/components/account-info.jsx:1442
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "要把 <0>@{username}</0> 從跟隨者中移除嗎？"
 
 #: src/components/account-info.jsx:1462
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "已把 @{username} 從跟隨者中移除"
 
 #: src/components/account-info.jsx:1474
 msgid "Remove follower…"
-msgstr ""
+msgstr "移除跟隨者..."
 
 #: src/components/account-info.jsx:1485
 msgid "Block <0>@{username}</0>?"
@@ -351,7 +351,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1514
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "已把 @{username} 封鎖"
 
 #: src/components/account-info.jsx:1522
 msgid "Unable to unblock @{username}"
@@ -446,12 +446,12 @@ msgstr ""
 
 #: src/components/account-info.jsx:1899
 msgid "Unable to add to list."
-msgstr ""
+msgstr "無法新增到列表"
 
 #: src/components/account-info.jsx:1918
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
-msgstr ""
+msgstr "無法載入列表"
 
 #: src/components/account-info.jsx:1922
 msgid "No lists."
@@ -482,7 +482,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:2142
 msgid "Unable to update profile."
-msgstr ""
+msgstr "無法更新個人資料"
 
 #: src/components/account-info.jsx:2162
 msgid "Bio"
@@ -582,7 +582,7 @@ msgstr ""
 
 #: src/components/compose.jsx:895
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "正在回覆 @{0} 的文章"
 
 #: src/components/compose.jsx:908
 msgid "Editing source post"
@@ -606,7 +606,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1961
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:982
 msgid "Content warning"
 msgstr ""
 
@@ -713,7 +713,7 @@ msgstr ""
 #: src/components/compose.jsx:2271
 #: src/components/compose.jsx:2291
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "檔案大小太大，上載可能會遇到問題。請嘗試把檔案大小從 {0} 縮小到 {1} 或更小"
 
 #: src/components/compose.jsx:2283
 #: src/components/compose.jsx:2303
@@ -849,13 +849,13 @@ msgstr ""
 
 #: src/components/compose.jsx:3454
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:884
+#: src/components/timeline.jsx:887
 msgid "Previous"
 msgstr ""
 
 #: src/components/compose.jsx:3472
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:901
+#: src/components/timeline.jsx:904
 msgid "Next"
 msgstr ""
 
@@ -885,7 +885,7 @@ msgstr ""
 #: src/components/status.jsx:1250
 #: src/pages/filters.jsx:587
 msgid "Delete…"
-msgstr ""
+msgstr "移除..."
 
 #: src/components/drafts.jsx:146
 msgid "Error fetching reply-to status!"
@@ -1207,7 +1207,7 @@ msgstr ""
 #: src/components/status.jsx:3406
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3580
-#: src/components/timeline.jsx:968
+#: src/components/timeline.jsx:971
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1859
 msgid "Filtered"
@@ -2306,13 +2306,21 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
-#: src/components/timeline.jsx:941
-#: src/components/timeline.jsx:948
+#: src/components/timeline.jsx:586
+msgid "{0, plural, one {# Boost} other {# Boosts}}"
+msgstr ""
+
+#: src/components/timeline.jsx:591
+msgid "Pinned posts"
+msgstr ""
+
+#: src/components/timeline.jsx:944
+#: src/components/timeline.jsx:951
 #: src/pages/catchup.jsx:1876
 msgid "Thread"
 msgstr ""
 
-#: src/components/timeline.jsx:963
+#: src/components/timeline.jsx:966
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 

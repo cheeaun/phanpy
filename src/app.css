@@ -367,6 +367,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   --line-dir: var(--to-forward);
 }
+.timeline:not(.contextual) > li + li {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 160px;
+}
 .timeline.flat > li {
   border-bottom: none;
 }
@@ -2900,5 +2904,27 @@ ul.link-list li a .icon {
 
   select {
     width: 10em;
+  }
+}
+
+/* DEBUG */
+
+.debug-info {
+  font-size: smaller;
+  summary {
+    height: 1em;
+    width: 100%;
+    list-style: none;
+    display: inline-block;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  p,
+  ol,
+  ul {
+    margin-block-start: 0;
+    padding-block-start: 0;
   }
 }

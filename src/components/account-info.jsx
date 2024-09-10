@@ -2146,7 +2146,7 @@ function EditProfileSheet({ onClose = () => {} }) {
           >
             <p>
               <label>
-                Name{' '}
+                <Trans>Name</Trans>{' '}
                 <input
                   type="text"
                   name="display_name"

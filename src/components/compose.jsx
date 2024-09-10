@@ -1061,6 +1061,10 @@ function Compose({
                   );
                 } else if (!editStatus) {
                   params.visibility = visibility;
+                  if(params.visibility === "list") {
+                    const list_id = prompt("Target list ID?")
+                    params.visibility = `list:${list_id}`
+                  }
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
@@ -1180,6 +1184,11 @@ function Compose({
                 <option value="private">
                   <Trans>Followers only</Trans>
                 </option>
+                {(supports('@pleroma/list-visibility-post') || supports('@akkoma/list-visibility-post')) &&
+                  <option value="list">
+                    <Trans>List only</Trans>
+                  </option>
+                }
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>

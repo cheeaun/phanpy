@@ -24,6 +24,8 @@ const platformFeatures = {
   '@pixelfed/global-feed': containPixelfed,
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
+  '@pleroma/list-visibility-post': containPleroma,
+  '@akkoma/list-visibility-post': containAkkoma,
 };
 const supportsCache = {};
 

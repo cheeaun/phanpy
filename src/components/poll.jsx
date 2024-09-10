@@ -49,7 +49,7 @@ export default function Poll({
   //   };
   // }, [expired, expiresAtDate]);
 
-  const pollVotesCount = votersCount || votesCount;
+  const pollVotesCount = multiple ? votersCount : votesCount;
   let roundPrecision = 0;
 
   if (pollVotesCount <= 1000) {

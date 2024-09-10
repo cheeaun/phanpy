@@ -374,12 +374,14 @@ function NavMenu(props) {
               <Trans>Search</Trans>
             </span>
           </MenuLink>
-          <MenuLink to={`/${instance}/trending`}>
-            <Icon icon="chart" size="l" />{' '}
-            <span>
-              <Trans>Trending</Trans>
-            </span>
-          </MenuLink>
+          {(supports("@mastodon/trending-hashtags") || supports("@mastodon/trending-links") || supports("@pixelfed/trending")) &&
+            <MenuLink to={`/${instance}/trending`}>
+              <Icon icon="chart" size="l" />{' '}
+              <span>
+                <Trans>Trending</Trans>
+              </span>
+            </MenuLink>
+          }
           <MenuLink to={`/${instance}/p/l`}>
             <Icon icon="building" size="l" />{' '}
             <span>

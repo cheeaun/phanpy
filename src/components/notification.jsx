@@ -374,7 +374,7 @@ function Notification({
   if (typeof text === 'function') {
     const count =
       _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
-    const postsCount = _statuses?.length || 0;
+    const postsCount = _statuses?.length || (status ? 1 : 0);
     if (type === 'admin.report') {
       const targetAccount = report?.targetAccount;
       if (targetAccount) {

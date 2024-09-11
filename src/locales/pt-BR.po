@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-08 11:25\n"
+"PO-Revision-Date: 2024-09-11 12:03\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Automatizado"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1454
+#: src/pages/catchup.jsx:1470
 msgid "Group"
 msgstr "Grupo"
 
@@ -47,7 +47,7 @@ msgid "Mutual"
 msgstr "Mutuo"
 
 #: src/components/account-block.jsx:180
-#: src/components/account-info.jsx:1674
+#: src/components/account-info.jsx:1677
 msgid "Requested"
 msgstr "Solicitado"
 
@@ -55,11 +55,11 @@ msgstr "Solicitado"
 #: src/components/account-info.jsx:416
 #: src/components/account-info.jsx:742
 #: src/components/account-info.jsx:756
-#: src/components/account-info.jsx:1665
+#: src/components/account-info.jsx:1668
 #: src/components/nav-menu.jsx:193
 #: src/components/shortcuts-settings.jsx:137
 #: src/pages/following.jsx:20
-#: src/pages/following.jsx:131
+#: src/pages/following.jsx:134
 msgid "Following"
 msgstr "Seguindo"
 
@@ -188,8 +188,8 @@ msgstr "Original"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1428
-#: src/pages/catchup.jsx:2039
+#: src/pages/catchup.jsx:1444
+#: src/pages/catchup.jsx:2055
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Respostas"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1430
-#: src/pages/catchup.jsx:2051
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "Impulsos"
@@ -277,7 +277,7 @@ msgstr "Ativar impulsos"
 
 #: src/components/account-info.jsx:1250
 #: src/components/account-info.jsx:1260
-#: src/components/account-info.jsx:1858
+#: src/components/account-info.jsx:1861
 msgid "Add/Remove from Lists"
 msgstr "Adicionar/Remover das listas"
 
@@ -345,65 +345,65 @@ msgstr "Excluir seguidor…"
 msgid "Block <0>@{username}</0>?"
 msgstr "Bloquear <0>@{username}</0>?"
 
-#: src/components/account-info.jsx:1506
+#: src/components/account-info.jsx:1509
 msgid "Unblocked @{username}"
 msgstr "Desbloqueou @{username}"
 
-#: src/components/account-info.jsx:1514
+#: src/components/account-info.jsx:1517
 msgid "Blocked @{username}"
 msgstr "Bloqueou @{username}"
 
-#: src/components/account-info.jsx:1522
+#: src/components/account-info.jsx:1525
 msgid "Unable to unblock @{username}"
 msgstr "Não foi possível desbloquear @{username}"
 
-#: src/components/account-info.jsx:1524
+#: src/components/account-info.jsx:1527
 msgid "Unable to block @{username}"
 msgstr "Não foi possível bloquear @{username}"
 
-#: src/components/account-info.jsx:1534
+#: src/components/account-info.jsx:1537
 msgid "Unblock <0>@{username}</0>"
 msgstr "Desbloquear <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1543
+#: src/components/account-info.jsx:1546
 msgid "Block <0>@{username}</0>…"
 msgstr "Bloquear <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1560
+#: src/components/account-info.jsx:1563
 msgid "Report <0>@{username}</0>…"
 msgstr "Denunciar <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1580
-#: src/components/account-info.jsx:2091
+#: src/components/account-info.jsx:1583
+#: src/components/account-info.jsx:2094
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/components/account-info.jsx:1616
+#: src/components/account-info.jsx:1619
 msgid "Withdraw follow request?"
 msgstr "Excluir solicitação de seguimento?"
 
-#: src/components/account-info.jsx:1617
+#: src/components/account-info.jsx:1620
 msgid "Unfollow @{0}?"
 msgstr "Parar de seguir @{0}?"
 
-#: src/components/account-info.jsx:1668
+#: src/components/account-info.jsx:1671
 msgid "Unfollow…"
 msgstr "Parar de seguir…"
 
-#: src/components/account-info.jsx:1677
+#: src/components/account-info.jsx:1680
 msgid "Withdraw…"
 msgstr "Excluir…"
 
-#: src/components/account-info.jsx:1684
-#: src/components/account-info.jsx:1688
+#: src/components/account-info.jsx:1687
+#: src/components/account-info.jsx:1691
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
 msgstr "Seguir"
 
-#: src/components/account-info.jsx:1799
-#: src/components/account-info.jsx:1853
-#: src/components/account-info.jsx:1986
-#: src/components/account-info.jsx:2086
+#: src/components/account-info.jsx:1802
+#: src/components/account-info.jsx:1856
+#: src/components/account-info.jsx:1989
+#: src/components/account-info.jsx:2089
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
 #: src/components/compose.jsx:2412
@@ -426,7 +426,7 @@ msgstr "Seguir"
 #: src/components/status.jsx:3085
 #: src/components/status.jsx:3583
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1564
+#: src/pages/catchup.jsx:1580
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -436,76 +436,76 @@ msgstr "Seguir"
 msgid "Close"
 msgstr "Fechar"
 
-#: src/components/account-info.jsx:1804
+#: src/components/account-info.jsx:1807
 msgid "Translated Bio"
 msgstr "Bio traduzida"
 
-#: src/components/account-info.jsx:1898
+#: src/components/account-info.jsx:1901
 msgid "Unable to remove from list."
 msgstr "Não foi possível remover da lista."
 
-#: src/components/account-info.jsx:1899
+#: src/components/account-info.jsx:1902
 msgid "Unable to add to list."
 msgstr "Não foi possível adicionar à lista."
 
-#: src/components/account-info.jsx:1918
+#: src/components/account-info.jsx:1921
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
 msgstr "Não foi possível carregar listas."
 
-#: src/components/account-info.jsx:1922
+#: src/components/account-info.jsx:1925
 msgid "No lists."
 msgstr "Não há listas."
 
-#: src/components/account-info.jsx:1933
+#: src/components/account-info.jsx:1936
 #: src/components/list-add-edit.jsx:37
 #: src/pages/lists.jsx:58
 msgid "New list"
 msgstr "Nova lista"
 
-#: src/components/account-info.jsx:1991
+#: src/components/account-info.jsx:1994
 msgid "Private note about <0>@{0}</0>"
 msgstr "Nota privada sobre <0>@{0}</0>"
 
-#: src/components/account-info.jsx:2021
+#: src/components/account-info.jsx:2024
 msgid "Unable to update private note."
 msgstr "Não foi possível atualizar nota privada."
 
-#: src/components/account-info.jsx:2044
-#: src/components/account-info.jsx:2214
+#: src/components/account-info.jsx:2047
+#: src/components/account-info.jsx:2217
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/components/account-info.jsx:2049
+#: src/components/account-info.jsx:2052
 msgid "Save & close"
 msgstr "Salvar e fechar"
 
-#: src/components/account-info.jsx:2142
+#: src/components/account-info.jsx:2145
 msgid "Unable to update profile."
 msgstr "Não foi possível atualizar perfil."
 
-#: src/components/account-info.jsx:2149
+#: src/components/account-info.jsx:2152
 #: src/components/list-add-edit.jsx:102
 msgid "Name"
 msgstr "Nome"
 
-#: src/components/account-info.jsx:2162
+#: src/components/account-info.jsx:2165
 msgid "Bio"
 msgstr "Bio"
 
-#: src/components/account-info.jsx:2175
+#: src/components/account-info.jsx:2178
 msgid "Extra fields"
 msgstr "Campos adicionais"
 
-#: src/components/account-info.jsx:2181
+#: src/components/account-info.jsx:2184
 msgid "Label"
 msgstr "Etiqueta"
 
-#: src/components/account-info.jsx:2184
+#: src/components/account-info.jsx:2187
 msgid "Content"
 msgstr "Conteúdo"
 
-#: src/components/account-info.jsx:2217
+#: src/components/account-info.jsx:2220
 #: src/components/list-add-edit.jsx:147
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/filters.jsx:554
@@ -513,11 +513,11 @@ msgstr "Conteúdo"
 msgid "Save"
 msgstr "Salvar"
 
-#: src/components/account-info.jsx:2270
+#: src/components/account-info.jsx:2273
 msgid "username"
 msgstr "nome de usuário"
 
-#: src/components/account-info.jsx:2274
+#: src/components/account-info.jsx:2277
 msgid "server domain name"
 msgstr "nome de domínio do servidor"
 
@@ -532,7 +532,7 @@ msgstr "Modo oculto ativado"
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:137
-#: src/components/timeline.jsx:435
+#: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
@@ -611,7 +611,7 @@ msgstr "Anexo #{i} falhou"
 
 #: src/components/compose.jsx:1118
 #: src/components/status.jsx:1962
-#: src/components/timeline.jsx:982
+#: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "Aviso de conteúdo"
 
@@ -861,13 +861,13 @@ msgstr "Escreva para pesquisar GIFs"
 
 #: src/components/compose.jsx:3459
 #: src/components/media-modal.jsx:387
-#: src/components/timeline.jsx:887
+#: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/compose.jsx:3477
 #: src/components/media-modal.jsx:406
-#: src/components/timeline.jsx:904
+#: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Seguinte"
 
@@ -920,7 +920,7 @@ msgid "No drafts found."
 msgstr "Não há rascunho encontrado."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1911
+#: src/pages/catchup.jsx:1927
 msgid "Poll"
 msgstr "Enquete"
 
@@ -964,7 +964,7 @@ msgid "Accounts"
 msgstr "Contas"
 
 #: src/components/generic-accounts.jsx:205
-#: src/components/timeline.jsx:517
+#: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:820
 #: src/pages/search.jsx:454
@@ -973,14 +973,14 @@ msgid "Show more…"
 msgstr "Mostrar mais…"
 
 #: src/components/generic-accounts.jsx:210
-#: src/components/timeline.jsx:522
+#: src/components/timeline.jsx:524
 #: src/pages/search.jsx:459
 msgid "The end."
 msgstr "Fim."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1618
 msgid "Keyboard shortcuts"
 msgstr "Atalhos do teclado"
 
@@ -989,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr "Ajuda com atalhos do teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1627
+#: src/pages/catchup.jsx:1643
 msgid "Next post"
 msgstr "Próxima publicação"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1635
+#: src/pages/catchup.jsx:1651
 msgid "Previous post"
 msgstr "Publicação anterior"
 
@@ -1019,7 +1019,7 @@ msgid "Load new posts"
 msgstr "Carregar novas publicações"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1675
 msgid "Open post details"
 msgstr "Abrir detalhes da publicação"
 
@@ -1215,9 +1215,9 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status.jsx:3413
 #: src/components/status.jsx:3509
 #: src/components/status.jsx:3587
-#: src/components/timeline.jsx:971
+#: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1859
+#: src/pages/catchup.jsx:1875
 msgid "Filtered"
 msgstr "Filtrado"
 
@@ -1307,8 +1307,8 @@ msgstr "Favoritos"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1429
-#: src/pages/catchup.jsx:2045
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2061
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1041
@@ -2291,18 +2291,19 @@ msgstr "Prévia"
 
 #: src/components/status.jsx:3275
 msgid "Note: This preview is lightly styled."
-msgstr "Nota: Essa prévia é levemente estilizada."
+msgstr "Nota: Esta prévia tem um estilo levemente padronizado."
 
+#. [Name] [Visibility icon] boosted
 #: src/components/status.jsx:3517
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsionou"
 
-#: src/components/timeline.jsx:451
+#: src/components/timeline.jsx:453
 #: src/pages/settings.jsx:1065
 msgid "New posts"
 msgstr "Novas publicações"
 
-#: src/components/timeline.jsx:552
+#: src/components/timeline.jsx:554
 #: src/pages/home.jsx:212
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
@@ -2310,21 +2311,21 @@ msgstr "Novas publicações"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: src/components/timeline.jsx:586
+#: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr "{0, plural, one {# Impulso} other {# Impulsos}}"
 
-#: src/components/timeline.jsx:591
+#: src/components/timeline.jsx:593
 msgid "Pinned posts"
 msgstr "Publicações fixadas"
 
-#: src/components/timeline.jsx:944
-#: src/components/timeline.jsx:951
-#: src/pages/catchup.jsx:1876
+#: src/components/timeline.jsx:946
+#: src/components/timeline.jsx:953
+#: src/pages/catchup.jsx:1892
 msgid "Thread"
 msgstr "Tópico"
 
-#: src/components/timeline.jsx:966
+#: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -2503,7 +2504,7 @@ msgstr "Adicionar conta existente"
 
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr "Nota: contas <0>padrões</0> sempre serão as primeiras usadas para carregar. Contas alteradas permaneceram durante a sessão."
+msgstr "Nota: as contas <0>padrões</0> sempre serão as primeiras a carregar. Contas alteradas permaneceram durante a sessão."
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
@@ -2583,7 +2584,7 @@ msgid "Catch-up <0>beta</0>"
 msgstr "Acompanhar <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1568
+#: src/pages/catchup.jsx:1584
 msgid "Help"
 msgstr "Ajuda"
 
@@ -2629,7 +2630,7 @@ msgstr "Até o último acompanhamento ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr "Nota: Suas instâncias talvez mostrem um máximo de 800 publicações na linha de tempo do início, independente do intervalo de tempo. Pode ser menos ou mais."
+msgstr "Nota: A sua instância talvez mostre um máximo de 800 publicações na linha de tempo do início, independente do intervalo de tempo. Pode ser menos ou mais."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
@@ -2645,7 +2646,7 @@ msgstr "Excluir acompanhamento?"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr "Nota: Só armazenará um máximo de 3. O resto será automaticamente excluído."
+msgstr "Nota: Aqui armazenará um máximo de 3 acompanhamentos. O resto será automaticamente excluído."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
@@ -2660,7 +2661,7 @@ msgid "Reset filters"
 msgstr "Redefinir filtros"
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1574
+#: src/pages/catchup.jsx:1590
 msgid "Top links"
 msgstr "Links populares"
 
@@ -2668,85 +2669,85 @@ msgstr "Links populares"
 msgid "Shared by {0}"
 msgstr "Compartilhado por {0}"
 
-#: src/pages/catchup.jsx:1299
+#: src/pages/catchup.jsx:1315
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "Tudo"
 
-#: src/pages/catchup.jsx:1384
+#: src/pages/catchup.jsx:1400
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# autor} other {# autores}}"
 
-#: src/pages/catchup.jsx:1396
+#: src/pages/catchup.jsx:1412
 msgid "Sort"
 msgstr "Ordenar"
 
-#: src/pages/catchup.jsx:1427
+#: src/pages/catchup.jsx:1443
 msgid "Date"
 msgstr "Data"
 
-#: src/pages/catchup.jsx:1431
+#: src/pages/catchup.jsx:1447
 msgid "Density"
 msgstr "Densidade"
 
-#: src/pages/catchup.jsx:1469
+#: src/pages/catchup.jsx:1485
 msgid "Authors"
 msgstr "Autores"
 
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1486
 msgid "None"
 msgstr "Nenhum"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1502
 msgid "Show all authors"
 msgstr "Mostrar autores"
 
-#: src/pages/catchup.jsx:1537
+#: src/pages/catchup.jsx:1553
 msgid "You don't have to read everything."
 msgstr "Você não precisa ler tudo."
 
-#: src/pages/catchup.jsx:1538
+#: src/pages/catchup.jsx:1554
 msgid "That's all."
 msgstr "Isso é tudo."
 
-#: src/pages/catchup.jsx:1546
+#: src/pages/catchup.jsx:1562
 msgid "Back to top"
 msgstr "Voltar ao topo"
 
-#: src/pages/catchup.jsx:1577
+#: src/pages/catchup.jsx:1593
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "Links compartilhados por seguidores, ordenados pela contagem de compartilhamentos, impulsos e curtidas."
 
-#: src/pages/catchup.jsx:1583
+#: src/pages/catchup.jsx:1599
 msgid "Sort: Density"
 msgstr "Ordenar: Densidade"
 
-#: src/pages/catchup.jsx:1586
+#: src/pages/catchup.jsx:1602
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr "As publicações são ordenadas por informações de densidade ou profundidade. As curtas são mais \"leves\" enquanto as longas são mais \"pesadas\". Publicações com fotos são mais \"pesadas\" do que elas sem fotos."
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1609
 msgid "Group: Authors"
 msgstr "Grupo: Autores"
 
-#: src/pages/catchup.jsx:1596
+#: src/pages/catchup.jsx:1612
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr "Publicações são agrupadas por autores, ordenado por quantidade de publicações por autor."
 
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1659
 msgid "Next author"
 msgstr "Próximo autor"
 
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1667
 msgid "Previous author"
 msgstr "Autor anterior"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1683
 msgid "Scroll to top"
 msgstr "Subir"
 
-#: src/pages/catchup.jsx:1858
+#: src/pages/catchup.jsx:1874
 msgid "Filtered: {0}"
 msgstr "Filtrado: {0}"
 
@@ -2895,11 +2896,11 @@ msgstr "Não foi possível carregar hashtags seguidas."
 msgid "No hashtags followed yet."
 msgstr "Não há hashtags seguidas ainda."
 
-#: src/pages/following.jsx:133
+#: src/pages/following.jsx:136
 msgid "Nothing to see here."
 msgstr "Nada para ver aqui."
 
-#: src/pages/following.jsx:134
+#: src/pages/following.jsx:137
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
 msgstr "Não foi possível carregar publicações."
@@ -3398,7 +3399,7 @@ msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" em:} other {Ocultar o b
 
 #: src/pages/settings.jsx:471
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
-msgstr "Nota: Este recurso usa serviços externos de tradução, desenvolvido por <0>Lingva API</0> e <1>Lingva Translate</1>."
+msgstr "Nota: Esse recurso usa serviços externos de tradução, desenvolvido por <0>Lingva API</0> e <1>Lingva Translate</1>."
 
 #: src/pages/settings.jsx:505
 msgid "Auto inline translation"
@@ -3414,7 +3415,7 @@ msgstr "Selecionador de GIF para escrita"
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr "Nota: Este recurso usa serviços externos de busca de GIF, desenvolvido por <0>GIPHY</0>. Avaliado bem (adequado para visualização de todas as idades), rastreando parâmetros são despojados, informação de referência é omitida de solicitações, porém consultas de busca e informação de endereço IP ainda poderá alcançar os servidores deles."
+msgstr "Nota: Esse recurso usa serviços externos de busca de GIF, desenvolvido por <0>GIPHY</0>. Avaliado bem (adequado para visualização de todas as idades), parâmetros de rastreamento são listrados, informação de referência é omitida de solicitações, porém as consultas de busca e informação de endereço IP ainda poderá alcançar os servidores do GIPHY."
 
 #: src/pages/settings.jsx:562
 msgid "Image description generator"
@@ -3426,7 +3427,7 @@ msgstr "Apenas para novas imagens enquanto escreve novas publicações."
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr "Nota: Este recurso usa serviços externos IA, desenvolvido por <0>img-alt-api</0>. Então ele pode não funcionar bem. Apenas para imagens e em inglês."
+msgstr "Nota: Esse recurso usa serviços externos IA, desenvolvido por <0>img-alt-api</0>. Então ele pode não funcionar bem. Apenas para imagens e em inglês."
 
 #: src/pages/settings.jsx:600
 msgid "Server-side grouped notifications"
@@ -3446,7 +3447,7 @@ msgstr "⚠️⚠️⚠️ Muito experimental.<0/>Armazenado nas notas do seu pe
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr "Nota: Este recurso usa a API do servidor de instância atualmente registrado."
+msgstr "Nota: Esse recurso usa a API do servidor de instância atualmente em uso."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"

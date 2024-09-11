@@ -9,13 +9,12 @@ const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
-const notContainPixelfedAkkomaPleroma = /^(?!.*pixelfed|.*akkoma|.*pleroma).*$/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
-  '@mastodon/filters': notContainPixelfedAkkomaPleroma,
+  '@mastodon/filters': (v) => !(containPixelfed.test(v) || containPleroma.test(v) || containAkkoma.test(v)),
   '@mastodon/mentions': notContainPixelfed,
-  '@mastodon/trending-hashtags': notContainPixelfedAkkomaPleroma,
-  '@mastodon/trending-links': notContainPixelfedAkkomaPleroma,
+  '@mastodon/trending-hashtags': (v) => !(containPixelfed.test(v) || containPleroma.test(v) || containAkkoma.test(v)),
+  '@mastodon/trending-links': (v) => !(containPixelfed.test(v) || containPleroma.test(v) || containAkkoma.test(v)),
   '@mastodon/post-bookmark': notContainPixelfed,
   '@mastodon/post-edit': notContainPixelfed,
   '@mastodon/profile-edit': notContainPixelfed,
@@ -33,9 +32,13 @@ function supports(feature) {
     const { version, domain } = getCurrentInstance();
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
-
-    if (platformFeatures[feature]) {
-      return (supportsCache[key] = platformFeatures[feature].test(version));
+    
+    const platformFeature = platformFeatures[feature];
+    if (platformFeature instanceof Function) {
+      return (supportsCache[key] = platformFeature(version));
+    }
+    else if(platformFeature !== undefined) {
+      return (supportsCache[key] = platformFeature.test(version));
     }
 
     const range = features[feature];

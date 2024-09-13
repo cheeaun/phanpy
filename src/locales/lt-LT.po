@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-13 14:56\n"
+"PO-Revision-Date: 2024-09-13 16:05\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1110,7 +1110,7 @@ msgstr "<0>Lyg2 (Shift)</0> + <1>b</1>"
 #: src/components/status.jsx:2351
 #: src/components/status.jsx:2352
 msgid "Bookmark"
-msgstr "Pridėti į žymės"
+msgstr "Prid. į žymės"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
 msgid "Toggle Cloak mode"
@@ -3386,111 +3386,111 @@ msgstr ""
 
 #: src/pages/settings.jsx:380
 msgid "Translate to"
-msgstr ""
+msgstr "Versti į"
 
 #: src/pages/settings.jsx:391
 msgid "System language ({systemTargetLanguageText})"
-msgstr ""
+msgstr "Sistemos kalba ({systemTargetLanguageText})"
 
 #: src/pages/settings.jsx:417
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr ""
+msgstr "{0, plural, one {Slėpti Versti mygtuką (#):} few {Slėpti Versti mygtuką (#):} many {Slėpti Versti mygtuką (#):}=0 {} other {Slėpti Versti mygtuką (#):}}"
 
 #: src/pages/settings.jsx:471
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
-msgstr ""
+msgstr "Pastaba: ši funkcija naudoja išorines vertimo paslaugas, veikiančias su <0>„Lingva“ API</0> ir <1>„Lingva Translate“</1>."
 
 #: src/pages/settings.jsx:505
 msgid "Auto inline translation"
-msgstr ""
+msgstr "Automatinis įterptinis vertimas"
 
 #: src/pages/settings.jsx:509
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr ""
+msgstr "Automatiškai rodyti vertimą įrašams laiko skalėje. Veikia tik <0>trumpiems</0> įrašams be turinio įspėjimo, medijos ir apklausos."
 
 #: src/pages/settings.jsx:529
 msgid "GIF Picker for composer"
-msgstr ""
+msgstr "GIF parinkiklis rengyklei"
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr ""
+msgstr "Pastaba: ši funkcija naudoja išorinę GIF paieškos paslaugą, veikiančią su <0>„GIPHY“</0>. „G-rated“ (skirta visiems amžiaus grupėms), sekimo parametrai pašalinami, užklausose nepateikiama nukreipiančioji informacija, bet paieškos užklausos ir IP adreso informacija vis tiek pasieks jų serverius."
 
 #: src/pages/settings.jsx:562
 msgid "Image description generator"
-msgstr ""
+msgstr "Vaizdų aprašymo generatorius"
 
 #: src/pages/settings.jsx:567
 msgid "Only for new images while composing new posts."
-msgstr ""
+msgstr "Tik naujiems vaizdams, kai kuriami nauji įrašai."
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr ""
+msgstr "Pastaba: ši funkcija naudoja išorinę DI paslaugą, veikiančią su <0>„img-alt-api“</0>. Gali veikti netinkamai. Tik vaizdams ir anglų kalba."
 
 #: src/pages/settings.jsx:600
 msgid "Server-side grouped notifications"
-msgstr ""
+msgstr "Serverio pusėje sugrupuoti pranešimai"
 
 #: src/pages/settings.jsx:604
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr ""
+msgstr "Alfa stadijos funkcija. Galimai patobulintas grupavimo langas, bet bazinė grupavimo logika."
 
 #: src/pages/settings.jsx:625
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr ""
+msgstr "Debesis importuoti / eksportuoti trumpųjų nustatymus"
 
 #: src/pages/settings.jsx:630
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr ""
+msgstr "⚠️⚠️⚠️ Labai eksperimentinis.<0/>Įrašyta tavo profilio pastabose. Profilio (privačios) pastabos daugiausia naudojamos kitiems profiliams, o savo profilyje yra paslėptos."
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Pastaba: ši funkcija naudoja šiuo metu prisijungusio serverio API."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr ""
+msgstr "Slėpimo režimas <0>(<1>Tekstas</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:667
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "Pakeisk tekstą blokais – tai naudinga darant ekrano kopijas dėl privatumo priežasčių."
 
 #: src/pages/settings.jsx:692
 msgid "About"
-msgstr ""
+msgstr "Apie"
 
 #: src/pages/settings.jsx:731
 msgid "<0>Built</0> by <1>@cheeaun</1>"
-msgstr ""
+msgstr "<0>Sukūrė</0> <1>@cheeaun</1>"
 
 #: src/pages/settings.jsx:760
 msgid "Sponsor"
-msgstr ""
+msgstr "Rėmėjas"
 
 #: src/pages/settings.jsx:768
 msgid "Donate"
-msgstr ""
+msgstr "Aukoti"
 
 #: src/pages/settings.jsx:776
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Privatumo politika"
 
 #: src/pages/settings.jsx:783
 msgid "<0>Site:</0> {0}"
-msgstr ""
+msgstr "<0>Svetainė:</0> {0}"
 
 #: src/pages/settings.jsx:790
 msgid "<0>Version:</0> <1/> {0}"
-msgstr ""
+msgstr "<0>Versija:</0> <1/> {0}"
 
 #: src/pages/settings.jsx:805
 msgid "Version string copied"
-msgstr ""
+msgstr "Nukopijuota versijos eilutė"
 
 #: src/pages/settings.jsx:808
 msgid "Unable to copy version string"
-msgstr ""
+msgstr "Nepavyksta nukopijuoti versijos eilutės."
 
 #: src/pages/settings.jsx:950
 #: src/pages/settings.jsx:955
@@ -3579,16 +3579,16 @@ msgstr "Eiti į pagrindinį įrašą"
 
 #: src/pages/status.jsx:1102
 msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "{0} įrašų aukščiau – eiti į viršų"
 
 #: src/pages/status.jsx:1145
 #: src/pages/status.jsx:1208
 msgid "Switch to Side Peek view"
-msgstr ""
+msgstr "Perjungti į šoninio žvilgsnio rodymą"
 
 #: src/pages/status.jsx:1209
 msgid "Switch to Full view"
-msgstr ""
+msgstr "Perjungti į visą rodymą"
 
 #: src/pages/status.jsx:1227
 msgid "Show all sensitive content"
@@ -3640,19 +3640,19 @@ msgstr "Atgal į tendencingų įrašų rodymą"
 
 #: src/pages/trending.jsx:379
 msgid "Showing posts mentioning <0>{0}</0>"
-msgstr "Rodomi įrašai, kuriuose minimas <0>{0}</0>"
+msgstr "Rodomi įrašai, kuriuose paminimas <0>{0}</0>"
 
 #: src/pages/trending.jsx:391
 msgid "Trending posts"
-msgstr ""
+msgstr "Tendencingi įrašai"
 
 #: src/pages/trending.jsx:414
 msgid "No trending posts."
-msgstr ""
+msgstr "Nėra tendencingų įrašų."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."
-msgstr "Minimalistinė „Mastodon“ žiniatinklio kliento programa."
+msgstr "Minimalistinė „Mastodon“ interneto kliento programa."
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
@@ -3660,51 +3660,51 @@ msgstr "Prisijungti su „Mastodon“"
 
 #: src/pages/welcome.jsx:70
 msgid "Sign up"
-msgstr ""
+msgstr "Registruotis"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
-msgstr "Prijunk esamą „Mastodon“ / Fediverso paskyrą.<0/>Tavo kredencialai šiame serveryje nėra saugomi."
+msgstr "Prijunk esamą „Mastodon“ / fediverso paskyrą.<0/>Tavo kredencialai šiame serveryje nėra saugomi."
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
-msgstr ""
+msgstr "<0>Sukūrė</0> <1>@cheeaun</1>. <2>Privatumo politika</2>."
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
-msgstr ""
+msgstr "Pasidalinimų karuselės ekrano kopija"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "Pasidalinimų karuselė"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr ""
+msgstr "Vizualiai atskirk originalius įrašus ir pakartotinai bendrinamus įrašus (pasidalintus įrašus)."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
-msgstr ""
+msgstr "Įterptų komentarų gijos ekrano kopija"
 
 #: src/pages/welcome.jsx:145
 msgid "Nested comments thread"
-msgstr ""
+msgstr "Įterptų komentarų gija"
 
 #: src/pages/welcome.jsx:148
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
-msgstr ""
+msgstr "Lengvai sek pokalbius. Pusiau suskleidžiamieji atsakymai."
 
 #: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
-msgstr ""
+msgstr "Sugrupuotų pranešimų ekrano kopija"
 
 #: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
-msgstr ""
+msgstr "Sugrupuoti pranešimai"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr ""
+msgstr "Panašūs pranešimai sugrupuojami ir suskleidžiami, kad būtų mažiau netvarkos."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"

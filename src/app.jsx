@@ -2,6 +2,7 @@ import './app.css';
 
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
+import { memo } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -329,7 +330,7 @@ function App() {
   __BENCHMARK.start('app-init');
   __BENCHMARK.start('time-to-following');
   __BENCHMARK.start('time-to-home');
-  __BENCHMARK.start('time-to-route-root');
+  __BENCHMARK.start('time-to-isLoggedIn');
   useLingui();
 
   useEffect(() => {
@@ -462,7 +463,9 @@ function App() {
 }
 
 function Root({ isLoggedIn, loading }) {
-  __BENCHMARK.end('time-to-route-root');
+  if (isLoggedIn) {
+    __BENCHMARK.end('time-to-isLoggedIn');
+  }
   return isLoggedIn ? (
     <Home />
   ) : loading ? (
@@ -472,7 +475,7 @@ function Root({ isLoggedIn, loading }) {
   );
 }
 
-function PrimaryRoutes({ isLoggedIn, loading }) {
+const PrimaryRoutes = memo(({ isLoggedIn, loading }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
@@ -489,7 +492,7 @@ function PrimaryRoutes({ isLoggedIn, loading }) {
       <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
-}
+});
 
 function getPrevLocation() {
   return states.prevLocation || null;

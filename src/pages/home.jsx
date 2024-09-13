@@ -27,8 +27,8 @@ import {
 function Home() {
   const { _ } = useLingui();
   const snapStates = useSnapshot(states);
+  __BENCHMARK.end('time-to-home');
   useEffect(() => {
-    __BENCHMARK.end('time-to-home');
     (async () => {
       const keys = await db.drafts.keys();
       if (keys.length) {

@@ -22,6 +22,7 @@ function Following({ title, path, id, ...props }) {
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
   const latestItem = useRef();
+  __BENCHMARK.end('time-to-following');
 
   console.debug('RENDER Following', title, id);
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
@@ -100,7 +101,6 @@ function Following({ title, path, id, ...props }) {
   }
 
   useEffect(() => {
-    __BENCHMARK.end('time-to-following');
     let sub;
     (async () => {
       if (streaming) {

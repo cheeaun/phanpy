@@ -66,7 +66,6 @@ function Following({ title, path, id, ...props }) {
       });
     }
     __BENCHMARK.end('fetch-home-first');
-    __BENCHMARK.end('time-to-home');
     return {
       ...results,
       value,
@@ -101,6 +100,7 @@ function Following({ title, path, id, ...props }) {
   }
 
   useEffect(() => {
+    __BENCHMARK.end('time-to-following');
     let sub;
     (async () => {
       if (streaming) {

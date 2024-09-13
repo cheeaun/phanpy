@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-11 15:53\n"
+"PO-Revision-Date: 2024-09-13 21:49\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -536,10 +536,10 @@ msgstr "Modo oculto ativado"
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
-#: src/pages/home.jsx:52
+#: src/pages/home.jsx:53
 #: src/pages/notifications.jsx:505
 msgid "Home"
-msgstr "Início"
+msgstr "Página inicial"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:37
@@ -603,7 +603,7 @@ msgstr "Algumas escolhas da enquete estão vazias"
 
 #: src/components/compose.jsx:972
 msgid "Some media have no descriptions. Continue?"
-msgstr "Algumas mídias não têm descrições. Prosseguir?"
+msgstr "Algumas medias não têm descrições. Prosseguir?"
 
 #: src/components/compose.jsx:1024
 msgid "Attachment #{i} failed"
@@ -617,7 +617,7 @@ msgstr "Alerta de conteúdo"
 
 #: src/components/compose.jsx:1134
 msgid "Content warning or sensitive media"
-msgstr "Alerta de conteúdo ou mídia sensível"
+msgstr "Alerta de conteúdo ou media sensível"
 
 #: src/components/compose.jsx:1170
 #: src/components/status.jsx:93
@@ -664,7 +664,7 @@ msgstr "O que estás a fazer?"
 
 #: src/components/compose.jsx:1271
 msgid "Mark media as sensitive"
-msgstr "Marcar mídia como sensível"
+msgstr "Marcar media como sensível"
 
 #: src/components/compose.jsx:1369
 msgid "Add poll"
@@ -927,7 +927,7 @@ msgstr "Enquete"
 #: src/components/drafts.jsx:248
 #: src/pages/account-statuses.jsx:365
 msgid "Media"
-msgstr "Mídia"
+msgstr "Media"
 
 #: src/components/embed-modal.jsx:22
 msgid "Open in new window"
@@ -1146,7 +1146,7 @@ msgstr "Não mostrar respostas"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr "Ocultar publicações nessa lista do Início/A seguir"
+msgstr "Ocultar publicações nesta lista da página inicial/A seguir"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
@@ -1164,7 +1164,7 @@ msgstr "Impossível eliminar lista."
 #: src/components/media-alt-modal.jsx:38
 #: src/components/media.jsx:50
 msgid "Media description"
-msgstr "Descrição da mídia"
+msgstr "Descrição da media"
 
 #: src/components/media-alt-modal.jsx:57
 #: src/components/status.jsx:968
@@ -1181,11 +1181,11 @@ msgstr "Falar"
 
 #: src/components/media-modal.jsx:294
 msgid "Open original media in new window"
-msgstr "Abrir mídia original em nova janela"
+msgstr "Abrir media original em nova janela"
 
 #: src/components/media-modal.jsx:298
 msgid "Open original media"
-msgstr "Abrir mídia original"
+msgstr "Abrir media original"
 
 #: src/components/media-modal.jsx:314
 msgid "Attempting to describe image. Please wait…"
@@ -1205,7 +1205,7 @@ msgstr "Ver publicação"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
-msgstr "Mídia sensível"
+msgstr "Media sensível"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
@@ -1253,7 +1253,7 @@ msgstr "Acompanhar"
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:143
-#: src/pages/home.jsx:223
+#: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
 #: src/pages/settings.jsx:1037
@@ -1265,8 +1265,8 @@ msgstr "Menções"
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:149
 #: src/pages/filters.jsx:24
-#: src/pages/home.jsx:83
-#: src/pages/home.jsx:183
+#: src/pages/home.jsx:84
+#: src/pages/home.jsx:184
 #: src/pages/notifications.jsx:106
 #: src/pages/notifications.jsx:509
 msgid "Notifications"
@@ -1721,7 +1721,7 @@ msgstr "Contas com <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr "Início / A seguir"
+msgstr "Página inicial / A seguir"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -1771,7 +1771,7 @@ msgstr "ex.: PixelArt (Máx. 5, espaço separado)"
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
 msgid "Media only"
-msgstr "Apenas mídia"
+msgstr "Apenas media"
 
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
@@ -1830,7 +1830,7 @@ msgstr "Nenhum atalho ainda. Clique no botão de adicionar atalho."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Sem certeza do que adicionar?<0/>Tente adicionar as <1>Notificações do Início / A seguir</1> primeiramente."
+msgstr "Sem certeza do que adicionar?<0/>Tente adicionar as <1>Notificações da Página Inicial / A seguir</1> primeiramente."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2048,7 +2048,7 @@ msgstr "Citar"
 #: src/components/status.jsx:863
 #: src/components/status.jsx:2318
 msgid "Some media have no descriptions."
-msgstr "Algumas mídias não têm descrições."
+msgstr "Algumas medias não têm descrições."
 
 #: src/components/status.jsx:870
 msgid "Old post (<0>{0}</0>)"
@@ -2214,7 +2214,7 @@ msgstr "Mostrar conteúdo"
 
 #: src/components/status.jsx:2072
 msgid "Show media"
-msgstr "Mostrar mídia"
+msgstr "Mostrar media"
 
 #: src/components/status.jsx:2192
 msgid "Edited"
@@ -2250,7 +2250,7 @@ msgstr "Impossível copiar código HTML"
 
 #: src/components/status.jsx:3127
 msgid "Media attachments:"
-msgstr "Anexos de mídia:"
+msgstr "Anexos de media:"
 
 #: src/components/status.jsx:3149
 msgid "Account Emojis:"
@@ -2279,7 +2279,7 @@ msgstr "Votações não são interativas, ela vira uma lista com contador de vot
 
 #: src/components/status.jsx:3254
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr "Anexos de mídia pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
+msgstr "Anexos de media pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
 
 #: src/components/status.jsx:3260
 msgid "Post could be edited or deleted later."
@@ -2304,7 +2304,7 @@ msgid "New posts"
 msgstr "Novas publicações"
 
 #: src/components/timeline.jsx:554
-#: src/pages/home.jsx:212
+#: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:796
 #: src/pages/status.jsx:945
 #: src/pages/status.jsx:1318
@@ -2377,7 +2377,7 @@ msgstr "Requer iniciar sessão."
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
-msgstr "Voltar ao início"
+msgstr "Voltar à página inicial"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
@@ -2397,7 +2397,7 @@ msgstr "{accountDisplay} (#{tagged})"
 
 #: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (Media)"
-msgstr "{accountDisplay} (Mídia)"
+msgstr "{accountDisplay} (Media)"
 
 #: src/pages/account-statuses.jsx:252
 msgid "{accountDisplay} ({monthYear})"
@@ -2429,7 +2429,7 @@ msgstr "- Impulsos"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr "A exibir publicações com mídia"
+msgstr "A exibir publicações com media"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
@@ -2630,7 +2630,7 @@ msgstr "Até o último acompanhamento ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr "Nota: a sua instância talvez mostre um máximo de 800 publicações na linha de tempo do início independente do intervalo de tempo. Pode ser menos ou mais."
+msgstr "Nota: a sua instância talvez mostre um máximo de 800 publicações na linha de tempo da página inicial, independente do intervalo de tempo. Pode ser menos ou mais."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
@@ -2761,7 +2761,7 @@ msgstr "Impossível carregar gostos."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
-msgstr "Início e listas"
+msgstr "Página inicial e listas"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
@@ -2907,7 +2907,7 @@ msgstr "Impossível carregar publicações."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr "{hashtagTitle} (Apenas mídia) em {instance}"
+msgstr "{hashtagTitle} (Apenas media) em {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
@@ -2915,7 +2915,7 @@ msgstr "{hashtagTitle} em {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr "{hashtagTitle} (Apenas mídia)"
+msgstr "{hashtagTitle} (Apenas media)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
@@ -3014,15 +3014,15 @@ msgstr "Ir à outra instância…"
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr "Ir à minha instância (<0>{currentInstance}</0>)"
 
-#: src/pages/home.jsx:208
+#: src/pages/home.jsx:209
 msgid "Unable to fetch notifications."
 msgstr "Impossível obter notificações."
 
-#: src/pages/home.jsx:228
+#: src/pages/home.jsx:229
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr "<0>Novos</0> <1>Pedidos de seguir</1>"
 
-#: src/pages/home.jsx:234
+#: src/pages/home.jsx:235
 msgid "See all"
 msgstr "Ver tudo"
 
@@ -3407,7 +3407,7 @@ msgstr "Tradução automática"
 
 #: src/pages/settings.jsx:509
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, mídia ou enquete."
+msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, media ou enquete."
 
 #: src/pages/settings.jsx:529
 msgid "GIF Picker for composer"

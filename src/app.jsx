@@ -329,6 +329,7 @@ function App() {
   __BENCHMARK.start('app-init');
   __BENCHMARK.start('time-to-following');
   __BENCHMARK.start('time-to-home');
+  __BENCHMARK.start('time-to-route-root');
   useLingui();
 
   useEffect(() => {
@@ -460,6 +461,17 @@ function App() {
   );
 }
 
+function Root({ isLoggedIn, loading }) {
+  __BENCHMARK.end('time-to-route-root');
+  return isLoggedIn ? (
+    <Home />
+  ) : loading ? (
+    <Loader id="loader-root" />
+  ) : (
+    <Welcome />
+  );
+}
+
 function PrimaryRoutes({ isLoggedIn, loading }) {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
@@ -471,15 +483,7 @@ function PrimaryRoutes({ isLoggedIn, loading }) {
     <Routes location={nonRootLocation || location}>
       <Route
         path="/"
-        element={
-          isLoggedIn ? (
-            <Home />
-          ) : loading ? (
-            <Loader id="loader-root" />
-          ) : (
-            <Welcome />
-          )
-        }
+        element={<Root isLoggedIn={isLoggedIn} loading={loading} />}
       />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />

@@ -1244,7 +1244,10 @@ function Compose({
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
                         const newAttachments = [...attachments];
-                        newAttachments[i].description = value;
+                        newAttachments[i] = {
+                          ...newAttachments[i],
+                          description: value,
+                        };
                         return newAttachments;
                       });
                     }}

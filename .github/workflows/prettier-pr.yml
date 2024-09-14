@@ -11,6 +11,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+      # Need node to install prettier plugin(s)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
       - uses: creyD/prettier_action@v4.3
         with:
           dry: true
+          # Don't write anything
+          prettier_options: '--check'

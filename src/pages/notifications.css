@@ -1,3 +1,9 @@
+#notifications-page {
+  .notification {
+    content-visibility: auto;
+  }
+}
+
 .notification {
   display: flex;
   padding: 16px !important;
@@ -10,8 +16,8 @@
     cursor: pointer;
   }
 }
-.notification.notification-mention {
-  margin-top: 16px;
+.notification-type.notification-mention {
+  padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),
 .only-mentions .timeline-empty {
@@ -139,7 +145,6 @@
   max-height: 320px;
   filter: none;
   background-color: var(--bg-color);
-  margin-top: calc(-16px - 1px);
   border-color: var(--reply-to-color);
   box-shadow: 0 0 0 3px var(--reply-to-faded-color);
 }

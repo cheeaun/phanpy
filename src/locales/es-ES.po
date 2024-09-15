@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-15 15:03\n"
+"PO-Revision-Date: 2024-09-15 19:03\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -940,7 +940,7 @@ msgstr "Aceptar"
 
 #: src/components/follow-request-buttons.jsx:68
 msgid "Reject"
-msgstr "Cancelar"
+msgstr "Rechazar"
 
 #: src/components/follow-request-buttons.jsx:75
 #: src/pages/notifications.jsx:1173
@@ -949,7 +949,7 @@ msgstr "Aceptado"
 
 #: src/components/follow-request-buttons.jsx:79
 msgid "Rejected"
-msgstr "Cancelado"
+msgstr "Rechazado"
 
 #: src/components/generic-accounts.jsx:24
 msgid "Nothing to show"
@@ -986,7 +986,7 @@ msgstr "Atajos del teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:51
 msgid "Keyboard shortcuts help"
-msgstr "Ayuda de atajos de teclado"
+msgstr "Ayuda para los atajos del teclado"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
 #: src/pages/catchup.jsx:1643
@@ -1239,7 +1239,7 @@ msgstr "Menú"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr "¿Volver a cargar página ahora para actualizar?"
+msgstr "¿Volver a cargar la página ahora para actualizar?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
@@ -1431,7 +1431,7 @@ msgstr "Una publicación con la que interactuaste ha sido editada."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó tu respuesta y le gustó.} other {{account} impulsó tu publicación y le gustó.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron tu publicación y les gustó.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó y le gustó tu respuesta.} other {{account} impulsó y le gustó tu publicación.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron y les gustó tu publicación.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1825,7 +1825,7 @@ msgstr "Aún no hay columnas. Pulse en el botón Añadir columna."
 
 #: src/components/shortcuts-settings.jsx:409
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr "No hay atajos todavía. Pulse en el botón Añadir atajo."
+msgstr "No hay atajos todavía. Pulsa en el botón Añadir atajo."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
@@ -1901,7 +1901,7 @@ msgstr "No se han podido descargar los atajos"
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
-msgstr "Descargando atajos guardados desde el servidor de instancia"
+msgstr "Descargando atajos guardados desde el servidor de la instancia"
 
 #: src/components/shortcuts-settings.jsx:909
 msgid "* Exists in current shortcuts"
@@ -1929,7 +1929,7 @@ msgstr "No hay nuevos atajos para importar"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr "Atajos importados. Excedido máximo {SHORTCUTS_LIMIT}, por lo que el resto no se importan."
+msgstr "Atajos importados. Se ha excedido el máximo {SHORTCUTS_LIMIT}, por lo que el resto no son importados."
 
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
@@ -1946,7 +1946,7 @@ msgstr "¿Deseas anular los atajos actuales?"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
-msgstr "¿Importar atajos?"
+msgstr "¿Deseas importar atajos?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
@@ -1962,7 +1962,7 @@ msgstr "Exportar"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
-msgstr "Atajos copiados"
+msgstr "Los atajos han sido copiados"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Unable to copy shortcuts"
@@ -1986,7 +1986,7 @@ msgstr "Guardando atajos a la instancia del servidor…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
-msgstr "Atajos guardados"
+msgstr "Los atajos han sido guardados"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
@@ -2519,23 +2519,23 @@ msgstr "en la última hora"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr "en las últimas 2 horas"
+msgstr "las últimas 2 horas"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr "en las últimas 3 horas"
+msgstr "las últimas 3 horas"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr "en las últimas 4 horas"
+msgstr "las últimas 4 horas"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
-msgstr "en las últimas 5 horas"
+msgstr "las últimas 5 horas"
 
 #: src/pages/catchup.jsx:59
 msgid "last 6 hours"
-msgstr "en las últimas 6 horas"
+msgstr "las últimas 6 horas"
 
 #: src/pages/catchup.jsx:60
 msgid "last 7 hours"
@@ -2609,7 +2609,7 @@ msgstr "Pongámonos al día con las publicaciones de las cuentas que sigues."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr "Muéstrame todas las publicaciones de…"
+msgstr "Mostrarme todas las publicaciones de…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
@@ -3105,7 +3105,7 @@ msgstr "No se han podido cargar las menciones."
 
 #: src/pages/notifications.jsx:97
 msgid "You don't follow"
-msgstr "A quienes no sigues"
+msgstr "Que tú no sigues"
 
 #: src/pages/notifications.jsx:98
 msgid "Who don't follow you"
@@ -3117,11 +3117,11 @@ msgstr "Con una nueva cuenta"
 
 #: src/pages/notifications.jsx:100
 msgid "Who unsolicitedly private mention you"
-msgstr "Quién te mencionan de forma no solicitada"
+msgstr "Que te mencionan de forma no solicitada"
 
 #: src/pages/notifications.jsx:101
 msgid "Who are limited by server moderators"
-msgstr "Quién está limitado por los moderadores del servidor"
+msgstr "Que están limitadas por los moderadores del servidor"
 
 #: src/pages/notifications.jsx:523
 #: src/pages/notifications.jsx:844
@@ -3179,7 +3179,7 @@ msgstr "Filtrar notificaciones de personas:"
 
 #: src/pages/notifications.jsx:893
 msgid "Filter"
-msgstr "Filtro"
+msgstr "Filtrar"
 
 #: src/pages/notifications.jsx:896
 msgid "Ignore"

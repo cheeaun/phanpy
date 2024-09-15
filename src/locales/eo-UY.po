@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-15 00:46\n"
+"PO-Revision-Date: 2024-09-15 14:06\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -110,7 +110,7 @@ msgstr "Afiŝoj"
 
 #: src/components/account-info.jsx:427
 #: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2456
+#: src/components/compose.jsx:2459
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1636
@@ -135,7 +135,7 @@ msgstr "<0>{displayName}</0> indikis, ke ilia nova konto nun estas:"
 #: src/components/account-info.jsx:584
 #: src/components/account-info.jsx:1273
 msgid "Handle copied"
-msgstr ""
+msgstr "Identigo kopiita"
 
 #: src/components/account-info.jsx:587
 #: src/components/account-info.jsx:1276
@@ -145,7 +145,7 @@ msgstr "Ne eblas kopii la tenilon"
 #: src/components/account-info.jsx:593
 #: src/components/account-info.jsx:1282
 msgid "Copy handle"
-msgstr ""
+msgstr "Kopii identigon"
 
 #: src/components/account-info.jsx:599
 msgid "Go to original profile page"
@@ -406,10 +406,10 @@ msgstr "Sekvi"
 #: src/components/account-info.jsx:2089
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
-#: src/components/compose.jsx:2412
-#: src/components/compose.jsx:2885
-#: src/components/compose.jsx:3093
-#: src/components/compose.jsx:3323
+#: src/components/compose.jsx:2415
+#: src/components/compose.jsx:2888
+#: src/components/compose.jsx:3096
+#: src/components/compose.jsx:3326
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -552,8 +552,8 @@ msgstr "Vi havas nekonservitajn ŝanĝojn. Ĉu forĵeti ĉi tiun afiŝon?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
-#: src/components/compose.jsx:1333
-#: src/components/compose.jsx:1594
+#: src/components/compose.jsx:1336
+#: src/components/compose.jsx:1597
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Vi povas nur kunsendi ĝis 1 dosieron.} other {Vi povas nur kunsendi ĝis # dosierojn.}}"
 
@@ -662,19 +662,19 @@ msgstr "Redakti vian afiŝon"
 msgid "What are you doing?"
 msgstr "Kion vi pensas?"
 
-#: src/components/compose.jsx:1271
+#: src/components/compose.jsx:1274
 msgid "Mark media as sensitive"
 msgstr "Aldoni averton de enhavo"
 
-#: src/components/compose.jsx:1369
+#: src/components/compose.jsx:1372
 msgid "Add poll"
 msgstr "Aldoni balotenketon"
 
-#: src/components/compose.jsx:1391
+#: src/components/compose.jsx:1394
 msgid "Add custom emoji"
 msgstr "Aldoni propran emoĝion"
 
-#: src/components/compose.jsx:1475
+#: src/components/compose.jsx:1478
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:831
 #: src/components/status.jsx:1616
@@ -683,195 +683,195 @@ msgstr "Aldoni propran emoĝion"
 msgid "Reply"
 msgstr "Respondi"
 
-#: src/components/compose.jsx:1477
+#: src/components/compose.jsx:1480
 msgid "Update"
 msgstr "Ĝisdatigi"
 
-#: src/components/compose.jsx:1478
+#: src/components/compose.jsx:1481
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Afiŝi"
 
-#: src/components/compose.jsx:1606
+#: src/components/compose.jsx:1609
 msgid "Downloading GIF…"
 msgstr "Elŝutante movbildon…"
 
-#: src/components/compose.jsx:1634
+#: src/components/compose.jsx:1637
 msgid "Failed to download GIF"
 msgstr "Malsukcesis elŝuti movbildon"
 
-#: src/components/compose.jsx:1745
-#: src/components/compose.jsx:1822
+#: src/components/compose.jsx:1748
+#: src/components/compose.jsx:1825
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "Pli…"
 
-#: src/components/compose.jsx:2225
+#: src/components/compose.jsx:2228
 msgid "Uploaded"
 msgstr "Ĝisdatigita"
 
-#: src/components/compose.jsx:2238
+#: src/components/compose.jsx:2241
 msgid "Image description"
 msgstr "Priskribo de bildo"
 
-#: src/components/compose.jsx:2239
+#: src/components/compose.jsx:2242
 msgid "Video description"
 msgstr "Priskribo de filmeto"
 
-#: src/components/compose.jsx:2240
+#: src/components/compose.jsx:2243
 msgid "Audio description"
 msgstr "Priskribo de aŭdaĵo"
 
-#: src/components/compose.jsx:2276
-#: src/components/compose.jsx:2296
+#: src/components/compose.jsx:2279
+#: src/components/compose.jsx:2299
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr ""
 
-#: src/components/compose.jsx:2288
-#: src/components/compose.jsx:2308
+#: src/components/compose.jsx:2291
+#: src/components/compose.jsx:2311
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr ""
 
-#: src/components/compose.jsx:2316
+#: src/components/compose.jsx:2319
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr ""
 
-#: src/components/compose.jsx:2376
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2379
+#: src/components/compose.jsx:2629
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Forigi"
 
-#: src/components/compose.jsx:2393
+#: src/components/compose.jsx:2396
 #: src/compose.jsx:83
 msgid "Error"
 msgstr "Eraro"
 
-#: src/components/compose.jsx:2418
+#: src/components/compose.jsx:2421
 msgid "Edit image description"
 msgstr "Redakti bildopriskribon"
 
-#: src/components/compose.jsx:2419
+#: src/components/compose.jsx:2422
 msgid "Edit video description"
 msgstr "Redakti videopriskribon"
 
-#: src/components/compose.jsx:2420
+#: src/components/compose.jsx:2423
 msgid "Edit audio description"
 msgstr "Redakti aŭdpriskribon"
 
-#: src/components/compose.jsx:2465
-#: src/components/compose.jsx:2514
+#: src/components/compose.jsx:2468
+#: src/components/compose.jsx:2517
 msgid "Generating description. Please wait…"
 msgstr "Kreante priskribon. Bonvolu atendi…"
 
-#: src/components/compose.jsx:2485
+#: src/components/compose.jsx:2488
 msgid "Failed to generate description: {0}"
 msgstr "Malsukcesis krei priskribon: {0}"
 
-#: src/components/compose.jsx:2486
+#: src/components/compose.jsx:2489
 msgid "Failed to generate description"
 msgstr "Malsukcesis krei priskribon"
 
-#: src/components/compose.jsx:2498
-#: src/components/compose.jsx:2504
-#: src/components/compose.jsx:2550
+#: src/components/compose.jsx:2501
+#: src/components/compose.jsx:2507
+#: src/components/compose.jsx:2553
 msgid "Generate description…"
 msgstr "Krei priskribon…"
 
-#: src/components/compose.jsx:2537
+#: src/components/compose.jsx:2540
 msgid "Failed to generate description{0}"
 msgstr "Malsukcesis krei priskribon{0}"
 
-#: src/components/compose.jsx:2552
+#: src/components/compose.jsx:2555
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— eksperimenta</0>"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2574
 msgid "Done"
 msgstr "Farite"
 
-#: src/components/compose.jsx:2607
+#: src/components/compose.jsx:2610
 msgid "Choice {0}"
 msgstr "Elekti {0}"
 
-#: src/components/compose.jsx:2654
+#: src/components/compose.jsx:2657
 msgid "Multiple choices"
 msgstr "Multoblaj elektoj"
 
-#: src/components/compose.jsx:2657
+#: src/components/compose.jsx:2660
 msgid "Duration"
 msgstr "Daŭro"
 
-#: src/components/compose.jsx:2688
+#: src/components/compose.jsx:2691
 msgid "Remove poll"
 msgstr "Forigi balotenketon"
 
-#: src/components/compose.jsx:2902
+#: src/components/compose.jsx:2905
 msgid "Search accounts"
 msgstr "Serĉi kontojn"
 
-#: src/components/compose.jsx:2943
+#: src/components/compose.jsx:2946
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "Aldoni"
 
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2959
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "Eraro dum ŝargo de kontoj"
 
-#: src/components/compose.jsx:3099
+#: src/components/compose.jsx:3102
 msgid "Custom emojis"
 msgstr "Propraj emoĝioj"
 
-#: src/components/compose.jsx:3119
+#: src/components/compose.jsx:3122
 msgid "Search emoji"
 msgstr "Serĉi emoĝion"
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3153
 msgid "Error loading custom emojis"
 msgstr "Eraro dum ŝarĝo de propraj emoĝioj"
 
-#: src/components/compose.jsx:3161
+#: src/components/compose.jsx:3164
 msgid "Recently used"
 msgstr "Ofte uzataj"
 
-#: src/components/compose.jsx:3162
+#: src/components/compose.jsx:3165
 msgid "Others"
 msgstr "Aliaj"
 
-#: src/components/compose.jsx:3200
+#: src/components/compose.jsx:3203
 msgid "{0} more…"
 msgstr "{0} pli…"
 
-#: src/components/compose.jsx:3338
+#: src/components/compose.jsx:3341
 msgid "Search GIFs"
 msgstr "Serĉi movbildojn"
 
-#: src/components/compose.jsx:3353
+#: src/components/compose.jsx:3356
 msgid "Powered by GIPHY"
 msgstr ""
 
-#: src/components/compose.jsx:3361
+#: src/components/compose.jsx:3364
 msgid "Type to search GIFs"
 msgstr "Tajpi por serĉi movbildojn"
 
-#: src/components/compose.jsx:3459
+#: src/components/compose.jsx:3462
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Antaŭa"
 
-#: src/components/compose.jsx:3477
+#: src/components/compose.jsx:3480
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Sekva"
 
-#: src/components/compose.jsx:3494
+#: src/components/compose.jsx:3497
 msgid "Error loading GIFs"
 msgstr "Eraro dum ŝargi de movbildoj"
 

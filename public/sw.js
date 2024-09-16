@@ -75,13 +75,11 @@ const iconsRoute = new Route(
 registerRoute(iconsRoute);
 
 // 1-day cache for
-// - /api/v1/instance
 // - /api/v1/custom_emojis
-// - /api/v1/preferences
 // - /api/v1/lists/:id
 // - /api/v1/announcements
 const apiExtendedRoute = new RegExpRoute(
-  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+|announcements)$/,
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(custom_emojis|lists\/\d+|announcements)$/,
   new StaleWhileRevalidate({
     cacheName: 'api-extended',
     plugins: [

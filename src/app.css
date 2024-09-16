@@ -367,7 +367,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   --line-dir: var(--to-forward);
 }
-.timeline:not(.contextual) > li + li {
+.timeline:not(.contextual) > li + li:not(.timeline-item-carousel) {
   content-visibility: auto;
   contain-intrinsic-size: auto 160px;
 }

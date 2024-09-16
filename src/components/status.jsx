@@ -2564,6 +2564,25 @@ function isCardPost(domain) {
   return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
 }
 
+function Byline({ authors, children }) {
+  if (!authors?.[0]?.account?.id) return children;
+  const author = authors[0].account;
+
+  return (
+    <div class="card-byline">
+      {children}
+      <div class="card-byline-author">
+        <Icon icon="link" size="s" />{' '}
+        <small>
+          <Trans comment="More from [Author]">
+            More from <NameText account={author} showAvatar />
+          </Trans>
+        </small>
+      </div>
+    </div>
+  );
+}
+
 function Card({ card, selfReferential, instance }) {
   const snapStates = useSnapshot(states);
   const {
@@ -2584,6 +2603,7 @@ function Card({ card, selfReferential, instance }) {
     embedUrl,
     language,
     publishedAt,
+    authors,
   } = card;
 
   /* type
@@ -2677,60 +2697,65 @@ function Card({ card, selfReferential, instance }) {
     const isPost = isCardPost(domain);
 
     return (
-      <a
-        href={cardStatusURL || url}
-        target={cardStatusURL ? null : '_blank'}
-        rel="nofollow noopener noreferrer"
-        class={`card link ${isPost ? 'card-post' : ''} ${
-          blurhashImage ? '' : size
-        }`}
-        style={{
-          '--average-color':
-            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-        }}
-        onClick={handleClick}
-      >
-        <div class="card-image">
-          <img
-            src={image || blurhashImage}
-            width={width}
-            height={height}
-            loading="lazy"
-            alt={imageDescription || ''}
-            onError={(e) => {
-              try {
-                e.target.style.display = 'none';
-              } catch (e) {}
-            }}
-            style={{
-              '--anim-duration':
-                width &&
-                height &&
-                `${Math.min(Math.max(Math.max(width, height) / 100, 5), 120)}s`,
-            }}
-          />
-        </div>
-        <div class="meta-container" lang={language}>
-          <p class="meta domain">
-            <span class="domain">{domain}</span>{' '}
-            {!!publishedAt && <>&middot; </>}
-            {!!publishedAt && (
-              <>
-                <RelativeTime datetime={publishedAt} format="micro" />
-              </>
-            )}
-          </p>
-          <p class="title" dir="auto" title={title}>
-            {title}
-          </p>
-          <p class="meta" dir="auto" title={description}>
-            {description ||
-              (!!publishedAt && (
-                <RelativeTime datetime={publishedAt} format="micro" />
-              ))}
-          </p>
-        </div>
-      </a>
+      <Byline authors={authors}>
+        <a
+          href={cardStatusURL || url}
+          target={cardStatusURL ? null : '_blank'}
+          rel="nofollow noopener noreferrer"
+          class={`card link ${isPost ? 'card-post' : ''} ${
+            blurhashImage ? '' : size
+          }`}
+          style={{
+            '--average-color':
+              rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+          }}
+          onClick={handleClick}
+        >
+          <div class="card-image">
+            <img
+              src={image || blurhashImage}
+              width={width}
+              height={height}
+              loading="lazy"
+              alt={imageDescription || ''}
+              onError={(e) => {
+                try {
+                  e.target.style.display = 'none';
+                } catch (e) {}
+              }}
+              style={{
+                '--anim-duration':
+                  width &&
+                  height &&
+                  `${Math.min(
+                    Math.max(Math.max(width, height) / 100, 5),
+                    120,
+                  )}s`,
+              }}
+            />
+          </div>
+          <div class="meta-container" lang={language}>
+            <p class="meta domain">
+              <span class="domain">{domain}</span>{' '}
+              {!!publishedAt && <>&middot; </>}
+              {!!publishedAt && (
+                <>
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                </>
+              )}
+            </p>
+            <p class="title" dir="auto" title={title}>
+              {title}
+            </p>
+            <p class="meta" dir="auto" title={description}>
+              {description ||
+                (!!publishedAt && (
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                ))}
+            </p>
+          </div>
+        </a>
+      </Byline>
     );
   } else if (type === 'photo') {
     return (

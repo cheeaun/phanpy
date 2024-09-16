@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-14 10:25\n"
+"PO-Revision-Date: 2024-09-16 07:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,7 @@ msgstr "Automatizzato"
 #: src/components/account-block.jsx:166
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1470
+#: src/pages/catchup.jsx:1471
 msgid "Group"
 msgstr "Gruppo"
 
@@ -110,7 +110,7 @@ msgstr "Post"
 
 #: src/components/account-info.jsx:427
 #: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2456
+#: src/components/compose.jsx:2459
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1636
@@ -124,7 +124,7 @@ msgstr "Post"
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
 #: src/pages/status.jsx:1169
-#: src/pages/trending.jsx:437
+#: src/pages/trending.jsx:471
 msgid "More"
 msgstr "Altro"
 
@@ -188,8 +188,8 @@ msgstr "Originale"
 #: src/components/account-info.jsx:859
 #: src/components/status.jsx:2163
 #: src/pages/catchup.jsx:71
-#: src/pages/catchup.jsx:1444
-#: src/pages/catchup.jsx:2055
+#: src/pages/catchup.jsx:1445
+#: src/pages/catchup.jsx:2056
 #: src/pages/status.jsx:892
 #: src/pages/status.jsx:1494
 msgid "Replies"
@@ -197,8 +197,8 @@ msgstr "Risposte"
 
 #: src/components/account-info.jsx:863
 #: src/pages/catchup.jsx:72
-#: src/pages/catchup.jsx:1446
-#: src/pages/catchup.jsx:2067
+#: src/pages/catchup.jsx:1447
+#: src/pages/catchup.jsx:2068
 #: src/pages/settings.jsx:1045
 msgid "Boosts"
 msgstr "Potenziamenti"
@@ -294,7 +294,7 @@ msgstr "Impossibile copiare link"
 #: src/components/account-info.jsx:1308
 #: src/components/shortcuts-settings.jsx:1056
 #: src/components/status.jsx:1088
-#: src/components/status.jsx:3121
+#: src/components/status.jsx:3146
 msgid "Copy"
 msgstr "Copia"
 
@@ -406,10 +406,10 @@ msgstr "Segui"
 #: src/components/account-info.jsx:2089
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:797
-#: src/components/compose.jsx:2412
-#: src/components/compose.jsx:2885
-#: src/components/compose.jsx:3093
-#: src/components/compose.jsx:3323
+#: src/components/compose.jsx:2415
+#: src/components/compose.jsx:2888
+#: src/components/compose.jsx:3096
+#: src/components/compose.jsx:3326
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -422,11 +422,11 @@ msgstr "Segui"
 #: src/components/shortcuts-settings.jsx:227
 #: src/components/shortcuts-settings.jsx:580
 #: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2846
-#: src/components/status.jsx:3085
-#: src/components/status.jsx:3583
+#: src/components/status.jsx:2871
+#: src/components/status.jsx:3110
+#: src/components/status.jsx:3608
 #: src/pages/accounts.jsx:36
-#: src/pages/catchup.jsx:1580
+#: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
 #: src/pages/notifications.jsx:840
@@ -552,8 +552,8 @@ msgstr "Ci sono modifiche non salvate. Scartare il post?"
 
 #: src/components/compose.jsx:614
 #: src/components/compose.jsx:630
-#: src/components/compose.jsx:1333
-#: src/components/compose.jsx:1594
+#: src/components/compose.jsx:1336
+#: src/components/compose.jsx:1597
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Puoi allegare fino a 1 documento.} other {Puoi allegare fino a # documenti.}}"
 
@@ -662,19 +662,19 @@ msgstr "Modifica il tuo post"
 msgid "What are you doing?"
 msgstr "Che stai facendo?"
 
-#: src/components/compose.jsx:1271
+#: src/components/compose.jsx:1274
 msgid "Mark media as sensitive"
 msgstr "Contrassegna media come sensibili"
 
-#: src/components/compose.jsx:1369
+#: src/components/compose.jsx:1372
 msgid "Add poll"
 msgstr "Aggiungi sondaggio"
 
-#: src/components/compose.jsx:1391
+#: src/components/compose.jsx:1394
 msgid "Add custom emoji"
 msgstr "Aggiungo emoji personalizzata"
 
-#: src/components/compose.jsx:1475
+#: src/components/compose.jsx:1478
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:831
 #: src/components/status.jsx:1616
@@ -683,195 +683,195 @@ msgstr "Aggiungo emoji personalizzata"
 msgid "Reply"
 msgstr "Rispondi"
 
-#: src/components/compose.jsx:1477
+#: src/components/compose.jsx:1480
 msgid "Update"
 msgstr "Aggiorna"
 
-#: src/components/compose.jsx:1478
+#: src/components/compose.jsx:1481
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Pubblica"
 
-#: src/components/compose.jsx:1606
+#: src/components/compose.jsx:1609
 msgid "Downloading GIF…"
 msgstr "Scarico GIF…"
 
-#: src/components/compose.jsx:1634
+#: src/components/compose.jsx:1637
 msgid "Failed to download GIF"
 msgstr "Download GIF fallito"
 
-#: src/components/compose.jsx:1745
-#: src/components/compose.jsx:1822
+#: src/components/compose.jsx:1748
+#: src/components/compose.jsx:1825
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "Altro…"
 
-#: src/components/compose.jsx:2225
+#: src/components/compose.jsx:2228
 msgid "Uploaded"
 msgstr "Caricato"
 
-#: src/components/compose.jsx:2238
+#: src/components/compose.jsx:2241
 msgid "Image description"
 msgstr "Descrizione immagine"
 
-#: src/components/compose.jsx:2239
+#: src/components/compose.jsx:2242
 msgid "Video description"
 msgstr "Descrizione video"
 
-#: src/components/compose.jsx:2240
+#: src/components/compose.jsx:2243
 msgid "Audio description"
 msgstr "Descrizione audio"
 
-#: src/components/compose.jsx:2276
-#: src/components/compose.jsx:2296
+#: src/components/compose.jsx:2279
+#: src/components/compose.jsx:2299
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File troppo pesante. Il caricamento potrebbe riscontrare degli errori. Prova a ridurre la dimensione del file da {0} a {1} o meno."
 
-#: src/components/compose.jsx:2288
-#: src/components/compose.jsx:2308
+#: src/components/compose.jsx:2291
+#: src/components/compose.jsx:2311
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimensioni eccessive. Il caricamento potrebbe riscontrare degli errori. Prova a ridurre le dimensioni da {0}×{1}px a {2}×{3}px."
 
-#: src/components/compose.jsx:2316
+#: src/components/compose.jsx:2319
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frequenza fotogrammi troppo alta. Il caricamento potrebbe riscontrare degli errori."
 
-#: src/components/compose.jsx:2376
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2379
+#: src/components/compose.jsx:2629
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: src/components/compose.jsx:2393
+#: src/components/compose.jsx:2396
 #: src/compose.jsx:83
 msgid "Error"
 msgstr "Errore"
 
-#: src/components/compose.jsx:2418
+#: src/components/compose.jsx:2421
 msgid "Edit image description"
 msgstr "Modifica descrizione immagine"
 
-#: src/components/compose.jsx:2419
+#: src/components/compose.jsx:2422
 msgid "Edit video description"
 msgstr "Modifica descrizione video"
 
-#: src/components/compose.jsx:2420
+#: src/components/compose.jsx:2423
 msgid "Edit audio description"
 msgstr "Modifica descrizione audio"
 
-#: src/components/compose.jsx:2465
-#: src/components/compose.jsx:2514
+#: src/components/compose.jsx:2468
+#: src/components/compose.jsx:2517
 msgid "Generating description. Please wait…"
 msgstr "Genero descrizione. Attendere…"
 
-#: src/components/compose.jsx:2485
+#: src/components/compose.jsx:2488
 msgid "Failed to generate description: {0}"
 msgstr "Generazione descrizione fallita: {0}"
 
-#: src/components/compose.jsx:2486
+#: src/components/compose.jsx:2489
 msgid "Failed to generate description"
 msgstr "Generazione descrizione fallita"
 
-#: src/components/compose.jsx:2498
-#: src/components/compose.jsx:2504
-#: src/components/compose.jsx:2550
+#: src/components/compose.jsx:2501
+#: src/components/compose.jsx:2507
+#: src/components/compose.jsx:2553
 msgid "Generate description…"
 msgstr "Genera descrizione…"
 
-#: src/components/compose.jsx:2537
+#: src/components/compose.jsx:2540
 msgid "Failed to generate description{0}"
 msgstr "Generazione descrizione fallita: {0}"
 
-#: src/components/compose.jsx:2552
+#: src/components/compose.jsx:2555
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— sperimentale</0>"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2574
 msgid "Done"
 msgstr "Fine"
 
-#: src/components/compose.jsx:2607
+#: src/components/compose.jsx:2610
 msgid "Choice {0}"
 msgstr "Opzione {0}"
 
-#: src/components/compose.jsx:2654
+#: src/components/compose.jsx:2657
 msgid "Multiple choices"
 msgstr "Scelta multipla"
 
-#: src/components/compose.jsx:2657
+#: src/components/compose.jsx:2660
 msgid "Duration"
 msgstr "Durata"
 
-#: src/components/compose.jsx:2688
+#: src/components/compose.jsx:2691
 msgid "Remove poll"
 msgstr "Rimuovi sondaggio"
 
-#: src/components/compose.jsx:2902
+#: src/components/compose.jsx:2905
 msgid "Search accounts"
 msgstr "Cerca account"
 
-#: src/components/compose.jsx:2943
+#: src/components/compose.jsx:2946
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "Aggiungi"
 
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2959
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "Errore caricamento account"
 
-#: src/components/compose.jsx:3099
+#: src/components/compose.jsx:3102
 msgid "Custom emojis"
 msgstr "Emoji personalizzate"
 
-#: src/components/compose.jsx:3119
+#: src/components/compose.jsx:3122
 msgid "Search emoji"
 msgstr "Cerca emoji"
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3153
 msgid "Error loading custom emojis"
 msgstr "Errore caricamento emoji personalizzate"
 
-#: src/components/compose.jsx:3161
+#: src/components/compose.jsx:3164
 msgid "Recently used"
 msgstr "Usate di recente"
 
-#: src/components/compose.jsx:3162
+#: src/components/compose.jsx:3165
 msgid "Others"
 msgstr "Altri"
 
-#: src/components/compose.jsx:3200
+#: src/components/compose.jsx:3203
 msgid "{0} more…"
 msgstr "{0} altri…"
 
-#: src/components/compose.jsx:3338
+#: src/components/compose.jsx:3341
 msgid "Search GIFs"
 msgstr "Cerca GIF"
 
-#: src/components/compose.jsx:3353
+#: src/components/compose.jsx:3356
 msgid "Powered by GIPHY"
 msgstr "Fornito da GIPHY"
 
-#: src/components/compose.jsx:3361
+#: src/components/compose.jsx:3364
 msgid "Type to search GIFs"
 msgstr "Scrivi per cercare GIF"
 
-#: src/components/compose.jsx:3459
+#: src/components/compose.jsx:3462
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Indietro"
 
-#: src/components/compose.jsx:3477
+#: src/components/compose.jsx:3480
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Avanti"
 
-#: src/components/compose.jsx:3494
+#: src/components/compose.jsx:3497
 msgid "Error loading GIFs"
 msgstr "Errore caricamento GIF"
 
@@ -920,7 +920,7 @@ msgid "No drafts found."
 msgstr "Nessuna bozza."
 
 #: src/components/drafts.jsx:245
-#: src/pages/catchup.jsx:1927
+#: src/pages/catchup.jsx:1928
 msgid "Poll"
 msgstr "Sondaggio"
 
@@ -980,7 +980,7 @@ msgstr "Fine."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/nav-menu.jsx:405
-#: src/pages/catchup.jsx:1618
+#: src/pages/catchup.jsx:1619
 msgid "Keyboard shortcuts"
 msgstr "Abbreviazioni da tastiera"
 
@@ -989,12 +989,12 @@ msgid "Keyboard shortcuts help"
 msgstr "Aiuto abbreviazioni da tastiera"
 
 #: src/components/keyboard-shortcuts-help.jsx:55
-#: src/pages/catchup.jsx:1643
+#: src/pages/catchup.jsx:1644
 msgid "Next post"
 msgstr "Post successivo"
 
 #: src/components/keyboard-shortcuts-help.jsx:59
-#: src/pages/catchup.jsx:1651
+#: src/pages/catchup.jsx:1652
 msgid "Previous post"
 msgstr "Post precedente"
 
@@ -1019,7 +1019,7 @@ msgid "Load new posts"
 msgstr "Carica nuovi post"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
-#: src/pages/catchup.jsx:1675
+#: src/pages/catchup.jsx:1676
 msgid "Open post details"
 msgstr "Apri dettagli post"
 
@@ -1212,12 +1212,12 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrato: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3413
-#: src/components/status.jsx:3509
-#: src/components/status.jsx:3587
+#: src/components/status.jsx:3438
+#: src/components/status.jsx:3534
+#: src/components/status.jsx:3612
 #: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
-#: src/pages/catchup.jsx:1875
+#: src/pages/catchup.jsx:1876
 msgid "Filtered"
 msgstr "Filtrato"
 
@@ -1257,7 +1257,7 @@ msgstr "Recupera"
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
 #: src/pages/settings.jsx:1037
-#: src/pages/trending.jsx:347
+#: src/pages/trending.jsx:381
 msgid "Mentions"
 msgstr "Menzioni"
 
@@ -1307,8 +1307,8 @@ msgstr "Segnalibri"
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:198
-#: src/pages/catchup.jsx:1445
-#: src/pages/catchup.jsx:2061
+#: src/pages/catchup.jsx:1446
+#: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
 #: src/pages/settings.jsx:1041
@@ -1359,7 +1359,7 @@ msgstr "Accedi"
 #: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:169
-#: src/pages/trending.jsx:407
+#: src/pages/trending.jsx:441
 msgid "Trending"
 msgstr "Tendenze"
 
@@ -2099,7 +2099,7 @@ msgid "Edited: {editedDateText}"
 msgstr "Modificato: {editedDateText}"
 
 #: src/components/status.jsx:1123
-#: src/components/status.jsx:3090
+#: src/components/status.jsx:3115
 msgid "Embed post"
 msgstr "Incorpora post"
 
@@ -2223,77 +2223,82 @@ msgstr "Modificato"
 msgid "Comments"
 msgstr "Commenti"
 
-#: src/components/status.jsx:2851
+#. More from [Author]
+#: src/components/status.jsx:2577
+msgid "More from <0/>"
+msgstr ""
+
+#: src/components/status.jsx:2876
 msgid "Edit History"
 msgstr "Modifica Cronologia"
 
-#: src/components/status.jsx:2855
+#: src/components/status.jsx:2880
 msgid "Failed to load history"
 msgstr "Impossibile caricare cronologia"
 
-#: src/components/status.jsx:2860
+#: src/components/status.jsx:2885
 msgid "Loading…"
 msgstr "Carico…"
 
-#: src/components/status.jsx:3095
+#: src/components/status.jsx:3120
 msgid "HTML Code"
 msgstr "Codice HTML"
 
-#: src/components/status.jsx:3112
+#: src/components/status.jsx:3137
 msgid "HTML code copied"
 msgstr "Codice HTML copiato"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3140
 msgid "Unable to copy HTML code"
 msgstr "Impossibile copiare codice HTML"
 
-#: src/components/status.jsx:3127
+#: src/components/status.jsx:3152
 msgid "Media attachments:"
 msgstr "Allegati multimediali:"
 
-#: src/components/status.jsx:3149
+#: src/components/status.jsx:3174
 msgid "Account Emojis:"
 msgstr "Emoji dell'account:"
 
-#: src/components/status.jsx:3180
-#: src/components/status.jsx:3225
+#: src/components/status.jsx:3205
+#: src/components/status.jsx:3250
 msgid "static URL"
 msgstr "URL statico"
 
-#: src/components/status.jsx:3194
+#: src/components/status.jsx:3219
 msgid "Emojis:"
 msgstr "Emoji:"
 
-#: src/components/status.jsx:3239
+#: src/components/status.jsx:3264
 msgid "Notes:"
 msgstr "Note:"
 
-#: src/components/status.jsx:3243
+#: src/components/status.jsx:3268
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "È statico, non stilizzato e senza script. Potresti dover applicare i tuoi stili e modificare di conseguenza."
 
-#: src/components/status.jsx:3249
+#: src/components/status.jsx:3274
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "I sondaggi non sono interattivi, diventano una lista con i conteggi dei voti."
 
-#: src/components/status.jsx:3254
+#: src/components/status.jsx:3279
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Gli allegati multimediali possono essere immagini, video, audio o qualsiasi tipo di file."
 
-#: src/components/status.jsx:3260
+#: src/components/status.jsx:3285
 msgid "Post could be edited or deleted later."
 msgstr "Il post può essere modificato o eliminato dopo."
 
-#: src/components/status.jsx:3266
+#: src/components/status.jsx:3291
 msgid "Preview"
 msgstr "Anteprima"
 
-#: src/components/status.jsx:3275
+#: src/components/status.jsx:3300
 msgid "Note: This preview is lightly styled."
 msgstr "Nota: Questa anteprima è leggermente stilizzata."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3517
+#: src/components/status.jsx:3542
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> ha potenziato"
 
@@ -2320,7 +2325,7 @@ msgstr "Post fissati"
 
 #: src/components/timeline.jsx:946
 #: src/components/timeline.jsx:953
-#: src/pages/catchup.jsx:1892
+#: src/pages/catchup.jsx:1893
 msgid "Thread"
 msgstr "Discussione"
 
@@ -2444,7 +2449,7 @@ msgstr "Niente da vedere qui."
 
 #: src/pages/account-statuses.jsx:506
 #: src/pages/public.jsx:97
-#: src/pages/trending.jsx:415
+#: src/pages/trending.jsx:449
 msgid "Unable to load posts"
 msgstr "Impossibile caricare i post"
 
@@ -2583,7 +2588,7 @@ msgid "Catch-up <0>beta</0>"
 msgstr "Recupero <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
-#: src/pages/catchup.jsx:1584
+#: src/pages/catchup.jsx:1585
 msgid "Help"
 msgstr "Aiuto"
 
@@ -2660,93 +2665,93 @@ msgid "Reset filters"
 msgstr "Resetta filtri"
 
 #: src/pages/catchup.jsx:1144
-#: src/pages/catchup.jsx:1590
+#: src/pages/catchup.jsx:1591
 msgid "Top links"
 msgstr "Top link"
 
-#: src/pages/catchup.jsx:1260
+#: src/pages/catchup.jsx:1261
 msgid "Shared by {0}"
 msgstr "Condiviso da {0}"
 
-#: src/pages/catchup.jsx:1315
+#: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:222
 msgid "All"
 msgstr "Tutto"
 
-#: src/pages/catchup.jsx:1400
+#: src/pages/catchup.jsx:1401
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural,one {# autore} other {# autori}}"
 
-#: src/pages/catchup.jsx:1412
+#: src/pages/catchup.jsx:1413
 msgid "Sort"
 msgstr "Ordina"
 
-#: src/pages/catchup.jsx:1443
+#: src/pages/catchup.jsx:1444
 msgid "Date"
 msgstr "Data"
 
-#: src/pages/catchup.jsx:1447
+#: src/pages/catchup.jsx:1448
 msgid "Density"
 msgstr "Densità"
 
-#: src/pages/catchup.jsx:1485
+#: src/pages/catchup.jsx:1486
 msgid "Authors"
 msgstr "Autori"
 
-#: src/pages/catchup.jsx:1486
+#: src/pages/catchup.jsx:1487
 msgid "None"
 msgstr "Nessuno"
 
-#: src/pages/catchup.jsx:1502
+#: src/pages/catchup.jsx:1503
 msgid "Show all authors"
 msgstr "Mostra tutti gli autori"
 
-#: src/pages/catchup.jsx:1553
+#: src/pages/catchup.jsx:1554
 msgid "You don't have to read everything."
 msgstr "Non devi leggere tutto."
 
-#: src/pages/catchup.jsx:1554
+#: src/pages/catchup.jsx:1555
 msgid "That's all."
 msgstr "È tutto."
 
-#: src/pages/catchup.jsx:1562
+#: src/pages/catchup.jsx:1563
 msgid "Back to top"
 msgstr "Torna su"
 
-#: src/pages/catchup.jsx:1593
+#: src/pages/catchup.jsx:1594
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
 msgstr "Link condivisi da account che segui, ordinati per numero di condivisioni, potenziamenti e Mi piace."
 
-#: src/pages/catchup.jsx:1599
+#: src/pages/catchup.jsx:1600
 msgid "Sort: Density"
 msgstr "Ordina: Densità"
 
-#: src/pages/catchup.jsx:1602
+#: src/pages/catchup.jsx:1603
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
 msgstr "I post sono ordinati per densità o profondità informativa. I post più corti sono più \"leggeri\" mentre i post più lunghi sono più \"pesanti\". I post con foto sono più \"pesanti\" dei post senza foto."
 
-#: src/pages/catchup.jsx:1609
+#: src/pages/catchup.jsx:1610
 msgid "Group: Authors"
 msgstr "Gruppo: Autori"
 
-#: src/pages/catchup.jsx:1612
+#: src/pages/catchup.jsx:1613
 msgid "Posts are grouped by authors, sorted by posts count per author."
 msgstr "I post vengono raggruppati in base agli autori, ordinati dal numero di post per autore."
 
-#: src/pages/catchup.jsx:1659
+#: src/pages/catchup.jsx:1660
 msgid "Next author"
 msgstr "Prossimo autore"
 
-#: src/pages/catchup.jsx:1667
+#: src/pages/catchup.jsx:1668
 msgid "Previous author"
 msgstr "Autore precedente"
 
-#: src/pages/catchup.jsx:1683
+#: src/pages/catchup.jsx:1684
 msgid "Scroll to top"
 msgstr "Torna su"
 
-#: src/pages/catchup.jsx:1874
+#: src/pages/catchup.jsx:1875
 msgid "Filtered: {0}"
 msgstr "Filtrati: {0}"
 
@@ -2991,25 +2996,25 @@ msgstr "Aggiungi a Scorciatoie"
 
 #: src/pages/hashtag.jsx:486
 #: src/pages/public.jsx:139
-#: src/pages/trending.jsx:444
+#: src/pages/trending.jsx:478
 msgid "Enter a new instance e.g. \"mastodon.social\""
 msgstr "Inserisci una nuova istanza es. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
-#: src/pages/trending.jsx:447
+#: src/pages/trending.jsx:481
 msgid "Invalid instance"
 msgstr "Istanza non valida"
 
 #: src/pages/hashtag.jsx:503
 #: src/pages/public.jsx:156
-#: src/pages/trending.jsx:459
+#: src/pages/trending.jsx:493
 msgid "Go to another instance…"
 msgstr "Vai in un'altra istanza…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
-#: src/pages/trending.jsx:470
+#: src/pages/trending.jsx:504
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr "Vai alla mia istanza (<0>{currentInstance}</0>)"
 
@@ -3626,27 +3631,32 @@ msgstr ""
 msgid "View post with its replies"
 msgstr "Visualizza il post con le sue risposte"
 
-#: src/pages/trending.jsx:70
+#: src/pages/trending.jsx:71
 msgid "Trending ({instance})"
 msgstr "In tendenza su ({instance})"
 
-#: src/pages/trending.jsx:227
+#: src/pages/trending.jsx:228
 msgid "Trending News"
 msgstr "Notizie di tendenza"
 
-#: src/pages/trending.jsx:374
+#. By [Author]
+#: src/pages/trending.jsx:347
+msgid "By {0}"
+msgstr ""
+
+#: src/pages/trending.jsx:408
 msgid "Back to showing trending posts"
 msgstr ""
 
-#: src/pages/trending.jsx:379
+#: src/pages/trending.jsx:413
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr ""
 
-#: src/pages/trending.jsx:391
+#: src/pages/trending.jsx:425
 msgid "Trending posts"
 msgstr "Post in tendenza"
 
-#: src/pages/trending.jsx:414
+#: src/pages/trending.jsx:448
 msgid "No trending posts."
 msgstr "Nessun post in tendenza."
 

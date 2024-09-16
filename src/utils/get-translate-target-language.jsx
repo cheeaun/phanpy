@@ -1,16 +1,17 @@
 import translationTargetLanguages from '../data/lingva-target-languages';
 
 import localeMatch from './locale-match';
+import mem from './mem';
 import states from './states';
 
-const locales = [
+const locales = mem(() => [
   new Intl.DateTimeFormat().resolvedOptions().locale,
   ...navigator.languages,
-];
+]);
 
 const localeTargetLanguages = () =>
   localeMatch(
-    locales,
+    locales(),
     translationTargetLanguages.map((l) => l.code.replace('_', '-')), // The underscore will fail Intl.Locale inside `match`
     'en',
   );

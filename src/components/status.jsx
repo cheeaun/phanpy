@@ -26,7 +26,7 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { detectAll } from 'tinyld/light';
+// import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -51,7 +51,6 @@ import htmlContentLength from '../utils/html-content-length';
 import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
-import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -168,7 +167,8 @@ const SIZE_CLASS = {
   l: 'large',
 };
 
-const detectLang = mem((text) => {
+const detectLang = pmem(async (text) => {
+  const { detectAll } = await import('tinyld/light');
   text = text?.trim();
 
   // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
@@ -304,8 +304,8 @@ function Status({
     if (!content) return;
     if (_language) return;
     let timer;
-    timer = setTimeout(() => {
-      let detected = detectLang(
+    timer = setTimeout(async () => {
+      let detected = await detectLang(
         getHTMLText(content, {
           preProcess: (dom) => {
             // Remove anything that can skew the language detection

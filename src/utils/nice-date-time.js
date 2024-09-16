@@ -3,7 +3,9 @@ import { i18n } from '@lingui/core';
 import localeMatch from './locale-match';
 import mem from './mem';
 
-const defaultLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+const defaultLocale = mem(
+  () => new Intl.DateTimeFormat().resolvedOptions().locale,
+);
 
 const _DateTimeFormat = (opts) => {
   const { locale, dateYear, hideTime, formatOpts } = opts || {};

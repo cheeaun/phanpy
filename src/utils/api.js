@@ -60,6 +60,7 @@ export function initClient({ instance, accessToken }) {
 // Get the instance information
 // The config is needed for composing
 export async function initInstance(client, instance) {
+  __BENCHMARK.start('init-instance');
   console.log('INIT INSTANCE', client, instance);
   const { masto, accessToken } = client;
   // Request v2, fallback to v1 if fail
@@ -111,6 +112,7 @@ export async function initInstance(client, instance) {
     // masto.ws = streamClient;
     console.log('🎏 Streaming API client:', client);
   }
+  __BENCHMARK.end('init-instance');
 }
 
 // Get the account information and store it
@@ -131,6 +133,7 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
 
 // Get preferences
 export async function initPreferences(client) {
+  __BENCHMARK.start('init-preferences');
   try {
     const { masto } = client;
     const preferences = await masto.v1.preferences.fetch();
@@ -139,6 +142,7 @@ export async function initPreferences(client) {
     // silently fail
     console.error(e);
   }
+  __BENCHMARK.end('init-preferences');
 }
 
 // Get the masto instance

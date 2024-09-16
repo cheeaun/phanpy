@@ -410,8 +410,10 @@ function App() {
         setUIState('loading');
         (async () => {
           try {
-            await initPreferences(client);
-            await initInstance(client, instance);
+            await Promise.allSettled([
+              initPreferences(client),
+              initInstance(client, instance),
+            ]);
           } catch (e) {
           } finally {
             setIsLoggedIn(true);

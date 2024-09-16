@@ -48,6 +48,8 @@ import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import {
   api,
+  hasInstance,
+  hasPreferences,
   initAccount,
   initClient,
   initInstance,
@@ -410,10 +412,16 @@ function App() {
         setUIState('loading');
         (async () => {
           try {
-            await Promise.allSettled([
-              initPreferences(client),
-              initInstance(client, instance),
-            ]);
+            if (hasPreferences() && hasInstance(instance)) {
+              // Non-blocking
+              initPreferences(client);
+              initInstance(client, instance);
+            } else {
+              await Promise.allSettled([
+                initPreferences(client),
+                initInstance(client, instance),
+              ]);
+            }
           } catch (e) {
           } finally {
             setIsLoggedIn(true);

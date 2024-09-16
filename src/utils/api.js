@@ -57,6 +57,11 @@ export function initClient({ instance, accessToken }) {
   return client;
 }
 
+export function hasInstance(instance) {
+  const instances = store.local.getJSON('instances') || {};
+  return !!instances[instance];
+}
+
 // Get the instance information
 // The config is needed for composing
 export async function initInstance(client, instance) {
@@ -130,6 +135,10 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
     accessToken,
     vapidKey,
   });
+}
+
+export function hasPreferences() {
+  return !!store.account.get('preferences');
 }
 
 // Get preferences

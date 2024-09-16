@@ -1634,6 +1634,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 /* SHEET */
 
 .sheet {
+  timeline-scope: --sheet-scroll;
   align-self: flex-end;
   display: flex;
   flex-direction: column;
@@ -1708,6 +1709,27 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   padding-right: max(16px, env(safe-area-inset-right));
   user-select: none;
 }
+@keyframes header-border {
+  0% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 0 0 0 1px var(--outline-color),
+      0 8px 16px -8px var(--drop-shadow-color);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .sheet header {
+    animation: header-border 1s linear both;
+    animation-timeline: --sheet-scroll;
+    animation-range: 0 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .sheet header + main {
+    mask-image: none !important;
+  }
+}
 .sheet .sheet-close:not(.outer) + header {
   padding-right: max(44px, env(safe-area-inset-right));
 
@@ -1726,6 +1748,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   align-items: center;
 }
 .sheet main {
+  scroll-timeline: --sheet-scroll;
   overflow: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;

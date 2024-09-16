@@ -60,11 +60,11 @@ export function initClient({ instance, accessToken }) {
 // Get the instance information
 // The config is needed for composing
 export async function initInstance(client, instance) {
-  __BENCHMARK.start('init-instance');
   console.log('INIT INSTANCE', client, instance);
   const { masto, accessToken } = client;
   // Request v2, fallback to v1 if fail
   let info;
+  __BENCHMARK.start('fetch-instance');
   try {
     info = await masto.v2.instance.fetch();
   } catch (e) {}
@@ -73,6 +73,7 @@ export async function initInstance(client, instance) {
       info = await masto.v1.instance.fetch();
     } catch (e) {}
   }
+  __BENCHMARK.end('fetch-instance');
   if (!info) return;
   console.log(info);
   const {
@@ -133,16 +134,16 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
 
 // Get preferences
 export async function initPreferences(client) {
-  __BENCHMARK.start('init-preferences');
   try {
     const { masto } = client;
+    __BENCHMARK.start('fetch-preferences');
     const preferences = await masto.v1.preferences.fetch();
+    __BENCHMARK.end('fetch-preferences');
     store.account.set('preferences', preferences);
   } catch (e) {
     // silently fail
     console.error(e);
   }
-  __BENCHMARK.end('init-preferences');
 }
 
 // Get the masto instance

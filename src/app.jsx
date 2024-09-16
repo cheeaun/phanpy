@@ -416,12 +416,13 @@ function App() {
           } finally {
             setIsLoggedIn(true);
             setUIState('default');
+            __BENCHMARK.end('app-init');
           }
         })();
       } else {
         setUIState('default');
+        __BENCHMARK.end('app-init');
       }
-      __BENCHMARK.end('app-init');
     }
 
     // Cleanup

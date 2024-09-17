@@ -45,7 +45,6 @@ const imageRoute = new Route(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
         purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
@@ -88,6 +87,7 @@ const apiExtendedRoute = new RegExpRoute(
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 24 * 60 * 60, // 1 day
+        purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -129,6 +129,7 @@ const apiRoute = new RegExpRoute(
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 5 * 60, // 5 minutes
+        purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],

@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-17 13:44\n"
+"PO-Revision-Date: 2024-09-17 14:49\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -80,7 +80,7 @@ msgstr "Verificato"
 #: src/components/account-block.jsx:220
 #: src/components/account-info.jsx:777
 msgid "Joined <0>{0}</0>"
-msgstr "Iscrizione: <0>{0}</0>"
+msgstr "Iscritto <0>{0}</0>"
 
 #: src/components/account-info.jsx:57
 msgid "Forever"
@@ -1411,7 +1411,7 @@ msgstr "{account} ha richiesto di seguirti."
 
 #: src/components/notification.jsx:149
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha messo Mi piace alla tua risposta.} other {{account} ha messo Mi piace al tuo post.}}} other {{account} ha messo {postsCount} Mi piace ai tuoi post.}}} other {{postType, select, reply {<0><1>{0}</1> persone</0> hanno messo Mi piace alla tua risposta.} other {<2><3>{1}</3> persone</2> hanno messo mi piace al tuo post.}}}}"
 
 #: src/components/notification.jsx:191
 msgid "A poll you have voted in or created has ended."
@@ -1431,7 +1431,7 @@ msgstr "Un post con cui hai interagito è stato modificato."
 
 #: src/components/notification.jsx:202
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ha rebloggato e ha messo Mi piace alla tua risposta.} other {{account} ha rebloggato e messo Mi piace al tuo post.}}} other {{account} ha rebloggato e messo Mi piace a {postsCount} dei tuoi post.}}} other {{postType, select, reply {<0><1>{0}</1> persone</0> hanno rebloggato e messo Mi piace alla tua risposta.} other {<2><3>{1}</3> persone</2> hanno rebloggato e messo Mi piace al tuo post.}}}}"
 
 #: src/components/notification.jsx:244
 msgid "{account} signed up."
@@ -1497,7 +1497,7 @@ msgstr "[Tipo notifica sconosciuto: {type}]"
 #: src/components/status.jsx:938
 #: src/components/status.jsx:948
 msgid "Boosted/Liked by…"
-msgstr "Potenziato da/Piace a…"
+msgstr "Rebloggato da/Piace a…"
 
 #: src/components/notification.jsx:426
 msgid "Liked by…"
@@ -1505,7 +1505,7 @@ msgstr "Piace a…"
 
 #: src/components/notification.jsx:427
 msgid "Boosted by…"
-msgstr "Potenziato da…"
+msgstr "Rebloggato da…"
 
 #: src/components/notification.jsx:428
 msgid "Followed by…"
@@ -1873,7 +1873,7 @@ msgstr "Aggiungi scorciatoia"
 
 #: src/components/shortcuts-settings.jsx:620
 msgid "Timeline"
-msgstr "Cronologia"
+msgstr "Timeline"
 
 #: src/components/shortcuts-settings.jsx:646
 msgid "List"
@@ -2010,7 +2010,7 @@ msgstr "Importa/esporta impostazioni da/su un server istanza (molto sperimentale
 
 #: src/components/status.jsx:464
 msgid "<0/> <1>boosted</1>"
-msgstr "<0/><1>potenziato</1>"
+msgstr "<0/><1>rebloggato</1>"
 
 #: src/components/status.jsx:563
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
@@ -2037,7 +2037,7 @@ msgstr "Post di @{0} aggiunto ai segnalibri"
 #: src/components/status.jsx:2294
 #: src/components/status.jsx:2326
 msgid "Unboost"
-msgstr "Annulla potenziamento"
+msgstr "Annulla reblog"
 
 #: src/components/status.jsx:855
 #: src/components/status.jsx:2309
@@ -2056,16 +2056,16 @@ msgstr "Post vecchio (<0>{0}</0>)"
 #: src/components/status.jsx:889
 #: src/components/status.jsx:1341
 msgid "Unboosted @{0}'s post"
-msgstr "Potenziamento del post di @{0} annullato"
+msgstr "Reblog del post di @{0} annullato"
 
 #: src/components/status.jsx:890
 #: src/components/status.jsx:1342
 msgid "Boosted @{0}'s post"
-msgstr "Hai potenziato il post di @{0}"
+msgstr "Hai rebloggato il post di @{0}"
 
 #: src/components/status.jsx:902
 msgid "Boost…"
-msgstr "Potenzia…"
+msgstr "Reblogga…"
 
 #: src/components/status.jsx:914
 #: src/components/status.jsx:1626
@@ -2176,7 +2176,7 @@ msgstr "Ti piace"
 #: src/components/status.jsx:1660
 #: src/components/status.jsx:2327
 msgid "Boosted"
-msgstr "Potenziato"
+msgstr "Rebloggato"
 
 #: src/components/status.jsx:1670
 #: src/components/status.jsx:2352
@@ -2317,7 +2317,7 @@ msgstr "Riprova"
 
 #: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
-msgstr "{0, plural, one {# potenziamento} other {# potenziamenti}}"
+msgstr "{0, plural, one {# Reblog} other {# Reblog}}"
 
 #: src/components/timeline.jsx:593
 msgid "Pinned posts"
@@ -2393,7 +2393,7 @@ msgstr "{accountDisplay} (+ Risposte)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- Potenziamenti)"
+msgstr "{accountDisplay} (- Reblog)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
@@ -2425,7 +2425,7 @@ msgstr "+ Risposte"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
-msgstr "Mostrando post senza potenziamenti"
+msgstr "Mostrando post senza reblog"
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
@@ -2580,12 +2580,12 @@ msgstr "Gruppi"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Mostrando {selectedFilterCategory, select, all {tutti i post} original {post originali} replies {risposte} boosts {reblog} followedTags {tag seguiti} groups {gruppi} filtered {post filtrati}}{sortBy, select, createdAt {{sortOrder, select, asc {dal più vecchio} desc {al più recente}}} reblogsCount {{sortOrder, select, asc {meno reblog} desc {più reblog}}} favouritesCount {{sortOrder, select, asc {meno like} desc {più like}}} repliesCount {{sortOrder, select, asc {meno risposte} desc {più risposte}}} density {{sortOrder, select, asc {meno fitti} desc {più fitti}}}} prima{groupBy, select, account {, raggruppato per autori} other {}}"
+msgstr "Mostrando {selectedFilterCategory, select, all {tutti i post} original {post originali} replies {risposte} boosts {reblog} followedTags {tag seguiti} groups {gruppi} filtered {post filtrati}}{sortBy, select, createdAt {{sortOrder, select, asc {dal più vecchio} desc {al più recente}}} reblogsCount {{sortOrder, select, asc {meno reblog} desc {più reblog}}} favouritesCount {{sortOrder, select, asc {meno like} desc {più like}}} repliesCount {{sortOrder, select, asc {meno risposte} desc {più risposte}}} density {{sortOrder, select, asc {meno densi} desc {più densi}}}} prima{groupBy, select, account {, raggruppato per autori} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
-msgstr "Recupero <0>beta</0>"
+msgstr "Recupera <0>beta</0>"
 
 #: src/pages/catchup.jsx:896
 #: src/pages/catchup.jsx:1585
@@ -2598,7 +2598,7 @@ msgstr "Cos'è questo?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr ""
+msgstr "Recupera è una timeline separata per gli account che segui, offre una visione panoramica con un'interfaccia semplice ispirata alle email per poter organizzare e filtrare i post."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
@@ -2622,7 +2622,7 @@ msgstr "fino al massimo"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
-msgstr "Recupero"
+msgstr "Recupera"
 
 #: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
@@ -2634,7 +2634,7 @@ msgstr "Fino all'ultimo recupero ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: la tua istanza potrebbe mostrare solamente un massimo di 800 post nella timeline della Home a prescindere dal lasso di tempo. Può essere di meno o di più."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
@@ -2729,7 +2729,7 @@ msgstr "Ordina: Densità"
 
 #: src/pages/catchup.jsx:1603
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "I post sono ordinati per densità o profondità informativa. I post più corti sono più \"leggeri\" mentre i post più lunghi sono più \"pesanti\". I post con foto sono più \"pesanti\" dei post senza foto."
+msgstr "I post sono ordinati in base alla loro densità o profondità informativa. I post più brevi sono più \"leggeri\" mentre i post più lunghi sono più \"pesanti\". I post con foto sono più \"pesanti\" dei post senza foto."
 
 #: src/pages/catchup.jsx:1610
 msgid "Group: Authors"
@@ -2769,7 +2769,7 @@ msgstr "Casa e liste"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr "Cronologie pubbliche"
+msgstr "Timeline pubbliche"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
@@ -3232,19 +3232,19 @@ msgstr "Ignorato"
 
 #: src/pages/public.jsx:27
 msgid "Local timeline ({instance})"
-msgstr "Cronologia locale ({instance})"
+msgstr "Timeline locale ({instance})"
 
 #: src/pages/public.jsx:28
 msgid "Federated timeline ({instance})"
-msgstr "Cronologia federata ({instance})"
+msgstr "Timeline federata ({instance})"
 
 #: src/pages/public.jsx:90
 msgid "Local timeline"
-msgstr "Cronologia locale"
+msgstr "Timeline locale"
 
 #: src/pages/public.jsx:90
 msgid "Federated timeline"
-msgstr "Cronologia federata"
+msgstr "Timeline federata"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
@@ -3379,7 +3379,7 @@ msgstr "Esperimenti"
 
 #: src/pages/settings.jsx:341
 msgid "Auto refresh timeline posts"
-msgstr "Carica automaticamente i nuovi post"
+msgstr "Aggiorna automaticamente i post della timeline"
 
 #: src/pages/settings.jsx:353
 msgid "Boosts carousel"
@@ -3411,11 +3411,11 @@ msgstr "Traduzione automatica in linea"
 
 #: src/pages/settings.jsx:509
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Mostra automaticamente la traduzione per i post nella cronologia. Funziona solo per i post <0>corti</0> senza avvisi contenuti, media e sondaggi."
+msgstr "Mostra automaticamente la traduzione per i post nella timeline. Funziona solo per i post <0>corti</0> senza avvisi contenuti, media e sondaggi."
 
 #: src/pages/settings.jsx:529
 msgid "GIF Picker for composer"
-msgstr "Selettore GIF per composizione"
+msgstr "Selezionatore di GIF per compositore"
 
 #: src/pages/settings.jsx:533
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
@@ -3451,7 +3451,7 @@ msgstr "⚠️⚠️⚠️ Molto sperimentale.<0/>Conservato nelle note del tuo 
 
 #: src/pages/settings.jsx:641
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Nota: Questa funzionalità usa l'API del server d'istanza attualmente in accesso."
 
 #: src/pages/settings.jsx:658
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3686,7 +3686,7 @@ msgstr "Schermata del Carosello dei Reblog"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr "Carosello dei reblog"
+msgstr "Carosello dei Reblog"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
@@ -3730,15 +3730,15 @@ msgstr "Di default, una sola colonna per gli utenti zen. Modalità multi-colonna
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
-msgstr "Screenshot della cronologia multi-hashtag con un modulo per aggiungere altri hashtag"
+msgstr "Screenshot della timeline multi-hashtag con un modulo per aggiungere altri hashtag"
 
 #: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"
-msgstr "Cronologia multi-hashtag"
+msgstr "Timeline multi-hashtag"
 
 #: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr "Fino a 5 hastag combinati in una sola cronologia."
+msgstr "Fino a 5 hastag combinati in una sola timeline."
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."

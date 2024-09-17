@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-16 14:04\n"
+"PO-Revision-Date: 2024-09-17 12:00\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -153,11 +153,11 @@ msgstr "Malfermi la originalan profilpaĝon"
 
 #: src/components/account-info.jsx:606
 msgid "View profile image"
-msgstr "Rigardi rolfiguron"
+msgstr "Vidi rolfiguron"
 
 #: src/components/account-info.jsx:612
 msgid "View profile header"
-msgstr "Rigardi fonbildon"
+msgstr "Vidi fonbildon"
 
 #: src/components/account-info.jsx:629
 msgid "In Memoriam"
@@ -199,7 +199,7 @@ msgstr "Respondoj"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
-#: src/pages/settings.jsx:1045
+#: src/pages/settings.jsx:1103
 msgid "Boosts"
 msgstr "Diskonigoj"
 
@@ -209,7 +209,7 @@ msgstr "Afiŝaj statistikoj ne disponeblaj."
 
 #: src/components/account-info.jsx:900
 msgid "View post stats"
-msgstr "Rigardi afiŝo-statistikojn"
+msgstr "Vidi afiŝo-statistikojn"
 
 #: src/components/account-info.jsx:1063
 msgid "Last post: <0>{0}</0>"
@@ -380,7 +380,7 @@ msgstr "Redakti la profilon"
 
 #: src/components/account-info.jsx:1619
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Ĉu nuligi peton por sekvado?"
 
 #: src/components/account-info.jsx:1620
 msgid "Unfollow @{0}?"
@@ -392,7 +392,7 @@ msgstr "Ĉesi sekvi…"
 
 #: src/components/account-info.jsx:1680
 msgid "Withdraw…"
-msgstr ""
+msgstr "Nuligi…"
 
 #: src/components/account-info.jsx:1687
 #: src/components/account-info.jsx:1691
@@ -1256,7 +1256,7 @@ msgstr ""
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1037
+#: src/pages/settings.jsx:1095
 #: src/pages/trending.jsx:381
 msgid "Mentions"
 msgstr "Mencioj"
@@ -1311,7 +1311,7 @@ msgstr "Legosignoj"
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1041
+#: src/pages/settings.jsx:1099
 msgid "Likes"
 msgstr "Stemuloj"
 
@@ -1387,7 +1387,7 @@ msgstr "Ĉi tiu sciigo estas de via alia konto."
 
 #: src/components/notification-service.jsx:195
 msgid "View all notifications"
-msgstr "Rigardi ĉiujn sciigojn"
+msgstr "Vidi ĉiujn sciigojn"
 
 #: src/components/notification.jsx:68
 msgid "{account} reacted to your post with {emojiObject}"
@@ -1479,7 +1479,7 @@ msgstr "Kelkaj el viaj afiŝoj estis forigitaj."
 
 #: src/components/notification.jsx:291
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Viaj afiŝoj estos markitaj kiel sentemaj ekde nun."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been limited."
@@ -1736,7 +1736,7 @@ msgstr "Kradvorto"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "Listo ID"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
@@ -1942,7 +1942,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:991
 msgid "Override current shortcuts?"
-msgstr ""
+msgstr "Ĉu anstataŭi nunajn ŝparvojojn?"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
@@ -1950,7 +1950,7 @@ msgstr "Ĉu importi ŝparvojojn?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
-msgstr ""
+msgstr "aŭ anstataŭi…"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
@@ -2303,7 +2303,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> diskonigita"
 
 #: src/components/timeline.jsx:453
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1123
 msgid "New posts"
 msgstr "Novaj afiŝoj"
 
@@ -2488,7 +2488,7 @@ msgstr "Ŝalti en novan langeton/fenestron"
 
 #: src/pages/accounts.jsx:146
 msgid "View profile…"
-msgstr "Rigardi profilon…"
+msgstr "Vidi profilon…"
 
 #: src/pages/accounts.jsx:163
 msgid "Set as default"
@@ -2618,7 +2618,7 @@ msgstr "Montri al mi ĉiujn afiŝojn de…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
-msgstr ""
+msgstr "ĝis la maksimumo"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
@@ -2753,7 +2753,7 @@ msgstr "Rulumi supren"
 
 #: src/pages/catchup.jsx:1875
 msgid "Filtered: {0}"
-msgstr ""
+msgstr "Filtrita: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
@@ -2838,7 +2838,7 @@ msgstr "{0, plural, one {# ŝlosilvorto} other {# ŝlosilvortoj}}"
 
 #: src/pages/filters.jsx:466
 msgid "Filter from…"
-msgstr ""
+msgstr "Filtri de…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
@@ -2858,7 +2858,7 @@ msgstr "Eksvalidiĝo"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr ""
+msgstr "Filtrita afiŝo estos…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
@@ -2988,7 +2988,7 @@ msgstr "Ĉi tiu ŝparvojo jam ekzistas"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr ""
+msgstr "Kradvorto-ŝparvojo aldonita"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
@@ -3028,7 +3028,7 @@ msgstr "<0>Nova</0> <1>Petoj de sekvado</1>"
 
 #: src/pages/home.jsx:235
 msgid "See all"
-msgstr "Rigardi ĉion"
+msgstr "Vidi ĉion"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
@@ -3142,7 +3142,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anonco} other {Anoncoj}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1053
+#: src/pages/settings.jsx:1111
 msgid "Follow requests"
 msgstr "Petoj de sekvado"
 
@@ -3196,7 +3196,7 @@ msgstr "Ĝisdatigita <0>{0}</0>"
 
 #: src/pages/notifications.jsx:1037
 msgid "View notifications from <0>@{0}</0>"
-msgstr "Rigardi sciigojn de <0>@{0}</0>"
+msgstr "Vidi sciigojn de <0>@{0}</0>"
 
 #: src/pages/notifications.jsx:1058
 msgid "Notifications from <0>@{0}</0>"
@@ -3383,7 +3383,7 @@ msgstr "Aŭtomate aktualigi templiniajn afiŝojn"
 
 #: src/pages/settings.jsx:353
 msgid "Boosts carousel"
-msgstr ""
+msgstr "Karuselon de diskonigoj"
 
 #: src/pages/settings.jsx:369
 msgid "Post translation"
@@ -3497,58 +3497,58 @@ msgstr ""
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:950
-#: src/pages/settings.jsx:955
+#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1013
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:961
+#: src/pages/settings.jsx:1019
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:968
+#: src/pages/settings.jsx:1026
 msgid "Push Notifications (beta)"
-msgstr ""
+msgstr "Puŝaj sciigoj (beta)"
 
-#: src/pages/settings.jsx:990
+#: src/pages/settings.jsx:1048
 msgid "Push notifications are blocked. Please enable them in your browser settings."
-msgstr ""
+msgstr "Puŝaj sciigoj estas blokitaj. Bonvolu aktivigi ilin en via retumila agordo."
 
-#: src/pages/settings.jsx:999
+#: src/pages/settings.jsx:1057
 msgid "Allow from <0>{0}</0>"
 msgstr "Permesi de <0>{0}</0>"
 
-#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1066
 msgid "anyone"
 msgstr "iu ajn"
 
-#: src/pages/settings.jsx:1012
+#: src/pages/settings.jsx:1070
 msgid "people I follow"
 msgstr "homoj, kiujn mi sekvas"
 
-#: src/pages/settings.jsx:1016
+#: src/pages/settings.jsx:1074
 msgid "followers"
 msgstr "sekvantoj"
 
-#: src/pages/settings.jsx:1049
+#: src/pages/settings.jsx:1107
 msgid "Follows"
 msgstr "Sekvas"
 
-#: src/pages/settings.jsx:1057
+#: src/pages/settings.jsx:1115
 msgid "Polls"
 msgstr "Balotenketoj"
 
-#: src/pages/settings.jsx:1061
+#: src/pages/settings.jsx:1119
 msgid "Post edits"
 msgstr "Redaktoj de la afiŝo"
 
-#: src/pages/settings.jsx:1082
+#: src/pages/settings.jsx:1140
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1098
+#: src/pages/settings.jsx:1156
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "NOTO: Puŝaj sciigoj funkcias nur por <0>unu konto</0>."
 
 #: src/pages/status.jsx:565
 msgid "Post"
@@ -3686,7 +3686,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "Karuselon de diskonigoj"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
@@ -3714,7 +3714,7 @@ msgstr "Grupigitaj sciigoj"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr ""
+msgstr "Similaj sciigoj estas grupigitaj kaj kolapsitaj por redukti malordon."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
@@ -3726,7 +3726,7 @@ msgstr "Ununuro aŭ plurkolumno"
 
 #: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
-msgstr ""
+msgstr "Defaŭlte, ununura kolumno por serĉantoj de zen-reĝimo. Agordebla plurkolumno por altnivelaj uzantoj."
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
@@ -3746,7 +3746,7 @@ msgstr "Ŝajnas, ke via retumilo blokas ŝprucfenestrojn."
 
 #: src/utils/show-compose.js:16
 msgid "A draft post is currently minimized. Post or discard it before creating a new one."
-msgstr ""
+msgstr "Malneto afiŝo estas nuntempe minimumigita. Afiŝu aŭ forĵetu ĝin antaŭ ol krei novan."
 
 #: src/utils/show-compose.js:21
 msgid "A post is currently open. Post or discard it before creating a new one."

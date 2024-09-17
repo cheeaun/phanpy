@@ -16,13 +16,17 @@ const assetsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isAsset =
       request.destination === 'style' || request.destination === 'script';
-    const hasHash = /-[0-9a-f]{4,}\./i.test(request.url);
+    const hasHash = /-[0-9a-z-]{4,}\./i.test(request.url);
     return sameOrigin && isAsset && hasHash;
   },
   new NetworkFirst({
     cacheName: 'assets',
     networkTimeoutSeconds: 5,
     plugins: [
+      new ExpirationPlugin({
+        maxEntries: 30,
+        purgeOnQuotaError: true,
+      }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
       }),
@@ -44,7 +48,7 @@ const imageRoute = new Route(
     cacheName: 'remote-images',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 30,
         purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
@@ -86,7 +90,7 @@ const apiExtendedRoute = new RegExpRoute(
     cacheName: 'api-extended',
     plugins: [
       new ExpirationPlugin({
-        maxAgeSeconds: 24 * 60 * 60, // 1 day
+        maxAgeSeconds: 12 * 60 * 60, // 12 hours
         purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
@@ -128,6 +132,7 @@ const apiRoute = new RegExpRoute(
     networkTimeoutSeconds: 5,
     plugins: [
       new ExpirationPlugin({
+        maxEntries: 30,
         maxAgeSeconds: 5 * 60, // 5 minutes
         purgeOnQuotaError: true,
       }),

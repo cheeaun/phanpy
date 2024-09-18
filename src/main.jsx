@@ -52,7 +52,7 @@ setTimeout(() => {
 if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
   const MAX_SW_CACHE_SIZE = 50;
   const IGNORE_CACHE_KEYS = ['icons'];
-  let clearedOnce = false;
+  let clearRanOnce = false;
   const FAST_INTERVAL = 10_000; // 10 seconds
   const SLOW_INTERVAL = 60 * 60 * 1000; // 1 hour
   async function clearCaches() {
@@ -69,13 +69,13 @@ if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
             for (const deleteKey of deleteKeys) {
               await cache.delete(deleteKey);
             }
-            clearedOnce = true;
           }
         }
+        clearRanOnce = true;
       } catch (e) {} // Silent fail
     }
     // Once cleared, clear again at slower interval
-    setTimeout(clearCaches, clearedOnce ? SLOW_INTERVAL : FAST_INTERVAL);
+    setTimeout(clearCaches, clearRanOnce ? SLOW_INTERVAL : FAST_INTERVAL);
   }
   setTimeout(clearCaches, FAST_INTERVAL);
 }

@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-17 06:59\n"
+"PO-Revision-Date: 2024-09-18 05:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -61,7 +61,7 @@ msgstr "已请求"
 #: src/pages/following.jsx:20
 #: src/pages/following.jsx:134
 msgid "Following"
-msgstr "关注"
+msgstr "正在关注"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
@@ -199,7 +199,7 @@ msgstr "回复"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
-#: src/pages/settings.jsx:1045
+#: src/pages/settings.jsx:1103
 msgid "Boosts"
 msgstr "转嘟"
 
@@ -1256,7 +1256,7 @@ msgstr "补看"
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1037
+#: src/pages/settings.jsx:1095
 #: src/pages/trending.jsx:381
 msgid "Mentions"
 msgstr "提及"
@@ -1311,7 +1311,7 @@ msgstr "收藏夹"
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1041
+#: src/pages/settings.jsx:1099
 msgid "Likes"
 msgstr "点赞列表"
 
@@ -2303,7 +2303,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 转嘟了"
 
 #: src/components/timeline.jsx:453
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1123
 msgid "New posts"
 msgstr "新嘟文"
 
@@ -3142,7 +3142,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {公告}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1053
+#: src/pages/settings.jsx:1111
 msgid "Follow requests"
 msgstr "关注请求"
 
@@ -3497,56 +3497,56 @@ msgstr "已复制版本号"
 msgid "Unable to copy version string"
 msgstr "无法复制版本号"
 
-#: src/pages/settings.jsx:950
-#: src/pages/settings.jsx:955
+#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1013
 msgid "Failed to update subscription. Please try again."
 msgstr "订阅更新失败。请重试。"
 
-#: src/pages/settings.jsx:961
+#: src/pages/settings.jsx:1019
 msgid "Failed to remove subscription. Please try again."
 msgstr "订阅删除失败。请重试。"
 
-#: src/pages/settings.jsx:968
+#: src/pages/settings.jsx:1026
 msgid "Push Notifications (beta)"
 msgstr "通知推送 (beta)"
 
-#: src/pages/settings.jsx:990
+#: src/pages/settings.jsx:1048
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "通知推送已被阻止。请在你的浏览器设置中授予相关权限。"
 
-#: src/pages/settings.jsx:999
+#: src/pages/settings.jsx:1057
 msgid "Allow from <0>{0}</0>"
 msgstr "推送范围 <0>{0}</0>"
 
-#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1066
 msgid "anyone"
 msgstr "任何人"
 
-#: src/pages/settings.jsx:1012
+#: src/pages/settings.jsx:1070
 msgid "people I follow"
 msgstr "我关注的人"
 
-#: src/pages/settings.jsx:1016
+#: src/pages/settings.jsx:1074
 msgid "followers"
 msgstr "粉丝"
 
-#: src/pages/settings.jsx:1049
+#: src/pages/settings.jsx:1107
 msgid "Follows"
 msgstr "关注"
 
-#: src/pages/settings.jsx:1057
+#: src/pages/settings.jsx:1115
 msgid "Polls"
 msgstr "投票"
 
-#: src/pages/settings.jsx:1061
+#: src/pages/settings.jsx:1119
 msgid "Post edits"
 msgstr "嘟文被编辑"
 
-#: src/pages/settings.jsx:1082
+#: src/pages/settings.jsx:1140
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "本次登录未授予通知推送权限。你需要<0>再次<1>登录</1>以授予推送权限</0>。"
 
-#: src/pages/settings.jsx:1098
+#: src/pages/settings.jsx:1156
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 

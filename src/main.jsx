@@ -50,26 +50,26 @@ setTimeout(() => {
 
 // Service worker cache cleanup
 if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
-  const MAX_SW_CACHE_SIZE = 300;
-  let swInterval = setInterval(() => {
-    if (window.__IDLE__) {
-      clearInterval(swInterval);
-      (async () => {
-        const keys = await caches.keys();
-        for (const key of keys) {
-          const cache = await caches.open(key);
-          const _keys = await cache.keys();
-          if (_keys.length > MAX_SW_CACHE_SIZE) {
-            console.warn('Cleaning cache', key, _keys.length);
-            const deleteKeys = _keys.slice(MAX_SW_CACHE_SIZE);
-            for (const deleteKey of deleteKeys) {
-              await cache.delete(deleteKey);
-            }
-          }
+  const MAX_SW_CACHE_SIZE = 30;
+  const IGNORE_CACHE_KEYS = ['icons'];
+  const clearCaches = async () => {
+    if (!window.__IDLE__) return;
+    const keys = await caches.keys();
+    for (const key of keys) {
+      if (IGNORE_CACHE_KEYS.includes(key)) continue;
+      const cache = await caches.open(key);
+      const _keys = await cache.keys();
+      if (_keys.length > MAX_SW_CACHE_SIZE) {
+        console.warn('Cleaning cache', key, _keys.length);
+        const deleteKeys = _keys.slice(MAX_SW_CACHE_SIZE);
+        for (const deleteKey of deleteKeys) {
+          await cache.delete(deleteKey);
         }
-      })();
+      }
     }
-  }, 15_000);
+  };
+  setTimeout(clearCaches, 10_000); // after 10 seconds
+  setInterval(clearCaches, 30 * 60 * 1000); // every 30 minutes
 }
 
 window.__CLOAK__ = () => {

@@ -12,6 +12,29 @@ navigationPreload.enable();
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
+const iconsRoute = new Route(
+  ({ request, sameOrigin }) => {
+    const isIcon = request.url.includes('/icons/');
+    return sameOrigin && isIcon;
+  },
+  new CacheFirst({
+    cacheName: 'icons',
+    plugins: [
+      new ExpirationPlugin({
+        // Weirdly high maxEntries number, due to some old icons suddenly disappearing and not rendering
+        // NOTE: Temporary fix
+        maxEntries: 300,
+        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
+        purgeOnQuotaError: true,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(iconsRoute);
+
 const assetsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isAsset =
@@ -58,27 +81,6 @@ const imageRoute = new Route(
   }),
 );
 registerRoute(imageRoute);
-
-const iconsRoute = new Route(
-  ({ request, sameOrigin }) => {
-    const isIcon = request.url.includes('/icons/');
-    return sameOrigin && isIcon;
-  },
-  new CacheFirst({
-    cacheName: 'icons',
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 300,
-        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
-        purgeOnQuotaError: true,
-      }),
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-    ],
-  }),
-);
-registerRoute(iconsRoute);
 
 // 1-day cache for
 // - /api/v1/custom_emojis

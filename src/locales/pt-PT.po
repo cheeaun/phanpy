@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-16 22:06\n"
+"PO-Revision-Date: 2024-09-17 20:29\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -199,7 +199,7 @@ msgstr "Respostas"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
-#: src/pages/settings.jsx:1045
+#: src/pages/settings.jsx:1103
 msgid "Boosts"
 msgstr "Impulsos"
 
@@ -1256,7 +1256,7 @@ msgstr "Acompanhar"
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1037
+#: src/pages/settings.jsx:1095
 #: src/pages/trending.jsx:381
 msgid "Mentions"
 msgstr "Menções"
@@ -1311,7 +1311,7 @@ msgstr "Favoritos"
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1041
+#: src/pages/settings.jsx:1099
 msgid "Likes"
 msgstr "Gostos"
 
@@ -2304,7 +2304,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsionou"
 
 #: src/components/timeline.jsx:453
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1123
 msgid "New posts"
 msgstr "Novas publicações"
 
@@ -2513,7 +2513,7 @@ msgstr "Nota: as contas <0>padrões</0> sempre serão as primeiras a carregar. C
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr "Sem favoritos ainda. Clica em 🔖numa publicação!"
+msgstr "Sem favoritos ainda. Favorita algo primeiramente!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -3143,7 +3143,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anunciado} other {Anunciados}}"
 
 #: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1053
+#: src/pages/settings.jsx:1111
 msgid "Follow requests"
 msgstr "Pedidos de seguir"
 
@@ -3498,56 +3498,56 @@ msgstr "Versão copiada"
 msgid "Unable to copy version string"
 msgstr "Impossível copiar versão"
 
-#: src/pages/settings.jsx:950
-#: src/pages/settings.jsx:955
+#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1013
 msgid "Failed to update subscription. Please try again."
 msgstr "Falhou ao atualizar subscrição. Tente novamente."
 
-#: src/pages/settings.jsx:961
+#: src/pages/settings.jsx:1019
 msgid "Failed to remove subscription. Please try again."
 msgstr "Falhou ao remover subscrição. Tente novamente."
 
-#: src/pages/settings.jsx:968
+#: src/pages/settings.jsx:1026
 msgid "Push Notifications (beta)"
 msgstr "Notificações de push (beta)"
 
-#: src/pages/settings.jsx:990
+#: src/pages/settings.jsx:1048
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "As notificações de push estão bloqueadas. Por favor, habilite-as nas definições do seu navegador."
 
-#: src/pages/settings.jsx:999
+#: src/pages/settings.jsx:1057
 msgid "Allow from <0>{0}</0>"
 msgstr "Permitir de <0>{0}</0>"
 
-#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1066
 msgid "anyone"
 msgstr "qualquer um"
 
-#: src/pages/settings.jsx:1012
+#: src/pages/settings.jsx:1070
 msgid "people I follow"
 msgstr "pessoas que sigo"
 
-#: src/pages/settings.jsx:1016
+#: src/pages/settings.jsx:1074
 msgid "followers"
 msgstr "seguidores"
 
-#: src/pages/settings.jsx:1049
+#: src/pages/settings.jsx:1107
 msgid "Follows"
 msgstr "Segue"
 
-#: src/pages/settings.jsx:1057
+#: src/pages/settings.jsx:1115
 msgid "Polls"
 msgstr "Votações"
 
-#: src/pages/settings.jsx:1061
+#: src/pages/settings.jsx:1119
 msgid "Post edits"
 msgstr "Publicar edições"
 
-#: src/pages/settings.jsx:1082
+#: src/pages/settings.jsx:1140
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "A permissão de push não foi concedida desde a última sessão. Precisas <0><1>iniciar sessão</1> novamente para conceder a permissão</0>."
 
-#: src/pages/settings.jsx:1098
+#: src/pages/settings.jsx:1156
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: Notificações de push só funcionam para <0>uma conta</0>."
 

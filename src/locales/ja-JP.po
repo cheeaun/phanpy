@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-19 06:59\n"
+"PO-Revision-Date: 2024-09-19 08:05\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -61,7 +61,7 @@ msgstr "リクエスト済み"
 #: src/pages/following.jsx:20
 #: src/pages/following.jsx:134
 msgid "Following"
-msgstr ""
+msgstr "フォロー中"
 
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1059
@@ -209,11 +209,11 @@ msgstr "投稿の統計情報を利用できません。"
 
 #: src/components/account-info.jsx:900
 msgid "View post stats"
-msgstr ""
+msgstr "投稿の統計を見る"
 
 #: src/components/account-info.jsx:1063
 msgid "Last post: <0>{0}</0>"
-msgstr ""
+msgstr "最終投稿: <0>{0}</0>"
 
 #: src/components/account-info.jsx:1077
 msgid "Muted"
@@ -225,7 +225,7 @@ msgstr "ブロック済み"
 
 #: src/components/account-info.jsx:1091
 msgid "Private note"
-msgstr ""
+msgstr "プライベートメモ"
 
 #: src/components/account-info.jsx:1148
 msgid "Mention <0>@{username}</0>"
@@ -237,19 +237,19 @@ msgstr "プロフィールを翻訳"
 
 #: src/components/account-info.jsx:1171
 msgid "Edit private note"
-msgstr ""
+msgstr "プライベートメモを編集"
 
 #: src/components/account-info.jsx:1171
 msgid "Add private note"
-msgstr "メモを追加"
+msgstr "プライベートメモを追加"
 
 #: src/components/account-info.jsx:1191
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "@{username} の投稿に対して通知を有効にしました。"
 
 #: src/components/account-info.jsx:1192
 msgid "Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr "@{username} の投稿に対する通知を無効にしました。"
 
 #: src/components/account-info.jsx:1204
 msgid "Disable notifications"
@@ -261,25 +261,25 @@ msgstr "通知を有効化"
 
 #: src/components/account-info.jsx:1222
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "@{username} からのブーストを有効にしました。"
 
 #: src/components/account-info.jsx:1223
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "@{username} からのブーストを無効にしました。"
 
 #: src/components/account-info.jsx:1234
 msgid "Disable boosts"
-msgstr ""
+msgstr "ブーストを無効化"
 
 #: src/components/account-info.jsx:1234
 msgid "Enable boosts"
-msgstr ""
+msgstr "ブーストを有効化"
 
 #: src/components/account-info.jsx:1250
 #: src/components/account-info.jsx:1260
 #: src/components/account-info.jsx:1861
 msgid "Add/Remove from Lists"
-msgstr ""
+msgstr "リストから追加/削除"
 
 #: src/components/account-info.jsx:1299
 #: src/components/status.jsx:1079
@@ -302,7 +302,7 @@ msgstr "コピー"
 #: src/components/shortcuts-settings.jsx:1074
 #: src/components/status.jsx:1104
 msgid "Sharing doesn't seem to work."
-msgstr ""
+msgstr "共有は機能しないようです。"
 
 #: src/components/account-info.jsx:1329
 #: src/components/status.jsx:1110
@@ -311,35 +311,35 @@ msgstr "共有…"
 
 #: src/components/account-info.jsx:1349
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "@{username} のミュートを解除"
 
 #: src/components/account-info.jsx:1361
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> をミュート解除"
 
 #: src/components/account-info.jsx:1377
 msgid "Mute <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> をミュート…"
 
 #: src/components/account-info.jsx:1409
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "@{username} を {0} ミュートしました"
 
 #: src/components/account-info.jsx:1421
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "@{username} をミュートできません"
 
 #: src/components/account-info.jsx:1442
 msgid "Remove <0>@{username}</0> from followers?"
-msgstr ""
+msgstr "<0>@{username}</0> をフォロワーから削除しますか？"
 
 #: src/components/account-info.jsx:1462
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} がフォロワーから削除されました"
 
 #: src/components/account-info.jsx:1474
 msgid "Remove follower…"
-msgstr ""
+msgstr "フォロワーを削除…"
 
 #: src/components/account-info.jsx:1485
 msgid "Block <0>@{username}</0>?"
@@ -355,23 +355,23 @@ msgstr "@{username} をブロックしました"
 
 #: src/components/account-info.jsx:1525
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "@{username} のブロックを解除できません"
 
 #: src/components/account-info.jsx:1527
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "@{username} をブロックできません"
 
 #: src/components/account-info.jsx:1537
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> のブロックを解除"
 
 #: src/components/account-info.jsx:1546
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> をブロック…"
 
 #: src/components/account-info.jsx:1563
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "<0>@{username}</0> を報告…"
 
 #: src/components/account-info.jsx:1583
 #: src/components/account-info.jsx:2094
@@ -380,7 +380,7 @@ msgstr "プロフィールを編集"
 
 #: src/components/account-info.jsx:1619
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "フォローリクエストを取り消しますか？"
 
 #: src/components/account-info.jsx:1620
 msgid "Unfollow @{0}?"
@@ -392,13 +392,13 @@ msgstr "フォロー解除…"
 
 #: src/components/account-info.jsx:1680
 msgid "Withdraw…"
-msgstr ""
+msgstr "取り消し…"
 
 #: src/components/account-info.jsx:1687
 #: src/components/account-info.jsx:1691
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
-msgstr ""
+msgstr "フォロー"
 
 #: src/components/account-info.jsx:1802
 #: src/components/account-info.jsx:1856
@@ -438,7 +438,7 @@ msgstr "閉じる"
 
 #: src/components/account-info.jsx:1807
 msgid "Translated Bio"
-msgstr ""
+msgstr "翻訳されたプロフィール"
 
 #: src/components/account-info.jsx:1901
 msgid "Unable to remove from list."
@@ -465,11 +465,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1994
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "<0>@{0}</0> に関するプライベートメモ"
 
 #: src/components/account-info.jsx:2024
 msgid "Unable to update private note."
-msgstr ""
+msgstr "プライベートメモを更新できませんでした。"
 
 #: src/components/account-info.jsx:2047
 #: src/components/account-info.jsx:2217
@@ -491,7 +491,7 @@ msgstr "名前"
 
 #: src/components/account-info.jsx:2165
 msgid "Bio"
-msgstr ""
+msgstr "プロフィール"
 
 #: src/components/account-info.jsx:2178
 msgid "Extra fields"
@@ -515,11 +515,11 @@ msgstr "保存"
 
 #: src/components/account-info.jsx:2273
 msgid "username"
-msgstr ""
+msgstr "ユーザー名"
 
 #: src/components/account-info.jsx:2277
 msgid "server domain name"
-msgstr ""
+msgstr "サーバーのドメイン名"
 
 #: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
@@ -623,20 +623,20 @@ msgstr ""
 #: src/components/status.jsx:92
 #: src/pages/settings.jsx:297
 msgid "Public"
-msgstr ""
+msgstr "公開"
 
 #: src/components/compose.jsx:1175
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
 #: src/components/status.jsx:93
 msgid "Local"
-msgstr ""
+msgstr "ローカル"
 
 #: src/components/compose.jsx:1179
 #: src/components/status.jsx:94
 #: src/pages/settings.jsx:300
 msgid "Unlisted"
-msgstr ""
+msgstr "未収載"
 
 #: src/components/compose.jsx:1182
 #: src/components/status.jsx:95
@@ -648,7 +648,7 @@ msgstr "フォロワーのみ"
 #: src/components/status.jsx:96
 #: src/components/status.jsx:1840
 msgid "Private mention"
-msgstr ""
+msgstr "非公開の返信"
 
 #: src/components/compose.jsx:1194
 msgid "Post your reply"
@@ -816,7 +816,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: src/components/compose.jsx:2963
 #: src/components/generic-accounts.jsx:227
@@ -878,7 +878,7 @@ msgstr "GIF の読み込みに失敗しました"
 #: src/components/drafts.jsx:63
 #: src/pages/settings.jsx:684
 msgid "Unsent drafts"
-msgstr ""
+msgstr "未送信の下書き"
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
@@ -1075,7 +1075,7 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> または <2>⌘</2> + <3>Enter</3>"
 #: src/pages/search.jsx:39
 #: src/pages/search.jsx:209
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: src/components/keyboard-shortcuts-help.jsx:147
 msgid "Reply (new window)"
@@ -1361,12 +1361,12 @@ msgstr "ログイン"
 #: src/components/shortcuts-settings.jsx:169
 #: src/pages/trending.jsx:441
 msgid "Trending"
-msgstr ""
+msgstr "トレンド"
 
 #: src/components/nav-menu.jsx:392
 #: src/components/shortcuts-settings.jsx:162
 msgid "Federated"
-msgstr ""
+msgstr "連合"
 
 #: src/components/nav-menu.jsx:415
 msgid "Shortcuts / Columns…"
@@ -1375,7 +1375,7 @@ msgstr ""
 #: src/components/nav-menu.jsx:425
 #: src/components/nav-menu.jsx:439
 msgid "Settings…"
-msgstr ""
+msgstr "設定…"
 
 #: src/components/notification-service.jsx:160
 msgid "Notification"
@@ -1736,7 +1736,7 @@ msgstr "ハッシュタグ"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "リスト ID"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
@@ -1775,11 +1775,11 @@ msgstr "メディアのみ対象"
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
 msgid "Shortcuts"
-msgstr ""
+msgstr "ショートカット"
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr ""
+msgstr "ベータ"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
@@ -1787,33 +1787,33 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "フローティングボタン"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "タブ/メニューバー"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
-msgstr ""
+msgstr "複数列表示"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "現在のビューモードでは使用できません"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
-msgstr ""
+msgstr "上へ移動"
 
 #: src/components/shortcuts-settings.jsx:364
 msgid "Move down"
-msgstr ""
+msgstr "下へ移動"
 
 #: src/components/shortcuts-settings.jsx:376
 #: src/components/status.jsx:1216
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
@@ -1833,23 +1833,23 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "最大 {SHORTCUTS_LIMIT} 列まで"
 
 #: src/components/shortcuts-settings.jsx:441
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "最大 {SHORTCUTS_LIMIT} ショートカットまで"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
-msgstr ""
+msgstr "インポート/エクスポート"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
-msgstr ""
+msgstr "列を追加…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
-msgstr ""
+msgstr "ショートカットを追加…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
@@ -1865,19 +1865,19 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
-msgstr ""
+msgstr "ショートカットを編集"
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Add shortcut"
-msgstr ""
+msgstr "ショートカットを追加"
 
 #: src/components/shortcuts-settings.jsx:620
 msgid "Timeline"
-msgstr ""
+msgstr "タイムライン"
 
 #: src/components/shortcuts-settings.jsx:646
 msgid "List"
-msgstr ""
+msgstr "リスト"
 
 #: src/components/shortcuts-settings.jsx:785
 msgid "Import/Export <0>Shortcuts</0>"
@@ -3095,11 +3095,11 @@ msgstr "アカウントを持っていませんか？アカウントを作成し
 
 #: src/pages/mentions.jsx:20
 msgid "Private mentions"
-msgstr ""
+msgstr "非公開の返信"
 
 #: src/pages/mentions.jsx:159
 msgid "Private"
-msgstr ""
+msgstr "非公開"
 
 #: src/pages/mentions.jsx:169
 msgid "No one mentioned you :("
@@ -3480,7 +3480,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:776
 msgid "Privacy Policy"
-msgstr ""
+msgstr "プライバシーポリシー"
 
 #: src/pages/settings.jsx:783
 msgid "<0>Site:</0> {0}"

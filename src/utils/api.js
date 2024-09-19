@@ -80,7 +80,6 @@ export async function initInstance(client, instance) {
   }
   __BENCHMARK.end('fetch-instance');
   if (!info) return;
-  console.log(info);
   const {
     // v1
     uri,
@@ -89,6 +88,32 @@ export async function initInstance(client, instance) {
     domain,
     configuration: { urls: { streaming } = {} } = {},
   } = info;
+
+  let nodeInfo;
+  try {
+    if (uri || domain) {
+      let urlBase = uri || `https://${domain}`;
+      const wellKnownResponse = await fetch(`${urlBase}/.well-known/nodeinfo`);
+      if (wellKnownResponse.ok) {
+        const wellKnown = await wellKnownResponse.json();
+        if (wellKnown && Array.isArray(wellKnown.links)) {
+          const nodeInfoUrl = wellKnown.links.find(
+            (link) => typeof link.rel === 'string' &&
+            link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
+          )?.href;
+          if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+            const nodeInfoResponse = await fetch(nodeInfoUrl);
+            nodeInfo = await nodeInfoResponse.json();
+          }
+        }
+      }
+    }
+  } catch (e) {}
+  if (nodeInfo) {
+    info.nodeInfo = nodeInfo;
+  }
+  console.log(info);
+
   const instances = store.local.getJSON('instances') || {};
   if (uri || domain) {
     instances[

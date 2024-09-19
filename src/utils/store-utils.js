@@ -163,5 +163,5 @@ export function getVapidKey() {
 
 export function isMediaFirstInstance() {
   const instance = getCurrentInstance();
-  return /pixelfed/i.test(instance?.version);
+  return instance.nodeInfo?.software?.name === 'pixelfed';
 }

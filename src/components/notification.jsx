@@ -399,7 +399,11 @@ function Notification({
             emoji?.shortcode ===
             notification.emoji.replace(/^:/, '').replace(/:$/, ''),
         ); // Emoji object instead of string
-      text = text({ emoji: notification.emoji, emojiURL });
+      text = text({
+        account: <NameText account={account} showAvatar />,
+        emoji: notification.emoji,
+        emojiURL,
+      });
     } else {
       text = text({
         account: account ? (

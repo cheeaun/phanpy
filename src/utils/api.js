@@ -89,29 +89,26 @@ export async function initInstance(client, instance) {
     configuration: { urls: { streaming } = {} } = {},
   } = info;
 
-  let nodeInfo;
+  // GoToSocial requires we get the NodeInfo to identify server type
+  // spec: https://github.com/jhass/nodeinfo
   try {
     if (uri || domain) {
       let urlBase = uri || `https://${domain}`;
-      const wellKnownResponse = await fetch(`${urlBase}/.well-known/nodeinfo`);
-      if (wellKnownResponse.ok) {
-        const wellKnown = await wellKnownResponse.json();
-        if (wellKnown && Array.isArray(wellKnown.links)) {
-          const nodeInfoUrl = wellKnown.links.find(
-            (link) => typeof link.rel === 'string' &&
-            link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
-          )?.href;
-          if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
-            const nodeInfoResponse = await fetch(nodeInfoUrl);
-            nodeInfo = await nodeInfoResponse.json();
+      const wellKnown = await (await fetch(`${urlBase}/.well-known/nodeinfo`)).json();
+      if (Array.isArray(wellKnown?.links)) {
+        const nodeInfoUrl = wellKnown.links.find(
+          (link) => typeof link.rel === 'string' &&
+          link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
+        )?.href;
+        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+          const nodeInfo = await (await fetch(nodeInfoUrl)).json();
+          if (typeof nodeInfo?.software?.name === 'string') {
+            info.software_name = nodeInfo.software.name;
           }
         }
       }
     }
   } catch (e) {}
-  if (nodeInfo) {
-    info.nodeInfo = nodeInfo;
-  }
   console.log(info);
 
   const instances = store.local.getJSON('instances') || {};

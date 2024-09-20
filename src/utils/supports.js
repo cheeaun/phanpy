@@ -1,82 +1,57 @@
 import { satisfies } from 'compare-versions';
 
+import features from '../data/features.json';
+
 import { getCurrentInstance } from './store-utils';
 
+// Non-semver(?) UA string detection
+const containPixelfed = /pixelfed/i;
+const notContainPixelfed = /^(?!.*pixelfed).*$/i;
+const containPleroma = /pleroma/i;
+const containAkkoma = /akkoma/i;
+const containGTS = /gotosocial/i;
 const platformFeatures = {
-  '@mastodon/edit-media-attributes': [['mastodon', '>=4.1']],
-  '@mastodon/list-exclusive': [
-    ['mastodon', '>=4.2'],
-    ['gotosocial', '>=0.17'],
-  ],
-  '@mastodon/filtered-notifications': [['mastodon', '>=4.3']],
-  '@mastodon/fetch-multiple-statuses': [['mastodon', '>=4.3']],
-  '@mastodon/trending-link-posts': [['mastodon', '>=4.3']],
-  '@mastodon/grouped-notifications': [['mastodon', '>=4.3']],
-  '@mastodon/lists': [['!pixelfed']],
-  '@mastodon/filters': [['!pixelfed']],
-  '@mastodon/mentions': [['!pixelfed']],
-  '@mastodon/trending-hashtags': [['!pixelfed']],
-  '@mastodon/trending-links': [['!pixelfed']],
-  '@mastodon/post-bookmark': [['!pixelfed']],
-  '@mastodon/post-edit': [['!pixelfed']],
-  '@mastodon/profile-edit': [['!pixelfed']],
-  '@mastodon/profile-private-note': [['!pixelfed']],
-  '@pixelfed/trending': [['pixelfed']],
-  '@pixelfed/home-include-reblogs': [['pixelfed']],
-  '@pixelfed/global-feed': [['pixelfed']],
-  '@pleroma/local-visibility-post': [['pleroma']],
-  '@akkoma/local-visibility-post': [['akkoma']],
+  '@mastodon/lists': notContainPixelfed,
+  '@mastodon/filters': notContainPixelfed,
+  '@mastodon/mentions': notContainPixelfed,
+  '@mastodon/trending-hashtags': notContainPixelfed,
+  '@mastodon/trending-links': notContainPixelfed,
+  '@mastodon/post-bookmark': notContainPixelfed,
+  '@mastodon/post-edit': notContainPixelfed,
+  '@mastodon/profile-edit': notContainPixelfed,
+  '@mastodon/profile-private-note': notContainPixelfed,
+  '@pixelfed/trending': containPixelfed,
+  '@pixelfed/home-include-reblogs': containPixelfed,
+  '@pixelfed/global-feed': containPixelfed,
+  '@pleroma/local-visibility-post': containPleroma,
+  '@akkoma/local-visibility-post': containAkkoma,
 };
 
 const supportsCache = {};
 
 function supports(feature) {
-  const specs = platformFeatures[feature];
-  if (!specs) return false;
-
   try {
-    let { version, domain, nodeInfo } = getCurrentInstance();
+    let { version, domain, software_name } = getCurrentInstance();
 
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
 
-    let software = 'mastodon';
-    if (
-      nodeInfo && nodeInfo.software && typeof nodeInfo.software.version === 'string'
-      && typeof nodeInfo.software.name === 'string'
-    ) {
-      software = nodeInfo.software.name.toLowerCase();
-      version = nodeInfo.software.version;
+    if (platformFeatures[feature]) {
+      return (supportsCache[key] = platformFeatures[feature].test(version));
     }
 
-    const isSupported = specs.some((spec) => versionSatisfies(software, version, spec));
-    return (supportsCache[key] = isSupported);
+    const range = features[feature];
+    if (!range) return false;
+    return (supportsCache[key] = (
+      containGTS.test(feature) === containGTS.test(software_name)
+      && satisfies(version, range, {
+        includePrerelease: true,
+        loose: true,
+      })
+    ));
   } catch (e) {
     return false;
   }
-}
-
-function versionSatisfies(software, version, [softwareSpec, versionSpec]) {
-  let softwareMatches;
-
-  // Inverted spec, like !pixelfed
-  if (softwareSpec.startsWith('!')) {
-    softwareMatches = software !== softwareSpec.slice(1);
-  } else {
-    softwareMatches = (
-      software === softwareSpec || (
-        // Hometown inherits Mastodon features
-        software === 'hometown' && softwareSpec === 'mastodon'
-      )
-    );
-  }
-
-  return softwareMatches && (
-    versionSpec == null || satisfies(version, versionSpec, {
-      includePrerelease: true,
-      loose: true,
-    })
-  );
 }
 
 export default supports;

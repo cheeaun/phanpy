@@ -372,7 +372,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   contain-intrinsic-size: auto 160px;
 
   &:is(:hover, :focus-visible) {
-    /* Needed to undo the overflow: hidden "effect"  due to "content-visibility: auto" */
+    /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
     content-visibility: visible;
   }
 }

@@ -2,6 +2,36 @@
   .notification {
     content-visibility: auto;
   }
+
+  .timeline-header {
+    position: sticky;
+    --mask-padding: 8px;
+    top: calc(48px - var(--mask-padding));
+    transition: top 0.5s ease-in-out;
+    header[hidden] ~ & {
+      top: calc(-1 * var(--mask-padding));
+    }
+    z-index: 1;
+    background-color: inherit;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--mask-padding) calc(100% - var(--mask-padding) * 2),
+      transparent
+    );
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-faded-color);
+    }
+    padding-block: 16px;
+    margin: 0;
+    opacity: 1;
+
+    small {
+      font-weight: normal;
+      font-size: var(--text-size);
+    }
+  }
 }
 
 .notification {

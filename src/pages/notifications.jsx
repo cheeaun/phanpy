@@ -4,7 +4,13 @@ import { msg, Plural, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
@@ -471,6 +477,15 @@ function Notifications({ columnMode }) {
     }
   });
 
+  const today = new Date();
+  const todaySubHeading = useMemo(() => {
+    return niceDateTime(today, {
+      forceOpts: {
+        weekday: 'long',
+      },
+    });
+  }, [today]);
+
   return (
     <div
       id="notifications-page"
@@ -726,7 +741,8 @@ function Notifications({ columnMode }) {
           </label>
         </div>
         <h2 class="timeline-header">
-          <Trans>Today</Trans>
+          <Trans>Today</Trans>{' '}
+          <small class="insignificant bidi-isolate">{todaySubHeading}</small>
         </h2>
         {showTodayEmpty && (
           <p class="ui-state insignificant">
@@ -757,9 +773,21 @@ function Notifications({ columnMode }) {
                     : niceDateTime(currentDay, {
                         hideTime: true,
                       });
+                const subHeading = niceDateTime(currentDay, {
+                  forceOpts: {
+                    weekday: 'long',
+                  },
+                });
                 return (
                   <Fragment key={notification._ids || notification.id}>
-                    {differentDay && <h2 class="timeline-header">{heading}</h2>}
+                    {differentDay && (
+                      <h2 class="timeline-header">
+                        <span>{heading}</span>{' '}
+                        <small class="insignificant bidi-isolate">
+                          {subHeading}
+                        </small>
+                      </h2>
+                    )}
                     <Notification
                       instance={instance}
                       notification={notification}

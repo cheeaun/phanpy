@@ -367,14 +367,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   --line-dir: var(--to-forward);
 }
-.timeline > li + li:not(.timeline-item-carousel) {
+.timeline > li + li:not(.timeline-item-carousel, .hero, .ancestor) {
   content-visibility: auto;
   contain-intrinsic-size: auto 160px;
-
-  &:is(:hover, :focus-visible) {
-    /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
-    content-visibility: visible;
-  }
+}
+.timeline.contextual > li:is(:hover, :focus-visible) {
+  /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
+  content-visibility: visible !important;
 }
 .timeline.flat > li {
   border-bottom: none;

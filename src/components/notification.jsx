@@ -3,6 +3,7 @@ import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
+import { api } from '../utils/api';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
 import { getCurrentAccountID } from '../utils/store-utils';
@@ -302,6 +303,7 @@ function Notification({
   disableContextMenu,
 }) {
   const { _ } = useLingui();
+  const { masto } = api();
   const {
     id,
     status,
@@ -313,9 +315,11 @@ function Notification({
     _ids,
     _accounts,
     _statuses,
+    _groupKeys,
     // Server-side grouped notification
     sampleAccounts,
     notificationsCount,
+    groupKey,
   } = notification;
   let { type } = notification;
 
@@ -443,10 +447,15 @@ function Notification({
 
   console.debug('RENDER Notification', notification.id);
 
+  const sameCount =
+    notificationsCount > 0 && notificationsCount <= sampleAccounts?.length;
+  const expandAccounts = sameCount ? 'local' : 'remote';
+
   return (
     <div
       class={`notification notification-${type}`}
       data-notification-id={_ids || id}
+      data-group-key={_groupKeys?.join(' ') || groupKey}
       tabIndex="0"
     >
       <div
@@ -550,15 +559,67 @@ function Notification({
                 </a>{' '}
               </Fragment>
             ))}
-            <button
-              type="button"
-              class="small plain"
-              onClick={handleOpenGenericAccounts}
-            >
-              {_accounts.length > AVATARS_LIMIT &&
-                `+${_accounts.length - AVATARS_LIMIT}`}
-              <Icon icon="chevron-down" />
-            </button>
+            {type === 'favourite+reblog' && expandAccounts === 'remote' ? (
+              <button
+                type="button"
+                class="small plain"
+                data-group-keys={_groupKeys.join(' ')}
+                onClick={() => {
+                  states.showGenericAccounts = {
+                    heading: genericAccountsHeading,
+                    fetchAccounts: async () => {
+                      const keyAccounts = await Promise.allSettled(
+                        _groupKeys.map(async (gKey) => {
+                          const iterator = masto.v2.notifications
+                            .$select(gKey)
+                            .accounts.list();
+                          return [gKey, (await iterator.next()).value];
+                        }),
+                      );
+                      const accounts = [];
+                      for (const keyAccount of keyAccounts) {
+                        const [key, _accounts] = keyAccount.value;
+                        const type = /^favourite/.test(key)
+                          ? 'favourite'
+                          : /^reblog/.test(key)
+                          ? 'reblog'
+                          : null;
+                        if (!type) continue;
+                        for (const account of _accounts) {
+                          const theAccount = accounts.find(
+                            (a) => a.id === account.id,
+                          );
+                          if (theAccount) {
+                            theAccount._types.push(type);
+                          } else {
+                            account._types = [type];
+                            accounts.push(account);
+                          }
+                        }
+                      }
+                      return {
+                        done: true,
+                        value: accounts,
+                      };
+                    },
+                    showReactions: true,
+                    postID: statusKey(actualStatusID, instance),
+                  };
+                }}
+              >
+                <Icon icon="chevron-down" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                class="small plain"
+                onClick={handleOpenGenericAccounts}
+              >
+                {_accounts.length > AVATARS_LIMIT &&
+                  `+${_accounts.length - AVATARS_LIMIT}`}
+                <Icon icon="chevron-down" />
+              </button>
+            )}
           </p>
         )}
         {!_accounts?.length && sampleAccounts?.length > 1 && (

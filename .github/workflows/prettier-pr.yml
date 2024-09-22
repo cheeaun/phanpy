@@ -18,4 +18,5 @@ jobs:
         with:
           dry: true
           # Don't write anything
-          prettier_options: '--check'
+          prettier_options: '--check --config .prettierrc'
+          file_pattern: '.'

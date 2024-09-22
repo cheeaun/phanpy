@@ -1991,9 +1991,11 @@ a.card:is(:hover, :focus):visited {
   flex-direction: column-reverse;
 }
 .card-byline-author {
-  display: inline-block;
+  display: inline-flex;
+  gap: 4px;
   color: var(--text-insignificant-color);
-  padding: 0 8px;
+  padding: 2px 8px;
+  align-items: center;
 
   .avatar {
     width: 16px !important;

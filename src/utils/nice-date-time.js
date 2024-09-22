@@ -8,11 +8,11 @@ const defaultLocale = mem(
 );
 
 const _DateTimeFormat = (opts) => {
-  const { locale, dateYear, hideTime, formatOpts } = opts || {};
+  const { locale, dateYear, hideTime, formatOpts, forceOpts } = opts || {};
   const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
   const loc = localeMatch([regionlessLocale], [defaultLocale], locale);
   const currentYear = new Date().getFullYear();
-  const options = {
+  const options = forceOpts || {
     // Show year if not current year
     year: dateYear === currentYear ? undefined : 'numeric',
     month: 'short',

@@ -563,7 +563,7 @@ function Notification({
               <button
                 type="button"
                 class="small plain"
-                data-group-keys={_groupKeys.join(' ')}
+                data-group-keys={_groupKeys?.join(' ')}
                 onClick={() => {
                   states.showGenericAccounts = {
                     heading: genericAccountsHeading,

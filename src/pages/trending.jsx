@@ -412,7 +412,7 @@ function Trending({ columnMode, ...props }) {
       id="trending"
       instance={instance}
       emptyText={t`No trending posts.`}
-      errorText={t`Unable to load posts`}
+      errorText={hasCurrentLink ? t`Unable to load posts` : t`Your server does not seem to support the Trending timeline`}
       fetchItems={hasCurrentLink ? fetchLinkMentions : fetchTrends}
       checkForUpdates={hasCurrentLink ? undefined : checkForUpdates}
       checkForUpdatesInterval={5 * 60 * 1000} // 5 minutes

@@ -238,6 +238,8 @@
 }
 
 #mentions-option {
+  position: relative;
+  z-index: 2;
   float: right;
   &:dir(rtl) {
     float: left;

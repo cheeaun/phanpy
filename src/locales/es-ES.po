@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-23 14:57\n"
+"PO-Revision-Date: 2024-09-23 21:04\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -571,7 +571,7 @@ msgstr "Parece que has cerrado la ventana principal."
 
 #: src/components/compose.jsx:828
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr "Parece que ya tienes una ventana de edición abierta en la ventana principal y que está publicando actualmente. Por favor, espera a que se publique y vuelve a intentarlo más tarde."
+msgstr "Parece que ya tienes una ventana de edición abierta en la ventana principal y que se está publicando. Por favor, espera a que se publique e inténtalo de nuevo más tarde."
 
 #: src/components/compose.jsx:833
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
@@ -725,16 +725,16 @@ msgstr "Descripción del audio"
 #: src/components/compose.jsx:2283
 #: src/components/compose.jsx:2303
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr "El tamaño del archivo es demasiado grande. Puede que haya problemas al cargar el archivo. Intenta reducir el tamaño de {0} a {1} o menos."
+msgstr "El tamaño del archivo es demasiado grande. La carga podría tener problemas. Intenta reducir el tamaño del archivo de {0} a {1} o inferior."
 
 #: src/components/compose.jsx:2295
 #: src/components/compose.jsx:2315
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr "La dimensión es demasiado grande. La carga puede encontrar problemas. Intenta reducir la dimensión de {0}×{1}px a {2}×{3}px."
+msgstr "La dimensión es demasiado grande. La carga podría tener problemas. Intenta reducir la dimensión de {0}×{1}px a {2}×{3}px."
 
 #: src/components/compose.jsx:2323
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr "Tasa de fotogramas demasiado alta. La carga podría encontrar problemas."
+msgstr "Tasa de fotogramas demasiado alta. La carga podría tener problemas."
 
 #: src/components/compose.jsx:2383
 #: src/components/compose.jsx:2633
@@ -882,7 +882,7 @@ msgstr "Borradores no enviados"
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr "Parece que tienes borradores sin enviar. Continuemos donde lo dejaste."
+msgstr "Parece que tienes borradores sin enviar. Prosigamos donde lo dejaste."
 
 #: src/components/drafts.jsx:102
 msgid "Delete this draft?"
@@ -917,7 +917,7 @@ msgstr "Eliminar todo…"
 
 #: src/components/drafts.jsx:209
 msgid "No drafts found."
-msgstr "No se encontraron borradores."
+msgstr "No se han encontrado borradores."
 
 #: src/components/drafts.jsx:245
 #: src/pages/catchup.jsx:1928
@@ -953,7 +953,7 @@ msgstr "Rechazado"
 
 #: src/components/generic-accounts.jsx:24
 msgid "Nothing to show"
-msgstr "Nada que mostrar"
+msgstr "No hay nada que mostrar"
 
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:437
@@ -1612,7 +1612,7 @@ msgstr "Violación de regla del servidor"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
-msgstr "Rompe reglas específicas del servidor"
+msgstr "Incumple normas específicas del servidor"
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
@@ -1853,7 +1853,7 @@ msgstr "Añadir atajo…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr "La lista específica es opcional. Para el modo de múltiples columnas, es necesaria una lista; sin ella, no se mostrará la columna."
+msgstr "Especificar una lista es opcional. Para el modo de múltiples columnas, la lista es obligatoria, de lo contrario la columna no se mostrará."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
@@ -2508,7 +2508,7 @@ msgstr "Añadir una cuenta ya existente"
 
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr "Aviso: la cuenta <0>Por defecto</0> se cargará siempre primero. Si cambias de cuenta, esta se mantendrá durante la sesión."
+msgstr "Nota: la cuenta <0>Predefinida</0> se cargará siempre primero. Si cambias de cuenta, esta se mantendrá durante la sesión."
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"

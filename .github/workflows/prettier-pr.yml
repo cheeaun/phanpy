@@ -1,0 +1,22 @@
+name: Prettier on pull requests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Need node to install prettier plugin(s)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - uses: creyD/prettier_action@v4.3
+        with:
+          dry: true
+          # Don't write anything
+          prettier_options: '--check --config .prettierrc'
+          file_pattern: '.'

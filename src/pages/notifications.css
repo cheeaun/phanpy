@@ -1,3 +1,39 @@
+#notifications-page {
+  .notification {
+    content-visibility: auto;
+  }
+
+  .timeline-header {
+    position: sticky;
+    --mask-padding: 8px;
+    top: calc(48px - var(--mask-padding));
+    transition: top 0.5s ease-in-out;
+    header[hidden] ~ & {
+      top: calc(-1 * var(--mask-padding));
+    }
+    z-index: 1;
+    background-color: inherit;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--mask-padding) calc(100% - var(--mask-padding) * 2),
+      transparent
+    );
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-faded-color);
+    }
+    padding-block: 16px;
+    margin: 0;
+    opacity: 1;
+
+    small {
+      font-weight: normal;
+      font-size: var(--text-size);
+    }
+  }
+}
+
 .notification {
   display: flex;
   padding: 16px !important;
@@ -10,8 +46,8 @@
     cursor: pointer;
   }
 }
-.notification.notification-mention {
-  margin-top: 16px;
+.notification-type.notification-mention {
+  padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),
 .only-mentions .timeline-empty {
@@ -139,7 +175,6 @@
   max-height: 320px;
   filter: none;
   background-color: var(--bg-color);
-  margin-top: calc(-16px - 1px);
   border-color: var(--reply-to-color);
   box-shadow: 0 0 0 3px var(--reply-to-faded-color);
 }
@@ -203,6 +238,8 @@
 }
 
 #mentions-option {
+  position: relative;
+  z-index: 2;
   float: right;
   &:dir(rtl) {
     float: left;

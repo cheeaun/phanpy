@@ -841,11 +841,69 @@ function Settings({ onClose }) {
                 )}
               </ul>
             )}
+            <p>Service Worker Cache</p>
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={async () => alert(await getCachesKeys())}
+            >
+              Show keys count
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={() => {
+                const key = prompt('Enter cache key');
+                if (!key) return;
+                try {
+                  clearCacheKey(key);
+                } catch (e) {
+                  alert(e);
+                }
+              }}
+            >
+              Clear cache key
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={() => {
+                try {
+                  clearCaches();
+                } catch (e) {
+                  alert(e);
+                }
+              }}
+            >
+              Clear all caches
+            </button>
           </details>
         )}
       </main>
     </div>
   );
+}
+
+async function getCachesKeys() {
+  const keys = await caches.keys();
+  const total = {};
+  for (const key of keys) {
+    const cache = await caches.open(key);
+    const k = await cache.keys();
+    total[key] = k.length;
+  }
+  return total;
+}
+
+function clearCacheKey(key) {
+  return caches.delete(key);
+}
+
+async function clearCaches() {
+  const keys = await caches.keys();
+  for (const key of keys) {
+    await caches.delete(key);
+  }
 }
 
 function PushNotificationsSection({ onClose }) {

@@ -666,6 +666,7 @@
         black calc(100% - 1em),
         transparent 100%
       );
+      padding-top: 0.1em;
 
       @media (min-width: 40em) {
         --width: 25vw;
@@ -697,7 +698,7 @@
 
   &:is(.catchup-group-account, .catchup-selected-author):is(
       .catchup-filter-original,
-      .catchup-filter-reply
+      .catchup-filter-replies
     )
     > li {
     margin-bottom: 0;

@@ -1,5 +1,6 @@
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
+import * as navigationPreload from 'workbox-navigation-preload';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
 import {
   CacheFirst,
@@ -7,19 +8,48 @@ import {
   StaleWhileRevalidate,
 } from 'workbox-strategies';
 
+navigationPreload.enable();
+
 self.__WB_DISABLE_DEV_LOGS = true;
+
+const iconsRoute = new Route(
+  ({ request, sameOrigin }) => {
+    const isIcon = request.url.includes('/icons/');
+    return sameOrigin && isIcon;
+  },
+  new CacheFirst({
+    cacheName: 'icons',
+    plugins: [
+      new ExpirationPlugin({
+        // Weirdly high maxEntries number, due to some old icons suddenly disappearing and not rendering
+        // NOTE: Temporary fix
+        maxEntries: 300,
+        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
+        purgeOnQuotaError: true,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(iconsRoute);
 
 const assetsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isAsset =
       request.destination === 'style' || request.destination === 'script';
-    const hasHash = /-[0-9a-f]{4,}\./i.test(request.url);
+    const hasHash = /-[0-9a-z-]{4,}\./i.test(request.url);
     return sameOrigin && isAsset && hasHash;
   },
   new NetworkFirst({
     cacheName: 'assets',
     networkTimeoutSeconds: 5,
     plugins: [
+      new ExpirationPlugin({
+        maxEntries: 30,
+        purgeOnQuotaError: true,
+      }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
       }),
@@ -41,8 +71,7 @@ const imageRoute = new Route(
     cacheName: 'remote-images',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
-        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
+        maxEntries: 30,
         purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
@@ -53,40 +82,18 @@ const imageRoute = new Route(
 );
 registerRoute(imageRoute);
 
-const iconsRoute = new Route(
-  ({ request, sameOrigin }) => {
-    const isIcon = request.url.includes('/icons/');
-    return sameOrigin && isIcon;
-  },
-  new CacheFirst({
-    cacheName: 'icons',
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 300,
-        maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
-        purgeOnQuotaError: true,
-      }),
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-    ],
-  }),
-);
-registerRoute(iconsRoute);
-
 // 1-day cache for
-// - /api/v1/instance
 // - /api/v1/custom_emojis
-// - /api/v1/preferences
 // - /api/v1/lists/:id
 // - /api/v1/announcements
 const apiExtendedRoute = new RegExpRoute(
-  /^https?:\/\/[^\/]+\/api\/v\d+\/(instance|custom_emojis|preferences|lists\/\d+|announcements)$/,
+  /^https?:\/\/[^\/]+\/api\/v\d+\/(custom_emojis|lists\/\d+|announcements)$/,
   new StaleWhileRevalidate({
     cacheName: 'api-extended',
     plugins: [
       new ExpirationPlugin({
-        maxAgeSeconds: 24 * 60 * 60, // 1 day
+        maxAgeSeconds: 12 * 60 * 60, // 12 hours
+        purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -127,7 +134,9 @@ const apiRoute = new RegExpRoute(
     networkTimeoutSeconds: 5,
     plugins: [
       new ExpirationPlugin({
+        maxEntries: 30,
         maxAgeSeconds: 5 * 60, // 5 minutes
+        purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],

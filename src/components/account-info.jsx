@@ -1488,6 +1488,9 @@ function RelatedActions({
                       </span>
                     </>
                   }
+                  itemProps={{
+                    className: 'danger',
+                  }}
                   menuItemClassName="danger"
                   onClick={() => {
                     // if (!blocking && !confirm(`Block @${username}?`)) {

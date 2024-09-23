@@ -57,6 +57,11 @@ export function initClient({ instance, accessToken }) {
   return client;
 }
 
+export function hasInstance(instance) {
+  const instances = store.local.getJSON('instances') || {};
+  return !!instances[instance];
+}
+
 // Get the instance information
 // The config is needed for composing
 export async function initInstance(client, instance) {
@@ -64,6 +69,7 @@ export async function initInstance(client, instance) {
   const { masto, accessToken } = client;
   // Request v2, fallback to v1 if fail
   let info;
+  __BENCHMARK.start('fetch-instance');
   try {
     info = await masto.v2.instance.fetch();
   } catch (e) {}
@@ -72,6 +78,7 @@ export async function initInstance(client, instance) {
       info = await masto.v1.instance.fetch();
     } catch (e) {}
   }
+  __BENCHMARK.end('fetch-instance');
   if (!info) return;
   console.log(info);
   const {
@@ -111,6 +118,7 @@ export async function initInstance(client, instance) {
     // masto.ws = streamClient;
     console.log('🎏 Streaming API client:', client);
   }
+  __BENCHMARK.end('init-instance');
 }
 
 // Get the account information and store it
@@ -129,11 +137,17 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
   });
 }
 
+export function hasPreferences() {
+  return !!store.account.get('preferences');
+}
+
 // Get preferences
 export async function initPreferences(client) {
   try {
     const { masto } = client;
+    __BENCHMARK.start('fetch-preferences');
     const preferences = await masto.v1.preferences.fetch();
+    __BENCHMARK.end('fetch-preferences');
     store.account.set('preferences', preferences);
   } catch (e) {
     // silently fail

@@ -22,6 +22,7 @@ function Following({ title, path, id, ...props }) {
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
   const latestItem = useRef();
+  __BENCHMARK.end('time-to-following');
 
   console.debug('RENDER Following', title, id);
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
@@ -66,7 +67,6 @@ function Following({ title, path, id, ...props }) {
       });
     }
     __BENCHMARK.end('fetch-home-first');
-    __BENCHMARK.end('time-to-home');
     return {
       ...results,
       value,

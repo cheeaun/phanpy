@@ -1990,6 +1990,20 @@ a.card:is(:hover, :focus):visited {
   .card.large.card-post {
   flex-direction: column-reverse;
 }
+.card-byline-author {
+  display: inline-flex;
+  gap: 4px;
+  color: var(--text-insignificant-color);
+  padding: 2px 8px;
+  align-items: center;
+
+  .avatar {
+    width: 16px !important;
+    height: 16px !important;
+    opacity: 0.8;
+    vertical-align: middle;
+  }
+}
 
 /* POLLS */
 

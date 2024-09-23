@@ -4,7 +4,13 @@ import { msg, Plural, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
@@ -63,7 +69,7 @@ export function mastoFetchNotifications(opts = {}) {
     memSupportsGroupedNotifications()
   ) {
     // https://github.com/mastodon/mastodon/pull/29889
-    return masto.v2_alpha.notifications.list({
+    return masto.v2.notifications.list({
       limit: NOTIFICATIONS_GROUPED_LIMIT,
       ...opts,
     });
@@ -471,15 +477,24 @@ function Notifications({ columnMode }) {
     }
   });
 
+  const today = new Date();
+  const todaySubHeading = useMemo(() => {
+    return niceDateTime(today, {
+      forceOpts: {
+        weekday: 'long',
+      },
+    });
+  }, [today]);
+
   return (
     <div
       id="notifications-page"
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        oRef.current = node;
+        jRef(node);
+        kRef(node);
+        oRef(node);
       }}
       tabIndex="-1"
     >
@@ -726,7 +741,8 @@ function Notifications({ columnMode }) {
           </label>
         </div>
         <h2 class="timeline-header">
-          <Trans>Today</Trans>
+          <Trans>Today</Trans>{' '}
+          <small class="insignificant bidi-isolate">{todaySubHeading}</small>
         </h2>
         {showTodayEmpty && (
           <p class="ui-state insignificant">
@@ -757,9 +773,21 @@ function Notifications({ columnMode }) {
                     : niceDateTime(currentDay, {
                         hideTime: true,
                       });
+                const subHeading = niceDateTime(currentDay, {
+                  forceOpts: {
+                    weekday: 'long',
+                  },
+                });
                 return (
                   <Fragment key={notification._ids || notification.id}>
-                    {differentDay && <h2 class="timeline-header">{heading}</h2>}
+                    {differentDay && (
+                      <h2 class="timeline-header">
+                        <span>{heading}</span>{' '}
+                        <small class="insignificant bidi-isolate">
+                          {subHeading}
+                        </small>
+                      </h2>
+                    )}
                     <Notification
                       instance={instance}
                       notification={notification}

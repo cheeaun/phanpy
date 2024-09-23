@@ -609,8 +609,7 @@ function Compose({
           const file = item.getAsFile();
           if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
             unsupportedFiles.push(file);
-          }
-          else {
+          } else {
             files.push(file);
           }
         }

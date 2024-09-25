@@ -585,7 +585,7 @@
     margin-top: calc(-1 * var(--banner-overlap));
   }
 
-  @supports (animation-timeline: scroll()) {
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
     .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
       animation: bye-banner 1s linear both;
       animation-timeline: view();

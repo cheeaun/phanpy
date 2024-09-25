@@ -1601,7 +1601,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
     margin-top: 8px;
     padding: 8px;
 
-    @supports (animation-timeline: scroll()) {
+    @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
       animation: media-carousel-slide 1s linear both;
       animation-timeline: --media-carousel;
     }

@@ -20,6 +20,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -131,7 +132,7 @@ const PostContent =
     const { content, emojis, language, mentions, url } = post;
 
     const divRef = useRef();
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (!divRef.current) return;
       const dom = enhanceContent(content, {
         emojis,

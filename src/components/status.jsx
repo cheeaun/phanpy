@@ -210,6 +210,25 @@ const detectLang = pmem(async (text) => {
 
 const readMoreText = msg`Read more →`;
 
+// All this work just to make sure this only lazy-run once
+// Because first run is slow due to intl-localematcher
+const DIFFERENT_LANG_CHECK = {};
+const checkDifferentLanguage = (
+  language,
+  contentTranslationHideLanguages = [],
+) => {
+  if (!language) return false;
+  const targetLanguage = getTranslateTargetLanguage(true);
+  const different =
+    language !== targetLanguage &&
+    !localeMatch([language], [targetLanguage]) &&
+    !contentTranslationHideLanguages.find(
+      (l) => language === l || localeMatch([language], [l]),
+    );
+  DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  return different;
+};
+
 function Status({
   statusID,
   status,
@@ -534,9 +553,9 @@ function Status({
   const isSizeLarge = size === 'l';
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
-  const targetLanguage = getTranslateTargetLanguage(true);
-  const contentTranslationHideLanguages =
-    snapStates.settings.contentTranslationHideLanguages || [];
+  // const targetLanguage = getTranslateTargetLanguage(true);
+  // const contentTranslationHideLanguages =
+  //   snapStates.settings.contentTranslationHideLanguages || [];
   const { contentTranslation, contentTranslationAutoInline } =
     snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
@@ -781,13 +800,37 @@ function Status({
     } catch (e) {}
   };
 
-  const differentLanguage =
-    !!language &&
-    language !== targetLanguage &&
-    !localeMatch([language], [targetLanguage]) &&
-    !contentTranslationHideLanguages.find(
-      (l) => language === l || localeMatch([language], [l]),
-    );
+  // const differentLanguage =
+  //   !!language &&
+  //   language !== targetLanguage &&
+  //   !localeMatch([language], [targetLanguage]) &&
+  //   !contentTranslationHideLanguages.find(
+  //     (l) => language === l || localeMatch([language], [l]),
+  //   );
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
+  const [differentLanguage, setDifferentLanguage] = useState(
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+      ? checkDifferentLanguage(language, contentTranslationHideLanguages)
+      : false,
+  );
+  useEffect(() => {
+    if (
+      !language ||
+      differentLanguage ||
+      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+    ) {
+      return;
+    }
+    let timeout = setTimeout(() => {
+      const different = checkDifferentLanguage(
+        language,
+        contentTranslationHideLanguages,
+      );
+      if (different) setDifferentLanguage(different);
+    }, 1);
+    return () => clearTimeout(timeout);
+  }, [language, differentLanguage, contentTranslationHideLanguages]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();

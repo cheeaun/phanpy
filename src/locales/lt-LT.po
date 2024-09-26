@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-26 15:00\n"
+"PO-Revision-Date: 2024-09-26 16:48\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1041,7 +1041,7 @@ msgstr "<0>Gr (Esc)</0> arba <1>Naikinimo klavišas (Backspace)</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
-msgstr "Fokusuoti stulpelį kelių stulpelių režime"
+msgstr "Fokusuoti stulpelį daugiastulpelių režime"
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
@@ -1569,11 +1569,11 @@ msgstr ""
 
 #: src/components/poll.jsx:272
 msgid "Ending <0/>"
-msgstr ""
+msgstr "Baigsis <0/>"
 
 #: src/components/poll.jsx:276
 msgid "Ending"
-msgstr ""
+msgstr "Baigsis"
 
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:57
@@ -1636,7 +1636,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
-msgstr ""
+msgstr "Laukiama apžvalgos"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
@@ -1728,15 +1728,15 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Paskyra"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "Saitažodis"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "Sąrašo ID"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
@@ -1770,7 +1770,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
 msgid "Media only"
-msgstr ""
+msgstr "Tik medija"
 
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
@@ -1779,7 +1779,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr ""
+msgstr "beta ver."
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
@@ -1795,29 +1795,29 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
-msgstr ""
+msgstr "Daugiastulpelių"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "Nepasiekiama dabartiniame rodinio režime"
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
-msgstr ""
+msgstr "Perkelti aukštyn"
 
 #: src/components/shortcuts-settings.jsx:364
 msgid "Move down"
-msgstr ""
+msgstr "Perkelti žemyn"
 
 #: src/components/shortcuts-settings.jsx:376
 #: src/components/status.jsx:1280
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "Redaguoti"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr ""
+msgstr "Pridėk daugiau nei vieną trumpąjį nuorodą / stulpelį, kad tai veiktų."
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
@@ -1897,7 +1897,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "Nepavyksta atsisiųsti trumpųjų nuorodų."
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Download shortcuts from instance server"
@@ -2246,56 +2246,56 @@ msgstr "HTML kodas"
 
 #: src/components/status.jsx:3205
 msgid "HTML code copied"
-msgstr ""
+msgstr "Nukopijuotas HTML kodas"
 
 #: src/components/status.jsx:3208
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "Nepavyksta nukopijuoti HTML kodo."
 
 #: src/components/status.jsx:3220
 msgid "Media attachments:"
-msgstr ""
+msgstr "Medijos priedai:"
 
 #: src/components/status.jsx:3242
 msgid "Account Emojis:"
-msgstr ""
+msgstr "Paskyros jaustukai:"
 
 #: src/components/status.jsx:3273
 #: src/components/status.jsx:3318
 msgid "static URL"
-msgstr ""
+msgstr "statinis URL"
 
 #: src/components/status.jsx:3287
 msgid "Emojis:"
-msgstr ""
+msgstr "Jaustukai:"
 
 #: src/components/status.jsx:3332
 msgid "Notes:"
-msgstr ""
+msgstr "Pastabos:"
 
 #: src/components/status.jsx:3336
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr ""
+msgstr "Tai – statiškas, nestilingas ir be skriptis. Gali reikėti taikyti savo stilius ir redaguoti pagal poreikį."
 
 #: src/components/status.jsx:3342
 msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr ""
+msgstr "Apklausos nėra interaktyvios, tampa sąrašu su balsų skaičiais."
 
 #: src/components/status.jsx:3347
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr ""
+msgstr "Medijos priedai gali būti vaizdai, vaizdo įrašai, garso įrašai arba bet kokio tipo failai."
 
 #: src/components/status.jsx:3353
 msgid "Post could be edited or deleted later."
-msgstr ""
+msgstr "Įrašas gali būti redaguojamas arba ištrintas vėliau."
 
 #: src/components/status.jsx:3359
 msgid "Preview"
-msgstr ""
+msgstr "Peržiūrėti"
 
 #: src/components/status.jsx:3368
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "Pastaba: ši peržiūra yra šiek tiek stilizuota."
 
 #. [Name] [Visibility icon] boosted
 #: src/components/status.jsx:3610

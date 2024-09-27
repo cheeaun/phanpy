@@ -170,8 +170,8 @@ function _enhanceContent(content, opts = {}) {
 
   // TWITTER USERNAMES
   // =================
-  // Convert @username@twitter.com to <a href="https://twitter.com/username">@username@twitter.com</a>
-  if (/twitter\.com/i.test(enhancedContent)) {
+  // Convert @username@x.com to <a href="https://x.com/username">@username@x.com</a>
+  if (/(?:twitter|x)\.com/i.test(enhancedContent)) {
     textNodes = extractTextNodes(dom, {
       rejectFilter: ['A'],
     });
@@ -180,10 +180,10 @@ function _enhanceContent(content, opts = {}) {
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
-      if (/@[a-zA-Z0-9_]+@twitter\.com/g.test(html)) {
+      if (/@[a-zA-Z0-9_]+@(?:twitter|x)\.com/g.test(html)) {
         html = html.replaceAll(
-          /(@([a-zA-Z0-9_]+)@twitter\.com)/g,
-          '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+          /(@([a-zA-Z0-9_]+)@(?:twitter|x)\.com)/g,
+          '<a href="https://x.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
         );
       }
       fauxDiv.innerHTML = html;

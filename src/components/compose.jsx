@@ -51,6 +51,7 @@ import {
 import supports from '../utils/supports';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
+import contentTypesIconMap from '../utils/content-types-icon-map.js';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import AccountBlock from './account-block';
@@ -248,6 +249,7 @@ function Compose({
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
+  const [contentType, setContentType] = useState('text/plain');
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
@@ -1064,6 +1066,9 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
+                if (supports('@akkoma/post-content-type')) {
+                  params.content_type = contentType;
+                }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
 
@@ -1150,6 +1155,38 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
+            {supports('@akkoma/post-content-type') && (
+              <>
+                <label class={`toolbar-button ${contentType !== 'text/plain' && !sensitive ? 'show-field' : ''} ${contentType !== 'text/plain' ? 'highlight' : ''}`}>
+                  <Icon icon={contentTypesIconMap[contentType]} alt={visibility} />
+                  <select
+                    name={'contentType'}
+                    value={contentType}
+                    onChange={(e) => {
+                      setContentType(e.target.value);
+                    }}
+                    disabled={uiState === 'loading'}
+                    dir={'auto'}
+                  >
+                    <option value="text/plain">
+                      <Trans>Plain text</Trans>
+                    </option>
+                    <option value="text/html">
+                      <Trans>HTML</Trans>
+                    </option>
+                    <option value="text/markdown">
+                      <Trans>Markdown</Trans>
+                    </option>
+                    <option value="text/bbcode">
+                      <Trans>BBCode</Trans>
+                    </option>
+                    <option value="text/x.misskeymarkdown">
+                      <Trans>MFM</Trans>
+                    </option>
+                  </select>
+                </label>{' '}
+              </>
+            )}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''

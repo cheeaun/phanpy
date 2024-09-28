@@ -7,7 +7,13 @@ import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import Fuse from 'fuse.js';
 import { forwardRef, memo } from 'preact/compat';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 // import { detectAll } from 'tinyld/light';
@@ -37,7 +43,11 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccount, getCurrentAccountNS, getCurrentInstanceConfiguration } from '../utils/store-utils';
+import {
+  getCurrentAccount,
+  getCurrentAccountNS,
+  getCurrentInstanceConfiguration,
+} from '../utils/store-utils';
 import supports from '../utils/supports';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
@@ -49,7 +59,6 @@ import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
 import Status from './status';
-
 
 const {
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
@@ -1145,9 +1154,8 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
-            {(
-              supports('@akkoma/post-content-type') | supports('@pleroma/post-content-type')
-            ) && (
+            {supports('@akkoma/post-content-type') |
+              supports('@pleroma/post-content-type') && (
               <>
                 <label
                   class={`toolbar-button ${

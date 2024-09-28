@@ -1220,7 +1220,7 @@ function Status({
           {isSizeLarge && (
             <MenuConfirm
               subMenu
-              className={"danger"}
+              className={'danger'}
               confirmLabel={
                 <>
                   <Icon icon="trash" />

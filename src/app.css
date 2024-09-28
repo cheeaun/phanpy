@@ -2045,14 +2045,18 @@ body > .szh-menu-container {
   opacity: 1;
 }
 .szh-menu
-  .szh-menu__item:not(.szh-menu__item--disabled):not(.szh-menu__item--hover).danger,
-.szh-menu .szh-menu__submenu.danger
+  .szh-menu__item:not(.szh-menu__item--disabled):not(
+    .szh-menu__item--hover
+  ).danger,
+.szh-menu
+  .szh-menu__submenu.danger
   .szh-menu__item:not(.szh-menu__item--disabled):not(.szh-menu__item--hover) {
   color: var(--red-text-color);
 }
 .szh-menu
   .szh-menu__item.danger:not(.szh-menu__item--disabled).szh-menu__item--hover,
-.szh-menu .szh-menu__submenu.danger
+.szh-menu
+  .szh-menu__submenu.danger
   .szh-menu__item:not(.szh-menu__item--disabled).szh-menu__item--hover {
   /* background-color: var(--red-color); */
   --menu-item-bg-color: var(--red-color);

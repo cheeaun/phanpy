@@ -27,6 +27,7 @@ import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
+import contentTypesIconMap from '../utils/content-types-icon-map.js';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
@@ -51,7 +52,6 @@ import {
 import supports from '../utils/supports';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
-import contentTypesIconMap from '../utils/content-types-icon-map.js';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import AccountBlock from './account-block';
@@ -1157,8 +1157,17 @@ function Compose({
             </label>{' '}
             {supports('@akkoma/post-content-type') && (
               <>
-                <label class={`toolbar-button ${contentType !== 'text/plain' && !sensitive ? 'show-field' : ''} ${contentType !== 'text/plain' ? 'highlight' : ''}`}>
-                  <Icon icon={contentTypesIconMap[contentType]} alt={visibility} />
+                <label
+                  class={`toolbar-button ${
+                    contentType !== 'text/plain' && !sensitive
+                      ? 'show-field'
+                      : ''
+                  } ${contentType !== 'text/plain' ? 'highlight' : ''}`}
+                >
+                  <Icon
+                    icon={contentTypesIconMap[contentType]}
+                    alt={visibility}
+                  />
                   <select
                     name={'contentType'}
                     value={contentType}

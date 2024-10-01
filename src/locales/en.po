@@ -194,7 +194,7 @@ msgstr ""
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
-#: src/pages/settings.jsx:1103
+#: src/pages/settings.jsx:1122
 msgid "Boosts"
 msgstr ""
 
@@ -871,7 +871,7 @@ msgid "Error loading GIFs"
 msgstr ""
 
 #: src/components/drafts.jsx:63
-#: src/pages/settings.jsx:684
+#: src/pages/settings.jsx:703
 msgid "Unsent drafts"
 msgstr ""
 
@@ -1251,7 +1251,7 @@ msgstr ""
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1095
+#: src/pages/settings.jsx:1114
 #: src/pages/trending.jsx:381
 msgid "Mentions"
 msgstr ""
@@ -1306,7 +1306,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1099
+#: src/pages/settings.jsx:1118
 msgid "Likes"
 msgstr ""
 
@@ -2298,7 +2298,7 @@ msgid "<0/> <1/> boosted"
 msgstr ""
 
 #: src/components/timeline.jsx:453
-#: src/pages/settings.jsx:1123
+#: src/pages/settings.jsx:1142
 msgid "New posts"
 msgstr ""
 
@@ -3137,7 +3137,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:614
-#: src/pages/settings.jsx:1111
+#: src/pages/settings.jsx:1130
 msgid "Follow requests"
 msgstr ""
 
@@ -3456,92 +3456,100 @@ msgstr ""
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
 
-#: src/pages/settings.jsx:692
+#: src/pages/settings.jsx:683
+msgid "Numberless mode"
+msgstr "Numberless mode"
+
+#: src/pages/settings.jsx:687
+msgid "Removes all post and user metrics from the client."
+msgstr "Removes all post and user metrics from the client."
+
+#: src/pages/settings.jsx:711
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:731
+#: src/pages/settings.jsx:750
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr ""
 
-#: src/pages/settings.jsx:760
+#: src/pages/settings.jsx:779
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:768
+#: src/pages/settings.jsx:787
 msgid "Donate"
 msgstr ""
 
-#: src/pages/settings.jsx:776
+#: src/pages/settings.jsx:795
 msgid "Privacy Policy"
 msgstr ""
 
-#: src/pages/settings.jsx:783
+#: src/pages/settings.jsx:802
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:790
+#: src/pages/settings.jsx:809
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:805
+#: src/pages/settings.jsx:824
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:808
+#: src/pages/settings.jsx:827
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:1008
-#: src/pages/settings.jsx:1013
+#: src/pages/settings.jsx:1027
+#: src/pages/settings.jsx:1032
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1019
+#: src/pages/settings.jsx:1038
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1026
+#: src/pages/settings.jsx:1045
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1048
+#: src/pages/settings.jsx:1067
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
-#: src/pages/settings.jsx:1057
+#: src/pages/settings.jsx:1076
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1066
+#: src/pages/settings.jsx:1085
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1070
+#: src/pages/settings.jsx:1089
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1074
+#: src/pages/settings.jsx:1093
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1107
+#: src/pages/settings.jsx:1126
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1115
+#: src/pages/settings.jsx:1134
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1119
+#: src/pages/settings.jsx:1138
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1140
+#: src/pages/settings.jsx:1159
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1156
+#: src/pages/settings.jsx:1175
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 
@@ -3737,6 +3745,10 @@ msgstr ""
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."
+msgstr ""
+
+#: src/utils/shorten-number.js:8
+msgid "Several"
 msgstr ""
 
 #: src/utils/show-compose.js:16

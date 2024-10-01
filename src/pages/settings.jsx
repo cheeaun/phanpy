@@ -671,6 +671,25 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.numberlessMode}
+                  onChange={(e) => {
+                    states.settings.numberlessMode = e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Numberless mode</Trans>
+              </label>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>
+                    Removes all post and user metrics from the client.
+                  </Trans>
+                </small>
+              </div>
+            </li>
             {authenticated && (
               <li>
                 <button

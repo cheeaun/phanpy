@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-27 15:15\n"
+"PO-Revision-Date: 2024-10-01 10:34\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1688,43 +1688,43 @@ msgstr ""
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
-msgstr ""
+msgstr "Užblokuotas {username}"
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
-msgstr ""
+msgstr "Nepavyksta užblokuoti {username}."
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
-msgstr ""
+msgstr "Siųsti ataskaitą <0>+ blokuoti profilį</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
+msgstr "{query} <0>‒ paskyros, saitažodžiai ir įrašai</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "Įrašai su <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr ""
+msgstr "Įrašai pažymėti su <0>#{0}</0>"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Ieškoti <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
-msgstr ""
+msgstr "Paskyros su <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Pagrindinis / sekimai"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
-msgstr ""
+msgstr "Viešieji (vietiniai / federaciniai)"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
@@ -1753,19 +1753,19 @@ msgstr "Serveris"
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr "Neprivalomas, pvz., mastodon.social"
+msgstr "Pasirinktinis, pvz., mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Paieškos terminas"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr ""
+msgstr "Pasirinktinis, nebent naudojamas daugiastulpelių režimas"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr ""
+msgstr "pvz., „PixelArt“ (ne daugiau kaip 5, atskirti tarpais)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
@@ -1775,23 +1775,23 @@ msgstr "Tik medija"
 #: src/components/shortcuts-settings.jsx:232
 #: src/components/shortcuts.jsx:186
 msgid "Shortcuts"
-msgstr ""
+msgstr "Trumposios nuorodos"
 
 #: src/components/shortcuts-settings.jsx:240
 msgid "beta"
-msgstr "beta ver."
+msgstr "beta versija"
 
 #: src/components/shortcuts-settings.jsx:246
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "Nurodyk trumpųjų nuorodų sąrašą, kuris bus rodomas kaip:"
 
 #: src/components/shortcuts-settings.jsx:252
 msgid "Floating button"
-msgstr ""
+msgstr "Slankusis mygtukas"
 
 #: src/components/shortcuts-settings.jsx:257
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Skirtukas / meniu juosta"
 
 #: src/components/shortcuts-settings.jsx:262
 msgid "Multi-column"
@@ -1799,7 +1799,7 @@ msgstr "Daugiastulpelių"
 
 #: src/components/shortcuts-settings.jsx:329
 msgid "Not available in current view mode"
-msgstr "Nepasiekiama dabartiniame rodinio režime"
+msgstr "Nepasiekiama dabartiniame rodinio režime."
 
 #: src/components/shortcuts-settings.jsx:348
 msgid "Move up"
@@ -1817,27 +1817,27 @@ msgstr "Redaguoti"
 
 #: src/components/shortcuts-settings.jsx:397
 msgid "Add more than one shortcut/column to make this work."
-msgstr "Pridėk daugiau nei vieną trumpąjį nuorodą / stulpelį, kad tai veiktų."
+msgstr "Pridėk daugiau nei vieną trumpąją nuorodą / stulpelį, kad tai veiktų."
 
 #: src/components/shortcuts-settings.jsx:408
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
+msgstr "Kol kas nėra stulpelių. Paliesk mygtuką Pridėti stulpelį."
 
 #: src/components/shortcuts-settings.jsx:409
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "Kol kas nėra trumpųjų nuorodų. Paliesk mygtuką Pridėti trumpąją nuorodą."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "Nežinai, ką pridėti?<0/>Pirmiausia pabandyk pridėti <1>Pagrindinis / sekimai ir pranešimai</1>."
 
 #: src/components/shortcuts-settings.jsx:440
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "Didžiausias {SHORTCUTS_LIMIT} stulpelių skaičius"
 
 #: src/components/shortcuts-settings.jsx:441
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "Didžiausias {SHORTCUTS_LIMIT} trumpųjų nuorodų skaičius"
 
 #: src/components/shortcuts-settings.jsx:455
 msgid "Import/export"
@@ -1845,19 +1845,19 @@ msgstr "Importuoti / eksportuoti"
 
 #: src/components/shortcuts-settings.jsx:465
 msgid "Add column…"
-msgstr ""
+msgstr "Pridėti stulpelį…"
 
 #: src/components/shortcuts-settings.jsx:466
 msgid "Add shortcut…"
-msgstr ""
+msgstr "Pridėti trumpąją nuorodą…"
 
 #: src/components/shortcuts-settings.jsx:513
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr ""
+msgstr "Konkretus sąrašas neprivalomas. Daugiastulpelių režime sąrašas yra privalomas, kitaip stulpelis nebus rodomas."
 
 #: src/components/shortcuts-settings.jsx:514
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr ""
+msgstr "Daugiastulpelių režime privaloma nurodyti paieškos terminą, kitaip stulpelis nebus rodomas."
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
@@ -1929,12 +1929,12 @@ msgstr "Nėra naujų trumpųjų nuorodų importuoti"
 
 #: src/components/shortcuts-settings.jsx:972
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr "Importuoti trumpiniai nuorodai. Viršytas didžiausias {SHORTCUTS_LIMIT} ribą, todėl likusieji neimportuojami."
+msgstr "Importuotos trumposios nuorodos. Viršytas didžiausias {SHORTCUTS_LIMIT} ribą, todėl likusieji neimportuojami."
 
 #: src/components/shortcuts-settings.jsx:973
 #: src/components/shortcuts-settings.jsx:997
 msgid "Shortcuts imported"
-msgstr "Importuoti trumpiniai nuorodai"
+msgstr "Importuotos trumposios nuorodos"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Import & append…"
@@ -1946,75 +1946,75 @@ msgstr "Perrašyti esamas trumpąsias nuorodas?"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "Importuoti trumpąsias nuorodas?"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "or override…"
-msgstr ""
+msgstr "arba perrašyti…"
 
 #: src/components/shortcuts-settings.jsx:1006
 msgid "Import…"
-msgstr ""
+msgstr "Importuoti…"
 
 #: src/components/shortcuts-settings.jsx:1015
 msgid "Export"
-msgstr ""
+msgstr "Eksportuoti"
 
 #: src/components/shortcuts-settings.jsx:1030
 msgid "Shortcuts copied"
-msgstr ""
+msgstr "Nukopijuotos trumposios nuorodos"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Unable to copy shortcuts"
-msgstr ""
+msgstr "Nepavyksta nukopijuoti trumpųjų nuorodų."
 
 #: src/components/shortcuts-settings.jsx:1047
 msgid "Shortcut settings copied"
-msgstr ""
+msgstr "Nukopijuoti trumpųjų nuorodų nustatymai"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "Nepavyksta nukopijuoti trumpųjų nuorodų nustatymų."
 
 #: src/components/shortcuts-settings.jsx:1080
 msgid "Share"
-msgstr ""
+msgstr "Bendrinti"
 
 #: src/components/shortcuts-settings.jsx:1119
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "Išsaugomos trumpųjų nuorodų į serverį…"
 
 #: src/components/shortcuts-settings.jsx:1126
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "Išsaugotos trumposios nuorodos"
 
 #: src/components/shortcuts-settings.jsx:1131
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "Nepavyksta išsaugoti trumpųjų nuorodų."
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Sync to instance server"
-msgstr ""
+msgstr "Sinchronizuoti su serveriu"
 
 #: src/components/shortcuts-settings.jsx:1142
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0, plural, one {# simbolis} few {# simboliai} many {# simbolio} other {# simbolių}}"
 
 #: src/components/shortcuts-settings.jsx:1154
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "Neapdorotos trumposios nuorodos JSON"
 
 #: src/components/shortcuts-settings.jsx:1167
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "Importuoti / eksportuoti nustatymus iš / į serverį (labai eksperimentinis)"
 
 #: src/components/status.jsx:504
 msgid "<0/> <1>boosted</1>"
-msgstr ""
+msgstr "<0/> <1>pasidalino</1>"
 
 #: src/components/status.jsx:603
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr ""
+msgstr "Atsiprašome, tavo dabartinis prisijungtas serveris negali sąveikauti su šiuo įrašu iš kito serverio."
 
 #: src/components/status.jsx:756
 msgid "Unliked @{0}'s post"
@@ -2022,15 +2022,15 @@ msgstr "Panaikintas @{0} patiktuko įrašas"
 
 #: src/components/status.jsx:757
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Patiko @{0} įrašas"
 
 #: src/components/status.jsx:796
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Pašalintas @{0} įrašas iš žymių"
 
 #: src/components/status.jsx:797
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Pridėtas @{0} įrašas į žymes"
 
 #: src/components/status.jsx:903
 #: src/components/status.jsx:965
@@ -2109,7 +2109,7 @@ msgstr "Atšauktas pokalbio nutildymas"
 
 #: src/components/status.jsx:1201
 msgid "Conversation muted"
-msgstr "Pokalbio nutildytas"
+msgstr "Pokalbis nutildytas"
 
 #: src/components/status.jsx:1207
 msgid "Unable to unmute conversation"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-01 10:34\n"
+"PO-Revision-Date: 2024-10-01 12:49\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -1523,21 +1523,21 @@ msgstr "Skaityti daugiau →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr ""
+msgstr "Balsuota"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# balsas} few {# balsai} many {# balso} other {# balsų}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
 #: src/components/poll.jsx:223
 msgid "Hide results"
-msgstr ""
+msgstr "Slėpti rezultatus"
 
 #: src/components/poll.jsx:185
 msgid "Vote"
-msgstr ""
+msgstr "Balsuoti"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
@@ -1557,15 +1557,15 @@ msgstr "{votesCount, plural, one {<0>{0}</0> balsas} few {<1>{1}</1> balsai} man
 
 #: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> balsuotojas} few {<1>{1}</1> balsuotojai} many {<1>{1}</1> balsuotojo} other {<1>{1}</1> balsuotojų}}"
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
-msgstr ""
+msgstr "Baigėsi <0/>"
 
 #: src/components/poll.jsx:269
 msgid "Ended"
-msgstr ""
+msgstr "Baigėsi"
 
 #: src/components/poll.jsx:272
 msgid "Ending <0/>"
@@ -1578,61 +1578,61 @@ msgstr "Baigsis"
 #. Relative time in seconds, as short as possible
 #: src/components/relative-time.jsx:57
 msgid "{0}s"
-msgstr ""
+msgstr "{0} sek."
 
 #. Relative time in minutes, as short as possible
 #: src/components/relative-time.jsx:62
 msgid "{0}m"
-msgstr ""
+msgstr "{0} min."
 
 #. Relative time in hours, as short as possible
 #: src/components/relative-time.jsx:67
 msgid "{0}h"
-msgstr ""
+msgstr "{0} val."
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
-msgstr ""
+msgstr "Brukalas"
 
 #: src/components/report-modal.jsx:30
 msgid "Malicious links, fake engagement, or repetitive replies"
-msgstr ""
+msgstr "Kenkėjiškos nuorodos, netikras įsitraukimas arba pasikartojantys atsakymai"
 
 #: src/components/report-modal.jsx:33
 msgid "Illegal"
-msgstr ""
+msgstr "Neteisėta"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
-msgstr ""
+msgstr "Pažeidžia tavo arba serverio šalies įstatymus"
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
-msgstr ""
+msgstr "Serverio taisyklių pažeidimas"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
-msgstr ""
+msgstr "Pažeidžia konkrečias serverio taisykles"
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
-msgstr ""
+msgstr "Pažeidimas"
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
-msgstr ""
+msgstr "Kita"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
-msgstr ""
+msgstr "Problema netinka kitoms kategorijoms"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
-msgstr ""
+msgstr "Pranešti apie įrašą"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
-msgstr ""
+msgstr "Pranešti apie @{username}"
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
@@ -1861,39 +1861,39 @@ msgstr "Daugiastulpelių režime privaloma nurodyti paieškos terminą, kitaip s
 
 #: src/components/shortcuts-settings.jsx:515
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr ""
+msgstr "Palaikomi keli saitažodžiai. Atskirti tarpais."
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Edit shortcut"
-msgstr ""
+msgstr "Redaguoti trumpąją nuorodą"
 
 #: src/components/shortcuts-settings.jsx:584
 msgid "Add shortcut"
-msgstr ""
+msgstr "Pridėti trumpąją nuorodą"
 
 #: src/components/shortcuts-settings.jsx:620
 msgid "Timeline"
-msgstr ""
+msgstr "Laiko skalė"
 
 #: src/components/shortcuts-settings.jsx:646
 msgid "List"
-msgstr ""
+msgstr "Sąrašas"
 
 #: src/components/shortcuts-settings.jsx:785
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr ""
+msgstr "Importuoti / eksportuoti <0>trumposios nuorodos</0>"
 
 #: src/components/shortcuts-settings.jsx:795
 msgid "Import"
-msgstr ""
+msgstr "Importuoti"
 
 #: src/components/shortcuts-settings.jsx:803
 msgid "Paste shortcuts here"
-msgstr ""
+msgstr "Įklijuok trumpąsias nuorodas čia"
 
 #: src/components/shortcuts-settings.jsx:819
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "Atsisiunčiamos išsaugotos trumposios nuorodos iš serverio…"
 
 #: src/components/shortcuts-settings.jsx:848
 msgid "Unable to download shortcuts"

@@ -1,10 +1,10 @@
 import { i18n } from '@lingui/core';
 import { t } from '@lingui/macro';
 
-import store from '../utils/store';
+import states from '../utils/states';
 
 export default function shortenNumber(num) {
-  const numberlessMode = store.account.get('settings-numberlessMode');
+  const numberlessMode = states.settings.numberlessMode;
   if (numberlessMode && num > 1) return t`Several`;
 
   try {

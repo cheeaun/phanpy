@@ -447,9 +447,9 @@ function Notification({
 
   console.debug('RENDER Notification', notification.id);
 
-  const sameCount =
-    notificationsCount > 0 && notificationsCount <= sampleAccounts?.length;
-  const expandAccounts = sameCount ? 'local' : 'remote';
+  const diffCount =
+    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
+  const expandAccounts = diffCount ? 'remote' : 'local';
 
   return (
     <div

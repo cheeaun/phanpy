@@ -35,6 +35,51 @@ function createDOM(html, isDocumentFragment) {
   return isDocumentFragment ? tpl.content : tpl;
 }
 
+function _countEntities(p) {
+  let count = 0;
+  
+  for (const node of p.childNodes) {
+    if(node.nodeType === Node.TEXT_NODE) {
+      // Check if there's text between the entities
+      const text = node.textContent.trim();
+      if(text !== '') {
+        // End if there's text
+        throw false;
+      }
+    }
+    else if(node.tagName === 'BR') {
+      // Ignore <br />
+    }
+    else if(node.tagName === 'A') {
+      // Check if the link has text
+      const linkText = node.textContent.trim();
+      
+      if(!linkText) {
+        // End if there's a link without text
+        throw false;
+      }
+      else if(!(
+        linkText.startsWith('#') || linkText.startsWith('@')
+      )) {
+        // End if there's a link that's not a mention or an hashtag
+        throw false;
+      }
+      else {
+        // This is an entity
+        count++;
+      }
+    } else if(node.tagName === 'SPAN') {
+      // If this is a span, we might need to go deeper
+      count += _countEntities(node)
+    } else {
+      // There's something else here we should not touch
+      throw false;
+    }
+  }
+  
+  return count
+}
+
 function _enhanceContent(content, opts = {}) {
   const { emojis, returnDOM, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
@@ -222,51 +267,40 @@ function _enhanceContent(content, opts = {}) {
     }
   }
 
-  // HASHTAG STUFFING
+  // ENTITY STUFFING
   // ================
-  // Get the <p> that contains a lot of hashtags, add a class to it
-  if (enhancedContent.includes('#')) {
+  // Get the <p> that contains a lot of hashtags or mentions, add a class to it
+  if (enhancedContent.includes('#') || enhancedContent.includes('@')) {
     let prevIndex = null;
-    const hashtagStuffedParagraphs = [...dom.querySelectorAll('p')].filter(
+    const stuffedParagraphs = [...dom.querySelectorAll('p')].filter(
       (p, index) => {
-        let hashtagCount = 0;
-        for (let i = 0; i < p.childNodes.length; i++) {
-          const node = p.childNodes[i];
-
-          if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.trim();
-            if (text !== '') {
-              return false;
-            }
-          } else if (node.tagName === 'BR') {
-            // Ignore <br />
-          } else if (node.tagName === 'A') {
-            const linkText = node.textContent.trim();
-            if (!linkText || !linkText.startsWith('#')) {
-              return false;
-            } else {
-              hashtagCount++;
-            }
-          } else {
-            return false;
+        let entitiesCount = 0;
+        
+        try {
+          entitiesCount = _countEntities(p)
+        } catch(e) {
+          if(e === false) {
+            return false
           }
+          throw e;
         }
+        
         // Only consider "stuffing" if:
-        // - there are more than 3 hashtags
-        // - there are more than 1 hashtag in adjacent paragraphs
-        if (hashtagCount > 3) {
+        // - there are more than 3 entities
+        // - there are more than 1 entity in adjacent paragraphs
+        if (entitiesCount > 3) {
           prevIndex = index;
           return true;
         }
-        if (hashtagCount > 1 && prevIndex && index === prevIndex + 1) {
+        if (entitiesCount > 1 && prevIndex && index === prevIndex + 1) {
           prevIndex = index;
           return true;
         }
       },
     );
-    if (hashtagStuffedParagraphs?.length) {
-      for (const p of hashtagStuffedParagraphs) {
-        p.classList.add('hashtag-stuffing');
+    if (stuffedParagraphs?.length) {
+      for (const p of stuffedParagraphs) {
+        p.classList.add('entity-stuffing');
         p.title = p.innerText;
       }
     }

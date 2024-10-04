@@ -44,6 +44,11 @@ import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
 
+
+const {
+  PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE,
+} = import.meta.env;
+
 const LIMIT = 40;
 const SUBCOMMENTS_OPEN_ALL_LIMIT = 10;
 const MAX_WEIGHT = 5;
@@ -788,7 +793,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       not possible.
                     </Trans>
                   </p>
-                  <Link to="/login" class="button">
+                  <Link to={DEFAULT_INSTANCE ? `/login?instance=${DEFAULT_INSTANCE}&submit=1` : '/login'} class="button">
                     <Trans>Log in</Trans>
                   </Link>
                 </div>

@@ -37,47 +37,41 @@ function createDOM(html, isDocumentFragment) {
 
 function _countEntities(p) {
   let count = 0;
-  
+
   for (const node of p.childNodes) {
-    if(node.nodeType === Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE) {
       // Check if there's text between the entities
       const text = node.textContent.trim();
-      if(text !== '') {
+      if (text !== '') {
         // End if there's text
         throw false;
       }
-    }
-    else if(node.tagName === 'BR') {
+    } else if (node.tagName === 'BR') {
       // Ignore <br />
-    }
-    else if(node.tagName === 'A') {
+    } else if (node.tagName === 'A') {
       // Check if the link has text
       const linkText = node.textContent.trim();
-      
-      if(!linkText) {
+
+      if (!linkText) {
         // End if there's a link without text
         throw false;
-      }
-      else if(!(
-        linkText.startsWith('#') || linkText.startsWith('@')
-      )) {
+      } else if (!(linkText.startsWith('#') || linkText.startsWith('@'))) {
         // End if there's a link that's not a mention or an hashtag
         throw false;
-      }
-      else {
+      } else {
         // This is an entity
         count++;
       }
-    } else if(node.tagName === 'SPAN') {
+    } else if (node.tagName === 'SPAN') {
       // If this is a span, we might need to go deeper
-      count += _countEntities(node)
+      count += _countEntities(node);
     } else {
       // There's something else here we should not touch
       throw false;
     }
   }
-  
-  return count
+
+  return count;
 }
 
 function _enhanceContent(content, opts = {}) {
@@ -275,16 +269,16 @@ function _enhanceContent(content, opts = {}) {
     const stuffedParagraphs = [...dom.querySelectorAll('p')].filter(
       (p, index) => {
         let entitiesCount = 0;
-        
+
         try {
-          entitiesCount = _countEntities(p)
-        } catch(e) {
-          if(e === false) {
-            return false
+          entitiesCount = _countEntities(p);
+        } catch (e) {
+          if (e === false) {
+            return false;
           }
           throw e;
         }
-        
+
         // Only consider "stuffing" if:
         // - there are more than 3 entities
         // - there are more than 1 entity in adjacent paragraphs

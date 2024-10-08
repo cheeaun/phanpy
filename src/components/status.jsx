@@ -20,13 +20,14 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'preact/hooks';
 import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { detectAll } from 'tinyld/light';
+// import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
@@ -51,7 +52,6 @@ import htmlContentLength from '../utils/html-content-length';
 import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
-import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -91,6 +91,7 @@ const memFetchAccount = pmem(throttle(fetchAccount));
 
 const visibilityText = {
   public: msg`Public`,
+  local: msg`Local`,
   unlisted: msg`Unlisted`,
   private: msg`Followers only`,
   direct: msg`Private mention`,
@@ -124,11 +125,31 @@ function getPostText(status) {
   );
 }
 
-const PostContent = memo(
+const HTTP_REGEX = /^http/i;
+const PostContent =
+  /*memo(*/
   ({ post, instance, previewMode }) => {
     const { content, emojis, language, mentions, url } = post;
+
+    const divRef = useRef();
+    useLayoutEffect(() => {
+      if (!divRef.current) return;
+      const dom = enhanceContent(content, {
+        emojis,
+        returnDOM: true,
+      });
+      // Remove target="_blank" from links
+      for (const a of dom.querySelectorAll('a.u-url[target="_blank"]')) {
+        if (!HTTP_REGEX.test(a.innerText.trim())) {
+          a.removeAttribute('target');
+        }
+      }
+      divRef.current.replaceChildren(dom.cloneNode(true));
+    }, [content, emojis.length]);
+
     return (
       <div
+        ref={divRef}
         lang={language}
         dir="auto"
         class="inner-content"
@@ -138,28 +159,28 @@ const PostContent = memo(
           previewMode,
           statusURL: url,
         })}
-        dangerouslySetInnerHTML={{
-          __html: enhanceContent(content, {
-            emojis,
-            postEnhanceDOM: (dom) => {
-              // Remove target="_blank" from links
-              dom.querySelectorAll('a.u-url[target="_blank"]').forEach((a) => {
-                if (!/http/i.test(a.innerText.trim())) {
-                  a.removeAttribute('target');
-                }
-              });
-            },
-          }),
-        }}
+        // dangerouslySetInnerHTML={{
+        //   __html: enhanceContent(content, {
+        //     emojis,
+        //     postEnhanceDOM: (dom) => {
+        //       // Remove target="_blank" from links
+        //       dom.querySelectorAll('a.u-url[target="_blank"]').forEach((a) => {
+        //         if (!/http/i.test(a.innerText.trim())) {
+        //           a.removeAttribute('target');
+        //         }
+        //       });
+        //     },
+        //   }),
+        // }}
       />
     );
-  },
+  }; /*,
   (oldProps, newProps) => {
     const { post: oldPost } = oldProps;
     const { post: newPost } = newProps;
     return oldPost.content === newPost.content;
   },
-);
+);*/
 
 const SIZE_CLASS = {
   s: 'small',
@@ -167,7 +188,8 @@ const SIZE_CLASS = {
   l: 'large',
 };
 
-const detectLang = mem((text) => {
+const detectLang = pmem(async (text) => {
+  const { detectAll } = await import('tinyld/light');
   text = text?.trim();
 
   // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
@@ -187,6 +209,25 @@ const detectLang = mem((text) => {
 });
 
 const readMoreText = msg`Read more →`;
+
+// All this work just to make sure this only lazy-run once
+// Because first run is slow due to intl-localematcher
+const DIFFERENT_LANG_CHECK = {};
+const checkDifferentLanguage = (
+  language,
+  contentTranslationHideLanguages = [],
+) => {
+  if (!language) return false;
+  const targetLanguage = getTranslateTargetLanguage(true);
+  const different =
+    language !== targetLanguage &&
+    !localeMatch([language], [targetLanguage]) &&
+    !contentTranslationHideLanguages.find(
+      (l) => language === l || localeMatch([language], [l]),
+    );
+  DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  return different;
+};
 
 function Status({
   statusID,
@@ -303,8 +344,8 @@ function Status({
     if (!content) return;
     if (_language) return;
     let timer;
-    timer = setTimeout(() => {
-      let detected = detectLang(
+    timer = setTimeout(async () => {
+      let detected = await detectLang(
         getHTMLText(content, {
           preProcess: (dom) => {
             // Remove anything that can skew the language detection
@@ -512,9 +553,9 @@ function Status({
   const isSizeLarge = size === 'l';
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
-  const targetLanguage = getTranslateTargetLanguage(true);
-  const contentTranslationHideLanguages =
-    snapStates.settings.contentTranslationHideLanguages || [];
+  // const targetLanguage = getTranslateTargetLanguage(true);
+  // const contentTranslationHideLanguages =
+  //   snapStates.settings.contentTranslationHideLanguages || [];
   const { contentTranslation, contentTranslationAutoInline } =
     snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
@@ -759,13 +800,37 @@ function Status({
     } catch (e) {}
   };
 
-  const differentLanguage =
-    !!language &&
-    language !== targetLanguage &&
-    !localeMatch([language], [targetLanguage]) &&
-    !contentTranslationHideLanguages.find(
-      (l) => language === l || localeMatch([language], [l]),
-    );
+  // const differentLanguage =
+  //   !!language &&
+  //   language !== targetLanguage &&
+  //   !localeMatch([language], [targetLanguage]) &&
+  //   !contentTranslationHideLanguages.find(
+  //     (l) => language === l || localeMatch([language], [l]),
+  //   );
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
+  const [differentLanguage, setDifferentLanguage] = useState(
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+      ? checkDifferentLanguage(language, contentTranslationHideLanguages)
+      : false,
+  );
+  useEffect(() => {
+    if (
+      !language ||
+      differentLanguage ||
+      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+    ) {
+      return;
+    }
+    let timeout = setTimeout(() => {
+      const different = checkDifferentLanguage(
+        language,
+        contentTranslationHideLanguages,
+      );
+      if (different) setDifferentLanguage(different);
+    }, 1);
+    return () => clearTimeout(timeout);
+  }, [language, differentLanguage, contentTranslationHideLanguages]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -1518,11 +1583,11 @@ function Status({
             node?.closest?.(
               '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
             ) || node;
-          rRef.current = nodeRef;
-          fRef.current = nodeRef;
-          dRef.current = nodeRef;
-          bRef.current = nodeRef;
-          xRef.current = nodeRef;
+          rRef(nodeRef);
+          fRef(nodeRef);
+          dRef(nodeRef);
+          bRef(nodeRef);
+          xRef(nodeRef);
         }}
         tabindex="-1"
         class={`status ${
@@ -2151,6 +2216,9 @@ function Status({
                       selfReferential={
                         card?.url === status.url || card?.url === status.uri
                       }
+                      selfAuthor={card?.authors?.some(
+                        (a) => a.account?.url === accountURL,
+                      )}
                       instance={currentInstance}
                     />
                   )}
@@ -2563,7 +2631,27 @@ function isCardPost(domain) {
   return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
 }
 
-function Card({ card, selfReferential, instance }) {
+function Byline({ authors, hidden, children }) {
+  if (hidden) return children;
+  if (!authors?.[0]?.account?.id) return children;
+  const author = authors[0].account;
+
+  return (
+    <div class="card-byline">
+      {children}
+      <div class="card-byline-author">
+        <Icon icon="link" size="s" />{' '}
+        <small>
+          <Trans comment="More from [Author]">
+            More from <NameText account={author} showAvatar />
+          </Trans>
+        </small>
+      </div>
+    </div>
+  );
+}
+
+function Card({ card, selfReferential, selfAuthor, instance }) {
   const snapStates = useSnapshot(states);
   const {
     blurhash,
@@ -2583,6 +2671,7 @@ function Card({ card, selfReferential, instance }) {
     embedUrl,
     language,
     publishedAt,
+    authors,
   } = card;
 
   /* type
@@ -2640,9 +2729,9 @@ function Card({ card, selfReferential, instance }) {
     [hasIframeHTML],
   );
 
+  const [blurhashImage, setBlurhashImage] = useState(null);
   if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = getDomain(url);
-    let blurhashImage;
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
     if (!image) {
@@ -2659,71 +2748,82 @@ function Card({ card, selfReferential, instance }) {
       const imageData = ctx.createImageData(w, h);
       imageData.data.set(blurhashPixels);
       ctx.putImageData(imageData, 0, 0);
-      if (window.OffscreenCanvas) {
-        const blob = canvas.convertToBlob();
-        blurhashImage = URL.createObjectURL(blob);
-      } else {
-        blurhashImage = canvas.toDataURL();
+      try {
+        if (window.OffscreenCanvas) {
+          canvas.convertToBlob().then((blob) => {
+            setBlurhashImage(URL.createObjectURL(blob));
+          });
+        } else {
+          setBlurhashImage(canvas.toDataURL());
+        }
+      } catch (e) {
+        // Silently fail
+        console.error(e);
       }
     }
 
     const isPost = isCardPost(domain);
 
     return (
-      <a
-        href={cardStatusURL || url}
-        target={cardStatusURL ? null : '_blank'}
-        rel="nofollow noopener noreferrer"
-        class={`card link ${isPost ? 'card-post' : ''} ${
-          blurhashImage ? '' : size
-        }`}
-        style={{
-          '--average-color':
-            rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-        }}
-        onClick={handleClick}
-      >
-        <div class="card-image">
-          <img
-            src={image || blurhashImage}
-            width={width}
-            height={height}
-            loading="lazy"
-            alt={imageDescription || ''}
-            onError={(e) => {
-              try {
-                e.target.style.display = 'none';
-              } catch (e) {}
-            }}
-            style={{
-              '--anim-duration':
-                width &&
-                height &&
-                `${Math.min(Math.max(Math.max(width, height) / 100, 5), 120)}s`,
-            }}
-          />
-        </div>
-        <div class="meta-container" lang={language}>
-          <p class="meta domain">
-            <span class="domain">{domain}</span>{' '}
-            {!!publishedAt && <>&middot; </>}
-            {!!publishedAt && (
-              <>
-                <RelativeTime datetime={publishedAt} format="micro" />
-              </>
-            )}
-          </p>
-          <p class="title" dir="auto" title={title}>
-            {title}
-          </p>
-          <p class="meta" dir="auto" title={description}>
-            {description ||
-              (!!publishedAt && (
-                <RelativeTime datetime={publishedAt} format="micro" />
-              ))}
-          </p>
-        </div>
-      </a>
+      <Byline hidden={!!selfAuthor} authors={authors}>
+        <a
+          href={cardStatusURL || url}
+          target={cardStatusURL ? null : '_blank'}
+          rel="nofollow noopener noreferrer"
+          class={`card link ${isPost ? 'card-post' : ''} ${
+            blurhashImage ? '' : size
+          }`}
+          style={{
+            '--average-color':
+              rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
+          }}
+          onClick={handleClick}
+        >
+          <div class="card-image">
+            <img
+              src={image || blurhashImage}
+              width={width}
+              height={height}
+              loading="lazy"
+              alt={imageDescription || ''}
+              onError={(e) => {
+                try {
+                  e.target.style.display = 'none';
+                } catch (e) {}
+              }}
+              style={{
+                '--anim-duration':
+                  width &&
+                  height &&
+                  `${Math.min(
+                    Math.max(Math.max(width, height) / 100, 5),
+                    120,
+                  )}s`,
+              }}
+            />
+          </div>
+          <div class="meta-container" lang={language}>
+            <p class="meta domain">
+              <span class="domain">{domain}</span>{' '}
+              {!!publishedAt && <>&middot; </>}
+              {!!publishedAt && (
+                <>
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                </>
+              )}
+            </p>
+            <p class="title" dir="auto" title={title}>
+              {title}
+            </p>
+            <p class="meta" dir="auto" title={description}>
+              {description ||
+                (!!publishedAt && (
+                  <RelativeTime datetime={publishedAt} format="micro" />
+                ))}
+            </p>
+          </div>
+        </a>
+      </Byline>
     );
   } else if (type === 'photo') {
     return (
@@ -3025,7 +3125,7 @@ function generateHTMLCode(post, instance, level = 0) {
       : '');
 
   const htmlCode = `
-    <blockquote lang="${language}" cite="${url}">
+    <blockquote lang="${language}" cite="${url}" data-source="fediverse">
       ${
         spoilerText
           ? `
@@ -3507,7 +3607,7 @@ function FilteredStatus({
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
             {isReblog ? (
-              <Trans>
+              <Trans comment="[Name] [Visibility icon] boosted">
                 <NameText account={status.account} instance={instance} />{' '}
                 <Icon
                   icon={visibilityIconsMap[visibility]}

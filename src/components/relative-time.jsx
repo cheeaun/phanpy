@@ -14,10 +14,12 @@ function isValidDate(value) {
   }
 }
 
-const resolvedLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+const resolvedLocale = mem(
+  () => new Intl.DateTimeFormat().resolvedOptions().locale,
+);
 const DTF = mem((locale, opts = {}) => {
   const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
-  const lang = localeMatch([regionlessLocale], [resolvedLocale], locale);
+  const lang = localeMatch([regionlessLocale], [resolvedLocale()], locale);
   try {
     return new Intl.DateTimeFormat(lang, opts);
   } catch (e) {}

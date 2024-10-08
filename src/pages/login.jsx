@@ -58,9 +58,32 @@ function Login() {
 
   const submitInstance = (instanceURL) => {
     if (!instanceURL) return;
-    store.local.set('instanceURL', instanceURL);
 
     (async () => {
+      // WEB_DOMAIN vs LOCAL_DOMAIN negotiation time
+      // https://docs.joinmastodon.org/admin/config/#web_domain
+      try {
+        const res = await fetch(`https://${instanceURL}/.well-known/host-meta`); // returns XML
+        const text = await res.text();
+        // Parse XML
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, 'text/xml');
+        // Get Link[template]
+        const link = xmlDoc.getElementsByTagName('Link')[0];
+        const template = link.getAttribute('template');
+        const url = URL.parse(template);
+        const { host } = url; // host includes the port
+        if (instanceURL !== host) {
+          console.log(`💫 ${instanceURL} -> ${host}`);
+          instanceURL = host;
+        }
+      } catch (e) {
+        // Silently fail
+        console.error(e);
+      }
+
+      store.local.set('instanceURL', instanceURL);
+
       setUIState('loading');
       try {
         const { client_id, client_secret, vapid_key } =
@@ -182,7 +205,7 @@ function Login() {
             autocapitalize="off"
             autocomplete="off"
             spellCheck={false}
-            placeholder={`instance domain`}
+            placeholder={t`instance domain`}
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}

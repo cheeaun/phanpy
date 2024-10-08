@@ -1488,6 +1488,9 @@ function RelatedActions({
                       </span>
                     </>
                   }
+                  itemProps={{
+                    className: 'danger',
+                  }}
                   menuItemClassName="danger"
                   onClick={() => {
                     // if (!blocking && !confirm(`Block @${username}?`)) {
@@ -2146,7 +2149,7 @@ function EditProfileSheet({ onClose = () => {} }) {
           >
             <p>
               <label>
-                Name{' '}
+                <Trans>Name</Trans>{' '}
                 <input
                   type="text"
                   name="display_name"

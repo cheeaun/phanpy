@@ -22,12 +22,14 @@ function Following({ title, path, id, ...props }) {
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
   const latestItem = useRef();
+  __BENCHMARK.end('time-to-following');
 
   console.debug('RENDER Following', title, id);
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
+      __BENCHMARK.start('fetch-home-first');
       homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
     }
     if (supportsPixelfed && homeIterator.current?.nextParams) {
@@ -64,6 +66,7 @@ function Following({ title, path, id, ...props }) {
         return bDate - aDate;
       });
     }
+    __BENCHMARK.end('fetch-home-first');
     return {
       ...results,
       value,

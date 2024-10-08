@@ -13,6 +13,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import Menu2 from '../components/menu2';
+import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
@@ -229,6 +230,7 @@ function Trending({ columnMode, ...props }) {
             </header>
             {links.map((link) => {
               const {
+                authors,
                 authorName,
                 authorUrl,
                 blurhash,
@@ -244,6 +246,11 @@ function Trending({ columnMode, ...props }) {
                 url,
                 width,
               } = link;
+              const author = authors?.[0]?.account?.id
+                ? authors[0].account
+                : null;
+              const isShortTitle = title.length < 30;
+              const hasAuthor = !!(authorName || author);
               const domain = punycode.toUnicode(
                 URL.parse(url)
                   .hostname.replace(/^www\./, '')
@@ -267,13 +274,13 @@ function Trending({ columnMode, ...props }) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class={
+                    class={`link-block ${
                       hasCurrentLink
                         ? currentLink === url
                           ? 'active'
                           : 'inactive'
                         : ''
-                    }
+                    }`}
                     style={
                       accentColor
                         ? {
@@ -322,13 +329,40 @@ function Trending({ columnMode, ...props }) {
                         </header>
                         {!!description && (
                           <p
-                            class="description"
+                            class={`description ${
+                              hasAuthor && !isShortTitle ? '' : 'more-lines'
+                            }`}
                             lang={language}
                             dir="auto"
                             title={description}
                           >
                             {description}
                           </p>
+                        )}
+                        {hasAuthor && (
+                          <>
+                            <hr />
+                            <p class="byline">
+                              <small>
+                                <Trans comment="By [Author]">
+                                  By{' '}
+                                  {author ? (
+                                    <NameText account={author} showAvatar />
+                                  ) : authorUrl ? (
+                                    <a
+                                      href={authorUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      {authorName}
+                                    </a>
+                                  ) : (
+                                    authorName
+                                  )}
+                                </Trans>
+                              </small>
+                            </p>
+                          </>
                         )}
                       </div>
                     </article>

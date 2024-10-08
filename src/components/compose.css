@@ -721,6 +721,11 @@
   }
 
   .custom-emojis-list {
+    .section-container {
+      position: relative;
+      content-visibility: auto;
+      content-intrinsic-size: auto 88px;
+    }
     .section-header {
       font-size: 80%;
       text-transform: uppercase;
@@ -730,6 +735,10 @@
       top: 0;
       background-color: var(--bg-color);
       z-index: 1;
+      display: inline-block;
+      padding-inline-end: 8px;
+      pointer-events: none;
+      border-end-end-radius: 8px;
     }
     section {
       display: flex;

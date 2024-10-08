@@ -21,6 +21,11 @@ const nameCollator = mem((locale) => {
   }
 });
 
+const ACCT_REGEX = /([^@]+)(@.+)/i;
+const SHORTCODES_REGEX = /(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g;
+const SPACES_REGEX = /\s+/g;
+const NON_ALPHA_NUMERIC_REGEX = /[^a-z0-9@\.]/gi;
+
 function NameText({
   account,
   instance,
@@ -42,17 +47,17 @@ function NameText({
     bot,
     username,
   } = account;
-  const [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+  const [_, acct1, acct2] = acct.match(ACCT_REGEX) || [, acct];
 
   if (!instance) instance = api().instance;
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
   const shortenedDisplayName = trimmedDisplayName
-    .replace(/(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
-    .replace(/\s+/g, ''); // E.g. "My name" === "myname"
+    .replace(SHORTCODES_REGEX, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
+    .replace(SPACES_REGEX, ''); // E.g. "My name" === "myname"
   const shortenedAlphaNumericDisplayName = shortenedDisplayName.replace(
-    /[^a-z0-9@\.]/gi,
+    NON_ALPHA_NUMERIC_REGEX,
     '',
   ); // Remove non-alphanumeric characters
 
@@ -130,9 +135,11 @@ function NameText({
   );
 }
 
-export default memo(NameText, (oldProps, newProps) => {
-  // Only care about account.id, the other props usually don't change
-  const { account } = oldProps;
-  const { account: newAccount } = newProps;
-  return account?.acct === newAccount?.acct;
-});
+export default mem(NameText);
+
+// export default memo(NameText, (oldProps, newProps) => {
+//   // Only care about account.id, the other props usually don't change
+//   const { account } = oldProps;
+//   const { account: newAccount } = newProps;
+//   return account?.acct === newAccount?.acct;
+// });

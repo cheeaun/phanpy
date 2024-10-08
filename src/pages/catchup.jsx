@@ -842,10 +842,10 @@ function Catchup() {
     <div
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        hlRef.current = node;
-        escRef.current = node;
+        jRef(node);
+        kRef(node);
+        hlRef(node);
+        escRef(node);
       }}
       id="catchup-page"
       class="deck-container"
@@ -1193,6 +1193,7 @@ function Catchup() {
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
+                          class="link-block"
                           style={
                             accentColor
                               ? {
@@ -1262,11 +1263,27 @@ function Catchup() {
                                   {sharers.map((s) => {
                                     const { avatarStatic, displayName } = s;
                                     return (
-                                      <Avatar
-                                        url={avatarStatic}
-                                        size="s"
-                                        alt={displayName}
-                                      />
+                                      <button
+                                        type="button"
+                                        class="plain"
+                                        style={{
+                                          padding: 0,
+                                        }}
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          e.stopPropagation();
+                                          // Reset and filter to author
+                                          const { id } = s;
+                                          setSelectedAuthor(id);
+                                          setSelectedFilterCategory('all');
+                                        }}
+                                      >
+                                        <Avatar
+                                          url={avatarStatic}
+                                          size="s"
+                                          alt={displayName}
+                                        />
+                                      </button>
                                     );
                                   })}
                                 </Trans>

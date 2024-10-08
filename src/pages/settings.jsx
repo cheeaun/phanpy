@@ -826,9 +826,84 @@ function Settings({ onClose }) {
             </p>
           )}
         </section>
+        {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
+          <details class="debug-info">
+            <summary></summary>
+            <p>Debugging</p>
+            {__BENCH_RESULTS?.size > 0 && (
+              <ul>
+                {Array.from(__BENCH_RESULTS.entries()).map(
+                  ([name, duration]) => (
+                    <li>
+                      <b>{name}</b>: {duration}ms
+                    </li>
+                  ),
+                )}
+              </ul>
+            )}
+            <p>Service Worker Cache</p>
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={async () => alert(await getCachesKeys())}
+            >
+              Show keys count
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={() => {
+                const key = prompt('Enter cache key');
+                if (!key) return;
+                try {
+                  clearCacheKey(key);
+                } catch (e) {
+                  alert(e);
+                }
+              }}
+            >
+              Clear cache key
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
+              onClick={() => {
+                try {
+                  clearCaches();
+                } catch (e) {
+                  alert(e);
+                }
+              }}
+            >
+              Clear all caches
+            </button>
+          </details>
+        )}
       </main>
     </div>
   );
+}
+
+async function getCachesKeys() {
+  const keys = await caches.keys();
+  const total = {};
+  for (const key of keys) {
+    const cache = await caches.open(key);
+    const k = await cache.keys();
+    total[key] = k.length;
+  }
+  return total;
+}
+
+function clearCacheKey(key) {
+  return caches.delete(key);
+}
+
+async function clearCaches() {
+  const keys = await caches.keys();
+  for (const key of keys) {
+    await caches.delete(key);
+  }
 }
 
 function PushNotificationsSection({ onClose }) {

@@ -367,6 +367,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border-bottom: var(--hairline-width) solid var(--divider-color);
   --line-dir: var(--to-forward);
 }
+.timeline > li + li:not(.timeline-item-carousel, .hero, .ancestor) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 160px;
+}
+.timeline.contextual > li:is(:hover, :focus-visible) {
+  /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
+  content-visibility: visible !important;
+}
 .timeline.flat > li {
   border-bottom: none;
 }
@@ -1630,6 +1638,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 /* SHEET */
 
 .sheet {
+  timeline-scope: --sheet-scroll;
   align-self: flex-end;
   display: flex;
   flex-direction: column;
@@ -1704,6 +1713,27 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   padding-right: max(16px, env(safe-area-inset-right));
   user-select: none;
 }
+@keyframes header-border {
+  0% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 0 0 0 1px var(--outline-color),
+      0 8px 16px -8px var(--drop-shadow-color);
+  }
+}
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+  .sheet header {
+    animation: header-border 1s linear both;
+    animation-timeline: --sheet-scroll;
+    animation-range: 0 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .sheet header + main {
+    mask-image: none !important;
+  }
+}
 .sheet .sheet-close:not(.outer) + header {
   padding-right: max(44px, env(safe-area-inset-right));
 
@@ -1722,6 +1752,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   align-items: center;
 }
 .sheet main {
+  scroll-timeline: --sheet-scroll;
   overflow: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -2332,7 +2363,7 @@ body > .szh-menu-container {
   }
 }
 
-@supports (animation-timeline: scroll()) {
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
   .header-account {
     animation: peekaboo-header 1s linear both;
     animation-timeline: scroll();
@@ -2900,5 +2931,27 @@ ul.link-list li a .icon {
 
   select {
     width: 10em;
+  }
+}
+
+/* DEBUG */
+
+.debug-info {
+  font-size: smaller;
+  summary {
+    height: 1em;
+    width: 100%;
+    list-style: none;
+    display: inline-block;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  p,
+  ol,
+  ul {
+    margin-block-start: 0;
+    padding-block-start: 0;
   }
 }

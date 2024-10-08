@@ -1,14 +1,32 @@
 import { generateCodeChallenge, verifier } from './oauth-pkce';
 
-const { PHANPY_CLIENT_NAME: CLIENT_NAME, PHANPY_WEBSITE: WEBSITE } = import.meta
-  .env;
+const {
+  DEV,
+  PHANPY_CLIENT_NAME: CLIENT_NAME,
+  PHANPY_WEBSITE: WEBSITE,
+} = import.meta.env;
 
 const SCOPES = 'read write follow push';
+
+/*
+  PHANPY_WEBSITE is set to the default official site.
+  It's used in pre-built releases, so there's no way to change it dynamically
+  without rebuilding.
+  Therefore, we can't use it as redirect_uri.
+  We only use PHANPY_WEBSITE if it's "same" as current location URL.
+  
+  Very basic check based on location.hostname for now
+*/
+const sameSite = WEBSITE
+  ? WEBSITE.toLowerCase().includes(location.hostname)
+  : false;
+const currentLocation = location.origin + location.pathname;
+const REDIRECT_URI = DEV || !sameSite ? currentLocation : WEBSITE;
 
 export async function registerApplication({ instanceURL }) {
   const registrationParams = new URLSearchParams({
     client_name: CLIENT_NAME,
-    redirect_uris: location.origin + location.pathname,
+    redirect_uris: REDIRECT_URI,
     scopes: SCOPES,
     website: WEBSITE,
   });
@@ -34,7 +52,7 @@ export async function getPKCEAuthorizationURL({ instanceURL, client_id }) {
     client_id,
     code_challenge_method: 'S256',
     code_challenge: codeChallenge,
-    redirect_uri: location.origin + location.pathname,
+    redirect_uri: REDIRECT_URI,
     response_type: 'code',
     scope: SCOPES,
   });
@@ -46,7 +64,7 @@ export async function getAuthorizationURL({ instanceURL, client_id }) {
   const authorizationParams = new URLSearchParams({
     client_id,
     scope: SCOPES,
-    redirect_uri: location.origin + location.pathname,
+    redirect_uri: REDIRECT_URI,
     // redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
     response_type: 'code',
   });
@@ -63,7 +81,7 @@ export async function getAccessToken({
 }) {
   const params = new URLSearchParams({
     client_id,
-    redirect_uri: location.origin + location.pathname,
+    redirect_uri: REDIRECT_URI,
     grant_type: 'authorization_code',
     code,
     scope: SCOPES,

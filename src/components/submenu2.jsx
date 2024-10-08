@@ -19,6 +19,7 @@ export default function SubMenu2(props) {
             menuRef.current?.openMenu?.();
           }
         },
+        ...props.itemProps,
       }}
     />
   );

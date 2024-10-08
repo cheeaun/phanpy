@@ -22,7 +22,7 @@ function Favourites() {
     <Timeline
       title={t`Likes`}
       id="favourites"
-      emptyText={`No likes yet. Go like something!`}
+      emptyText={t`No likes yet. Go like something!`}
       errorText={t`Unable to load likes.`}
       instance={instance}
       fetchItems={fetchFavourites}

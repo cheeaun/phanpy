@@ -15,18 +15,35 @@ import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Public({ local, columnMode, ...props }) {
+function Public({ variant = 'federated', columnMode, ...props }) {
   const snapStates = useSnapshot(states);
-  const isLocal = !!local;
   const params = columnMode ? {} : useParams();
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();
-  const title = isLocal
-    ? t`Local timeline (${instance})`
-    : t`Federated timeline (${instance})`;
-  useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
+  const title = {
+    local: t`Local timeline (${instance})`,
+    bubble: t`Bubble timeline (${instance})`,
+    federated: t`Federated timeline (${instance})`,
+  }[variant];
+  const headerText = {
+    local: t`Local timeline`,
+    bubble: t`Bubble timeline`,
+    federated: t`Federated timeline`,
+  }[variant];
+  const path = {
+    local: '/:instance?/p/l',
+    bubble: '/:instance?/p/b',
+    federated: '/:instance?/p',
+  }[variant];
+  const source = {
+    local: masto.v1.timelines.public.list,
+    bubble: masto.v1.timelines.bubble.list, // Bubble timeline isn't officially supported in Masto, but this seems to work nevertheless
+    federated: masto.v1.timelines.public.list,
+  }[variant];
+
+  useTitle(title, path);
   // const navigate = useNavigate();
   const latestItem = useRef();
 
@@ -35,12 +52,12 @@ function Public({ local, columnMode, ...props }) {
     if (firstLoad || !publicIterator.current) {
       const opts = {
         limit: LIMIT,
-        local: isLocal || undefined,
+        local: variant === 'local',
       };
-      if (!isLocal && supports('@pixelfed/global-feed')) {
+      if (variant === 'federated' && supports('@pixelfed/global-feed')) {
         opts.remote = true;
       }
-      publicIterator.current = masto.v1.timelines.public.list(opts);
+      publicIterator.current = source(opts);
     }
     const results = await publicIterator.current.next();
     let { value } = results;
@@ -62,10 +79,10 @@ function Public({ local, columnMode, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines.public
+      const results = await source
         .list({
           limit: 1,
-          local: isLocal,
+          local: variant === 'local',
           since_id: latestItem.current,
         })
         .next();
@@ -83,11 +100,11 @@ function Public({ local, columnMode, ...props }) {
 
   return (
     <Timeline
-      key={instance + isLocal}
+      key={instance + variant}
       title={title}
       titleComponent={
         <h1 class="header-double-lines">
-          <b>{isLocal ? t`Local timeline` : t`Federated timeline`}</b>
+          <b>{headerText}</b>
           <div>{instance}</div>
         </h1>
       }
@@ -115,23 +132,30 @@ function Public({ local, columnMode, ...props }) {
             </button>
           }
         >
-          <MenuItem href={isLocal ? `/#/${instance}/p` : `/#/${instance}/p/l`}>
-            {isLocal ? (
-              <>
-                <Icon icon="transfer" />{' '}
-                <span>
-                  <Trans>Switch to Federated</Trans>
-                </span>
-              </>
-            ) : (
-              <>
-                <Icon icon="transfer" />{' '}
-                <span>
-                  <Trans>Switch to Local</Trans>
-                </span>
-              </>
-            )}
-          </MenuItem>
+          {variant !== 'local' && (
+            <MenuItem href={`/#/${instance}/p/l`}>
+              <Icon icon="transfer" />{' '}
+              <span>
+                <Trans>Switch to Local</Trans>
+              </span>
+            </MenuItem>
+          )}
+          {variant !== 'bubble' && (
+            <MenuItem href={`/#/${instance}/p/b`}>
+              <Icon icon="transfer" />{' '}
+              <span>
+                <Trans>Switch to Bubble</Trans>
+              </span>
+            </MenuItem>
+          )}
+          {variant !== 'federated' && (
+            <MenuItem href={`/#/${instance}/p`}>
+              <Icon icon="transfer" />{' '}
+              <span>
+                <Trans>Switch to Federated</Trans>
+              </span>
+            </MenuItem>
+          )}
           <MenuDivider />
           <MenuItem
             onClick={() => {

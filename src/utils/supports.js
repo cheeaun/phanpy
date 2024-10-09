@@ -24,6 +24,7 @@ const platformFeatures = {
   '@pixelfed/global-feed': containPixelfed,
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
+  '@akkoma/bubble-timeline': containAkkoma, // FIXME: Not all Akkoma instances have a bubble
 };
 const supportsCache = {};
 

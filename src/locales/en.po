@@ -117,7 +117,7 @@ msgstr ""
 #: src/pages/accounts.jsx:109
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
-#: src/pages/public.jsx:114
+#: src/pages/public.jsx:131
 #: src/pages/status.jsx:1169
 #: src/pages/trending.jsx:471
 msgid "More"
@@ -974,7 +974,7 @@ msgid "The end."
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/nav-menu.jsx:405
+#: src/components/nav-menu.jsx:413
 #: src/pages/catchup.jsx:1619
 msgid "Keyboard shortcuts"
 msgstr ""
@@ -1358,17 +1358,21 @@ msgstr ""
 msgid "Trending"
 msgstr ""
 
-#: src/components/nav-menu.jsx:392
+#: src/components/nav-menu.jsx:393
+msgid "Bubble"
+msgstr "Bubble"
+
+#: src/components/nav-menu.jsx:400
 #: src/components/shortcuts-settings.jsx:162
 msgid "Federated"
 msgstr ""
 
-#: src/components/nav-menu.jsx:415
+#: src/components/nav-menu.jsx:423
 msgid "Shortcuts / Columns…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:425
-#: src/components/nav-menu.jsx:439
+#: src/components/nav-menu.jsx:433
+#: src/components/nav-menu.jsx:447
 msgid "Settings…"
 msgstr ""
 
@@ -2443,7 +2447,7 @@ msgid "Nothing to see here yet."
 msgstr ""
 
 #: src/pages/account-statuses.jsx:506
-#: src/pages/public.jsx:97
+#: src/pages/public.jsx:114
 #: src/pages/trending.jsx:449
 msgid "Unable to load posts"
 msgstr ""
@@ -2990,25 +2994,25 @@ msgid "Add to Shortcuts"
 msgstr ""
 
 #: src/pages/hashtag.jsx:486
-#: src/pages/public.jsx:139
+#: src/pages/public.jsx:163
 #: src/pages/trending.jsx:478
 msgid "Enter a new instance e.g. \"mastodon.social\""
 msgstr ""
 
 #: src/pages/hashtag.jsx:489
-#: src/pages/public.jsx:142
+#: src/pages/public.jsx:166
 #: src/pages/trending.jsx:481
 msgid "Invalid instance"
 msgstr ""
 
 #: src/pages/hashtag.jsx:503
-#: src/pages/public.jsx:156
+#: src/pages/public.jsx:180
 #: src/pages/trending.jsx:493
 msgid "Go to another instance…"
 msgstr ""
 
 #: src/pages/hashtag.jsx:516
-#: src/pages/public.jsx:169
+#: src/pages/public.jsx:193
 #: src/pages/trending.jsx:504
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr ""
@@ -3225,32 +3229,44 @@ msgstr ""
 msgid "Dismissed"
 msgstr ""
 
-#: src/pages/public.jsx:27
+#: src/pages/public.jsx:26
 msgid "Local timeline ({instance})"
 msgstr ""
+
+#: src/pages/public.jsx:27
+msgid "Bubble timeline ({instance})"
+msgstr "Bubble timeline ({instance})"
 
 #: src/pages/public.jsx:28
 msgid "Federated timeline ({instance})"
 msgstr ""
 
-#: src/pages/public.jsx:90
+#: src/pages/public.jsx:31
 msgid "Local timeline"
 msgstr ""
 
-#: src/pages/public.jsx:90
+#: src/pages/public.jsx:32
+msgid "Bubble timeline"
+msgstr "Bubble timeline"
+
+#: src/pages/public.jsx:33
 msgid "Federated timeline"
 msgstr ""
 
-#: src/pages/public.jsx:96
+#: src/pages/public.jsx:113
 msgid "No one has posted anything yet."
 msgstr ""
 
-#: src/pages/public.jsx:123
-msgid "Switch to Federated"
+#: src/pages/public.jsx:139
+msgid "Switch to Local"
 msgstr ""
 
-#: src/pages/public.jsx:130
-msgid "Switch to Local"
+#: src/pages/public.jsx:147
+msgid "Switch to Bubble"
+msgstr "Switch to Bubble"
+
+#: src/pages/public.jsx:155
+msgid "Switch to Federated"
 msgstr ""
 
 #: src/pages/search.jsx:43

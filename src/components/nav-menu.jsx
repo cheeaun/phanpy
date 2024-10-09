@@ -386,6 +386,14 @@ function NavMenu(props) {
               <Trans>Local</Trans>
             </span>
           </MenuLink>
+          {supports('@akkoma/bubble-timeline') && (
+            <MenuLink to={`/${instance}/p/b`}>
+              <Icon icon="star2" size="l" />{' '}
+              <span>
+                <Trans>Bubble</Trans>
+              </span>
+            </MenuLink>
+          )}
           <MenuLink to={`/${instance}/p`}>
             <Icon icon="earth" size="l" />{' '}
             <span>

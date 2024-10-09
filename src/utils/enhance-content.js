@@ -19,14 +19,14 @@ function escapeHTML(html) {
 
 const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;
-const MENTION_REGEX = /^@[^@]+(@[^@]+)?$/g;
-const HASHTAG_REGEX = /^#[^#]+$/g;
-const CODE_BLOCK_REGEX = /^```[^]+```$/g;
-const CODE_BLOCK_START_REGEX = /^```/g;
-const CODE_BLOCK_END_REGEX = /```$/g;
-const INLINE_CODE_REGEX = /`[^`]+`/g;
+const MENTION_REGEX = /^@[^@]+(@[^@]+)?$/;
+const HASHTAG_REGEX = /^#[^#]+$/;
+const CODE_BLOCK_REGEX = /^```[^]+```$/;
+const CODE_BLOCK_START_REGEX = /^```/;
+const CODE_BLOCK_END_REGEX = /```$/;
+const INLINE_CODE_REGEX = /`[^`]+`/;
 const TWITTER_DOMAIN_REGEX = /(twitter|x)\.com/i;
-const TWITTER_MENTION_REGEX = /@[a-zA-Z0-9_]+@(twitter|x)\.com/g;
+const TWITTER_MENTION_REGEX = /@[a-zA-Z0-9_]+@(twitter|x)\.com/;
 const TWITTER_MENTION_CAPTURE_REGEX = /(@([a-zA-Z0-9_]+)@(twitter|x)\.com)/g;
 
 function createDOM(html, isDocumentFragment) {

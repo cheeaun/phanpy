@@ -118,7 +118,7 @@ msgstr ""
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1169
+#: src/pages/status.jsx:1178
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr ""
@@ -185,8 +185,8 @@ msgstr ""
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:892
-#: src/pages/status.jsx:1494
+#: src/pages/status.jsx:901
+#: src/pages/status.jsx:1503
 msgid "Replies"
 msgstr ""
 
@@ -427,7 +427,7 @@ msgstr ""
 #: src/pages/notifications.jsx:868
 #: src/pages/notifications.jsx:1082
 #: src/pages/settings.jsx:76
-#: src/pages/status.jsx:1256
+#: src/pages/status.jsx:1265
 msgid "Close"
 msgstr ""
 
@@ -951,7 +951,7 @@ msgid "Nothing to show"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:437
+#: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:227
 #: src/pages/search.jsx:260
@@ -963,7 +963,7 @@ msgstr ""
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
 #: src/pages/search.jsx:454
-#: src/pages/status.jsx:1289
+#: src/pages/status.jsx:1298
 msgid "Show more…"
 msgstr ""
 
@@ -1346,7 +1346,7 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:792
+#: src/pages/status.jsx:801
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr ""
@@ -1384,134 +1384,134 @@ msgstr ""
 msgid "View all notifications"
 msgstr ""
 
-#: src/components/notification.jsx:69
+#: src/components/notification.jsx:70
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr ""
 
-#: src/components/notification.jsx:76
+#: src/components/notification.jsx:77
 msgid "{account} published a post."
 msgstr ""
 
-#: src/components/notification.jsx:84
+#: src/components/notification.jsx:85
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:127
+#: src/components/notification.jsx:128
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr ""
 
-#: src/components/notification.jsx:141
+#: src/components/notification.jsx:142
 msgid "{account} requested to follow you."
 msgstr ""
 
-#: src/components/notification.jsx:150
+#: src/components/notification.jsx:151
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:192
+#: src/components/notification.jsx:193
 msgid "A poll you have voted in or created has ended."
 msgstr ""
 
-#: src/components/notification.jsx:193
+#: src/components/notification.jsx:194
 msgid "A poll you have created has ended."
 msgstr ""
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:195
 msgid "A poll you have voted in has ended."
 msgstr ""
 
-#: src/components/notification.jsx:195
+#: src/components/notification.jsx:196
 msgid "A post you interacted with has been edited."
 msgstr ""
 
-#: src/components/notification.jsx:203
+#: src/components/notification.jsx:204
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:245
+#: src/components/notification.jsx:246
 msgid "{account} signed up."
 msgstr ""
 
-#: src/components/notification.jsx:247
+#: src/components/notification.jsx:248
 msgid "{account} reported {targetAccount}"
 msgstr ""
 
-#: src/components/notification.jsx:252
+#: src/components/notification.jsx:253
 msgid "Lost connections with <0>{name}</0>."
 msgstr ""
 
-#: src/components/notification.jsx:258
+#: src/components/notification.jsx:259
 msgid "Moderation warning"
 msgstr ""
 
-#: src/components/notification.jsx:268
+#: src/components/notification.jsx:269
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr ""
 
-#: src/components/notification.jsx:274
+#: src/components/notification.jsx:275
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:280
+#: src/components/notification.jsx:281
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:288
+#: src/components/notification.jsx:289
 msgid "Your account has received a moderation warning."
 msgstr ""
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:290
 msgid "Your account has been disabled."
 msgstr ""
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:291
 msgid "Some of your posts have been marked as sensitive."
 msgstr ""
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:292
 msgid "Some of your posts have been deleted."
 msgstr ""
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:293
 msgid "Your posts will be marked as sensitive from now on."
 msgstr ""
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:294
 msgid "Your account has been limited."
 msgstr ""
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:295
 msgid "Your account has been suspended."
 msgstr ""
 
-#: src/components/notification.jsx:368
+#: src/components/notification.jsx:369
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:433
+#: src/components/notification.jsx:434
 #: src/components/status.jsx:1002
 #: src/components/status.jsx:1012
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:434
+#: src/components/notification.jsx:435
 msgid "Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:435
+#: src/components/notification.jsx:436
 msgid "Boosted by…"
 msgstr ""
 
-#: src/components/notification.jsx:436
+#: src/components/notification.jsx:437
 msgid "Followed by…"
 msgstr ""
 
-#: src/components/notification.jsx:497
-#: src/components/notification.jsx:513
+#: src/components/notification.jsx:508
+#: src/components/notification.jsx:524
 msgid "Learn more <0/>"
 msgstr ""
 
-#: src/components/notification.jsx:745
+#: src/components/notification.jsx:756
 #: src/components/status.jsx:211
 msgid "Read more →"
 msgstr ""
@@ -1536,8 +1536,8 @@ msgstr ""
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1158
-#: src/pages/status.jsx:1181
+#: src/pages/status.jsx:1167
+#: src/pages/status.jsx:1190
 msgid "Refresh"
 msgstr ""
 
@@ -2305,8 +2305,8 @@ msgstr ""
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:824
-#: src/pages/status.jsx:945
-#: src/pages/status.jsx:1318
+#: src/pages/status.jsx:954
+#: src/pages/status.jsx:1327
 msgid "Try again"
 msgstr ""
 
@@ -3545,84 +3545,84 @@ msgstr ""
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 
-#: src/pages/status.jsx:565
+#: src/pages/status.jsx:567
 msgid "Post"
 msgstr ""
 
-#: src/pages/status.jsx:786
+#: src/pages/status.jsx:788
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:799
+#: src/pages/status.jsx:808
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:827
+#: src/pages/status.jsx:836
 msgid "Error: {e}"
 msgstr ""
 
-#: src/pages/status.jsx:834
+#: src/pages/status.jsx:843
 msgid "Switch to my instance to enable interactions"
 msgstr ""
 
-#: src/pages/status.jsx:936
+#: src/pages/status.jsx:945
 msgid "Unable to load replies."
 msgstr ""
 
-#: src/pages/status.jsx:1048
+#: src/pages/status.jsx:1057
 msgid "Back"
 msgstr ""
 
-#: src/pages/status.jsx:1079
+#: src/pages/status.jsx:1088
 msgid "Go to main post"
 msgstr ""
 
-#: src/pages/status.jsx:1102
+#: src/pages/status.jsx:1111
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
 
-#: src/pages/status.jsx:1145
-#: src/pages/status.jsx:1208
+#: src/pages/status.jsx:1154
+#: src/pages/status.jsx:1217
 msgid "Switch to Side Peek view"
 msgstr ""
 
-#: src/pages/status.jsx:1209
+#: src/pages/status.jsx:1218
 msgid "Switch to Full view"
 msgstr ""
 
-#: src/pages/status.jsx:1227
+#: src/pages/status.jsx:1236
 msgid "Show all sensitive content"
 msgstr ""
 
-#: src/pages/status.jsx:1232
+#: src/pages/status.jsx:1241
 msgid "Experimental"
 msgstr ""
 
-#: src/pages/status.jsx:1241
+#: src/pages/status.jsx:1250
 msgid "Unable to switch"
 msgstr ""
 
-#: src/pages/status.jsx:1248
+#: src/pages/status.jsx:1257
 msgid "Switch to post's instance ({0})"
 msgstr ""
 
-#: src/pages/status.jsx:1251
+#: src/pages/status.jsx:1260
 msgid "Switch to post's instance"
 msgstr ""
 
-#: src/pages/status.jsx:1309
+#: src/pages/status.jsx:1318
 msgid "Unable to load post"
 msgstr ""
 
-#: src/pages/status.jsx:1426
+#: src/pages/status.jsx:1435
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
-#: src/pages/status.jsx:1444
+#: src/pages/status.jsx:1453
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
 
-#: src/pages/status.jsx:1466
+#: src/pages/status.jsx:1475
 msgid "View post with its replies"
 msgstr ""
 

@@ -70,6 +70,7 @@ const states = proxy({
     mediaAltGenerator: false,
     composerGIFPicker: false,
     cloakMode: false,
+    numberlessMode: false,
     groupedNotificationsAlpha: false,
   },
 });
@@ -105,6 +106,8 @@ export function initStates() {
   states.settings.composerGIFPicker =
     store.account.get('settings-composerGIFPicker') ?? false;
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
+  states.settings.numberlessMode =
+    store.account.get('settings-numberlessMode') ?? false;
   states.settings.groupedNotificationsAlpha =
     store.account.get('settings-groupedNotificationsAlpha') ?? false;
 }
@@ -155,6 +158,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.cloakMode') {
       store.account.set('settings-cloakMode', !!value);
+    }
+    if (path.join('.') === 'settings.numberlessMode') {
+      store.account.set('settings-numberlessMode', !!value);
     }
     if (path.join('.') === 'settings.groupedNotificationsAlpha') {
       store.account.set('settings-groupedNotificationsAlpha', !!value);

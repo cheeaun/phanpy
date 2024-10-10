@@ -63,7 +63,14 @@ function Settings({ onClose }) {
   // }, []);
 
   return (
-    <div id="settings-container" class="sheet" tabIndex="-1">
+    <div
+      id="settings-container"
+      class="sheet"
+      tabIndex="-1"
+      style={{
+        '--current-text-size': `${currentTextSize}px`,
+      }}
+    >
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
           <Icon icon="x" alt={t`Close`} />

@@ -1,5 +1,7 @@
 #settings-container {
   background-color: var(--bg-faded-color);
+  /* Prevent immediate text size change affecting max width */
+  max-width: calc(40 * var(--current-text-size) - 50px - 16px);
 }
 
 #settings-container main h3 {

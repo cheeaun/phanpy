@@ -13,6 +13,7 @@ export default function CustomEmoji({ staticUrl, alt, url }) {
         height="16"
         loading="lazy"
         decoding="async"
+        fetchPriority="low"
       />
     </picture>
   );

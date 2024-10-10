@@ -7,6 +7,7 @@ on:
 
 jobs:
   auto-pull-request:
+    if: github.repository == 'cheeaun/phanpy'
     runs-on: ubuntu-latest
     steps:
       - uses: vsoch/pull-request-action@master

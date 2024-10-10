@@ -17,12 +17,17 @@ function EmojiText({ text, emojis }) {
   //   'g',
   // );
   const regex = shortcodesRegexp(emojis.map((e) => e.shortcode));
-  const elements = text.split(regex).map((word) => {
+  const elements = text.split(regex).map((word, i) => {
     const emoji = emojis.find((e) => e.shortcode === word);
     if (emoji) {
       const { url, staticUrl } = emoji;
       return (
-        <CustomEmoji staticUrl={staticUrl} alt={word} url={url} key={word} />
+        <CustomEmoji
+          staticUrl={staticUrl}
+          alt={word}
+          url={url}
+          key={word + '-' + i} // Handle >= 2 same shortcodes
+        />
       );
     }
     return word;

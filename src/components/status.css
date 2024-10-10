@@ -1658,29 +1658,31 @@ body:has(#modal-container .carousel) .status .media img:hover {
   }
 }
 
-.status:not(.large) .hashtag-stuffing {
-  opacity: 0.75;
+.status .entity-stuffing {
+  opacity: 0.50;
   transition: opacity 0.2s ease-in-out;
 }
-.status:not(.large) .hashtag-stuffing:is(:hover, :focus, :focus-within) {
+.status .entity-stuffing:is(:hover, :focus, :focus-within) {
   opacity: 1;
 }
-.status:not(.large) .hashtag-stuffing {
+.status:not(.large) .entity-stuffing {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  
+  font-size: smaller;
 
   /* Convert breaks to spaces */
   br {
     display: none;
 
     + * {
-      margin-inline-start: 1ex;
+      margin-inline-start: 0.5ex;
     }
   }
 }
-.status:not(.large) .hashtag-stuffing:first-child {
+.status:not(.large) .entity-stuffing:first-child {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1690,13 +1692,13 @@ body:has(#modal-container .carousel) .status .media img:hover {
 /* If >= 9 hashtags, collapse */
 /* TODO: lower the threshold one day */
 .status:not(.large, .contextual .status)
-  p:not(.hashtag-stuffing):has(.hashtag:nth-of-type(1)):has(
-    .hashtag:nth-of-type(2)
-  ):has(.hashtag:nth-of-type(3)):has(.hashtag:nth-of-type(4)):has(
-    .hashtag:nth-of-type(5)
-  ):has(.hashtag:nth-of-type(6)):has(.hashtag:nth-of-type(7)):has(
-    .hashtag:nth-of-type(8)
-  ):has(.hashtag:nth-of-type(9)) {
+  p:not(.entity-stuffing):has(.mention:nth-of-type(1)):has(
+    .mention:nth-of-type(2)
+  ):has(.mention:nth-of-type(3)):has(.mention:nth-of-type(4)):has(
+    .mention:nth-of-type(5)
+  ):has(.mention:nth-of-type(6)):has(.mention:nth-of-type(7)):has(
+    .mention:nth-of-type(8)
+  ):has(.mention:nth-of-type(9)) {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -2561,7 +2563,7 @@ a.card:is(:hover, :focus):visited {
       display: revert;
     }
 
-    .hashtag-stuffing {
+    .entity-stuffing {
       white-space: normal;
       opacity: 1;
     }

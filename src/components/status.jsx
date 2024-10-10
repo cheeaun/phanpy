@@ -1292,6 +1292,9 @@ function Status({
                   </span>
                 </>
               }
+              itemProps={{
+                className: 'danger',
+              }}
               menuItemClassName="danger"
               onClick={() => {
                 // const yes = confirm('Delete this post?');

@@ -2788,6 +2788,8 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
               width={width}
               height={height}
               loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               alt={imageDescription || ''}
               onError={(e) => {
                 try {

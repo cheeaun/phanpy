@@ -9,6 +9,7 @@ const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
+const containGTS = /gotosocial/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,
@@ -25,11 +26,13 @@ const platformFeatures = {
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
 };
+
 const supportsCache = {};
 
 function supports(feature) {
   try {
-    const { version, domain } = getCurrentInstance();
+    let { version, domain, software_name } = getCurrentInstance();
+
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
 
@@ -39,10 +42,13 @@ function supports(feature) {
 
     const range = features[feature];
     if (!range) return false;
-    return (supportsCache[key] = satisfies(version, range, {
-      includePrerelease: true,
-      loose: true,
-    }));
+    return (supportsCache[key] = (
+      containGTS.test(feature) === containGTS.test(software_name)
+      && satisfies(version, range, {
+        includePrerelease: true,
+        loose: true,
+      })
+    ));
   } catch (e) {
     return false;
   }

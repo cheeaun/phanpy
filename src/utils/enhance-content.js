@@ -27,7 +27,7 @@ const CODE_BLOCK_END_REGEX = /```$/;
 const INLINE_CODE_REGEX = /`[^`]+`/;
 const TWITTER_DOMAIN_REGEX = /(twitter|x)\.com/i;
 const TWITTER_MENTION_REGEX = /@[a-zA-Z0-9_]+@(twitter|x)\.com/;
-const TWITTER_MENTION_CAPTURE_REGEX = /(@([a-zA-Z0-9_]+)@(twitter|x)\.com)/g;
+const TWITTER_MENTION_CAPTURE_REGEX = /(@([a-zA-Z0-9_]+)@(twitter|x)\.com)/;
 
 function createDOM(html, isDocumentFragment) {
   const tpl = document.createElement('template');

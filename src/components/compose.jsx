@@ -27,7 +27,6 @@ import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
-import contentTypesIconMap from '../utils/content-types-icon-map.js';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
@@ -73,6 +72,14 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   };
   return acc;
 }, {});
+
+const contentTypesMap = {
+  "text/plain": {icon: "font", text: t`Plain text`},
+  "text/html": {icon: "brackets-angle", text: t`HTML`},
+  "text/markdown": {icon: "asterisk", text: t`Markdown`},
+  "text/bbcode": {icon: "brackets", text: t`BBCode`},
+  "text/x.misskeymarkdown": {icon: "currency-dollar-2", text: t`MFM`},
+}
 
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
@@ -225,12 +232,13 @@ function Compose({
 
   const {
     statuses: {
+      supportedMimeTypes: supportedStatusMimeTypes = ["text/plain"],
       maxCharacters,
       maxMediaAttachments,
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes = [],
+      supportedMimeTypes: supportedMediaMimeTypes = [],
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -244,11 +252,13 @@ function Compose({
       minExpiration,
     } = {},
   } = configuration || {};
+  
+  const defaultContentType = supports("@glitch/implicit-markdown") ? "text/markdown" : supportedStatusMimeTypes[0]
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
-  const [contentType, setContentType] = useState('text/plain');
+  const [contentType, setContentType] = useState(defaultContentType);
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
@@ -605,7 +615,7 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedMimeTypes.includes(file.type)) {
+          if (file && supportedStatusMimeTypes.includes(file.type)) {
             files.push(file);
           }
         }
@@ -1065,7 +1075,7 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
-                if (supports('@akkoma/post-content-type')) {
+                if (!supports("@glitch/implicit-markdown") && supportedStatusMimeTypes.length > 1) {
                   params.content_type = contentType;
                 }
                 params = removeNullUndefined(params);
@@ -1154,50 +1164,37 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
-            {supports('@akkoma/post-content-type') |
-              supports('@pleroma/post-content-type') && (
-              <>
-                <label
-                  class={`toolbar-button ${
-                    contentType !== 'text/plain' && !sensitive
-                      ? 'show-field'
-                      : ''
-                  } ${contentType !== 'text/plain' ? 'highlight' : ''}`}
-                >
-                  <Icon
-                    icon={contentTypesIconMap[contentType]}
-                    alt={visibility}
-                  />
+            <>
+              <label
+                class={`toolbar-button ${
+                  contentType !== defaultContentType && !sensitive
+                    ? 'show-field'
+                    : ''
+                } ${contentType !== defaultContentType ? 'highlight' : ''}`}
+              >
+                <Icon
+                  icon={contentTypesMap[contentType].icon}
+                  alt={visibility}
+                />
+                {supportedStatusMimeTypes.length > 1 &&
                   <select
                     name={'contentType'}
                     value={contentType}
                     onChange={(e) => {
                       setContentType(e.target.value);
                     }}
-                    disabled={uiState === 'loading'}
+                    disabled={uiState === 'loading' || supports("@glitch/implicit-markdown")}
                     dir={'auto'}
                   >
-                    <option value="text/plain">
-                      <Trans>Plain text</Trans>
-                    </option>
-                    <option value="text/html">
-                      <Trans>HTML</Trans>
-                    </option>
-                    <option value="text/markdown">
-                      <Trans>Markdown</Trans>
-                    </option>
-                    <option value="text/bbcode">
-                      <Trans>BBCode</Trans>
-                    </option>
-                    {supports('@akkoma/post-content-type') && (
-                      <option value="text/x.misskeymarkdown">
-                        <Trans>MFM</Trans>
+                    {supportedStatusMimeTypes.map(mime => (
+                      <option value={mime}>
+                        {contentTypesMap[mime].text}
                       </option>
-                    )}
+                    ))}
                   </select>
-                </label>{' '}
-              </>
-            )}
+                }
+              </label>{' '}
+            </>
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1355,7 +1352,7 @@ function Compose({
               <label class="toolbar-button">
                 <input
                   type="file"
-                  accept={supportedMimeTypes.join(',')}
+                  accept={supportedStatusMimeTypes.join(',')}
                   multiple={mediaAttachments.length < maxMediaAttachments - 1}
                   disabled={
                     uiState === 'loading' ||

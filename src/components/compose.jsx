@@ -1174,7 +1174,7 @@ function Compose({
                   } ${contentType !== defaultContentType ? 'highlight' : ''}`}
                 >
                   <Icon
-                    icon={contentTypesMap[contentType].icon}
+                    icon={contentTypesMap[contentType].icon ?? 'asterisk'}
                     alt={visibility}
                   />
                   <select
@@ -1187,7 +1187,9 @@ function Compose({
                     dir={'auto'}
                   >
                     {supportedStatusMimeTypes.map((mime) => (
-                      <option value={mime}>{contentTypesMap[mime].text}</option>
+                      <option value={mime}>
+                        {contentTypesMap[mime].text ?? mime}
+                      </option>
                     ))}
                   </select>
                 </label>{' '}

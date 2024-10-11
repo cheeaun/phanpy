@@ -217,13 +217,13 @@
     background-image: none;
   }
 
-  & + header .avatar + * {
+  & + header .avatar-container + * {
     transition: opacity 0.3s ease-in-out;
     opacity: 0 !important;
   }
 
   &,
-  & + header .avatar {
+  & + header .avatar-container {
     transition: filter 0.3s ease-in-out;
     filter: none !important;
   }
@@ -250,16 +250,21 @@
     -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color);
   animation: fade-in 0.3s both ease-in-out 0.1s;
-}
-.account-container header .avatar {
-  /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
+
+  .avatar-container {
+    filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
+      drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
+  }
+
+  .avatar {
+    /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color); */
-  overflow: initial;
-  filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
-    drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
-}
-.account-container header .avatar:not(.has-alpha) img {
-  border-radius: inherit;
+    /* overflow: initial; */
+
+    &:not(.has-alpha) img {
+      border-radius: inherit;
+    }
+  }
 }
 
 .account-container main > *:first-child {
@@ -585,7 +590,7 @@
     margin-top: calc(-1 * var(--banner-overlap));
   }
 
-  @supports (animation-timeline: scroll()) {
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
     .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
       animation: bye-banner 1s linear both;
       animation-timeline: view();
@@ -754,12 +759,16 @@
     letter-spacing: -0.5px;
     mix-blend-mode: multiply;
     gap: 12px;
-  }
-  .timeline-start .account-container header .account-block .avatar {
-    width: 112px !important;
-    height: 112px !important;
-    filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
-      drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+
+    .avatar-container {
+      filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
+        drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+    }
+
+    .avatar {
+      width: 112px !important;
+      height: 112px !important;
+    }
   }
 }
 

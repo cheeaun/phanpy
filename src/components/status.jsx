@@ -20,6 +20,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -124,11 +125,31 @@ function getPostText(status) {
   );
 }
 
-const PostContent = memo(
+const HTTP_REGEX = /^http/i;
+const PostContent =
+  /*memo(*/
   ({ post, instance, previewMode }) => {
     const { content, emojis, language, mentions, url } = post;
+
+    const divRef = useRef();
+    useLayoutEffect(() => {
+      if (!divRef.current) return;
+      const dom = enhanceContent(content, {
+        emojis,
+        returnDOM: true,
+      });
+      // Remove target="_blank" from links
+      for (const a of dom.querySelectorAll('a.u-url[target="_blank"]')) {
+        if (!HTTP_REGEX.test(a.innerText.trim())) {
+          a.removeAttribute('target');
+        }
+      }
+      divRef.current.replaceChildren(dom.cloneNode(true));
+    }, [content, emojis.length]);
+
     return (
       <div
+        ref={divRef}
         lang={language}
         dir="auto"
         class="inner-content"
@@ -138,28 +159,28 @@ const PostContent = memo(
           previewMode,
           statusURL: url,
         })}
-        dangerouslySetInnerHTML={{
-          __html: enhanceContent(content, {
-            emojis,
-            postEnhanceDOM: (dom) => {
-              // Remove target="_blank" from links
-              dom.querySelectorAll('a.u-url[target="_blank"]').forEach((a) => {
-                if (!/http/i.test(a.innerText.trim())) {
-                  a.removeAttribute('target');
-                }
-              });
-            },
-          }),
-        }}
+        // dangerouslySetInnerHTML={{
+        //   __html: enhanceContent(content, {
+        //     emojis,
+        //     postEnhanceDOM: (dom) => {
+        //       // Remove target="_blank" from links
+        //       dom.querySelectorAll('a.u-url[target="_blank"]').forEach((a) => {
+        //         if (!/http/i.test(a.innerText.trim())) {
+        //           a.removeAttribute('target');
+        //         }
+        //       });
+        //     },
+        //   }),
+        // }}
       />
     );
-  },
+  }; /*,
   (oldProps, newProps) => {
     const { post: oldPost } = oldProps;
     const { post: newPost } = newProps;
     return oldPost.content === newPost.content;
   },
-);
+);*/
 
 const SIZE_CLASS = {
   s: 'small',
@@ -188,6 +209,25 @@ const detectLang = pmem(async (text) => {
 });
 
 const readMoreText = msg`Read more →`;
+
+// All this work just to make sure this only lazy-run once
+// Because first run is slow due to intl-localematcher
+const DIFFERENT_LANG_CHECK = {};
+const checkDifferentLanguage = (
+  language,
+  contentTranslationHideLanguages = [],
+) => {
+  if (!language) return false;
+  const targetLanguage = getTranslateTargetLanguage(true);
+  const different =
+    language !== targetLanguage &&
+    !localeMatch([language], [targetLanguage]) &&
+    !contentTranslationHideLanguages.find(
+      (l) => language === l || localeMatch([language], [l]),
+    );
+  DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  return different;
+};
 
 function Status({
   statusID,
@@ -513,9 +553,9 @@ function Status({
   const isSizeLarge = size === 'l';
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
-  const targetLanguage = getTranslateTargetLanguage(true);
-  const contentTranslationHideLanguages =
-    snapStates.settings.contentTranslationHideLanguages || [];
+  // const targetLanguage = getTranslateTargetLanguage(true);
+  // const contentTranslationHideLanguages =
+  //   snapStates.settings.contentTranslationHideLanguages || [];
   const { contentTranslation, contentTranslationAutoInline } =
     snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
@@ -760,13 +800,37 @@ function Status({
     } catch (e) {}
   };
 
-  const differentLanguage =
-    !!language &&
-    language !== targetLanguage &&
-    !localeMatch([language], [targetLanguage]) &&
-    !contentTranslationHideLanguages.find(
-      (l) => language === l || localeMatch([language], [l]),
-    );
+  // const differentLanguage =
+  //   !!language &&
+  //   language !== targetLanguage &&
+  //   !localeMatch([language], [targetLanguage]) &&
+  //   !contentTranslationHideLanguages.find(
+  //     (l) => language === l || localeMatch([language], [l]),
+  //   );
+  const contentTranslationHideLanguages =
+    snapStates.settings.contentTranslationHideLanguages || [];
+  const [differentLanguage, setDifferentLanguage] = useState(
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+      ? checkDifferentLanguage(language, contentTranslationHideLanguages)
+      : false,
+  );
+  useEffect(() => {
+    if (
+      !language ||
+      differentLanguage ||
+      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+    ) {
+      return;
+    }
+    let timeout = setTimeout(() => {
+      const different = checkDifferentLanguage(
+        language,
+        contentTranslationHideLanguages,
+      );
+      if (different) setDifferentLanguage(different);
+    }, 1);
+    return () => clearTimeout(timeout);
+  }, [language, differentLanguage, contentTranslationHideLanguages]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -1228,6 +1292,9 @@ function Status({
                   </span>
                 </>
               }
+              itemProps={{
+                className: 'danger',
+              }}
               menuItemClassName="danger"
               onClick={() => {
                 // const yes = confirm('Delete this post?');
@@ -2721,6 +2788,8 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
               width={width}
               height={height}
               loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               alt={imageDescription || ''}
               onError={(e) => {
                 try {
@@ -3061,7 +3130,7 @@ function generateHTMLCode(post, instance, level = 0) {
       : '');
 
   const htmlCode = `
-    <blockquote lang="${language}" cite="${url}">
+    <blockquote lang="${language}" cite="${url}" data-source="fediverse">
       ${
         spoilerText
           ? `

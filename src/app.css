@@ -1722,7 +1722,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
       0 8px 16px -8px var(--drop-shadow-color);
   }
 }
-@supports (animation-timeline: scroll()) {
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
   .sheet header {
     animation: header-border 1s linear both;
     animation-timeline: --sheet-scroll;
@@ -2363,7 +2363,7 @@ body > .szh-menu-container {
   }
 }
 
-@supports (animation-timeline: scroll()) {
+@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
   .header-account {
     animation: peekaboo-header 1s linear both;
     animation-timeline: scroll();

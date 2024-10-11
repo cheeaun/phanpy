@@ -53,10 +53,12 @@ function supports(feature) {
     const featureSoftware = feature.match(/^@([a-z]+)\//)[1];
 
     const doesSoftwareMatch = featureSoftware === softwareName.toLowerCase();
-    return (supportsCache[key] = doesSoftwareMatch && satisfies(version, range, {
-      includePrerelease: true,
-      loose: true,
-    }));
+    return (supportsCache[key] =
+      doesSoftwareMatch &&
+      satisfies(version, range, {
+        includePrerelease: true,
+        loose: true,
+      }));
   } catch (e) {
     return false;
   }

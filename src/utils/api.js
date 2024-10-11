@@ -110,11 +110,14 @@ export async function initInstance(client, instance) {
   try {
     if (uri || domain) {
       let urlBase = uri || `https://${domain}`;
-      const wellKnown = await (await fetch(`${urlBase}/.well-known/nodeinfo`)).json();
+      const wellKnown = await (
+        await fetch(`${urlBase}/.well-known/nodeinfo`)
+      ).json();
       if (Array.isArray(wellKnown?.links)) {
         const nodeInfoUrl = wellKnown.links.find(
-          (link) => typeof link.rel === 'string' &&
-          link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
+          (link) =>
+            typeof link.rel === 'string' &&
+            link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/'),
         )?.href;
         if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
           nodeInfo = await (await fetch(nodeInfoUrl)).json();

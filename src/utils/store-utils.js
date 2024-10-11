@@ -122,7 +122,7 @@ export function getCurrentNodeInfo() {
     const account = getCurrentAccount();
     const nodeInfos = store.local.getJSON('nodeInfos') || {};
     const instanceURL = account.instanceURL.toLowerCase();
-    return (currentNodeInfo = (nodeInfos[instanceURL] || {}));
+    return (currentNodeInfo = nodeInfos[instanceURL] || {});
   } catch (e) {
     console.error(e);
     return {};

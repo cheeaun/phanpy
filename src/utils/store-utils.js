@@ -115,6 +115,20 @@ export function getCurrentInstance() {
   }
 }
 
+let currentNodeInfo = null;
+export function getCurrentNodeInfo() {
+  if (currentNodeInfo) return currentNodeInfo;
+  try {
+    const account = getCurrentAccount();
+    const nodeInfos = store.local.getJSON('nodeInfos') || {};
+    const instanceURL = account.instanceURL.toLowerCase();
+    return (currentNodeInfo = (nodeInfos[instanceURL] || {}));
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+}
+
 // Massage these instance configurations to match the Mastodon API
 // - Pleroma
 function getInstanceConfiguration(instance) {

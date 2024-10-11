@@ -80,6 +80,7 @@ export async function initInstance(client, instance) {
   }
   __BENCHMARK.end('fetch-instance');
   if (!info) return;
+  console.log(info);
   const {
     // v1
     uri,
@@ -88,28 +89,6 @@ export async function initInstance(client, instance) {
     domain,
     configuration: { urls: { streaming } = {} } = {},
   } = info;
-
-  // GoToSocial requires we get the NodeInfo to identify server type
-  // spec: https://github.com/jhass/nodeinfo
-  try {
-    if (uri || domain) {
-      let urlBase = uri || `https://${domain}`;
-      const wellKnown = await (await fetch(`${urlBase}/.well-known/nodeinfo`)).json();
-      if (Array.isArray(wellKnown?.links)) {
-        const nodeInfoUrl = wellKnown.links.find(
-          (link) => typeof link.rel === 'string' &&
-          link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
-        )?.href;
-        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
-          const nodeInfo = await (await fetch(nodeInfoUrl)).json();
-          if (typeof nodeInfo?.software?.name === 'string') {
-            info.software_name = nodeInfo.software.name;
-          }
-        }
-      }
-    }
-  } catch (e) {}
-  console.log(info);
 
   const instances = store.local.getJSON('instances') || {};
   if (uri || domain) {
@@ -124,6 +103,31 @@ export async function initInstance(client, instance) {
     instances[instance.toLowerCase()] = info;
   }
   store.local.setJSON('instances', instances);
+
+  let nodeInfo;
+  // GoToSocial requires we get the NodeInfo to identify server type
+  // spec: https://github.com/jhass/nodeinfo
+  try {
+    if (uri || domain) {
+      let urlBase = uri || `https://${domain}`;
+      const wellKnown = await (await fetch(`${urlBase}/.well-known/nodeinfo`)).json();
+      if (Array.isArray(wellKnown?.links)) {
+        const nodeInfoUrl = wellKnown.links.find(
+          (link) => typeof link.rel === 'string' &&
+          link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/')
+        )?.href;
+        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+          nodeInfo = await (await fetch(nodeInfoUrl)).json();
+        }
+      }
+    }
+  } catch (e) {}
+  const nodeInfos = store.local.getJSON('nodeInfos') || {};
+  if (nodeInfo) {
+    nodeInfos[instance.toLowerCase()] = nodeInfo;
+  }
+  store.local.setJSON('nodeInfos', nodeInfos);
+
   // This is a weird place to put this but here's updating the masto instance with the streaming API URL set in the configuration
   // Reason: Streaming WebSocket URL may change, unlike the standard API REST URLs
   const supportsWebSocket = 'WebSocket' in window;

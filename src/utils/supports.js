@@ -2,7 +2,7 @@ import { satisfies } from 'compare-versions';
 
 import features from '../data/features.json';
 
-import { getCurrentInstance } from './store-utils';
+import { getCurrentInstance, getCurrentNodeInfo } from './store-utils';
 
 // Non-semver(?) UA string detection
 const containPixelfed = /pixelfed/i;
@@ -31,7 +31,13 @@ const supportsCache = {};
 
 function supports(feature) {
   try {
-    let { version, domain, software_name } = getCurrentInstance();
+    let { version, domain } = getCurrentInstance();
+    let softwareName = getCurrentNodeInfo()?.software?.name || 'mastodon';
+
+    if (softwareName === 'hometown') {
+      // Hometown is a Mastodon fork and inherits its features
+      softwareName = 'mastodon';
+    }
 
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) return supportsCache[key];
@@ -42,13 +48,15 @@ function supports(feature) {
 
     const range = features[feature];
     if (!range) return false;
-    return (supportsCache[key] = (
-      containGTS.test(feature) === containGTS.test(software_name)
-      && satisfies(version, range, {
-        includePrerelease: true,
-        loose: true,
-      })
-    ));
+
+    // '@mastodon/blah' => 'mastodon'
+    const featureSoftware = feature.match(/^@([a-z]+)\//)[1];
+
+    const doesSoftwareMatch = featureSoftware === softwareName.toLowerCase();
+    return (supportsCache[key] = doesSoftwareMatch && satisfies(version, range, {
+      includePrerelease: true,
+      loose: true,
+    }));
   } catch (e) {
     return false;
   }

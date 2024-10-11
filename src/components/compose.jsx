@@ -1164,37 +1164,35 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
-            <>
-              <label
-                class={`toolbar-button ${
-                  contentType !== defaultContentType && !sensitive
-                    ? 'show-field'
-                    : ''
-                } ${contentType !== defaultContentType ? 'highlight' : ''}`}
-              >
-                <Icon
-                  icon={contentTypesMap[contentType].icon}
-                  alt={visibility}
-                />
-                {supportedStatusMimeTypes.length > 1 &&
-                  <select
-                    name={'contentType'}
-                    value={contentType}
-                    onChange={(e) => {
-                      setContentType(e.target.value);
-                    }}
-                    disabled={uiState === 'loading' || supports("@glitch/implicit-markdown")}
-                    dir={'auto'}
-                  >
-                    {supportedStatusMimeTypes.map(mime => (
-                      <option value={mime}>
-                        {contentTypesMap[mime].text}
-                      </option>
-                    ))}
-                  </select>
-                }
-              </label>{' '}
-            </>
+            <label
+              class={`toolbar-button ${
+                contentType !== defaultContentType && !sensitive
+                  ? 'show-field'
+                  : ''
+              } ${contentType !== defaultContentType ? 'highlight' : ''}`}
+            >
+              <Icon
+                icon={contentTypesMap[contentType].icon}
+                alt={visibility}
+              />
+              {supportedStatusMimeTypes.length > 1 &&
+                <select
+                  name={'contentType'}
+                  value={contentType}
+                  onChange={(e) => {
+                    setContentType(e.target.value);
+                  }}
+                  disabled={uiState === 'loading' || supports("@glitch/implicit-markdown")}
+                  dir={'auto'}
+                >
+                  {supportedStatusMimeTypes.map(mime => (
+                    <option value={mime}>
+                      {contentTypesMap[mime].text}
+                    </option>
+                  ))}
+                </select>
+              }
+            </label>{' '}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''

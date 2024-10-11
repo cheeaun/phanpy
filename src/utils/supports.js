@@ -9,7 +9,6 @@ const containPixelfed = /pixelfed/i;
 const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
-const containGlitch = /glitch|chuckya/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,
@@ -33,22 +32,11 @@ function supports(feature) {
     const { version, domain } = getCurrentInstance();
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) {
-      console.debug(
-        'SUPPORTS [cached]',
-        key,
-        platformFeatures[feature].test(version),
-      );
       return supportsCache[key];
     }
 
     if (platformFeatures[feature]) {
-      platformFeatures[feature].test(version);
-      console.debug(
-        'SUPPORTS [new]',
-        key,
-        platformFeatures[feature].test(version),
-      );
-      return (supportsCache[key] = feature);
+      return (supportsCache[key] = platformFeatures[feature].test(version));
     }
 
     const range = features[feature];

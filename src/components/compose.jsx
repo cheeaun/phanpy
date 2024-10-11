@@ -74,12 +74,12 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
 }, {});
 
 const contentTypesMap = {
-  "text/plain": {icon: "font", text: t`Plain text`},
-  "text/html": {icon: "brackets-angle", text: t`HTML`},
-  "text/markdown": {icon: "asterisk", text: t`Markdown`},
-  "text/bbcode": {icon: "brackets", text: t`BBCode`},
-  "text/x.misskeymarkdown": {icon: "currency-dollar-2", text: t`MFM`},
-}
+  'text/plain': { icon: 'font', text: t`Plain text` },
+  'text/html': { icon: 'brackets-angle', text: t`HTML` },
+  'text/markdown': { icon: 'asterisk', text: t`Markdown` },
+  'text/bbcode': { icon: 'brackets', text: t`BBCode` },
+  'text/x.misskeymarkdown': { icon: 'currency-dollar-2', text: t`MFM` },
+};
 
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
@@ -232,7 +232,7 @@ function Compose({
 
   const {
     statuses: {
-      supportedMimeTypes: supportedStatusMimeTypes = ["text/plain"],
+      supportedMimeTypes: supportedStatusMimeTypes = ['text/plain'],
       maxCharacters,
       maxMediaAttachments,
       charactersReservedPerUrl,
@@ -252,8 +252,8 @@ function Compose({
       minExpiration,
     } = {},
   } = configuration || {};
-  
-  const defaultContentType = supports("@glitch/implicit-markdown") ? "text/markdown" : supportedStatusMimeTypes[0]
+
+  const defaultContentType = supportedStatusMimeTypes[0];
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
@@ -615,7 +615,7 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedStatusMimeTypes.includes(file.type)) {
+          if (file && supportedMediaMimeTypes.includes(file.type)) {
             files.push(file);
           }
         }
@@ -1075,7 +1075,7 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
-                if (!supports("@glitch/implicit-markdown") && supportedStatusMimeTypes.length > 1) {
+                if (supportedStatusMimeTypes.length > 1) {
                   params.content_type = contentType;
                 }
                 params = removeNullUndefined(params);
@@ -1164,35 +1164,35 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
-            <label
-              class={`toolbar-button ${
-                contentType !== defaultContentType && !sensitive
-                  ? 'show-field'
-                  : ''
-              } ${contentType !== defaultContentType ? 'highlight' : ''}`}
-            >
-              <Icon
-                icon={contentTypesMap[contentType].icon}
-                alt={visibility}
-              />
-              {supportedStatusMimeTypes.length > 1 &&
-                <select
-                  name={'contentType'}
-                  value={contentType}
-                  onChange={(e) => {
-                    setContentType(e.target.value);
-                  }}
-                  disabled={uiState === 'loading' || supports("@glitch/implicit-markdown")}
-                  dir={'auto'}
+            {supportedStatusMimeTypes.length > 1 && (
+              <>
+                <label
+                  class={`toolbar-button ${
+                    contentType !== defaultContentType && !sensitive
+                      ? 'show-field'
+                      : ''
+                  } ${contentType !== defaultContentType ? 'highlight' : ''}`}
                 >
-                  {supportedStatusMimeTypes.map(mime => (
-                    <option value={mime}>
-                      {contentTypesMap[mime].text}
-                    </option>
-                  ))}
-                </select>
-              }
-            </label>{' '}
+                  <Icon
+                    icon={contentTypesMap[contentType].icon}
+                    alt={visibility}
+                  />
+                  <select
+                    name={'contentType'}
+                    value={contentType}
+                    onChange={(e) => {
+                      setContentType(e.target.value);
+                    }}
+                    disabled={uiState === 'loading'}
+                    dir={'auto'}
+                  >
+                    {supportedStatusMimeTypes.map((mime) => (
+                      <option value={mime}>{contentTypesMap[mime].text}</option>
+                    ))}
+                  </select>
+                </label>{' '}
+              </>
+            )}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1350,7 +1350,7 @@ function Compose({
               <label class="toolbar-button">
                 <input
                   type="file"
-                  accept={supportedStatusMimeTypes.join(',')}
+                  accept={supportedMediaMimeTypes.join(',')}
                   multiple={mediaAttachments.length < maxMediaAttachments - 1}
                   disabled={
                     uiState === 'loading' ||

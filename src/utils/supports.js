@@ -25,7 +25,6 @@ const platformFeatures = {
   '@pixelfed/global-feed': containPixelfed,
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
-  '@glitch/implicit-markdown': containGlitch,
 };
 const supportsCache = {};
 
@@ -34,13 +33,21 @@ function supports(feature) {
     const { version, domain } = getCurrentInstance();
     const key = `${domain}-${feature}`;
     if (supportsCache[key]) {
-      console.debug("SUPPORTS [cached]", key, platformFeatures[feature].test(version))
+      console.debug(
+        'SUPPORTS [cached]',
+        key,
+        platformFeatures[feature].test(version),
+      );
       return supportsCache[key];
     }
 
     if (platformFeatures[feature]) {
-      platformFeatures[feature].test(version)
-      console.debug("SUPPORTS [new]", key, platformFeatures[feature].test(version))
+      platformFeatures[feature].test(version);
+      console.debug(
+        'SUPPORTS [new]',
+        key,
+        platformFeatures[feature].test(version),
+      );
       return (supportsCache[key] = feature);
     }
 

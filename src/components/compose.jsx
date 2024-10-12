@@ -254,6 +254,8 @@ function Compose({
   );
   const prevLanguage = useRef(language);
   const [mediaAttachments, setMediaAttachments] = useState([]);
+  const [draggingAttachment, setDraggingAttachment] = useState(null);
+  const [draggingOver, setDraggingOver] = useState(null);
   const [poll, setPoll] = useState(null);
 
   const prefs = store.account.get('preferences') || {};
@@ -1252,6 +1254,40 @@ function Compose({
                         return newAttachments;
                       });
                     }}
+                    draggingOver={draggingOver === i}
+                    onDragStart={(e) => {
+                      setDraggingAttachment(i);
+                      e.dataTransfer.dropEffect = 'move';
+                    }}
+                    onDragEnter={() => setDraggingOver(i)}
+                    onDragLeave={() => setDraggingOver(null)}
+                    onDragEnd={() => {
+                      setDraggingAttachment(null);
+                      setDraggingOver(null);
+                    }}
+                    onDrop={(e) => {
+                      const from = draggingAttachment;
+                      const to = i;
+                      if (from == null || from === to) return;
+                      setMediaAttachments((attachments) => {
+                        if (to < from) {
+                          return [
+                            ...attachments.slice(0, to),
+                            attachments[from],
+                            ...attachments.slice(to, from),
+                            ...attachments.slice(from + 1),
+                          ];
+                        } else {
+                          return [
+                            ...attachments.slice(0, from),
+                            ...attachments.slice(from + 1, to + 1),
+                            attachments[from],
+                            ...attachments.slice(to + 1),
+                          ];
+                        }
+                      });
+                      e.stopPropagation();
+                    }}
                     onRemove={() => {
                       setMediaAttachments((attachments) => {
                         return attachments.filter((_, j) => j !== i);
@@ -2114,6 +2150,12 @@ function MediaAttachment({
   disabled,
   lang,
   onDescriptionChange = () => {},
+  draggingOver,
+  onDragStart,
+  onDragEnd,
+  onDragEnter,
+  onDragLeave,
+  onDrop,
   onRemove = () => {},
 }) {
   const { i18n } = useLingui();
@@ -2329,8 +2371,15 @@ function MediaAttachment({
     <>
       <div class="media-attachment">
         <div
-          class="media-preview"
+          class={`media-preview ${draggingOver ? 'dragging-over' : ''}`}
           tabIndex="0"
+          draggable
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          onDragEnter={onDragEnter}
+          onDragLeave={onDragLeave}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={onDrop}
           onClick={() => {
             setShowModal(true);
           }}

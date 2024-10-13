@@ -116,13 +116,11 @@ function _enhanceContent(content, opts = {}) {
   // ======
   // Convert :shortcode: to <img />
   let textNodes;
-  if (enhancedContent.includes(':')) {
+  if (enhancedContent.includes(':') && emojis?.length) {
     textNodes = extractTextNodes(dom);
     for (const node of textNodes) {
       let html = escapeHTML(node.nodeValue);
-      if (emojis) {
-        html = emojifyText(html, emojis);
-      }
+      html = emojifyText(html, emojis);
       fauxDiv.innerHTML = html;
       node.replaceWith(...fauxDiv.childNodes);
     }

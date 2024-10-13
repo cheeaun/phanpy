@@ -28,6 +28,7 @@ const INLINE_CODE_REGEX = /`[^`]+`/;
 const TWITTER_DOMAIN_REGEX = /(twitter|x)\.com/i;
 const TWITTER_MENTION_REGEX = /@[a-zA-Z0-9_]+@(twitter|x)\.com/;
 const TWITTER_MENTION_CAPTURE_REGEX = /(@([a-zA-Z0-9_]+)@(twitter|x)\.com)/g;
+const CODE_INLINE_CAPTURE_REGEX = /(`[^]+?`)/g;
 
 function createDOM(html, isDocumentFragment) {
   if (isDocumentFragment) {
@@ -197,7 +198,7 @@ function _enhanceContent(content, opts = {}) {
     for (const node of textNodes) {
       let html = escapeHTML(node.nodeValue);
       if (INLINE_CODE_REGEX.test(html)) {
-        html = html.replaceAll(/(`[^]+?`)/g, '<code>$1</code>');
+        html = html.replaceAll(CODE_INLINE_CAPTURE_REGEX, '<code>$1</code>');
       }
       fauxDiv.innerHTML = html;
       // const nodes = [...fauxDiv.childNodes];

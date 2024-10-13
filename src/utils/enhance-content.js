@@ -30,9 +30,15 @@ const TWITTER_MENTION_REGEX = /@[a-zA-Z0-9_]+@(twitter|x)\.com/;
 const TWITTER_MENTION_CAPTURE_REGEX = /(@([a-zA-Z0-9_]+)@(twitter|x)\.com)/g;
 
 function createDOM(html, isDocumentFragment) {
-  const tpl = document.createElement('template');
-  tpl.innerHTML = html;
-  return isDocumentFragment ? tpl.content : tpl;
+  if (isDocumentFragment) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    return tpl.content;
+  } else {
+    const tpl = document.createElement('div');
+    tpl.innerHTML = html;
+    return tpl;
+  }
 }
 
 function _enhanceContent(content, opts = {}) {

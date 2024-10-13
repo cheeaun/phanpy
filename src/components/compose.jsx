@@ -238,7 +238,7 @@ function Compose({
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes: supportedMediaMimeTypes = [],
+      supportedMimeTypes: supportedMediaMimeTypes = undefined,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -1474,7 +1474,8 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    (maxMediaAttachments !== undefined && mediaAttachments.length >= maxMediaAttachments) ||
+                    (maxMediaAttachments !== undefined &&
+                      mediaAttachments.length >= maxMediaAttachments) ||
                     !!poll
                   }
                   onClick={() => {

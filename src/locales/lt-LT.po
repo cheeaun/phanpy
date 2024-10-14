@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-14 10:34\n"
+"PO-Revision-Date: 2024-10-14 11:48\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -110,7 +110,7 @@ msgstr "Įrašai"
 
 #: src/components/account-info.jsx:427
 #: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2479
+#: src/components/compose.jsx:2488
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1703
@@ -123,7 +123,7 @@ msgstr "Įrašai"
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1178
+#: src/pages/status.jsx:1181
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr "Daugiau"
@@ -190,8 +190,8 @@ msgstr "Originalus"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:901
-#: src/pages/status.jsx:1503
+#: src/pages/status.jsx:904
+#: src/pages/status.jsx:1506
 msgid "Replies"
 msgstr "Atsakymai"
 
@@ -405,11 +405,11 @@ msgstr "Sekti"
 #: src/components/account-info.jsx:1989
 #: src/components/account-info.jsx:2089
 #: src/components/account-sheet.jsx:37
-#: src/components/compose.jsx:813
-#: src/components/compose.jsx:2435
-#: src/components/compose.jsx:2908
-#: src/components/compose.jsx:3116
-#: src/components/compose.jsx:3346
+#: src/components/compose.jsx:818
+#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2917
+#: src/components/compose.jsx:3125
+#: src/components/compose.jsx:3355
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -432,7 +432,7 @@ msgstr "Sekti"
 #: src/pages/notifications.jsx:868
 #: src/pages/notifications.jsx:1082
 #: src/pages/settings.jsx:76
-#: src/pages/status.jsx:1265
+#: src/pages/status.jsx:1268
 msgid "Close"
 msgstr "Uždaryti"
 
@@ -550,135 +550,135 @@ msgstr "Sukurti"
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Turi neišsaugotų pakeitimų. Atmesti šią įrašą?"
 
-#: src/components/compose.jsx:619
+#: src/components/compose.jsx:622
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {{1} failas nepalaikomas.} few {{2} failai nepalaikomi.} many {{2} failo nepalaikoma.} other {{2} failų nepalaikoma.}}"
 
-#: src/components/compose.jsx:627
-#: src/components/compose.jsx:645
-#: src/components/compose.jsx:1353
-#: src/components/compose.jsx:1614
+#: src/components/compose.jsx:632
+#: src/components/compose.jsx:650
+#: src/components/compose.jsx:1361
+#: src/components/compose.jsx:1623
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Gali pridėti tik iki # failo.} few {Gali pridėti tik iki # failų.} many {Gali pridėti tik iki # failo.} other {Gali pridėti tik iki # failų.}}"
 
-#: src/components/compose.jsx:794
+#: src/components/compose.jsx:799
 msgid "Pop out"
 msgstr "Išskleisti"
 
-#: src/components/compose.jsx:801
+#: src/components/compose.jsx:806
 msgid "Minimize"
 msgstr "Sumažinti"
 
-#: src/components/compose.jsx:837
+#: src/components/compose.jsx:842
 msgid "Looks like you closed the parent window."
 msgstr "Atrodo, kad uždarei pirminį langą."
 
-#: src/components/compose.jsx:844
+#: src/components/compose.jsx:849
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Atrodo, kad pirminiame lange jau atidarytas sukūrimo laukas ir šiuo metu skelbiamas. Palauk, kol jis bus baigtas, ir pabandyk dar kartą vėliau."
 
-#: src/components/compose.jsx:849
+#: src/components/compose.jsx:854
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Atrodo, kad pirminiame lange jau yra atidarytas sukūrimo laukas. Suskleisčius šiame lange, bus atmesti pakeitimai, kuriuos padarėte pirminiame lange. Tęsti?"
 
-#: src/components/compose.jsx:891
+#: src/components/compose.jsx:896
 msgid "Pop in"
 msgstr "Suskleisti"
 
-#: src/components/compose.jsx:901
+#: src/components/compose.jsx:906
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Atsakant į @{0} įrašą (<0>{1}</0>)"
 
-#: src/components/compose.jsx:911
+#: src/components/compose.jsx:916
 msgid "Replying to @{0}’s post"
 msgstr "Atsakant į @{0} įrašą"
 
-#: src/components/compose.jsx:924
+#: src/components/compose.jsx:929
 msgid "Editing source post"
 msgstr "Redaguojamas šaltinio įrašas"
 
-#: src/components/compose.jsx:971
+#: src/components/compose.jsx:976
 msgid "Poll must have at least 2 options"
 msgstr "Apklausa turi turėti bent 2 parinktis."
 
-#: src/components/compose.jsx:975
+#: src/components/compose.jsx:980
 msgid "Some poll choices are empty"
 msgstr "Kai kurie apklausos pasirinkimai yra tušti."
 
-#: src/components/compose.jsx:988
+#: src/components/compose.jsx:993
 msgid "Some media have no descriptions. Continue?"
 msgstr "Kai kurios medijos neturi aprašymų. Tęsti?"
 
-#: src/components/compose.jsx:1040
+#: src/components/compose.jsx:1045
 msgid "Attachment #{i} failed"
 msgstr "Nepavyko #{i} priedas."
 
-#: src/components/compose.jsx:1134
+#: src/components/compose.jsx:1139
 #: src/components/status.jsx:2029
 #: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "Turinio įspėjimas"
 
-#: src/components/compose.jsx:1150
+#: src/components/compose.jsx:1155
 msgid "Content warning or sensitive media"
 msgstr "Turinio įspėjimas arba jautri medija"
 
-#: src/components/compose.jsx:1186
+#: src/components/compose.jsx:1191
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:304
 msgid "Public"
 msgstr "Vieša"
 
-#: src/components/compose.jsx:1191
+#: src/components/compose.jsx:1196
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
 #: src/components/status.jsx:94
 msgid "Local"
 msgstr "Vietinis"
 
-#: src/components/compose.jsx:1195
+#: src/components/compose.jsx:1200
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:307
 msgid "Unlisted"
 msgstr "Neįtrauktas į sąrašą"
 
-#: src/components/compose.jsx:1198
+#: src/components/compose.jsx:1203
 #: src/components/status.jsx:96
 #: src/pages/settings.jsx:310
 msgid "Followers only"
 msgstr "Tik sekėjai"
 
-#: src/components/compose.jsx:1201
+#: src/components/compose.jsx:1206
 #: src/components/status.jsx:97
 #: src/components/status.jsx:1907
 msgid "Private mention"
 msgstr "Privatus paminėjimas"
 
-#: src/components/compose.jsx:1210
+#: src/components/compose.jsx:1215
 msgid "Post your reply"
 msgstr "Skelbti savo atsakymą"
 
-#: src/components/compose.jsx:1212
+#: src/components/compose.jsx:1217
 msgid "Edit your post"
 msgstr "Redaguoti savo įrašą"
 
-#: src/components/compose.jsx:1213
+#: src/components/compose.jsx:1218
 msgid "What are you doing?"
 msgstr "Ką tu darai?"
 
-#: src/components/compose.jsx:1291
+#: src/components/compose.jsx:1296
 msgid "Mark media as sensitive"
 msgstr "Žymėti mediją kaip jautrią"
 
-#: src/components/compose.jsx:1389
+#: src/components/compose.jsx:1397
 msgid "Add poll"
 msgstr "Pridėti apklausą"
 
-#: src/components/compose.jsx:1411
+#: src/components/compose.jsx:1419
 msgid "Add custom emoji"
 msgstr "Pridėti pasirinktinį jaustuką"
 
-#: src/components/compose.jsx:1495
+#: src/components/compose.jsx:1504
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:895
 #: src/components/status.jsx:1683
@@ -687,195 +687,195 @@ msgstr "Pridėti pasirinktinį jaustuką"
 msgid "Reply"
 msgstr "Atsakyti"
 
-#: src/components/compose.jsx:1497
+#: src/components/compose.jsx:1506
 msgid "Update"
 msgstr "Atnaujinti"
 
-#: src/components/compose.jsx:1498
+#: src/components/compose.jsx:1507
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Skelbti"
 
-#: src/components/compose.jsx:1626
+#: src/components/compose.jsx:1635
 msgid "Downloading GIF…"
 msgstr "Atsisiunčiama GIF…"
 
-#: src/components/compose.jsx:1654
+#: src/components/compose.jsx:1663
 msgid "Failed to download GIF"
 msgstr "Nepavyko atsisiųsti GIF."
 
-#: src/components/compose.jsx:1766
-#: src/components/compose.jsx:1843
+#: src/components/compose.jsx:1775
+#: src/components/compose.jsx:1852
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "Daugiau…"
 
-#: src/components/compose.jsx:2248
+#: src/components/compose.jsx:2257
 msgid "Uploaded"
 msgstr "Įkelta"
 
-#: src/components/compose.jsx:2261
+#: src/components/compose.jsx:2270
 msgid "Image description"
 msgstr "Vaizdo aprašymas"
 
-#: src/components/compose.jsx:2262
+#: src/components/compose.jsx:2271
 msgid "Video description"
 msgstr "Vaizdo įrašo aprašymas"
 
-#: src/components/compose.jsx:2263
+#: src/components/compose.jsx:2272
 msgid "Audio description"
 msgstr "Garso įrašo aprašymas"
 
-#: src/components/compose.jsx:2299
-#: src/components/compose.jsx:2319
+#: src/components/compose.jsx:2308
+#: src/components/compose.jsx:2328
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandyk sumažinti failo dydį nuo {0} iki {1} arba mažiau."
 
-#: src/components/compose.jsx:2311
-#: src/components/compose.jsx:2331
+#: src/components/compose.jsx:2320
+#: src/components/compose.jsx:2340
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Per didelis matmuo. Įkeliant gali kilti problemų. Bandyk sumažinti matmenis nuo {0}×{1} tšk. iki {2}×{3} tšk."
 
-#: src/components/compose.jsx:2339
+#: src/components/compose.jsx:2348
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Per didelis kadrų dažnis. Įkeliant gali kilti problemų."
 
-#: src/components/compose.jsx:2399
-#: src/components/compose.jsx:2649
+#: src/components/compose.jsx:2408
+#: src/components/compose.jsx:2658
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: src/components/compose.jsx:2416
+#: src/components/compose.jsx:2425
 #: src/compose.jsx:83
 msgid "Error"
 msgstr "Klaida"
 
-#: src/components/compose.jsx:2441
+#: src/components/compose.jsx:2450
 msgid "Edit image description"
 msgstr "Redaguoti vaizdo aprašymą"
 
-#: src/components/compose.jsx:2442
+#: src/components/compose.jsx:2451
 msgid "Edit video description"
 msgstr "Redaguoti vaizdo įrašo aprašymą"
 
-#: src/components/compose.jsx:2443
+#: src/components/compose.jsx:2452
 msgid "Edit audio description"
 msgstr "Redaguoti garso įrašo aprašymą"
 
-#: src/components/compose.jsx:2488
-#: src/components/compose.jsx:2537
+#: src/components/compose.jsx:2497
+#: src/components/compose.jsx:2546
 msgid "Generating description. Please wait…"
 msgstr "Generuojamas aprašymas. Palauk…"
 
-#: src/components/compose.jsx:2508
+#: src/components/compose.jsx:2517
 msgid "Failed to generate description: {0}"
 msgstr "Nepavyko sugeneruoti aprašymo: {0}"
 
-#: src/components/compose.jsx:2509
+#: src/components/compose.jsx:2518
 msgid "Failed to generate description"
 msgstr "Nepavyko sugeneruoti aprašymo."
 
-#: src/components/compose.jsx:2521
-#: src/components/compose.jsx:2527
-#: src/components/compose.jsx:2573
+#: src/components/compose.jsx:2530
+#: src/components/compose.jsx:2536
+#: src/components/compose.jsx:2582
 msgid "Generate description…"
 msgstr "Generuoti aprašymą…"
 
-#: src/components/compose.jsx:2560
+#: src/components/compose.jsx:2569
 msgid "Failed to generate description{0}"
 msgstr "Nepavyko sugeneruoti aprašymo: {0}"
 
-#: src/components/compose.jsx:2575
+#: src/components/compose.jsx:2584
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>– eksperimentinė</0>"
 
-#: src/components/compose.jsx:2594
+#: src/components/compose.jsx:2603
 msgid "Done"
 msgstr "Atlikta"
 
-#: src/components/compose.jsx:2630
+#: src/components/compose.jsx:2639
 msgid "Choice {0}"
 msgstr "{0} pasirinkimas"
 
-#: src/components/compose.jsx:2677
+#: src/components/compose.jsx:2686
 msgid "Multiple choices"
 msgstr "Keli pasirinkimai"
 
-#: src/components/compose.jsx:2680
+#: src/components/compose.jsx:2689
 msgid "Duration"
 msgstr "Trukmė"
 
-#: src/components/compose.jsx:2711
+#: src/components/compose.jsx:2720
 msgid "Remove poll"
 msgstr "Pašalinti apklausą"
 
-#: src/components/compose.jsx:2925
+#: src/components/compose.jsx:2934
 msgid "Search accounts"
 msgstr "Ieškoti paskyrų"
 
-#: src/components/compose.jsx:2966
+#: src/components/compose.jsx:2975
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "Pridėti"
 
-#: src/components/compose.jsx:2979
+#: src/components/compose.jsx:2988
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "Klaida įkeliant paskyras."
 
-#: src/components/compose.jsx:3122
+#: src/components/compose.jsx:3131
 msgid "Custom emojis"
 msgstr "Pasirinktiniai jaustukai"
 
-#: src/components/compose.jsx:3142
+#: src/components/compose.jsx:3151
 msgid "Search emoji"
 msgstr "Ieškoti jaustukų"
 
-#: src/components/compose.jsx:3173
+#: src/components/compose.jsx:3182
 msgid "Error loading custom emojis"
 msgstr "Klaida įkeliant pasirinktinius jaustukus."
 
-#: src/components/compose.jsx:3184
+#: src/components/compose.jsx:3193
 msgid "Recently used"
 msgstr "Neseniai naudoti"
 
-#: src/components/compose.jsx:3185
+#: src/components/compose.jsx:3194
 msgid "Others"
 msgstr "Kiti"
 
-#: src/components/compose.jsx:3223
+#: src/components/compose.jsx:3232
 msgid "{0} more…"
 msgstr "{0} daugiau…"
 
-#: src/components/compose.jsx:3361
+#: src/components/compose.jsx:3370
 msgid "Search GIFs"
 msgstr "Ieškoti GIF"
 
-#: src/components/compose.jsx:3376
+#: src/components/compose.jsx:3385
 msgid "Powered by GIPHY"
 msgstr "Veikiama su „GIPHY“"
 
-#: src/components/compose.jsx:3384
+#: src/components/compose.jsx:3393
 msgid "Type to search GIFs"
 msgstr "Rašyk, kad ieškotum GIF"
 
-#: src/components/compose.jsx:3482
+#: src/components/compose.jsx:3491
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "Ankstesnis"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3509
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "Kitas"
 
-#: src/components/compose.jsx:3517
+#: src/components/compose.jsx:3526
 msgid "Error loading GIFs"
 msgstr "Klaida įkeliant GIF."
 
@@ -972,7 +972,7 @@ msgstr "Paskyros"
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
 #: src/pages/search.jsx:454
-#: src/pages/status.jsx:1298
+#: src/pages/status.jsx:1301
 msgid "Show more…"
 msgstr "Rodyti daugiau…"
 
@@ -1355,7 +1355,7 @@ msgstr "Paskyros…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:801
+#: src/pages/status.jsx:804
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "Prisijungti"
@@ -1545,8 +1545,8 @@ msgstr "Balsuoti"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1167
-#: src/pages/status.jsx:1190
+#: src/pages/status.jsx:1170
+#: src/pages/status.jsx:1193
 msgid "Refresh"
 msgstr "Atnaujinti"
 
@@ -2314,8 +2314,8 @@ msgstr "Nauji įrašai"
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:824
-#: src/pages/status.jsx:954
-#: src/pages/status.jsx:1327
+#: src/pages/status.jsx:957
+#: src/pages/status.jsx:1330
 msgid "Try again"
 msgstr "Bandyti dar kartą"
 
@@ -3555,84 +3555,85 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "Pastaba: tiesioginiai pranešimai veikia tik <0>vienai paskyrai</0>."
 
 #: src/pages/status.jsx:567
-#: src/pages/status.jsx:1097
+#: src/pages/status.jsx:1100
+msgctxt "noun"
 msgid "Post"
-msgstr "Skelbti"
+msgstr ""
 
-#: src/pages/status.jsx:788
+#: src/pages/status.jsx:791
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "Nesi prisijungęs (-usi). Sąveikos (atsakyti, pasidalinti ir t. t.) negalimos."
 
-#: src/pages/status.jsx:808
+#: src/pages/status.jsx:811
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Šis įrašas yra iš kito serverio (<0>{instance}</0>). Sąveikos (atsakyti, pasidalinti ir t. t.) negalimos."
 
-#: src/pages/status.jsx:836
+#: src/pages/status.jsx:839
 msgid "Error: {e}"
 msgstr "Klaida: {e}"
 
-#: src/pages/status.jsx:843
+#: src/pages/status.jsx:846
 msgid "Switch to my instance to enable interactions"
 msgstr "Perjungti į mano serverį, kad būtų įjungtos sąveikos"
 
-#: src/pages/status.jsx:945
+#: src/pages/status.jsx:948
 msgid "Unable to load replies."
 msgstr "Nepavyksta įkelti atsakymų."
 
-#: src/pages/status.jsx:1057
+#: src/pages/status.jsx:1060
 msgid "Back"
 msgstr "Atgal"
 
-#: src/pages/status.jsx:1088
+#: src/pages/status.jsx:1091
 msgid "Go to main post"
 msgstr "Eiti į pagrindinį įrašą"
 
-#: src/pages/status.jsx:1111
+#: src/pages/status.jsx:1114
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} įrašų aukščiau – eiti į viršų"
 
-#: src/pages/status.jsx:1154
-#: src/pages/status.jsx:1217
+#: src/pages/status.jsx:1157
+#: src/pages/status.jsx:1220
 msgid "Switch to Side Peek view"
 msgstr "Perjungti į šoninio žvilgsnio rodymą"
 
-#: src/pages/status.jsx:1218
+#: src/pages/status.jsx:1221
 msgid "Switch to Full view"
 msgstr "Perjungti į visą rodymą"
 
-#: src/pages/status.jsx:1236
+#: src/pages/status.jsx:1239
 msgid "Show all sensitive content"
 msgstr "Rodyti visą jautrų turinį"
 
-#: src/pages/status.jsx:1241
+#: src/pages/status.jsx:1244
 msgid "Experimental"
 msgstr "Eksperimentinis"
 
-#: src/pages/status.jsx:1250
+#: src/pages/status.jsx:1253
 msgid "Unable to switch"
 msgstr "Nepavyksta perjungti."
 
-#: src/pages/status.jsx:1257
+#: src/pages/status.jsx:1260
 msgid "Switch to post's instance ({0})"
 msgstr "Perjungti į įrašo serverį ({0})"
 
-#: src/pages/status.jsx:1260
+#: src/pages/status.jsx:1263
 msgid "Switch to post's instance"
 msgstr "Perjungti į įrašo serverį"
 
-#: src/pages/status.jsx:1318
+#: src/pages/status.jsx:1321
 msgid "Unable to load post"
 msgstr "Nepavyksta įkelti įrašo."
 
-#: src/pages/status.jsx:1435
+#: src/pages/status.jsx:1438
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# atsakymas} few {<0>{1}</0> atsakymai} many {<0>{1}</0> atsakymo} other {<0>{1}</0> atsakymų}}"
 
-#: src/pages/status.jsx:1453
+#: src/pages/status.jsx:1456
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# komentaras} few {<0>{0}</0> komentarai} many {<0>{0}</0> komentaro} other {<0>{0}</0> komentarų}}"
 
-#: src/pages/status.jsx:1475
+#: src/pages/status.jsx:1478
 msgid "View post with its replies"
 msgstr "Peržiūrėti įrašą su jo atsakymais"
 

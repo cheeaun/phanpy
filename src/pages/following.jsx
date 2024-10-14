@@ -17,7 +17,14 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
-  useTitle(title || t`Following`, path || '/following');
+  useTitle(
+    title ||
+      t({
+        id: 'following.title',
+        message: 'Following',
+      }),
+    path || '/following',
+  );
   const { masto, streaming, instance } = api();
   const snapStates = useSnapshot(states);
   const homeIterator = useRef();
@@ -131,7 +138,7 @@ function Following({ title, path, id, ...props }) {
 
   return (
     <Timeline
-      title={title || t`Following`}
+      title={title || t({ id: 'following.title', message: 'Following' })}
       id={id || 'following'}
       emptyText={t`Nothing to see here.`}
       errorText={t`Unable to load posts.`}

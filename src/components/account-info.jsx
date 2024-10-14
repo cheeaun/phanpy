@@ -413,7 +413,7 @@ function AccountInfo({
                   <span>██</span> <Trans>Followers</Trans>
                 </div>
                 <div>
-                  <span>██</span> <Trans>Following</Trans>
+                  <span>██</span> <Trans id="following.stats">Following</Trans>
                 </div>
                 <div>
                   <span>██</span> <Trans>Posts</Trans>
@@ -739,7 +739,10 @@ function AccountInfo({
                       // states.showAccount = false;
                       setTimeout(() => {
                         states.showGenericAccounts = {
-                          heading: t`Following`,
+                          heading: t({
+                            id: 'following.stats',
+                            message: 'Following',
+                          }),
                           fetchAccounts: fetchFollowing,
                           instance,
                           excludeRelationshipAttrs: isSelf ? ['following'] : [],
@@ -753,7 +756,7 @@ function AccountInfo({
                     <span title={followingCount}>
                       {shortenNumber(followingCount)}
                     </span>{' '}
-                    <Trans>Following</Trans>
+                    <Trans id="following.stats">Following</Trans>
                     <br />
                   </LinkOrDiv>
                   <LinkOrDiv

@@ -228,7 +228,7 @@ function Compose({
   const {
     statuses: {
       maxCharacters,
-      maxMediaAttachments,  // Beware: it can be undefined!
+      maxMediaAttachments, // Beware: it can be undefined!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
@@ -607,7 +607,10 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (supportedMimeTypes !== undefined && !supportedMimeTypes.includes(file.type)) {
+          if (
+            supportedMimeTypes !== undefined &&
+            !supportedMimeTypes.includes(file.type)
+          ) {
             unsupportedFiles.push(file);
           } else {
             files.push(file);
@@ -618,7 +621,9 @@ function Compose({
         alert(
           plural(unsupportedFiles.length, {
             one: `File ${unsupportedFiles[0].name} is not supported.`,
-            other: `Files ${lf.format(unsupportedFiles.map(f => f.name))} are not supported.`,
+            other: `Files ${lf.format(
+              unsupportedFiles.map((f) => f.name),
+            )} are not supported.`,
           }),
         );
       }
@@ -637,10 +642,10 @@ function Compose({
         e.stopPropagation();
         // Auto-cut-off files to avoid exceeding maxMediaAttachments
         let allowedFiles = files;
-        if(maxMediaAttachments !== undefined) {
+        if (maxMediaAttachments !== undefined) {
           const max = maxMediaAttachments - mediaAttachments.length;
           allowedFiles = allowedFiles.slice(0, max);
-          if(allowedFiles.length <= 0) {
+          if (allowedFiles.length <= 0) {
             alert(
               plural(maxMediaAttachments, {
                 one: 'You can only attach up to 1 file.',
@@ -1324,7 +1329,10 @@ function Compose({
                 <input
                   type="file"
                   accept={supportedMimeTypes?.join(',')}
-                  multiple={(maxMediaAttachments === undefined) || (maxMediaAttachments - mediaAttachments >= 2)}
+                  multiple={
+                    maxMediaAttachments === undefined ||
+                    maxMediaAttachments - mediaAttachments >= 2
+                  }
                   disabled={
                     uiState === 'loading' ||
                     mediaAttachments.length >= maxMediaAttachments ||
@@ -1416,7 +1424,8 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    (maxMediaAttachments !== undefined && mediaAttachments.length >= maxMediaAttachments) ||
+                    (maxMediaAttachments !== undefined &&
+                      mediaAttachments.length >= maxMediaAttachments) ||
                     !!poll
                   }
                   onClick={() => {

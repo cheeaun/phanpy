@@ -1094,7 +1094,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               </>
             ) : (
               <>
-                Post{' '}
+                <Trans>Post</Trans>{' '}
                 <button
                   type="button"
                   class="ancestors-indicator light small"

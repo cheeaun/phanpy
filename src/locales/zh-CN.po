@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-14 11:48\n"
+"PO-Revision-Date: 2024-10-14 13:07\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -552,7 +552,7 @@ msgstr "你有尚未保存的更改。是否丢弃这条嘟文？"
 
 #: src/components/compose.jsx:622
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
-msgstr ""
+msgstr "{0, plural, other {文件 {2} 的类型不受支持。}}"
 
 #: src/components/compose.jsx:632
 #: src/components/compose.jsx:650
@@ -3554,11 +3554,11 @@ msgstr "本次登录未授予通知推送权限。你需要<0>再次<1>登录</1
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 
+#. js-lingui-explicit-id
 #: src/pages/status.jsx:567
 #: src/pages/status.jsx:1100
-msgctxt "noun"
-msgid "Post"
-msgstr ""
+msgid "post.title"
+msgstr "post.title"
 
 #: src/pages/status.jsx:791
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."

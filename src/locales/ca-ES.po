@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-14 11:48\n"
+"PO-Revision-Date: 2024-10-14 13:07\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -552,7 +552,7 @@ msgstr "Hi ha canvis sense desar. Voleu descartar la publicació?"
 
 #: src/components/compose.jsx:622
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
-msgstr ""
+msgstr "{0, plural, one {{1} fitxer no és compatible.} other {{2} fitxers no són compatibles.}}"
 
 #: src/components/compose.jsx:632
 #: src/components/compose.jsx:650
@@ -3556,11 +3556,11 @@ msgstr "No s'ha concedit el permís d'enviar notificacions des del darrer inici 
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: les notificacions només funcionen per a <0>un compte</0>."
 
+#. js-lingui-explicit-id
 #: src/pages/status.jsx:567
 #: src/pages/status.jsx:1100
-msgctxt "noun"
-msgid "Post"
-msgstr ""
+msgid "post.title"
+msgstr "publicació"
 
 #: src/pages/status.jsx:791
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."

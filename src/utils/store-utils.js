@@ -122,7 +122,6 @@ function getInstanceConfiguration(instance) {
     configuration,
     maxMediaAttachments,
     maxTootChars,
-    pleroma,
     pollLimits,
   } = instance;
 
@@ -130,6 +129,7 @@ function getInstanceConfiguration(instance) {
   if (maxMediaAttachments) {
     statuses.maxMediaAttachments ??= maxMediaAttachments;
   }
+  
   if (maxTootChars) {
     statuses.maxCharacters ??= maxTootChars;
   }

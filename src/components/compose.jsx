@@ -1,7 +1,7 @@
 import './compose.css';
 import '@github/text-expander-element';
 
-import { msg, plural, t, Trans } from '@lingui/macro';
+import { plural, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
@@ -45,7 +45,6 @@ import store from '../utils/store';
 import {
   getCurrentAccount,
   getCurrentAccountNS,
-  getCurrentInstance,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
@@ -73,6 +72,14 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   };
   return acc;
 }, {});
+
+const contentTypesMap = {
+  'text/plain': { icon: 'font', text: t`Plain text` },
+  'text/html': { icon: 'brackets-angle', text: t`HTML` },
+  'text/markdown': { icon: 'asterisk', text: t`Markdown` },
+  'text/bbcode': { icon: 'brackets', text: t`BBCode` },
+  'text/x.misskeymarkdown': { icon: 'currency-dollar-2', text: t`MFM` },
+};
 
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
@@ -225,12 +232,13 @@ function Compose({
 
   const {
     statuses: {
+      supportedMimeTypes: supportedStatusMimeTypes = ['text/plain'],
       maxCharacters,
       maxMediaAttachments,
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes = [],
+      supportedMimeTypes: supportedMediaMimeTypes = undefined,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -245,9 +253,12 @@ function Compose({
     } = {},
   } = configuration || {};
 
+  const defaultContentType = supportedStatusMimeTypes[0];
+
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
+  const [contentType, setContentType] = useState(defaultContentType);
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
@@ -600,14 +611,30 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
+      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedMimeTypes.includes(file.type)) {
+          if (
+            supportedMediaMimeTypes !== undefined &&
+            !supportedMediaMimeTypes.includes(file.type)
+          ) {
+            unsupportedFiles.push(file);
+          } else {
             files.push(file);
           }
         }
+      }
+      if (unsupportedFiles.length > 0) {
+        alert(
+          plural(unsupportedFiles.length, {
+            one: `File ${unsupportedFiles[0].name} is not supported.`,
+            other: `Files ${lf.format(
+              unsupportedFiles.map((f) => f.name),
+            )} are not supported.`,
+          }),
+        );
       }
       if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
         alert(
@@ -623,16 +650,19 @@ function Compose({
         e.preventDefault();
         e.stopPropagation();
         // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        const max = maxMediaAttachments - mediaAttachments.length;
-        const allowedFiles = files.slice(0, max);
-        if (allowedFiles.length <= 0) {
-          alert(
-            plural(maxMediaAttachments, {
-              one: 'You can only attach up to 1 file.',
-              other: 'You can only attach up to # files.',
-            }),
-          );
-          return;
+        let allowedFiles = files;
+        if (maxMediaAttachments !== undefined) {
+          const max = maxMediaAttachments - mediaAttachments.length;
+          allowedFiles = allowedFiles.slice(0, max);
+          if (allowedFiles.length <= 0) {
+            alert(
+              plural(maxMediaAttachments, {
+                one: 'You can only attach up to 1 file.',
+                other: 'You can only attach up to # files.',
+              }),
+            );
+            return;
+          }
         }
         const mediaFiles = allowedFiles.map((file) => ({
           file,
@@ -1061,8 +1091,15 @@ function Compose({
                   );
                 } else if (!editStatus) {
                   params.visibility = visibility;
+                  if (params.visibility === 'list') {
+                    const list_id = prompt('Target list ID?');
+                    params.visibility = `list:${list_id}`;
+                  }
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
+                }
+                if (supportedStatusMimeTypes.length > 1) {
+                  params.content_type = contentType;
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1150,6 +1187,37 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
+            {supportedStatusMimeTypes.length > 1 && (
+              <>
+                <label
+                  class={`toolbar-button ${
+                    contentType !== defaultContentType && !sensitive
+                      ? 'show-field'
+                      : ''
+                  } ${contentType !== defaultContentType ? 'highlight' : ''}`}
+                >
+                  <Icon
+                    icon={contentTypesMap[contentType].icon ?? 'asterisk'}
+                    alt={visibility}
+                  />
+                  <select
+                    name={'contentType'}
+                    value={contentType}
+                    onChange={(e) => {
+                      setContentType(e.target.value);
+                    }}
+                    disabled={uiState === 'loading'}
+                    dir={'auto'}
+                  >
+                    {supportedStatusMimeTypes.map((mime) => (
+                      <option value={mime}>
+                        {contentTypesMap[mime].text ?? mime}
+                      </option>
+                    ))}
+                  </select>
+                </label>{' '}
+              </>
+            )}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1181,6 +1249,12 @@ function Compose({
                 <option value="private">
                   <Trans>Followers only</Trans>
                 </option>
+                {(supports('@pleroma/list-visibility-post') ||
+                  supports('@akkoma/list-visibility-post')) && (
+                  <option value="list">
+                    <Trans>List only</Trans>
+                  </option>
+                )}
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>
@@ -1307,7 +1381,7 @@ function Compose({
               <label class="toolbar-button">
                 <input
                   type="file"
-                  accept={supportedMimeTypes.join(',')}
+                  accept={supportedMediaMimeTypes.join(',')}
                   multiple={mediaAttachments.length < maxMediaAttachments - 1}
                   disabled={
                     uiState === 'loading' ||
@@ -1400,7 +1474,8 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    mediaAttachments.length >= maxMediaAttachments ||
+                    (maxMediaAttachments !== undefined &&
+                      mediaAttachments.length >= maxMediaAttachments) ||
                     !!poll
                   }
                   onClick={() => {

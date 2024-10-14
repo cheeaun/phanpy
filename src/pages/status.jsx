@@ -564,7 +564,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   useTitle(
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
-      : t`Post`,
+      : t({
+          message: 'Post',
+          context: 'noun',
+        }),
     '/:instance?/s/:id',
   );
 
@@ -1094,7 +1097,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               </>
             ) : (
               <>
-                <Trans>Post</Trans>{' '}
+                <Trans context="noun">Post</Trans>{' '}
                 <button
                   type="button"
                   class="ancestors-indicator light small"

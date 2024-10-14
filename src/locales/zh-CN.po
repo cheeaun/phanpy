@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-14 13:07\n"
+"PO-Revision-Date: 2024-10-14 15:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -47,24 +47,17 @@ msgid "Mutual"
 msgstr "互相关注"
 
 #: src/components/account-block.jsx:182
-#: src/components/account-info.jsx:1677
+#: src/components/account-info.jsx:1680
 msgid "Requested"
 msgstr "已请求"
 
 #: src/components/account-block.jsx:186
-#: src/components/account-info.jsx:416
-#: src/components/account-info.jsx:742
-#: src/components/account-info.jsx:756
-#: src/components/account-info.jsx:1668
-#: src/components/nav-menu.jsx:193
-#: src/components/shortcuts-settings.jsx:137
-#: src/pages/following.jsx:20
-#: src/pages/following.jsx:134
+#: src/components/account-info.jsx:1671
 msgid "Following"
 msgstr "正在关注"
 
 #: src/components/account-block.jsx:190
-#: src/components/account-info.jsx:1059
+#: src/components/account-info.jsx:1062
 msgid "Follows you"
 msgstr "关注了你"
 
@@ -78,7 +71,7 @@ msgid "Verified"
 msgstr "已认证"
 
 #: src/components/account-block.jsx:222
-#: src/components/account-info.jsx:777
+#: src/components/account-info.jsx:780
 msgid "Joined <0>{0}</0>"
 msgstr "加入于 <0>{0}</0>"
 
@@ -100,8 +93,15 @@ msgstr "转到账户页"
 msgid "Followers"
 msgstr "粉丝"
 
+#. js-lingui-explicit-id
+#: src/components/account-info.jsx:416
+#: src/components/account-info.jsx:742
+#: src/components/account-info.jsx:759
+msgid "following.stats"
+msgstr ""
+
 #: src/components/account-info.jsx:419
-#: src/components/account-info.jsx:773
+#: src/components/account-info.jsx:776
 #: src/pages/account-statuses.jsx:484
 #: src/pages/search.jsx:237
 #: src/pages/search.jsx:384
@@ -109,7 +109,7 @@ msgid "Posts"
 msgstr "嘟文"
 
 #: src/components/account-info.jsx:427
-#: src/components/account-info.jsx:1115
+#: src/components/account-info.jsx:1118
 #: src/components/compose.jsx:2488
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
@@ -133,17 +133,17 @@ msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> 已声明 Ta 现在的新账户是："
 
 #: src/components/account-info.jsx:584
-#: src/components/account-info.jsx:1273
+#: src/components/account-info.jsx:1276
 msgid "Handle copied"
 msgstr "已复制用户名"
 
 #: src/components/account-info.jsx:587
-#: src/components/account-info.jsx:1276
+#: src/components/account-info.jsx:1279
 msgid "Unable to copy handle"
 msgstr "无法复制用户名"
 
 #: src/components/account-info.jsx:593
-#: src/components/account-info.jsx:1282
+#: src/components/account-info.jsx:1285
 msgid "Copy handle"
 msgstr "复制用户名"
 
@@ -164,28 +164,28 @@ msgid "In Memoriam"
 msgstr "悼念账户"
 
 #: src/components/account-info.jsx:709
-#: src/components/account-info.jsx:747
+#: src/components/account-info.jsx:750
 msgid "This user has chosen to not make this information available."
 msgstr "该用户选择不提供此信息。"
 
-#: src/components/account-info.jsx:802
+#: src/components/account-info.jsx:805
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} 为原创嘟文，{1} 为回复，{2} 为转嘟"
 
-#: src/components/account-info.jsx:818
+#: src/components/account-info.jsx:821
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, other {{3, plural, other {最近 {6} 天发了 {5} 条嘟文}}}}"
 
-#: src/components/account-info.jsx:831
+#: src/components/account-info.jsx:834
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, other {近几年的 {1} 条嘟文}}"
 
-#: src/components/account-info.jsx:855
+#: src/components/account-info.jsx:858
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr "原创"
 
-#: src/components/account-info.jsx:859
+#: src/components/account-info.jsx:862
 #: src/components/status.jsx:2233
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
@@ -195,7 +195,7 @@ msgstr "原创"
 msgid "Replies"
 msgstr "回复"
 
-#: src/components/account-info.jsx:863
+#: src/components/account-info.jsx:866
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
@@ -203,207 +203,207 @@ msgstr "回复"
 msgid "Boosts"
 msgstr "转嘟"
 
-#: src/components/account-info.jsx:869
+#: src/components/account-info.jsx:872
 msgid "Post stats unavailable."
 msgstr "嘟文统计不可用"
 
-#: src/components/account-info.jsx:900
+#: src/components/account-info.jsx:903
 msgid "View post stats"
 msgstr "查看嘟文统计"
 
-#: src/components/account-info.jsx:1063
+#: src/components/account-info.jsx:1066
 msgid "Last post: <0>{0}</0>"
 msgstr "上次发嘟: <0>{0}</0>"
 
-#: src/components/account-info.jsx:1077
+#: src/components/account-info.jsx:1080
 msgid "Muted"
 msgstr "已静音"
 
-#: src/components/account-info.jsx:1082
+#: src/components/account-info.jsx:1085
 msgid "Blocked"
 msgstr "已屏蔽"
 
-#: src/components/account-info.jsx:1091
+#: src/components/account-info.jsx:1094
 msgid "Private note"
 msgstr "私人备注"
 
-#: src/components/account-info.jsx:1148
+#: src/components/account-info.jsx:1151
 msgid "Mention <0>@{username}</0>"
 msgstr "提及 <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1160
+#: src/components/account-info.jsx:1163
 msgid "Translate bio"
 msgstr "翻译简介"
 
-#: src/components/account-info.jsx:1171
+#: src/components/account-info.jsx:1174
 msgid "Edit private note"
 msgstr "编辑私人备注"
 
-#: src/components/account-info.jsx:1171
+#: src/components/account-info.jsx:1174
 msgid "Add private note"
 msgstr "添加私人备注"
 
-#: src/components/account-info.jsx:1191
+#: src/components/account-info.jsx:1194
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "已启用 @{username} 的嘟文通知。"
 
-#: src/components/account-info.jsx:1192
+#: src/components/account-info.jsx:1195
 msgid "Notifications disabled for @{username}'s posts."
 msgstr "已停用 @{username} 的发嘟通知。"
 
-#: src/components/account-info.jsx:1204
+#: src/components/account-info.jsx:1207
 msgid "Disable notifications"
 msgstr "停用通知"
 
-#: src/components/account-info.jsx:1205
+#: src/components/account-info.jsx:1208
 msgid "Enable notifications"
 msgstr "启用通知"
 
-#: src/components/account-info.jsx:1222
+#: src/components/account-info.jsx:1225
 msgid "Boosts from @{username} enabled."
 msgstr "将显示 @{username} 的转嘟。"
 
-#: src/components/account-info.jsx:1223
+#: src/components/account-info.jsx:1226
 msgid "Boosts from @{username} disabled."
 msgstr "将不再显示 @{username} 的转嘟。"
 
-#: src/components/account-info.jsx:1234
+#: src/components/account-info.jsx:1237
 msgid "Disable boosts"
 msgstr "不显示转嘟"
 
-#: src/components/account-info.jsx:1234
+#: src/components/account-info.jsx:1237
 msgid "Enable boosts"
 msgstr "显示转嘟"
 
-#: src/components/account-info.jsx:1250
-#: src/components/account-info.jsx:1260
-#: src/components/account-info.jsx:1861
+#: src/components/account-info.jsx:1253
+#: src/components/account-info.jsx:1263
+#: src/components/account-info.jsx:1864
 msgid "Add/Remove from Lists"
 msgstr "加入/移出列表"
 
-#: src/components/account-info.jsx:1299
+#: src/components/account-info.jsx:1302
 #: src/components/status.jsx:1143
 msgid "Link copied"
 msgstr "已复制链接"
 
-#: src/components/account-info.jsx:1302
+#: src/components/account-info.jsx:1305
 #: src/components/status.jsx:1146
 msgid "Unable to copy link"
 msgstr "无法复制链接"
 
-#: src/components/account-info.jsx:1308
-#: src/components/shortcuts-settings.jsx:1056
+#: src/components/account-info.jsx:1311
+#: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1152
 #: src/components/status.jsx:3219
 msgid "Copy"
 msgstr "复制"
 
-#: src/components/account-info.jsx:1323
-#: src/components/shortcuts-settings.jsx:1074
+#: src/components/account-info.jsx:1326
+#: src/components/shortcuts-settings.jsx:1077
 #: src/components/status.jsx:1168
 msgid "Sharing doesn't seem to work."
 msgstr "分享似乎无法正常工作。"
 
-#: src/components/account-info.jsx:1329
+#: src/components/account-info.jsx:1332
 #: src/components/status.jsx:1174
 msgid "Share…"
 msgstr "分享…"
 
-#: src/components/account-info.jsx:1349
+#: src/components/account-info.jsx:1352
 msgid "Unmuted @{username}"
 msgstr "已取消静音 @{username}"
 
-#: src/components/account-info.jsx:1361
+#: src/components/account-info.jsx:1364
 msgid "Unmute <0>@{username}</0>"
 msgstr "取消静音 <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1377
+#: src/components/account-info.jsx:1380
 msgid "Mute <0>@{username}</0>…"
 msgstr "静音 <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1409
+#: src/components/account-info.jsx:1412
 msgid "Muted @{username} for {0}"
 msgstr "已静音 @{username} {0}"
 
-#: src/components/account-info.jsx:1421
+#: src/components/account-info.jsx:1424
 msgid "Unable to mute @{username}"
 msgstr "无法静音 @{username}"
 
-#: src/components/account-info.jsx:1442
+#: src/components/account-info.jsx:1445
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "是否将 <0>@{username}</0> 从粉丝中移除？"
 
-#: src/components/account-info.jsx:1462
+#: src/components/account-info.jsx:1465
 msgid "@{username} removed from followers"
 msgstr "@{username} 已被从粉丝中移除"
 
-#: src/components/account-info.jsx:1474
+#: src/components/account-info.jsx:1477
 msgid "Remove follower…"
 msgstr "移除粉丝…"
 
-#: src/components/account-info.jsx:1485
+#: src/components/account-info.jsx:1488
 msgid "Block <0>@{username}</0>?"
 msgstr "是否屏蔽 <0>@{username}</0>？"
 
-#: src/components/account-info.jsx:1509
+#: src/components/account-info.jsx:1512
 msgid "Unblocked @{username}"
 msgstr "已解除屏蔽 @{username}"
 
-#: src/components/account-info.jsx:1517
+#: src/components/account-info.jsx:1520
 msgid "Blocked @{username}"
 msgstr "已屏蔽 @{username}"
 
-#: src/components/account-info.jsx:1525
+#: src/components/account-info.jsx:1528
 msgid "Unable to unblock @{username}"
 msgstr "无法解除屏蔽 @{username}"
 
-#: src/components/account-info.jsx:1527
+#: src/components/account-info.jsx:1530
 msgid "Unable to block @{username}"
 msgstr "无法屏蔽 @{username}"
 
-#: src/components/account-info.jsx:1537
+#: src/components/account-info.jsx:1540
 msgid "Unblock <0>@{username}</0>"
 msgstr "取消屏蔽 <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1546
+#: src/components/account-info.jsx:1549
 msgid "Block <0>@{username}</0>…"
 msgstr "屏蔽 <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1563
+#: src/components/account-info.jsx:1566
 msgid "Report <0>@{username}</0>…"
 msgstr "举报 <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1583
-#: src/components/account-info.jsx:2094
+#: src/components/account-info.jsx:1586
+#: src/components/account-info.jsx:2097
 msgid "Edit profile"
 msgstr "编辑个人资料"
 
-#: src/components/account-info.jsx:1619
+#: src/components/account-info.jsx:1622
 msgid "Withdraw follow request?"
 msgstr "是否撤回关注请求？"
 
-#: src/components/account-info.jsx:1620
+#: src/components/account-info.jsx:1623
 msgid "Unfollow @{0}?"
 msgstr "是否取关 @{0} ？"
 
-#: src/components/account-info.jsx:1671
+#: src/components/account-info.jsx:1674
 msgid "Unfollow…"
 msgstr "取关…"
 
-#: src/components/account-info.jsx:1680
+#: src/components/account-info.jsx:1683
 msgid "Withdraw…"
 msgstr "撤回…"
 
-#: src/components/account-info.jsx:1687
-#: src/components/account-info.jsx:1691
+#: src/components/account-info.jsx:1690
+#: src/components/account-info.jsx:1694
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
 msgstr "关注"
 
-#: src/components/account-info.jsx:1802
-#: src/components/account-info.jsx:1856
-#: src/components/account-info.jsx:1989
-#: src/components/account-info.jsx:2089
+#: src/components/account-info.jsx:1805
+#: src/components/account-info.jsx:1859
+#: src/components/account-info.jsx:1992
+#: src/components/account-info.jsx:2092
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:818
 #: src/components/compose.jsx:2444
@@ -419,9 +419,9 @@ msgstr "关注"
 #: src/components/media-modal.jsx:247
 #: src/components/notification-service.jsx:156
 #: src/components/report-modal.jsx:75
-#: src/components/shortcuts-settings.jsx:227
-#: src/components/shortcuts-settings.jsx:580
-#: src/components/shortcuts-settings.jsx:780
+#: src/components/shortcuts-settings.jsx:230
+#: src/components/shortcuts-settings.jsx:583
+#: src/components/shortcuts-settings.jsx:783
 #: src/components/status.jsx:2944
 #: src/components/status.jsx:3183
 #: src/components/status.jsx:3681
@@ -436,88 +436,88 @@ msgstr "关注"
 msgid "Close"
 msgstr "关闭"
 
-#: src/components/account-info.jsx:1807
+#: src/components/account-info.jsx:1810
 msgid "Translated Bio"
 msgstr "简介(已翻译)"
 
-#: src/components/account-info.jsx:1901
+#: src/components/account-info.jsx:1904
 msgid "Unable to remove from list."
 msgstr "无法从列表中移除。"
 
-#: src/components/account-info.jsx:1902
+#: src/components/account-info.jsx:1905
 msgid "Unable to add to list."
 msgstr "无法添加到列表。"
 
-#: src/components/account-info.jsx:1921
+#: src/components/account-info.jsx:1924
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
 msgstr "无法加载列表。"
 
-#: src/components/account-info.jsx:1925
+#: src/components/account-info.jsx:1928
 msgid "No lists."
 msgstr "暂无列表。"
 
-#: src/components/account-info.jsx:1936
+#: src/components/account-info.jsx:1939
 #: src/components/list-add-edit.jsx:37
 #: src/pages/lists.jsx:58
 msgid "New list"
 msgstr "新建列表"
 
-#: src/components/account-info.jsx:1994
+#: src/components/account-info.jsx:1997
 msgid "Private note about <0>@{0}</0>"
 msgstr "对 <0>@{0}</0> 的私人备注"
 
-#: src/components/account-info.jsx:2024
+#: src/components/account-info.jsx:2027
 msgid "Unable to update private note."
 msgstr "无法更新私人备注。"
 
-#: src/components/account-info.jsx:2047
-#: src/components/account-info.jsx:2217
+#: src/components/account-info.jsx:2050
+#: src/components/account-info.jsx:2220
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/account-info.jsx:2052
+#: src/components/account-info.jsx:2055
 msgid "Save & close"
 msgstr "保存并关闭"
 
-#: src/components/account-info.jsx:2145
+#: src/components/account-info.jsx:2148
 msgid "Unable to update profile."
 msgstr "无法更新个人资料。"
 
-#: src/components/account-info.jsx:2152
+#: src/components/account-info.jsx:2155
 #: src/components/list-add-edit.jsx:102
 msgid "Name"
 msgstr "名称"
 
-#: src/components/account-info.jsx:2165
+#: src/components/account-info.jsx:2168
 msgid "Bio"
 msgstr "简介"
 
-#: src/components/account-info.jsx:2178
+#: src/components/account-info.jsx:2181
 msgid "Extra fields"
 msgstr "附加信息"
 
-#: src/components/account-info.jsx:2184
+#: src/components/account-info.jsx:2187
 msgid "Label"
 msgstr "名称"
 
-#: src/components/account-info.jsx:2187
+#: src/components/account-info.jsx:2190
 msgid "Content"
 msgstr "内容"
 
-#: src/components/account-info.jsx:2220
+#: src/components/account-info.jsx:2223
 #: src/components/list-add-edit.jsx:147
-#: src/components/shortcuts-settings.jsx:712
+#: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
 #: src/pages/notifications.jsx:934
 msgid "Save"
 msgstr "保存"
 
-#: src/components/account-info.jsx:2273
+#: src/components/account-info.jsx:2276
 msgid "username"
 msgstr "用户名"
 
-#: src/components/account-info.jsx:2277
+#: src/components/account-info.jsx:2280
 msgid "server domain name"
 msgstr "实例域名"
 
@@ -531,7 +531,7 @@ msgstr "已启用文字打码模式"
 
 #: src/components/columns.jsx:19
 #: src/components/nav-menu.jsx:184
-#: src/components/shortcuts-settings.jsx:137
+#: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
@@ -631,7 +631,7 @@ msgstr "公开"
 
 #: src/components/compose.jsx:1196
 #: src/components/nav-menu.jsx:386
-#: src/components/shortcuts-settings.jsx:162
+#: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:94
 msgid "Local"
 msgstr "本站"
@@ -742,7 +742,7 @@ msgstr "帧率过高。上传将有可能出现问题。"
 
 #: src/components/compose.jsx:2408
 #: src/components/compose.jsx:2658
-#: src/components/shortcuts-settings.jsx:723
+#: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
@@ -817,7 +817,7 @@ msgid "Search accounts"
 msgstr "搜索账户"
 
 #: src/components/compose.jsx:2975
-#: src/components/shortcuts-settings.jsx:712
+#: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "添加"
@@ -1075,7 +1075,7 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> 或 <2>⌘</2> + <3>Enter</3>"
 #: src/components/nav-menu.jsx:374
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
-#: src/components/shortcuts-settings.jsx:176
+#: src/components/shortcuts-settings.jsx:179
 #: src/pages/search.jsx:39
 #: src/pages/search.jsx:209
 msgid "Search"
@@ -1249,6 +1249,14 @@ msgstr "是否现在刷新页面以更新？"
 msgid "New update available…"
 msgstr "有更新可用…"
 
+#. js-lingui-explicit-id
+#: src/components/nav-menu.jsx:193
+#: src/components/shortcuts-settings.jsx:140
+#: src/pages/following.jsx:22
+#: src/pages/following.jsx:141
+msgid "following.title"
+msgstr ""
+
 #: src/components/nav-menu.jsx:200
 #: src/pages/catchup.jsx:871
 msgid "Catch-up"
@@ -1256,7 +1264,7 @@ msgstr "补看"
 
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
-#: src/components/shortcuts-settings.jsx:143
+#: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
@@ -1267,7 +1275,7 @@ msgstr "提及"
 
 #: src/components/nav-menu.jsx:214
 #: src/components/shortcuts-settings.jsx:49
-#: src/components/shortcuts-settings.jsx:149
+#: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:84
 #: src/pages/home.jsx:184
@@ -1287,7 +1295,7 @@ msgstr "个人资料"
 #: src/components/nav-menu.jsx:241
 #: src/components/nav-menu.jsx:268
 #: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:155
+#: src/components/shortcuts-settings.jsx:158
 #: src/pages/list.jsx:126
 #: src/pages/lists.jsx:16
 #: src/pages/lists.jsx:50
@@ -1302,7 +1310,7 @@ msgstr "全部列表"
 
 #: src/components/nav-menu.jsx:276
 #: src/components/shortcuts-settings.jsx:54
-#: src/components/shortcuts-settings.jsx:192
+#: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:11
 #: src/pages/bookmarks.jsx:23
 msgid "Bookmarks"
@@ -1310,7 +1318,7 @@ msgstr "收藏夹"
 
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
-#: src/components/shortcuts-settings.jsx:198
+#: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1446
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
@@ -1362,13 +1370,13 @@ msgstr "登录"
 
 #: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
-#: src/components/shortcuts-settings.jsx:169
+#: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:441
 msgid "Trending"
 msgstr "热门"
 
 #: src/components/nav-menu.jsx:392
-#: src/components/shortcuts-settings.jsx:162
+#: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr "跨站"
 
@@ -1776,239 +1784,239 @@ msgstr "例如:像素艺术 (最多 5 个，用空格分隔)"
 msgid "Media only"
 msgstr "仅媒体"
 
-#: src/components/shortcuts-settings.jsx:232
+#: src/components/shortcuts-settings.jsx:235
 #: src/components/shortcuts.jsx:186
 msgid "Shortcuts"
 msgstr "快捷方式"
 
-#: src/components/shortcuts-settings.jsx:240
+#: src/components/shortcuts-settings.jsx:243
 msgid "beta"
 msgstr "beta"
 
-#: src/components/shortcuts-settings.jsx:246
+#: src/components/shortcuts-settings.jsx:249
 msgid "Specify a list of shortcuts that'll appear as:"
 msgstr "指定一组快捷方式，显示样式为:"
 
-#: src/components/shortcuts-settings.jsx:252
+#: src/components/shortcuts-settings.jsx:255
 msgid "Floating button"
 msgstr "悬浮按钮"
 
-#: src/components/shortcuts-settings.jsx:257
+#: src/components/shortcuts-settings.jsx:260
 msgid "Tab/Menu bar"
 msgstr "标签/菜单栏"
 
-#: src/components/shortcuts-settings.jsx:262
+#: src/components/shortcuts-settings.jsx:265
 msgid "Multi-column"
 msgstr "多栏"
 
-#: src/components/shortcuts-settings.jsx:329
+#: src/components/shortcuts-settings.jsx:332
 msgid "Not available in current view mode"
 msgstr "在当前视图模式下不可用"
 
-#: src/components/shortcuts-settings.jsx:348
+#: src/components/shortcuts-settings.jsx:351
 msgid "Move up"
 msgstr "向上移动"
 
-#: src/components/shortcuts-settings.jsx:364
+#: src/components/shortcuts-settings.jsx:367
 msgid "Move down"
 msgstr "向下移动"
 
-#: src/components/shortcuts-settings.jsx:376
+#: src/components/shortcuts-settings.jsx:379
 #: src/components/status.jsx:1280
 #: src/pages/list.jsx:170
 msgid "Edit"
 msgstr "编辑"
 
-#: src/components/shortcuts-settings.jsx:397
+#: src/components/shortcuts-settings.jsx:400
 msgid "Add more than one shortcut/column to make this work."
 msgstr "需要添加一个以上快捷方式/栏以使其正常工作。"
 
-#: src/components/shortcuts-settings.jsx:408
+#: src/components/shortcuts-settings.jsx:411
 msgid "No columns yet. Tap on the Add column button."
 msgstr "尚未添加任何栏。点击以添加栏。"
 
-#: src/components/shortcuts-settings.jsx:409
+#: src/components/shortcuts-settings.jsx:412
 msgid "No shortcuts yet. Tap on the Add shortcut button."
 msgstr "尚未添加任何快捷方式。点击以添加快捷方式。"
 
-#: src/components/shortcuts-settings.jsx:412
+#: src/components/shortcuts-settings.jsx:415
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
 msgstr "不确定要添加哪些？<0/>可以先尝试添加<1>主页 / 关注和通知</1>。"
 
-#: src/components/shortcuts-settings.jsx:440
+#: src/components/shortcuts-settings.jsx:443
 msgid "Max {SHORTCUTS_LIMIT} columns"
 msgstr "最多 {SHORTCUTS_LIMIT} 栏"
 
-#: src/components/shortcuts-settings.jsx:441
+#: src/components/shortcuts-settings.jsx:444
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "最多 {SHORTCUTS_LIMIT} 个快捷方式"
 
-#: src/components/shortcuts-settings.jsx:455
+#: src/components/shortcuts-settings.jsx:458
 msgid "Import/export"
 msgstr "导入/导出"
 
-#: src/components/shortcuts-settings.jsx:465
+#: src/components/shortcuts-settings.jsx:468
 msgid "Add column…"
 msgstr "添加栏…"
 
-#: src/components/shortcuts-settings.jsx:466
+#: src/components/shortcuts-settings.jsx:469
 msgid "Add shortcut…"
 msgstr "添加快捷方式…"
 
-#: src/components/shortcuts-settings.jsx:513
+#: src/components/shortcuts-settings.jsx:516
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
 msgstr "特定的某个列表是可选的。但在多栏模式下，必须添加列表，否则对应的栏将不会显示。"
 
-#: src/components/shortcuts-settings.jsx:514
+#: src/components/shortcuts-settings.jsx:517
 msgid "For multi-column mode, search term is required, else the column will not be shown."
 msgstr "在多栏模式下，搜索关键词是必须的，否则对应的栏将不会显示。"
 
-#: src/components/shortcuts-settings.jsx:515
+#: src/components/shortcuts-settings.jsx:518
 msgid "Multiple hashtags are supported. Space-separated."
 msgstr "支持添加多个话题标签。以空格分隔。"
 
-#: src/components/shortcuts-settings.jsx:584
+#: src/components/shortcuts-settings.jsx:587
 msgid "Edit shortcut"
 msgstr "编辑快捷方式"
 
-#: src/components/shortcuts-settings.jsx:584
+#: src/components/shortcuts-settings.jsx:587
 msgid "Add shortcut"
 msgstr "添加快捷方式"
 
-#: src/components/shortcuts-settings.jsx:620
+#: src/components/shortcuts-settings.jsx:623
 msgid "Timeline"
 msgstr "时间线"
 
-#: src/components/shortcuts-settings.jsx:646
+#: src/components/shortcuts-settings.jsx:649
 msgid "List"
 msgstr "列表"
 
-#: src/components/shortcuts-settings.jsx:785
+#: src/components/shortcuts-settings.jsx:788
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr "导入/导出 <0>快捷方式</0>"
 
-#: src/components/shortcuts-settings.jsx:795
+#: src/components/shortcuts-settings.jsx:798
 msgid "Import"
 msgstr "导入"
 
-#: src/components/shortcuts-settings.jsx:803
+#: src/components/shortcuts-settings.jsx:806
 msgid "Paste shortcuts here"
 msgstr "在此粘贴快捷方式配置"
 
-#: src/components/shortcuts-settings.jsx:819
+#: src/components/shortcuts-settings.jsx:822
 msgid "Downloading saved shortcuts from instance server…"
 msgstr "从实例服务器下载保存的快捷方式…"
 
-#: src/components/shortcuts-settings.jsx:848
+#: src/components/shortcuts-settings.jsx:851
 msgid "Unable to download shortcuts"
 msgstr "无法下载快捷方式"
 
-#: src/components/shortcuts-settings.jsx:851
+#: src/components/shortcuts-settings.jsx:854
 msgid "Download shortcuts from instance server"
 msgstr "从实例服务器下载快捷方式"
 
-#: src/components/shortcuts-settings.jsx:909
+#: src/components/shortcuts-settings.jsx:912
 msgid "* Exists in current shortcuts"
 msgstr "* 已存在于当前快捷方式中"
 
-#: src/components/shortcuts-settings.jsx:914
+#: src/components/shortcuts-settings.jsx:917
 msgid "List may not work if it's from a different account."
 msgstr "如果列表来自不同的账户，则可能无法使用。"
 
-#: src/components/shortcuts-settings.jsx:924
+#: src/components/shortcuts-settings.jsx:927
 msgid "Invalid settings format"
 msgstr "设置格式非法"
 
-#: src/components/shortcuts-settings.jsx:932
+#: src/components/shortcuts-settings.jsx:935
 msgid "Append to current shortcuts?"
 msgstr "是否追加到当前快捷方式？"
 
-#: src/components/shortcuts-settings.jsx:935
+#: src/components/shortcuts-settings.jsx:938
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
 msgstr "只有不存在于当前快捷方式中的快捷方式才会被追加。"
 
-#: src/components/shortcuts-settings.jsx:957
+#: src/components/shortcuts-settings.jsx:960
 msgid "No new shortcuts to import"
 msgstr "没有新的快捷方式可供导入"
 
-#: src/components/shortcuts-settings.jsx:972
+#: src/components/shortcuts-settings.jsx:975
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
 msgstr "已导入快捷方式。但总数超出最大限制 {SHORTCUTS_LIMIT}，因此超出的部分未被导入。"
 
-#: src/components/shortcuts-settings.jsx:973
-#: src/components/shortcuts-settings.jsx:997
+#: src/components/shortcuts-settings.jsx:976
+#: src/components/shortcuts-settings.jsx:1000
 msgid "Shortcuts imported"
 msgstr "已导入快捷方式"
 
-#: src/components/shortcuts-settings.jsx:983
+#: src/components/shortcuts-settings.jsx:986
 msgid "Import & append…"
 msgstr "导入并追加…"
 
-#: src/components/shortcuts-settings.jsx:991
+#: src/components/shortcuts-settings.jsx:994
 msgid "Override current shortcuts?"
 msgstr "是否覆盖当前快捷方式配置？"
 
-#: src/components/shortcuts-settings.jsx:992
+#: src/components/shortcuts-settings.jsx:995
 msgid "Import shortcuts?"
 msgstr "是否导入快捷方式？"
 
-#: src/components/shortcuts-settings.jsx:1006
+#: src/components/shortcuts-settings.jsx:1009
 msgid "or override…"
 msgstr "或覆盖…"
 
-#: src/components/shortcuts-settings.jsx:1006
+#: src/components/shortcuts-settings.jsx:1009
 msgid "Import…"
 msgstr "导入…"
 
-#: src/components/shortcuts-settings.jsx:1015
+#: src/components/shortcuts-settings.jsx:1018
 msgid "Export"
 msgstr "导出"
 
-#: src/components/shortcuts-settings.jsx:1030
+#: src/components/shortcuts-settings.jsx:1033
 msgid "Shortcuts copied"
 msgstr "已复制快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1033
+#: src/components/shortcuts-settings.jsx:1036
 msgid "Unable to copy shortcuts"
 msgstr "无法复制快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1047
+#: src/components/shortcuts-settings.jsx:1050
 msgid "Shortcut settings copied"
 msgstr "已复制快捷方式设置"
 
-#: src/components/shortcuts-settings.jsx:1050
+#: src/components/shortcuts-settings.jsx:1053
 msgid "Unable to copy shortcut settings"
 msgstr "无法复制快捷方式设置"
 
-#: src/components/shortcuts-settings.jsx:1080
+#: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
 msgstr "分享"
 
-#: src/components/shortcuts-settings.jsx:1119
+#: src/components/shortcuts-settings.jsx:1122
 msgid "Saving shortcuts to instance server…"
 msgstr "将快捷方式保存到实例服务器…"
 
-#: src/components/shortcuts-settings.jsx:1126
+#: src/components/shortcuts-settings.jsx:1129
 msgid "Shortcuts saved"
 msgstr "已保存快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1131
+#: src/components/shortcuts-settings.jsx:1134
 msgid "Unable to save shortcuts"
 msgstr "无法保存快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1134
+#: src/components/shortcuts-settings.jsx:1137
 msgid "Sync to instance server"
 msgstr "同步到实例服务器"
 
-#: src/components/shortcuts-settings.jsx:1142
+#: src/components/shortcuts-settings.jsx:1145
 msgid "{0, plural, one {# character} other {# characters}}"
 msgstr "{0, plural, other {# 个字符}}"
 
-#: src/components/shortcuts-settings.jsx:1154
+#: src/components/shortcuts-settings.jsx:1157
 msgid "Raw Shortcuts JSON"
 msgstr "原始快捷方式 JSON"
 
-#: src/components/shortcuts-settings.jsx:1167
+#: src/components/shortcuts-settings.jsx:1170
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "导入/导出配置到实例服务器(很不稳定)"
 
@@ -2904,11 +2912,11 @@ msgstr "无法加载已关注的话题标签。"
 msgid "No hashtags followed yet."
 msgstr "尚无关注的话题标签。"
 
-#: src/pages/following.jsx:136
+#: src/pages/following.jsx:143
 msgid "Nothing to see here."
 msgstr "这里空空如也。"
 
-#: src/pages/following.jsx:137
+#: src/pages/following.jsx:144
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
 msgstr "无法加载嘟文."

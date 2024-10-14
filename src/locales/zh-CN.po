@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-14 09:36\n"
+"PO-Revision-Date: 2024-10-14 11:48\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -110,7 +110,7 @@ msgstr "嘟文"
 
 #: src/components/account-info.jsx:427
 #: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2479
+#: src/components/compose.jsx:2488
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
 #: src/components/status.jsx:1703
@@ -123,7 +123,7 @@ msgstr "嘟文"
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1178
+#: src/pages/status.jsx:1181
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr "更多"
@@ -190,8 +190,8 @@ msgstr "原创"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:901
-#: src/pages/status.jsx:1503
+#: src/pages/status.jsx:904
+#: src/pages/status.jsx:1506
 msgid "Replies"
 msgstr "回复"
 
@@ -405,11 +405,11 @@ msgstr "关注"
 #: src/components/account-info.jsx:1989
 #: src/components/account-info.jsx:2089
 #: src/components/account-sheet.jsx:37
-#: src/components/compose.jsx:813
-#: src/components/compose.jsx:2435
-#: src/components/compose.jsx:2908
-#: src/components/compose.jsx:3116
-#: src/components/compose.jsx:3346
+#: src/components/compose.jsx:818
+#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2917
+#: src/components/compose.jsx:3125
+#: src/components/compose.jsx:3355
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -432,7 +432,7 @@ msgstr "关注"
 #: src/pages/notifications.jsx:868
 #: src/pages/notifications.jsx:1082
 #: src/pages/settings.jsx:76
-#: src/pages/status.jsx:1265
+#: src/pages/status.jsx:1268
 msgid "Close"
 msgstr "关闭"
 
@@ -550,135 +550,135 @@ msgstr "发嘟"
 msgid "You have unsaved changes. Discard this post?"
 msgstr "你有尚未保存的更改。是否丢弃这条嘟文？"
 
-#: src/components/compose.jsx:619
+#: src/components/compose.jsx:622
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr ""
 
-#: src/components/compose.jsx:627
-#: src/components/compose.jsx:645
-#: src/components/compose.jsx:1353
-#: src/components/compose.jsx:1614
+#: src/components/compose.jsx:632
+#: src/components/compose.jsx:650
+#: src/components/compose.jsx:1361
+#: src/components/compose.jsx:1623
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, other {你最多可以添加 # 个附件。}}"
 
-#: src/components/compose.jsx:794
+#: src/components/compose.jsx:799
 msgid "Pop out"
 msgstr "弹出"
 
-#: src/components/compose.jsx:801
+#: src/components/compose.jsx:806
 msgid "Minimize"
 msgstr "最小化"
 
-#: src/components/compose.jsx:837
+#: src/components/compose.jsx:842
 msgid "Looks like you closed the parent window."
 msgstr "你似乎关闭了上级窗口。"
 
-#: src/components/compose.jsx:844
+#: src/components/compose.jsx:849
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "你似乎已在上级窗口打开了一个撰写框并正在发布内容。请等待其完成后再试。"
 
-#: src/components/compose.jsx:849
+#: src/components/compose.jsx:854
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "你似乎已在上级窗口中打开了一个撰写框。如果在此窗口中新建撰写框，你在上级窗口中所做的更改将丢失。是否继续？"
 
-#: src/components/compose.jsx:891
+#: src/components/compose.jsx:896
 msgid "Pop in"
 msgstr "弹回"
 
-#: src/components/compose.jsx:901
+#: src/components/compose.jsx:906
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "正在回复 @{0} 的嘟文 (<0>{1}</0>)"
 
-#: src/components/compose.jsx:911
+#: src/components/compose.jsx:916
 msgid "Replying to @{0}’s post"
 msgstr "正在回复 @{0} 的嘟文"
 
-#: src/components/compose.jsx:924
+#: src/components/compose.jsx:929
 msgid "Editing source post"
 msgstr "编辑原嘟"
 
-#: src/components/compose.jsx:971
+#: src/components/compose.jsx:976
 msgid "Poll must have at least 2 options"
 msgstr "投票必须至少包含 2 个选项"
 
-#: src/components/compose.jsx:975
+#: src/components/compose.jsx:980
 msgid "Some poll choices are empty"
 msgstr "某些投票项为空"
 
-#: src/components/compose.jsx:988
+#: src/components/compose.jsx:993
 msgid "Some media have no descriptions. Continue?"
 msgstr "某些媒体附件没有描述文本。是否继续？"
 
-#: src/components/compose.jsx:1040
+#: src/components/compose.jsx:1045
 msgid "Attachment #{i} failed"
 msgstr "附加附件 #{i} 失败"
 
-#: src/components/compose.jsx:1134
+#: src/components/compose.jsx:1139
 #: src/components/status.jsx:2029
 #: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "内容警告"
 
-#: src/components/compose.jsx:1150
+#: src/components/compose.jsx:1155
 msgid "Content warning or sensitive media"
 msgstr "内容警告或敏感媒体"
 
-#: src/components/compose.jsx:1186
+#: src/components/compose.jsx:1191
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:304
 msgid "Public"
 msgstr "公开"
 
-#: src/components/compose.jsx:1191
+#: src/components/compose.jsx:1196
 #: src/components/nav-menu.jsx:386
 #: src/components/shortcuts-settings.jsx:162
 #: src/components/status.jsx:94
 msgid "Local"
 msgstr "本站"
 
-#: src/components/compose.jsx:1195
+#: src/components/compose.jsx:1200
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:307
 msgid "Unlisted"
 msgstr "不列出"
 
-#: src/components/compose.jsx:1198
+#: src/components/compose.jsx:1203
 #: src/components/status.jsx:96
 #: src/pages/settings.jsx:310
 msgid "Followers only"
 msgstr "仅粉丝"
 
-#: src/components/compose.jsx:1201
+#: src/components/compose.jsx:1206
 #: src/components/status.jsx:97
 #: src/components/status.jsx:1907
 msgid "Private mention"
 msgstr "私信"
 
-#: src/components/compose.jsx:1210
+#: src/components/compose.jsx:1215
 msgid "Post your reply"
 msgstr "发送回复"
 
-#: src/components/compose.jsx:1212
+#: src/components/compose.jsx:1217
 msgid "Edit your post"
 msgstr "编辑嘟文"
 
-#: src/components/compose.jsx:1213
+#: src/components/compose.jsx:1218
 msgid "What are you doing?"
 msgstr "在做什么呢？"
 
-#: src/components/compose.jsx:1291
+#: src/components/compose.jsx:1296
 msgid "Mark media as sensitive"
 msgstr "将媒体标记为敏感"
 
-#: src/components/compose.jsx:1389
+#: src/components/compose.jsx:1397
 msgid "Add poll"
 msgstr "发起投票"
 
-#: src/components/compose.jsx:1411
+#: src/components/compose.jsx:1419
 msgid "Add custom emoji"
 msgstr "添加自定义表情"
 
-#: src/components/compose.jsx:1495
+#: src/components/compose.jsx:1504
 #: src/components/keyboard-shortcuts-help.jsx:143
 #: src/components/status.jsx:895
 #: src/components/status.jsx:1683
@@ -687,195 +687,195 @@ msgstr "添加自定义表情"
 msgid "Reply"
 msgstr "回复"
 
-#: src/components/compose.jsx:1497
+#: src/components/compose.jsx:1506
 msgid "Update"
 msgstr "更新"
 
-#: src/components/compose.jsx:1498
+#: src/components/compose.jsx:1507
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "发布"
 
-#: src/components/compose.jsx:1626
+#: src/components/compose.jsx:1635
 msgid "Downloading GIF…"
 msgstr "正在下载 GIF…"
 
-#: src/components/compose.jsx:1654
+#: src/components/compose.jsx:1663
 msgid "Failed to download GIF"
 msgstr "GIF 下载失败"
 
-#: src/components/compose.jsx:1766
-#: src/components/compose.jsx:1843
+#: src/components/compose.jsx:1775
+#: src/components/compose.jsx:1852
 #: src/components/nav-menu.jsx:287
 msgid "More…"
 msgstr "更多…"
 
-#: src/components/compose.jsx:2248
+#: src/components/compose.jsx:2257
 msgid "Uploaded"
 msgstr "已上传"
 
-#: src/components/compose.jsx:2261
+#: src/components/compose.jsx:2270
 msgid "Image description"
 msgstr "图片描述"
 
-#: src/components/compose.jsx:2262
+#: src/components/compose.jsx:2271
 msgid "Video description"
 msgstr "视频描述"
 
-#: src/components/compose.jsx:2263
+#: src/components/compose.jsx:2272
 msgid "Audio description"
 msgstr "音频描述"
 
-#: src/components/compose.jsx:2299
-#: src/components/compose.jsx:2319
+#: src/components/compose.jsx:2308
+#: src/components/compose.jsx:2328
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "文件大小过大。上传将有可能出现问题。可尝试将文件大小从 {0} 压缩至 {1} 或更小。"
 
-#: src/components/compose.jsx:2311
-#: src/components/compose.jsx:2331
+#: src/components/compose.jsx:2320
+#: src/components/compose.jsx:2340
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "文件尺寸过大。上传将有可能出现问题。可尝试将尺寸从 {0}×{1}px 裁剪至 {2}×{3}px。"
 
-#: src/components/compose.jsx:2339
+#: src/components/compose.jsx:2348
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "帧率过高。上传将有可能出现问题。"
 
-#: src/components/compose.jsx:2399
-#: src/components/compose.jsx:2649
+#: src/components/compose.jsx:2408
+#: src/components/compose.jsx:2658
 #: src/components/shortcuts-settings.jsx:723
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "移除"
 
-#: src/components/compose.jsx:2416
+#: src/components/compose.jsx:2425
 #: src/compose.jsx:83
 msgid "Error"
 msgstr "错误"
 
-#: src/components/compose.jsx:2441
+#: src/components/compose.jsx:2450
 msgid "Edit image description"
 msgstr "编辑图片描述"
 
-#: src/components/compose.jsx:2442
+#: src/components/compose.jsx:2451
 msgid "Edit video description"
 msgstr "编辑视频描述"
 
-#: src/components/compose.jsx:2443
+#: src/components/compose.jsx:2452
 msgid "Edit audio description"
 msgstr "编辑音频描述"
 
-#: src/components/compose.jsx:2488
-#: src/components/compose.jsx:2537
+#: src/components/compose.jsx:2497
+#: src/components/compose.jsx:2546
 msgid "Generating description. Please wait…"
 msgstr "正在生成描述。请稍候…"
 
-#: src/components/compose.jsx:2508
+#: src/components/compose.jsx:2517
 msgid "Failed to generate description: {0}"
 msgstr "描述生成失败: {0}"
 
-#: src/components/compose.jsx:2509
+#: src/components/compose.jsx:2518
 msgid "Failed to generate description"
 msgstr "描述生成失败"
 
-#: src/components/compose.jsx:2521
-#: src/components/compose.jsx:2527
-#: src/components/compose.jsx:2573
+#: src/components/compose.jsx:2530
+#: src/components/compose.jsx:2536
+#: src/components/compose.jsx:2582
 msgid "Generate description…"
 msgstr "生成描述…"
 
-#: src/components/compose.jsx:2560
+#: src/components/compose.jsx:2569
 msgid "Failed to generate description{0}"
 msgstr "描述生成失败{0}"
 
-#: src/components/compose.jsx:2575
+#: src/components/compose.jsx:2584
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— 实验性功能</0>"
 
-#: src/components/compose.jsx:2594
+#: src/components/compose.jsx:2603
 msgid "Done"
 msgstr "已完成"
 
-#: src/components/compose.jsx:2630
+#: src/components/compose.jsx:2639
 msgid "Choice {0}"
 msgstr "选项 {0}"
 
-#: src/components/compose.jsx:2677
+#: src/components/compose.jsx:2686
 msgid "Multiple choices"
 msgstr "多选"
 
-#: src/components/compose.jsx:2680
+#: src/components/compose.jsx:2689
 msgid "Duration"
 msgstr "时长"
 
-#: src/components/compose.jsx:2711
+#: src/components/compose.jsx:2720
 msgid "Remove poll"
 msgstr "删除投票"
 
-#: src/components/compose.jsx:2925
+#: src/components/compose.jsx:2934
 msgid "Search accounts"
 msgstr "搜索账户"
 
-#: src/components/compose.jsx:2966
+#: src/components/compose.jsx:2975
 #: src/components/shortcuts-settings.jsx:712
 #: src/pages/list.jsx:359
 msgid "Add"
 msgstr "添加"
 
-#: src/components/compose.jsx:2979
+#: src/components/compose.jsx:2988
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
 msgstr "加载账户时出错"
 
-#: src/components/compose.jsx:3122
+#: src/components/compose.jsx:3131
 msgid "Custom emojis"
 msgstr "自定义表情"
 
-#: src/components/compose.jsx:3142
+#: src/components/compose.jsx:3151
 msgid "Search emoji"
 msgstr "搜索表情"
 
-#: src/components/compose.jsx:3173
+#: src/components/compose.jsx:3182
 msgid "Error loading custom emojis"
 msgstr "加载自定义表情时出错"
 
-#: src/components/compose.jsx:3184
+#: src/components/compose.jsx:3193
 msgid "Recently used"
 msgstr "最近使用"
 
-#: src/components/compose.jsx:3185
+#: src/components/compose.jsx:3194
 msgid "Others"
 msgstr "其它"
 
-#: src/components/compose.jsx:3223
+#: src/components/compose.jsx:3232
 msgid "{0} more…"
 msgstr "更多 {0} 个…"
 
-#: src/components/compose.jsx:3361
+#: src/components/compose.jsx:3370
 msgid "Search GIFs"
 msgstr "搜索 GIF"
 
-#: src/components/compose.jsx:3376
+#: src/components/compose.jsx:3385
 msgid "Powered by GIPHY"
 msgstr "由 GIPHY 驱动"
 
-#: src/components/compose.jsx:3384
+#: src/components/compose.jsx:3393
 msgid "Type to search GIFs"
 msgstr "输入以搜索 GIF"
 
-#: src/components/compose.jsx:3482
+#: src/components/compose.jsx:3491
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:889
 msgid "Previous"
 msgstr "上一页"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3509
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:906
 msgid "Next"
 msgstr "下一页"
 
-#: src/components/compose.jsx:3517
+#: src/components/compose.jsx:3526
 msgid "Error loading GIFs"
 msgstr "加载 GIF 时出错"
 
@@ -972,7 +972,7 @@ msgstr "账号"
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
 #: src/pages/search.jsx:454
-#: src/pages/status.jsx:1298
+#: src/pages/status.jsx:1301
 msgid "Show more…"
 msgstr "显示更多…"
 
@@ -1355,7 +1355,7 @@ msgstr "账号…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:801
+#: src/pages/status.jsx:804
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "登录"
@@ -1545,8 +1545,8 @@ msgstr "投票"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1167
-#: src/pages/status.jsx:1190
+#: src/pages/status.jsx:1170
+#: src/pages/status.jsx:1193
 msgid "Refresh"
 msgstr "刷新"
 
@@ -2314,8 +2314,8 @@ msgstr "新嘟文"
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:824
-#: src/pages/status.jsx:954
-#: src/pages/status.jsx:1327
+#: src/pages/status.jsx:957
+#: src/pages/status.jsx:1330
 msgid "Try again"
 msgstr "重试"
 
@@ -3555,84 +3555,85 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 
 #: src/pages/status.jsx:567
-#: src/pages/status.jsx:1097
+#: src/pages/status.jsx:1100
+msgctxt "noun"
 msgid "Post"
-msgstr "发布"
+msgstr ""
 
-#: src/pages/status.jsx:788
+#: src/pages/status.jsx:791
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "你尚未登录。互动 ()"
 
-#: src/pages/status.jsx:808
+#: src/pages/status.jsx:811
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "此嘟文加载自其它实例 (<0>{instance}</0>)。 无法进行互动 (回复、转嘟等)。"
 
-#: src/pages/status.jsx:836
+#: src/pages/status.jsx:839
 msgid "Error: {e}"
 msgstr "错误: {e}"
 
-#: src/pages/status.jsx:843
+#: src/pages/status.jsx:846
 msgid "Switch to my instance to enable interactions"
 msgstr "切换到我所在的实例以进行互动"
 
-#: src/pages/status.jsx:945
+#: src/pages/status.jsx:948
 msgid "Unable to load replies."
 msgstr "无法加载回复。"
 
-#: src/pages/status.jsx:1057
+#: src/pages/status.jsx:1060
 msgid "Back"
 msgstr "返回"
 
-#: src/pages/status.jsx:1088
+#: src/pages/status.jsx:1091
 msgid "Go to main post"
 msgstr "跳转到主嘟文"
 
-#: src/pages/status.jsx:1111
+#: src/pages/status.jsx:1114
 msgid "{0} posts above ‒ Go to top"
 msgstr "还有 {0} 条上级嘟文 ‒ 转到顶部"
 
-#: src/pages/status.jsx:1154
-#: src/pages/status.jsx:1217
+#: src/pages/status.jsx:1157
+#: src/pages/status.jsx:1220
 msgid "Switch to Side Peek view"
 msgstr "切换至侧边预览视图"
 
-#: src/pages/status.jsx:1218
+#: src/pages/status.jsx:1221
 msgid "Switch to Full view"
 msgstr "切换至完整视图"
 
-#: src/pages/status.jsx:1236
+#: src/pages/status.jsx:1239
 msgid "Show all sensitive content"
 msgstr "显示所有敏感内容"
 
-#: src/pages/status.jsx:1241
+#: src/pages/status.jsx:1244
 msgid "Experimental"
 msgstr "实验性功能"
 
-#: src/pages/status.jsx:1250
+#: src/pages/status.jsx:1253
 msgid "Unable to switch"
 msgstr "无法切换"
 
-#: src/pages/status.jsx:1257
+#: src/pages/status.jsx:1260
 msgid "Switch to post's instance ({0})"
 msgstr "切换到原嘟所属的实例 ({0})"
 
-#: src/pages/status.jsx:1260
+#: src/pages/status.jsx:1263
 msgid "Switch to post's instance"
 msgstr "切换到原嘟所属实例"
 
-#: src/pages/status.jsx:1318
+#: src/pages/status.jsx:1321
 msgid "Unable to load post"
 msgstr "无法加载嘟文"
 
-#: src/pages/status.jsx:1435
+#: src/pages/status.jsx:1438
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, other {<0>{1}</0> 条回复}}"
 
-#: src/pages/status.jsx:1453
+#: src/pages/status.jsx:1456
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, other {<0>{0}</0> 条评论}}"
 
-#: src/pages/status.jsx:1475
+#: src/pages/status.jsx:1478
 msgid "View post with its replies"
 msgstr "查看嘟文及其回复"
 

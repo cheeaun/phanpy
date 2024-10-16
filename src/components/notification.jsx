@@ -333,10 +333,6 @@ function Notification({
   } = notification;
   let { type } = notification;
 
-  if (type === 'move') {
-    console.debug('NOTIFS', notification);
-  }
-
   if (type === 'mention' && !status) {
     // Could be deleted
     return null;

@@ -33,6 +33,7 @@ const NOTIFICATION_ICONS = {
   moderation_warning: 'alert',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
+  move: 'suitcase',
 };
 
 /*
@@ -261,6 +262,13 @@ const contentText = {
   ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
+  move: ({ account, targetAccount }) => {
+    return (
+      <Trans>
+        {account} moved to {targetAccount}.
+      </Trans>
+    );
+  },
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -309,6 +317,7 @@ function Notification({
     id,
     status,
     account,
+    target, // Pleroma move event
     report,
     event,
     moderation_warning,
@@ -323,6 +332,10 @@ function Notification({
     groupKey,
   } = notification;
   let { type } = notification;
+
+  if (type === 'move') {
+    console.debug('NOTIFS', notification);
+  }
 
   if (type === 'mention' && !status) {
     // Could be deleted
@@ -408,6 +421,11 @@ function Notification({
         account: <NameText account={account} showAvatar />,
         emoji: notification.emoji,
         emojiURL,
+      });
+    } else if (type === 'move') {
+      text = text({
+        account: <NameText account={account} showAvatar />,
+        targetAccount: <NameText account={target} showAvatar />,
       });
     } else {
       text = text({

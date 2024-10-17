@@ -4,6 +4,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import { isFiltered } from '../utils/filters';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
 import { getCurrentAccountID } from '../utils/store-utils';
@@ -450,6 +451,16 @@ function Notification({
   const diffCount =
     notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
   const expandAccounts = diffCount ? 'remote' : 'local';
+
+  // If there's a status and filter action is 'hide', then the notification is hidden
+  // TODO: Handle 'warn' action one day
+  if (!!status?.filtered) {
+    const isOwnPost = status?.account?.id === currentAccount;
+    const filterInfo = isFiltered(status.filtered, 'notifications');
+    if (!isSelf && !isOwnPost && filterInfo?.action === 'hide') {
+      return null;
+    }
+  }
 
   return (
     <div

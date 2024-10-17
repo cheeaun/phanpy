@@ -1,0 +1,81 @@
+name: "Bug report"
+description: "Create a report to help us improve"
+
+labels:
+- "bug"
+
+body:
+- type: input
+  id: "site"
+  attributes:
+    label: "Site"
+    description: |-
+      What site(s) did you encounter this bug on?
+    placeholder: |-
+      phanpy.social
+
+- type: input
+  id: "version"
+  attributes:
+    label: "Version"
+    description: |-
+      Which Phanpy version(s) did you encounter this bug on?
+      You can see and copy your current version by opening the Settings menu and scrolling down to the About section.
+    placeholder: |-
+      2024.10.08.0a176e2
+
+- type: input
+  id: "instance"
+  attributes:
+    label: "Instance"
+    description: |-
+      Which instance(s) did you encounter this bug on?
+    placeholder: |-
+      mastodon.social
+      
+- type: textarea
+  id: "Browser"
+  attributes:
+    label: "Browser"
+    description: |-
+      Which browser(s) did you encounter this bug on?
+    placeholder: |-
+      - Firefox 132.0b5 on Windows 11
+      - Safari 18 on iOS 18 on iPhone 16 Pro Max
+
+- type: textarea
+  id: "description"
+  attributes:
+    label: "Bug description"
+    description: |-
+      A concise description of what the bug is.
+      If applicable, add screenshots to help explain your problem.
+      You can paste screenshots here and GitHub will convert them to Markdown for you.
+
+- type: textarea
+  id: "steps"
+  attributes:
+    label: "To reproduce"
+    description: |-
+      A list of steps that can be performed to make the bug happen again.
+      If possible, add screenshots to help demonstrate the steps.
+      You can paste screenshots here and GitHub will convert them to Markdown for you.
+    placeholder: |-
+      1. Go to '...'
+      2. Click on '...'
+      3. Scroll down to '...'
+      4. See error
+
+- type: textarea
+  id: "behavior"
+  attributes:
+    label: "Expected behavior"
+    description: |-
+      A concise description of what you expected to happen.
+
+- type: textarea
+  id: "other"
+  attributes:
+    label: "Other"
+    description: |-
+      Anything you want to add?

@@ -197,6 +197,7 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
 // const rtf = new Intl.RelativeTimeFormat();
 const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
+const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 
 const CUSTOM_EMOJIS_COUNT = 100;
 
@@ -210,6 +211,7 @@ function Compose({
 }) {
   const { i18n } = useLingui();
   const rtf = RTF(i18n.locale);
+  const lf = LF(i18n.locale);
 
   console.warn('RENDER COMPOSER');
   const { masto, instance } = api();
@@ -226,11 +228,11 @@ function Compose({
   const {
     statuses: {
       maxCharacters,
-      maxMediaAttachments,
+      maxMediaAttachments, // Beware: it can be undefined!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes = [],
+      supportedMimeTypes,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -600,14 +602,30 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
+      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedMimeTypes.includes(file.type)) {
+          if (
+            supportedMimeTypes !== undefined &&
+            !supportedMimeTypes.includes(file.type)
+          ) {
+            unsupportedFiles.push(file);
+          } else {
             files.push(file);
           }
         }
+      }
+      if (unsupportedFiles.length > 0) {
+        alert(
+          plural(unsupportedFiles.length, {
+            one: `File ${unsupportedFiles[0].name} is not supported.`,
+            other: `Files ${lf.format(
+              unsupportedFiles.map((f) => f.name),
+            )} are not supported.`,
+          }),
+        );
       }
       if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
         alert(
@@ -623,16 +641,19 @@ function Compose({
         e.preventDefault();
         e.stopPropagation();
         // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        const max = maxMediaAttachments - mediaAttachments.length;
-        const allowedFiles = files.slice(0, max);
-        if (allowedFiles.length <= 0) {
-          alert(
-            plural(maxMediaAttachments, {
-              one: 'You can only attach up to 1 file.',
-              other: 'You can only attach up to # files.',
-            }),
-          );
-          return;
+        let allowedFiles = files;
+        if (maxMediaAttachments !== undefined) {
+          const max = maxMediaAttachments - mediaAttachments.length;
+          allowedFiles = allowedFiles.slice(0, max);
+          if (allowedFiles.length <= 0) {
+            alert(
+              plural(maxMediaAttachments, {
+                one: 'You can only attach up to 1 file.',
+                other: 'You can only attach up to # files.',
+              }),
+            );
+            return;
+          }
         }
         const mediaFiles = allowedFiles.map((file) => ({
           file,
@@ -1307,8 +1328,11 @@ function Compose({
               <label class="toolbar-button">
                 <input
                   type="file"
-                  accept={supportedMimeTypes.join(',')}
-                  multiple={mediaAttachments.length < maxMediaAttachments - 1}
+                  accept={supportedMimeTypes?.join(',')}
+                  multiple={
+                    maxMediaAttachments === undefined ||
+                    maxMediaAttachments - mediaAttachments >= 2
+                  }
                   disabled={
                     uiState === 'loading' ||
                     mediaAttachments.length >= maxMediaAttachments ||
@@ -1400,7 +1424,8 @@ function Compose({
                   class="toolbar-button gif-picker-button"
                   disabled={
                     uiState === 'loading' ||
-                    mediaAttachments.length >= maxMediaAttachments ||
+                    (maxMediaAttachments !== undefined &&
+                      mediaAttachments.length >= maxMediaAttachments) ||
                     !!poll
                   }
                   onClick={() => {

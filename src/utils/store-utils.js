@@ -118,18 +118,14 @@ export function getCurrentInstance() {
 // Massage these instance configurations to match the Mastodon API
 // - Pleroma
 function getInstanceConfiguration(instance) {
-  const {
-    configuration,
-    maxMediaAttachments,
-    maxTootChars,
-    pleroma,
-    pollLimits,
-  } = instance;
+  const { configuration, maxMediaAttachments, maxTootChars, pollLimits } =
+    instance;
 
   const statuses = configuration?.statuses || {};
   if (maxMediaAttachments) {
     statuses.maxMediaAttachments ??= maxMediaAttachments;
   }
+
   if (maxTootChars) {
     statuses.maxCharacters ??= maxTootChars;
   }

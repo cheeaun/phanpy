@@ -125,6 +125,46 @@ function getPostText(status) {
   );
 }
 
+function isTranslateble(content) {
+  if (!content) return false;
+  content = content.trim();
+  if (!content) return false;
+  const text = getHTMLText(content, {
+    preProcess: (dom) => {
+      // Remove .mention, pre, code, a:has(.invisible)
+      for (const a of dom.querySelectorAll(
+        '.mention, pre, code, a:has(.invisible)',
+      )) {
+        a.remove();
+      }
+    },
+  });
+  return !!text;
+}
+
+function getHTMLTextForDetectLang(content) {
+  return getHTMLText(content, {
+    preProcess: (dom) => {
+      // Remove anything that can skew the language detection
+
+      // Remove .mention, .hashtag, pre, code, a:has(.invisible)
+      for (const a of dom.querySelectorAll(
+        '.mention, .hashtag, pre, code, a:has(.invisible)',
+      )) {
+        a.remove();
+      }
+
+      // Remove links that contains text that starts with https?://
+      for (const a of dom.querySelectorAll('a')) {
+        const text = a.innerText.trim();
+        if (text.startsWith('https://') || text.startsWith('http://')) {
+          a.remove();
+        }
+      }
+    },
+  });
+}
+
 const HTTP_REGEX = /^http/i;
 const PostContent =
   /*memo(*/
@@ -343,32 +383,10 @@ function Status({
   useEffect(() => {
     if (!content) return;
     if (_language) return;
+    if (languageAutoDetected) return;
     let timer;
     timer = setTimeout(async () => {
-      let detected = await detectLang(
-        getHTMLText(content, {
-          preProcess: (dom) => {
-            // Remove anything that can skew the language detection
-
-            // Remove .mention, .hashtag, pre, code, a:has(.invisible)
-            dom
-              .querySelectorAll(
-                '.mention, .hashtag, pre, code, a:has(.invisible)',
-              )
-              .forEach((a) => {
-                a.remove();
-              });
-
-            // Remove links that contains text that starts with https?://
-            dom.querySelectorAll('a').forEach((a) => {
-              const text = a.innerText.trim();
-              if (text.startsWith('https://') || text.startsWith('http://')) {
-                a.remove();
-              }
-            });
-          },
-        }),
-      );
+      let detected = await detectLang(getHTMLTextForDetectLang(content));
       setLanguageAutoDetected(detected);
     }, 1000);
     return () => clearTimeout(timer);
@@ -2101,8 +2119,7 @@ function Status({
                   />
                 )}
                 {(((enableTranslate || inlineTranslate) &&
-                  !!content.trim() &&
-                  !!getHTMLText(emojifyText(content, emojis)) &&
+                  isTranslateble(content) &&
                   differentLanguage) ||
                   forceTranslate) && (
                   <TranslationBlock

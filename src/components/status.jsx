@@ -2079,6 +2079,7 @@ function Status({
                     class="content"
                     ref={contentRef}
                     data-read-more={_(readMoreText)}
+                    inert={!!spoilerText && !showSpoiler ? true : undefined}
                   >
                     <PostContent
                       post={status}

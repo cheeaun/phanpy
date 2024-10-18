@@ -290,6 +290,17 @@ function _enhanceContent(content, opts = {}) {
     }
   }
 
+  // FIX CLOAK MODE FOR SAFARI
+  // Workaround for Safari so that `text-decoration-thickness` works
+  // Wrap child text nodes in spans
+  for (const node of dom.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const span = document.createElement('span');
+      span.textContent = node.textContent;
+      dom.replaceChild(span, node);
+    }
+  }
+
   if (postEnhanceDOM) {
     queueMicrotask(() => postEnhanceDOM(dom));
     // postEnhanceDOM(dom); // mutate dom

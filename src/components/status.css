@@ -1995,7 +1995,11 @@ a.card:is(:hover, :focus):visited {
   gap: 4px;
   color: var(--text-insignificant-color);
   padding: 2px 8px;
-  align-items: center;
+  align-items: flex-start;
+
+  .icon {
+    min-height: 1em;
+  }
 
   .avatar {
     width: 16px !important;

@@ -271,6 +271,7 @@ These are self-hosted by other wonderful folks.
 - [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
 - [phanpy.cz](https://phanpy.cz) by [@zdendys@mamutovo.cz](https://mamutovo.cz/@zdendys)
 - [phanpy.social.tchncs.de](https://phanpy.social.tchncs.de) by [@milan@social.tchncs.de](https://social.tchncs.de/@milan)
+- [phanpy.mastodon.world](https://phanpy.mastodon.world) by [@ruud@mastodon.world](https://mastodon.world/@ruud)
 
 > Note: Add yours by creating a pull request.
 

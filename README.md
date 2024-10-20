@@ -304,7 +304,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15525631/medium/51293156034d0236f1a1020c10f7d539_default.png" alt="" width="16" height="16" /> cbo92 (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15910131/medium/67fab7eeab5551853450e76e2ef19e59.jpeg" alt="" width="16" height="16" /> CDN (Chinese Simplified)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16556801/medium/ed5e501ca1f3cc6525d2da28db646346.jpeg" alt="" width="16" height="16" /> dannypsnl (Chinese Traditional)
-- <img src="https://crowdin-static.downloads.crowdin.com/avatar/3711/medium/d95ddd44e8dcb3a039f8a3463aed781d_default.png" alt="" width="16" height="16" /> databio (Catalan)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/3711/medium/c97239bb54623a50eb43cc6b801bb156.jpg" alt="" width="16" height="16" /> databio (Catalan)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16533843/medium/ac7af8776858a992d992cf6702d1aaae.jpg" alt="" width="16" height="16" /> Dizro (Italian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16574625/medium/f2ac3a4f32f104a3a6d4085d4bcb3924_default.png" alt="" width="16" height="16" /> Drift6944 (Czech)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" alt="" width="16" height="16" /> drydenwu (Chinese Traditional)

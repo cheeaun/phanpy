@@ -1,7 +1,32 @@
 {
+  "private": true,
   "name": "phanpy",
-  "version": "0.1.0",
   "type": "module",
+  "version": "0.1.0",
+  "description": "Minimalistic opinionated Mastodon web client",
+  "keywords": [
+    "mastodon",
+    "fediverse",
+    "web-app"
+  ],
+  "homepage": "https://github.com/cheeaun/phanpy",
+  "bugs": {
+    "url": "https://github.com/cheeaun/phanpy"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Chee Aun",
+    "email": "cheeaun@gmail.com",
+    "url": "https://cheeaun.com/"
+  },
+  "funding": [
+    "https://github.com/sponsors/cheeaun",
+    "https://www.buymeacoffee.com/cheeaun",
+    "https://revolut.me/cheeaun",
+    "https://donate.stripe.com/9AQeVfbr40ZB9nGaEF",
+    "https://paypal.me/cheeaun"
+  ],
+  "repository": "github:cheeaun/phanpy",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

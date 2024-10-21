@@ -2,18 +2,25 @@ name: Prettier on pull requests
 
 on:
   pull_request:
+    branches: 
+      - main
   workflow_dispatch:
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      # Need node to install prettier plugin(s)
-      - uses: actions/setup-node@v4
+      - name: "Checkout repository's previous and current states"
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-      - run: npm ci
-      - run: |
-          echo "Prettier-ing files"
-          npx prettier "src/**/*.{js,jsx}" --check
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+      
+      - name: "Run prettier on the changed files"
+        uses: creyD/prettier_action@v4.3  # https://github.com/creyD/prettier_action/blob/v4.3/entrypoint.sh
+        with:
+          prettier_options: >-
+            --write
+            **/*.{js,jsx}
+          only_changed: true

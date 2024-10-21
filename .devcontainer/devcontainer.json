@@ -2,5 +2,15 @@
 	"name": "Phanpy",
 	"image": "mcr.microsoft.com/devcontainers/typescript-node",
 	
-	"forwardPorts": [8080]
+	"forwardPorts": [
+		8080
+	],
+	
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"github.vscode-github-actions"
+			]
+		}
+	}
 }

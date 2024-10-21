@@ -1,0 +1,15 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"src/locales": true,
+	},
+	"explorer.fileNesting.patterns": {
+		"*.jsx": "${capture}.js,${capture}.module.css,${capture}.css",
+		"*.tsx": "${capture}.ts,${capture}.jsx,${capture}.js,${capture}.module.css,${capture}.css"
+	}
+}

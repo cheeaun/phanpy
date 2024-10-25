@@ -2220,6 +2220,7 @@ function Status({
                                   }
                                 : undefined
                             }
+                            checkAspectRatio={mediaAttachments.length === 1}
                           />
                         ))}
                       </div>

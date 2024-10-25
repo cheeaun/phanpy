@@ -360,7 +360,11 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             nestedDescendants.push(status);
           } else if (
             !status.inReplyToAccountId &&
-            nestedDescendants.find((s) => s.id === status.inReplyToId) &&
+            nestedDescendants.find(
+              (s) =>
+                s.id === status.inReplyToId &&
+                s.account.id === heroStatus.account.id,
+            ) &&
             status.account.id === heroStatus.account.id
           ) {
             // If replying to hero's own statuses, it's part of the thread, level 1

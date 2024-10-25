@@ -1061,11 +1061,11 @@ function Catchup() {
                             onClick={async () => {
                               const yes = confirm(t`Remove this catch-up?`);
                               if (yes) {
-                                let t = showToast(
+                                let st = showToast(
                                   t`Removing Catch-up ${pc.id}`,
                                 );
                                 await db.catchup.del(pc.id);
-                                t?.hideToast?.();
+                                st?.hideToast?.();
                                 showToast(t`Catch-up ${pc.id} removed`);
                                 reloadCatchups();
                               }

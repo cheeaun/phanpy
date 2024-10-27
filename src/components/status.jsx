@@ -342,6 +342,11 @@ function Status({
       emojis: accountEmojis,
       bot,
       group,
+      source: {
+        pleroma: {
+          actorType = undefined
+        } = {},
+      } = {},
     },
     id,
     repliesCount,
@@ -487,7 +492,7 @@ function Status({
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
 
-    if (group) {
+    if (group || actorType === "Group") {
       return (
         <div
           data-state-post-id={sKey}

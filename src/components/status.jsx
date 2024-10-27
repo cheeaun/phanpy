@@ -500,8 +500,11 @@ function Status({
           onMouseEnter={debugHover}
         >
           <div class="status-pre-meta">
-            <Icon icon="group" size="l" alt={t`Group`} />{' '}
-            <NameText account={status.account} instance={instance} showAvatar />
+              <Icon icon="group" size="l" alt={t`Group`} />{' '}
+              <Trans>
+                <span>Posted in</span>{" "}
+                <NameText account={status.account} instance={instance} showAvatar />{' '}
+              </Trans>
           </div>
           <Status
             status={statusID ? null : reblog}

@@ -395,6 +395,51 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   :dir(rtl) & {
     --line-curve: -45deg;
   }
+
+  .descendant.thread:has(+ .descendant:not(.thread)):after {
+    position: absolute;
+    inset-inline-start: 10px;
+    bottom: 0;
+    content: '';
+    display: block;
+    width: calc(var(--line-start) + var(--line-width) - 10px);
+    /* background-color: var(--bg-color);
+    border-bottom: var(--line-width) dotted var(--comment-line-color); */
+    height: calc(var(--line-diameter) - var(--line-width));
+    background-color: var(--bg-color);
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      ),
+      radial-gradient(
+        circle at bottom var(--forward),
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      ),
+      radial-gradient(
+        circle at top var(--backward),
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      );
+    background-position: var(--line-radius) 0, bottom var(--backward),
+      top var(--forward);
+    background-size: calc(100% - var(--line-radius) * 2) auto,
+      var(--line-radius), var(--line-radius);
+  }
+
+  > li.hero:has(+ .descendant:not(.thread)),
+  > li.descendant:not(.thread) {
+    --thread-start: 10px;
+    --line-start: 10px;
+    --line-end: calc(var(--line-start) + var(--line-width));
+  }
 }
 .timeline.contextual > li {
   background-image: linear-gradient(
@@ -427,7 +472,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual
   > li.descendant:not(.thread)
   > :is(.status-link, .status-focus) {
-  padding-inline-start: 40px;
+  padding-inline-start: var(--line-start);
 }
 .timeline.contextual .replies[data-scroll-left]:not([data-scroll-left='0']) {
   background-color: var(--bg-color);

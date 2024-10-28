@@ -2267,6 +2267,19 @@ function Status({
                     /> */}
                     <span>{_(visibilityText[visibility])}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener noreferrer">
+                      {
+                        // within a day
+                        new Date().getTime() - createdAtDate.getTime() <
+                          86400000 && (
+                          <>
+                            <RelativeTime
+                              datetime={createdAtDate}
+                              format="micro"
+                            />{' '}
+                            ‒{' '}
+                          </>
+                        )
+                      }
                       <time
                         class="created"
                         datetime={createdAtDate.toISOString()}

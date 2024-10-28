@@ -371,7 +371,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   content-visibility: auto;
   contain-intrinsic-size: auto 160px;
 }
-.timeline.contextual > li:is(:hover, :focus-visible, :focus-within) {
+.timeline.contextual
+  > li:is(:hover, :focus-visible, :focus-within, :has(.status-menu-open)) {
   /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
   content-visibility: visible !important;
 }

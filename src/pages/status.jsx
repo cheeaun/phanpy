@@ -393,14 +393,20 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           console.error('Missing statuses', [...missingStatuses]);
         }
 
-        function expandReplies(_replies) {
+        let descendantLevelsCount = 1;
+        function expandReplies(_replies, level) {
+          const nextLevel = level + 1;
+          if (nextLevel > descendantLevelsCount) {
+            descendantLevelsCount = level;
+          }
           return _replies?.map((_r) => ({
             id: _r.id,
             account: _r.account,
             repliesCount: _r.repliesCount,
             content: _r.content,
             weight: calcStatusWeight(_r),
-            replies: expandReplies(_r.__replies),
+            level: nextLevel,
+            replies: expandReplies(_r.__replies, nextLevel),
           }));
         }
 
@@ -426,7 +432,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
             weight: calcStatusWeight(s),
-            replies: expandReplies(s.__replies),
+            level: 1,
+            replies: expandReplies(s.__replies, 1),
           })),
         ];
 
@@ -437,12 +444,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         };
 
         // Set limit to hero's index
-        const heroLimit = allStatuses.findIndex((s) => s.id === id);
+        // const heroLimit = allStatuses.findIndex((s) => s.id === id);
+        const heroLimit = ancestors.length || 0; // 0-indexed
         if (heroLimit >= limit) {
           setLimit(heroLimit + 1);
         }
 
-        console.log({ allStatuses });
+        console.log({ allStatuses, descendantLevelsCount });
         setStatuses(allStatuses);
         cachedStatusesMap[id] = allStatuses;
 
@@ -758,6 +766,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         replies,
         repliesCount,
         weight,
+        level,
       } = status;
       const isHero = statusID === id;
       const isLinkable = isThread || ancestor;
@@ -931,7 +940,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               instance={instance}
               replies={replies}
               hasParentThread={thread}
-              level={1}
+              level={level}
               accWeight={weight}
               openAll={totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT}
               parentLink={{
@@ -1523,7 +1532,7 @@ function SubComments({
               <SubComments
                 instance={instance}
                 replies={r.replies}
-                level={level + 1}
+                level={r.level}
                 accWeight={!open ? r.weight : totalWeight}
                 openAll={openAll}
                 parentLink={{

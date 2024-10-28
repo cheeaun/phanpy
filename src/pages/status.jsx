@@ -321,6 +321,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const context = await contextFetch;
         const { ancestors, descendants } = context;
 
+        // Sort oldest first
+        ancestors.sort((a, b) => a.createdAt - b.createdAt);
+        descendants.sort((a, b) => a.createdAt - b.createdAt);
+
         totalDescendants.current = descendants?.length || 0;
 
         const missingStatuses = new Set();

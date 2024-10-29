@@ -381,10 +381,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline.contextual {
+  --default-line-start: 40px;
   --thread-start: 40px;
   --line-start: 40px;
   --line-width: 3px;
   --line-end: calc(var(--line-start) + var(--line-width));
+  --default-line-end: calc(var(--default-line-start) + var(--line-width));
   --line-margin-end: 16px;
   --line-radius: 10px;
   --line-diameter: calc(var(--line-radius) * 2);
@@ -451,6 +453,28 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent var(--line-end),
     transparent
   );
+  &.hero:not(:first-child, :last-child, :only-child) {
+    background-image: linear-gradient(
+        var(--line-dir),
+        transparent,
+        transparent var(--line-start),
+        var(--comment-line-color) var(--line-start),
+        var(--comment-line-color) var(--line-end),
+        transparent var(--line-end),
+        transparent
+      ),
+      linear-gradient(
+        var(--line-dir),
+        transparent,
+        transparent var(--default-line-start),
+        var(--comment-line-color) var(--default-line-start),
+        var(--comment-line-color) var(--default-line-end),
+        transparent var(--default-line-end),
+        transparent
+      );
+    background-size: 100% 50%;
+    background-position: bottom, top;
+  }
   background-repeat: no-repeat;
   transition: opacity 0.3s ease-in-out;
 }

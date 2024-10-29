@@ -404,12 +404,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     bottom: 0;
     content: '';
     display: block;
-    width: calc(var(--line-start) + var(--line-width) - 10px);
-    /* background-color: var(--bg-color);
-    border-bottom: var(--line-width) dotted var(--comment-line-color); */
-    height: calc(var(--line-diameter) - var(--line-width));
+    --curves-width: calc(var(--line-start) + var(--line-width) - 10px);
+    width: var(--curves-width);
     background-color: var(--bg-color);
     background-repeat: no-repeat;
+    /* border-bottom: var(--line-width) dotted var(--comment-line-color); */
+    /* height: calc(var(--line-diameter) - var(--line-width));
     background-image: linear-gradient(
         transparent calc(var(--line-radius) - var(--line-width)),
         var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
@@ -433,7 +433,25 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     background-position: var(--line-radius) 0, bottom var(--backward),
       top var(--forward);
     background-size: calc(100% - var(--line-radius) * 2) auto,
-      var(--line-radius), var(--line-radius);
+      var(--line-radius), var(--line-radius); */
+    --curves-radius: calc(var(--curves-width) / 2);
+    height: calc(var(--curves-width) - var(--line-width));
+    background-image: radial-gradient(
+        circle at bottom var(--forward),
+        transparent calc(var(--curves-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
+          var(--curves-radius),
+        transparent var(--curves-radius)
+      ),
+      radial-gradient(
+        circle at top var(--backward),
+        transparent calc(var(--curves-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
+          var(--curves-radius),
+        transparent var(--curves-radius)
+      );
+    background-size: var(--curves-radius);
+    background-position: top var(--backward), bottom var(--forward);
   }
 
   > li.hero:has(+ .descendant:not(.thread)),

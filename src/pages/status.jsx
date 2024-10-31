@@ -323,7 +323,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
         // Sort oldest first
         ancestors.sort((a, b) => a.createdAt - b.createdAt);
-        descendants.sort((a, b) => a.createdAt - b.createdAt);
+        // descendants.sort((a, b) => a.createdAt - b.createdAt);
 
         totalDescendants.current = descendants?.length || 0;
 
@@ -386,6 +386,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               console.warn('No parent found for', status);
             }
           }
+        });
+
+        nestedDescendants.sort((a, b) => {
+          // sort hero author to top
+          const heroAccountID = heroStatus.account.id;
+          if (a.account.id === heroAccountID) return -1;
+          if (b.account.id === heroAccountID) return 1;
+          // sort by createdAt (oldest first)
+          return a.createdAt - b.createdAt;
         });
 
         console.log({ ancestors, descendants, nestedDescendants });

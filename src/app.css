@@ -400,7 +400,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     --line-curve: -45deg;
   }
 
-  > li:is(.hero:has(+ .thread), .thread, .ancestor) {
+  > li:is(.hero:has(+ .thread), .hero:last-child, .thread, .ancestor) {
     --thread-start: var(--indent-large-start);
     --line-start: var(--indent-large-start);
     --line-end: calc(var(--line-start) + var(--line-width));

@@ -208,6 +208,11 @@ function StatusParent(props) {
   );
 }
 
+// oldest first
+function createdAtSort(a, b) {
+  return new Date(b.created_at) - new Date(a.created_at);
+}
+
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
@@ -321,9 +326,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const context = await contextFetch;
         const { ancestors, descendants } = context;
 
-        // Sort oldest first
-        ancestors.sort((a, b) => a.createdAt - b.createdAt);
-        // descendants.sort((a, b) => a.createdAt - b.createdAt);
+        ancestors.sort(createdAtSort);
+        descendants.sort(createdAtSort);
 
         totalDescendants.current = descendants?.length || 0;
 
@@ -388,13 +392,14 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }
         });
 
+        // sort hero author to top
         nestedDescendants.sort((a, b) => {
-          // sort hero author to top
           const heroAccountID = heroStatus.account.id;
-          if (a.account.id === heroAccountID) return -1;
-          if (b.account.id === heroAccountID) return 1;
-          // sort by createdAt (oldest first)
-          return a.createdAt - b.createdAt;
+          if (a.account.id === heroAccountID && b.account.id !== heroAccountID)
+            return -1;
+          if (b.account.id === heroAccountID && a.account.id !== heroAccountID)
+            return 1;
+          return 0;
         });
 
         console.log({ ancestors, descendants, nestedDescendants });

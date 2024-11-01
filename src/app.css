@@ -2631,6 +2631,15 @@ ul.link-list li a .icon {
   }
   #columns > * {
     padding: 0 16px;
+
+    &:is(#notifications-page) {
+      padding-inline: 0;
+
+      .timeline-deck > header {
+        margin-inline: 16px;
+      }
+    }
+
     border-inline: var(--hairline-width) solid var(--bg-faded-color);
     /* border-radius: 16px; */
     /* box-shadow: -4px 0 16px -8px var(--drop-shadow-color); */

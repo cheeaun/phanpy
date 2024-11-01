@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-01 10:02\n"
+"PO-Revision-Date: 2024-11-01 13:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -123,7 +123,7 @@ msgstr "嘟文"
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1207
+#: src/pages/status.jsx:1212
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr "更多"
@@ -190,8 +190,8 @@ msgstr "原创"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:930
-#: src/pages/status.jsx:1552
+#: src/pages/status.jsx:935
+#: src/pages/status.jsx:1557
 msgid "Replies"
 msgstr "回复"
 
@@ -432,7 +432,7 @@ msgstr "关注"
 #: src/pages/notifications.jsx:868
 #: src/pages/notifications.jsx:1082
 #: src/pages/settings.jsx:76
-#: src/pages/status.jsx:1294
+#: src/pages/status.jsx:1299
 msgid "Close"
 msgstr "关闭"
 
@@ -972,7 +972,7 @@ msgstr "账号"
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
 #: src/pages/search.jsx:529
-#: src/pages/status.jsx:1327
+#: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr "显示更多…"
 
@@ -1045,7 +1045,7 @@ msgstr "<0>Esc</0> 或 <1>Backspace</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
-msgstr "在多栏模式中聚焦对应栏"
+msgstr "在多栏模式中选中对应栏"
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
@@ -1053,11 +1053,11 @@ msgstr "<0>1</0> 到 <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
 msgid "Focus next column in multi-column mode"
-msgstr ""
+msgstr "在多栏模式中选中下一栏"
 
 #: src/components/keyboard-shortcuts-help.jsx:121
 msgid "Focus previous column in multi-column mode"
-msgstr ""
+msgstr "在多栏模式中选中上一栏"
 
 #: src/components/keyboard-shortcuts-help.jsx:125
 msgid "Compose new post"
@@ -1371,7 +1371,7 @@ msgstr "账号…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:830
+#: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "登录"
@@ -1561,8 +1561,8 @@ msgstr "投票"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1196
-#: src/pages/status.jsx:1219
+#: src/pages/status.jsx:1201
+#: src/pages/status.jsx:1224
 msgid "Refresh"
 msgstr "刷新"
 
@@ -2330,8 +2330,8 @@ msgstr "新嘟文"
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:824
-#: src/pages/status.jsx:983
-#: src/pages/status.jsx:1356
+#: src/pages/status.jsx:988
+#: src/pages/status.jsx:1361
 msgid "Try again"
 msgstr "重试"
 
@@ -3579,85 +3579,85 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:592
-#: src/pages/status.jsx:1126
+#: src/pages/status.jsx:597
+#: src/pages/status.jsx:1131
 msgid "post.title"
 msgstr "嘟文"
 
-#: src/pages/status.jsx:817
+#: src/pages/status.jsx:822
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "你尚未登录。互动 ()"
 
-#: src/pages/status.jsx:837
+#: src/pages/status.jsx:842
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "此嘟文加载自其它实例 (<0>{instance}</0>)。 无法进行互动 (回复、转嘟等)。"
 
-#: src/pages/status.jsx:865
+#: src/pages/status.jsx:870
 msgid "Error: {e}"
 msgstr "错误: {e}"
 
-#: src/pages/status.jsx:872
+#: src/pages/status.jsx:877
 msgid "Switch to my instance to enable interactions"
 msgstr "切换到我所在的实例以进行互动"
 
-#: src/pages/status.jsx:974
+#: src/pages/status.jsx:979
 msgid "Unable to load replies."
 msgstr "无法加载回复。"
 
-#: src/pages/status.jsx:1086
+#: src/pages/status.jsx:1091
 msgid "Back"
 msgstr "返回"
 
-#: src/pages/status.jsx:1117
+#: src/pages/status.jsx:1122
 msgid "Go to main post"
 msgstr "跳转到主嘟文"
 
-#: src/pages/status.jsx:1140
+#: src/pages/status.jsx:1145
 msgid "{0} posts above ‒ Go to top"
 msgstr "还有 {0} 条上级嘟文 ‒ 转到顶部"
 
-#: src/pages/status.jsx:1183
-#: src/pages/status.jsx:1246
+#: src/pages/status.jsx:1188
+#: src/pages/status.jsx:1251
 msgid "Switch to Side Peek view"
 msgstr "切换至侧边预览视图"
 
-#: src/pages/status.jsx:1247
+#: src/pages/status.jsx:1252
 msgid "Switch to Full view"
 msgstr "切换至完整视图"
 
-#: src/pages/status.jsx:1265
+#: src/pages/status.jsx:1270
 msgid "Show all sensitive content"
 msgstr "显示所有敏感内容"
 
-#: src/pages/status.jsx:1270
+#: src/pages/status.jsx:1275
 msgid "Experimental"
 msgstr "实验性功能"
 
-#: src/pages/status.jsx:1279
+#: src/pages/status.jsx:1284
 msgid "Unable to switch"
 msgstr "无法切换"
 
-#: src/pages/status.jsx:1286
+#: src/pages/status.jsx:1291
 msgid "Switch to post's instance ({0})"
 msgstr "切换到原嘟所属的实例 ({0})"
 
-#: src/pages/status.jsx:1289
+#: src/pages/status.jsx:1294
 msgid "Switch to post's instance"
 msgstr "切换到原嘟所属实例"
 
-#: src/pages/status.jsx:1347
+#: src/pages/status.jsx:1352
 msgid "Unable to load post"
 msgstr "无法加载嘟文"
 
-#: src/pages/status.jsx:1482
+#: src/pages/status.jsx:1487
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, other {<0>{1}</0> 条回复}}"
 
-#: src/pages/status.jsx:1500
+#: src/pages/status.jsx:1505
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, other {<0>{0}</0> 条评论}}"
 
-#: src/pages/status.jsx:1522
+#: src/pages/status.jsx:1527
 msgid "View post with its replies"
 msgstr "查看嘟文及其回复"
 

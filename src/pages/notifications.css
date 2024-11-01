@@ -27,6 +27,11 @@
     margin: 0;
     opacity: 1;
 
+    #columns & {
+      position: static;
+      background-color: inherit;
+    }
+
     small {
       font-weight: normal;
       font-size: var(--text-size);

@@ -30,10 +30,10 @@ function Shortcuts() {
   if (!shortcuts.length) {
     return null;
   }
-  if (
+  const isMultiColumnMode =
     settings.shortcutsViewMode === 'multi-column' ||
-    (!settings.shortcutsViewMode && settings.shortcutsColumnsMode)
-  ) {
+    (!settings.shortcutsViewMode && settings.shortcutsColumnsMode);
+  if (isMultiColumnMode) {
     return null;
   }
 
@@ -87,16 +87,22 @@ function Shortcuts() {
     .filter(Boolean);
 
   const navigate = useNavigate();
-  useHotkeys(['1', '2', '3', '4', '5', '6', '7', '8', '9'], (e, handler) => {
-    const index = parseInt(handler.keys[0], 10) - 1;
-    if (index < formattedShortcuts.length) {
-      const { path } = formattedShortcuts[index];
-      if (path) {
-        navigate(path);
-        menuRef.current?.closeMenu?.();
+  useHotkeys(
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    (e, handler) => {
+      const index = parseInt(handler.keys[0], 10) - 1;
+      if (index < formattedShortcuts.length) {
+        const { path } = formattedShortcuts[index];
+        if (path) {
+          navigate(path);
+          menuRef.current?.closeMenu?.();
+        }
       }
-    }
-  });
+    },
+    {
+      enabled: !isMultiColumnMode,
+    },
+  );
 
   const [lists, setLists] = useState([]);
 

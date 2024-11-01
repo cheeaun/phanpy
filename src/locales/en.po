@@ -98,8 +98,8 @@ msgstr "Following"
 #: src/components/account-info.jsx:419
 #: src/components/account-info.jsx:776
 #: src/pages/account-statuses.jsx:484
-#: src/pages/search.jsx:237
-#: src/pages/search.jsx:384
+#: src/pages/search.jsx:312
+#: src/pages/search.jsx:459
 msgid "Posts"
 msgstr ""
 
@@ -524,7 +524,7 @@ msgstr ""
 msgid "Cloak mode enabled"
 msgstr ""
 
-#: src/components/columns.jsx:19
+#: src/components/columns.jsx:26
 #: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
@@ -674,7 +674,7 @@ msgid "Add custom emoji"
 msgstr ""
 
 #: src/components/compose.jsx:1504
-#: src/components/keyboard-shortcuts-help.jsx:143
+#: src/components/keyboard-shortcuts-help.jsx:151
 #: src/components/status.jsx:913
 #: src/components/status.jsx:1701
 #: src/components/status.jsx:1702
@@ -957,8 +957,8 @@ msgstr ""
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
-#: src/pages/search.jsx:227
-#: src/pages/search.jsx:260
+#: src/pages/search.jsx:302
+#: src/pages/search.jsx:335
 msgid "Accounts"
 msgstr ""
 
@@ -966,14 +966,14 @@ msgstr ""
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
-#: src/pages/search.jsx:454
+#: src/pages/search.jsx:529
 #: src/pages/status.jsx:1327
 msgid "Show more…"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:524
-#: src/pages/search.jsx:459
+#: src/pages/search.jsx:534
 msgid "The end."
 msgstr ""
 
@@ -1047,52 +1047,60 @@ msgid "<0>1</0> to <1>9</1>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:117
+msgid "Focus next column in multi-column mode"
+msgstr "Focus next column in multi-column mode"
+
+#: src/components/keyboard-shortcuts-help.jsx:121
+msgid "Focus previous column in multi-column mode"
+msgstr "Focus previous column in multi-column mode"
+
+#: src/components/keyboard-shortcuts-help.jsx:125
 msgid "Compose new post"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:121
+#: src/components/keyboard-shortcuts-help.jsx:129
 msgid "Compose new post (new window)"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:124
+#: src/components/keyboard-shortcuts-help.jsx:132
 msgid "<0>Shift</0> + <1>c</1>"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:130
+#: src/components/keyboard-shortcuts-help.jsx:138
 msgid "Send post"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:132
+#: src/components/keyboard-shortcuts-help.jsx:140
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:139
+#: src/components/keyboard-shortcuts-help.jsx:147
 #: src/components/nav-menu.jsx:374
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
-#: src/pages/search.jsx:39
-#: src/pages/search.jsx:209
+#: src/pages/search.jsx:45
+#: src/pages/search.jsx:284
 msgid "Search"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:147
+#: src/components/keyboard-shortcuts-help.jsx:155
 msgid "Reply (new window)"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:150
+#: src/components/keyboard-shortcuts-help.jsx:158
 msgid "<0>Shift</0> + <1>r</1>"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:156
+#: src/components/keyboard-shortcuts-help.jsx:164
 msgid "Like (favourite)"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:158
+#: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>l</0> or <1>f</1>"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:164
+#: src/components/keyboard-shortcuts-help.jsx:172
 #: src/components/status.jsx:921
 #: src/components/status.jsx:2396
 #: src/components/status.jsx:2428
@@ -1100,22 +1108,22 @@ msgstr ""
 msgid "Boost"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:166
+#: src/components/keyboard-shortcuts-help.jsx:174
 msgid "<0>Shift</0> + <1>b</1>"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:172
+#: src/components/keyboard-shortcuts-help.jsx:180
 #: src/components/status.jsx:1006
 #: src/components/status.jsx:2453
 #: src/components/status.jsx:2454
 msgid "Bookmark"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:176
+#: src/components/keyboard-shortcuts-help.jsx:184
 msgid "Toggle Cloak mode"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:178
+#: src/components/keyboard-shortcuts-help.jsx:186
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr ""
 
@@ -1298,7 +1306,7 @@ msgid "Lists"
 msgstr ""
 
 #: src/components/nav-menu.jsx:249
-#: src/components/shortcuts.jsx:209
+#: src/components/shortcuts.jsx:215
 #: src/pages/list.jsx:133
 msgid "All Lists"
 msgstr ""
@@ -1780,7 +1788,7 @@ msgid "Media only"
 msgstr ""
 
 #: src/components/shortcuts-settings.jsx:235
-#: src/components/shortcuts.jsx:186
+#: src/components/shortcuts.jsx:192
 msgid "Shortcuts"
 msgstr ""
 
@@ -2690,7 +2698,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
-#: src/pages/search.jsx:222
+#: src/pages/search.jsx:297
 msgid "All"
 msgstr ""
 
@@ -3273,58 +3281,58 @@ msgstr ""
 msgid "Switch to Local"
 msgstr ""
 
-#: src/pages/search.jsx:43
+#: src/pages/search.jsx:49
 msgid "Search: {q} (Posts)"
 msgstr ""
 
-#: src/pages/search.jsx:46
+#: src/pages/search.jsx:52
 msgid "Search: {q} (Accounts)"
 msgstr ""
 
-#: src/pages/search.jsx:49
+#: src/pages/search.jsx:55
 msgid "Search: {q} (Hashtags)"
 msgstr ""
 
-#: src/pages/search.jsx:52
+#: src/pages/search.jsx:58
 msgid "Search: {q}"
 msgstr ""
 
-#: src/pages/search.jsx:232
-#: src/pages/search.jsx:314
+#: src/pages/search.jsx:307
+#: src/pages/search.jsx:389
 msgid "Hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:264
-#: src/pages/search.jsx:318
-#: src/pages/search.jsx:388
+#: src/pages/search.jsx:339
+#: src/pages/search.jsx:393
+#: src/pages/search.jsx:463
 msgid "See more"
 msgstr ""
 
-#: src/pages/search.jsx:290
+#: src/pages/search.jsx:365
 msgid "See more accounts"
 msgstr ""
 
-#: src/pages/search.jsx:304
+#: src/pages/search.jsx:379
 msgid "No accounts found."
 msgstr ""
 
-#: src/pages/search.jsx:360
+#: src/pages/search.jsx:435
 msgid "See more hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:374
+#: src/pages/search.jsx:449
 msgid "No hashtags found."
 msgstr ""
 
-#: src/pages/search.jsx:418
+#: src/pages/search.jsx:493
 msgid "See more posts"
 msgstr ""
 
-#: src/pages/search.jsx:432
+#: src/pages/search.jsx:507
 msgid "No posts found."
 msgstr ""
 
-#: src/pages/search.jsx:476
+#: src/pages/search.jsx:551
 msgid "Enter your search term or paste a URL above to get started."
 msgstr ""
 

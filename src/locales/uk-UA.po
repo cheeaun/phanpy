@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-01 11:27\n"
+"PO-Revision-Date: 2024-11-02 00:22\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1339,7 +1339,7 @@ msgstr "Вподобане"
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
-msgstr "Відстежувані гештеґи"
+msgstr "Відстежувані хештеґи"
 
 #: src/components/nav-menu.jsx:310
 #: src/pages/account-statuses.jsx:331
@@ -1573,11 +1573,11 @@ msgstr "Показати результати"
 
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
-msgstr ""
+msgstr "{votesCount, plural, one {<0>{0}</0> проголосува(в/ла)} other {<1>{1}</1> проголосували}}"
 
 #: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> учасник} few {<1>{1}</1> учасники} other {<1>{1}</1> учасників}} опитування"
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
@@ -1720,204 +1720,204 @@ msgstr "Надіслати скаргу <0>+ Заблокувати корист
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
+msgstr "{query} <0>‒ обліківки, хештеґи та дописи</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "Дописи з <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr ""
+msgstr "Дописи, що помічені <0>#{0}</0>"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Переглянути <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
-msgstr ""
+msgstr "Облікові записи з <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Домашня / Підписки"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
-msgstr ""
+msgstr "Публічна (Локальна / Федеративна)"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Обліковий запис"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "Хештеґ"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "ID списку"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
-msgstr ""
+msgstr "Лише локальна"
 
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:193
 msgid "Instance"
-msgstr ""
+msgstr "Інстанс"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr ""
+msgstr "Необов'язково, напр. twiukraine.com"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Пошуковий запит"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr ""
+msgstr "Необов'язково для режиму з одним стовпцем"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr ""
+msgstr "напр. PixelArt (Макс 5, розділені пробілом)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
 msgid "Media only"
-msgstr ""
+msgstr "Лише медіа"
 
 #: src/components/shortcuts-settings.jsx:235
 #: src/components/shortcuts.jsx:192
 msgid "Shortcuts"
-msgstr ""
+msgstr "Ярлики"
 
 #: src/components/shortcuts-settings.jsx:243
 msgid "beta"
-msgstr ""
+msgstr "бета"
 
 #: src/components/shortcuts-settings.jsx:249
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "Вкажіть список ярликів, які будуть виглядати як:"
 
 #: src/components/shortcuts-settings.jsx:255
 msgid "Floating button"
-msgstr ""
+msgstr "Кнопка, що плаває"
 
 #: src/components/shortcuts-settings.jsx:260
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Панель Вкладки/Меню"
 
 #: src/components/shortcuts-settings.jsx:265
 msgid "Multi-column"
-msgstr ""
+msgstr "Декілька стовпців"
 
 #: src/components/shortcuts-settings.jsx:332
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "Недоступно в поточному режимі перегляду"
 
 #: src/components/shortcuts-settings.jsx:351
 msgid "Move up"
-msgstr ""
+msgstr "Перемістити вгору"
 
 #: src/components/shortcuts-settings.jsx:367
 msgid "Move down"
-msgstr ""
+msgstr "Пересунути вниз"
 
 #: src/components/shortcuts-settings.jsx:379
 #: src/components/status.jsx:1298
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: src/components/shortcuts-settings.jsx:400
 msgid "Add more than one shortcut/column to make this work."
-msgstr ""
+msgstr "Додайте кілька ярликів/стовпців, щоб це працювало."
 
 #: src/components/shortcuts-settings.jsx:411
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
+msgstr "Ще немає стовпців. Натисніть кнопку Додати стовпчик."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "Ще немає ярликів. Натисніть кнопку Додати ярлик."
 
 #: src/components/shortcuts-settings.jsx:415
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "Не знаєте що додати?<0/> Радимо почати з <1>Додому / Підписки</1> та <1>Сповіщення</1>."
 
 #: src/components/shortcuts-settings.jsx:443
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "Максимум {SHORTCUTS_LIMIT} стовпців"
 
 #: src/components/shortcuts-settings.jsx:444
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "Максимум {SHORTCUTS_LIMIT} ярликів"
 
 #: src/components/shortcuts-settings.jsx:458
 msgid "Import/export"
-msgstr ""
+msgstr "Імпорт/Експорт"
 
 #: src/components/shortcuts-settings.jsx:468
 msgid "Add column…"
-msgstr ""
+msgstr "Додати стовпець…"
 
 #: src/components/shortcuts-settings.jsx:469
 msgid "Add shortcut…"
-msgstr ""
+msgstr "Додати ярлик…"
 
 #: src/components/shortcuts-settings.jsx:516
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr ""
+msgstr "Вказаний список не є обов'язковим. Для режиму з кількома стовпцями список необхідний, інакше стовпець не буде показано."
 
 #: src/components/shortcuts-settings.jsx:517
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr ""
+msgstr "Для режиму з кількома стовпцями пошуковий запит необхідний, інакше стовпець не буде показано."
 
 #: src/components/shortcuts-settings.jsx:518
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr ""
+msgstr "Підтримуються декілька гештеґів. Розділені пробілами."
 
 #: src/components/shortcuts-settings.jsx:587
 msgid "Edit shortcut"
-msgstr ""
+msgstr "Редагувати ярлик"
 
 #: src/components/shortcuts-settings.jsx:587
 msgid "Add shortcut"
-msgstr ""
+msgstr "Додати ярлик"
 
 #: src/components/shortcuts-settings.jsx:623
 msgid "Timeline"
-msgstr ""
+msgstr "Стрічка"
 
 #: src/components/shortcuts-settings.jsx:649
 msgid "List"
-msgstr ""
+msgstr "Список"
 
 #: src/components/shortcuts-settings.jsx:788
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr ""
+msgstr "Імпорт/Експорт <0>Ярликів</0>"
 
 #: src/components/shortcuts-settings.jsx:798
 msgid "Import"
-msgstr ""
+msgstr "Імпорт"
 
 #: src/components/shortcuts-settings.jsx:806
 msgid "Paste shortcuts here"
-msgstr ""
+msgstr "Вставити ярлики сюди"
 
 #: src/components/shortcuts-settings.jsx:822
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "Завантаження збережених ярликів з сервера інстансу…"
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "Не вдалося завантажити ярлики"
 
 #: src/components/shortcuts-settings.jsx:854
 msgid "Download shortcuts from instance server"
@@ -2918,15 +2918,15 @@ msgstr ""
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
-msgstr ""
+msgstr "{0, plural,one {# хештеґ} few {# хештеґи} other {# хештеґів}}"
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "Не вдалося завантажити хештеґи, що відстежуються."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Жодного хештеґу не відстежується."
 
 #: src/pages/following.jsx:143
 msgid "Nothing to see here."
@@ -2939,60 +2939,60 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} (Лише медіа) на {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} на {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr ""
+msgstr "{hashtagTitle} (Лише медіа)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr ""
+msgstr "Жодного допису із цим хештеґом."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr ""
+msgstr "Не вдалося завантажити дописи із цим хештеґом."
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "Не відстежувати #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} не відстежується"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} відстежується"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr ""
+msgstr "Відстежуємо…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"
-msgstr ""
+msgstr "Не рекомендовано в профілі"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr ""
+msgstr "Не вдалося скасувати рекомендацію в профілі"
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
 msgid "Featured on profile"
-msgstr ""
+msgstr "Рекомендовано в профілі"
 
 #: src/pages/hashtag.jsx:328
 msgid "Feature on profile"
-msgstr ""
+msgstr "Рекомендувати в профілі"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
@@ -3000,11 +3000,11 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
-msgstr ""
+msgstr "Додати хештеґ"
 
 #: src/pages/hashtag.jsx:428
 msgid "Remove hashtag"
-msgstr ""
+msgstr "Видалити хештеґ"
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
@@ -3012,21 +3012,21 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
-msgstr ""
+msgstr "Цей ярлик вже існує"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr ""
+msgstr "Ярлик хештеґу додано"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
-msgstr ""
+msgstr "Додати в Ярлики"
 
 #: src/pages/hashtag.jsx:486
 #: src/pages/public.jsx:139
 #: src/pages/trending.jsx:478
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Введіть новий інстанс, напр. twiukraine.com"
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
@@ -3305,7 +3305,7 @@ msgstr ""
 #: src/pages/search.jsx:307
 #: src/pages/search.jsx:389
 msgid "Hashtags"
-msgstr ""
+msgstr "Хештеґи"
 
 #: src/pages/search.jsx:339
 #: src/pages/search.jsx:393
@@ -3323,11 +3323,11 @@ msgstr ""
 
 #: src/pages/search.jsx:435
 msgid "See more hashtags"
-msgstr ""
+msgstr "Переглянути більше хештеґів"
 
 #: src/pages/search.jsx:449
 msgid "No hashtags found."
-msgstr ""
+msgstr "Хештеґи не знайдено."
 
 #: src/pages/search.jsx:493
 msgid "See more posts"
@@ -3760,7 +3760,7 @@ msgstr ""
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
-msgstr ""
+msgstr "Скриншот стрічки з кількома хештеґами з формою для додавання хештеґів"
 
 #: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-02 12:16\n"
+"PO-Revision-Date: 2024-11-02 13:22\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1773,7 +1773,7 @@ msgstr "Інстанс"
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr "Необов'язково, напр. twiukraine.com"
+msgstr "Необов'язково, напр. \"twiukraine.com\""
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
@@ -2588,15 +2588,15 @@ msgstr "останні 12 годин"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "більше 12 годин"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
-msgstr ""
+msgstr "Відстежувані теґи"
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "Групи"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
@@ -2605,191 +2605,191 @@ msgstr ""
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
-msgstr ""
+msgstr "Ретроспектива <0>бета</0>"
 
 #: src/pages/catchup.jsx:896
 #: src/pages/catchup.jsx:1585
 msgid "Help"
-msgstr ""
+msgstr "Довідка"
 
 #: src/pages/catchup.jsx:912
 msgid "What is this?"
-msgstr ""
+msgstr "Що це?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr ""
+msgstr "Ретроспектива (Cath-Up) - це окрема стрічка ваших підписок, що пропонує їх високорівневий перегляд з простим, натхненний email-ом інтерфейсом для багатофункціонального і легкого сортування і фільтру дописів."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
-msgstr ""
+msgstr "Попередній перегляд інтерфейсу Ретроспективи"
 
 #: src/pages/catchup.jsx:935
 msgid "Let's catch up"
-msgstr ""
+msgstr "Зрозуміло, до роботи"
 
 #: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
-msgstr ""
+msgstr "Нумо переглянемо дописи з ваших підписок."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr ""
+msgstr "Показати мені всі дописи з…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
-msgstr ""
+msgstr "до максимуму"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
-msgstr ""
+msgstr "Наздогнати"
 
 #: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
-msgstr ""
+msgstr "Перетинається з вашою останньою ретроспективою"
 
 #: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
-msgstr ""
+msgstr "До останньої ретроспективи ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Примітка: ваш інстанс може показати не більше 800 дописів в Домашній стрічці незалежно від часового діапазону. Може бути менше або більше."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
-msgstr ""
+msgstr "Раніше…"
 
 #: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
-msgstr ""
+msgstr "{0, plural, one {# допис} few {# дописи} other {# дописів}}"
 
 #: src/pages/catchup.jsx:1062
 msgid "Remove this catch-up?"
-msgstr ""
+msgstr "Видалити цю ретроспективу?"
 
 #: src/pages/catchup.jsx:1065
 msgid "Removing Catch-up {0}"
-msgstr ""
+msgstr "Видалення ретроспективи {0}"
 
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Ретроспективу {0} видалено"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr ""
+msgstr "Примітка: Буде збережено не більше 3 останніх ретроспектив."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
-msgstr ""
+msgstr "Отримання дописів…"
 
 #: src/pages/catchup.jsx:1101
 msgid "This might take a while."
-msgstr ""
+msgstr "Це може зайняти деякий час."
 
 #: src/pages/catchup.jsx:1136
 msgid "Reset filters"
-msgstr ""
+msgstr "Скинути фільтри"
 
 #: src/pages/catchup.jsx:1144
 #: src/pages/catchup.jsx:1591
 msgid "Top links"
-msgstr ""
+msgstr "Найпопулярніші посилання"
 
 #: src/pages/catchup.jsx:1261
 msgid "Shared by {0}"
-msgstr ""
+msgstr "Поширили {0}"
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
 #: src/pages/search.jsx:297
 msgid "All"
-msgstr ""
+msgstr "Усе"
 
 #: src/pages/catchup.jsx:1401
 msgid "{0, plural, one {# author} other {# authors}}"
-msgstr ""
+msgstr "{0, plural, one {# автор} few {# автори} other {# авторів}}"
 
 #: src/pages/catchup.jsx:1413
 msgid "Sort"
-msgstr ""
+msgstr "Сортування"
 
 #: src/pages/catchup.jsx:1444
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: src/pages/catchup.jsx:1448
 msgid "Density"
-msgstr ""
+msgstr "Наповнення"
 
 #: src/pages/catchup.jsx:1486
 msgid "Authors"
-msgstr ""
+msgstr "За авторами"
 
 #: src/pages/catchup.jsx:1487
 msgid "None"
-msgstr ""
+msgstr "Не групувати"
 
 #: src/pages/catchup.jsx:1503
 msgid "Show all authors"
-msgstr ""
+msgstr "Показати всіх авторів"
 
 #: src/pages/catchup.jsx:1554
 msgid "You don't have to read everything."
-msgstr ""
+msgstr "Ви не мусите читати все."
 
 #: src/pages/catchup.jsx:1555
 msgid "That's all."
-msgstr ""
+msgstr "На цьому все."
 
 #: src/pages/catchup.jsx:1563
 msgid "Back to top"
-msgstr ""
+msgstr "На початок"
 
 #: src/pages/catchup.jsx:1594
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr ""
+msgstr "Посилання, поширені підписками, відсортовані за кількістю взаємодій, поширень і вподобань."
 
 #: src/pages/catchup.jsx:1600
 msgid "Sort: Density"
-msgstr ""
+msgstr "Сортування: Наповнення"
 
 #: src/pages/catchup.jsx:1603
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr ""
+msgstr "Дописи відсортовані за наповненням або розміром інформації. Короткі дописи - \"легші\", коли як довші пости - \"важче\". Дописи із зображенням \"важче\", аніж дописи без зображень."
 
 #: src/pages/catchup.jsx:1610
 msgid "Group: Authors"
-msgstr ""
+msgstr "Групування: За авторами"
 
 #: src/pages/catchup.jsx:1613
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr ""
+msgstr "Дописи згруповані за авторами, відсортовані за кількістю дописів на автора."
 
 #: src/pages/catchup.jsx:1660
 msgid "Next author"
-msgstr ""
+msgstr "Наступний автор"
 
 #: src/pages/catchup.jsx:1668
 msgid "Previous author"
-msgstr ""
+msgstr "Попередній автор"
 
 #: src/pages/catchup.jsx:1684
 msgid "Scroll to top"
-msgstr ""
+msgstr "Прокрутити догори"
 
 #: src/pages/catchup.jsx:1875
 msgid "Filtered: {0}"
-msgstr ""
+msgstr "Відфільтровано: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Жодного вподобання. Нумо вподобайте щось!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
-msgstr ""
+msgstr "Не вдалося завантажити вподобання."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
@@ -3026,7 +3026,7 @@ msgstr "Додати в Ярлики"
 #: src/pages/public.jsx:139
 #: src/pages/trending.jsx:478
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr "Введіть новий інстанс, напр. twiukraine.com"
+msgstr "Введіть новий інстанс, напр. \"twiukraine.com\""
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
@@ -3102,7 +3102,7 @@ msgstr ""
 
 #: src/pages/login.jsx:232
 msgid "e.g. “mastodon.social”"
-msgstr ""
+msgstr "напр. \"twiukraine.com\""
 
 #: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."

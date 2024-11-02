@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-02 00:22\n"
+"PO-Revision-Date: 2024-11-02 10:13\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -2996,7 +2996,7 @@ msgstr "Рекомендувати в профілі"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
-msgstr ""
+msgstr "{TOTAL_TAGS_LIMIT, plural, few {Макс. # теґи} other {Макс. # теґів}}"
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
@@ -3008,7 +3008,7 @@ msgstr "Видалити хештеґ"
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
-msgstr ""
+msgstr "Досягнуто ліміт в {SHORTCUTS_LIMIT, plural, one {# ярлик.} few {# ярлики.} other {# ярликів.}} Не вдалося додати ярлик."
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
@@ -3032,19 +3032,19 @@ msgstr "Введіть новий інстанс, напр. twiukraine.com"
 #: src/pages/public.jsx:142
 #: src/pages/trending.jsx:481
 msgid "Invalid instance"
-msgstr ""
+msgstr "Некоректний інстанс"
 
 #: src/pages/hashtag.jsx:503
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:493
 msgid "Go to another instance…"
-msgstr ""
+msgstr "Перейти до іншого інстансу…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:504
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Перейти до мого інстансу (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:209
 msgid "Unable to fetch notifications."
@@ -3296,7 +3296,7 @@ msgstr ""
 
 #: src/pages/search.jsx:55
 msgid "Search: {q} (Hashtags)"
-msgstr ""
+msgstr "Пошук: {q} (Хештеґи)"
 
 #: src/pages/search.jsx:58
 msgid "Search: {q}"
@@ -3764,11 +3764,11 @@ msgstr "Скриншот стрічки з кількома хештеґами �
 
 #: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"
-msgstr ""
+msgstr "Стрічка з кількома хештеґами"
 
 #: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr ""
+msgstr "До 5 хештеґів, об'єднаних в одну стрічку"
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."

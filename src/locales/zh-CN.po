@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-01 13:44\n"
+"PO-Revision-Date: 2024-11-03 07:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -38,7 +38,6 @@ msgstr "机器人"
 #: src/components/account-block.jsx:168
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:498
-#: src/pages/catchup.jsx:1471
 msgid "Group"
 msgstr "群组"
 
@@ -2618,7 +2617,7 @@ msgstr "这是什么？"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr "“补看”是你关注的内容的一个独立时间线，提供一种一目了然的高级视图，它拥有灵感来源于电子邮件的简介界面，能够让你轻松对嘟文进行排序和筛选。"
+msgstr "“补看”是你关注的内容的一个独立时间线，提供一种一目了然的高级视图，它拥有灵感来源于电子邮件的简洁界面，能够让你轻松对嘟文进行排序和筛选。"
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
@@ -2722,6 +2721,11 @@ msgstr "日期"
 #: src/pages/catchup.jsx:1448
 msgid "Density"
 msgstr "内容"
+
+#. js-lingui-explicit-id
+#: src/pages/catchup.jsx:1471
+msgid "group.filter"
+msgstr ""
 
 #: src/pages/catchup.jsx:1486
 msgid "Authors"

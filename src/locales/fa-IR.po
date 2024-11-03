@@ -8,7 +8,7 @@ msgstr ""
 "Language: fa\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-01 10:02\n"
+"PO-Revision-Date: 2024-11-03 07:11\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -38,7 +38,6 @@ msgstr "خودکارشده"
 #: src/components/account-block.jsx:168
 #: src/components/account-info.jsx:639
 #: src/components/status.jsx:498
-#: src/pages/catchup.jsx:1471
 msgid "Group"
 msgstr "گروه"
 
@@ -123,7 +122,7 @@ msgstr "فرسته"
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1207
+#: src/pages/status.jsx:1212
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr "بیشتر"
@@ -190,8 +189,8 @@ msgstr "اصلی"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:930
-#: src/pages/status.jsx:1552
+#: src/pages/status.jsx:935
+#: src/pages/status.jsx:1557
 msgid "Replies"
 msgstr "پاسخ‌ها"
 
@@ -432,7 +431,7 @@ msgstr "پی گرفتن"
 #: src/pages/notifications.jsx:868
 #: src/pages/notifications.jsx:1082
 #: src/pages/settings.jsx:76
-#: src/pages/status.jsx:1294
+#: src/pages/status.jsx:1299
 msgid "Close"
 msgstr "بستن"
 
@@ -972,7 +971,7 @@ msgstr "حساب‌های کاربری"
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
 #: src/pages/search.jsx:529
-#: src/pages/status.jsx:1327
+#: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr "نمایش بیشتر…"
 
@@ -1371,7 +1370,7 @@ msgstr "حساب‌ها…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:830
+#: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "ورود"
@@ -1561,8 +1560,8 @@ msgstr "رأی دادن"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1196
-#: src/pages/status.jsx:1219
+#: src/pages/status.jsx:1201
+#: src/pages/status.jsx:1224
 msgid "Refresh"
 msgstr "بارگذاری مجدد"
 
@@ -2330,8 +2329,8 @@ msgstr "فرسته‌های جدید"
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
 #: src/pages/notifications.jsx:824
-#: src/pages/status.jsx:983
-#: src/pages/status.jsx:1356
+#: src/pages/status.jsx:988
+#: src/pages/status.jsx:1361
 msgid "Try again"
 msgstr "تلاش مجدد"
 
@@ -2722,6 +2721,11 @@ msgstr "تاریخ"
 #: src/pages/catchup.jsx:1448
 msgid "Density"
 msgstr "تراکم"
+
+#. js-lingui-explicit-id
+#: src/pages/catchup.jsx:1471
+msgid "group.filter"
+msgstr ""
 
 #: src/pages/catchup.jsx:1486
 msgid "Authors"
@@ -3579,85 +3583,85 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "نکته: آگاهی‌های ارسالی فقط برای <0>یک حساب کاربری</0> کار میکنند."
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:592
-#: src/pages/status.jsx:1126
+#: src/pages/status.jsx:597
+#: src/pages/status.jsx:1131
 msgid "post.title"
 msgstr ""
 
-#: src/pages/status.jsx:817
+#: src/pages/status.jsx:822
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:837
+#: src/pages/status.jsx:842
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:865
+#: src/pages/status.jsx:870
 msgid "Error: {e}"
 msgstr ""
 
-#: src/pages/status.jsx:872
+#: src/pages/status.jsx:877
 msgid "Switch to my instance to enable interactions"
 msgstr ""
 
-#: src/pages/status.jsx:974
+#: src/pages/status.jsx:979
 msgid "Unable to load replies."
 msgstr ""
 
-#: src/pages/status.jsx:1086
+#: src/pages/status.jsx:1091
 msgid "Back"
 msgstr ""
 
-#: src/pages/status.jsx:1117
+#: src/pages/status.jsx:1122
 msgid "Go to main post"
 msgstr ""
 
-#: src/pages/status.jsx:1140
+#: src/pages/status.jsx:1145
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
 
-#: src/pages/status.jsx:1183
-#: src/pages/status.jsx:1246
+#: src/pages/status.jsx:1188
+#: src/pages/status.jsx:1251
 msgid "Switch to Side Peek view"
 msgstr ""
 
-#: src/pages/status.jsx:1247
+#: src/pages/status.jsx:1252
 msgid "Switch to Full view"
 msgstr "تعویض به حالت نمایش کامل"
 
-#: src/pages/status.jsx:1265
+#: src/pages/status.jsx:1270
 msgid "Show all sensitive content"
 msgstr "نمایش همهٔ محتوای حساس"
 
-#: src/pages/status.jsx:1270
+#: src/pages/status.jsx:1275
 msgid "Experimental"
 msgstr "آزمایشی"
 
-#: src/pages/status.jsx:1279
+#: src/pages/status.jsx:1284
 msgid "Unable to switch"
 msgstr ""
 
-#: src/pages/status.jsx:1286
+#: src/pages/status.jsx:1291
 msgid "Switch to post's instance ({0})"
 msgstr "تعویض به نمونهٔ فرسته ({0})"
 
-#: src/pages/status.jsx:1289
+#: src/pages/status.jsx:1294
 msgid "Switch to post's instance"
 msgstr "تعویض به نمونهٔ فرسته"
 
-#: src/pages/status.jsx:1347
+#: src/pages/status.jsx:1352
 msgid "Unable to load post"
 msgstr ""
 
-#: src/pages/status.jsx:1482
+#: src/pages/status.jsx:1487
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
-#: src/pages/status.jsx:1500
+#: src/pages/status.jsx:1505
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
 
-#: src/pages/status.jsx:1522
+#: src/pages/status.jsx:1527
 msgid "View post with its replies"
 msgstr ""
 

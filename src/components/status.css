@@ -247,8 +247,11 @@
   :is(.content.truncated, .poll, .media-container.truncated) {
   mask-image: linear-gradient(to bottom, #000 40px, transparent);
 }
-.status-card .card {
-  display: none;
+.status-card {
+  .card,
+  .card-byline {
+    display: none;
+  }
 }
 .timeline-deck .status-card .content.truncated:after {
   /* Don't show "Read more" in status cards */

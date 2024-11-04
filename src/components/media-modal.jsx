@@ -14,6 +14,7 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import isRTL from '../utils/is-rtl';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
+import store from '../utils/store';
 
 import Icon from './icon';
 import Link from './link';
@@ -115,17 +116,24 @@ function MediaModal({
     return () => clearTimeout(timer);
   }, []);
 
-  const mediaAccentColors = useMemo(() => {
+  const mediaOklabColors = useMemo(() => {
     return mediaAttachments?.map((media) => {
       const { blurhash } = media;
       if (blurhash) {
         const averageColor = getBlurHashAverageColor(blurhash);
-        const labAverageColor = rgb2oklab(averageColor);
-        return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
+        return rgb2oklab(averageColor);
       }
       return null;
     });
   }, [mediaAttachments]);
+  const mediaAccentColors = useMemo(() => {
+    return mediaOklabColors?.map((labAverageColor) => {
+      if (labAverageColor) {
+        return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
+      }
+      return null;
+    });
+  }, [mediaOklabColors]);
   const mediaAccentGradient = useMemo(() => {
     const gap = 5;
     const range = 100 / mediaAccentColors.length;
@@ -156,6 +164,51 @@ function MediaModal({
       toastRef.current?.hideToast?.();
     };
   }, []);
+
+  useLayoutEffect(() => {
+    const currentColor = mediaOklabColors[currentIndex];
+    let $meta;
+    let metaColor;
+    if (currentColor) {
+      const mediaColor = {
+        light: `rgb(${oklab2rgb([0.81, currentColor[1], currentColor[2]]).join(
+          ',',
+        )})`,
+        dark: `rgb(${oklab2rgb([0.35, currentColor[1], currentColor[2]]).join(
+          ',',
+        )})`,
+      };
+
+      const theme = store.local.get('theme');
+      if (theme) {
+        $meta = document.querySelector(
+          `meta[name="theme-color"][data-theme-setting="manual"]`,
+        );
+        if ($meta) {
+          metaColor = $meta.content;
+          $meta.content = mediaColor[theme];
+        }
+      } else {
+        const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light';
+        $meta = document.querySelector(
+          `meta[name="theme-color"][media*="${colorScheme}"]`,
+        );
+        if ($meta) {
+          metaColor = $meta.content;
+          $meta.content = mediaColor[colorScheme];
+        }
+      }
+    }
+    return () => {
+      // Reset meta color
+      if ($meta && metaColor) {
+        $meta.content = metaColor;
+      }
+    };
+  }, [currentIndex, mediaAccentColors]);
 
   return (
     <div

@@ -1468,7 +1468,7 @@ function Catchup() {
                     ))}
                   </fieldset> */}
                   <span class="filter-label">
-                    <Trans>Group</Trans>
+                    <Trans id="group.filter">Group</Trans>
                   </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_GROUPS.map((key) => (

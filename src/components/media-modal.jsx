@@ -260,8 +260,8 @@ function MediaModal({
                   e.stopPropagation();
                   const left =
                     carouselRef.current.clientWidth * i * (isRTL() ? -1 : 1);
-                  carouselRef.current.scrollTo({ left, behavior: 'smooth' });
                   carouselRef.current.focus();
+                  carouselRef.current.scrollTo({ left, behavior: 'smooth' });
                 }}
               >
                 <Icon icon="round" size="s" alt="⸱" />

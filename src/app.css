@@ -371,7 +371,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   content-visibility: auto;
   contain-intrinsic-size: auto 160px;
 }
-.timeline.contextual > li:is(:hover, :focus-visible) {
+.timeline.contextual
+  > li:is(:hover, :focus-visible, :focus-within, :has(.status-menu-open)) {
   /* Needed to undo the overflow: hidden "effect" due to "content-visibility: auto" */
   content-visibility: visible !important;
 }
@@ -380,10 +381,14 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline.contextual {
-  --thread-start: 40px;
-  --line-start: 40px;
+  --indent-large-start: 40px;
+  --indent-small-start: 10px;
+  --thread-start: var(--indent-small-start);
+  --line-start: var(--indent-small-start);
   --line-width: 3px;
   --line-end: calc(var(--line-start) + var(--line-width));
+  --indent-large-end: calc(var(--indent-large-start) + var(--line-width));
+  --indent-small-end: calc(var(--indent-small-start) + var(--line-width));
   --line-margin-end: 16px;
   --line-radius: 10px;
   --line-diameter: calc(var(--line-radius) * 2);
@@ -393,6 +398,68 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   --line-curve: 45deg;
   :dir(rtl) & {
     --line-curve: -45deg;
+  }
+
+  > li:is(.hero:has(+ .thread), .hero:last-child, .thread, .ancestor) {
+    --thread-start: var(--indent-large-start);
+    --line-start: var(--indent-large-start);
+    --line-end: calc(var(--line-start) + var(--line-width));
+  }
+
+  > li.descendant.thread:has(+ .descendant:not(.thread)):after {
+    position: absolute;
+    inset-inline-start: 10px;
+    bottom: 0;
+    content: '';
+    display: block;
+    --curves-width: calc(var(--line-start) + var(--line-width) - 10px);
+    width: var(--curves-width);
+    background-color: var(--bg-color);
+    background-repeat: no-repeat;
+    /* border-bottom: var(--line-width) dotted var(--comment-line-color); */
+    /* height: calc(var(--line-diameter) - var(--line-width));
+    background-image: linear-gradient(
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      ),
+      radial-gradient(
+        circle at bottom var(--forward),
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      ),
+      radial-gradient(
+        circle at top var(--backward),
+        transparent calc(var(--line-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--line-radius) - var(--line-width))
+          var(--line-radius),
+        transparent var(--line-radius)
+      );
+    background-position: var(--line-radius) 0, bottom var(--backward),
+      top var(--forward);
+    background-size: calc(100% - var(--line-radius) * 2) auto,
+      var(--line-radius), var(--line-radius); */
+    --curves-radius: calc(var(--curves-width) / 2);
+    height: calc(var(--curves-width) - var(--line-width));
+    background-image: radial-gradient(
+        circle at bottom var(--forward),
+        transparent calc(var(--curves-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
+          var(--curves-radius),
+        transparent var(--curves-radius)
+      ),
+      radial-gradient(
+        circle at top var(--backward),
+        transparent calc(var(--curves-radius) - var(--line-width)),
+        var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
+          var(--curves-radius),
+        transparent var(--curves-radius)
+      );
+    background-size: var(--curves-radius);
+    background-position: top var(--backward), bottom var(--forward);
   }
 }
 .timeline.contextual > li {
@@ -405,6 +472,28 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent var(--line-end),
     transparent
   );
+  &.hero:not(:has(+ .thread), :first-child, :only-child, :last-child) {
+    background-image: linear-gradient(
+        var(--line-dir),
+        transparent,
+        transparent var(--indent-small-start),
+        var(--comment-line-color) var(--indent-small-start),
+        var(--comment-line-color) var(--indent-small-end),
+        transparent var(--indent-small-end),
+        transparent
+      ),
+      linear-gradient(
+        var(--line-dir),
+        transparent,
+        transparent var(--indent-large-start),
+        var(--comment-line-color) var(--indent-large-start),
+        var(--comment-line-color) var(--indent-large-end),
+        transparent var(--indent-large-end),
+        transparent
+      );
+    background-size: 100% 50%;
+    background-position: bottom, top;
+  }
   background-repeat: no-repeat;
   transition: opacity 0.3s ease-in-out;
 }
@@ -426,7 +515,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .timeline.contextual
   > li.descendant:not(.thread)
   > :is(.status-link, .status-focus) {
-  padding-inline-start: 40px;
+  padding-inline-start: var(--line-start);
 }
 .timeline.contextual .replies[data-scroll-left]:not([data-scroll-left='0']) {
   background-color: var(--bg-color);
@@ -2542,6 +2631,15 @@ ul.link-list li a .icon {
   }
   #columns > * {
     padding: 0 16px;
+
+    &:is(#notifications-page) {
+      padding-inline: 0;
+
+      .timeline-deck > header {
+        margin-inline: 16px;
+      }
+    }
+
     border-inline: var(--hairline-width) solid var(--bg-faded-color);
     /* border-radius: 16px; */
     /* box-shadow: -4px 0 16px -8px var(--drop-shadow-color); */

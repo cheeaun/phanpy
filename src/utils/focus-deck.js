@@ -3,7 +3,7 @@ const focusDeck = () => {
     const columns = document.getElementById('columns');
     if (columns) {
       // Focus first column
-      // columns.querySelector('.deck-container')?.focus?.();
+      columns.querySelector('.deck-container')?.focus?.();
     } else {
       const modals = document.querySelectorAll('#modal-container > *');
       if (modals?.length) {

@@ -14,6 +14,7 @@ import targetLanguages from '../data/lingva-target-languages';
 import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
+import prettyBytes from '../utils/pretty-bytes';
 import {
   initSubscription,
   isPushSupported,
@@ -859,6 +860,13 @@ function Settings({ onClose }) {
             <button
               type="button"
               class="plain2 small"
+              onClick={async () => alert(await getCachesSize())}
+            >
+              Show cache size
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
               onClick={() => {
                 const key = prompt('Enter cache key');
                 if (!key) return;
@@ -900,6 +908,28 @@ async function getCachesKeys() {
     total[key] = k.length;
   }
   return total;
+}
+
+async function getCachesSize() {
+  const keys = await caches.keys();
+  let total = {};
+  let totalSize = 0;
+  for (const key of keys) {
+    const cache = await caches.open(key);
+    const k = await cache.keys();
+    for (const item of k) {
+      const response = await cache.match(item);
+      const blob = await response.blob();
+      total[key] = (total[key] || 0) + blob.size;
+      totalSize += blob.size;
+    }
+  }
+  return {
+    ...Object.fromEntries(
+      Object.entries(total).map(([k, v]) => [k, prettyBytes(v)]),
+    ),
+    totalSize: prettyBytes(totalSize),
+  };
 }
 
 function clearCacheKey(key) {

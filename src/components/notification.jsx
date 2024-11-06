@@ -420,8 +420,8 @@ function Notification({
       });
     } else if (type === 'move') {
       text = text({
-        account: <NameText account={account} showAvatar />,
-        targetAccount: <NameText account={target} showAvatar />,
+        account: <NameText account={account} showAvatar showAcct />,
+        targetAccount: <NameText account={target} showAvatar showAcct />,
       });
     } else {
       text = text({

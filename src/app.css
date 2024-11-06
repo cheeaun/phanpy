@@ -1395,6 +1395,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   user-select: none;
   width: 100%;
   gap: 16px;
+  --accent-gradient: var(--accent-gradient-light);
+  @media (prefers-color-scheme: dark) {
+    --accent-gradient: var(--accent-gradient-dark);
+  }
+  background-image: linear-gradient(to var(--forward), var(--accent-gradient));
 }
 .carousel::-webkit-scrollbar {
   display: none;
@@ -1409,7 +1414,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--accent-alpha-color);
+  background-color: var(--accent-light-color);
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--accent-dark-color);
+  }
   /* background-image: radial-gradient(
     closest-side,
     var(--accent-color) 10%,

@@ -913,22 +913,27 @@ async function getCachesKeys() {
 async function getCachesSize() {
   const keys = await caches.keys();
   let total = {};
-  let totalSize = 0;
+  let TOTAL = 0;
   for (const key of keys) {
     const cache = await caches.open(key);
     const k = await cache.keys();
     for (const item of k) {
-      const response = await cache.match(item);
-      const blob = await response.blob();
-      total[key] = (total[key] || 0) + blob.size;
-      totalSize += blob.size;
+      try {
+        const response = await cache.match(item);
+        const blob = await response.blob();
+        total[key] = (total[key] || 0) + blob.size;
+        TOTAL += blob.size;
+      } catch (e) {
+        alert('Failed to get cache size for ' + item);
+        alert(e);
+      }
     }
   }
   return {
     ...Object.fromEntries(
       Object.entries(total).map(([k, v]) => [k, prettyBytes(v)]),
     ),
-    totalSize: prettyBytes(totalSize),
+    TOTAL: prettyBytes(TOTAL),
   };
 }
 

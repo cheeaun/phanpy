@@ -561,6 +561,11 @@
         display: flex;
         align-items: center;
         gap: 4px;
+
+        small {
+          flex: 1;
+          min-width: 0;
+        }
       }
     }
 

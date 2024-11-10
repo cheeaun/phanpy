@@ -14,6 +14,7 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import isRTL from '../utils/is-rtl';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
+import store from '../utils/store';
 
 import Icon from './icon';
 import Link from './link';
@@ -115,39 +116,95 @@ function MediaModal({
     return () => clearTimeout(timer);
   }, []);
 
-  const mediaAccentColors = useMemo(() => {
+  const mediaOklabColors = useMemo(() => {
     return mediaAttachments?.map((media) => {
       const { blurhash } = media;
       if (blurhash) {
         const averageColor = getBlurHashAverageColor(blurhash);
-        const labAverageColor = rgb2oklab(averageColor);
-        return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
+        return rgb2oklab(averageColor);
       }
       return null;
     });
   }, [mediaAttachments]);
-  const mediaAccentGradient = useMemo(() => {
+  // const mediaAccentColors = useMemo(() => {
+  //   return mediaOklabColors?.map((labAverageColor) => {
+  //     if (labAverageColor) {
+  //       return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
+  //     }
+  //     return null;
+  //   });
+  // }, [mediaOklabColors]);
+  const mediaAccentColors = useMemo(() => {
+    return mediaOklabColors?.map((labAverageColor) => {
+      if (labAverageColor) {
+        return {
+          light: oklab2rgb([0.95, labAverageColor[1], labAverageColor[2]]),
+          dark: oklab2rgb([0.25, labAverageColor[1], labAverageColor[2]]),
+          default: oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]),
+        };
+      }
+      return {};
+    });
+  });
+  // const mediaAccentGradient = useMemo(() => {
+  //   const gap = 5;
+  //   const range = 100 / mediaAccentColors.length;
+  //   return (
+  //     mediaAccentColors
+  //       ?.map((color, i) => {
+  //         const start = i * range + gap;
+  //         const end = (i + 1) * range - gap;
+  //         if (color) {
+  //           return `
+  //           rgba(${color?.join(',')}, 0.4) ${start}%,
+  //           rgba(${color?.join(',')}, 0.4) ${end}%
+  //         `;
+  //         }
+
+  //         return `
+  //           transparent ${start}%,
+  //           transparent ${end}%
+  //         `;
+  //       })
+  //       ?.join(', ') || 'transparent'
+  //   );
+  // }, [mediaAccentColors]);
+  const mediaAccentGradients = useMemo(() => {
     const gap = 5;
     const range = 100 / mediaAccentColors.length;
-    return (
-      mediaAccentColors
-        ?.map((color, i) => {
-          const start = i * range + gap;
-          const end = (i + 1) * range - gap;
-          if (color) {
-            return `
-            rgba(${color?.join(',')}, 0.4) ${start}%,
-            rgba(${color?.join(',')}, 0.4) ${end}%
-          `;
-          }
+    const colors = mediaAccentColors.map((color, i) => {
+      const start = i * range + gap;
+      const end = (i + 1) * range - gap;
+      if (color?.light && color?.dark) {
+        return {
+          light: `
+                rgb(${color.light?.join(',')}) ${start}%, 
+                rgb(${color.light?.join(',')}) ${end}%
+              `,
+          dark: `
+                rgb(${color.dark?.join(',')}) ${start}%, 
+                rgb(${color.dark?.join(',')}) ${end}%
+              `,
+        };
+      }
 
-          return `
-            transparent ${start}%,
-            transparent ${end}%
-          `;
-        })
-        ?.join(', ') || 'transparent'
-    );
+      return {
+        light: `
+              transparent ${start}%, 
+              transparent ${end}%
+            `,
+        dark: `
+              transparent ${start}%, 
+              transparent ${end}%
+            `,
+      };
+    });
+    const lightGradient = colors.map((color) => color.light).join(', ');
+    const darkGradient = colors.map((color) => color.dark).join(', ');
+    return {
+      light: lightGradient,
+      dark: darkGradient,
+    };
   }, [mediaAccentColors]);
 
   let toastRef = useRef(null);
@@ -156,6 +213,46 @@ function MediaModal({
       toastRef.current?.hideToast?.();
     };
   }, []);
+
+  useLayoutEffect(() => {
+    const currentColor = mediaAccentColors[currentIndex];
+    let $meta;
+    let metaColor;
+    if (currentColor) {
+      const theme = store.local.get('theme');
+      if (theme) {
+        const mediaColor = `rgb(${currentColor[theme].join(',')})`;
+        console.log({ mediaColor });
+        $meta = document.querySelector(
+          `meta[name="theme-color"][data-theme-setting="manual"]`,
+        );
+        if ($meta) {
+          metaColor = $meta.content;
+          $meta.content = mediaColor;
+        }
+      } else {
+        const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light';
+        const mediaColor = `rgb(${currentColor[colorScheme].join(',')})`;
+        console.log({ mediaColor });
+        $meta = document.querySelector(
+          `meta[name="theme-color"][media*="${colorScheme}"]`,
+        );
+        if ($meta) {
+          metaColor = $meta.content;
+          $meta.content = mediaColor;
+        }
+      }
+    }
+    return () => {
+      // Reset meta color
+      if ($meta && metaColor) {
+        $meta.content = metaColor;
+      }
+    };
+  }, [currentIndex, mediaAccentColors]);
 
   return (
     <div
@@ -179,8 +276,10 @@ function MediaModal({
           mediaAttachments.length > 1
             ? {
                 backgroundAttachment: 'local',
-                backgroundImage: `linear-gradient(
-            to ${isRTL() ? 'left' : 'right'}, ${mediaAccentGradient})`,
+                '--accent-gradient-light': mediaAccentGradients?.light,
+                '--accent-gradient-dark': mediaAccentGradients?.dark,
+                //     backgroundImage: `linear-gradient(
+                // to ${isRTL() ? 'left' : 'right'}, ${mediaAccentGradient})`,
               }
             : {}
         }
@@ -194,8 +293,14 @@ function MediaModal({
               style={
                 accentColor
                   ? {
-                      '--accent-color': `rgb(${accentColor?.join(',')})`,
-                      '--accent-alpha-color': `rgba(${accentColor?.join(
+                      '--accent-color': `rgb(${accentColor.default.join(',')})`,
+                      '--accent-light-color': `rgb(${accentColor.light?.join(
+                        ',',
+                      )})`,
+                      '--accent-dark-color': `rgb(${accentColor.dark?.join(
+                        ',',
+                      )})`,
+                      '--accent-alpha-color': `rgba(${accentColor.default.join(
                         ',',
                       )}, 0.4)`,
                     }

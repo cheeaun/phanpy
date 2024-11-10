@@ -210,6 +210,12 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 if (isIOS) {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
+      // Don't reset theme color if media modal is showing
+      // Media modal will set its own theme color based on the media's color
+      const showingMediaModal =
+        document.getElementsByClassName('media-modal-container').length > 0;
+      if (showingMediaModal) return;
+
       const theme = store.local.get('theme');
       let $meta;
       if (theme) {

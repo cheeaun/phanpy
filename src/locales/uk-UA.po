@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-16 07:24\n"
+"PO-Revision-Date: 2024-11-03 07:11\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -18,67 +18,59 @@ msgstr ""
 "X-Crowdin-File: /main/src/locales/en.po\n"
 "X-Crowdin-File-ID: 18\n"
 
-#: src/components/account-block.jsx:133
+#: src/components/account-block.jsx:135
 msgid "Locked"
 msgstr "Закритий профіль"
 
-#: src/components/account-block.jsx:139
+#: src/components/account-block.jsx:141
 msgid "Posts: {0}"
 msgstr "Дописи: {0}"
 
-#: src/components/account-block.jsx:144
+#: src/components/account-block.jsx:146
 msgid "Last posted: {0}"
 msgstr "Останній допис: {0}"
 
-#: src/components/account-block.jsx:159
+#: src/components/account-block.jsx:161
 #: src/components/account-info.jsx:634
 msgid "Automated"
 msgstr "Автоматизовано"
 
-#: src/components/account-block.jsx:166
+#: src/components/account-block.jsx:168
 #: src/components/account-info.jsx:639
-#: src/components/status.jsx:440
-#: src/pages/catchup.jsx:1471
+#: src/components/status.jsx:498
 msgid "Group"
 msgstr "Група"
 
-#: src/components/account-block.jsx:176
+#: src/components/account-block.jsx:178
 msgid "Mutual"
 msgstr "Взаємно"
 
-#: src/components/account-block.jsx:180
-#: src/components/account-info.jsx:1677
+#: src/components/account-block.jsx:182
+#: src/components/account-info.jsx:1680
 msgid "Requested"
 msgstr "Зроблено запит"
 
-#: src/components/account-block.jsx:184
-#: src/components/account-info.jsx:416
-#: src/components/account-info.jsx:742
-#: src/components/account-info.jsx:756
-#: src/components/account-info.jsx:1668
-#: src/components/nav-menu.jsx:193
-#: src/components/shortcuts-settings.jsx:137
-#: src/pages/following.jsx:20
-#: src/pages/following.jsx:134
+#: src/components/account-block.jsx:186
+#: src/components/account-info.jsx:1671
 msgid "Following"
 msgstr "Ви підписані"
 
-#: src/components/account-block.jsx:188
-#: src/components/account-info.jsx:1059
+#: src/components/account-block.jsx:190
+#: src/components/account-info.jsx:1062
 msgid "Follows you"
 msgstr "Підписаний(-на) на вас"
 
-#: src/components/account-block.jsx:196
+#: src/components/account-block.jsx:198
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# підписник} many {# підписників} other {# підписники}}"
 
-#: src/components/account-block.jsx:205
+#: src/components/account-block.jsx:207
 #: src/components/account-info.jsx:680
 msgid "Verified"
 msgstr "Верифіковано"
 
-#: src/components/account-block.jsx:220
-#: src/components/account-info.jsx:777
+#: src/components/account-block.jsx:222
+#: src/components/account-info.jsx:780
 msgid "Joined <0>{0}</0>"
 msgstr "Приєднав(-ла)ся <0>{0}</0>"
 
@@ -100,30 +92,37 @@ msgstr "Перейти на сторінку облікового запису"
 msgid "Followers"
 msgstr "Підписники"
 
+#. js-lingui-explicit-id
+#: src/components/account-info.jsx:416
+#: src/components/account-info.jsx:742
+#: src/components/account-info.jsx:759
+msgid "following.stats"
+msgstr "Підписок"
+
 #: src/components/account-info.jsx:419
-#: src/components/account-info.jsx:773
+#: src/components/account-info.jsx:776
 #: src/pages/account-statuses.jsx:484
-#: src/pages/search.jsx:237
-#: src/pages/search.jsx:384
+#: src/pages/search.jsx:312
+#: src/pages/search.jsx:459
 msgid "Posts"
 msgstr "Дописів"
 
 #: src/components/account-info.jsx:427
-#: src/components/account-info.jsx:1115
-#: src/components/compose.jsx:2459
+#: src/components/account-info.jsx:1118
+#: src/components/compose.jsx:2488
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:283
-#: src/components/status.jsx:1636
-#: src/components/status.jsx:1653
-#: src/components/status.jsx:1777
-#: src/components/status.jsx:2372
-#: src/components/status.jsx:2375
+#: src/components/status.jsx:1721
+#: src/components/status.jsx:1738
+#: src/components/status.jsx:1862
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2477
 #: src/pages/account-statuses.jsx:528
 #: src/pages/accounts.jsx:109
 #: src/pages/hashtag.jsx:199
 #: src/pages/list.jsx:157
 #: src/pages/public.jsx:114
-#: src/pages/status.jsx:1169
+#: src/pages/status.jsx:1212
 #: src/pages/trending.jsx:471
 msgid "More"
 msgstr "Більше"
@@ -133,17 +132,17 @@ msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> вказав(-ла), що новий обліковий запис зараз:"
 
 #: src/components/account-info.jsx:584
-#: src/components/account-info.jsx:1273
+#: src/components/account-info.jsx:1276
 msgid "Handle copied"
 msgstr "Ідентифікатор скопійовано"
 
 #: src/components/account-info.jsx:587
-#: src/components/account-info.jsx:1276
+#: src/components/account-info.jsx:1279
 msgid "Unable to copy handle"
 msgstr "Не вдалося скопіювати ідентифікатор"
 
 #: src/components/account-info.jsx:593
-#: src/components/account-info.jsx:1282
+#: src/components/account-info.jsx:1285
 msgid "Copy handle"
 msgstr "Скопіювати ідентифікатор"
 
@@ -164,252 +163,252 @@ msgid "In Memoriam"
 msgstr "Вічна пам'ять"
 
 #: src/components/account-info.jsx:709
-#: src/components/account-info.jsx:747
+#: src/components/account-info.jsx:750
 msgid "This user has chosen to not make this information available."
 msgstr "Цей користувач вирішив не розкривати цю інформацію."
 
-#: src/components/account-info.jsx:802
+#: src/components/account-info.jsx:805
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} дописи, {1} відповіді, {2} поширення"
 
-#: src/components/account-info.jsx:818
+#: src/components/account-info.jsx:821
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {1 останній допис за 1 останній день} other {1 останній допис за {2} останніх днів}}} other {{3, plural, one {Останні {4} дописів за 1 останній день} other {Останні {5} дописів за {6} останніх днів}}}}"
 
-#: src/components/account-info.jsx:831
+#: src/components/account-info.jsx:834
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {{1}  допис} few {{1} дописи} many {{1} дописів} other {{1} дописи}} за останній рік чи роки"
 
-#: src/components/account-info.jsx:855
+#: src/components/account-info.jsx:858
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr "Оригінал"
 
-#: src/components/account-info.jsx:859
-#: src/components/status.jsx:2163
+#: src/components/account-info.jsx:862
+#: src/components/status.jsx:2252
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
 #: src/pages/catchup.jsx:2056
-#: src/pages/status.jsx:892
-#: src/pages/status.jsx:1494
+#: src/pages/status.jsx:935
+#: src/pages/status.jsx:1557
 msgid "Replies"
 msgstr "Відповіді"
 
-#: src/components/account-info.jsx:863
+#: src/components/account-info.jsx:866
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
-#: src/pages/settings.jsx:1045
+#: src/pages/settings.jsx:1110
 msgid "Boosts"
 msgstr "Поширення"
 
-#: src/components/account-info.jsx:869
+#: src/components/account-info.jsx:872
 msgid "Post stats unavailable."
 msgstr "Статистика дописів недоступна."
 
-#: src/components/account-info.jsx:900
+#: src/components/account-info.jsx:903
 msgid "View post stats"
 msgstr "Переглянути статистику дописів"
 
-#: src/components/account-info.jsx:1063
+#: src/components/account-info.jsx:1066
 msgid "Last post: <0>{0}</0>"
 msgstr "Останній допис: <0>{0}</0>"
 
-#: src/components/account-info.jsx:1077
+#: src/components/account-info.jsx:1080
 msgid "Muted"
 msgstr "Заглушений(-а)"
 
-#: src/components/account-info.jsx:1082
+#: src/components/account-info.jsx:1085
 msgid "Blocked"
 msgstr "Заблокований(-а)"
 
-#: src/components/account-info.jsx:1091
+#: src/components/account-info.jsx:1094
 msgid "Private note"
 msgstr "Приватна нотатка"
 
-#: src/components/account-info.jsx:1148
+#: src/components/account-info.jsx:1151
 msgid "Mention <0>@{username}</0>"
 msgstr "Згадати <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1160
+#: src/components/account-info.jsx:1163
 msgid "Translate bio"
 msgstr "Перекласти біографію"
 
-#: src/components/account-info.jsx:1171
+#: src/components/account-info.jsx:1174
 msgid "Edit private note"
 msgstr "Редагувати приватну нотатку"
 
-#: src/components/account-info.jsx:1171
+#: src/components/account-info.jsx:1174
 msgid "Add private note"
 msgstr "Додати приватну нотатку"
 
-#: src/components/account-info.jsx:1191
+#: src/components/account-info.jsx:1194
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "Сповіщення про дописи @{username} увімкнено."
 
-#: src/components/account-info.jsx:1192
+#: src/components/account-info.jsx:1195
 msgid "Notifications disabled for @{username}'s posts."
 msgstr "Сповіщення про дописи @{username} вимкнено."
 
-#: src/components/account-info.jsx:1204
+#: src/components/account-info.jsx:1207
 msgid "Disable notifications"
 msgstr "Вимкнути сповіщення"
 
-#: src/components/account-info.jsx:1205
+#: src/components/account-info.jsx:1208
 msgid "Enable notifications"
 msgstr "Увімкнути сповіщення"
 
-#: src/components/account-info.jsx:1222
+#: src/components/account-info.jsx:1225
 msgid "Boosts from @{username} enabled."
 msgstr "Поширення від @{username} увімкнено."
 
-#: src/components/account-info.jsx:1223
+#: src/components/account-info.jsx:1226
 msgid "Boosts from @{username} disabled."
 msgstr "Поширення від @{username} вимкнено."
 
-#: src/components/account-info.jsx:1234
+#: src/components/account-info.jsx:1237
 msgid "Disable boosts"
 msgstr "Вимкнути поширення"
 
-#: src/components/account-info.jsx:1234
+#: src/components/account-info.jsx:1237
 msgid "Enable boosts"
 msgstr "Увімкнути поширення"
 
-#: src/components/account-info.jsx:1250
-#: src/components/account-info.jsx:1260
-#: src/components/account-info.jsx:1861
+#: src/components/account-info.jsx:1253
+#: src/components/account-info.jsx:1263
+#: src/components/account-info.jsx:1864
 msgid "Add/Remove from Lists"
 msgstr "Додати/видалити зі Списків"
 
-#: src/components/account-info.jsx:1299
-#: src/components/status.jsx:1079
+#: src/components/account-info.jsx:1302
+#: src/components/status.jsx:1161
 msgid "Link copied"
 msgstr "Посилання скопійовано"
 
-#: src/components/account-info.jsx:1302
-#: src/components/status.jsx:1082
+#: src/components/account-info.jsx:1305
+#: src/components/status.jsx:1164
 msgid "Unable to copy link"
 msgstr "Не вдалося скопіювати посилання"
 
-#: src/components/account-info.jsx:1308
-#: src/components/shortcuts-settings.jsx:1056
-#: src/components/status.jsx:1088
-#: src/components/status.jsx:3146
+#: src/components/account-info.jsx:1311
+#: src/components/shortcuts-settings.jsx:1059
+#: src/components/status.jsx:1170
+#: src/components/status.jsx:3251
 msgid "Copy"
 msgstr "Скопіювати"
 
-#: src/components/account-info.jsx:1323
-#: src/components/shortcuts-settings.jsx:1074
-#: src/components/status.jsx:1104
+#: src/components/account-info.jsx:1326
+#: src/components/shortcuts-settings.jsx:1077
+#: src/components/status.jsx:1186
 msgid "Sharing doesn't seem to work."
 msgstr "Здається, поширення не працює."
 
-#: src/components/account-info.jsx:1329
-#: src/components/status.jsx:1110
+#: src/components/account-info.jsx:1332
+#: src/components/status.jsx:1192
 msgid "Share…"
 msgstr "Поширити…"
 
-#: src/components/account-info.jsx:1349
+#: src/components/account-info.jsx:1352
 msgid "Unmuted @{username}"
 msgstr "@{username} більше не глушиться"
 
-#: src/components/account-info.jsx:1361
+#: src/components/account-info.jsx:1364
 msgid "Unmute <0>@{username}</0>"
 msgstr "Не глушити <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1377
+#: src/components/account-info.jsx:1380
 msgid "Mute <0>@{username}</0>…"
 msgstr "Заглушити <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1409
+#: src/components/account-info.jsx:1412
 msgid "Muted @{username} for {0}"
 msgstr "@{username} заглушений на {0}"
 
-#: src/components/account-info.jsx:1421
+#: src/components/account-info.jsx:1424
 msgid "Unable to mute @{username}"
 msgstr "Не вдалося заглушити @{username}"
 
-#: src/components/account-info.jsx:1442
+#: src/components/account-info.jsx:1445
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Відписати <0>@{username}</0>?"
 
-#: src/components/account-info.jsx:1462
+#: src/components/account-info.jsx:1465
 msgid "@{username} removed from followers"
 msgstr "@{username} відписано"
 
-#: src/components/account-info.jsx:1474
+#: src/components/account-info.jsx:1477
 msgid "Remove follower…"
 msgstr "Відписати…"
 
-#: src/components/account-info.jsx:1485
+#: src/components/account-info.jsx:1488
 msgid "Block <0>@{username}</0>?"
 msgstr "Заблокувати <0>@{username}</0>?"
 
-#: src/components/account-info.jsx:1509
+#: src/components/account-info.jsx:1512
 msgid "Unblocked @{username}"
 msgstr "@{username} розблоковано"
 
-#: src/components/account-info.jsx:1517
+#: src/components/account-info.jsx:1520
 msgid "Blocked @{username}"
 msgstr "@{username} заблоковано"
 
-#: src/components/account-info.jsx:1525
+#: src/components/account-info.jsx:1528
 msgid "Unable to unblock @{username}"
 msgstr "Не вдалося розблокувати @{username}"
 
-#: src/components/account-info.jsx:1527
+#: src/components/account-info.jsx:1530
 msgid "Unable to block @{username}"
 msgstr "Не вдалося заблокувати @{username}"
 
-#: src/components/account-info.jsx:1537
+#: src/components/account-info.jsx:1540
 msgid "Unblock <0>@{username}</0>"
 msgstr "Розблокувати <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1546
+#: src/components/account-info.jsx:1549
 msgid "Block <0>@{username}</0>…"
 msgstr "Заблокувати <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1563
+#: src/components/account-info.jsx:1566
 msgid "Report <0>@{username}</0>…"
 msgstr "Поскаржитися на <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1583
-#: src/components/account-info.jsx:2094
+#: src/components/account-info.jsx:1586
+#: src/components/account-info.jsx:2097
 msgid "Edit profile"
 msgstr "Редагувати профіль"
 
-#: src/components/account-info.jsx:1619
+#: src/components/account-info.jsx:1622
 msgid "Withdraw follow request?"
 msgstr "Відкликати запит на підписку?"
 
-#: src/components/account-info.jsx:1620
+#: src/components/account-info.jsx:1623
 msgid "Unfollow @{0}?"
 msgstr "Відписатися від @{0}?"
 
-#: src/components/account-info.jsx:1671
+#: src/components/account-info.jsx:1674
 msgid "Unfollow…"
 msgstr "Відписатися…"
 
-#: src/components/account-info.jsx:1680
+#: src/components/account-info.jsx:1683
 msgid "Withdraw…"
 msgstr "Відкликати…"
 
-#: src/components/account-info.jsx:1687
-#: src/components/account-info.jsx:1691
+#: src/components/account-info.jsx:1690
+#: src/components/account-info.jsx:1694
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
 msgstr "Підписатися"
 
-#: src/components/account-info.jsx:1802
-#: src/components/account-info.jsx:1856
-#: src/components/account-info.jsx:1989
-#: src/components/account-info.jsx:2089
+#: src/components/account-info.jsx:1805
+#: src/components/account-info.jsx:1859
+#: src/components/account-info.jsx:1992
+#: src/components/account-info.jsx:2092
 #: src/components/account-sheet.jsx:37
-#: src/components/compose.jsx:797
-#: src/components/compose.jsx:2415
-#: src/components/compose.jsx:2888
-#: src/components/compose.jsx:3096
-#: src/components/compose.jsx:3326
+#: src/components/compose.jsx:818
+#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2917
+#: src/components/compose.jsx:3125
+#: src/components/compose.jsx:3355
 #: src/components/drafts.jsx:58
 #: src/components/embed-modal.jsx:12
 #: src/components/generic-accounts.jsx:142
@@ -419,105 +418,105 @@ msgstr "Підписатися"
 #: src/components/media-modal.jsx:247
 #: src/components/notification-service.jsx:156
 #: src/components/report-modal.jsx:75
-#: src/components/shortcuts-settings.jsx:227
-#: src/components/shortcuts-settings.jsx:580
-#: src/components/shortcuts-settings.jsx:780
-#: src/components/status.jsx:2871
-#: src/components/status.jsx:3110
-#: src/components/status.jsx:3608
+#: src/components/shortcuts-settings.jsx:230
+#: src/components/shortcuts-settings.jsx:583
+#: src/components/shortcuts-settings.jsx:783
+#: src/components/status.jsx:2976
+#: src/components/status.jsx:3215
+#: src/components/status.jsx:3713
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
-#: src/pages/notifications.jsx:840
-#: src/pages/notifications.jsx:1054
-#: src/pages/settings.jsx:69
-#: src/pages/status.jsx:1256
+#: src/pages/notifications.jsx:868
+#: src/pages/notifications.jsx:1082
+#: src/pages/settings.jsx:76
+#: src/pages/status.jsx:1299
 msgid "Close"
 msgstr "Закрити"
 
-#: src/components/account-info.jsx:1807
+#: src/components/account-info.jsx:1810
 msgid "Translated Bio"
 msgstr "Перекладена біографія"
 
-#: src/components/account-info.jsx:1901
+#: src/components/account-info.jsx:1904
 msgid "Unable to remove from list."
 msgstr "Не вдалося видалити зі списку"
 
-#: src/components/account-info.jsx:1902
+#: src/components/account-info.jsx:1905
 msgid "Unable to add to list."
 msgstr "Не вдалося додати до списку"
 
-#: src/components/account-info.jsx:1921
+#: src/components/account-info.jsx:1924
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
 msgstr "Не вдалося завантажити список"
 
-#: src/components/account-info.jsx:1925
+#: src/components/account-info.jsx:1928
 msgid "No lists."
 msgstr "Списки відсутні."
 
-#: src/components/account-info.jsx:1936
+#: src/components/account-info.jsx:1939
 #: src/components/list-add-edit.jsx:37
 #: src/pages/lists.jsx:58
 msgid "New list"
 msgstr "Новий список"
 
-#: src/components/account-info.jsx:1994
+#: src/components/account-info.jsx:1997
 msgid "Private note about <0>@{0}</0>"
 msgstr "Приватна нотатка про <0>@{0}</0>"
 
-#: src/components/account-info.jsx:2024
+#: src/components/account-info.jsx:2027
 msgid "Unable to update private note."
 msgstr "Не вдалося оновити приватну нотатку"
 
-#: src/components/account-info.jsx:2047
-#: src/components/account-info.jsx:2217
+#: src/components/account-info.jsx:2050
+#: src/components/account-info.jsx:2220
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/components/account-info.jsx:2052
+#: src/components/account-info.jsx:2055
 msgid "Save & close"
 msgstr "Зберегти і закрити"
 
-#: src/components/account-info.jsx:2145
+#: src/components/account-info.jsx:2148
 msgid "Unable to update profile."
 msgstr "Не вдалося оновити профіль."
 
-#: src/components/account-info.jsx:2152
+#: src/components/account-info.jsx:2155
 #: src/components/list-add-edit.jsx:102
 msgid "Name"
-msgstr ""
+msgstr "Назва"
 
-#: src/components/account-info.jsx:2165
+#: src/components/account-info.jsx:2168
 msgid "Bio"
 msgstr "Біографія"
 
-#: src/components/account-info.jsx:2178
+#: src/components/account-info.jsx:2181
 msgid "Extra fields"
 msgstr "Додаткові поля"
 
-#: src/components/account-info.jsx:2184
+#: src/components/account-info.jsx:2187
 msgid "Label"
 msgstr "Заголовок"
 
-#: src/components/account-info.jsx:2187
+#: src/components/account-info.jsx:2190
 msgid "Content"
 msgstr "Вміст"
 
-#: src/components/account-info.jsx:2220
+#: src/components/account-info.jsx:2223
 #: src/components/list-add-edit.jsx:147
-#: src/components/shortcuts-settings.jsx:712
+#: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
-#: src/pages/notifications.jsx:906
+#: src/pages/notifications.jsx:934
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/components/account-info.jsx:2273
+#: src/components/account-info.jsx:2276
 msgid "username"
 msgstr "ім'я користувача"
 
-#: src/components/account-info.jsx:2277
+#: src/components/account-info.jsx:2280
 msgid "server domain name"
 msgstr "доменне ім'я сервера"
 
@@ -529,15 +528,15 @@ msgstr "Режим маскування вимкнено"
 msgid "Cloak mode enabled"
 msgstr "Режим маскування увімкнено"
 
-#: src/components/columns.jsx:19
+#: src/components/columns.jsx:26
 #: src/components/nav-menu.jsx:184
-#: src/components/shortcuts-settings.jsx:137
+#: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:53
-#: src/pages/notifications.jsx:505
+#: src/pages/notifications.jsx:520
 msgid "Home"
 msgstr "Домашня"
 
@@ -546,343 +545,347 @@ msgstr "Домашня"
 msgid "Compose"
 msgstr "Написати"
 
-#: src/components/compose.jsx:392
+#: src/components/compose.jsx:394
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Є незбережені зміни. Скасувати цей допис?"
 
-#: src/components/compose.jsx:614
-#: src/components/compose.jsx:630
-#: src/components/compose.jsx:1336
-#: src/components/compose.jsx:1597
-msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+#: src/components/compose.jsx:622
+msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
+msgstr "{0, plural, one {Файл {1} не підтримується.} other {Файли {2} не підтримуються.}}"
 
-#: src/components/compose.jsx:778
+#: src/components/compose.jsx:632
+#: src/components/compose.jsx:650
+#: src/components/compose.jsx:1361
+#: src/components/compose.jsx:1623
+msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
+msgstr "{maxMediaAttachments, plural, one {Ви можете прикріпити до 1 файлу.} other {Ви можете прикріпити до # файлів.}}"
+
+#: src/components/compose.jsx:799
 msgid "Pop out"
 msgstr "В окремому вікні"
 
-#: src/components/compose.jsx:785
+#: src/components/compose.jsx:806
 msgid "Minimize"
 msgstr "Згорнути"
 
-#: src/components/compose.jsx:821
+#: src/components/compose.jsx:842
 msgid "Looks like you closed the parent window."
 msgstr "Здається, ви закрили батьківське вікно."
 
-#: src/components/compose.jsx:828
+#: src/components/compose.jsx:849
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Здається, ви вже публікуєте допис в батьківському вікні. Дочекайтеся публікації та повторіть спробу."
 
-#: src/components/compose.jsx:833
+#: src/components/compose.jsx:854
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Здається, ви вже друкуєте або редагуєте допис в батьківському вікні. Повернення в це вікно скасує зміни, що зроблені в батьківському вікні. Продовжити?"
 
-#: src/components/compose.jsx:875
+#: src/components/compose.jsx:896
 msgid "Pop in"
 msgstr "Повернути в батьківське вікно"
 
-#: src/components/compose.jsx:885
+#: src/components/compose.jsx:906
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Відповідаємо на допис @{0} (<0>{1}</0>)"
 
-#: src/components/compose.jsx:895
+#: src/components/compose.jsx:916
 msgid "Replying to @{0}’s post"
 msgstr "Відповідаємо на допис @{0}"
 
-#: src/components/compose.jsx:908
+#: src/components/compose.jsx:929
 msgid "Editing source post"
 msgstr "Редагування вихідного допису"
 
-#: src/components/compose.jsx:955
+#: src/components/compose.jsx:976
 msgid "Poll must have at least 2 options"
 msgstr "Опитування повинно мати не більше 2 опцій"
 
-#: src/components/compose.jsx:959
+#: src/components/compose.jsx:980
 msgid "Some poll choices are empty"
 msgstr "Деякі варіанти опитування порожні"
 
-#: src/components/compose.jsx:972
+#: src/components/compose.jsx:993
 msgid "Some media have no descriptions. Continue?"
 msgstr "Деякі медіа не мають альтернативного тексту. Продовжити?"
 
-#: src/components/compose.jsx:1024
+#: src/components/compose.jsx:1045
 msgid "Attachment #{i} failed"
 msgstr "Помилка вкладення #{i}"
 
-#: src/components/compose.jsx:1118
-#: src/components/status.jsx:1962
+#: src/components/compose.jsx:1139
+#: src/components/status.jsx:2047
 #: src/components/timeline.jsx:984
 msgid "Content warning"
 msgstr "Попередження про вміст"
 
-#: src/components/compose.jsx:1134
+#: src/components/compose.jsx:1155
 msgid "Content warning or sensitive media"
 msgstr "Попередження про вміст або чутливе медіа"
 
-#: src/components/compose.jsx:1170
+#: src/components/compose.jsx:1191
 #: src/components/status.jsx:93
-#: src/pages/settings.jsx:297
+#: src/pages/settings.jsx:304
 msgid "Public"
 msgstr "Для всіх"
 
-#: src/components/compose.jsx:1174
+#: src/components/compose.jsx:1196
 #: src/components/nav-menu.jsx:386
-#: src/components/shortcuts-settings.jsx:162
+#: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:94
 msgid "Local"
-msgstr ""
+msgstr "Локальна"
 
-#: src/components/compose.jsx:1178
+#: src/components/compose.jsx:1200
 #: src/components/status.jsx:95
-#: src/pages/settings.jsx:300
+#: src/pages/settings.jsx:307
 msgid "Unlisted"
 msgstr "Поза списком"
 
-#: src/components/compose.jsx:1181
+#: src/components/compose.jsx:1203
 #: src/components/status.jsx:96
-#: src/pages/settings.jsx:303
+#: src/pages/settings.jsx:310
 msgid "Followers only"
 msgstr "Лише підписники"
 
-#: src/components/compose.jsx:1184
+#: src/components/compose.jsx:1206
 #: src/components/status.jsx:97
-#: src/components/status.jsx:1840
+#: src/components/status.jsx:1925
 msgid "Private mention"
 msgstr "Лише згадані"
 
-#: src/components/compose.jsx:1193
+#: src/components/compose.jsx:1215
 msgid "Post your reply"
 msgstr "Опублікувати відповідь"
 
-#: src/components/compose.jsx:1195
+#: src/components/compose.jsx:1217
 msgid "Edit your post"
 msgstr "Редагувати допис"
 
-#: src/components/compose.jsx:1196
+#: src/components/compose.jsx:1218
 msgid "What are you doing?"
 msgstr "Що ви робите?"
 
-#: src/components/compose.jsx:1274
+#: src/components/compose.jsx:1296
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Позначити медіа як чутливе"
 
-#: src/components/compose.jsx:1372
+#: src/components/compose.jsx:1397
 msgid "Add poll"
-msgstr ""
+msgstr "Додати опитування"
 
-#: src/components/compose.jsx:1394
+#: src/components/compose.jsx:1419
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Додати користувацькі емодзі"
 
-#: src/components/compose.jsx:1478
-#: src/components/keyboard-shortcuts-help.jsx:143
-#: src/components/status.jsx:831
-#: src/components/status.jsx:1616
-#: src/components/status.jsx:1617
-#: src/components/status.jsx:2268
+#: src/components/compose.jsx:1504
+#: src/components/keyboard-shortcuts-help.jsx:151
+#: src/components/status.jsx:913
+#: src/components/status.jsx:1701
+#: src/components/status.jsx:1702
+#: src/components/status.jsx:2370
 msgid "Reply"
-msgstr ""
+msgstr "Відповісти"
 
-#: src/components/compose.jsx:1480
+#: src/components/compose.jsx:1506
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
-#: src/components/compose.jsx:1481
+#: src/components/compose.jsx:1507
 msgctxt "Submit button in composer"
 msgid "Post"
-msgstr ""
+msgstr "Опублікувати"
 
-#: src/components/compose.jsx:1609
+#: src/components/compose.jsx:1635
 msgid "Downloading GIF…"
-msgstr ""
+msgstr "Завантаження GIF…"
 
-#: src/components/compose.jsx:1637
+#: src/components/compose.jsx:1663
 msgid "Failed to download GIF"
-msgstr ""
+msgstr "Не вдалося завантажити GIF"
 
-#: src/components/compose.jsx:1748
-#: src/components/compose.jsx:1825
+#: src/components/compose.jsx:1775
+#: src/components/compose.jsx:1852
 #: src/components/nav-menu.jsx:287
 msgid "More…"
-msgstr ""
+msgstr "Більше…"
 
-#: src/components/compose.jsx:2228
+#: src/components/compose.jsx:2257
 msgid "Uploaded"
-msgstr ""
+msgstr "Вивантажено"
 
-#: src/components/compose.jsx:2241
+#: src/components/compose.jsx:2270
 msgid "Image description"
-msgstr ""
+msgstr "Опис зображення"
 
-#: src/components/compose.jsx:2242
+#: src/components/compose.jsx:2271
 msgid "Video description"
-msgstr ""
+msgstr "Опис відео"
 
-#: src/components/compose.jsx:2243
+#: src/components/compose.jsx:2272
 msgid "Audio description"
-msgstr ""
+msgstr "Опис аудіо"
 
-#: src/components/compose.jsx:2279
-#: src/components/compose.jsx:2299
+#: src/components/compose.jsx:2308
+#: src/components/compose.jsx:2328
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "Розмір файлу завеликий. Можуть виникнути проблеми з вивантаженням файлу. Спробуйте зменшити його розмір з {0} до {1} або менше."
 
-#: src/components/compose.jsx:2291
-#: src/components/compose.jsx:2311
+#: src/components/compose.jsx:2320
+#: src/components/compose.jsx:2340
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Розмір зображення завеликий. Можуть виникнути проблеми із вивантаженням. Спробуйте зменшити його з {0}×{1}px до {2}×{3}px."
 
-#: src/components/compose.jsx:2319
+#: src/components/compose.jsx:2348
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr ""
+msgstr "Частота кадрів зависока. Можуть виникнути проблеми із вивантаженням. "
 
-#: src/components/compose.jsx:2379
-#: src/components/compose.jsx:2629
-#: src/components/shortcuts-settings.jsx:723
+#: src/components/compose.jsx:2408
+#: src/components/compose.jsx:2658
+#: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr ""
+msgstr "Вилучити"
 
-#: src/components/compose.jsx:2396
+#: src/components/compose.jsx:2425
 #: src/compose.jsx:83
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
-#: src/components/compose.jsx:2421
+#: src/components/compose.jsx:2450
 msgid "Edit image description"
-msgstr ""
+msgstr "Редагувати опис зображення"
 
-#: src/components/compose.jsx:2422
+#: src/components/compose.jsx:2451
 msgid "Edit video description"
-msgstr ""
+msgstr "Редагувати опис відео"
 
-#: src/components/compose.jsx:2423
+#: src/components/compose.jsx:2452
 msgid "Edit audio description"
-msgstr ""
+msgstr "Редагувати опис аудіо"
 
-#: src/components/compose.jsx:2468
-#: src/components/compose.jsx:2517
+#: src/components/compose.jsx:2497
+#: src/components/compose.jsx:2546
 msgid "Generating description. Please wait…"
-msgstr ""
+msgstr "Генерується опис. Будь ласка, зачекайте…"
 
-#: src/components/compose.jsx:2488
+#: src/components/compose.jsx:2517
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Помилка генерації опису: {0}"
 
-#: src/components/compose.jsx:2489
+#: src/components/compose.jsx:2518
 msgid "Failed to generate description"
-msgstr ""
+msgstr "Помилка генерації опису"
 
-#: src/components/compose.jsx:2501
-#: src/components/compose.jsx:2507
-#: src/components/compose.jsx:2553
+#: src/components/compose.jsx:2530
+#: src/components/compose.jsx:2536
+#: src/components/compose.jsx:2582
 msgid "Generate description…"
-msgstr ""
+msgstr "Згенерувати опис…"
 
-#: src/components/compose.jsx:2540
+#: src/components/compose.jsx:2569
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Помилка генерації опису{0}"
 
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2584
 msgid "({0}) <0>— experimental</0>"
-msgstr ""
+msgstr "({0}) <0>— експериментально</0>"
 
-#: src/components/compose.jsx:2574
+#: src/components/compose.jsx:2603
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
-#: src/components/compose.jsx:2610
+#: src/components/compose.jsx:2639
 msgid "Choice {0}"
-msgstr ""
+msgstr "Варіант {0}"
 
-#: src/components/compose.jsx:2657
+#: src/components/compose.jsx:2686
 msgid "Multiple choices"
-msgstr ""
+msgstr "Кілька варіантів відповідей"
 
-#: src/components/compose.jsx:2660
+#: src/components/compose.jsx:2689
 msgid "Duration"
-msgstr ""
+msgstr "Тривалість"
 
-#: src/components/compose.jsx:2691
+#: src/components/compose.jsx:2720
 msgid "Remove poll"
-msgstr ""
+msgstr "Прибрати опитування"
 
-#: src/components/compose.jsx:2905
+#: src/components/compose.jsx:2934
 msgid "Search accounts"
-msgstr ""
+msgstr "Шукати облікові записи"
 
-#: src/components/compose.jsx:2946
-#: src/components/shortcuts-settings.jsx:712
+#: src/components/compose.jsx:2975
+#: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:359
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
-#: src/components/compose.jsx:2959
+#: src/components/compose.jsx:2988
 #: src/components/generic-accounts.jsx:227
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Помилка завантаження облікових записів"
 
-#: src/components/compose.jsx:3102
+#: src/components/compose.jsx:3131
 msgid "Custom emojis"
-msgstr ""
+msgstr "Користувацькі емодзі"
 
-#: src/components/compose.jsx:3122
+#: src/components/compose.jsx:3151
 msgid "Search emoji"
-msgstr ""
+msgstr "Шукати емодзі"
 
-#: src/components/compose.jsx:3153
+#: src/components/compose.jsx:3182
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "Помилка завантаження емодзі"
 
-#: src/components/compose.jsx:3164
+#: src/components/compose.jsx:3193
 msgid "Recently used"
-msgstr ""
+msgstr "Нещодавно використані"
 
-#: src/components/compose.jsx:3165
+#: src/components/compose.jsx:3194
 msgid "Others"
-msgstr ""
+msgstr "Інші"
 
-#: src/components/compose.jsx:3203
+#: src/components/compose.jsx:3232
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} більше…"
 
-#: src/components/compose.jsx:3341
+#: src/components/compose.jsx:3370
 msgid "Search GIFs"
-msgstr ""
+msgstr "Пошук GIF-ок"
 
-#: src/components/compose.jsx:3356
+#: src/components/compose.jsx:3385
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "На базі GIPHY"
 
-#: src/components/compose.jsx:3364
+#: src/components/compose.jsx:3393
 msgid "Type to search GIFs"
-msgstr ""
+msgstr "Почніть набирати для пошуку GIF-ок"
 
-#: src/components/compose.jsx:3462
+#: src/components/compose.jsx:3491
 #: src/components/media-modal.jsx:387
 #: src/components/timeline.jsx:889
 msgid "Previous"
-msgstr ""
+msgstr "Попередні"
 
-#: src/components/compose.jsx:3480
+#: src/components/compose.jsx:3509
 #: src/components/media-modal.jsx:406
 #: src/components/timeline.jsx:906
 msgid "Next"
-msgstr ""
+msgstr "Наступні"
 
-#: src/components/compose.jsx:3497
+#: src/components/compose.jsx:3526
 msgid "Error loading GIFs"
-msgstr ""
+msgstr "Помилка завантаження GIF-ок"
 
 #: src/components/drafts.jsx:63
-#: src/pages/settings.jsx:684
+#: src/pages/settings.jsx:691
 msgid "Unsent drafts"
-msgstr ""
+msgstr "Невідправлені чернетки"
 
 #: src/components/drafts.jsx:68
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "Схоже, у вас є невідправлені чернетки. Ви можете відновити роботу з ними."
 
 #: src/components/drafts.jsx:102
 msgid "Delete this draft?"
@@ -894,7 +897,7 @@ msgstr "Помилка видалення чернетки! Будь ласка,
 
 #: src/components/drafts.jsx:127
 #: src/components/list-add-edit.jsx:183
-#: src/components/status.jsx:1251
+#: src/components/status.jsx:1336
 #: src/pages/filters.jsx:587
 msgid "Delete…"
 msgstr "Видалити…"
@@ -934,7 +937,7 @@ msgid "Open in new window"
 msgstr "Відкрити у новому вікні"
 
 #: src/components/follow-request-buttons.jsx:42
-#: src/pages/notifications.jsx:890
+#: src/pages/notifications.jsx:918
 msgid "Accept"
 msgstr "Погодитись"
 
@@ -943,7 +946,7 @@ msgid "Reject"
 msgstr "Відхилити"
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1173
+#: src/pages/notifications.jsx:1201
 msgid "Accepted"
 msgstr "Погоджено"
 
@@ -956,25 +959,25 @@ msgid "Nothing to show"
 msgstr "Нічого показати"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:429
+#: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
-#: src/pages/search.jsx:227
-#: src/pages/search.jsx:260
+#: src/pages/search.jsx:302
+#: src/pages/search.jsx:335
 msgid "Accounts"
 msgstr "Облікові записи"
 
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
-#: src/pages/notifications.jsx:820
-#: src/pages/search.jsx:454
-#: src/pages/status.jsx:1289
+#: src/pages/notifications.jsx:848
+#: src/pages/search.jsx:529
+#: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr "Показати більше…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:524
-#: src/pages/search.jsx:459
+#: src/pages/search.jsx:534
 msgid "The end."
 msgstr "Кінець."
 
@@ -1041,285 +1044,301 @@ msgstr "<0>Esc</0> або <1>Backspace</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:109
 msgid "Focus column in multi-column mode"
-msgstr "Фокус колонки в багатоколонному режимі"
+msgstr "Фокус стовпця в режимі декількох стовпців"
 
 #: src/components/keyboard-shortcuts-help.jsx:111
 msgid "<0>1</0> to <1>9</1>"
 msgstr "<0>1</0> по <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:117
+msgid "Focus next column in multi-column mode"
+msgstr "Перемістити фокус на наступний стовпець в режимі декількох стовпців"
+
+#: src/components/keyboard-shortcuts-help.jsx:121
+msgid "Focus previous column in multi-column mode"
+msgstr "Перемістити фокус на попередній стовпець в режимі декількох стовпців"
+
+#: src/components/keyboard-shortcuts-help.jsx:125
 msgid "Compose new post"
 msgstr "Створити новий допис"
 
-#: src/components/keyboard-shortcuts-help.jsx:121
+#: src/components/keyboard-shortcuts-help.jsx:129
 msgid "Compose new post (new window)"
 msgstr "Створити новий допис (нове вікно)"
 
-#: src/components/keyboard-shortcuts-help.jsx:124
+#: src/components/keyboard-shortcuts-help.jsx:132
 msgid "<0>Shift</0> + <1>c</1>"
 msgstr "<0>Shift</0> + <1>c</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:130
+#: src/components/keyboard-shortcuts-help.jsx:138
 msgid "Send post"
 msgstr "Опублікувати допис"
 
-#: src/components/keyboard-shortcuts-help.jsx:132
+#: src/components/keyboard-shortcuts-help.jsx:140
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> або<2>⌘</2> + <3>Enter</3>"
 
-#: src/components/keyboard-shortcuts-help.jsx:139
+#: src/components/keyboard-shortcuts-help.jsx:147
 #: src/components/nav-menu.jsx:374
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
-#: src/components/shortcuts-settings.jsx:176
-#: src/pages/search.jsx:39
-#: src/pages/search.jsx:209
+#: src/components/shortcuts-settings.jsx:179
+#: src/pages/search.jsx:45
+#: src/pages/search.jsx:284
 msgid "Search"
 msgstr "Пошук"
 
-#: src/components/keyboard-shortcuts-help.jsx:147
+#: src/components/keyboard-shortcuts-help.jsx:155
 msgid "Reply (new window)"
 msgstr "Відповісти (нове вікно)"
 
-#: src/components/keyboard-shortcuts-help.jsx:150
+#: src/components/keyboard-shortcuts-help.jsx:158
 msgid "<0>Shift</0> + <1>r</1>"
 msgstr "<0>Shift</0> + <1>r</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:156
+#: src/components/keyboard-shortcuts-help.jsx:164
 msgid "Like (favourite)"
 msgstr "Вподобати (обране)"
 
-#: src/components/keyboard-shortcuts-help.jsx:158
+#: src/components/keyboard-shortcuts-help.jsx:166
 msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> або<1>f</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:164
-#: src/components/status.jsx:839
-#: src/components/status.jsx:2294
-#: src/components/status.jsx:2326
-#: src/components/status.jsx:2327
+#: src/components/keyboard-shortcuts-help.jsx:172
+#: src/components/status.jsx:921
+#: src/components/status.jsx:2396
+#: src/components/status.jsx:2428
+#: src/components/status.jsx:2429
 msgid "Boost"
 msgstr "Поширити"
 
-#: src/components/keyboard-shortcuts-help.jsx:166
+#: src/components/keyboard-shortcuts-help.jsx:174
 msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:172
-#: src/components/status.jsx:924
-#: src/components/status.jsx:2351
-#: src/components/status.jsx:2352
+#: src/components/keyboard-shortcuts-help.jsx:180
+#: src/components/status.jsx:1006
+#: src/components/status.jsx:2453
+#: src/components/status.jsx:2454
 msgid "Bookmark"
 msgstr "Додати в закладки"
 
-#: src/components/keyboard-shortcuts-help.jsx:176
+#: src/components/keyboard-shortcuts-help.jsx:184
 msgid "Toggle Cloak mode"
 msgstr "Перемкнути режим маскування"
 
-#: src/components/keyboard-shortcuts-help.jsx:178
+#: src/components/keyboard-shortcuts-help.jsx:186
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/list-add-edit.jsx:37
 msgid "Edit list"
-msgstr ""
+msgstr "Редагувати список"
 
 #: src/components/list-add-edit.jsx:93
 msgid "Unable to edit list."
-msgstr ""
+msgstr "Не вдалось відредагувати список."
 
 #: src/components/list-add-edit.jsx:94
 msgid "Unable to create list."
-msgstr ""
+msgstr "Не вдалося створити список."
 
 #: src/components/list-add-edit.jsx:122
 msgid "Show replies to list members"
-msgstr ""
+msgstr "Показувати відповіді учасникам списку"
 
 #: src/components/list-add-edit.jsx:125
 msgid "Show replies to people I follow"
-msgstr ""
+msgstr "Показувати відповіді на людей, на яких я підписан(ий/а)"
 
 #: src/components/list-add-edit.jsx:128
 msgid "Don't show replies"
-msgstr ""
+msgstr "Не показувати відповіді"
 
 #: src/components/list-add-edit.jsx:141
 msgid "Hide posts on this list from Home/Following"
-msgstr ""
+msgstr "Приховати дописи цього списку з Головної/Підписок"
 
 #: src/components/list-add-edit.jsx:147
 #: src/pages/filters.jsx:554
 msgid "Create"
-msgstr ""
+msgstr "Створити"
 
 #: src/components/list-add-edit.jsx:154
 msgid "Delete this list?"
-msgstr ""
+msgstr "Видалити цей список?"
 
 #: src/components/list-add-edit.jsx:173
 msgid "Unable to delete list."
-msgstr ""
+msgstr "Не вдалося видалити список."
 
 #: src/components/media-alt-modal.jsx:38
 #: src/components/media.jsx:50
 msgid "Media description"
-msgstr ""
+msgstr "Опис медіа"
 
 #: src/components/media-alt-modal.jsx:57
-#: src/components/status.jsx:968
-#: src/components/status.jsx:995
+#: src/components/status.jsx:1050
+#: src/components/status.jsx:1077
 #: src/components/translation-block.jsx:195
 msgid "Translate"
-msgstr ""
+msgstr "Перекласти"
 
 #: src/components/media-alt-modal.jsx:68
-#: src/components/status.jsx:982
-#: src/components/status.jsx:1009
+#: src/components/status.jsx:1064
+#: src/components/status.jsx:1091
 msgid "Speak"
-msgstr ""
+msgstr "Вимовити"
 
 #: src/components/media-modal.jsx:294
 msgid "Open original media in new window"
-msgstr ""
+msgstr "Відкрити оригінальне медіа у новому вікні"
 
 #: src/components/media-modal.jsx:298
 msgid "Open original media"
-msgstr ""
+msgstr "Відкрити оригінальне медіа"
 
 #: src/components/media-modal.jsx:314
 msgid "Attempting to describe image. Please wait…"
-msgstr ""
+msgstr "Пробуємо описати зображення. Будь ласка, зачекайте…"
 
 #: src/components/media-modal.jsx:329
 msgid "Failed to describe image"
-msgstr ""
+msgstr "Не вдалося описати зображення"
 
 #: src/components/media-modal.jsx:339
 msgid "Describe image…"
-msgstr ""
+msgstr "Опишіть зображення…"
 
 #: src/components/media-modal.jsx:362
 msgid "View post"
-msgstr ""
+msgstr "Переглянути допис"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
-msgstr ""
+msgstr "Чутливе медіа"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "Відфільтровано: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3438
-#: src/components/status.jsx:3534
-#: src/components/status.jsx:3612
+#: src/components/status.jsx:3543
+#: src/components/status.jsx:3639
+#: src/components/status.jsx:3717
 #: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1876
 msgid "Filtered"
-msgstr ""
+msgstr "Відфільтровано"
 
 #: src/components/modals.jsx:72
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "Допис опубліковано. Перевірте це."
 
 #: src/components/modals.jsx:73
 msgid "Reply posted. Check it out."
-msgstr ""
+msgstr "Відповідь опубліковано. Перевірте це."
 
 #: src/components/modals.jsx:74
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "Допис оновлено. Перевірте це."
 
 #: src/components/nav-menu.jsx:126
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
 #: src/components/nav-menu.jsx:162
 msgid "Reload page now to update?"
-msgstr ""
+msgstr "Перезавантажити сторінку для оновлення?"
 
 #: src/components/nav-menu.jsx:174
 msgid "New update available…"
-msgstr ""
+msgstr "Доступне нове оновлення…"
+
+#. js-lingui-explicit-id
+#: src/components/nav-menu.jsx:193
+#: src/components/shortcuts-settings.jsx:140
+#: src/pages/following.jsx:22
+#: src/pages/following.jsx:141
+msgid "following.title"
+msgstr "Підписки"
 
 #: src/components/nav-menu.jsx:200
 #: src/pages/catchup.jsx:871
 msgid "Catch-up"
-msgstr ""
+msgstr "Ретроспектива"
 
 #: src/components/nav-menu.jsx:207
 #: src/components/shortcuts-settings.jsx:58
-#: src/components/shortcuts-settings.jsx:143
+#: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:224
 #: src/pages/mentions.jsx:20
 #: src/pages/mentions.jsx:167
-#: src/pages/settings.jsx:1037
+#: src/pages/settings.jsx:1102
 #: src/pages/trending.jsx:381
 msgid "Mentions"
-msgstr ""
+msgstr "Згадки"
 
 #: src/components/nav-menu.jsx:214
 #: src/components/shortcuts-settings.jsx:49
-#: src/components/shortcuts-settings.jsx:149
+#: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:84
 #: src/pages/home.jsx:184
-#: src/pages/notifications.jsx:106
-#: src/pages/notifications.jsx:509
+#: src/pages/notifications.jsx:112
+#: src/pages/notifications.jsx:524
 msgid "Notifications"
-msgstr ""
+msgstr "Сповіщення"
 
 #: src/components/nav-menu.jsx:217
 msgid "New"
-msgstr ""
+msgstr "Нове"
 
 #: src/components/nav-menu.jsx:228
 msgid "Profile"
-msgstr ""
+msgstr "Профіль"
 
 #: src/components/nav-menu.jsx:241
 #: src/components/nav-menu.jsx:268
 #: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:155
+#: src/components/shortcuts-settings.jsx:158
 #: src/pages/list.jsx:126
 #: src/pages/lists.jsx:16
 #: src/pages/lists.jsx:50
 msgid "Lists"
-msgstr ""
+msgstr "Списки"
 
 #: src/components/nav-menu.jsx:249
-#: src/components/shortcuts.jsx:209
+#: src/components/shortcuts.jsx:215
 #: src/pages/list.jsx:133
 msgid "All Lists"
-msgstr ""
+msgstr "Всі списки"
 
 #: src/components/nav-menu.jsx:276
 #: src/components/shortcuts-settings.jsx:54
-#: src/components/shortcuts-settings.jsx:192
+#: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:11
 #: src/pages/bookmarks.jsx:23
 msgid "Bookmarks"
-msgstr ""
+msgstr "Закладки"
 
 #: src/components/nav-menu.jsx:296
 #: src/components/shortcuts-settings.jsx:55
-#: src/components/shortcuts-settings.jsx:198
+#: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1446
 #: src/pages/catchup.jsx:2062
 #: src/pages/favourites.jsx:11
 #: src/pages/favourites.jsx:23
-#: src/pages/settings.jsx:1041
+#: src/pages/settings.jsx:1106
 msgid "Likes"
-msgstr ""
+msgstr "Вподобане"
 
 #: src/components/nav-menu.jsx:302
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
-msgstr ""
+msgstr "Відстежувані хештеґи"
 
 #: src/components/nav-menu.jsx:310
 #: src/pages/account-statuses.jsx:331
@@ -1327,50 +1346,50 @@ msgstr ""
 #: src/pages/filters.jsx:93
 #: src/pages/hashtag.jsx:339
 msgid "Filters"
-msgstr ""
+msgstr "Фільтри"
 
 #: src/components/nav-menu.jsx:318
 msgid "Muted users"
-msgstr ""
+msgstr "Заглушені користувачі"
 
 #: src/components/nav-menu.jsx:326
 msgid "Muted users…"
-msgstr ""
+msgstr "Заглушені користувачі…"
 
 #: src/components/nav-menu.jsx:333
 msgid "Blocked users"
-msgstr ""
+msgstr "Заблоковані користувачі"
 
 #: src/components/nav-menu.jsx:341
 msgid "Blocked users…"
-msgstr ""
+msgstr "Заблоковані користувачі…"
 
 #: src/components/nav-menu.jsx:353
 msgid "Accounts…"
-msgstr ""
+msgstr "Облікові записи…"
 
 #: src/components/nav-menu.jsx:363
 #: src/pages/login.jsx:189
-#: src/pages/status.jsx:792
+#: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
-msgstr ""
+msgstr "Увійти"
 
 #: src/components/nav-menu.jsx:380
 #: src/components/shortcuts-settings.jsx:57
-#: src/components/shortcuts-settings.jsx:169
+#: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:441
 msgid "Trending"
-msgstr ""
+msgstr "Популярне"
 
 #: src/components/nav-menu.jsx:392
-#: src/components/shortcuts-settings.jsx:162
+#: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
-msgstr ""
+msgstr "Федеративна"
 
 #: src/components/nav-menu.jsx:415
 msgid "Shortcuts / Columns…"
-msgstr ""
+msgstr "Ярлики / Стовпці…"
 
 #: src/components/nav-menu.jsx:425
 #: src/components/nav-menu.jsx:439
@@ -1389,135 +1408,135 @@ msgstr "Це сповіщення з вашого іншого обліково�
 msgid "View all notifications"
 msgstr "Переглянути всі сповіщення"
 
-#: src/components/notification.jsx:68
+#: src/components/notification.jsx:70
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} відреагував {emojiObject} на ваш допис "
 
-#: src/components/notification.jsx:75
+#: src/components/notification.jsx:77
 msgid "{account} published a post."
 msgstr "{account} опублікував допис"
 
-#: src/components/notification.jsx:83
+#: src/components/notification.jsx:85
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} пошири(в/ла) вашу відповідь.} other {{account} пошири(в/ла) ваш допис.}}} few {{postType, select, reply {{account} пошири(в/ла) {postsCount} ваші відповіді.} other {{account} пошири(в/ла) {postsCount} ваші дописи.}}} other {{postType, select, reply {{account} пошири(в/ла) {postsCount} ваших відповідей.} other {{account} пошири(в/ла) {postsCount} ваших дописів.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили вашу відповідь.} other {<0><1>{0}</1> користувачі</0> поширили ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачі</0> поширили {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачі</0> поширили {postsCount} ваших дописів.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили вашу відповідь.} other {<0><1>{0}</1> користувачів</0> поширили ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачів</0> поширили {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачів</0> поширили {postsCount} ваших дописів.}}}}}}"
 
-#: src/components/notification.jsx:126
+#: src/components/notification.jsx:128
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} підписа(вся/лась) на вас.} few {<0><1>{0}</1> користувачі</0> підписалися на вас.} other {<0><1>{0}</1> користувачів</0> підписалися на вас.}}"
 
-#: src/components/notification.jsx:140
+#: src/components/notification.jsx:142
 msgid "{account} requested to follow you."
-msgstr "{account} подав запит на підписку"
+msgstr "{account} подав запит на підписку."
 
-#: src/components/notification.jsx:149
+#: src/components/notification.jsx:151
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} вподоба(в/ла) вашу відповідь.} other {{account} вподоба(в/ла) ваш допис.}}} few {{postType, select, reply {{account} вподоба(в/ла) {postsCount} ваші відповіді.} other {{account} вподоба(в/ла) {postsCount} ваші дописи.}}} other {{postType, select, reply {{account} вподоба(в/ла) {postsCount} ваших відповідей.} other {{account} вподоба(в/ла) {postsCount} ваших дописів.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачі</0> вподобали вашу відповідь.} other {<0><1>{0}</1> користувачі</0> вподобали ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачі</0> вподобали {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачі</0> вподобали {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачі</0> вподобали {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачі</0> вподобали {postsCount} ваших дописів.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачів</0> вподобали вашу відповідь.} other {<0><1>{0}</1> користувачів</0> вподобали ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачів</0> вподобали {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачів</0> вподобали {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачів</0> вподобали {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачів</0> вподобали {postsCount} ваших дописів.}}}}}}"
 
-#: src/components/notification.jsx:191
+#: src/components/notification.jsx:193
 msgid "A poll you have voted in or created has ended."
 msgstr "Опитування, в якому ви проголосували або яке створили, закінчилося."
 
-#: src/components/notification.jsx:192
+#: src/components/notification.jsx:194
 msgid "A poll you have created has ended."
 msgstr "Опитування, яке ви створили, завершено."
 
-#: src/components/notification.jsx:193
+#: src/components/notification.jsx:195
 msgid "A poll you have voted in has ended."
 msgstr "Опитування, в якому ви проголосували, закінчилося"
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:196
 msgid "A post you interacted with has been edited."
 msgstr "Допис, з яким ви взаємодіяли, був відредагований."
 
-#: src/components/notification.jsx:202
+#: src/components/notification.jsx:204
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} пошири(в/ла) і вподоба(в/ла) вашу відповідь.} other {{account} пошири(в/ла) і вподоба(в/ла) ваш допис.}}} few {{postType, select, reply {{account} пошири(в/ла) і вподоба(в/ла) {postsCount} ваші відповіді.} other {{account} пошири(в/ла) і вподоба(в/ла) {postsCount} ваші дописи.}}} other {{postType, select, reply {{account} пошири(в/ла) і вподоба(в/ла) {postsCount} ваших відповідей.} other {{account} пошири(в/ла) і вподоба(в/ла) {postsCount} ваших дописів.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили і вподобали вашу відповідь.} other {<0><1>{0}</1> користувачі</0> поширили і вподобали ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили і вподобали {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачі</0> поширили і вподобали {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачі</0> поширили і вподобали {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачі</0> поширили і вподобали {postsCount} ваших дописів.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили і вподобали вашу відповідь.} other {<0><1>{0}</1> користувачів</0> поширили і вподобали ваш допис.}}} few {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили і вподобали {postsCount} ваші відповіді.} other {<0><1>{0}</1> користувачів</0> поширили і вподобали {postsCount} ваші дописи.}}} other {{postType, select, reply {<0><1>{0}</1> користувачів</0> поширили і вподобали {postsCount} ваших відповідей.} other {<0><1>{0}</1> користувачів</0> поширили і вподобали {postsCount} ваших дописів.}}}}}}"
 
-#: src/components/notification.jsx:244
+#: src/components/notification.jsx:246
 msgid "{account} signed up."
 msgstr "{account} зареєструвався(-лась)"
 
-#: src/components/notification.jsx:246
+#: src/components/notification.jsx:248
 msgid "{account} reported {targetAccount}"
 msgstr "{account} поскаржився(-лась) на {targetAccount}"
 
-#: src/components/notification.jsx:251
+#: src/components/notification.jsx:253
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Втрачено з'єднання з <0>{name}</0>."
 
-#: src/components/notification.jsx:257
+#: src/components/notification.jsx:259
 msgid "Moderation warning"
 msgstr "Попередження про модерацію"
 
-#: src/components/notification.jsx:267
+#: src/components/notification.jsx:269
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Адміністратор з <0>{from}</0> призупинив <1>{targetName}</1>, що означає, що ви більше не зможете отримувати оновлення від них або взаємодіяти з ними."
 
-#: src/components/notification.jsx:273
+#: src/components/notification.jsx:275
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Адміністратор з <0>{from}</0> заблокував <1>{targetName}</1>. Торкнулося підписників: {followersCount}, підписки: {followingCount}."
 
-#: src/components/notification.jsx:279
+#: src/components/notification.jsx:281
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Ви заблокували <0>{targetName}</0>. Видалені підписники: {followersCount}, підписки: {followingCount}."
 
-#: src/components/notification.jsx:287
+#: src/components/notification.jsx:289
 msgid "Your account has received a moderation warning."
 msgstr "Ваш обліковий запис отримав попередження про модерацію."
 
-#: src/components/notification.jsx:288
+#: src/components/notification.jsx:290
 msgid "Your account has been disabled."
 msgstr "Ваш обліковий запис було вимкнено."
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:291
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Деякі з ваших дописів було позначено як чутливі."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:292
 msgid "Some of your posts have been deleted."
 msgstr "Деякі з ваших дописів було видалено."
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:293
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Відтепер ваші дописи будуть позначатися як чутливі."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:294
 msgid "Your account has been limited."
 msgstr "Ваш обліковий запис було обмежено."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:295
 msgid "Your account has been suspended."
 msgstr "Ваш обліковий запис було призупинено."
 
-#: src/components/notification.jsx:364
+#: src/components/notification.jsx:369
 msgid "[Unknown notification type: {type}]"
 msgstr "[Невідомий тип сповіщення: {type}]"
 
-#: src/components/notification.jsx:425
-#: src/components/status.jsx:938
-#: src/components/status.jsx:948
+#: src/components/notification.jsx:434
+#: src/components/status.jsx:1020
+#: src/components/status.jsx:1030
 msgid "Boosted/Liked by…"
 msgstr "Поширили/Вподобали…"
 
-#: src/components/notification.jsx:426
+#: src/components/notification.jsx:435
 msgid "Liked by…"
 msgstr "Вподобали…"
 
-#: src/components/notification.jsx:427
+#: src/components/notification.jsx:436
 msgid "Boosted by…"
 msgstr "Поширили…"
 
-#: src/components/notification.jsx:428
+#: src/components/notification.jsx:437
 msgid "Followed by…"
 msgstr "Підписалися…"
 
-#: src/components/notification.jsx:484
-#: src/components/notification.jsx:500
+#: src/components/notification.jsx:508
+#: src/components/notification.jsx:524
 msgid "Learn more <0/>"
 msgstr "Дізнайтеся більше <0/>"
 
-#: src/components/notification.jsx:680
-#: src/components/status.jsx:190
+#: src/components/notification.jsx:756
+#: src/components/status.jsx:251
 msgid "Read more →"
 msgstr "Читати більше →"
 
@@ -1527,7 +1546,7 @@ msgstr "Проголосував(-ла)"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# голос} few { # голоси} other {# голосів}}"
 
 #: src/components/poll.jsx:136
 #: src/components/poll.jsx:219
@@ -1541,8 +1560,8 @@ msgstr "Проголосувати"
 
 #: src/components/poll.jsx:205
 #: src/components/poll.jsx:207
-#: src/pages/status.jsx:1158
-#: src/pages/status.jsx:1181
+#: src/pages/status.jsx:1201
+#: src/pages/status.jsx:1224
 msgid "Refresh"
 msgstr "Оновити"
 
@@ -1553,11 +1572,11 @@ msgstr "Показати результати"
 
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
-msgstr ""
+msgstr "{votesCount, plural, one {<0>{0}</0> проголосува(в/ла)} other {<1>{1}</1> проголосували}}"
 
 #: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> учасник} few {<1>{1}</1> учасники} other {<1>{1}</1> учасників}} опитування"
 
 #: src/components/poll.jsx:265
 msgid "Ended <0/>"
@@ -1576,2179 +1595,2194 @@ msgid "Ending"
 msgstr "Завершення"
 
 #. Relative time in seconds, as short as possible
-#: src/components/relative-time.jsx:55
+#: src/components/relative-time.jsx:57
 msgid "{0}s"
 msgstr "{0}с"
 
 #. Relative time in minutes, as short as possible
-#: src/components/relative-time.jsx:60
+#: src/components/relative-time.jsx:62
 msgid "{0}m"
 msgstr "{0}хв"
 
 #. Relative time in hours, as short as possible
-#: src/components/relative-time.jsx:65
+#: src/components/relative-time.jsx:67
 msgid "{0}h"
-msgstr ""
+msgstr "{0}г"
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
-msgstr ""
+msgstr "Спам"
 
 #: src/components/report-modal.jsx:30
 msgid "Malicious links, fake engagement, or repetitive replies"
-msgstr ""
+msgstr "Шкідливі посилання, фальшиві взаємодії, або відповіді, що повторюються"
 
 #: src/components/report-modal.jsx:33
 msgid "Illegal"
-msgstr ""
+msgstr "Нелегал"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
-msgstr ""
+msgstr "Порушує закон вашої країни чи країни серверу"
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
-msgstr ""
+msgstr "Порушення правил серверу"
 
 #: src/components/report-modal.jsx:38
 msgid "Breaks specific server rules"
-msgstr ""
+msgstr "Порушує певні правила серверу"
 
 #: src/components/report-modal.jsx:39
 msgid "Violation"
-msgstr ""
+msgstr "Порушення"
 
 #: src/components/report-modal.jsx:42
 msgid "Other"
-msgstr ""
+msgstr "Інше"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
-msgstr ""
+msgstr "Проблема не відповідає іншим категоріям"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
-msgstr ""
+msgstr "Поскаржитися на допис"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
-msgstr ""
+msgstr "Поскаржитися на @{username}"
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
-msgstr ""
+msgstr "Очікує перевірки"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
-msgstr ""
+msgstr "Скарга на допис відправлена"
 
 #: src/components/report-modal.jsx:146
 msgid "Profile reported"
-msgstr ""
+msgstr "Скарга на обліковий запис відправлена"
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr ""
+msgstr "Не вдалося поскаржитися на допис"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
-msgstr ""
+msgstr "Не вдалося поскаржитися на обліковий запис"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr ""
+msgstr "Яка проблема з цим дописом?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
-msgstr ""
+msgstr "Яка проблема з цим обліковим записом?"
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
-msgstr ""
+msgstr "Додаткова інформація"
 
 #: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
-msgstr ""
+msgstr "Переслати до <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
-msgstr ""
+msgstr "Надіслати скаргу"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
-msgstr ""
+msgstr "{username} заглушено"
 
 #: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
-msgstr ""
+msgstr "Неможливо заглушити {username}"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr ""
+msgstr "Надіслати скаргу <0>+ Заглушити користувача</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
-msgstr ""
+msgstr "{username} заблоковано"
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
-msgstr ""
+msgstr "Не вдалося заблокувати {username}"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
-msgstr ""
+msgstr "Надіслати скаргу <0>+ Заблокувати користувача</0>"
 
 #: src/components/search-form.jsx:202
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
+msgstr "{query} <0>‒ обліківки, хештеґи та дописи</0>"
 
 #: src/components/search-form.jsx:215
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "Дописи з <0>{query}</0>"
 
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr ""
+msgstr "Дописи, що помічені <0>#{0}</0>"
 
 #: src/components/search-form.jsx:241
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "Переглянути <0>{query}</0>"
 
 #: src/components/search-form.jsx:252
 msgid "Accounts with <0>{query}</0>"
-msgstr ""
+msgstr "Облікові записи з <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr ""
+msgstr "Домашня / Підписки"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
-msgstr ""
+msgstr "Публічна (Локальна / Федеративна)"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Обліковий запис"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "Хештеґ"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
-msgstr ""
+msgstr "ID списку"
 
 #: src/components/shortcuts-settings.jsx:70
 msgid "Local only"
-msgstr ""
+msgstr "Лише локальна"
 
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:193
 msgid "Instance"
-msgstr ""
+msgstr "Інстанс"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr ""
+msgstr "Необов'язково, напр. \"twiukraine.com\""
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Пошуковий запит"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr ""
+msgstr "Необов'язково для режиму з одним стовпцем"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr ""
+msgstr "напр. PixelArt (Макс 5, розділені пробілом)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:355
 msgid "Media only"
-msgstr ""
+msgstr "Лише медіа"
 
-#: src/components/shortcuts-settings.jsx:232
-#: src/components/shortcuts.jsx:186
+#: src/components/shortcuts-settings.jsx:235
+#: src/components/shortcuts.jsx:192
 msgid "Shortcuts"
-msgstr ""
+msgstr "Ярлики"
 
-#: src/components/shortcuts-settings.jsx:240
+#: src/components/shortcuts-settings.jsx:243
 msgid "beta"
-msgstr ""
+msgstr "бета"
 
-#: src/components/shortcuts-settings.jsx:246
+#: src/components/shortcuts-settings.jsx:249
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "Вкажіть список ярликів, які будуть виглядати як:"
 
-#: src/components/shortcuts-settings.jsx:252
+#: src/components/shortcuts-settings.jsx:255
 msgid "Floating button"
-msgstr ""
+msgstr "Кнопка, що плаває"
 
-#: src/components/shortcuts-settings.jsx:257
+#: src/components/shortcuts-settings.jsx:260
 msgid "Tab/Menu bar"
-msgstr ""
+msgstr "Панель Вкладки/Меню"
 
-#: src/components/shortcuts-settings.jsx:262
+#: src/components/shortcuts-settings.jsx:265
 msgid "Multi-column"
-msgstr ""
+msgstr "Декілька стовпців"
 
-#: src/components/shortcuts-settings.jsx:329
+#: src/components/shortcuts-settings.jsx:332
 msgid "Not available in current view mode"
-msgstr ""
+msgstr "Недоступно в поточному режимі перегляду"
 
-#: src/components/shortcuts-settings.jsx:348
+#: src/components/shortcuts-settings.jsx:351
 msgid "Move up"
-msgstr ""
+msgstr "Перемістити вгору"
 
-#: src/components/shortcuts-settings.jsx:364
+#: src/components/shortcuts-settings.jsx:367
 msgid "Move down"
-msgstr ""
+msgstr "Пересунути вниз"
 
-#: src/components/shortcuts-settings.jsx:376
-#: src/components/status.jsx:1216
+#: src/components/shortcuts-settings.jsx:379
+#: src/components/status.jsx:1298
 #: src/pages/list.jsx:170
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
-#: src/components/shortcuts-settings.jsx:397
+#: src/components/shortcuts-settings.jsx:400
 msgid "Add more than one shortcut/column to make this work."
-msgstr ""
+msgstr "Додайте кілька ярликів/стовпців, щоб це працювало."
 
-#: src/components/shortcuts-settings.jsx:408
+#: src/components/shortcuts-settings.jsx:411
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:409
-msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "Ще немає стовпців. Натисніть кнопку Додати стовпчик."
 
 #: src/components/shortcuts-settings.jsx:412
+msgid "No shortcuts yet. Tap on the Add shortcut button."
+msgstr "Ще немає ярликів. Натисніть кнопку Додати ярлик."
+
+#: src/components/shortcuts-settings.jsx:415
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "Не знаєте що додати?<0/> Радимо почати з <1>Додому / Підписки</1> та <1>Сповіщення</1>."
 
-#: src/components/shortcuts-settings.jsx:440
+#: src/components/shortcuts-settings.jsx:443
 msgid "Max {SHORTCUTS_LIMIT} columns"
-msgstr ""
+msgstr "Максимум {SHORTCUTS_LIMIT} стовпців"
 
-#: src/components/shortcuts-settings.jsx:441
+#: src/components/shortcuts-settings.jsx:444
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
-msgstr ""
+msgstr "Максимум {SHORTCUTS_LIMIT} ярликів"
 
-#: src/components/shortcuts-settings.jsx:455
+#: src/components/shortcuts-settings.jsx:458
 msgid "Import/export"
-msgstr ""
+msgstr "Імпорт/Експорт"
 
-#: src/components/shortcuts-settings.jsx:465
+#: src/components/shortcuts-settings.jsx:468
 msgid "Add column…"
-msgstr ""
+msgstr "Додати стовпець…"
 
-#: src/components/shortcuts-settings.jsx:466
+#: src/components/shortcuts-settings.jsx:469
 msgid "Add shortcut…"
-msgstr ""
+msgstr "Додати ярлик…"
 
-#: src/components/shortcuts-settings.jsx:513
+#: src/components/shortcuts-settings.jsx:516
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr ""
+msgstr "Вказаний список не є обов'язковим. Для режиму з кількома стовпцями список необхідний, інакше стовпець не буде показано."
 
-#: src/components/shortcuts-settings.jsx:514
+#: src/components/shortcuts-settings.jsx:517
 msgid "For multi-column mode, search term is required, else the column will not be shown."
-msgstr ""
+msgstr "Для режиму з кількома стовпцями пошуковий запит необхідний, інакше стовпець не буде показано."
 
-#: src/components/shortcuts-settings.jsx:515
+#: src/components/shortcuts-settings.jsx:518
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr ""
+msgstr "Підтримуються декілька гештеґів. Розділені пробілами."
 
-#: src/components/shortcuts-settings.jsx:584
+#: src/components/shortcuts-settings.jsx:587
 msgid "Edit shortcut"
-msgstr ""
+msgstr "Редагувати ярлик"
 
-#: src/components/shortcuts-settings.jsx:584
+#: src/components/shortcuts-settings.jsx:587
 msgid "Add shortcut"
-msgstr ""
+msgstr "Додати ярлик"
 
-#: src/components/shortcuts-settings.jsx:620
+#: src/components/shortcuts-settings.jsx:623
 msgid "Timeline"
-msgstr ""
+msgstr "Стрічка"
 
-#: src/components/shortcuts-settings.jsx:646
+#: src/components/shortcuts-settings.jsx:649
 msgid "List"
-msgstr ""
+msgstr "Список"
 
-#: src/components/shortcuts-settings.jsx:785
+#: src/components/shortcuts-settings.jsx:788
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr ""
+msgstr "Імпорт/Експорт <0>Ярликів</0>"
 
-#: src/components/shortcuts-settings.jsx:795
+#: src/components/shortcuts-settings.jsx:798
 msgid "Import"
-msgstr ""
+msgstr "Імпорт"
 
-#: src/components/shortcuts-settings.jsx:803
+#: src/components/shortcuts-settings.jsx:806
 msgid "Paste shortcuts here"
-msgstr ""
+msgstr "Вставити ярлики сюди"
 
-#: src/components/shortcuts-settings.jsx:819
+#: src/components/shortcuts-settings.jsx:822
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:848
-msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "Завантаження збережених ярликів з сервера інстансу…"
 
 #: src/components/shortcuts-settings.jsx:851
+msgid "Unable to download shortcuts"
+msgstr "Не вдалося завантажити ярлики"
+
+#: src/components/shortcuts-settings.jsx:854
 msgid "Download shortcuts from instance server"
-msgstr ""
+msgstr "Завантажити ярлики з сервера інстансу"
 
-#: src/components/shortcuts-settings.jsx:909
+#: src/components/shortcuts-settings.jsx:912
 msgid "* Exists in current shortcuts"
-msgstr ""
+msgstr "* Існує в поточних ярликах"
 
-#: src/components/shortcuts-settings.jsx:914
+#: src/components/shortcuts-settings.jsx:917
 msgid "List may not work if it's from a different account."
-msgstr ""
+msgstr "Список може не працювати, якщо він з іншого облікового запису."
 
-#: src/components/shortcuts-settings.jsx:924
+#: src/components/shortcuts-settings.jsx:927
 msgid "Invalid settings format"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:932
-msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "Неприпустимий формат налаштувань"
 
 #: src/components/shortcuts-settings.jsx:935
+msgid "Append to current shortcuts?"
+msgstr "Додати до поточних ярликів?"
+
+#: src/components/shortcuts-settings.jsx:938
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr ""
+msgstr "Будуть додані лише ті ярлики, яких немає серед поточних ярликів."
 
-#: src/components/shortcuts-settings.jsx:957
+#: src/components/shortcuts-settings.jsx:960
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "Немає нових ярликів для імпорту"
 
-#: src/components/shortcuts-settings.jsx:972
+#: src/components/shortcuts-settings.jsx:975
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr ""
+msgstr "Ярлики імпортовано. Перевищено ліміт {SHORTCUTS_LIMIT}, тому інші не імпортуються."
 
-#: src/components/shortcuts-settings.jsx:973
-#: src/components/shortcuts-settings.jsx:997
+#: src/components/shortcuts-settings.jsx:976
+#: src/components/shortcuts-settings.jsx:1000
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "Ярлики імпортовано"
 
-#: src/components/shortcuts-settings.jsx:983
+#: src/components/shortcuts-settings.jsx:986
 msgid "Import & append…"
-msgstr ""
+msgstr "Імпортувати й додати…"
 
-#: src/components/shortcuts-settings.jsx:991
+#: src/components/shortcuts-settings.jsx:994
 msgid "Override current shortcuts?"
-msgstr ""
+msgstr "Замінити поточні ярлики?"
 
-#: src/components/shortcuts-settings.jsx:992
+#: src/components/shortcuts-settings.jsx:995
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "Імпортувати ярлики?"
 
-#: src/components/shortcuts-settings.jsx:1006
+#: src/components/shortcuts-settings.jsx:1009
 msgid "or override…"
-msgstr ""
+msgstr "або замінити…"
 
-#: src/components/shortcuts-settings.jsx:1006
+#: src/components/shortcuts-settings.jsx:1009
 msgid "Import…"
-msgstr ""
+msgstr "Імпортувати…"
 
-#: src/components/shortcuts-settings.jsx:1015
+#: src/components/shortcuts-settings.jsx:1018
 msgid "Export"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1030
-msgid "Shortcuts copied"
-msgstr ""
+msgstr "Експорт"
 
 #: src/components/shortcuts-settings.jsx:1033
-msgid "Unable to copy shortcuts"
-msgstr ""
+msgid "Shortcuts copied"
+msgstr "Ярлики скопійовано"
 
-#: src/components/shortcuts-settings.jsx:1047
-msgid "Shortcut settings copied"
-msgstr ""
+#: src/components/shortcuts-settings.jsx:1036
+msgid "Unable to copy shortcuts"
+msgstr "Не вдалося скопіювати ярлики"
 
 #: src/components/shortcuts-settings.jsx:1050
+msgid "Shortcut settings copied"
+msgstr "Налаштування ярлика скопійовано"
+
+#: src/components/shortcuts-settings.jsx:1053
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "Не вдалося скопіювати налаштування ярлику"
 
-#: src/components/shortcuts-settings.jsx:1080
+#: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
-msgstr ""
+msgstr "Поширити"
 
-#: src/components/shortcuts-settings.jsx:1119
+#: src/components/shortcuts-settings.jsx:1122
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "Збереження ярликів до сервера інстансу…"
 
-#: src/components/shortcuts-settings.jsx:1126
+#: src/components/shortcuts-settings.jsx:1129
 msgid "Shortcuts saved"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1131
-msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "Ярлики збережено"
 
 #: src/components/shortcuts-settings.jsx:1134
+msgid "Unable to save shortcuts"
+msgstr "Не вдалося зберегти ярлики"
+
+#: src/components/shortcuts-settings.jsx:1137
 msgid "Sync to instance server"
-msgstr ""
+msgstr "Синхронізувати з сервером інстансу"
 
-#: src/components/shortcuts-settings.jsx:1142
+#: src/components/shortcuts-settings.jsx:1145
 msgid "{0, plural, one {# character} other {# characters}}"
-msgstr ""
+msgstr "{0, plural, one {# символ} few {# символи} other {# символів}}"
 
-#: src/components/shortcuts-settings.jsx:1154
+#: src/components/shortcuts-settings.jsx:1157
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "Вихідний JSON Ярликів"
 
-#: src/components/shortcuts-settings.jsx:1167
+#: src/components/shortcuts-settings.jsx:1170
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "Імпорт/експорт налаштувань з/на сервер інстансу (Дуже експериментально)"
 
-#: src/components/status.jsx:464
+#: src/components/status.jsx:522
 msgid "<0/> <1>boosted</1>"
-msgstr ""
+msgstr "<0/> <1>пошири(в/ла)</1>"
 
-#: src/components/status.jsx:563
+#: src/components/status.jsx:621
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
-msgstr ""
+msgstr "На жаль, ваш поточний інстанс не може взаємодіяти з цим дописом з іншого інстансу."
 
-#: src/components/status.jsx:716
+#: src/components/status.jsx:774
 msgid "Unliked @{0}'s post"
-msgstr ""
+msgstr "Не вподобано допис @{0}"
 
-#: src/components/status.jsx:717
+#: src/components/status.jsx:775
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Вподобано допис @{0}"
 
-#: src/components/status.jsx:756
+#: src/components/status.jsx:814
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Допис @{0} прибрано із закладок"
 
-#: src/components/status.jsx:757
+#: src/components/status.jsx:815
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Допис @{0} додано в закладки"
 
-#: src/components/status.jsx:839
-#: src/components/status.jsx:901
-#: src/components/status.jsx:2294
-#: src/components/status.jsx:2326
+#: src/components/status.jsx:921
+#: src/components/status.jsx:983
+#: src/components/status.jsx:2396
+#: src/components/status.jsx:2428
 msgid "Unboost"
-msgstr ""
+msgstr "Не поширювати"
 
-#: src/components/status.jsx:855
-#: src/components/status.jsx:2309
+#: src/components/status.jsx:937
+#: src/components/status.jsx:2411
 msgid "Quote"
-msgstr ""
+msgstr "Цитувати"
 
-#: src/components/status.jsx:863
-#: src/components/status.jsx:2318
+#: src/components/status.jsx:945
+#: src/components/status.jsx:2420
 msgid "Some media have no descriptions."
-msgstr ""
+msgstr "Деякі медіа не мають альтернативного тексту."
 
-#: src/components/status.jsx:870
+#: src/components/status.jsx:952
 msgid "Old post (<0>{0}</0>)"
-msgstr ""
+msgstr "Старий допис (<0>{0}</0>)"
 
-#: src/components/status.jsx:889
-#: src/components/status.jsx:1341
+#: src/components/status.jsx:971
+#: src/components/status.jsx:1426
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Допис @{0} більше не поширюється"
 
-#: src/components/status.jsx:890
-#: src/components/status.jsx:1342
+#: src/components/status.jsx:972
+#: src/components/status.jsx:1427
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Допис @{0} поширено"
 
-#: src/components/status.jsx:902
+#: src/components/status.jsx:984
 msgid "Boost…"
-msgstr ""
+msgstr "Поширити…"
 
-#: src/components/status.jsx:914
-#: src/components/status.jsx:1626
-#: src/components/status.jsx:2339
+#: src/components/status.jsx:996
+#: src/components/status.jsx:1711
+#: src/components/status.jsx:2441
 msgid "Unlike"
-msgstr ""
+msgstr "Не вподобати"
 
-#: src/components/status.jsx:915
-#: src/components/status.jsx:1626
-#: src/components/status.jsx:1627
-#: src/components/status.jsx:2339
-#: src/components/status.jsx:2340
+#: src/components/status.jsx:997
+#: src/components/status.jsx:1711
+#: src/components/status.jsx:1712
+#: src/components/status.jsx:2441
+#: src/components/status.jsx:2442
 msgid "Like"
-msgstr ""
+msgstr "Вподобати"
 
-#: src/components/status.jsx:924
-#: src/components/status.jsx:2351
+#: src/components/status.jsx:1006
+#: src/components/status.jsx:2453
 msgid "Unbookmark"
-msgstr ""
+msgstr "Вилучити з закладок"
 
-#: src/components/status.jsx:1032
+#: src/components/status.jsx:1114
 msgid "View post by <0>@{0}</0>"
-msgstr ""
+msgstr "Переглянути допис від <0>@{0}</0>"
 
-#: src/components/status.jsx:1053
+#: src/components/status.jsx:1135
 msgid "Show Edit History"
-msgstr ""
+msgstr "Показати Історію Змін"
 
-#: src/components/status.jsx:1056
+#: src/components/status.jsx:1138
 msgid "Edited: {editedDateText}"
-msgstr ""
+msgstr "Відредаговано: {editedDateText}"
 
-#: src/components/status.jsx:1123
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:1205
+#: src/components/status.jsx:3220
 msgid "Embed post"
-msgstr ""
+msgstr "Вбудувати допис"
 
-#: src/components/status.jsx:1137
+#: src/components/status.jsx:1219
 msgid "Conversation unmuted"
-msgstr ""
+msgstr "Бесіда більше не глушиться"
 
-#: src/components/status.jsx:1137
+#: src/components/status.jsx:1219
 msgid "Conversation muted"
-msgstr ""
+msgstr "Бесіда заглушена"
 
-#: src/components/status.jsx:1143
+#: src/components/status.jsx:1225
 msgid "Unable to unmute conversation"
-msgstr ""
+msgstr "Не вдалося розглушити бесіду"
 
-#: src/components/status.jsx:1144
+#: src/components/status.jsx:1226
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "Не вдалося заглушити бесіду"
 
-#: src/components/status.jsx:1153
+#: src/components/status.jsx:1235
 msgid "Unmute conversation"
-msgstr ""
+msgstr "Розглушити бесіду"
 
-#: src/components/status.jsx:1160
+#: src/components/status.jsx:1242
 msgid "Mute conversation"
-msgstr ""
+msgstr "Заглушити бесіду"
 
-#: src/components/status.jsx:1176
+#: src/components/status.jsx:1258
 msgid "Post unpinned from profile"
-msgstr ""
+msgstr "Допис відкріплено від профілю"
 
-#: src/components/status.jsx:1177
+#: src/components/status.jsx:1259
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "Допис закріплено в профілі"
 
-#: src/components/status.jsx:1182
+#: src/components/status.jsx:1264
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "Не вдалося відкріпити допис"
 
-#: src/components/status.jsx:1182
+#: src/components/status.jsx:1264
 msgid "Unable to pin post"
-msgstr ""
+msgstr "Не вдалося закріпити допис"
 
-#: src/components/status.jsx:1191
+#: src/components/status.jsx:1273
 msgid "Unpin from profile"
-msgstr ""
+msgstr "Відкріпити від профілю"
 
-#: src/components/status.jsx:1198
+#: src/components/status.jsx:1280
 msgid "Pin to profile"
-msgstr ""
+msgstr "Закріпити в профілі"
 
-#: src/components/status.jsx:1227
+#: src/components/status.jsx:1309
 msgid "Delete this post?"
-msgstr ""
+msgstr "Видалити цей допис?"
 
-#: src/components/status.jsx:1240
+#: src/components/status.jsx:1325
 msgid "Post deleted"
-msgstr ""
+msgstr "Допис видалено"
 
-#: src/components/status.jsx:1243
+#: src/components/status.jsx:1328
 msgid "Unable to delete post"
-msgstr ""
+msgstr "Не вдалося видалити допис"
 
-#: src/components/status.jsx:1271
+#: src/components/status.jsx:1356
 msgid "Report post…"
-msgstr ""
+msgstr "Поскаржитися на допис…"
 
-#: src/components/status.jsx:1627
-#: src/components/status.jsx:1663
-#: src/components/status.jsx:2340
+#: src/components/status.jsx:1712
+#: src/components/status.jsx:1748
+#: src/components/status.jsx:2442
 msgid "Liked"
-msgstr ""
+msgstr "Вподобано"
 
-#: src/components/status.jsx:1660
-#: src/components/status.jsx:2327
+#: src/components/status.jsx:1745
+#: src/components/status.jsx:2429
 msgid "Boosted"
-msgstr ""
+msgstr "Поширено"
 
-#: src/components/status.jsx:1670
-#: src/components/status.jsx:2352
+#: src/components/status.jsx:1755
+#: src/components/status.jsx:2454
 msgid "Bookmarked"
-msgstr ""
+msgstr "Додано в закладки"
 
-#: src/components/status.jsx:1674
+#: src/components/status.jsx:1759
 msgid "Pinned"
-msgstr ""
+msgstr "Закріплено"
 
-#: src/components/status.jsx:1719
-#: src/components/status.jsx:2171
+#: src/components/status.jsx:1804
+#: src/components/status.jsx:2260
 msgid "Deleted"
-msgstr ""
+msgstr "Видалено"
 
-#: src/components/status.jsx:1760
+#: src/components/status.jsx:1845
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
-msgstr ""
+msgstr "{repliesCount, plural, one {# відповідь} few {# відповіді} other {# відповідей}}"
 
-#: src/components/status.jsx:1849
+#: src/components/status.jsx:1934
 msgid "Thread{0}"
-msgstr ""
+msgstr "Нитка{0}"
 
-#: src/components/status.jsx:1925
-#: src/components/status.jsx:1987
+#: src/components/status.jsx:2010
 #: src/components/status.jsx:2072
+#: src/components/status.jsx:2157
 msgid "Show less"
-msgstr ""
+msgstr "Згорнути"
 
-#: src/components/status.jsx:1925
-#: src/components/status.jsx:1987
-msgid "Show content"
-msgstr ""
-
+#: src/components/status.jsx:2010
 #: src/components/status.jsx:2072
+msgid "Show content"
+msgstr "Показати вміст"
+
+#: src/components/status.jsx:2157
 msgid "Show media"
-msgstr ""
+msgstr "Показати медіа"
 
-#: src/components/status.jsx:2192
+#: src/components/status.jsx:2294
 msgid "Edited"
-msgstr ""
+msgstr "Відредаговано"
 
-#: src/components/status.jsx:2269
+#: src/components/status.jsx:2371
 msgid "Comments"
-msgstr ""
+msgstr "Коментарі"
 
 #. More from [Author]
-#: src/components/status.jsx:2577
+#: src/components/status.jsx:2680
 msgid "More from <0/>"
-msgstr ""
+msgstr "Більше від <0/>"
 
-#: src/components/status.jsx:2876
+#: src/components/status.jsx:2981
 msgid "Edit History"
-msgstr ""
+msgstr "Історія Змін"
 
-#: src/components/status.jsx:2880
+#: src/components/status.jsx:2985
 msgid "Failed to load history"
-msgstr ""
+msgstr "Не вдалося завантажити історію"
 
-#: src/components/status.jsx:2885
+#: src/components/status.jsx:2990
 msgid "Loading…"
-msgstr ""
+msgstr "Завантаження…"
 
-#: src/components/status.jsx:3120
+#: src/components/status.jsx:3225
 msgid "HTML Code"
-msgstr ""
+msgstr "HTML-код"
 
-#: src/components/status.jsx:3137
+#: src/components/status.jsx:3242
 msgid "HTML code copied"
-msgstr ""
+msgstr "HTML-код скопійовано"
 
-#: src/components/status.jsx:3140
+#: src/components/status.jsx:3245
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "Не вдалося скопіювати HTML-код"
 
-#: src/components/status.jsx:3152
+#: src/components/status.jsx:3257
 msgid "Media attachments:"
-msgstr ""
-
-#: src/components/status.jsx:3174
-msgid "Account Emojis:"
-msgstr ""
-
-#: src/components/status.jsx:3205
-#: src/components/status.jsx:3250
-msgid "static URL"
-msgstr ""
-
-#: src/components/status.jsx:3219
-msgid "Emojis:"
-msgstr ""
-
-#: src/components/status.jsx:3264
-msgid "Notes:"
-msgstr ""
-
-#: src/components/status.jsx:3268
-msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr ""
-
-#: src/components/status.jsx:3274
-msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr ""
+msgstr "Медіа вкладення:"
 
 #: src/components/status.jsx:3279
+msgid "Account Emojis:"
+msgstr "Емодзі обліківки:"
+
+#: src/components/status.jsx:3310
+#: src/components/status.jsx:3355
+msgid "static URL"
+msgstr "статичний URL"
+
+#: src/components/status.jsx:3324
+msgid "Emojis:"
+msgstr "Емодзі:"
+
+#: src/components/status.jsx:3369
+msgid "Notes:"
+msgstr "Нотатки:"
+
+#: src/components/status.jsx:3373
+msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
+msgstr "Це статичне, не стилізоване та без сценаріїв. Можливо, варто застосувати власні стилі та відредагувати як треба."
+
+#: src/components/status.jsx:3379
+msgid "Polls are not interactive, becomes a list with vote counts."
+msgstr "Опитування не інтерактивні, вони являють собою список з підрахованими голосами."
+
+#: src/components/status.jsx:3384
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr ""
+msgstr "Вкладені медіа можуть бути зображеннями, відео, аудіо чи будь-якими іншими типами файлів."
 
-#: src/components/status.jsx:3285
+#: src/components/status.jsx:3390
 msgid "Post could be edited or deleted later."
-msgstr ""
+msgstr "Допис можна відредагувати або видалити пізніше."
 
-#: src/components/status.jsx:3291
+#: src/components/status.jsx:3396
 msgid "Preview"
-msgstr ""
+msgstr "Попередній перегляд"
 
-#: src/components/status.jsx:3300
+#: src/components/status.jsx:3405
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "Примітка: Цей попередній перегляд трохи стилізовано."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3542
+#: src/components/status.jsx:3647
 msgid "<0/> <1/> boosted"
-msgstr ""
+msgstr "<0/> <1/> поширили"
 
 #: src/components/timeline.jsx:453
-#: src/pages/settings.jsx:1065
+#: src/pages/settings.jsx:1130
 msgid "New posts"
-msgstr ""
+msgstr "Нові дописи"
 
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
-#: src/pages/notifications.jsx:796
-#: src/pages/status.jsx:945
-#: src/pages/status.jsx:1318
+#: src/pages/notifications.jsx:824
+#: src/pages/status.jsx:988
+#: src/pages/status.jsx:1361
 msgid "Try again"
-msgstr ""
+msgstr "Спробувати знову"
 
 #: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
-msgstr ""
+msgstr "{0, plural, one {# Поширення} few {# Поширення} other{# Поширень}}"
 
 #: src/components/timeline.jsx:593
 msgid "Pinned posts"
-msgstr ""
+msgstr "Закріплені дописи"
 
 #: src/components/timeline.jsx:946
 #: src/components/timeline.jsx:953
 #: src/pages/catchup.jsx:1893
 msgid "Thread"
-msgstr ""
+msgstr "Нитка"
 
 #: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
-msgstr ""
+msgstr "<0>Відфільтровано</0>: <1>{0}</1>"
 
 #: src/components/translation-block.jsx:152
 msgid "Auto-translated from {sourceLangText}"
-msgstr ""
+msgstr "Автопереклад з {sourceLangText}"
 
 #: src/components/translation-block.jsx:190
 msgid "Translating…"
-msgstr ""
+msgstr "Перекладаємо…"
 
 #: src/components/translation-block.jsx:193
 msgid "Translate from {sourceLangText} (auto-detected)"
-msgstr ""
+msgstr "Перекласти з {sourceLangText} (автовизначення)"
 
 #: src/components/translation-block.jsx:194
 msgid "Translate from {sourceLangText}"
-msgstr ""
+msgstr "Перекласти з {sourceLangText}"
 
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
-msgstr ""
+msgstr "Авто ({0})"
 
 #: src/components/translation-block.jsx:235
 msgid "Failed to translate"
-msgstr ""
+msgstr "Не вдалося перекласти"
 
 #: src/compose.jsx:32
 msgid "Editing source status"
-msgstr ""
+msgstr "Редагування вихідного статусу"
 
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
-msgstr ""
+msgstr "Відповісти @{0}"
 
 #: src/compose.jsx:62
 msgid "You may close this page now."
-msgstr ""
+msgstr "Тепер ви можете закрити сторінку."
 
 #: src/compose.jsx:70
 msgid "Close window"
-msgstr ""
+msgstr "Закрити вікно"
 
 #: src/compose.jsx:86
 msgid "Login required."
-msgstr ""
+msgstr "Необхідно ввійти."
 
 #: src/compose.jsx:90
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
-msgstr ""
+msgstr "На головну"
 
 #: src/pages/account-statuses.jsx:233
 msgid "Account posts"
-msgstr ""
+msgstr "Дописи облікового запису"
 
 #: src/pages/account-statuses.jsx:240
 msgid "{accountDisplay} (+ Replies)"
-msgstr ""
+msgstr "{accountDisplay} (+ Відповіді)"
 
 #: src/pages/account-statuses.jsx:242
 msgid "{accountDisplay} (- Boosts)"
-msgstr ""
+msgstr "{accountDisplay} (- Поширення)"
 
 #: src/pages/account-statuses.jsx:244
 msgid "{accountDisplay} (#{tagged})"
-msgstr ""
+msgstr "{accountDisplay} (#{tagged})"
 
 #: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (Media)"
-msgstr ""
+msgstr "{accountDisplay} (Медіа)"
 
 #: src/pages/account-statuses.jsx:252
 msgid "{accountDisplay} ({monthYear})"
-msgstr ""
+msgstr "{accountDisplay} ({monthYear})"
 
 #: src/pages/account-statuses.jsx:321
 msgid "Clear filters"
-msgstr ""
+msgstr "Скинути фільтри"
 
 #: src/pages/account-statuses.jsx:324
 msgid "Clear"
-msgstr ""
+msgstr "Очистити"
 
 #: src/pages/account-statuses.jsx:338
 msgid "Showing post with replies"
-msgstr ""
+msgstr "Показ дописів з відповідями"
 
 #: src/pages/account-statuses.jsx:343
 msgid "+ Replies"
-msgstr ""
+msgstr "+ Відповіді"
 
 #: src/pages/account-statuses.jsx:349
 msgid "Showing posts without boosts"
-msgstr ""
+msgstr "Показ дописів без поширень"
 
 #: src/pages/account-statuses.jsx:354
 msgid "- Boosts"
-msgstr ""
+msgstr "- Поширення"
 
 #: src/pages/account-statuses.jsx:360
 msgid "Showing posts with media"
-msgstr ""
+msgstr "Показ дописів з медіа"
 
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
-msgstr ""
+msgstr "Показ дописів з теґом #{0}"
 
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Показ дописів в {0}"
 
 #: src/pages/account-statuses.jsx:505
 msgid "Nothing to see here yet."
-msgstr ""
+msgstr "Поки що тут нічого нема."
 
 #: src/pages/account-statuses.jsx:506
 #: src/pages/public.jsx:97
 #: src/pages/trending.jsx:449
 msgid "Unable to load posts"
-msgstr ""
+msgstr "Не вдалося завантажити дописи"
 
 #: src/pages/account-statuses.jsx:547
 #: src/pages/account-statuses.jsx:577
 msgid "Unable to fetch account info"
-msgstr ""
+msgstr "Не вдалося отримати інформацію про обліковий запис"
 
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
-msgstr ""
+msgstr "Перемкнутися на інстанс {0} обліківки"
 
 #: src/pages/account-statuses.jsx:584
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Перемкнутися на мій інстанс (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:646
 msgid "Month"
-msgstr ""
+msgstr "Місяць"
 
 #: src/pages/accounts.jsx:55
 msgid "Current"
-msgstr ""
+msgstr "Поточний"
 
 #: src/pages/accounts.jsx:101
 msgid "Default"
-msgstr ""
+msgstr "За замовчуванням"
 
 #: src/pages/accounts.jsx:123
 msgid "Switch to this account"
-msgstr ""
+msgstr "Перемкнутися на цю обліківку"
 
 #: src/pages/accounts.jsx:132
 msgid "Switch in new tab/window"
-msgstr ""
+msgstr "Перемкнутися в новій вкладці/вікні"
 
 #: src/pages/accounts.jsx:146
 msgid "View profile…"
-msgstr ""
+msgstr "Переглянути профіль…"
 
 #: src/pages/accounts.jsx:163
 msgid "Set as default"
-msgstr ""
+msgstr "Встановити за замовчуванням"
 
 #: src/pages/accounts.jsx:173
 msgid "Log out <0>@{0}</0>?"
-msgstr ""
+msgstr "Вийти з <0>@{0}</0>?"
 
 #: src/pages/accounts.jsx:196
 msgid "Log out…"
-msgstr ""
+msgstr "Вийти з…"
 
 #: src/pages/accounts.jsx:209
 msgid "Add an existing account"
-msgstr ""
+msgstr "Додати існуючий обліковий запис"
 
 #: src/pages/accounts.jsx:216
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr ""
+msgstr "Примітка: При першому завантаженні буде використано обліковий запис <0>за замовчуванням</0>. Перемикання між обліківками буде зберігатися протягом сесії."
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr ""
+msgstr "Жодної закладки. Додаймо якусь!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "Не вдалося завантажити закладки."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
-msgstr ""
+msgstr "остання година"
 
 #: src/pages/catchup.jsx:55
 msgid "last 2 hours"
-msgstr ""
+msgstr "останні 2 години"
 
 #: src/pages/catchup.jsx:56
 msgid "last 3 hours"
-msgstr ""
+msgstr "останні 3 години"
 
 #: src/pages/catchup.jsx:57
 msgid "last 4 hours"
-msgstr ""
+msgstr "останні 4 години"
 
 #: src/pages/catchup.jsx:58
 msgid "last 5 hours"
-msgstr ""
+msgstr "останні 5 годин"
 
 #: src/pages/catchup.jsx:59
 msgid "last 6 hours"
-msgstr ""
+msgstr "останні 6 годин"
 
 #: src/pages/catchup.jsx:60
 msgid "last 7 hours"
-msgstr ""
+msgstr "останні 7 годин"
 
 #: src/pages/catchup.jsx:61
 msgid "last 8 hours"
-msgstr ""
+msgstr "останні 8 годин"
 
 #: src/pages/catchup.jsx:62
 msgid "last 9 hours"
-msgstr ""
+msgstr "останні 9 годин"
 
 #: src/pages/catchup.jsx:63
 msgid "last 10 hours"
-msgstr ""
+msgstr "останні 10 годин"
 
 #: src/pages/catchup.jsx:64
 msgid "last 11 hours"
-msgstr ""
+msgstr "останні 11 годин"
 
 #: src/pages/catchup.jsx:65
 msgid "last 12 hours"
-msgstr ""
+msgstr "останні 12 годин"
 
 #: src/pages/catchup.jsx:66
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "більше 12 годин"
 
 #: src/pages/catchup.jsx:73
 msgid "Followed tags"
-msgstr ""
+msgstr "Відстежувані теґи"
 
 #: src/pages/catchup.jsx:74
 msgid "Groups"
-msgstr ""
+msgstr "Групи"
 
 #: src/pages/catchup.jsx:596
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Показуються {selectedFilterCategory, select, all {усі дописи} original {оригінальні дописи} replies {відповіді} boosts {поширення} followedTags {відстежувані теґи} groups {групи} filtered {відфільтровані дописи}}, {sortBy, select, createdAt {{sortOrder, select, asc {найстаріші} desc {найновіші}}} reblogsCount {{sortOrder, select, asc {найменш поширені} desc {найпоширеніші}}} favouritesCount {{sortOrder, select, asc {найменш вподобані} desc {найвподобаніші}}} repliesCount {{sortOrder, select, asc {найменше відповідей} desc {найбільше відповідей}}} density {{sortOrder, select, asc {найменш наповнені} desc {найбільш наповнені}}}} перші{groupBy, select, account {, згруповані за авторами} other {}}"
 
 #: src/pages/catchup.jsx:882
 #: src/pages/catchup.jsx:906
 msgid "Catch-up <0>beta</0>"
-msgstr ""
+msgstr "Ретроспектива <0>бета</0>"
 
 #: src/pages/catchup.jsx:896
 #: src/pages/catchup.jsx:1585
 msgid "Help"
-msgstr ""
+msgstr "Довідка"
 
 #: src/pages/catchup.jsx:912
 msgid "What is this?"
-msgstr ""
+msgstr "Що це?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr ""
+msgstr "Ретроспектива (Cath-Up) - це окрема стрічка ваших підписок, що пропонує їх високорівневий перегляд з простим, натхненний email-ом інтерфейсом для багатофункціонального і легкого сортування і фільтру дописів."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
-msgstr ""
+msgstr "Попередній перегляд інтерфейсу Ретроспективи"
 
 #: src/pages/catchup.jsx:935
 msgid "Let's catch up"
-msgstr ""
+msgstr "Зрозуміло, до роботи"
 
 #: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
-msgstr ""
+msgstr "Нумо переглянемо дописи з ваших підписок."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr ""
+msgstr "Показати мені всі дописи з…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
-msgstr ""
+msgstr "до максимуму"
 
 #: src/pages/catchup.jsx:997
 msgid "Catch up"
-msgstr ""
+msgstr "Наздогнати"
 
 #: src/pages/catchup.jsx:1003
 msgid "Overlaps with your last catch-up"
-msgstr ""
+msgstr "Перетинається з вашою останньою ретроспективою"
 
 #: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
-msgstr ""
+msgstr "До останньої ретроспективи ({0})"
 
 #: src/pages/catchup.jsx:1024
 msgid "Note: your instance might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Примітка: ваш інстанс може показати не більше 800 дописів в Домашній стрічці незалежно від часового діапазону. Може бути менше або більше."
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
-msgstr ""
+msgstr "Раніше…"
 
 #: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
-msgstr ""
+msgstr "{0, plural, one {# допис} few {# дописи} other {# дописів}}"
 
 #: src/pages/catchup.jsx:1062
 msgid "Remove this catch-up?"
-msgstr ""
+msgstr "Видалити цю ретроспективу?"
+
+#: src/pages/catchup.jsx:1065
+msgid "Removing Catch-up {0}"
+msgstr "Видалення ретроспективи {0}"
+
+#: src/pages/catchup.jsx:1069
+msgid "Catch-up {0} removed"
+msgstr "Ретроспективу {0} видалено"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr ""
+msgstr "Примітка: Буде збережено не більше 3 останніх ретроспектив."
 
 #: src/pages/catchup.jsx:1098
 msgid "Fetching posts…"
-msgstr ""
+msgstr "Отримання дописів…"
 
 #: src/pages/catchup.jsx:1101
 msgid "This might take a while."
-msgstr ""
+msgstr "Це може зайняти деякий час."
 
 #: src/pages/catchup.jsx:1136
 msgid "Reset filters"
-msgstr ""
+msgstr "Скинути фільтри"
 
 #: src/pages/catchup.jsx:1144
 #: src/pages/catchup.jsx:1591
 msgid "Top links"
-msgstr ""
+msgstr "Найпопулярніші посилання"
 
 #: src/pages/catchup.jsx:1261
 msgid "Shared by {0}"
-msgstr ""
+msgstr "Поширили {0}"
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
-#: src/pages/search.jsx:222
+#: src/pages/search.jsx:297
 msgid "All"
-msgstr ""
+msgstr "Усе"
 
 #: src/pages/catchup.jsx:1401
 msgid "{0, plural, one {# author} other {# authors}}"
-msgstr ""
+msgstr "{0, plural, one {# автор} few {# автори} other {# авторів}}"
 
 #: src/pages/catchup.jsx:1413
 msgid "Sort"
-msgstr ""
+msgstr "Сортування"
 
 #: src/pages/catchup.jsx:1444
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: src/pages/catchup.jsx:1448
 msgid "Density"
+msgstr "Наповнення"
+
+#. js-lingui-explicit-id
+#: src/pages/catchup.jsx:1471
+msgid "group.filter"
 msgstr ""
 
 #: src/pages/catchup.jsx:1486
 msgid "Authors"
-msgstr ""
+msgstr "За авторами"
 
 #: src/pages/catchup.jsx:1487
 msgid "None"
-msgstr ""
+msgstr "Не групувати"
 
 #: src/pages/catchup.jsx:1503
 msgid "Show all authors"
-msgstr ""
+msgstr "Показати всіх авторів"
 
 #: src/pages/catchup.jsx:1554
 msgid "You don't have to read everything."
-msgstr ""
+msgstr "Ви не мусите читати все."
 
 #: src/pages/catchup.jsx:1555
 msgid "That's all."
-msgstr ""
+msgstr "На цьому все."
 
 #: src/pages/catchup.jsx:1563
 msgid "Back to top"
-msgstr ""
+msgstr "На початок"
 
 #: src/pages/catchup.jsx:1594
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr ""
+msgstr "Посилання, поширені підписками, відсортовані за кількістю взаємодій, поширень і вподобань."
 
 #: src/pages/catchup.jsx:1600
 msgid "Sort: Density"
-msgstr ""
+msgstr "Сортування: Наповнення"
 
 #: src/pages/catchup.jsx:1603
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr ""
+msgstr "Дописи відсортовані за наповненням або розміром інформації. Короткі дописи - \"легші\", коли як довші пости - \"важче\". Дописи із зображенням \"важче\", аніж дописи без зображень."
 
 #: src/pages/catchup.jsx:1610
 msgid "Group: Authors"
-msgstr ""
+msgstr "Групування: За авторами"
 
 #: src/pages/catchup.jsx:1613
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr ""
+msgstr "Дописи згруповані за авторами, відсортовані за кількістю дописів на автора."
 
 #: src/pages/catchup.jsx:1660
 msgid "Next author"
-msgstr ""
+msgstr "Наступний автор"
 
 #: src/pages/catchup.jsx:1668
 msgid "Previous author"
-msgstr ""
+msgstr "Попередній автор"
 
 #: src/pages/catchup.jsx:1684
 msgid "Scroll to top"
-msgstr ""
+msgstr "Прокрутити догори"
 
 #: src/pages/catchup.jsx:1875
 msgid "Filtered: {0}"
-msgstr ""
+msgstr "Відфільтровано: {0}"
 
 #: src/pages/favourites.jsx:25
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Жодного вподобання. Нумо вподобайте щось!"
 
 #: src/pages/favourites.jsx:26
 msgid "Unable to load likes."
-msgstr ""
+msgstr "Не вдалося завантажити вподобання."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
-msgstr ""
+msgstr "Домашня та Списки"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr ""
+msgstr "Публічна стрічка"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
-msgstr ""
+msgstr "Бесіди"
 
 #: src/pages/filters.jsx:27
 msgid "Profiles"
-msgstr ""
+msgstr "Профілі"
 
 #: src/pages/filters.jsx:42
 msgid "Never"
-msgstr ""
+msgstr "Ніколи"
 
 #: src/pages/filters.jsx:103
 #: src/pages/filters.jsx:228
 msgid "New filter"
-msgstr ""
+msgstr "Новий фільтр"
 
 #: src/pages/filters.jsx:151
 msgid "{0, plural, one {# filter} other {# filters}}"
-msgstr ""
+msgstr "{0, plural, one {# фільтр} few {# фільтри} other {# фільтрів}}"
 
 #: src/pages/filters.jsx:166
 msgid "Unable to load filters."
-msgstr ""
+msgstr "Не вдалося завантажити фільтри."
 
 #: src/pages/filters.jsx:170
 msgid "No filters yet."
-msgstr ""
+msgstr "Немає жодного фільтра."
 
 #: src/pages/filters.jsx:177
 msgid "Add filter"
-msgstr ""
+msgstr "Додати фільтр"
 
 #: src/pages/filters.jsx:228
 msgid "Edit filter"
-msgstr ""
+msgstr "Редагувати фільтр"
 
 #: src/pages/filters.jsx:345
 msgid "Unable to edit filter"
-msgstr ""
+msgstr "Не вдалося редагувати фільтр"
 
 #: src/pages/filters.jsx:346
 msgid "Unable to create filter"
-msgstr ""
+msgstr "Не вдалося створити фільтр"
 
 #: src/pages/filters.jsx:355
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: src/pages/filters.jsx:396
 msgid "Whole word"
-msgstr ""
+msgstr "Ціле слово"
 
 #: src/pages/filters.jsx:422
 msgid "No keywords. Add one."
-msgstr ""
+msgstr "Немає ключових слів. Додайте одне."
 
 #: src/pages/filters.jsx:449
 msgid "Add keyword"
-msgstr ""
+msgstr "Додати ключове слово"
 
 #: src/pages/filters.jsx:453
 msgid "{0, plural, one {# keyword} other {# keywords}}"
-msgstr ""
+msgstr "{0, plural, one {# ключове слово} few {# ключових слова} other {# ключових слів}}"
 
 #: src/pages/filters.jsx:466
 msgid "Filter from…"
-msgstr ""
+msgstr "Фільтрувати з…"
 
 #: src/pages/filters.jsx:492
 msgid "* Not implemented yet"
-msgstr ""
+msgstr "* Ще не реалізовано"
 
 #: src/pages/filters.jsx:498
 msgid "Status: <0><1/></0>"
-msgstr ""
+msgstr "Статус: <0><1/></0>"
 
 #: src/pages/filters.jsx:507
 msgid "Change expiry"
-msgstr ""
+msgstr "Змінити термін дії"
 
 #: src/pages/filters.jsx:507
 msgid "Expiry"
-msgstr ""
+msgstr "Термін дії"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr ""
+msgstr "Відфільтрований допис буде…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
-msgstr ""
+msgstr "згорнуто"
 
 #: src/pages/filters.jsx:546
 msgid "hidden"
-msgstr ""
+msgstr "приховано"
 
 #: src/pages/filters.jsx:563
 msgid "Delete this filter?"
-msgstr ""
+msgstr "Видалити цей фільтр?"
 
 #: src/pages/filters.jsx:576
 msgid "Unable to delete filter."
-msgstr ""
+msgstr "Не вдалося видалити фільтр."
 
 #: src/pages/filters.jsx:608
 msgid "Expired"
-msgstr ""
+msgstr "Прострочений"
 
 #: src/pages/filters.jsx:610
 msgid "Expiring <0/>"
-msgstr ""
+msgstr "Минає <0/>"
 
 #: src/pages/filters.jsx:614
 msgid "Never expires"
-msgstr ""
+msgstr "Необмежений термін дії"
 
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
-msgstr ""
+msgstr "{0, plural,one {# хештеґ} few {# хештеґи} other {# хештеґів}}"
 
 #: src/pages/followed-hashtags.jsx:85
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "Не вдалося завантажити хештеґи, що відстежуються."
 
 #: src/pages/followed-hashtags.jsx:89
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Жодного хештеґу не відстежується."
 
-#: src/pages/following.jsx:136
+#: src/pages/following.jsx:143
 msgid "Nothing to see here."
-msgstr ""
+msgstr "Немає на що дивитись."
 
-#: src/pages/following.jsx:137
+#: src/pages/following.jsx:144
 #: src/pages/list.jsx:108
 msgid "Unable to load posts."
-msgstr ""
+msgstr "Не вдалося завантажити дописи."
 
 #: src/pages/hashtag.jsx:55
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} (Лише медіа) на {instance}"
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} на {instance}"
 
 #: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} (Media only)"
-msgstr ""
+msgstr "{hashtagTitle} (Лише медіа)"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:181
 msgid "No one has posted anything with this tag yet."
-msgstr ""
+msgstr "Жодного допису із цим хештеґом."
 
 #: src/pages/hashtag.jsx:182
 msgid "Unable to load posts with this tag"
-msgstr ""
+msgstr "Не вдалося завантажити дописи із цим хештеґом."
 
 #: src/pages/hashtag.jsx:208
 msgid "Unfollow #{hashtag}?"
-msgstr ""
+msgstr "Не відстежувати #{hashtag}?"
 
 #: src/pages/hashtag.jsx:223
 msgid "Unfollowed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} не відстежується"
 
 #: src/pages/hashtag.jsx:238
 msgid "Followed #{hashtag}"
-msgstr ""
+msgstr "#{hashtag} відстежується"
 
 #: src/pages/hashtag.jsx:254
 msgid "Following…"
-msgstr ""
+msgstr "Відстежуємо…"
 
 #: src/pages/hashtag.jsx:282
 msgid "Unfeatured on profile"
-msgstr ""
+msgstr "Не рекомендовано в профілі"
 
 #: src/pages/hashtag.jsx:296
 msgid "Unable to unfeature on profile"
-msgstr ""
+msgstr "Не вдалося скасувати рекомендацію в профілі"
 
 #: src/pages/hashtag.jsx:305
 #: src/pages/hashtag.jsx:321
 msgid "Featured on profile"
-msgstr ""
+msgstr "Рекомендовано в профілі"
 
 #: src/pages/hashtag.jsx:328
 msgid "Feature on profile"
-msgstr ""
+msgstr "Рекомендувати в профілі"
 
 #: src/pages/hashtag.jsx:393
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
-msgstr ""
+msgstr "{TOTAL_TAGS_LIMIT, plural, few {Макс. # теґи} other {Макс. # теґів}}"
 
 #: src/pages/hashtag.jsx:396
 msgid "Add hashtag"
-msgstr ""
+msgstr "Додати хештеґ"
 
 #: src/pages/hashtag.jsx:428
 msgid "Remove hashtag"
-msgstr ""
+msgstr "Видалити хештеґ"
 
 #: src/pages/hashtag.jsx:442
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
-msgstr ""
+msgstr "Досягнуто ліміт в {SHORTCUTS_LIMIT, plural, one {# ярлик.} few {# ярлики.} other {# ярликів.}} Не вдалося додати ярлик."
 
 #: src/pages/hashtag.jsx:471
 msgid "This shortcut already exists"
-msgstr ""
+msgstr "Цей ярлик вже існує"
 
 #: src/pages/hashtag.jsx:474
 msgid "Hashtag shortcut added"
-msgstr ""
+msgstr "Ярлик хештеґу додано"
 
 #: src/pages/hashtag.jsx:480
 msgid "Add to Shortcuts"
-msgstr ""
+msgstr "Додати в Ярлики"
 
 #: src/pages/hashtag.jsx:486
 #: src/pages/public.jsx:139
 #: src/pages/trending.jsx:478
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Введіть новий інстанс, напр. \"twiukraine.com\""
 
 #: src/pages/hashtag.jsx:489
 #: src/pages/public.jsx:142
 #: src/pages/trending.jsx:481
 msgid "Invalid instance"
-msgstr ""
+msgstr "Некоректний інстанс"
 
 #: src/pages/hashtag.jsx:503
 #: src/pages/public.jsx:156
 #: src/pages/trending.jsx:493
 msgid "Go to another instance…"
-msgstr ""
+msgstr "Перейти до іншого інстансу…"
 
 #: src/pages/hashtag.jsx:516
 #: src/pages/public.jsx:169
 #: src/pages/trending.jsx:504
 msgid "Go to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Перейти до мого інстансу (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:209
 msgid "Unable to fetch notifications."
-msgstr ""
+msgstr "Не вдалося отримати сповіщення."
 
 #: src/pages/home.jsx:229
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr ""
+msgstr "<0>Нові</0> <1>Запити на Підписку</1>"
 
 #: src/pages/home.jsx:235
 msgid "See all"
-msgstr ""
+msgstr "Переглянути всі"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr ""
+msgstr "Визначається…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr ""
+msgstr "Не вдалося визначити URL"
 
 #: src/pages/list.jsx:107
 msgid "Nothing yet."
-msgstr ""
+msgstr "Поки нічого."
 
 #: src/pages/list.jsx:176
 #: src/pages/list.jsx:279
 msgid "Manage members"
-msgstr ""
+msgstr "Керувати учасниками"
 
 #: src/pages/list.jsx:313
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "Вилучити <0>@{0}</0> зі списку?"
 
 #: src/pages/list.jsx:359
 msgid "Remove…"
-msgstr ""
+msgstr "Вилучити…"
 
 #: src/pages/lists.jsx:93
 msgid "{0, plural, one {# list} other {# lists}}"
-msgstr ""
+msgstr "{0, plural, one {# список} few {# списки} other {# списків}}"
 
 #: src/pages/lists.jsx:108
 msgid "No lists yet."
-msgstr ""
+msgstr "Списків поки немає."
 
 #: src/pages/login.jsx:109
 #: src/pages/login.jsx:122
 msgid "Failed to register application"
-msgstr ""
+msgstr "Не вдалося зареєструвати застосунок"
 
 #: src/pages/login.jsx:208
 msgid "instance domain"
-msgstr ""
+msgstr "домен інстансу"
 
 #: src/pages/login.jsx:232
 msgid "e.g. “mastodon.social”"
-msgstr ""
+msgstr "напр. \"twiukraine.com\""
 
 #: src/pages/login.jsx:243
 msgid "Failed to log in. Please try again or try another instance."
-msgstr ""
+msgstr "Не вдалося увійти. Будь ласка, повторіть спробу або спробуйте інший екземпляр."
 
 #: src/pages/login.jsx:255
 msgid "Continue with {selectedInstanceText}"
-msgstr ""
+msgstr "Продовжити з {selectedInstanceText}"
 
 #: src/pages/login.jsx:256
 msgid "Continue"
-msgstr ""
+msgstr "Продовжити"
 
 #: src/pages/login.jsx:264
 msgid "Don't have an account? Create one!"
-msgstr ""
+msgstr "У вас ще немає облікового запису? Створіть його!"
 
 #: src/pages/mentions.jsx:20
 msgid "Private mentions"
-msgstr ""
+msgstr "Особисті згадки"
 
 #: src/pages/mentions.jsx:159
 msgid "Private"
-msgstr ""
+msgstr "Приватне"
 
 #: src/pages/mentions.jsx:169
 msgid "No one mentioned you :("
-msgstr ""
+msgstr "Ніхто не згадував вас :("
 
 #: src/pages/mentions.jsx:170
 msgid "Unable to load mentions."
-msgstr ""
+msgstr "Не вдалося завантажити згадки."
 
-#: src/pages/notifications.jsx:97
+#: src/pages/notifications.jsx:103
 msgid "You don't follow"
-msgstr ""
+msgstr "На кого ви не підписані"
 
-#: src/pages/notifications.jsx:98
+#: src/pages/notifications.jsx:104
 msgid "Who don't follow you"
-msgstr ""
+msgstr "Хто не підписаний на вас"
 
-#: src/pages/notifications.jsx:99
+#: src/pages/notifications.jsx:105
 msgid "With a new account"
-msgstr ""
+msgstr "З новим обліковим записом"
 
-#: src/pages/notifications.jsx:100
+#: src/pages/notifications.jsx:106
 msgid "Who unsolicitedly private mention you"
-msgstr ""
+msgstr "Хто небажано згадав вас"
 
-#: src/pages/notifications.jsx:101
+#: src/pages/notifications.jsx:107
 msgid "Who are limited by server moderators"
-msgstr ""
+msgstr "Хто обмежений модераторами сервера"
 
-#: src/pages/notifications.jsx:523
-#: src/pages/notifications.jsx:844
+#: src/pages/notifications.jsx:538
+#: src/pages/notifications.jsx:872
 msgid "Notifications settings"
-msgstr ""
+msgstr "Налаштування сповіщень"
 
-#: src/pages/notifications.jsx:541
+#: src/pages/notifications.jsx:556
 msgid "New notifications"
-msgstr ""
+msgstr "Нові сповіщення"
 
-#: src/pages/notifications.jsx:552
+#: src/pages/notifications.jsx:567
 msgid "{0, plural, one {Announcement} other {Announcements}}"
-msgstr ""
+msgstr "{0, plural, one {Оголошення} few {Оголошення} other {Оголошень}}"
 
-#: src/pages/notifications.jsx:599
-#: src/pages/settings.jsx:1053
+#: src/pages/notifications.jsx:614
+#: src/pages/settings.jsx:1118
 msgid "Follow requests"
-msgstr ""
+msgstr "Запити на підписку"
 
-#: src/pages/notifications.jsx:604
+#: src/pages/notifications.jsx:619
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
-msgstr ""
+msgstr "{0, plural, one {# запит} few {# запити} other {# запитів}} на підписку"
 
-#: src/pages/notifications.jsx:659
+#: src/pages/notifications.jsx:674
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
-msgstr ""
+msgstr "Відфільтровані сповіщення від {0, plural, one {# користувача} other {# користувачів}}"
 
-#: src/pages/notifications.jsx:725
+#: src/pages/notifications.jsx:740
 msgid "Only mentions"
-msgstr ""
+msgstr "Лише згадки"
 
-#: src/pages/notifications.jsx:729
+#: src/pages/notifications.jsx:744
 msgid "Today"
-msgstr ""
+msgstr "Сьогодні"
 
-#: src/pages/notifications.jsx:733
+#: src/pages/notifications.jsx:749
 msgid "You're all caught up."
-msgstr ""
+msgstr "Ви наздогнали все."
 
-#: src/pages/notifications.jsx:756
+#: src/pages/notifications.jsx:772
 msgid "Yesterday"
-msgstr ""
+msgstr "Вчора"
 
-#: src/pages/notifications.jsx:792
+#: src/pages/notifications.jsx:820
 msgid "Unable to load notifications"
-msgstr ""
+msgstr "Не вдалося завантажити сповіщення"
 
-#: src/pages/notifications.jsx:871
+#: src/pages/notifications.jsx:899
 msgid "Notifications settings updated"
-msgstr ""
+msgstr "Налаштування сповіщень оновлено"
 
-#: src/pages/notifications.jsx:879
+#: src/pages/notifications.jsx:907
 msgid "Filter out notifications from people:"
-msgstr ""
+msgstr "Відфільтрувати сповіщення від користувачів:"
 
-#: src/pages/notifications.jsx:893
+#: src/pages/notifications.jsx:921
 msgid "Filter"
-msgstr ""
+msgstr "Фільтрувати"
 
-#: src/pages/notifications.jsx:896
+#: src/pages/notifications.jsx:924
 msgid "Ignore"
-msgstr ""
+msgstr "Ігнорувати"
 
-#: src/pages/notifications.jsx:969
+#: src/pages/notifications.jsx:997
 msgid "Updated <0>{0}</0>"
-msgstr ""
+msgstr "Оновлено <0>{0}</0>"
 
-#: src/pages/notifications.jsx:1037
+#: src/pages/notifications.jsx:1065
 msgid "View notifications from <0>@{0}</0>"
-msgstr ""
+msgstr "Переглянути сповіщення від <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1058
+#: src/pages/notifications.jsx:1086
 msgid "Notifications from <0>@{0}</0>"
-msgstr ""
+msgstr "Сповіщення від <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1125
+#: src/pages/notifications.jsx:1153
 msgid "Notifications from @{0} will not be filtered from now on."
-msgstr ""
+msgstr "Відтепер сповіщення від @{0} не будуть відфільтровані."
 
-#: src/pages/notifications.jsx:1130
+#: src/pages/notifications.jsx:1158
 msgid "Unable to accept notification request"
-msgstr ""
+msgstr "Не вдалося прийняти запит на сповіщення"
 
-#: src/pages/notifications.jsx:1135
+#: src/pages/notifications.jsx:1163
 msgid "Allow"
-msgstr ""
+msgstr "Дозволити"
 
-#: src/pages/notifications.jsx:1155
+#: src/pages/notifications.jsx:1183
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Відтепер сповіщення від @{0} не показуватимуться у відфільтрованих сповіщеннях."
 
-#: src/pages/notifications.jsx:1160
+#: src/pages/notifications.jsx:1188
 msgid "Unable to dismiss notification request"
-msgstr ""
+msgstr "Не вдалося відхилити запит на сповіщення"
 
-#: src/pages/notifications.jsx:1165
+#: src/pages/notifications.jsx:1193
 msgid "Dismiss"
-msgstr ""
+msgstr "Відхилити"
 
-#: src/pages/notifications.jsx:1180
+#: src/pages/notifications.jsx:1208
 msgid "Dismissed"
-msgstr ""
+msgstr "Відхилено"
 
 #: src/pages/public.jsx:27
 msgid "Local timeline ({instance})"
-msgstr ""
+msgstr "Локальна стрічка ({instance})"
 
 #: src/pages/public.jsx:28
 msgid "Federated timeline ({instance})"
-msgstr ""
+msgstr "Федеративна стрічка ({instance})"
 
 #: src/pages/public.jsx:90
 msgid "Local timeline"
-msgstr ""
+msgstr "Локальна стрічка"
 
 #: src/pages/public.jsx:90
 msgid "Federated timeline"
-msgstr ""
+msgstr "Федеративна стрічка"
 
 #: src/pages/public.jsx:96
 msgid "No one has posted anything yet."
-msgstr ""
+msgstr "Ще ніхто нічого не опублікував."
 
 #: src/pages/public.jsx:123
 msgid "Switch to Federated"
-msgstr ""
+msgstr "Перемкнути на Федеративну"
 
 #: src/pages/public.jsx:130
 msgid "Switch to Local"
-msgstr ""
-
-#: src/pages/search.jsx:43
-msgid "Search: {q} (Posts)"
-msgstr ""
-
-#: src/pages/search.jsx:46
-msgid "Search: {q} (Accounts)"
-msgstr ""
+msgstr "Перемкнути на Локальну"
 
 #: src/pages/search.jsx:49
-msgid "Search: {q} (Hashtags)"
-msgstr ""
+msgid "Search: {q} (Posts)"
+msgstr "Пошук: {q} (Дописи)"
 
 #: src/pages/search.jsx:52
+msgid "Search: {q} (Accounts)"
+msgstr "Пошук: {q} (Облікові записи)"
+
+#: src/pages/search.jsx:55
+msgid "Search: {q} (Hashtags)"
+msgstr "Пошук: {q} (Хештеґи)"
+
+#: src/pages/search.jsx:58
 msgid "Search: {q}"
-msgstr ""
+msgstr "Пошук: {q}"
 
-#: src/pages/search.jsx:232
-#: src/pages/search.jsx:314
+#: src/pages/search.jsx:307
+#: src/pages/search.jsx:389
 msgid "Hashtags"
-msgstr ""
+msgstr "Хештеґи"
 
-#: src/pages/search.jsx:264
-#: src/pages/search.jsx:318
-#: src/pages/search.jsx:388
+#: src/pages/search.jsx:339
+#: src/pages/search.jsx:393
+#: src/pages/search.jsx:463
 msgid "See more"
-msgstr ""
+msgstr "Показати більше"
 
-#: src/pages/search.jsx:290
+#: src/pages/search.jsx:365
 msgid "See more accounts"
-msgstr ""
+msgstr "Переглянути більше облікових записів"
 
-#: src/pages/search.jsx:304
+#: src/pages/search.jsx:379
 msgid "No accounts found."
-msgstr ""
+msgstr "Жодного облікового запису не знайдено."
 
-#: src/pages/search.jsx:360
+#: src/pages/search.jsx:435
 msgid "See more hashtags"
-msgstr ""
+msgstr "Переглянути більше хештеґів"
 
-#: src/pages/search.jsx:374
+#: src/pages/search.jsx:449
 msgid "No hashtags found."
-msgstr ""
+msgstr "Хештеґи не знайдено."
 
-#: src/pages/search.jsx:418
+#: src/pages/search.jsx:493
 msgid "See more posts"
-msgstr ""
+msgstr "Показати більше повідомлень"
 
-#: src/pages/search.jsx:432
+#: src/pages/search.jsx:507
 msgid "No posts found."
-msgstr ""
+msgstr "Жодного допису не знайдено."
 
-#: src/pages/search.jsx:476
+#: src/pages/search.jsx:551
 msgid "Enter your search term or paste a URL above to get started."
-msgstr ""
+msgstr "Введіть пошуковий запит або вставте посилання вище, щоб розпочати."
 
-#: src/pages/settings.jsx:74
+#: src/pages/settings.jsx:81
 msgid "Settings"
-msgstr ""
+msgstr "Налаштування"
 
-#: src/pages/settings.jsx:83
+#: src/pages/settings.jsx:90
 msgid "Appearance"
-msgstr ""
+msgstr "Оформлення"
 
-#: src/pages/settings.jsx:159
+#: src/pages/settings.jsx:166
 msgid "Light"
-msgstr ""
+msgstr "Світла"
 
-#: src/pages/settings.jsx:170
+#: src/pages/settings.jsx:177
 msgid "Dark"
-msgstr ""
+msgstr "Темна"
 
-#: src/pages/settings.jsx:183
+#: src/pages/settings.jsx:190
 msgid "Auto"
-msgstr ""
+msgstr "Автоматично"
 
-#: src/pages/settings.jsx:193
+#: src/pages/settings.jsx:200
 msgid "Text size"
-msgstr ""
+msgstr "Розмір тексту"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
-#: src/pages/settings.jsx:198
-#: src/pages/settings.jsx:223
+#: src/pages/settings.jsx:205
+#: src/pages/settings.jsx:230
 msgid "A"
-msgstr ""
+msgstr "А"
 
-#: src/pages/settings.jsx:237
+#: src/pages/settings.jsx:244
 msgid "Display language"
-msgstr ""
+msgstr "Мова інтерфейсу"
 
-#: src/pages/settings.jsx:246
+#: src/pages/settings.jsx:253
 msgid "Volunteer translations"
-msgstr ""
-
-#: src/pages/settings.jsx:257
-msgid "Posting"
-msgstr ""
+msgstr "Допомогти з перекладом"
 
 #: src/pages/settings.jsx:264
+msgid "Posting"
+msgstr "Публікація"
+
+#: src/pages/settings.jsx:271
 msgid "Default visibility"
-msgstr ""
+msgstr "Видимість допису за замовчуванням"
 
-#: src/pages/settings.jsx:265
-#: src/pages/settings.jsx:311
+#: src/pages/settings.jsx:272
+#: src/pages/settings.jsx:318
 msgid "Synced"
-msgstr ""
+msgstr "Синхронізовано"
 
-#: src/pages/settings.jsx:290
+#: src/pages/settings.jsx:297
 msgid "Failed to update posting privacy"
-msgstr ""
+msgstr "Не вдалося оновити видимість дописів"
 
-#: src/pages/settings.jsx:313
+#: src/pages/settings.jsx:320
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Синхронізовано з налаштуваннями на вашому інстансі.<0> Перейдіть на сайт вашого інстансу ({instance}) для детальних налаштувань.</0>"
 
-#: src/pages/settings.jsx:328
+#: src/pages/settings.jsx:335
 msgid "Experiments"
-msgstr ""
+msgstr "Експериментальні опції"
 
-#: src/pages/settings.jsx:341
+#: src/pages/settings.jsx:348
 msgid "Auto refresh timeline posts"
-msgstr ""
+msgstr "Автоматично оновлювати дописи стрічки"
 
-#: src/pages/settings.jsx:353
+#: src/pages/settings.jsx:360
 msgid "Boosts carousel"
-msgstr ""
+msgstr "Карусель поширень"
 
-#: src/pages/settings.jsx:369
+#: src/pages/settings.jsx:376
 msgid "Post translation"
-msgstr ""
+msgstr "Переклад допису"
 
-#: src/pages/settings.jsx:380
+#: src/pages/settings.jsx:387
 msgid "Translate to"
-msgstr ""
+msgstr "Перекласти на"
 
-#: src/pages/settings.jsx:391
+#: src/pages/settings.jsx:398
 msgid "System language ({systemTargetLanguageText})"
-msgstr ""
+msgstr "Мова системи ({systemTargetLanguageText})"
 
-#: src/pages/settings.jsx:417
+#: src/pages/settings.jsx:424
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr ""
+msgstr "{0, plural, =0 {Приховати кнопку \"Перекласти\" для:} other {Приховати кнопку \"Перекласти\" для (#):}}"
 
-#: src/pages/settings.jsx:471
+#: src/pages/settings.jsx:478
 msgid "Note: This feature uses external translation services, powered by <0>Lingva API</0> & <1>Lingva Translate</1>."
-msgstr ""
+msgstr "Примітка: Ця функція використовує сервіси зовнішніх перекладів, що працюють на <0>Lingva API</0> & <1>Lingva Translate</1>."
 
-#: src/pages/settings.jsx:505
+#: src/pages/settings.jsx:512
 msgid "Auto inline translation"
-msgstr ""
+msgstr "Автоматичний вбудований переклад"
 
-#: src/pages/settings.jsx:509
+#: src/pages/settings.jsx:516
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr ""
+msgstr "Автоматично показувати переклад постів в стрічці. Працює лише для <0>коротких</0> дописів без чутливого контенту, медіа та опитування."
 
-#: src/pages/settings.jsx:529
+#: src/pages/settings.jsx:536
 msgid "GIF Picker for composer"
-msgstr ""
+msgstr "Пошук GIF в редакторі"
 
-#: src/pages/settings.jsx:533
+#: src/pages/settings.jsx:540
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr ""
+msgstr "Примітка: Ця функція використовує зовнішній сервіс пошуку GIF від <0>GIPHY</0>. G-рейтинг (підходить для перегляду будь-якому віку), параметри відстеження та інформація про джерело будуть прибрані, але пошукові запити та дані IP-адреси все одно будуть передаватися на їхній сервер."
 
-#: src/pages/settings.jsx:562
+#: src/pages/settings.jsx:569
 msgid "Image description generator"
-msgstr ""
-
-#: src/pages/settings.jsx:567
-msgid "Only for new images while composing new posts."
-msgstr ""
+msgstr "Генератор опису зображення"
 
 #: src/pages/settings.jsx:574
+msgid "Only for new images while composing new posts."
+msgstr "Лише для нових зображень при створенні нових дописів."
+
+#: src/pages/settings.jsx:581
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr ""
+msgstr "Примітка: Ця функціональність використовує зовнішній сервіс AI, що базується на <0>img-alt-api</0>. Може не працювати добре. Тільки для зображень та англійською мовою."
 
-#: src/pages/settings.jsx:600
+#: src/pages/settings.jsx:607
 msgid "Server-side grouped notifications"
-msgstr ""
+msgstr "Згруповані сервером сповіщення"
 
-#: src/pages/settings.jsx:604
+#: src/pages/settings.jsx:611
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr ""
+msgstr "Функціональність на етапі альфи. Потенційно покращене групування вікон, але базова логіка групування."
 
-#: src/pages/settings.jsx:625
+#: src/pages/settings.jsx:632
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr ""
+msgstr "\"Хмарний\" імпорт/експорт для налаштувань ярликів"
 
-#: src/pages/settings.jsx:630
+#: src/pages/settings.jsx:637
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr ""
+msgstr "⚠️⚠️⚠️ Занадто експериментально.<0/>Зберігається в нотатках вашого профілю. (Приватні) нотатки профілю зазвичай використовуються для інших профілів і приховані для власного профілю."
 
-#: src/pages/settings.jsx:641
+#: src/pages/settings.jsx:648
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr ""
+msgstr "Примітка: Ця функціональність використовує API поточно-авторизованого сервера інстансу."
 
-#: src/pages/settings.jsx:658
+#: src/pages/settings.jsx:665
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr ""
+msgstr "Режим маскування <0>(<1>Текст</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:667
+#: src/pages/settings.jsx:674
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "Замінює текст блоками. Корисно при створенні скриншотів (з міркувань конфіденційності)."
 
-#: src/pages/settings.jsx:692
+#: src/pages/settings.jsx:699
 msgid "About"
-msgstr ""
+msgstr "Про застосунок"
 
-#: src/pages/settings.jsx:731
+#: src/pages/settings.jsx:738
 msgid "<0>Built</0> by <1>@cheeaun</1>"
-msgstr ""
+msgstr "<0>Створено</0> <1>@cheeaun</1>"
 
-#: src/pages/settings.jsx:760
+#: src/pages/settings.jsx:767
 msgid "Sponsor"
-msgstr ""
+msgstr "Спонсорувати"
 
-#: src/pages/settings.jsx:768
+#: src/pages/settings.jsx:775
 msgid "Donate"
-msgstr ""
-
-#: src/pages/settings.jsx:776
-msgid "Privacy Policy"
-msgstr ""
+msgstr "Підтримати"
 
 #: src/pages/settings.jsx:783
-msgid "<0>Site:</0> {0}"
-msgstr ""
+msgid "Privacy Policy"
+msgstr "Політика конфіденційності"
 
 #: src/pages/settings.jsx:790
+msgid "<0>Site:</0> {0}"
+msgstr "<0>Адреса клієнта:</0> {0}"
+
+#: src/pages/settings.jsx:797
 msgid "<0>Version:</0> <1/> {0}"
-msgstr ""
+msgstr "<0>Версія:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:805
+#: src/pages/settings.jsx:812
 msgid "Version string copied"
-msgstr ""
+msgstr "Версію скопійовано"
 
-#: src/pages/settings.jsx:808
+#: src/pages/settings.jsx:815
 msgid "Unable to copy version string"
-msgstr ""
+msgstr "Не вдалося скопіювати версію"
 
-#: src/pages/settings.jsx:950
-#: src/pages/settings.jsx:955
+#: src/pages/settings.jsx:1015
+#: src/pages/settings.jsx:1020
 msgid "Failed to update subscription. Please try again."
-msgstr ""
+msgstr "Не вдалося оновити підписку. Будь ласка, спробуйте ще раз."
 
-#: src/pages/settings.jsx:961
+#: src/pages/settings.jsx:1026
 msgid "Failed to remove subscription. Please try again."
-msgstr ""
+msgstr "Не вдалося скасувати підписку. Будь ласка, спробуйте ще раз."
 
-#: src/pages/settings.jsx:968
+#: src/pages/settings.jsx:1033
 msgid "Push Notifications (beta)"
-msgstr ""
+msgstr "Push-сповіщення (бета)"
 
-#: src/pages/settings.jsx:990
+#: src/pages/settings.jsx:1055
 msgid "Push notifications are blocked. Please enable them in your browser settings."
-msgstr ""
+msgstr "Push-сповіщення заблоковані. Будь ласка, увімкніть їх у налаштуваннях свого браузеру."
 
-#: src/pages/settings.jsx:999
+#: src/pages/settings.jsx:1064
 msgid "Allow from <0>{0}</0>"
-msgstr ""
+msgstr "Дозволити від <0>{0}</0>"
 
-#: src/pages/settings.jsx:1008
+#: src/pages/settings.jsx:1073
 msgid "anyone"
-msgstr ""
+msgstr "будь-кого"
 
-#: src/pages/settings.jsx:1012
+#: src/pages/settings.jsx:1077
 msgid "people I follow"
-msgstr ""
+msgstr "моїх підписок"
 
-#: src/pages/settings.jsx:1016
+#: src/pages/settings.jsx:1081
 msgid "followers"
-msgstr ""
+msgstr "підписників"
 
-#: src/pages/settings.jsx:1049
+#: src/pages/settings.jsx:1114
 msgid "Follows"
-msgstr ""
+msgstr "Підписки"
 
-#: src/pages/settings.jsx:1057
+#: src/pages/settings.jsx:1122
 msgid "Polls"
-msgstr ""
+msgstr "Опитування"
 
-#: src/pages/settings.jsx:1061
+#: src/pages/settings.jsx:1126
 msgid "Post edits"
-msgstr ""
+msgstr "Редагування дописів"
 
-#: src/pages/settings.jsx:1082
+#: src/pages/settings.jsx:1147
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr ""
+msgstr "Дозвіл на push-сповіщення не було надано з моменту останнього входу. Вам потрібно <0><1>увійти в систему</1> знову, щоб надати дозвіл."
 
-#: src/pages/settings.jsx:1098
+#: src/pages/settings.jsx:1163
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "ПРИМІТКА: Push-сповіщення працюють лише для <0>одного облікового запису</0>."
 
-#: src/pages/status.jsx:565
-msgid "Post"
-msgstr ""
+#. js-lingui-explicit-id
+#: src/pages/status.jsx:597
+#: src/pages/status.jsx:1131
+msgid "post.title"
+msgstr "Допис"
 
-#: src/pages/status.jsx:786
+#: src/pages/status.jsx:822
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Ви не увійшли в систему. Взаємодія (відповідь, поширення тощо) неможлива."
 
-#: src/pages/status.jsx:799
+#: src/pages/status.jsx:842
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Цей допис з іншого інстансу (<0>{instance}</0>). Взаємодія (відповідь, поширення тощо) неможлива."
 
-#: src/pages/status.jsx:827
+#: src/pages/status.jsx:870
 msgid "Error: {e}"
-msgstr ""
+msgstr "Помилка: {e}"
 
-#: src/pages/status.jsx:834
+#: src/pages/status.jsx:877
 msgid "Switch to my instance to enable interactions"
-msgstr ""
+msgstr "Перемкнутися на мій інстанс задля взаємодії"
 
-#: src/pages/status.jsx:936
+#: src/pages/status.jsx:979
 msgid "Unable to load replies."
-msgstr ""
+msgstr "Не вдалося завантажити відповіді."
 
-#: src/pages/status.jsx:1048
+#: src/pages/status.jsx:1091
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
-#: src/pages/status.jsx:1079
+#: src/pages/status.jsx:1122
 msgid "Go to main post"
-msgstr ""
-
-#: src/pages/status.jsx:1102
-msgid "{0} posts above ‒ Go to top"
-msgstr ""
+msgstr "Перейти до головного запису"
 
 #: src/pages/status.jsx:1145
-#: src/pages/status.jsx:1208
-msgid "Switch to Side Peek view"
-msgstr ""
+msgid "{0} posts above ‒ Go to top"
+msgstr "{0} дописів вище ‒ Перейти вгору"
 
-#: src/pages/status.jsx:1209
-msgid "Switch to Full view"
-msgstr ""
-
-#: src/pages/status.jsx:1227
-msgid "Show all sensitive content"
-msgstr ""
-
-#: src/pages/status.jsx:1232
-msgid "Experimental"
-msgstr ""
-
-#: src/pages/status.jsx:1241
-msgid "Unable to switch"
-msgstr ""
-
-#: src/pages/status.jsx:1248
-msgid "Switch to post's instance ({0})"
-msgstr ""
-
+#: src/pages/status.jsx:1188
 #: src/pages/status.jsx:1251
+msgid "Switch to Side Peek view"
+msgstr "Перемкнутися на вигляд з Боковою Панеллю"
+
+#: src/pages/status.jsx:1252
+msgid "Switch to Full view"
+msgstr "Перемкнутися на Повний вигляд"
+
+#: src/pages/status.jsx:1270
+msgid "Show all sensitive content"
+msgstr "Показати весь чутливий вміст"
+
+#: src/pages/status.jsx:1275
+msgid "Experimental"
+msgstr "Експериментальне"
+
+#: src/pages/status.jsx:1284
+msgid "Unable to switch"
+msgstr "Не вдалося перемкнутися"
+
+#: src/pages/status.jsx:1291
+msgid "Switch to post's instance ({0})"
+msgstr "Перемкнутися на інстанс допису ({0})"
+
+#: src/pages/status.jsx:1294
 msgid "Switch to post's instance"
-msgstr ""
+msgstr "Перемкнутися на інстанс допису"
 
-#: src/pages/status.jsx:1309
+#: src/pages/status.jsx:1352
 msgid "Unable to load post"
-msgstr ""
+msgstr "Не вдалося завантажити дописи"
 
-#: src/pages/status.jsx:1426
+#: src/pages/status.jsx:1487
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
-msgstr ""
+msgstr "{0, plural, one {# відповідь} few {<0>{1}</0> відповіді} other {<0>{1}</0> відповідей}}"
 
-#: src/pages/status.jsx:1444
+#: src/pages/status.jsx:1505
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
-msgstr ""
+msgstr "{totalComments, plural, one {# коментар} few {<0>{0}</0> коментарі} other {<0>{0}</0> коментарів}}"
 
-#: src/pages/status.jsx:1466
+#: src/pages/status.jsx:1527
 msgid "View post with its replies"
-msgstr ""
+msgstr "Переглянути допис і відповіді на нього"
 
 #: src/pages/trending.jsx:71
 msgid "Trending ({instance})"
-msgstr ""
+msgstr "Популярне ({instance})"
 
 #: src/pages/trending.jsx:228
 msgid "Trending News"
-msgstr ""
+msgstr "Популярні Новини"
 
 #. By [Author]
 #: src/pages/trending.jsx:347
 msgid "By {0}"
-msgstr ""
+msgstr "Від {0}"
 
 #: src/pages/trending.jsx:408
 msgid "Back to showing trending posts"
-msgstr ""
+msgstr "Назад до популярних дописів"
 
 #: src/pages/trending.jsx:413
 msgid "Showing posts mentioning <0>{0}</0>"
-msgstr ""
+msgstr "Показ дописів зі згадкою <0>{0}</0>"
 
 #: src/pages/trending.jsx:425
 msgid "Trending posts"
-msgstr ""
+msgstr "Популярні дописи"
 
 #: src/pages/trending.jsx:448
 msgid "No trending posts."
-msgstr ""
+msgstr "Немає популярних дописів."
 
 #: src/pages/welcome.jsx:53
 msgid "A minimalistic opinionated Mastodon web client."
-msgstr ""
+msgstr "Мінімалістичний вдумливий клієнт для багатьох платформ Федиверсу."
 
 #: src/pages/welcome.jsx:64
 msgid "Log in with Mastodon"
-msgstr ""
+msgstr "Увійти через Федиверс"
 
 #: src/pages/welcome.jsx:70
 msgid "Sign up"
-msgstr ""
+msgstr "Зареєструватися"
 
 #: src/pages/welcome.jsx:77
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
-msgstr ""
+msgstr "Під'єднайте ваш обліковий запис Федиверсу (Mastodon, Pleroma тощо).<0/>Ваші облікові дані не зберігаються на цьому сервері."
 
 #: src/pages/welcome.jsx:94
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
-msgstr ""
+msgstr "<0>Створений</0> <1>@cheeaun</1>. <2>Політика Конфіденційності</2>."
 
 #: src/pages/welcome.jsx:125
 msgid "Screenshot of Boosts Carousel"
-msgstr ""
+msgstr "Скриншот Каруселі Поширень"
 
 #: src/pages/welcome.jsx:129
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "Карусель Поширень"
 
 #: src/pages/welcome.jsx:132
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr ""
+msgstr "Візуально розділяє оригінальні та повторно поширені дописи."
 
 #: src/pages/welcome.jsx:141
 msgid "Screenshot of nested comments thread"
-msgstr ""
+msgstr "Скриншот вкладених коментарів нитки"
 
 #: src/pages/welcome.jsx:145
 msgid "Nested comments thread"
-msgstr ""
+msgstr "Вкладені коментарі нитки"
 
 #: src/pages/welcome.jsx:148
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
-msgstr ""
+msgstr "Легке відстежування бесід. Відповіді, що напів згортаються."
 
 #: src/pages/welcome.jsx:156
 msgid "Screenshot of grouped notifications"
-msgstr ""
+msgstr "Скриншот згрупованих сповіщень"
 
 #: src/pages/welcome.jsx:160
 msgid "Grouped notifications"
-msgstr ""
+msgstr "Згруповані сповіщення"
 
 #: src/pages/welcome.jsx:163
 msgid "Similar notifications are grouped and collapsed to reduce clutter."
-msgstr ""
+msgstr "Подібні сповіщення групуються і згортаються, щоб зменшити захаращення."
 
 #: src/pages/welcome.jsx:172
 msgid "Screenshot of multi-column UI"
-msgstr ""
+msgstr "Скриншот інтерфейсу з кількома стовпцями"
 
 #: src/pages/welcome.jsx:176
 msgid "Single or multi-column"
-msgstr ""
+msgstr "Один або декілька стовпців"
 
 #: src/pages/welcome.jsx:179
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
-msgstr ""
+msgstr "За замовченням, один стовпець - для шукачів сконцентрованого перегляду. Декілька стовпців - для просунутих користувачів."
 
 #: src/pages/welcome.jsx:188
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
-msgstr ""
+msgstr "Скриншот стрічки з кількома хештеґами з формою для додавання хештеґів"
 
 #: src/pages/welcome.jsx:192
 msgid "Multi-hashtag timeline"
-msgstr ""
+msgstr "Стрічка з кількома хештеґами"
 
 #: src/pages/welcome.jsx:195
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr ""
+msgstr "До 5 хештеґів, об'єднаних в одну стрічку"
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."
-msgstr ""
+msgstr "Схоже, ваш браузер блокує вікна, що спливають."
 
 #: src/utils/show-compose.js:16
 msgid "A draft post is currently minimized. Post or discard it before creating a new one."
-msgstr ""
+msgstr "Чернетка допису наразі мінімізована. Опублікуйте або видаліть його перед створенням нового."
 
 #: src/utils/show-compose.js:21
 msgid "A post is currently open. Post or discard it before creating a new one."
-msgstr ""
+msgstr "Допис наразі відкрито. Опублікуйте або видаліть його перед створенням нового."
 

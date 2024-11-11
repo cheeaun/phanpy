@@ -190,7 +190,7 @@ function NavMenu(props) {
                 <MenuLink to="/following">
                   <Icon icon="following" size="l" />{' '}
                   <span>
-                    <Trans>Following</Trans>
+                    <Trans id="following.title">Following</Trans>
                   </span>
                 </MenuLink>
               )}

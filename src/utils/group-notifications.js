@@ -9,6 +9,10 @@ const notificationTypeKeys = {
   poll: ['status'],
   update: ['status'],
 };
+
+const GROUP_TYPES = ['favourite', 'reblog', 'follow'];
+const groupable = (type) => GROUP_TYPES.includes(type);
+
 export function fixNotifications(notifications) {
   return notifications.filter((notification) => {
     const { type, id, createdAt } = notification;
@@ -85,8 +89,8 @@ export function groupNotifications2(groupNotifications) {
     } = gn;
     const date = createdAt ? new Date(createdAt).toLocaleDateString() : '';
     let virtualType = type;
-    const sameCount =
-      notificationsCount > 0 && notificationsCount === sampleAccounts?.length;
+    // const sameCount =
+    notificationsCount > 0 && notificationsCount === sampleAccounts?.length;
     // if (sameCount && (type === 'favourite' || type === 'reblog')) {
     if (type === 'favourite' || type === 'reblog') {
       virtualType = 'favourite+reblog';
@@ -94,7 +98,9 @@ export function groupNotifications2(groupNotifications) {
     // const key = `${status?.id}-${virtualType}-${date}-${sameCount ? 1 : 0}`;
     const key = `${status?.id}-${virtualType}-${date}`;
     const mappedNotification = notificationsMap[key];
-    if (mappedNotification) {
+    if (!groupable(type)) {
+      newGroupNotifications1.push(gn);
+    } else if (mappedNotification) {
       // Merge sampleAccounts + merge _types
       sampleAccounts.forEach((a) => {
         const mappedAccount = mappedNotification.sampleAccounts.find(
@@ -199,7 +205,7 @@ export default function groupNotifications(notifications) {
     }
     const key = `${status?.id}-${virtualType}-${date}`;
     const mappedNotification = notificationsMap[key];
-    if (virtualType === 'follow_request') {
+    if (!groupable(type)) {
       cleanNotifications[j++] = notification;
     } else if (mappedNotification?.account) {
       const mappedAccount = mappedNotification._accounts.find(

@@ -777,6 +777,14 @@ function Settings({ onClose }) {
             </a>{' '}
             &middot;{' '}
             <a
+              href="https://patreon.com/cheeaun"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Patreon
+            </a>{' '}
+            &middot;{' '}
+            <a
               href={PRIVACY_POLICY_URL}
               target="_blank"
               rel="noopener noreferrer"

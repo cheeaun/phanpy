@@ -10,7 +10,7 @@ import {
 } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
+import { oklch2rgb, rgb2oklch } from '../utils/color-utils';
 import isRTL from '../utils/is-rtl';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -116,59 +116,28 @@ function MediaModal({
     return () => clearTimeout(timer);
   }, []);
 
-  const mediaOklabColors = useMemo(() => {
+  const mediaOkColors = useMemo(() => {
     return mediaAttachments?.map((media) => {
       const { blurhash } = media;
       if (blurhash) {
         const averageColor = getBlurHashAverageColor(blurhash);
-        return rgb2oklab(averageColor);
+        return rgb2oklch(averageColor);
       }
       return null;
     });
   }, [mediaAttachments]);
-  // const mediaAccentColors = useMemo(() => {
-  //   return mediaOklabColors?.map((labAverageColor) => {
-  //     if (labAverageColor) {
-  //       return oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]);
-  //     }
-  //     return null;
-  //   });
-  // }, [mediaOklabColors]);
   const mediaAccentColors = useMemo(() => {
-    return mediaOklabColors?.map((labAverageColor) => {
-      if (labAverageColor) {
+    return mediaOkColors?.map((okColor) => {
+      if (okColor) {
         return {
-          light: oklab2rgb([0.95, labAverageColor[1], labAverageColor[2]]),
-          dark: oklab2rgb([0.25, labAverageColor[1], labAverageColor[2]]),
-          default: oklab2rgb([0.6, labAverageColor[1], labAverageColor[2]]),
+          light: oklch2rgb([0.95, 0.01, okColor[2]]),
+          dark: oklch2rgb([0.35, 0.01, okColor[2]]),
+          default: oklch2rgb([0.6, okColor[1], okColor[2]]),
         };
       }
       return {};
     });
   });
-  // const mediaAccentGradient = useMemo(() => {
-  //   const gap = 5;
-  //   const range = 100 / mediaAccentColors.length;
-  //   return (
-  //     mediaAccentColors
-  //       ?.map((color, i) => {
-  //         const start = i * range + gap;
-  //         const end = (i + 1) * range - gap;
-  //         if (color) {
-  //           return `
-  //           rgba(${color?.join(',')}, 0.4) ${start}%,
-  //           rgba(${color?.join(',')}, 0.4) ${end}%
-  //         `;
-  //         }
-
-  //         return `
-  //           transparent ${start}%,
-  //           transparent ${end}%
-  //         `;
-  //       })
-  //       ?.join(', ') || 'transparent'
-  //   );
-  // }, [mediaAccentColors]);
   const mediaAccentGradients = useMemo(() => {
     const gap = 5;
     const range = 100 / mediaAccentColors.length;

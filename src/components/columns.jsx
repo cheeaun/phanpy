@@ -107,6 +107,18 @@ function Columns() {
           states.showShortcutsSettings = true;
         }
       }}
+      onFocus={() => {
+        // Get current focused column
+        const currentFocusedColumn =
+          document.activeElement.closest('#columns > *');
+        if (currentFocusedColumn) {
+          // Remove focus classes from all columns
+          // Add focus class to current focused column
+          document.querySelectorAll('#columns > *').forEach((column) => {
+            column.classList.toggle('focus', column === currentFocusedColumn);
+          });
+        }
+      }}
     >
       {components}
     </div>

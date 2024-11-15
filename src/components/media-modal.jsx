@@ -135,7 +135,7 @@ function MediaModal({
           default: oklch2rgb([0.6, okColor[1], okColor[2]]),
         };
       }
-      return {};
+      return null;
     });
   });
   const mediaAccentGradients = useMemo(() => {

@@ -2266,9 +2266,10 @@ function AccountHandleInfo({ acct, instance }) {
   // acct = username or username@server
   let [username, server] = acct.split('@');
   if (!server) server = instance;
+  const encodedAcct = punycode.toASCII(acct);
   return (
     <div class="handle-info">
-      <span class="handle-handle">
+      <span class="handle-handle" title={encodedAcct}>
         <b class="handle-username">{username}</b>
         <span class="handle-at">@</span>
         <b class="handle-server">{server}</b>

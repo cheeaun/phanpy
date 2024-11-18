@@ -2611,6 +2611,17 @@ ul.link-list li a .icon {
 #columns > .deck-container > .timeline-deck {
   content-visibility: auto;
 }
+#columns > .deck-container {
+  &:first-child:not(:only-child) > .deck {
+    margin-inline-start: auto;
+    margin-inline-end: 0;
+  }
+
+  &:last-child:not(:only-child) > .deck {
+    margin-inline-end: auto;
+    margin-inline-start: 0;
+  }
+}
 #columns .header-grid input {
   pointer-events: none;
 }

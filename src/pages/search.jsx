@@ -184,12 +184,16 @@ function Search({ columnMode, ...props }) {
   });
 
   useEffect(() => {
+    let timer;
     searchFormRef.current?.setValue?.(q || '');
     if (q) {
       loadResults(true);
     } else {
-      searchFormRef.current?.focus?.();
+      timer = setTimeout(() => {
+        searchFormRef.current?.focus?.();
+      }, 150); // Right after focusDeck runs
     }
+    return () => clearTimeout(timer);
   }, [q, type, instance]);
 
   useHotkeys(

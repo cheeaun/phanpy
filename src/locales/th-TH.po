@@ -8,7 +8,7 @@ msgstr ""
 "Language: th\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-16 08:54\n"
+"PO-Revision-Date: 2024-11-20 15:36\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -102,8 +102,8 @@ msgstr "following.stats"
 #: src/components/account-info.jsx:421
 #: src/components/account-info.jsx:778
 #: src/pages/account-statuses.jsx:484
-#: src/pages/search.jsx:312
-#: src/pages/search.jsx:459
+#: src/pages/search.jsx:323
+#: src/pages/search.jsx:470
 msgid "Posts"
 msgstr "โพสต์"
 
@@ -252,11 +252,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
-msgstr ""
+msgstr "ปิดใช้งานการแจ้งเตือน"
 
 #: src/components/account-info.jsx:1210
 msgid "Enable notifications"
-msgstr ""
+msgstr "เปิดใช้งานการแจ้งเตือน"
 
 #: src/components/account-info.jsx:1227
 msgid "Boosts from @{username} enabled."
@@ -473,20 +473,20 @@ msgstr ""
 #: src/components/account-info.jsx:2052
 #: src/components/account-info.jsx:2222
 msgid "Cancel"
-msgstr ""
+msgstr "ยกเลิก"
 
 #: src/components/account-info.jsx:2057
 msgid "Save & close"
-msgstr ""
+msgstr "บันทึกและปิด"
 
 #: src/components/account-info.jsx:2150
 msgid "Unable to update profile."
-msgstr ""
+msgstr "ไม่สามารถอัปเดตโปรไฟล์"
 
 #: src/components/account-info.jsx:2157
 #: src/components/list-add-edit.jsx:104
 msgid "Name"
-msgstr ""
+msgstr "ชื่อ"
 
 #: src/components/account-info.jsx:2170
 msgid "Bio"
@@ -502,7 +502,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:2192
 msgid "Content"
-msgstr ""
+msgstr "เนื้อหา"
 
 #: src/components/account-info.jsx:2225
 #: src/components/list-add-edit.jsx:149
@@ -510,15 +510,15 @@ msgstr ""
 #: src/pages/filters.jsx:554
 #: src/pages/notifications.jsx:934
 msgid "Save"
-msgstr ""
+msgstr "บันทึก"
 
-#: src/components/account-info.jsx:2278
+#: src/components/account-info.jsx:2279
 msgid "username"
-msgstr ""
+msgstr "ชื่อผู้ใช้"
 
-#: src/components/account-info.jsx:2282
+#: src/components/account-info.jsx:2283
 msgid "server domain name"
-msgstr ""
+msgstr "ชื่อโดเมนเซิร์ฟเวอร์"
 
 #: src/components/background-service.jsx:149
 msgid "Cloak mode disabled"
@@ -529,7 +529,7 @@ msgid "Cloak mode enabled"
 msgstr ""
 
 #: src/components/columns.jsx:26
-#: src/components/nav-menu.jsx:184
+#: src/components/nav-menu.jsx:175
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
@@ -538,27 +538,27 @@ msgstr ""
 #: src/pages/home.jsx:53
 #: src/pages/notifications.jsx:520
 msgid "Home"
-msgstr ""
+msgstr "หน้าหลัก"
 
 #: src/components/compose-button.jsx:49
 #: src/compose.jsx:37
 msgid "Compose"
-msgstr ""
+msgstr "เขียน"
 
 #: src/components/compose.jsx:394
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "คุณมีการเปลี่ยนแปลงที่ไม่ได้บันทึก ละทิ้งโพสต์นี้ไหม?"
 
 #: src/components/compose.jsx:622
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
-msgstr ""
+msgstr "{0, plural, other {ไฟล์ {2} เป็นไฟล์ที่ไม่รองรับ}}"
 
 #: src/components/compose.jsx:632
 #: src/components/compose.jsx:650
 #: src/components/compose.jsx:1361
 #: src/components/compose.jsx:1623
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, other {คุณสามารถแนบไฟล์ได้สูงสุดเพียง # ไฟล์}}"
 
 #: src/components/compose.jsx:799
 msgid "Pop out"
@@ -566,7 +566,7 @@ msgstr ""
 
 #: src/components/compose.jsx:806
 msgid "Minimize"
-msgstr ""
+msgstr "ย่อขนาด"
 
 #: src/components/compose.jsx:842
 msgid "Looks like you closed the parent window."
@@ -594,7 +594,7 @@ msgstr ""
 
 #: src/components/compose.jsx:929
 msgid "Editing source post"
-msgstr ""
+msgstr "กำลังแก้ไขโพสต์ต้นฉบับ"
 
 #: src/components/compose.jsx:976
 msgid "Poll must have at least 2 options"
@@ -626,32 +626,32 @@ msgstr ""
 #: src/components/status.jsx:93
 #: src/pages/settings.jsx:305
 msgid "Public"
-msgstr ""
+msgstr "สาธารณะ"
 
 #: src/components/compose.jsx:1196
-#: src/components/nav-menu.jsx:386
+#: src/components/nav-menu.jsx:337
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:94
 msgid "Local"
-msgstr ""
+msgstr "ในเซิร์ฟเวอร์"
 
 #: src/components/compose.jsx:1200
 #: src/components/status.jsx:95
 #: src/pages/settings.jsx:308
 msgid "Unlisted"
-msgstr ""
+msgstr "ไม่อยู่ในรายการ"
 
 #: src/components/compose.jsx:1203
 #: src/components/status.jsx:96
 #: src/pages/settings.jsx:311
 msgid "Followers only"
-msgstr ""
+msgstr "ผู้ติดตามเท่านั้น"
 
 #: src/components/compose.jsx:1206
 #: src/components/status.jsx:97
 #: src/components/status.jsx:1925
 msgid "Private mention"
-msgstr ""
+msgstr "การกล่าวถึงแบบส่วนตัว"
 
 #: src/components/compose.jsx:1215
 msgid "Post your reply"
@@ -659,15 +659,15 @@ msgstr ""
 
 #: src/components/compose.jsx:1217
 msgid "Edit your post"
-msgstr ""
+msgstr "แก้ไขโพสต์ของคุณ"
 
 #: src/components/compose.jsx:1218
 msgid "What are you doing?"
-msgstr ""
+msgstr "คุณกำลังทำอะไรอยู่?"
 
 #: src/components/compose.jsx:1296
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "ทำเครื่องหมายสื่อว่าละเอียดอ่อน"
 
 #: src/components/compose.jsx:1397
 msgid "Add poll"
@@ -705,7 +705,7 @@ msgstr ""
 
 #: src/components/compose.jsx:1775
 #: src/components/compose.jsx:1852
-#: src/components/nav-menu.jsx:287
+#: src/components/nav-menu.jsx:238
 msgid "More…"
 msgstr ""
 
@@ -961,8 +961,8 @@ msgstr ""
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
-#: src/pages/search.jsx:302
-#: src/pages/search.jsx:335
+#: src/pages/search.jsx:313
+#: src/pages/search.jsx:346
 msgid "Accounts"
 msgstr ""
 
@@ -970,19 +970,19 @@ msgstr ""
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
-#: src/pages/search.jsx:529
+#: src/pages/search.jsx:540
 #: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:524
-#: src/pages/search.jsx:534
+#: src/pages/search.jsx:545
 msgid "The end."
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/nav-menu.jsx:405
+#: src/components/nav-menu.jsx:356
 #: src/pages/catchup.jsx:1619
 msgid "Keyboard shortcuts"
 msgstr ""
@@ -1079,12 +1079,12 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:147
-#: src/components/nav-menu.jsx:374
+#: src/components/nav-menu.jsx:325
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
 #: src/pages/search.jsx:45
-#: src/pages/search.jsx:284
+#: src/pages/search.jsx:295
 msgid "Search"
 msgstr ""
 
@@ -1244,32 +1244,32 @@ msgstr ""
 msgid "Post updated. Check it out."
 msgstr ""
 
-#: src/components/nav-menu.jsx:126
+#: src/components/nav-menu.jsx:117
 msgid "Menu"
 msgstr ""
 
-#: src/components/nav-menu.jsx:162
+#: src/components/nav-menu.jsx:153
 msgid "Reload page now to update?"
 msgstr ""
 
-#: src/components/nav-menu.jsx:174
+#: src/components/nav-menu.jsx:165
 msgid "New update available…"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:193
+#: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:22
 #: src/pages/following.jsx:141
 msgid "following.title"
 msgstr ""
 
-#: src/components/nav-menu.jsx:200
+#: src/components/nav-menu.jsx:191
 #: src/pages/catchup.jsx:871
 msgid "Catch-up"
 msgstr ""
 
-#: src/components/nav-menu.jsx:207
+#: src/components/nav-menu.jsx:198
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:224
@@ -1280,7 +1280,7 @@ msgstr ""
 msgid "Mentions"
 msgstr ""
 
-#: src/components/nav-menu.jsx:214
+#: src/components/nav-menu.jsx:205
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1291,31 +1291,15 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: src/components/nav-menu.jsx:217
+#: src/components/nav-menu.jsx:208
 msgid "New"
 msgstr ""
 
-#: src/components/nav-menu.jsx:228
+#: src/components/nav-menu.jsx:219
 msgid "Profile"
 msgstr ""
 
-#: src/components/nav-menu.jsx:241
-#: src/components/nav-menu.jsx:268
-#: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:126
-#: src/pages/lists.jsx:16
-#: src/pages/lists.jsx:50
-msgid "Lists"
-msgstr ""
-
-#: src/components/nav-menu.jsx:249
-#: src/components/shortcuts.jsx:215
-#: src/pages/list.jsx:133
-msgid "All Lists"
-msgstr ""
-
-#: src/components/nav-menu.jsx:276
+#: src/components/nav-menu.jsx:227
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:11
@@ -1323,7 +1307,7 @@ msgstr ""
 msgid "Bookmarks"
 msgstr ""
 
-#: src/components/nav-menu.jsx:296
+#: src/components/nav-menu.jsx:247
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1446
@@ -1334,13 +1318,13 @@ msgstr ""
 msgid "Likes"
 msgstr ""
 
-#: src/components/nav-menu.jsx:302
+#: src/components/nav-menu.jsx:253
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
 msgstr ""
 
-#: src/components/nav-menu.jsx:310
+#: src/components/nav-menu.jsx:261
 #: src/pages/account-statuses.jsx:331
 #: src/pages/filters.jsx:54
 #: src/pages/filters.jsx:93
@@ -1348,52 +1332,68 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: src/components/nav-menu.jsx:318
+#: src/components/nav-menu.jsx:269
 msgid "Muted users"
 msgstr ""
 
-#: src/components/nav-menu.jsx:326
+#: src/components/nav-menu.jsx:277
 msgid "Muted users…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:333
+#: src/components/nav-menu.jsx:284
 msgid "Blocked users"
 msgstr ""
 
-#: src/components/nav-menu.jsx:341
+#: src/components/nav-menu.jsx:292
 msgid "Blocked users…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:353
+#: src/components/nav-menu.jsx:304
 msgid "Accounts…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:363
+#: src/components/nav-menu.jsx:314
 #: src/pages/login.jsx:189
 #: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr ""
 
-#: src/components/nav-menu.jsx:380
+#: src/components/nav-menu.jsx:331
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:441
 msgid "Trending"
 msgstr ""
 
-#: src/components/nav-menu.jsx:392
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr ""
 
-#: src/components/nav-menu.jsx:415
+#: src/components/nav-menu.jsx:366
 msgid "Shortcuts / Columns…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:425
-#: src/components/nav-menu.jsx:439
+#: src/components/nav-menu.jsx:376
+#: src/components/nav-menu.jsx:390
 msgid "Settings…"
+msgstr ""
+
+#: src/components/nav-menu.jsx:420
+#: src/components/nav-menu.jsx:447
+#: src/components/shortcuts-settings.jsx:50
+#: src/components/shortcuts-settings.jsx:158
+#: src/pages/list.jsx:126
+#: src/pages/lists.jsx:16
+#: src/pages/lists.jsx:50
+msgid "Lists"
+msgstr ""
+
+#: src/components/nav-menu.jsx:428
+#: src/components/shortcuts.jsx:215
+#: src/pages/list.jsx:133
+msgid "All Lists"
 msgstr ""
 
 #: src/components/notification-service.jsx:160
@@ -2702,7 +2702,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
-#: src/pages/search.jsx:297
+#: src/pages/search.jsx:308
 msgid "All"
 msgstr ""
 
@@ -3306,42 +3306,42 @@ msgstr ""
 msgid "Search: {q}"
 msgstr ""
 
-#: src/pages/search.jsx:307
-#: src/pages/search.jsx:389
+#: src/pages/search.jsx:318
+#: src/pages/search.jsx:400
 msgid "Hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:339
-#: src/pages/search.jsx:393
-#: src/pages/search.jsx:463
+#: src/pages/search.jsx:350
+#: src/pages/search.jsx:404
+#: src/pages/search.jsx:474
 msgid "See more"
 msgstr ""
 
-#: src/pages/search.jsx:365
+#: src/pages/search.jsx:376
 msgid "See more accounts"
 msgstr ""
 
-#: src/pages/search.jsx:379
+#: src/pages/search.jsx:390
 msgid "No accounts found."
 msgstr ""
 
-#: src/pages/search.jsx:435
+#: src/pages/search.jsx:446
 msgid "See more hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:449
+#: src/pages/search.jsx:460
 msgid "No hashtags found."
 msgstr ""
 
-#: src/pages/search.jsx:493
+#: src/pages/search.jsx:504
 msgid "See more posts"
 msgstr ""
 
-#: src/pages/search.jsx:507
+#: src/pages/search.jsx:518
 msgid "No posts found."
 msgstr ""
 
-#: src/pages/search.jsx:551
+#: src/pages/search.jsx:562
 msgid "Enter your search term or paste a URL above to get started."
 msgstr ""
 

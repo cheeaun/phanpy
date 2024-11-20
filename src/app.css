@@ -2077,6 +2077,11 @@ body > .szh-menu-container {
 .szh-menu__divider {
   background-color: var(--divider-color);
   margin-block: 4px;
+
+  > &:first-child,
+  li[role='none']:first-child + & {
+    display: none;
+  }
 }
 .szh-menu .szh-menu__item .menu-grow {
   flex-grow: 1;

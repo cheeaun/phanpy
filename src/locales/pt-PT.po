@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-16 13:58\n"
+"PO-Revision-Date: 2024-11-20 11:31\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -102,8 +102,8 @@ msgstr "A seguir"
 #: src/components/account-info.jsx:421
 #: src/components/account-info.jsx:778
 #: src/pages/account-statuses.jsx:484
-#: src/pages/search.jsx:312
-#: src/pages/search.jsx:459
+#: src/pages/search.jsx:323
+#: src/pages/search.jsx:470
 msgid "Posts"
 msgstr "Publicações"
 
@@ -512,11 +512,11 @@ msgstr "Conteúdo"
 msgid "Save"
 msgstr "Guardar"
 
-#: src/components/account-info.jsx:2278
+#: src/components/account-info.jsx:2279
 msgid "username"
 msgstr "nome de utilizador"
 
-#: src/components/account-info.jsx:2282
+#: src/components/account-info.jsx:2283
 msgid "server domain name"
 msgstr "domínio do servidor"
 
@@ -529,7 +529,7 @@ msgid "Cloak mode enabled"
 msgstr "Modo oculto ativado"
 
 #: src/components/columns.jsx:26
-#: src/components/nav-menu.jsx:184
+#: src/components/nav-menu.jsx:175
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
@@ -629,7 +629,7 @@ msgid "Public"
 msgstr "Público"
 
 #: src/components/compose.jsx:1196
-#: src/components/nav-menu.jsx:386
+#: src/components/nav-menu.jsx:337
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:94
 msgid "Local"
@@ -705,7 +705,7 @@ msgstr "Falhou ao transferir GIF"
 
 #: src/components/compose.jsx:1775
 #: src/components/compose.jsx:1852
-#: src/components/nav-menu.jsx:287
+#: src/components/nav-menu.jsx:238
 msgid "More…"
 msgstr "Mais…"
 
@@ -961,8 +961,8 @@ msgstr "Nada para exibir"
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
-#: src/pages/search.jsx:302
-#: src/pages/search.jsx:335
+#: src/pages/search.jsx:313
+#: src/pages/search.jsx:346
 msgid "Accounts"
 msgstr "Contas"
 
@@ -970,19 +970,19 @@ msgstr "Contas"
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
-#: src/pages/search.jsx:529
+#: src/pages/search.jsx:540
 #: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr "Mostrar mais…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:524
-#: src/pages/search.jsx:534
+#: src/pages/search.jsx:545
 msgid "The end."
 msgstr "Fim."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/nav-menu.jsx:405
+#: src/components/nav-menu.jsx:356
 #: src/pages/catchup.jsx:1619
 msgid "Keyboard shortcuts"
 msgstr "Atalhos do teclado"
@@ -1079,12 +1079,12 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> ou <2>⌘</2> + <3>Enter</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:147
-#: src/components/nav-menu.jsx:374
+#: src/components/nav-menu.jsx:325
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
 #: src/pages/search.jsx:45
-#: src/pages/search.jsx:284
+#: src/pages/search.jsx:295
 msgid "Search"
 msgstr "Buscar"
 
@@ -1244,32 +1244,32 @@ msgstr "Resposta publicada. Dê uma olhada."
 msgid "Post updated. Check it out."
 msgstr "Publicação atualizada. Dê uma olhada."
 
-#: src/components/nav-menu.jsx:126
+#: src/components/nav-menu.jsx:117
 msgid "Menu"
 msgstr "Menu"
 
-#: src/components/nav-menu.jsx:162
+#: src/components/nav-menu.jsx:153
 msgid "Reload page now to update?"
 msgstr "Recarregar página para atualizar?"
 
-#: src/components/nav-menu.jsx:174
+#: src/components/nav-menu.jsx:165
 msgid "New update available…"
 msgstr "Nova atualização disponível…"
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:193
+#: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:22
 #: src/pages/following.jsx:141
 msgid "following.title"
 msgstr "A seguir"
 
-#: src/components/nav-menu.jsx:200
+#: src/components/nav-menu.jsx:191
 #: src/pages/catchup.jsx:871
 msgid "Catch-up"
 msgstr "Acompanhar"
 
-#: src/components/nav-menu.jsx:207
+#: src/components/nav-menu.jsx:198
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:224
@@ -1280,7 +1280,7 @@ msgstr "Acompanhar"
 msgid "Mentions"
 msgstr "Menções"
 
-#: src/components/nav-menu.jsx:214
+#: src/components/nav-menu.jsx:205
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1291,31 +1291,15 @@ msgstr "Menções"
 msgid "Notifications"
 msgstr "Notificações"
 
-#: src/components/nav-menu.jsx:217
+#: src/components/nav-menu.jsx:208
 msgid "New"
 msgstr "Novo"
 
-#: src/components/nav-menu.jsx:228
+#: src/components/nav-menu.jsx:219
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/components/nav-menu.jsx:241
-#: src/components/nav-menu.jsx:268
-#: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:126
-#: src/pages/lists.jsx:16
-#: src/pages/lists.jsx:50
-msgid "Lists"
-msgstr "Listas"
-
-#: src/components/nav-menu.jsx:249
-#: src/components/shortcuts.jsx:215
-#: src/pages/list.jsx:133
-msgid "All Lists"
-msgstr "Todas as listas"
-
-#: src/components/nav-menu.jsx:276
+#: src/components/nav-menu.jsx:227
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:11
@@ -1323,7 +1307,7 @@ msgstr "Todas as listas"
 msgid "Bookmarks"
 msgstr "Favoritos"
 
-#: src/components/nav-menu.jsx:296
+#: src/components/nav-menu.jsx:247
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1446
@@ -1334,13 +1318,13 @@ msgstr "Favoritos"
 msgid "Likes"
 msgstr "Gostos"
 
-#: src/components/nav-menu.jsx:302
+#: src/components/nav-menu.jsx:253
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
 msgstr "Hashtags seguidas"
 
-#: src/components/nav-menu.jsx:310
+#: src/components/nav-menu.jsx:261
 #: src/pages/account-statuses.jsx:331
 #: src/pages/filters.jsx:54
 #: src/pages/filters.jsx:93
@@ -1348,53 +1332,69 @@ msgstr "Hashtags seguidas"
 msgid "Filters"
 msgstr "Filtros"
 
-#: src/components/nav-menu.jsx:318
+#: src/components/nav-menu.jsx:269
 msgid "Muted users"
 msgstr "Utilizadores silenciados"
 
-#: src/components/nav-menu.jsx:326
+#: src/components/nav-menu.jsx:277
 msgid "Muted users…"
 msgstr "Utilizadores silenciados…"
 
-#: src/components/nav-menu.jsx:333
+#: src/components/nav-menu.jsx:284
 msgid "Blocked users"
 msgstr "Utilizadores bloqueados"
 
-#: src/components/nav-menu.jsx:341
+#: src/components/nav-menu.jsx:292
 msgid "Blocked users…"
 msgstr "Utilizadores bloqueados…"
 
-#: src/components/nav-menu.jsx:353
+#: src/components/nav-menu.jsx:304
 msgid "Accounts…"
 msgstr "Contas…"
 
-#: src/components/nav-menu.jsx:363
+#: src/components/nav-menu.jsx:314
 #: src/pages/login.jsx:189
 #: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "Iniciar sessão"
 
-#: src/components/nav-menu.jsx:380
+#: src/components/nav-menu.jsx:331
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:441
 msgid "Trending"
 msgstr "Tendência"
 
-#: src/components/nav-menu.jsx:392
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr "Federado"
 
-#: src/components/nav-menu.jsx:415
+#: src/components/nav-menu.jsx:366
 msgid "Shortcuts / Columns…"
 msgstr "Atalhos / Colunas…"
 
-#: src/components/nav-menu.jsx:425
-#: src/components/nav-menu.jsx:439
+#: src/components/nav-menu.jsx:376
+#: src/components/nav-menu.jsx:390
 msgid "Settings…"
 msgstr "Definições…"
+
+#: src/components/nav-menu.jsx:420
+#: src/components/nav-menu.jsx:447
+#: src/components/shortcuts-settings.jsx:50
+#: src/components/shortcuts-settings.jsx:158
+#: src/pages/list.jsx:126
+#: src/pages/lists.jsx:16
+#: src/pages/lists.jsx:50
+msgid "Lists"
+msgstr "Listas"
+
+#: src/components/nav-menu.jsx:428
+#: src/components/shortcuts.jsx:215
+#: src/pages/list.jsx:133
+msgid "All Lists"
+msgstr "Todas as listas"
 
 #: src/components/notification-service.jsx:160
 msgid "Notification"
@@ -2614,7 +2614,7 @@ msgstr "Ajuda"
 
 #: src/pages/catchup.jsx:912
 msgid "What is this?"
-msgstr "O que é isto?"
+msgstr "O que isto significa?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
@@ -2634,7 +2634,7 @@ msgstr "Vamos acompanhar as publicações dos seus seguidores."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
-msgstr "Mostra-me todas as publicações de…"
+msgstr "Exiba-me as publicações de…"
 
 #: src/pages/catchup.jsx:967
 msgid "until the max"
@@ -2658,7 +2658,7 @@ msgstr "Nota: a sua instância talvez mostre um máximo de 800 publicações na 
 
 #: src/pages/catchup.jsx:1034
 msgid "Previously…"
-msgstr "Anteriormente…"
+msgstr "Antes…"
 
 #: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
@@ -2703,7 +2703,7 @@ msgstr "Partilhado por {0}"
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
-#: src/pages/search.jsx:297
+#: src/pages/search.jsx:308
 msgid "All"
 msgstr "Tudo"
 
@@ -3307,42 +3307,42 @@ msgstr "Buscar: {q} (Hashtags)"
 msgid "Search: {q}"
 msgstr "Buscar: {q}"
 
-#: src/pages/search.jsx:307
-#: src/pages/search.jsx:389
+#: src/pages/search.jsx:318
+#: src/pages/search.jsx:400
 msgid "Hashtags"
 msgstr "Hashtags"
 
-#: src/pages/search.jsx:339
-#: src/pages/search.jsx:393
-#: src/pages/search.jsx:463
+#: src/pages/search.jsx:350
+#: src/pages/search.jsx:404
+#: src/pages/search.jsx:474
 msgid "See more"
 msgstr "Ver mais"
 
-#: src/pages/search.jsx:365
+#: src/pages/search.jsx:376
 msgid "See more accounts"
 msgstr "Ver mais contas"
 
-#: src/pages/search.jsx:379
+#: src/pages/search.jsx:390
 msgid "No accounts found."
 msgstr "Nenhuma conta encontrada."
 
-#: src/pages/search.jsx:435
+#: src/pages/search.jsx:446
 msgid "See more hashtags"
 msgstr "Ver mais hashtags"
 
-#: src/pages/search.jsx:449
+#: src/pages/search.jsx:460
 msgid "No hashtags found."
 msgstr "Nenhuma hashtag encontrada."
 
-#: src/pages/search.jsx:493
+#: src/pages/search.jsx:504
 msgid "See more posts"
 msgstr "Ver mais publicações"
 
-#: src/pages/search.jsx:507
+#: src/pages/search.jsx:518
 msgid "No posts found."
 msgstr "Nenhuma publicação encontrada."
 
-#: src/pages/search.jsx:551
+#: src/pages/search.jsx:562
 msgid "Enter your search term or paste a URL above to get started."
 msgstr "Insira o termo da sua busca ou cole um URL acima para iniciar."
 

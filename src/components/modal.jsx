@@ -1,12 +1,19 @@
 import './modal.css';
 
 import { createPortal } from 'preact/compat';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import store from '../utils/store';
 import useCloseWatcher from '../utils/useCloseWatcher';
 
 const $modalContainer = document.getElementById('modal-container');
+
+function getBackdropThemeColor() {
+  return getComputedStyle(document.documentElement).getPropertyValue(
+    '--backdrop-theme-color',
+  );
+}
 
 function Modal({ children, onClose, onClick, class: className, minimized }) {
   if (!children) return null;
@@ -65,6 +72,50 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       $deckContainers.forEach(($deckContainer) => {
         $deckContainer.removeAttribute('inert');
       });
+    };
+  }, [children, minimized]);
+
+  const $meta = useRef();
+  const metaColor = useRef();
+  useLayoutEffect(() => {
+    if (children && !minimized) {
+      const theme = store.local.get('theme');
+      if (theme) {
+        const backdropColor = getBackdropThemeColor();
+        console.log({ backdropColor });
+        $meta.current = document.querySelector(
+          `meta[name="theme-color"][data-theme-setting="manual"]`,
+        );
+        if ($meta.current) {
+          metaColor.current = $meta.current.content;
+          $meta.current.content = backdropColor;
+        }
+      } else {
+        const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light';
+        const backdropColor = getBackdropThemeColor();
+        console.log({ backdropColor });
+        $meta.current = document.querySelector(
+          `meta[name="theme-color"][media*="${colorScheme}"]`,
+        );
+        if ($meta.current) {
+          metaColor.current = $meta.current.content;
+          $meta.current.content = backdropColor;
+        }
+      }
+    } else {
+      // Reset meta color
+      if ($meta.current && metaColor.current) {
+        $meta.current.content = metaColor.current;
+      }
+    }
+    return () => {
+      // Reset meta color
+      if ($meta.current && metaColor.current) {
+        $meta.current.content = metaColor.current;
+      }
     };
   }, [children, minimized]);
 

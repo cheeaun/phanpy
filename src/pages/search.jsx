@@ -79,6 +79,11 @@ function Search({ columnMode, ...props }) {
     setAccountResults([]);
     setHashtagResults([]);
   }, [q]);
+  const typeResults = {
+    statuses: statusResults,
+    accounts: accountResults,
+    hashtags: hashtagResults,
+  };
   const setTypeResultsFunc = {
     statuses: setStatusResults,
     accounts: setAccountResults,
@@ -136,10 +141,16 @@ function Search({ columnMode, ...props }) {
             offsetRef.current = LIMIT;
             setShowMore(!!length);
           } else {
-            setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
-            const length = results[type]?.length;
-            offsetRef.current = offsetRef.current + LIMIT;
-            setShowMore(!!length);
+            // If first item is the same, it means API doesn't support offset
+            // I know this is a very basic check, but it works for now
+            if (results[type]?.[0]?.id === typeResults[type]?.[0]?.id) {
+              setShowMore(false);
+            } else {
+              setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
+              const length = results[type]?.length;
+              offsetRef.current = offsetRef.current + LIMIT;
+              setShowMore(!!length);
+            }
           }
         } else {
           setStatusResults(results.statuses || []);
@@ -173,12 +184,16 @@ function Search({ columnMode, ...props }) {
   });
 
   useEffect(() => {
+    let timer;
     searchFormRef.current?.setValue?.(q || '');
     if (q) {
       loadResults(true);
     } else {
-      searchFormRef.current?.focus?.();
+      timer = setTimeout(() => {
+        searchFormRef.current?.focus?.();
+      }, 150); // Right after focusDeck runs
     }
+    return () => clearTimeout(timer);
   }, [q, type, instance]);
 
   useHotkeys(

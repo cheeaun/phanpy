@@ -125,6 +125,17 @@ function getPostText(status) {
   );
 }
 
+function forgivingQSA(selectors = [], dom = document) {
+  // Run QSA for list of selectors
+  // If a selector return invalid selector error, try the next one
+  for (const selector of selectors) {
+    try {
+      return dom.querySelectorAll(selector);
+    } catch (e) {}
+  }
+  return [];
+}
+
 function isTranslateble(content) {
   if (!content) return false;
   content = content.trim();
@@ -132,8 +143,9 @@ function isTranslateble(content) {
   const text = getHTMLText(content, {
     preProcess: (dom) => {
       // Remove .mention, pre, code, a:has(.invisible)
-      for (const a of dom.querySelectorAll(
-        '.mention, pre, code, a:has(.invisible)',
+      for (const a of forgivingQSA(
+        ['.mention, pre, code, a:has(.invisible)', '.mention, pre, code'],
+        dom,
       )) {
         a.remove();
       }
@@ -148,8 +160,12 @@ function getHTMLTextForDetectLang(content) {
       // Remove anything that can skew the language detection
 
       // Remove .mention, .hashtag, pre, code, a:has(.invisible)
-      for (const a of dom.querySelectorAll(
-        '.mention, .hashtag, pre, code, a:has(.invisible)',
+      for (const a of forgivingQSA(
+        [
+          '.mention, .hashtag, pre, code, a:has(.invisible)',
+          '.mention, .hashtag, pre, code',
+        ],
+        dom,
       )) {
         a.remove();
       }
@@ -2892,7 +2908,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
         if (videoID) {
           return (
             <a class="card video" onClick={handleClick}>
-              <lite-youtube videoid={videoID} nocookie></lite-youtube>
+              <lite-youtube videoid={videoID} nocookie autoPause></lite-youtube>
             </a>
           );
         }

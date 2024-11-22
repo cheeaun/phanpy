@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-14 23:11\n"
+"PO-Revision-Date: 2024-11-19 12:15\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -31,12 +31,12 @@ msgid "Last posted: {0}"
 msgstr "Última publicació: {0}"
 
 #: src/components/account-block.jsx:161
-#: src/components/account-info.jsx:634
+#: src/components/account-info.jsx:636
 msgid "Automated"
 msgstr "Automatitzat"
 
 #: src/components/account-block.jsx:168
-#: src/components/account-info.jsx:639
+#: src/components/account-info.jsx:641
 #: src/components/status.jsx:498
 msgid "Group"
 msgstr "Grup"
@@ -46,17 +46,17 @@ msgid "Mutual"
 msgstr "Mutu"
 
 #: src/components/account-block.jsx:182
-#: src/components/account-info.jsx:1680
+#: src/components/account-info.jsx:1682
 msgid "Requested"
 msgstr "Sol·licitat per"
 
 #: src/components/account-block.jsx:186
-#: src/components/account-info.jsx:1671
+#: src/components/account-info.jsx:1673
 msgid "Following"
 msgstr "Seguint-ne"
 
 #: src/components/account-block.jsx:190
-#: src/components/account-info.jsx:1062
+#: src/components/account-info.jsx:1064
 msgid "Follows you"
 msgstr "Et segueix"
 
@@ -65,50 +65,50 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount , plural, one {# seguidor} other {# seguidors}}"
 
 #: src/components/account-block.jsx:207
-#: src/components/account-info.jsx:680
+#: src/components/account-info.jsx:682
 msgid "Verified"
 msgstr "Verificat"
 
 #: src/components/account-block.jsx:222
-#: src/components/account-info.jsx:780
+#: src/components/account-info.jsx:782
 msgid "Joined <0>{0}</0>"
 msgstr "S'hi va unir <0>{0}</0>"
 
-#: src/components/account-info.jsx:57
+#: src/components/account-info.jsx:58
 msgid "Forever"
 msgstr "Per sempre"
 
-#: src/components/account-info.jsx:377
+#: src/components/account-info.jsx:379
 msgid "Unable to load account."
 msgstr "No es pot carregar el compte."
 
-#: src/components/account-info.jsx:385
+#: src/components/account-info.jsx:387
 msgid "Go to account page"
 msgstr "Ves a la pàgina del compte"
 
-#: src/components/account-info.jsx:413
-#: src/components/account-info.jsx:702
-#: src/components/account-info.jsx:732
+#: src/components/account-info.jsx:415
+#: src/components/account-info.jsx:704
+#: src/components/account-info.jsx:734
 msgid "Followers"
 msgstr "Seguidors"
 
 #. js-lingui-explicit-id
-#: src/components/account-info.jsx:416
-#: src/components/account-info.jsx:742
-#: src/components/account-info.jsx:759
+#: src/components/account-info.jsx:418
+#: src/components/account-info.jsx:744
+#: src/components/account-info.jsx:761
 msgid "following.stats"
 msgstr "Seguint-ne"
 
-#: src/components/account-info.jsx:419
-#: src/components/account-info.jsx:776
+#: src/components/account-info.jsx:421
+#: src/components/account-info.jsx:778
 #: src/pages/account-statuses.jsx:484
-#: src/pages/search.jsx:312
-#: src/pages/search.jsx:459
+#: src/pages/search.jsx:323
+#: src/pages/search.jsx:470
 msgid "Posts"
 msgstr "Publicacions"
 
-#: src/components/account-info.jsx:427
-#: src/components/account-info.jsx:1118
+#: src/components/account-info.jsx:429
+#: src/components/account-info.jsx:1120
 #: src/components/compose.jsx:2488
 #: src/components/media-alt-modal.jsx:45
 #: src/components/media-modal.jsx:357
@@ -127,64 +127,64 @@ msgstr "Publicacions"
 msgid "More"
 msgstr "Més"
 
-#: src/components/account-info.jsx:439
+#: src/components/account-info.jsx:441
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> ha indicat que té un nou compte:"
 
-#: src/components/account-info.jsx:584
-#: src/components/account-info.jsx:1276
+#: src/components/account-info.jsx:586
+#: src/components/account-info.jsx:1278
 msgid "Handle copied"
 msgstr "Identificador copiat"
 
-#: src/components/account-info.jsx:587
-#: src/components/account-info.jsx:1279
+#: src/components/account-info.jsx:589
+#: src/components/account-info.jsx:1281
 msgid "Unable to copy handle"
 msgstr "No ha sigut possible copiar l'identificador d'usuari"
 
-#: src/components/account-info.jsx:593
-#: src/components/account-info.jsx:1285
+#: src/components/account-info.jsx:595
+#: src/components/account-info.jsx:1287
 msgid "Copy handle"
 msgstr "Copia l'identificador d'usuari"
 
-#: src/components/account-info.jsx:599
+#: src/components/account-info.jsx:601
 msgid "Go to original profile page"
 msgstr "Ves a la pàgina del perfil original"
 
-#: src/components/account-info.jsx:606
+#: src/components/account-info.jsx:608
 msgid "View profile image"
 msgstr "Veure imatge de perfil"
 
-#: src/components/account-info.jsx:612
+#: src/components/account-info.jsx:614
 msgid "View profile header"
 msgstr "Veure imatge de la capçalera"
 
-#: src/components/account-info.jsx:629
+#: src/components/account-info.jsx:631
 msgid "In Memoriam"
 msgstr "En Memòria"
 
-#: src/components/account-info.jsx:709
-#: src/components/account-info.jsx:750
+#: src/components/account-info.jsx:711
+#: src/components/account-info.jsx:752
 msgid "This user has chosen to not make this information available."
 msgstr "Aquest usuari ha decidit no mostrar aquesta informació."
 
-#: src/components/account-info.jsx:805
+#: src/components/account-info.jsx:807
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} publicacions originals, {1} respostes, {2} impulsos"
 
-#: src/components/account-info.jsx:821
+#: src/components/account-info.jsx:823
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Última publicació en el darrer dia} other {Última publicació en els darrers {2} dies}}} other {{3, plural, one {Últimes {4} publicacions en el darrer dia} other {Últimes {5} publicacions en els darrers {6} dies}}}}"
 
-#: src/components/account-info.jsx:834
+#: src/components/account-info.jsx:836
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Última publicació en el darrer any(s)} other {Últimes {1} publicacions en el darrer any(s)}}"
 
-#: src/components/account-info.jsx:858
+#: src/components/account-info.jsx:860
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr "Original"
 
-#: src/components/account-info.jsx:862
+#: src/components/account-info.jsx:864
 #: src/components/status.jsx:2252
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1445
@@ -194,7 +194,7 @@ msgstr "Original"
 msgid "Replies"
 msgstr "Respostes"
 
-#: src/components/account-info.jsx:866
+#: src/components/account-info.jsx:868
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1447
 #: src/pages/catchup.jsx:2068
@@ -202,207 +202,207 @@ msgstr "Respostes"
 msgid "Boosts"
 msgstr "Impulsos"
 
-#: src/components/account-info.jsx:872
+#: src/components/account-info.jsx:874
 msgid "Post stats unavailable."
 msgstr "Les estadístiques de les publicacions no estan disponibles."
 
-#: src/components/account-info.jsx:903
+#: src/components/account-info.jsx:905
 msgid "View post stats"
 msgstr "Veure estadístiques de les publicacions"
 
-#: src/components/account-info.jsx:1066
+#: src/components/account-info.jsx:1068
 msgid "Last post: <0>{0}</0>"
 msgstr "Última publicació: <0>{0}</0>"
 
-#: src/components/account-info.jsx:1080
+#: src/components/account-info.jsx:1082
 msgid "Muted"
 msgstr "Usuaris silenciats"
 
-#: src/components/account-info.jsx:1085
+#: src/components/account-info.jsx:1087
 msgid "Blocked"
 msgstr "Usuaris blocats"
 
-#: src/components/account-info.jsx:1094
+#: src/components/account-info.jsx:1096
 msgid "Private note"
 msgstr "Nota privada"
 
-#: src/components/account-info.jsx:1151
+#: src/components/account-info.jsx:1153
 msgid "Mention <0>@{username}</0>"
 msgstr "Menciona a <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1163
+#: src/components/account-info.jsx:1165
 msgid "Translate bio"
 msgstr "Tradueix la biografia"
 
-#: src/components/account-info.jsx:1174
+#: src/components/account-info.jsx:1176
 msgid "Edit private note"
 msgstr "Edita una nota privada"
 
-#: src/components/account-info.jsx:1174
+#: src/components/account-info.jsx:1176
 msgid "Add private note"
 msgstr "Afegiu una nota privada"
 
-#: src/components/account-info.jsx:1194
+#: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "S'han activat les publicacions de @{username}."
 
-#: src/components/account-info.jsx:1195
+#: src/components/account-info.jsx:1197
 msgid "Notifications disabled for @{username}'s posts."
 msgstr "S'han desactivat les publicacions de @{username}."
 
-#: src/components/account-info.jsx:1207
+#: src/components/account-info.jsx:1209
 msgid "Disable notifications"
 msgstr "Desactiva les notificacions"
 
-#: src/components/account-info.jsx:1208
+#: src/components/account-info.jsx:1210
 msgid "Enable notifications"
 msgstr "Activa les notificacions"
 
-#: src/components/account-info.jsx:1225
+#: src/components/account-info.jsx:1227
 msgid "Boosts from @{username} enabled."
 msgstr "Impulsos de @{username} permesos."
 
-#: src/components/account-info.jsx:1226
+#: src/components/account-info.jsx:1228
 msgid "Boosts from @{username} disabled."
 msgstr "Impulsos de @{username} inhabilitats."
 
-#: src/components/account-info.jsx:1237
+#: src/components/account-info.jsx:1239
 msgid "Disable boosts"
 msgstr "Desactiva els impulsos"
 
-#: src/components/account-info.jsx:1237
+#: src/components/account-info.jsx:1239
 msgid "Enable boosts"
 msgstr "Activa els impulsos"
 
-#: src/components/account-info.jsx:1253
-#: src/components/account-info.jsx:1263
-#: src/components/account-info.jsx:1864
+#: src/components/account-info.jsx:1255
+#: src/components/account-info.jsx:1265
+#: src/components/account-info.jsx:1866
 msgid "Add/Remove from Lists"
 msgstr "Afegeix/elimina de les llistes"
 
-#: src/components/account-info.jsx:1302
+#: src/components/account-info.jsx:1304
 #: src/components/status.jsx:1161
 msgid "Link copied"
 msgstr "Enllaç copiat"
 
-#: src/components/account-info.jsx:1305
+#: src/components/account-info.jsx:1307
 #: src/components/status.jsx:1164
 msgid "Unable to copy link"
 msgstr "No estat possible copiar l'enllaç"
 
-#: src/components/account-info.jsx:1311
+#: src/components/account-info.jsx:1313
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1170
 #: src/components/status.jsx:3251
 msgid "Copy"
 msgstr "Copia"
 
-#: src/components/account-info.jsx:1326
+#: src/components/account-info.jsx:1328
 #: src/components/shortcuts-settings.jsx:1077
 #: src/components/status.jsx:1186
 msgid "Sharing doesn't seem to work."
 msgstr "Sembla que la compartició no funciona."
 
-#: src/components/account-info.jsx:1332
+#: src/components/account-info.jsx:1334
 #: src/components/status.jsx:1192
 msgid "Share…"
 msgstr "Comparteix…"
 
-#: src/components/account-info.jsx:1352
+#: src/components/account-info.jsx:1354
 msgid "Unmuted @{username}"
 msgstr "@{username} s'ha deixat de silenciar"
 
-#: src/components/account-info.jsx:1364
+#: src/components/account-info.jsx:1366
 msgid "Unmute <0>@{username}</0>"
 msgstr "Deixa de silenciar a <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1380
+#: src/components/account-info.jsx:1382
 msgid "Mute <0>@{username}</0>…"
 msgstr "Silencia a <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1412
+#: src/components/account-info.jsx:1414
 msgid "Muted @{username} for {0}"
 msgstr "@{username} silenciat durant {0}"
 
-#: src/components/account-info.jsx:1424
+#: src/components/account-info.jsx:1426
 msgid "Unable to mute @{username}"
 msgstr "No ha estat possible silenciar @{username}"
 
-#: src/components/account-info.jsx:1445
+#: src/components/account-info.jsx:1447
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Voleu suprimir a <0>@{username}</0> dels seguidors?"
 
-#: src/components/account-info.jsx:1465
+#: src/components/account-info.jsx:1467
 msgid "@{username} removed from followers"
 msgstr "S'ha eliminat @{username} de la llista de seguidors"
 
-#: src/components/account-info.jsx:1477
+#: src/components/account-info.jsx:1479
 msgid "Remove follower…"
 msgstr "Suprimeix seguidor…"
 
-#: src/components/account-info.jsx:1488
+#: src/components/account-info.jsx:1490
 msgid "Block <0>@{username}</0>?"
 msgstr "Voleu blocar a <0>@{username}</0>?"
 
-#: src/components/account-info.jsx:1512
+#: src/components/account-info.jsx:1514
 msgid "Unblocked @{username}"
 msgstr "S'ha desblocat a @{username}"
 
-#: src/components/account-info.jsx:1520
+#: src/components/account-info.jsx:1522
 msgid "Blocked @{username}"
 msgstr "S'ha blocat a @{username}"
 
-#: src/components/account-info.jsx:1528
+#: src/components/account-info.jsx:1530
 msgid "Unable to unblock @{username}"
 msgstr "No ha estat possible desblocar @{username}"
 
-#: src/components/account-info.jsx:1530
+#: src/components/account-info.jsx:1532
 msgid "Unable to block @{username}"
 msgstr "No ha estat possible blocar @{username}"
 
-#: src/components/account-info.jsx:1540
+#: src/components/account-info.jsx:1542
 msgid "Unblock <0>@{username}</0>"
 msgstr "Deixa de blocar a <0>@{username}</0>"
 
-#: src/components/account-info.jsx:1549
+#: src/components/account-info.jsx:1551
 msgid "Block <0>@{username}</0>…"
 msgstr "Bloca a <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1566
+#: src/components/account-info.jsx:1568
 msgid "Report <0>@{username}</0>…"
 msgstr "Denúncia a <0>@{username}</0>…"
 
-#: src/components/account-info.jsx:1586
-#: src/components/account-info.jsx:2097
+#: src/components/account-info.jsx:1588
+#: src/components/account-info.jsx:2099
 msgid "Edit profile"
 msgstr "Edita el perfil"
 
-#: src/components/account-info.jsx:1622
+#: src/components/account-info.jsx:1624
 msgid "Withdraw follow request?"
 msgstr "Voleu retirar la sol·licitud de seguiment?"
 
-#: src/components/account-info.jsx:1623
+#: src/components/account-info.jsx:1625
 msgid "Unfollow @{0}?"
 msgstr "Voleu deixar de seguir @{0}?"
 
-#: src/components/account-info.jsx:1674
+#: src/components/account-info.jsx:1676
 msgid "Unfollow…"
 msgstr "Deixa de seguir…"
 
-#: src/components/account-info.jsx:1683
+#: src/components/account-info.jsx:1685
 msgid "Withdraw…"
 msgstr "Descarta…"
 
-#: src/components/account-info.jsx:1690
-#: src/components/account-info.jsx:1694
+#: src/components/account-info.jsx:1692
+#: src/components/account-info.jsx:1696
 #: src/pages/hashtag.jsx:261
 msgid "Follow"
 msgstr "Segueix"
 
-#: src/components/account-info.jsx:1805
-#: src/components/account-info.jsx:1859
-#: src/components/account-info.jsx:1992
-#: src/components/account-info.jsx:2092
+#: src/components/account-info.jsx:1807
+#: src/components/account-info.jsx:1861
+#: src/components/account-info.jsx:1994
+#: src/components/account-info.jsx:2094
 #: src/components/account-sheet.jsx:37
 #: src/components/compose.jsx:818
 #: src/components/compose.jsx:2444
@@ -435,76 +435,76 @@ msgstr "Segueix"
 msgid "Close"
 msgstr "Tanca"
 
-#: src/components/account-info.jsx:1810
+#: src/components/account-info.jsx:1812
 msgid "Translated Bio"
 msgstr "Biografia traduïda"
 
-#: src/components/account-info.jsx:1904
+#: src/components/account-info.jsx:1906
 msgid "Unable to remove from list."
 msgstr "No s'ha pogut eliminar de la llista."
 
-#: src/components/account-info.jsx:1905
+#: src/components/account-info.jsx:1907
 msgid "Unable to add to list."
 msgstr "No s'ha pogut afegir a la llista."
 
-#: src/components/account-info.jsx:1924
+#: src/components/account-info.jsx:1926
 #: src/pages/lists.jsx:104
 msgid "Unable to load lists."
 msgstr "No s'ha pogut carregar les llistes."
 
-#: src/components/account-info.jsx:1928
+#: src/components/account-info.jsx:1930
 msgid "No lists."
 msgstr "No hi ha cap llista."
 
-#: src/components/account-info.jsx:1939
+#: src/components/account-info.jsx:1941
 #: src/components/list-add-edit.jsx:39
 #: src/pages/lists.jsx:58
 msgid "New list"
 msgstr "Llista nova"
 
-#: src/components/account-info.jsx:1997
+#: src/components/account-info.jsx:1999
 msgid "Private note about <0>@{0}</0>"
 msgstr "Nota privada sobre <0>@{0}</0>"
 
-#: src/components/account-info.jsx:2027
+#: src/components/account-info.jsx:2029
 msgid "Unable to update private note."
 msgstr "No ha estat possible actualitzar la nota privada."
 
-#: src/components/account-info.jsx:2050
-#: src/components/account-info.jsx:2220
+#: src/components/account-info.jsx:2052
+#: src/components/account-info.jsx:2222
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/components/account-info.jsx:2055
+#: src/components/account-info.jsx:2057
 msgid "Save & close"
 msgstr "Desa i tanca"
 
-#: src/components/account-info.jsx:2148
+#: src/components/account-info.jsx:2150
 msgid "Unable to update profile."
 msgstr "No ha estat possible actualitzar el perfil."
 
-#: src/components/account-info.jsx:2155
+#: src/components/account-info.jsx:2157
 #: src/components/list-add-edit.jsx:104
 msgid "Name"
 msgstr "Nom"
 
-#: src/components/account-info.jsx:2168
+#: src/components/account-info.jsx:2170
 msgid "Bio"
 msgstr "Biografia"
 
-#: src/components/account-info.jsx:2181
+#: src/components/account-info.jsx:2183
 msgid "Extra fields"
 msgstr "Camps addicionals"
 
-#: src/components/account-info.jsx:2187
+#: src/components/account-info.jsx:2189
 msgid "Label"
 msgstr "Etiqueta"
 
-#: src/components/account-info.jsx:2190
+#: src/components/account-info.jsx:2192
 msgid "Content"
 msgstr "Contingut"
 
-#: src/components/account-info.jsx:2223
+#: src/components/account-info.jsx:2225
 #: src/components/list-add-edit.jsx:149
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
@@ -512,11 +512,11 @@ msgstr "Contingut"
 msgid "Save"
 msgstr "Desa"
 
-#: src/components/account-info.jsx:2276
+#: src/components/account-info.jsx:2279
 msgid "username"
 msgstr "nom d’usuari"
 
-#: src/components/account-info.jsx:2280
+#: src/components/account-info.jsx:2283
 msgid "server domain name"
 msgstr "nom de domini del servidor"
 
@@ -529,7 +529,7 @@ msgid "Cloak mode enabled"
 msgstr "Mode ocult activat"
 
 #: src/components/columns.jsx:26
-#: src/components/nav-menu.jsx:184
+#: src/components/nav-menu.jsx:175
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:437
 #: src/pages/catchup.jsx:876
@@ -629,7 +629,7 @@ msgid "Public"
 msgstr "Públic"
 
 #: src/components/compose.jsx:1196
-#: src/components/nav-menu.jsx:386
+#: src/components/nav-menu.jsx:337
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:94
 msgid "Local"
@@ -705,7 +705,7 @@ msgstr "Ha fallat la descàrrega del GIF"
 
 #: src/components/compose.jsx:1775
 #: src/components/compose.jsx:1852
-#: src/components/nav-menu.jsx:287
+#: src/components/nav-menu.jsx:238
 msgid "More…"
 msgstr "Més…"
 
@@ -961,8 +961,8 @@ msgstr "Res a mostrar"
 #: src/components/generic-accounts.jsx:145
 #: src/components/notification.jsx:438
 #: src/pages/accounts.jsx:41
-#: src/pages/search.jsx:302
-#: src/pages/search.jsx:335
+#: src/pages/search.jsx:313
+#: src/pages/search.jsx:346
 msgid "Accounts"
 msgstr "Comptes"
 
@@ -970,19 +970,19 @@ msgstr "Comptes"
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
 #: src/pages/notifications.jsx:848
-#: src/pages/search.jsx:529
+#: src/pages/search.jsx:540
 #: src/pages/status.jsx:1332
 msgid "Show more…"
 msgstr "Mostra'n més…"
 
 #: src/components/generic-accounts.jsx:210
 #: src/components/timeline.jsx:524
-#: src/pages/search.jsx:534
+#: src/pages/search.jsx:545
 msgid "The end."
 msgstr "Final."
 
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/nav-menu.jsx:405
+#: src/components/nav-menu.jsx:356
 #: src/pages/catchup.jsx:1619
 msgid "Keyboard shortcuts"
 msgstr "Dreceres de teclat"
@@ -1079,12 +1079,12 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> o <2>⌘</2> + <3>Enter</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:147
-#: src/components/nav-menu.jsx:374
+#: src/components/nav-menu.jsx:325
 #: src/components/search-form.jsx:72
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
 #: src/pages/search.jsx:45
-#: src/pages/search.jsx:284
+#: src/pages/search.jsx:295
 msgid "Search"
 msgstr "Cerca"
 
@@ -1244,32 +1244,32 @@ msgstr "Resposta enviada. Comproveu-la."
 msgid "Post updated. Check it out."
 msgstr "Publicació actualitzada. Comproveu-la."
 
-#: src/components/nav-menu.jsx:126
+#: src/components/nav-menu.jsx:117
 msgid "Menu"
 msgstr "Menú"
 
-#: src/components/nav-menu.jsx:162
+#: src/components/nav-menu.jsx:153
 msgid "Reload page now to update?"
 msgstr "Voleu tornar a carregar la pàgina per actualitzar-la?"
 
-#: src/components/nav-menu.jsx:174
+#: src/components/nav-menu.jsx:165
 msgid "New update available…"
 msgstr "Nova actualització disponible…"
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:193
+#: src/components/nav-menu.jsx:184
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:22
 #: src/pages/following.jsx:141
 msgid "following.title"
 msgstr "Seguint-ne"
 
-#: src/components/nav-menu.jsx:200
+#: src/components/nav-menu.jsx:191
 #: src/pages/catchup.jsx:871
 msgid "Catch-up"
 msgstr "Posada al dia"
 
-#: src/components/nav-menu.jsx:207
+#: src/components/nav-menu.jsx:198
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:224
@@ -1280,7 +1280,7 @@ msgstr "Posada al dia"
 msgid "Mentions"
 msgstr "Mencions"
 
-#: src/components/nav-menu.jsx:214
+#: src/components/nav-menu.jsx:205
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1291,31 +1291,15 @@ msgstr "Mencions"
 msgid "Notifications"
 msgstr "Notificacions"
 
-#: src/components/nav-menu.jsx:217
+#: src/components/nav-menu.jsx:208
 msgid "New"
 msgstr "Nou"
 
-#: src/components/nav-menu.jsx:228
+#: src/components/nav-menu.jsx:219
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/components/nav-menu.jsx:241
-#: src/components/nav-menu.jsx:268
-#: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:126
-#: src/pages/lists.jsx:16
-#: src/pages/lists.jsx:50
-msgid "Lists"
-msgstr "Llistes"
-
-#: src/components/nav-menu.jsx:249
-#: src/components/shortcuts.jsx:215
-#: src/pages/list.jsx:133
-msgid "All Lists"
-msgstr "Totes les llistes"
-
-#: src/components/nav-menu.jsx:276
+#: src/components/nav-menu.jsx:227
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:11
@@ -1323,7 +1307,7 @@ msgstr "Totes les llistes"
 msgid "Bookmarks"
 msgstr "Marcadors"
 
-#: src/components/nav-menu.jsx:296
+#: src/components/nav-menu.jsx:247
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1446
@@ -1334,13 +1318,13 @@ msgstr "Marcadors"
 msgid "Likes"
 msgstr "\"M'agrada\""
 
-#: src/components/nav-menu.jsx:302
+#: src/components/nav-menu.jsx:253
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
 msgstr "Etiquetes seguides"
 
-#: src/components/nav-menu.jsx:310
+#: src/components/nav-menu.jsx:261
 #: src/pages/account-statuses.jsx:331
 #: src/pages/filters.jsx:54
 #: src/pages/filters.jsx:93
@@ -1348,53 +1332,69 @@ msgstr "Etiquetes seguides"
 msgid "Filters"
 msgstr "Filtres"
 
-#: src/components/nav-menu.jsx:318
+#: src/components/nav-menu.jsx:269
 msgid "Muted users"
 msgstr "Usuaris silenciats"
 
-#: src/components/nav-menu.jsx:326
+#: src/components/nav-menu.jsx:277
 msgid "Muted users…"
 msgstr "Usuaris silenciats…"
 
-#: src/components/nav-menu.jsx:333
+#: src/components/nav-menu.jsx:284
 msgid "Blocked users"
 msgstr "Usuaris blocats"
 
-#: src/components/nav-menu.jsx:341
+#: src/components/nav-menu.jsx:292
 msgid "Blocked users…"
 msgstr "Usuaris blocats…"
 
-#: src/components/nav-menu.jsx:353
+#: src/components/nav-menu.jsx:304
 msgid "Accounts…"
 msgstr "Comptes…"
 
-#: src/components/nav-menu.jsx:363
+#: src/components/nav-menu.jsx:314
 #: src/pages/login.jsx:189
 #: src/pages/status.jsx:835
 #: src/pages/welcome.jsx:64
 msgid "Log in"
 msgstr "Inicia sessió"
 
-#: src/components/nav-menu.jsx:380
+#: src/components/nav-menu.jsx:331
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:441
 msgid "Trending"
 msgstr "Tendències"
 
-#: src/components/nav-menu.jsx:392
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr "Federada"
 
-#: src/components/nav-menu.jsx:415
+#: src/components/nav-menu.jsx:366
 msgid "Shortcuts / Columns…"
 msgstr "Dreceres / Columnes…"
 
-#: src/components/nav-menu.jsx:425
-#: src/components/nav-menu.jsx:439
+#: src/components/nav-menu.jsx:376
+#: src/components/nav-menu.jsx:390
 msgid "Settings…"
 msgstr "Configuració…"
+
+#: src/components/nav-menu.jsx:420
+#: src/components/nav-menu.jsx:447
+#: src/components/shortcuts-settings.jsx:50
+#: src/components/shortcuts-settings.jsx:158
+#: src/pages/list.jsx:126
+#: src/pages/lists.jsx:16
+#: src/pages/lists.jsx:50
+msgid "Lists"
+msgstr "Llistes"
+
+#: src/components/nav-menu.jsx:428
+#: src/components/shortcuts.jsx:215
+#: src/pages/list.jsx:133
+msgid "All Lists"
+msgstr "Totes les llistes"
 
 #: src/components/notification-service.jsx:160
 msgid "Notification"
@@ -2532,7 +2532,7 @@ msgstr "Nota: el compte <0>Per defecte</0> sempre s'utilitzarà per a la primera
 
 #: src/pages/bookmarks.jsx:25
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr "No teniu marcats. Cerqueu alguna cosa per guardar!"
+msgstr "No teniu marcadors. Cerqueu alguna cosa per guardar!"
 
 #: src/pages/bookmarks.jsx:26
 msgid "Unable to load bookmarks."
@@ -2703,7 +2703,7 @@ msgstr "Compartit per {0}"
 
 #: src/pages/catchup.jsx:1316
 #: src/pages/mentions.jsx:147
-#: src/pages/search.jsx:297
+#: src/pages/search.jsx:308
 msgid "All"
 msgstr "Totes"
 
@@ -3307,42 +3307,42 @@ msgstr "Cerca: {q} (etiquetes)"
 msgid "Search: {q}"
 msgstr "Cerca: {q}"
 
-#: src/pages/search.jsx:307
-#: src/pages/search.jsx:389
+#: src/pages/search.jsx:318
+#: src/pages/search.jsx:400
 msgid "Hashtags"
 msgstr "Etiquetes"
 
-#: src/pages/search.jsx:339
-#: src/pages/search.jsx:393
-#: src/pages/search.jsx:463
+#: src/pages/search.jsx:350
+#: src/pages/search.jsx:404
+#: src/pages/search.jsx:474
 msgid "See more"
 msgstr "Mostra'n més"
 
-#: src/pages/search.jsx:365
+#: src/pages/search.jsx:376
 msgid "See more accounts"
 msgstr "Veure més comptes"
 
-#: src/pages/search.jsx:379
+#: src/pages/search.jsx:390
 msgid "No accounts found."
 msgstr "No s'ha trobat cap compte."
 
-#: src/pages/search.jsx:435
+#: src/pages/search.jsx:446
 msgid "See more hashtags"
 msgstr "Veure més etiquetes"
 
-#: src/pages/search.jsx:449
+#: src/pages/search.jsx:460
 msgid "No hashtags found."
 msgstr "No s'ha trobat cap etiqueta."
 
-#: src/pages/search.jsx:493
+#: src/pages/search.jsx:504
 msgid "See more posts"
 msgstr "Veure més publicacions"
 
-#: src/pages/search.jsx:507
+#: src/pages/search.jsx:518
 msgid "No posts found."
 msgstr "No s'ha trobat cap publicació."
 
-#: src/pages/search.jsx:551
+#: src/pages/search.jsx:562
 msgid "Enter your search term or paste a URL above to get started."
 msgstr "Introduïu el vostre terme de cerca o enganxeu un URL a dalt per començar."
 
@@ -3387,7 +3387,7 @@ msgstr "Ajudeu a traduir"
 
 #: src/pages/settings.jsx:265
 msgid "Posting"
-msgstr "Publicant"
+msgstr "Publicacions"
 
 #: src/pages/settings.jsx:272
 msgid "Default visibility"
@@ -3409,7 +3409,7 @@ msgstr "Sincronitzat amb la configuració de la instància del servidor. \n"
 
 #: src/pages/settings.jsx:336
 msgid "Experiments"
-msgstr "Experiments"
+msgstr "Funcions experimentals"
 
 #: src/pages/settings.jsx:349
 msgid "Auto refresh timeline posts"

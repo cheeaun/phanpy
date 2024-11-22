@@ -331,6 +331,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16539461/medium/2f41b9f0b802c1d200a6ab62167a7229_default.png" alt="" width="16" height="16" /> pazpi (Italian)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" alt="" width="16" height="16" /> PPNplus (Thai)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15106977/medium/54bf93b19af8bbfdee579ea51685bafa.jpeg" alt="" width="16" height="16" /> punkrockgirl (Basque)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16536247/medium/f010c8e718a36229733a8b58f6bad2a4_default.png" alt="" width="16" height="16" /> radecos (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16538917/medium/092ec03f56f9dd1cbce94379fa4d4d38.png" alt="" width="16" height="16" /> Razem (Czech)

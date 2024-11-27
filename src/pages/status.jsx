@@ -1309,7 +1309,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         >
           {statusesList}
           {showMore > 0 && (
-            <li>
+            <li class="descendant descendant-more">
               <button
                 type="button"
                 class="plain block show-more"

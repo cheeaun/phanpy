@@ -1373,6 +1373,7 @@ function Compose({
                   }}
                   menuButton={({ open }) => (
                     <button
+                      type="button"
                       class={`toolbar-button add-button ${
                         open ? 'active' : ''
                       }`}

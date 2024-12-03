@@ -1883,7 +1883,9 @@ const Textarea = forwardRef((props, ref) => {
                   url,
                 )}" width="16" height="16" alt="" loading="lazy" />`;
             html += `
-              <li role="option" data-value="${encodeHTML(unicode || `:${shortcode}:`)}">
+              <li role="option" data-value="${encodeHTML(
+                unicode || `:${shortcode}:`,
+              )}">
                 ${presentation}
                 ${encodeHTML(shortcode || '')}
               </li>`;

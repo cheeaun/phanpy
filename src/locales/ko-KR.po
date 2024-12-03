@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-27 14:37\n"
+"PO-Revision-Date: 2024-12-03 18:15\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "표시할 내용 없음"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:438
+#: src/components/notification.jsx:446
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -1477,74 +1477,82 @@ msgstr "<0>{name}</0> 서버와 연결 끊김."
 msgid "Moderation warning"
 msgstr "조정 경고"
 
-#: src/components/notification.jsx:269
+#: src/components/notification.jsx:265
+msgid "Your {year} #Wrapstodon is here!"
+msgstr ""
+
+#: src/components/notification.jsx:272
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "<0>{from}</0> 의 관리자가 <1>{targetName}</1> 를 일시 중단하였습니다, 이는 더 이상 업데이트를 받거나 상호 작용할 수 없다는 의미입니다."
 
-#: src/components/notification.jsx:275
+#: src/components/notification.jsx:278
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "<0>{from}</0>의 관리자가 <1>{targetName}</1>를 차단하였습니다. 영향을 받는 팔로워: {followersCount}, 팔로잉: {followingCount}."
 
-#: src/components/notification.jsx:281
+#: src/components/notification.jsx:284
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "당신은 <0>{targetName}</0>를 차단하였습니다. 제거된 팔로워: {followersCount}, 팔로잉: {followingCount}."
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:292
 msgid "Your account has received a moderation warning."
 msgstr "중재 경고를 받았습니다."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:293
 msgid "Your account has been disabled."
 msgstr "계정이 비활성화되었습니다."
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been marked as sensitive."
 msgstr "일부 게시물이 민감한 게시물로 처리되었습니다."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:295
 msgid "Some of your posts have been deleted."
 msgstr "내 게시물 몇 개가 지워졌습니다."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:296
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "앞으로의 게시물은 민감하다고 표시됩니다."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:297
 msgid "Your account has been limited."
 msgstr "계정이 제한되었습니다."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:298
 msgid "Your account has been suspended."
 msgstr "계정이 정지되었습니다."
 
-#: src/components/notification.jsx:369
+#: src/components/notification.jsx:373
 msgid "[Unknown notification type: {type}]"
 msgstr "[알 수 없는 알림 유형: {type}]"
 
-#: src/components/notification.jsx:434
+#: src/components/notification.jsx:442
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "부스트·좋아한 사용자…"
 
-#: src/components/notification.jsx:435
+#: src/components/notification.jsx:443
 msgid "Liked by…"
 msgstr "좋아한 사람:"
 
-#: src/components/notification.jsx:436
+#: src/components/notification.jsx:444
 msgid "Boosted by…"
 msgstr "부스트한 사람:"
 
-#: src/components/notification.jsx:437
+#: src/components/notification.jsx:445
 msgid "Followed by…"
 msgstr "팔로한 사람:"
 
-#: src/components/notification.jsx:508
-#: src/components/notification.jsx:524
+#: src/components/notification.jsx:516
+#: src/components/notification.jsx:532
 msgid "Learn more <0/>"
 msgstr "자세히 보기 <0/>"
 
-#: src/components/notification.jsx:756
+#: src/components/notification.jsx:540
+msgid "View #Wrapstodon"
+msgstr ""
+
+#: src/components/notification.jsx:769
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "더 보기 →"
@@ -2265,6 +2273,7 @@ msgid "Failed to load history"
 msgstr "내역 불러오기 실패"
 
 #: src/components/status.jsx:3006
+#: src/pages/annual-report.jsx:44
 msgid "Loading…"
 msgstr "불러오는 중…"
 
@@ -2406,6 +2415,7 @@ msgid "Login required."
 msgstr "로그인이 필요합니다."
 
 #: src/compose.jsx:90
+#: src/pages/annual-report.jsx:132
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"

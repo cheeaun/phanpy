@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-27 16:05\n"
+"PO-Revision-Date: 2024-12-03 18:15\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Nėra ką rodyti."
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:438
+#: src/components/notification.jsx:446
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -1447,7 +1447,7 @@ msgstr "Baigėsi apklausa, kurioje balsavai arba kurią sukūrei."
 
 #: src/components/notification.jsx:194
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "Baigėsi apklausa, kurią sukūrei."
 
 #: src/components/notification.jsx:195
 msgid "A poll you have voted in has ended."
@@ -1477,74 +1477,82 @@ msgstr ""
 msgid "Moderation warning"
 msgstr "Prižiūrėjimo įspėjimas"
 
-#: src/components/notification.jsx:269
+#: src/components/notification.jsx:265
+msgid "Your {year} #Wrapstodon is here!"
+msgstr ""
+
+#: src/components/notification.jsx:272
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Administratorius (-ė) iš <0>{from}</0> pristabdė <1>{targetName}</1>, o tai reiškia, kad nebegali gauti iš jų naujienų ir su jais bendrauti."
 
-#: src/components/notification.jsx:275
+#: src/components/notification.jsx:278
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:281
+#: src/components/notification.jsx:284
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Užblokavote <0>{targetName}</0>. Pašalinti sekėjai: {followersCount}, sekimai: {followingCount}."
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:292
 msgid "Your account has received a moderation warning."
 msgstr "Tavo paskyra gavo prižiūrėjimo įspėjimą."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:293
 msgid "Your account has been disabled."
 msgstr "Tavo paskyra buvo išjungta."
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Kai kurie tavo įrašai buvo pažymėtos kaip jautrios."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:295
 msgid "Some of your posts have been deleted."
 msgstr "Kai kurios tavo įrašai buvo ištrinti."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:296
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Nuo šiol tavo įrašai bus pažymėti kaip jautrūs."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:297
 msgid "Your account has been limited."
 msgstr "Tavo paskyra buvo apribota."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:298
 msgid "Your account has been suspended."
 msgstr "Tavo paskyra buvo pristabdyta."
 
-#: src/components/notification.jsx:369
+#: src/components/notification.jsx:373
 msgid "[Unknown notification type: {type}]"
 msgstr "[Nežinomas pranešimo tipas: {type}]"
 
-#: src/components/notification.jsx:434
+#: src/components/notification.jsx:442
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Pasidalino / patiko…"
 
-#: src/components/notification.jsx:435
+#: src/components/notification.jsx:443
 msgid "Liked by…"
 msgstr "Patiko…"
 
-#: src/components/notification.jsx:436
+#: src/components/notification.jsx:444
 msgid "Boosted by…"
 msgstr "Pasidalino…"
 
-#: src/components/notification.jsx:437
+#: src/components/notification.jsx:445
 msgid "Followed by…"
 msgstr "Seka…"
 
-#: src/components/notification.jsx:508
-#: src/components/notification.jsx:524
+#: src/components/notification.jsx:516
+#: src/components/notification.jsx:532
 msgid "Learn more <0/>"
 msgstr "Sužinoti daugiau <0/>"
 
-#: src/components/notification.jsx:756
+#: src/components/notification.jsx:540
+msgid "View #Wrapstodon"
+msgstr ""
+
+#: src/components/notification.jsx:769
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "Skaityti daugiau →"
@@ -1680,7 +1688,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
-msgstr ""
+msgstr "Nepavyksta pranešti apie profilį"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
@@ -1692,11 +1700,11 @@ msgstr ""
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
-msgstr ""
+msgstr "Papildoma informacija"
 
 #: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
-msgstr ""
+msgstr "Persiųsti į <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
@@ -2265,6 +2273,7 @@ msgid "Failed to load history"
 msgstr "Nepavyko įkelti istorijos."
 
 #: src/components/status.jsx:3006
+#: src/pages/annual-report.jsx:44
 msgid "Loading…"
 msgstr "Įkeliama…"
 
@@ -2406,6 +2415,7 @@ msgid "Login required."
 msgstr "Privalomas prisijungimas."
 
 #: src/compose.jsx:90
+#: src/pages/annual-report.jsx:132
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"

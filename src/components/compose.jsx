@@ -1789,14 +1789,15 @@ function autoResizeTextarea(textarea) {
 async function _getCustomEmojis(lang, instance, masto) {
   const [unicodeEmojis, customEmojis] = await Promise.all([
     fetch(`./assets/emojis/${lang}.json`).then((r) => r.json()),
-    masto.v1.customEmojis.list()
+    masto.v1.customEmojis.list(),
   ]);
 
   for (let emoji of unicodeEmojis.emojis)
     if (emoji.group in unicodeEmojis.groups)
       emoji.category = unicodeEmojis.groups[emoji.group].message;
 
-  const visibleEmojis = customEmojis.filter((e) => e.visibleInPicker)
+  const visibleEmojis = customEmojis
+    .filter((e) => e.visibleInPicker)
     .concat(unicodeEmojis.emojis);
   const searcher = new Fuse(visibleEmojis, {
     keys: ['shortcode', 'label', 'tags'],
@@ -1876,14 +1877,15 @@ const Textarea = forwardRef((props, ref) => {
           let html = '';
           results.forEach(({ item: emoji }) => {
             const { unicode, shortcode, url } = emoji;
-            const presentation = unicode ? unicode :
-              `<img src="${encodeHTML(
-                url,
-              )}" width="16" height="16" alt="" loading="lazy" />`;
+            const presentation = unicode
+              ? unicode
+              : `<img src="${encodeHTML(
+                  url,
+                )}" width="16" height="16" alt="" loading="lazy" />`;
             html += `
               <li role="option" data-value="${encodeHTML(unicode || `:${shortcode}:`)}">
                 ${presentation}
-                ${encodeHTML(shortcode || "")}
+                ${encodeHTML(shortcode || '')}
               </li>`;
           });
           html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
@@ -3126,7 +3128,11 @@ function CustomEmojisModal({
     setUIState('loading');
     (async () => {
       try {
-        const [emojis, searcher] = await getCustomEmojis(i18n.locale, instance, masto);
+        const [emojis, searcher] = await getCustomEmojis(
+          i18n.locale,
+          instance,
+          masto,
+        );
         console.log('emojis', emojis);
         searcherRef.current = searcher;
         setCustomEmojis(emojis);
@@ -3255,7 +3261,9 @@ function CustomEmojisModal({
             e.preventDefault();
             const emoji = matches[0];
             if (emoji) {
-              onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
+              onSelectEmoji(
+                emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`,
+              );
             }
           }}
         >
@@ -3281,7 +3289,9 @@ function CustomEmojisModal({
                 <CustomEmojiButton
                   emoji={emoji}
                   onClick={() => {
-                    onSelectEmoji(emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`);
+                    onSelectEmoji(
+                      emoji.unicode ? emoji.unicode : `:${emoji.shortcode}:`,
+                    );
                   }}
                   showCode
                 />
@@ -3381,7 +3391,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
       onPointerEnter={addEdges}
       onFocus={addEdges}
     >
-      {emoji.unicode && <>{emoji.unicode}</> || (
+      {(emoji.unicode && <>{emoji.unicode}</>) || (
         <picture>
           {!!emoji.staticUrl && (
             <source

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-28 08:59\n"
+"PO-Revision-Date: 2024-12-03 18:15\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Ei mitään näytettävää"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:438
+#: src/components/notification.jsx:446
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -1477,74 +1477,82 @@ msgstr "Menetettiin yhteydet kohteeseen <0>{name}</0>."
 msgid "Moderation warning"
 msgstr "Moderointivaroitus"
 
-#: src/components/notification.jsx:269
+#: src/components/notification.jsx:265
+msgid "Your {year} #Wrapstodon is here!"
+msgstr ""
+
+#: src/components/notification.jsx:272
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Palvelimen <0>{from}</0> ylläpitäjä on jäädyttänyt käyttäjän <1>{targetName}</1>, minkä takia et saa enää hänen päivityksiään etkä voi olla vuorovaikutuksessa hänen kanssaan."
 
-#: src/components/notification.jsx:275
+#: src/components/notification.jsx:278
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Palvelimen <0>{from}</0> ylläpitäjä on estänyt palvelimen <1>{targetName}</1>. Vaikutettuja seuraajia {followersCount}, seurattuja {followingCount}."
 
-#: src/components/notification.jsx:281
+#: src/components/notification.jsx:284
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Olet estänyt palvelimen <0>{targetName}</0>. Poistettuja seuraajia {followersCount}, seurattuja {followingCount}."
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:292
 msgid "Your account has received a moderation warning."
 msgstr "Tilisi on saanut moderointivaroituksen."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:293
 msgid "Your account has been disabled."
 msgstr "Tilisi on poistettu käytöstä."
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Julkaisujasi on merkitty arkaluonteisiksi."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:295
 msgid "Some of your posts have been deleted."
 msgstr "Julkaisujasi on poistettu."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:296
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Tästä lähtien julkaisusi merkitään arkaluonteisiksi."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:297
 msgid "Your account has been limited."
 msgstr "Tiliäsi on rajoitettu."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:298
 msgid "Your account has been suspended."
 msgstr "Tilisi on jäädytetty."
 
-#: src/components/notification.jsx:369
+#: src/components/notification.jsx:373
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tuntematon ilmoitustyyppi: {type}]"
 
-#: src/components/notification.jsx:434
+#: src/components/notification.jsx:442
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Tehostaneet/tykänneet…"
 
-#: src/components/notification.jsx:435
+#: src/components/notification.jsx:443
 msgid "Liked by…"
 msgstr "Tykänneet…"
 
-#: src/components/notification.jsx:436
+#: src/components/notification.jsx:444
 msgid "Boosted by…"
 msgstr "Tehostanut…"
 
-#: src/components/notification.jsx:437
+#: src/components/notification.jsx:445
 msgid "Followed by…"
 msgstr "Seurannut…"
 
-#: src/components/notification.jsx:508
-#: src/components/notification.jsx:524
+#: src/components/notification.jsx:516
+#: src/components/notification.jsx:532
 msgid "Learn more <0/>"
 msgstr "Lue lisää <0/>"
 
-#: src/components/notification.jsx:756
+#: src/components/notification.jsx:540
+msgid "View #Wrapstodon"
+msgstr ""
+
+#: src/components/notification.jsx:769
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "Lue lisää →"
@@ -2265,6 +2273,7 @@ msgid "Failed to load history"
 msgstr "Historian lataus epäonnistui"
 
 #: src/components/status.jsx:3006
+#: src/pages/annual-report.jsx:44
 msgid "Loading…"
 msgstr "Ladataan…"
 
@@ -2406,6 +2415,7 @@ msgid "Login required."
 msgstr "Kirjautuminen vaaditaan."
 
 #: src/compose.jsx:90
+#: src/pages/annual-report.jsx:132
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"

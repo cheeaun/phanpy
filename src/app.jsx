@@ -46,6 +46,7 @@ import Search from './pages/search';
 import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
 import Welcome from './pages/welcome';
+import AnnualReport from './pages/annual-report';
 import {
   api,
   hasInstance,
@@ -546,6 +547,7 @@ function SecondaryRoutes({ isLoggedIn }) {
           <Route path="/fh" element={<FollowedHashtags />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
+          <Route path="/annual_report/:year" element={<AnnualReport />} />
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

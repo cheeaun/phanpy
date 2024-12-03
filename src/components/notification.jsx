@@ -261,6 +261,9 @@ const contentText = {
   ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
+  annual_report: ({ year }) => (
+    <Trans>Your {year} #Wrapstodon is here!</Trans>
+  ),
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -312,6 +315,7 @@ function Notification({
     report,
     event,
     moderation_warning,
+    annualReport,
     // Client-side grouped notification
     _ids,
     _accounts,
@@ -408,6 +412,10 @@ function Notification({
         account: <NameText account={account} showAvatar />,
         emoji: notification.emoji,
         emojiURL,
+      });
+    } else if (type === 'annual_report') {
+      text = text({
+        ...notification.annualReport,
       });
     } else {
       text = text({
@@ -525,6 +533,11 @@ function Notification({
                     Learn more <Icon icon="external" size="s" />
                   </Trans>
                 </a>
+              </div>
+            )}
+            {type === 'annual_report' && (
+              <div>
+                <Link to={`/annual_report/${annualReport?.year}`}><Trans>View #Wrapstodon</Trans></Link>
               </div>
             )}
           </>

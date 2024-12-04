@@ -64,7 +64,8 @@ export default function AnnualReport() {
                           <tr>
                             {Object.entries(item).map(([k, value]) => (
                               <td>
-                                {value && /(accountId)/i.test(k) &&
+                                {value &&
+                                /(accountId)/i.test(k) &&
                                 /^(mostRebloggedAccounts|commonlyInteractedWithAccounts)$/i.test(
                                   key,
                                 ) ? (
@@ -90,14 +91,17 @@ export default function AnnualReport() {
                           <>
                             <dt>{k}</dt>
                             <dd>
-                              {value &&
-                              <Link to={`/${instance}/s/${value}`}>
-                                <Status
-                                  status={statuses?.find((s) => s.id === value)}
-                                  size="s"
-                                  readOnly
-                                />
-                              </Link>}
+                              {value && (
+                                <Link to={`/${instance}/s/${value}`}>
+                                  <Status
+                                    status={statuses?.find(
+                                      (s) => s.id === value,
+                                    )}
+                                    size="s"
+                                    readOnly
+                                  />
+                                </Link>
+                              )}
                             </dd>
                           </>
                         ))}

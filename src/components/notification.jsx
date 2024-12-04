@@ -261,9 +261,7 @@ const contentText = {
   ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
-  annual_report: ({ year }) => (
-    <Trans>Your {year} #Wrapstodon is here!</Trans>
-  ),
+  annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -537,7 +535,9 @@ function Notification({
             )}
             {type === 'annual_report' && (
               <div>
-                <Link to={`/annual_report/${annualReport?.year}`}><Trans>View #Wrapstodon</Trans></Link>
+                <Link to={`/annual_report/${annualReport?.year}`}>
+                  <Trans>View #Wrapstodon</Trans>
+                </Link>
               </div>
             )}
           </>
@@ -562,8 +562,8 @@ function Notification({
                       _accounts.length <= 10
                         ? 'xxl'
                         : _accounts.length < 20
-                        ? 'xl'
-                        : 'l'
+                          ? 'xl'
+                          : 'l'
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}
@@ -606,8 +606,8 @@ function Notification({
                         const type = /^favourite/.test(key)
                           ? 'favourite'
                           : /^reblog/.test(key)
-                          ? 'reblog'
-                          : null;
+                            ? 'reblog'
+                            : null;
                         if (!type) continue;
                         for (const account of _accounts) {
                           const theAccount = accounts.find(

@@ -996,8 +996,8 @@ function Status({
                 {reblogsCount > 0
                   ? shortenNumber(reblogsCount)
                   : reblogged
-                  ? t`Unboost`
-                  : t`Boost…`}
+                    ? t`Unboost`
+                    : t`Boost…`}
               </span>
             </MenuConfirm>
             <MenuItem
@@ -1009,8 +1009,8 @@ function Status({
                 {favouritesCount > 0
                   ? shortenNumber(favouritesCount)
                   : favourited
-                  ? t`Unlike`
-                  : t`Like`}
+                    ? t`Unlike`
+                    : t`Like`}
               </span>
             </MenuItem>
             {supports('@mastodon/post-bookmark') && (
@@ -3167,8 +3167,8 @@ function generateHTMLCode(post, instance, level = 0) {
             } else {
               mediaHTML = `
                 <a href="${sourceMediaURL}">📄 ${
-                description || sourceMediaURL
-              }</a>
+                  description || sourceMediaURL
+                }</a>
               `;
             }
 
@@ -3625,12 +3625,12 @@ function FilteredStatus({
         quoted
           ? ''
           : isReblog
-          ? group
-            ? 'status-group'
-            : 'status-reblog'
-          : isFollowedTags
-          ? 'status-followed-tags'
-          : ''
+            ? group
+              ? 'status-group'
+              : 'status-reblog'
+            : isFollowedTags
+              ? 'status-followed-tags'
+              : ''
       }
       {...containerProps}
       // title={statusPeekText}

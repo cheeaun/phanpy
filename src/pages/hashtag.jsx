@@ -55,8 +55,8 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       ? t`${hashtagTitle} (Media only) on ${instance}`
       : t`${hashtagTitle} on ${instance}`
     : media
-    ? t`${hashtagTitle} (Media only)`
-    : t`${hashtagTitle}`;
+      ? t`${hashtagTitle} (Media only)`
+      : t`${hashtagTitle}`;
   useTitle(title, `/:instance?/t/:hashtag`);
   const latestItem = useRef();
 

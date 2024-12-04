@@ -1255,8 +1255,8 @@ function Compose({
               replyToStatus
                 ? t`Post your reply`
                 : editStatus
-                ? t`Edit your post`
-                : t`What are you doing?`
+                  ? t`Edit your post`
+                  : t`What are you doing?`
             }
             required={mediaAttachments?.length === 0}
             disabled={uiState === 'loading'}
@@ -1554,11 +1554,11 @@ function Compose({
               {replyToStatus
                 ? t`Reply`
                 : editStatus
-                ? t`Update`
-                : t({
-                    message: 'Post',
-                    context: 'Submit button in composer',
-                  })}
+                  ? t`Update`
+                  : t({
+                      message: 'Post',
+                      context: 'Submit button in composer',
+                    })}
             </button>
           </div>
         </form>
@@ -2214,10 +2214,10 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
           leftChars <= -10
             ? 'explode'
             : leftChars <= 0
-            ? 'danger'
-            : leftChars <= 20
-            ? 'warning'
-            : ''
+              ? 'danger'
+              : leftChars <= 20
+                ? 'warning'
+                : ''
         }`}
         value={charCount}
         max={maxCharacters}
@@ -2846,16 +2846,16 @@ function filterShortcodes(emojis, searchTerm) {
       return bothStartWith
         ? a.length - b.length
         : aStartsWith
-        ? -1
-        : bStartsWith
-        ? 1
-        : bothContain
-        ? a.length - b.length
-        : aContains
-        ? -1
-        : bContains
-        ? 1
-        : 0;
+          ? -1
+          : bStartsWith
+            ? 1
+            : bothContain
+              ? a.length - b.length
+              : aContains
+                ? -1
+                : bContains
+                  ? 1
+                  : 0;
     })
     .slice(0, 5);
 }
@@ -3516,8 +3516,8 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                 const theImage = fixed_height_small?.url
                   ? fixed_height_small
                   : fixed_height_downsampled?.url
-                  ? fixed_height_downsampled
-                  : fixed_height;
+                    ? fixed_height_downsampled
+                    : fixed_height;
                 let { url, webp, width, height } = theImage;
                 if (+height > 100) {
                   width = (width / height) * 100;

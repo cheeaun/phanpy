@@ -1,0 +1,37 @@
+name: "Feature request"
+description: "Suggest an idea for this project"
+
+labels:
+- "enhancement"
+
+
+body:
+- type: textarea
+  id: "problem"
+  attributes:
+    label: "Problem I have"
+    description: |-
+      If your request is related to a problem, please provide a clear and concise description of what the problem is.
+    placeholder: |-
+      I'm always frustrated when [...]
+
+- type: textarea
+  id: "solution"
+  attributes:
+    label: "Solution I'd like"
+    description: |-
+      A clear and concise description of what you want to happen.
+
+- type: textarea
+  id: "alternatives"
+  attributes:
+    label: "Alternatives considered"
+    description: |-
+      A clear and concise description of any alternative solutions or features you've considered.
+
+- type: textarea
+  id: "other"
+  attributes:
+    label: "Other"
+    description: |-
+      Anything you want to add?

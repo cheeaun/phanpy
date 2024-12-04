@@ -6,7 +6,7 @@
   overflow-x: auto;
   background-color: var(--bg-faded-color);
   mask-image: linear-gradient(
-    to right,
+    var(--to-forward),
     transparent,
     black 16px,
     black calc(100% - 16px),
@@ -20,6 +20,9 @@
       width: 95vw;
       max-width: calc(320px * 3.3);
       transform: translateX(calc(-50% + var(--main-width) / 2));
+      &:dir(rtl) {
+        transform: translateX(calc(50% - var(--main-width) / 2));
+      }
     }
   }
 
@@ -38,12 +41,16 @@
       color: var(--text-insignificant-color);
       position: absolute;
       top: 8px;
-      left: 0;
+      inset-inline-start: 0;
       transform-origin: top left;
       transform: rotate(-90deg) translateX(-100%);
+      &:dir(rtl) {
+        transform-origin: top right;
+        transform: rotate(90deg) translateX(100%);
+      }
       user-select: none;
       background-image: linear-gradient(
-        to left,
+        var(--to-backward),
         var(--text-color),
         var(--link-color)
       );
@@ -53,10 +60,10 @@
     }
   }
 
-  a {
-    min-width: 240px;
-    flex-grow: 1;
-    max-width: 320px;
+  a.link-block {
+    width: 240px;
+    flex-shrink: 0;
+    /* max-width: 320px; */
     text-decoration: none;
     color: inherit;
     border-radius: 16px;
@@ -74,7 +81,7 @@
     background-clip: border-box;
     background-origin: border-box;
     min-height: 160px;
-    height: 320px;
+    height: 340px;
     max-height: 50vh;
 
     &:not(:active):is(:hover, :focus-visible) {
@@ -93,6 +100,35 @@
       transition: none;
       transform: scale(1.015);
       filter: brightness(0.8);
+    }
+
+    figure {
+      transition: 1s ease-out;
+      transition-property: opacity, mix-blend-mode;
+    }
+
+    &.inactive:not(:active, :hover) {
+      figure {
+        transition-duration: 0.3s;
+        opacity: 0.5;
+        mix-blend-mode: luminosity;
+      }
+
+      .byline {
+        transition-duration: 0.3s;
+        opacity: 0.75;
+        mix-blend-mode: luminosity;
+      }
+    }
+
+    &.active {
+      border-color: var(--accent-color, var(--link-light-color));
+      height: 100%;
+      max-height: 100%;
+
+      + button[disabled] {
+        display: none;
+      }
     }
 
     article {
@@ -187,10 +223,29 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       font-size: 90%;
+
+      &.more-lines {
+        -webkit-line-clamp: 3;
+      }
     }
 
     hr {
       margin: 4px 0;
+    }
+
+    .byline {
+      white-space: nowrap;
+      mask-image: linear-gradient(var(--to-backward), transparent, black 32px);
+
+      a {
+        color: inherit;
+      }
+
+      .avatar {
+        width: 16px !important;
+        height: 16px !important;
+        opacity: 0.8;
+      }
     }
   }
 }

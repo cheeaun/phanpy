@@ -1,6 +1,7 @@
 import './lists.css';
 
-import { Menu, MenuItem } from '@szhsin/react-menu';
+import { t, Trans } from '@lingui/macro';
+import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,12 +11,14 @@ import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
-import Menu2 from '../components/menu2';
 import MenuConfirm from '../components/menu-confirm';
+import MenuLink from '../components/menu-link';
+import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
+import { getList, getLists } from '../utils/lists';
 import states, { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
@@ -61,8 +64,9 @@ function List(props) {
         since_id: latestItem.current,
       });
       let { value } = results;
-      value = filteredItems(value, 'home');
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
+        value = filteredItems(value, 'home');
         return true;
       }
       return false;
@@ -71,13 +75,18 @@ function List(props) {
     }
   }
 
+  const [lists, setLists] = useState([]);
+  useEffect(() => {
+    getLists().then(setLists);
+  }, []);
+
   const [list, setList] = useState({ title: 'List' });
   // const [title, setTitle] = useState(`List`);
   useTitle(list.title, `/l/:id`);
   useEffect(() => {
     (async () => {
       try {
-        const list = await masto.v1.lists.$select(id).fetch();
+        const list = await getList(id);
         setList(list);
         // setTitle(list.title);
       } catch (e) {
@@ -95,8 +104,8 @@ function List(props) {
         key={id}
         title={list.title}
         id="list"
-        emptyText="Nothing yet."
-        errorText="Unable to load posts."
+        emptyText={t`Nothing yet.`}
+        errorText={t`Unable to load posts.`}
         instance={instance}
         fetchItems={fetchList}
         checkForUpdates={checkForUpdates}
@@ -107,9 +116,34 @@ function List(props) {
         showReplyParent
         // refresh={reloadCount}
         headerStart={
-          <Link to="/l" class="button plain">
-            <Icon icon="list" size="l" />
-          </Link>
+          // <Link to="/l" class="button plain">
+          //   <Icon icon="list" size="l" />
+          // </Link>
+          <Menu2
+            overflow="auto"
+            menuButton={
+              <button type="button" class="plain">
+                <Icon icon="list" size="l" alt={t`Lists`} />
+                <Icon icon="chevron-down" size="s" />
+              </button>
+            }
+          >
+            <MenuLink to="/l">
+              <span>
+                <Trans>All Lists</Trans>
+              </span>
+            </MenuLink>
+            {lists?.length > 0 && (
+              <>
+                <MenuDivider />
+                {lists.map((list) => (
+                  <MenuLink key={list.id} to={`/l/${list.id}`}>
+                    <span>{list.title}</span>
+                  </MenuLink>
+                ))}
+              </>
+            )}
+          </Menu2>
         }
         headerEnd={
           <Menu2
@@ -120,7 +154,7 @@ function List(props) {
             position="anchor"
             menuButton={
               <button type="button" class="plain">
-                <Icon icon="more" size="l" />
+                <Icon icon="more" size="l" alt={t`More`} />
               </button>
             }
           >
@@ -132,11 +166,15 @@ function List(props) {
               }
             >
               <Icon icon="pencil" size="l" />
-              <span>Edit</span>
+              <span>
+                <Trans>Edit</Trans>
+              </span>
             </MenuItem>
             <MenuItem onClick={() => setShowManageMembersModal(true)}>
               <Icon icon="group" size="l" />
-              <span>Manage members</span>
+              <span>
+                <Trans>Manage members</Trans>
+              </span>
             </MenuItem>
           </Menu2>
         }
@@ -233,11 +271,13 @@ function ListManageMembers({ listID, onClose }) {
     <div class="sheet" id="list-manage-members-container">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Manage members</h2>
+        <h2>
+          <Trans>Manage members</Trans>
+        </h2>
       </header>
       <main>
         <ul>
@@ -250,7 +290,7 @@ function ListManageMembers({ listID, onClose }) {
           {showMore && uiState === 'default' && (
             <InView as="li" onChange={(inView) => inView && fetchMembers()}>
               <button type="button" class="light block" onClick={fetchMembers}>
-                Show more&hellip;
+                <Trans>Show more…</Trans>
               </button>
             </InView>
           )}
@@ -268,7 +308,14 @@ function RemoveAddButton({ account, listID }) {
   return (
     <MenuConfirm
       confirm={!removed}
-      confirmLabel={<span>Remove @{account.username} from list?</span>}
+      confirmLabel={
+        <span>
+          <Trans>
+            Remove <span class="bidi-isolate">@{account.username}</span> from
+            list?
+          </Trans>
+        </span>
+      }
       align="end"
       menuItemClassName="danger"
       onClick={() => {
@@ -309,7 +356,7 @@ function RemoveAddButton({ account, listID }) {
         class={`light ${removed ? '' : 'danger'}`}
         disabled={uiState === 'loading'}
       >
-        {removed ? 'Add' : 'Remove…'}
+        {removed ? t`Add` : t`Remove…`}
       </button>
     </MenuConfirm>
   );

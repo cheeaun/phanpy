@@ -48,10 +48,10 @@
   a {
     .icon {
       vertical-align: middle;
-      transition: transform 0.2s;
+      transition: margin 0.2s;
     }
     &:hover .icon {
-      transform: translateX(4px);
+      margin-inline-start: 4px;
     }
   }
 }
@@ -101,9 +101,8 @@ ul.link-list.hashtag-list li a {
 }
 .search-popover {
   position: absolute;
-  left: 8px;
+  inset-inline-start: 8px;
   max-width: calc(100% - 16px);
-  /* right: 8px; */
   background-color: var(--bg-color);
   border: 1px solid var(--outline-color);
   box-shadow: 0 4px 24px var(--drop-shadow-color);
@@ -118,7 +117,8 @@ ul.link-list.hashtag-list li a {
 }
 .search-popover-item {
   text-decoration: none;
-  padding: 8px 16px 8px 8px;
+  padding: 8px;
+  padding-inline-end: 16px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -132,10 +132,15 @@ ul.link-list.hashtag-list li a {
 }
 .search-popover-item:is(:focus, .focus) {
   box-shadow: inset 4px 0 0 0 var(--button-bg-color);
+  :dir(rtl) & {
+    box-shadow: inset -4px 0 0 0 var(--button-bg-color);
+  }
 }
 .search-popover-item :is(mark, q) {
   color: var(--text-color);
   background-color: var(--link-bg-color);
+  unicode-bidi: isolate;
+  direction: initial;
 }
 .search-popover-item:is(:hover, :focus, .focus) :is(mark, q) {
   background-color: var(--link-bg-color);

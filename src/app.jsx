@@ -1,7 +1,8 @@
 import './app.css';
 
+import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
-import { lazy, Suspense } from 'preact/compat';
+import { memo } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -10,7 +11,9 @@ import {
   useState,
 } from 'preact/hooks';
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
+
 import 'swiped-events';
+
 import { subscribe } from 'valtio';
 
 import BackgroundService from './components/background-service';
@@ -18,15 +21,17 @@ import ComposeButton from './components/compose-button';
 import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
-// import Modals from './components/modals';
+import Modals from './components/modals';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
+import AnnualReport from './pages/annual-report';
 import Bookmarks from './pages/bookmarks';
-// import Catchup from './pages/catchup';
+import Catchup from './pages/catchup';
 import Favourites from './pages/favourites';
+import Filters from './pages/filters';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
 import Hashtag from './pages/hashtag';
@@ -44,6 +49,8 @@ import Trending from './pages/trending';
 import Welcome from './pages/welcome';
 import {
   api,
+  hasInstance,
+  hasPreferences,
   initAccount,
   initClient,
   initInstance,
@@ -53,11 +60,13 @@ import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
 import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
-import { getCurrentAccount } from './utils/store-utils';
-import './utils/toast-alert';
+import {
+  getAccount,
+  getCurrentAccount,
+  setCurrentAccountID,
+} from './utils/store-utils';
 
-const Catchup = lazy(() => import('./pages/catchup'));
-const Modals = lazy(() => import('./components/modals'));
+import './utils/toast-alert';
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -90,52 +99,57 @@ window.__STATES_STATS__ = () => {
 // Experimental "garbage collection" for states
 // Every 15 minutes
 // Only posts for now
-setInterval(() => {
-  if (!window.__IDLE__) return;
-  const { statuses, unfurledLinks, notifications } = states;
-  let keysCount = 0;
-  const { instance } = api();
-  for (const key in statuses) {
-    if (!window.__IDLE__) break;
-    try {
-      const $post = document.querySelector(
-        `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
-      );
-      const postInNotifications = notifications.some(
-        (n) => key === statusKey(n.status?.id, instance),
-      );
-      if (!$post && !postInNotifications) {
-        delete states.statuses[key];
-        delete states.statusQuotes[key];
-        for (const link in unfurledLinks) {
-          const unfurled = unfurledLinks[link];
-          const sKey = statusKey(unfurled.id, unfurled.instance);
-          if (sKey === key) {
-            delete states.unfurledLinks[link];
-            break;
+setInterval(
+  () => {
+    if (!window.__IDLE__) return;
+    const { statuses, unfurledLinks, notifications } = states;
+    let keysCount = 0;
+    const { instance } = api();
+    for (const key in statuses) {
+      if (!window.__IDLE__) break;
+      try {
+        const $post = document.querySelector(
+          `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
+        );
+        const postInNotifications = notifications.some(
+          (n) => key === statusKey(n.status?.id, instance),
+        );
+        if (!$post && !postInNotifications) {
+          delete states.statuses[key];
+          delete states.statusQuotes[key];
+          for (const link in unfurledLinks) {
+            const unfurled = unfurledLinks[link];
+            const sKey = statusKey(unfurled.id, unfurled.instance);
+            if (sKey === key) {
+              delete states.unfurledLinks[link];
+              break;
+            }
           }
+          keysCount++;
         }
-        keysCount++;
-      }
-    } catch (e) {}
-  }
-  if (keysCount) {
-    console.info(`GC: Removed ${keysCount} keys`);
-  }
-}, 15 * 60 * 1000);
+      } catch (e) {}
+    }
+    if (keysCount) {
+      console.info(`GC: Removed ${keysCount} keys`);
+    }
+  },
+  15 * 60 * 1000,
+);
 
 // Preload icons
 // There's probably a better way to do this
 // Related: https://github.com/vitejs/vite/issues/10600
 setTimeout(() => {
   for (const icon in ICONS) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       if (Array.isArray(ICONS[icon])) {
         ICONS[icon][0]?.();
+      } else if (typeof ICONS[icon] === 'object') {
+        ICONS[icon].module?.();
       } else {
         ICONS[icon]?.();
       }
-    });
+    }, 1);
   }
 }, 5000);
 
@@ -200,6 +214,12 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 if (isIOS) {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
+      // Don't reset theme color if media modal is showing
+      // Media modal will set its own theme color based on the media's color
+      const showingMediaModal =
+        document.getElementsByClassName('media-modal-container').length > 0;
+      if (showingMediaModal) return;
+
       const theme = store.local.get('theme');
       let $meta;
       if (theme) {
@@ -294,9 +314,36 @@ subscribe(states, (changes) => {
   }
 });
 
+const BENCHES = new Map();
+window.__BENCH_RESULTS = new Map();
+window.__BENCHMARK = {
+  start(name) {
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
+    // If already started, ignore
+    if (BENCHES.has(name)) return;
+    const start = performance.now();
+    BENCHES.set(name, start);
+  },
+  end(name) {
+    if (!import.meta.env.DEV && !import.meta.env.PHANPY_DEV) return;
+    const start = BENCHES.get(name);
+    if (start) {
+      const end = performance.now();
+      const duration = end - start;
+      __BENCH_RESULTS.set(name, duration);
+      BENCHES.delete(name);
+    }
+  },
+};
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
+  __BENCHMARK.start('app-init');
+  __BENCHMARK.start('time-to-following');
+  __BENCHMARK.start('time-to-home');
+  __BENCHMARK.start('time-to-isLoggedIn');
+  useLingui();
 
   useEffect(() => {
     const instanceURL = store.local.get('instanceURL');
@@ -313,9 +360,10 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.session.get('clientID');
-      const clientSecret = store.session.get('clientSecret');
-      const vapidKey = store.session.get('vapidKey');
+      const clientID = store.sessionCookie.get('clientID');
+      const clientSecret = store.sessionCookie.get('clientSecret');
+      const vapidKey = store.sessionCookie.get('vapidKey');
+      const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {
         setUIState('loading');
@@ -324,43 +372,83 @@ function App() {
           client_id: clientID,
           client_secret: clientSecret,
           code,
+          code_verifier: verifier || undefined,
         });
 
-        const client = initClient({ instance: instanceURL, accessToken });
-        await Promise.allSettled([
-          initInstance(client, instanceURL),
-          initAccount(client, instanceURL, accessToken, vapidKey),
-        ]);
-        initStates();
-        initPreferences(client);
+        if (accessToken) {
+          const client = initClient({ instance: instanceURL, accessToken });
+          await Promise.allSettled([
+            initPreferences(client),
+            initInstance(client, instanceURL),
+            initAccount(client, instanceURL, accessToken, vapidKey),
+          ]);
+          initStates();
+          window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
 
-        setIsLoggedIn(true);
-        setUIState('default');
+          setIsLoggedIn(true);
+          setUIState('default');
+        } else {
+          setUIState('error');
+        }
+        __BENCHMARK.end('app-init');
       })();
     } else {
       window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
-      const account = getCurrentAccount();
+      const searchAccount = decodeURIComponent(
+        (window.location.search.match(/account=([^&]+)/) || [, ''])[1],
+      );
+      let account;
+      if (searchAccount) {
+        account = getAccount(searchAccount);
+        console.log('searchAccount', searchAccount, account);
+        if (account) {
+          setCurrentAccountID(account.info.id);
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname || '/',
+          );
+        }
+      }
+      if (!account) {
+        account = getCurrentAccount();
+      }
       if (account) {
-        store.session.set('currentAccount', account.info.id);
+        setCurrentAccountID(account.info.id);
         const { client } = api({ account });
         const { instance } = client;
         // console.log('masto', masto);
         initStates();
-        initPreferences(client);
         setUIState('loading');
         (async () => {
           try {
-            await initInstance(client, instance);
+            if (hasPreferences() && hasInstance(instance)) {
+              // Non-blocking
+              initPreferences(client);
+              initInstance(client, instance);
+            } else {
+              await Promise.allSettled([
+                initPreferences(client),
+                initInstance(client, instance),
+              ]);
+            }
           } catch (e) {
           } finally {
             setIsLoggedIn(true);
             setUIState('default');
+            __BENCHMARK.end('app-init');
           }
         })();
       } else {
         setUIState('default');
+        __BENCHMARK.end('app-init');
       }
     }
+
+    // Cleanup
+    store.sessionCookie.del('clientID');
+    store.sessionCookie.del('clientSecret');
+    store.sessionCookie.del('codeVerifier');
   }, []);
 
   let location = useLocation();
@@ -375,29 +463,36 @@ function App() {
     return <HttpRoute />;
   }
 
+  if (uiState === 'loading') {
+    return <Loader id="loader-root" />;
+  }
+
   return (
     <>
-      <PrimaryRoutes isLoggedIn={isLoggedIn} loading={uiState === 'loading'} />
+      <PrimaryRoutes isLoggedIn={isLoggedIn} />
       <SecondaryRoutes isLoggedIn={isLoggedIn} />
-      {uiState === 'default' && (
-        <Routes>
-          <Route path="/:instance?/s/:id" element={<StatusRoute />} />
-        </Routes>
-      )}
+      <Routes>
+        <Route path="/:instance?/s/:id" element={<StatusRoute />} />
+      </Routes>
       {isLoggedIn && <ComposeButton />}
       {isLoggedIn && <Shortcuts />}
-      <Suspense>
-        <Modals />
-      </Suspense>
+      <Modals />
       {isLoggedIn && <NotificationService />}
       <BackgroundService isLoggedIn={isLoggedIn} />
-      {uiState !== 'loading' && <SearchCommand onClose={focusDeck} />}
+      <SearchCommand onClose={focusDeck} />
       <KeyboardShortcutsHelp />
     </>
   );
 }
 
-function PrimaryRoutes({ isLoggedIn, loading }) {
+function Root({ isLoggedIn }) {
+  if (isLoggedIn) {
+    __BENCHMARK.end('time-to-isLoggedIn');
+  }
+  return isLoggedIn ? <Home /> : <Welcome />;
+}
+
+const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
@@ -406,23 +501,12 @@ function PrimaryRoutes({ isLoggedIn, loading }) {
 
   return (
     <Routes location={nonRootLocation || location}>
-      <Route
-        path="/"
-        element={
-          isLoggedIn ? (
-            <Home />
-          ) : loading ? (
-            <Loader id="loader-root" />
-          ) : (
-            <Welcome />
-          )
-        }
-      />
+      <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
     </Routes>
   );
-}
+});
 
 function getPrevLocation() {
   return states.prevLocation || null;
@@ -463,15 +547,10 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route index element={<Lists />} />
             <Route path=":id" element={<List />} />
           </Route>
-          <Route path="/ft" element={<FollowedHashtags />} />
-          <Route
-            path="/catchup"
-            element={
-              <Suspense>
-                <Catchup />
-              </Suspense>
-            }
-          />
+          <Route path="/fh" element={<FollowedHashtags />} />
+          <Route path="/ft" element={<Filters />} />
+          <Route path="/catchup" element={<Catchup />} />
+          <Route path="/annual_report/:year" element={<AnnualReport />} />
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

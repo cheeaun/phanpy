@@ -1,0 +1,32 @@
+name: Update Catalogs
+
+on:
+  push:
+    branches:
+      - l10n_main
+  workflow_dispatch:
+
+jobs:
+  update-catalogs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: l10n_main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Update catalogs.json
+        run: |
+          node scripts/catalogs.js
+          if git diff --quiet src/data/catalogs.json; then
+            echo "No changes to catalogs.json"
+          else
+            echo "Changes to catalogs.json"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add src/data/catalogs.json
+            git commit -m "Update catalogs.json"
+            git push origin HEAD:l10n_main || true
+          fi

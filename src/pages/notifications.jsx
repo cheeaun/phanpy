@@ -1,8 +1,16 @@
 import './notifications.css';
 
+import { msg, Plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
@@ -14,22 +22,31 @@ import FollowRequestButtons from '../components/follow-request-buttons';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
 import Notification from '../components/notification';
+import Status from '../components/status';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
-import groupNotifications from '../utils/group-notifications';
+import groupNotifications, {
+  groupNotifications2,
+  massageNotifications2,
+} from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
 import shortenNumber from '../utils/shorten-number';
+import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentInstance } from '../utils/store-utils';
+import supports from '../utils/supports';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
-const LIMIT = 30; // 30 is the maximum limit :(
+const NOTIFICATIONS_LIMIT = 80;
+const NOTIFICATIONS_GROUPED_LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
@@ -38,8 +55,61 @@ const scrollIntoViewOptions = {
   behavior: 'smooth',
 };
 
+const memSupportsGroupedNotifications = mem(
+  () => supports('@mastodon/grouped-notifications'),
+  {
+    maxAge: 1000 * 60 * 5, // 5 minutes
+  },
+);
+
+export function mastoFetchNotifications(opts = {}) {
+  const { masto } = api();
+  if (
+    states.settings.groupedNotificationsAlpha &&
+    memSupportsGroupedNotifications()
+  ) {
+    // https://github.com/mastodon/mastodon/pull/29889
+    return masto.v2.notifications.list({
+      limit: NOTIFICATIONS_GROUPED_LIMIT,
+      ...opts,
+    });
+  } else {
+    return masto.v1.notifications.list({
+      limit: NOTIFICATIONS_LIMIT,
+      ...opts,
+    });
+  }
+}
+
+export function getGroupedNotifications(notifications) {
+  if (
+    states.settings.groupedNotificationsAlpha &&
+    memSupportsGroupedNotifications()
+  ) {
+    return groupNotifications2(notifications);
+  } else {
+    return groupNotifications(notifications);
+  }
+}
+
+const NOTIFICATIONS_POLICIES = [
+  'forNotFollowing',
+  'forNotFollowers',
+  'forNewAccounts',
+  'forPrivateMentions',
+  'forLimitedAccounts',
+];
+const NOTIFICATIONS_POLICIES_TEXT = {
+  forNotFollowing: msg`You don't follow`,
+  forNotFollowers: msg`Who don't follow you`,
+  forNewAccounts: msg`With a new account`,
+  forPrivateMentions: msg`Who unsolicitedly private mention you`,
+  forLimitedAccounts: msg`Who are limited by server moderators`,
+};
+
 function Notifications({ columnMode }) {
-  useTitle('Notifications', '/notifications');
+  const { _ } = useLingui();
+  useTitle(t`Notifications`, '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
@@ -63,13 +133,19 @@ function Notifications({ columnMode }) {
   async function fetchNotifications(firstLoad) {
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
-      notificationsIterator.current = masto.v1.notifications.list({
-        limit: LIMIT,
+      notificationsIterator.current = mastoFetchNotifications({
         excludeTypes: ['follow_request'],
       });
     }
+    if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
+      // Pixelfed returns next paginationed link with empty max_id
+      // I assume, it's done (end of list)
+      return {
+        done: true,
+      };
+    }
     const allNotifications = await notificationsIterator.current.next();
-    const notifications = allNotifications.value;
+    const notifications = massageNotifications2(allNotifications.value);
 
     if (notifications?.length) {
       notifications.forEach((notification) => {
@@ -78,17 +154,43 @@ function Notifications({ columnMode }) {
         });
       });
 
-      const groupedNotifications = groupNotifications(notifications);
+      // TEST: Slot in a fake notification to test 'severed_relationships'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'severed_relationships',
+      //   createdAt: '2024-03-22T19:20:08.316Z',
+      //   event: {
+      //     type: 'account_suspension',
+      //     targetName: 'mastodon.dev',
+      //     followersCount: 0,
+      //     followingCount: 0,
+      //   },
+      // });
+
+      // TEST: Slot in a fake notification to test 'moderation_warning'
+      // notifications.unshift({
+      //   id: '123123',
+      //   type: 'moderation_warning',
+      //   createdAt: new Date().toISOString(),
+      //   moderation_warning: {
+      //     id: '1231234',
+      //     action: 'mark_statuses_as_sensitive',
+      //   },
+      // });
+
+      // console.log({ notifications });
+
+      const groupedNotifications = getGroupedNotifications(notifications);
 
       if (firstLoad) {
-        states.notificationsLast = notifications[0];
+        states.notificationsLast = groupedNotifications[0];
         states.notifications = groupedNotifications;
 
         // Update last read marker
         masto.v1.markers
           .create({
             notifications: {
-              lastReadId: notifications[0].id,
+              lastReadId: groupedNotifications[0].id,
             },
           })
           .catch(() => {});
@@ -136,6 +238,28 @@ function Notifications({ columnMode }) {
     }
   }
 
+  const supportsFilteredNotifications = supports(
+    '@mastodon/filtered-notifications',
+  );
+  const [showNotificationsSettings, setShowNotificationsSettings] =
+    useState(false);
+  const [notificationsPolicy, setNotificationsPolicy] = useState({});
+  function fetchNotificationsPolicy() {
+    return masto.v2.notifications.policy.fetch().catch(() => {});
+  }
+  function loadNotificationsPolicy() {
+    fetchNotificationsPolicy()
+      .then((policy) => {
+        console.log('✨ Notifications policy', policy);
+        setNotificationsPolicy(policy);
+      })
+      .catch(() => {});
+  }
+  const [notificationsRequests, setNotificationsRequests] = useState(null);
+  function fetchNotificationsRequest() {
+    return masto.v1.notifications.requests.list();
+  }
+
   const loadNotifications = (firstLoad) => {
     setShowNew(false);
     setUIState('loading');
@@ -161,6 +285,10 @@ function Notifications({ columnMode }) {
               setFollowRequests(requests);
             })
             .catch(() => {});
+
+          if (supportsFilteredNotifications) {
+            loadNotificationsPolicy();
+          }
         }
 
         const { done } = await fetchNotificationsPromise;
@@ -168,6 +296,7 @@ function Notifications({ columnMode }) {
 
         setUIState('default');
       } catch (e) {
+        console.error(e);
         setUIState('error');
       }
     })();
@@ -216,7 +345,6 @@ function Notifications({ columnMode }) {
 
   const lastHiddenTime = useRef();
   usePageVisibility((visible) => {
-    let unsub;
     if (visible) {
       const timeDiff = Date.now() - lastHiddenTime.current;
       if (!lastHiddenTime.current || timeDiff > 1000 * 3) {
@@ -227,20 +355,21 @@ function Notifications({ columnMode }) {
       } else {
         lastHiddenTime.current = Date.now();
       }
-      unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
-        if (uiState === 'loading') {
-          return;
-        }
-        if (v) {
-          loadUpdates();
-        }
-        setShowNew(v);
-      });
     }
-    return () => {
-      unsub?.();
-    };
   });
+  const firstLoad = useRef(true);
+  useEffect(() => {
+    let unsub = subscribeKey(states, 'notificationsShowNew', (v) => {
+      if (firstLoad.current) {
+        firstLoad.current = false;
+        return;
+      }
+      if (uiState === 'loading') return;
+      if (v) loadUpdates();
+      setShowNew(v);
+    });
+    return () => unsub?.();
+  }, []);
 
   const todayDate = new Date();
   const yesterdayDate = new Date(todayDate - 24 * 60 * 60 * 1000);
@@ -348,15 +477,24 @@ function Notifications({ columnMode }) {
     }
   });
 
+  const today = new Date();
+  const todaySubHeading = useMemo(() => {
+    return niceDateTime(today, {
+      forceOpts: {
+        weekday: 'long',
+      },
+    });
+  }, [today]);
+
   return (
     <div
       id="notifications-page"
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        oRef.current = node;
+        jRef(node);
+        kRef(node);
+        oRef(node);
       }}
       tabIndex="-1"
     >
@@ -379,12 +517,28 @@ function Notifications({ columnMode }) {
             <div class="header-side">
               <NavMenu />
               <Link to="/" class="button plain">
-                <Icon icon="home" size="l" alt="Home" />
+                <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>
-            <h1>Notifications</h1>
+            <h1>
+              <Trans>Notifications</Trans>
+            </h1>
             <div class="header-side">
-              {/* <Loader hidden={uiState !== 'loading'} /> */}
+              {supportsFilteredNotifications && (
+                <button
+                  type="button"
+                  class="button plain4"
+                  onClick={() => {
+                    setShowNotificationsSettings(true);
+                  }}
+                >
+                  <Icon
+                    icon="settings"
+                    size="l"
+                    alt={t`Notifications settings`}
+                  />
+                </button>
+              )}
             </div>
           </div>
           {showNew && uiState !== 'loading' && (
@@ -399,7 +553,7 @@ function Notifications({ columnMode }) {
                 });
               }}
             >
-              <Icon icon="arrow-up" /> New notifications
+              <Icon icon="arrow-up" /> <Trans>New notifications</Trans>
             </button>
           )}
         </header>
@@ -410,7 +564,11 @@ function Notifications({ columnMode }) {
                 <summary>
                   <span>
                     <Icon icon="announce" class="announcement-icon" size="l" />{' '}
-                    <b>Announcement{announcements.length > 1 ? 's' : ''}</b>{' '}
+                    <Plural
+                      value={announcements.length}
+                      one="Announcement"
+                      other="Announcements"
+                    />{' '}
                     <small class="insignificant">{instance}</small>
                   </span>
                   {announcements.length > 1 && (
@@ -452,10 +610,18 @@ function Notifications({ columnMode }) {
         )}
         {followRequests.length > 0 && (
           <div class="follow-requests">
-            <h2 class="timeline-header">Follow requests</h2>
+            <h2 class="timeline-header">
+              <Trans>Follow requests</Trans>
+            </h2>
             {followRequests.length > 5 ? (
               <details>
-                <summary>{followRequests.length} follow requests</summary>
+                <summary>
+                  <Plural
+                    value={followRequests.length}
+                    one="# follow request"
+                    other="# follow requests"
+                  />
+                </summary>
                 <ul>
                   {followRequests.map((account) => (
                     <li key={account.id}>
@@ -489,6 +655,79 @@ function Notifications({ columnMode }) {
             )}
           </div>
         )}
+        {supportsFilteredNotifications &&
+          notificationsPolicy?.summary?.pendingRequestsCount > 0 && (
+            <div class="shazam-container">
+              <div class="shazam-container-inner">
+                <div class="filtered-notifications">
+                  <details
+                    onToggle={async (e) => {
+                      const { open } = e.target;
+                      if (open) {
+                        const requests = await fetchNotificationsRequest();
+                        setNotificationsRequests(requests);
+                        console.log({ open, requests });
+                      }
+                    }}
+                  >
+                    <summary>
+                      <Plural
+                        value={notificationsPolicy.summary.pendingRequestsCount}
+                        one="Filtered notifications from # person"
+                        other="Filtered notifications from # people"
+                      />
+                    </summary>
+                    {!notificationsRequests ? (
+                      <p class="ui-state">
+                        <Loader abrupt />
+                      </p>
+                    ) : (
+                      notificationsRequests?.length > 0 && (
+                        <ul>
+                          {notificationsRequests.map((request) => (
+                            <li key={request.id}>
+                              <div class="request-notifcations">
+                                {!request.lastStatus?.id && (
+                                  <AccountBlock
+                                    useAvatarStatic
+                                    showStats
+                                    account={request.account}
+                                  />
+                                )}
+                                {request.lastStatus?.id && (
+                                  <div class="last-post">
+                                    <Link
+                                      class="status-link"
+                                      to={`/${instance}/s/${request.lastStatus.id}`}
+                                    >
+                                      <Status
+                                        status={request.lastStatus}
+                                        size="s"
+                                        readOnly
+                                      />
+                                    </Link>
+                                  </div>
+                                )}
+                                <NotificationRequestModalButton
+                                  request={request}
+                                />
+                              </div>
+                              <NotificationRequestButtons
+                                request={request}
+                                onChange={() => {
+                                  loadNotifications(true);
+                                }}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      )
+                    )}
+                  </details>
+                </div>
+              </div>
+            </div>
+          )}
         <div id="mentions-option">
           <label>
             <input
@@ -498,13 +737,16 @@ function Notifications({ columnMode }) {
                 setOnlyMentions(e.target.checked);
               }}
             />{' '}
-            Only mentions
+            <Trans>Only mentions</Trans>
           </label>
         </div>
-        <h2 class="timeline-header">Today</h2>
-        {showTodayEmpty && !!snapStates.notifications.length && (
+        <h2 class="timeline-header">
+          <Trans>Today</Trans>{' '}
+          <small class="insignificant bidi-isolate">{todaySubHeading}</small>
+        </h2>
+        {showTodayEmpty && (
           <p class="ui-state insignificant">
-            {uiState === 'default' ? "You're all caught up." : <>&hellip;</>}
+            {uiState === 'default' ? t`You're all caught up.` : <>&hellip;</>}
           </p>
         )}
         {snapStates.notifications.length ? (
@@ -527,17 +769,29 @@ function Notifications({ columnMode }) {
                 const heading =
                   notificationDay.toDateString() ===
                   yesterdayDate.toDateString()
-                    ? 'Yesterday'
+                    ? t`Yesterday`
                     : niceDateTime(currentDay, {
                         hideTime: true,
                       });
+                const subHeading = niceDateTime(currentDay, {
+                  forceOpts: {
+                    weekday: 'long',
+                  },
+                });
                 return (
-                  <Fragment key={notification.id}>
-                    {differentDay && <h2 class="timeline-header">{heading}</h2>}
+                  <Fragment key={notification._ids || notification.id}>
+                    {differentDay && (
+                      <h2 class="timeline-header">
+                        <span>{heading}</span>{' '}
+                        <small class="insignificant bidi-isolate">
+                          {subHeading}
+                        </small>
+                      </h2>
+                    )}
                     <Notification
                       instance={instance}
                       notification={notification}
-                      key={notification.id}
+                      key={notification._ids || notification.id}
                     />
                   </Fragment>
                 );
@@ -563,11 +817,11 @@ function Notifications({ columnMode }) {
             )}
             {uiState === 'error' && (
               <p class="ui-state">
-                Unable to load notifications
+                <Trans>Unable to load notifications</Trans>
                 <br />
                 <br />
                 <button type="button" onClick={() => loadNotifications(true)}>
-                  Try again
+                  <Trans>Try again</Trans>
                 </button>
               </p>
             )}
@@ -591,12 +845,100 @@ function Notifications({ columnMode }) {
               {uiState === 'loading' ? (
                 <Loader abrupt />
               ) : (
-                <>Show more&hellip;</>
+                <Trans>Show more…</Trans>
               )}
             </button>
           </InView>
         )}
       </div>
+      {supportsFilteredNotifications && showNotificationsSettings && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowNotificationsSettings(false);
+            }
+          }}
+        >
+          <div class="sheet" id="notifications-settings" tabIndex="-1">
+            <button
+              type="button"
+              class="sheet-close"
+              onClick={() => setShowNotificationsSettings(false)}
+            >
+              <Icon icon="x" alt={t`Close`} />
+            </button>
+            <header>
+              <h2>
+                <Trans>Notifications settings</Trans>
+              </h2>
+            </header>
+            <main>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const {
+                    forNotFollowing,
+                    forNotFollowers,
+                    forNewAccounts,
+                    forPrivateMentions,
+                    forLimitedAccounts,
+                  } = e.target;
+                  const newPolicy = {
+                    ...notificationsPolicy,
+                    forNotFollowing: forNotFollowing.value,
+                    forNotFollowers: forNotFollowers.value,
+                    forNewAccounts: forNewAccounts.value,
+                    forPrivateMentions: forPrivateMentions.value,
+                    forLimitedAccounts: forLimitedAccounts.value,
+                  };
+                  setNotificationsPolicy(newPolicy);
+                  setShowNotificationsSettings(false);
+                  (async () => {
+                    try {
+                      await masto.v2.notifications.policy.update(newPolicy);
+                      showToast(t`Notifications settings updated`);
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  })();
+                }}
+              >
+                <p>
+                  <Trans>Filter out notifications from people:</Trans>
+                </p>
+                <div class="notification-policy-fields">
+                  {NOTIFICATIONS_POLICIES.map((key) => {
+                    const value = notificationsPolicy[key];
+                    return (
+                      <div key={key}>
+                        <label>
+                          {_(NOTIFICATIONS_POLICIES_TEXT[key])}
+                          <select name={key} defaultValue={value} class="small">
+                            <option value="accept">
+                              <Trans>Accept</Trans>
+                            </option>
+                            <option value="filter">
+                              <Trans>Filter</Trans>
+                            </option>
+                            <option value="drop">
+                              <Trans>Ignore</Trans>
+                            </option>
+                          </select>
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p>
+                  <button type="submit">
+                    <Trans>Save</Trans>
+                  </button>
+                </p>
+              </form>
+            </main>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
@@ -652,10 +994,12 @@ function AnnouncementBlock({ announcement }) {
             {' '}
             &bull;{' '}
             <span class="ib">
-              Updated{' '}
-              <time datetime={updatedAtDate.toISOString()}>
-                {niceDateTime(updatedAtDate)}
-              </time>
+              <Trans>
+                Updated{' '}
+                <time datetime={updatedAtDate.toISOString()}>
+                  {niceDateTime(updatedAtDate)}
+                </time>
+              </Trans>
             </span>
           </>
         )}
@@ -676,6 +1020,198 @@ function AnnouncementBlock({ announcement }) {
         })}
       </div>
     </div>
+  );
+}
+
+function fetchNotficationsByAccount(accountID) {
+  const { masto } = api();
+  return masto.v1.notifications.list({
+    accountID,
+  });
+}
+function NotificationRequestModalButton({ request }) {
+  const { instance } = api();
+  const [uiState, setUIState] = useState('loading');
+  const { account, lastStatus } = request;
+  const [showModal, setShowModal] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  function onClose() {
+    setShowModal(false);
+  }
+
+  useEffect(() => {
+    if (!request?.account?.id) return;
+    if (!showModal) return;
+    setUIState('loading');
+    (async () => {
+      const notifs = await fetchNotficationsByAccount(request.account.id);
+      setNotifications(notifs || []);
+      setUIState('default');
+    })();
+  }, [showModal, request?.account?.id]);
+
+  return (
+    <>
+      <button
+        type="button"
+        class="plain4 request-notifications-account"
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        <Icon icon="notification" class="more-insignificant" />{' '}
+        <small>
+          <Trans>
+            View notifications from{' '}
+            <span class="bidi-isolate">@{account.username}</span>
+          </Trans>
+        </small>{' '}
+        <Icon icon="chevron-down" />
+      </button>
+      {showModal && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              onClose();
+            }
+          }}
+        >
+          <div class="sheet" tabIndex="-1">
+            <button type="button" class="sheet-close" onClick={onClose}>
+              <Icon icon="x" alt={t`Close`} />
+            </button>
+            <header>
+              <b>
+                <Trans>
+                  Notifications from{' '}
+                  <span class="bidi-isolate">@{account.username}</span>
+                </Trans>
+              </b>
+            </header>
+            <main>
+              {uiState === 'loading' ? (
+                <p class="ui-state">
+                  <Loader abrupt />
+                </p>
+              ) : (
+                notifications.map((notification) => (
+                  <div
+                    class="notification-peek"
+                    onClick={(e) => {
+                      const { target } = e;
+                      // If button or links
+                      if (
+                        e.target.tagName === 'BUTTON' ||
+                        e.target.tagName === 'A'
+                      ) {
+                        onClose();
+                      }
+                    }}
+                  >
+                    <Notification
+                      instance={instance}
+                      notification={notification}
+                      isStatic
+                    />
+                  </div>
+                ))
+              )}
+            </main>
+          </div>
+        </Modal>
+      )}
+    </>
+  );
+}
+
+function NotificationRequestButtons({ request, onChange }) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('default');
+  const [requestState, setRequestState] = useState(null); // accept, dismiss
+  const hasRequestState = requestState !== null;
+
+  return (
+    <p class="notification-request-buttons">
+      <button
+        type="button"
+        disabled={uiState === 'loading' || hasRequestState}
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.notifications.requests
+                .$select(request.id)
+                .accept();
+              setRequestState('accept');
+              setUIState('default');
+              onChange({
+                request,
+                state: 'accept',
+              });
+              showToast(
+                t`Notifications from @${request.account.username} will not be filtered from now on.`,
+              );
+            } catch (error) {
+              setUIState('error');
+              console.error(error);
+              showToast(t`Unable to accept notification request`);
+            }
+          })();
+        }}
+      >
+        <Trans>Allow</Trans>
+      </button>{' '}
+      <button
+        type="button"
+        disabled={uiState === 'loading' || hasRequestState}
+        class="light danger"
+        onClick={() => {
+          setUIState('loading');
+          (async () => {
+            try {
+              await masto.v1.notifications.requests
+                .$select(request.id)
+                .dismiss();
+              setRequestState('dismiss');
+              setUIState('default');
+              onChange({
+                request,
+                state: 'dismiss',
+              });
+              showToast(
+                t`Notifications from @${request.account.username} will not show up in Filtered notifications from now on.`,
+              );
+            } catch (error) {
+              setUIState('error');
+              console.error(error);
+              showToast(t`Unable to dismiss notification request`);
+            }
+          })();
+        }}
+      >
+        <Trans>Dismiss</Trans>
+      </button>
+      <span class="notification-request-states">
+        {uiState === 'loading' ? (
+          <Loader abrupt />
+        ) : requestState === 'accept' ? (
+          <Icon
+            icon="check-circle"
+            alt={t`Accepted`}
+            class="notification-accepted"
+          />
+        ) : (
+          requestState === 'dismiss' && (
+            <Icon
+              icon="x-circle"
+              alt={t`Dismissed`}
+              class="notification-dismissed"
+            />
+          )
+        )}
+      </span>
+    </p>
   );
 }
 

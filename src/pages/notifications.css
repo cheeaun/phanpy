@@ -1,3 +1,44 @@
+#notifications-page {
+  .notification {
+    content-visibility: auto;
+  }
+
+  .timeline-header {
+    position: sticky;
+    --mask-padding: 8px;
+    top: calc(48px - var(--mask-padding));
+    transition: top 0.5s ease-in-out;
+    header[hidden] ~ & {
+      top: calc(-1 * var(--mask-padding));
+    }
+    z-index: 1;
+    background-color: inherit;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--mask-padding) calc(100% - var(--mask-padding) * 2),
+      transparent
+    );
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-faded-color);
+    }
+    padding-block: 16px;
+    margin: 0;
+    opacity: 1;
+
+    #columns & {
+      position: static;
+      background-color: inherit;
+    }
+
+    small {
+      font-weight: normal;
+      font-size: var(--text-size);
+    }
+  }
+}
+
 .notification {
   display: flex;
   padding: 16px !important;
@@ -10,8 +51,8 @@
     cursor: pointer;
   }
 }
-.notification.notification-mention {
-  margin-top: 16px;
+.notification-type.notification-mention {
+  padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),
 .only-mentions .timeline-empty {
@@ -139,7 +180,6 @@
   max-height: 320px;
   filter: none;
   background-color: var(--bg-color);
-  margin-top: calc(-16px - 1px);
   border-color: var(--reply-to-color);
   box-shadow: 0 0 0 3px var(--reply-to-faded-color);
 }
@@ -185,7 +225,7 @@
 .notification-group-statuses > li:before {
   content: counter(index);
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   font-size: 10px;
   padding: 8px;
   font-weight: bold;
@@ -194,16 +234,21 @@
   margin-top: -1px;
 }
 .notification-group-statuses > li:not(:last-child) .status-link {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
 }
 .notification-group-statuses > li:not(:first-child) .status-link {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
 }
 
 #mentions-option {
+  position: relative;
+  z-index: 2;
   float: right;
+  &:dir(rtl) {
+    float: left;
+  }
   margin-top: 0.5em;
 }
 #mentions-option label {
@@ -388,7 +433,7 @@
   width: calc(100% - 16px);
 }
 .announcements > ul > li:last-child {
-  border-right: none;
+  border-inline-end: none;
 }
 .announcements .announcement-block {
   padding: 16px;
@@ -420,4 +465,168 @@
 .announcements .announcement-reactions button.reacted {
   color: var(--text-color);
   background-color: var(--link-faded-color);
+}
+
+/* FILTERED NOTIFICATIONS */
+
+.filtered-notifications {
+  padding-block-end: 16px;
+
+  summary {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    user-select: none;
+    margin: 16px 0 0;
+    color: var(--text-insignificant-color);
+
+    &::marker,
+    &::-webkit-details-marker {
+      color: var(--text-insignificant-color);
+    }
+  }
+  details[open] summary {
+    color: var(--text-color);
+  }
+
+  summary + ul {
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 50vh;
+    max-height: 50dvh;
+    overflow: auto;
+    border-top: 1px solid var(--outline-color);
+    border-bottom: 1px solid var(--outline-color);
+    background-color: var(--bg-faded-color);
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-color);
+      border-radius: 16px;
+      border-width: 0;
+    }
+
+    li {
+      display: flex;
+      padding: 16px;
+      row-gap: 8px;
+      column-gap: 16px;
+      border-bottom: 1px solid var(--outline-color);
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .request-notifcations {
+      min-width: 0;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+
+      .last-post {
+        max-width: 100%;
+
+        > .status-link {
+          border-radius: 8px;
+          overflow: hidden;
+          --max-height: 160px;
+          max-height: var(--max-height);
+          border: 1px solid var(--outline-color);
+
+          &:is(:hover, :focus-visible) {
+            border-color: var(--outline-hover-color);
+          }
+
+          .status {
+            mask-image: linear-gradient(
+              to bottom,
+              black calc(var(--max-height) / 2),
+              transparent calc(var(--max-height) - 8px)
+            );
+            font-size: calc(var(--text-size) * 0.9);
+
+            .content-container {
+              pointer-events: none;
+              filter: saturate(0.5);
+            }
+          }
+        }
+      }
+
+      .request-notifications-account {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        small {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+    }
+
+    .notification-request-buttons {
+      grid-area: buttons;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      button {
+        max-width: 30vw;
+      }
+
+      .notification-request-states {
+        min-height: 32px;
+        text-align: center;
+        vertical-align: middle;
+
+        .icon {
+          margin-inline: 8px;
+
+          &.notification-accepted {
+            color: var(--green-color);
+          }
+
+          &.notification-dismissed {
+            color: var(--red-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+#notifications-settings {
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+
+    input[type='checkbox'] {
+      flex-shrink: 0;
+    }
+  }
+
+  .notification-policy-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    select:has(option[value='accept']:checked) {
+      box-shadow: 0 0 0 2px var(--green-color);
+    }
+    select:has(option[value='filter']:checked) {
+      box-shadow: 0 0 0 2px var(--orange-color);
+    }
+    select:has(option[value='drop']:checked) {
+      box-shadow: 0 0 0 2px var(--red-color);
+    }
+  }
 }

@@ -1,6 +1,8 @@
 import './account-info.css';
 
-import { Menu, MenuDivider, MenuItem, SubMenu } from '@szhsin/react-menu';
+import { msg, plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
   useEffect,
@@ -9,18 +11,23 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
+import i18nDuration from '../utils/i18n-duration';
+import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
+import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import states, { hideAllModals } from '../utils/states';
 import store from '../utils/store';
-import { updateAccount } from '../utils/store-utils';
+import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
+import supports from '../utils/supports';
 
 import AccountBlock from './account-block';
 import Avatar from './avatar';
@@ -29,9 +36,11 @@ import Icon from './icon';
 import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
-import Menu2 from './menu2';
 import MenuConfirm from './menu-confirm';
+import MenuLink from './menu-link';
+import Menu2 from './menu2';
 import Modal from './modal';
+import SubMenu2 from './submenu2';
 import TranslationBlock from './translation-block';
 
 const MUTE_DURATIONS = [
@@ -42,17 +51,19 @@ const MUTE_DURATIONS = [
   60 * 60 * 24, // 1 day
   60 * 60 * 24 * 3, // 3 days
   60 * 60 * 24 * 7, // 1 week
+  60 * 60 * 24 * 30, // 30 days
   0, // forever
 ];
 const MUTE_DURATIONS_LABELS = {
-  0: 'Forever',
-  300: '5 minutes',
-  1_800: '30 minutes',
-  3_600: '1 hour',
-  21_600: '6 hours',
-  86_400: '1 day',
-  259_200: '3 days',
-  604_800: '1 week',
+  0: msg`Forever`,
+  300: i18nDuration(5, 'minute'),
+  1_800: i18nDuration(30, 'minute'),
+  3_600: i18nDuration(1, 'hour'),
+  21_600: i18nDuration(6, 'hour'),
+  86_400: i18nDuration(1, 'day'),
+  259_200: i18nDuration(3, 'day'),
+  604_800: i18nDuration(1, 'week'),
+  2592_000: i18nDuration(30, 'day'),
 };
 
 const LIMIT = 80;
@@ -124,6 +135,7 @@ function AccountInfo({
   instance,
   authenticated,
 }) {
+  const { i18n } = useLingui();
   const { masto } = api({
     instance,
   });
@@ -181,6 +193,7 @@ function AccountInfo({
     memorial,
     moved,
     roles,
+    hideCollections,
   } = info || {};
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
@@ -194,10 +207,7 @@ function AccountInfo({
     }
   }
 
-  const isSelf = useMemo(
-    () => id === store.session.get('currentAccount'),
-    [id],
-  );
+  const isSelf = useMemo(() => id === getCurrentAccountID(), [id]);
 
   useEffect(() => {
     const infoHasEssentials = !!(
@@ -227,7 +237,7 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = new URL(url).hostname;
+    const domain = punycode.toUnicode(URL.parse(url).hostname);
     return domain;
   }, [url]);
 
@@ -250,12 +260,13 @@ function AccountInfo({
     // On first load, fetch familiar followers, merge to top of results' `value`
     // Remove dups on every fetch
     if (firstLoad) {
-      const familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch(
-        {
+      let familiarFollowers = [];
+      try {
+        familiarFollowers = await masto.v1.accounts.familiarFollowers.fetch({
           id: [id],
-        },
-      );
-      familiarFollowersCache.current = familiarFollowers[0].accounts;
+        });
+      } catch (e) {}
+      familiarFollowersCache.current = familiarFollowers?.[0]?.accounts || [];
       newValue = [
         ...familiarFollowersCache.current,
         ...value.filter(
@@ -340,6 +351,17 @@ function AccountInfo({
     [standalone, id, statusesCount],
   );
 
+  const onProfileUpdate = useCallback(
+    (newAccount) => {
+      if (newAccount.id === id) {
+        console.log('Updated account info', newAccount);
+        setInfo(newAccount);
+        states.accounts[`${newAccount.id}@${instance}`] = newAccount;
+      }
+    },
+    [id, instance],
+  );
+
   return (
     <div
       tabIndex="-1"
@@ -353,14 +375,16 @@ function AccountInfo({
     >
       {uiState === 'error' && (
         <div class="ui-state">
-          <p>Unable to load account.</p>
+          <p>
+            <Trans>Unable to load account.</Trans>
+          </p>
           <p>
             <a
               href={isString ? account : url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Go to account page <Icon icon="external" />
+              <Trans>Go to account page</Trans> <Icon icon="external" />
             </a>
           </p>
         </div>
@@ -388,21 +412,21 @@ function AccountInfo({
               </div>
               <div class="stats">
                 <div>
-                  <span>██</span> Followers
+                  <span>██</span> <Trans>Followers</Trans>
                 </div>
                 <div>
-                  <span>██</span> Following
+                  <span>██</span> <Trans id="following.stats">Following</Trans>
                 </div>
                 <div>
-                  <span>██</span> Posts
+                  <span>██</span> <Trans>Posts</Trans>
                 </div>
               </div>
             </div>
             <div class="actions">
               <span />
               <span class="buttons">
-                <button type="button" title="More" class="plain" disabled>
-                  <Icon icon="more" size="l" alt="More" />
+                <button type="button" class="plain" disabled>
+                  <Icon icon="more" size="l" alt={t`More`} />
                 </button>
               </span>
             </div>
@@ -414,8 +438,10 @@ function AccountInfo({
             {!!moved && (
               <div class="account-moved">
                 <p>
-                  <b>{displayName}</b> has indicated that their new account is
-                  now:
+                  <Trans>
+                    <b>{displayName}</b> has indicated that their new account is
+                    now:
+                  </Trans>
                 </p>
                 <AccountBlock
                   account={moved}
@@ -453,12 +479,15 @@ function AccountInfo({
                   e.target.classList.add('loaded');
                   try {
                     // Get color from four corners of image
-                    const canvas = document.createElement('canvas');
+                    const canvas = window.OffscreenCanvas
+                      ? new OffscreenCanvas(1, 1)
+                      : document.createElement('canvas');
                     const ctx = canvas.getContext('2d', {
                       willReadFrequently: true,
                     });
                     canvas.width = e.target.width;
                     canvas.height = e.target.height;
+                    ctx.imageSmoothingEnabled = false;
                     ctx.drawImage(e.target, 0, 0);
                     // const colors = [
                     //   ctx.getImageData(0, 0, 1, 1).data,
@@ -526,25 +555,90 @@ function AccountInfo({
               />
             )}
             <header>
-              <AccountBlock
-                account={info}
-                instance={instance}
-                avatarSize="xxxl"
-                external={standalone}
-                internal={!standalone}
-              />
+              {standalone ? (
+                <Menu2
+                  shift={
+                    window.matchMedia('(min-width: calc(40em))').matches
+                      ? 114
+                      : 64
+                  }
+                  menuButton={
+                    <div>
+                      <AccountBlock
+                        account={info}
+                        instance={instance}
+                        avatarSize="xxxl"
+                        onClick={() => {}}
+                      />
+                    </div>
+                  }
+                >
+                  <div class="szh-menu__header">
+                    <AccountHandleInfo acct={acct} instance={instance} />
+                  </div>
+                  <MenuItem
+                    onClick={() => {
+                      const handleWithInstance = acct.includes('@')
+                        ? `@${acct}`
+                        : `@${acct}@${instance}`;
+                      try {
+                        navigator.clipboard.writeText(handleWithInstance);
+                        showToast(t`Handle copied`);
+                      } catch (e) {
+                        console.error(e);
+                        showToast(t`Unable to copy handle`);
+                      }
+                    }}
+                  >
+                    <Icon icon="link" />
+                    <span>
+                      <Trans>Copy handle</Trans>
+                    </span>
+                  </MenuItem>
+                  <MenuItem href={url} target="_blank">
+                    <Icon icon="external" />
+                    <span>
+                      <Trans>Go to original profile page</Trans>
+                    </span>
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuLink href={info.avatar} target="_blank">
+                    <Icon icon="user" />
+                    <span>
+                      <Trans>View profile image</Trans>
+                    </span>
+                  </MenuLink>
+                  <MenuLink href={info.header} target="_blank">
+                    <Icon icon="media" />
+                    <span>
+                      <Trans>View profile header</Trans>
+                    </span>
+                  </MenuLink>
+                </Menu2>
+              ) : (
+                <AccountBlock
+                  account={info}
+                  instance={instance}
+                  avatarSize="xxxl"
+                  internal
+                />
+              )}
             </header>
             <div class="faux-header-bg" aria-hidden="true" />
             <main>
-              {!!memorial && <span class="tag">In Memoriam</span>}
+              {!!memorial && (
+                <span class="tag">
+                  <Trans>In Memoriam</Trans>
+                </span>
+              )}
               {!!bot && (
                 <span class="tag">
-                  <Icon icon="bot" /> Automated
+                  <Icon icon="bot" /> <Trans>Automated</Trans>
                 </span>
               )}
               {!!group && (
                 <span class="tag">
-                  <Icon icon="group" /> Group
+                  <Icon icon="group" /> <Trans>Group</Trans>
                 </span>
               )}
               {roles?.map((role) => (
@@ -582,7 +676,11 @@ function AccountInfo({
                         <b>
                           <EmojiText text={name} emojis={emojis} />{' '}
                           {!!verifiedAt && (
-                            <Icon icon="check-circle" size="s" />
+                            <Icon
+                              icon="check-circle"
+                              size="s"
+                              alt={t`Verified`}
+                            />
                           )}
                         </b>
                         <p
@@ -602,12 +700,16 @@ function AccountInfo({
                       // states.showAccount = false;
                       setTimeout(() => {
                         states.showGenericAccounts = {
-                          heading: 'Followers',
+                          id: 'followers',
+                          heading: t`Followers`,
                           fetchAccounts: fetchFollowers,
                           instance,
                           excludeRelationshipAttrs: isSelf
                             ? ['followedBy']
                             : [],
+                          blankCopy: hideCollections
+                            ? t`This user has chosen to not make this information available.`
+                            : undefined,
                         };
                       }, 0);
                     }}
@@ -629,7 +731,7 @@ function AccountInfo({
                     <span title={followersCount}>
                       {shortenNumber(followersCount)}
                     </span>{' '}
-                    Followers
+                    <Trans>Followers</Trans>
                   </LinkOrDiv>
                   <LinkOrDiv
                     class="insignificant"
@@ -639,10 +741,16 @@ function AccountInfo({
                       // states.showAccount = false;
                       setTimeout(() => {
                         states.showGenericAccounts = {
-                          heading: 'Following',
+                          heading: t({
+                            id: 'following.stats',
+                            message: 'Following',
+                          }),
                           fetchAccounts: fetchFollowing,
                           instance,
                           excludeRelationshipAttrs: isSelf ? ['following'] : [],
+                          blankCopy: hideCollections
+                            ? t`This user has chosen to not make this information available.`
+                            : undefined,
                         };
                       }, 0);
                     }}
@@ -650,7 +758,7 @@ function AccountInfo({
                     <span title={followingCount}>
                       {shortenNumber(followingCount)}
                     </span>{' '}
-                    Following
+                    <Trans id="following.stats">Following</Trans>
                     <br />
                   </LinkOrDiv>
                   <LinkOrDiv
@@ -667,16 +775,18 @@ function AccountInfo({
                     <span title={statusesCount}>
                       {shortenNumber(statusesCount)}
                     </span>{' '}
-                    Posts
+                    <Trans>Posts</Trans>
                   </LinkOrDiv>
                   {!!createdAt && (
                     <div class="insignificant">
-                      Joined{' '}
-                      <time datetime={createdAt}>
-                        {niceDateTime(createdAt, {
-                          hideTime: true,
-                        })}
-                      </time>
+                      <Trans>
+                        Joined{' '}
+                        <time datetime={createdAt}>
+                          {niceDateTime(createdAt, {
+                            hideTime: true,
+                          })}
+                        </time>
+                      </Trans>
                     </div>
                   )}
                 </div>
@@ -694,25 +804,39 @@ function AccountInfo({
                       {hasPostingStats ? (
                         <div
                           class="posting-stats"
-                          title={`${Math.round(
-                            (postingStats.originals / postingStats.total) * 100,
-                          )}% original posts, ${Math.round(
-                            (postingStats.replies / postingStats.total) * 100,
-                          )}% replies, ${Math.round(
-                            (postingStats.boosts / postingStats.total) * 100,
-                          )}% boosts`}
+                          title={t`${(
+                            postingStats.originals / postingStats.total
+                          ).toLocaleString(i18n.locale || undefined, {
+                            style: 'percent',
+                          })} original posts, ${(
+                            postingStats.replies / postingStats.total
+                          ).toLocaleString(i18n.locale || undefined, {
+                            style: 'percent',
+                          })} replies, ${(
+                            postingStats.boosts / postingStats.total
+                          ).toLocaleString(i18n.locale || undefined, {
+                            style: 'percent',
+                          })} boosts`}
                         >
                           <div>
                             {postingStats.daysSinceLastPost < 365
-                              ? `Last ${postingStats.total} post${
-                                  postingStats.total > 1 ? 's' : ''
-                                } in the past 
-                      ${postingStats.daysSinceLastPost} day${
-                                  postingStats.daysSinceLastPost > 1 ? 's' : ''
-                                }`
-                              : `
-                      Last ${postingStats.total} posts in the past year(s)
-                      `}
+                              ? plural(postingStats.total, {
+                                  one: plural(postingStats.daysSinceLastPost, {
+                                    one: `Last 1 post in the past 1 day`,
+                                    other: `Last 1 post in the past ${postingStats.daysSinceLastPost} days`,
+                                  }),
+                                  other: plural(
+                                    postingStats.daysSinceLastPost,
+                                    {
+                                      one: `Last ${postingStats.total} posts in the past 1 day`,
+                                      other: `Last ${postingStats.total} posts in the past ${postingStats.daysSinceLastPost} days`,
+                                    },
+                                  ),
+                                })
+                              : plural(postingStats.total, {
+                                  one: 'Last 1 post in the past year(s)',
+                                  other: `Last ${postingStats.total} posts in the past year(s)`,
+                                })}
                           </div>
                           <div
                             class="posting-stats-bar"
@@ -733,64 +857,70 @@ function AccountInfo({
                           <div class="posting-stats-legends">
                             <span class="ib">
                               <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                              Original
+                              <Trans>Original</Trans>
                             </span>{' '}
                             <span class="ib">
                               <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                              Replies
+                              <Trans>Replies</Trans>
                             </span>{' '}
                             <span class="ib">
                               <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                              Boosts
+                              <Trans>Boosts</Trans>
                             </span>
                           </div>
                         </div>
                       ) : (
-                        <div class="posting-stats">Post stats unavailable.</div>
+                        <div class="posting-stats">
+                          <Trans>Post stats unavailable.</Trans>
+                        </div>
                       )}
                     </div>
                   </div>
                 </LinkOrDiv>
               )}
-              <div class="account-metadata-box">
-                <div
-                  class="shazam-container no-animation"
-                  hidden={!!postingStats}
-                >
-                  <div class="shazam-container-inner">
-                    <button
-                      type="button"
-                      class="posting-stats-button"
-                      disabled={postingStatsUIState === 'loading'}
-                      onClick={() => {
-                        renderPostingStats();
-                      }}
-                    >
-                      <div
-                        class={`posting-stats-bar posting-stats-icon ${
-                          postingStatsUIState === 'loading' ? 'loading' : ''
-                        }`}
-                        style={{
-                          '--originals-percentage': '33%',
-                          '--replies-percentage': '66%',
+              {!moved && (
+                <div class="account-metadata-box">
+                  <div
+                    class="shazam-container no-animation"
+                    hidden={!!postingStats}
+                  >
+                    <div class="shazam-container-inner">
+                      <button
+                        type="button"
+                        class="posting-stats-button"
+                        disabled={postingStatsUIState === 'loading'}
+                        onClick={() => {
+                          renderPostingStats();
                         }}
-                      />
-                      View post stats{' '}
-                      {/* <Loader
+                      >
+                        <div
+                          class={`posting-stats-bar posting-stats-icon ${
+                            postingStatsUIState === 'loading' ? 'loading' : ''
+                          }`}
+                          style={{
+                            '--originals-percentage': '33%',
+                            '--replies-percentage': '66%',
+                          }}
+                        />
+                        <Trans>View post stats</Trans>{' '}
+                        {/* <Loader
                         abrupt
                         hidden={postingStatsUIState !== 'loading'}
                       /> */}
-                    </button>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </main>
             <footer>
               <RelatedActions
                 info={info}
                 instance={instance}
+                standalone={standalone}
                 authenticated={authenticated}
                 onRelationshipChange={onRelationshipChange}
+                onProfileUpdate={onProfileUpdate}
               />
             </footer>
           </>
@@ -805,10 +935,13 @@ const FAMILIAR_FOLLOWERS_LIMIT = 3;
 function RelatedActions({
   info,
   instance,
+  standalone,
   authenticated,
   onRelationshipChange = () => {},
+  onProfileUpdate = () => {},
 }) {
   if (!info) return null;
+  const { _ } = useLingui();
   const {
     masto: currentMasto,
     instance: currentInstance,
@@ -841,9 +974,11 @@ function RelatedActions({
   const [currentInfo, setCurrentInfo] = useState(null);
   const [isSelf, setIsSelf] = useState(false);
 
+  const acctWithInstance = acct.includes('@') ? acct : `${acct}@${instance}`;
+
   useEffect(() => {
     if (info) {
-      const currentAccount = store.session.get('currentAccount');
+      const currentAccount = getCurrentAccountID();
       let currentID;
       (async () => {
         if (sameInstance && authenticated) {
@@ -878,7 +1013,7 @@ function RelatedActions({
 
         accountID.current = currentID;
 
-        if (moved) return;
+        // if (moved) return;
 
         setRelationshipUIState('loading');
 
@@ -917,6 +1052,7 @@ function RelatedActions({
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const [lists, setLists] = useState([]);
 
   return (
@@ -924,28 +1060,40 @@ function RelatedActions({
       <div class="actions">
         <span>
           {followedBy ? (
-            <span class="tag">Follows you</span>
+            <span class="tag">
+              <Trans>Follows you</Trans>
+            </span>
           ) : !!lastStatusAt ? (
             <small class="insignificant">
-              Last post:{' '}
-              <span class="ib">
-                {niceDateTime(lastStatusAt, {
-                  hideTime: true,
-                })}
-              </span>
+              <Trans>
+                Last post:{' '}
+                <span class="ib">
+                  {niceDateTime(lastStatusAt, {
+                    hideTime: true,
+                  })}
+                </span>
+              </Trans>
             </small>
           ) : (
             <span />
           )}
-          {muting && <span class="tag danger">Muted</span>}
-          {blocking && <span class="tag danger">Blocked</span>}
+          {muting && (
+            <span class="tag danger">
+              <Trans>Muted</Trans>
+            </span>
+          )}
+          {blocking && (
+            <span class="tag danger">
+              <Trans>Blocked</Trans>
+            </span>
+          )}
         </span>{' '}
         <span class="buttons">
           {!!privateNote && (
             <button
               type="button"
               class="private-note-tag"
-              title="Private note"
+              title={t`Private note`}
               onClick={() => {
                 setShowPrivateNoteModal(true);
               }}
@@ -968,13 +1116,8 @@ function RelatedActions({
             position="anchor"
             overflow="auto"
             menuButton={
-              <button
-                type="button"
-                title="More"
-                class="plain"
-                disabled={loading}
-              >
-                <Icon icon="more" size="l" alt="More" />
+              <button type="button" class="plain" disabled={loading}>
+                <Icon icon="more" size="l" alt={t`More`} />
               </button>
             }
             onMenuChange={(e) => {
@@ -998,15 +1141,19 @@ function RelatedActions({
               <>
                 <MenuItem
                   onClick={() => {
-                    states.showCompose = {
+                    showCompose({
                       draftStatus: {
                         status: `@${currentInfo?.acct || acct} `,
                       },
-                    };
+                    });
                   }}
                 >
                   <Icon icon="at" />
-                  <span>Mention @{username}</span>
+                  <span>
+                    <Trans>
+                      Mention <span class="bidi-isolate">@{username}</span>
+                    </Trans>
+                  </span>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
@@ -1014,18 +1161,86 @@ function RelatedActions({
                   }}
                 >
                   <Icon icon="translate" />
-                  <span>Translate bio</span>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    setShowPrivateNoteModal(true);
-                  }}
-                >
-                  <Icon icon="pencil" />
                   <span>
-                    {privateNote ? 'Edit private note' : 'Add private note'}
+                    <Trans>Translate bio</Trans>
                   </span>
                 </MenuItem>
+                {supports('@mastodon/profile-private-note') && (
+                  <MenuItem
+                    onClick={() => {
+                      setShowPrivateNoteModal(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>
+                      {privateNote ? t`Edit private note` : t`Add private note`}
+                    </span>
+                  </MenuItem>
+                )}
+                {following && !!relationship && (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        setRelationshipUIState('loading');
+                        (async () => {
+                          try {
+                            const rel = await currentMasto.v1.accounts
+                              .$select(accountID.current)
+                              .follow({
+                                notify: !notifying,
+                              });
+                            if (rel) setRelationship(rel);
+                            setRelationshipUIState('default');
+                            showToast(
+                              rel.notifying
+                                ? t`Notifications enabled for @${username}'s posts.`
+                                : t` Notifications disabled for @${username}'s posts.`,
+                            );
+                          } catch (e) {
+                            alert(e);
+                            setRelationshipUIState('error');
+                          }
+                        })();
+                      }}
+                    >
+                      <Icon icon="notification" />
+                      <span>
+                        {notifying
+                          ? t`Disable notifications`
+                          : t`Enable notifications`}
+                      </span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setRelationshipUIState('loading');
+                        (async () => {
+                          try {
+                            const rel = await currentMasto.v1.accounts
+                              .$select(accountID.current)
+                              .follow({
+                                reblogs: !showingReblogs,
+                              });
+                            if (rel) setRelationship(rel);
+                            setRelationshipUIState('default');
+                            showToast(
+                              rel.showingReblogs
+                                ? t`Boosts from @${username} enabled.`
+                                : t`Boosts from @${username} disabled.`,
+                            );
+                          } catch (e) {
+                            alert(e);
+                            setRelationshipUIState('error');
+                          }
+                        })();
+                      }}
+                    >
+                      <Icon icon="rocket" />
+                      <span>
+                        {showingReblogs ? t`Disable boosts` : t`Enable boosts`}
+                      </span>
+                    </MenuItem>
+                  </>
+                )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
                   <MenuItem
@@ -1037,7 +1252,7 @@ function RelatedActions({
                     {lists.length ? (
                       <>
                         <small class="menu-grow">
-                          Add/Remove from Lists
+                          <Trans>Add/Remove from Lists</Trans>
                           <br />
                           <span class="more-insignificant">
                             {lists.map((list) => list.title).join(', ')}
@@ -1046,7 +1261,9 @@ function RelatedActions({
                         <small class="more-insignificant">{lists.length}</small>
                       </>
                     ) : (
-                      <span>Add/Remove from Lists</span>
+                      <span>
+                        <Trans>Add/Remove from Lists</Trans>
+                      </span>
                     )}
                   </MenuItem>
                 )}
@@ -1055,22 +1272,22 @@ function RelatedActions({
             )}
             <MenuItem
               onClick={() => {
-                const handle = `@${currentInfo?.acct || acct}`;
+                const handle = `@${currentInfo?.acct || acctWithInstance}`;
                 try {
                   navigator.clipboard.writeText(handle);
-                  showToast('Handle copied');
+                  showToast(t`Handle copied`);
                 } catch (e) {
                   console.error(e);
-                  showToast('Unable to copy handle');
+                  showToast(t`Unable to copy handle`);
                 }
               }}
             >
               <Icon icon="copy" />
               <small>
-                Copy handle
+                <Trans>Copy handle</Trans>
                 <br />
-                <span class="more-insignificant">
-                  @{currentInfo?.acct || acct}
+                <span class="more-insignificant bidi-isolate">
+                  @{currentInfo?.acct || acctWithInstance}
                 </span>
               </small>
             </MenuItem>
@@ -1084,15 +1301,17 @@ function RelatedActions({
                   // Copy url to clipboard
                   try {
                     navigator.clipboard.writeText(url);
-                    showToast('Link copied');
+                    showToast(t`Link copied`);
                   } catch (e) {
                     console.error(e);
-                    showToast('Unable to copy link');
+                    showToast(t`Unable to copy link`);
                   }
                 }}
               >
                 <Icon icon="link" />
-                <span>Copy</span>
+                <span>
+                  <Trans>Copy</Trans>
+                </span>
               </MenuItem>
               {navigator?.share &&
                 navigator?.canShare?.({
@@ -1106,12 +1325,14 @@ function RelatedActions({
                         });
                       } catch (e) {
                         console.error(e);
-                        alert("Sharing doesn't seem to work.");
+                        alert(t`Sharing doesn't seem to work.`);
                       }
                     }}
                   >
                     <Icon icon="share" />
-                    <span>Share…</span>
+                    <span>
+                      <Trans>Share…</Trans>
+                    </span>
                   </MenuItem>
                 )}
             </div>
@@ -1130,7 +1351,7 @@ function RelatedActions({
                           console.log('unmuting', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
-                          showToast(`Unmuted @${username}`);
+                          showToast(t`Unmuted @${username}`);
                           states.reloadGenericAccounts.id = 'mute';
                           states.reloadGenericAccounts.counter++;
                         } catch (e) {
@@ -1141,10 +1362,14 @@ function RelatedActions({
                     }}
                   >
                     <Icon icon="unmute" />
-                    <span>Unmute @{username}</span>
+                    <span>
+                      <Trans>
+                        Unmute <span class="bidi-isolate">@{username}</span>
+                      </Trans>
+                    </span>
                   </MenuItem>
                 ) : (
-                  <SubMenu
+                  <SubMenu2
                     menuClassName="menu-blur"
                     openTrigger="clickOnly"
                     direction="bottom"
@@ -1153,7 +1378,11 @@ function RelatedActions({
                     label={
                       <>
                         <Icon icon="mute" />
-                        <span class="menu-grow">Mute @{username}…</span>
+                        <span class="menu-grow">
+                          <Trans>
+                            Mute <span class="bidi-isolate">@{username}</span>…
+                          </Trans>
+                        </span>
                         <span
                           style={{
                             textOverflow: 'clip',
@@ -1182,23 +1411,74 @@ function RelatedActions({
                                 setRelationship(newRelationship);
                                 setRelationshipUIState('default');
                                 showToast(
-                                  `Muted @${username} for ${MUTE_DURATIONS_LABELS[duration]}`,
+                                  t`Muted @${username} for ${
+                                    typeof MUTE_DURATIONS_LABELS[duration] ===
+                                    'function'
+                                      ? MUTE_DURATIONS_LABELS[duration]()
+                                      : _(MUTE_DURATIONS_LABELS[duration])
+                                  }`,
                                 );
                                 states.reloadGenericAccounts.id = 'mute';
                                 states.reloadGenericAccounts.counter++;
                               } catch (e) {
                                 console.error(e);
                                 setRelationshipUIState('error');
-                                showToast(`Unable to mute @${username}`);
+                                showToast(t`Unable to mute @${username}`);
                               }
                             })();
                           }}
                         >
-                          {MUTE_DURATIONS_LABELS[duration]}
+                          {typeof MUTE_DURATIONS_LABELS[duration] === 'function'
+                            ? MUTE_DURATIONS_LABELS[duration]()
+                            : _(MUTE_DURATIONS_LABELS[duration])}
                         </MenuItem>
                       ))}
                     </div>
-                  </SubMenu>
+                  </SubMenu2>
+                )}
+                {followedBy && (
+                  <MenuConfirm
+                    subMenu
+                    menuItemClassName="danger"
+                    confirmLabel={
+                      <>
+                        <Icon icon="user-x" />
+                        <span>
+                          <Trans>
+                            Remove <span class="bidi-isolate">@{username}</span>{' '}
+                            from followers?
+                          </Trans>
+                        </span>
+                      </>
+                    }
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .removeFromFollowers();
+                          console.log(
+                            'removing from followers',
+                            newRelationship,
+                          );
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(t`@${username} removed from followers`);
+                          states.reloadGenericAccounts.id = 'followers';
+                          states.reloadGenericAccounts.counter++;
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="user-x" />
+                    <span>
+                      <Trans>Remove follower…</Trans>
+                    </span>
+                  </MenuConfirm>
                 )}
                 <MenuConfirm
                   subMenu
@@ -1206,9 +1486,16 @@ function RelatedActions({
                   confirmLabel={
                     <>
                       <Icon icon="block" />
-                      <span>Block @{username}?</span>
+                      <span>
+                        <Trans>
+                          Block <span class="bidi-isolate">@{username}</span>?
+                        </Trans>
+                      </span>
                     </>
                   }
+                  itemProps={{
+                    className: 'danger',
+                  }}
                   menuItemClassName="danger"
                   onClick={() => {
                     // if (!blocking && !confirm(`Block @${username}?`)) {
@@ -1224,7 +1511,7 @@ function RelatedActions({
                           console.log('unblocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
-                          showToast(`Unblocked @${username}`);
+                          showToast(t`Unblocked @${username}`);
                         } else {
                           const newRelationship = await currentMasto.v1.accounts
                             .$select(currentInfo?.id || id)
@@ -1232,7 +1519,7 @@ function RelatedActions({
                           console.log('blocking', newRelationship);
                           setRelationship(newRelationship);
                           setRelationshipUIState('default');
-                          showToast(`Blocked @${username}`);
+                          showToast(t`Blocked @${username}`);
                         }
                         states.reloadGenericAccounts.id = 'block';
                         states.reloadGenericAccounts.counter++;
@@ -1240,9 +1527,9 @@ function RelatedActions({
                         console.error(e);
                         setRelationshipUIState('error');
                         if (blocking) {
-                          showToast(`Unable to unblock @${username}`);
+                          showToast(t`Unable to unblock @${username}`);
                         } else {
-                          showToast(`Unable to block @${username}`);
+                          showToast(t`Unable to block @${username}`);
                         }
                       }
                     })();
@@ -1251,12 +1538,20 @@ function RelatedActions({
                   {blocking ? (
                     <>
                       <Icon icon="unblock" />
-                      <span>Unblock @{username}</span>
+                      <span>
+                        <Trans>
+                          Unblock <span class="bidi-isolate">@{username}</span>
+                        </Trans>
+                      </span>
                     </>
                   ) : (
                     <>
                       <Icon icon="block" />
-                      <span>Block @{username}…</span>
+                      <span>
+                        <Trans>
+                          Block <span class="bidi-isolate">@{username}</span>…
+                        </Trans>
+                      </span>
                     </>
                   )}
                 </MenuConfirm>
@@ -1269,10 +1564,32 @@ function RelatedActions({
                   }}
                 >
                   <Icon icon="flag" />
-                  <span>Report @{username}…</span>
+                  <span>
+                    <Trans>
+                      Report <span class="bidi-isolate">@{username}</span>…
+                    </Trans>
+                  </span>
                 </MenuItem>
               </>
             )}
+            {currentAuthenticated &&
+              isSelf &&
+              standalone &&
+              supports('@mastodon/profile-edit') && (
+                <>
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => {
+                      setShowEditProfile(true);
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>
+                      <Trans>Edit profile</Trans>
+                    </span>
+                  </MenuItem>
+                </>
+              )}
             {import.meta.env.DEV && currentAuthenticated && isSelf && (
               <>
                 <MenuDivider />
@@ -1298,14 +1615,14 @@ function RelatedActions({
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />
           )}
-          {!!relationship && (
+          {!!relationship && !moved && (
             <MenuConfirm
               confirm={following || requested}
               confirmLabel={
                 <span>
                   {requested
-                    ? 'Withdraw follow request?'
-                    : `Unfollow @${info.acct || info.username}?`}
+                    ? t`Withdraw follow request?`
+                    : t`Unfollow @${info.acct || info.username}?`}
                 </span>
               }
               menuItemClassName="danger"
@@ -1352,20 +1669,31 @@ function RelatedActions({
               >
                 {following ? (
                   <>
-                    <span>Following</span>
-                    <span>Unfollow…</span>
+                    <span>
+                      <Trans>Following</Trans>
+                    </span>
+                    <span>
+                      <Trans>Unfollow…</Trans>
+                    </span>
                   </>
                 ) : requested ? (
                   <>
-                    <span>Requested</span>
-                    <span>Withdraw…</span>
+                    <span>
+                      <Trans>Requested</Trans>
+                    </span>
+                    <span>
+                      <Trans>Withdraw…</Trans>
+                    </span>
                   </>
                 ) : locked ? (
                   <>
-                    <Icon icon="lock" /> <span>Follow</span>
+                    <Icon icon="lock" />{' '}
+                    <span>
+                      <Trans>Follow</Trans>
+                    </span>
                   </>
                 ) : (
-                  'Follow'
+                  t`Follow`
                 )}
               </button>
             </MenuConfirm>
@@ -1414,6 +1742,22 @@ function RelatedActions({
           />
         </Modal>
       )}
+      {!!showEditProfile && (
+        <Modal
+          onClose={() => {
+            setShowEditProfile(false);
+          }}
+        >
+          <EditProfileSheet
+            onClose={({ state, account } = {}) => {
+              setShowEditProfile(false);
+              if (state === 'success' && account) {
+                onProfileUpdate(account);
+              }
+            }}
+          />
+        </Modal>
+      )}
     </>
   );
 }
@@ -1436,12 +1780,12 @@ function lightenRGB([r, g, b]) {
 
 function niceAccountURL(url) {
   if (!url) return;
-  const urlObj = new URL(url);
+  const urlObj = URL.parse(url);
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (
     <>
-      <span class="more-insignificant">{host}/</span>
+      <span class="more-insignificant">{punycode.toUnicode(host)}/</span>
       <wbr />
       <span>{path}</span>
     </>
@@ -1460,11 +1804,13 @@ function TranslatedBioSheet({ note, fields, onClose }) {
     <div class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Translated Bio</h2>
+        <h2>
+          <Trans>Translated Bio</Trans>
+        </h2>
       </header>
       <main>
         <p
@@ -1491,13 +1837,12 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     setUIState('loading');
     (async () => {
       try {
-        const lists = await masto.v1.lists.list();
-        lists.sort((a, b) => a.title.localeCompare(b.title));
+        const lists = await getLists();
+        setLists(lists);
         const listsContainingAccount = await masto.v1.accounts
           .$select(accountID)
           .lists.list();
         console.log({ lists, listsContainingAccount });
-        setLists(lists);
         setListsContainingAccount(listsContainingAccount);
         setUIState('default');
       } catch (e) {
@@ -1513,11 +1858,13 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     <div class="sheet" id="list-add-remove-container">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <h2>Add/Remove from Lists</h2>
+        <h2>
+          <Trans>Add/Remove from Lists</Trans>
+        </h2>
       </header>
       <main>
         {lists.length > 0 ? (
@@ -1556,14 +1903,14 @@ function AddRemoveListsSheet({ accountID, onClose }) {
                           setUIState('error');
                           alert(
                             inList
-                              ? 'Unable to remove from list.'
-                              : 'Unable to add to list.',
+                              ? t`Unable to remove from list.`
+                              : t`Unable to add to list.`,
                           );
                         }
                       })();
                     }}
                   >
-                    <Icon icon="check-circle" />
+                    <Icon icon="check-circle" alt="☑️" />
                     <span>{list.title}</span>
                   </button>
                 </li>
@@ -1575,9 +1922,13 @@ function AddRemoveListsSheet({ accountID, onClose }) {
             <Loader abrupt />
           </p>
         ) : uiState === 'error' ? (
-          <p class="ui-state">Unable to load lists.</p>
+          <p class="ui-state">
+            <Trans>Unable to load lists.</Trans>
+          </p>
         ) : (
-          <p class="ui-state">No lists.</p>
+          <p class="ui-state">
+            <Trans>No lists.</Trans>
+          </p>
         )}
         <button
           type="button"
@@ -1585,7 +1936,10 @@ function AddRemoveListsSheet({ accountID, onClose }) {
           onClick={() => setShowListAddEditModal(true)}
           disabled={uiState !== 'default'}
         >
-          <Icon icon="plus" size="l" /> <span>New list</span>
+          <Icon icon="plus" size="l" />{' '}
+          <span>
+            <Trans>New list</Trans>
+          </span>
         </button>
       </main>
       {showListAddEditModal && (
@@ -1637,11 +1991,18 @@ function PrivateNoteSheet({
     <div class="sheet" id="private-note-container">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <b>Private note about @{account?.username || account?.acct}</b>
+        <b>
+          <Trans>
+            Private note about{' '}
+            <span class="bidi-isolate">
+              @{account?.username || account?.acct}
+            </span>
+          </Trans>
+        </b>
       </header>
       <main>
         <form
@@ -1665,7 +2026,7 @@ function PrivateNoteSheet({
                 } catch (e) {
                   console.error(e);
                   setUIState('error');
-                  alert(e?.message || 'Unable to update private note.');
+                  alert(e?.message || t`Unable to update private note.`);
                 }
               })();
             }
@@ -1675,6 +2036,7 @@ function PrivateNoteSheet({
             ref={textareaRef}
             name="note"
             disabled={uiState === 'loading'}
+            dir="auto"
           >
             {initialNote}
           </textarea>
@@ -1687,17 +2049,240 @@ function PrivateNoteSheet({
                 onClose?.();
               }}
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </button>
             <span>
               <Loader abrupt hidden={uiState !== 'loading'} />
               <button disabled={uiState === 'loading'} type="submit">
-                Save &amp; close
+                <Trans>Save &amp; close</Trans>
               </button>
             </span>
           </footer>
         </form>
       </main>
+    </div>
+  );
+}
+
+function EditProfileSheet({ onClose = () => {} }) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('loading');
+  const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const acc = await masto.v1.accounts.verifyCredentials();
+        setAccount(acc);
+        setUIState('default');
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      }
+    })();
+  }, []);
+
+  console.log('EditProfileSheet', account);
+  const { displayName, source } = account || {};
+  const { note, fields } = source || {};
+  const fieldsAttributesRef = useRef(null);
+
+  return (
+    <div class="sheet" id="edit-profile-container">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" alt={t`Close`} />
+        </button>
+      )}
+      <header>
+        <b>
+          <Trans>Edit profile</Trans>
+        </b>
+      </header>
+      <main>
+        {uiState === 'loading' ? (
+          <p class="ui-state">
+            <Loader abrupt />
+          </p>
+        ) : (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const displayName = formData.get('display_name');
+              const note = formData.get('note');
+              const fieldsAttributesFields =
+                fieldsAttributesRef.current.querySelectorAll(
+                  'input[name^="fields_attributes"]',
+                );
+              const fieldsAttributes = [];
+              fieldsAttributesFields.forEach((field) => {
+                const name = field.name;
+                const [_, index, key] =
+                  name.match(/fields_attributes\[(\d+)\]\[(.+)\]/) || [];
+                const value = field.value ? field.value.trim() : '';
+                if (index && key && value) {
+                  if (!fieldsAttributes[index]) fieldsAttributes[index] = {};
+                  fieldsAttributes[index][key] = value;
+                }
+              });
+              // Fill in the blanks
+              fieldsAttributes.forEach((field) => {
+                if (field.name && !field.value) {
+                  field.value = '';
+                }
+              });
+
+              (async () => {
+                try {
+                  const newAccount = await masto.v1.accounts.updateCredentials({
+                    displayName,
+                    note,
+                    fieldsAttributes,
+                  });
+                  console.log('updated account', newAccount);
+                  onClose?.({
+                    state: 'success',
+                    account: newAccount,
+                  });
+                } catch (e) {
+                  console.error(e);
+                  alert(e?.message || t`Unable to update profile.`);
+                }
+              })();
+            }}
+          >
+            <p>
+              <label>
+                <Trans>Name</Trans>{' '}
+                <input
+                  type="text"
+                  name="display_name"
+                  defaultValue={displayName}
+                  maxLength={30}
+                  disabled={uiState === 'loading'}
+                  dir="auto"
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                <Trans>Bio</Trans>
+                <textarea
+                  defaultValue={note}
+                  name="note"
+                  maxLength={500}
+                  rows="5"
+                  disabled={uiState === 'loading'}
+                  dir="auto"
+                />
+              </label>
+            </p>
+            {/* Table for fields; name and values are in fields, min 4 rows */}
+            <p>
+              <Trans>Extra fields</Trans>
+            </p>
+            <table ref={fieldsAttributesRef}>
+              <thead>
+                <tr>
+                  <th>
+                    <Trans>Label</Trans>
+                  </th>
+                  <th>
+                    <Trans>Content</Trans>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: Math.max(4, fields.length) }).map(
+                  (_, i) => {
+                    const { name = '', value = '' } = fields[i] || {};
+                    return (
+                      <FieldsAttributesRow
+                        key={i}
+                        name={name}
+                        value={value}
+                        index={i}
+                        disabled={uiState === 'loading'}
+                      />
+                    );
+                  },
+                )}
+              </tbody>
+            </table>
+            <footer>
+              <button
+                type="button"
+                class="light"
+                disabled={uiState === 'loading'}
+                onClick={() => {
+                  onClose?.();
+                }}
+              >
+                <Trans>Cancel</Trans>
+              </button>
+              <button type="submit" disabled={uiState === 'loading'}>
+                <Trans>Save</Trans>
+              </button>
+            </footer>
+          </form>
+        )}
+      </main>
+    </div>
+  );
+}
+
+function FieldsAttributesRow({ name, value, disabled, index: i }) {
+  const [hasValue, setHasValue] = useState(!!value);
+  return (
+    <tr>
+      <td>
+        <input
+          type="text"
+          name={`fields_attributes[${i}][name]`}
+          defaultValue={name}
+          disabled={disabled}
+          maxLength={255}
+          required={hasValue}
+          dir="auto"
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name={`fields_attributes[${i}][value]`}
+          defaultValue={value}
+          disabled={disabled}
+          maxLength={255}
+          onChange={(e) => setHasValue(!!e.currentTarget.value)}
+          dir="auto"
+        />
+      </td>
+    </tr>
+  );
+}
+
+function AccountHandleInfo({ acct, instance }) {
+  // acct = username or username@server
+  let [username, server] = acct.split('@');
+  if (!server) server = instance;
+  const encodedAcct = punycode.toASCII(acct);
+  return (
+    <div class="handle-info">
+      <span class="handle-handle" title={encodedAcct}>
+        <b class="handle-username">{username}</b>
+        <span class="handle-at">@</span>
+        <b class="handle-server">{server}</b>
+      </span>
+      <div class="handle-legend">
+        <span class="ib">
+          <span class="handle-legend-icon username" /> <Trans>username</Trans>
+        </span>{' '}
+        <span class="ib">
+          <span class="handle-legend-icon server" />{' '}
+          <Trans>server domain name</Trans>
+        </span>
+      </div>
     </div>
   );
 }

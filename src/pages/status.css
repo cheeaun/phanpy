@@ -11,7 +11,7 @@
     align-self: stretch;
   }
   header h1 .deck-back {
-    margin-left: -16px;
+    margin-inline-start: -16px;
   }
 
   .button-refresh .icon {
@@ -19,12 +19,6 @@
   }
   .button-refresh:is(:hover, :focus) .icon {
     transition: transform 1s linear;
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  to {
     transform: rotate(360deg);
   }
 }
@@ -45,7 +39,7 @@
   font-size: 70% !important;
 
   & > .avatar ~ .avatar {
-    margin-left: -4px;
+    margin-inline-start: -4px;
   }
 }
 .ancestors-indicator:not([hidden]) {

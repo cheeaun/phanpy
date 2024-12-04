@@ -2,6 +2,7 @@ import store from './store';
 
 export function getAccount(id) {
   const accounts = store.local.getJSON('accounts') || [];
+  if (!id) return accounts[0];
   return accounts.find((a) => a.info.id === id) || accounts[0];
 }
 
@@ -15,13 +16,40 @@ export function getAccountByInstance(instance) {
   return accounts.find((a) => a.instanceURL === instance);
 }
 
+const standaloneMQ = window.matchMedia('(display-mode: standalone)');
+
+export function getCurrentAccountID() {
+  try {
+    const id = store.session.get('currentAccount');
+    if (id) return id;
+  } catch (e) {}
+  if (standaloneMQ.matches) {
+    try {
+      const id = store.local.get('currentAccount');
+      if (id) return id;
+    } catch (e) {}
+  }
+  return null;
+}
+
+export function setCurrentAccountID(id) {
+  try {
+    store.session.set('currentAccount', id);
+  } catch (e) {}
+  if (standaloneMQ.matches) {
+    try {
+      store.local.set('currentAccount', id);
+    } catch (e) {}
+  }
+}
+
 export function getCurrentAccount() {
   if (!window.__IGNORE_GET_ACCOUNT_ERROR__) {
     // Track down getCurrentAccount() calls before account-based states are initialized
     console.error('getCurrentAccount() called before states are initialized');
     if (import.meta.env.DEV) console.trace();
   }
-  const currentAccount = store.session.get('currentAccount');
+  const currentAccount = getCurrentAccountID();
   const account = getAccount(currentAccount);
   return account;
 }
@@ -47,7 +75,7 @@ export function saveAccount(account) {
     accounts.push(account);
   }
   store.local.setJSON('accounts', accounts);
-  store.session.set('currentAccount', account.info.id);
+  setCurrentAccountID(account.info.id);
 }
 
 export function updateAccount(accountInfo) {
@@ -79,10 +107,24 @@ export function getCurrentInstance() {
     return (currentInstance = instances[instance]);
   } catch (e) {
     console.error(e);
-    alert(`Failed to load instance configuration. Please try again.\n\n${e}`);
+    // alert(`Failed to load instance configuration. Please try again.\n\n${e}`);
     // Temporary fix for corrupted data
-    store.local.del('instances');
-    location.reload();
+    // store.local.del('instances');
+    // location.reload();
+    return {};
+  }
+}
+
+let currentNodeInfo = null;
+export function getCurrentNodeInfo() {
+  if (currentNodeInfo) return currentNodeInfo;
+  try {
+    const account = getCurrentAccount();
+    const nodeInfos = store.local.getJSON('nodeInfos') || {};
+    const instanceURL = account.instanceURL.toLowerCase();
+    return (currentNodeInfo = nodeInfos[instanceURL] || {});
+  } catch (e) {
+    console.error(e);
     return {};
   }
 }
@@ -90,18 +132,14 @@ export function getCurrentInstance() {
 // Massage these instance configurations to match the Mastodon API
 // - Pleroma
 function getInstanceConfiguration(instance) {
-  const {
-    configuration,
-    maxMediaAttachments,
-    maxTootChars,
-    pleroma,
-    pollLimits,
-  } = instance;
+  const { configuration, maxMediaAttachments, maxTootChars, pollLimits } =
+    instance;
 
   const statuses = configuration?.statuses || {};
   if (maxMediaAttachments) {
     statuses.maxMediaAttachments ??= maxMediaAttachments;
   }
+
   if (maxTootChars) {
     statuses.maxCharacters ??= maxTootChars;
   }
@@ -124,4 +162,16 @@ function getInstanceConfiguration(instance) {
 export function getCurrentInstanceConfiguration() {
   const instance = getCurrentInstance();
   return getInstanceConfiguration(instance);
+}
+
+export function getVapidKey() {
+  // Vapid key has moved from account to instance config
+  const config = getCurrentInstanceConfiguration();
+  const vapidKey = config?.vapid?.publicKey || config?.vapid?.public_key;
+  return vapidKey || getCurrentAccount()?.vapidKey;
+}
+
+export function isMediaFirstInstance() {
+  const instance = getCurrentInstance();
+  return /pixelfed/i.test(instance?.version);
 }

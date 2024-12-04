@@ -1,5 +1,6 @@
 import './status.css';
 
+import { Plural, t, Trans } from '@lingui/macro';
 import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
@@ -12,10 +13,10 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { matchPath, useSearchParams } from 'react-router-dom';
-import { useDebouncedCallback } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
@@ -42,6 +43,8 @@ import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
+
+const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
 
 const LIMIT = 40;
 const SUBCOMMENTS_OPEN_ALL_LIMIT = 10;
@@ -122,7 +125,7 @@ function StatusPage(params) {
   }, [showMedia]);
 
   const mediaAttachments = mediaStatusID
-    ? mediaStatus?.mediaAttachments
+    ? snapStates.statuses[statusKey(mediaStatusID, instance)]?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
   const handleMediaClose = useCallback(() => {
@@ -152,6 +155,18 @@ function StatusPage(params) {
     }, 100);
     return () => clearTimeout(timer);
   }, [showMediaOnly]);
+
+  useEffect(() => {
+    const $deckContainers = document.querySelectorAll('.deck-container');
+    $deckContainers.forEach(($deckContainer) => {
+      $deckContainer.setAttribute('inert', '');
+    });
+    return () => {
+      $deckContainers.forEach(($deckContainer) => {
+        $deckContainer.removeAttribute('inert');
+      });
+    };
+  }, []);
 
   return (
     <div class="deck-backdrop">
@@ -191,6 +206,11 @@ function StatusParent(props) {
   ) : (
     <div class="status-focus" tabIndex={0} {...restProps} />
   );
+}
+
+// oldest first
+function createdAtSort(a, b) {
+  return new Date(b.created_at) - new Date(a.created_at);
 }
 
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
@@ -306,6 +326,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const context = await contextFetch;
         const { ancestors, descendants } = context;
 
+        ancestors.sort(createdAtSort);
+        descendants.sort(createdAtSort);
+
         totalDescendants.current = descendants?.length || 0;
 
         const missingStatuses = new Set();
@@ -345,7 +368,11 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             nestedDescendants.push(status);
           } else if (
             !status.inReplyToAccountId &&
-            nestedDescendants.find((s) => s.id === status.inReplyToId) &&
+            nestedDescendants.find(
+              (s) =>
+                s.id === status.inReplyToId &&
+                s.account.id === heroStatus.account.id,
+            ) &&
             status.account.id === heroStatus.account.id
           ) {
             // If replying to hero's own statuses, it's part of the thread, level 1
@@ -365,19 +392,35 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }
         });
 
+        // sort hero author to top
+        nestedDescendants.sort((a, b) => {
+          const heroAccountID = heroStatus.account.id;
+          if (a.account.id === heroAccountID && b.account.id !== heroAccountID)
+            return -1;
+          if (b.account.id === heroAccountID && a.account.id !== heroAccountID)
+            return 1;
+          return 0;
+        });
+
         console.log({ ancestors, descendants, nestedDescendants });
         if (missingStatuses.size) {
           console.error('Missing statuses', [...missingStatuses]);
         }
 
-        function expandReplies(_replies) {
+        let descendantLevelsCount = 1;
+        function expandReplies(_replies, level) {
+          const nextLevel = level + 1;
+          if (nextLevel > descendantLevelsCount) {
+            descendantLevelsCount = level;
+          }
           return _replies?.map((_r) => ({
             id: _r.id,
             account: _r.account,
             repliesCount: _r.repliesCount,
             content: _r.content,
             weight: calcStatusWeight(_r),
-            replies: expandReplies(_r.__replies),
+            level: nextLevel,
+            replies: expandReplies(_r.__replies, nextLevel),
           }));
         }
 
@@ -403,7 +446,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             descendant: true,
             thread: s.account.id === heroStatus.account.id,
             weight: calcStatusWeight(s),
-            replies: expandReplies(s.__replies),
+            level: 1,
+            replies: expandReplies(s.__replies, 1),
           })),
         ];
 
@@ -414,12 +458,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         };
 
         // Set limit to hero's index
-        const heroLimit = allStatuses.findIndex((s) => s.id === id);
+        // const heroLimit = allStatuses.findIndex((s) => s.id === id);
+        const heroLimit = ancestors.length || 0; // 0-indexed
         if (heroLimit >= limit) {
           setLimit(heroLimit + 1);
         }
 
-        console.log({ allStatuses });
+        console.log({ allStatuses, descendantLevelsCount });
         setStatuses(allStatuses);
         cachedStatusesMap[id] = allStatuses;
 
@@ -549,7 +594,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   useTitle(
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
-      : 'Status',
+      : t({
+          id: 'post.title',
+          message: 'Post',
+        }),
     '/:instance?/s/:id',
   );
 
@@ -557,7 +605,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     if (!heroStatus) return;
     const { url } = heroStatus;
     if (!url) return;
-    return new URL(url).hostname;
+    return URL.parse(url).hostname;
   }, [heroStatus]);
   const postSameInstance = useMemo(() => {
     if (!postInstance) return;
@@ -732,6 +780,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         replies,
         repliesCount,
         weight,
+        level,
       } = status;
       const isHero = statusID === id;
       const isLinkable = isThread || ancestor;
@@ -770,19 +819,30 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {uiState !== 'loading' && !authenticated ? (
                 <div class="post-status-banner">
                   <p>
-                    You're not logged in. Interactions (reply, boost, etc) are
-                    not possible.
+                    <Trans>
+                      You're not logged in. Interactions (reply, boost, etc) are
+                      not possible.
+                    </Trans>
                   </p>
-                  <Link to="/login" class="button">
-                    Log in
+                  <Link
+                    to={
+                      DEFAULT_INSTANCE
+                        ? `/login?instance=${DEFAULT_INSTANCE}&submit=1`
+                        : '/login'
+                    }
+                    class="button"
+                  >
+                    <Trans>Log in</Trans>
                   </Link>
                 </div>
               ) : (
                 !sameInstance && (
                   <div class="post-status-banner">
                     <p>
-                      This post is from another instance (<b>{instance}</b>).
-                      Interactions (reply, boost, etc) are not possible.
+                      <Trans>
+                        This post is from another instance (<b>{instance}</b>).
+                        Interactions (reply, boost, etc) are not possible.
+                      </Trans>
                     </p>
                     <button
                       type="button"
@@ -807,14 +867,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                             }
                           } catch (e) {
                             setUIState('default');
-                            alert('Error: ' + e);
+                            alert(t`Error: ${e}`);
                             console.error(e);
                           }
                         })();
                       }}
                     >
-                      <Icon icon="transfer" /> Switch to my instance to enable
-                      interactions
+                      <Icon icon="transfer" />{' '}
+                      <Trans>
+                        Switch to my instance to enable interactions
+                      </Trans>
                     </button>
                   </div>
                 )
@@ -870,7 +932,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               )}
               {ancestor && repliesCount > 1 && (
                 <div class="replies-link">
-                  <Icon icon="comment2" />{' '}
+                  <Icon icon="comment2" alt={t`Replies`} />{' '}
                   <span title={repliesCount}>
                     {shortenNumber(repliesCount)}
                   </span>
@@ -892,7 +954,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               instance={instance}
               replies={replies}
               hasParentThread={thread}
-              level={1}
+              level={level}
               accWeight={weight}
               openAll={totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT}
               parentLink={{
@@ -914,7 +976,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             !!heroStatus?.repliesCount &&
             !hasDescendants && (
               <div class="status-error">
-                Unable to load replies.
+                <Trans>Unable to load replies.</Trans>
                 <br />
                 <button
                   type="button"
@@ -923,7 +985,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  Try again
+                  <Trans>Try again</Trans>
                 </button>
               </div>
             )}
@@ -972,6 +1034,18 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     [statuses, limit, renderStatus],
   );
 
+  // If there's spoiler in hero status, auto-expand it
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (!heroStatusRef.current) return;
+      const spoilerButton = heroStatusRef.current.querySelector(
+        '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
+      );
+      if (spoilerButton) spoilerButton.click();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [id]);
+
   return (
     <div
       tabIndex="-1"
@@ -1014,7 +1088,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   history.back();
                 }}
               >
-                <Icon icon="chevron-left" size="xl" />
+                <Icon icon="chevron-left" size="xl" alt={t`Back`} />
               </button>
             )}
             {!heroInView && heroStatus && uiState !== 'loading' ? (
@@ -1045,7 +1119,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       block: 'start',
                     });
                   }}
-                  title="Go to main post"
+                  title={t`Go to main post`}
                 >
                   <Icon
                     icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
@@ -1054,7 +1128,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               </>
             ) : (
               <>
-                Post{' '}
+                <Trans id="post.title">Post</Trans>{' '}
                 <button
                   type="button"
                   class="ancestors-indicator light small"
@@ -1068,7 +1142,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     });
                   }}
                   hidden={!ancestors.length || reachTopPost}
-                  title={`${ancestors.length} posts above ‒ Go to top`}
+                  title={t`${ancestors.length} posts above ‒ Go to top`}
                 >
                   <Icon icon="arrow-up" />
                   {ancestors
@@ -1111,7 +1185,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 searchParams.delete('view');
                 setSearchParams(searchParams);
               }}
-              title="Switch to Side Peek view"
+              title={t`Switch to Side Peek view`}
             >
               <Icon icon="layout4" size="l" />
             </button>
@@ -1124,7 +1198,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   setShowRefresh(false);
                 }}
               >
-                <Icon icon="refresh" size="l" />
+                <Icon icon="refresh" size="l" alt={t`Refresh`} />
               </button>
             )}
             <Menu2
@@ -1135,7 +1209,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               }}
               menuButton={
                 <button type="button" class="button plain4">
-                  <Icon icon="more" alt="Actions" size="xl" />
+                  <Icon icon="more" alt={t`More`} size="xl" />
                 </button>
               }
             >
@@ -1146,7 +1220,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 }}
               >
                 <Icon icon="refresh" />
-                <span>Refresh</span>
+                <span>
+                  <Trans>Refresh</Trans>
+                </span>
               </MenuItem>
               <MenuItem
                 className="menu-switch-view"
@@ -1171,7 +1247,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   }
                 />
                 <span>
-                  Switch to {viewMode === 'full' ? 'Side Peek' : 'Full'} view
+                  {viewMode === 'full'
+                    ? t`Switch to Side Peek view`
+                    : t`Switch to Full view`}
                 </span>
               </MenuItem>
               <MenuItem
@@ -1187,10 +1265,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   });
                 }}
               >
-                <Icon icon="eye-open" /> <span>Show all sensitive content</span>
+                <Icon icon="eye-open" />{' '}
+                <span>
+                  <Trans>Show all sensitive content</Trans>
+                </span>
               </MenuItem>
               <MenuDivider />
-              <MenuHeader className="plain">Experimental</MenuHeader>
+              <MenuHeader className="plain">
+                <Trans>Experimental</Trans>
+              </MenuHeader>
               <MenuItem
                 disabled={!postInstance || postSameInstance}
                 onClick={() => {
@@ -1198,26 +1281,22 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   if (statusURL) {
                     location.hash = statusURL;
                   } else {
-                    alert('Unable to switch');
+                    alert(t`Unable to switch`);
                   }
                 }}
               >
                 <Icon icon="transfer" />
                 <small class="menu-double-lines">
-                  Switch to post's instance
-                  {postInstance ? (
-                    <>
-                      {' '}
-                      (<b>{postInstance}</b>)
-                    </>
-                  ) : (
-                    ''
-                  )}
+                  {postInstance
+                    ? t`Switch to post's instance (${punycode.toUnicode(
+                        postInstance,
+                      )})`
+                    : t`Switch to post's instance`}
                 </small>
               </MenuItem>
             </Menu2>
             <Link class="button plain deck-close" to={closeLink}>
-              <Icon icon="x" size="xl" />
+              <Icon icon="x" size="xl" alt={t`Close`} />
             </Link>
           </div>
         </div>
@@ -1230,7 +1309,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         >
           {statusesList}
           {showMore > 0 && (
-            <li>
+            <li class="descendant descendant-more">
               <button
                 type="button"
                 class="plain block show-more"
@@ -1250,7 +1329,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   ))}
                 </div>{' '}
                 <div class="ib">
-                  Show more&hellip;{' '}
+                  <Trans>Show more…</Trans>{' '}
                   <span class="tag">
                     {showMore > LIMIT ? `${LIMIT}+` : showMore}
                   </span>
@@ -1270,7 +1349,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           )}
           {uiState === 'error' && (
             <p class="ui-state">
-              Unable to load post
+              <Trans>Unable to load post</Trans>
               <br />
               <br />
               <button
@@ -1279,7 +1358,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   states.reloadStatusPage++;
                 }}
               >
-                Try again
+                <Trans>Try again</Trans>
               </button>
             </p>
           )}
@@ -1346,6 +1425,8 @@ function SubComments({
   const detailsRef = useRef();
   useLayoutEffect(() => {
     function handleScroll(e) {
+      // NOTE: this scrollLeft works for RTL too
+      // Browsers do the magic for us
       e.target.dataset.scrollLeft = e.target.scrollLeft;
     }
     detailsRef.current?.addEventListener('scroll', handleScroll, {
@@ -1356,114 +1437,151 @@ function SubComments({
     };
   }, []);
 
+  // If not open, delay render replies
+  const [renderReplies, setRenderReplies] = useState(openBefore || open);
+  useEffect(() => {
+    let timer;
+    if (!openBefore && !open) {
+      timer = setTimeout(() => setRenderReplies(true), 100);
+    }
+    return () => clearTimeout(timer);
+  }, [openBefore, open]);
+
+  const Container = open ? 'div' : 'details';
+  const isDetails = Container === 'details';
+
   return (
-    <details
+    <Container
       ref={detailsRef}
       class="replies"
-      open={openBefore || open}
-      onToggle={(e) => {
-        const { open } = e.target;
-        // use first reply as ID
-        cachedRepliesToggle[replies[0].id] = open;
-      }}
+      open={isDetails ? openBefore || open : undefined}
+      onToggle={
+        isDetails
+          ? (e) => {
+              const { open } = e.target;
+              // use first reply as ID
+              cachedRepliesToggle[replies[0].id] = open;
+            }
+          : undefined
+      }
       style={{
         '--comments-level': level,
       }}
       data-comments-level={level}
       data-comments-level-overflow={level > 4}
     >
-      <summary class="replies-summary" hidden={open}>
-        <span class="avatars">
-          {accounts.map((a) => (
-            <Avatar
-              key={a.id}
-              url={a.avatarStatic}
-              title={`${a.displayName} @${a.username}`}
-              squircle={a?.bot}
-            />
-          ))}
-        </span>
-        <span class="replies-counts">
-          <b>
-            <span title={replies.length}>{shortenNumber(replies.length)}</span>{' '}
-            repl
-            {replies.length === 1 ? 'y' : 'ies'}
-          </b>
-          {!sameCount && totalComments > 1 && (
-            <>
-              {' '}
-              &middot;{' '}
-              <span>
-                <span title={totalComments}>
-                  {shortenNumber(totalComments)}
-                </span>{' '}
-                comment
-                {totalComments === 1 ? '' : 's'}
-              </span>
-            </>
+      {!open && (
+        <summary class="replies-summary" hidden={open}>
+          <span class="avatars">
+            {accounts.map((a) => (
+              <Avatar
+                key={a.id}
+                url={a.avatarStatic}
+                title={`${a.displayName} @${a.username}`}
+                squircle={a?.bot}
+              />
+            ))}
+          </span>
+          <span class="replies-counts">
+            <b>
+              <Plural
+                value={replies.length}
+                one="# reply"
+                other={
+                  <Trans>
+                    <span title={replies.length}>
+                      {shortenNumber(replies.length)}
+                    </span>{' '}
+                    replies
+                  </Trans>
+                }
+              />
+            </b>
+            {!sameCount && totalComments > 1 && (
+              <>
+                {' '}
+                &middot;{' '}
+                <span>
+                  <Plural
+                    value={totalComments}
+                    one="# comment"
+                    other={
+                      <Trans>
+                        <span title={totalComments}>
+                          {shortenNumber(totalComments)}
+                        </span>{' '}
+                        comments
+                      </Trans>
+                    }
+                  />
+                </span>
+              </>
+            )}
+          </span>
+          <Icon icon="chevron-down" class="replies-summary-chevron" />
+          {!!parentLink && (
+            <Link
+              class="replies-parent-link"
+              to={parentLink.to}
+              onClick={parentLink.onClick}
+              title={t`View post with its replies`}
+            >
+              &raquo;
+            </Link>
           )}
-        </span>
-        <Icon icon="chevron-down" class="replies-summary-chevron" />
-        {!!parentLink && (
-          <Link
-            class="replies-parent-link"
-            to={parentLink.to}
-            onClick={parentLink.onClick}
-            title="View post with its replies"
-          >
-            &raquo;
-          </Link>
-        )}
-      </summary>
-      <ul>
-        {replies.map((r) => (
-          <li key={r.id}>
-            {/* <Link
+        </summary>
+      )}
+      {renderReplies && (
+        <ul>
+          {replies.map((r) => (
+            <li key={r.id}>
+              {/* <Link
               class="status-link"
               to={instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`}
               onClick={() => {
                 resetScrollPosition(r.id);
               }}
             > */}
-            <div class="status-focus" tabIndex={0}>
-              <Status
-                statusID={r.id}
-                instance={instance}
-                withinContext
-                size="s"
-                enableTranslate
-                onMediaClick={handleMediaClick}
-                showActionsBar
-              />
-              {!r.replies?.length && r.repliesCount > 0 && (
-                <div class="replies-link">
-                  <Icon icon="comment2" />{' '}
-                  <span title={r.repliesCount}>
-                    {shortenNumber(r.repliesCount)}
-                  </span>
-                </div>
+              <div class="status-focus" tabIndex={0}>
+                <Status
+                  statusID={r.id}
+                  instance={instance}
+                  withinContext
+                  size="s"
+                  enableTranslate
+                  onMediaClick={handleMediaClick}
+                  showActionsBar
+                />
+                {!r.replies?.length && r.repliesCount > 0 && (
+                  <div class="replies-link">
+                    <Icon icon="comment2" alt={t`Replies`} />{' '}
+                    <span title={r.repliesCount}>
+                      {shortenNumber(r.repliesCount)}
+                    </span>
+                  </div>
+                )}
+              </div>
+              {/* </Link> */}
+              {r.replies?.length && (
+                <SubComments
+                  instance={instance}
+                  replies={r.replies}
+                  level={r.level}
+                  accWeight={!open ? r.weight : totalWeight}
+                  openAll={openAll}
+                  parentLink={{
+                    to: instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`,
+                    onClick: () => {
+                      resetScrollPosition(r.id);
+                    },
+                  }}
+                />
               )}
-            </div>
-            {/* </Link> */}
-            {r.replies?.length && (
-              <SubComments
-                instance={instance}
-                replies={r.replies}
-                level={level + 1}
-                accWeight={!open ? r.weight : totalWeight}
-                openAll={openAll}
-                parentLink={{
-                  to: instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`,
-                  onClick: () => {
-                    resetScrollPosition(r.id);
-                  },
-                }}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
-    </details>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Container>
   );
 }
 

@@ -1,15 +1,28 @@
 import './compose.css';
-
 import '@github/text-expander-element';
+
+import { msg, plural, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
-import { forwardRef } from 'preact/compat';
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import Fuse from 'fuse.js';
+import { forwardRef, memo } from 'preact/compat';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
+// import { detectAll } from 'tinyld/light';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
+import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
+
+import poweredByGiphyURL from '../assets/powered-by-giphy.svg';
 
 import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
@@ -17,8 +30,15 @@ import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import i18nDuration from '../utils/i18n-duration';
+import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
+import localeCode2Text from '../utils/localeCode2Text';
+import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
+import pmem from '../utils/pmem';
+import prettyBytes from '../utils/pretty-bytes';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -41,7 +61,10 @@ import Loader from './loader';
 import Modal from './modal';
 import Status from './status';
 
-const { PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL } = import.meta.env;
+const {
+  PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
+  PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
+} = import.meta.env;
 
 const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   const [code, common, native] = l;
@@ -57,16 +80,15 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
 */
 
 const expiryOptions = {
-  '5 minutes': 5 * 60,
-  '30 minutes': 30 * 60,
-  '1 hour': 60 * 60,
-  '6 hours': 6 * 60 * 60,
-  '12 hours': 12 * 60 * 60,
-  '1 day': 24 * 60 * 60,
-  '3 days': 3 * 24 * 60 * 60,
-  '7 days': 7 * 24 * 60 * 60,
+  300: i18nDuration(5, 'minute'),
+  1_800: i18nDuration(30, 'minute'),
+  3_600: i18nDuration(1, 'hour'),
+  21_600: i18nDuration(6, 'hour'),
+  86_400: i18nDuration(1, 'day'),
+  259_200: i18nDuration(3, 'day'),
+  604_800: i18nDuration(1, 'week'),
 };
-const expirySeconds = Object.values(expiryOptions);
+const expirySeconds = Object.keys(expiryOptions);
 const oneDay = 24 * 60 * 60;
 
 const expiresInFromExpiresAt = (expiresAt) => {
@@ -87,7 +109,8 @@ const observer = new IntersectionObserver((entries) => {
       const { left, width } = entry.boundingClientRect;
       const { innerWidth } = window;
       if (left + width > innerWidth) {
-        menu.style.left = innerWidth - width - windowMargin + 'px';
+        const insetInlineStart = isRTL() ? 'right' : 'left';
+        menu.style[insetInlineStart] = innerWidth - width - windowMargin + 'px';
       }
     }
   });
@@ -119,35 +142,34 @@ const MENTION_RE = new RegExp(
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?)(?![\\/\\w])`,
+  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.]+[a-z0-9_]+)?)(?![\\/\\w])`,
   'ig',
 );
 
 // https://github.com/mastodon/mastodon/blob/23e32a4b3031d1da8b911e0145d61b4dd47c4f96/app/models/custom_emoji.rb#L31
 const SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}';
 const SCAN_RE = new RegExp(
-  `([^A-Za-z0-9_:\\n]|^)(:${SHORTCODE_RE_FRAGMENT}:)(?=[^A-Za-z0-9_:]|$)`,
+  `(^|[^=\\/\\w])(:${SHORTCODE_RE_FRAGMENT}:)(?=[^A-Za-z0-9_:]|$)`,
   'g',
 );
 
 const segmenter = new Intl.Segmenter();
-function highlightText(text, { maxCharacters = Infinity }) {
-  // Accept text string, return formatted HTML string
-  // Escape all HTML special characters
-  let html = text
+function escapeHTML(text) {
+  return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
-
+}
+function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
   const { composerCharacterCount } = states;
   if (composerCharacterCount > maxCharacters) {
     // Highlight exceeded characters
     let withinLimitHTML = '',
       exceedLimitHTML = '';
-    const htmlSegments = segmenter.segment(html);
+    const htmlSegments = segmenter.segment(text);
     for (const { segment, index } of htmlSegments) {
       if (index < maxCharacters) {
         withinLimitHTML += segment;
@@ -158,13 +180,13 @@ function highlightText(text, { maxCharacters = Infinity }) {
     if (exceedLimitHTML) {
       exceedLimitHTML =
         '<mark class="compose-highlight-exceeded">' +
-        exceedLimitHTML +
+        escapeHTML(exceedLimitHTML) +
         '</mark>';
     }
-    return withinLimitHTML + exceedLimitHTML;
+    return escapeHTML(withinLimitHTML) + exceedLimitHTML;
   }
 
-  return html
+  return escapeHTML(text)
     .replace(urlRegexObj, '$2<mark class="compose-highlight-url">$3</mark>') // URLs
     .replace(MENTION_RE, '$1<mark class="compose-highlight-mention">$2</mark>') // Mentions
     .replace(HASHTAG_RE, '$1<mark class="compose-highlight-hashtag">$2</mark>') // Hashtags
@@ -174,6 +196,19 @@ function highlightText(text, { maxCharacters = Infinity }) {
     ); // Emoji shortcodes
 }
 
+// const rtf = new Intl.RelativeTimeFormat();
+const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
+const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
+
+const CUSTOM_EMOJIS_COUNT = 100;
+
+const ADD_LABELS = {
+  media: msg`Add media`,
+  customEmoji: msg`Add custom emoji`,
+  gif: msg`Add GIF`,
+  poll: msg`Add poll`,
+};
+
 function Compose({
   onClose,
   replyToStatus,
@@ -182,6 +217,10 @@ function Compose({
   standalone,
   hasOpener,
 }) {
+  const { i18n, _ } = useLingui();
+  const rtf = RTF(i18n.locale);
+  const lf = LF(i18n.locale);
+
   console.warn('RENDER COMPOSER');
   const { masto, instance } = api();
   const [uiState, setUIState] = useState('default');
@@ -197,11 +236,11 @@ function Compose({
   const {
     statuses: {
       maxCharacters,
-      maxMediaAttachments,
+      maxMediaAttachments, // Beware: it can be undefined!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes = [],
+      supportedMimeTypes,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -268,10 +307,14 @@ function Compose({
       focusTextarea();
       setVisibility(
         visibility === 'public' && prefs['posting:default:visibility']
-          ? prefs['posting:default:visibility']
+          ? prefs['posting:default:visibility'].toLowerCase()
           : visibility,
       );
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       setSensitive(sensitive && !!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
@@ -295,9 +338,13 @@ function Compose({
           focusTextarea();
           spoilerTextRef.current.value = spoilerText;
           setVisibility(visibility);
-          setLanguage(language || presf.postingDefaultLanguage || DEFAULT_LANG);
+          setLanguage(
+            language ||
+              prefs['posting:default:language']?.toLowerCase() ||
+              DEFAULT_LANG,
+          );
           setSensitive(sensitive);
-          setPoll(composablePoll);
+          if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
           setUIState('default');
         } catch (e) {
@@ -310,13 +357,13 @@ function Compose({
       focusTextarea();
       console.log('Apply prefs', prefs);
       if (prefs['posting:default:visibility']) {
-        setVisibility(prefs['posting:default:visibility']);
+        setVisibility(prefs['posting:default:visibility'].toLowerCase());
       }
       if (prefs['posting:default:language']) {
-        setLanguage(prefs['posting:default:language']);
+        setLanguage(prefs['posting:default:language'].toLowerCase());
       }
       if (prefs['posting:default:sensitive']) {
-        setSensitive(prefs['posting:default:sensitive']);
+        setSensitive(!!prefs['posting:default:sensitive']);
       }
     }
     if (draftStatus) {
@@ -339,7 +386,11 @@ function Compose({
       focusTextarea();
       if (spoilerText) spoilerTextRef.current.value = spoilerText;
       if (visibility) setVisibility(visibility);
-      setLanguage(language || prefs.postingDefaultLanguage || DEFAULT_LANG);
+      setLanguage(
+        language ||
+          prefs['posting:default:language']?.toLowerCase() ||
+          DEFAULT_LANG,
+      );
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
@@ -348,7 +399,7 @@ function Compose({
 
   const formRef = useRef();
 
-  const beforeUnloadCopy = 'You have unsaved changes. Discard this post?';
+  const beforeUnloadCopy = t`You have unsaved changes. Discard this post?`;
   const canClose = () => {
     const { value, dataset } = textareaRef.current;
 
@@ -359,8 +410,11 @@ function Compose({
     }
 
     // check for status and media attachments
+    const hasValue = (value || '')
+      .trim()
+      .replace(/^\p{White_Space}+|\p{White_Space}+$/gu, '');
     const hasMediaAttachments = mediaAttachments.length > 0;
-    if (!value && !hasMediaAttachments) {
+    if (!hasValue && !hasMediaAttachments) {
       console.log('canClose', { value, mediaAttachments });
       return true;
     }
@@ -492,6 +546,7 @@ function Compose({
     // I don't think this warrant a draft mode for a status that's already posted
     // Maybe it could be a big edit change but it should be rare
     if (editStatus) return;
+    if (states.composerState.minimized) return;
     const key = draftKey();
     const backgroundDraft = {
       key,
@@ -555,17 +610,38 @@ function Compose({
     const handleItems = (e) => {
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
+      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (file && supportedMimeTypes.includes(file.type)) {
+          if (
+            supportedMimeTypes !== undefined &&
+            !supportedMimeTypes.includes(file.type)
+          ) {
+            unsupportedFiles.push(file);
+          } else {
             files.push(file);
           }
         }
       }
+      if (unsupportedFiles.length > 0) {
+        alert(
+          plural(unsupportedFiles.length, {
+            one: `File ${unsupportedFiles[0].name} is not supported.`,
+            other: `Files ${lf.format(
+              unsupportedFiles.map((f) => f.name),
+            )} are not supported.`,
+          }),
+        );
+      }
       if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
-        alert(`You can only attach up to ${maxMediaAttachments} files.`);
+        alert(
+          plural(maxMediaAttachments, {
+            one: 'You can only attach up to 1 file.',
+            other: 'You can only attach up to # files.',
+          }),
+        );
         return;
       }
       console.log({ files });
@@ -573,11 +649,19 @@ function Compose({
         e.preventDefault();
         e.stopPropagation();
         // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        const max = maxMediaAttachments - mediaAttachments.length;
-        const allowedFiles = files.slice(0, max);
-        if (allowedFiles.length <= 0) {
-          alert(`You can only attach up to ${maxMediaAttachments} files.`);
-          return;
+        let allowedFiles = files;
+        if (maxMediaAttachments !== undefined) {
+          const max = maxMediaAttachments - mediaAttachments.length;
+          allowedFiles = allowedFiles.slice(0, max);
+          if (allowedFiles.length <= 0) {
+            alert(
+              plural(maxMediaAttachments, {
+                one: 'You can only attach up to 1 file.',
+                other: 'You can only attach up to # files.',
+              }),
+            );
+            return;
+          }
         }
         const mediaFiles = allowedFiles.map((file) => ({
           file,
@@ -607,8 +691,11 @@ function Compose({
     };
   }, [mediaAttachments]);
 
+  const [showMentionPicker, setShowMentionPicker] = useState(false);
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
+  const [showGIFPicker, setShowGIFPicker] = useState(false);
 
+  const [autoDetectedLanguages, setAutoDetectedLanguages] = useState(null);
   const [topSupportedLanguages, restSupportedLanguages] = useMemo(() => {
     const topLanguages = [];
     const restLanguages = [];
@@ -619,7 +706,8 @@ function Compose({
         code === language ||
         code === prevLanguage.current ||
         code === DEFAULT_LANG ||
-        contentTranslationHideLanguages.includes(code)
+        contentTranslationHideLanguages.includes(code) ||
+        (autoDetectedLanguages?.length && autoDetectedLanguages.includes(code))
       ) {
         topLanguages.push(l);
       } else {
@@ -635,7 +723,55 @@ function Compose({
       commonA.localeCompare(commonB),
     );
     return [topLanguages, restLanguages];
-  }, [language]);
+  }, [language, autoDetectedLanguages]);
+
+  const replyToStatusMonthsAgo = useMemo(
+    () =>
+      !!replyToStatus?.createdAt &&
+      Math.floor(
+        (Date.now() - new Date(replyToStatus.createdAt)) /
+          (1000 * 60 * 60 * 24 * 30),
+      ),
+    [replyToStatus],
+  );
+
+  const onMinimize = () => {
+    saveUnsavedDraft();
+    states.composerState.minimized = true;
+  };
+
+  const gifPickerDisabled =
+    uiState === 'loading' ||
+    (maxMediaAttachments !== undefined &&
+      mediaAttachments.length >= maxMediaAttachments) ||
+    !!poll;
+
+  // If maxOptions is not defined or defined and is greater than 1, show poll button
+  const showPollButton = maxOptions == null || maxOptions > 1;
+  const pollButtonDisabled =
+    uiState === 'loading' || !!poll || !!mediaAttachments.length;
+  const onPollButtonClick = () => {
+    setPoll({
+      options: ['', ''],
+      expiresIn: 24 * 60 * 60, // 1 day
+      multiple: false,
+    });
+  };
+
+  const addSubToolbarRef = useRef();
+  const [showAddButton, setShowAddButton] = useState(false);
+  useResizeObserver({
+    ref: addSubToolbarRef,
+    box: 'border-box',
+    onResize: ({ width }) => {
+      // If scrollable, it's truncated
+      const { scrollWidth } = addSubToolbarRef.current;
+      const truncated = scrollWidth > width;
+      const overTruncated = width < 84; // roughly two buttons width
+      setShowAddButton(overTruncated || truncated);
+      addSubToolbarRef.current.hidden = overTruncated;
+    },
+  });
 
   return (
     <div id="compose-container-outer">
@@ -656,10 +792,10 @@ function Compose({
             />
           )}
           {!standalone ? (
-            <span>
+            <span class="compose-controls">
               <button
                 type="button"
-                class="light pop-button"
+                class="plain4 pop-button"
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
@@ -701,7 +837,14 @@ function Compose({
                   onClose();
                 }}
               >
-                <Icon icon="popout" alt="Pop out" />
+                <Icon icon="popout" alt={t`Pop out`} />
+              </button>
+              <button
+                type="button"
+                class="plain4 min-button"
+                onClick={onMinimize}
+              >
+                <Icon icon="minimize" alt={t`Minimize`} />
               </button>{' '}
               <button
                 type="button"
@@ -713,7 +856,7 @@ function Compose({
                   }
                 }}
               >
-                <Icon icon="x" />
+                <Icon icon="x" alt={t`Close`} />
               </button>
             </span>
           ) : (
@@ -737,14 +880,20 @@ function Compose({
                   // }
 
                   if (!window.opener) {
-                    alert('Looks like you closed the parent window.');
+                    alert(t`Looks like you closed the parent window.`);
                     return;
                   }
 
                   if (window.opener.__STATES__.showCompose) {
-                    const yes = confirm(
-                      'Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?',
-                    );
+                    if (window.opener.__STATES__.composerState?.publishing) {
+                      alert(
+                        t`Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.`,
+                      );
+                      return;
+                    }
+
+                    let confirmText = t`Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?`;
+                    const yes = confirm(confirmText);
                     if (!yes) return;
                   }
 
@@ -769,12 +918,23 @@ function Compose({
                         },
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
-                      window.opener.__STATES__.showCompose = true;
+                      if (window.opener.__STATES__.showCompose) {
+                        window.opener.__STATES__.showCompose = false;
+                        setTimeout(() => {
+                          window.opener.__STATES__.showCompose = true;
+                        }, 10);
+                      } else {
+                        window.opener.__STATES__.showCompose = true;
+                      }
+                      if (window.opener.__STATES__.composerState.minimized) {
+                        // Maximize it
+                        window.opener.__STATES__.composerState.minimized = false;
+                      }
                     },
                   });
                 }}
               >
-                <Icon icon="popin" alt="Pop in" />
+                <Icon icon="popin" alt={t`Pop in`} />
               </button>
             )
           )}
@@ -783,16 +943,32 @@ function Compose({
           <div class="status-preview">
             <Status status={replyToStatus} size="s" previewMode />
             <div class="status-preview-legend reply-to">
-              Replying to @
-              {replyToStatus.account.acct || replyToStatus.account.username}
-              &rsquo;s post
+              {replyToStatusMonthsAgo > 0 ? (
+                <Trans>
+                  Replying to @
+                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  &rsquo;s post (
+                  <strong>
+                    {rtf.format(-replyToStatusMonthsAgo, 'month')}
+                  </strong>
+                  )
+                </Trans>
+              ) : (
+                <Trans>
+                  Replying to @
+                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  &rsquo;s post
+                </Trans>
+              )}
             </div>
           </div>
         )}
         {!!editStatus && (
           <div class="status-preview">
             <Status status={editStatus} size="s" previewMode />
-            <div class="status-preview-legend">Editing source post</div>
+            <div class="status-preview-legend">
+              <Trans>Editing source post</Trans>
+            </div>
           </div>
         )}
         <form
@@ -838,11 +1014,11 @@ function Compose({
           */
             if (poll) {
               if (poll.options.length < 2) {
-                alert('Poll must have at least 2 options');
+                alert(t`Poll must have at least 2 options`);
                 return;
               }
               if (poll.options.some((option) => option === '')) {
-                alert('Some poll choices are empty');
+                alert(t`Some poll choices are empty`);
                 return;
               }
             }
@@ -855,7 +1031,7 @@ function Compose({
               );
               if (hasNoDescriptions) {
                 const yes = confirm(
-                  'Some media have no descriptions. Continue?',
+                  t`Some media have no descriptions. Continue?`,
                 );
                 if (!yes) return;
               }
@@ -865,6 +1041,8 @@ function Compose({
             spoilerText = (sensitive && spoilerText) || undefined;
             status = status === '' ? undefined : status;
 
+            // states.composerState.minimized = true;
+            states.composerState.publishing = true;
             setUIState('loading');
             (async () => {
               try {
@@ -898,12 +1076,14 @@ function Compose({
                       return result.status === 'rejected' || !result.value?.id;
                     })
                   ) {
+                    states.composerState.publishing = false;
+                    states.composerState.publishingError = true;
                     setUIState('error');
                     // Alert all the reasons
                     results.forEach((result) => {
                       if (result.status === 'rejected') {
                         console.error(result);
-                        alert(result.reason || `Attachment #${i} failed`);
+                        alert(result.reason || t`Attachment #${i} failed`);
                       }
                     });
                     return;
@@ -960,13 +1140,19 @@ function Compose({
                 } else {
                   try {
                     newStatus = await masto.v1.statuses.create(params, {
-                      idempotencyKey: UID.current,
+                      requestInit: {
+                        headers: {
+                          'Idempotency-Key': UID.current,
+                        },
+                      },
                     });
                   } catch (_) {
                     // If idempotency key fails, try again without it
                     newStatus = await masto.v1.statuses.create(params);
                   }
                 }
+                states.composerState.minimized = false;
+                states.composerState.publishing = false;
                 setUIState('default');
 
                 // Close
@@ -977,6 +1163,8 @@ function Compose({
                   instance,
                 });
               } catch (e) {
+                states.composerState.publishing = false;
+                states.composerState.publishingError = true;
                 console.error(e);
                 alert(e?.reason || e);
                 setUIState('error');
@@ -989,7 +1177,7 @@ function Compose({
               ref={spoilerTextRef}
               type="text"
               name="spoilerText"
-              placeholder="Content warning"
+              placeholder={t`Content warning`}
               disabled={uiState === 'loading'}
               class="spoiler-text-field"
               lang={language}
@@ -1005,7 +1193,7 @@ function Compose({
             />
             <label
               class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
-              title="Content warning or sensitive media"
+              title={t`Content warning or sensitive media`}
             >
               <input
                 name="sensitive"
@@ -1028,7 +1216,7 @@ function Compose({
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
               } ${visibility !== 'public' ? 'highlight' : ''}`}
-              title={`Visibility: ${visibility}`}
+              title={visibility}
             >
               <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
               <select
@@ -1038,13 +1226,26 @@ function Compose({
                   setVisibility(e.target.value);
                 }}
                 disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
               >
                 <option value="public">
-                  Public <Icon icon="earth" />
+                  <Trans>Public</Trans>
                 </option>
-                <option value="unlisted">Unlisted</option>
-                <option value="private">Followers only</option>
-                <option value="direct">Private mention</option>
+                {(supports('@pleroma/local-visibility-post') ||
+                  supports('@akkoma/local-visibility-post')) && (
+                  <option value="local">
+                    <Trans>Local</Trans>
+                  </option>
+                )}
+                <option value="unlisted">
+                  <Trans>Unlisted</Trans>
+                </option>
+                <option value="private">
+                  <Trans>Followers only</Trans>
+                </option>
+                <option value="direct">
+                  <Trans>Private mention</Trans>
+                </option>
               </select>
             </label>{' '}
           </div>
@@ -1052,10 +1253,10 @@ function Compose({
             ref={textareaRef}
             placeholder={
               replyToStatus
-                ? 'Post your reply'
+                ? t`Post your reply`
                 : editStatus
-                ? 'Edit your post'
-                : 'What are you doing?'
+                  ? t`Edit your post`
+                  : t`What are you doing?`
             }
             required={mediaAttachments?.length === 0}
             disabled={uiState === 'loading'}
@@ -1075,6 +1276,22 @@ function Compose({
               }
               return masto.v2.search.fetch(params);
             }}
+            onTrigger={(action) => {
+              if (action?.name === 'custom-emojis') {
+                setShowEmoji2Picker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
+              } else if (action?.name === 'mention') {
+                setShowMentionPicker({
+                  defaultSearchTerm: action?.defaultSearchTerm || null,
+                });
+              } else if (
+                action?.name === 'auto-detect-language' &&
+                action?.languages
+              ) {
+                setAutoDetectedLanguages(action.languages);
+              }
+            }}
           />
           {mediaAttachments?.length > 0 && (
             <div class="media-attachments">
@@ -1090,7 +1307,10 @@ function Compose({
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
                         const newAttachments = [...attachments];
-                        newAttachments[i].description = value;
+                        newAttachments[i] = {
+                          ...newAttachments[i],
+                          description: value,
+                        };
                         return newAttachments;
                       });
                     }}
@@ -1113,7 +1333,9 @@ function Compose({
                     setSensitive(sensitive);
                   }}
                 />{' '}
-                <span>Mark media as sensitive</span>{' '}
+                <span>
+                  <Trans>Mark media as sensitive</Trans>
+                </span>{' '}
                 <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
               </label>
             </div>
@@ -1137,84 +1359,139 @@ function Compose({
               }}
             />
           )}
-          <div
-            class="toolbar wrap"
-            style={{
-              justifyContent: 'flex-end',
-            }}
-          >
-            <span>
-              <label class="toolbar-button">
-                <input
-                  type="file"
-                  accept={supportedMimeTypes.join(',')}
-                  multiple={mediaAttachments.length < maxMediaAttachments - 1}
-                  disabled={
-                    uiState === 'loading' ||
-                    mediaAttachments.length >= maxMediaAttachments ||
-                    !!poll
-                  }
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    if (!files) return;
-
-                    const mediaFiles = Array.from(files).map((file) => ({
-                      file,
-                      type: file.type,
-                      size: file.size,
-                      url: URL.createObjectURL(file),
-                      id: null, // indicate uploaded state
-                      description: null,
-                    }));
-                    console.log('MEDIA ATTACHMENTS', files, mediaFiles);
-
-                    // Validate max media attachments
-                    if (
-                      mediaAttachments.length + mediaFiles.length >
-                      maxMediaAttachments
-                    ) {
-                      alert(
-                        `You can only attach up to ${maxMediaAttachments} files.`,
-                      );
-                    } else {
-                      setMediaAttachments((attachments) => {
-                        return attachments.concat(mediaFiles);
-                      });
-                    }
-                    // Reset
-                    e.target.value = '';
+          <div class="toolbar compose-footer">
+            <span class="add-toolbar-button-group spacer">
+              {showAddButton && (
+                <Menu2
+                  portal={{
+                    target: document.body,
                   }}
-                />
-                <Icon icon="attachment" />
-              </label>{' '}
-              <button
-                type="button"
-                class="toolbar-button"
-                disabled={
-                  uiState === 'loading' || !!poll || !!mediaAttachments.length
-                }
-                onClick={() => {
-                  setPoll({
-                    options: ['', ''],
-                    expiresIn: 24 * 60 * 60, // 1 day
-                    multiple: false,
-                  });
-                }}
-              >
-                <Icon icon="poll" alt="Add poll" />
-              </button>{' '}
-              <button
+                  containerProps={{
+                    style: {
+                      zIndex: 1001,
+                    },
+                  }}
+                  menuButton={({ open }) => (
+                    <button
+                      type="button"
+                      class={`toolbar-button add-button ${
+                        open ? 'active' : ''
+                      }`}
+                    >
+                      <Icon icon="plus" title={t`Add`} />
+                    </button>
+                  )}
+                >
+                  <MenuItem className="compose-menu-add-media">
+                    <label class="compose-menu-add-media-field">
+                      <FilePickerInput
+                        hidden
+                        supportedMimeTypes={supportedMimeTypes}
+                        maxMediaAttachments={maxMediaAttachments}
+                        mediaAttachments={mediaAttachments}
+                        disabled={
+                          uiState === 'loading' ||
+                          mediaAttachments.length >= maxMediaAttachments ||
+                          !!poll
+                        }
+                        setMediaAttachments={setMediaAttachments}
+                      />
+                    </label>
+                    <Icon icon="media" /> <span>{_(ADD_LABELS.media)}</span>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setShowEmoji2Picker(true);
+                    }}
+                  >
+                    <Icon icon="emoji2" />{' '}
+                    <span>{_(ADD_LABELS.customEmoji)}</span>
+                  </MenuItem>
+                  {!!states.settings.composerGIFPicker && (
+                    <MenuItem
+                      disabled={gifPickerDisabled}
+                      onClick={() => {
+                        setShowGIFPicker(true);
+                      }}
+                    >
+                      <span class="icon icon-gif" role="img" />
+                      <span>{_(ADD_LABELS.gif)}</span>
+                    </MenuItem>
+                  )}
+                  <MenuItem
+                    disabled={pollButtonDisabled}
+                    onClick={onPollButtonClick}
+                  >
+                    <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
+                  </MenuItem>
+                </Menu2>
+              )}
+              <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
+                <label class="toolbar-button">
+                  <FilePickerInput
+                    supportedMimeTypes={supportedMimeTypes}
+                    maxMediaAttachments={maxMediaAttachments}
+                    mediaAttachments={mediaAttachments}
+                    disabled={
+                      uiState === 'loading' ||
+                      mediaAttachments.length >= maxMediaAttachments ||
+                      !!poll
+                    }
+                    setMediaAttachments={setMediaAttachments}
+                  />
+                  <Icon icon="media" alt={_(ADD_LABELS.media)} />
+                </label>
+                {/* <button
                 type="button"
                 class="toolbar-button"
                 disabled={uiState === 'loading'}
                 onClick={() => {
-                  setShowEmoji2Picker(true);
+                  setShowMentionPicker(true);
                 }}
               >
-                <Icon icon="emoji2" />
-              </button>
+                <Icon icon="at" />
+              </button> */}
+                <button
+                  type="button"
+                  class="toolbar-button"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    setShowEmoji2Picker(true);
+                  }}
+                >
+                  <Icon icon="emoji2" alt={_(ADD_LABELS.customEmoji)} />
+                </button>
+                {!!states.settings.composerGIFPicker && (
+                  <button
+                    type="button"
+                    class="toolbar-button gif-picker-button"
+                    disabled={gifPickerDisabled}
+                    onClick={() => {
+                      setShowGIFPicker(true);
+                    }}
+                  >
+                    <span
+                      class="icon icon-gif"
+                      aria-label={_(ADD_LABELS.gif)}
+                    />
+                  </button>
+                )}
+                {}
+                {showPollButton && (
+                  <>
+                    <button
+                      type="button"
+                      class="toolbar-button"
+                      disabled={pollButtonDisabled}
+                      onClick={onPollButtonClick}
+                    >
+                      <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
+                    </button>
+                  </>
+                )}
+              </span>
             </span>
-            <div class="spacer" />
+            {/* <div class="spacer" /> */}
             {uiState === 'loading' ? (
               <Loader abrupt />
             ) : (
@@ -1225,7 +1502,11 @@ function Compose({
             )}
             <label
               class={`toolbar-button ${
-                language !== prevLanguage.current ? 'highlight' : ''
+                language !== prevLanguage.current ||
+                (autoDetectedLanguages?.length &&
+                  !autoDetectedLanguages.includes(language))
+                  ? 'highlight'
+                  : ''
               }`}
             >
               <span class="icon-text">
@@ -1240,30 +1521,97 @@ function Compose({
                   store.session.set('currentLanguage', value || DEFAULT_LANG);
                 }}
                 disabled={uiState === 'loading'}
+                dir="auto"
               >
-                {topSupportedLanguages.map(([code, common, native]) => (
-                  <option value={code} key={code}>
-                    {common} ({native})
-                  </option>
-                ))}
+                {topSupportedLanguages.map(([code, common, native]) => {
+                  const commonText = localeCode2Text({
+                    code,
+                    fallback: common,
+                  });
+                  const showCommon = commonText !== native;
+                  return (
+                    <option value={code} key={code}>
+                      {showCommon ? `${native} - ${commonText}` : commonText}
+                    </option>
+                  );
+                })}
                 <hr />
-                {restSupportedLanguages.map(([code, common, native]) => (
-                  <option value={code} key={code}>
-                    {common} ({native})
-                  </option>
-                ))}
+                {restSupportedLanguages.map(([code, common, native]) => {
+                  const commonText = localeCode2Text({
+                    code,
+                    fallback: common,
+                  });
+                  const showCommon = commonText !== native;
+                  return (
+                    <option value={code} key={code}>
+                      {showCommon ? `${native} - ${commonText}` : commonText}
+                    </option>
+                  );
+                })}
               </select>
             </label>{' '}
-            <button
-              type="submit"
-              class="large"
-              disabled={uiState === 'loading'}
-            >
-              {replyToStatus ? 'Reply' : editStatus ? 'Update' : 'Post'}
+            <button type="submit" disabled={uiState === 'loading'}>
+              {replyToStatus
+                ? t`Reply`
+                : editStatus
+                  ? t`Update`
+                  : t({
+                      message: 'Post',
+                      context: 'Submit button in composer',
+                    })}
             </button>
           </div>
         </form>
       </div>
+      {showMentionPicker && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowMentionPicker(false);
+            }
+          }}
+        >
+          <MentionModal
+            masto={masto}
+            instance={instance}
+            onClose={() => {
+              setShowMentionPicker(false);
+            }}
+            defaultSearchTerm={showMentionPicker?.defaultSearchTerm}
+            onSelect={(socialAddress) => {
+              const textarea = textareaRef.current;
+              if (!textarea) return;
+              const { selectionStart, selectionEnd } = textarea;
+              const text = textarea.value;
+              const textBeforeMention = text.slice(0, selectionStart);
+              const spaceBeforeMention = textBeforeMention
+                ? /[\s\t\n\r]$/.test(textBeforeMention)
+                  ? ''
+                  : ' '
+                : '';
+              const textAfterMention = text.slice(selectionEnd);
+              const spaceAfterMention = /^[\s\t\n\r]/.test(textAfterMention)
+                ? ''
+                : ' ';
+              const newText =
+                textBeforeMention +
+                spaceBeforeMention +
+                '@' +
+                socialAddress +
+                spaceAfterMention +
+                textAfterMention;
+              textarea.value = newText;
+              textarea.selectionStart = textarea.selectionEnd =
+                selectionEnd +
+                1 +
+                socialAddress.length +
+                spaceAfterMention.length;
+              textarea.focus();
+              textarea.dispatchEvent(new Event('input'));
+            }}
+          />
+        </Modal>
+      )}
       {showEmoji2Picker && (
         <Modal
           onClick={(e) => {
@@ -1278,26 +1626,151 @@ function Compose({
             onClose={() => {
               setShowEmoji2Picker(false);
             }}
-            onSelect={(emoji) => {
-              const emojiWithSpace = ` ${emoji} `;
+            defaultSearchTerm={showEmoji2Picker?.defaultSearchTerm}
+            onSelect={(emojiShortcode) => {
               const textarea = textareaRef.current;
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
+              const textBeforeEmoji = text.slice(0, selectionStart);
+              const spaceBeforeEmoji = textBeforeEmoji
+                ? /[\s\t\n\r]$/.test(textBeforeEmoji)
+                  ? ''
+                  : ' '
+                : '';
+              const textAfterEmoji = text.slice(selectionEnd);
+              const spaceAfterEmoji = /^[\s\t\n\r]/.test(textAfterEmoji)
+                ? ''
+                : ' ';
               const newText =
-                text.slice(0, selectionStart) +
-                emojiWithSpace +
-                text.slice(selectionEnd);
+                textBeforeEmoji +
+                spaceBeforeEmoji +
+                emojiShortcode +
+                spaceAfterEmoji +
+                textAfterEmoji;
               textarea.value = newText;
               textarea.selectionStart = textarea.selectionEnd =
-                selectionEnd + emojiWithSpace.length;
+                selectionEnd + emojiShortcode.length + spaceAfterEmoji.length;
               textarea.focus();
               textarea.dispatchEvent(new Event('input'));
             }}
           />
         </Modal>
       )}
+      {showGIFPicker && (
+        <Modal
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowGIFPicker(false);
+            }
+          }}
+        >
+          <GIFPickerModal
+            onClose={() => setShowGIFPicker(false)}
+            onSelect={({ url, type, alt_text }) => {
+              console.log('GIF URL', url);
+              if (mediaAttachments.length >= maxMediaAttachments) {
+                alert(
+                  plural(maxMediaAttachments, {
+                    one: 'You can only attach up to 1 file.',
+                    other: 'You can only attach up to # files.',
+                  }),
+                );
+                return;
+              }
+              // Download the GIF and insert it as media attachment
+              (async () => {
+                let theToast;
+                try {
+                  theToast = showToast({
+                    text: t`Downloading GIF…`,
+                    duration: -1,
+                  });
+                  const blob = await fetch(url, {
+                    referrerPolicy: 'no-referrer',
+                  }).then((res) => res.blob());
+                  const file = new File(
+                    [blob],
+                    type === 'video/mp4' ? 'video.mp4' : 'image.gif',
+                    {
+                      type,
+                    },
+                  );
+                  const newMediaAttachments = [
+                    ...mediaAttachments,
+                    {
+                      file,
+                      type,
+                      size: file.size,
+                      id: null,
+                      description: alt_text || '',
+                    },
+                  ];
+                  setMediaAttachments(newMediaAttachments);
+                  theToast?.hideToast?.();
+                } catch (err) {
+                  console.error(err);
+                  theToast?.hideToast?.();
+                  showToast(t`Failed to download GIF`);
+                }
+              })();
+            }}
+          />
+        </Modal>
+      )}
     </div>
+  );
+}
+
+function FilePickerInput({
+  hidden,
+  supportedMimeTypes,
+  maxMediaAttachments,
+  mediaAttachments,
+  disabled = false,
+  setMediaAttachments,
+}) {
+  return (
+    <input
+      type="file"
+      hidden={hidden}
+      accept={supportedMimeTypes?.join(',')}
+      multiple={
+        maxMediaAttachments === undefined ||
+        maxMediaAttachments - mediaAttachments >= 2
+      }
+      disabled={disabled}
+      onChange={(e) => {
+        const files = e.target.files;
+        if (!files) return;
+
+        const mediaFiles = Array.from(files).map((file) => ({
+          file,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null, // indicate uploaded state
+          description: null,
+        }));
+        console.log('MEDIA ATTACHMENTS', files, mediaFiles);
+
+        // Validate max media attachments
+        if (mediaAttachments.length + mediaFiles.length > maxMediaAttachments) {
+          alert(
+            plural(maxMediaAttachments, {
+              one: 'You can only attach up to 1 file.',
+              other: 'You can only attach up to # files.',
+            }),
+          );
+        } else {
+          setMediaAttachments((attachments) => {
+            return attachments.concat(mediaFiles);
+          });
+        }
+        // Reset
+        e.target.value = '';
+      }}
+    />
   );
 }
 
@@ -1313,25 +1786,55 @@ function autoResizeTextarea(textarea) {
   }
 }
 
+async function _getCustomEmojis(instance, masto) {
+  const emojis = await masto.v1.customEmojis.list();
+  const visibleEmojis = emojis.filter((e) => e.visibleInPicker);
+  const searcher = new Fuse(visibleEmojis, {
+    keys: ['shortcode'],
+    findAllMatches: true,
+  });
+  return [visibleEmojis, searcher];
+}
+const getCustomEmojis = pmem(_getCustomEmojis, {
+  // Limit by time to reduce memory usage
+  // Cached by instance
+  matchesArg: (cacheKeyArg, keyArg) => cacheKeyArg.instance === keyArg.instance,
+  maxAge: 30 * 60 * 1000, // 30 minutes
+});
+
+const detectLangs = async (text) => {
+  const { detectAll } = await import('tinyld/light');
+  const langs = detectAll(text);
+  if (langs?.length) {
+    // return max 2
+    return langs.slice(0, 2).map((lang) => lang.lang);
+  }
+  return null;
+};
+
 const Textarea = forwardRef((props, ref) => {
-  const { masto } = api();
+  const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
-  const { maxCharacters, performSearch = () => {}, ...textareaProps } = props;
+  const {
+    maxCharacters,
+    performSearch = () => {},
+    onTrigger = () => {},
+    ...textareaProps
+  } = props;
   // const snapStates = useSnapshot(states);
   // const charCount = snapStates.composerCharacterCount;
 
-  const customEmojis = useRef();
+  // const customEmojis = useRef();
+  const searcherRef = useRef();
   useEffect(() => {
-    (async () => {
-      try {
-        const emojis = await masto.v1.customEmojis.list();
-        console.log({ emojis });
-        customEmojis.current = emojis;
-      } catch (e) {
-        // silent fail
+    getCustomEmojis(instance, masto)
+      .then((r) => {
+        const [emojis, searcher] = r;
+        searcherRef.current = searcher;
+      })
+      .catch((e) => {
         console.error(e);
-      }
-    })();
+      });
   }, []);
 
   const textExpanderRef = useRef();
@@ -1357,23 +1860,27 @@ const Textarea = forwardRef((props, ref) => {
           // const emojis = customEmojis.current.filter((emoji) =>
           //   emoji.shortcode.startsWith(text),
           // );
-          const emojis = filterShortcodes(customEmojis.current, text);
+          // const emojis = filterShortcodes(customEmojis.current, text);
+          const results = searcherRef.current?.search(text, {
+            limit: 5,
+          });
           let html = '';
-          emojis.forEach((emoji) => {
+          results.forEach(({ item: emoji }) => {
             const { shortcode, url } = emoji;
             html += `
                 <li role="option" data-value="${encodeHTML(shortcode)}">
                 <img src="${encodeHTML(
                   url,
                 )}" width="16" height="16" alt="" loading="lazy" /> 
-                :${encodeHTML(shortcode)}:
+                ${encodeHTML(shortcode)}
               </li>`;
           });
+          html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
           // console.log({ emojis, html });
           menu.innerHTML = html;
           provide(
             Promise.resolve({
-              matched: emojis.length > 0,
+              matched: results.length > 0,
               fragment: menu,
             }),
           );
@@ -1421,7 +1928,9 @@ const Textarea = forwardRef((props, ref) => {
                       </span>
                       <span>
                         <b>${displayNameWithEmoji || username}</b>
-                        <br>@${encodeHTML(acct)}
+                        <br><span class="bidi-isolate">@${encodeHTML(
+                          acct,
+                        )}</span>
                       </span>
                     </li>
                   `;
@@ -1441,8 +1950,11 @@ const Textarea = forwardRef((props, ref) => {
                     </li>
                   `;
                 }
-                menu.innerHTML = html;
               });
+              if (type === 'accounts') {
+                html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
+              }
+              menu.innerHTML = html;
               console.log('MENU', results, menu);
               resolve({
                 matched: results.length > 0,
@@ -1460,10 +1972,33 @@ const Textarea = forwardRef((props, ref) => {
 
       handleValue = (e) => {
         const { key, item } = e.detail;
+        const { value, more } = item.dataset;
         if (key === ':') {
-          e.detail.value = `:${item.dataset.value}:`;
+          e.detail.value = value ? `:${value}:` : '​'; // zero-width space
+          if (more) {
+            // Prevent adding space after the above value
+            e.detail.continue = true;
+
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'custom-emojis',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
+        } else if (key === '@') {
+          e.detail.value = value ? `@${value} ` : '​'; // zero-width space
+          if (more) {
+            e.detail.continue = true;
+            setTimeout(() => {
+              onTrigger?.({
+                name: 'mention',
+                defaultSearchTerm: more,
+              });
+            }, 300);
+          }
         } else {
-          e.detail.value = `${key}${item.dataset.value}`;
+          e.detail.value = `${key}${value}`;
         }
       };
 
@@ -1547,6 +2082,28 @@ const Textarea = forwardRef((props, ref) => {
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
+  const debouncedAutoDetectLanguage = useDebouncedCallback(() => {
+    // Make use of the highlightRef to get the DOM
+    // Clone the dom
+    const dom = composeHighlightRef.current?.cloneNode(true);
+    if (!dom) return;
+    // Remove mark
+    dom.querySelectorAll('mark').forEach((mark) => {
+      mark.remove();
+    });
+    const text = dom.innerText?.trim();
+    if (!text) return;
+    (async () => {
+      const langs = await detectLangs(text);
+      if (langs?.length) {
+        onTrigger?.({
+          name: 'auto-detect-language',
+          languages: langs,
+        });
+      }
+    })();
+  }, 2000);
+
   return (
     <text-expander
       ref={textExpanderRef}
@@ -1608,11 +2165,13 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          const text = target.value;
+          // Replace zero-width space
+          const text = target.value.replace(/\u200b/g, '');
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
           throttleHighlightText(text);
+          debouncedAutoDetectLanguage();
         }}
         style={{
           width: '100%',
@@ -1640,28 +2199,42 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
   const charCount = snapStates.composerCharacterCount;
   const leftChars = maxCharacters - charCount;
   if (hidden) {
-    return <meter class="donut" hidden />;
+    return <span class="char-counter" hidden />;
   }
   return (
-    <meter
-      class={`donut ${
-        leftChars <= -10
-          ? 'explode'
-          : leftChars <= 0
-          ? 'danger'
-          : leftChars <= 20
-          ? 'warning'
-          : ''
-      }`}
-      value={charCount}
-      max={maxCharacters}
-      data-left={leftChars}
+    <span
+      class="char-counter"
       title={`${leftChars}/${maxCharacters}`}
       style={{
         '--percentage': (charCount / maxCharacters) * 100,
       }}
-    />
+    >
+      <meter
+        class={`${
+          leftChars <= -10
+            ? 'explode'
+            : leftChars <= 0
+              ? 'danger'
+              : leftChars <= 20
+                ? 'warning'
+                : ''
+        }`}
+        value={charCount}
+        max={maxCharacters}
+      />
+      <span class="counter">{leftChars}</span>
+    </span>
   );
+}
+
+function scaleDimension(matrix, matrixLimit, width, height) {
+  // matrix = number of pixels
+  // matrixLimit = max number of pixels
+  // Calculate new width and height, downsize to within the limit, preserve aspect ratio, no decimals
+  const scalingFactor = Math.sqrt(matrixLimit / matrix);
+  const newWidth = Math.floor(width * scalingFactor);
+  const newHeight = Math.floor(height * scalingFactor);
+  return { newWidth, newHeight };
 }
 
 function MediaAttachment({
@@ -1671,6 +2244,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
+  const { i18n } = useLingui();
   const [uiState, setUIState] = useState('default');
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
@@ -1679,12 +2253,90 @@ function MediaAttachment({
     [file, attachment.url],
   );
   console.log({ attachment });
+
+  const checkMaxError = !!file?.size;
+  const configuration = checkMaxError ? getCurrentInstanceConfiguration() : {};
+  const {
+    mediaAttachments: {
+      imageSizeLimit,
+      imageMatrixLimit,
+      videoSizeLimit,
+      videoMatrixLimit,
+      videoFrameRateLimit,
+    } = {},
+  } = configuration || {};
+
+  const [maxError, setMaxError] = useState(() => {
+    if (!checkMaxError) return null;
+    if (
+      type.startsWith('image') &&
+      imageSizeLimit &&
+      file.size > imageSizeLimit
+    ) {
+      return {
+        type: 'imageSizeLimit',
+        details: {
+          imageSize: file.size,
+          imageSizeLimit,
+        },
+      };
+    } else if (
+      type.startsWith('video') &&
+      videoSizeLimit &&
+      file.size > videoSizeLimit
+    ) {
+      return {
+        type: 'videoSizeLimit',
+        details: {
+          videoSize: file.size,
+          videoSizeLimit,
+        },
+      };
+    }
+    return null;
+  });
+
+  const [imageMatrix, setImageMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !imageMatrixLimit) return;
+    if (imageMatrix?.matrix > imageMatrixLimit) {
+      setMaxError({
+        type: 'imageMatrixLimit',
+        details: {
+          imageMatrix: imageMatrix?.matrix,
+          imageMatrixLimit,
+          width: imageMatrix?.width,
+          height: imageMatrix?.height,
+        },
+      });
+    }
+  }, [imageMatrix, imageMatrixLimit, checkMaxError]);
+
+  const [videoMatrix, setVideoMatrix] = useState({});
+  useEffect(() => {
+    if (!checkMaxError || !videoMatrixLimit) return;
+    if (videoMatrix?.matrix > videoMatrixLimit) {
+      setMaxError({
+        type: 'videoMatrixLimit',
+        details: {
+          videoMatrix: videoMatrix?.matrix,
+          videoMatrixLimit,
+          width: videoMatrix?.width,
+          height: videoMatrix?.height,
+        },
+      });
+    }
+  }, [videoMatrix, videoMatrixLimit, checkMaxError]);
+
   const [description, setDescription] = useState(attachment.description);
   const [suffixType, subtype] = type.split('/');
   const debouncedOnDescriptionChange = useDebouncedCallback(
     onDescriptionChange,
     250,
   );
+  useEffect(() => {
+    debouncedOnDescriptionChange(description);
+  }, [description, debouncedOnDescriptionChange]);
 
   const [showModal, setShowModal] = useState(false);
   const textareaRef = useRef(null);
@@ -1704,7 +2356,9 @@ function MediaAttachment({
     <>
       {!!id && !supportsEdit ? (
         <div class="media-desc">
-          <span class="tag">Uploaded</span>
+          <span class="tag">
+            <Trans>Uploaded</Trans>
+          </span>
           <p title={description}>
             {attachment.description || <i>No description</i>}
           </p>
@@ -1716,9 +2370,9 @@ function MediaAttachment({
           lang={lang}
           placeholder={
             {
-              image: 'Image description',
-              video: 'Video description',
-              audio: 'Audio description',
+              image: t`Image description`,
+              video: t`Video description`,
+              audio: t`Audio description`,
             }[suffixType]
           }
           autoCapitalize="sentences"
@@ -1733,7 +2387,7 @@ function MediaAttachment({
           onInput={(e) => {
             const { value } = e.target;
             setDescription(value);
-            debouncedOnDescriptionChange(value);
+            // debouncedOnDescriptionChange(value);
           }}
         ></textarea>
       )}
@@ -1747,6 +2401,58 @@ function MediaAttachment({
     };
   }, []);
 
+  const maxErrorToast = useRef(null);
+
+  const maxErrorText = (err) => {
+    const { type, details } = err;
+    switch (type) {
+      case 'imageSizeLimit': {
+        const { imageSize, imageSizeLimit } = details;
+        return t`File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          imageSize,
+        )} to ${prettyBytes(imageSizeLimit)} or lower.`;
+      }
+      case 'imageMatrixLimit': {
+        const { imageMatrix, imageMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          imageMatrix,
+          imageMatrixLimit,
+          width,
+          height,
+        );
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+          width,
+        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
+          newHeight,
+        )}px.`;
+      }
+      case 'videoSizeLimit': {
+        const { videoSize, videoSizeLimit } = details;
+        return t`File size too large. Uploading might encounter issues. Try reduce the file size from ${prettyBytes(
+          videoSize,
+        )} to ${prettyBytes(videoSizeLimit)} or lower.`;
+      }
+      case 'videoMatrixLimit': {
+        const { videoMatrix, videoMatrixLimit, width, height } = details;
+        const { newWidth, newHeight } = scaleDimension(
+          videoMatrix,
+          videoMatrixLimit,
+          width,
+          height,
+        );
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+          width,
+        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
+          newHeight,
+        )}px.`;
+      }
+      case 'videoFrameRateLimit': {
+        // Not possible to detect this on client-side for now
+        return t`Frame rate too high. Uploading might encounter issues.`;
+      }
+    }
+  };
+
   return (
     <>
       <div class="media-attachment">
@@ -1758,9 +2464,38 @@ function MediaAttachment({
           }}
         >
           {suffixType === 'image' ? (
-            <img src={url} alt="" />
+            <img
+              src={url}
+              alt=""
+              onLoad={(e) => {
+                if (!checkMaxError) return;
+                const { naturalWidth, naturalHeight } = e.target;
+                setImageMatrix({
+                  matrix: naturalWidth * naturalHeight,
+                  width: naturalWidth,
+                  height: naturalHeight,
+                });
+              }}
+            />
           ) : suffixType === 'video' || suffixType === 'gifv' ? (
-            <video src={url} playsinline muted />
+            <video
+              src={url + '#t=0.1'} // Make Safari show 1st-frame preview
+              playsinline
+              muted
+              disablePictureInPicture
+              preload="metadata"
+              onLoadedMetadata={(e) => {
+                if (!checkMaxError) return;
+                const { videoWidth, videoHeight } = e.target;
+                if (videoWidth && videoHeight) {
+                  setVideoMatrix({
+                    matrix: videoWidth * videoHeight,
+                    width: videoWidth,
+                    height: videoHeight,
+                  });
+                }
+              }}
+            />
           ) : suffixType === 'audio' ? (
             <audio src={url} controls />
           ) : null}
@@ -1773,16 +2508,32 @@ function MediaAttachment({
             disabled={disabled}
             onClick={onRemove}
           >
-            <Icon icon="x" />
+            <Icon icon="x" alt={t`Remove`} />
           </button>
+          {!!maxError && (
+            <button
+              type="button"
+              class="media-error"
+              title={maxErrorText(maxError)}
+              onClick={() => {
+                if (maxErrorToast.current) {
+                  maxErrorToast.current.hideToast();
+                }
+                maxErrorToast.current = showToast({
+                  text: maxErrorText(maxError),
+                  duration: 10_000,
+                });
+              }}
+            >
+              <Icon icon="alert" alt={t`Error`} />
+            </button>
+          )}
         </div>
       </div>
       {showModal && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowModal(false);
-            }
+          onClose={() => {
+            setShowModal(false);
           }}
         >
           <div id="media-sheet" class="sheet sheet-max">
@@ -1793,15 +2544,15 @@ function MediaAttachment({
                 setShowModal(false);
               }}
             >
-              <Icon icon="x" />
+              <Icon icon="x" alt={t`Close`} />
             </button>
             <header>
               <h2>
                 {
                   {
-                    image: 'Edit image description',
-                    video: 'Edit video description',
-                    audio: 'Edit audio description',
+                    image: t`Edit image description`,
+                    video: t`Edit video description`,
+                    audio: t`Edit audio description`,
                   }[suffixType]
                 }
               </h2>
@@ -1836,8 +2587,8 @@ function MediaAttachment({
                         position="anchor"
                         overflow="auto"
                         menuButton={
-                          <button type="button" title="More" class="plain">
-                            <Icon icon="more" size="l" alt="More" />
+                          <button type="button" class="plain">
+                            <Icon icon="more" size="l" alt={t`More`} />
                           </button>
                         }
                       >
@@ -1846,7 +2597,7 @@ function MediaAttachment({
                           onClick={() => {
                             setUIState('loading');
                             toastRef.current = showToast({
-                              text: 'Generating description. Please wait...',
+                              text: t`Generating description. Please wait…`,
                               duration: -1,
                             });
                             // POST with multipart
@@ -1865,9 +2616,9 @@ function MediaAttachment({
                               } catch (e) {
                                 console.error(e);
                                 showToast(
-                                  `Failed to generate description${
-                                    e?.message ? `: ${e.message}` : ''
-                                  }`,
+                                  e.message
+                                    ? t`Failed to generate description: ${e.message}`
+                                    : t`Failed to generate description`,
                                 );
                               } finally {
                                 setUIState('default');
@@ -1877,8 +2628,71 @@ function MediaAttachment({
                           }}
                         >
                           <Icon icon="sparkles2" />
-                          <span>Generate description…</span>
+                          {lang && lang !== 'en' ? (
+                            <small>
+                              <Trans>Generate description…</Trans>
+                              <br />
+                              (English)
+                            </small>
+                          ) : (
+                            <span>
+                              <Trans>Generate description…</Trans>
+                            </span>
+                          )}
                         </MenuItem>
+                        {!!lang && lang !== 'en' && (
+                          <MenuItem
+                            disabled={uiState === 'loading'}
+                            onClick={() => {
+                              setUIState('loading');
+                              toastRef.current = showToast({
+                                text: t`Generating description. Please wait…`,
+                                duration: -1,
+                              });
+                              // POST with multipart
+                              (async function () {
+                                try {
+                                  const body = new FormData();
+                                  body.append('image', file);
+                                  const params = `?lang=${lang}`;
+                                  const response = await fetch(
+                                    IMG_ALT_API_URL + params,
+                                    {
+                                      method: 'POST',
+                                      body,
+                                    },
+                                  ).then((r) => r.json());
+                                  if (response.error) {
+                                    throw new Error(response.error);
+                                  }
+                                  setDescription(response.description);
+                                } catch (e) {
+                                  console.error(e);
+                                  showToast(
+                                    t`Failed to generate description${
+                                      e?.message ? `: ${e.message}` : ''
+                                    }`,
+                                  );
+                                } finally {
+                                  setUIState('default');
+                                  toastRef.current?.hideToast?.();
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="sparkles2" />
+                            <small>
+                              <Trans>Generate description…</Trans>
+                              <br />
+                              <Trans>
+                                ({localeCode2Text(lang)}){' '}
+                                <span class="more-insignificant">
+                                  — experimental
+                                </span>
+                              </Trans>
+                            </small>
+                          </MenuItem>
+                        )}
                       </Menu2>
                     )}
                   <button
@@ -1889,7 +2703,7 @@ function MediaAttachment({
                     }}
                     disabled={uiState === 'loading'}
                   >
-                    Done
+                    <Trans>Done</Trans>
                   </button>
                 </footer>
               </div>
@@ -1911,6 +2725,7 @@ function Poll({
   minExpiration,
   maxCharactersPerOption,
 }) {
+  const { _ } = useLingui();
   const { options, expiresIn, multiple } = poll;
 
   return (
@@ -1924,7 +2739,7 @@ function Poll({
               value={option}
               disabled={disabled}
               maxlength={maxCharactersPerOption}
-              placeholder={`Choice ${i + 1}`}
+              placeholder={t`Choice ${i + 1}`}
               lang={lang}
               spellCheck="true"
               dir="auto"
@@ -1943,7 +2758,7 @@ function Poll({
                 onInput(poll);
               }}
             >
-              <Icon icon="x" size="s" />
+              <Icon icon="x" size="s" alt={t`Remove`} />
             </button>
           </div>
         ))}
@@ -1971,10 +2786,10 @@ function Poll({
               onInput(poll);
             }}
           />{' '}
-          Multiple choices
+          <Trans>Multiple choices</Trans>
         </label>
         <label class="expires-in">
-          Duration{' '}
+          <Trans>Duration</Trans>{' '}
           <select
             value={expiresIn}
             disabled={disabled}
@@ -1985,12 +2800,12 @@ function Poll({
             }}
           >
             {Object.entries(expiryOptions)
-              .filter(([label, value]) => {
+              .filter(([value]) => {
                 return value >= minExpiration && value <= maxExpiration;
               })
-              .map(([label, value]) => (
+              .map(([value, label]) => (
                 <option value={value} key={value}>
-                  {label}
+                  {label()}
                 </option>
               ))}
           </select>
@@ -2005,7 +2820,7 @@ function Poll({
             onInput(null);
           }}
         >
-          Remove poll
+          <Trans>Remove poll</Trans>
         </button>
       </div>
     </div>
@@ -2031,16 +2846,16 @@ function filterShortcodes(emojis, searchTerm) {
       return bothStartWith
         ? a.length - b.length
         : aStartsWith
-        ? -1
-        : bStartsWith
-        ? 1
-        : bothContain
-        ? a.length - b.length
-        : aContains
-        ? -1
-        : bContains
-        ? 1
-        : 0;
+          ? -1
+          : bStartsWith
+            ? 1
+            : bothContain
+              ? a.length - b.length
+              : aContains
+                ? -1
+                : bContains
+                  ? 1
+                  : 0;
     })
     .slice(0, 5);
 }
@@ -2060,46 +2875,250 @@ function removeNullUndefined(obj) {
   return obj;
 }
 
+function MentionModal({
+  onClose = () => {},
+  onSelect = () => {},
+  defaultSearchTerm,
+}) {
+  const { masto } = api();
+  const [uiState, setUIState] = useState('default');
+  const [accounts, setAccounts] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const loadRelationships = async (accounts) => {
+    if (!accounts?.length) return;
+    const relationships = await fetchRelationships(accounts, relationshipsMap);
+    if (relationships) {
+      setRelationshipsMap({
+        ...relationshipsMap,
+        ...relationships,
+      });
+    }
+  };
+
+  const loadAccounts = (term) => {
+    if (!term) return;
+    setUIState('loading');
+    (async () => {
+      try {
+        const accounts = await masto.v1.accounts.search.list({
+          q: term,
+          limit: 40,
+          resolve: false,
+        });
+        setAccounts(accounts);
+        loadRelationships(accounts);
+        setUIState('default');
+      } catch (e) {
+        setUIState('error');
+        console.error(e);
+      }
+    })();
+  };
+
+  const debouncedLoadAccounts = useDebouncedCallback(loadAccounts, 1000);
+
+  useEffect(() => {
+    loadAccounts();
+  }, [loadAccounts]);
+
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (defaultSearchTerm) {
+      loadAccounts(defaultSearchTerm);
+    }
+  }, [defaultSearchTerm]);
+
+  const selectAccount = (account) => {
+    const socialAddress = account.acct;
+    onSelect(socialAddress);
+    onClose();
+  };
+
+  useHotkeys(
+    'enter',
+    () => {
+      const selectedAccount = accounts[selectedIndex];
+      if (selectedAccount) {
+        selectAccount(selectedAccount);
+      }
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  const listRef = useRef();
+  useHotkeys(
+    'down',
+    () => {
+      if (selectedIndex < accounts.length - 1) {
+        setSelectedIndex(selectedIndex + 1);
+      } else {
+        setSelectedIndex(0);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  useHotkeys(
+    'up',
+    () => {
+      if (selectedIndex > 0) {
+        setSelectedIndex(selectedIndex - 1);
+      } else {
+        setSelectedIndex(accounts.length - 1);
+      }
+      setTimeout(() => {
+        const selectedItem = listRef.current.querySelector('.selected');
+        if (selectedItem) {
+          selectedItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }
+      }, 1);
+    },
+    {
+      preventDefault: true,
+      enableOnFormTags: ['input'],
+    },
+  );
+
+  return (
+    <div id="mention-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" alt={t`Close`} />
+        </button>
+      )}
+      <header>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            debouncedLoadAccounts.flush?.();
+            // const searchTerm = inputRef.current.value;
+            // debouncedLoadAccounts(searchTerm);
+          }}
+        >
+          <input
+            ref={inputRef}
+            required
+            type="search"
+            class="block"
+            placeholder={t`Search accounts`}
+            onInput={(e) => {
+              const { value } = e.target;
+              debouncedLoadAccounts(value);
+            }}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            defaultValue={defaultSearchTerm || ''}
+          />
+        </form>
+      </header>
+      <main>
+        {accounts?.length > 0 ? (
+          <ul
+            ref={listRef}
+            class={`accounts-list ${uiState === 'loading' ? 'loading' : ''}`}
+          >
+            {accounts.map((account, i) => {
+              const relationship = relationshipsMap[account.id];
+              return (
+                <li
+                  key={account.id}
+                  class={i === selectedIndex ? 'selected' : ''}
+                >
+                  <AccountBlock
+                    avatarSize="xxl"
+                    account={account}
+                    relationship={relationship}
+                    showStats
+                    showActivity
+                  />
+                  <button
+                    type="button"
+                    class="plain2"
+                    onClick={() => {
+                      selectAccount(account);
+                    }}
+                  >
+                    <Icon icon="plus" size="xl" alt={t`Add`} />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : uiState === 'loading' ? (
+          <div class="ui-state">
+            <Loader abrupt />
+          </div>
+        ) : uiState === 'error' ? (
+          <div class="ui-state">
+            <p>
+              <Trans>Error loading accounts</Trans>
+            </p>
+          </div>
+        ) : null}
+      </main>
+    </div>
+  );
+}
+
 function CustomEmojisModal({
   masto,
   instance,
   onClose = () => {},
   onSelect = () => {},
+  defaultSearchTerm,
 }) {
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
-  const [customEmojis, setCustomEmojis] = useState({});
+  const [customEmojis, setCustomEmojis] = useState([]);
   const recentlyUsedCustomEmojis = useMemo(
     () => store.account.get('recentlyUsedCustomEmojis') || [],
   );
+  const searcherRef = useRef();
   useEffect(() => {
     setUIState('loading');
     (async () => {
       try {
-        const emojis = await masto.v1.customEmojis.list();
-        // Group emojis by category
-        const emojisCat = {
-          '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-            emojis.find((e) => e.shortcode === emoji.shortcode),
-          ),
-        };
-        const othersCat = [];
-        emojis.forEach((emoji) => {
-          if (!emoji.visibleInPicker) return;
-          customEmojisList.current?.push?.(emoji);
-          if (!emoji.category) {
-            othersCat.push(emoji);
-            return;
-          }
-          if (!emojisCat[emoji.category]) {
-            emojisCat[emoji.category] = [];
-          }
-          emojisCat[emoji.category].push(emoji);
-        });
-        if (othersCat.length) {
-          emojisCat['--others--'] = othersCat;
-        }
-        setCustomEmojis(emojisCat);
+        const [emojis, searcher] = await getCustomEmojis(instance, masto);
+        console.log('emojis', emojis);
+        searcherRef.current = searcher;
+        setCustomEmojis(emojis);
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -2108,110 +3127,509 @@ function CustomEmojisModal({
     })();
   }, []);
 
+  const customEmojisCatList = useMemo(() => {
+    // Group emojis by category
+    const emojisCat = {
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+        customEmojis.find((e) => e.shortcode === emoji.shortcode),
+      ),
+    };
+    const othersCat = [];
+    customEmojis.forEach((emoji) => {
+      customEmojisList.current?.push?.(emoji);
+      if (!emoji.category) {
+        othersCat.push(emoji);
+        return;
+      }
+      if (!emojisCat[emoji.category]) {
+        emojisCat[emoji.category] = [];
+      }
+      emojisCat[emoji.category].push(emoji);
+    });
+    if (othersCat.length) {
+      emojisCat['--others--'] = othersCat;
+    }
+    return emojisCat;
+  }, [customEmojis]);
+
+  const scrollableRef = useRef();
+  const [matches, setMatches] = useState(null);
+  const onFind = useCallback(
+    (e) => {
+      const { value } = e.target;
+      if (value) {
+        const results = searcherRef.current?.search(value, {
+          limit: CUSTOM_EMOJIS_COUNT,
+        });
+        setMatches(results.map((r) => r.item));
+        scrollableRef.current?.scrollTo?.(0, 0);
+      } else {
+        setMatches(null);
+      }
+    },
+    [customEmojis],
+  );
+  useEffect(() => {
+    if (defaultSearchTerm && customEmojis?.length) {
+      onFind({ target: { value: defaultSearchTerm } });
+    }
+  }, [defaultSearchTerm, onFind, customEmojis]);
+
+  const onSelectEmoji = useCallback(
+    (emoji) => {
+      onSelect?.(emoji);
+      onClose?.();
+
+      queueMicrotask(() => {
+        let recentlyUsedCustomEmojis =
+          store.account.get('recentlyUsedCustomEmojis') || [];
+        const recentlyUsedEmojiIndex = recentlyUsedCustomEmojis.findIndex(
+          (e) => e.shortcode === emoji.shortcode,
+        );
+        if (recentlyUsedEmojiIndex !== -1) {
+          // Move emoji to index 0
+          recentlyUsedCustomEmojis.splice(recentlyUsedEmojiIndex, 1);
+          recentlyUsedCustomEmojis.unshift(emoji);
+        } else {
+          recentlyUsedCustomEmojis.unshift(emoji);
+          // Remove unavailable ones
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.filter((e) =>
+            customEmojisList.current?.find?.(
+              (emoji) => emoji.shortcode === e.shortcode,
+            ),
+          );
+          // Limit to 10
+          recentlyUsedCustomEmojis = recentlyUsedCustomEmojis.slice(0, 10);
+        }
+
+        // Store back
+        store.account.set('recentlyUsedCustomEmojis', recentlyUsedCustomEmojis);
+      });
+    },
+    [onSelect],
+  );
+
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      // Put cursor at the end
+      if (inputRef.current.value) {
+        inputRef.current.selectionStart = inputRef.current.value.length;
+        inputRef.current.selectionEnd = inputRef.current.value.length;
+      }
+    }
+  }, []);
+
   return (
     <div id="custom-emojis-sheet" class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}
       <header>
-        <b>Custom emojis</b>{' '}
-        {uiState === 'loading' ? (
-          <Loader />
-        ) : (
-          <small class="insignificant"> • {instance}</small>
-        )}
-      </header>
-      <main>
-        <div class="custom-emojis-list">
-          {uiState === 'error' && (
-            <div class="ui-state">
-              <p>Error loading custom emojis</p>
-            </div>
+        <div>
+          <b>
+            <Trans>Custom emojis</Trans>
+          </b>{' '}
+          {uiState === 'loading' ? (
+            <Loader />
+          ) : (
+            <small class="insignificant"> • {instance}</small>
           )}
-          {uiState === 'default' &&
-            Object.entries(customEmojis).map(
-              ([category, emojis]) =>
-                !!emojis?.length && (
-                  <>
-                    <div class="section-header">
-                      {{
-                        '--recent--': 'Recently used',
-                        '--others--': 'Others',
-                      }[category] || category}
-                    </div>
-                    <section>
-                      {emojis.map((emoji) => (
-                        <button
-                          key={emoji}
-                          type="button"
-                          class="plain4"
-                          onClick={() => {
-                            onClose();
-                            requestAnimationFrame(() => {
-                              onSelect(`:${emoji.shortcode}:`);
-                            });
-                            let recentlyUsedCustomEmojis =
-                              store.account.get('recentlyUsedCustomEmojis') ||
-                              [];
-                            const recentlyUsedEmojiIndex =
-                              recentlyUsedCustomEmojis.findIndex(
-                                (e) => e.shortcode === emoji.shortcode,
-                              );
-                            if (recentlyUsedEmojiIndex !== -1) {
-                              // Move emoji to index 0
-                              recentlyUsedCustomEmojis.splice(
-                                recentlyUsedEmojiIndex,
-                                1,
-                              );
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                            } else {
-                              recentlyUsedCustomEmojis.unshift(emoji);
-                              // Remove unavailable ones
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.filter((e) =>
-                                  customEmojisList.current?.find?.(
-                                    (emoji) => emoji.shortcode === e.shortcode,
-                                  ),
-                                );
-                              // Limit to 10
-                              recentlyUsedCustomEmojis =
-                                recentlyUsedCustomEmojis.slice(0, 10);
-                            }
-
-                            // Store back
-                            store.account.set(
-                              'recentlyUsedCustomEmojis',
-                              recentlyUsedCustomEmojis,
-                            );
-                          }}
-                          title={`:${emoji.shortcode}:`}
-                        >
-                          <picture>
-                            {!!emoji.staticUrl && (
-                              <source
-                                srcset={emoji.staticUrl}
-                                media="(prefers-reduced-motion: reduce)"
-                              />
-                            )}
-                            <img
-                              class="shortcode-emoji"
-                              src={emoji.url || emoji.staticUrl}
-                              alt={emoji.shortcode}
-                              width="16"
-                              height="16"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </picture>
-                        </button>
-                      ))}
-                    </section>
-                  </>
-                ),
-            )}
         </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const emoji = matches[0];
+            if (emoji) {
+              onSelectEmoji(`:${emoji.shortcode}:`);
+            }
+          }}
+        >
+          <input
+            ref={inputRef}
+            type="search"
+            placeholder={t`Search emoji`}
+            onInput={onFind}
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            defaultValue={defaultSearchTerm || ''}
+          />
+        </form>
+      </header>
+      <main ref={scrollableRef}>
+        {matches !== null ? (
+          <ul class="custom-emojis-matches custom-emojis-list">
+            {matches.map((emoji) => (
+              <li key={emoji.shortcode} class="custom-emojis-match">
+                <CustomEmojiButton
+                  emoji={emoji}
+                  onClick={() => {
+                    onSelectEmoji(`:${emoji.shortcode}:`);
+                  }}
+                  showCode
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="custom-emojis-list">
+            {uiState === 'error' && (
+              <div class="ui-state">
+                <p>
+                  <Trans>Error loading custom emojis</Trans>
+                </p>
+              </div>
+            )}
+            {uiState === 'default' &&
+              Object.entries(customEmojisCatList).map(
+                ([category, emojis]) =>
+                  !!emojis?.length && (
+                    <div class="section-container">
+                      <div class="section-header">
+                        {{
+                          '--recent--': t`Recently used`,
+                          '--others--': t`Others`,
+                        }[category] || category}
+                      </div>
+                      <CustomEmojisList
+                        emojis={emojis}
+                        onSelect={onSelectEmoji}
+                      />
+                    </div>
+                  ),
+              )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+const CustomEmojisList = memo(({ emojis, onSelect }) => {
+  const { i18n } = useLingui();
+  const [max, setMax] = useState(CUSTOM_EMOJIS_COUNT);
+  const showMore = emojis.length > max;
+  return (
+    <section>
+      {emojis.slice(0, max).map((emoji) => (
+        <CustomEmojiButton
+          key={emoji.shortcode}
+          emoji={emoji}
+          onClick={() => {
+            onSelect(`:${emoji.shortcode}:`);
+          }}
+        />
+      ))}
+      {showMore && (
+        <button
+          type="button"
+          class="plain small"
+          onClick={() => setMax(max + CUSTOM_EMOJIS_COUNT)}
+        >
+          <Trans>{i18n.number(emojis.length - max)} more…</Trans>
+        </button>
+      )}
+    </section>
+  );
+});
+
+const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
+  const addEdges = (e) => {
+    // Add edge-left or edge-right class based on self position relative to scrollable parent
+    // If near left edge, add edge-left, if near right edge, add edge-right
+    const buffer = 88;
+    const parent = e.currentTarget.closest('main');
+    if (parent) {
+      const rect = parent.getBoundingClientRect();
+      const selfRect = e.currentTarget.getBoundingClientRect();
+      const targetClassList = e.currentTarget.classList;
+      if (selfRect.left < rect.left + buffer) {
+        targetClassList.add('edge-left');
+        targetClassList.remove('edge-right');
+      } else if (selfRect.right > rect.right - buffer) {
+        targetClassList.add('edge-right');
+        targetClassList.remove('edge-left');
+      } else {
+        targetClassList.remove('edge-left', 'edge-right');
+      }
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className="plain4"
+      onClick={onClick}
+      data-title={showCode ? undefined : emoji.shortcode}
+      onPointerEnter={addEdges}
+      onFocus={addEdges}
+    >
+      <picture>
+        {!!emoji.staticUrl && (
+          <source
+            srcSet={emoji.staticUrl}
+            media="(prefers-reduced-motion: reduce)"
+          />
+        )}
+        <img
+          className="shortcode-emoji"
+          src={emoji.url || emoji.staticUrl}
+          alt={emoji.shortcode}
+          width="24"
+          height="24"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      {showCode && (
+        <>
+          {' '}
+          <code>{emoji.shortcode}</code>
+        </>
+      )}
+    </button>
+  );
+});
+
+const GIFS_PER_PAGE = 20;
+function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
+  const { i18n } = useLingui();
+  const [uiState, setUIState] = useState('default');
+  const [results, setResults] = useState([]);
+  const formRef = useRef(null);
+  const qRef = useRef(null);
+  const currentOffset = useRef(0);
+  const scrollableRef = useRef(null);
+
+  function fetchGIFs({ offset }) {
+    console.log('fetchGIFs', { offset });
+    if (!qRef.current?.value) return;
+    setUIState('loading');
+    scrollableRef.current?.scrollTo?.({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    (async () => {
+      try {
+        const query = {
+          api_key: GIPHY_API_KEY,
+          q: qRef.current.value,
+          rating: 'g',
+          limit: GIFS_PER_PAGE,
+          bundle: 'messaging_non_clips',
+          offset,
+          lang: i18n.locale || 'en',
+        };
+        const response = await fetch(
+          'https://api.giphy.com/v1/gifs/search?' + new URLSearchParams(query),
+          {
+            referrerPolicy: 'no-referrer',
+          },
+        ).then((r) => r.json());
+        currentOffset.current = response.pagination?.offset || 0;
+        setResults(response);
+        setUIState('results');
+      } catch (e) {
+        setUIState('error');
+        console.error(e);
+      }
+    })();
+  }
+
+  useEffect(() => {
+    qRef.current?.focus();
+  }, []);
+
+  const debouncedOnInput = useDebouncedCallback(() => {
+    fetchGIFs({ offset: 0 });
+  }, 1000);
+
+  return (
+    <div id="gif-picker-sheet" class="sheet">
+      {!!onClose && (
+        <button type="button" class="sheet-close" onClick={onClose}>
+          <Icon icon="x" alt={t`Close`} />
+        </button>
+      )}
+      <header>
+        <form
+          ref={formRef}
+          onSubmit={(e) => {
+            e.preventDefault();
+            fetchGIFs({ offset: 0 });
+          }}
+        >
+          <input
+            ref={qRef}
+            type="search"
+            name="q"
+            placeholder={t`Search GIFs`}
+            required
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellCheck="false"
+            dir="auto"
+            onInput={debouncedOnInput}
+          />
+          <input
+            type="image"
+            class="powered-button"
+            src={poweredByGiphyURL}
+            width="86"
+            height="30"
+            alt={t`Powered by GIPHY`}
+          />
+        </form>
+      </header>
+      <main ref={scrollableRef} class={uiState === 'loading' ? 'loading' : ''}>
+        {uiState === 'default' && (
+          <div class="ui-state">
+            <p class="insignificant">
+              <Trans>Type to search GIFs</Trans>
+            </p>
+          </div>
+        )}
+        {uiState === 'loading' && !results?.data?.length && (
+          <div class="ui-state">
+            <Loader abrupt />
+          </div>
+        )}
+        {results?.data?.length > 0 ? (
+          <>
+            <ul>
+              {results.data.map((gif) => {
+                const { id, images, title, alt_text } = gif;
+                const {
+                  fixed_height_small,
+                  fixed_height_downsampled,
+                  fixed_height,
+                  original,
+                } = images;
+                const theImage = fixed_height_small?.url
+                  ? fixed_height_small
+                  : fixed_height_downsampled?.url
+                    ? fixed_height_downsampled
+                    : fixed_height;
+                let { url, webp, width, height } = theImage;
+                if (+height > 100) {
+                  width = (width / height) * 100;
+                  height = 100;
+                }
+                const urlObj = URL.parse(url);
+                const strippedURL = urlObj.origin + urlObj.pathname;
+                let strippedWebP;
+                if (webp) {
+                  const webpObj = URL.parse(webp);
+                  strippedWebP = webpObj.origin + webpObj.pathname;
+                }
+                return (
+                  <li key={id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const { mp4, url } = original;
+                        const theURL = mp4 || url;
+                        const urlObj = URL.parse(theURL);
+                        const strippedURL = urlObj.origin + urlObj.pathname;
+                        onClose();
+                        onSelect({
+                          url: strippedURL,
+                          type: mp4 ? 'video/mp4' : 'image/gif',
+                          alt_text: alt_text || title,
+                        });
+                      }}
+                    >
+                      <figure
+                        style={{
+                          '--figure-width': width + 'px',
+                          // width: width + 'px'
+                        }}
+                      >
+                        <picture>
+                          {strippedWebP && (
+                            <source srcset={strippedWebP} type="image/webp" />
+                          )}
+                          <img
+                            src={strippedURL}
+                            width={width}
+                            height={height}
+                            loading="lazy"
+                            decoding="async"
+                            alt={alt_text}
+                            referrerpolicy="no-referrer"
+                            onLoad={(e) => {
+                              e.target.style.backgroundColor = 'transparent';
+                            }}
+                          />
+                        </picture>
+                        <figcaption>{alt_text || title}</figcaption>
+                      </figure>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <p class="pagination">
+              {results.pagination?.offset > 0 && (
+                <button
+                  type="button"
+                  class="light small"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    fetchGIFs({
+                      offset: results.pagination?.offset - GIFS_PER_PAGE,
+                    });
+                  }}
+                >
+                  <Icon icon="chevron-left" />
+                  <span>
+                    <Trans>Previous</Trans>
+                  </span>
+                </button>
+              )}
+              <span />
+              {results.pagination?.offset + results.pagination?.count <
+                results.pagination?.total_count && (
+                <button
+                  type="button"
+                  class="light small"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    fetchGIFs({
+                      offset: results.pagination?.offset + GIFS_PER_PAGE,
+                    });
+                  }}
+                >
+                  <span>
+                    <Trans>Next</Trans>
+                  </span>{' '}
+                  <Icon icon="chevron-right" />
+                </button>
+              )}
+            </p>
+          </>
+        ) : (
+          uiState === 'results' && (
+            <div class="ui-state">
+              <p>No results</p>
+            </div>
+          )
+        )}
+        {uiState === 'error' && (
+          <div class="ui-state">
+            <p>
+              <Trans>Error loading GIFs</Trans>
+            </p>
+          </div>
+        )}
       </main>
     </div>
   );

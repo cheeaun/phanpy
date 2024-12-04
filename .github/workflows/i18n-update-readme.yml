@@ -1,0 +1,34 @@
+name: Update README with list of i18n volunteers
+
+on:
+  schedule:
+    # Every week
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: |
+          npm run fetch-i18n-volunteers
+          npm run readme:i18n-volunteers
+
+          # Commit & push if there are changes
+          if git diff --quiet README.md; then
+            echo "No changes to README.md"
+          else
+            echo "Changes to README.md"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add README.md
+            git commit -m "Update README.md"
+            git push
+          fi
+        env:
+          CROWDIN_ACCESS_TOKEN: ${{ secrets.CROWDIN_ACCESS_TOKEN }}

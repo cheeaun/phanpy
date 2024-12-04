@@ -1,5 +1,6 @@
 import './generic-accounts.css';
 
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
@@ -11,12 +12,16 @@ import useLocationChange from '../utils/useLocationChange';
 
 import AccountBlock from './account-block';
 import Icon from './icon';
+import Link from './link';
 import Loader from './loader';
+import Status from './status';
 
 export default function GenericAccounts({
   instance,
   excludeRelationshipAttrs = [],
+  postID,
   onClose = () => {},
+  blankCopy = t`Nothing to show`,
 }) {
   const { masto, instance: currentInstance } = api();
   const isCurrentInstance = instance ? instance === currentInstance : true;
@@ -129,15 +134,25 @@ export default function GenericAccounts({
     }
   }, [snapStates.reloadGenericAccounts.counter]);
 
+  const post = states.statuses[postID];
+
   return (
     <div id="generic-accounts-container" class="sheet" tabindex="-1">
       <button type="button" class="sheet-close" onClick={onClose}>
-        <Icon icon="x" />
+        <Icon icon="x" alt={t`Close`} />
       </button>
       <header>
-        <h2>{heading || 'Accounts'}</h2>
+        <h2>{heading || t`Accounts`}</h2>
       </header>
       <main>
+        {post && (
+          <Link
+            to={`/${instance || currentInstance}/s/${post.id}`}
+            class="post-preview"
+          >
+            <Status status={post} size="s" readOnly />
+          </Link>
+        )}
         {accounts.length > 0 ? (
           <>
             <ul class="accounts-list">
@@ -187,11 +202,13 @@ export default function GenericAccounts({
                     class="plain block"
                     onClick={() => loadAccounts()}
                   >
-                    Show more&hellip;
+                    <Trans>Show more…</Trans>
                   </button>
                 </InView>
               ) : (
-                <p class="ui-state insignificant">The end.</p>
+                <p class="ui-state insignificant">
+                  <Trans>The end.</Trans>
+                </p>
               )
             ) : (
               uiState === 'loading' && (
@@ -206,9 +223,11 @@ export default function GenericAccounts({
             <Loader abrupt />
           </p>
         ) : uiState === 'error' ? (
-          <p class="ui-state">Error loading accounts</p>
+          <p class="ui-state">
+            <Trans>Error loading accounts</Trans>
+          </p>
         ) : (
-          <p class="ui-state insignificant">Nothing to show</p>
+          <p class="ui-state insignificant">{blankCopy}</p>
         )}
       </main>
     </div>

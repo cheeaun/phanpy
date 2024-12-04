@@ -57,7 +57,7 @@
     background-repeat: no-repeat;
     animation: swoosh-bg-image 0.3s ease-in-out 0.3s both;
     background-image: linear-gradient(
-      to right,
+      var(--to-forward),
       var(--original-color) 0%,
       var(--original-color) calc(var(--originals-percentage) - var(--gap)),
       var(--gap-color) calc(var(--originals-percentage) - var(--gap)),
@@ -181,8 +181,8 @@
   opacity: 1;
 }
 .sheet .account-container .header-banner {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-start-start-radius: 16px;
+  border-start-end-radius: 16px;
 }
 .account-container .header-banner.header-is-avatar {
   mask-image: linear-gradient(
@@ -217,13 +217,13 @@
     background-image: none;
   }
 
-  & + header .avatar + * {
+  & + header .avatar-container + * {
     transition: opacity 0.3s ease-in-out;
     opacity: 0 !important;
   }
 
   &,
-  & + header .avatar {
+  & + header .avatar-container {
     transition: filter 0.3s ease-in-out;
     filter: none !important;
   }
@@ -250,16 +250,21 @@
     -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color);
   animation: fade-in 0.3s both ease-in-out 0.1s;
-}
-.account-container header .avatar {
-  /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
+
+  .avatar-container {
+    filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
+      drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
+  }
+
+  .avatar {
+    /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
     8px 0 24px var(--header-color-4, --bg-color); */
-  overflow: initial;
-  filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
-    drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
-}
-.account-container header .avatar:not(.has-alpha) img {
-  border-radius: inherit;
+    /* overflow: initial; */
+
+    &:not(.has-alpha) img {
+      border-radius: inherit;
+    }
+  }
 }
 
 .account-container main > *:first-child {
@@ -288,10 +293,17 @@
   align-self: center !important;
   /* clip a dog ear on top right */
   clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
+  &:dir(rtl) {
+    /* top left */
+    clip-path: polygon(4px 0, 100% 0, 100% 100%, 0 100%, 0 4px);
+  }
   /* 4x4px square on top right */
   background-size: 4px 4px;
   background-repeat: no-repeat;
   background-position: top right;
+  &:dir(rtl) {
+    background-position: top left;
+  }
   background-image: linear-gradient(
     to bottom,
     var(--private-note-border-color),
@@ -311,7 +323,7 @@
     box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    text-align: left;
+    text-align: start;
   }
 
   &:hover:not(:active) {
@@ -370,7 +382,8 @@
     animation: appear 1s both ease-in-out;
 
     > *:not(:first-child) {
-      margin: 0 0 0 -4px;
+      margin: 0;
+      margin-inline-start: -4px;
     }
   }
 }
@@ -422,15 +435,15 @@
   }
 
   &:has(+ .account-metadata-box) {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-end-start-radius: 4px;
+    border-end-end-radius: 4px;
   }
 
   + .account-metadata-box {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-start-start-radius: 4px;
+    border-start-end-radius: 4px;
+    border-end-start-radius: 16px;
+    border-end-end-radius: 16px;
   }
 }
 
@@ -577,7 +590,7 @@
     margin-top: calc(-1 * var(--banner-overlap));
   }
 
-  @supports (animation-timeline: scroll()) {
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
     .header-banner:not(.header-is-avatar):not(:hover):not(:active) {
       animation: bye-banner 1s linear both;
       animation-timeline: view();
@@ -746,12 +759,16 @@
     letter-spacing: -0.5px;
     mix-blend-mode: multiply;
     gap: 12px;
-  }
-  .timeline-start .account-container header .account-block .avatar {
-    width: 112px !important;
-    height: 112px !important;
-    filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
-      drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+
+    .avatar-container {
+      filter: drop-shadow(-8px 0 8px var(--header-color-3, --bg-color))
+        drop-shadow(8px 0 8px var(--header-color-4, --bg-color));
+    }
+
+    .avatar {
+      width: 112px !important;
+      height: 112px !important;
+    }
   }
 }
 
@@ -778,6 +795,111 @@
 
     * {
       vertical-align: middle;
+    }
+  }
+}
+
+#edit-profile-container {
+  p {
+    margin-block: 8px;
+  }
+
+  label {
+    input,
+    textarea {
+      display: block;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 5em;
+      max-height: 50vh;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    th {
+      text-align: start;
+      color: var(--text-insignificant-color);
+      font-weight: normal;
+      font-size: 0.8em;
+      text-transform: uppercase;
+    }
+
+    tbody tr td:first-child {
+      width: 40%;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    * {
+      vertical-align: middle;
+    }
+  }
+}
+
+.handle-info {
+  .handle-handle {
+    display: inline-block;
+    margin-block: 5px;
+
+    b {
+      font-weight: 600;
+      padding: 2px 4px;
+      border-radius: 4px;
+      display: inline-block;
+      box-shadow: 0 0 0 5px var(--bg-blur-color);
+
+      &.handle-username {
+        color: var(--orange-fg-color);
+        background-color: var(--orange-bg-color);
+      }
+
+      &.handle-server {
+        color: var(--purple-fg-color);
+        background-color: var(--purple-bg-color);
+      }
+    }
+  }
+
+  .handle-at {
+    display: inline-block;
+    margin-inline: -3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .handle-legend {
+    margin-top: 0.25em;
+  }
+
+  .handle-legend-icon {
+    overflow: hidden;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
+
+    &.username {
+      background-color: var(--orange-fg-color);
+      border-color: var(--orange-bg-color);
+    }
+    &.server {
+      background-color: var(--purple-fg-color);
+      border-color: var(--purple-bg-color);
     }
   }
 }

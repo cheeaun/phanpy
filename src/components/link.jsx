@@ -22,15 +22,13 @@ const Link = forwardRef((props, ref) => {
 
   // Handle encodeURIComponent of searchParams values
   if (!!hash && hash !== '/' && hash.includes('?')) {
-    try {
-      const parsedHash = new URL(hash, location.origin); // Fake base URL
-      if (parsedHash.searchParams.size) {
-        const searchParamsStr = Array.from(parsedHash.searchParams.entries())
-          .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-          .join('&');
-        hash = parsedHash.pathname + '?' + searchParamsStr;
-      }
-    } catch (e) {}
+    const parsedHash = URL.parse(hash, location.origin); // Fake base URL
+    if (parsedHash?.searchParams?.size) {
+      const searchParamsStr = Array.from(parsedHash.searchParams.entries())
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&');
+      hash = parsedHash.pathname + '?' + searchParamsStr;
+    }
   }
 
   const isActive = hash === to || decodeURIComponent(hash) === to;

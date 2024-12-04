@@ -1,8 +1,8 @@
-import { MenuItem, SubMenu } from '@szhsin/react-menu';
+import { MenuItem } from '@szhsin/react-menu';
 import { cloneElement } from 'preact';
-import { useRef } from 'preact/hooks';
 
 import Menu2 from './menu2';
+import SubMenu2 from './submenu2';
 
 function MenuConfirm({
   subMenu = false,
@@ -23,11 +23,9 @@ function MenuConfirm({
     }
     return children;
   }
-  const Parent = subMenu ? SubMenu : Menu2;
-  const menuRef = useRef();
+  const Parent = subMenu ? SubMenu2 : Menu2;
   return (
     <Parent
-      instanceRef={menuRef}
       openTrigger="clickOnly"
       direction="bottom"
       overflow="auto"
@@ -37,19 +35,6 @@ function MenuConfirm({
       {...restProps}
       menuButton={subMenu ? undefined : children}
       label={subMenu ? children : undefined}
-      // Test fix for bug; submenus not opening on Android
-      itemProps={{
-        onPointerMove: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-        onPointerLeave: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-      }}
     >
       <MenuItem className={menuItemClassName} onClick={onClick}>
         {confirmLabel}

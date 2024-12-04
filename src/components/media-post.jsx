@@ -1,5 +1,6 @@
 import './media-post.css';
 
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useContext, useMemo } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -8,6 +9,7 @@ import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
+import { getCurrentAccountID } from '../utils/store-utils';
 
 import Media from './media';
 
@@ -88,7 +90,7 @@ function MediaPost({
   };
 
   const currentAccount = useMemo(() => {
-    return store.session.get('currentAccount');
+    return getCurrentAccountID();
   }, []);
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;
@@ -107,7 +109,7 @@ function MediaPost({
   const readingExpandMedia = useMemo(() => {
     // default | show_all | hide_all
     const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media'] || 'default';
+    return prefs['reading:expand:media']?.toLowerCase() || 'default';
   }, []);
   const showSpoilerMedia = readingExpandMedia === 'show_all';
 
@@ -122,11 +124,13 @@ function MediaPost({
         onMouseEnter={debugHover}
         key={mediaKey}
         data-spoiler-text={
-          spoilerText || (sensitive ? 'Sensitive media' : undefined)
+          spoilerText || (sensitive ? t`Sensitive media` : undefined)
         }
         data-filtered-text={
           filterInfo
-            ? `Filtered${filterTitleStr ? `: ${filterTitleStr}` : ''}`
+            ? filterTitleStr
+              ? t`Filtered: ${filterTitleStr}`
+              : t`Filtered`
             : undefined
         }
         class={`

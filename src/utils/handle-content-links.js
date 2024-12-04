@@ -16,7 +16,9 @@ function handleContentLinks(opts) {
     const textBeforeLinkIsAt = prevText?.endsWith('@');
     const textStartsWithAt = target.innerText.startsWith('@');
     if (
-      (target.classList.contains('u-url') && textStartsWithAt) ||
+      ((target.classList.contains('u-url') ||
+        target.classList.contains('mention')) &&
+        textStartsWithAt) ||
       (textBeforeLinkIsAt && !textStartsWithAt)
     ) {
       const targetText = (

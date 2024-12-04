@@ -35,7 +35,7 @@
   border-bottom: 0;
   margin-bottom: -1px;
   background-image: linear-gradient(
-    to top left,
+    to top var(--backward),
     var(--bg-color) 50%,
     var(--bg-faded-blur-color)
   );
@@ -44,12 +44,13 @@
 .status-translation-block .translated-block {
   border: 1px solid var(--outline-color);
   line-height: 1.3;
-  border-radius: 0 8px 8px 8px;
+  border-radius: 8px;
+  border-start-start-radius: 0;
   margin: 0;
   padding: 8px;
   background-color: var(--bg-color);
   background-image: linear-gradient(
-    to bottom right,
+    to bottom var(--forward),
     var(--bg-color),
     var(--bg-faded-blur-color)
   );

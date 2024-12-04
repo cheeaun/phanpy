@@ -1,11 +1,11 @@
 import { api } from './api';
-import store from './store';
+import { getCurrentAccountID } from './store-utils';
 
 export async function fetchRelationships(accounts, relationshipsMap = {}) {
   if (!accounts?.length) return;
   const { masto } = api();
 
-  const currentAccount = store.session.get('currentAccount');
+  const currentAccount = getCurrentAccountID();
   const uniqueAccountIds = accounts.reduce((acc, a) => {
     // 1. Ignore duplicate accounts
     // 2. Ignore accounts that are already inside relationshipsMap

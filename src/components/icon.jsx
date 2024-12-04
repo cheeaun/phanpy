@@ -53,9 +53,14 @@ function Icon({
     return null;
   }
 
-  let rotate, flip;
+  let rotate,
+    flip,
+    rtl = false;
   if (Array.isArray(iconBlock)) {
     [iconBlock, rotate, flip] = iconBlock;
+  } else if (typeof iconBlock === 'object') {
+    ({ rotate, flip, rtl } = iconBlock);
+    iconBlock = iconBlock.module;
   }
 
   const [iconData, setIconData] = useState(ICONDATA[icon]);
@@ -72,13 +77,14 @@ function Icon({
 
   return (
     <span
-      class={`icon ${className}`}
+      class={`icon ${className} ${rtl ? 'rtl-flip' : ''}`}
       title={title || alt}
       style={{
         width: `${iconSize}px`,
         height: `${iconSize}px`,
         ...style,
       }}
+      data-icon={icon}
     >
       {iconData && (
         // <svg

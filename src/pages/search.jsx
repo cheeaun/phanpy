@@ -1,6 +1,7 @@
 import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -23,6 +24,12 @@ const SHORT_LIMIT = 5;
 const LIMIT = 40;
 const emptySearchParams = new URLSearchParams();
 
+const scrollIntoViewOptions = {
+  block: 'nearest',
+  inline: 'center',
+  behavior: 'smooth',
+};
+
 function Search({ columnMode, ...props }) {
   const params = columnMode ? {} : useParams();
   const { masto, instance, authenticated } = api({
@@ -35,22 +42,23 @@ function Search({ columnMode, ...props }) {
   const type = columnMode
     ? 'statuses'
     : props?.type || searchParams.get('type');
-  useTitle(
-    q
-      ? `Search: ${q}${
-          type
-            ? ` (${
-                {
-                  statuses: 'Posts',
-                  accounts: 'Accounts',
-                  hashtags: 'Hashtags',
-                }[type]
-              })`
-            : ''
-        }`
-      : 'Search',
-    `/search`,
-  );
+  let title = t`Search`;
+  if (q) {
+    switch (type) {
+      case 'statuses':
+        title = t`Search: ${q} (Posts)`;
+        break;
+      case 'accounts':
+        title = t`Search: ${q} (Accounts)`;
+        break;
+      case 'hashtags':
+        title = t`Search: ${q} (Hashtags)`;
+        break;
+      default:
+        title = t`Search: ${q}`;
+    }
+  }
+  useTitle(title, `/search`);
 
   const [showMore, setShowMore] = useState(false);
   const offsetRef = useRef(0);
@@ -71,6 +79,11 @@ function Search({ columnMode, ...props }) {
     setAccountResults([]);
     setHashtagResults([]);
   }, [q]);
+  const typeResults = {
+    statuses: statusResults,
+    accounts: accountResults,
+    hashtags: hashtagResults,
+  };
   const setTypeResultsFunc = {
     statuses: setStatusResults,
     accounts: setAccountResults,
@@ -128,10 +141,16 @@ function Search({ columnMode, ...props }) {
             offsetRef.current = LIMIT;
             setShowMore(!!length);
           } else {
-            setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
-            const length = results[type]?.length;
-            offsetRef.current = offsetRef.current + LIMIT;
-            setShowMore(!!length);
+            // If first item is the same, it means API doesn't support offset
+            // I know this is a very basic check, but it works for now
+            if (results[type]?.[0]?.id === typeResults[type]?.[0]?.id) {
+              setShowMore(false);
+            } else {
+              setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
+              const length = results[type]?.length;
+              offsetRef.current = offsetRef.current + LIMIT;
+              setShowMore(!!length);
+            }
           }
         } else {
           setStatusResults(results.statuses || []);
@@ -165,28 +184,102 @@ function Search({ columnMode, ...props }) {
   });
 
   useEffect(() => {
+    let timer;
     searchFormRef.current?.setValue?.(q || '');
     if (q) {
       loadResults(true);
     } else {
-      searchFormRef.current?.focus?.();
+      timer = setTimeout(() => {
+        searchFormRef.current?.focus?.();
+      }, 150); // Right after focusDeck runs
     }
+    return () => clearTimeout(timer);
   }, [q, type, instance]);
 
   useHotkeys(
     ['/', 'Slash'],
     (e) => {
       searchFormRef.current?.focus?.();
+      searchFormRef.current?.select?.();
     },
     {
       preventDefault: true,
     },
   );
 
+  const itemsSelector = '.timeline > li > a, .hashtag-list > li > a';
+  const jRef = useHotkeys('j', () => {
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let nextItem = allItems[activeItemIndex + 1];
+      if (nextItem) {
+        nextItem.focus();
+        nextItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
+  const kRef = useHotkeys('k', () => {
+    // focus on previous status after active item
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let prevItem = allItems[activeItemIndex - 1];
+      if (prevItem) {
+        prevItem.focus();
+        prevItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
   const [filterBarParent] = useAutoAnimate();
 
   return (
-    <div id="search-page" class="deck-container" ref={scrollableRef}>
+    <div
+      id="search-page"
+      class="deck-container"
+      tabIndex="-1"
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef(node);
+        kRef(node);
+      }}
+    >
       <div class="timeline-deck deck">
         <header class={uiState === 'loading' ? 'loading' : ''}>
           <div class="header-grid">
@@ -203,7 +296,7 @@ function Search({ columnMode, ...props }) {
                 }}
                 disabled={uiState === 'loading'}
               >
-                <Icon icon="search" size="l" />
+                <Icon icon="search" size="l" alt={t`Search`} />
               </button>
             </div>
           </div>
@@ -216,22 +309,22 @@ function Search({ columnMode, ...props }) {
             >
               {!!type && (
                 <Link to={`/search${q ? `?q=${encodeURIComponent(q)}` : ''}`}>
-                  ‹ All
+                  <Icon icon="chevron-left" /> <Trans>All</Trans>
                 </Link>
               )}
               {[
                 {
-                  label: 'Accounts',
+                  label: t`Accounts`,
                   type: 'accounts',
                   to: `/search?q=${encodeURIComponent(q)}&type=accounts`,
                 },
                 {
-                  label: 'Hashtags',
+                  label: t`Hashtags`,
                   type: 'hashtags',
                   to: `/search?q=${encodeURIComponent(q)}&type=hashtags`,
                 },
                 {
-                  label: 'Posts',
+                  label: t`Posts`,
                   type: 'statuses',
                   to: `/search?q=${encodeURIComponent(q)}&type=statuses`,
                 },
@@ -254,11 +347,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'accounts' && (
                     <h2 class="timeline-header">
-                      Accounts{' '}
+                      <Trans>Accounts</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=accounts`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -284,7 +377,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=accounts`}
                           >
-                            See more accounts <Icon icon="arrow-right" />
+                            <Trans>See more accounts</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -296,7 +390,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No accounts found.</p>
+                      <p class="ui-state">
+                        <Trans>No accounts found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -305,11 +401,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'hashtags' && (
                     <h2 class="timeline-header">
-                      Hashtags{' '}
+                      <Trans>Hashtags</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=hashtags`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -331,7 +427,7 @@ function Search({ columnMode, ...props }) {
                                     : `/t/${name}`
                                 }
                               >
-                                <Icon icon="hashtag" />
+                                <Icon icon="hashtag" alt="#" />
                                 <span>{name}</span>
                                 {!!total && (
                                   <span class="count">
@@ -351,7 +447,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=hashtags`}
                           >
-                            See more hashtags <Icon icon="arrow-right" />
+                            <Trans>See more hashtags</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -363,7 +460,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No hashtags found.</p>
+                      <p class="ui-state">
+                        <Trans>No hashtags found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -372,11 +471,11 @@ function Search({ columnMode, ...props }) {
                 <>
                   {type !== 'statuses' && (
                     <h2 class="timeline-header">
-                      Posts{' '}
+                      <Trans>Posts</Trans>{' '}
                       <Link
                         to={`/search?q=${encodeURIComponent(q)}&type=statuses`}
                       >
-                        <Icon icon="arrow-right" size="l" />
+                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
                       </Link>
                     </h2>
                   )}
@@ -406,7 +505,8 @@ function Search({ columnMode, ...props }) {
                               q,
                             )}&type=statuses`}
                           >
-                            See more posts <Icon icon="arrow-right" />
+                            <Trans>See more posts</Trans>{' '}
+                            <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
@@ -418,7 +518,9 @@ function Search({ columnMode, ...props }) {
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">No posts found.</p>
+                      <p class="ui-state">
+                        <Trans>No posts found.</Trans>
+                      </p>
                     ))
                   )}
                 </>
@@ -439,11 +541,13 @@ function Search({ columnMode, ...props }) {
                         onClick={() => loadResults()}
                         style={{ marginBlockEnd: '6em' }}
                       >
-                        Show more&hellip;
+                        <Trans>Show more…</Trans>
                       </button>
                     </InView>
                   ) : (
-                    <p class="ui-state insignificant">The end.</p>
+                    <p class="ui-state insignificant">
+                      <Trans>The end.</Trans>
+                    </p>
                   )
                 ) : (
                   uiState === 'loading' && (
@@ -459,7 +563,9 @@ function Search({ columnMode, ...props }) {
             </p>
           ) : (
             <p class="ui-state">
-              Enter your search term or paste a URL above to get started.
+              <Trans>
+                Enter your search term or paste a URL above to get started.
+              </Trans>
             </p>
           )}
         </main>

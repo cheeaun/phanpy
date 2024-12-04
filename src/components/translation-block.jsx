@@ -1,5 +1,6 @@
 import './translation-block.css';
 
+import { t, Trans } from '@lingui/macro';
 import pRetry from 'p-retry';
 import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -10,6 +11,7 @@ import localeCode2Text from '../utils/localeCode2Text';
 import pmem from '../utils/pmem';
 
 import Icon from './icon';
+import LazyShazam from './lazy-shazam';
 import Loader from './loader';
 
 const { PHANPY_LINGVA_INSTANCES } = import.meta.env;
@@ -76,6 +78,7 @@ function TranslationBlock({
   onTranslate,
   text = '',
   mini,
+  autoDetected,
 }) {
   const targetLang = getTranslateTargetLanguage(true);
   const [uiState, setUIState] = useState('default');
@@ -142,23 +145,21 @@ function TranslationBlock({
       detectedLang !== targetLangText
     ) {
       return (
-        <div class="shazam-container">
-          <div class="shazam-container-inner">
-            <div class="status-translation-block-mini">
-              <Icon
-                icon="translate"
-                alt={`Auto-translated from ${sourceLangText}`}
-              />
-              <output
-                lang={targetLang}
-                dir="auto"
-                title={pronunciationContent || ''}
-              >
-                {translatedContent}
-              </output>
-            </div>
+        <LazyShazam>
+          <div class="status-translation-block-mini">
+            <Icon
+              icon="translate"
+              alt={t`Auto-translated from ${sourceLangText}`}
+            />
+            <output
+              lang={targetLang}
+              dir="auto"
+              title={pronunciationContent || ''}
+            >
+              {translatedContent}
+            </output>
           </div>
-        </div>
+        </LazyShazam>
       );
     }
     return null;
@@ -186,10 +187,12 @@ function TranslationBlock({
             <Icon icon="translate" />{' '}
             <span>
               {uiState === 'loading'
-                ? 'Translating…'
+                ? t`Translating…`
                 : sourceLanguage && sourceLangText && !detectedLang
-                ? `Translate from ${sourceLangText}`
-                : `Translate`}
+                  ? autoDetected
+                    ? t`Translate from ${sourceLangText} (auto-detected)`
+                    : t`Translate from ${sourceLangText}`
+                  : t`Translate`}
             </span>
           </button>
         </summary>
@@ -203,17 +206,34 @@ function TranslationBlock({
                 translate();
               }}
             >
-              {sourceLanguages.map((l) => (
-                <option value={l.code}>
-                  {l.code === 'auto' ? `Auto (${detectedLang ?? '…'})` : l.name}
-                </option>
-              ))}
+              {sourceLanguages.map((l) => {
+                const common = localeCode2Text({
+                  code: l.code,
+                  fallback: l.name,
+                });
+                const native = localeCode2Text({
+                  code: l.code,
+                  locale: l.code,
+                });
+                const showCommon = common !== native;
+                return (
+                  <option value={l.code}>
+                    {l.code === 'auto'
+                      ? t`Auto (${detectedLang ?? '…'})`
+                      : showCommon
+                        ? `${native} - ${common}`
+                        : native}
+                  </option>
+                );
+              })}
             </select>{' '}
             <span>→ {targetLangText}</span>
             <Loader abrupt hidden={uiState !== 'loading'} />
           </div>
           {uiState === 'error' ? (
-            <p class="ui-state">Failed to translate</p>
+            <p class="ui-state">
+              <Trans>Failed to translate</Trans>
+            </p>
           ) : (
             !!translatedContent && (
               <>

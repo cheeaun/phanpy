@@ -1,0 +1,55 @@
+#trending-page {
+  .timeline-header-block {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+
+    &.blended {
+      background-image: linear-gradient(
+        to bottom,
+        var(--bg-faded-color),
+        transparent
+      );
+    }
+
+    @media (min-width: 40em) {
+      padding: 0 16px;
+    }
+
+    &.loading {
+      color: var(--text-insignificant-color);
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .link-text {
+      color: var(--text-insignificant-color);
+      display: block;
+      font-weight: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.9em;
+    }
+  }
+
+  .timeline {
+    transition: opacity 0.3s ease-in-out;
+  }
+  .timeline.loading {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  .timeline-link-mentions {
+    .status .card {
+      display: none;
+    }
+  }
+}

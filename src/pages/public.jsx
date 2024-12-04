@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useRef } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,8 +9,8 @@ import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import states from '../utils/states';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
+import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -22,7 +23,9 @@ function Public({ local, columnMode, ...props }) {
     instance: props?.instance || params.instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();
-  const title = `${isLocal ? 'Local' : 'Federated'} timeline (${instance})`;
+  const title = isLocal
+    ? t`Local timeline (${instance})`
+    : t`Federated timeline (${instance})`;
   useTitle(title, isLocal ? `/:instance?/p/l` : `/:instance?/p`);
   // const navigate = useNavigate();
   const latestItem = useRef();
@@ -30,10 +33,14 @@ function Public({ local, columnMode, ...props }) {
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
-      publicIterator.current = masto.v1.timelines.public.list({
+      const opts = {
         limit: LIMIT,
-        local: isLocal,
-      });
+        local: isLocal || undefined,
+      };
+      if (!isLocal && supports('@pixelfed/global-feed')) {
+        opts.remote = true;
+      }
+      publicIterator.current = masto.v1.timelines.public.list(opts);
     }
     const results = await publicIterator.current.next();
     let { value } = results;
@@ -63,8 +70,9 @@ function Public({ local, columnMode, ...props }) {
         })
         .next();
       let { value } = results;
-      value = filteredItems(value, 'public');
-      if (value?.length) {
+      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
+      if (value?.length && !valueContainsLatestItem) {
+        value = filteredItems(value, 'public');
         return true;
       }
       return false;
@@ -79,14 +87,14 @@ function Public({ local, columnMode, ...props }) {
       title={title}
       titleComponent={
         <h1 class="header-double-lines">
-          <b>{isLocal ? 'Local timeline' : 'Federated timeline'}</b>
+          <b>{isLocal ? t`Local timeline` : t`Federated timeline`}</b>
           <div>{instance}</div>
         </h1>
       }
       id="public"
       instance={instance}
-      emptyText="No one has posted anything yet."
-      errorText="Unable to load posts"
+      emptyText={t`No one has posted anything yet.`}
+      errorText={t`Unable to load posts`}
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}
       useItemID
@@ -103,18 +111,24 @@ function Public({ local, columnMode, ...props }) {
           position="anchor"
           menuButton={
             <button type="button" class="plain">
-              <Icon icon="more" size="l" />
+              <Icon icon="more" size="l" alt={t`More`} />
             </button>
           }
         >
           <MenuItem href={isLocal ? `/#/${instance}/p` : `/#/${instance}/p/l`}>
             {isLocal ? (
               <>
-                <Icon icon="transfer" /> <span>Switch to Federated</span>
+                <Icon icon="transfer" />{' '}
+                <span>
+                  <Trans>Switch to Federated</Trans>
+                </span>
               </>
             ) : (
               <>
-                <Icon icon="transfer" /> <span>Switch to Local</span>
+                <Icon icon="transfer" />{' '}
+                <span>
+                  <Trans>Switch to Local</Trans>
+                </span>
               </>
             )}
           </MenuItem>
@@ -122,10 +136,10 @@ function Public({ local, columnMode, ...props }) {
           <MenuItem
             onClick={() => {
               let newInstance = prompt(
-                'Enter a new instance e.g. "mastodon.social"',
+                t`Enter a new instance e.g. "mastodon.social"`,
               );
               if (!/\./.test(newInstance)) {
-                if (newInstance) alert('Invalid instance');
+                if (newInstance) alert(t`Invalid instance`);
                 return;
               }
               if (newInstance) {
@@ -137,7 +151,10 @@ function Public({ local, columnMode, ...props }) {
               }
             }}
           >
-            <Icon icon="bus" /> <span>Go to another instance…</span>
+            <Icon icon="bus" />{' '}
+            <span>
+              <Trans>Go to another instance…</Trans>
+            </span>
           </MenuItem>
           {currentInstance !== instance && (
             <MenuItem
@@ -149,7 +166,9 @@ function Public({ local, columnMode, ...props }) {
             >
               <Icon icon="bus" />{' '}
               <small class="menu-double-lines">
-                Go to my instance (<b>{currentInstance}</b>)
+                <Trans>
+                  Go to my instance (<b>{currentInstance}</b>)
+                </Trans>
               </small>
             </MenuItem>
           )}

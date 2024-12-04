@@ -1,3 +1,5 @@
+import { t, Trans } from '@lingui/macro';
+import { useEffect } from 'preact/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { subscribe, useSnapshot } from 'valtio';
 
@@ -8,7 +10,7 @@ import showToast from '../utils/show-toast';
 import states from '../utils/states';
 
 import AccountSheet from './account-sheet';
-import Compose from './compose';
+import ComposeSuspense, { preload } from './compose-suspense';
 import Drafts from './drafts';
 import EmbedModal from './embed-modal';
 import GenericAccounts from './generic-accounts';
@@ -32,11 +34,18 @@ export default function Modals() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    setTimeout(preload, 1000);
+  }, []);
+
   return (
     <>
       {!!snapStates.showCompose && (
-        <Modal class="solid">
-          <Compose
+        <Modal
+          class={`solid ${snapStates.composerState.minimized ? 'min' : ''}`}
+          minimized={!!snapStates.composerState.minimized}
+        >
+          <ComposeSuspense
             replyToStatus={
               typeof snapStates.showCompose !== 'boolean'
                 ? snapStates.showCompose.replyToStatus
@@ -60,9 +69,9 @@ export default function Modals() {
                 states.reloadStatusPage++;
                 showToast({
                   text: {
-                    post: 'Post published. Check it out.',
-                    reply: 'Reply posted. Check it out.',
-                    edit: 'Post updated. Check it out.',
+                    post: t`Post published. Check it out.`,
+                    reply: t`Reply posted. Check it out.`,
+                    edit: t`Post updated. Check it out.`,
                   }[type || 'post'],
                   delay: 1000,
                   duration: 10_000, // 10 seconds
@@ -179,7 +188,9 @@ export default function Modals() {
             excludeRelationshipAttrs={
               snapStates.showGenericAccounts.excludeRelationshipAttrs
             }
+            postID={snapStates.showGenericAccounts.postID}
             onClose={() => (states.showGenericAccounts = false)}
+            blankCopy={snapStates.showGenericAccounts.blankCopy}
           />
         </Modal>
       )}

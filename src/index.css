@@ -16,6 +16,12 @@
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
+  --purple-fg-color: color-mix(
+    in srgb-linear,
+    var(--purple-color) 60%,
+    var(--text-color) 40%
+  );
+  --purple-bg-color: color-mix(in srgb, var(--purple-color) 10%, transparent);
   --green-color: darkgreen;
   --orange-color: darkorange;
   --orange-light-bg-color: color-mix(
@@ -23,7 +29,18 @@
     var(--orange-color) 20%,
     transparent
   );
+  --orange-fg-color: color-mix(
+    in srgb-linear,
+    var(--orange-color) 60%,
+    var(--text-color) 40%
+  );
+  --orange-bg-color: color-mix(in srgb, var(--orange-color) 10%, transparent);
   --red-color: orangered;
+  --red-text-color: color-mix(
+    in srgb-linear,
+    var(--red-color) 60%,
+    var(--text-color) 40%
+  );
   --red-bg-color: color-mix(in lch, var(--red-color) 40%, transparent);
   --bg-color: #fff;
   --bg-faded-color: #f0f2f5;
@@ -67,11 +84,13 @@
     var(--text-color) 60%
   );
   --outline-color: rgba(128, 128, 128, 0.2);
+  --outline-stronger-color: rgba(128, 128, 128, 0.4);
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
+  --backdrop-solid-color: color-mix(in srgb, var(--bg-color) 90%, #000 10%);
+  --backdrop-theme-color: #e5e5e5;
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
-  --backdrop-solid-color: #eee;
   --img-bg-color: rgba(128, 128, 128, 0.2);
   --loader-color: #1c1e2199;
   --comment-line-color: #e5e5e5;
@@ -91,6 +110,19 @@
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
   --spring-timing-funtion: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  --min-dimension: 88px;
+
+  --forward: right;
+  --backward: left;
+  --to-forward: to right;
+  --to-backward: to left;
+  &:dir(rtl) {
+    --forward: left;
+    --backward: right;
+    --to-forward: to left;
+    --to-backward: to right;
+  }
 }
 
 @media (min-resolution: 2dppx) {
@@ -119,13 +151,19 @@
       mediumslateblue 70%,
       var(--text-color) 30%
     );
+    --button-bg-color: color-mix(
+      in srgb,
+      var(--blue-color) 80%,
+      var(--bg-color) 20%
+    );
     --reblog-faded-color: #b190f141;
     --reply-to-text-color: var(--reply-to-color);
     --reply-to-faded-color: #ffa60017;
     --divider-color: rgba(255, 255, 255, 0.1);
     --bg-blur-color: #24252699;
     --backdrop-color: rgba(0, 0, 0, 0.5);
-    --backdrop-solid-color: #111;
+    --backdrop-solid-color: color-mix(in srgb, var(--bg-color) 50%, #000 50%);
+    --backdrop-theme-color: #121213; /* same as backdrop-solid-color but without color-mix, to be used for meta[theme-color] */
     --loader-color: #f0f2f599;
     --comment-line-color: #565656;
     --drop-shadow-color: rgba(0, 0, 0, 0.5);
@@ -227,7 +265,7 @@ button[hidden] {
 }
 :is(button, .button):not(:disabled, .disabled):is(:hover, :focus) {
   cursor: pointer;
-  filter: brightness(1.2);
+  filter: brightness(1.05);
 }
 :is(button, .button):not(:disabled, .disabled):active {
   filter: brightness(0.8);
@@ -328,6 +366,7 @@ button[hidden] {
 }
 
 input[type='text'],
+input[type='search'],
 textarea,
 select {
   color: var(--text-color);
@@ -337,6 +376,7 @@ select {
   border-radius: 4px;
 }
 input[type='text']:focus,
+input[type='search']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--outline-color);
@@ -352,14 +392,20 @@ textarea:disabled {
   background-color: var(--bg-faded-color);
 }
 
-:is(input[type='text'], textarea, select).block {
+:is(input[type='text'], input[type='search'], textarea, select).block {
   display: block;
   width: 100%;
 }
 
-button.small {
+:is(button, .button, select).small {
   font-size: 90%;
   padding: 4px 8px;
+}
+
+.button.centered {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 select.plain {
@@ -413,6 +459,11 @@ kbd {
 }
 :has(:focus-visible) .hide-until-focus-visible {
   display: initial;
+}
+
+.bidi-isolate {
+  direction: initial;
+  unicode-bidi: isolate;
 }
 
 /* KEYFRAMES */
@@ -525,4 +576,10 @@ kbd {
 }
 .shazam-container-horizontal[hidden] {
   grid-template-columns: 0fr;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

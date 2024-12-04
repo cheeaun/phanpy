@@ -29,6 +29,8 @@
     line-clamp: 1;
     text-overflow: ellipsis;
     overflow: hidden;
+    unicode-bidi: isolate;
+    direction: initial;
   }
 
   a {

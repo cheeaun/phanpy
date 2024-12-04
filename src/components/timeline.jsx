@@ -1,5 +1,12 @@
+import { plural, t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useDebouncedCallback } from 'use-debounce';
@@ -7,8 +14,11 @@ import { useSnapshot } from 'valtio';
 
 import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
+import isRTL from '../utils/is-rtl';
+import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
+import { isMediaFirstInstance } from '../utils/store-utils';
 import { groupBoosts, groupContext } from '../utils/timeline-utils';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
@@ -48,26 +58,33 @@ function Timeline({
   filterContext,
   showFollowedTags,
   showReplyParent,
+  clearWhenRefresh,
 }) {
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
-  const [uiState, setUIState] = useState('default');
+  const [uiState, setUIState] = useState('start');
   const [showMore, setShowMore] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [visible, setVisible] = useState(true);
   const scrollableRef = useRef();
 
   console.debug('RENDER Timeline', id, refresh);
+  __BENCHMARK.start(`timeline-${id}-load`);
+
+  const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
   const allowGrouping = view !== 'media';
+  const loadItemsTS = useRef(0); // Ensures only one loadItems at a time
   const loadItems = useDebouncedCallback(
     (firstLoad) => {
       setShowNew(false);
-      if (uiState === 'loading') return;
+      // if (uiState === 'loading') return;
       setUIState('loading');
       (async () => {
         try {
+          const ts = (loadItemsTS.current = Date.now());
           let { done, value } = await fetchItems(firstLoad);
+          if (ts !== loadItemsTS.current) return;
           if (Array.isArray(value)) {
             // Avoid grouping for pinned posts
             const [pinnedPosts, otherPosts] = value.reduce(
@@ -103,18 +120,22 @@ function Timeline({
             setShowMore(false);
           }
           setUIState('default');
+          __BENCHMARK.end(`timeline-${id}-load`);
         } catch (e) {
           console.error(e);
           setUIState('error');
+          if (firstLoad && !items.length && errorText) {
+            showToast(errorText);
+          }
         } finally {
           loadItems.cancel();
         }
       })();
     },
-    1500,
+    1_000,
     {
       leading: true,
-      trailing: false,
+      // trailing: false,
     },
   );
 
@@ -200,8 +221,8 @@ function Timeline({
 
   const oRef = useHotkeys(['enter', 'o'], () => {
     // open active status
-    const activeItem = document.activeElement.closest(itemsSelector);
-    if (activeItem) {
+    const activeItem = document.activeElement;
+    if (activeItem?.matches(itemsSelector)) {
       activeItem.click();
     }
   });
@@ -209,17 +230,13 @@ function Timeline({
   const showNewPostsIndicator =
     items.length > 0 && uiState !== 'loading' && showNew;
   const handleLoadNewPosts = useCallback(() => {
-    loadItems(true);
+    if (showNewPostsIndicator) loadItems(true);
     scrollableRef.current?.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  }, [loadItems]);
-  const dotRef = useHotkeys('.', () => {
-    if (showNewPostsIndicator) {
-      handleLoadNewPosts();
-    }
-  });
+  }, [loadItems, showNewPostsIndicator]);
+  const dotRef = useHotkeys('.', handleLoadNewPosts);
 
   // const {
   //   scrollDirection,
@@ -268,9 +285,18 @@ function Timeline({
     scrollableRef.current?.scrollTo({ top: 0 });
     loadItems(true);
   }, []);
+  const firstLoad = useRef(true);
   useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
+    if (clearWhenRefresh && items?.length) {
+      loadItems.cancel?.();
+      setItems([]);
+    }
     loadItems(true);
-  }, [refresh]);
+  }, [clearWhenRefresh, refresh]);
 
   // useEffect(() => {
   //   if (reachStart) {
@@ -359,14 +385,28 @@ function Timeline({
     <FilterContext.Provider value={filterContext}>
       <div
         id={`${id}-page`}
-        class="deck-container"
+        class={`deck-container ${
+          mediaFirst ? 'deck-container-media-first' : ''
+        }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef.current = node;
-          kRef.current = node;
-          oRef.current = node;
+          jRef(node);
+          kRef(node);
+          oRef(node);
+          dotRef(node);
         }}
         tabIndex="-1"
+        onClick={(e) => {
+          // If click on timeline item, unhide header
+          if (
+            headerRef.current &&
+            e.target.closest('.timeline-item, .timeline-item-alt')
+          ) {
+            setTimeout(() => {
+              headerRef.current.hidden = false;
+            }, 250);
+          }
+        }}
       >
         <div class="timeline-deck deck">
           <header
@@ -394,7 +434,7 @@ function Timeline({
                   headerStart
                 ) : (
                   <Link to="/" class="button plain home-button">
-                    <Icon icon="home" size="l" />
+                    <Icon icon="home" size="l" alt={t`Home`} />
                   </Link>
                 )}
               </div>
@@ -410,7 +450,7 @@ function Timeline({
                 type="button"
                 onClick={handleLoadNewPosts}
               >
-                <Icon icon="arrow-up" /> New posts
+                <Icon icon="arrow-up" /> <Trans>New posts</Trans>
               </button>
             )}
           </header>
@@ -435,6 +475,7 @@ function Timeline({
                     view={view}
                     showFollowedTags={showFollowedTags}
                     showReplyParent={showReplyParent}
+                    mediaFirst={mediaFirst}
                   />
                 ))}
                 {showMore &&
@@ -446,14 +487,14 @@ function Timeline({
                           height: '20vh',
                         }}
                       >
-                        <Status skeleton />
+                        <Status skeleton mediaFirst={mediaFirst} />
                       </li>
                       <li
                         style={{
                           height: '25vh',
                         }}
                       >
-                        <Status skeleton />
+                        <Status skeleton mediaFirst={mediaFirst} />
                       </li>
                     </>
                   ))}
@@ -475,11 +516,13 @@ function Timeline({
                       onClick={() => loadItems()}
                       style={{ marginBlockEnd: '6em' }}
                     >
-                      Show more&hellip;
+                      <Trans>Show more…</Trans>
                     </button>
                   </InView>
                 ) : (
-                  <p class="ui-state insignificant">The end.</p>
+                  <p class="ui-state insignificant">
+                    <Trans>The end.</Trans>
+                  </p>
                 ))}
             </>
           ) : uiState === 'loading' ? (
@@ -493,13 +536,14 @@ function Timeline({
                   />
                 ) : (
                   <li key={i}>
-                    <Status skeleton />
+                    <Status skeleton mediaFirst={mediaFirst} />
                   </li>
                 ),
               )}
             </ul>
           ) : (
-            uiState !== 'error' && <p class="ui-state">{emptyText}</p>
+            uiState !== 'error' &&
+            uiState !== 'start' && <p class="ui-state">{emptyText}</p>
           )}
           {uiState === 'error' && (
             <p class="ui-state">
@@ -507,7 +551,7 @@ function Timeline({
               <br />
               <br />
               <button type="button" onClick={() => loadItems(!items.length)}>
-                Try again
+                <Trans>Try again</Trans>
               </button>
             </p>
           )}
@@ -527,6 +571,7 @@ const TimelineItem = memo(
     view,
     showFollowedTags,
     showReplyParent,
+    mediaFirst,
   }) => {
     console.debug('RENDER TimelineItem', status.id);
     const { id: statusID, reblog, items, type, _pinned } = status;
@@ -535,16 +580,21 @@ const TimelineItem = memo(
     const url = instance
       ? `/${instance}/s/${actualStatusID}`
       : `/s/${actualStatusID}`;
-    let title = '';
-    if (type === 'boosts') {
-      title = `${items.length} Boosts`;
-    } else if (type === 'pinned') {
-      title = 'Pinned posts';
-    }
-    const isCarousel = type === 'boosts' || type === 'pinned';
+
     if (items) {
-      const fItems = filteredItems(items, filterContext);
+      let fItems = filteredItems(items, filterContext);
+      let title = '';
+      if (type === 'boosts') {
+        title = plural(fItems.length, {
+          one: '# Boost',
+          other: '# Boosts',
+        });
+      } else if (type === 'pinned') {
+        title = t`Pinned posts`;
+      }
+      const isCarousel = type === 'boosts' || type === 'pinned';
       if (isCarousel) {
+        const filteredItemsIDs = new Set();
         // Here, we don't hide filtered posts, but we sort them last
         fItems.sort((a, b) => {
           // if (a._filtered && !b._filtered) {
@@ -555,6 +605,8 @@ const TimelineItem = memo(
           // }
           const aFiltered = isFiltered(a.filtered, filterContext);
           const bFiltered = isFiltered(b.filtered, filterContext);
+          if (aFiltered) filteredItemsIDs.add(a.id);
+          if (bFiltered) filteredItemsIDs.add(b.id);
           if (aFiltered && !bFiltered) {
             return 1;
           }
@@ -563,11 +615,69 @@ const TimelineItem = memo(
           }
           return 0;
         });
+
+        if (filteredItemsIDs.size >= 2) {
+          const GROUP_SIZE = 5;
+          // If 2 or more, group filtered items into one, limit to GROUP_SIZE in a group
+          const unfiltered = [];
+          const filtered = [];
+          fItems.forEach((item) => {
+            if (filteredItemsIDs.has(item.id)) {
+              filtered.push(item);
+            } else {
+              unfiltered.push(item);
+            }
+          });
+          const filteredItems = [];
+          for (let i = 0; i < filtered.length; i += GROUP_SIZE) {
+            filteredItems.push({
+              _grouped: true,
+              posts: filtered.slice(i, i + GROUP_SIZE),
+            });
+          }
+          fItems = unfiltered.concat(filteredItems);
+        }
+
         return (
           <li key={`timeline-${statusID}`} class="timeline-item-carousel">
             <StatusCarousel title={title} class={`${type}-carousel`}>
               {fItems.map((item) => {
-                const { id: statusID, reblog, _pinned } = item;
+                const { id: statusID, reblog, _pinned, _grouped } = item;
+                if (_grouped) {
+                  return (
+                    <li key={statusID} class="timeline-item-carousel-group">
+                      {item.posts.map((item) => {
+                        const { id: statusID, reblog, _pinned } = item;
+                        const actualStatusID = reblog?.id || statusID;
+                        const url = instance
+                          ? `/${instance}/s/${actualStatusID}`
+                          : `/s/${actualStatusID}`;
+                        if (_pinned) useItemID = false;
+                        return (
+                          <Link
+                            class="status-carousel-link timeline-item-alt"
+                            to={url}
+                          >
+                            {useItemID ? (
+                              <Status
+                                statusID={statusID}
+                                instance={instance}
+                                size="s"
+                              />
+                            ) : (
+                              <Status
+                                status={item}
+                                instance={instance}
+                                size="s"
+                              />
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </li>
+                  );
+                }
+
                 const actualStatusID = reblog?.id || statusID;
                 const url = instance
                   ? `/${instance}/s/${actualStatusID}`
@@ -587,6 +697,7 @@ const TimelineItem = memo(
                           contentTextWeight
                           enableCommentHint
                           // allowFilters={allowFilters}
+                          mediaFirst={mediaFirst}
                         />
                       ) : (
                         <Status
@@ -596,6 +707,7 @@ const TimelineItem = memo(
                           contentTextWeight
                           enableCommentHint
                           // allowFilters={allowFilters}
+                          mediaFirst={mediaFirst}
                         />
                       )}
                     </Link>
@@ -632,7 +744,11 @@ const TimelineItem = memo(
           >
             <Link class="status-link timeline-item" to={url}>
               {showCompact ? (
-                <TimelineStatusCompact status={item} instance={instance} />
+                <TimelineStatusCompact
+                  status={item}
+                  instance={instance}
+                  filterContext={filterContext}
+                />
               ) : useItemID ? (
                 <Status
                   statusID={statusID}
@@ -691,6 +807,7 @@ const TimelineItem = memo(
               showFollowedTags={showFollowedTags}
               showReplyParent={showReplyParent}
               // allowFilters={allowFilters}
+              mediaFirst={mediaFirst}
             />
           ) : (
             <Status
@@ -700,6 +817,7 @@ const TimelineItem = memo(
               showFollowedTags={showFollowedTags}
               showReplyParent={showReplyParent}
               // allowFilters={allowFilters}
+              mediaFirst={mediaFirst}
             />
           )}
         </Link>
@@ -759,13 +877,16 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachStart}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? 1 : -1);
               carouselRef.current?.scrollBy({
-                left: -Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}
           >
-            <Icon icon="chevron-left" />
+            <Icon icon="chevron-left" alt={t`Previous`} />
           </button>{' '}
           <button
             ref={endButtonRef}
@@ -773,13 +894,16 @@ function StatusCarousel({ title, class: className, children }) {
             class="small plain2"
             // disabled={reachEnd}
             onClick={() => {
+              const left =
+                Math.min(320, carouselRef.current?.offsetWidth) *
+                (isRTL() ? -1 : 1);
               carouselRef.current?.scrollBy({
-                left: Math.min(320, carouselRef.current?.offsetWidth),
+                left,
                 behavior: 'smooth',
               });
             }}
           >
-            <Icon icon="chevron-right" />
+            <Icon icon="chevron-right" alt={t`Next`} />
           </button>
         </span>
       </header>
@@ -804,11 +928,12 @@ function StatusCarousel({ title, class: className, children }) {
   );
 }
 
-function TimelineStatusCompact({ status, instance }) {
+function TimelineStatusCompact({ status, instance, filterContext }) {
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);
   const sKey = statusKey(id, instance);
+  const filterInfo = isFiltered(status.filtered, filterContext);
   return (
     <article
       class={`status compact-thread ${
@@ -818,14 +943,14 @@ function TimelineStatusCompact({ status, instance }) {
     >
       {!!snapStates.statusThreadNumber[sKey] ? (
         <div class="status-thread-badge">
-          <Icon icon="thread" size="s" />
+          <Icon icon="thread" size="s" alt={t`Thread`} />
           {snapStates.statusThreadNumber[sKey]
             ? ` ${snapStates.statusThreadNumber[sKey]}/X`
             : ''}
         </div>
       ) : (
         <div class="status-thread-badge">
-          <Icon icon="thread" size="s" />
+          <Icon icon="thread" size="s" alt={t`Thread`} />
         </div>
       )}
       <div
@@ -834,13 +959,32 @@ function TimelineStatusCompact({ status, instance }) {
         lang={language}
         dir="auto"
       >
-        {statusPeekText}
-        {status.sensitive && status.spoilerText && (
+        {!!filterInfo ? (
+          <b
+            class="status-filtered-badge badge-meta horizontal"
+            title={filterInfo?.titlesStr || ''}
+          >
+            {filterInfo?.titlesStr ? (
+              <Trans>
+                <span>Filtered</span>: <span>{filterInfo.titlesStr}</span>
+              </Trans>
+            ) : (
+              <span>
+                <Trans>Filtered</Trans>
+              </span>
+            )}
+          </b>
+        ) : (
           <>
-            {' '}
-            <span class="spoiler-badge">
-              <Icon icon="eye-close" size="s" />
-            </span>
+            {statusPeekText}
+            {status.sensitive && status.spoilerText && (
+              <>
+                {' '}
+                <span class="spoiler-badge">
+                  <Icon icon="eye-close" size="s" alt={t`Content warning`} />
+                </span>
+              </>
+            )}
           </>
         )}
       </div>

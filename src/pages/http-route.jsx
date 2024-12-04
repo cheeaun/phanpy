@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useLayoutEffect, useState } from 'preact/hooks';
 import { useLocation } from 'react-router-dom';
 
@@ -24,11 +25,13 @@ export default function HttpRoute() {
       // Check if status returns 200
       try {
         const { instance, id } = statusObject;
-        const { masto } = api({ instance });
-        const status = await masto.v1.statuses.$select(id).fetch();
-        if (status) {
-          window.location.hash = statusURL + '?view=full';
-          return;
+        if (id) {
+          const { masto } = api({ instance });
+          const status = await masto.v1.statuses.$select(id).fetch();
+          if (status) {
+            window.location.hash = statusURL + '?view=full';
+            return;
+          }
         }
       } catch (e) {}
 
@@ -61,7 +64,9 @@ export default function HttpRoute() {
       {uiState === 'loading' ? (
         <>
           <Loader abrupt />
-          <h2>Resolving…</h2>
+          <h2>
+            <Trans>Resolving…</Trans>
+          </h2>
           <p>
             <a href={url} target="_blank" rel="noopener noreferrer">
               {url}
@@ -70,7 +75,9 @@ export default function HttpRoute() {
         </>
       ) : (
         <>
-          <h2>Unable to resolve URL</h2>
+          <h2>
+            <Trans>Unable to resolve URL</Trans>
+          </h2>
           <p>
             <a href={url} target="_blank" rel="noopener noreferrer">
               {url}
@@ -80,7 +87,9 @@ export default function HttpRoute() {
       )}
       <hr />
       <p>
-        <Link to="/">Go home</Link>
+        <Link to="/">
+          <Trans>Go home</Trans>
+        </Link>
       </p>
     </div>
   );

@@ -1,4 +1,39 @@
 #generic-accounts-container {
+  .post-preview {
+    --max-height: 120px;
+    max-height: var(--max-height);
+    overflow: hidden;
+    margin-block: 8px;
+    border: 1px solid var(--outline-color);
+    border-radius: 8px;
+    pointer-events: none;
+
+    .status {
+      font-size: calc(var(--text-size) * 0.9);
+      mask-image: linear-gradient(
+        to bottom,
+        black calc(var(--max-height) / 2),
+        transparent calc(var(--max-height) - 8px)
+      );
+      filter: saturate(0.5);
+    }
+
+    &:is(a) {
+      pointer-events: auto;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        border-color: var(--outline-hover-color);
+      }
+
+      > * {
+        pointer-events: none;
+      }
+    }
+  }
+
   .accounts-list {
     --list-gap: 16px;
     list-style: none;
@@ -27,13 +62,13 @@
         border-top: var(--hairline-width) solid var(--divider-color);
         position: absolute;
         bottom: calc(-1 * var(--list-gap) / 2);
-        left: 40px;
-        right: 0;
+        inset-inline-start: 40px;
+        inset-inline-end: 0;
       }
 
       &:has(.reactions-block):before {
         /* avatar + reactions + gap */
-        left: calc(40px + 16px + 8px);
+        inset-inline-start: calc(40px + 16px + 8px);
       }
     }
 

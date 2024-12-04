@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -11,11 +12,18 @@ import Notifications from '../pages/notifications';
 import Public from '../pages/public';
 import Search from '../pages/search';
 import Trending from '../pages/trending';
+import isRTL from '../utils/is-rtl';
 import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
+const scrollIntoViewOptions = {
+  block: 'nearest',
+  inline: 'nearest',
+  behavior: 'smooth',
+};
+
 function Columns() {
-  useTitle('Home', '/');
+  useTitle(t`Home`, '/');
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;
 
@@ -39,6 +47,8 @@ function Columns() {
     if (!Component) return null;
     // Don't show Search column with no query, for now
     if (type === 'search' && !params.query) return null;
+    // Don't show List column with no list, for now
+    if (type === 'list' && !params.id) return null;
     return (
       <Component key={type + JSON.stringify(params)} {...params} columnMode />
     );
@@ -47,9 +57,39 @@ function Columns() {
   useHotkeys(['1', '2', '3', '4', '5', '6', '7', '8', '9'], (e, handler) => {
     try {
       const index = parseInt(handler.keys[0], 10) - 1;
-      document.querySelectorAll('#columns > *')[index].focus();
+      const $column = document.querySelectorAll('#columns > *')[index];
+      if ($column) {
+        $column.focus();
+        $column.scrollIntoView(scrollIntoViewOptions);
+      }
     } catch (e) {
       console.error(e);
+    }
+  });
+
+  useHotkeys(['[', ']'], (e, handler) => {
+    const key = handler.keys[0];
+    const currentFocusedColumn = document.activeElement.closest('#columns > *');
+
+    const rtl = isRTL();
+    const prevColKey = rtl ? ']' : '[';
+    const nextColKey = rtl ? '[' : ']';
+    let $column;
+
+    if (key === prevColKey) {
+      // If [, focus on left of focused column, else first column
+      $column = currentFocusedColumn
+        ? currentFocusedColumn.previousElementSibling
+        : document.querySelectorAll('#columns > *')[0];
+    } else if (key === nextColKey) {
+      // If ], focus on right of focused column, else 2nd column
+      $column = currentFocusedColumn
+        ? currentFocusedColumn.nextElementSibling
+        : document.querySelectorAll('#columns > *')[1];
+    }
+    if ($column) {
+      $column.focus();
+      $column.scrollIntoView(scrollIntoViewOptions);
     }
   });
 
@@ -65,6 +105,18 @@ function Columns() {
         ) {
           e.preventDefault();
           states.showShortcutsSettings = true;
+        }
+      }}
+      onFocus={() => {
+        // Get current focused column
+        const currentFocusedColumn =
+          document.activeElement.closest('#columns > *');
+        if (currentFocusedColumn) {
+          // Remove focus classes from all columns
+          // Add focus class to current focused column
+          document.querySelectorAll('#columns > *').forEach((column) => {
+            column.classList.toggle('focus', column === currentFocusedColumn);
+          });
         }
       }}
     >

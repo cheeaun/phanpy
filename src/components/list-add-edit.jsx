@@ -1,6 +1,8 @@
+import { t, Trans } from '@lingui/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
+import { addListStore, deleteListStore, updateListStore } from '../utils/lists';
 import supports from '../utils/supports';
 
 import Icon from './icon';
@@ -22,17 +24,19 @@ function ListAddEdit({ list, onClose }) {
       }
     }
   }, [editMode]);
-  const supportsExclusive = supports('@mastodon/list-exclusive');
+  const supportsExclusive =
+    supports('@mastodon/list-exclusive') ||
+    supports('@gotosocial/list-exclusive');
 
   return (
     <div class="sheet">
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" />
+          <Icon icon="x" alt={t`Close`} />
         </button>
       )}{' '}
       <header>
-        <h2>{editMode ? 'Edit list' : 'New list'}</h2>
+        <h2>{editMode ? t`Edit list` : t`New list`}</h2>
       </header>
       <main>
         <form
@@ -75,11 +79,21 @@ function ListAddEdit({ list, onClose }) {
                   state: 'success',
                   list: listResult,
                 });
+
+                setTimeout(() => {
+                  if (editMode) {
+                    updateListStore(listResult);
+                  } else {
+                    addListStore(listResult);
+                  }
+                }, 1);
               } catch (e) {
                 console.error(e);
                 setUIState('error');
                 alert(
-                  editMode ? 'Unable to edit list.' : 'Unable to create list.',
+                  editMode
+                    ? t`Unable to edit list.`
+                    : t`Unable to create list.`,
                 );
               }
             })();
@@ -87,7 +101,7 @@ function ListAddEdit({ list, onClose }) {
         >
           <div class="list-form-row">
             <label for="list-title">
-              Name{' '}
+              <Trans>Name</Trans>{' '}
               <input
                 ref={nameFieldRef}
                 type="text"
@@ -106,9 +120,15 @@ function ListAddEdit({ list, onClose }) {
               required
               disabled={uiState === 'loading'}
             >
-              <option value="list">Show replies to list members</option>
-              <option value="followed">Show replies to people I follow</option>
-              <option value="none">Don't show replies</option>
+              <option value="list">
+                <Trans>Show replies to list members</Trans>
+              </option>
+              <option value="followed">
+                <Trans>Show replies to people I follow</Trans>
+              </option>
+              <option value="none">
+                <Trans>Don't show replies</Trans>
+              </option>
             </select>
           </div>
           {supportsExclusive && (
@@ -120,20 +140,20 @@ function ListAddEdit({ list, onClose }) {
                   name="exclusive"
                   disabled={uiState === 'loading'}
                 />{' '}
-                Hide posts on this list from Home/Following
+                <Trans>Hide posts on this list from Home/Following</Trans>
               </label>
             </div>
           )}
           <div class="list-form-footer">
             <button type="submit" disabled={uiState === 'loading'}>
-              {editMode ? 'Save' : 'Create'}
+              {editMode ? t`Save` : t`Create`}
             </button>
             {editMode && (
               <MenuConfirm
                 disabled={uiState === 'loading'}
                 align="end"
                 menuItemClassName="danger"
-                confirmLabel="Delete this list?"
+                confirmLabel={t`Delete this list?`}
                 onClick={() => {
                   // const yes = confirm('Delete this list?');
                   // if (!yes) return;
@@ -146,10 +166,13 @@ function ListAddEdit({ list, onClose }) {
                       onClose?.({
                         state: 'deleted',
                       });
+                      setTimeout(() => {
+                        deleteListStore(list.id);
+                      }, 1);
                     } catch (e) {
                       console.error(e);
                       setUIState('error');
-                      alert('Unable to delete list.');
+                      alert(t`Unable to delete list.`);
                     }
                   })();
                 }}
@@ -159,7 +182,7 @@ function ListAddEdit({ list, onClose }) {
                   class="light danger"
                   disabled={uiState === 'loading'}
                 >
-                  Delete…
+                  <Trans>Delete…</Trans>
                 </button>
               </MenuConfirm>
             )}

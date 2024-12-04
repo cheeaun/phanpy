@@ -1,0 +1,149 @@
+#filters-page {
+  .filters-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 8px 16px;
+      border-bottom: var(--hairline-width) solid var(--outline-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h2 {
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+      font-size: 1em;
+    }
+  }
+}
+
+#filters-add-edit-modal {
+  .filter-form-row {
+    margin-bottom: 16px;
+
+    + .filter-form-row {
+      margin-top: 16px;
+      border-top: 1px solid var(--outline-color);
+      padding-top: 16px;
+    }
+  }
+
+  main {
+    padding-top: 10px;
+    line-height: 1.5;
+
+    p {
+      margin-block: 1em;
+    }
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .filter-form-keywords {
+    margin: 0 -16px 16px;
+  }
+
+  .filter-form-cols {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    .filter-form-col {
+      flex-basis: 160px;
+      flex-grow: 1;
+
+      > *:first-child {
+        margin-top: 0;
+      }
+      > *:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .filter-keywords {
+    --gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding: var(--gap);
+    overflow-y: auto;
+    min-height: 80px;
+    max-height: 25vh;
+    background-color: var(--bg-faded-blur-color);
+    counter-reset: index;
+    scroll-behavior: smooth;
+
+    li {
+      counter-increment: index;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-wrap: wrap;
+
+      &:not(:only-child):before {
+        content: counter(index);
+        font-size: 10px;
+        color: var(--text-insignificant-color);
+        align-self: flex-start;
+      }
+
+      input[type='text'] {
+        flex-basis: 160px;
+        flex-grow: 100;
+      }
+
+      .filter-keyword-actions {
+        display: flex;
+        gap: 8px;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: space-between;
+
+        label {
+          font-size: 0.8em;
+          line-height: 1;
+        }
+      }
+    }
+  }
+
+  .filter-keywords-footer {
+    padding: 8px 16px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  input[type='text'] {
+    display: block;
+    width: 100%;
+  }
+
+  .filter-form-footer {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+
+    > span {
+      display: flex;
+      align-items: center;
+    }
+
+    button[type='submit'] {
+      padding-inline: 24px;
+    }
+  }
+}

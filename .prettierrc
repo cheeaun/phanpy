@@ -3,17 +3,20 @@
   "useTabs": false,
   "singleQuote": true,
   "trailingComma": "all",
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
   "importOrder": [
     "^[^.].*.css$",
     "index.css$",
     ".css$",
+    "",
+    "./polyfills",
+    "",
     "<THIRD_PARTY_MODULES>",
+    "",
     "/assets/",
+    "",
     "^../",
+    "",
     "^[./]"
-  ],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true,
-  "importOrderGroupNamespaceSpecifiers": true,
-  "importOrderCaseInsensitive": true
+  ]
 }

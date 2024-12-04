@@ -1,3 +1,4 @@
+import { t, Trans } from '@lingui/macro';
 import { memo } from 'preact/compat';
 import { useLayoutEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -152,14 +153,18 @@ export default memo(function NotificationService() {
       >
         <div class="sheet" tabIndex="-1">
           <button type="button" class="sheet-close" onClick={onClose}>
-            <Icon icon="x" />
+            <Icon icon="x" alt={t`Close`} />
           </button>
           <header>
-            <b>Notification</b>
+            <b>
+              <Trans>Notification</Trans>
+            </b>
           </header>
           <main>
             {!sameInstance && (
-              <p>This notification is from your other account.</p>
+              <p>
+                <Trans>This notification is from your other account.</Trans>
+              </p>
             )}
             <div
               class="notification-peek"
@@ -186,7 +191,10 @@ export default memo(function NotificationService() {
               }}
             >
               <Link to="/notifications" class="button light" onClick={onClose}>
-                <span>View all notifications</span> <Icon icon="arrow-right" />
+                <span>
+                  <Trans>View all notifications</Trans>
+                </span>{' '}
+                <Icon icon="arrow-right" />
               </Link>
             </div>
           </main>

@@ -1,9 +1,10 @@
+import { generateCodeChallenge, verifier } from './oauth-pkce';
+
 const {
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_SCHEME: SCHEME = 'https',
 } = import.meta.env;
-import { generateCodeChallenge, verifier } from './oauth-pkce';
 
 const SCOPES = 'read write follow push';
 

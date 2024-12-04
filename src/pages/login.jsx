@@ -20,7 +20,10 @@ import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
-const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE, PHANPY_SCHEME: SCHEME = 'https' } = import.meta.env;
+const {
+  PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE,
+  PHANPY_SCHEME: SCHEME = 'https',
+} = import.meta.env;
 
 function Login() {
   useTitle('Log in');
@@ -137,11 +140,12 @@ function Login() {
         .replace(/^@?[^@]+@/, '') // Remove @?acct@
         .trim()
     : null;
-  const instanceTextLooksLikeDomain = 
+  const instanceTextLooksLikeDomain =
     (/[^\s\r\n\t\/\\]+\.[^\s\r\n\t\/\\]+/.test(cleanInstanceText) &&
-    !/[\s\/\\@]/.test(cleanInstanceText)) || SCHEME === "http";
+      !/[\s\/\\@]/.test(cleanInstanceText)) ||
+    SCHEME === 'http';
 
-  console.log(SCHEME)
+  console.log(SCHEME);
 
   const instancesSuggestions = cleanInstanceText
     ? searcher.current

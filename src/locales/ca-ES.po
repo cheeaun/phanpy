@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-03 18:15\n"
+"PO-Revision-Date: 2024-12-05 21:44\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Res a mostrar"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:444
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -1478,80 +1478,80 @@ msgstr "S'han perdut les connexions amb <0>{name}</0>."
 msgid "Moderation warning"
 msgstr "Avís de moderació"
 
-#: src/components/notification.jsx:265
+#: src/components/notification.jsx:264
 msgid "Your {year} #Wrapstodon is here!"
-msgstr ""
+msgstr "Ja teniu aquí el vostre #Wrapstodon {year}!"
 
-#: src/components/notification.jsx:272
+#: src/components/notification.jsx:270
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Un administrador de <0>{from}</0> ha suspès <1>{targetName}</1>; això vol dir que ja no en podreu rebre actualitzacions o interactuar-hi."
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:276
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Un administrador de <0>{from}</0> ha blocat <1>{targetName}</1>. Seguidors afectats: {followersCount}, seguiments: {followingCount}."
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:282
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Heu bloquejat a <0>{targetName}</0>. Seguidors eliminats: {followersCount}, seguidors: {followingCount}."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:290
 msgid "Your account has received a moderation warning."
 msgstr "El vostre compte ha rebut un avís de moderació."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:291
 msgid "Your account has been disabled."
 msgstr "S'ha desactivat el vostre compte."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:292
 msgid "Some of your posts have been marked as sensitive."
 msgstr "S'ha marcat com a sensibles algunes de les vostres publicacions."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:293
 msgid "Some of your posts have been deleted."
 msgstr "S'han eliminat algunes de les vostres publicacions."
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:294
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "A partir d'ara les vostres publicacions es marcaran com sensibles."
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:295
 msgid "Your account has been limited."
 msgstr "S'ha limitat el vostre compte."
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:296
 msgid "Your account has been suspended."
 msgstr "El vostre compte ha estat suspès."
 
-#: src/components/notification.jsx:373
+#: src/components/notification.jsx:371
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipus de notificació desconeguda: {type}]"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:440
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Impulsat/Afavorit per…"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:441
 msgid "Liked by…"
 msgstr "Li agrada a…"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:442
 msgid "Boosted by…"
 msgstr "Impulsat per…"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:443
 msgid "Followed by…"
 msgstr "Seguit per…"
 
-#: src/components/notification.jsx:516
-#: src/components/notification.jsx:532
+#: src/components/notification.jsx:514
+#: src/components/notification.jsx:530
 msgid "Learn more <0/>"
 msgstr "Saber-ne més <0/>"
 
-#: src/components/notification.jsx:540
+#: src/components/notification.jsx:539
 msgid "View #Wrapstodon"
-msgstr ""
+msgstr "Visualitzeu el #Wrapstodon"
 
 #: src/components/notification.jsx:769
 #: src/components/status.jsx:267
@@ -2416,7 +2416,7 @@ msgid "Login required."
 msgstr "Cal iniciar sessió."
 
 #: src/compose.jsx:90
-#: src/pages/annual-report.jsx:132
+#: src/pages/annual-report.jsx:136
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"

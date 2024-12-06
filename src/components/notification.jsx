@@ -33,6 +33,7 @@ const NOTIFICATION_ICONS = {
   moderation_warning: 'alert',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
+  annual_report: 'celebrate',
 };
 
 /*

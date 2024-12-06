@@ -35,6 +35,8 @@ export default function AnnualReport() {
   const { accounts, annualReports, statuses } = results || {};
   const report = annualReports?.find((report) => report.year == year)?.data;
 
+  const datePlaceholder = new Date();
+
   return (
     <div id="annual-report-page" class="deck-container" tabIndex="-1">
       <div class="report">
@@ -54,8 +56,16 @@ export default function AnnualReport() {
                     <table>
                       <thead>
                         <tr>
-                          {Object.keys(value[0]).map((key) => (
-                            <th>{key}</th>
+                          {Object.entries(value[0]).map(([key, value]) => (
+                            <th
+                              class={
+                                key !== 'month' && typeof value === 'number'
+                                  ? 'number'
+                                  : ''
+                              }
+                            >
+                              {key}
+                            </th>
                           ))}
                         </tr>
                       </thead>
@@ -63,7 +73,13 @@ export default function AnnualReport() {
                         {value.map((item) => (
                           <tr>
                             {Object.entries(item).map(([k, value]) => (
-                              <td>
+                              <td
+                                class={
+                                  k !== 'month' && typeof value === 'number'
+                                    ? 'number'
+                                    : ''
+                                }
+                              >
                                 {value &&
                                 /(accountId)/i.test(k) &&
                                 /^(mostRebloggedAccounts|commonlyInteractedWithAccounts)$/i.test(
@@ -75,6 +91,13 @@ export default function AnnualReport() {
                                     )}
                                     showAvatar
                                   />
+                                ) : k === 'month' ? (
+                                  datePlaceholder.setMonth(value - 1) &&
+                                  datePlaceholder.toLocaleString(undefined, {
+                                    month: 'long',
+                                  })
+                                ) : typeof value === 'number' ? (
+                                  value.toLocaleString()
                                 ) : (
                                   value
                                 )}
@@ -112,7 +135,13 @@ export default function AnnualReport() {
                           {Object.entries(value).map(([k, value]) => (
                             <tr>
                               <th>{k}</th>
-                              <td>{value}</td>
+                              <td
+                                class={
+                                  typeof value === 'number' ? 'number' : ''
+                                }
+                              >
+                                {value}
+                              </td>
                             </tr>
                           ))}
                         </tbody>

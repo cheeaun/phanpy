@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-03 20:36\n"
+"PO-Revision-Date: 2024-12-06 12:01\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -428,8 +428,8 @@ msgstr "Sekvi"
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
-#: src/pages/notifications.jsx:868
-#: src/pages/notifications.jsx:1082
+#: src/pages/notifications.jsx:915
+#: src/pages/notifications.jsx:1129
 #: src/pages/settings.jsx:77
 #: src/pages/status.jsx:1299
 msgid "Close"
@@ -508,7 +508,7 @@ msgstr "Enhavo"
 #: src/components/list-add-edit.jsx:149
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
-#: src/pages/notifications.jsx:934
+#: src/pages/notifications.jsx:981
 msgid "Save"
 msgstr "Konservi"
 
@@ -536,7 +536,7 @@ msgstr "Ŝtelreĝimo estis ŝaltita"
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:53
-#: src/pages/notifications.jsx:520
+#: src/pages/notifications.jsx:560
 msgid "Home"
 msgstr "Hejmo"
 
@@ -946,7 +946,7 @@ msgid "Open in new window"
 msgstr "Malfermi en nova fenestro"
 
 #: src/components/follow-request-buttons.jsx:42
-#: src/pages/notifications.jsx:918
+#: src/pages/notifications.jsx:965
 msgid "Accept"
 msgstr "Akcepti"
 
@@ -955,7 +955,7 @@ msgid "Reject"
 msgstr "Malakcepti"
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1201
+#: src/pages/notifications.jsx:1248
 msgid "Accepted"
 msgstr "Akceptita"
 
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Nenio por montri"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:445
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -978,7 +978,7 @@ msgstr "Kontoj"
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
-#: src/pages/notifications.jsx:848
+#: src/pages/notifications.jsx:895
 #: src/pages/search.jsx:544
 #: src/pages/status.jsx:1332
 msgid "Show more…"
@@ -1295,8 +1295,8 @@ msgstr "Mencioj"
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:84
 #: src/pages/home.jsx:184
-#: src/pages/notifications.jsx:112
-#: src/pages/notifications.jsx:524
+#: src/pages/notifications.jsx:113
+#: src/pages/notifications.jsx:564
 msgid "Notifications"
 msgstr "Sciigoj"
 
@@ -1417,63 +1417,63 @@ msgstr "Ĉi tiu sciigo estas de via alia konto."
 msgid "View all notifications"
 msgstr "Vidi ĉiujn sciigojn"
 
-#: src/components/notification.jsx:70
+#: src/components/notification.jsx:71
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} reagis al via afiŝo kun {emojiObject}"
 
-#: src/components/notification.jsx:77
+#: src/components/notification.jsx:78
 msgid "{account} published a post."
 msgstr "{account} publikigis afiŝon."
 
-#: src/components/notification.jsx:85
+#: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} diskonigis vian respondon.} other {{account} diskonigis vian afiŝon.}}} other {{account} diskonigis {postsCount} de viaj afiŝoj.}}} other {{postType, select, reply {<0><1>{0}</1> homoj</0> diskonigis vian respondon.} other {<2><3>{1}</3> homoj</2> diskonigis vian afiŝon.}}}}"
 
-#: src/components/notification.jsx:128
+#: src/components/notification.jsx:129
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, =1 {{account} sekvis vin.} other {<0><1>{0}</1> homoj</0> sekvis vin.}}"
 
-#: src/components/notification.jsx:142
+#: src/components/notification.jsx:143
 msgid "{account} requested to follow you."
 msgstr "{account} petis sekvi vin."
 
-#: src/components/notification.jsx:151
+#: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} ŝatis vian respondon.} other {{account} ŝatis vian afiŝon.}}} other {{account} ŝatis {postsCount} de viaj afiŝoj.}}} other {{postType, select, reply {<0><1>{0}</1> homoj</0> ŝatis vian respondon.} other {<2><3>{1}</3> homoj</2> ŝatis vian afiŝon.}}}}"
 
-#: src/components/notification.jsx:193
+#: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
 msgstr "Balotenketo, kiun vi voĉdonis aŭ kreis, finiĝis."
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:195
 msgid "A poll you have created has ended."
 msgstr "Balotenketo, kiun vi kreis, finiĝis."
 
-#: src/components/notification.jsx:195
+#: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
 msgstr "Balotenketo, pri kiu vi voĉdonis, finiĝis."
 
-#: src/components/notification.jsx:196
+#: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
 msgstr "Afiŝo, kun kiu vi interagis, estis redaktita."
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} diskonigis kaj ŝatis vian respondon.} other {{account} diskonigis kaj ŝatis vian afiŝon.}}} other {{account} diskonigis kaj ŝatis {postsCount} de viaj afiŝoj.}}} other {{postType, select, reply {<0><1>{0}</1> homoj</0> diskonigis kaj ŝatis vian respondon.} other {<2><3>{1}</3> homoj</2> diskonigis kaj ŝatis vian afiŝon.}}}}"
 
-#: src/components/notification.jsx:246
+#: src/components/notification.jsx:247
 msgid "{account} signed up."
 msgstr "{account} aliĝis."
 
-#: src/components/notification.jsx:248
+#: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
 msgstr "{account} raportis {targetAccount}"
 
-#: src/components/notification.jsx:253
+#: src/components/notification.jsx:254
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Perditaj konektoj kun <0>{name}</0>."
 
-#: src/components/notification.jsx:259
+#: src/components/notification.jsx:260
 msgid "Moderation warning"
 msgstr "Moderiga averto"
 
@@ -1481,70 +1481,70 @@ msgstr "Moderiga averto"
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Via #Wrapstodon {year} estas ĉi tie!"
 
-#: src/components/notification.jsx:272
+#: src/components/notification.jsx:271
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Administranto de <0>{from}</0> malakceptis <1>{targetName}</1>, kio signifas, ke vi ne plu povas ricevi ĝisdatigojn de ili aŭ interagi kun ili."
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Administranto de <0>{from}</0> blokis <1>{targetName}</1>. Afektitaj sekvantoj: {followersCount}, Sekvantoj: {followingCount}."
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Vi blokis <0>{targetName}</0>. Forigitaj sekvantoj: {followersCount}, sekvantoj: {followingCount}."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
 msgstr "Via konto ricevis moderan averton."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:292
 msgid "Your account has been disabled."
 msgstr "Via konto estas malŝaltita."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Kelkaj el viaj afiŝoj estis markitaj kiel sentemaj."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
 msgstr "Kelkaj el viaj afiŝoj estis forigitaj."
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Viaj afiŝoj estos markitaj kiel sentemaj ekde nun."
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:296
 msgid "Your account has been limited."
 msgstr "Via konto estis limigita."
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:297
 msgid "Your account has been suspended."
 msgstr "Via konto estas malakceptita."
 
-#: src/components/notification.jsx:373
+#: src/components/notification.jsx:372
 msgid "[Unknown notification type: {type}]"
 msgstr "[Nekonata tipo de sciigo: {type}]"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:441
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Diskonigita/Ŝatita de…"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:442
 msgid "Liked by…"
 msgstr "Ŝatita de…"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:443
 msgid "Boosted by…"
 msgstr "Diskonigita de…"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:444
 msgid "Followed by…"
 msgstr "Sekvita de…"
 
-#: src/components/notification.jsx:516
-#: src/components/notification.jsx:532
+#: src/components/notification.jsx:515
+#: src/components/notification.jsx:531
 msgid "Learn more <0/>"
 msgstr "Lerni pli <0/>"
 
@@ -1552,14 +1552,14 @@ msgstr "Lerni pli <0/>"
 msgid "View #Wrapstodon"
 msgstr "Vidu #Wrapstodon"
 
-#: src/components/notification.jsx:769
+#: src/components/notification.jsx:770
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "Legi pli →"
 
 #: src/components/poll.jsx:110
 msgid "Voted"
-msgstr "Voĉdonite"
+msgstr "Elektita"
 
 #: src/components/poll.jsx:116
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -2273,7 +2273,7 @@ msgid "Failed to load history"
 msgstr "Malsukcesis ŝargi historion"
 
 #: src/components/status.jsx:3006
-#: src/pages/annual-report.jsx:44
+#: src/pages/annual-report.jsx:46
 msgid "Loading…"
 msgstr "Ŝargante…"
 
@@ -2346,7 +2346,7 @@ msgstr "Novaj afiŝoj"
 
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
-#: src/pages/notifications.jsx:824
+#: src/pages/notifications.jsx:871
 #: src/pages/status.jsx:988
 #: src/pages/status.jsx:1361
 msgid "Try again"
@@ -2415,7 +2415,7 @@ msgid "Login required."
 msgstr "Ensaluto bezonata."
 
 #: src/compose.jsx:90
-#: src/pages/annual-report.jsx:132
+#: src/pages/annual-report.jsx:165
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
@@ -3159,125 +3159,125 @@ msgstr "Neniu menciis vin :("
 msgid "Unable to load mentions."
 msgstr "Ne eblas ŝargi menciojn."
 
-#: src/pages/notifications.jsx:103
+#: src/pages/notifications.jsx:104
 msgid "You don't follow"
 msgstr "Vi ne sekvas"
 
-#: src/pages/notifications.jsx:104
+#: src/pages/notifications.jsx:105
 msgid "Who don't follow you"
 msgstr "Kiuj ne sekvas vin"
 
-#: src/pages/notifications.jsx:105
+#: src/pages/notifications.jsx:106
 msgid "With a new account"
 msgstr "Kun nova konto"
 
-#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:107
 msgid "Who unsolicitedly private mention you"
 msgstr "Kiu nepetite privata mencias vin"
 
-#: src/pages/notifications.jsx:107
+#: src/pages/notifications.jsx:108
 msgid "Who are limited by server moderators"
 msgstr "Kiuj estas limigitaj de servilaj moderigantoj"
 
-#: src/pages/notifications.jsx:538
-#: src/pages/notifications.jsx:872
+#: src/pages/notifications.jsx:578
+#: src/pages/notifications.jsx:919
 msgid "Notifications settings"
 msgstr "Agordoj pri sciigoj"
 
-#: src/pages/notifications.jsx:556
+#: src/pages/notifications.jsx:596
 msgid "New notifications"
 msgstr "Novaj sciigoj"
 
-#: src/pages/notifications.jsx:567
+#: src/pages/notifications.jsx:607
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anonco} other {Anoncoj}}"
 
-#: src/pages/notifications.jsx:614
+#: src/pages/notifications.jsx:654
 #: src/pages/settings.jsx:1161
 msgid "Follow requests"
 msgstr "Petoj de sekvado"
 
-#: src/pages/notifications.jsx:619
+#: src/pages/notifications.jsx:659
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# peto de sekvado} other {# petoj de sekvado}}"
 
-#: src/pages/notifications.jsx:674
+#: src/pages/notifications.jsx:714
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Filtritaj sciigoj de # persono} other {Filtritaj sciigoj de # personoj}}"
 
-#: src/pages/notifications.jsx:740
+#: src/pages/notifications.jsx:787
 msgid "Only mentions"
 msgstr "Nur mencioj"
 
-#: src/pages/notifications.jsx:744
+#: src/pages/notifications.jsx:791
 msgid "Today"
 msgstr "Hodiaŭ"
 
-#: src/pages/notifications.jsx:749
+#: src/pages/notifications.jsx:796
 msgid "You're all caught up."
 msgstr "Vi estas aktualiĝa."
 
-#: src/pages/notifications.jsx:772
+#: src/pages/notifications.jsx:819
 msgid "Yesterday"
 msgstr "Hieraŭ"
 
-#: src/pages/notifications.jsx:820
+#: src/pages/notifications.jsx:867
 msgid "Unable to load notifications"
 msgstr "Ne eblas ŝargi sciigojn"
 
-#: src/pages/notifications.jsx:899
+#: src/pages/notifications.jsx:946
 msgid "Notifications settings updated"
 msgstr "Sciigaj agordoj ĝisdatigitaj"
 
-#: src/pages/notifications.jsx:907
+#: src/pages/notifications.jsx:954
 msgid "Filter out notifications from people:"
 msgstr "Filtri sciigojn de homoj:"
 
-#: src/pages/notifications.jsx:921
+#: src/pages/notifications.jsx:968
 msgid "Filter"
 msgstr "Filtrilo"
 
-#: src/pages/notifications.jsx:924
+#: src/pages/notifications.jsx:971
 msgid "Ignore"
 msgstr "Ignori"
 
-#: src/pages/notifications.jsx:997
+#: src/pages/notifications.jsx:1044
 msgid "Updated <0>{0}</0>"
 msgstr "Ĝisdatigita <0>{0}</0>"
 
-#: src/pages/notifications.jsx:1065
+#: src/pages/notifications.jsx:1112
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Vidi sciigojn de <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1086
+#: src/pages/notifications.jsx:1133
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Sciigoj de <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1153
+#: src/pages/notifications.jsx:1200
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "Sciigoj de @{0} ne estos filtritaj ekde nun."
 
-#: src/pages/notifications.jsx:1158
+#: src/pages/notifications.jsx:1205
 msgid "Unable to accept notification request"
 msgstr "Ne eblas akcepti sciigan peton"
 
-#: src/pages/notifications.jsx:1163
+#: src/pages/notifications.jsx:1210
 msgid "Allow"
 msgstr "Permesi"
 
-#: src/pages/notifications.jsx:1183
+#: src/pages/notifications.jsx:1230
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Sciigoj de @{0} ne aperos en Filtritaj sciigoj ekde nun."
 
-#: src/pages/notifications.jsx:1188
+#: src/pages/notifications.jsx:1235
 msgid "Unable to dismiss notification request"
 msgstr "Ne eblas malakcepti sciigan peton"
 
-#: src/pages/notifications.jsx:1193
+#: src/pages/notifications.jsx:1240
 msgid "Dismiss"
 msgstr "Fermi"
 
-#: src/pages/notifications.jsx:1208
+#: src/pages/notifications.jsx:1255
 msgid "Dismissed"
 msgstr "Fermita"
 

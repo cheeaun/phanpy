@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
-import { resolve } from 'path';
+import { createRequire } from 'module';
+import { dirname, join, resolve } from 'path';
 
 import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
@@ -39,6 +40,66 @@ const rollbarCode = fs.readFileSync(
   resolve(__dirname, './rollbar.js'),
   'utf-8',
 );
+
+let emojiData;
+{
+  // import.meta.resolve requires Node 20.6.0/18.19.0, cannot use that yet.
+  const require = createRequire(import.meta.url);
+  const basePath = dirname(dirname(
+    require.resolve("emojibase-data/en/data.json")
+  ));
+
+  emojiData = ALL_LOCALES.map((lang) => {
+    const emojiLang = [
+      lang.toLowerCase(),
+      lang.replace(/-.*/, '').toLowerCase(),
+      'en',
+    ].find((lang) => {
+      try {
+        return fs.statSync(join(basePath, lang)).isDirectory();
+      } catch (error) {
+        return false;
+      }
+    });
+
+    const messages = JSON.parse(fs.readFileSync(
+      join(basePath, emojiLang, 'messages.json')
+    ));
+    const emojis = JSON.parse(fs.readFileSync(
+      join(basePath, emojiLang, 'compact.json')
+    ));
+    const shortcodes = JSON.parse(fs.readFileSync(
+      join(basePath, emojiLang, 'shortcodes', 'cldr.json')
+    ));
+
+    const data = {
+      groups: messages.groups,
+      subgroups: messages.subgroups,
+      skinTones: messages.skinTones,
+      emojis: emojis.sort((emoji1, emoji2) => emoji1.order - emoji2.order).map((emoji) => {
+        if (emoji.hexcode in shortcodes)
+          emoji.shortcode = shortcodes[emoji.hexcode];
+
+        // Remove unused fields to keep the data compact
+        delete emoji.order;
+        delete emoji.hexcode;
+
+        if (emoji.skins) {
+          emoji.skins = emoji.skins.sort((skin1, skin2) => skin1.order - skin2.order)
+            .map((skin) => skin.unicode);
+        }
+
+        return emoji;
+      }),
+    };
+
+    return generateFile({
+      type: 'json',
+      output: `./assets/emojis/${lang}.json`,
+      data,
+    });
+  });
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -154,6 +215,7 @@ export default defineConfig({
       detailed: true,
       brotli: true,
     }),
+    ...emojiData,
   ],
   build: {
     sourcemap: true,

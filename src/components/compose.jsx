@@ -19,6 +19,7 @@ import stringLength from 'string-length';
 // import { detectAll } from 'tinyld/light';
 import { uid } from 'uid/single';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
+import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
 import poweredByGiphyURL from '../assets/powered-by-giphy.svg';
@@ -201,6 +202,13 @@ const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 
 const CUSTOM_EMOJIS_COUNT = 100;
 
+const ADD_LABELS = {
+  media: msg`Add media`,
+  customEmoji: msg`Add custom emoji`,
+  gif: msg`Add GIF`,
+  poll: msg`Add poll`,
+};
+
 function Compose({
   onClose,
   replyToStatus,
@@ -209,7 +217,7 @@ function Compose({
   standalone,
   hasOpener,
 }) {
-  const { i18n } = useLingui();
+  const { i18n, _ } = useLingui();
   const rtf = RTF(i18n.locale);
   const lf = LF(i18n.locale);
 
@@ -732,6 +740,39 @@ function Compose({
     states.composerState.minimized = true;
   };
 
+  const gifPickerDisabled =
+    uiState === 'loading' ||
+    (maxMediaAttachments !== undefined &&
+      mediaAttachments.length >= maxMediaAttachments) ||
+    !!poll;
+
+  // If maxOptions is not defined or defined and is greater than 1, show poll button
+  const showPollButton = maxOptions == null || maxOptions > 1;
+  const pollButtonDisabled =
+    uiState === 'loading' || !!poll || !!mediaAttachments.length;
+  const onPollButtonClick = () => {
+    setPoll({
+      options: ['', ''],
+      expiresIn: 24 * 60 * 60, // 1 day
+      multiple: false,
+    });
+  };
+
+  const addSubToolbarRef = useRef();
+  const [showAddButton, setShowAddButton] = useState(false);
+  useResizeObserver({
+    ref: addSubToolbarRef,
+    box: 'border-box',
+    onResize: ({ width }) => {
+      // If scrollable, it's truncated
+      const { scrollWidth } = addSubToolbarRef.current;
+      const truncated = scrollWidth > width;
+      const overTruncated = width < 84; // roughly two buttons width
+      setShowAddButton(overTruncated || truncated);
+      addSubToolbarRef.current.hidden = overTruncated;
+    },
+  });
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -1214,8 +1255,8 @@ function Compose({
               replyToStatus
                 ? t`Post your reply`
                 : editStatus
-                ? t`Edit your post`
-                : t`What are you doing?`
+                  ? t`Edit your post`
+                  : t`What are you doing?`
             }
             required={mediaAttachments?.length === 0}
             disabled={uiState === 'loading'}
@@ -1318,87 +1359,89 @@ function Compose({
               }}
             />
           )}
-          <div
-            class="toolbar wrap"
-            style={{
-              justifyContent: 'flex-end',
-            }}
-          >
-            <span>
-              <label class="toolbar-button">
-                <input
-                  type="file"
-                  accept={supportedMimeTypes?.join(',')}
-                  multiple={
-                    maxMediaAttachments === undefined ||
-                    maxMediaAttachments - mediaAttachments >= 2
-                  }
-                  disabled={
-                    uiState === 'loading' ||
-                    mediaAttachments.length >= maxMediaAttachments ||
-                    !!poll
-                  }
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    if (!files) return;
-
-                    const mediaFiles = Array.from(files).map((file) => ({
-                      file,
-                      type: file.type,
-                      size: file.size,
-                      url: URL.createObjectURL(file),
-                      id: null, // indicate uploaded state
-                      description: null,
-                    }));
-                    console.log('MEDIA ATTACHMENTS', files, mediaFiles);
-
-                    // Validate max media attachments
-                    if (
-                      mediaAttachments.length + mediaFiles.length >
-                      maxMediaAttachments
-                    ) {
-                      alert(
-                        plural(maxMediaAttachments, {
-                          one: 'You can only attach up to 1 file.',
-                          other: 'You can only attach up to # files.',
-                        }),
-                      );
-                    } else {
-                      setMediaAttachments((attachments) => {
-                        return attachments.concat(mediaFiles);
-                      });
-                    }
-                    // Reset
-                    e.target.value = '';
+          <div class="toolbar compose-footer">
+            <span class="add-toolbar-button-group spacer">
+              {showAddButton && (
+                <Menu2
+                  portal={{
+                    target: document.body,
                   }}
-                />
-                <Icon icon="attachment" />
-              </label>
-              {/* If maxOptions is not defined or defined and is greater than 1, show poll button */}
-              {maxOptions == null ||
-                (maxOptions > 1 && (
-                  <>
+                  containerProps={{
+                    style: {
+                      zIndex: 1001,
+                    },
+                  }}
+                  menuButton={({ open }) => (
                     <button
                       type="button"
-                      class="toolbar-button"
-                      disabled={
-                        uiState === 'loading' ||
-                        !!poll ||
-                        !!mediaAttachments.length
-                      }
+                      class={`toolbar-button add-button ${
+                        open ? 'active' : ''
+                      }`}
+                    >
+                      <Icon icon="plus" title={t`Add`} />
+                    </button>
+                  )}
+                >
+                  <MenuItem className="compose-menu-add-media">
+                    <label class="compose-menu-add-media-field">
+                      <FilePickerInput
+                        hidden
+                        supportedMimeTypes={supportedMimeTypes}
+                        maxMediaAttachments={maxMediaAttachments}
+                        mediaAttachments={mediaAttachments}
+                        disabled={
+                          uiState === 'loading' ||
+                          mediaAttachments.length >= maxMediaAttachments ||
+                          !!poll
+                        }
+                        setMediaAttachments={setMediaAttachments}
+                      />
+                    </label>
+                    <Icon icon="media" /> <span>{_(ADD_LABELS.media)}</span>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setShowEmoji2Picker(true);
+                    }}
+                  >
+                    <Icon icon="emoji2" />{' '}
+                    <span>{_(ADD_LABELS.customEmoji)}</span>
+                  </MenuItem>
+                  {!!states.settings.composerGIFPicker && (
+                    <MenuItem
+                      disabled={gifPickerDisabled}
                       onClick={() => {
-                        setPoll({
-                          options: ['', ''],
-                          expiresIn: 24 * 60 * 60, // 1 day
-                          multiple: false,
-                        });
+                        setShowGIFPicker(true);
                       }}
                     >
-                      <Icon icon="poll" alt={t`Add poll`} />
-                    </button>
-                  </>
-                ))}
-              {/* <button
+                      <span class="icon icon-gif" role="img" />
+                      <span>{_(ADD_LABELS.gif)}</span>
+                    </MenuItem>
+                  )}
+                  <MenuItem
+                    disabled={pollButtonDisabled}
+                    onClick={onPollButtonClick}
+                  >
+                    <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
+                  </MenuItem>
+                </Menu2>
+              )}
+              <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
+                <label class="toolbar-button">
+                  <FilePickerInput
+                    supportedMimeTypes={supportedMimeTypes}
+                    maxMediaAttachments={maxMediaAttachments}
+                    mediaAttachments={mediaAttachments}
+                    disabled={
+                      uiState === 'loading' ||
+                      mediaAttachments.length >= maxMediaAttachments ||
+                      !!poll
+                    }
+                    setMediaAttachments={setMediaAttachments}
+                  />
+                  <Icon icon="media" alt={_(ADD_LABELS.media)} />
+                </label>
+                {/* <button
                 type="button"
                 class="toolbar-button"
                 disabled={uiState === 'loading'}
@@ -1408,35 +1451,47 @@ function Compose({
               >
                 <Icon icon="at" />
               </button> */}
-              <button
-                type="button"
-                class="toolbar-button"
-                disabled={uiState === 'loading'}
-                onClick={() => {
-                  setShowEmoji2Picker(true);
-                }}
-              >
-                <Icon icon="emoji2" alt={t`Add custom emoji`} />
-              </button>
-              {!!states.settings.composerGIFPicker && (
                 <button
                   type="button"
-                  class="toolbar-button gif-picker-button"
-                  disabled={
-                    uiState === 'loading' ||
-                    (maxMediaAttachments !== undefined &&
-                      mediaAttachments.length >= maxMediaAttachments) ||
-                    !!poll
-                  }
+                  class="toolbar-button"
+                  disabled={uiState === 'loading'}
                   onClick={() => {
-                    setShowGIFPicker(true);
+                    setShowEmoji2Picker(true);
                   }}
                 >
-                  <span>GIF</span>
+                  <Icon icon="emoji2" alt={_(ADD_LABELS.customEmoji)} />
                 </button>
-              )}
+                {!!states.settings.composerGIFPicker && (
+                  <button
+                    type="button"
+                    class="toolbar-button gif-picker-button"
+                    disabled={gifPickerDisabled}
+                    onClick={() => {
+                      setShowGIFPicker(true);
+                    }}
+                  >
+                    <span
+                      class="icon icon-gif"
+                      aria-label={_(ADD_LABELS.gif)}
+                    />
+                  </button>
+                )}
+                {}
+                {showPollButton && (
+                  <>
+                    <button
+                      type="button"
+                      class="toolbar-button"
+                      disabled={pollButtonDisabled}
+                      onClick={onPollButtonClick}
+                    >
+                      <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
+                    </button>
+                  </>
+                )}
+              </span>
             </span>
-            <div class="spacer" />
+            {/* <div class="spacer" /> */}
             {uiState === 'loading' ? (
               <Loader abrupt />
             ) : (
@@ -1495,19 +1550,15 @@ function Compose({
                 })}
               </select>
             </label>{' '}
-            <button
-              type="submit"
-              class="large"
-              disabled={uiState === 'loading'}
-            >
+            <button type="submit" disabled={uiState === 'loading'}>
               {replyToStatus
                 ? t`Reply`
                 : editStatus
-                ? t`Update`
-                : t({
-                    message: 'Post',
-                    context: 'Submit button in composer',
-                  })}
+                  ? t`Update`
+                  : t({
+                      message: 'Post',
+                      context: 'Submit button in composer',
+                    })}
             </button>
           </div>
         </form>
@@ -1668,6 +1719,58 @@ function Compose({
         </Modal>
       )}
     </div>
+  );
+}
+
+function FilePickerInput({
+  hidden,
+  supportedMimeTypes,
+  maxMediaAttachments,
+  mediaAttachments,
+  disabled = false,
+  setMediaAttachments,
+}) {
+  return (
+    <input
+      type="file"
+      hidden={hidden}
+      accept={supportedMimeTypes?.join(',')}
+      multiple={
+        maxMediaAttachments === undefined ||
+        maxMediaAttachments - mediaAttachments >= 2
+      }
+      disabled={disabled}
+      onChange={(e) => {
+        const files = e.target.files;
+        if (!files) return;
+
+        const mediaFiles = Array.from(files).map((file) => ({
+          file,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null, // indicate uploaded state
+          description: null,
+        }));
+        console.log('MEDIA ATTACHMENTS', files, mediaFiles);
+
+        // Validate max media attachments
+        if (mediaAttachments.length + mediaFiles.length > maxMediaAttachments) {
+          alert(
+            plural(maxMediaAttachments, {
+              one: 'You can only attach up to 1 file.',
+              other: 'You can only attach up to # files.',
+            }),
+          );
+        } else {
+          setMediaAttachments((attachments) => {
+            return attachments.concat(mediaFiles);
+          });
+        }
+        // Reset
+        e.target.value = '';
+      }}
+    />
   );
 }
 
@@ -2111,10 +2214,10 @@ function CharCountMeter({ maxCharacters = 500, hidden }) {
           leftChars <= -10
             ? 'explode'
             : leftChars <= 0
-            ? 'danger'
-            : leftChars <= 20
-            ? 'warning'
-            : ''
+              ? 'danger'
+              : leftChars <= 20
+                ? 'warning'
+                : ''
         }`}
         value={charCount}
         max={maxCharacters}
@@ -2743,16 +2846,16 @@ function filterShortcodes(emojis, searchTerm) {
       return bothStartWith
         ? a.length - b.length
         : aStartsWith
-        ? -1
-        : bStartsWith
-        ? 1
-        : bothContain
-        ? a.length - b.length
-        : aContains
-        ? -1
-        : bContains
-        ? 1
-        : 0;
+          ? -1
+          : bStartsWith
+            ? 1
+            : bothContain
+              ? a.length - b.length
+              : aContains
+                ? -1
+                : bContains
+                  ? 1
+                  : 0;
     })
     .slice(0, 5);
 }
@@ -3413,8 +3516,8 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
                 const theImage = fixed_height_small?.url
                   ? fixed_height_small
                   : fixed_height_downsampled?.url
-                  ? fixed_height_downsampled
-                  : fixed_height;
+                    ? fixed_height_downsampled
+                    : fixed_height;
                 let { url, webp, width, height } = theImage;
                 if (+height > 100) {
                   width = (width / height) * 100;

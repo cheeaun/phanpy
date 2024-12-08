@@ -273,6 +273,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.tilde.zone](https://phanpy.tilde.zone) by [@ben@tilde.zone](https://tilde.zone/@ben)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
 - [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
+- [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 
 > Note: Add yours by creating a pull request.
 
@@ -324,12 +325,14 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16291756/medium/c008af10bc117fa9c9dcb70f2b291ee6.jpg" alt="" width="16" height="16" /> lucasofchirst (Occitan, Portuguese, Portuguese, Brazilian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/15000639/medium/ebbf0bb7d5027a1903d11b7f5f34f65b.jpeg" alt="" width="16" height="16" /> nycterent (Lithuanian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16539461/medium/2f41b9f0b802c1d200a6ab62167a7229_default.png" alt="" width="16" height="16" /> pazpi (Italian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" alt="" width="16" height="16" /> PPNplus (Thai)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15106977/medium/54bf93b19af8bbfdee579ea51685bafa.jpeg" alt="" width="16" height="16" /> punkrockgirl (Basque)

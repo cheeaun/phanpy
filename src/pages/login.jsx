@@ -152,10 +152,10 @@ function Login() {
   const selectedInstanceText = instanceTextLooksLikeDomain
     ? cleanInstanceText
     : instancesSuggestions?.length
-    ? instancesSuggestions[0]
-    : instanceText
-    ? instancesList.find((instance) => instance.includes(instanceText))
-    : null;
+      ? instancesSuggestions[0]
+      : instanceText
+        ? instancesList.find((instance) => instance.includes(instanceText))
+        : null;
 
   const onSubmit = (e) => {
     e.preventDefault();

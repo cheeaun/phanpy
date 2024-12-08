@@ -13,7 +13,7 @@ function escapeHTML(html) {
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
-      }[c]),
+      })[c],
   );
 }
 

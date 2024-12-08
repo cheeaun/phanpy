@@ -31,10 +31,10 @@ function App() {
     editStatus
       ? t`Editing source status`
       : replyToStatus
-      ? t`Replying to @${
-          replyToStatus.account?.acct || replyToStatus.account?.username
-        }`
-      : t`Compose`,
+        ? t`Replying to @${
+            replyToStatus.account?.acct || replyToStatus.account?.username
+          }`
+        : t`Compose`,
   );
 
   useEffect(() => {

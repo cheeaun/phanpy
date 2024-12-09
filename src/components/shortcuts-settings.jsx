@@ -48,7 +48,7 @@ const TYPE_TEXT = {
   following: msg`Home / Following`,
   notifications: msg`Notifications`,
   list: msg`Lists`,
-  public: msg`Public (Local / Federated)`,
+  public: msg`Local / Bubble / Federated`,
   search: msg`Search`,
   'account-statuses': msg`Account`,
   bookmarks: msg`Bookmarks`,
@@ -67,9 +67,9 @@ const TYPE_PARAMS = {
   ],
   public: [
     {
-      text: msg`Local only`,
-      name: 'local',
-      type: 'checkbox',
+      text: msg`Variant`,
+      name: 'variant',
+      type: 'variant',
     },
     {
       text: msg`Instance`,
@@ -162,10 +162,27 @@ export const SHORTCUTS_META = {
   },
   public: {
     id: 'public',
-    title: ({ local }) => (local ? t`Local` : t`Federated`),
+    title: ({ variant }) =>
+      ({
+        local: t`Local`,
+        bubble: t`Bubble`,
+        federated: t`Federated`,
+      })[variant],
     subtitle: ({ instance }) => instance || api().instance,
-    path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
-    icon: ({ local }) => (local ? 'building' : 'earth'),
+    path: ({ variant, instance }) => {
+      const suffix = {
+        local: '/l',
+        bubble: '/b',
+        federated: '',
+      }[variant];
+      return `/${instance}/p${suffix}`;
+    },
+    icon: ({ variant }) =>
+      ({
+        local: 'building',
+        bubble: 'star2',
+        federated: 'earth',
+      })[variant],
   },
   trending: {
     id: 'trending',
@@ -665,6 +682,35 @@ function ShortcutForm({
                 );
               }
 
+              if (type === 'variant') {
+                return (
+                  <p>
+                    <label>
+                      <span>
+                        <Trans>Variant</Trans>
+                      </span>
+                      <select
+                        name="variant"
+                        required={!notRequired}
+                        disabled={disabled || uiState === 'loading'}
+                        defaultValue={editMode ? shortcut.variant : 'local'}
+                        dir="auto"
+                      >
+                        <option value="local">
+                          <Trans>Local</Trans>
+                        </option>
+                        <option value="bubble">
+                          <Trans>Bubble</Trans>
+                        </option>
+                        <option value="federated">
+                          <Trans>Federated</Trans>
+                        </option>
+                      </select>
+                    </label>
+                  </p>
+                );
+              }
+
               return (
                 <p>
                   <label>
@@ -893,7 +939,7 @@ function ImportExport({ shortcuts, onClose }) {
                             shortcut[name] ? (
                               <>
                                 <span class="tag collapsed insignificant">
-                                  {text}:{' '}
+                                  {_(text)}:{' '}
                                   {type === 'checkbox'
                                     ? shortcut[name] === 'on'
                                       ? '✅'

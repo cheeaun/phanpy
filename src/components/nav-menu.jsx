@@ -12,7 +12,7 @@ import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID } from '../utils/store-utils';
+import { getCurrentAccountID, getCurrentInstance } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import Avatar from './avatar';
@@ -84,6 +84,9 @@ function NavMenu(props) {
     const results = await blocksIterator.current.next();
     return results;
   }
+
+  const hasBubbleTimeline =
+    supports('@akkoma/bubble-timeline') || supports('@chuckya/bubble-timeline');
 
   const buttonClickTS = useRef();
   return (
@@ -337,6 +340,14 @@ function NavMenu(props) {
               <Trans>Local</Trans>
             </span>
           </MenuLink>
+          {hasBubbleTimeline && (
+            <MenuLink to={`/${instance}/p/b`}>
+              <Icon icon="star2" size="l" />{' '}
+              <span>
+                <Trans>Bubble</Trans>
+              </span>
+            </MenuLink>
+          )}
           <MenuLink to={`/${instance}/p`}>
             <Icon icon="earth" size="l" />{' '}
             <span>

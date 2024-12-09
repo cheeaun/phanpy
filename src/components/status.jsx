@@ -358,11 +358,7 @@ function Status({
       emojis: accountEmojis,
       bot,
       group,
-      source: {
-        pleroma: {
-          actorType = undefined
-        } = {},
-      } = {},
+      source: { pleroma: { actorType = undefined } = {} } = {},
     },
     id,
     repliesCount,
@@ -508,7 +504,7 @@ function Status({
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
 
-    if (group || actorType === "Group") {
+    if (group || actorType === 'Group') {
       return (
         <div
           data-state-post-id={sKey}
@@ -516,11 +512,15 @@ function Status({
           onMouseEnter={debugHover}
         >
           <div class="status-pre-meta">
-              <Icon icon="group" size="l" alt={t`Group`} />{' '}
-              <Trans>
-                <span>Posted in</span>{" "}
-                <NameText account={status.account} instance={instance} showAvatar />{' '}
-              </Trans>
+            <Icon icon="group" size="l" alt={t`Group`} />{' '}
+            <Trans>
+              <span>Posted in</span>{' '}
+              <NameText
+                account={status.account}
+                instance={instance}
+                showAvatar
+              />{' '}
+            </Trans>
           </div>
           <Status
             status={statusID ? null : reblog}

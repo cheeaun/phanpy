@@ -20,11 +20,15 @@
   justify-content: space-between;
   gap: 8px;
   align-items: center;
-  padding: 16px;
+  padding: 8px;
   position: sticky;
   top: 0;
   z-index: 100;
   white-space: nowrap;
+
+  @media (min-width: 480px) {
+    padding: 16px;
+  }
 }
 #compose-container .compose-top .account-block {
   text-align: start;
@@ -110,16 +114,20 @@
 }
 
 #compose-container form {
-  --form-padding-inline: 8px;
-  --form-padding-block: 0;
+  --form-spacing-inline: 4px;
+  --form-spacing-block: 0;
   /* border-radius: 16px; */
-  padding: var(--form-padding-block) var(--form-padding-inline);
+  padding: var(--form-spacing-block) var(--form-spacing-inline);
   background-color: var(--bg-blur-color);
   /* background-image: linear-gradient(var(--bg-color) 85%, transparent); */
   position: relative;
   z-index: 2;
   --drop-shadow: 0 3px 6px -3px var(--drop-shadow-color);
   box-shadow: var(--drop-shadow);
+
+  @media (min-width: 480px) {
+    --form-spacing-inline: 8px;
+  }
 
   @media (min-width: 40em) {
     border-radius: 16px;
@@ -153,8 +161,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  gap: 8px;
+  padding: var(--form-spacing-inline) 0;
+  gap: var(--form-spacing-inline);
 }
 #compose-container .toolbar.wrap {
   flex-wrap: wrap;
@@ -181,6 +189,11 @@
   white-space: nowrap;
   border: 2px solid transparent;
   vertical-align: middle;
+
+  &.active {
+    filter: brightness(0.8);
+    background-color: var(--bg-color);
+  }
 }
 #compose-container .toolbar-button > * {
   vertical-align: middle;
@@ -246,6 +259,39 @@
   text-overflow: ellipsis;
   overflow: hidden;
   max-width: 100%;
+  min-width: 4ch;
+}
+
+#compose-container .compose-footer {
+  .add-toolbar-button-group {
+    display: flex;
+    overflow: auto;
+  }
+  .add-sub-toolbar-button-group {
+    flex-grow: 1;
+    display: flex;
+    overflow: auto;
+    transition: 0.5s ease-in-out;
+    transition-property: opacity, width;
+    scrollbar-width: none;
+    padding-inline-end: 16px;
+    mask-image: linear-gradient(
+      var(--to-backward),
+      transparent 0,
+      black 16px,
+      black 100%
+    );
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &[hidden] {
+      opacity: 0;
+      pointer-events: none;
+      width: 0;
+    }
+  }
 }
 
 #compose-container text-expander {
@@ -516,6 +562,37 @@
   color: var(--red-color);
 }
 
+.compose-menu-add-media {
+  position: relative;
+
+  .compose-menu-add-media-field {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+}
+
+.icon-gif {
+  display: inline-block !important;
+  min-width: 16px;
+  height: 16px;
+  font-size: 10px !important;
+  letter-spacing: -0.5px;
+  font-size-adjust: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 16px;
+  font-weight: bold;
+  text-rendering: optimizeSpeed;
+
+  &:after {
+    display: block;
+    content: 'GIF';
+  }
+}
+
 @media (display-mode: standalone) {
   /* No popping in standalone mode */
   #compose-container .pop-button {
@@ -525,8 +602,10 @@
 
 #compose-container button[type='submit'] {
   border-radius: 8px;
+
   @media (min-width: 480px) {
     padding-inline: 24px;
+    font-size: 125%;
   }
 }
 
@@ -820,8 +899,8 @@
 .compose-field-container {
   display: grid !important;
 
-  @media (width < 30em) {
-    margin-inline: calc(-1 * var(--form-padding-inline));
+  @media (width < 480px) {
+    margin-inline: calc(-1 * var(--form-spacing-inline));
     width: 100vw !important;
     max-width: 100vw;
 
@@ -929,15 +1008,55 @@
   }
 }
 
+@keyframes jump-scare {
+  from {
+    opacity: 0.5;
+    transform: scale(0.25) translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+@keyframes jump-scare-rtl {
+  from {
+    opacity: 0.5;
+    transform: scale(0.25) translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+.add-button {
+  transform-origin: var(--forward) center;
+  background-color: var(--bg-blur-color) !important;
+  animation: jump-scare 0.2s ease-in-out both;
+  :dir(rtl) & {
+    animation-name: jump-scare-rtl;
+  }
+
+  .icon {
+    transition: transform 0.3s ease-in-out;
+  }
+  &.active {
+    .icon {
+      transform: rotate(135deg);
+    }
+  }
+}
+
 .gif-picker-button {
-  span {
+  /* span {
     font-weight: bold;
     font-size: 11.5px;
     display: block;
-  }
+    line-height: 1;
+  } */
 
   &:is(:hover, :focus) {
-    span {
+    .icon {
       animation: gif-shake 0.3s 3;
     }
   }

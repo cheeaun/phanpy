@@ -13,7 +13,7 @@ function escapeHTML(html) {
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
-      }[c]),
+      })[c],
   );
 }
 
@@ -287,6 +287,17 @@ function _enhanceContent(content, opts = {}) {
       if (width && height) {
         img.style.setProperty('--original-aspect-ratio', `${width}/${height}`);
       }
+    }
+  }
+
+  // FIX CLOAK MODE FOR SAFARI
+  // Workaround for Safari so that `text-decoration-thickness` works
+  // Wrap child text nodes in spans
+  for (const node of dom.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const span = document.createElement('span');
+      span.textContent = node.textContent;
+      dom.replaceChild(span, node);
     }
   }
 

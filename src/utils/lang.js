@@ -1,9 +1,9 @@
 import { i18n } from '@lingui/core';
 import {
-  detect,
   fromNavigator,
   fromStorage,
   fromUrl,
+  multipleDetect,
 } from '@lingui/detect-locale';
 import Locale from 'intl-locale-textinfo-polyfill';
 
@@ -54,7 +54,7 @@ export async function activateLang(lang) {
 }
 
 export function initActivateLang() {
-  const lang = detect(
+  const languages = multipleDetect(
     fromUrl('lang'),
     fromStorage('lang'),
     fromNavigator(),
@@ -62,7 +62,8 @@ export function initActivateLang() {
     DEFAULT_LANG,
   );
   const matchedLang =
-    ALL_LOCALES.find((l) => l === lang) || localeMatch(lang, ALL_LOCALES);
+    languages.find((l) => ALL_LOCALES.includes(l)) ||
+    localeMatch(languages, ALL_LOCALES);
   activateLang(matchedLang);
 
   // const yes = confirm(t`Reload to apply language setting?`);

@@ -174,6 +174,7 @@ export const ICONS = {
   'heart-break': () => import('@iconify-icons/mingcute/heart-crack-line'),
   'user-x': () => import('@iconify-icons/mingcute/user-x-line'),
   minimize: () => import('@iconify-icons/mingcute/arrows-down-line'),
+  celebrate: () => import('@iconify-icons/mingcute/celebrate-line'),
   font: () => import('@iconify-icons/mingcute/font-line'),
   'brackets-angle': () => import('@iconify-icons/mingcute/brackets-angle-line'),
   asterisk: () => import('@iconify-icons/mingcute/asterisk-line'),

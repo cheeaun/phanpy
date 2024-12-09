@@ -134,7 +134,10 @@ const fetchAccountTitle = pmem(async ({ id }) => {
 export const SHORTCUTS_META = {
   following: {
     id: 'home',
-    title: (_, index) => (index === 0 ? t`Home` : t`Following`),
+    title: (_, index) =>
+      index === 0
+        ? t`Home`
+        : t({ id: 'following.title', message: 'Following' }),
     path: '/',
     icon: 'home',
   },

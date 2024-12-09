@@ -85,15 +85,6 @@ function NavMenu(props) {
     return results;
   }
 
-  const supportsLists = supports('@mastodon/lists');
-  const [lists, setLists] = useState([]);
-  useEffect(() => {
-    if (!supportsLists) return;
-    if (menuState === 'open') {
-      getLists().then(setLists);
-    }
-  }, [menuState === 'open']);
-
   const buttonClickTS = useRef();
   return (
     <>
@@ -190,7 +181,7 @@ function NavMenu(props) {
                 <MenuLink to="/following">
                   <Icon icon="following" size="l" />{' '}
                   <span>
-                    <Trans>Following</Trans>
+                    <Trans id="following.title">Following</Trans>
                   </span>
                 </MenuLink>
               )}
@@ -229,47 +220,7 @@ function NavMenu(props) {
                   </span>
                 </MenuLink>
               )}
-              {lists?.length > 0 ? (
-                <SubMenu2
-                  menuClassName="nav-submenu"
-                  overflow="auto"
-                  gap={-8}
-                  label={
-                    <>
-                      <Icon icon="list" size="l" />
-                      <span class="menu-grow">
-                        <Trans>Lists</Trans>
-                      </span>
-                      <Icon icon="chevron-right" />
-                    </>
-                  }
-                >
-                  <MenuLink to="/l">
-                    <span>
-                      <Trans>All Lists</Trans>
-                    </span>
-                  </MenuLink>
-                  {lists?.length > 0 && (
-                    <>
-                      <MenuDivider />
-                      {lists.map((list) => (
-                        <MenuLink key={list.id} to={`/l/${list.id}`}>
-                          <span>{list.title}</span>
-                        </MenuLink>
-                      ))}
-                    </>
-                  )}
-                </SubMenu2>
-              ) : (
-                supportsLists && (
-                  <MenuLink to="/l">
-                    <Icon icon="list" size="l" />
-                    <span>
-                      <Trans>Lists</Trans>
-                    </span>
-                  </MenuLink>
-                )
-              )}
+              <ListMenu menuState={menuState} />
               <MenuLink to="/b">
                 <Icon icon="bookmark" size="l" />{' '}
                 <span>
@@ -444,6 +395,59 @@ function NavMenu(props) {
         </section>
       </ControlledMenu>
     </>
+  );
+}
+
+function ListMenu({ menuState }) {
+  const supportsLists = supports('@mastodon/lists');
+  const [lists, setLists] = useState([]);
+  useEffect(() => {
+    if (!supportsLists) return;
+    if (menuState === 'open') {
+      getLists().then(setLists);
+    }
+  }, [menuState, supportsLists]);
+
+  return lists.length > 0 ? (
+    <SubMenu2
+      menuClassName="nav-submenu"
+      overflow="auto"
+      gap={-8}
+      label={
+        <>
+          <Icon icon="list" size="l" />
+          <span class="menu-grow">
+            <Trans>Lists</Trans>
+          </span>
+          <Icon icon="chevron-right" />
+        </>
+      }
+    >
+      <MenuLink to="/l">
+        <span>
+          <Trans>All Lists</Trans>
+        </span>
+      </MenuLink>
+      {lists?.length > 0 && (
+        <>
+          <MenuDivider />
+          {lists.map((list) => (
+            <MenuLink key={list.id} to={`/l/${list.id}`}>
+              <span>{list.title}</span>
+            </MenuLink>
+          ))}
+        </>
+      )}
+    </SubMenu2>
+  ) : (
+    supportsLists && (
+      <MenuLink to="/l">
+        <Icon icon="list" size="l" />
+        <span>
+          <Trans>Lists</Trans>
+        </span>
+      </MenuLink>
+    )
   );
 }
 

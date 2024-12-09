@@ -24,7 +24,9 @@ function ListAddEdit({ list, onClose }) {
       }
     }
   }, [editMode]);
-  const supportsExclusive = supports('@mastodon/list-exclusive');
+  const supportsExclusive =
+    supports('@mastodon/list-exclusive') ||
+    supports('@gotosocial/list-exclusive');
 
   return (
     <div class="sheet">

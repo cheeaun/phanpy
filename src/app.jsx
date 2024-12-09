@@ -27,6 +27,7 @@ import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
 import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
+import AnnualReport from './pages/annual-report';
 import Bookmarks from './pages/bookmarks';
 import Catchup from './pages/catchup';
 import Favourites from './pages/favourites';
@@ -98,39 +99,42 @@ window.__STATES_STATS__ = () => {
 // Experimental "garbage collection" for states
 // Every 15 minutes
 // Only posts for now
-setInterval(() => {
-  if (!window.__IDLE__) return;
-  const { statuses, unfurledLinks, notifications } = states;
-  let keysCount = 0;
-  const { instance } = api();
-  for (const key in statuses) {
-    if (!window.__IDLE__) break;
-    try {
-      const $post = document.querySelector(
-        `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
-      );
-      const postInNotifications = notifications.some(
-        (n) => key === statusKey(n.status?.id, instance),
-      );
-      if (!$post && !postInNotifications) {
-        delete states.statuses[key];
-        delete states.statusQuotes[key];
-        for (const link in unfurledLinks) {
-          const unfurled = unfurledLinks[link];
-          const sKey = statusKey(unfurled.id, unfurled.instance);
-          if (sKey === key) {
-            delete states.unfurledLinks[link];
-            break;
+setInterval(
+  () => {
+    if (!window.__IDLE__) return;
+    const { statuses, unfurledLinks, notifications } = states;
+    let keysCount = 0;
+    const { instance } = api();
+    for (const key in statuses) {
+      if (!window.__IDLE__) break;
+      try {
+        const $post = document.querySelector(
+          `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
+        );
+        const postInNotifications = notifications.some(
+          (n) => key === statusKey(n.status?.id, instance),
+        );
+        if (!$post && !postInNotifications) {
+          delete states.statuses[key];
+          delete states.statusQuotes[key];
+          for (const link in unfurledLinks) {
+            const unfurled = unfurledLinks[link];
+            const sKey = statusKey(unfurled.id, unfurled.instance);
+            if (sKey === key) {
+              delete states.unfurledLinks[link];
+              break;
+            }
           }
+          keysCount++;
         }
-        keysCount++;
-      }
-    } catch (e) {}
-  }
-  if (keysCount) {
-    console.info(`GC: Removed ${keysCount} keys`);
-  }
-}, 15 * 60 * 1000);
+      } catch (e) {}
+    }
+    if (keysCount) {
+      console.info(`GC: Removed ${keysCount} keys`);
+    }
+  },
+  15 * 60 * 1000,
+);
 
 // Preload icons
 // There's probably a better way to do this
@@ -210,6 +214,12 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 if (isIOS) {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
+      // Don't reset theme color if media modal is showing
+      // Media modal will set its own theme color based on the media's color
+      const showingMediaModal =
+        document.getElementsByClassName('media-modal-container').length > 0;
+      if (showingMediaModal) return;
+
       const theme = store.local.get('theme');
       let $meta;
       if (theme) {
@@ -540,6 +550,7 @@ function SecondaryRoutes({ isLoggedIn }) {
           <Route path="/fh" element={<FollowedHashtags />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
+          <Route path="/annual_report/:year" element={<AnnualReport />} />
         </>
       )}
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />

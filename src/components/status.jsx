@@ -2014,8 +2014,14 @@ function Status({
                       }}
                     >
                       <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                      <span class={"spoiler-text"}>
-                        {spoilerText ? <EmojiText text={spoilerText} emojis={emojis} /> : showSpoiler ? t`Show less` : t`Show content`}
+                      <span class={'spoiler-text'}>
+                        {spoilerText ? (
+                          <EmojiText text={spoilerText} emojis={emojis} />
+                        ) : showSpoiler ? (
+                          t`Show less`
+                        ) : (
+                          t`Show content`
+                        )}
                       </span>
                     </button>
                   </>
@@ -2067,8 +2073,14 @@ function Status({
                         }}
                       >
                         <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                        <span class={"spoiler-text"}>
-                          {!!spoilerText ? <EmojiText text={spoilerText} emojis={emojis} /> : showSpoiler ? t`Show less` : t`Show content`}
+                        <span class={'spoiler-text'}>
+                          {!!spoilerText ? (
+                            <EmojiText text={spoilerText} emojis={emojis} />
+                          ) : showSpoiler ? (
+                            t`Show less`
+                          ) : (
+                            t`Show content`
+                          )}
                         </span>
                       </button>
                     )}

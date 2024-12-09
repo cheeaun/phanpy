@@ -34,6 +34,7 @@ const NOTIFICATION_ICONS = {
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
+  move: 'suitcase',
 };
 
 /*
@@ -263,6 +264,13 @@ const contentText = {
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
+  move: ({ account, targetAccount }) => {
+    return (
+      <Trans>
+        {account} moved to {targetAccount}.
+      </Trans>
+    );
+  },
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -311,6 +319,7 @@ function Notification({
     id,
     status,
     account,
+    target, // Pleroma move event
     report,
     event,
     moderation_warning,
@@ -415,6 +424,11 @@ function Notification({
     } else if (type === 'annual_report') {
       text = text({
         ...notification.annualReport,
+      });
+    } else if (type === 'move') {
+      text = text({
+        account: <NameText account={account} showAvatar showAcct />,
+        targetAccount: <NameText account={target} showAvatar showAcct />,
       });
     } else {
       text = text({

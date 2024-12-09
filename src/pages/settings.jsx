@@ -14,6 +14,7 @@ import targetLanguages from '../data/lingva-target-languages';
 import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
+import prettyBytes from '../utils/pretty-bytes';
 import {
   initSubscription,
   isPushSupported,
@@ -63,7 +64,14 @@ function Settings({ onClose }) {
   // }, []);
 
   return (
-    <div id="settings-container" class="sheet" tabIndex="-1">
+    <div
+      id="settings-container"
+      class="sheet"
+      tabIndex="-1"
+      style={{
+        '--current-text-size': `${currentTextSize}px`,
+      }}
+    >
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
           <Icon icon="x" alt={t`Close`} />
@@ -769,6 +777,14 @@ function Settings({ onClose }) {
             </a>{' '}
             &middot;{' '}
             <a
+              href="https://patreon.com/cheeaun"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Patreon
+            </a>{' '}
+            &middot;{' '}
+            <a
               href={PRIVACY_POLICY_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -852,6 +868,13 @@ function Settings({ onClose }) {
             <button
               type="button"
               class="plain2 small"
+              onClick={async () => alert(await getCachesSize())}
+            >
+              Show cache size
+            </button>{' '}
+            <button
+              type="button"
+              class="plain2 small"
               onClick={() => {
                 const key = prompt('Enter cache key');
                 if (!key) return;
@@ -893,6 +916,33 @@ async function getCachesKeys() {
     total[key] = k.length;
   }
   return total;
+}
+
+async function getCachesSize() {
+  const keys = await caches.keys();
+  let total = {};
+  let TOTAL = 0;
+  for (const key of keys) {
+    const cache = await caches.open(key);
+    const k = await cache.keys();
+    for (const item of k) {
+      try {
+        const response = await cache.match(item);
+        const blob = await response.blob();
+        total[key] = (total[key] || 0) + blob.size;
+        TOTAL += blob.size;
+      } catch (e) {
+        alert('Failed to get cache size for ' + item);
+        alert(e);
+      }
+    }
+  }
+  return {
+    ...Object.fromEntries(
+      Object.entries(total).map(([k, v]) => [k, prettyBytes(v)]),
+    ),
+    TOTAL: prettyBytes(TOTAL),
+  };
 }
 
 function clearCacheKey(key) {

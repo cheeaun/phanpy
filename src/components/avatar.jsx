@@ -23,10 +23,12 @@ const ctx = canvas.getContext('2d', {
 });
 ctx.imageSmoothingEnabled = false;
 
+const MISSING_IMAGE_PATH_REGEX = /missing\.png$/;
+
 function Avatar({ url, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
-  const isMissing = /missing\.png$/.test(url);
+  const isMissing = MISSING_IMAGE_PATH_REGEX.test(url);
   return (
     <span
       ref={avatarRef}
@@ -48,6 +50,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
           alt={alt}
           loading="lazy"
           decoding="async"
+          fetchPriority="low"
           crossOrigin={
             alphaCache[url] === undefined && !isMissing
               ? 'anonymous'

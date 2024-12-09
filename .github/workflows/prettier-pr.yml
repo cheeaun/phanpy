@@ -14,9 +14,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - uses: creyD/prettier_action@v4.3
-        with:
-          dry: true
-          # Don't write anything
-          prettier_options: '--check --config .prettierrc'
-          file_pattern: '.'
+      - run: |
+          echo "Prettier-ing files"
+          npx prettier "src/**/*.{js,jsx}" --check

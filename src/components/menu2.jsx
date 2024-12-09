@@ -17,8 +17,8 @@ function Menu2(props) {
     ? align === 'end'
       ? 'start'
       : align === 'start'
-      ? 'end'
-      : align
+        ? 'end'
+        : align
     : align;
 
   return (

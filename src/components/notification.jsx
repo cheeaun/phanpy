@@ -4,6 +4,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import { isFiltered } from '../utils/filters';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
 import { getCurrentAccountID } from '../utils/store-utils';
@@ -32,6 +33,7 @@ const NOTIFICATION_ICONS = {
   moderation_warning: 'alert',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
+  annual_report: 'celebrate',
 };
 
 /*
@@ -260,6 +262,7 @@ const contentText = {
   ),
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
+  annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -311,6 +314,7 @@ function Notification({
     report,
     event,
     moderation_warning,
+    annualReport,
     // Client-side grouped notification
     _ids,
     _accounts,
@@ -408,6 +412,10 @@ function Notification({
         emoji: notification.emoji,
         emojiURL,
       });
+    } else if (type === 'annual_report') {
+      text = text({
+        ...notification.annualReport,
+      });
     } else {
       text = text({
         account: account ? (
@@ -447,9 +455,19 @@ function Notification({
 
   console.debug('RENDER Notification', notification.id);
 
-  const sameCount =
-    notificationsCount > 0 && notificationsCount <= sampleAccounts?.length;
-  const expandAccounts = sameCount ? 'local' : 'remote';
+  const diffCount =
+    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
+  const expandAccounts = diffCount ? 'remote' : 'local';
+
+  // If there's a status and filter action is 'hide', then the notification is hidden
+  // TODO: Handle 'warn' action one day
+  if (!!status?.filtered) {
+    const isOwnPost = status?.account?.id === currentAccount;
+    const filterInfo = isFiltered(status.filtered, 'notifications');
+    if (!isSelf && !isOwnPost && filterInfo?.action === 'hide') {
+      return null;
+    }
+  }
 
   return (
     <div
@@ -516,6 +534,13 @@ function Notification({
                 </a>
               </div>
             )}
+            {type === 'annual_report' && (
+              <div>
+                <Link to={`/annual_report/${annualReport?.year}`}>
+                  <Trans>View #Wrapstodon</Trans>
+                </Link>
+              </div>
+            )}
           </>
         )}
         {_accounts?.length > 1 && (
@@ -538,8 +563,8 @@ function Notification({
                       _accounts.length <= 10
                         ? 'xxl'
                         : _accounts.length < 20
-                        ? 'xl'
-                        : 'l'
+                          ? 'xl'
+                          : 'l'
                     }
                     key={account.id}
                     alt={`${account.displayName} @${account.acct}`}
@@ -582,8 +607,8 @@ function Notification({
                         const type = /^favourite/.test(key)
                           ? 'favourite'
                           : /^reblog/.test(key)
-                          ? 'reblog'
-                          : null;
+                            ? 'reblog'
+                            : null;
                         if (!type) continue;
                         for (const account of _accounts) {
                           const theAccount = accounts.find(

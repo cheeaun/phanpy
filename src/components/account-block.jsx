@@ -105,11 +105,13 @@ function AccountBlock({
         }
       }}
     >
-      <Avatar
-        url={useAvatarStatic ? avatarStatic : avatar || avatarStatic}
-        size={avatarSize}
-        squircle={bot}
-      />
+      <div class="avatar-container">
+        <Avatar
+          url={useAvatarStatic ? avatarStatic : avatar || avatarStatic}
+          size={avatarSize}
+          squircle={bot}
+        />
+      </div>
       <span class="account-block-content">
         {!hideDisplayName && (
           <>

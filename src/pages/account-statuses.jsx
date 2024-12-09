@@ -232,7 +232,7 @@ function AccountStatuses() {
   const { i18n } = useLingui();
   let title = t`Account posts`;
   if (account?.acct) {
-    const acctDisplay = /@/.test(account.acct) ? '' : '@' + account.acct;
+    const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;
     const accountDisplay = account?.displayName
       ? `${account.displayName} (${acctDisplay})`
       : `${acctDisplay}`;

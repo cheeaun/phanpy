@@ -399,7 +399,9 @@ function Notification({
         text = text({ name: targetName });
       }
     } else if (
-      (type === 'reaction' || type === 'emoji_reaction' || type === 'pleroma:emoji_reaction') &&
+      (type === 'reaction' ||
+        type === 'emoji_reaction' ||
+        type === 'pleroma:emoji_reaction') &&
       notification.emoji
     ) {
       const emojiURL =

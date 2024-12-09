@@ -1468,7 +1468,7 @@ function Catchup() {
                     ))}
                   </fieldset> */}
                   <span class="filter-label">
-                    <Trans>Group</Trans>
+                    <Trans id="group.filter">Group</Trans>
                   </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_GROUPS.map((key) => (
@@ -1730,10 +1730,10 @@ const PostLine = memo(
           group
             ? 'group'
             : reblog
-            ? 'reblog'
-            : isFollowedTags?.length
-            ? 'followed-tags'
-            : ''
+              ? 'reblog'
+              : isFollowedTags?.length
+                ? 'followed-tags'
+                : ''
         } ${isReplyTo ? 'reply-to' : ''} ${
           isFiltered ? 'filtered' : ''
         } visibility-${visibility}`}
@@ -1826,8 +1826,8 @@ function postDensity(post) {
     (mediaAttachments?.length
       ? MEDIA_DENSITY * mediaAttachments.length
       : card?.image
-      ? CARD_DENSITY
-      : 0);
+        ? CARD_DENSITY
+        : 0);
   return density;
 }
 

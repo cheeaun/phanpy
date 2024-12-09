@@ -1,0 +1,85 @@
+#annual-report-page {
+  .report {
+    background-color: var(--bg-color);
+    border: 16px ridge var(--bg-faded-color);
+    box-shadow: 0 0 0 2px var(--bg-color);
+    padding: 16px;
+    margin: 80px auto;
+    max-width: var(--main-width);
+    font-family: var(--monospace-font);
+    font-variant-numeric: slashed-zero;
+    font-feature-settings: 'ss01';
+    font-variant-numeric: tabular-nums;
+    min-height: 80vh;
+
+    h1 {
+      margin: 0;
+      padding: 0;
+    }
+
+    dt {
+      font-weight: bold;
+      font-size: larger;
+    }
+
+    dd {
+      margin: 0 0 2em;
+      padding: 0;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+
+      td,
+      th {
+        vertical-align: top;
+
+        &.number {
+          text-align: end;
+        }
+      }
+
+      th {
+        font-weight: normal;
+        text-align: start;
+        color: var(--text-insignificant-color);
+        text-transform: uppercase;
+      }
+
+      tr > * {
+        border-top: 1px dashed var(--outline-color);
+
+        ~ * {
+          padding-inline-start: 1ch;
+        }
+      }
+    }
+
+    .report-topStatuses {
+      dt {
+        font-size: var(--text-size);
+      }
+
+      dd {
+        margin-block-end: 1em;
+
+        > a {
+          display: block;
+          color: inherit;
+          text-decoration: none;
+          border: 2px dashed var(--outline-stronger-color);
+
+          &:is(:hover, :focus) {
+            border-color: var(--text-color);
+          }
+        }
+
+        .status {
+          pointer-events: none;
+          font-size: calc(var(--text-size) * 0.8);
+        }
+      }
+    }
+  }
+}

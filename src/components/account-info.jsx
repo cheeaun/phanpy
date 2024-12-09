@@ -51,6 +51,7 @@ const MUTE_DURATIONS = [
   60 * 60 * 24, // 1 day
   60 * 60 * 24 * 3, // 3 days
   60 * 60 * 24 * 7, // 1 week
+  60 * 60 * 24 * 30, // 30 days
   0, // forever
 ];
 const MUTE_DURATIONS_LABELS = {
@@ -62,6 +63,7 @@ const MUTE_DURATIONS_LABELS = {
   86_400: i18nDuration(1, 'day'),
   259_200: i18nDuration(3, 'day'),
   604_800: i18nDuration(1, 'week'),
+  2592_000: i18nDuration(30, 'day'),
 };
 
 const LIMIT = 80;
@@ -2264,9 +2266,10 @@ function AccountHandleInfo({ acct, instance }) {
   // acct = username or username@server
   let [username, server] = acct.split('@');
   if (!server) server = instance;
+  const encodedAcct = punycode.toASCII(acct);
   return (
     <div class="handle-info">
-      <span class="handle-handle">
+      <span class="handle-handle" title={encodedAcct}>
         <b class="handle-username">{username}</b>
         <span class="handle-at">@</span>
         <b class="handle-server">{server}</b>

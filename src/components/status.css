@@ -247,8 +247,11 @@
   :is(.content.truncated, .poll, .media-container.truncated) {
   mask-image: linear-gradient(to bottom, #000 40px, transparent);
 }
-.status-card .card {
-  display: none;
+.status-card {
+  .card,
+  .card-byline {
+    display: none;
+  }
 }
 .timeline-deck .status-card .content.truncated:after {
   /* Don't show "Read more" in status cards */
@@ -2128,8 +2131,8 @@ a.card:is(:hover, :focus):visited {
   color: var(--text-insignificant-color);
   font-size: 90%;
 }
-.status .extra-meta * {
-  vertical-align: middle;
+.status .extra-meta .icon {
+  vertical-align: text-bottom;
 }
 .status .extra-meta a {
   color: inherit;

@@ -110,8 +110,8 @@ msgstr ""
 #: src/components/status.jsx:1737
 #: src/components/status.jsx:1754
 #: src/components/status.jsx:1878
-#: src/components/status.jsx:2490
-#: src/components/status.jsx:2493
+#: src/components/status.jsx:2495
+#: src/components/status.jsx:2498
 #: src/pages/account-statuses.jsx:528
 #: src/pages/accounts.jsx:109
 #: src/pages/hashtag.jsx:199
@@ -288,7 +288,7 @@ msgstr ""
 #: src/components/account-info.jsx:1313
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1186
-#: src/components/status.jsx:3267
+#: src/components/status.jsx:3272
 msgid "Copy"
 msgstr ""
 
@@ -416,9 +416,9 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:2992
-#: src/components/status.jsx:3231
-#: src/components/status.jsx:3731
+#: src/components/status.jsx:2997
+#: src/components/status.jsx:3236
+#: src/components/status.jsx:3736
 #: src/pages/accounts.jsx:36
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
@@ -692,7 +692,7 @@ msgstr ""
 #: src/components/status.jsx:929
 #: src/components/status.jsx:1717
 #: src/components/status.jsx:1718
-#: src/components/status.jsx:2386
+#: src/components/status.jsx:2391
 msgid "Reply"
 msgstr ""
 
@@ -963,7 +963,7 @@ msgid "Nothing to show"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:449
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -1110,9 +1110,9 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:172
 #: src/components/status.jsx:937
-#: src/components/status.jsx:2413
-#: src/components/status.jsx:2444
-#: src/components/status.jsx:2445
+#: src/components/status.jsx:2418
+#: src/components/status.jsx:2449
+#: src/components/status.jsx:2450
 msgid "Boost"
 msgstr ""
 
@@ -1122,8 +1122,8 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:180
 #: src/components/status.jsx:1022
-#: src/components/status.jsx:2469
-#: src/components/status.jsx:2470
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2475
 msgid "Bookmark"
 msgstr ""
 
@@ -1227,9 +1227,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr ""
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3561
-#: src/components/status.jsx:3657
-#: src/components/status.jsx:3735
+#: src/components/status.jsx:3566
+#: src/components/status.jsx:3662
+#: src/components/status.jsx:3740
 #: src/components/timeline.jsx:973
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1876
@@ -1412,142 +1412,146 @@ msgstr ""
 msgid "View all notifications"
 msgstr ""
 
-#: src/components/notification.jsx:71
+#: src/components/notification.jsx:72
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr ""
 
-#: src/components/notification.jsx:78
+#: src/components/notification.jsx:79
 msgid "{account} published a post."
 msgstr ""
 
-#: src/components/notification.jsx:86
+#: src/components/notification.jsx:87
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:129
+#: src/components/notification.jsx:130
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr ""
 
-#: src/components/notification.jsx:143
+#: src/components/notification.jsx:144
 msgid "{account} requested to follow you."
 msgstr ""
 
-#: src/components/notification.jsx:152
+#: src/components/notification.jsx:153
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:195
 msgid "A poll you have voted in or created has ended."
 msgstr ""
 
-#: src/components/notification.jsx:195
+#: src/components/notification.jsx:196
 msgid "A poll you have created has ended."
 msgstr ""
 
-#: src/components/notification.jsx:196
+#: src/components/notification.jsx:197
 msgid "A poll you have voted in has ended."
 msgstr ""
 
-#: src/components/notification.jsx:197
+#: src/components/notification.jsx:198
 msgid "A post you interacted with has been edited."
 msgstr ""
 
-#: src/components/notification.jsx:205
+#: src/components/notification.jsx:206
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:247
+#: src/components/notification.jsx:248
 msgid "{account} signed up."
 msgstr ""
 
-#: src/components/notification.jsx:249
+#: src/components/notification.jsx:250
 msgid "{account} reported {targetAccount}"
 msgstr ""
 
-#: src/components/notification.jsx:254
+#: src/components/notification.jsx:255
 msgid "Lost connections with <0>{name}</0>."
 msgstr ""
 
-#: src/components/notification.jsx:260
+#: src/components/notification.jsx:261
 msgid "Moderation warning"
 msgstr ""
 
-#: src/components/notification.jsx:265
+#: src/components/notification.jsx:264
+msgid "{account} reacted to your post."
+msgstr "{account} reacted to your post."
+
+#: src/components/notification.jsx:267
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Your {year} #Wrapstodon is here!"
 
-#: src/components/notification.jsx:271
+#: src/components/notification.jsx:273
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr ""
 
-#: src/components/notification.jsx:277
+#: src/components/notification.jsx:279
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:283
+#: src/components/notification.jsx:285
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:291
+#: src/components/notification.jsx:293
 msgid "Your account has received a moderation warning."
 msgstr ""
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:294
 msgid "Your account has been disabled."
 msgstr ""
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:295
 msgid "Some of your posts have been marked as sensitive."
 msgstr ""
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:296
 msgid "Some of your posts have been deleted."
 msgstr ""
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:297
 msgid "Your posts will be marked as sensitive from now on."
 msgstr ""
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:298
 msgid "Your account has been limited."
 msgstr ""
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:299
 msgid "Your account has been suspended."
 msgstr ""
 
-#: src/components/notification.jsx:372
+#: src/components/notification.jsx:374
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:441
+#: src/components/notification.jsx:445
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:446
 msgid "Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:447
 msgid "Boosted by…"
 msgstr ""
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:448
 msgid "Followed by…"
 msgstr ""
 
-#: src/components/notification.jsx:515
-#: src/components/notification.jsx:531
+#: src/components/notification.jsx:519
+#: src/components/notification.jsx:535
 msgid "Learn more <0/>"
 msgstr ""
 
-#: src/components/notification.jsx:540
+#: src/components/notification.jsx:544
 msgid "View #Wrapstodon"
 msgstr "View #Wrapstodon"
 
-#: src/components/notification.jsx:770
+#: src/components/notification.jsx:774
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr ""
@@ -2065,18 +2069,18 @@ msgstr ""
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
-#: src/components/status.jsx:2413
-#: src/components/status.jsx:2444
+#: src/components/status.jsx:2418
+#: src/components/status.jsx:2449
 msgid "Unboost"
 msgstr ""
 
 #: src/components/status.jsx:953
-#: src/components/status.jsx:2428
+#: src/components/status.jsx:2433
 msgid "Quote"
 msgstr ""
 
 #: src/components/status.jsx:961
-#: src/components/status.jsx:2437
+#: src/components/status.jsx:2442
 msgid "Some media have no descriptions."
 msgstr ""
 
@@ -2100,20 +2104,20 @@ msgstr ""
 
 #: src/components/status.jsx:1012
 #: src/components/status.jsx:1727
-#: src/components/status.jsx:2457
+#: src/components/status.jsx:2462
 msgid "Unlike"
 msgstr ""
 
 #: src/components/status.jsx:1013
 #: src/components/status.jsx:1727
 #: src/components/status.jsx:1728
-#: src/components/status.jsx:2457
-#: src/components/status.jsx:2458
+#: src/components/status.jsx:2462
+#: src/components/status.jsx:2463
 msgid "Like"
 msgstr ""
 
 #: src/components/status.jsx:1022
-#: src/components/status.jsx:2469
+#: src/components/status.jsx:2474
 msgid "Unbookmark"
 msgstr ""
 
@@ -2130,7 +2134,7 @@ msgid "Edited: {editedDateText}"
 msgstr ""
 
 #: src/components/status.jsx:1221
-#: src/components/status.jsx:3236
+#: src/components/status.jsx:3241
 msgid "Embed post"
 msgstr ""
 
@@ -2200,17 +2204,17 @@ msgstr ""
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
-#: src/components/status.jsx:2458
+#: src/components/status.jsx:2463
 msgid "Liked"
 msgstr ""
 
 #: src/components/status.jsx:1761
-#: src/components/status.jsx:2445
+#: src/components/status.jsx:2450
 msgid "Boosted"
 msgstr ""
 
 #: src/components/status.jsx:1771
-#: src/components/status.jsx:2470
+#: src/components/status.jsx:2475
 msgid "Bookmarked"
 msgstr ""
 
@@ -2250,87 +2254,87 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
-#: src/components/status.jsx:2387
+#: src/components/status.jsx:2392
 msgid "Comments"
 msgstr ""
 
 #. More from [Author]
-#: src/components/status.jsx:2696
+#: src/components/status.jsx:2701
 msgid "More from <0/>"
 msgstr "More from <0/>"
 
-#: src/components/status.jsx:2997
+#: src/components/status.jsx:3002
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:3001
+#: src/components/status.jsx:3006
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:3006
+#: src/components/status.jsx:3011
 #: src/pages/annual-report.jsx:46
 msgid "Loading…"
 msgstr ""
 
-#: src/components/status.jsx:3241
+#: src/components/status.jsx:3246
 msgid "HTML Code"
 msgstr ""
 
-#: src/components/status.jsx:3258
+#: src/components/status.jsx:3263
 msgid "HTML code copied"
 msgstr ""
 
-#: src/components/status.jsx:3261
+#: src/components/status.jsx:3266
 msgid "Unable to copy HTML code"
 msgstr ""
 
-#: src/components/status.jsx:3273
+#: src/components/status.jsx:3278
 msgid "Media attachments:"
 msgstr ""
 
-#: src/components/status.jsx:3295
+#: src/components/status.jsx:3300
 msgid "Account Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3326
-#: src/components/status.jsx:3371
+#: src/components/status.jsx:3331
+#: src/components/status.jsx:3376
 msgid "static URL"
 msgstr ""
 
-#: src/components/status.jsx:3340
+#: src/components/status.jsx:3345
 msgid "Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3385
+#: src/components/status.jsx:3390
 msgid "Notes:"
 msgstr ""
 
-#: src/components/status.jsx:3389
+#: src/components/status.jsx:3394
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr ""
 
-#: src/components/status.jsx:3395
+#: src/components/status.jsx:3400
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr ""
 
-#: src/components/status.jsx:3400
+#: src/components/status.jsx:3405
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr ""
 
-#: src/components/status.jsx:3406
+#: src/components/status.jsx:3411
 msgid "Post could be edited or deleted later."
 msgstr ""
 
-#: src/components/status.jsx:3412
+#: src/components/status.jsx:3417
 msgid "Preview"
 msgstr ""
 
-#: src/components/status.jsx:3421
+#: src/components/status.jsx:3426
 msgid "Note: This preview is lightly styled."
 msgstr ""
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3665
+#: src/components/status.jsx:3670
 msgid "<0/> <1/> boosted"
 msgstr ""
 

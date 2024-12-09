@@ -4,6 +4,7 @@ import { resolve } from 'path';
 
 import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
+import { SondaRollupPlugin } from 'sonda';
 import { uid } from 'uid/single';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
@@ -148,6 +149,10 @@ export default defineConfig({
         enabled: NODE_ENV === 'development',
         type: 'module',
       },
+    }),
+    SondaRollupPlugin({
+      detailed: true,
+      brotli: true,
     }),
   ],
   build: {

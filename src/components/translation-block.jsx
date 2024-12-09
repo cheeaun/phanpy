@@ -189,10 +189,10 @@ function TranslationBlock({
               {uiState === 'loading'
                 ? t`Translating…`
                 : sourceLanguage && sourceLangText && !detectedLang
-                ? autoDetected
-                  ? t`Translate from ${sourceLangText} (auto-detected)`
-                  : t`Translate from ${sourceLangText}`
-                : t`Translate`}
+                  ? autoDetected
+                    ? t`Translate from ${sourceLangText} (auto-detected)`
+                    : t`Translate from ${sourceLangText}`
+                  : t`Translate`}
             </span>
           </button>
         </summary>
@@ -221,8 +221,8 @@ function TranslationBlock({
                     {l.code === 'auto'
                       ? t`Auto (${detectedLang ?? '…'})`
                       : showCommon
-                      ? `${native} - ${common}`
-                      : native}
+                        ? `${native} - ${common}`
+                        : native}
                   </option>
                 );
               })}

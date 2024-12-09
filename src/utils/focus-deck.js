@@ -2,8 +2,25 @@ const focusDeck = () => {
   let timer = setTimeout(() => {
     const columns = document.getElementById('columns');
     if (columns) {
-      // Focus first column
-      // columns.querySelector('.deck-container')?.focus?.();
+      // Focus focused column
+      const focusedColumn = columns.querySelector('.deck-container.focus');
+      if (focusedColumn) {
+        focusedColumn.focus();
+      } else {
+        // Focus first column within viewport
+        const firstVisibleColumn = columns
+          .querySelectorAll('.deck-container')
+          .find((column) => {
+            const columnRect = column.getBoundingClientRect();
+            return columnRect.left >= 0;
+          });
+        if (firstVisibleColumn) {
+          firstVisibleColumn.focus();
+        } else {
+          // Focus first column
+          columns.querySelector('.deck-container')?.focus?.();
+        }
+      }
     } else {
       const modals = document.querySelectorAll('#modal-container > *');
       if (modals?.length) {

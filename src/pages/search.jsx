@@ -24,6 +24,12 @@ const SHORT_LIMIT = 5;
 const LIMIT = 40;
 const emptySearchParams = new URLSearchParams();
 
+const scrollIntoViewOptions = {
+  block: 'nearest',
+  inline: 'center',
+  behavior: 'smooth',
+};
+
 function Search({ columnMode, ...props }) {
   const params = columnMode ? {} : useParams();
   const { masto, instance, authenticated } = api({
@@ -73,6 +79,11 @@ function Search({ columnMode, ...props }) {
     setAccountResults([]);
     setHashtagResults([]);
   }, [q]);
+  const typeResults = {
+    statuses: statusResults,
+    accounts: accountResults,
+    hashtags: hashtagResults,
+  };
   const setTypeResultsFunc = {
     statuses: setStatusResults,
     accounts: setAccountResults,
@@ -130,10 +141,16 @@ function Search({ columnMode, ...props }) {
             offsetRef.current = LIMIT;
             setShowMore(!!length);
           } else {
-            setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
-            const length = results[type]?.length;
-            offsetRef.current = offsetRef.current + LIMIT;
-            setShowMore(!!length);
+            // If first item is the same, it means API doesn't support offset
+            // I know this is a very basic check, but it works for now
+            if (results[type]?.[0]?.id === typeResults[type]?.[0]?.id) {
+              setShowMore(false);
+            } else {
+              setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
+              const length = results[type]?.length;
+              offsetRef.current = offsetRef.current + LIMIT;
+              setShowMore(!!length);
+            }
           }
         } else {
           setStatusResults(results.statuses || []);
@@ -167,12 +184,16 @@ function Search({ columnMode, ...props }) {
   });
 
   useEffect(() => {
+    let timer;
     searchFormRef.current?.setValue?.(q || '');
     if (q) {
       loadResults(true);
     } else {
-      searchFormRef.current?.focus?.();
+      timer = setTimeout(() => {
+        searchFormRef.current?.focus?.();
+      }, 150); // Right after focusDeck runs
     }
+    return () => clearTimeout(timer);
   }, [q, type, instance]);
 
   useHotkeys(
@@ -186,10 +207,79 @@ function Search({ columnMode, ...props }) {
     },
   );
 
+  const itemsSelector = '.timeline > li > a, .hashtag-list > li > a';
+  const jRef = useHotkeys('j', () => {
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let nextItem = allItems[activeItemIndex + 1];
+      if (nextItem) {
+        nextItem.focus();
+        nextItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
+  const kRef = useHotkeys('k', () => {
+    // focus on previous status after active item
+    const activeItem = document.activeElement.closest(itemsSelector);
+    const activeItemRect = activeItem?.getBoundingClientRect();
+    const allItems = Array.from(
+      scrollableRef.current.querySelectorAll(itemsSelector),
+    );
+    if (
+      activeItem &&
+      activeItemRect.top < scrollableRef.current.clientHeight &&
+      activeItemRect.bottom > 0
+    ) {
+      const activeItemIndex = allItems.indexOf(activeItem);
+      let prevItem = allItems[activeItemIndex - 1];
+      if (prevItem) {
+        prevItem.focus();
+        prevItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    } else {
+      const topmostItem = allItems.find((item) => {
+        const itemRect = item.getBoundingClientRect();
+        return itemRect.top >= 44 && itemRect.left >= 0;
+      });
+      if (topmostItem) {
+        topmostItem.focus();
+        topmostItem.scrollIntoView(scrollIntoViewOptions);
+      }
+    }
+  });
+
   const [filterBarParent] = useAutoAnimate();
 
   return (
-    <div id="search-page" class="deck-container" ref={scrollableRef}>
+    <div
+      id="search-page"
+      class="deck-container"
+      tabIndex="-1"
+      ref={(node) => {
+        scrollableRef.current = node;
+        jRef(node);
+        kRef(node);
+      }}
+    >
       <div class="timeline-deck deck">
         <header class={uiState === 'loading' ? 'loading' : ''}>
           <div class="header-grid">

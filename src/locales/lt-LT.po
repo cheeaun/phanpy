@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-03 19:32\n"
+"PO-Revision-Date: 2024-12-10 16:12\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -428,8 +428,8 @@ msgstr "Sekti"
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
-#: src/pages/notifications.jsx:868
-#: src/pages/notifications.jsx:1082
+#: src/pages/notifications.jsx:915
+#: src/pages/notifications.jsx:1129
 #: src/pages/settings.jsx:77
 #: src/pages/status.jsx:1299
 msgid "Close"
@@ -508,7 +508,7 @@ msgstr "Turinys"
 #: src/components/list-add-edit.jsx:149
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
-#: src/pages/notifications.jsx:934
+#: src/pages/notifications.jsx:981
 msgid "Save"
 msgstr "Išsaugoti"
 
@@ -536,7 +536,7 @@ msgstr "Įjungtas slėpimo režimas"
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:53
-#: src/pages/notifications.jsx:520
+#: src/pages/notifications.jsx:560
 msgid "Home"
 msgstr "Pagrindinis"
 
@@ -946,7 +946,7 @@ msgid "Open in new window"
 msgstr "Atidaryti naujame lange"
 
 #: src/components/follow-request-buttons.jsx:42
-#: src/pages/notifications.jsx:918
+#: src/pages/notifications.jsx:965
 msgid "Accept"
 msgstr "Priimti"
 
@@ -955,7 +955,7 @@ msgid "Reject"
 msgstr "Atmesti"
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1201
+#: src/pages/notifications.jsx:1248
 msgid "Accepted"
 msgstr "Priimta"
 
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Nėra ką rodyti."
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:445
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -978,7 +978,7 @@ msgstr "Paskyros"
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
-#: src/pages/notifications.jsx:848
+#: src/pages/notifications.jsx:895
 #: src/pages/search.jsx:544
 #: src/pages/status.jsx:1332
 msgid "Show more…"
@@ -1295,8 +1295,8 @@ msgstr "Paminėjimai"
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:84
 #: src/pages/home.jsx:184
-#: src/pages/notifications.jsx:112
-#: src/pages/notifications.jsx:524
+#: src/pages/notifications.jsx:113
+#: src/pages/notifications.jsx:564
 msgid "Notifications"
 msgstr "Pranešimai"
 
@@ -1331,7 +1331,7 @@ msgstr "Patiktukų"
 #: src/pages/followed-hashtags.jsx:14
 #: src/pages/followed-hashtags.jsx:44
 msgid "Followed Hashtags"
-msgstr "Sekamos saitažodžiai"
+msgstr "Sekami saitažodžiai"
 
 #: src/components/nav-menu.jsx:261
 #: src/pages/account-statuses.jsx:331
@@ -1417,63 +1417,63 @@ msgstr "Šis pranešimas yra iš kitos tavo paskyros."
 msgid "View all notifications"
 msgstr "Peržiūrėti visus pranešimus"
 
-#: src/components/notification.jsx:70
+#: src/components/notification.jsx:71
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} sureagavo į tavo įrašą su {emojiObject}"
 
-#: src/components/notification.jsx:77
+#: src/components/notification.jsx:78
 msgid "{account} published a post."
 msgstr "{account} paskelbė įrašą."
 
-#: src/components/notification.jsx:85
+#: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:128
+#: src/components/notification.jsx:129
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, one {{0} seka tave.} few {<0><1>{0}</1> žmonės</0> seka tave.} many {<0><1>{0}</1> žmones</0> seka tave.}=1 {{account}} other {<0><1>{0}</1> žmonių</0> seka tave.}}"
 
-#: src/components/notification.jsx:142
+#: src/components/notification.jsx:143
 msgid "{account} requested to follow you."
 msgstr "{account} paprašė tave sekti."
 
-#: src/components/notification.jsx:151
+#: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:193
+#: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
 msgstr "Baigėsi apklausa, kurioje balsavai arba kurią sukūrei."
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:195
 msgid "A poll you have created has ended."
 msgstr "Baigėsi apklausa, kurią sukūrei."
 
-#: src/components/notification.jsx:195
+#: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
 msgstr ""
 
-#: src/components/notification.jsx:196
+#: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
 msgstr ""
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:246
+#: src/components/notification.jsx:247
 msgid "{account} signed up."
 msgstr ""
 
-#: src/components/notification.jsx:248
+#: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
 msgstr ""
 
-#: src/components/notification.jsx:253
+#: src/components/notification.jsx:254
 msgid "Lost connections with <0>{name}</0>."
 msgstr ""
 
-#: src/components/notification.jsx:259
+#: src/components/notification.jsx:260
 msgid "Moderation warning"
 msgstr "Prižiūrėjimo įspėjimas"
 
@@ -1481,70 +1481,70 @@ msgstr "Prižiūrėjimo įspėjimas"
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Jūsų #Wrapstodon {year} jau čia!"
 
-#: src/components/notification.jsx:272
+#: src/components/notification.jsx:271
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Administratorius (-ė) iš <0>{from}</0> pristabdė <1>{targetName}</1>, o tai reiškia, kad nebegali gauti iš jų naujienų ir su jais bendrauti."
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Užblokavote <0>{targetName}</0>. Pašalinti sekėjai: {followersCount}, sekimai: {followingCount}."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
 msgstr "Tavo paskyra gavo prižiūrėjimo įspėjimą."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:292
 msgid "Your account has been disabled."
 msgstr "Tavo paskyra buvo išjungta."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Kai kurie tavo įrašai buvo pažymėtos kaip jautrios."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
 msgstr "Kai kurios tavo įrašai buvo ištrinti."
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Nuo šiol tavo įrašai bus pažymėti kaip jautrūs."
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:296
 msgid "Your account has been limited."
 msgstr "Tavo paskyra buvo apribota."
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:297
 msgid "Your account has been suspended."
 msgstr "Tavo paskyra buvo pristabdyta."
 
-#: src/components/notification.jsx:373
+#: src/components/notification.jsx:372
 msgid "[Unknown notification type: {type}]"
 msgstr "[Nežinomas pranešimo tipas: {type}]"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:441
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Pasidalino / patiko…"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:442
 msgid "Liked by…"
 msgstr "Patiko…"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:443
 msgid "Boosted by…"
 msgstr "Pasidalino…"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:444
 msgid "Followed by…"
 msgstr "Seka…"
 
-#: src/components/notification.jsx:516
-#: src/components/notification.jsx:532
+#: src/components/notification.jsx:515
+#: src/components/notification.jsx:531
 msgid "Learn more <0/>"
 msgstr "Sužinoti daugiau <0/>"
 
@@ -1552,7 +1552,7 @@ msgstr "Sužinoti daugiau <0/>"
 msgid "View #Wrapstodon"
 msgstr "Peržiūrėti #Wrapstodon"
 
-#: src/components/notification.jsx:769
+#: src/components/notification.jsx:770
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "Skaityti daugiau →"
@@ -2273,7 +2273,7 @@ msgid "Failed to load history"
 msgstr "Nepavyko įkelti istorijos."
 
 #: src/components/status.jsx:3006
-#: src/pages/annual-report.jsx:44
+#: src/pages/annual-report.jsx:46
 msgid "Loading…"
 msgstr "Įkeliama…"
 
@@ -2346,7 +2346,7 @@ msgstr "Nauji įrašai"
 
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
-#: src/pages/notifications.jsx:824
+#: src/pages/notifications.jsx:871
 #: src/pages/status.jsx:988
 #: src/pages/status.jsx:1361
 msgid "Try again"
@@ -2415,7 +2415,7 @@ msgid "Login required."
 msgstr "Privalomas prisijungimas."
 
 #: src/compose.jsx:90
-#: src/pages/annual-report.jsx:132
+#: src/pages/annual-report.jsx:165
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
@@ -3159,125 +3159,125 @@ msgstr "Niekas tavęs nepaminėjo. :("
 msgid "Unable to load mentions."
 msgstr "Nepavyksta įkelti paminėjimų."
 
-#: src/pages/notifications.jsx:103
+#: src/pages/notifications.jsx:104
 msgid "You don't follow"
 msgstr "Neseki"
 
-#: src/pages/notifications.jsx:104
+#: src/pages/notifications.jsx:105
 msgid "Who don't follow you"
 msgstr "Kurie tavęs neseka"
 
-#: src/pages/notifications.jsx:105
+#: src/pages/notifications.jsx:106
 msgid "With a new account"
 msgstr "Su nauja paskyra"
 
-#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:107
 msgid "Who unsolicitedly private mention you"
 msgstr "Kurie neprašytai privačiai paminėjo tave"
 
-#: src/pages/notifications.jsx:107
+#: src/pages/notifications.jsx:108
 msgid "Who are limited by server moderators"
 msgstr "Kurie yra ribojami serverio prižiūrėtojų"
 
-#: src/pages/notifications.jsx:538
-#: src/pages/notifications.jsx:872
+#: src/pages/notifications.jsx:578
+#: src/pages/notifications.jsx:919
 msgid "Notifications settings"
 msgstr "Pranešimų nustatymai"
 
-#: src/pages/notifications.jsx:556
+#: src/pages/notifications.jsx:596
 msgid "New notifications"
 msgstr "Nauji pranešimai"
 
-#: src/pages/notifications.jsx:567
+#: src/pages/notifications.jsx:607
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Skelbimas} few {Skelbimai} many {Skelbimo} other {Skelbimų}}"
 
-#: src/pages/notifications.jsx:614
+#: src/pages/notifications.jsx:654
 #: src/pages/settings.jsx:1161
 msgid "Follow requests"
 msgstr "Sekimo prašymai"
 
-#: src/pages/notifications.jsx:619
+#: src/pages/notifications.jsx:659
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# sekimo prašymai} few {# sekimo prašymai} many {# sekimo prašymo} other {# sekimo prašymų}}"
 
-#: src/pages/notifications.jsx:674
+#: src/pages/notifications.jsx:714
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Filtruojami pranešimai iš # žmogaus} few {Filtruojami pranešimai iš # žmonių} many {Filtruojami pranešimai iš # žmogaus} other {Filtruojami pranešimai iš # žmonių}}"
 
-#: src/pages/notifications.jsx:740
+#: src/pages/notifications.jsx:787
 msgid "Only mentions"
 msgstr "Tik paminėjimus"
 
-#: src/pages/notifications.jsx:744
+#: src/pages/notifications.jsx:791
 msgid "Today"
 msgstr "Šiandien"
 
-#: src/pages/notifications.jsx:749
+#: src/pages/notifications.jsx:796
 msgid "You're all caught up."
 msgstr "Viską peržiūrėjai."
 
-#: src/pages/notifications.jsx:772
+#: src/pages/notifications.jsx:819
 msgid "Yesterday"
 msgstr "Vakar"
 
-#: src/pages/notifications.jsx:820
+#: src/pages/notifications.jsx:867
 msgid "Unable to load notifications"
 msgstr "Nepavyksta įkelti pranešimų."
 
-#: src/pages/notifications.jsx:899
+#: src/pages/notifications.jsx:946
 msgid "Notifications settings updated"
 msgstr "Atnaujinti pranešimų nustatymai"
 
-#: src/pages/notifications.jsx:907
+#: src/pages/notifications.jsx:954
 msgid "Filter out notifications from people:"
 msgstr "Filtruoti pranešimus iš žmonių:"
 
-#: src/pages/notifications.jsx:921
+#: src/pages/notifications.jsx:968
 msgid "Filter"
 msgstr "Filtruoti"
 
-#: src/pages/notifications.jsx:924
+#: src/pages/notifications.jsx:971
 msgid "Ignore"
 msgstr "Ignoruoti"
 
-#: src/pages/notifications.jsx:997
+#: src/pages/notifications.jsx:1044
 msgid "Updated <0>{0}</0>"
 msgstr "Atnaujinta <0>{0}</0>"
 
-#: src/pages/notifications.jsx:1065
+#: src/pages/notifications.jsx:1112
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Peržiūrėti pranešimus iš <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1086
+#: src/pages/notifications.jsx:1133
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Pranešimai iš <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1153
+#: src/pages/notifications.jsx:1200
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "Pranešimai iš @{0} nuo šiol nebus filtruojami."
 
-#: src/pages/notifications.jsx:1158
+#: src/pages/notifications.jsx:1205
 msgid "Unable to accept notification request"
 msgstr "Nepavyksta priimti pranešimo prašymo."
 
-#: src/pages/notifications.jsx:1163
+#: src/pages/notifications.jsx:1210
 msgid "Allow"
 msgstr "Leisti"
 
-#: src/pages/notifications.jsx:1183
+#: src/pages/notifications.jsx:1230
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Pranešimai iš @{0} nuo šiol nebus rodomi filtruotuose pranešimuose."
 
-#: src/pages/notifications.jsx:1188
+#: src/pages/notifications.jsx:1235
 msgid "Unable to dismiss notification request"
 msgstr "Nepavyksta atmesti pranešimo prašymo."
 
-#: src/pages/notifications.jsx:1193
+#: src/pages/notifications.jsx:1240
 msgid "Dismiss"
 msgstr "Atmesti"
 
-#: src/pages/notifications.jsx:1208
+#: src/pages/notifications.jsx:1255
 msgid "Dismissed"
 msgstr "Atmesta"
 

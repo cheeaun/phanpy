@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-04 05:42\n"
+"PO-Revision-Date: 2024-12-11 06:54\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -428,8 +428,8 @@ msgstr "Seguir"
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
 #: src/pages/list.jsx:274
-#: src/pages/notifications.jsx:868
-#: src/pages/notifications.jsx:1082
+#: src/pages/notifications.jsx:915
+#: src/pages/notifications.jsx:1129
 #: src/pages/settings.jsx:77
 #: src/pages/status.jsx:1299
 msgid "Close"
@@ -508,7 +508,7 @@ msgstr "Contido"
 #: src/components/list-add-edit.jsx:149
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:554
-#: src/pages/notifications.jsx:934
+#: src/pages/notifications.jsx:981
 msgid "Save"
 msgstr "Gardar"
 
@@ -536,7 +536,7 @@ msgstr "Capa activada"
 #: src/pages/filters.jsx:89
 #: src/pages/followed-hashtags.jsx:40
 #: src/pages/home.jsx:53
-#: src/pages/notifications.jsx:520
+#: src/pages/notifications.jsx:560
 msgid "Home"
 msgstr "Inicio"
 
@@ -946,7 +946,7 @@ msgid "Open in new window"
 msgstr "Abrir nunha nova xanela"
 
 #: src/components/follow-request-buttons.jsx:42
-#: src/pages/notifications.jsx:918
+#: src/pages/notifications.jsx:965
 msgid "Accept"
 msgstr "Aceptar"
 
@@ -955,7 +955,7 @@ msgid "Reject"
 msgstr "Rexeitar"
 
 #: src/components/follow-request-buttons.jsx:75
-#: src/pages/notifications.jsx:1201
+#: src/pages/notifications.jsx:1248
 msgid "Accepted"
 msgstr "Aceptado"
 
@@ -968,7 +968,7 @@ msgid "Nothing to show"
 msgstr "Nada que mostrar"
 
 #: src/components/generic-accounts.jsx:145
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:445
 #: src/pages/accounts.jsx:41
 #: src/pages/search.jsx:317
 #: src/pages/search.jsx:350
@@ -978,7 +978,7 @@ msgstr "Contas"
 #: src/components/generic-accounts.jsx:205
 #: src/components/timeline.jsx:519
 #: src/pages/list.jsx:293
-#: src/pages/notifications.jsx:848
+#: src/pages/notifications.jsx:895
 #: src/pages/search.jsx:544
 #: src/pages/status.jsx:1332
 msgid "Show more…"
@@ -1295,8 +1295,8 @@ msgstr "Mencións"
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:84
 #: src/pages/home.jsx:184
-#: src/pages/notifications.jsx:112
-#: src/pages/notifications.jsx:524
+#: src/pages/notifications.jsx:113
+#: src/pages/notifications.jsx:564
 msgid "Notifications"
 msgstr "Notificacións"
 
@@ -1417,63 +1417,63 @@ msgstr "Esta notificación procede de outra conta."
 msgid "View all notifications"
 msgstr "Ver todas as notificacións"
 
-#: src/components/notification.jsx:70
+#: src/components/notification.jsx:71
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} reaccionou á túa publicación con {emojiObject}"
 
-#: src/components/notification.jsx:77
+#: src/components/notification.jsx:78
 msgid "{account} published a post."
 msgstr "{account} enviou unha publicación."
 
-#: src/components/notification.jsx:85
+#: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} promoveu a túa resposta.} other {{account} promoveu a túa publicación.}}} other {{account} promoveu {postsCount} das túas publicacións.}}} other {{postType, select, reply {<0><1>{0}</1> persoas</0> promoveron a túa resposta.} other {<2><3>{1}</3> persoas</2> promoveron a túa publicación.}}}}"
 
-#: src/components/notification.jsx:128
+#: src/components/notification.jsx:129
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, one {}=1 {{account} seguiute.} other {<0><1>{0}</1> persoas</0> seguíronte.}}"
 
-#: src/components/notification.jsx:142
+#: src/components/notification.jsx:143
 msgid "{account} requested to follow you."
 msgstr "{account} solicitou seguirte."
 
-#: src/components/notification.jsx:151
+#: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural,  =1 {{postsCount, plural, =1 {{postType, select, reply {a {account} gustoulle a túa resposta.} other {a {account} gustoulle a túa publicación.}}} other {a {account} gustoulle {postsCount} das túas publicacións.}}} other {{postType, select, reply {a <0><1>{0}</1> persoas</0> gustoulle a túa resposta.} other {a <2><3>{1}</3> persoas</2> gustoulle a túa publicación.}}}}"
 
-#: src/components/notification.jsx:193
+#: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
 msgstr "Finalizou unha enquisa que ti creaches o na que votaches."
 
-#: src/components/notification.jsx:194
+#: src/components/notification.jsx:195
 msgid "A poll you have created has ended."
 msgstr "Finalizou unha enquisa que creaches."
 
-#: src/components/notification.jsx:195
+#: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
 msgstr "Finalizou unha enquisa na que votaches."
 
-#: src/components/notification.jsx:196
+#: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
 msgstr "Editouse unha publicación coa que interactuaches."
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gustoulle e promoveu a túa resposta.} other {{account} gustoulle e promoveu a túa publicación.}}} other {a {account} gustoulle e promoveu {postsCount} das túas publicacións.}}} other {{postType, select, reply {a <0><1>{0}</1> persoas</0> gustoulle e promoveron a túa resposta.} other {a <2><3>{1}</3> persoas</2> gustoulle e promoveron a túa publicación.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {a {account} gustoulle e promoveu a túa resposta.} other {a {account} gustoulle e promoveu a túa publicación.}}} other {a {account} gustoulle e promoveu {postsCount} das túas publicacións.}}} other {{postType, select, reply {a <0><1>{0}</1> persoas</0> gustoulles e promoveron a túa resposta.} other {a <2><3>{1}</3> persoas</2> gustoulle e promoveron a túa publicación.}}}}"
 
-#: src/components/notification.jsx:246
+#: src/components/notification.jsx:247
 msgid "{account} signed up."
 msgstr "{account} creou a conta."
 
-#: src/components/notification.jsx:248
+#: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
 msgstr "{account} denunciou a {targetAccount}"
 
-#: src/components/notification.jsx:253
+#: src/components/notification.jsx:254
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Conexións perdidas con <0>{name}</0>."
 
-#: src/components/notification.jsx:259
+#: src/components/notification.jsx:260
 msgid "Moderation warning"
 msgstr "Aviso da Moderación"
 
@@ -1481,70 +1481,70 @@ msgstr "Aviso da Moderación"
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Xa chegou o teu {year} #Wrapstodon!"
 
-#: src/components/notification.jsx:272
+#: src/components/notification.jsx:271
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "A administración de <0>{from}</0> suspendeu a <1>{targetName}</1>, xa que logo non vas recibir actualizacións desa conta ou interactuar con ela."
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "A administración de <0>{from}</0> bloqueou a <1>{targetName}</1>. Seguidoras afectadas: {followersCount}; seguimentos: {followingCount}."
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Bloqueaches a <0>{targetName}</0>. Seguidoras eliminadas: {followersCount}; seguimentos: {followingCount}."
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
 msgstr "A túa conta recibeu unha advertencia da moderación."
 
-#: src/components/notification.jsx:293
+#: src/components/notification.jsx:292
 msgid "Your account has been disabled."
 msgstr "A túa conta foi desactivada."
 
-#: src/components/notification.jsx:294
+#: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Algunha das túas publicacións foron marcadas como sensibles."
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
 msgstr "Algunha das túas publicacións foron eliminadas."
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "De agora en diante as túas publicacións van ser marcadas como sensibles."
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:296
 msgid "Your account has been limited."
 msgstr "A túa conta foi limitada."
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:297
 msgid "Your account has been suspended."
 msgstr "A túa conta foi suspendida."
 
-#: src/components/notification.jsx:373
+#: src/components/notification.jsx:372
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo de notificación descoñecido: {type}]"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:441
 #: src/components/status.jsx:1036
 #: src/components/status.jsx:1046
 msgid "Boosted/Liked by…"
 msgstr "Promovida/Favorecida por…"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:442
 msgid "Liked by…"
 msgstr "Favorecida por…"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:443
 msgid "Boosted by…"
 msgstr "Promovida por…"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:444
 msgid "Followed by…"
 msgstr "Seguida por…"
 
-#: src/components/notification.jsx:516
-#: src/components/notification.jsx:532
+#: src/components/notification.jsx:515
+#: src/components/notification.jsx:531
 msgid "Learn more <0/>"
 msgstr "Saber mais <0/>"
 
@@ -1552,7 +1552,7 @@ msgstr "Saber mais <0/>"
 msgid "View #Wrapstodon"
 msgstr "Ver #Wrapstodon"
 
-#: src/components/notification.jsx:769
+#: src/components/notification.jsx:770
 #: src/components/status.jsx:267
 msgid "Read more →"
 msgstr "Ler mais →"
@@ -2273,7 +2273,7 @@ msgid "Failed to load history"
 msgstr "Fallou a carga do historial"
 
 #: src/components/status.jsx:3006
-#: src/pages/annual-report.jsx:44
+#: src/pages/annual-report.jsx:46
 msgid "Loading…"
 msgstr "A cargar…"
 
@@ -2346,7 +2346,7 @@ msgstr "Novas publicacións"
 
 #: src/components/timeline.jsx:554
 #: src/pages/home.jsx:213
-#: src/pages/notifications.jsx:824
+#: src/pages/notifications.jsx:871
 #: src/pages/status.jsx:988
 #: src/pages/status.jsx:1361
 msgid "Try again"
@@ -2415,7 +2415,7 @@ msgid "Login required."
 msgstr "Precisa acceder."
 
 #: src/compose.jsx:90
-#: src/pages/annual-report.jsx:132
+#: src/pages/annual-report.jsx:165
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:270
 msgid "Go home"
@@ -3159,125 +3159,125 @@ msgstr "Ninguén te mencionou :("
 msgid "Unable to load mentions."
 msgstr "Non se cargaron as mencións."
 
-#: src/pages/notifications.jsx:103
+#: src/pages/notifications.jsx:104
 msgid "You don't follow"
 msgstr "Non estás a seguir"
 
-#: src/pages/notifications.jsx:104
+#: src/pages/notifications.jsx:105
 msgid "Who don't follow you"
 msgstr "Que non te segue"
 
-#: src/pages/notifications.jsx:105
+#: src/pages/notifications.jsx:106
 msgid "With a new account"
 msgstr "Cunha nova conta"
 
-#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:107
 msgid "Who unsolicitedly private mention you"
 msgstr "Con mención privada non solicitada"
 
-#: src/pages/notifications.jsx:107
+#: src/pages/notifications.jsx:108
 msgid "Who are limited by server moderators"
 msgstr "Que está limitada pola moderación do servidor"
 
-#: src/pages/notifications.jsx:538
-#: src/pages/notifications.jsx:872
+#: src/pages/notifications.jsx:578
+#: src/pages/notifications.jsx:919
 msgid "Notifications settings"
 msgstr "Axustes das notificacións"
 
-#: src/pages/notifications.jsx:556
+#: src/pages/notifications.jsx:596
 msgid "New notifications"
 msgstr "Novas notificacións"
 
-#: src/pages/notifications.jsx:567
+#: src/pages/notifications.jsx:607
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anuncio} other {Anuncios}}"
 
-#: src/pages/notifications.jsx:614
+#: src/pages/notifications.jsx:654
 #: src/pages/settings.jsx:1161
 msgid "Follow requests"
 msgstr "Solicitudes de seguimento"
 
-#: src/pages/notifications.jsx:619
+#: src/pages/notifications.jsx:659
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# solicitude de seguimento} other {# solicitudes de seguimento}}"
 
-#: src/pages/notifications.jsx:674
+#: src/pages/notifications.jsx:714
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Notificacións filtradas de # persoa} other {Notificacións filtradas de # persoas}}"
 
-#: src/pages/notifications.jsx:740
+#: src/pages/notifications.jsx:787
 msgid "Only mentions"
 msgstr "Só mencións"
 
-#: src/pages/notifications.jsx:744
+#: src/pages/notifications.jsx:791
 msgid "Today"
 msgstr "Hoxe"
 
-#: src/pages/notifications.jsx:749
+#: src/pages/notifications.jsx:796
 msgid "You're all caught up."
 msgstr "Xa estás ao día."
 
-#: src/pages/notifications.jsx:772
+#: src/pages/notifications.jsx:819
 msgid "Yesterday"
 msgstr "Onte"
 
-#: src/pages/notifications.jsx:820
+#: src/pages/notifications.jsx:867
 msgid "Unable to load notifications"
 msgstr "Non se cargaron as notificacións"
 
-#: src/pages/notifications.jsx:899
+#: src/pages/notifications.jsx:946
 msgid "Notifications settings updated"
 msgstr "Actualizáronse os axustes das notificacións"
 
-#: src/pages/notifications.jsx:907
+#: src/pages/notifications.jsx:954
 msgid "Filter out notifications from people:"
 msgstr "Filtrar as notificacións de persoas:"
 
-#: src/pages/notifications.jsx:921
+#: src/pages/notifications.jsx:968
 msgid "Filter"
 msgstr "Filtrar"
 
-#: src/pages/notifications.jsx:924
+#: src/pages/notifications.jsx:971
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: src/pages/notifications.jsx:997
+#: src/pages/notifications.jsx:1044
 msgid "Updated <0>{0}</0>"
 msgstr "Acutalizado <0>{0}</0>"
 
-#: src/pages/notifications.jsx:1065
+#: src/pages/notifications.jsx:1112
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Ver notificacións de <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1086
+#: src/pages/notifications.jsx:1133
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Notificacións de <0>@{0}</0>"
 
-#: src/pages/notifications.jsx:1153
+#: src/pages/notifications.jsx:1200
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "A partir de agora non se filtrarán as notificacións de @{0}."
 
-#: src/pages/notifications.jsx:1158
+#: src/pages/notifications.jsx:1205
 msgid "Unable to accept notification request"
 msgstr "Non se puido aceptar a solicitude de notificación"
 
-#: src/pages/notifications.jsx:1163
+#: src/pages/notifications.jsx:1210
 msgid "Allow"
 msgstr "Permitir"
 
-#: src/pages/notifications.jsx:1183
+#: src/pages/notifications.jsx:1230
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "A partir de agora non se mostrarán as notificacións de @{0} nas Notificacións filtradas."
 
-#: src/pages/notifications.jsx:1188
+#: src/pages/notifications.jsx:1235
 msgid "Unable to dismiss notification request"
 msgstr "Non se puido desbotar a solicitude de notificación"
 
-#: src/pages/notifications.jsx:1193
+#: src/pages/notifications.jsx:1240
 msgid "Dismiss"
 msgstr "Desbotar"
 
-#: src/pages/notifications.jsx:1208
+#: src/pages/notifications.jsx:1255
 msgid "Dismissed"
 msgstr "Desbotada"
 

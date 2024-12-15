@@ -30,3 +30,20 @@ jobs:
           files: |
             phanpy-dist.zip
             phanpy-dist.tar.gz
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            ${{ steps.tag_name.outputs.tag_name }}
+            latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          build-args: |
+            VERSION=${{ steps.tag_name.outputs.tag_name }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

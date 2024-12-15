@@ -179,11 +179,30 @@ Read the [intro documentation](https://support.crowdin.com/for-volunteer-transla
 
 This is a **pure static web app**. You can host it anywhere you want.
 
-Two ways (choose one):
+Three ways (choose one):
 
 ### Easy way
 
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
+
+### The Docker way
+
+```bash
+docker run -p 8080:80 ghcr.io/cheeaun/phanpy:latest
+```
+
+With Docker Compose:
+
+```yaml
+---
+version: "3.9"
+services:
+  phanpy:
+    image: ghcr.io/cheeaun/phanpy:latest
+    container_name: phanpy
+    ports:
+      - 8080:80
+```
 
 ### Custom-build way
 

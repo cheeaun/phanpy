@@ -123,7 +123,7 @@ function NameText({
       )}
       {showAcct && (
         <>
-          <br />
+          {' '}
           <i class="bidi-isolate">
             {acct2 ? '' : '@'}
             {acct1}

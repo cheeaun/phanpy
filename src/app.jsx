@@ -557,7 +557,8 @@ function SecondaryRoutes({ isLoggedIn }) {
       <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
       <Route path="/:instance?/p">
         <Route index element={<Public />} />
-        <Route path="l" element={<Public local />} />
+        <Route path="l" element={<Public variant={'local'} />} />
+        <Route path="b" element={<Public variant={'bubble'} />} />
       </Route>
       <Route path="/:instance?/trending" element={<Trending />} />
       <Route path="/:instance?/search" element={<Search />} />

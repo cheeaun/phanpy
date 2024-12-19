@@ -10,6 +10,7 @@ const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
 const containGTS = /gotosocial/i;
+const containChuckya = /chuckya/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,
@@ -25,13 +26,21 @@ const platformFeatures = {
   '@pixelfed/global-feed': containPixelfed,
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
+  '@chuckya/bubble-timeline': containChuckya,
+};
+const advertisedFeatures = {
+  '@akkoma/bubble-timeline': 'bubble_timeline',
 };
 
 const supportsCache = {};
 
 function supports(feature) {
   try {
-    let { version, domain } = getCurrentInstance();
+    let instanceData = getCurrentInstance();
+    let version = instanceData.version;
+    let domain = instanceData.domain;
+    let pleroma = instanceData?.pleroma;
+
     let softwareName = getCurrentNodeInfo()?.software?.name || 'mastodon';
 
     if (softwareName === 'hometown') {
@@ -44,6 +53,13 @@ function supports(feature) {
 
     if (platformFeatures[feature]) {
       return (supportsCache[key] = platformFeatures[feature].test(version));
+    }
+
+    // Advertised features
+    if (pleroma) {
+      return (supportsCache[key] = pleroma.metadata.features.includes(
+        advertisedFeatures[feature],
+      ));
     }
 
     const range = features[feature];

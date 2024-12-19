@@ -9,8 +9,6 @@ export default function CustomEmoji({ staticUrl, alt, url }) {
         src={url}
         alt={alt}
         class="shortcode-emoji emoji"
-        width="16"
-        height="16"
         loading="lazy"
         decoding="async"
         fetchPriority="low"

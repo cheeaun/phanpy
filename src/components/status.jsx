@@ -2339,8 +2339,10 @@ function Status({
                             alt={name}
                             url={url}
                             staticUrl={staticUrl}
-                          />{' '}
-                          {count}
+                          />
+                          <span className={'emoji-reaction-count'}>
+                            {count}
+                          </span>
                         </span>
                       );
                     }
@@ -2362,8 +2364,10 @@ function Status({
                               alt={name}
                               url={emoji.url}
                               staticUrl={emoji.staticUrl}
-                            />{' '}
-                            {count}
+                            />
+                            <span className={'emoji-reaction-count'}>
+                              {count}
+                            </span>
                           </span>
                         );
                       }
@@ -2374,7 +2378,8 @@ function Status({
                           me ? '' : 'insignificant'
                         }`}
                       >
-                        {name} {count}
+                        <span className={'emoji-reaction-name'}>{name}</span>
+                        <span className={'emoji-reaction-count'}>{count}</span>
                       </span>
                     );
                   })}

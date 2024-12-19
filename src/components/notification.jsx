@@ -31,6 +31,7 @@ const NOTIFICATION_ICONS = {
   'admin.report': 'account-warning',
   severed_relationships: 'heart-break',
   moderation_warning: 'alert',
+  reaction: 'emoji2',
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
@@ -260,6 +261,7 @@ const contentText = {
       <Trans>Moderation warning</Trans>
     </b>
   ),
+  reaction: ({ account }) => <Trans>{account} reacted to your post.</Trans>,
   emoji_reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
@@ -397,7 +399,9 @@ function Notification({
         text = text({ name: targetName });
       }
     } else if (
-      (type === 'emoji_reaction' || type === 'pleroma:emoji_reaction') &&
+      (type === 'reaction' ||
+        type === 'emoji_reaction' ||
+        type === 'pleroma:emoji_reaction') &&
       notification.emoji
     ) {
       const emojiURL =

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 12:46\n"
+"PO-Revision-Date: 2024-12-21 14:15\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -241,7 +241,7 @@ msgstr "Estetty"
 
 #: src/components/account-info.jsx:1096
 msgid "Private note"
-msgstr ""
+msgstr "Yksityinen merkintä"
 
 #: src/components/account-info.jsx:1153
 msgid "Mention <0>@{username}</0>"
@@ -253,43 +253,43 @@ msgstr "Käännä elämäkerta"
 
 #: src/components/account-info.jsx:1176
 msgid "Edit private note"
-msgstr ""
+msgstr "Muokkaa yksityistä merkintää"
 
 #: src/components/account-info.jsx:1176
 msgid "Add private note"
-msgstr ""
+msgstr "Lisää yksityinen merkintä"
 
 #: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "Ilmoitukset käyttäjän @{username} julkaisuista otettu käyttöön."
 
 #: src/components/account-info.jsx:1197
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr " Ilmoitukset käyttäjän @{username} julkaisuista poistettu käytöstä."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
-msgstr ""
+msgstr "Poista ilmoitukset käytöstä"
 
 #: src/components/account-info.jsx:1210
 msgid "Enable notifications"
-msgstr ""
+msgstr "Ota ilmoitukset käyttöön"
 
 #: src/components/account-info.jsx:1227
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Käyttäjän @{username} tehostukset otettu käyttöön."
 
 #: src/components/account-info.jsx:1228
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Käyttäjän @{username} tehostukset poistettu käytöstä."
 
 #: src/components/account-info.jsx:1239
 msgid "Disable boosts"
-msgstr ""
+msgstr "Poista tehostukset käytöstä"
 
 #: src/components/account-info.jsx:1239
 msgid "Enable boosts"
-msgstr ""
+msgstr "Ota tehostukset käyttöön"
 
 #: src/components/account-info.jsx:1255
 #: src/components/account-info.jsx:1265
@@ -327,7 +327,7 @@ msgstr "Jaa…"
 
 #: src/components/account-info.jsx:1354
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Kumottu käyttäjän @{username} mykistys"
 
 #: src/components/account-info.jsx:1366
 msgid "Unmute <0>@{username}</0>"
@@ -340,11 +340,11 @@ msgstr "Mykistä <0>@{username}</0>…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1414
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "Mykistetty @{username}, kestona {0}"
 
 #: src/components/account-info.jsx:1426
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Käyttäjää @{username} ei voitu mykistää"
 
 #: src/components/account-info.jsx:1447
 msgid "Remove <0>@{username}</0> from followers?"
@@ -352,7 +352,7 @@ msgstr "Poistetaanko <0>@{username}</0> seuraajista?"
 
 #: src/components/account-info.jsx:1467
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} poistettu seuraajista"
 
 #: src/components/account-info.jsx:1479
 msgid "Remove follower…"
@@ -364,19 +364,19 @@ msgstr "Estetäänkö <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1514
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "Kumottu käyttäjän @{username} esto"
 
 #: src/components/account-info.jsx:1522
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "Estetty @{username}"
 
 #: src/components/account-info.jsx:1530
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Käyttäjän @{username} mykistystä ei voitu kumota"
 
 #: src/components/account-info.jsx:1532
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Käyttäjää @{username} ei voitu estää"
 
 #: src/components/account-info.jsx:1542
 msgid "Unblock <0>@{username}</0>"
@@ -397,12 +397,12 @@ msgstr "Muokkaa profiilia"
 
 #: src/components/account-info.jsx:1624
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Perutaanko seurauspyyntö?"
 
 #. placeholder {1}: info.acct || info.username
 #: src/components/account-info.jsx:1625
 msgid "Unfollow @{1}?"
-msgstr ""
+msgstr "Lopetetaanko käyttäjän @{1} seuraaminen?"
 
 #: src/components/account-info.jsx:1676
 msgid "Unfollow…"
@@ -459,11 +459,11 @@ msgstr "Käännetty elämäkerta"
 
 #: src/components/account-info.jsx:1908
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Listasta ei voitu poistaa."
 
 #: src/components/account-info.jsx:1909
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Listaan ei voitu lisätä."
 
 #: src/components/account-info.jsx:1928
 #: src/pages/lists.jsx:105
@@ -487,7 +487,7 @@ msgstr "Yksityinen merkintä käyttäjästä <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2032
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Yksityistä merkintää ei voitu päivittää."
 
 #: src/components/account-info.jsx:2055
 #: src/components/account-info.jsx:2226
@@ -500,7 +500,7 @@ msgstr "Tallenna ja sulje"
 
 #: src/components/account-info.jsx:2154
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Profiilia ei voitu päivittää."
 
 #: src/components/account-info.jsx:2161
 #: src/components/list-add-edit.jsx:105
@@ -859,7 +859,7 @@ msgstr "Valmis"
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2743
 msgid "Choice {0}"
-msgstr ""
+msgstr "Vaihtoehto {0}"
 
 #: src/components/compose.jsx:2790
 msgid "Multiple choices"
@@ -875,7 +875,7 @@ msgstr "Poista äänestys"
 
 #: src/components/compose.jsx:3039
 msgid "Search accounts"
-msgstr ""
+msgstr "Hae tilejä"
 
 #: src/components/compose.jsx:3093
 #: src/components/generic-accounts.jsx:228
@@ -888,7 +888,7 @@ msgstr "Mukautetut emojit"
 
 #: src/components/compose.jsx:3257
 msgid "Search emoji"
-msgstr ""
+msgstr "Hae emojeita"
 
 #: src/components/compose.jsx:3288
 msgid "Error loading custom emojis"
@@ -896,11 +896,11 @@ msgstr "Virhe ladattaessa mukautettuja emojeita"
 
 #: src/components/compose.jsx:3299
 msgid "Recently used"
-msgstr ""
+msgstr "Viimeaikaiset"
 
 #: src/components/compose.jsx:3300
 msgid "Others"
-msgstr ""
+msgstr "Muut"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/compose.jsx:3338
@@ -909,11 +909,11 @@ msgstr "{0} lisää…"
 
 #: src/components/compose.jsx:3476
 msgid "Search GIFs"
-msgstr ""
+msgstr "Hae GIF-kuvia"
 
 #: src/components/compose.jsx:3491
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Palvelun tarjoaa GIPHY"
 
 #: src/components/compose.jsx:3499
 msgid "Type to search GIFs"

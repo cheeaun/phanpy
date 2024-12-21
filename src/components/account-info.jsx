@@ -941,7 +941,7 @@ function RelatedActions({
   onProfileUpdate = () => {},
 }) {
   if (!info) return null;
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   const {
     masto: currentMasto,
     instance: currentInstance,
@@ -1793,6 +1793,7 @@ function niceAccountURL(url) {
 }
 
 function TranslatedBioSheet({ note, fields, onClose }) {
+  const { t } = useLingui();
   const fieldsText =
     fields
       ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
@@ -1827,6 +1828,7 @@ function TranslatedBioSheet({ note, fields, onClose }) {
 }
 
 function AddRemoveListsSheet({ accountID, onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -1971,6 +1973,7 @@ function PrivateNoteSheet({
   onRelationshipChange = () => {},
   onClose = () => {},
 }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const textareaRef = useRef(null);
@@ -2065,6 +2068,7 @@ function PrivateNoteSheet({
 }
 
 function EditProfileSheet({ onClose = () => {} }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('loading');
   const [account, setAccount] = useState(null);

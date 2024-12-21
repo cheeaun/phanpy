@@ -1813,6 +1813,7 @@ const detectLangs = async (text) => {
 };
 
 const Textarea = forwardRef((props, ref) => {
+  const { t } = useLingui();
   const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const {
@@ -2725,7 +2726,7 @@ function Poll({
   minExpiration,
   maxCharactersPerOption,
 }) {
-  const { _ } = useLingui();
+  const { t } = useLingui();
   const { options, expiresIn, multiple } = poll;
 
   return (
@@ -2880,6 +2881,7 @@ function MentionModal({
   onSelect = () => {},
   defaultSearchTerm,
 }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [accounts, setAccounts] = useState([]);
@@ -3104,6 +3106,7 @@ function CustomEmojisModal({
   onSelect = () => {},
   defaultSearchTerm,
 }) {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
   const [customEmojis, setCustomEmojis] = useState([]);
@@ -3399,7 +3402,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
 
 const GIFS_PER_PAGE = 20;
 function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [results, setResults] = useState([]);
   const formRef = useRef(null);

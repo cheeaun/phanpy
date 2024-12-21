@@ -216,6 +216,7 @@ function Drafts({ onClose }) {
 }
 
 function MiniDraft({ draft }) {
+  const { t } = useLingui();
   const { draftStatus, replyTo } = draft;
   const { status, spoilerText, poll, mediaAttachments } = draftStatus;
   const hasPoll = poll?.options?.length > 0;

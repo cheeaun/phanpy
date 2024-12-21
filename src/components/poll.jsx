@@ -1,3 +1,4 @@
+import { i18n } from '@lingui/core';
 import { plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'preact/hooks';

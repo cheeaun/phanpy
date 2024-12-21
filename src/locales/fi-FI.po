@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 07:30\n"
+"PO-Revision-Date: 2024-12-21 09:39\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2117,12 +2117,12 @@ msgstr "Raportoi julkaisu…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Kumottu käyttäjän @{6} julkaisun tehostus"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Tehostettu käyttäjän @{7} julkaisua"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2411,7 +2411,7 @@ msgstr "Näytetään julkaisut aihetunnisteella #{0}"
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:415
 msgid "Showing posts in {1}"
-msgstr ""
+msgstr "Näytetään julkaisut ajalta {1}"
 
 #: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
@@ -2630,7 +2630,7 @@ msgstr "Poistetaan kiinnikuronta {0}"
 #. placeholder {1}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {1} removed"
-msgstr ""
+msgstr "Kiinnikuronta {1} poistettu"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3225,7 +3225,7 @@ msgstr "Salli"
 #. placeholder {1}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Ilmoitukset käyttäjältä @{1} eivät näy suodatetuissa ilmoituksissa tästä lähtien."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3400,7 +3400,7 @@ msgstr "Julkaisujen kääntäminen"
 
 #: src/pages/settings.jsx:389
 msgid "Translate to "
-msgstr ""
+msgstr "Käännä kielelle "
 
 #: src/pages/settings.jsx:400
 msgid "System language ({systemTargetLanguageText})"
@@ -3626,7 +3626,7 @@ msgstr "Ei voitu vaihtaa"
 #. placeholder {1}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({1})"
-msgstr ""
+msgstr "Vaihda julkaisun instanssiin ({1})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

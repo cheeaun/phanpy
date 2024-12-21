@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 09:39\n"
+"PO-Revision-Date: 2024-12-21 10:37\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -633,7 +633,7 @@ msgstr "Äänen kuvaus"
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #: src/components/compose.jsx:2411
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr "Liian suuri tiedostokoko. Lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää koosta {0} kokoon {1} tai pienemmäksi."
+msgstr "Liian suuri tiedostokoko. Palveluun lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää tiedostoa koosta {0} kokoon {1} tai pienemmäksi."
 
 #. placeholder {2}: i18n.number( width, )
 #. placeholder {3}: i18n.number(height)
@@ -641,13 +641,13 @@ msgstr "Liian suuri tiedostokoko. Lataaminen saattaa aiheuttaa ongelmia. Kokeile
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2423
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Liian suuret mitat. Palveluun lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää kuvaa mitoista {2}×{3} px mittoihin {4}×{5} px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2431
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "Liian suuri tiedostokoko. Palveluun lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää tiedostoa koosta {6} kokoon {7} tai pienemmäksi."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -655,11 +655,11 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2443
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "Liian suuret mitat. Palveluun lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää videota mitoista {8}×{9} px mittoihin {10}×{11} px."
 
 #: src/components/compose.jsx:2451
 msgid "Frame rate too high. Uploading might encounter issues."
-msgstr "Liian suuri kuvataajuus. Lataaminen saattaa aiheuttaa ongelmia."
+msgstr "Liian suuri kuvataajuus. Palveluun lataaminen saattaa aiheuttaa ongelmia."
 
 #: src/components/compose.jsx:2511
 #: src/components/shortcuts-settings.jsx:726
@@ -693,7 +693,7 @@ msgstr "Luodaan kuvausta. Odota hetki…"
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2620
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Kuvauksen luonti epäonnistui: {12}"
 
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description"
@@ -708,7 +708,7 @@ msgstr "Luo kuvaus…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2672
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Kuvauksen luonti epäonnistui{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2687
@@ -1957,17 +1957,17 @@ msgstr "Kumottu käyttäjän @{0} julkaisun tykkäys"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "Tykätty käyttäjän @{1} julkaisusta"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Poistettu käyttäjän @{2} julkaisu kirjanmerkeistä"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Lisätty käyttäjän @{3} julkaisu kirjanmerkkeihin"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -1994,12 +1994,12 @@ msgstr "Vanha julkaisu (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Kumottu käyttäjän @{4} julkaisun tehostus"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Tehostettu käyttäjän @{5} julkaisua"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"

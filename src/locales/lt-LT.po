@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 07:30\n"
+"PO-Revision-Date: 2024-12-21 08:43\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -641,13 +641,13 @@ msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandyk sumažin
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2423
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Per didelis matmuo. Įkeliant gali kilti problemų. Bandykite sumažinti matmenis nuo {2}×{3} tšk. iki {4}×{5} tšk."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2431
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandykite sumažinti failo dydį nuo {6} iki {7} arba mažiau."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -655,7 +655,7 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2443
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "Per didelis matmuo. Įkeliant gali kilti problemų. Bandykite sumažinti matmenis nuo {8}×{9} tšk. iki {10}×{11} tšk."
 
 #: src/components/compose.jsx:2451
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -693,7 +693,7 @@ msgstr "Generuojamas aprašymas. Palauk…"
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2620
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Nepavyko sugeneruoti aprašymo: {12}"
 
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description"
@@ -708,7 +708,7 @@ msgstr "Generuoti aprašymą…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2672
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Nepavyko sugeneruoti aprašymo{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2687
@@ -1332,11 +1332,11 @@ msgstr "Baigėsi apklausa, kurią sukūrei."
 
 #: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "Baigėsi apklausa, kurioje balsavote."
 
 #: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
-msgstr ""
+msgstr "Įrašas, su kuriuo bendravote, buvo redaguotas."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1346,15 +1346,15 @@ msgstr ""
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
-msgstr ""
+msgstr "{account} užsiregistravo."
 
 #: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} pranešė apie {targetAccount}"
 
 #: src/components/notification.jsx:254
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Prarasti sąryšiai su <0>{name}</0>."
 
 #: src/components/notification.jsx:260
 msgid "Moderation warning"
@@ -1370,7 +1370,7 @@ msgstr "Administratorius (-ė) iš <0>{from}</0> pristabdė <1>{targetName}</1>,
 
 #: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Administratorius iš <0>{from}</0> užblokavo <1>{targetName}</1>. Paveikti sekėjai: {followersCount}, sekimai: {followingCount}."
 
 #: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
@@ -1566,15 +1566,15 @@ msgstr "Laukiama apžvalgos"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
-msgstr ""
+msgstr "Įrašas praneštas"
 
 #: src/components/report-modal.jsx:146
 msgid "Profile reported"
-msgstr ""
+msgstr "Profilis praneštas"
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr ""
+msgstr "Nepavyksta pranešti apie įrašą."
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
@@ -1582,11 +1582,11 @@ msgstr "Nepavyksta pranešti apie profilį"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr ""
+msgstr "Kokia problema su šiuo įrašu?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
-msgstr ""
+msgstr "Kokia problema su šiuo profiliu?"
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
@@ -1598,19 +1598,19 @@ msgstr "Persiųsti į <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
-msgstr ""
+msgstr "Siųsti ataskaitą"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
-msgstr ""
+msgstr "Nutildytas {username}"
 
 #: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
-msgstr ""
+msgstr "Nepavyksta nutildyti {username}."
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr ""
+msgstr "Siųsti ataskaitą <0>+ nutildyti profilį</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
@@ -1957,17 +1957,17 @@ msgstr "Panaikintas @{0} patiktuko įrašas"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "Patiko @{1} įrašas"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Pašalintas @{2} įrašas iš žymių"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Pridėtas @{3} įrašas prie žymių"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -1994,12 +1994,12 @@ msgstr "Senasis įrašas (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Panaikintas @{4} įrašo pasidalinimas"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Pasidalintas @{5} įrašas"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2117,12 +2117,12 @@ msgstr "Pranešti apie įrašą…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Panaikintas @{6} įrašo pasidalinimas"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Pasidalintas @{7} įrašas"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2411,7 +2411,7 @@ msgstr "Rodomi įrašai pažymėti su #{0}"
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:415
 msgid "Showing posts in {1}"
-msgstr ""
+msgstr "Rodomi įrašai rikiavime {1}"
 
 #: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
@@ -2630,7 +2630,7 @@ msgstr "Pašalinima {0} pasivijimas"
 #. placeholder {1}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {1} removed"
-msgstr ""
+msgstr "Pašalintas {1} pasivijimas"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -2684,7 +2684,7 @@ msgstr "Tankumas"
 #. js-lingui-explicit-id
 #: src/pages/catchup.jsx:1471
 msgid "group.filter"
-msgstr ""
+msgstr "Filtruoti"
 
 #: src/pages/catchup.jsx:1486
 msgid "Authors"
@@ -3225,7 +3225,7 @@ msgstr "Leisti"
 #. placeholder {1}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Pranešimai iš @{1} nuo šiol nebus rodomi filtruotuose pranešimuose."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3400,7 +3400,7 @@ msgstr "Įrašo vertimas"
 
 #: src/pages/settings.jsx:389
 msgid "Translate to "
-msgstr ""
+msgstr "Versti į "
 
 #: src/pages/settings.jsx:400
 msgid "System language ({systemTargetLanguageText})"
@@ -3626,7 +3626,7 @@ msgstr "Nepavyksta perjungti."
 #. placeholder {1}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({1})"
-msgstr ""
+msgstr "Perjungti į įrašo serverį ({1})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

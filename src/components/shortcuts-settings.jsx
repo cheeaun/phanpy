@@ -1,8 +1,8 @@
 import './shortcuts-settings.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
-import { msg, Plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, t } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,

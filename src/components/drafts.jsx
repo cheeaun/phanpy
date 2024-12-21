@@ -1,6 +1,6 @@
 import './drafts.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useMemo, useReducer, useState } from 'react';
 
 import { api } from '../utils/api';
@@ -14,6 +14,7 @@ import Loader from './loader';
 import MenuConfirm from './menu-confirm';
 
 function Drafts({ onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [drafts, setDrafts] = useState([]);

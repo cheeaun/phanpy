@@ -1,8 +1,8 @@
 import './compose.css';
 import '@github/text-expander-element';
 
-import { msg, plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import Fuse from 'fuse.js';
@@ -217,7 +217,7 @@ function Compose({
   standalone,
   hasOpener,
 }) {
-  const { i18n, _ } = useLingui();
+  const { i18n, _, t } = useLingui();
   const rtf = RTF(i18n.locale);
   const lf = LF(i18n.locale);
 
@@ -2244,7 +2244,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;

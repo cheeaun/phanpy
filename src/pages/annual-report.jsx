@@ -1,7 +1,6 @@
-import { t, Trans } from '@lingui/macro';
-
 import './annual-report.css';
 
+import { Trans } from '@lingui/react/macro';
 import { useEffect, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useLayoutEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -33,6 +33,7 @@ import Notification from './notification';
 }
 
 export default memo(function NotificationService() {
+  const { t } = useLingui();
   if (!('serviceWorker' in navigator)) return null;
 
   const snapStates = useSnapshot(states);

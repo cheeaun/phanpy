@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ const LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 function Mentions({ columnMode, ...props }) {
+  const { t } = useLingui();
   const { masto, instance } = api();
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const [stateType, setStateType] = useState(null);

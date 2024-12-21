@@ -1,7 +1,7 @@
 import './account-info.css';
 
-import { msg, plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -24,7 +24,7 @@ import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
-import states, { hideAllModals } from '../utils/states';
+import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 import supports from '../utils/supports';
@@ -135,7 +135,7 @@ function AccountInfo({
   instance,
   authenticated,
 }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const { masto } = api({
     instance,
   });

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import {
@@ -32,6 +32,7 @@ function MediaModal({
   index = 0,
   onClose = () => {},
 }) {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const carouselRef = useRef(null);
 

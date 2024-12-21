@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useEffect, useRef } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -17,6 +17,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
+  const { t } = useLingui();
   useTitle(
     title ||
       t({

@@ -1,7 +1,6 @@
 import './shortcuts.css';
 
-import { t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
@@ -22,6 +21,7 @@ import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
 
 function Shortcuts() {
+  const { t } = useLingui();
   const { _ } = useLingui();
   const { instance } = api();
   const snapStates = useSnapshot(states);

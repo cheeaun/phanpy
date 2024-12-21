@@ -1,7 +1,7 @@
 import './account-info.css';
 
-import { msg, plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -24,7 +24,7 @@ import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
-import states, { hideAllModals } from '../utils/states';
+import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 import supports from '../utils/supports';
@@ -135,7 +135,7 @@ function AccountInfo({
   instance,
   authenticated,
 }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const { masto } = api({
     instance,
   });
@@ -941,7 +941,7 @@ function RelatedActions({
   onProfileUpdate = () => {},
 }) {
   if (!info) return null;
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   const {
     masto: currentMasto,
     instance: currentInstance,
@@ -1793,6 +1793,7 @@ function niceAccountURL(url) {
 }
 
 function TranslatedBioSheet({ note, fields, onClose }) {
+  const { t } = useLingui();
   const fieldsText =
     fields
       ?.map(({ name, value }) => `${name}\n${getHTMLText(value)}`)
@@ -1827,6 +1828,7 @@ function TranslatedBioSheet({ note, fields, onClose }) {
 }
 
 function AddRemoveListsSheet({ accountID, onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
@@ -1971,6 +1973,7 @@ function PrivateNoteSheet({
   onRelationshipChange = () => {},
   onClose = () => {},
 }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const textareaRef = useRef(null);
@@ -2065,6 +2068,7 @@ function PrivateNoteSheet({
 }
 
 function EditProfileSheet({ onClose = () => {} }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('loading');
   const [account, setAccount] = useState(null);

@@ -1,7 +1,7 @@
 import './notifications.css';
 
-import { msg, Plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -109,7 +109,7 @@ const NOTIFICATIONS_POLICIES_TEXT = {
 };
 
 function Notifications({ columnMode }) {
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   useTitle(t`Notifications`, '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
@@ -1173,6 +1173,7 @@ function NotificationRequestModalButton({ request }) {
 }
 
 function NotificationRequestButtons({ request, onChange }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [requestState, setRequestState] = useState(null); // accept, dismiss

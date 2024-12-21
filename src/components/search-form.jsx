@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { forwardRef } from 'preact/compat';
 import { useImperativeHandle, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import Icon from './icon';
 import Link from './link';
 
 const SearchForm = forwardRef((props, ref) => {
+  const { t } = useLingui();
   const { instance } = api();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);

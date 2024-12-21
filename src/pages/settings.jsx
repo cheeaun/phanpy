@@ -1,6 +1,6 @@
 import './settings.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -36,6 +36,7 @@ const {
 } = import.meta.env;
 
 function Settings({ onClose }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const currentTheme = store.local.get('theme') || 'auto';
   const themeFormRef = useRef();
@@ -957,6 +958,7 @@ async function clearCaches() {
 }
 
 function PushNotificationsSection({ onClose }) {
+  const { t } = useLingui();
   if (!isPushSupported()) return null;
 
   const { instance } = api();

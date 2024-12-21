@@ -1,6 +1,6 @@
 import './nav-menu.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -21,6 +21,7 @@ import MenuLink from './menu-link';
 import SubMenu2 from './submenu2';
 
 function NavMenu(props) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const { masto, instance, authenticated } = api();
 

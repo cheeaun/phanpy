@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
@@ -7,6 +7,7 @@ import Icon from './icon';
 import Loader from './loader';
 
 function FollowRequestButtons({ accountID, onChange }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [requestState, setRequestState] = useState(null); // accept, reject

@@ -1,7 +1,7 @@
 import './notifications-menu.css';
 
-import { msg, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { ControlledMenu } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -62,6 +62,7 @@ function Home() {
 }
 
 function NotificationsLink() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const notificationLinkRef = useRef();
   const [menuState, setMenuState] = useState(undefined);

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
@@ -8,6 +8,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Favourites() {
+  const { t } = useLingui();
   useTitle(t`Likes`, '/favourites');
   const { masto, instance } = api();
   const favouritesIterator = useRef();

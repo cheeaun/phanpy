@@ -1,6 +1,6 @@
 import './lists.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
@@ -25,6 +25,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function List(props) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const { masto, instance } = api();
   const id = props?.id || useParams()?.id;
@@ -222,6 +223,7 @@ function List(props) {
 
 const MEMBERS_LIMIT = 40;
 function ListManageMembers({ listID, onClose }) {
+  const { t } = useLingui();
   // Show list of members with [Remove] button
   // API only returns 40 members at a time, so this need to be paginated with infinite scroll
   // Show [Add] button after removing a member
@@ -301,6 +303,7 @@ function ListManageMembers({ listID, onClose }) {
 }
 
 function RemoveAddButton({ account, listID }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [removed, setRemoved] = useState(false);

@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { t, Trans } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
 import localeMatch from '../utils/locale-match';

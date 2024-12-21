@@ -1,8 +1,7 @@
 import './filters.css';
 
-import { i18n } from '@lingui/core';
-import { msg, Plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
@@ -50,6 +49,7 @@ const EXPIRY_DURATIONS_LABELS = {
 };
 
 function Filters() {
+  const { t } = useLingui();
   const { masto } = api();
   useTitle(t`Filters`, `/ft`);
   const [uiState, setUIState] = useState('default');
@@ -197,7 +197,7 @@ function Filters() {
 let _id = 1;
 const incID = () => _id++;
 function FiltersAddEdit({ filter, onClose }) {
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const editMode = !!filter;
@@ -596,6 +596,7 @@ function FiltersAddEdit({ filter, onClose }) {
 }
 
 function ExpiryStatus({ expiresAt, showNeverExpires }) {
+  const { t } = useLingui();
   const hasExpiry = !!expiresAt;
   const expiresAtDate = hasExpiry && new Date(expiresAt);
   const expired = hasExpiry && expiresAtDate <= new Date();

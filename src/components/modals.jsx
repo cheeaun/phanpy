@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useEffect } from 'preact/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { subscribe, useSnapshot } from 'valtio';
@@ -30,6 +30,7 @@ subscribe(states, (changes) => {
 });
 
 export default function Modals() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const navigate = useNavigate();
   const location = useLocation();

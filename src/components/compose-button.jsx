@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -9,6 +9,7 @@ import states from '../utils/states';
 import Icon from './icon';
 
 export default function ComposeButton() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
 
   function handleButton(e) {

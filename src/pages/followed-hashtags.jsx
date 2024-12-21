@@ -1,4 +1,4 @@
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
@@ -10,6 +10,7 @@ import { fetchFollowedTags } from '../utils/followed-tags';
 import useTitle from '../utils/useTitle';
 
 function FollowedHashtags() {
+  const { t } = useLingui();
   const { masto, instance } = api();
   useTitle(t`Followed Hashtags`, `/fh`);
   const [uiState, setUIState] = useState('default');

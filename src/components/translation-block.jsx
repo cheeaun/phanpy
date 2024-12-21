@@ -1,6 +1,6 @@
 import './translation-block.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import pRetry from 'p-retry';
 import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -80,6 +80,7 @@ function TranslationBlock({
   mini,
   autoDetected,
 }) {
+  const { t } = useLingui();
   const targetLang = getTranslateTargetLanguage(true);
   const [uiState, setUIState] = useState('default');
   const [pronunciationContent, setPronunciationContent] = useState(null);

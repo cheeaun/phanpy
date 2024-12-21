@@ -1,6 +1,6 @@
 import './keyboard-shortcuts-help.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
@@ -11,6 +11,7 @@ import Icon from './icon';
 import Modal from './modal';
 
 export default memo(function KeyboardShortcutsHelp() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
 
   function onClose() {

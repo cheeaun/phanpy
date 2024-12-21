@@ -1,5 +1,5 @@
-import { msg, Plural, Select, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, t } from '@lingui/core/macro';
+import { Plural, Select, Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 

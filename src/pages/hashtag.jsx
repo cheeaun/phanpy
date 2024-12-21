@@ -1,5 +1,5 @@
-import { plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   FocusableItem,
   MenuDivider,
@@ -31,6 +31,7 @@ const TAGS_LIMIT_PER_MODE = 4;
 const TOTAL_TAGS_LIMIT = TAGS_LIMIT_PER_MODE + 1;
 
 function Hashtags({ media: mediaView, columnMode, ...props }) {
+  const { t } = useLingui();
   // const navigate = useNavigate();
   let { hashtag, ...params } = columnMode ? {} : useParams();
   if (props.hashtag) hashtag = props.hashtag;

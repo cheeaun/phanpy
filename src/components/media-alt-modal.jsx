@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -13,6 +13,7 @@ import Menu2 from './menu2';
 import TranslationBlock from './translation-block';
 
 export default function MediaAltModal({ alt, lang, onClose }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const [forceTranslate, setForceTranslate] = useState(false);
   const targetLanguage = getTranslateTargetLanguage(true);

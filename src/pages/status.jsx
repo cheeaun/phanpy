@@ -1,6 +1,6 @@
 import './status.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
@@ -73,6 +73,7 @@ const STATUSES_SELECTOR =
 const STATUS_URL_REGEX = /\/s\//i;
 
 function StatusPage(params) {
+  const { t } = useLingui();
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
   const snapStates = useSnapshot(states);
@@ -214,6 +215,7 @@ function createdAtSort(a, b) {
 }
 
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
+  const { t } = useLingui();
   const [searchParams, setSearchParams] = useSearchParams();
   const mediaParam = searchParams.get('media');
   const mediaStatusID = searchParams.get('mediaStatusID');
@@ -1377,6 +1379,7 @@ function SubComments({
   openAll,
   parentLink,
 }) {
+  const { t } = useLingui();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Total comments count, including sub-replies

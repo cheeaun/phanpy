@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
@@ -8,6 +8,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Bookmarks() {
+  const { t } = useLingui();
   useTitle(t`Bookmarks`, '/bookmarks');
   const { masto, instance } = api();
   const bookmarksIterator = useRef();

@@ -1,6 +1,6 @@
 import './lists.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useReducer, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
@@ -13,6 +13,7 @@ import { fetchLists } from '../utils/lists';
 import useTitle from '../utils/useTitle';
 
 function Lists() {
+  const { t } = useLingui();
   useTitle(t`Lists`, `/l`);
   const [uiState, setUIState] = useState('default');
 

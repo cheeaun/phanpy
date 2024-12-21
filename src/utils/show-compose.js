@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 
 import openOSK from './open-osk';
 import showToast from './show-toast';

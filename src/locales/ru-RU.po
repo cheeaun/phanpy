@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 07:30\n"
+"PO-Revision-Date: 2024-12-21 10:37\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -641,13 +641,13 @@ msgstr "Файл слишком большой — при загрузке мо�
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2423
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Сильно большое разрешение — при загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {2}×{3}px до {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2431
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "Файл слишком большой — при загрузке могут возникнуть проблемы. Попробуйте уменьшить размер с {6} до {7} или меньше."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -655,7 +655,7 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2443
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "Сильно большое разрешение — при загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {8}×{9}px до {10}×{11}px."
 
 #: src/components/compose.jsx:2451
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -693,7 +693,7 @@ msgstr "Создаём описание. Один момент, пожалуйс
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2620
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Не удалось создать описание: {12}"
 
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description"
@@ -708,7 +708,7 @@ msgstr "Автоматическое описание…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2672
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Не удалось создать описание: {13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2687
@@ -1957,17 +1957,17 @@ msgstr "Удалена отметка \"нравится\" у поста от @{
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "Понравился пост от @{1}"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Удалена закладка поста от @{2}"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Добавлена закладка поста от @{3}"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -1994,12 +1994,12 @@ msgstr "Старый пост (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Прекратил(а) продвигать пост @{4}"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Продвинул(а) пост @{5}"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2117,12 +2117,12 @@ msgstr "Пожаловаться на пост…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Прекратил(а) продвигать пост @{6}"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Продвинул(а) пост @{7}"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2411,7 +2411,7 @@ msgstr "Посты, помеченные #{0}"
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:415
 msgid "Showing posts in {1}"
-msgstr ""
+msgstr "Посты с {1}"
 
 #: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
@@ -2630,7 +2630,7 @@ msgstr "Убираем Catch-up {0}"
 #. placeholder {1}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {1} removed"
-msgstr ""
+msgstr "Catch-up {1} удалён"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3225,7 +3225,7 @@ msgstr "Разрешить"
 #. placeholder {1}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Уведомления от @{1} теперь не будут отображаться в отфильтрованных уведомлениях."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3400,7 +3400,7 @@ msgstr "Перевод поста"
 
 #: src/pages/settings.jsx:389
 msgid "Translate to "
-msgstr ""
+msgstr "Перевести на "
 
 #: src/pages/settings.jsx:400
 msgid "System language ({systemTargetLanguageText})"
@@ -3626,7 +3626,7 @@ msgstr "Не удалось переключиться"
 #. placeholder {1}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({1})"
-msgstr ""
+msgstr "Переключиться на инстанс поста ({1})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

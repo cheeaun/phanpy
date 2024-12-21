@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 16:09\n"
+"PO-Revision-Date: 2024-12-21 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -783,7 +783,7 @@ msgstr "La dimensión es demasiado grande. La carga podría tener problemas. Tra
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2432
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "El tamaño del archivo es demasiado grande. Puede que haya problemas al cargar el archivo. Trata de reducir el tamaño de {6} a {7} o menos."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -791,7 +791,7 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2444
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "La dimensión es demasiado grande. Puede que haya problemas al cargar el archivo. Trata de reducir la dimensión de {8}x{9}px a {10}x{11}px."
 
 #: src/components/compose.jsx:2452
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -830,7 +830,7 @@ msgstr "Generando descripción. Por favor, espera…"
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Ha habido un fallo al generar la descripción: {12}"
 
 #: src/components/compose.jsx:2622
 msgid "Failed to generate description"
@@ -845,7 +845,7 @@ msgstr "Generar descripción…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2673
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Ha habido un fallo al generar la descripción{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2688
@@ -2129,12 +2129,12 @@ msgstr "Me gustó la publicación de @{1}"
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Dejar de guardar como marcador la publicación de @{2}"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Se ha guardado como marcador la publicación de @{3}"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -2161,12 +2161,12 @@ msgstr "Antiguas publicaciones (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Has dejado de impulsar la publicación de @{4}"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Has impulsado la publicación de @{5}"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2276,12 +2276,12 @@ msgstr "Reportar publicación…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Has dejado de impulsar la publicación de @{6}"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Has impulsado la publicación de @{7}"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764

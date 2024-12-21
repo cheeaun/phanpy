@@ -17,10 +17,12 @@ msgstr ""
 msgid "Locked"
 msgstr ""
 
+#. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:141
 msgid "Posts: {0}"
 msgstr ""
 
+#. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:146
 msgid "Last posted: {0}"
 msgstr ""
@@ -64,6 +66,8 @@ msgstr ""
 msgid "Verified"
 msgstr ""
 
+#. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
+#. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:222
 #: src/components/account-info.jsx:782
 msgid "Joined <0>{0}</0>"
@@ -162,14 +166,26 @@ msgstr ""
 msgid "This user has chosen to not make this information available."
 msgstr ""
 
+#. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
+#. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
+#. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:807
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr ""
 
+#. placeholder {0}: postingStats.total
+#. placeholder {1}: postingStats.daysSinceLastPost
+#. placeholder {2}: postingStats.daysSinceLastPost
+#. placeholder {3}: postingStats.daysSinceLastPost
+#. placeholder {4}: postingStats.total
+#. placeholder {5}: postingStats.total
+#. placeholder {6}: postingStats.daysSinceLastPost
 #: src/components/account-info.jsx:823
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr ""
 
+#. placeholder {0}: postingStats.total
+#. placeholder {1}: postingStats.total
 #: src/components/account-info.jsx:836
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr ""
@@ -205,6 +221,7 @@ msgstr ""
 msgid "View post stats"
 msgstr ""
 
+#. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-info.jsx:1068
 msgid "Last post: <0>{0}</0>"
 msgstr ""
@@ -242,8 +259,8 @@ msgid "Notifications enabled for @{username}'s posts."
 msgstr ""
 
 #: src/components/account-info.jsx:1197
-msgid "Notifications disabled for @{username}'s posts."
-msgstr ""
+msgid " Notifications disabled for @{username}'s posts."
+msgstr " Notifications disabled for @{username}'s posts."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
@@ -315,6 +332,7 @@ msgstr ""
 msgid "Mute <0>@{username}</0>…"
 msgstr ""
 
+#. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1414
 msgid "Muted @{username} for {0}"
 msgstr ""
@@ -376,6 +394,7 @@ msgstr ""
 msgid "Withdraw follow request?"
 msgstr ""
 
+#. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1625
 msgid "Unfollow @{0}?"
 msgstr ""
@@ -457,6 +476,7 @@ msgstr ""
 msgid "New list"
 msgstr ""
 
+#. placeholder {0}: account?.username || account?.acct
 #: src/components/account-info.jsx:1999
 msgid "Private note about <0>@{0}</0>"
 msgstr ""
@@ -560,6 +580,9 @@ msgstr ""
 msgid "You have unsaved changes. Discard this post?"
 msgstr ""
 
+#. placeholder {0}: unsupportedFiles.length
+#. placeholder {1}: unsupportedFiles[0].name
+#. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
 #: src/components/compose.jsx:630
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
@@ -595,10 +618,13 @@ msgstr ""
 msgid "Pop in"
 msgstr ""
 
+#. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
+#. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
 #: src/components/compose.jsx:947
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr ""
 
+#. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #: src/components/compose.jsx:957
 msgid "Replying to @{0}’s post"
 msgstr ""
@@ -735,11 +761,19 @@ msgstr ""
 msgid "Audio description"
 msgstr ""
 
+#. placeholder {0}: prettyBytes( imageSize, )
+#. placeholder {0}: prettyBytes( videoSize, )
+#. placeholder {1}: prettyBytes(imageSizeLimit)
+#. placeholder {1}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2411
 #: src/components/compose.jsx:2431
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr ""
 
+#. placeholder {0}: i18n.number( width, )
+#. placeholder {1}: i18n.number(height)
+#. placeholder {2}: i18n.number(newWidth)
+#. placeholder {3}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2423
 #: src/components/compose.jsx:2443
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
@@ -779,6 +813,7 @@ msgstr ""
 msgid "Generating description. Please wait…"
 msgstr ""
 
+#. placeholder {0}: e.message
 #: src/components/compose.jsx:2620
 msgid "Failed to generate description: {0}"
 msgstr ""
@@ -793,10 +828,12 @@ msgstr ""
 msgid "Generate description…"
 msgstr ""
 
+#. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2672
 msgid "Failed to generate description{0}"
 msgstr ""
 
+#. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2687
 msgid "({0}) <0>— experimental</0>"
 msgstr ""
@@ -805,6 +842,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
+#. placeholder {0}: i + 1
 #: src/components/compose.jsx:2742
 msgid "Choice {0}"
 msgstr ""
@@ -850,6 +888,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
+#. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/compose.jsx:3335
 msgid "{0} more…"
 msgstr ""
@@ -1420,10 +1459,13 @@ msgstr ""
 msgid "{account} published a post."
 msgstr ""
 
+#. placeholder {0}: shortenNumber(count)
+#. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
+#. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:129
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr ""
@@ -1432,6 +1474,8 @@ msgstr ""
 msgid "{account} requested to follow you."
 msgstr ""
 
+#. placeholder {0}: shortenNumber(count)
+#. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
@@ -1452,6 +1496,8 @@ msgstr ""
 msgid "A post you interacted with has been edited."
 msgstr ""
 
+#. placeholder {0}: shortenNumber(count)
+#. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
@@ -1582,10 +1628,14 @@ msgstr ""
 msgid "Show results"
 msgstr ""
 
+#. placeholder {0}: shortenNumber(votesCount)
+#. placeholder {1}: shortenNumber(votesCount)
 #: src/components/poll.jsx:228
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr ""
 
+#. placeholder {0}: shortenNumber(votersCount)
+#. placeholder {1}: shortenNumber(votersCount)
 #: src/components/poll.jsx:245
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr ""
@@ -1607,16 +1657,19 @@ msgid "Ending"
 msgstr ""
 
 #. Relative time in seconds, as short as possible
+#. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
 #: src/components/relative-time.jsx:57
 msgid "{0}s"
 msgstr ""
 
 #. Relative time in minutes, as short as possible
+#. placeholder {0}: Math.floor(seconds / minute)
 #: src/components/relative-time.jsx:62
 msgid "{0}m"
 msgstr ""
 
 #. Relative time in hours, as short as possible
+#. placeholder {0}: Math.floor(seconds / hour)
 #: src/components/relative-time.jsx:67
 msgid "{0}h"
 msgstr ""
@@ -1737,6 +1790,7 @@ msgstr ""
 msgid "Posts with <0>{query}</0>"
 msgstr ""
 
+#. placeholder {0}: query.replace(/^#/, '')
 #: src/components/search-form.jsx:227
 msgid "Posts tagged with <0>#{0}</0>"
 msgstr ""
@@ -2027,6 +2081,7 @@ msgstr ""
 msgid "Sync to instance server"
 msgstr ""
 
+#. placeholder {0}: shortcutsStr.length
 #: src/components/shortcuts-settings.jsx:1145
 msgid "{0, plural, one {# character} other {# characters}}"
 msgstr ""
@@ -2047,18 +2102,22 @@ msgstr ""
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:790
 msgid "Unliked @{0}'s post"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{0}'s post"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{0}'s post"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{0}'s post"
 msgstr ""
@@ -2080,15 +2139,18 @@ msgstr ""
 msgid "Some media have no descriptions."
 msgstr ""
 
+#. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
 #: src/components/status.jsx:968
 msgid "Old post (<0>{0}</0>)"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:987
 #: src/components/status.jsx:1442
 msgid "Unboosted @{0}'s post"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:988
 #: src/components/status.jsx:1443
 msgid "Boosted @{0}'s post"
@@ -2117,6 +2179,7 @@ msgstr ""
 msgid "Unbookmark"
 msgstr ""
 
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:1130
 msgid "View post by <0>@{0}</0>"
 msgstr ""
@@ -2227,6 +2290,7 @@ msgstr ""
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr ""
 
+#. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
 #: src/components/status.jsx:1950
 msgid "Thread{0}"
 msgstr ""
@@ -2347,6 +2411,7 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
+#. placeholder {0}: fItems.length
 #: src/components/timeline.jsx:588
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr "{0, plural, one {# Boost} other {# Boosts}}"
@@ -2361,6 +2426,7 @@ msgstr "Pinned posts"
 msgid "Thread"
 msgstr ""
 
+#. placeholder {0}: filterInfo.titlesStr
 #: src/components/timeline.jsx:968
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
@@ -2381,6 +2447,7 @@ msgstr ""
 msgid "Translate from {sourceLangText}"
 msgstr ""
 
+#. placeholder {0}: detectedLang ?? '…'
 #: src/components/translation-block.jsx:222
 msgid "Auto ({0})"
 msgstr ""
@@ -2393,6 +2460,7 @@ msgstr ""
 msgid "Editing source status"
 msgstr ""
 
+#. placeholder {0}: replyToStatus.account?.acct || replyToStatus.account?.username
 #: src/compose.jsx:34
 msgid "Replying to @{0}"
 msgstr ""
@@ -2468,10 +2536,12 @@ msgstr ""
 msgid "Showing posts with media"
 msgstr ""
 
+#. placeholder {0}: tag.name
 #: src/pages/account-statuses.jsx:377
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
+#. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:416
 msgid "Showing posts in {0}"
 msgstr ""
@@ -2491,6 +2561,7 @@ msgstr ""
 msgid "Unable to fetch account info"
 msgstr ""
 
+#. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:554
 msgid "Switch to account's instance {0}"
 msgstr ""
@@ -2527,6 +2598,7 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
+#. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:173
 msgid "Log out <0>@{0}</0>?"
 msgstr ""
@@ -2661,6 +2733,7 @@ msgstr ""
 msgid "Overlaps with your last catch-up"
 msgstr ""
 
+#. placeholder {0}: dtf.format(new Date(lastCatchupEndAt))
 #: src/pages/catchup.jsx:1015
 msgid "Until the last catch-up ({0})"
 msgstr ""
@@ -2673,6 +2746,7 @@ msgstr ""
 msgid "Previously…"
 msgstr ""
 
+#. placeholder {0}: pc.count
 #: src/pages/catchup.jsx:1052
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr ""
@@ -2681,10 +2755,12 @@ msgstr ""
 msgid "Remove this catch-up?"
 msgstr ""
 
+#. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1065
 msgid "Removing Catch-up {0}"
 msgstr "Removing Catch-up {0}"
 
+#. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {0} removed"
 msgstr "Catch-up {0} removed"
@@ -2710,6 +2786,7 @@ msgstr ""
 msgid "Top links"
 msgstr ""
 
+#. placeholder {0}: sharers.map((s) => { const { avatarStatic, displayName } = s; return ( <button type="button" class="plain" style={{ padding: 0, }} onClick={(e) => { e.preventDefault(); e.stopPropagation(); // Reset and filter to author const { id } = s; setSelectedAuthor(id); setSelectedFilterCategory('all'); }} > <Avatar url={avatarStatic} size="s" alt={displayName} /> </button> ); })
 #: src/pages/catchup.jsx:1261
 msgid "Shared by {0}"
 msgstr ""
@@ -2720,6 +2797,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+#. placeholder {0}: authorCountsList.length
 #: src/pages/catchup.jsx:1401
 msgid "{0, plural, one {# author} other {# authors}}"
 msgstr ""
@@ -2797,6 +2875,7 @@ msgstr ""
 msgid "Scroll to top"
 msgstr ""
 
+#. placeholder {0}: filterInfo.titlesStr
 #: src/pages/catchup.jsx:1875
 msgid "Filtered: {0}"
 msgstr ""
@@ -2834,6 +2913,7 @@ msgstr ""
 msgid "New filter"
 msgstr ""
 
+#. placeholder {0}: filters.length
 #: src/pages/filters.jsx:151
 msgid "{0, plural, one {# filter} other {# filters}}"
 msgstr ""
@@ -2878,6 +2958,7 @@ msgstr ""
 msgid "Add keyword"
 msgstr ""
 
+#. placeholder {0}: filteredEditKeywords.length
 #: src/pages/filters.jsx:453
 msgid "{0, plural, one {# keyword} other {# keywords}}"
 msgstr ""
@@ -2934,6 +3015,7 @@ msgstr ""
 msgid "Never expires"
 msgstr ""
 
+#. placeholder {0}: followedHashtags.length
 #: src/pages/followed-hashtags.jsx:70
 msgid "{0, plural, one {# hashtag} other {# hashtags}}"
 msgstr ""
@@ -3093,6 +3175,7 @@ msgstr ""
 msgid "Manage members"
 msgstr ""
 
+#. placeholder {0}: account.username
 #: src/pages/list.jsx:313
 msgid "Remove <0>@{0}</0> from list?"
 msgstr ""
@@ -3101,6 +3184,7 @@ msgstr ""
 msgid "Remove…"
 msgstr ""
 
+#. placeholder {0}: lists.length
 #: src/pages/lists.jsx:93
 msgid "{0, plural, one {# list} other {# lists}}"
 msgstr ""
@@ -3183,6 +3267,7 @@ msgstr ""
 msgid "New notifications"
 msgstr ""
 
+#. placeholder {0}: announcements.length
 #: src/pages/notifications.jsx:607
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
@@ -3192,10 +3277,12 @@ msgstr ""
 msgid "Follow requests"
 msgstr ""
 
+#. placeholder {0}: followRequests.length
 #: src/pages/notifications.jsx:659
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr ""
 
+#. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
 #: src/pages/notifications.jsx:714
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr ""
@@ -3236,18 +3323,22 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
+#. placeholder {0}: niceDateTime(updatedAtDate)
 #: src/pages/notifications.jsx:1044
 msgid "Updated <0>{0}</0>"
 msgstr ""
 
+#. placeholder {0}: account.username
 #: src/pages/notifications.jsx:1112
 msgid "View notifications from <0>@{0}</0>"
 msgstr ""
 
+#. placeholder {0}: account.username
 #: src/pages/notifications.jsx:1133
 msgid "Notifications from <0>@{0}</0>"
 msgstr ""
 
+#. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1200
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
@@ -3260,6 +3351,7 @@ msgstr ""
 msgid "Allow"
 msgstr ""
 
+#. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1230
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
@@ -3436,13 +3528,14 @@ msgid "Post translation"
 msgstr ""
 
 #: src/pages/settings.jsx:388
-msgid "Translate to"
-msgstr ""
+msgid "Translate to "
+msgstr "Translate to "
 
 #: src/pages/settings.jsx:399
 msgid "System language ({systemTargetLanguageText})"
 msgstr ""
 
+#. placeholder {0}: snapStates.settings.contentTranslationHideLanguages.length
 #: src/pages/settings.jsx:425
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr ""
@@ -3527,10 +3620,12 @@ msgstr "Donate"
 msgid "Privacy Policy"
 msgstr ""
 
+#. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
 #: src/pages/settings.jsx:799
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
+#. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener noreferrer" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
 #: src/pages/settings.jsx:806
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
@@ -3560,6 +3655,7 @@ msgstr ""
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
+#. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
 #: src/pages/settings.jsx:1107
 msgid "Allow from <0>{0}</0>"
 msgstr ""
@@ -3630,6 +3726,7 @@ msgstr ""
 msgid "Go to main post"
 msgstr ""
 
+#. placeholder {0}: ancestors.length
 #: src/pages/status.jsx:1145
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
@@ -3655,6 +3752,7 @@ msgstr ""
 msgid "Unable to switch"
 msgstr ""
 
+#. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1291
 msgid "Switch to post's instance ({0})"
 msgstr ""
@@ -3667,10 +3765,13 @@ msgstr ""
 msgid "Unable to load post"
 msgstr ""
 
+#. placeholder {0}: replies.length
+#. placeholder {1}: shortenNumber(replies.length)
 #: src/pages/status.jsx:1487
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
+#. placeholder {0}: shortenNumber(totalComments)
 #: src/pages/status.jsx:1505
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
@@ -3688,6 +3789,7 @@ msgid "Trending News"
 msgstr ""
 
 #. By [Author]
+#. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener noreferrer" > {authorName} </a> ) : ( authorName )
 #: src/pages/trending.jsx:347
 msgid "By {0}"
 msgstr "By {0}"
@@ -3696,6 +3798,7 @@ msgstr "By {0}"
 msgid "Back to showing trending posts"
 msgstr ""
 
+#. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
 #: src/pages/trending.jsx:413
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr ""

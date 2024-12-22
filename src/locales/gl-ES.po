@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 12:46\n"
+"PO-Revision-Date: 2024-12-22 05:44\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -241,7 +241,7 @@ msgstr "Bloqueada"
 
 #: src/components/account-info.jsx:1096
 msgid "Private note"
-msgstr ""
+msgstr "Nota privada"
 
 #: src/components/account-info.jsx:1153
 msgid "Mention <0>@{username}</0>"
@@ -253,27 +253,27 @@ msgstr "Traducir bio"
 
 #: src/components/account-info.jsx:1176
 msgid "Edit private note"
-msgstr ""
+msgstr "Editar nota privada"
 
 #: src/components/account-info.jsx:1176
 msgid "Add private note"
-msgstr ""
+msgstr "Engadir nota privada"
 
 #: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "Activadas as notificacións para as publicacións de @{username}."
 
 #: src/components/account-info.jsx:1197
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr " Desactivadas as notificacións para as publicacións de @{username}."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
-msgstr ""
+msgstr "Desactivar notificacións"
 
 #: src/components/account-info.jsx:1210
 msgid "Enable notifications"
-msgstr ""
+msgstr "Activar notificacións"
 
 #: src/components/account-info.jsx:1227
 msgid "Boosts from @{username} enabled."
@@ -285,11 +285,11 @@ msgstr "Desactivadas as promocións de @{username}."
 
 #: src/components/account-info.jsx:1239
 msgid "Disable boosts"
-msgstr ""
+msgstr "Desactivar promocións"
 
 #: src/components/account-info.jsx:1239
 msgid "Enable boosts"
-msgstr ""
+msgstr "Activar promocións"
 
 #: src/components/account-info.jsx:1255
 #: src/components/account-info.jsx:1265
@@ -327,7 +327,7 @@ msgstr "Compartir…"
 
 #: src/components/account-info.jsx:1354
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Reactivouse a @{username}"
 
 #: src/components/account-info.jsx:1366
 msgid "Unmute <0>@{username}</0>"
@@ -340,11 +340,11 @@ msgstr "Acalar a <0>@{username}</0>…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1414
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "Silenciaches a @{username} durante {0}"
 
 #: src/components/account-info.jsx:1426
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Non se puido silenciar a @{username}"
 
 #: src/components/account-info.jsx:1447
 msgid "Remove <0>@{username}</0> from followers?"
@@ -352,7 +352,7 @@ msgstr "Quitar a <0>@{username}</0> das túas seguidoras?"
 
 #: src/components/account-info.jsx:1467
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "Retirouse a @{username} das seguidoras"
 
 #: src/components/account-info.jsx:1479
 msgid "Remove follower…"
@@ -397,12 +397,12 @@ msgstr "Editar perfil"
 
 #: src/components/account-info.jsx:1624
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Retirar solicitude de seguimento?"
 
 #. placeholder {1}: info.acct || info.username
 #: src/components/account-info.jsx:1625
 msgid "Unfollow @{1}?"
-msgstr ""
+msgstr "Deixar de seguir a @{1}?"
 
 #: src/components/account-info.jsx:1676
 msgid "Unfollow…"
@@ -459,11 +459,11 @@ msgstr "Traduciuse a Bio"
 
 #: src/components/account-info.jsx:1908
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Non se puido retirar da lista."
 
 #: src/components/account-info.jsx:1909
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Non se puido engadir á lista."
 
 #: src/components/account-info.jsx:1928
 #: src/pages/lists.jsx:105
@@ -487,7 +487,7 @@ msgstr "Nota privada sobre <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2032
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Non se puido actualizar a nota privada."
 
 #: src/components/account-info.jsx:2055
 #: src/components/account-info.jsx:2226
@@ -500,7 +500,7 @@ msgstr "Gardar e pechar"
 
 #: src/components/account-info.jsx:2154
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Non se puido actualizar o perfil."
 
 #: src/components/account-info.jsx:2161
 #: src/components/list-add-edit.jsx:105
@@ -777,13 +777,13 @@ msgstr "Ficheiro demasiado grande. Podería haber problemas ao cargalo. Intenta 
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2424
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Tamaño demasiado grande. Podería dar problemas ao cargala. Intenta reducir o tamaño de {2}×{3}px a {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2432
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "Ficheiro demasiado grande. Podería haber problemas ao cargalo. Intenta reducir o tamaño de {6} a {7} ou inferior."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -791,7 +791,7 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2444
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "Tamaño demasiado grande. Podería dar problemas ao cargala. Intenta reducir o tamaño de {8}×{9}px a {10}×{11}px."
 
 #: src/components/compose.jsx:2452
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -830,7 +830,7 @@ msgstr "Creando a descrición. Agarda…"
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Fallou a creación da descrición: {12}"
 
 #: src/components/compose.jsx:2622
 msgid "Failed to generate description"
@@ -845,7 +845,7 @@ msgstr "Crear unha descrición…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2673
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Fallou a creación da descrición{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2688
@@ -859,7 +859,7 @@ msgstr "Feito"
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2743
 msgid "Choice {0}"
-msgstr ""
+msgstr "Opción {0}"
 
 #: src/components/compose.jsx:2790
 msgid "Multiple choices"
@@ -875,7 +875,7 @@ msgstr "Retirar enquisa"
 
 #: src/components/compose.jsx:3039
 msgid "Search accounts"
-msgstr ""
+msgstr "Buscar contas"
 
 #: src/components/compose.jsx:3093
 #: src/components/generic-accounts.jsx:228
@@ -888,7 +888,7 @@ msgstr "Emojis personais"
 
 #: src/components/compose.jsx:3257
 msgid "Search emoji"
-msgstr ""
+msgstr "Buscar emoji"
 
 #: src/components/compose.jsx:3288
 msgid "Error loading custom emojis"
@@ -896,11 +896,11 @@ msgstr "Erro ao cargar os emojis personais"
 
 #: src/components/compose.jsx:3299
 msgid "Recently used"
-msgstr ""
+msgstr "Usados recentemente"
 
 #: src/components/compose.jsx:3300
 msgid "Others"
-msgstr ""
+msgstr "Outros"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/compose.jsx:3338
@@ -909,11 +909,11 @@ msgstr "{0} mais…"
 
 #: src/components/compose.jsx:3476
 msgid "Search GIFs"
-msgstr ""
+msgstr "Buscar GIFs"
 
 #: src/components/compose.jsx:3491
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Proporcionado por GIPHY"
 
 #: src/components/compose.jsx:3499
 msgid "Type to search GIFs"
@@ -1496,11 +1496,11 @@ msgstr "{count, plural,  =1 {{postsCount, plural, =1 {{postType, select, reply {
 
 #: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
-msgstr "Finalizou unha enquisa que ti creaches o na que votaches."
+msgstr "Finalizou unha enquisa creada por ti ou na que votaches."
 
 #: src/components/notification.jsx:195
 msgid "A poll you have created has ended."
-msgstr "Finalizou unha enquisa que creaches."
+msgstr "Finalizou unha enquisa creada por ti."
 
 #: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
@@ -2124,17 +2124,17 @@ msgstr "Retirado o favorecemento a @{0}"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "Favorecida a publicación de @{1}"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Desmarcouse a publicación de @{2}"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Marcouse a publicación de @{3}"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -2161,12 +2161,12 @@ msgstr "Publicación antiga (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Retirada a promoción da publicación de @{4}"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Promoveu a publicación de @{5}"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2276,12 +2276,12 @@ msgstr "Denunciar publicación…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Retirou a promoción da publicación de @{6}"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Promoveu a publicación de @{7}"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2566,7 +2566,7 @@ msgstr "Mostrando publicacións etiquetadas con #{0}"
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:415
 msgid "Showing posts in {1}"
-msgstr ""
+msgstr "Mostrando as publicacións de {1}"
 
 #: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
@@ -2785,7 +2785,7 @@ msgstr "Retirar Ponte ao Día {0}"
 #. placeholder {1}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {1} removed"
-msgstr ""
+msgstr "Eliminouse o Ponte ao Día {1}"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3376,7 +3376,7 @@ msgstr "Permitir"
 #. placeholder {1}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "A partir de agora non se mostrarán as notificacións de @{1} nas Notificacións filtradas."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3551,7 +3551,7 @@ msgstr "Tradución das publicacións"
 
 #: src/pages/settings.jsx:389
 msgid "Translate to "
-msgstr ""
+msgstr "Traducir ao "
 
 #: src/pages/settings.jsx:400
 msgid "System language ({systemTargetLanguageText})"
@@ -3777,7 +3777,7 @@ msgstr "Non se puido cambiar"
 #. placeholder {1}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({1})"
-msgstr ""
+msgstr "Cambiar á instancia ({1}) da publicación"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

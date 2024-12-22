@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 23:15\n"
+"PO-Revision-Date: 2024-12-22 12:38\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -777,13 +777,13 @@ msgstr "Dosiergrandeco estas tro granda. Alŝuto eble renkontos problemojn. Prov
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2424
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Dimensio estas tro granda. Alŝuto eble renkontos problemojn. Provu redukti dimension de {2}x{3}px al {4}x{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2432
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "Dosiergrandeco estas tro granda. Alŝuto eble renkontos problemojn. Provu redukti la dosiergrandecon de {6} al {7} ​​aŭ malpli."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
@@ -791,7 +791,7 @@ msgstr ""
 #. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2444
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "Dimensio estas tro granda. Alŝuto eble renkontos problemojn. Provu redukti dimension de {8}x{9}px al {10}x{11}px."
 
 #: src/components/compose.jsx:2452
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -830,7 +830,7 @@ msgstr "Kreante priskribon. Bonvolu atendi…"
 #. placeholder {12}: e.message
 #: src/components/compose.jsx:2621
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "Malsukcesis krei priskribon: {12}"
 
 #: src/components/compose.jsx:2622
 msgid "Failed to generate description"
@@ -845,7 +845,7 @@ msgstr "Krei priskribon…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2673
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Malsukcesis krei priskribon{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2688
@@ -859,7 +859,7 @@ msgstr "Farite"
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2743
 msgid "Choice {0}"
-msgstr ""
+msgstr "Elekti {0}"
 
 #: src/components/compose.jsx:2790
 msgid "Multiple choices"
@@ -913,7 +913,7 @@ msgstr "Serĉi GIF-movbildojn"
 
 #: src/components/compose.jsx:3491
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Funkciigita de GIPHY"
 
 #: src/components/compose.jsx:3499
 msgid "Type to search GIFs"
@@ -2129,12 +2129,12 @@ msgstr "Ŝatis la afiŝon de @{1}"
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Ne plu legosignita la afiŝon de @{2}"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Legosignita la afiŝon de @{3}"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999

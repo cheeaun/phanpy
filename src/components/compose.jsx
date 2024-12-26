@@ -1840,8 +1840,13 @@ const Textarea = forwardRef((props, ref) => {
 
   const textExpanderRef = useRef();
   const textExpanderTextRef = useRef('');
+  const hasTextExpanderRef = useRef(false);
   useEffect(() => {
-    let handleChange, handleValue, handleCommited;
+    let handleChange,
+      handleValue,
+      handleCommited,
+      handleActivate,
+      handleDeactivate;
     if (textExpanderRef.current) {
       handleChange = (e) => {
         // console.log('text-expander-change', e);
@@ -2022,6 +2027,24 @@ const Textarea = forwardRef((props, ref) => {
         'text-expander-committed',
         handleCommited,
       );
+
+      handleActivate = () => {
+        hasTextExpanderRef.current = true;
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-activate',
+        handleActivate,
+      );
+
+      handleDeactivate = () => {
+        hasTextExpanderRef.current = false;
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-deactivate',
+        handleDeactivate,
+      );
     }
 
     return () => {
@@ -2037,6 +2060,14 @@ const Textarea = forwardRef((props, ref) => {
         textExpanderRef.current.removeEventListener(
           'text-expander-committed',
           handleCommited,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-activate',
+          handleActivate,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-deactivate',
+          handleDeactivate,
         );
       }
     };
@@ -2127,7 +2158,8 @@ const Textarea = forwardRef((props, ref) => {
         onKeyDown={(e) => {
           // Get line before cursor position after pressing 'Enter'
           const { key, target } = e;
-          if (key === 'Enter' && !(e.ctrlKey || e.metaKey)) {
+          const hasTextExpander = hasTextExpanderRef.current;
+          if (key === 'Enter' && !(e.ctrlKey || e.metaKey || hasTextExpander)) {
             try {
               const { value, selectionStart } = target;
               const textBeforeCursor = value.slice(0, selectionStart);

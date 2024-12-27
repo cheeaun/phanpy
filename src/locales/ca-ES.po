@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 12:46\n"
+"PO-Revision-Date: 2024-12-27 18:00\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -113,7 +113,7 @@ msgstr "Publicacions"
 
 #: src/components/account-info.jsx:429
 #: src/components/account-info.jsx:1120
-#: src/components/compose.jsx:2592
+#: src/components/compose.jsx:2624
 #: src/components/media-alt-modal.jsx:46
 #: src/components/media-modal.jsx:358
 #: src/components/status.jsx:1737
@@ -241,7 +241,7 @@ msgstr "Usuaris blocats"
 
 #: src/components/account-info.jsx:1096
 msgid "Private note"
-msgstr ""
+msgstr "Nota privada"
 
 #: src/components/account-info.jsx:1153
 msgid "Mention <0>@{username}</0>"
@@ -253,43 +253,43 @@ msgstr "Tradueix la biografia"
 
 #: src/components/account-info.jsx:1176
 msgid "Edit private note"
-msgstr ""
+msgstr "Edita una nota privada"
 
 #: src/components/account-info.jsx:1176
 msgid "Add private note"
-msgstr ""
+msgstr "Afegiu una nota privada"
 
 #: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "S'han activat les notificacions per a les publicacions de @{username}."
 
 #: src/components/account-info.jsx:1197
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr " S'han desactivat les notificacions per a les publicacions de @{username}."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
-msgstr ""
+msgstr "Desactiva les notificacions"
 
 #: src/components/account-info.jsx:1210
 msgid "Enable notifications"
-msgstr ""
+msgstr "Activa les notificacions"
 
 #: src/components/account-info.jsx:1227
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Impulsos de @{username} permesos."
 
 #: src/components/account-info.jsx:1228
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Impulsos de @{username} inhabilitats."
 
 #: src/components/account-info.jsx:1239
 msgid "Disable boosts"
-msgstr ""
+msgstr "Desactiva els impulsos"
 
 #: src/components/account-info.jsx:1239
 msgid "Enable boosts"
-msgstr ""
+msgstr "Activa els impulsos"
 
 #: src/components/account-info.jsx:1255
 #: src/components/account-info.jsx:1265
@@ -327,7 +327,7 @@ msgstr "Comparteix…"
 
 #: src/components/account-info.jsx:1354
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "@{username} s'ha deixat de silenciar"
 
 #: src/components/account-info.jsx:1366
 msgid "Unmute <0>@{username}</0>"
@@ -340,11 +340,11 @@ msgstr "Silencia a <0>@{username}</0>…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1414
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "@{username} silenciat durant {0}"
 
 #: src/components/account-info.jsx:1426
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "No ha estat possible silenciar @{username}"
 
 #: src/components/account-info.jsx:1447
 msgid "Remove <0>@{username}</0> from followers?"
@@ -352,7 +352,7 @@ msgstr "Voleu suprimir a <0>@{username}</0> dels seguidors?"
 
 #: src/components/account-info.jsx:1467
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "S'ha eliminat @{username} de la llista de seguidors"
 
 #: src/components/account-info.jsx:1479
 msgid "Remove follower…"
@@ -364,19 +364,19 @@ msgstr "Voleu blocar a <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1514
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "S'ha desblocat a @{username}"
 
 #: src/components/account-info.jsx:1522
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "S'ha blocat a @{username}"
 
 #: src/components/account-info.jsx:1530
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "No ha estat possible desblocar @{username}"
 
 #: src/components/account-info.jsx:1532
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "No ha estat possible blocar @{username}"
 
 #: src/components/account-info.jsx:1542
 msgid "Unblock <0>@{username}</0>"
@@ -397,12 +397,12 @@ msgstr "Edita el perfil"
 
 #: src/components/account-info.jsx:1624
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Voleu retirar la sol·licitud de seguiment?"
 
 #. placeholder {1}: info.acct || info.username
 #: src/components/account-info.jsx:1625
 msgid "Unfollow @{1}?"
-msgstr ""
+msgstr "Voleu deixar de seguir @{1}?"
 
 #: src/components/account-info.jsx:1676
 msgid "Unfollow…"
@@ -424,10 +424,10 @@ msgstr "Segueix"
 #: src/components/account-info.jsx:2098
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:859
-#: src/components/compose.jsx:2548
-#: src/components/compose.jsx:3022
-#: src/components/compose.jsx:3231
-#: src/components/compose.jsx:3461
+#: src/components/compose.jsx:2580
+#: src/components/compose.jsx:3054
+#: src/components/compose.jsx:3263
+#: src/components/compose.jsx:3493
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:143
@@ -459,11 +459,11 @@ msgstr "Biografia traduïda"
 
 #: src/components/account-info.jsx:1908
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "No s'ha pogut eliminar de la llista."
 
 #: src/components/account-info.jsx:1909
 msgid "Unable to add to list."
-msgstr ""
+msgstr "No s'ha pogut afegir a la llista."
 
 #: src/components/account-info.jsx:1928
 #: src/pages/lists.jsx:105
@@ -487,7 +487,7 @@ msgstr "Nota privada sobre <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2032
 msgid "Unable to update private note."
-msgstr ""
+msgstr "No ha estat possible actualitzar la nota privada."
 
 #: src/components/account-info.jsx:2055
 #: src/components/account-info.jsx:2226
@@ -500,7 +500,7 @@ msgstr "Desa i tanca"
 
 #: src/components/account-info.jsx:2154
 msgid "Unable to update profile."
-msgstr ""
+msgstr "No ha estat possible actualitzar el perfil."
 
 #: src/components/account-info.jsx:2161
 #: src/components/list-add-edit.jsx:105
@@ -711,7 +711,7 @@ msgid "Mark media as sensitive"
 msgstr "Marca els mitjans com a sensibles"
 
 #: src/components/compose.jsx:1381
-#: src/components/compose.jsx:3080
+#: src/components/compose.jsx:3112
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
@@ -743,31 +743,31 @@ msgstr "S'està baixant el GIF…"
 msgid "Failed to download GIF"
 msgstr "Ha fallat la descàrrega del GIF"
 
-#: src/components/compose.jsx:1879
-#: src/components/compose.jsx:1956
+#: src/components/compose.jsx:1884
+#: src/components/compose.jsx:1961
 #: src/components/nav-menu.jsx:239
 msgid "More…"
 msgstr "Més…"
 
-#: src/components/compose.jsx:2361
+#: src/components/compose.jsx:2393
 msgid "Uploaded"
 msgstr "Pujat"
 
-#: src/components/compose.jsx:2374
+#: src/components/compose.jsx:2406
 msgid "Image description"
 msgstr "Descripció de la imatge"
 
-#: src/components/compose.jsx:2375
+#: src/components/compose.jsx:2407
 msgid "Video description"
 msgstr "Descripció del vídeo"
 
-#: src/components/compose.jsx:2376
+#: src/components/compose.jsx:2408
 msgid "Audio description"
 msgstr "Descripció de l'àudio"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
-#: src/components/compose.jsx:2412
+#: src/components/compose.jsx:2444
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la mida del fitxer de {0} a {1} o inferior."
 
@@ -775,163 +775,163 @@ msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Prov
 #. placeholder {3}: i18n.number(height)
 #. placeholder {4}: i18n.number(newWidth)
 #. placeholder {5}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2424
+#: src/components/compose.jsx:2456
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "La resolució del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la resolució de {2}×{3}px a {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2432
+#: src/components/compose.jsx:2464
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
+msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la mida del fitxer de {6} a {7} o inferior."
 
 #. placeholder {8}: i18n.number( width, )
 #. placeholder {9}: i18n.number(height)
 #. placeholder {10}: i18n.number(newWidth)
 #. placeholder {11}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2476
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
-msgstr ""
+msgstr "La resolució del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la resolució de {8}×{9}px a {10}×{11}px."
 
-#: src/components/compose.jsx:2452
+#: src/components/compose.jsx:2484
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "La velocitat de fotogrames és massa alta. La càrrega pot tenir problemes."
 
-#: src/components/compose.jsx:2512
-#: src/components/compose.jsx:2762
+#: src/components/compose.jsx:2544
+#: src/components/compose.jsx:2794
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Suprimeix"
 
-#: src/components/compose.jsx:2529
+#: src/components/compose.jsx:2561
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Error"
 
-#: src/components/compose.jsx:2554
+#: src/components/compose.jsx:2586
 msgid "Edit image description"
 msgstr "Edita la descripció de la imatge"
 
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2587
 msgid "Edit video description"
 msgstr "Edita la descripció del vídeo"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2588
 msgid "Edit audio description"
 msgstr "Edita la descripció de l'àudio"
 
-#: src/components/compose.jsx:2601
-#: src/components/compose.jsx:2650
+#: src/components/compose.jsx:2633
+#: src/components/compose.jsx:2682
 msgid "Generating description. Please wait…"
 msgstr "Generant descripció. Si us plau, espereu…"
 
 #. placeholder {12}: e.message
-#: src/components/compose.jsx:2621
+#: src/components/compose.jsx:2653
 msgid "Failed to generate description: {12}"
-msgstr ""
+msgstr "No s'ha pogut generar la descripció: {12}"
 
-#: src/components/compose.jsx:2622
+#: src/components/compose.jsx:2654
 msgid "Failed to generate description"
 msgstr "No s'ha pogut generar la descripció"
 
-#: src/components/compose.jsx:2634
-#: src/components/compose.jsx:2640
-#: src/components/compose.jsx:2686
+#: src/components/compose.jsx:2666
+#: src/components/compose.jsx:2672
+#: src/components/compose.jsx:2718
 msgid "Generate description…"
 msgstr "Genera una descripció…"
 
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2673
+#: src/components/compose.jsx:2705
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "No s'ha pogut generar la descripció{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2688
+#: src/components/compose.jsx:2720
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— experimental</0>"
 
-#: src/components/compose.jsx:2707
+#: src/components/compose.jsx:2739
 msgid "Done"
 msgstr "Fet"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2743
+#: src/components/compose.jsx:2775
 msgid "Choice {0}"
-msgstr ""
+msgstr "Opció {0}"
 
-#: src/components/compose.jsx:2790
+#: src/components/compose.jsx:2822
 msgid "Multiple choices"
 msgstr "Opció múltiple"
 
-#: src/components/compose.jsx:2793
+#: src/components/compose.jsx:2825
 msgid "Duration"
 msgstr "Durada"
 
-#: src/components/compose.jsx:2824
+#: src/components/compose.jsx:2856
 msgid "Remove poll"
 msgstr "Elimina l'enquesta"
 
-#: src/components/compose.jsx:3039
+#: src/components/compose.jsx:3071
 msgid "Search accounts"
-msgstr ""
+msgstr "Cerca comptes"
 
-#: src/components/compose.jsx:3093
+#: src/components/compose.jsx:3125
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
 msgstr "S'ha produït un error en carregar els comptes"
 
-#: src/components/compose.jsx:3237
+#: src/components/compose.jsx:3269
 msgid "Custom emojis"
 msgstr "Emojis personalitzats"
 
-#: src/components/compose.jsx:3257
+#: src/components/compose.jsx:3289
 msgid "Search emoji"
-msgstr ""
+msgstr "Cerca un emoji"
 
-#: src/components/compose.jsx:3288
+#: src/components/compose.jsx:3320
 msgid "Error loading custom emojis"
 msgstr "S'ha produït un error en carregar els emojis personalitzats"
 
-#: src/components/compose.jsx:3299
+#: src/components/compose.jsx:3331
 msgid "Recently used"
-msgstr ""
+msgstr "Usats recentment"
 
-#: src/components/compose.jsx:3300
+#: src/components/compose.jsx:3332
 msgid "Others"
-msgstr ""
+msgstr "Altres"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3338
+#: src/components/compose.jsx:3370
 msgid "{0} more…"
 msgstr "{0} més…"
 
-#: src/components/compose.jsx:3476
+#: src/components/compose.jsx:3508
 msgid "Search GIFs"
-msgstr ""
+msgstr "Cerca GIF"
 
-#: src/components/compose.jsx:3491
+#: src/components/compose.jsx:3523
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Desenvolupat per GIPHY"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3531
 msgid "Type to search GIFs"
 msgstr "Escriviu per cercar un GIF"
 
-#: src/components/compose.jsx:3597
+#: src/components/compose.jsx:3629
 #: src/components/media-modal.jsx:462
 #: src/components/timeline.jsx:893
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/components/compose.jsx:3615
+#: src/components/compose.jsx:3647
 #: src/components/media-modal.jsx:481
 #: src/components/timeline.jsx:910
 msgid "Next"
 msgstr "Següent"
 
-#: src/components/compose.jsx:3632
+#: src/components/compose.jsx:3664
 msgid "Error loading GIFs"
 msgstr "S'ha produït un error en carregar els GIF"
 
@@ -2125,17 +2125,17 @@ msgstr "La publicació de @{0} s'ha eliminat dels favorits"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "La publicació de @{1} s'ha afegit als favorits"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "La publicació de @{2} s'ha eliminat dels marcadors"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "La publicació de @{3} s'ha afegit als marcadors"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -2162,12 +2162,12 @@ msgstr "Publicacions antigues (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "S'ha eliminat l'impuls de la publicació de @{4}"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Heu impulsat la publicació de @{5}"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2277,12 +2277,12 @@ msgstr "Denuncia la publicació…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "S'ha eliminat l'impuls de la publicació de @{6}"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Heu impulsat la publicació de @{7}"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2567,7 +2567,7 @@ msgstr "Es mostren les publicacions etiquetades amb #{0}"
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:415
 msgid "Showing posts in {1}"
-msgstr ""
+msgstr "Es mostren publicacions a {1}"
 
 #: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
@@ -2786,7 +2786,7 @@ msgstr "S'està eliminant la Posada al dia {0}"
 #. placeholder {1}: pc.id
 #: src/pages/catchup.jsx:1069
 msgid "Catch-up {1} removed"
-msgstr ""
+msgstr "S'ha eliminat la Posada al dia {1}"
 
 #: src/pages/catchup.jsx:1083
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3377,7 +3377,7 @@ msgstr "Permet"
 #. placeholder {1}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Les notificacions de @{1} no es mostraran a les Notificacions filtrades a partir d'ara."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3553,7 +3553,7 @@ msgstr "Traducció de les publicacions"
 
 #: src/pages/settings.jsx:389
 msgid "Translate to "
-msgstr ""
+msgstr "Tradueix a "
 
 #: src/pages/settings.jsx:400
 msgid "System language ({systemTargetLanguageText})"
@@ -3779,7 +3779,7 @@ msgstr "No s'ha pogut canviar"
 #. placeholder {1}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({1})"
-msgstr ""
+msgstr "Canvia a la instància de la publicació ({1})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

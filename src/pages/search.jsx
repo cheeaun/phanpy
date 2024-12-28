@@ -1,7 +1,7 @@
 import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -31,6 +31,7 @@ const scrollIntoViewOptions = {
 };
 
 function Search({ columnMode, ...props }) {
+  const { t } = useLingui();
   const params = columnMode ? {} : useParams();
   const { masto, instance, authenticated } = api({
     instance: params.instance,

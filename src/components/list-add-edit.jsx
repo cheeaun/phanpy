@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
@@ -9,6 +9,7 @@ import Icon from './icon';
 import MenuConfirm from './menu-confirm';
 
 function ListAddEdit({ list, onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const editMode = !!list;

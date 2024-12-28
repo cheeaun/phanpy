@@ -180,8 +180,11 @@
     color: var(--text-color);
     background-color: var(--bg-faded-color);
     border: 1px dashed var(--link-color);
-    box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-      0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+    box-shadow:
+      0 0 0 1px var(--bg-color),
+      0 -5px 10px var(--bg-color),
+      0 -5px 15px var(--bg-color),
+      0 -5px 20px var(--bg-color);
     padding: 0.5em 0.75em;
     border-radius: 10em;
     font-size: 90%;
@@ -682,7 +685,8 @@
       .spoiler-media-button
     ),
   ~ .card .meta-container {
-    img {
+    img,
+    video {
       filter: invert(0.5);
       background-color: black;
     }
@@ -851,8 +855,11 @@
   border-radius: 10em;
   font-size: 90%;
   white-space: nowrap;
-  box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-    0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+  box-shadow:
+    0 0 0 1px var(--bg-color),
+    0 -5px 10px var(--bg-color),
+    0 -5px 15px var(--bg-color),
+    0 -5px 20px var(--bg-color);
   transition: transform 0.5s ease-in-out;
 }
 .timeline-deck .status .content.truncated:hover:after {
@@ -2298,7 +2305,8 @@ a.card:is(:hover, :focus):visited {
 
       &,
       & .szh-menu__item {
-        box-shadow: inset 0 -2px 0 var(--checked-color),
+        box-shadow:
+          inset 0 -2px 0 var(--checked-color),
           inset 0 -16px 8px -16px var(--checked-color);
       }
       &:has(.szh-menu__item) {
@@ -2357,7 +2365,9 @@ a.card:is(:hover, :focus):visited {
   pointer-events: none;
   transform: translate3d(0, 6px, 0);
   transform-origin: var(--forward) center;
-  transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
+  transition:
+    all 0.15s ease-out 0.3s,
+    border-color 0.3s ease-out;
 
   .timeline.contextual .replies[data-comments-level='4'] & {
     top: 0;
@@ -2623,7 +2633,8 @@ a.card:is(:hover, :focus):visited {
     font-size: 0.9em;
     border: 2px dashed var(--link-light-color);
     border-radius: 8px;
-    box-shadow: 0 4px 8px -4px var(--drop-shadow-color),
+    box-shadow:
+      0 4px 8px -4px var(--drop-shadow-color),
       0 8px 32px -8px var(--drop-shadow-color);
     padding: 16px;
 
@@ -2731,8 +2742,11 @@ a.card:is(:hover, :focus):visited {
         color: var(--text-color);
         background-color: var(--bg-faded-color);
         border: 1px dashed var(--link-color);
-        box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-          0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+        box-shadow:
+          0 0 0 1px var(--bg-color),
+          0 -5px 10px var(--bg-color),
+          0 -5px 15px var(--bg-color),
+          0 -5px 20px var(--bg-color);
         padding: 0.5em 0.75em;
         border-radius: 10em;
         font-size: 90%;

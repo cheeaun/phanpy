@@ -1,8 +1,8 @@
 import './compose.css';
 import '@github/text-expander-element';
 
-import { msg, plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import Fuse from 'fuse.js';
@@ -217,7 +217,7 @@ function Compose({
   standalone,
   hasOpener,
 }) {
-  const { i18n, _ } = useLingui();
+  const { i18n, _, t } = useLingui();
   const rtf = RTF(i18n.locale);
   const lf = LF(i18n.locale);
 
@@ -1813,6 +1813,7 @@ const detectLangs = async (text) => {
 };
 
 const Textarea = forwardRef((props, ref) => {
+  const { t } = useLingui();
   const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
   const {
@@ -1839,8 +1840,13 @@ const Textarea = forwardRef((props, ref) => {
 
   const textExpanderRef = useRef();
   const textExpanderTextRef = useRef('');
+  const hasTextExpanderRef = useRef(false);
   useEffect(() => {
-    let handleChange, handleValue, handleCommited;
+    let handleChange,
+      handleValue,
+      handleCommited,
+      handleActivate,
+      handleDeactivate;
     if (textExpanderRef.current) {
       handleChange = (e) => {
         // console.log('text-expander-change', e);
@@ -2021,6 +2027,24 @@ const Textarea = forwardRef((props, ref) => {
         'text-expander-committed',
         handleCommited,
       );
+
+      handleActivate = () => {
+        hasTextExpanderRef.current = true;
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-activate',
+        handleActivate,
+      );
+
+      handleDeactivate = () => {
+        hasTextExpanderRef.current = false;
+      };
+
+      textExpanderRef.current.addEventListener(
+        'text-expander-deactivate',
+        handleDeactivate,
+      );
     }
 
     return () => {
@@ -2036,6 +2060,14 @@ const Textarea = forwardRef((props, ref) => {
         textExpanderRef.current.removeEventListener(
           'text-expander-committed',
           handleCommited,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-activate',
+          handleActivate,
+        );
+        textExpanderRef.current.removeEventListener(
+          'text-expander-deactivate',
+          handleDeactivate,
         );
       }
     };
@@ -2126,7 +2158,8 @@ const Textarea = forwardRef((props, ref) => {
         onKeyDown={(e) => {
           // Get line before cursor position after pressing 'Enter'
           const { key, target } = e;
-          if (key === 'Enter' && !(e.ctrlKey || e.metaKey)) {
+          const hasTextExpander = hasTextExpanderRef.current;
+          if (key === 'Enter' && !(e.ctrlKey || e.metaKey || hasTextExpander)) {
             try {
               const { value, selectionStart } = target;
               const textBeforeCursor = value.slice(0, selectionStart);
@@ -2244,7 +2277,7 @@ function MediaAttachment({
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const supportsEdit = supports('@mastodon/edit-media-attributes');
   const { type, id, file } = attachment;
@@ -2725,7 +2758,7 @@ function Poll({
   minExpiration,
   maxCharactersPerOption,
 }) {
-  const { _ } = useLingui();
+  const { t } = useLingui();
   const { options, expiresIn, multiple } = poll;
 
   return (
@@ -2880,6 +2913,7 @@ function MentionModal({
   onSelect = () => {},
   defaultSearchTerm,
 }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [accounts, setAccounts] = useState([]);
@@ -3104,6 +3138,7 @@ function CustomEmojisModal({
   onSelect = () => {},
   defaultSearchTerm,
 }) {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
   const [customEmojis, setCustomEmojis] = useState([]);
@@ -3399,7 +3434,7 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
 
 const GIFS_PER_PAGE = 20;
 function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [results, setResults] = useState([]);
   const formRef = useRef(null);

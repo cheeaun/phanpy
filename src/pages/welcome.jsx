@@ -1,6 +1,6 @@
 import './welcome.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
 import groupedNotificationsUrl from '../assets/features/grouped-notifications.jpg';
@@ -31,6 +31,7 @@ const appVersion = __BUILD_TIME__
   : null;
 
 function Welcome() {
+  const { t } = useLingui();
   useTitle(null, ['/', '/welcome']);
   return (
     <main id="welcome">

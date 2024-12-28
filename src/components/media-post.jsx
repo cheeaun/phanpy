@@ -1,6 +1,6 @@
 import './media-post.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useContext, useMemo } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
@@ -22,6 +22,7 @@ function MediaPost({
   // allowFilters,
   onMediaClick,
 }) {
+  const { t } = useLingui();
   let sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {

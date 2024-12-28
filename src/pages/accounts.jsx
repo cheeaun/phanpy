@@ -1,7 +1,7 @@
 import './accounts.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer } from 'preact/hooks';
 
@@ -20,6 +20,7 @@ import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
 function Accounts({ onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   // Accounts
   const accounts = store.local.getJSON('accounts');

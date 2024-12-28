@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -23,6 +23,7 @@ const scrollIntoViewOptions = {
 };
 
 function Columns() {
+  const { t } = useLingui();
   useTitle(t`Home`, '/');
   const snapStates = useSnapshot(states);
   const { shortcuts } = snapStates;

@@ -1,6 +1,6 @@
 import './generic-accounts.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useSnapshot } from 'valtio';
@@ -21,8 +21,9 @@ export default function GenericAccounts({
   excludeRelationshipAttrs = [],
   postID,
   onClose = () => {},
-  blankCopy = t`Nothing to show`,
+  blankCopy,
 }) {
+  const { t } = useLingui();
   const { masto, instance: currentInstance } = api();
   const isCurrentInstance = instance ? instance === currentInstance : true;
   const snapStates = useSnapshot(states);
@@ -227,7 +228,9 @@ export default function GenericAccounts({
             <Trans>Error loading accounts</Trans>
           </p>
         ) : (
-          <p class="ui-state insignificant">{blankCopy}</p>
+          <p class="ui-state insignificant">
+            {blankCopy || t`Nothing to show`}
+          </p>
         )}
       </main>
     </div>

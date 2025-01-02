@@ -1,7 +1,7 @@
 import './report-modal.css';
 
-import { msg, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { useMemo, useRef, useState } from 'preact/hooks';
 
@@ -46,7 +46,7 @@ const CATEGORIES_INFO = {
 };
 
 function ReportModal({ account, post, onClose }) {
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [username, domain] = account.acct.split('@');

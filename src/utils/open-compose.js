@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 
 export default function openCompose(opts) {
   const url = URL.parse('/compose/', window.location);

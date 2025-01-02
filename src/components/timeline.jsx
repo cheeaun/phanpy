@@ -1,4 +1,5 @@
-import { plural, t, Trans } from '@lingui/macro';
+import { plural } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import {
   useCallback,
@@ -60,6 +61,7 @@ function Timeline({
   showReplyParent,
   clearWhenRefresh,
 }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('start');
@@ -573,6 +575,7 @@ const TimelineItem = memo(
     showReplyParent,
     mediaFirst,
   }) => {
+    const { t } = useLingui();
     console.debug('RENDER TimelineItem', status.id);
     const { id: statusID, reblog, items, type, _pinned } = status;
     if (_pinned) useItemID = false;
@@ -836,6 +839,7 @@ const TimelineItem = memo(
 );
 
 function StatusCarousel({ title, class: className, children }) {
+  const { t } = useLingui();
   const carouselRef = useRef();
   // const { reachStart, reachEnd, init } = useScroll({
   //   scrollableRef: carouselRef,
@@ -929,6 +933,7 @@ function StatusCarousel({ title, class: className, children }) {
 }
 
 function TimelineStatusCompact({ status, instance, filterContext }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);

@@ -1,6 +1,6 @@
 import './account-block.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
@@ -28,6 +28,7 @@ function AccountBlock({
   relationship = {},
   excludeRelationshipAttrs = [],
 }) {
+  const { t } = useLingui();
   if (skeleton) {
     return (
       <div class="account-block skeleton">

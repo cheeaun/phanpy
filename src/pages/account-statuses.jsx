@@ -1,5 +1,4 @@
-import { t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -51,6 +50,7 @@ async function _isSearchEnabled(instance) {
 const isSearchEnabled = pmem(_isSearchEnabled);
 
 function AccountStatuses() {
+  const { i18n, t } = useLingui();
   const snapStates = useSnapshot(states);
   const { id, ...params } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -229,7 +229,6 @@ function AccountStatuses() {
   }
 
   const [featuredTags, setFeaturedTags] = useState([]);
-  const { i18n } = useLingui();
   let title = t`Account posts`;
   if (account?.acct) {
     const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;

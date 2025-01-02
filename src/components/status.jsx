@@ -466,7 +466,7 @@ function Status({
         <FilteredStatus
           status={status}
           filterInfo={{
-            titlesStr: "Thread muted"
+            titlesStr: t`Thread muted`
           }}
           instance={instance}
           containerProps={{
@@ -494,9 +494,6 @@ function Status({
         />
       );
     }
-  }
-  
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
   }
 
   const createdAtDate = new Date(createdAt);

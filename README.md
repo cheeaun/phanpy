@@ -97,7 +97,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Development
 
-Prerequisites: Node.js 18+
+Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
 - `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel

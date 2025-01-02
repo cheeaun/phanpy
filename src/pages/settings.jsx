@@ -680,6 +680,31 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
+            <li class="block">
+              <div class="sub-section">
+                <label>
+                  <Trans>
+                    Regex mutes
+                  </Trans>
+                </label>
+              </div>
+              <div class="sub-section">
+                <textarea
+                  value={snapStates.settings.regexFilter}
+                  onChange={(e) => {
+                    // FIXME: Probably inefficient
+                    states.settings.regexFilter = e.target.value;
+                  }}
+                />
+              </div>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>
+                    Mute posts matching these regular expressions. One per line. Make sure that the final regular expression is terminated by a newline character, or it won't be parsed!
+                  </Trans>
+                </small>
+              </div>
+            </li>
             {authenticated && (
               <li>
                 <button

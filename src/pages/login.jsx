@@ -30,10 +30,12 @@ function Login() {
   const [uiState, setUIState] = useState('default');
   const [searchParams] = useSearchParams();
   const instance = searchParams.get('instance');
+  const isWebDomainParam = searchParams.get('is_web_domain');
   const submit = searchParams.get('submit');
   const [instanceText, setInstanceText] = useState(
     instance || cachedInstanceURL?.toLowerCase() || '',
   );
+  const [isWebDomain, setIsWebDomain] = useState(isWebDomainParam || false);
 
   const [instancesList, setInstancesList] = useState([]);
   const searcher = useRef();
@@ -63,24 +65,28 @@ function Login() {
     (async () => {
       // WEB_DOMAIN vs LOCAL_DOMAIN negotiation time
       // https://docs.joinmastodon.org/admin/config/#web_domain
-      try {
-        const res = await fetch(`https://${instanceURL}/.well-known/host-meta`); // returns XML
-        const text = await res.text();
-        // Parse XML
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(text, 'text/xml');
-        // Get Link[template]
-        const link = xmlDoc.getElementsByTagName('Link')[0];
-        const template = link.getAttribute('template');
-        const url = URL.parse(template);
-        const { host } = url; // host includes the port
-        if (instanceURL !== host) {
-          console.log(`💫 ${instanceURL} -> ${host}`);
-          instanceURL = host;
+      if (!isWebDomain) {
+        try {
+          const res = await fetch(
+            `https://${instanceURL}/.well-known/host-meta`,
+          ); // returns XML
+          const text = await res.text();
+          // Parse XML
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(text, 'text/xml');
+          // Get Link[template]
+          const link = xmlDoc.getElementsByTagName('Link')[0];
+          const template = link.getAttribute('template');
+          const url = URL.parse(template);
+          const { host } = url; // host includes the port
+          if (instanceURL !== host) {
+            console.log(`💫 ${instanceURL} -> ${host}`);
+            instanceURL = host;
+          }
+        } catch (e) {
+          // Silently fail
+          console.error(e);
         }
-      } catch (e) {
-        // Silently fail
-        console.error(e);
       }
 
       store.local.set('instanceURL', instanceURL);
@@ -256,6 +262,18 @@ function Login() {
               ? t`Continue with ${selectedInstanceText}`
               : t`Continue`}
           </button>{' '}
+        </div>
+        <div id="settings">
+          <label>
+            <input
+              type="checkbox"
+              checked={isWebDomain}
+              onChange={(e) => {
+                setIsWebDomain(e.target.checked);
+              }}
+            />{' '}
+            <Trans>This is the Web Domain used by Mastodon</Trans>
+          </label>
         </div>
         <Loader hidden={uiState !== 'loading'} />
         <hr />

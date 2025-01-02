@@ -57,7 +57,7 @@ function Welcome() {
             <Link
               to={
                 DEFAULT_INSTANCE
-                  ? `/login?instance=${DEFAULT_INSTANCE}&submit=1`
+                  ? `/login?instance=${DEFAULT_INSTANCE}&submit=1&is_web_domain=true`
                   : '/login'
               }
               class="button"

@@ -71,7 +71,7 @@ const states = proxy({
     composerGIFPicker: false,
     cloakMode: false,
     groupedNotificationsAlpha: false,
-    regexFilter: "",
+    regexFilter: '',
   },
 });
 
@@ -108,8 +108,7 @@ export function initStates() {
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
   states.settings.groupedNotificationsAlpha =
     store.account.get('settings-groupedNotificationsAlpha') ?? false;
-  states.settings.regexFilter =
-    store.account.get('settings-regexFilter') ?? "";
+  states.settings.regexFilter = store.account.get('settings-regexFilter') ?? '';
 }
 
 subscribeKey(states, 'notificationsLast', (v) => {

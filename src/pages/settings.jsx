@@ -683,9 +683,7 @@ function Settings({ onClose }) {
             <li class="block">
               <div class="sub-section">
                 <label>
-                  <Trans>
-                    Regex mutes
-                  </Trans>
+                  <Trans>Regex mutes</Trans>
                 </label>
               </div>
               <div class="sub-section">
@@ -700,7 +698,9 @@ function Settings({ onClose }) {
               <div class="sub-section insignificant">
                 <small>
                   <Trans>
-                    Mute posts matching these regular expressions. One per line. Make sure that the final regular expression is terminated by a newline character, or it won't be parsed!
+                    Mute posts matching these regular expressions. One per line.
+                    Make sure that the final regular expression is terminated by
+                    a newline character, or it won't be parsed!
                   </Trans>
                 </small>
               </div>

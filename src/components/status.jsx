@@ -432,8 +432,6 @@ function Status({
   const regexFilters = useMemo(() => regexFilterLines.map(f => new RegExp(f)), [regexFilterLines])
   const regexFilterInfo = useMemo(() => regexFilters.map(f => content.search(f)), [regexFilters])
   const regexFilterTriggered = useMemo(() => regexFilterInfo.findIndex(f => f !== -1), [regexFilterInfo])
-  
-  console.debug("ASDF", "\ntext", regexFilterText, "\nlines", regexFilterLines, "\nregex", regexFilters, "\ninfo", regexFilterInfo, "\ntrigger", regexFilterTriggered)
 
   if (filterInfo?.action === 'hide') {
     return null;
@@ -3587,6 +3585,8 @@ function StatusCompact({ sKey }) {
   const filterInfo = isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') return null;
+  
+  console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
   const filterTitleStr = filterInfo?.titlesStr || '';
 

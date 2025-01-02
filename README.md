@@ -97,7 +97,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Development
 
-Prerequisites: Node.js 18+
+Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
 - `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
@@ -351,6 +351,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16530049/medium/683f3581620c6b4a5c753b416ed695a7.jpeg" alt="" width="16" height="16" /> tferrermo (Spanish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" alt="" width="16" height="16" /> tkbremnes (Norwegian Bokmal)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" alt="" width="16" height="16" /> tux93 (German)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/16791511/medium/321c72613cd27efc3005e7c3bf383578.jpeg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16026914/medium/e3ca187f354a298ef0c9d02a0ed17be7.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)

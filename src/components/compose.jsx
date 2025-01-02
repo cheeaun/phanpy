@@ -1,5 +1,6 @@
 import './compose.css';
 import '@github/text-expander-element';
+
 import { msg, plural, t } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';

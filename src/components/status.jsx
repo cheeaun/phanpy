@@ -345,6 +345,8 @@ function Status({
   if (!status) {
     return null;
   }
+  
+  console.debug("ASDF", status)
 
   const {
     account: {
@@ -393,6 +395,9 @@ function Status({
     // _filtered,
     // Non-Mastodon
     emojiReactions,
+    pleroma: {
+      threadMuted,
+    } = {}
   } = status;
 
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
@@ -428,8 +433,6 @@ function Status({
     return null;
   }
 
-  console.debug('RENDER Status', id, status?.account.displayName, quoted);
-
   const debugHover = (e) => {
     if (e.shiftKey) {
       console.log({
@@ -438,7 +441,7 @@ function Status({
     }
   };
 
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
+  if (/*allowFilters && */ size !== 'l' && (filterInfo || threadMuted)) {
     return (
       <FilteredStatus
         status={status}

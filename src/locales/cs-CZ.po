@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-05 15:28\n"
+"PO-Revision-Date: 2025-01-06 21:33\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -777,7 +777,7 @@ msgstr "Velikost souboru je příliš velká. Při nahrávání mohou vzniknout 
 #. placeholder {5}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2456
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
+msgstr "Rozlišení je příliš velké. Při nahrávání mohou vzniknout problémy. Zkuste zmenšit rozlišení z {2}×{3}px na {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
@@ -2124,17 +2124,17 @@ msgstr "Nelíbí se @{0}"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:791
 msgid "Liked @{1}'s post"
-msgstr ""
+msgstr "Líbí se příspěvek od @{1}"
 
 #. placeholder {2}: username || acct
 #: src/components/status.jsx:830
 msgid "Unbookmarked @{2}'s post"
-msgstr ""
+msgstr "Odebrali jste záložku z příspěvku od @{2}"
 
 #. placeholder {3}: username || acct
 #: src/components/status.jsx:831
 msgid "Bookmarked @{3}'s post"
-msgstr ""
+msgstr "Přidali jste příspěvek od @{3} do záložek"
 
 #: src/components/status.jsx:937
 #: src/components/status.jsx:999
@@ -2161,12 +2161,12 @@ msgstr "Starý příspěvek (<0>{0}</0>)"
 #. placeholder {4}: username || acct
 #: src/components/status.jsx:987
 msgid "Unboosted @{4}'s post"
-msgstr ""
+msgstr "Zrušili jste boostnutí příspěvku od @{4}"
 
 #. placeholder {5}: username || acct
 #: src/components/status.jsx:988
 msgid "Boosted @{5}'s post"
-msgstr ""
+msgstr "Boostnuli jste příspěvek od @{5}"
 
 #: src/components/status.jsx:1000
 msgid "Boost…"
@@ -2276,12 +2276,12 @@ msgstr "Nahlásit příspěvek…"
 #. placeholder {6}: username || acct
 #: src/components/status.jsx:1442
 msgid "Unboosted @{6}'s post"
-msgstr ""
+msgstr "Zrušili jste boostnutí příspěvku od @{6}"
 
 #. placeholder {7}: username || acct
 #: src/components/status.jsx:1443
 msgid "Boosted @{7}'s post"
-msgstr ""
+msgstr "Boostnuli jste příspěvek od @{7}"
 
 #: src/components/status.jsx:1728
 #: src/components/status.jsx:1764
@@ -2343,7 +2343,7 @@ msgstr "Komentáře"
 #. More from [Author]
 #: src/components/status.jsx:2696
 msgid "More from <0/>"
-msgstr ""
+msgstr "Více od <0/>"
 
 #: src/components/status.jsx:2998
 msgid "Edit History"
@@ -2436,7 +2436,7 @@ msgstr "Zkuste to znovu"
 #. placeholder {0}: fItems.length
 #: src/components/timeline.jsx:591
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
-msgstr ""
+msgstr "{0, plural, one {# Boostnutí} other {# Boostnutí}}"
 
 #: src/components/timeline.jsx:596
 msgid "Pinned posts"
@@ -2610,7 +2610,7 @@ msgstr "Přepněte na tento účet"
 
 #: src/pages/accounts.jsx:133
 msgid "Switch in new tab/window"
-msgstr ""
+msgstr "Přepnout v novém panelu/okně"
 
 #: src/pages/accounts.jsx:147
 msgid "View profile…"
@@ -2904,7 +2904,7 @@ msgstr "Filtrováno: {0}"
 
 #: src/pages/favourites.jsx:26
 msgid "No likes yet. Go like something!"
-msgstr ""
+msgstr "Neudělili jste žádné \"líbí se mi\". Označte něco, co se vám líbí!"
 
 #: src/pages/favourites.jsx:27
 msgid "Unable to load likes."
@@ -3007,7 +3007,7 @@ msgstr "Vypršení platnosti"
 
 #: src/pages/filters.jsx:526
 msgid "Filtered post will be…"
-msgstr ""
+msgstr "Filtrovaný příspěvek bude…"
 
 #: src/pages/filters.jsx:536
 msgid "minimized"
@@ -3031,11 +3031,11 @@ msgstr "Vypršelo"
 
 #: src/pages/filters.jsx:611
 msgid "Expiring <0/>"
-msgstr ""
+msgstr "Vyprší <0/>"
 
 #: src/pages/filters.jsx:615
 msgid "Never expires"
-msgstr ""
+msgstr "Nikdy nevyprší"
 
 #. placeholder {0}: followedHashtags.length
 #: src/pages/followed-hashtags.jsx:71
@@ -3061,19 +3061,19 @@ msgstr "Nelze načíst příspěvky."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} (pouze média) na {instance}"
 
 #: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} on {instance}"
-msgstr ""
+msgstr "{hashtagTitle} na {instance}"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle} (Media only)"
-msgstr ""
+msgstr "{hashtagTitle} (pouze média)"
 
 #: src/pages/hashtag.jsx:60
 msgid "{hashtagTitle}"
-msgstr ""
+msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:182
 msgid "No one has posted anything with this tag yet."
@@ -3101,20 +3101,20 @@ msgstr "Sleduji…"
 
 #: src/pages/hashtag.jsx:283
 msgid "Unfeatured on profile"
-msgstr ""
+msgstr "Odebráno z profilu"
 
 #: src/pages/hashtag.jsx:297
 msgid "Unable to unfeature on profile"
-msgstr ""
+msgstr "Nepodařilo se odebrat z profilu"
 
 #: src/pages/hashtag.jsx:306
 #: src/pages/hashtag.jsx:322
 msgid "Featured on profile"
-msgstr ""
+msgstr "Zmíněno v profilu"
 
 #: src/pages/hashtag.jsx:329
 msgid "Feature on profile"
-msgstr ""
+msgstr "Zmínit v profilu"
 
 #: src/pages/hashtag.jsx:394
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
@@ -3134,7 +3134,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:472
 msgid "This shortcut already exists"
-msgstr ""
+msgstr "Tato zkratka již existuje"
 
 #: src/pages/hashtag.jsx:475
 msgid "Hashtag shortcut added"
@@ -3170,11 +3170,11 @@ msgstr "Přejít na moji instanci (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:210
 msgid "Unable to fetch notifications."
-msgstr ""
+msgstr "Nelze načíst oznámení."
 
 #: src/pages/home.jsx:230
 msgid "<0>New</0> <1>Follow Requests</1>"
-msgstr ""
+msgstr "<0>Nové</0> <1>Žádosti o sledování</1>"
 
 #: src/pages/home.jsx:236
 msgid "See all"
@@ -3200,7 +3200,7 @@ msgstr "Spravovat členy"
 #. placeholder {0}: account.username
 #: src/pages/list.jsx:316
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "Odstranit <0>@{0}</0> ze seznamu?"
 
 #: src/pages/list.jsx:362
 msgid "Remove…"
@@ -3213,12 +3213,12 @@ msgstr ""
 
 #: src/pages/lists.jsx:109
 msgid "No lists yet."
-msgstr ""
+msgstr "Nemáte žádné seznamy."
 
 #: src/pages/login.jsx:110
 #: src/pages/login.jsx:123
 msgid "Failed to register application"
-msgstr ""
+msgstr "Nepodařilo se zaregistrovat aplikaci"
 
 #: src/pages/login.jsx:209
 msgid "instance domain"
@@ -3226,7 +3226,7 @@ msgstr ""
 
 #: src/pages/login.jsx:233
 msgid "e.g. “mastodon.social”"
-msgstr ""
+msgstr "např. “mastodon.social”"
 
 #: src/pages/login.jsx:244
 msgid "Failed to log in. Please try again or try another instance."

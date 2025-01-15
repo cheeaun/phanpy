@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-15 11:59\n"
+"PO-Revision-Date: 2025-01-15 16:00\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -25,7 +25,7 @@ msgstr "Bloqueado"
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:142
 msgid "Posts: {0}"
-msgstr "Publicações: {0}"
+msgstr "Postagens: {0}"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:147
@@ -109,7 +109,7 @@ msgstr "A seguir"
 #: src/pages/search.jsx:328
 #: src/pages/search.jsx:475
 msgid "Posts"
-msgstr "Publicações"
+msgstr "Postagens"
 
 #: src/components/account-info.jsx:429
 #: src/components/account-info.jsx:1120
@@ -176,7 +176,7 @@ msgstr "O utilizador deixou privado esta informação."
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:807
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
+msgstr "{0} postagens originais, {1} respostas, {2} impulsos"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.daysSinceLastPost
@@ -187,13 +187,13 @@ msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 #. placeholder {6}: postingStats.daysSinceLastPost
 #: src/components/account-info.jsx:823
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Última publicação no último dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
+msgstr "{0, plural, one {{1, plural, one {Última postagem no último dia} other {Última postagem nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} postagens no último dia} other {Últimas {5} postagens nos últimos {6} dias}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
 #: src/components/account-info.jsx:836
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr "{0, plural, one {Última publicação no(s) ano(s) passado(s)} other {Últimas {1} publicações no(s) ano(s) passado(s)}}"
+msgstr "{0, plural, one {Última postagem no(s) ano(s) passado(s)} other {Últimas {1} postagens no(s) ano(s) passado(s)}}"
 
 #: src/components/account-info.jsx:860
 #: src/pages/catchup.jsx:70
@@ -261,11 +261,11 @@ msgstr "Adicionar nota privada"
 
 #: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
-msgstr "Notificações ativadas para as publicações de @{username}."
+msgstr "Habilitado as notificações para postagens de @{username}."
 
 #: src/components/account-info.jsx:1197
 msgid " Notifications disabled for @{username}'s posts."
-msgstr " Notificações desativadas para as publicações de @{username}."
+msgstr " Desabilitado as notificações de postagens de @{username}."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
@@ -1076,7 +1076,7 @@ msgstr "<0>Shift</0> + <1>k</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:80
 msgid "Load new posts"
-msgstr "Carregar novas publicações"
+msgstr "Ver novas postagens"
 
 #: src/components/keyboard-shortcuts-help.jsx:84
 #: src/pages/catchup.jsx:1676
@@ -1214,7 +1214,7 @@ msgstr "Não mostrar respostas"
 
 #: src/components/list-add-edit.jsx:144
 msgid "Hide posts on this list from Home/Following"
-msgstr "Ocultar publicações nesta lista da página inicial/A seguir"
+msgstr "Ocultar postagens nesta lista da página inicial/A seguir"
 
 #: src/components/list-add-edit.jsx:150
 #: src/pages/filters.jsx:554
@@ -1478,7 +1478,7 @@ msgstr "{account} fez uma publicação."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a sua resposta.} other {{account} impulsionou a sua publicação.}}} other {{account} impulsionou {postsCount} das suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a sua resposta.} other {{account} impulsionou a sua postagem.}}} other {{account} impulsionou {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a sua postagem.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:129
@@ -1493,7 +1493,7 @@ msgstr "{account} pediu para seguir-te."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da sua resposta.} other {{account} gostou de sua publicação.}}} other {{account} gostou de {postsCount} de suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da sua resposta.} other {{account} gostou da sua postagem.}}} other {{account} gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da sua postagens.}}}}"
 
 #: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
@@ -1515,7 +1515,7 @@ msgstr "Uma publicação que interagiste foi editada."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da sua resposta.} other {{account} impulsionou e gostou da sua publicação.}}} other {{account} impulsionou e gostou de {postsCount} de suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou da sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da sua resposta.} other {{account} impulsionou e gostou da sua postagem.}}} other {{account} impulsionou e gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou da sua postagem.}}}}"
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
@@ -1560,15 +1560,15 @@ msgstr "A sua conta foi desativada."
 
 #: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
-msgstr "Algumas das suas publicações foram marcadas como sensível."
+msgstr "Algumas das suas postagens foram marcados como sensíveis."
 
 #: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
-msgstr "Algumas publicações suas foram eliminadas."
+msgstr "Algumas das suas postagens foram eliminadas."
 
 #: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
-msgstr "Agora as suas publicações serão marcadas como sensíveis."
+msgstr "Agora as suas postagens serão marcadas como sensíveis."
 
 #: src/components/notification.jsx:296
 msgid "Your account has been limited."
@@ -1800,7 +1800,7 @@ msgstr "Enviar relato <0>+ Bloquear perfil</0>"
 
 #: src/components/search-form.jsx:203
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr "{query} <0>‒ contas, hashtags e publicações</0>"
+msgstr "{query} <0>‒ contas, hashtags e postagens</0>"
 
 #: src/components/search-form.jsx:216
 msgid "Posts with <0>{query}</0>"
@@ -3071,7 +3071,7 @@ msgstr "{hashtagTitle} em {instance}"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle} (Media only)"
-msgstr "{hashtagTitle} (Apenas media)"
+msgstr "{hashtagTitle} (Somente multimédia)"
 
 #: src/pages/hashtag.jsx:60
 msgid "{hashtagTitle}"
@@ -3574,7 +3574,7 @@ msgstr "Tradução automática"
 
 #: src/pages/settings.jsx:518
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, media ou enquete."
+msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, multimédia ou enquete."
 
 #: src/pages/settings.jsx:538
 msgid "GIF Picker for composer"

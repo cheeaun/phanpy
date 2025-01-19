@@ -313,6 +313,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" alt="" width="16" height="16" /> drydenwu (Chinese Traditional)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13557465/medium/8feebf3677fa80c01e8c54c4fbe097e0_default.png" alt="" width="16" height="16" /> elissarc (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16528627/medium/9036f6eced0257f4e1ea4c5bd499de2d_default.png" alt="" width="16" height="16" /> ElPamplina (Spanish)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/15592209/medium/28f10212dce24e74c25e27ea6d0e9126.png" alt="" width="16" height="16" /> filipesmedeiros (Portuguese)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14277386/medium/29b30d2c73a214000e3941c9978f49e4_default.png" alt="" width="16" height="16" /> Fitik (Esperanto, Hebrew)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14444512/medium/99d0e7a3076deccbdfe0aa0b0612308c.jpeg" alt="" width="16" height="16" /> Freeesia (Japanese)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12617257/medium/7a0122f352a94d95be10780bb83f63ef.jpg" alt="" width="16" height="16" /> ghose (Galician)

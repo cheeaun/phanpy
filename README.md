@@ -97,7 +97,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Development
 
-Prerequisites: Node.js 18+
+Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
 - `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
@@ -313,6 +313,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" alt="" width="16" height="16" /> drydenwu (Chinese Traditional)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13557465/medium/8feebf3677fa80c01e8c54c4fbe097e0_default.png" alt="" width="16" height="16" /> elissarc (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16528627/medium/9036f6eced0257f4e1ea4c5bd499de2d_default.png" alt="" width="16" height="16" /> ElPamplina (Spanish)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/15592209/medium/28f10212dce24e74c25e27ea6d0e9126.png" alt="" width="16" height="16" /> filipesmedeiros (Portuguese)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14277386/medium/29b30d2c73a214000e3941c9978f49e4_default.png" alt="" width="16" height="16" /> Fitik (Esperanto, Hebrew)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14444512/medium/99d0e7a3076deccbdfe0aa0b0612308c.jpeg" alt="" width="16" height="16" /> Freeesia (Japanese)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12617257/medium/7a0122f352a94d95be10780bb83f63ef.jpg" alt="" width="16" height="16" /> ghose (Galician)
@@ -328,6 +329,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
@@ -348,9 +350,11 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16532441/medium/1a47e8d80c95636e02d2260f6e233ca5.png" alt="" width="16" height="16" /> Su5hicz (Czech)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/12579488/medium/699394d1acfe986a31532007534c7656.jpg" alt="" width="16" height="16" /> svetlemodry (Czech)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16530049/medium/683f3581620c6b4a5c753b416ed695a7.jpeg" alt="" width="16" height="16" /> tferrermo (Spanish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" alt="" width="16" height="16" /> tkbremnes (Norwegian Bokmal)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" alt="" width="16" height="16" /> tux93 (German)
+- <img src="https://crowdin-static.downloads.crowdin.com/avatar/16791511/medium/321c72613cd27efc3005e7c3bf383578.jpeg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16026914/medium/e3ca187f354a298ef0c9d02a0ed17be7.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)

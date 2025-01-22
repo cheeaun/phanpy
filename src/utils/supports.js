@@ -25,6 +25,7 @@ const platformFeatures = {
   '@pixelfed/global-feed': containPixelfed,
   '@pleroma/local-visibility-post': containPleroma,
   '@akkoma/local-visibility-post': containAkkoma,
+  '@gotosocial/local-posting': containGTS,
 };
 
 const supportsCache = {};
@@ -43,7 +44,7 @@ function supports(feature) {
     if (supportsCache[key]) return supportsCache[key];
 
     if (platformFeatures[feature]) {
-      return (supportsCache[key] = platformFeatures[feature].test(version));
+      return (supportsCache[key] = platformFeatures[feature].test(softwareName));
     }
 
     const range = features[feature];

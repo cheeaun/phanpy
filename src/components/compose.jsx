@@ -1126,6 +1126,16 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
+                if(supports('@gotosocial/local-posting')) {
+                  if(params.visibility === "local-public") {
+                    params.visibility = "public";
+                    params.local_only = true;
+                  }
+                  if(params.visibility === "local-unlisted") {
+                    params.visibility = "unlisted";
+                    params.local_only = true;
+                  }
+                }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
 
@@ -1237,9 +1247,19 @@ function Compose({
                     <Trans>Local</Trans>
                   </option>
                 )}
+                {(supports('@gotosocial/local-posting')) && (
+                  <option value="local-public">
+                    <Trans>Local Instance Public</Trans>
+                  </option>
+                )}
                 <option value="unlisted">
                   <Trans>Unlisted</Trans>
                 </option>
+                {(supports('@gotosocial/local-posting')) && (
+                  <option value="local-unlisted">
+                    <Trans>Local Instance Unlisted</Trans>
+                  </option>
+                )}
                 <option value="private">
                   <Trans>Followers only</Trans>
                 </option>

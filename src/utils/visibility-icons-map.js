@@ -4,4 +4,6 @@ export default {
   private: 'lock',
   direct: 'message',
   local: 'building',
+  'local-public': 'building',
+  'local-unlisted': 'building'
 };

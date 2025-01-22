@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-21 14:14\n"
+"PO-Revision-Date: 2025-01-22 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -113,7 +113,7 @@ msgstr "bidalketa"
 
 #: src/components/account-info.jsx:429
 #: src/components/account-info.jsx:1120
-#: src/components/compose.jsx:2592
+#: src/components/compose.jsx:2624
 #: src/components/media-alt-modal.jsx:46
 #: src/components/media-modal.jsx:358
 #: src/components/status.jsx:1737
@@ -424,10 +424,10 @@ msgstr "Jarraitu"
 #: src/components/account-info.jsx:2098
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:859
-#: src/components/compose.jsx:2548
-#: src/components/compose.jsx:3022
-#: src/components/compose.jsx:3231
-#: src/components/compose.jsx:3461
+#: src/components/compose.jsx:2580
+#: src/components/compose.jsx:3054
+#: src/components/compose.jsx:3263
+#: src/components/compose.jsx:3493
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:143
@@ -711,7 +711,7 @@ msgid "Mark media as sensitive"
 msgstr "Markatu multimedia hunkigarri gisa"
 
 #: src/components/compose.jsx:1381
-#: src/components/compose.jsx:3080
+#: src/components/compose.jsx:3112
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
@@ -743,31 +743,31 @@ msgstr "GIFa deskargatzen…"
 msgid "Failed to download GIF"
 msgstr "Ezin da GIFa deskargatu"
 
-#: src/components/compose.jsx:1879
-#: src/components/compose.jsx:1956
+#: src/components/compose.jsx:1884
+#: src/components/compose.jsx:1961
 #: src/components/nav-menu.jsx:239
 msgid "More…"
 msgstr "Gehiago…"
 
-#: src/components/compose.jsx:2361
+#: src/components/compose.jsx:2393
 msgid "Uploaded"
 msgstr "Igota"
 
-#: src/components/compose.jsx:2374
+#: src/components/compose.jsx:2406
 msgid "Image description"
 msgstr "Irudiaren deskribapena"
 
-#: src/components/compose.jsx:2375
+#: src/components/compose.jsx:2407
 msgid "Video description"
 msgstr "Bideoaren deskribapena"
 
-#: src/components/compose.jsx:2376
+#: src/components/compose.jsx:2408
 msgid "Audio description"
 msgstr "Audioaren deskribapena"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
-#: src/components/compose.jsx:2412
+#: src/components/compose.jsx:2444
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Fitxategia handiegia da. Igoerak arazoak izan ditzake. Saiatu tamaina {0}tik {1} edo gutxiagora murrizten."
 
@@ -775,13 +775,13 @@ msgstr "Fitxategia handiegia da. Igoerak arazoak izan ditzake. Saiatu tamaina {0
 #. placeholder {3}: i18n.number(height)
 #. placeholder {4}: i18n.number(newWidth)
 #. placeholder {5}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2424
+#: src/components/compose.jsx:2456
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
 msgstr "Neurria handiegia da. Igoerak arazoak izan ditzake. Saiatu neurria {2}×{3}px-etik {4}×{5}px edo gutxiagora murrizten."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2432
+#: src/components/compose.jsx:2464
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
 msgstr "Fitxategia handiegia da. Igoerak arazoak izan ditzake. Saiatu tamaina {6}tik {7} edo gutxiagora murrizten."
 
@@ -789,149 +789,149 @@ msgstr "Fitxategia handiegia da. Igoerak arazoak izan ditzake. Saiatu tamaina {6
 #. placeholder {9}: i18n.number(height)
 #. placeholder {10}: i18n.number(newWidth)
 #. placeholder {11}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2476
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
 msgstr "Neurria handiegia da. Igoerak arazoak izan ditzake. Saiatu neurria {8}×{9}px-etik {10}×{11}px edo gutxiagora murrizten."
 
-#: src/components/compose.jsx:2452
+#: src/components/compose.jsx:2484
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Fotograma-tasa (frame rate) altuegia da. Igoerak arazoak izan ditzake."
 
-#: src/components/compose.jsx:2512
-#: src/components/compose.jsx:2762
+#: src/components/compose.jsx:2544
+#: src/components/compose.jsx:2794
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Kendu"
 
-#: src/components/compose.jsx:2529
+#: src/components/compose.jsx:2561
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Errorea"
 
-#: src/components/compose.jsx:2554
+#: src/components/compose.jsx:2586
 msgid "Edit image description"
 msgstr "Editatu irudiaren deskribapena"
 
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2587
 msgid "Edit video description"
 msgstr "Editatu bideoaren deskribapena"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2588
 msgid "Edit audio description"
 msgstr "Editatu audioaren deskribapena"
 
-#: src/components/compose.jsx:2601
-#: src/components/compose.jsx:2650
+#: src/components/compose.jsx:2633
+#: src/components/compose.jsx:2682
 msgid "Generating description. Please wait…"
 msgstr "Deskribapena sortzen. Itxaron…"
 
 #. placeholder {12}: e.message
-#: src/components/compose.jsx:2621
+#: src/components/compose.jsx:2653
 msgid "Failed to generate description: {12}"
 msgstr "Ezin da deskribapena sortu: {12}"
 
-#: src/components/compose.jsx:2622
+#: src/components/compose.jsx:2654
 msgid "Failed to generate description"
 msgstr "Ezin da deskribapena sortu"
 
-#: src/components/compose.jsx:2634
-#: src/components/compose.jsx:2640
-#: src/components/compose.jsx:2686
+#: src/components/compose.jsx:2666
+#: src/components/compose.jsx:2672
+#: src/components/compose.jsx:2718
 msgid "Generate description…"
 msgstr "Sortu deskribapena…"
 
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2673
+#: src/components/compose.jsx:2705
 msgid "Failed to generate description{13}"
 msgstr "Ezin izan da deskribapena sortu{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2688
+#: src/components/compose.jsx:2720
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— esperimentala</0>"
 
-#: src/components/compose.jsx:2707
+#: src/components/compose.jsx:2739
 msgid "Done"
 msgstr "Eginda"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2743
+#: src/components/compose.jsx:2775
 msgid "Choice {0}"
 msgstr "{0}. aukera"
 
-#: src/components/compose.jsx:2790
+#: src/components/compose.jsx:2822
 msgid "Multiple choices"
 msgstr "Hainbat aukera"
 
-#: src/components/compose.jsx:2793
+#: src/components/compose.jsx:2825
 msgid "Duration"
 msgstr "Iraupena"
 
-#: src/components/compose.jsx:2824
+#: src/components/compose.jsx:2856
 msgid "Remove poll"
 msgstr "Kendu bozketa"
 
-#: src/components/compose.jsx:3039
+#: src/components/compose.jsx:3071
 msgid "Search accounts"
 msgstr "Bilatu kontuak"
 
-#: src/components/compose.jsx:3093
+#: src/components/compose.jsx:3125
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
 msgstr "Errorea kontuak kargatzean"
 
-#: src/components/compose.jsx:3237
+#: src/components/compose.jsx:3269
 msgid "Custom emojis"
 msgstr "Instantziako emojiak"
 
-#: src/components/compose.jsx:3257
+#: src/components/compose.jsx:3289
 msgid "Search emoji"
 msgstr "Bilatu emojia"
 
-#: src/components/compose.jsx:3288
+#: src/components/compose.jsx:3320
 msgid "Error loading custom emojis"
 msgstr "Errorea emoji pertsonalizatua kargatzean"
 
-#: src/components/compose.jsx:3299
+#: src/components/compose.jsx:3331
 msgid "Recently used"
 msgstr "Oraintsu erabilita"
 
-#: src/components/compose.jsx:3300
+#: src/components/compose.jsx:3332
 msgid "Others"
 msgstr "Besteak"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3338
+#: src/components/compose.jsx:3370
 msgid "{0} more…"
 msgstr "{0} gehiago…"
 
-#: src/components/compose.jsx:3476
+#: src/components/compose.jsx:3508
 msgid "Search GIFs"
 msgstr "Bilatu GIFak"
 
-#: src/components/compose.jsx:3491
+#: src/components/compose.jsx:3523
 msgid "Powered by GIPHY"
 msgstr "GIPHYri esker"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3531
 msgid "Type to search GIFs"
 msgstr "Idatzi GIFak bilatzeko"
 
-#: src/components/compose.jsx:3597
+#: src/components/compose.jsx:3629
 #: src/components/media-modal.jsx:462
 #: src/components/timeline.jsx:893
 msgid "Previous"
 msgstr "Aurrekoa"
 
-#: src/components/compose.jsx:3615
+#: src/components/compose.jsx:3647
 #: src/components/media-modal.jsx:481
 #: src/components/timeline.jsx:910
 msgid "Next"
 msgstr "Hurrengoa"
 
-#: src/components/compose.jsx:3632
+#: src/components/compose.jsx:3664
 msgid "Error loading GIFs"
 msgstr "Errorea GIFak kargatzean"
 
@@ -1410,6 +1410,7 @@ msgid "Accounts…"
 msgstr "Kontuak…"
 
 #: src/components/nav-menu.jsx:315
+#: src/pages/login.jsx:27
 #: src/pages/login.jsx:190
 #: src/pages/status.jsx:837
 #: src/pages/welcome.jsx:65
@@ -1656,7 +1657,7 @@ msgstr "{votersCount, plural, one {hautesle <0>{0}</0>} other {<1>{1}</1> hautes
 
 #: src/components/poll.jsx:268
 msgid "Ended <0/>"
-msgstr "<0/>(e)an amaitu zen"
+msgstr "<0/> amaitu da"
 
 #: src/components/poll.jsx:272
 msgid "Ended"
@@ -1664,7 +1665,7 @@ msgstr "Amaitu da"
 
 #: src/components/poll.jsx:275
 msgid "Ending <0/>"
-msgstr "<0/>(e)an amaituko da"
+msgstr "<0/> amaituko da"
 
 #: src/components/poll.jsx:279
 msgid "Ending"

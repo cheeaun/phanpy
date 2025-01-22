@@ -393,6 +393,7 @@ function Status({
     // _filtered,
     // Non-Mastodon
     emojiReactions,
+    pleroma: { threadMuted } = {},
   } = status;
 
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
@@ -424,11 +425,27 @@ function Status({
   const filterInfo =
     !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
 
+  const regexFilterText = snapStates.settings.regexFilter;
+  const regexFilterLines = useMemo(
+    () => regexFilterText.split('\n').slice(0, -1),
+    [regexFilterText],
+  );
+  const regexFilters = useMemo(
+    () => regexFilterLines.map((f) => new RegExp(f)),
+    [regexFilterLines],
+  );
+  const regexFilterInfo = useMemo(
+    () => regexFilters.map((f) => content.search(f) || spoilerText?.search?.(f)),
+    [regexFilters],
+  );
+  const regexFilterTriggered = useMemo(
+    () => regexFilterInfo.findIndex((f) => f !== -1),
+    [regexFilterInfo],
+  );
+
   if (filterInfo?.action === 'hide') {
     return null;
   }
-
-  console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -438,19 +455,55 @@ function Status({
     }
   };
 
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
-    return (
-      <FilteredStatus
-        status={status}
-        filterInfo={filterInfo}
-        instance={instance}
-        containerProps={{
-          onMouseEnter: debugHover,
-        }}
-        showFollowedTags
-        quoted={quoted}
-      />
-    );
+  if (size !== 'l') {
+    if (filterInfo) {
+      return (
+        <FilteredStatus
+          status={status}
+          filterInfo={filterInfo}
+          instance={instance}
+          containerProps={{
+            onMouseEnter: debugHover,
+          }}
+          showFollowedTags
+          quoted={quoted}
+        />
+      );
+    }
+
+    if (threadMuted) {
+      return (
+        <FilteredStatus
+          status={status}
+          filterInfo={{
+            titlesStr: t`Thread muted`,
+          }}
+          instance={instance}
+          containerProps={{
+            onMouseEnter: debugHover,
+          }}
+          showFollowedTags
+          quoted={quoted}
+        />
+      );
+    }
+
+    if (regexFilterTriggered >= 0) {
+      return (
+        <FilteredStatus
+          status={status}
+          filterInfo={{
+            titlesStr: regexFilterLines[regexFilterTriggered],
+          }}
+          instance={instance}
+          containerProps={{
+            onMouseEnter: debugHover,
+          }}
+          showFollowedTags
+          quoted={quoted}
+        />
+      );
+    }
   }
 
   const createdAtDate = new Date(createdAt);
@@ -3539,6 +3592,8 @@ function StatusCompact({ sKey }) {
   const filterInfo = isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') return null;
+
+  console.debug('RENDER Status', id, status?.account.displayName, quoted);
 
   const filterTitleStr = filterInfo?.titlesStr || '';
 

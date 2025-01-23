@@ -13,12 +13,7 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
           <Icon icon="x" alt={t`Close`} />
         </button>
         {url && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button plain"
-          >
+          <a href={url} target="_blank" rel="noopener" class="button plain">
             <span>
               <Trans>Open in new window</Trans>
             </span>{' '}

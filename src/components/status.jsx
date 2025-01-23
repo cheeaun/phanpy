@@ -2282,7 +2282,7 @@ function Status({
                       alt={visibilityText[visibility]}
                     /> */}
                     <span>{_(visibilityText[visibility])}</span> &bull;{' '}
-                    <a href={url} target="_blank" rel="noopener noreferrer">
+                    <a href={url} target="_blank" rel="noopener">
                       {
                         // within a day
                         new Date().getTime() - createdAtDate.getTime() <
@@ -2820,7 +2820,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener noreferrer"
+          rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
           }`}
@@ -2883,7 +2883,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
       <a
         href={url}
         target="_blank"
-        rel="nofollow noopener noreferrer"
+        rel="nofollow noopener"
         class="card photo"
         onClick={handleClick}
       >
@@ -2930,7 +2930,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener noreferrer"
+          rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
           dir="auto"

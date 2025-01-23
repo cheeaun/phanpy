@@ -21,6 +21,7 @@ const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
+  PHANPY_REFERRER_POLICY: REFERRER_POLICY,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
@@ -86,6 +87,13 @@ export default defineConfig({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
     htmlPlugin({
+      metas: [
+        // Learn more: https://web.dev/articles/referrer-best-practices
+        {
+          name: 'referrer',
+          content: REFERRER_POLICY || 'origin',
+        },
+      ],
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
       links: [
         ...ALL_LOCALES.map((lang) => ({

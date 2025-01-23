@@ -233,6 +233,11 @@ Available variables:
 - `PHANPY_DEFAULT_LANG` (optional):
   - Default language is English (`en`) if not specified.
   - Fallback language after multiple detection methods (`lang` query parameter, `lang` key in `localStorage` and `navigator.language`)
+- `PHANPY_REFERRER_POLICY` (optional, default: `origin`):
+  - Referrer policy for the site. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy).
+  - This is applied with the `<meta>` tag on the client-side.
+  - The policy can also be set with `Referrer-Policy` header configured on the server-side (not this variable).
+  - Note that since Phanpy uses hash-based URLs, the referrer does not include the hash part.
 - `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)

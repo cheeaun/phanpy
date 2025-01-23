@@ -984,10 +984,10 @@ function PushNotificationsSection({ onClose }) {
           const policyEl = elements.namedItem('policy');
           if (policyEl) policyEl.value = policy;
           // alerts is {}, iterate it
-          Object.keys(alerts).forEach((alert) => {
+          Object.entries(alerts).forEach(([alert, value]) => {
             const el = elements.namedItem(alert);
             if (el?.type === 'checkbox') {
-              el.checked = true;
+              el.checked = !!value;
             }
           });
         }

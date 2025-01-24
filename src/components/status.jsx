@@ -918,6 +918,25 @@ function Status({
   const actionsRef = useRef();
   const isPublic = ['public', 'unlisted'].includes(visibility);
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
+  const menuFooter =
+    mediaNoDesc && !reblogged ? (
+      <div class="footer">
+        <Icon icon="alert" />
+        <Trans>Some media have no descriptions.</Trans>
+      </div>
+    ) : (
+      statusMonthsAgo >= 3 && (
+        <div class="footer">
+          <Icon icon="info" />
+          <span>
+            <Trans>
+              Old post (<strong>{rtf.format(-statusMonthsAgo, 'month')}</strong>
+              )
+            </Trans>
+          </span>
+        </div>
+      )
+    );
   const StatusMenuItems = (
     <>
       {!isSizeLarge && sameInstance && (
@@ -954,29 +973,7 @@ function Status({
                   </span>
                 </MenuItem>
               }
-              menuFooter={
-                mediaNoDesc && !reblogged ? (
-                  <div class="footer">
-                    <Icon icon="alert" />
-                    <Trans>Some media have no descriptions.</Trans>
-                  </div>
-                ) : (
-                  statusMonthsAgo >= 3 && (
-                    <div class="footer">
-                      <Icon icon="info" />
-                      <span>
-                        <Trans>
-                          Old post (
-                          <strong>
-                            {rtf.format(-statusMonthsAgo, 'month')}
-                          </strong>
-                          )
-                        </Trans>
-                      </span>
-                    </div>
-                  )
-                )
-              }
+              menuFooter={menuFooter}
               disabled={!canBoost}
               onClick={async () => {
                 try {
@@ -2429,15 +2426,7 @@ function Status({
                         </span>
                       </MenuItem>
                     }
-                    menuFooter={
-                      mediaNoDesc &&
-                      !reblogged && (
-                        <div class="footer">
-                          <Icon icon="alert" />
-                          <Trans>Some media have no descriptions.</Trans>
-                        </div>
-                      )
-                    }
+                    menuFooter={menuFooter}
                   >
                     <StatusButton
                       checked={reblogged}

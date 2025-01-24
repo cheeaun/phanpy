@@ -1,7 +1,7 @@
 import './compose.css';
 import '@github/text-expander-element';
 
-import { msg, plural } from '@lingui/core/macro';
+import { msg, plural, t } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
@@ -46,7 +46,6 @@ import store from '../utils/store';
 import {
   getCurrentAccount,
   getCurrentAccountNS,
-  getCurrentInstance,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
@@ -74,6 +73,14 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   };
   return acc;
 }, {});
+
+const contentTypesMap = {
+  'text/plain': { icon: 'font', text: t`Plain text` },
+  'text/html': { icon: 'brackets-angle', text: t`HTML` },
+  'text/markdown': { icon: 'asterisk', text: t`Markdown` },
+  'text/bbcode': { icon: 'brackets', text: t`BBCode` },
+  'text/x.misskeymarkdown': { icon: 'currency-dollar-2', text: t`MFM` },
+};
 
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
@@ -235,12 +242,13 @@ function Compose({
 
   const {
     statuses: {
+      supportedMimeTypes: supportedStatusMimeTypes = ['text/plain'],
       maxCharacters,
       maxMediaAttachments, // Beware: it can be undefined!
       charactersReservedPerUrl,
     } = {},
     mediaAttachments: {
-      supportedMimeTypes,
+      supportedMimeTypes: supportedMediaMimeTypes = undefined,
       imageSizeLimit,
       imageMatrixLimit,
       videoSizeLimit,
@@ -255,9 +263,12 @@ function Compose({
     } = {},
   } = configuration || {};
 
+  const defaultContentType = supportedStatusMimeTypes[0];
+
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
+  const [contentType, setContentType] = useState(defaultContentType);
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
@@ -1123,8 +1134,15 @@ function Compose({
                   );
                 } else if (!editStatus) {
                   params.visibility = visibility;
+                  if (params.visibility === 'list') {
+                    const list_id = prompt('Target list ID?');
+                    params.visibility = `list:${list_id}`;
+                  }
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
+                }
+                if (supportedStatusMimeTypes.length > 1) {
+                  params.content_type = contentType;
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1212,6 +1230,37 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
+            {supportedStatusMimeTypes.length > 1 && (
+              <>
+                <label
+                  class={`toolbar-button ${
+                    contentType !== defaultContentType && !sensitive
+                      ? 'show-field'
+                      : ''
+                  } ${contentType !== defaultContentType ? 'highlight' : ''}`}
+                >
+                  <Icon
+                    icon={contentTypesMap[contentType].icon ?? 'asterisk'}
+                    alt={visibility}
+                  />
+                  <select
+                    name={'contentType'}
+                    value={contentType}
+                    onChange={(e) => {
+                      setContentType(e.target.value);
+                    }}
+                    disabled={uiState === 'loading'}
+                    dir={'auto'}
+                  >
+                    {supportedStatusMimeTypes.map((mime) => (
+                      <option value={mime}>
+                        {contentTypesMap[mime].text ?? mime}
+                      </option>
+                    ))}
+                  </select>
+                </label>{' '}
+              </>
+            )}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1243,6 +1292,12 @@ function Compose({
                 <option value="private">
                   <Trans>Followers only</Trans>
                 </option>
+                {(supports('@pleroma/list-visibility-post') ||
+                  supports('@akkoma/list-visibility-post')) && (
+                  <option value="list">
+                    <Trans>List only</Trans>
+                  </option>
+                )}
                 <option value="direct">
                   <Trans>Private mention</Trans>
                 </option>
@@ -1386,7 +1441,7 @@ function Compose({
                     <label class="compose-menu-add-media-field">
                       <FilePickerInput
                         hidden
-                        supportedMimeTypes={supportedMimeTypes}
+                        supportedMimeTypes={supportedMediaMimeTypes}
                         maxMediaAttachments={maxMediaAttachments}
                         mediaAttachments={mediaAttachments}
                         disabled={
@@ -1429,7 +1484,7 @@ function Compose({
               <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
                 <label class="toolbar-button">
                   <FilePickerInput
-                    supportedMimeTypes={supportedMimeTypes}
+                    supportedMimeTypes={supportedMediaMimeTypes}
                     maxMediaAttachments={maxMediaAttachments}
                     mediaAttachments={mediaAttachments}
                     disabled={

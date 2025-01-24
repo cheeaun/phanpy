@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
-import { SondaRollupPlugin } from 'sonda';
+import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
@@ -21,6 +21,7 @@ const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
+  PHANPY_REFERRER_POLICY: REFERRER_POLICY,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
@@ -86,6 +87,13 @@ export default defineConfig({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
     htmlPlugin({
+      metas: [
+        // Learn more: https://web.dev/articles/referrer-best-practices
+        {
+          name: 'referrer',
+          content: REFERRER_POLICY || 'origin',
+        },
+      ],
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
       links: [
         ...ALL_LOCALES.map((lang) => ({
@@ -150,7 +158,7 @@ export default defineConfig({
         type: 'module',
       },
     }),
-    SondaRollupPlugin({
+    Sonda({
       detailed: true,
       brotli: true,
     }),

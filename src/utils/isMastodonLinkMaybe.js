@@ -8,6 +8,7 @@ export default function isMastodonLinkMaybe(url) {
       /^\/(notice|objects)\/[a-z0-9-]+$/i.test(pathname) || // Pleroma
       /^\/@[^/]+\/post\/[a-z0-9\-_]+$/i.test(pathname) || // Threads
       /^\/@[^/]+\/[a-z0-9]+[a-z0-9\-]+[a-z0-9]+$/i.test(pathname) || // Hollo
+      /^\/ap\/note\/[a-z0-9\-_]+$/i.test(pathname) || // BotKit, Fedify
       (hostname === 'fed.brid.gy' && pathname.startsWith('/r/http')) || // Bridgy Fed
       /#\/[^\/]+\.[^\/]+\/s\/.+/i.test(hash) // Phanpy 🫣
     );

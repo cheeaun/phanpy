@@ -379,11 +379,7 @@ function AccountInfo({
             <Trans>Unable to load account.</Trans>
           </p>
           <p>
-            <a
-              href={isString ? account : url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={isString ? account : url} target="_blank" rel="noopener">
               <Trans>Go to account page</Trans> <Icon icon="external" />
             </a>
           </p>

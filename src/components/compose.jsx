@@ -53,6 +53,7 @@ import supports from '../utils/supports';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
+import localPostingIconsMap from '../utils/local-posting-icons-map.js';
 
 import AccountBlock from './account-block';
 // import Avatar from './avatar';
@@ -259,6 +260,7 @@ function Compose({
   const spoilerTextRef = useRef();
   const [visibility, setVisibility] = useState('public');
   const [sensitive, setSensitive] = useState(false);
+  const [localOnly, setLocalOnly] = useState('federated');
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
   );
@@ -694,6 +696,12 @@ function Compose({
   const [showMentionPicker, setShowMentionPicker] = useState(false);
   const [showEmoji2Picker, setShowEmoji2Picker] = useState(false);
   const [showGIFPicker, setShowGIFPicker] = useState(false);
+  const supportsLocalPosting = supports('@gotosocial/local-posting');
+  const [localPostingLabel, setLocalPostingLabel] = useState('');
+  const [showLocalOnlyButton, setShowLocalOnlyButton] = useState(supportsLocalPosting);
+  if(supportsLocalPosting) {
+    setLocalPostingLabel(localOnly ? 'Local Instance' : 'Federated');
+  }
 
   const [autoDetectedLanguages, setAutoDetectedLanguages] = useState(null);
   const [topSupportedLanguages, restSupportedLanguages] = useMemo(() => {
@@ -1127,14 +1135,7 @@ function Compose({
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
                 if(supports('@gotosocial/local-posting')) {
-                  if(params.visibility === "local-public") {
-                    params.visibility = "public";
-                    params.local_only = true;
-                  }
-                  if(params.visibility === "local-unlisted") {
-                    params.visibility = "unlisted";
-                    params.local_only = true;
-                  }
+                  params.local_only = localOnly === 'local-instance';
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1222,6 +1223,29 @@ function Compose({
               />
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
+            {showLocalOnlyButton && (
+              <label
+                class={`toolbar-button ${
+                  !sensitive ? 'show-field' : ''}`}>
+                <Icon icon={localPostingIconsMap[localOnly]} alt={localPostingLabel} />
+                <select
+                  value={localOnly}
+                  onChange={(e) => {
+                    setLocalOnly(e.target.value);
+                    setLocalPostingLabel(localOnly ? 'Local Instance' : 'Federated');
+                  }}
+                  disabled={uiState === 'loading' || !!editStatus}
+                  dir="auto">
+                  <option value="local-instance">
+                    <Trans>Local Instance</Trans>
+                  </option>
+                  <option value="federated">
+                    <Trans>Federated</Trans>
+                  </option>
+                </select>
+              </label>
+            )
+            }
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1247,19 +1271,9 @@ function Compose({
                     <Trans>Local</Trans>
                   </option>
                 )}
-                {(supports('@gotosocial/local-posting')) && (
-                  <option value="local-public">
-                    <Trans>Local Instance Public</Trans>
-                  </option>
-                )}
                 <option value="unlisted">
                   <Trans>Unlisted</Trans>
                 </option>
-                {(supports('@gotosocial/local-posting')) && (
-                  <option value="local-unlisted">
-                    <Trans>Local Instance Unlisted</Trans>
-                  </option>
-                )}
                 <option value="private">
                   <Trans>Followers only</Trans>
                 </option>
@@ -1381,7 +1395,7 @@ function Compose({
           )}
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
-              {showAddButton && (
+              { showAddButton && (
                 <Menu2
                   portal={{
                     target: document.body,

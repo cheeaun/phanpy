@@ -175,4 +175,6 @@ export const ICONS = {
   'user-x': () => import('@iconify-icons/mingcute/user-x-line'),
   minimize: () => import('@iconify-icons/mingcute/arrows-down-line'),
   celebrate: () => import('@iconify-icons/mingcute/celebrate-line'),
+  locked: () => import('@iconify-icons/mingcute/lock-fill'),
+  unlocked: () => import('@iconify-icons/mingcute/unlock-line'),
 };

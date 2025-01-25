@@ -289,7 +289,10 @@ function Compose({
 
   useEffect(() => {
     if (replyToStatus) {
-      const { spoilerText, visibility, language, sensitive } = replyToStatus;
+      const { spoilerText, visibility, language, sensitive, localOnly } = replyToStatus;
+      if(showLocalOnlyButton) {
+        setLocalOnly(localOnly ? 'local-instance' : 'federated');
+      }
       if (spoilerText && spoilerTextRef.current) {
         spoilerTextRef.current.value = spoilerText;
       }

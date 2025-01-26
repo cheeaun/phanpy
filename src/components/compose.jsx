@@ -703,7 +703,7 @@ function Compose({
   const [localPostingLabel, setLocalPostingLabel] = useState('');
   const [showLocalOnlyButton, setShowLocalOnlyButton] = useState(supportsLocalPosting);
   if(supportsLocalPosting) {
-    setLocalPostingLabel(localOnly ? 'Local Instance' : 'Federated');
+    setLocalPostingLabel(localOnly ? 'Local' : 'Federated');
   }
 
   const [autoDetectedLanguages, setAutoDetectedLanguages] = useState(null);
@@ -1235,12 +1235,12 @@ function Compose({
                   value={localOnly}
                   onChange={(e) => {
                     setLocalOnly(e.target.value);
-                    setLocalPostingLabel(localOnly ? 'Local Instance' : 'Federated');
+                    setLocalPostingLabel(localOnly ? 'Local' : 'Federated');
                   }}
                   disabled={uiState === 'loading' || !!editStatus}
                   dir="auto">
                   <option value="local-instance">
-                    <Trans>Local Instance</Trans>
+                    <Trans>Local</Trans>
                   </option>
                   <option value="federated">
                     <Trans>Federated</Trans>

@@ -378,11 +378,17 @@ function AccountInfo({
           <p>
             <Trans>Unable to load account.</Trans>
           </p>
-          <p>
-            <a href={isString ? account : url} target="_blank" rel="noopener">
-              <Trans>Go to account page</Trans> <Icon icon="external" />
-            </a>
-          </p>
+          {isString ? (
+            <p>
+              <code class="insignificant">{account}</code>
+            </p>
+          ) : (
+            <p>
+              <a href={url} target="_blank" rel="noopener">
+                <Trans>Go to account page</Trans> <Icon icon="external" />
+              </a>
+            </p>
+          )}
         </div>
       )}
       {uiState === 'loading' ? (

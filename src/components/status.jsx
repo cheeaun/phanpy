@@ -918,6 +918,25 @@ function Status({
   const actionsRef = useRef();
   const isPublic = ['public', 'unlisted'].includes(visibility);
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
+  const menuFooter =
+    mediaNoDesc && !reblogged ? (
+      <div class="footer">
+        <Icon icon="alert" />
+        <Trans>Some media have no descriptions.</Trans>
+      </div>
+    ) : (
+      statusMonthsAgo >= 3 && (
+        <div class="footer">
+          <Icon icon="info" />
+          <span>
+            <Trans>
+              Old post (<strong>{rtf.format(-statusMonthsAgo, 'month')}</strong>
+              )
+            </Trans>
+          </span>
+        </div>
+      )
+    );
   const StatusMenuItems = (
     <>
       {!isSizeLarge && sameInstance && (
@@ -954,29 +973,7 @@ function Status({
                   </span>
                 </MenuItem>
               }
-              menuFooter={
-                mediaNoDesc && !reblogged ? (
-                  <div class="footer">
-                    <Icon icon="alert" />
-                    <Trans>Some media have no descriptions.</Trans>
-                  </div>
-                ) : (
-                  statusMonthsAgo >= 3 && (
-                    <div class="footer">
-                      <Icon icon="info" />
-                      <span>
-                        <Trans>
-                          Old post (
-                          <strong>
-                            {rtf.format(-statusMonthsAgo, 'month')}
-                          </strong>
-                          )
-                        </Trans>
-                      </span>
-                    </div>
-                  )
-                )
-              }
+              menuFooter={menuFooter}
               disabled={!canBoost}
               onClick={async () => {
                 try {
@@ -2282,7 +2279,7 @@ function Status({
                       alt={visibilityText[visibility]}
                     /> */}
                     <span>{_(visibilityText[visibility])}</span> &bull;{' '}
-                    <a href={url} target="_blank" rel="noopener noreferrer">
+                    <a href={url} target="_blank" rel="noopener">
                       {
                         // within a day
                         new Date().getTime() - createdAtDate.getTime() <
@@ -2429,15 +2426,7 @@ function Status({
                         </span>
                       </MenuItem>
                     }
-                    menuFooter={
-                      mediaNoDesc &&
-                      !reblogged && (
-                        <div class="footer">
-                          <Icon icon="alert" />
-                          <Trans>Some media have no descriptions.</Trans>
-                        </div>
-                      )
-                    }
+                    menuFooter={menuFooter}
                   >
                     <StatusButton
                       checked={reblogged}
@@ -2820,7 +2809,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener noreferrer"
+          rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
           }`}
@@ -2883,7 +2872,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
       <a
         href={url}
         target="_blank"
-        rel="nofollow noopener noreferrer"
+        rel="nofollow noopener"
         class="card photo"
         onClick={handleClick}
       >
@@ -2930,7 +2919,7 @@ function Card({ card, selfReferential, selfAuthor, instance }) {
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener noreferrer"
+          rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} no-image`}
           lang={language}
           dir="auto"

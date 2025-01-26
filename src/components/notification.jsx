@@ -510,7 +510,7 @@ function Notification({
                 <a
                   href={`https://${instance}/severed_relationships`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                 >
                   <Trans>
                     Learn more <Icon icon="external" size="s" />
@@ -526,7 +526,7 @@ function Notification({
                 <a
                   href={`/disputes/strikes/${moderation_warning.id}`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                 >
                   <Trans>
                     Learn more <Icon icon="external" size="s" />
@@ -550,7 +550,7 @@ function Notification({
                 <a
                   key={account.id}
                   href={account.url}
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   class="account-avatar-stack"
                   onClick={(e) => {
                     e.preventDefault();
@@ -654,7 +654,7 @@ function Notification({
                 <a
                   key={account.id}
                   href={account.url}
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   class="account-avatar-stack"
                   onClick={(e) => {
                     e.preventDefault();

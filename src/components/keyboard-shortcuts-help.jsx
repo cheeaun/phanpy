@@ -26,8 +26,10 @@ export default memo(function KeyboardShortcutsHelp() {
     },
     {
       ignoreEventWhen: (e) => {
-        const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        const isCatchUpPage = /\/catchup/i.test(location.hash);
+        return isCatchUpPage;
+        // const hasModal = !!document.querySelector('#modal-container > *');
+        // return hasModal;
       },
     },
   );

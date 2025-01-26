@@ -149,7 +149,7 @@ function Timeline({
     const activeItemRect = activeItem?.getBoundingClientRect();
     const allItems = Array.from(
       scrollableRef.current.querySelectorAll(itemsSelector),
-    );
+    ).filter((item) => !!item.offsetHeight);
     if (
       activeItem &&
       activeItemRect.top < scrollableRef.current.clientHeight &&
@@ -188,7 +188,7 @@ function Timeline({
     const activeItemRect = activeItem?.getBoundingClientRect();
     const allItems = Array.from(
       scrollableRef.current.querySelectorAll(itemsSelector),
-    );
+    ).filter((item) => !!item.offsetHeight);
     if (
       activeItem &&
       activeItemRect.top < scrollableRef.current.clientHeight &&

@@ -1192,7 +1192,7 @@ function Catchup() {
                           key={url}
                           href={url}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener"
                           class="link-block"
                           style={
                             accentColor

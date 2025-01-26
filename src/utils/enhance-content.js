@@ -218,7 +218,7 @@ function _enhanceContent(content, opts = {}) {
       if (TWITTER_MENTION_REGEX.test(html)) {
         html = html.replaceAll(
           TWITTER_MENTION_CAPTURE_REGEX,
-          '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+          '<a href="https://twitter.com/$2" rel="nofollow noopener" target="_blank">$1</a>',
         );
       }
       fauxDiv.innerHTML = html;

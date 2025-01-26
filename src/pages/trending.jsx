@@ -274,7 +274,7 @@ function Trending({ columnMode, ...props }) {
                     ref={currentLink === url ? currentLinkRef : null}
                     href={url}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                     class={`link-block ${
                       hasCurrentLink
                         ? currentLink === url
@@ -353,7 +353,7 @@ function Trending({ columnMode, ...props }) {
                                     <a
                                       href={authorUrl}
                                       target="_blank"
-                                      rel="noopener noreferrer"
+                                      rel="noopener"
                                     >
                                       {authorName}
                                     </a>

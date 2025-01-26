@@ -24,7 +24,7 @@ const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
 
 function Login() {
   const { t } = useLingui();
-  useTitle('Log in');
+  useTitle(t`Log in`, '/login');
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');

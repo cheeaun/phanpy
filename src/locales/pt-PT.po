@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-12-22 00:30\n"
+"PO-Revision-Date: 2025-01-15 16:00\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -25,7 +25,7 @@ msgstr "Bloqueado"
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:142
 msgid "Posts: {0}"
-msgstr "Publicações: {0}"
+msgstr "Postagens: {0}"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:147
@@ -76,7 +76,7 @@ msgstr "Verificado"
 #: src/components/account-block.jsx:223
 #: src/components/account-info.jsx:782
 msgid "Joined <0>{0}</0>"
-msgstr "Se juntou em <0>{0}</0>"
+msgstr "Juntou-se em <0>{0}</0>"
 
 #: src/components/account-info.jsx:58
 msgid "Forever"
@@ -109,11 +109,11 @@ msgstr "A seguir"
 #: src/pages/search.jsx:328
 #: src/pages/search.jsx:475
 msgid "Posts"
-msgstr "Publicações"
+msgstr "Postagens"
 
 #: src/components/account-info.jsx:429
 #: src/components/account-info.jsx:1120
-#: src/components/compose.jsx:2592
+#: src/components/compose.jsx:2624
 #: src/components/media-alt-modal.jsx:46
 #: src/components/media-modal.jsx:358
 #: src/components/status.jsx:1737
@@ -133,7 +133,7 @@ msgstr "Mais"
 
 #: src/components/account-info.jsx:441
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> indicou que a nova conta é:"
+msgstr "A nova conta de <0>{displayName}</0> é:"
 
 #: src/components/account-info.jsx:586
 #: src/components/account-info.jsx:1278
@@ -169,14 +169,14 @@ msgstr "Em memória"
 #: src/components/account-info.jsx:711
 #: src/components/account-info.jsx:752
 msgid "This user has chosen to not make this information available."
-msgstr "Este utilizador decidiu não fazer esta informação visível."
+msgstr "O utilizador deixou privado esta informação."
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:807
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
+msgstr "{0} postagens originais, {1} respostas, {2} impulsos"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.daysSinceLastPost
@@ -187,13 +187,13 @@ msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 #. placeholder {6}: postingStats.daysSinceLastPost
 #: src/components/account-info.jsx:823
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Última publicação no último dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
+msgstr "{0, plural, one {{1, plural, one {Última postagem no último dia} other {Última postagem nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} postagens no último dia} other {Últimas {5} postagens nos últimos {6} dias}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
 #: src/components/account-info.jsx:836
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr "{0, plural, one {Última publicação no(s) ano(s) passado(s)} other {Últimas {1} publicações no(s) ano(s) passado(s)}}"
+msgstr "{0, plural, one {Última postagem no(s) ano(s) passado(s)} other {Últimas {1} postagens no(s) ano(s) passado(s)}}"
 
 #: src/components/account-info.jsx:860
 #: src/pages/catchup.jsx:70
@@ -220,7 +220,7 @@ msgstr "Impulsos"
 
 #: src/components/account-info.jsx:874
 msgid "Post stats unavailable."
-msgstr "As estatísticas estão indisponíveis."
+msgstr "Estatísticas da publicação indisponíveis."
 
 #: src/components/account-info.jsx:905
 msgid "View post stats"
@@ -261,11 +261,11 @@ msgstr "Adicionar nota privada"
 
 #: src/components/account-info.jsx:1196
 msgid "Notifications enabled for @{username}'s posts."
-msgstr "Notificações ativadas para as publicações de @{username}."
+msgstr "Habilitado as notificações para postagens de @{username}."
 
 #: src/components/account-info.jsx:1197
 msgid " Notifications disabled for @{username}'s posts."
-msgstr " Notificações desativadas para as publicações de @{username}."
+msgstr " Desabilitado as notificações de postagens de @{username}."
 
 #: src/components/account-info.jsx:1209
 msgid "Disable notifications"
@@ -397,7 +397,7 @@ msgstr "Editar perfil"
 
 #: src/components/account-info.jsx:1624
 msgid "Withdraw follow request?"
-msgstr "Eliminar pedido de seguimento?"
+msgstr "Eliminar pedido de seguir?"
 
 #. placeholder {1}: info.acct || info.username
 #: src/components/account-info.jsx:1625
@@ -424,10 +424,10 @@ msgstr "Seguir"
 #: src/components/account-info.jsx:2098
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:859
-#: src/components/compose.jsx:2548
-#: src/components/compose.jsx:3022
-#: src/components/compose.jsx:3231
-#: src/components/compose.jsx:3461
+#: src/components/compose.jsx:2580
+#: src/components/compose.jsx:3054
+#: src/components/compose.jsx:3263
+#: src/components/compose.jsx:3493
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:143
@@ -566,7 +566,7 @@ msgstr "Escrever"
 
 #: src/components/compose.jsx:206
 msgid "Add media"
-msgstr "Adicionar media"
+msgstr "Adicionar multimédia"
 
 #: src/components/compose.jsx:207
 msgid "Add custom emoji"
@@ -596,7 +596,7 @@ msgstr "{0, plural, one {O ficheiro {1} não é suportado.} other {Os ficheiros 
 #: src/components/compose.jsx:1674
 #: src/components/compose.jsx:1760
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr "{maxMediaAttachments, plural,one {Tu podes anexar até 1 ficheiro.} other {Tu podes anexar até # ficheiros.}}"
+msgstr "{maxMediaAttachments, plural,one {Só pode anexar até 1 ficheiro.} other {Só pode anexar até # ficheiros.}}"
 
 #: src/components/compose.jsx:840
 msgid "Pop out"
@@ -647,7 +647,7 @@ msgstr "Algumas escolhas da enquete estão vazias"
 
 #: src/components/compose.jsx:1034
 msgid "Some media have no descriptions. Continue?"
-msgstr "Algumas das medias não têm descrição. Prosseguir?"
+msgstr "Algumas multimédias não possuem descrições. Prosseguir?"
 
 #: src/components/compose.jsx:1086
 msgid "Attachment #{i} failed"
@@ -661,7 +661,7 @@ msgstr "Alerta de conteúdo"
 
 #: src/components/compose.jsx:1196
 msgid "Content warning or sensitive media"
-msgstr "Alerta de conteúdo ou media sensível"
+msgstr "Alerta de conteúdo ou multimédia sensível"
 
 #: src/components/compose.jsx:1232
 #: src/components/status.jsx:93
@@ -704,14 +704,14 @@ msgstr "Editar publicação"
 
 #: src/components/compose.jsx:1259
 msgid "What are you doing?"
-msgstr "O que tu fazes?"
+msgstr "O que faz?"
 
 #: src/components/compose.jsx:1337
 msgid "Mark media as sensitive"
-msgstr "Marcar media como sensível"
+msgstr "Marcar multimédia como sensível"
 
 #: src/components/compose.jsx:1381
-#: src/components/compose.jsx:3080
+#: src/components/compose.jsx:3112
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
@@ -743,31 +743,31 @@ msgstr "A transferir GIF…"
 msgid "Failed to download GIF"
 msgstr "Falhou ao transferir GIF"
 
-#: src/components/compose.jsx:1879
-#: src/components/compose.jsx:1956
+#: src/components/compose.jsx:1884
+#: src/components/compose.jsx:1961
 #: src/components/nav-menu.jsx:239
 msgid "More…"
 msgstr "Mais…"
 
-#: src/components/compose.jsx:2361
+#: src/components/compose.jsx:2393
 msgid "Uploaded"
 msgstr "Enviado"
 
-#: src/components/compose.jsx:2374
+#: src/components/compose.jsx:2406
 msgid "Image description"
 msgstr "Descrição da imagem"
 
-#: src/components/compose.jsx:2375
+#: src/components/compose.jsx:2407
 msgid "Video description"
 msgstr "Descrição do vídeo"
 
-#: src/components/compose.jsx:2376
+#: src/components/compose.jsx:2408
 msgid "Audio description"
 msgstr "Descrição do áudio"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
-#: src/components/compose.jsx:2412
+#: src/components/compose.jsx:2444
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "O ficheiro é muito grande. Ao enviar pode enfrentar problemas. Tenta reduzir o tamanho de {0} a {1} ou mais baixo."
 
@@ -775,13 +775,13 @@ msgstr "O ficheiro é muito grande. Ao enviar pode enfrentar problemas. Tenta re
 #. placeholder {3}: i18n.number(height)
 #. placeholder {4}: i18n.number(newWidth)
 #. placeholder {5}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2424
+#: src/components/compose.jsx:2456
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
 msgstr "A dimensão é muito grande. Ao enviar pode enfrentar problemas. Tenta reduzir a dimensão de {2}×{3}px para {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2432
+#: src/components/compose.jsx:2464
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
 msgstr "O ficheiro é muito grande. Ao enviar pode enfrentar problemas. Tenta reduzir o tamanho de {6} a {7} ou mais baixo."
 
@@ -789,149 +789,149 @@ msgstr "O ficheiro é muito grande. Ao enviar pode enfrentar problemas. Tenta re
 #. placeholder {9}: i18n.number(height)
 #. placeholder {10}: i18n.number(newWidth)
 #. placeholder {11}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2444
+#: src/components/compose.jsx:2476
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
 msgstr "A dimensão é muito grande. Ao enviar pode enfrentar problemas. Tenta reduzir a dimensão de {8}×{9}px para {10}×{11}px."
 
-#: src/components/compose.jsx:2452
+#: src/components/compose.jsx:2484
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "A taxa de quadros está muito alta. Ao enviar pode enfrentar problemas."
 
-#: src/components/compose.jsx:2512
-#: src/components/compose.jsx:2762
+#: src/components/compose.jsx:2544
+#: src/components/compose.jsx:2794
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Eliminar"
 
-#: src/components/compose.jsx:2529
+#: src/components/compose.jsx:2561
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Erro"
 
-#: src/components/compose.jsx:2554
+#: src/components/compose.jsx:2586
 msgid "Edit image description"
 msgstr "Editar descrição da imagem"
 
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2587
 msgid "Edit video description"
 msgstr "Editar descrição do vídeo"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2588
 msgid "Edit audio description"
 msgstr "Editar descrição do áudio"
 
-#: src/components/compose.jsx:2601
-#: src/components/compose.jsx:2650
+#: src/components/compose.jsx:2633
+#: src/components/compose.jsx:2682
 msgid "Generating description. Please wait…"
 msgstr "A gerar descrição. Por favor, espere…"
 
 #. placeholder {12}: e.message
-#: src/components/compose.jsx:2621
+#: src/components/compose.jsx:2653
 msgid "Failed to generate description: {12}"
 msgstr "Falhou ao gerar descrição: {12}"
 
-#: src/components/compose.jsx:2622
+#: src/components/compose.jsx:2654
 msgid "Failed to generate description"
 msgstr "Falhou ao gerar descrição"
 
-#: src/components/compose.jsx:2634
-#: src/components/compose.jsx:2640
-#: src/components/compose.jsx:2686
+#: src/components/compose.jsx:2666
+#: src/components/compose.jsx:2672
+#: src/components/compose.jsx:2718
 msgid "Generate description…"
 msgstr "Gerar descrição…"
 
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2673
+#: src/components/compose.jsx:2705
 msgid "Failed to generate description{13}"
 msgstr "Falhou ao gerar descrição{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2688
+#: src/components/compose.jsx:2720
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— experimental</0>"
 
-#: src/components/compose.jsx:2707
+#: src/components/compose.jsx:2739
 msgid "Done"
 msgstr "Concluído"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2743
+#: src/components/compose.jsx:2775
 msgid "Choice {0}"
 msgstr "Escolha {0}"
 
-#: src/components/compose.jsx:2790
+#: src/components/compose.jsx:2822
 msgid "Multiple choices"
 msgstr "Várias escolhas"
 
-#: src/components/compose.jsx:2793
+#: src/components/compose.jsx:2825
 msgid "Duration"
 msgstr "Duração"
 
-#: src/components/compose.jsx:2824
+#: src/components/compose.jsx:2856
 msgid "Remove poll"
 msgstr "Eliminar enquete"
 
-#: src/components/compose.jsx:3039
+#: src/components/compose.jsx:3071
 msgid "Search accounts"
 msgstr "Buscar contas"
 
-#: src/components/compose.jsx:3093
+#: src/components/compose.jsx:3125
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
 msgstr "Erro ao carregar contas"
 
-#: src/components/compose.jsx:3237
+#: src/components/compose.jsx:3269
 msgid "Custom emojis"
 msgstr "Emojis personalizados"
 
-#: src/components/compose.jsx:3257
+#: src/components/compose.jsx:3289
 msgid "Search emoji"
 msgstr "Buscar emoji"
 
-#: src/components/compose.jsx:3288
+#: src/components/compose.jsx:3320
 msgid "Error loading custom emojis"
 msgstr "Erro ao carregar emojis personalizados"
 
-#: src/components/compose.jsx:3299
+#: src/components/compose.jsx:3331
 msgid "Recently used"
 msgstr "Usado recentemente"
 
-#: src/components/compose.jsx:3300
+#: src/components/compose.jsx:3332
 msgid "Others"
 msgstr "Outros"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3338
+#: src/components/compose.jsx:3370
 msgid "{0} more…"
 msgstr "{0} mais…"
 
-#: src/components/compose.jsx:3476
+#: src/components/compose.jsx:3508
 msgid "Search GIFs"
 msgstr "Buscar GIFs"
 
-#: src/components/compose.jsx:3491
+#: src/components/compose.jsx:3523
 msgid "Powered by GIPHY"
 msgstr "Desenvolvido por GIPHY"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3531
 msgid "Type to search GIFs"
 msgstr "Digite para buscar GIFs"
 
-#: src/components/compose.jsx:3597
+#: src/components/compose.jsx:3629
 #: src/components/media-modal.jsx:462
 #: src/components/timeline.jsx:893
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/components/compose.jsx:3615
+#: src/components/compose.jsx:3647
 #: src/components/media-modal.jsx:481
 #: src/components/timeline.jsx:910
 msgid "Next"
 msgstr "Seguinte"
 
-#: src/components/compose.jsx:3632
+#: src/components/compose.jsx:3664
 msgid "Error loading GIFs"
 msgstr "Erro ao carregar GIFs"
 
@@ -987,7 +987,7 @@ msgstr "Enquete"
 #: src/components/drafts.jsx:250
 #: src/pages/account-statuses.jsx:364
 msgid "Media"
-msgstr "Media"
+msgstr "Multimédia"
 
 #: src/components/embed-modal.jsx:23
 msgid "Open in new window"
@@ -1076,7 +1076,7 @@ msgstr "<0>Shift</0> + <1>k</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:80
 msgid "Load new posts"
-msgstr "Carregar novas publicações"
+msgstr "Ver novas postagens"
 
 #: src/components/keyboard-shortcuts-help.jsx:84
 #: src/pages/catchup.jsx:1676
@@ -1214,7 +1214,7 @@ msgstr "Não mostrar respostas"
 
 #: src/components/list-add-edit.jsx:144
 msgid "Hide posts on this list from Home/Following"
-msgstr "Ocultar publicações nesta lista da página inicial/A seguir"
+msgstr "Ocultar postagens nesta lista da página inicial/A seguir"
 
 #: src/components/list-add-edit.jsx:150
 #: src/pages/filters.jsx:554
@@ -1232,7 +1232,7 @@ msgstr "Impossível eliminar lista."
 #: src/components/media-alt-modal.jsx:39
 #: src/components/media.jsx:51
 msgid "Media description"
-msgstr "Descrição da media"
+msgstr "Descrição da multimédia"
 
 #: src/components/media-alt-modal.jsx:58
 #: src/components/status.jsx:1066
@@ -1249,15 +1249,15 @@ msgstr "Falar"
 
 #: src/components/media-modal.jsx:369
 msgid "Open original media in new window"
-msgstr "Abrir media original em nova janela"
+msgstr "Abrir multimédia original em nova janela"
 
 #: src/components/media-modal.jsx:373
 msgid "Open original media"
-msgstr "Abrir media original"
+msgstr "Abrir multimédia original"
 
 #: src/components/media-modal.jsx:389
 msgid "Attempting to describe image. Please wait…"
-msgstr "A tentar descrever imagem. Por favor, espere…"
+msgstr "A descrever imagem. Por favor, espere…"
 
 #: src/components/media-modal.jsx:404
 msgid "Failed to describe image"
@@ -1273,7 +1273,7 @@ msgstr "Ver publicação"
 
 #: src/components/media-post.jsx:128
 msgid "Sensitive media"
-msgstr "Media sensível"
+msgstr "Multimédia sensível"
 
 #: src/components/media-post.jsx:133
 msgid "Filtered: {filterTitleStr}"
@@ -1410,6 +1410,7 @@ msgid "Accounts…"
 msgstr "Contas…"
 
 #: src/components/nav-menu.jsx:315
+#: src/pages/login.jsx:27
 #: src/pages/login.jsx:190
 #: src/pages/status.jsx:837
 #: src/pages/welcome.jsx:65
@@ -1477,7 +1478,7 @@ msgstr "{account} fez uma publicação."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a sua resposta.} other {{account} impulsionou a sua publicação.}}} other {{account} impulsionou {postsCount} das suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a sua resposta.} other {{account} impulsionou a sua postagem.}}} other {{account} impulsionou {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a sua postagem.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:129
@@ -1492,7 +1493,7 @@ msgstr "{account} pediu para seguir-te."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da sua resposta.} other {{account} gostou de sua publicação.}}} other {{account} gostou de {postsCount} de suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da sua resposta.} other {{account} gostou da sua postagem.}}} other {{account} gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da sua postagens.}}}}"
 
 #: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
@@ -1514,7 +1515,7 @@ msgstr "Uma publicação que interagiste foi editada."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da sua resposta.} other {{account} impulsionou e gostou da sua publicação.}}} other {{account} impulsionou e gostou de {postsCount} de suas publicações.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou da sua publicação.}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da sua resposta.} other {{account} impulsionou e gostou da sua postagem.}}} other {{account} impulsionou e gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou da sua postagem.}}}}"
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
@@ -1559,15 +1560,15 @@ msgstr "A sua conta foi desativada."
 
 #: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
-msgstr "Algumas das suas publicações foram marcadas como sensível."
+msgstr "Algumas das suas postagens foram marcados como sensíveis."
 
 #: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
-msgstr "Algumas publicações suas foram eliminadas."
+msgstr "Algumas das suas postagens foram eliminadas."
 
 #: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
-msgstr "Agora as suas publicações serão marcadas como sensíveis."
+msgstr "Agora as suas postagens serão marcadas como sensíveis."
 
 #: src/components/notification.jsx:296
 msgid "Your account has been limited."
@@ -1799,7 +1800,7 @@ msgstr "Enviar relato <0>+ Bloquear perfil</0>"
 
 #: src/components/search-form.jsx:203
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr "{query} <0>‒ contas, hashtags e publicações</0>"
+msgstr "{query} <0>‒ contas, hashtags e postagens</0>"
 
 #: src/components/search-form.jsx:216
 msgid "Posts with <0>{query}</0>"
@@ -1870,7 +1871,7 @@ msgstr "ex.: PixelArt (Máx. 5, espaço separado)"
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:356
 msgid "Media only"
-msgstr "Apenas media"
+msgstr "Somente multimédia"
 
 #: src/components/shortcuts-settings.jsx:235
 #: src/components/shortcuts.jsx:192
@@ -2152,7 +2153,7 @@ msgstr "Citar"
 #: src/components/status.jsx:961
 #: src/components/status.jsx:2437
 msgid "Some media have no descriptions."
-msgstr "Algumas das medias não têm descrição."
+msgstr "Algumas multimédias não possuem descrições."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
 #: src/components/status.jsx:968
@@ -2331,7 +2332,7 @@ msgstr "Mostrar conteúdo"
 
 #: src/components/status.jsx:2173
 msgid "Show media"
-msgstr "Mostrar media"
+msgstr "Mostrar multimédia"
 
 #: src/components/status.jsx:2310
 msgid "Edited"
@@ -2373,7 +2374,7 @@ msgstr "Impossível copiar código HTML"
 
 #: src/components/status.jsx:3275
 msgid "Media attachments:"
-msgstr "Anexos de media:"
+msgstr "Anexos de multimédia:"
 
 #: src/components/status.jsx:3297
 msgid "Account Emojis:"
@@ -2402,7 +2403,7 @@ msgstr "Votações não são interativas, ela vira uma lista com contador de vot
 
 #: src/components/status.jsx:3402
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr "Anexos de media pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
+msgstr "Anexos de multimédia pode ser imagens, vídeos, áudios, e qualquer tipo de ficheiro."
 
 #: src/components/status.jsx:3408
 msgid "Post could be edited or deleted later."
@@ -2525,7 +2526,7 @@ msgstr "{accountDisplay} (#{tagged})"
 
 #: src/pages/account-statuses.jsx:245
 msgid "{accountDisplay} (Media)"
-msgstr "{accountDisplay} (Media)"
+msgstr "{accountDisplay} (Multimédia)"
 
 #: src/pages/account-statuses.jsx:251
 msgid "{accountDisplay} ({monthYear})"
@@ -2557,7 +2558,7 @@ msgstr "- Impulsos"
 
 #: src/pages/account-statuses.jsx:359
 msgid "Showing posts with media"
-msgstr "A exibir publicações com media"
+msgstr "A exibir publicações com multimédia"
 
 #. placeholder {0}: tag.name
 #: src/pages/account-statuses.jsx:376
@@ -3062,7 +3063,7 @@ msgstr "Impossível carregar publicações."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr "{hashtagTitle} (Apenas media) em {instance}"
+msgstr "{hashtagTitle} (Somente multimédia) em {instance}"
 
 #: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} on {instance}"
@@ -3070,7 +3071,7 @@ msgstr "{hashtagTitle} em {instance}"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle} (Media only)"
-msgstr "{hashtagTitle} (Apenas media)"
+msgstr "{hashtagTitle} (Somente multimédia)"
 
 #: src/pages/hashtag.jsx:60
 msgid "{hashtagTitle}"
@@ -3573,7 +3574,7 @@ msgstr "Tradução automática"
 
 #: src/pages/settings.jsx:518
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, media ou enquete."
+msgstr "Automaticamente exibe tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, multimédia ou enquete."
 
 #: src/pages/settings.jsx:538
 msgid "GIF Picker for composer"

@@ -33,7 +33,7 @@ import NavMenu from './nav-menu';
 import Status from './status';
 
 const scrollIntoViewOptions = {
-  block: 'nearest',
+  block: 'start',
   inline: 'center',
   behavior: 'smooth',
 };

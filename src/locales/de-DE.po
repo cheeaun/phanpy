@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-29 09:12\n"
+"PO-Revision-Date: 2025-02-04 16:54\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:423
 #: src/components/account-info.jsx:780
-#: src/pages/account-statuses.jsx:483
+#: src/pages/account-statuses.jsx:479
 #: src/pages/search.jsx:328
 #: src/pages/search.jsx:475
 msgid "Posts"
@@ -121,7 +121,7 @@ msgstr "Beiträge"
 #: src/components/status.jsx:1875
 #: src/components/status.jsx:2479
 #: src/components/status.jsx:2482
-#: src/pages/account-statuses.jsx:527
+#: src/pages/account-statuses.jsx:523
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:200
 #: src/pages/list.jsx:158
@@ -985,7 +985,7 @@ msgid "Poll"
 msgstr "Umfrage"
 
 #: src/components/drafts.jsx:250
-#: src/pages/account-statuses.jsx:364
+#: src/pages/account-statuses.jsx:360
 msgid "Media"
 msgstr "Medien"
 
@@ -1289,6 +1289,10 @@ msgstr "Gefiltert: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Gefiltert"
 
+#: src/components/media.jsx:414
+msgid "Open file"
+msgstr ""
+
 #: src/components/modals.jsx:73
 msgid "Post published. Check it out."
 msgstr "Post veröffentlicht. Schauen Sie sich ihn an."
@@ -1382,7 +1386,7 @@ msgid "Followed Hashtags"
 msgstr "Gefolgte Hashtags"
 
 #: src/components/nav-menu.jsx:262
-#: src/pages/account-statuses.jsx:330
+#: src/pages/account-statuses.jsx:326
 #: src/pages/filters.jsx:54
 #: src/pages/filters.jsx:93
 #: src/pages/hashtag.jsx:340
@@ -2530,69 +2534,69 @@ msgstr "{accountDisplay} (Medien)"
 msgid "{accountDisplay} ({monthYear})"
 msgstr "{accountDisplay} ({monthYear})"
 
-#: src/pages/account-statuses.jsx:320
+#: src/pages/account-statuses.jsx:316
 msgid "Clear filters"
 msgstr "Filter leeren"
 
-#: src/pages/account-statuses.jsx:323
+#: src/pages/account-statuses.jsx:319
 msgid "Clear"
 msgstr "Leeren"
 
-#: src/pages/account-statuses.jsx:337
+#: src/pages/account-statuses.jsx:333
 msgid "Showing post with replies"
 msgstr "Beitrag mit Antworten anzeigen"
 
-#: src/pages/account-statuses.jsx:342
+#: src/pages/account-statuses.jsx:338
 msgid "+ Replies"
 msgstr "+ Antworten"
 
-#: src/pages/account-statuses.jsx:348
+#: src/pages/account-statuses.jsx:344
 msgid "Showing posts without boosts"
 msgstr "Zeige Posts ohne Boosts"
 
-#: src/pages/account-statuses.jsx:353
+#: src/pages/account-statuses.jsx:349
 msgid "- Boosts"
 msgstr "- Boosts"
 
-#: src/pages/account-statuses.jsx:359
+#: src/pages/account-statuses.jsx:355
 msgid "Showing posts with media"
 msgstr "Zeige Posts mit Medien"
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:376
+#: src/pages/account-statuses.jsx:372
 msgid "Showing posts tagged with #{0}"
 msgstr "Zeige Posts mit #{0}"
 
 #. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
-#: src/pages/account-statuses.jsx:415
+#: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {1}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:504
+#: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
 msgstr "Noch nichts zu sehen."
 
-#: src/pages/account-statuses.jsx:505
+#: src/pages/account-statuses.jsx:501
 #: src/pages/public.jsx:98
 #: src/pages/trending.jsx:450
 msgid "Unable to load posts"
 msgstr "Konnte Posts nicht laden"
 
-#: src/pages/account-statuses.jsx:546
-#: src/pages/account-statuses.jsx:576
+#: src/pages/account-statuses.jsx:542
+#: src/pages/account-statuses.jsx:572
 msgid "Unable to fetch account info"
 msgstr "Kontoinformationen konnten nicht abgerufen werden"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:553
+#: src/pages/account-statuses.jsx:549
 msgid "Switch to account's instance {0}"
 msgstr "Zur Kontoinstanz {0} wechseln"
 
-#: src/pages/account-statuses.jsx:583
+#: src/pages/account-statuses.jsx:579
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
 msgstr "Zu meiner Instanz wechseln (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:645
+#: src/pages/account-statuses.jsx:641
 msgid "Month"
 msgstr "Monat"
 

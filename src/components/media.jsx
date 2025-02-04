@@ -1,4 +1,4 @@
-import { useLingui } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
@@ -165,9 +165,12 @@ function Media({
     onUpdate,
   };
 
+  const [mediaLoadError, setMediaLoadError] = useState(false);
+
   const Parent = useMemo(
-    () => (to ? (props) => <Link to={to} {...props} /> : 'div'),
-    [to],
+    () =>
+      to && !mediaLoadError ? (props) => <Link to={to} {...props} /> : 'div',
+    [to, mediaLoadError],
   );
 
   const remoteMediaURLObj = remoteMediaURL ? getURLObj(remoteMediaURL) : null;
@@ -392,6 +395,8 @@ function Media({
                   const { src } = e.target;
                   if (src === mediaURL && mediaURL !== remoteMediaURL) {
                     e.target.src = remoteMediaURL;
+                  } else {
+                    setMediaLoadError(true);
                   }
                 }}
               />
@@ -401,6 +406,16 @@ function Media({
             </>
           )}
         </Parent>
+        {mediaLoadError && (
+          <div>
+            <a href={remoteUrl} class="button plain6 small" target="_blank">
+              <Icon icon="external" />{' '}
+              <span>
+                <Trans>Open file</Trans>
+              </span>
+            </a>
+          </div>
+        )}
       </Figure>
     );
   } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {

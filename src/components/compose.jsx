@@ -32,6 +32,7 @@ import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
 import isRTL from '../utils/is-rtl';
+import localPostingIconsMap from '../utils/local-posting-icons-map.js';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
@@ -53,7 +54,6 @@ import supports from '../utils/supports';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
-import localPostingIconsMap from '../utils/local-posting-icons-map.js';
 
 import AccountBlock from './account-block';
 // import Avatar from './avatar';
@@ -289,8 +289,9 @@ function Compose({
 
   useEffect(() => {
     if (replyToStatus) {
-      const { spoilerText, visibility, language, sensitive, localOnly } = replyToStatus;
-      if(showLocalOnlyButton) {
+      const { spoilerText, visibility, language, sensitive, localOnly } =
+        replyToStatus;
+      if (showLocalOnlyButton) {
         setLocalOnly(localOnly ? 'local-instance' : 'federated');
       }
       if (spoilerText && spoilerTextRef.current) {
@@ -701,8 +702,9 @@ function Compose({
   const [showGIFPicker, setShowGIFPicker] = useState(false);
   const supportsLocalPosting = supports('@gotosocial/local-posting');
   const [localPostingLabel, setLocalPostingLabel] = useState('');
-  const [showLocalOnlyButton, setShowLocalOnlyButton] = useState(supportsLocalPosting);
-  if(supportsLocalPosting) {
+  const [showLocalOnlyButton, setShowLocalOnlyButton] =
+    useState(supportsLocalPosting);
+  if (supportsLocalPosting) {
     setLocalPostingLabel(localOnly ? 'Local' : 'Federated');
   }
 
@@ -1137,7 +1139,7 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                 }
-                if(supports('@gotosocial/local-posting')) {
+                if (supports('@gotosocial/local-posting')) {
                   params.local_only = localOnly === 'local-instance';
                 }
                 params = removeNullUndefined(params);
@@ -1227,10 +1229,11 @@ function Compose({
               <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
             </label>{' '}
             {showLocalOnlyButton && (
-              <label
-                class={`toolbar-button ${
-                  !sensitive ? 'show-field' : ''}`}>
-                <Icon icon={localPostingIconsMap[localOnly]} alt={localPostingLabel} />
+              <label class={`toolbar-button ${!sensitive ? 'show-field' : ''}`}>
+                <Icon
+                  icon={localPostingIconsMap[localOnly]}
+                  alt={localPostingLabel}
+                />
                 <select
                   value={localOnly}
                   onChange={(e) => {
@@ -1238,7 +1241,8 @@ function Compose({
                     setLocalPostingLabel(localOnly ? 'Local' : 'Federated');
                   }}
                   disabled={uiState === 'loading' || !!editStatus}
-                  dir="auto">
+                  dir="auto"
+                >
                   <option value="local-instance">
                     <Trans>Local</Trans>
                   </option>
@@ -1247,8 +1251,7 @@ function Compose({
                   </option>
                 </select>
               </label>
-            )
-            }
+            )}
             <label
               class={`toolbar-button ${
                 visibility !== 'public' && !sensitive ? 'show-field' : ''
@@ -1398,7 +1401,7 @@ function Compose({
           )}
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
-              { showAddButton && (
+              {showAddButton && (
                 <Menu2
                   portal={{
                     target: document.body,

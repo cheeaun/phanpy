@@ -11,8 +11,7 @@
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
-  --monospace-font: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
+  --monospace-font: ui-monospace, monospace;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -190,8 +189,7 @@ html {
 }
 
 body {
-  font-family: ui-rounded, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family: ui-rounded, sans-serif, system-ui;
   font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;

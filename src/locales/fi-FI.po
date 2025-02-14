@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-04 18:14\n"
+"PO-Revision-Date: 2025-02-14 14:02\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -101,7 +101,7 @@ msgstr "Seuraajat"
 #: src/components/account-info.jsx:746
 #: src/components/account-info.jsx:763
 msgid "following.stats"
-msgstr "Seuratut"
+msgstr "Seurattavat"
 
 #: src/components/account-info.jsx:423
 #: src/components/account-info.jsx:780
@@ -1323,7 +1323,7 @@ msgstr "Uusi päivitys saatavilla…"
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:142
 msgid "following.title"
-msgstr "Seuratut"
+msgstr "Seurattavat"
 
 #: src/components/nav-menu.jsx:192
 #: src/pages/catchup.jsx:871
@@ -1383,7 +1383,7 @@ msgstr "Tykkäykset"
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
-msgstr "Seuratut aihetunnisteet"
+msgstr "Seurattavat aihetunnisteet"
 
 #: src/components/nav-menu.jsx:262
 #: src/pages/account-statuses.jsx:326
@@ -1547,11 +1547,11 @@ msgstr "Palvelimen <0>{from}</0> ylläpitäjä on jäädyttänyt käyttäjän <1
 
 #: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr "Palvelimen <0>{from}</0> ylläpitäjä on estänyt palvelimen <1>{targetName}</1>. Vaikutettuja seuraajia {followersCount}, seurattuja {followingCount}."
+msgstr "Palvelimen <0>{from}</0> ylläpitäjä on estänyt palvelimen <1>{targetName}</1>. Vaikutettuja seuraajia {followersCount}, seurattavia {followingCount}."
 
 #: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr "Olet estänyt palvelimen <0>{targetName}</0>. Poistettuja seuraajia {followersCount}, seurattuja {followingCount}."
+msgstr "Olet estänyt palvelimen <0>{targetName}</0>. Poistettuja seuraajia {followersCount}, seurattavia {followingCount}."
 
 #: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
@@ -1824,7 +1824,7 @@ msgstr "Tilit haulla <0>{query}</0>"
 
 #: src/components/shortcuts-settings.jsx:48
 msgid "Home / Following"
-msgstr "Koti / Seuratut"
+msgstr "Koti / Seurattavat"
 
 #: src/components/shortcuts-settings.jsx:51
 msgid "Public (Local / Federated)"
@@ -2729,7 +2729,7 @@ msgstr "Mikä tämä on?"
 
 #: src/pages/catchup.jsx:915
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr "Kiinnikuronta on erillinen aikajana, joka tarjoaa ylätason näkymän seurattuihisi yhdellä silmäyksellä. Yksinkertainen, sähköpostin innoittama käyttöliittymä, jossa voit vaivattomasti järjestellä ja suodattaa julkaisuja."
+msgstr "Kiinnikuronta on erillinen aikajana, joka tarjoaa ylätason näkymän seurattaviisi yhdellä silmäyksellä. Yksinkertainen, sähköpostin innoittama käyttöliittymä, jossa voit vaivattomasti järjestellä ja suodattaa julkaisuja."
 
 #: src/pages/catchup.jsx:926
 msgid "Preview of Catch-up UI"
@@ -2741,7 +2741,7 @@ msgstr "Kurotaanpa kiinni"
 
 #: src/pages/catchup.jsx:940
 msgid "Let's catch up on the posts from your followings."
-msgstr "Kurotaanpa seurattusi julkaisut kiinni."
+msgstr "Kurotaanpa seurattaviesi julkaisut kiinni."
 
 #: src/pages/catchup.jsx:944
 msgid "Show me all posts from…"
@@ -2871,7 +2871,7 @@ msgstr "Takaisin ylös"
 
 #: src/pages/catchup.jsx:1594
 msgid "Links shared by followings, sorted by shared counts, boosts and likes."
-msgstr "Seurattujen jakamat linkit järjestettynä jakomäärän mukaan, tehostukset ja tykkäykset."
+msgstr "Seurattavien jakamat linkit järjestettynä jakomäärän mukaan, tehostukset ja tykkäykset."
 
 #: src/pages/catchup.jsx:1600
 msgid "Sort: Density"
@@ -3048,11 +3048,11 @@ msgstr "{0, plural, one {# aihetunniste} other {# aihetunnistetta}}"
 
 #: src/pages/followed-hashtags.jsx:86
 msgid "Unable to load followed hashtags."
-msgstr "Seurattuja aihetunnisteita ei voitu ladata."
+msgstr "Seurattavia aihetunnisteita ei voitu ladata."
 
 #: src/pages/followed-hashtags.jsx:90
 msgid "No hashtags followed yet."
-msgstr "Ei vielä seurattuja aihetunnisteita."
+msgstr "Ei vielä seurattavia aihetunnisteita."
 
 #: src/pages/following.jsx:144
 msgid "Nothing to see here."
@@ -3097,7 +3097,7 @@ msgstr "Lopetettu tunnisteen #{hashtag} seuraaminen"
 
 #: src/pages/hashtag.jsx:239
 msgid "Followed #{hashtag}"
-msgstr "Seurattu tunnistetta #{hashtag}"
+msgstr "Seurataan tunnistetta #{hashtag}"
 
 #: src/pages/hashtag.jsx:255
 msgid "Following…"

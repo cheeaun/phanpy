@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-17 10:03\n"
+"PO-Revision-Date: 2025-02-17 13:31\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -1435,12 +1435,12 @@ msgstr "Z całej sieci"
 
 #: src/components/nav-menu.jsx:367
 msgid "Shortcuts / Columns…"
-msgstr ""
+msgstr "Skróty / Kolumny…"
 
 #: src/components/nav-menu.jsx:377
 #: src/components/nav-menu.jsx:391
 msgid "Settings…"
-msgstr ""
+msgstr "Ustawienia…"
 
 #: src/components/nav-menu.jsx:421
 #: src/components/nav-menu.jsx:448
@@ -1450,186 +1450,186 @@ msgstr ""
 #: src/pages/lists.jsx:17
 #: src/pages/lists.jsx:51
 msgid "Lists"
-msgstr ""
+msgstr "Listy"
 
 #: src/components/nav-menu.jsx:429
 #: src/components/shortcuts.jsx:215
 #: src/pages/list.jsx:134
 msgid "All Lists"
-msgstr ""
+msgstr "Wszystkie listy"
 
 #: src/components/notification-service.jsx:161
 msgid "Notification"
-msgstr ""
+msgstr "Powiadomienie"
 
 #: src/components/notification-service.jsx:167
 msgid "This notification is from your other account."
-msgstr ""
+msgstr "To powiadomienie pochodzi z twojego innego konta."
 
 #: src/components/notification-service.jsx:196
 msgid "View all notifications"
-msgstr ""
+msgstr "Wyświetl wszystkie powiadomienia"
 
 #: src/components/notification.jsx:71
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr ""
+msgstr "{account} reaguje na twój wpis {emojiObject}"
 
 #: src/components/notification.jsx:78
 msgid "{account} published a post."
-msgstr ""
+msgstr "{account} publikuje wpis."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija twój komentarz.} other {{account} podbija twój wpis.}}} few {{postType, select, reply {{account} podbija {postsCount} twoje komentarze.} other {{account} podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija {postsCount} twoich komentarzy.} other {{account} podbija {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają twój komentarz.} other {<0><1>{0}</1> osoby</0> podbijają twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija twój komentarz.} other {<0><1>{0}</1> osób</0> podbija twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoich wpisów.}}}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:129
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} obserwuje cię.} few {<0><1>{0}</1> osoby</0> obserwują cię.} other {<0><1>{0}</1> osób</0> obserwuje cię.}}"
 
 #: src/components/notification.jsx:143
 msgid "{account} requested to follow you."
-msgstr ""
+msgstr "{account} chce cię obserwować."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} lubi twój komentarz.} other {{account} lubi twój wpis.}}} few {{postType, select, reply {{account} lubi {postsCount} twoje komentarze.} other {{account} lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} lubi {postsCount} twoich komentarzy.} other {{account} lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią twój komentarz.} other {<0><1>{0}</1> osoby</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> lubi twój komentarz.} other {<0><1>{0}</1> osób</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoich wpisów.}}}}}}"
 
 #: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
-msgstr ""
+msgstr "Zakończyła się ankieta, w której głosowano lub którą utworzono."
 
 #: src/components/notification.jsx:195
 msgid "A poll you have created has ended."
-msgstr ""
+msgstr "Utworzona przez ciebie ankieta została zakończona."
 
 #: src/components/notification.jsx:196
 msgid "A poll you have voted in has ended."
-msgstr ""
+msgstr "Zakończyła się ankieta, w której oddano głos."
 
 #: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
-msgstr ""
+msgstr "Wpis, na który zareagowano, został edytowany."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija i lubi twój komentarz.} other {{account} podbija i lubi twój wpis.}}} few {{postType, select, reply {{account} podbija i lubi {postsCount} twoje komentarze.} other {{account} podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija i lubi {postsCount} twoich komentarzy.} other {{account} podbija i lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twój komentarz.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twój komentarz.} other {<0><1>{0}</1> osób</0> podbija i lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich wpisów.}}}}}}"
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
-msgstr ""
+msgstr "{account} rejestruje się."
 
 #: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
-msgstr ""
+msgstr "{account} zgłasza {targetAccount}"
 
 #: src/components/notification.jsx:254
 msgid "Lost connections with <0>{name}</0>."
-msgstr ""
+msgstr "Utracono połączenie z <0>{name}</0>."
 
 #: src/components/notification.jsx:260
 msgid "Moderation warning"
-msgstr ""
+msgstr "Ostrzeżenie"
 
 #: src/components/notification.jsx:265
 msgid "Your {year} #Wrapstodon is here!"
-msgstr ""
+msgstr "Twój #Wrapstodon {year} jest już dostępny!"
 
 #: src/components/notification.jsx:271
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
-msgstr ""
+msgstr "Administrator <0>{from}</0> zawiesza konto <1>{targetName}</1>, co oznacza, że nie możesz już otrzymywać aktualności ani wchodzić w interakcje z tą osobą."
 
 #: src/components/notification.jsx:277
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Administrator <0>{from}</0> blokuje konto <1>{targetName}</1>. Obserwujący: {followersCount}, i obserwowani: {followingCount}, których to dotyczy."
 
 #: src/components/notification.jsx:283
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "Zablokowano <0>{targetName}</0>. Obserwujący: {followersCount}, i obserwowani: {followingCount}, których usunięto."
 
 #: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
-msgstr ""
+msgstr "Twoje konto otrzymało ostrzeżenie."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "Twoje konto zostało wyłączone."
 
 #: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "Niektóre twoje wpisy zostały oznaczone jako wrażliwe."
 
 #: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "Niektóre twoje wpisy zostały usunięte."
 
 #: src/components/notification.jsx:295
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "Twoje wpisy będą od teraz oznaczane jako wrażliwe."
 
 #: src/components/notification.jsx:296
 msgid "Your account has been limited."
-msgstr ""
+msgstr "Twoje konto zostało ograniczone."
 
 #: src/components/notification.jsx:297
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "Twoje konto zostało zawieszone."
 
 #: src/components/notification.jsx:372
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[Nieznany typ powiadomienia: {type}]"
 
 #: src/components/notification.jsx:441
 #: src/components/status.jsx:1033
 #: src/components/status.jsx:1043
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "Podbite/polubione przez…"
 
 #: src/components/notification.jsx:442
 msgid "Liked by…"
-msgstr ""
+msgstr "Polubione przez…"
 
 #: src/components/notification.jsx:443
 msgid "Boosted by…"
-msgstr ""
+msgstr "Podbite przez…"
 
 #: src/components/notification.jsx:444
 msgid "Followed by…"
-msgstr ""
+msgstr "Obserwujący…"
 
 #: src/components/notification.jsx:515
 #: src/components/notification.jsx:531
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "Dowiedz się więcej <0/>"
 
 #: src/components/notification.jsx:540
 msgid "View #Wrapstodon"
-msgstr ""
+msgstr "Wyświetl #Wrapstodon"
 
 #: src/components/notification.jsx:770
 #: src/components/status.jsx:267
 msgid "Read more →"
-msgstr ""
+msgstr "Więcej →"
 
 #: src/components/poll.jsx:113
 msgid "Voted"
-msgstr ""
+msgstr "Zagłosowano"
 
 #: src/components/poll.jsx:119
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, one {# głos} few { # głosy} other {# głosów}}"
 
 #: src/components/poll.jsx:139
 #: src/components/poll.jsx:222
 #: src/components/poll.jsx:226
 msgid "Hide results"
-msgstr ""
+msgstr "Ukryj wyniki"
 
 #: src/components/poll.jsx:188
 msgid "Vote"
@@ -1851,39 +1851,39 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:122
 #: src/pages/login.jsx:194
 msgid "Instance"
-msgstr ""
+msgstr "Serwer"
 
 #: src/components/shortcuts-settings.jsx:78
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr ""
+msgstr "Opcjonalnie, np. mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr ""
+msgstr "Szukaj"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
-msgstr ""
+msgstr "Opcjonalnie, z wyjątkiem trybu rozszerzonego"
 
 #: src/components/shortcuts-settings.jsx:113
 msgid "e.g. PixelArt (Max 5, space-separated)"
-msgstr ""
+msgstr "np. PixelArt (maksymalnie 5, oddzielone spacją)"
 
 #: src/components/shortcuts-settings.jsx:117
 #: src/pages/hashtag.jsx:356
 msgid "Media only"
-msgstr ""
+msgstr "Tylko multimedia"
 
 #: src/components/shortcuts-settings.jsx:235
 #: src/components/shortcuts.jsx:192
 msgid "Shortcuts"
-msgstr ""
+msgstr "Skróty"
 
 #: src/components/shortcuts-settings.jsx:243
 msgid "beta"
-msgstr ""
+msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:249
 msgid "Specify a list of shortcuts that'll appear as:"

@@ -37,7 +37,6 @@ import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
 import MenuConfirm from './menu-confirm';
-import MenuLink from './menu-link';
 import Menu2 from './menu2';
 import Modal from './modal';
 import SubMenu2 from './submenu2';
@@ -604,18 +603,40 @@ function AccountInfo({
                     </span>
                   </MenuItem>
                   <MenuDivider />
-                  <MenuLink href={info.avatar} target="_blank">
+                  <MenuItem
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: [
+                          {
+                            type: 'image',
+                            url: avatarStatic,
+                          },
+                        ],
+                      };
+                    }}
+                  >
                     <Icon icon="user" />
                     <span>
                       <Trans>View profile image</Trans>
                     </span>
-                  </MenuLink>
-                  <MenuLink href={info.header} target="_blank">
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: [
+                          {
+                            type: 'image',
+                            url: headerStatic,
+                          },
+                        ],
+                      };
+                    }}
+                  >
                     <Icon icon="media" />
                     <span>
                       <Trans>View profile header</Trans>
                     </span>
-                  </MenuLink>
+                  </MenuItem>
                 </Menu2>
               ) : (
                 <AccountBlock

@@ -201,7 +201,7 @@ const PostContent =
         }
       }
       divRef.current.replaceChildren(dom.cloneNode(true));
-    }, [content, emojis.length]);
+    }, [content, emojis?.length]);
 
     return (
       <div
@@ -358,7 +358,7 @@ function Status({
       emojis: accountEmojis,
       bot,
       group,
-    },
+    } = {},
     id,
     repliesCount,
     reblogged,
@@ -428,7 +428,7 @@ function Status({
     return null;
   }
 
-  console.debug('RENDER Status', id, status?.account.displayName, quoted);
+  console.debug('RENDER Status', id, status?.account?.displayName, quoted);
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -646,7 +646,7 @@ function Status({
     [spoilerText, content],
   );
 
-  const createdDateText = niceDateTime(createdAtDate);
+  const createdDateText = createdAt && niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
   // Can boost if:
@@ -1792,146 +1792,148 @@ function Status({
           </a>
         )}
         <div class="container">
-          <div class="meta">
-            <span class="meta-name">
-              <NameText
-                account={status.account}
-                instance={instance}
-                showAvatar={size === 's'}
-                showAcct={isSizeLarge}
-              />
-            </span>
-            {/* {inReplyToAccount && !withinContext && size !== 's' && (
-              <>
-                {' '}
-                <span class="ib">
-                  <Icon icon="arrow-right" class="arrow" />{' '}
-                  <NameText account={inReplyToAccount} instance={instance} short />
-                </span>
-              </>
-            )} */}
-            {/* </span> */}{' '}
-            {size !== 'l' &&
-              (_deleted ? (
-                <span class="status-deleted-tag">
-                  <Trans>Deleted</Trans>
-                </span>
-              ) : url && !previewMode && !readOnly && !quoted ? (
-                <Link
-                  to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                  onClick={(e) => {
-                    if (
-                      e.metaKey ||
-                      e.ctrlKey ||
-                      e.shiftKey ||
-                      e.altKey ||
-                      e.which === 2
-                    ) {
-                      return;
-                    }
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onStatusLinkClick?.(e, status);
-                    setContextMenuProps({
-                      anchorRef: {
-                        current: e.currentTarget,
-                      },
-                      align: 'end',
-                      direction: 'bottom',
-                      gap: 4,
-                    });
-                    setIsContextMenuOpen(true);
-                  }}
-                  class={`time ${
-                    isContextMenuOpen && contextMenuProps?.anchorRef
-                      ? 'is-open'
-                      : ''
-                  }`}
-                >
-                  {showCommentHint && !showCommentCount ? (
-                    <Icon
-                      icon="comment2"
-                      size="s"
-                      // alt={`${repliesCount} ${
-                      //   repliesCount === 1 ? 'reply' : 'replies'
-                      // }`}
-                      alt={plural(repliesCount, {
-                        one: '# reply',
-                        other: '# replies',
-                      })}
-                    />
-                  ) : (
-                    visibility !== 'public' &&
-                    visibility !== 'direct' && (
+          {!!(status.account || createdAt) && (
+            <div class="meta">
+              <span class="meta-name">
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  showAvatar={size === 's'}
+                  showAcct={isSizeLarge}
+                />
+              </span>
+              {/* {inReplyToAccount && !withinContext && size !== 's' && (
+                <>
+                  {' '}
+                  <span class="ib">
+                    <Icon icon="arrow-right" class="arrow" />{' '}
+                    <NameText account={inReplyToAccount} instance={instance} short />
+                  </span>
+                </>
+              )} */}
+              {/* </span> */}{' '}
+              {size !== 'l' &&
+                (_deleted ? (
+                  <span class="status-deleted-tag">
+                    <Trans>Deleted</Trans>
+                  </span>
+                ) : url && !previewMode && !readOnly && !quoted ? (
+                  <Link
+                    to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                    onClick={(e) => {
+                      if (
+                        e.metaKey ||
+                        e.ctrlKey ||
+                        e.shiftKey ||
+                        e.altKey ||
+                        e.which === 2
+                      ) {
+                        return;
+                      }
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onStatusLinkClick?.(e, status);
+                      setContextMenuProps({
+                        anchorRef: {
+                          current: e.currentTarget,
+                        },
+                        align: 'end',
+                        direction: 'bottom',
+                        gap: 4,
+                      });
+                      setIsContextMenuOpen(true);
+                    }}
+                    class={`time ${
+                      isContextMenuOpen && contextMenuProps?.anchorRef
+                        ? 'is-open'
+                        : ''
+                    }`}
+                  >
+                    {showCommentHint && !showCommentCount ? (
                       <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
+                        icon="comment2"
                         size="s"
+                        // alt={`${repliesCount} ${
+                        //   repliesCount === 1 ? 'reply' : 'replies'
+                        // }`}
+                        alt={plural(repliesCount, {
+                          one: '# reply',
+                          other: '# replies',
+                        })}
                       />
-                    )
-                  )}{' '}
-                  <RelativeTime datetime={createdAtDate} format="micro" />
-                  {!previewMode && !readOnly && (
-                    <Icon icon="more2" class="more" alt={t`More`} />
-                  )}
-                </Link>
-              ) : (
-                // <Menu
-                //   instanceRef={menuInstanceRef}
-                //   portal={{
-                //     target: document.body,
-                //   }}
-                //   containerProps={{
-                //     style: {
-                //       // Higher than the backdrop
-                //       zIndex: 1001,
-                //     },
-                //     onClick: (e) => {
-                //       if (e.target === e.currentTarget)
-                //         menuInstanceRef.current?.closeMenu?.();
-                //     },
-                //   }}
-                //   align="end"
-                //   gap={4}
-                //   overflow="auto"
-                //   viewScroll="close"
-                //   boundingBoxPadding="8 8 8 8"
-                //   unmountOnClose
-                //   menuButton={({ open }) => (
-                //     <Link
-                //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                //       onClick={(e) => {
-                //         e.preventDefault();
-                //         e.stopPropagation();
-                //         onStatusLinkClick?.(e, status);
-                //       }}
-                //       class={`time ${open ? 'is-open' : ''}`}
-                //     >
-                //       <Icon
-                //         icon={visibilityIconsMap[visibility]}
-                //         alt={visibilityText[visibility]}
-                //         size="s"
-                //       />{' '}
-                //       <RelativeTime datetime={createdAtDate} format="micro" />
-                //     </Link>
-                //   )}
-                // >
-                //   {StatusMenuItems}
-                // </Menu>
-                <span class="time">
-                  {visibility !== 'public' && visibility !== 'direct' && (
-                    <>
-                      <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
-                        size="s"
-                      />{' '}
-                    </>
-                  )}
-                  <RelativeTime datetime={createdAtDate} format="micro" />
-                </span>
-              ))}
-          </div>
+                    ) : (
+                      visibility !== 'public' &&
+                      visibility !== 'direct' && (
+                        <Icon
+                          icon={visibilityIconsMap[visibility]}
+                          alt={_(visibilityText[visibility])}
+                          size="s"
+                        />
+                      )
+                    )}{' '}
+                    <RelativeTime datetime={createdAtDate} format="micro" />
+                    {!previewMode && !readOnly && (
+                      <Icon icon="more2" class="more" alt={t`More`} />
+                    )}
+                  </Link>
+                ) : (
+                  // <Menu
+                  //   instanceRef={menuInstanceRef}
+                  //   portal={{
+                  //     target: document.body,
+                  //   }}
+                  //   containerProps={{
+                  //     style: {
+                  //       // Higher than the backdrop
+                  //       zIndex: 1001,
+                  //     },
+                  //     onClick: (e) => {
+                  //       if (e.target === e.currentTarget)
+                  //         menuInstanceRef.current?.closeMenu?.();
+                  //     },
+                  //   }}
+                  //   align="end"
+                  //   gap={4}
+                  //   overflow="auto"
+                  //   viewScroll="close"
+                  //   boundingBoxPadding="8 8 8 8"
+                  //   unmountOnClose
+                  //   menuButton={({ open }) => (
+                  //     <Link
+                  //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                  //       onClick={(e) => {
+                  //         e.preventDefault();
+                  //         e.stopPropagation();
+                  //         onStatusLinkClick?.(e, status);
+                  //       }}
+                  //       class={`time ${open ? 'is-open' : ''}`}
+                  //     >
+                  //       <Icon
+                  //         icon={visibilityIconsMap[visibility]}
+                  //         alt={visibilityText[visibility]}
+                  //         size="s"
+                  //       />{' '}
+                  //       <RelativeTime datetime={createdAtDate} format="micro" />
+                  //     </Link>
+                  //   )}
+                  // >
+                  //   {StatusMenuItems}
+                  // </Menu>
+                  <span class="time">
+                    {visibility !== 'public' && visibility !== 'direct' && (
+                      <>
+                        <Icon
+                          icon={visibilityIconsMap[visibility]}
+                          alt={_(visibilityText[visibility])}
+                          size="s"
+                        />{' '}
+                      </>
+                    )}
+                    <RelativeTime datetime={createdAtDate} format="micro" />
+                  </span>
+                ))}
+            </div>
+          )}
           {visibility === 'direct' && (
             <>
               <div class="status-direct-badge">

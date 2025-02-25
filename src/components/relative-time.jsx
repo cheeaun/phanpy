@@ -40,13 +40,15 @@ const rtfFromNow = (date) => {
   const seconds = (date.getTime() - Date.now()) / 1000;
   const absSeconds = Math.abs(seconds);
   if (absSeconds < minute) {
-    return rtf.format(seconds, 'second');
+    return rtf.format(Math.floor(seconds), 'second');
   } else if (absSeconds < hour) {
     return rtf.format(Math.floor(seconds / minute), 'minute');
   } else if (absSeconds < day) {
     return rtf.format(Math.floor(seconds / hour), 'hour');
-  } else {
+  } else if (absSeconds < 30 * day) {
     return rtf.format(Math.floor(seconds / day), 'day');
+  } else {
+    return rtf.format(Math.floor(seconds / day / 30), 'month');
   }
 };
 
@@ -76,7 +78,8 @@ export default function RelativeTime({ datetime, format }) {
   const [renderCount, rerender] = useReducer((x) => x + 1, 0);
   const date = useMemo(() => new Date(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
-    if (!isValidDate(date)) return ['' + datetime, '', ''];
+    if (!isValidDate(date))
+      return ['' + (typeof datetime === 'string' ? datetime : ''), '', ''];
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year

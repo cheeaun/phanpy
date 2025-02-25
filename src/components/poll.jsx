@@ -27,7 +27,7 @@ export default function Poll({
     ownVotes,
     voted,
     votersCount,
-    votesCount,
+    votesCount = 0,
     emojis,
   } = poll;
   const expiresAtDate = !!expiresAt && new Date(expiresAt); // Update poll at point of expiry

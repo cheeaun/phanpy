@@ -19,7 +19,6 @@ export default function ScheduledAtField({ scheduledAt, setScheduledAt }) {
         .toISOString()
         .slice(0, 16);
       setMinStr(str);
-      console.log('MIN', min);
     }
     updateMinStr();
 
@@ -29,7 +28,6 @@ export default function ScheduledAtField({ scheduledAt, setScheduledAt }) {
         .toISOString()
         .slice(0, 16);
       setMaxStr(str);
-      console.log('MAX', max);
     }
     updateMaxStr();
 

@@ -2499,7 +2499,7 @@ function Status({
                     </div>
                   }
                 >
-                  {StatusMenuItems}
+                  {StatusMenuItems}{' '}
                 </Menu2>
               </div>
             </>

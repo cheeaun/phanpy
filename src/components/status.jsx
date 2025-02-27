@@ -154,7 +154,15 @@ function isTranslateble(content) {
   return !!text;
 }
 
-function getHTMLTextForDetectLang(content) {
+function getHTMLTextForDetectLang(content, emojis) {
+  if (emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '');
+  }
+
   return getHTMLText(content, {
     preProcess: (dom) => {
       // Remove anything that can skew the language detection
@@ -402,7 +410,9 @@ function Status({
     if (languageAutoDetected) return;
     let timer;
     timer = setTimeout(async () => {
-      let detected = await detectLang(getHTMLTextForDetectLang(content));
+      let detected = await detectLang(
+        getHTMLTextForDetectLang(content, emojis),
+      );
       setLanguageAutoDetected(detected);
     }, 1000);
     return () => clearTimeout(timer);
@@ -844,16 +854,19 @@ function Status({
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   const [differentLanguage, setDifferentLanguage] = useState(
-    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
-      ? checkDifferentLanguage(language, contentTranslationHideLanguages)
-      : false,
+    () =>
+      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] ||
+      checkDifferentLanguage(language, contentTranslationHideLanguages),
   );
   useEffect(() => {
+    if (!language || differentLanguage) {
+      return;
+    }
     if (
-      !language ||
-      differentLanguage ||
+      !differentLanguage &&
       DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
     ) {
+      setDifferentLanguage(true);
       return;
     }
     let timeout = setTimeout(() => {

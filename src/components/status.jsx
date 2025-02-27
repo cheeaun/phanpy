@@ -289,7 +289,8 @@ const checkDifferentLanguage = (
     !contentTranslationHideLanguages.find(
       (l) => language === l || localeMatch([language], [l]),
     );
-  DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  if (different)
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
   return different;
 };
 

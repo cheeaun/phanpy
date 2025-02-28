@@ -2090,15 +2090,20 @@ function binByTime(data, key, numBins) {
   );
 
   // Calculate the time span in milliseconds
-  const range = maxDate.getTime() - minDate.getTime();
+  const range = Math.min(maxDate.getTime(), Date.now()) - minDate.getTime();
 
   // Create empty bins and loop through data
   const bins = Array.from({ length: numBins }, () => []);
   data.forEach((item) => {
     const date = new Date(item[key]);
-    const normalized = (date.getTime() - minDate.getTime()) / range;
-    const binIndex = Math.floor(normalized * (numBins - 1));
-    bins[binIndex].push(item);
+    if (date.getTime() > Date.now()) {
+      // Future dates go into the last bin
+      bins[bins.length - 1].push(item);
+    } else {
+      const normalized = (date.getTime() - minDate.getTime()) / range;
+      const binIndex = Math.floor(normalized * (numBins - 1));
+      bins[binIndex].push(item);
+    }
   });
 
   return bins;

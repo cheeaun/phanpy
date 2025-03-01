@@ -28,6 +28,7 @@ import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
+import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
@@ -1875,6 +1876,12 @@ const getCustomEmojis = pmem(_getCustomEmojis, {
 });
 
 const detectLangs = async (text) => {
+  if (langDetector) {
+    const langs = await langDetector.detect(text);
+    if (langs?.length) {
+      return langs.slice(0, 2).map((lang) => lang.detectedLanguage);
+    }
+  }
   const { detectAll } = await import('tinyld/light');
   const langs = detectAll(text);
   if (langs?.length) {

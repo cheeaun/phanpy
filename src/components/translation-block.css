@@ -112,15 +112,21 @@
 /* MINI */
 
 .status-translation-block-mini {
-  width: fit-content;
   display: flex;
   margin: 8px 0 0;
-  padding: 4px 0 0;
   font-size: 90%;
-  border-top: 1px dashed var(--outline-stronger-color);
   gap: 8px;
-}
-.status-translation-block-mini .icon {
-  color: var(--text-insignificant-color);
-  margin-top: 2px;
+  --top-padding: 2px;
+  --top-border: 1px;
+
+  .icon {
+    color: var(--text-insignificant-color);
+    margin-top: calc(var(--top-padding) + var(--top-border) + 2px);
+  }
+
+  output {
+    padding: var(--top-padding) 0 0;
+    border-top: var(--top-border) dashed var(--outline-stronger-color);
+    text-wrap: pretty;
+  }
 }

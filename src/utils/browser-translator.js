@@ -4,33 +4,35 @@ export const supportsBrowserTranslator =
 // https://developer.chrome.com/docs/ai/language-detection
 export let langDetector;
 if (supportsBrowserTranslator) {
-  try {
-    const languageDetectorCapabilities =
-      await self.ai.languageDetector.capabilities();
-    const canDetect = languageDetectorCapabilities.capabilities;
-    if (canDetect === 'no') {
-      // The language detector isn't usable.
-      // return;
+  (async () => {
+    try {
+      const languageDetectorCapabilities =
+        await self.ai.languageDetector.capabilities();
+      const canDetect = languageDetectorCapabilities.capabilities;
+      if (canDetect === 'no') {
+        // The language detector isn't usable.
+        // return;
+      }
+      if (canDetect === 'readily') {
+        // The language detector can immediately be used.
+        langDetector = await self.ai.languageDetector.create();
+      } else {
+        // The language detector can be used after model download.
+        langDetector = await self.ai.languageDetector.create({
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(
+                `Detector: Downloaded ${e.loaded} of ${e.total} bytes.`,
+              );
+            });
+          },
+        });
+        await langDetector.ready;
+      }
+    } catch (e) {
+      console.error(e);
     }
-    if (canDetect === 'readily') {
-      // The language detector can immediately be used.
-      langDetector = await self.ai.languageDetector.create();
-    } else {
-      // The language detector can be used after model download.
-      langDetector = await self.ai.languageDetector.create({
-        monitor(m) {
-          m.addEventListener('downloadprogress', (e) => {
-            console.log(
-              `Detector: Downloaded ${e.loaded} of ${e.total} bytes.`,
-            );
-          });
-        },
-      });
-      await langDetector.ready;
-    }
-  } catch (e) {
-    console.error(e);
-  }
+  })();
 }
 
 // https://developer.chrome.com/docs/ai/translator-api

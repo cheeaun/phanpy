@@ -8,7 +8,7 @@ function emojifyText(text, emojis = []) {
     const { shortcode, staticUrl, url } = emoji;
     text = text.replace(
       new RegExp(`:${shortcode}:`, 'g'),
-      `<picture><source srcset="${staticUrl}" media="(prefers-reduced-motion: reduce)"></source><img class="shortcode-emoji emoji" src="${url}" alt=":${shortcode}:" width="16" height="16" loading="lazy" decoding="async" fetchPriority="low" /></picture>`,
+      `<picture><source srcset="${staticUrl}" media="(prefers-reduced-motion: reduce)"></source><img class="shortcode-emoji emoji" src="${url}" alt=":${shortcode}:" title=":${shortcode}:" width="16" height="16" loading="lazy" decoding="async" fetchPriority="low" /></picture>`,
     );
   });
   // console.log(text, emojis);

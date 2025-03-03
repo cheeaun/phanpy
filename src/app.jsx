@@ -43,6 +43,7 @@ import Login from './pages/login';
 import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
+import ScheduledPosts from './pages/scheduled-posts';
 import Search from './pages/search';
 import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
@@ -548,6 +549,7 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/fh" element={<FollowedHashtags />} />
+          <Route path="/sp" element={<ScheduledPosts />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
           <Route path="/annual_report/:year" element={<AnnualReport />} />

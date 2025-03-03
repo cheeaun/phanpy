@@ -380,7 +380,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                     //     : `/t/${hashtags.join('+')}`,
                     // );
                     location.hash = instance
-                      ? `/${instance}/t/${hashtags.join('+')}`
+                      ? `/${instance}/t/${hashtags.join('+')}${linkParams}`
                       : `/t/${hashtags.join('+')}${linkParams}`;
                   }
                 }}

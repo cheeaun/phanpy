@@ -6,6 +6,10 @@ import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import sourceLanguages from '../data/lingva-source-languages';
+import {
+  translate as browserTranslate,
+  supportsBrowserTranslator,
+} from '../utils/browser-translator';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import pmem from '../utils/pmem';
@@ -95,7 +99,22 @@ function TranslationBlock({
   const apiSourceLang = useRef('auto');
 
   if (!onTranslate) {
-    onTranslate = mini ? throttledLingvaTranslate : lingvaTranslate;
+    // onTranslate = supportsBrowserTranslator
+    //   ? browserTranslate
+    //   : mini
+    //     ? throttledLingvaTranslate
+    //     : lingvaTranslate;
+    onTranslate = async (...args) => {
+      if (supportsBrowserTranslator) {
+        const result = await browserTranslate(...args);
+        if (result && !result.error) {
+          return result;
+        }
+      }
+      return mini
+        ? await throttledLingvaTranslate(...args)
+        : await lingvaTranslate(...args);
+    };
   }
 
   const translate = async () => {

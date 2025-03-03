@@ -28,6 +28,7 @@ import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
+import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
@@ -59,6 +60,10 @@ import AccountBlock from './account-block';
 import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
+import ScheduledAtField, {
+  getLocalTimezoneName,
+  MIN_SCHEDULED_AT,
+} from './ScheduledAtField';
 import Status from './status';
 
 const {
@@ -142,8 +147,8 @@ const MENTION_RE = new RegExp(
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.]+[a-z0-9_]+)?)(?![\\/\\w])`,
-  'ig',
+  `(^|[^=\\/\\w])(#[\\p{L}\\p{N}_]+([\\p{L}\\p{N}_.]+[\\p{L}\\p{N}_]+)?)(?![\\/\\w])`,
+  'iug',
 );
 
 // https://github.com/mastodon/mastodon/blob/23e32a4b3031d1da8b911e0145d61b4dd47c4f96/app/models/custom_emoji.rb#L31
@@ -207,6 +212,7 @@ const ADD_LABELS = {
   customEmoji: msg`Add custom emoji`,
   gif: msg`Add GIF`,
   poll: msg`Add poll`,
+  scheduledPost: msg`Schedule post`,
 };
 
 function Compose({
@@ -265,6 +271,7 @@ function Compose({
   const prevLanguage = useRef(language);
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
+  const [scheduledAt, setScheduledAt] = useState(null);
 
   const prefs = store.account.get('preferences') || {};
 
@@ -375,6 +382,7 @@ function Compose({
         sensitive,
         poll,
         mediaAttachments,
+        scheduledAt,
       } = draftStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
@@ -394,6 +402,7 @@ function Compose({
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
+      if (scheduledAt) setScheduledAt(scheduledAt);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -574,6 +583,7 @@ function Compose({
         sensitive,
         poll,
         mediaAttachments,
+        scheduledAt,
       },
     };
     if (
@@ -773,6 +783,13 @@ function Compose({
     },
   });
 
+  const showScheduledAt = !editStatus;
+  const scheduledAtButtonDisabled = uiState === 'loading' || !!scheduledAt;
+  const onScheduledAtClick = () => {
+    const date = new Date(Date.now() + MIN_SCHEDULED_AT);
+    setScheduledAt(date);
+  };
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -827,6 +844,7 @@ function Compose({
                       sensitive,
                       poll,
                       mediaAttachments,
+                      scheduledAt,
                     },
                   });
 
@@ -915,6 +933,7 @@ function Compose({
                           sensitive,
                           poll,
                           mediaAttachments,
+                          scheduledAt,
                         },
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
@@ -991,10 +1010,16 @@ function Compose({
             const formData = new FormData(e.target);
             const entries = Object.fromEntries(formData.entries());
             console.log('ENTRIES', entries);
-            let { status, visibility, sensitive, spoilerText } = entries;
+            let { status, visibility, sensitive, spoilerText, scheduledAt } =
+              entries;
 
             // Pre-cleanup
             sensitive = sensitive === 'on'; // checkboxes return "on" if checked
+
+            // Convert datetime-local input value to RFC3339 Date string value
+            scheduledAt = scheduledAt
+              ? new Date(scheduledAt).toISOString()
+              : undefined;
 
             // Validation
             /* Let the backend validate this
@@ -1125,6 +1150,7 @@ function Compose({
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
+                  params.scheduled_at = scheduledAt;
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1161,6 +1187,7 @@ function Compose({
                   type: editStatus ? 'edit' : replyToStatus ? 'reply' : 'post',
                   newStatus,
                   instance,
+                  scheduledAt,
                 });
               } catch (e) {
                 states.composerState.publishing = false;
@@ -1359,6 +1386,30 @@ function Compose({
               }}
             />
           )}
+          {scheduledAt && (
+            <div class="toolbar scheduled-at">
+              <button
+                type="button"
+                class="plain4 small"
+                onClick={() => {
+                  setScheduledAt(null);
+                }}
+              >
+                <Icon icon="x" />
+              </button>
+              <label>
+                <Trans>
+                  Posting on{' '}
+                  <ScheduledAtField
+                    scheduledAt={scheduledAt}
+                    setScheduledAt={setScheduledAt}
+                  />
+                </Trans>
+                <br />
+                <small>{getLocalTimezoneName()}</small>
+              </label>
+            </div>
+          )}
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
               {showAddButton && (
@@ -1418,12 +1469,23 @@ function Compose({
                       <span>{_(ADD_LABELS.gif)}</span>
                     </MenuItem>
                   )}
-                  <MenuItem
-                    disabled={pollButtonDisabled}
-                    onClick={onPollButtonClick}
-                  >
-                    <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
-                  </MenuItem>
+                  {showPollButton && (
+                    <MenuItem
+                      disabled={pollButtonDisabled}
+                      onClick={onPollButtonClick}
+                    >
+                      <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
+                    </MenuItem>
+                  )}
+                  {showScheduledAt && (
+                    <MenuItem
+                      disabled={scheduledAtButtonDisabled}
+                      onClick={onScheduledAtClick}
+                    >
+                      <Icon icon="schedule" />{' '}
+                      <span>{_(ADD_LABELS.scheduledPost)}</span>
+                    </MenuItem>
+                  )}
                 </Menu2>
               )}
               <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
@@ -1476,7 +1538,6 @@ function Compose({
                     />
                   </button>
                 )}
-                {}
                 {showPollButton && (
                   <>
                     <button
@@ -1488,6 +1549,16 @@ function Compose({
                       <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
                     </button>
                   </>
+                )}
+                {showScheduledAt && (
+                  <button
+                    type="button"
+                    class={`toolbar-button ${scheduledAt ? 'highlight' : ''}`}
+                    disabled={scheduledAtButtonDisabled}
+                    onClick={onScheduledAtClick}
+                  >
+                    <Icon icon="schedule" alt={_(ADD_LABELS.scheduledPost)} />
+                  </button>
                 )}
               </span>
             </span>
@@ -1551,14 +1622,16 @@ function Compose({
               </select>
             </label>{' '}
             <button type="submit" disabled={uiState === 'loading'}>
-              {replyToStatus
-                ? t`Reply`
-                : editStatus
-                  ? t`Update`
-                  : t({
-                      message: 'Post',
-                      context: 'Submit button in composer',
-                    })}
+              {scheduledAt
+                ? t`Schedule`
+                : replyToStatus
+                  ? t`Reply`
+                  : editStatus
+                    ? t`Update`
+                    : t({
+                        message: 'Post',
+                        context: 'Submit button in composer',
+                      })}
             </button>
           </div>
         </form>
@@ -1803,6 +1876,12 @@ const getCustomEmojis = pmem(_getCustomEmojis, {
 });
 
 const detectLangs = async (text) => {
+  if (langDetector) {
+    const langs = await langDetector.detect(text);
+    if (langs?.length) {
+      return langs.slice(0, 2).map((lang) => lang.detectedLanguage);
+    }
+  }
   const { detectAll } = await import('tinyld/light');
   const langs = detectAll(text);
   if (langs?.length) {

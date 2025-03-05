@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-04 23:15\n"
+"PO-Revision-Date: 2025-03-05 07:46\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -570,10 +570,31 @@ msgstr "Estalki modua gaituta"
 msgid "Home"
 msgstr "Hasiera"
 
-#: src/components/compose-button.jsx:50
+#: src/components/compose-button.jsx:128
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Idatzi"
+
+#: src/components/compose-button.jsx:151
+#: src/components/nav-menu.jsx:260
+#: src/pages/scheduled-posts.jsx:31
+#: src/pages/scheduled-posts.jsx:76
+msgid "Scheduled Posts"
+msgstr "Programatutako bidalketak"
+
+#: src/components/compose-button.jsx:160
+msgid "Add to thread"
+msgstr ""
+
+#: src/components/compose-button.jsx:174
+#: src/components/status.jsx:3034
+#: src/pages/annual-report.jsx:45
+msgid "Loading…"
+msgstr "Kargatzen…"
+
+#: src/components/compose-button.jsx:180
+msgid "No posts found"
+msgstr ""
 
 #: src/components/compose.jsx:211
 msgid "Add media"
@@ -1416,12 +1437,6 @@ msgstr "Gogokoak"
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
 msgstr "Jarraitutako traolak"
-
-#: src/components/nav-menu.jsx:260
-#: src/pages/scheduled-posts.jsx:31
-#: src/pages/scheduled-posts.jsx:76
-msgid "Scheduled Posts"
-msgstr "Programatutako bidalketak"
 
 #: src/components/nav-menu.jsx:268
 #: src/pages/account-statuses.jsx:326
@@ -2395,11 +2410,6 @@ msgstr "Edizio-historia"
 #: src/components/status.jsx:3029
 msgid "Failed to load history"
 msgstr "Ezin da historia kargatu"
-
-#: src/components/status.jsx:3034
-#: src/pages/annual-report.jsx:45
-msgid "Loading…"
-msgstr "Kargatzen…"
 
 #: src/components/status.jsx:3270
 msgid "HTML Code"

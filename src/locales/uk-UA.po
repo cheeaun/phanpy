@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-05 07:46\n"
+"PO-Revision-Date: 2025-03-06 06:21\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -570,30 +570,20 @@ msgstr "Режим маскування увімкнено"
 msgid "Home"
 msgstr "Домашня"
 
-#: src/components/compose-button.jsx:128
+#: src/components/compose-button.jsx:135
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Написати"
 
-#: src/components/compose-button.jsx:151
+#: src/components/compose-button.jsx:159
 #: src/components/nav-menu.jsx:260
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
 msgstr ""
 
-#: src/components/compose-button.jsx:160
+#: src/components/compose-button.jsx:172
 msgid "Add to thread"
-msgstr ""
-
-#: src/components/compose-button.jsx:174
-#: src/components/status.jsx:3034
-#: src/pages/annual-report.jsx:45
-msgid "Loading…"
-msgstr "Завантаження…"
-
-#: src/components/compose-button.jsx:180
-msgid "No posts found"
 msgstr ""
 
 #: src/components/compose.jsx:211
@@ -2410,6 +2400,11 @@ msgstr "Історія Змін"
 #: src/components/status.jsx:3029
 msgid "Failed to load history"
 msgstr "Не вдалося завантажити історію"
+
+#: src/components/status.jsx:3034
+#: src/pages/annual-report.jsx:45
+msgid "Loading…"
+msgstr "Завантаження…"
 
 #: src/components/status.jsx:3270
 msgid "HTML Code"

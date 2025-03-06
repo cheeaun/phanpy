@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-05 13:07\n"
+"PO-Revision-Date: 2025-03-06 06:21\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -570,31 +570,21 @@ msgstr "Peittotila otettu käyttöön"
 msgid "Home"
 msgstr "Koti"
 
-#: src/components/compose-button.jsx:128
+#: src/components/compose-button.jsx:135
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Luo"
 
-#: src/components/compose-button.jsx:151
+#: src/components/compose-button.jsx:159
 #: src/components/nav-menu.jsx:260
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
 msgstr "Ajastetut julkaisut"
 
-#: src/components/compose-button.jsx:160
+#: src/components/compose-button.jsx:172
 msgid "Add to thread"
 msgstr "Lisää ketjuun"
-
-#: src/components/compose-button.jsx:174
-#: src/components/status.jsx:3034
-#: src/pages/annual-report.jsx:45
-msgid "Loading…"
-msgstr "Ladataan…"
-
-#: src/components/compose-button.jsx:180
-msgid "No posts found"
-msgstr "Julkaisuja ei löytynyt"
 
 #: src/components/compose.jsx:211
 msgid "Add media"
@@ -2410,6 +2400,11 @@ msgstr "Muokkaushistoria"
 #: src/components/status.jsx:3029
 msgid "Failed to load history"
 msgstr "Historian lataus epäonnistui"
+
+#: src/components/status.jsx:3034
+#: src/pages/annual-report.jsx:45
+msgid "Loading…"
+msgstr "Ladataan…"
 
 #: src/components/status.jsx:3270
 msgid "HTML Code"

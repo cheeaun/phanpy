@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
-import { useCallback, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
@@ -17,6 +17,7 @@ import statusPeek from '../utils/status-peek';
 import { getCurrentAccountID } from '../utils/store-utils';
 
 import Icon from './icon';
+import Loader from './loader';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
 import SubMenu2 from './submenu2';
@@ -109,6 +110,12 @@ export default function ComposeButton() {
     setMenuOpen(false);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen) {
+      fetchLatestPosts();
+    }
+  }, [fetchLatestPosts, menuOpen]);
+
   return (
     <>
       <button
@@ -141,46 +148,34 @@ export default function ComposeButton() {
         boundingBoxPadding={safeBoundingBoxPadding()}
         containerProps={{
           style: {
-            zIndex: 1001,
+            zIndex: 101,
           },
         }}
+        submenuOpenDelay={600}
       >
         <MenuLink to="/sp">
-          <Icon icon="schedule" size="l" />{' '}
+          <Icon icon="schedule" />{' '}
           <span>
             <Trans>Scheduled Posts</Trans>
           </span>
         </MenuLink>
         <MenuDivider />
         <SubMenu2
+          align="end"
+          direction="top"
+          shift={-8}
+          disabled={loadingPosts || latestPosts.length === 0}
           label={
             <>
-              <Icon icon="comment" size="l" />{' '}
+              <Icon icon="comment" />{' '}
               <span className="menu-grow">
                 <Trans>Add to thread</Trans>
               </span>
-              <Icon icon="chevron-right" />
+              {loadingPosts ? '…' : <Icon icon="chevron-right" />}
             </>
           }
-          onMenuChange={(e) => {
-            if (e.open) {
-              fetchLatestPosts();
-            }
-          }}
         >
-          {loadingPosts ? (
-            <MenuItem disabled>
-              <span>
-                <Trans>Loading…</Trans>
-              </span>
-            </MenuItem>
-          ) : latestPosts.length === 0 ? (
-            <MenuItem disabled>
-              <small>
-                <Trans>No posts found</Trans>
-              </small>
-            </MenuItem>
-          ) : (
+          {latestPosts.length > 0 &&
             latestPosts.map((post) => {
               const createdDate = new Date(post.createdAt);
               const isWithinDay =
@@ -209,8 +204,7 @@ export default function ComposeButton() {
                   </small>
                 </MenuItem>
               );
-            })
-          )}
+            })}
         </SubMenu2>
       </ControlledMenu>
     </>

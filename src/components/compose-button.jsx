@@ -150,6 +150,9 @@ export default function ComposeButton() {
           style: {
             zIndex: 101,
           },
+          onClick: () => {
+            menuRef.current?.closeMenu?.();
+          },
         }}
         submenuOpenDelay={600}
       >

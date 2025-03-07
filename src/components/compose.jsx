@@ -208,6 +208,8 @@ const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 const CUSTOM_EMOJIS_COUNT = 100;
 
 const ADD_LABELS = {
+  // camera: msg`Take photo or video`,
+  camera: 'Take photo or video',
   media: msg`Add media`,
   customEmoji: msg`Add custom emoji`,
   gif: msg`Add GIF`,
@@ -260,6 +262,9 @@ function Compose({
       minExpiration,
     } = {},
   } = configuration || {};
+  const supportedImagesVideosTypes = supportedMimeTypes?.filter((mimeType) =>
+    /^(image|video)/i.test(mimeType),
+  );
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
@@ -1433,6 +1438,23 @@ function Compose({
                     </button>
                   )}
                 >
+                  {supportsCameraCapture && (
+                    <MenuItem className="compose-menu-add-media">
+                      <label class="compose-menu-add-media-field">
+                        <CameraCaptureInput
+                          hidden
+                          supportedMimeTypes={supportedImagesVideosTypes}
+                          disabled={
+                            uiState === 'loading' ||
+                            mediaAttachments.length >= maxMediaAttachments ||
+                            !!poll
+                          }
+                          setMediaAttachments={setMediaAttachments}
+                        />
+                      </label>
+                      <Icon icon="camera" /> <span>{_(ADD_LABELS.camera)}</span>
+                    </MenuItem>
+                  )}
                   <MenuItem className="compose-menu-add-media">
                     <label class="compose-menu-add-media-field">
                       <FilePickerInput
@@ -1489,6 +1511,21 @@ function Compose({
                 </Menu2>
               )}
               <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
+                {supportsCameraCapture && (
+                  <label class="toolbar-button">
+                    <CameraCaptureInput
+                      supportedMimeTypes={supportedImagesVideosTypes}
+                      mediaAttachments={mediaAttachments}
+                      disabled={
+                        uiState === 'loading' ||
+                        mediaAttachments.length >= maxMediaAttachments ||
+                        !!poll
+                      }
+                      setMediaAttachments={setMediaAttachments}
+                    />
+                    <Icon icon="camera" alt={_(ADD_LABELS.camera)} />
+                  </label>
+                )}
                 <label class="toolbar-button">
                   <FilePickerInput
                     supportedMimeTypes={supportedMimeTypes}
@@ -1786,6 +1823,45 @@ function Compose({
         </Modal>
       )}
     </div>
+  );
+}
+
+const supportsCameraCapture = (() => {
+  const input = document.createElement('input');
+  return 'capture' in input;
+})();
+function CameraCaptureInput({
+  hidden,
+  disabled = false,
+  supportedMimeTypes,
+  setMediaAttachments,
+}) {
+  return (
+    <input
+      type="file"
+      hidden={hidden}
+      accept={supportedMimeTypes?.join(',')}
+      capture="environment"
+      disabled={disabled}
+      onChange={(e) => {
+        const files = e.target.files;
+        if (!files) return;
+        const mediaFile = Array.from(files)[0];
+        if (!mediaFile) return;
+        setMediaAttachments((attachments) => [
+          ...attachments,
+          {
+            file: mediaFile,
+            type: mediaFile.type,
+            size: mediaFile.size,
+            url: URL.createObjectURL(mediaFile),
+            id: null, // indicate uploaded state
+            description: null,
+          },
+        ]);
+        e.target.value = null;
+      }}
+    />
   );
 }
 

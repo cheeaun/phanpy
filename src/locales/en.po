@@ -108,7 +108,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:430
 #: src/components/account-info.jsx:1143
-#: src/components/compose.jsx:2703
+#: src/components/compose.jsx:2697
 #: src/components/media-alt-modal.jsx:46
 #: src/components/media-modal.jsx:358
 #: src/components/status.jsx:1770
@@ -420,10 +420,10 @@ msgstr ""
 #: src/components/account-info.jsx:2140
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:877
-#: src/components/compose.jsx:2659
-#: src/components/compose.jsx:3133
-#: src/components/compose.jsx:3342
-#: src/components/compose.jsx:3572
+#: src/components/compose.jsx:2653
+#: src/components/compose.jsx:3127
+#: src/components/compose.jsx:3336
+#: src/components/compose.jsx:3566
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:143
@@ -614,8 +614,8 @@ msgstr "{0, plural, one {File {1} is not supported.} other {Files {2} are not su
 
 #: src/components/compose.jsx:650
 #: src/components/compose.jsx:668
-#: src/components/compose.jsx:1747
-#: src/components/compose.jsx:1833
+#: src/components/compose.jsx:1741
+#: src/components/compose.jsx:1827
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
@@ -736,7 +736,7 @@ msgid "Posting on <0/>"
 msgstr "Posting on <0/>"
 
 #: src/components/compose.jsx:1432
-#: src/components/compose.jsx:3191
+#: src/components/compose.jsx:3185
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
@@ -764,39 +764,39 @@ msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Post"
 
-#: src/components/compose.jsx:1759
+#: src/components/compose.jsx:1753
 msgid "Downloading GIF…"
 msgstr "Downloading GIF…"
 
-#: src/components/compose.jsx:1787
+#: src/components/compose.jsx:1781
 msgid "Failed to download GIF"
 msgstr "Failed to download GIF"
 
-#: src/components/compose.jsx:1963
-#: src/components/compose.jsx:2040
+#: src/components/compose.jsx:1957
+#: src/components/compose.jsx:2034
 #: src/components/nav-menu.jsx:239
 msgid "More…"
 msgstr ""
 
-#: src/components/compose.jsx:2472
+#: src/components/compose.jsx:2466
 msgid "Uploaded"
 msgstr ""
 
-#: src/components/compose.jsx:2485
+#: src/components/compose.jsx:2479
 msgid "Image description"
 msgstr "Image description"
 
-#: src/components/compose.jsx:2486
+#: src/components/compose.jsx:2480
 msgid "Video description"
 msgstr "Video description"
 
-#: src/components/compose.jsx:2487
+#: src/components/compose.jsx:2481
 msgid "Audio description"
 msgstr "Audio description"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
-#: src/components/compose.jsx:2523
+#: src/components/compose.jsx:2517
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 
@@ -804,13 +804,13 @@ msgstr "File size too large. Uploading might encounter issues. Try reduce the fi
 #. placeholder {3}: i18n.number(height)
 #. placeholder {4}: i18n.number(newWidth)
 #. placeholder {5}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2535
+#: src/components/compose.jsx:2529
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
 msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2543
+#: src/components/compose.jsx:2537
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
 msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
 
@@ -818,149 +818,149 @@ msgstr "File size too large. Uploading might encounter issues. Try reduce the fi
 #. placeholder {9}: i18n.number(height)
 #. placeholder {10}: i18n.number(newWidth)
 #. placeholder {11}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2549
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
 msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
 
-#: src/components/compose.jsx:2563
+#: src/components/compose.jsx:2557
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frame rate too high. Uploading might encounter issues."
 
-#: src/components/compose.jsx:2623
-#: src/components/compose.jsx:2873
+#: src/components/compose.jsx:2617
+#: src/components/compose.jsx:2867
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr ""
 
-#: src/components/compose.jsx:2640
+#: src/components/compose.jsx:2634
 #: src/compose.jsx:84
 msgid "Error"
 msgstr ""
 
-#: src/components/compose.jsx:2665
+#: src/components/compose.jsx:2659
 msgid "Edit image description"
 msgstr "Edit image description"
 
-#: src/components/compose.jsx:2666
+#: src/components/compose.jsx:2660
 msgid "Edit video description"
 msgstr "Edit video description"
 
-#: src/components/compose.jsx:2667
+#: src/components/compose.jsx:2661
 msgid "Edit audio description"
 msgstr "Edit audio description"
 
-#: src/components/compose.jsx:2712
-#: src/components/compose.jsx:2761
+#: src/components/compose.jsx:2706
+#: src/components/compose.jsx:2755
 msgid "Generating description. Please wait…"
 msgstr "Generating description. Please wait…"
 
 #. placeholder {12}: e.message
-#: src/components/compose.jsx:2732
+#: src/components/compose.jsx:2726
 msgid "Failed to generate description: {12}"
 msgstr "Failed to generate description: {12}"
 
-#: src/components/compose.jsx:2733
+#: src/components/compose.jsx:2727
 msgid "Failed to generate description"
 msgstr "Failed to generate description"
 
+#: src/components/compose.jsx:2739
 #: src/components/compose.jsx:2745
-#: src/components/compose.jsx:2751
-#: src/components/compose.jsx:2797
+#: src/components/compose.jsx:2791
 msgid "Generate description…"
 msgstr ""
 
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2784
+#: src/components/compose.jsx:2778
 msgid "Failed to generate description{13}"
 msgstr "Failed to generate description{13}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2799
+#: src/components/compose.jsx:2793
 msgid "({0}) <0>— experimental</0>"
 msgstr ""
 
-#: src/components/compose.jsx:2818
+#: src/components/compose.jsx:2812
 msgid "Done"
 msgstr ""
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2854
+#: src/components/compose.jsx:2848
 msgid "Choice {0}"
 msgstr "Choice {0}"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2895
 msgid "Multiple choices"
 msgstr ""
 
-#: src/components/compose.jsx:2904
+#: src/components/compose.jsx:2898
 msgid "Duration"
 msgstr ""
 
-#: src/components/compose.jsx:2935
+#: src/components/compose.jsx:2929
 msgid "Remove poll"
 msgstr ""
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3144
 msgid "Search accounts"
 msgstr "Search accounts"
 
-#: src/components/compose.jsx:3204
+#: src/components/compose.jsx:3198
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
 msgstr ""
 
-#: src/components/compose.jsx:3348
+#: src/components/compose.jsx:3342
 msgid "Custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3368
+#: src/components/compose.jsx:3362
 msgid "Search emoji"
 msgstr "Search emoji"
 
-#: src/components/compose.jsx:3399
+#: src/components/compose.jsx:3393
 msgid "Error loading custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3410
+#: src/components/compose.jsx:3404
 msgid "Recently used"
 msgstr "Recently used"
 
-#: src/components/compose.jsx:3411
+#: src/components/compose.jsx:3405
 msgid "Others"
 msgstr "Others"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3449
+#: src/components/compose.jsx:3443
 msgid "{0} more…"
 msgstr ""
 
-#: src/components/compose.jsx:3587
+#: src/components/compose.jsx:3581
 msgid "Search GIFs"
 msgstr "Search GIFs"
 
-#: src/components/compose.jsx:3602
+#: src/components/compose.jsx:3596
 msgid "Powered by GIPHY"
 msgstr "Powered by GIPHY"
 
-#: src/components/compose.jsx:3610
+#: src/components/compose.jsx:3604
 msgid "Type to search GIFs"
 msgstr ""
 
-#: src/components/compose.jsx:3708
+#: src/components/compose.jsx:3702
 #: src/components/media-modal.jsx:464
 #: src/components/timeline.jsx:893
 msgid "Previous"
 msgstr ""
 
-#: src/components/compose.jsx:3726
+#: src/components/compose.jsx:3720
 #: src/components/media-modal.jsx:483
 #: src/components/timeline.jsx:910
 msgid "Next"
 msgstr ""
 
-#: src/components/compose.jsx:3743
+#: src/components/compose.jsx:3737
 msgid "Error loading GIFs"
 msgstr ""
 

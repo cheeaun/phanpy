@@ -530,7 +530,7 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
-      ignoreEventWhen: (e) => {
+      ignoreEventWhen: () => {
         const modals = document.querySelectorAll('#modal-container > *');
         const hasModal = !!modals;
         const hasOnlyComposer =
@@ -543,7 +543,7 @@ function Compose({
     if (!standalone && confirmClose()) {
       onClose();
     }
-  }, [standalone, confirmClose, onClose]);
+  }, []);
 
   const prevBackgroundDraft = useRef({});
   const draftKey = () => {
@@ -1638,10 +1638,8 @@ function Compose({
       </div>
       {showMentionPicker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMentionPicker(false);
-            }
+          onClose={() => {
+            setShowMentionPicker(false);
           }}
         >
           <MentionModal
@@ -1687,10 +1685,8 @@ function Compose({
       )}
       {showEmoji2Picker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowEmoji2Picker(false);
-            }
+          onClose={() => {
+            setShowEmoji2Picker(false);
           }}
         >
           <CustomEmojisModal
@@ -1732,10 +1728,8 @@ function Compose({
       )}
       {showGIFPicker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowGIFPicker(false);
-            }
+          onClose={() => {
+            setShowGIFPicker(false);
           }}
         >
           <GIFPickerModal

@@ -119,7 +119,7 @@ export async function initInstance(client, instance) {
             typeof link.rel === 'string' &&
             link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/'),
         )?.href;
-        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+        if (nodeInfoUrl) {
           nodeInfo = await (await fetch(nodeInfoUrl)).json();
         }
       }

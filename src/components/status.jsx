@@ -2331,13 +2331,15 @@ function Status({
                           </>
                         )
                       }
-                      <time
-                        class="created"
-                        datetime={createdAtDate.toISOString()}
-                        title={createdAtDate.toLocaleString()}
-                      >
-                        {createdDateText}
-                      </time>
+                      {!!createdAt && (
+                        <time
+                          class="created"
+                          datetime={createdAtDate.toISOString()}
+                          title={createdAtDate.toLocaleString()}
+                        >
+                          {createdDateText}
+                        </time>
+                      )}
                     </a>
                     {editedAt && (
                       <>
@@ -3221,7 +3223,7 @@ function generateHTMLCode(post, instance, level = 0) {
         — ${emojifyText(
           displayName,
           accountEmojis,
-        )} (@${acct}) <a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>
+        )} (@${acct}) ${!!createdAt ? `<a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>` : ''}
       </footer>
     </blockquote>
   `;

@@ -208,8 +208,7 @@ const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 const CUSTOM_EMOJIS_COUNT = 100;
 
 const ADD_LABELS = {
-  // camera: msg`Take photo or video`,
-  camera: 'Take photo or video',
+  camera: msg`Take photo or video`,
   media: msg`Add media`,
   customEmoji: msg`Add custom emoji`,
   gif: msg`Add GIF`,

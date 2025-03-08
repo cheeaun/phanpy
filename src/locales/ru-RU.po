@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-06 06:21\n"
+"PO-Revision-Date: 2025-03-08 01:54\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -113,7 +113,7 @@ msgstr "Посты"
 
 #: src/components/account-info.jsx:430
 #: src/components/account-info.jsx:1143
-#: src/components/compose.jsx:2703
+#: src/components/compose.jsx:2772
 #: src/components/media-alt-modal.jsx:46
 #: src/components/media-modal.jsx:358
 #: src/components/status.jsx:1770
@@ -424,11 +424,11 @@ msgstr "Подписаться"
 #: src/components/account-info.jsx:2020
 #: src/components/account-info.jsx:2140
 #: src/components/account-sheet.jsx:38
-#: src/components/compose.jsx:877
-#: src/components/compose.jsx:2659
-#: src/components/compose.jsx:3133
-#: src/components/compose.jsx:3342
-#: src/components/compose.jsx:3572
+#: src/components/compose.jsx:881
+#: src/components/compose.jsx:2728
+#: src/components/compose.jsx:3202
+#: src/components/compose.jsx:3411
+#: src/components/compose.jsx:3641
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:143
@@ -575,183 +575,187 @@ msgstr "Домашняя"
 msgid "Compose"
 msgstr "Написать"
 
-#: src/components/compose-button.jsx:159
+#: src/components/compose-button.jsx:162
 #: src/components/nav-menu.jsx:260
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
 msgstr "Отложенные посты"
 
-#: src/components/compose-button.jsx:172
+#: src/components/compose-button.jsx:175
 msgid "Add to thread"
 msgstr "Добавить в обсуждение"
 
 #: src/components/compose.jsx:211
+msgid "Take photo or video"
+msgstr ""
+
+#: src/components/compose.jsx:212
 msgid "Add media"
 msgstr "Добавить медиафайл"
 
-#: src/components/compose.jsx:212
+#: src/components/compose.jsx:213
 msgid "Add custom emoji"
 msgstr "Добавить пользовательские эмодзи"
 
-#: src/components/compose.jsx:213
+#: src/components/compose.jsx:214
 msgid "Add GIF"
 msgstr "Добавить GIF"
 
-#: src/components/compose.jsx:214
+#: src/components/compose.jsx:215
 msgid "Add poll"
 msgstr "Добавить голосование"
 
-#: src/components/compose.jsx:215
+#: src/components/compose.jsx:216
 msgid "Schedule post"
 msgstr "Запланировать пост"
 
-#: src/components/compose.jsx:411
+#: src/components/compose.jsx:415
 msgid "You have unsaved changes. Discard this post?"
 msgstr "У вас есть несохраненные изменения. Отменить этот пост?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:640
+#: src/components/compose.jsx:644
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {Файл {1} не поддерживается.} other {Файлы {2} не поддерживаются.}}"
 
-#: src/components/compose.jsx:650
-#: src/components/compose.jsx:668
-#: src/components/compose.jsx:1747
-#: src/components/compose.jsx:1833
+#: src/components/compose.jsx:654
+#: src/components/compose.jsx:672
+#: src/components/compose.jsx:1777
+#: src/components/compose.jsx:1902
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Вы можете прикрепить только 1 файл.} other {Вы можете прикрепить до # файлов.}}"
 
-#: src/components/compose.jsx:858
+#: src/components/compose.jsx:862
 msgid "Pop out"
 msgstr "Открыть в отдельном окне"
 
-#: src/components/compose.jsx:865
+#: src/components/compose.jsx:869
 msgid "Minimize"
 msgstr "Свернуть"
 
-#: src/components/compose.jsx:901
+#: src/components/compose.jsx:905
 msgid "Looks like you closed the parent window."
 msgstr "Похоже, вы закрыли родительское окно."
 
-#: src/components/compose.jsx:908
+#: src/components/compose.jsx:912
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Похоже, вы уже публикуете пост в родительском окне. Дождитесь публикации и попробуйте снова."
 
-#: src/components/compose.jsx:913
+#: src/components/compose.jsx:917
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Похоже, вы уже пишите или редактируете пост в родительском окне. Возвращение этого окна отменит изменения в родительском окне. Продолжить?"
 
-#: src/components/compose.jsx:956
+#: src/components/compose.jsx:960
 msgid "Pop in"
 msgstr "Вернуть в родительское окно"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:966
+#: src/components/compose.jsx:970
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Отвечаем пост @{0}(<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:976
+#: src/components/compose.jsx:980
 msgid "Replying to @{0}’s post"
 msgstr "Отвечаем на пост @{0}"
 
-#: src/components/compose.jsx:989
+#: src/components/compose.jsx:993
 msgid "Editing source post"
 msgstr "Редактирование исходного поста"
 
-#: src/components/compose.jsx:1042
+#: src/components/compose.jsx:1046
 msgid "Poll must have at least 2 options"
 msgstr "Опрос должен иметь не менее 2 вариантов ответа"
 
-#: src/components/compose.jsx:1046
+#: src/components/compose.jsx:1050
 msgid "Some poll choices are empty"
 msgstr "Некоторые варианты ответа пусты"
 
-#: src/components/compose.jsx:1059
+#: src/components/compose.jsx:1063
 msgid "Some media have no descriptions. Continue?"
 msgstr "У некоторых медиафайлов нет описаний. Продолжить?"
 
-#: src/components/compose.jsx:1111
+#: src/components/compose.jsx:1115
 msgid "Attachment #{i} failed"
 msgstr "Не удалось прикрепить вложение №{i}"
 
-#: src/components/compose.jsx:1207
+#: src/components/compose.jsx:1211
 #: src/components/status.jsx:2098
 #: src/components/timeline.jsx:989
 msgid "Content warning"
 msgstr "Предупреждение о содержании"
 
-#: src/components/compose.jsx:1223
+#: src/components/compose.jsx:1227
 msgid "Content warning or sensitive media"
 msgstr "Предупреждение о содержании или медиафайлах деликатного характера"
 
-#: src/components/compose.jsx:1259
+#: src/components/compose.jsx:1263
 #: src/components/status.jsx:94
 #: src/pages/settings.jsx:306
 msgid "Public"
 msgstr "Публичный"
 
-#: src/components/compose.jsx:1264
+#: src/components/compose.jsx:1268
 #: src/components/nav-menu.jsx:344
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:95
 msgid "Local"
 msgstr "Локальная"
 
-#: src/components/compose.jsx:1268
+#: src/components/compose.jsx:1272
 #: src/components/status.jsx:96
 #: src/pages/settings.jsx:309
 msgid "Unlisted"
 msgstr "Без включения в поиск"
 
-#: src/components/compose.jsx:1271
+#: src/components/compose.jsx:1275
 #: src/components/status.jsx:97
 #: src/pages/settings.jsx:312
 msgid "Followers only"
 msgstr "Только для подписчиков"
 
-#: src/components/compose.jsx:1274
+#: src/components/compose.jsx:1278
 #: src/components/status.jsx:98
 #: src/components/status.jsx:1976
 msgid "Private mention"
 msgstr "Личное упоминание"
 
-#: src/components/compose.jsx:1283
+#: src/components/compose.jsx:1287
 msgid "Post your reply"
 msgstr "Опубликовать ответ"
 
-#: src/components/compose.jsx:1285
+#: src/components/compose.jsx:1289
 msgid "Edit your post"
 msgstr "Редактировать свой пост"
 
-#: src/components/compose.jsx:1286
+#: src/components/compose.jsx:1290
 msgid "What are you doing?"
 msgstr "Начните писать свои мысли"
 
-#: src/components/compose.jsx:1364
+#: src/components/compose.jsx:1368
 msgid "Mark media as sensitive"
 msgstr "Отметить медиафайл как деликатный"
 
-#: src/components/compose.jsx:1401
+#: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
 msgstr "Публикация в <0/>"
 
-#: src/components/compose.jsx:1432
-#: src/components/compose.jsx:3191
+#: src/components/compose.jsx:1436
+#: src/components/compose.jsx:3260
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
 msgstr "Добавить"
 
-#: src/components/compose.jsx:1626
+#: src/components/compose.jsx:1662
 msgid "Schedule"
 msgstr "Запланировать"
 
-#: src/components/compose.jsx:1628
+#: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:154
 #: src/components/status.jsx:984
 #: src/components/status.jsx:1750
@@ -760,48 +764,48 @@ msgstr "Запланировать"
 msgid "Reply"
 msgstr "Ответить"
 
-#: src/components/compose.jsx:1630
+#: src/components/compose.jsx:1666
 msgid "Update"
 msgstr "Сохранить"
 
-#: src/components/compose.jsx:1631
+#: src/components/compose.jsx:1667
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Опубликовать"
 
-#: src/components/compose.jsx:1759
+#: src/components/compose.jsx:1789
 msgid "Downloading GIF…"
 msgstr "Загружаем GIF-анимацию…"
 
-#: src/components/compose.jsx:1787
+#: src/components/compose.jsx:1817
 msgid "Failed to download GIF"
 msgstr "Не удалось загрузить GIF-анимацию"
 
-#: src/components/compose.jsx:1963
-#: src/components/compose.jsx:2040
+#: src/components/compose.jsx:2032
+#: src/components/compose.jsx:2109
 #: src/components/nav-menu.jsx:239
 msgid "More…"
 msgstr "Ещё…"
 
-#: src/components/compose.jsx:2472
+#: src/components/compose.jsx:2541
 msgid "Uploaded"
 msgstr "Загружено"
 
-#: src/components/compose.jsx:2485
+#: src/components/compose.jsx:2554
 msgid "Image description"
 msgstr "Описание изображения"
 
-#: src/components/compose.jsx:2486
+#: src/components/compose.jsx:2555
 msgid "Video description"
 msgstr "Описание видео"
 
-#: src/components/compose.jsx:2487
+#: src/components/compose.jsx:2556
 msgid "Audio description"
 msgstr "Описание аудио"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
-#: src/components/compose.jsx:2523
+#: src/components/compose.jsx:2592
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Файл слишком большой — при загрузке могут возникнуть проблемы. Попробуйте уменьшить размер с {0} до {1} или меньше."
 
@@ -809,13 +813,13 @@ msgstr "Файл слишком большой — при загрузке мо�
 #. placeholder {3}: i18n.number(height)
 #. placeholder {4}: i18n.number(newWidth)
 #. placeholder {5}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2535
+#: src/components/compose.jsx:2604
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
 msgstr "Сильно большое разрешение — при загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {2}×{3}px до {4}×{5}px."
 
 #. placeholder {6}: prettyBytes( videoSize, )
 #. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2543
+#: src/components/compose.jsx:2612
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
 msgstr "Файл слишком большой — при загрузке могут возникнуть проблемы. Попробуйте уменьшить размер с {6} до {7} или меньше."
 
@@ -823,149 +827,149 @@ msgstr "Файл слишком большой — при загрузке мо�
 #. placeholder {9}: i18n.number(height)
 #. placeholder {10}: i18n.number(newWidth)
 #. placeholder {11}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2555
+#: src/components/compose.jsx:2624
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
 msgstr "Сильно большое разрешение — при загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {8}×{9}px до {10}×{11}px."
 
-#: src/components/compose.jsx:2563
+#: src/components/compose.jsx:2632
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Слишком высокая частота кадров — при загрузке могут возникнуть проблемы."
 
-#: src/components/compose.jsx:2623
-#: src/components/compose.jsx:2873
+#: src/components/compose.jsx:2692
+#: src/components/compose.jsx:2942
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
 msgstr "Убрать"
 
-#: src/components/compose.jsx:2640
+#: src/components/compose.jsx:2709
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Ошибка"
 
-#: src/components/compose.jsx:2665
+#: src/components/compose.jsx:2734
 msgid "Edit image description"
 msgstr "Редактировать описание изображения"
 
-#: src/components/compose.jsx:2666
+#: src/components/compose.jsx:2735
 msgid "Edit video description"
 msgstr "Редактировать описание видео"
 
-#: src/components/compose.jsx:2667
+#: src/components/compose.jsx:2736
 msgid "Edit audio description"
 msgstr "Редактировать описание аудио"
 
-#: src/components/compose.jsx:2712
-#: src/components/compose.jsx:2761
+#: src/components/compose.jsx:2781
+#: src/components/compose.jsx:2830
 msgid "Generating description. Please wait…"
 msgstr "Создаём описание. Один момент, пожалуйста…"
 
 #. placeholder {12}: e.message
-#: src/components/compose.jsx:2732
+#: src/components/compose.jsx:2801
 msgid "Failed to generate description: {12}"
 msgstr "Не удалось создать описание: {12}"
 
-#: src/components/compose.jsx:2733
+#: src/components/compose.jsx:2802
 msgid "Failed to generate description"
 msgstr "Не удалось создать описание"
 
-#: src/components/compose.jsx:2745
-#: src/components/compose.jsx:2751
-#: src/components/compose.jsx:2797
+#: src/components/compose.jsx:2814
+#: src/components/compose.jsx:2820
+#: src/components/compose.jsx:2866
 msgid "Generate description…"
 msgstr "Автоматическое описание…"
 
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2784
+#: src/components/compose.jsx:2853
 msgid "Failed to generate description{13}"
 msgstr "Не удалось создать описание: {13}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2799
+#: src/components/compose.jsx:2868
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— экспериментальная функция</0>"
 
-#: src/components/compose.jsx:2818
+#: src/components/compose.jsx:2887
 msgid "Done"
 msgstr "Готово"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2854
+#: src/components/compose.jsx:2923
 msgid "Choice {0}"
 msgstr "Выбор {0}"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2970
 msgid "Multiple choices"
 msgstr "Разрешить несколько ответов"
 
-#: src/components/compose.jsx:2904
+#: src/components/compose.jsx:2973
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: src/components/compose.jsx:2935
+#: src/components/compose.jsx:3004
 msgid "Remove poll"
 msgstr "Убрать опрос"
 
-#: src/components/compose.jsx:3150
+#: src/components/compose.jsx:3219
 msgid "Search accounts"
 msgstr "Поиск пользователей"
 
-#: src/components/compose.jsx:3204
+#: src/components/compose.jsx:3273
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
 msgstr "Ошибка поиска пользователей"
 
-#: src/components/compose.jsx:3348
+#: src/components/compose.jsx:3417
 msgid "Custom emojis"
 msgstr "Пользовательские эмодзи"
 
-#: src/components/compose.jsx:3368
+#: src/components/compose.jsx:3437
 msgid "Search emoji"
 msgstr "Поиск эмодзи"
 
-#: src/components/compose.jsx:3399
+#: src/components/compose.jsx:3468
 msgid "Error loading custom emojis"
 msgstr "Ошибка загрузки пользовательских эмодзи"
 
-#: src/components/compose.jsx:3410
+#: src/components/compose.jsx:3479
 msgid "Recently used"
 msgstr "Недавно использованные"
 
-#: src/components/compose.jsx:3411
+#: src/components/compose.jsx:3480
 msgid "Others"
 msgstr "Прочие"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3449
+#: src/components/compose.jsx:3518
 msgid "{0} more…"
 msgstr "Ещё {0}…"
 
-#: src/components/compose.jsx:3587
+#: src/components/compose.jsx:3656
 msgid "Search GIFs"
 msgstr "Поиск GIF"
 
-#: src/components/compose.jsx:3602
+#: src/components/compose.jsx:3671
 msgid "Powered by GIPHY"
 msgstr "На основе GIPHY"
 
-#: src/components/compose.jsx:3610
+#: src/components/compose.jsx:3679
 msgid "Type to search GIFs"
 msgstr "Начните набирать для поиска GIF-анимаций"
 
-#: src/components/compose.jsx:3708
+#: src/components/compose.jsx:3777
 #: src/components/media-modal.jsx:464
 #: src/components/timeline.jsx:893
 msgid "Previous"
 msgstr "Назад"
 
-#: src/components/compose.jsx:3726
+#: src/components/compose.jsx:3795
 #: src/components/media-modal.jsx:483
 #: src/components/timeline.jsx:910
 msgid "Next"
 msgstr "Вперёд"
 
-#: src/components/compose.jsx:3743
+#: src/components/compose.jsx:3812
 msgid "Error loading GIFs"
 msgstr "Ошибка поиска GIF-анимаций"
 

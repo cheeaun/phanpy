@@ -22,10 +22,7 @@ jobs:
       run: npm install
 
     - name: Build project
-      run: PHANPY_CLIENT_NAME="Not Clickable" \
-           PHANPY_WEBSITE="https://notclickable.social" \
-           PHANPY_DEFAULT_INSTANCE=notclickable.social \
-           npm run build
+      run: npm run build
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4

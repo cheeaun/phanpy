@@ -444,7 +444,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       var(--line-radius), var(--line-radius); */
     --curves-radius: calc(var(--curves-width) / 2);
     height: calc(var(--curves-width) - var(--line-width));
-    background-image: radial-gradient(
+    background-image:
+      radial-gradient(
         circle at bottom var(--forward),
         transparent calc(var(--curves-radius) - var(--line-width)),
         var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
@@ -475,7 +476,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent
   );
   &.hero:not(:has(+ .thread), :first-child, :only-child, :last-child) {
-    background-image: linear-gradient(
+    background-image:
+      linear-gradient(
         var(--line-dir),
         transparent,
         transparent var(--indent-small-start),
@@ -1050,7 +1052,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       ellipse 50% 32px at bottom center,
       var(--carousel-faded-color),
       transparent
@@ -1736,6 +1739,18 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   }
 }
 
+.menu-post-text {
+  max-width: 40em;
+  overflow: hidden;
+  /* ellipsis 2 lines */
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
 /* SHEET */
 
 .sheet {
@@ -2311,7 +2326,8 @@ body > .szh-menu-container {
       var(--bg-color) var(--middle-circle-radius),
       transparent var(--middle-circle-radius)
     );
-    background-image: var(--middle-circle),
+    background-image:
+      var(--middle-circle),
       conic-gradient(var(--color) var(--fill), var(--outline-color) 0);
     transform: scale(0.7);
     &:dir(rtl) {

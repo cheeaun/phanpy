@@ -84,7 +84,7 @@ export async function getAccessToken({
     redirect_uri: REDIRECT_URI,
     grant_type: 'authorization_code',
     code,
-    scope: SCOPES,
+    // scope: SCOPES, // Not needed
     // client_secret,
     // code_verifier,
   });

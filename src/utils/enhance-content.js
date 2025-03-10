@@ -294,7 +294,7 @@ function _enhanceContent(content, opts = {}) {
   // Workaround for Safari so that `text-decoration-thickness` works
   // Wrap child text nodes in spans
   for (const node of dom.childNodes) {
-    if (node.nodeType === Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim?.()) {
       const span = document.createElement('span');
       span.textContent = node.textContent;
       dom.replaceChild(span, node);

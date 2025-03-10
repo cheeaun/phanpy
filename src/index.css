@@ -11,8 +11,9 @@
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
-  --monospace-font: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
+  --monospace-font:
+    ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+    monospace;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -190,8 +191,16 @@ html {
 }
 
 body {
-  font-family: ui-rounded, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family:
+    ui-rounded,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    sans-serif;
   font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -367,6 +376,7 @@ button[hidden] {
 
 input[type='text'],
 input[type='search'],
+input[type='datetime-local'],
 textarea,
 select {
   color: var(--text-color);
@@ -377,6 +387,7 @@ select {
 }
 input[type='text']:focus,
 input[type='search']:focus,
+input[type='datetime-local']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--outline-color);

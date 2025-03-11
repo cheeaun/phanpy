@@ -1,3 +1,4 @@
+import { compareVersions, satisfies, validate } from 'compare-versions';
 import { createRestAPIClient, createStreamingAPIClient } from 'masto';
 
 import store from './store';
@@ -114,12 +115,24 @@ export async function initInstance(client, instance) {
         await fetch(`${urlBase}/.well-known/nodeinfo`)
       ).json();
       if (Array.isArray(wellKnown?.links)) {
-        const nodeInfoUrl = wellKnown.links.find(
-          (link) =>
-            typeof link.rel === 'string' &&
-            link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/'),
-        )?.href;
-        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+        const schema = 'http://nodeinfo.diaspora.software/ns/schema/';
+        const nodeInfoUrl = wellKnown.links
+          .filter(
+            (link) =>
+              typeof link.rel === 'string' &&
+              link.rel.startsWith(schema) &&
+              validate(link.rel.slice(schema.length)),
+          )
+          .map((link) => {
+            let version = link.rel.slice(schema.length);
+            return {
+              version,
+              href: link.href,
+            };
+          })
+          .sort((a, b) => -compareVersions(a.version, b.version))
+          .find((x) => satisfies(x.version, '<=2'))?.href;
+        if (nodeInfoUrl) {
           nodeInfo = await (await fetch(nodeInfoUrl)).json();
         }
       }

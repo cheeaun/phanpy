@@ -417,27 +417,29 @@ function MediaModal({
                 </>
               )}
           </Menu2>{' '}
-          <Link
-            to={`${instance ? `/${instance}` : ''}/s/${statusID}${
-              window.matchMedia('(min-width: calc(40em + 350px))').matches
-                ? `?media=${currentIndex + 1}`
-                : ''
-            }`}
-            class="button carousel-button media-post-link"
-            // onClick={() => {
-            //   // if small screen (not media query min-width 40em + 350px), run onClose
-            //   if (
-            //     !window.matchMedia('(min-width: calc(40em + 350px))').matches
-            //   ) {
-            //     onClose();
-            //   }
-            // }}
-          >
-            <span class="button-label">
-              <Trans>View post</Trans>{' '}
-            </span>
-            &raquo;
-          </Link>
+          {!!statusID && (
+            <Link
+              to={`${instance ? `/${instance}` : ''}/s/${statusID}${
+                window.matchMedia('(min-width: calc(40em + 350px))').matches
+                  ? `?media=${currentIndex + 1}`
+                  : ''
+              }`}
+              class="button carousel-button media-post-link"
+              // onClick={() => {
+              //   // if small screen (not media query min-width 40em + 350px), run onClose
+              //   if (
+              //     !window.matchMedia('(min-width: calc(40em + 350px))').matches
+              //   ) {
+              //     onClose();
+              //   }
+              // }}
+            >
+              <span class="button-label">
+                <Trans>View post</Trans>{' '}
+              </span>
+              &raquo;
+            </Link>
+          )}
         </span>
       </div>
       {mediaAttachments?.length > 1 && (

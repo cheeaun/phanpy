@@ -28,6 +28,7 @@ import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
 import { api } from '../utils/api';
+import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import i18nDuration from '../utils/i18n-duration';
@@ -59,6 +60,10 @@ import AccountBlock from './account-block';
 import Icon from './icon';
 import Loader from './loader';
 import Modal from './modal';
+import ScheduledAtField, {
+  getLocalTimezoneName,
+  MIN_SCHEDULED_AT,
+} from './ScheduledAtField';
 import Status from './status';
 
 const {
@@ -142,8 +147,8 @@ const MENTION_RE = new RegExp(
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[a-z0-9_]+([a-z0-9_.]+[a-z0-9_]+)?)(?![\\/\\w])`,
-  'ig',
+  `(^|[^=\\/\\w])(#[\\p{L}\\p{N}_]+([\\p{L}\\p{N}_.]+[\\p{L}\\p{N}_]+)?)(?![\\/\\w])`,
+  'iug',
 );
 
 // https://github.com/mastodon/mastodon/blob/23e32a4b3031d1da8b911e0145d61b4dd47c4f96/app/models/custom_emoji.rb#L31
@@ -203,10 +208,12 @@ const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 const CUSTOM_EMOJIS_COUNT = 100;
 
 const ADD_LABELS = {
+  camera: msg`Take photo or video`,
   media: msg`Add media`,
   customEmoji: msg`Add custom emoji`,
   gif: msg`Add GIF`,
   poll: msg`Add poll`,
+  scheduledPost: msg`Schedule post`,
 };
 
 function Compose({
@@ -254,6 +261,9 @@ function Compose({
       minExpiration,
     } = {},
   } = configuration || {};
+  const supportedImagesVideosTypes = supportedMimeTypes?.filter((mimeType) =>
+    /^(image|video)/i.test(mimeType),
+  );
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
@@ -265,6 +275,7 @@ function Compose({
   const prevLanguage = useRef(language);
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
+  const [scheduledAt, setScheduledAt] = useState(null);
 
   const prefs = store.account.get('preferences') || {};
 
@@ -375,6 +386,7 @@ function Compose({
         sensitive,
         poll,
         mediaAttachments,
+        scheduledAt,
       } = draftStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
@@ -394,6 +406,7 @@ function Compose({
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
+      if (scheduledAt) setScheduledAt(scheduledAt);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -521,7 +534,7 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
-      ignoreEventWhen: (e) => {
+      ignoreEventWhen: () => {
         const modals = document.querySelectorAll('#modal-container > *');
         const hasModal = !!modals;
         const hasOnlyComposer =
@@ -534,7 +547,7 @@ function Compose({
     if (!standalone && confirmClose()) {
       onClose();
     }
-  }, [standalone, confirmClose, onClose]);
+  }, []);
 
   const prevBackgroundDraft = useRef({});
   const draftKey = () => {
@@ -574,6 +587,7 @@ function Compose({
         sensitive,
         poll,
         mediaAttachments,
+        scheduledAt,
       },
     };
     if (
@@ -773,6 +787,13 @@ function Compose({
     },
   });
 
+  const showScheduledAt = !editStatus;
+  const scheduledAtButtonDisabled = uiState === 'loading' || !!scheduledAt;
+  const onScheduledAtClick = () => {
+    const date = new Date(Date.now() + MIN_SCHEDULED_AT);
+    setScheduledAt(date);
+  };
+
   return (
     <div id="compose-container-outer">
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
@@ -827,6 +848,7 @@ function Compose({
                       sensitive,
                       poll,
                       mediaAttachments,
+                      scheduledAt,
                     },
                   });
 
@@ -915,6 +937,7 @@ function Compose({
                           sensitive,
                           poll,
                           mediaAttachments,
+                          scheduledAt,
                         },
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
@@ -991,10 +1014,16 @@ function Compose({
             const formData = new FormData(e.target);
             const entries = Object.fromEntries(formData.entries());
             console.log('ENTRIES', entries);
-            let { status, visibility, sensitive, spoilerText } = entries;
+            let { status, visibility, sensitive, spoilerText, scheduledAt } =
+              entries;
 
             // Pre-cleanup
             sensitive = sensitive === 'on'; // checkboxes return "on" if checked
+
+            // Convert datetime-local input value to RFC3339 Date string value
+            scheduledAt = scheduledAt
+              ? new Date(scheduledAt).toISOString()
+              : undefined;
 
             // Validation
             /* Let the backend validate this
@@ -1125,6 +1154,7 @@ function Compose({
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
+                  params.scheduled_at = scheduledAt;
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1161,6 +1191,7 @@ function Compose({
                   type: editStatus ? 'edit' : replyToStatus ? 'reply' : 'post',
                   newStatus,
                   instance,
+                  scheduledAt,
                 });
               } catch (e) {
                 states.composerState.publishing = false;
@@ -1359,6 +1390,30 @@ function Compose({
               }}
             />
           )}
+          {scheduledAt && (
+            <div class="toolbar scheduled-at">
+              <button
+                type="button"
+                class="plain4 small"
+                onClick={() => {
+                  setScheduledAt(null);
+                }}
+              >
+                <Icon icon="x" />
+              </button>
+              <label>
+                <Trans>
+                  Posting on{' '}
+                  <ScheduledAtField
+                    scheduledAt={scheduledAt}
+                    setScheduledAt={setScheduledAt}
+                  />
+                </Trans>
+                <br />
+                <small>{getLocalTimezoneName()}</small>
+              </label>
+            </div>
+          )}
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
               {showAddButton && (
@@ -1382,6 +1437,23 @@ function Compose({
                     </button>
                   )}
                 >
+                  {supportsCameraCapture && (
+                    <MenuItem className="compose-menu-add-media">
+                      <label class="compose-menu-add-media-field">
+                        <CameraCaptureInput
+                          hidden
+                          supportedMimeTypes={supportedImagesVideosTypes}
+                          disabled={
+                            uiState === 'loading' ||
+                            mediaAttachments.length >= maxMediaAttachments ||
+                            !!poll
+                          }
+                          setMediaAttachments={setMediaAttachments}
+                        />
+                      </label>
+                      <Icon icon="camera" /> <span>{_(ADD_LABELS.camera)}</span>
+                    </MenuItem>
+                  )}
                   <MenuItem className="compose-menu-add-media">
                     <label class="compose-menu-add-media-field">
                       <FilePickerInput
@@ -1418,15 +1490,41 @@ function Compose({
                       <span>{_(ADD_LABELS.gif)}</span>
                     </MenuItem>
                   )}
-                  <MenuItem
-                    disabled={pollButtonDisabled}
-                    onClick={onPollButtonClick}
-                  >
-                    <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
-                  </MenuItem>
+                  {showPollButton && (
+                    <MenuItem
+                      disabled={pollButtonDisabled}
+                      onClick={onPollButtonClick}
+                    >
+                      <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
+                    </MenuItem>
+                  )}
+                  {showScheduledAt && (
+                    <MenuItem
+                      disabled={scheduledAtButtonDisabled}
+                      onClick={onScheduledAtClick}
+                    >
+                      <Icon icon="schedule" />{' '}
+                      <span>{_(ADD_LABELS.scheduledPost)}</span>
+                    </MenuItem>
+                  )}
                 </Menu2>
               )}
               <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
+                {supportsCameraCapture && (
+                  <label class="toolbar-button">
+                    <CameraCaptureInput
+                      supportedMimeTypes={supportedImagesVideosTypes}
+                      mediaAttachments={mediaAttachments}
+                      disabled={
+                        uiState === 'loading' ||
+                        mediaAttachments.length >= maxMediaAttachments ||
+                        !!poll
+                      }
+                      setMediaAttachments={setMediaAttachments}
+                    />
+                    <Icon icon="camera" alt={_(ADD_LABELS.camera)} />
+                  </label>
+                )}
                 <label class="toolbar-button">
                   <FilePickerInput
                     supportedMimeTypes={supportedMimeTypes}
@@ -1476,7 +1574,6 @@ function Compose({
                     />
                   </button>
                 )}
-                {}
                 {showPollButton && (
                   <>
                     <button
@@ -1488,6 +1585,16 @@ function Compose({
                       <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
                     </button>
                   </>
+                )}
+                {showScheduledAt && (
+                  <button
+                    type="button"
+                    class={`toolbar-button ${scheduledAt ? 'highlight' : ''}`}
+                    disabled={scheduledAtButtonDisabled}
+                    onClick={onScheduledAtClick}
+                  >
+                    <Icon icon="schedule" alt={_(ADD_LABELS.scheduledPost)} />
+                  </button>
                 )}
               </span>
             </span>
@@ -1551,24 +1658,24 @@ function Compose({
               </select>
             </label>{' '}
             <button type="submit" disabled={uiState === 'loading'}>
-              {replyToStatus
-                ? t`Reply`
-                : editStatus
-                  ? t`Update`
-                  : t({
-                      message: 'Post',
-                      context: 'Submit button in composer',
-                    })}
+              {scheduledAt
+                ? t`Schedule`
+                : replyToStatus
+                  ? t`Reply`
+                  : editStatus
+                    ? t`Update`
+                    : t({
+                        message: 'Post',
+                        context: 'Submit button in composer',
+                      })}
             </button>
           </div>
         </form>
       </div>
       {showMentionPicker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowMentionPicker(false);
-            }
+          onClose={() => {
+            setShowMentionPicker(false);
           }}
         >
           <MentionModal
@@ -1614,10 +1721,8 @@ function Compose({
       )}
       {showEmoji2Picker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowEmoji2Picker(false);
-            }
+          onClose={() => {
+            setShowEmoji2Picker(false);
           }}
         >
           <CustomEmojisModal
@@ -1659,10 +1764,8 @@ function Compose({
       )}
       {showGIFPicker && (
         <Modal
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowGIFPicker(false);
-            }
+          onClose={() => {
+            setShowGIFPicker(false);
           }}
         >
           <GIFPickerModal
@@ -1719,6 +1822,45 @@ function Compose({
         </Modal>
       )}
     </div>
+  );
+}
+
+const supportsCameraCapture = (() => {
+  const input = document.createElement('input');
+  return 'capture' in input;
+})();
+function CameraCaptureInput({
+  hidden,
+  disabled = false,
+  supportedMimeTypes,
+  setMediaAttachments,
+}) {
+  return (
+    <input
+      type="file"
+      hidden={hidden}
+      accept={supportedMimeTypes?.join(',')}
+      capture="environment"
+      disabled={disabled}
+      onChange={(e) => {
+        const files = e.target.files;
+        if (!files) return;
+        const mediaFile = Array.from(files)[0];
+        if (!mediaFile) return;
+        setMediaAttachments((attachments) => [
+          ...attachments,
+          {
+            file: mediaFile,
+            type: mediaFile.type,
+            size: mediaFile.size,
+            url: URL.createObjectURL(mediaFile),
+            id: null, // indicate uploaded state
+            description: null,
+          },
+        ]);
+        e.target.value = null;
+      }}
+    />
   );
 }
 
@@ -1803,6 +1945,12 @@ const getCustomEmojis = pmem(_getCustomEmojis, {
 });
 
 const detectLangs = async (text) => {
+  if (langDetector) {
+    const langs = await langDetector.detect(text);
+    if (langs?.length) {
+      return langs.slice(0, 2).map((lang) => lang.detectedLanguage);
+    }
+  }
   const { detectAll } = await import('tinyld/light');
   const langs = detectAll(text);
   if (langs?.length) {

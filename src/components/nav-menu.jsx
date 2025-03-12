@@ -254,6 +254,12 @@ function NavMenu(props) {
                     <Trans>Followed Hashtags</Trans>
                   </span>
                 </MenuLink>
+                <MenuLink to="/sp">
+                  <Icon icon="schedule" size="l" />{' '}
+                  <span>
+                    <Trans>Scheduled Posts</Trans>
+                  </span>
+                </MenuLink>
                 <MenuDivider />
                 {supports('@mastodon/filters') && (
                   <MenuLink to="/ft">

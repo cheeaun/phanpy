@@ -21,8 +21,7 @@ import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
 
 function Shortcuts() {
-  const { t } = useLingui();
-  const { _ } = useLingui();
+  const { t, _ } = useLingui();
   const { instance } = api();
   const snapStates = useSnapshot(states);
   const { shortcuts, settings } = snapStates;

@@ -37,7 +37,6 @@ import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
 import MenuConfirm from './menu-confirm';
-import MenuLink from './menu-link';
 import Menu2 from './menu2';
 import Modal from './modal';
 import SubMenu2 from './submenu2';
@@ -604,18 +603,40 @@ function AccountInfo({
                     </span>
                   </MenuItem>
                   <MenuDivider />
-                  <MenuLink href={info.avatar} target="_blank">
+                  <MenuItem
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: [
+                          {
+                            type: 'image',
+                            url: avatarStatic,
+                          },
+                        ],
+                      };
+                    }}
+                  >
                     <Icon icon="user" />
                     <span>
                       <Trans>View profile image</Trans>
                     </span>
-                  </MenuLink>
-                  <MenuLink href={info.header} target="_blank">
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: [
+                          {
+                            type: 'image',
+                            url: headerStatic,
+                          },
+                        ],
+                      };
+                    }}
+                  >
                     <Icon icon="media" />
                     <span>
                       <Trans>View profile header</Trans>
                     </span>
-                  </MenuLink>
+                  </MenuItem>
                 </Menu2>
               ) : (
                 <AccountBlock
@@ -2069,11 +2090,21 @@ function PrivateNoteSheet({
   );
 }
 
+const SUPPORTED_IMAGE_FORMATS = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+];
+const SUPPORTED_IMAGE_FORMATS_STR = SUPPORTED_IMAGE_FORMATS.join(',');
+
 function EditProfileSheet({ onClose = () => {} }) {
   const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('loading');
   const [account, setAccount] = useState(null);
+  const [headerPreview, setHeaderPreview] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -2089,9 +2120,18 @@ function EditProfileSheet({ onClose = () => {} }) {
   }, []);
 
   console.log('EditProfileSheet', account);
-  const { displayName, source } = account || {};
+  const { displayName, source, avatar, header } = account || {};
   const { note, fields } = source || {};
   const fieldsAttributesRef = useRef(null);
+
+  const avatarMediaAttachments = [
+    ...(avatar ? [{ type: 'image', url: avatar }] : []),
+    ...(avatarPreview ? [{ type: 'image', url: avatarPreview }] : []),
+  ];
+  const headerMediaAttachments = [
+    ...(header ? [{ type: 'image', url: header }] : []),
+    ...(headerPreview ? [{ type: 'image', url: headerPreview }] : []),
+  ];
 
   return (
     <div class="sheet" id="edit-profile-container">
@@ -2115,6 +2155,8 @@ function EditProfileSheet({ onClose = () => {} }) {
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.target);
+              const header = formData.get('header');
+              const avatar = formData.get('avatar');
               const displayName = formData.get('display_name');
               const note = formData.get('note');
               const fieldsAttributesFields =
@@ -2142,6 +2184,8 @@ function EditProfileSheet({ onClose = () => {} }) {
               (async () => {
                 try {
                   const newAccount = await masto.v1.accounts.updateCredentials({
+                    header,
+                    avatar,
                     displayName,
                     note,
                     fieldsAttributes,
@@ -2158,6 +2202,110 @@ function EditProfileSheet({ onClose = () => {} }) {
               })();
             }}
           >
+            <div class="edit-profile-media-container">
+              <label>
+                <Trans>Header picture</Trans>{' '}
+                <input
+                  type="file"
+                  name="header"
+                  accept={SUPPORTED_IMAGE_FORMATS_STR}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const blob = URL.createObjectURL(file);
+                      setHeaderPreview(blob);
+                    }
+                  }}
+                />
+              </label>
+              <div class="edit-profile-media-field">
+                {header ? (
+                  <div
+                    class="edit-media"
+                    tabIndex="0"
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: headerMediaAttachments,
+                        index: 0,
+                      };
+                    }}
+                  >
+                    <img src={header} alt="" />
+                  </div>
+                ) : (
+                  <div class="edit-media"></div>
+                )}
+                {headerPreview && (
+                  <>
+                    <Icon icon="arrow-right" />
+                    <div
+                      class="edit-media"
+                      tabIndex="0"
+                      onClick={() => {
+                        states.showMediaModal = {
+                          mediaAttachments: headerMediaAttachments,
+                          index: 1,
+                        };
+                      }}
+                    >
+                      <img src={headerPreview} alt="" />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            <div class="edit-profile-media-container">
+              <label>
+                <Trans>Profile picture</Trans>{' '}
+                <input
+                  type="file"
+                  name="avatar"
+                  accept={SUPPORTED_IMAGE_FORMATS_STR}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const blob = URL.createObjectURL(file);
+                      setAvatarPreview(blob);
+                    }
+                  }}
+                />
+              </label>
+              <div class="edit-profile-media-field">
+                {avatar ? (
+                  <div
+                    class="edit-media"
+                    tabIndex="0"
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: avatarMediaAttachments,
+                        index: 0,
+                      };
+                    }}
+                  >
+                    <img src={avatar} alt="" />
+                  </div>
+                ) : (
+                  <div class="edit-media"></div>
+                )}
+                {avatarPreview && (
+                  <>
+                    <Icon icon="arrow-right" />
+                    <div
+                      class="edit-media"
+                      tabIndex="0"
+                      onClick={() => {
+                        states.showMediaModal = {
+                          mediaAttachments: avatarMediaAttachments,
+                          index: 1,
+                        };
+                      }}
+                    >
+                      <img src={avatarPreview} alt="" />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
             <p>
               <label>
                 <Trans>Name</Trans>{' '}

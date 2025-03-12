@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-12 14:04\n"
+"PO-Revision-Date: 2025-03-12 16:13\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -506,11 +506,11 @@ msgstr "Nie udało się zaktualizować profilu."
 
 #: src/components/account-info.jsx:2207
 msgid "Header picture"
-msgstr ""
+msgstr "Obrazek w nagłówku"
 
 #: src/components/account-info.jsx:2259
 msgid "Profile picture"
-msgstr ""
+msgstr "Zdjęcie profilowe"
 
 #: src/components/account-info.jsx:2311
 #: src/components/list-add-edit.jsx:105
@@ -551,11 +551,11 @@ msgstr "nazwa domeny serwera"
 
 #: src/components/background-service.jsx:151
 msgid "Cloak mode disabled"
-msgstr "Tryb Cloak jest wyłączony"
+msgstr "Tryb \"Kloaka\" jest wyłączony"
 
 #: src/components/background-service.jsx:151
 msgid "Cloak mode enabled"
-msgstr "Tryb Cloak jest włączony"
+msgstr "Tryb \"Kloaka\" jest włączony"
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:176
@@ -580,39 +580,39 @@ msgstr "Utwórz wpis"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "Zaplanowane posty"
 
 #: src/components/compose-button.jsx:175
 msgid "Add to thread"
-msgstr ""
+msgstr "Dodaj do wątku"
 
 #: src/components/compose.jsx:211
 msgid "Take photo or video"
-msgstr ""
+msgstr "Zrób zdjęcie lub wideo"
 
 #: src/components/compose.jsx:212
 msgid "Add media"
-msgstr ""
+msgstr "Dodaj media"
 
 #: src/components/compose.jsx:213
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Dodaj własne emoji"
 
 #: src/components/compose.jsx:214
 msgid "Add GIF"
-msgstr ""
+msgstr "Dodaj GIF"
 
 #: src/components/compose.jsx:215
 msgid "Add poll"
-msgstr ""
+msgstr "Dodaj ankietę"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr ""
+msgstr "Zaplanuj post"
 
 #: src/components/compose.jsx:415
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "Masz niezapisane zmiany. Czy chcesz porzucić ten wpis?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
@@ -634,7 +634,7 @@ msgstr ""
 
 #: src/components/compose.jsx:869
 msgid "Minimize"
-msgstr ""
+msgstr "Zminimalizuj"
 
 #: src/components/compose.jsx:905
 msgid "Looks like you closed the parent window."
@@ -673,7 +673,7 @@ msgstr "Ankieta musi mieć co najmniej 2 opcje"
 
 #: src/components/compose.jsx:1050
 msgid "Some poll choices are empty"
-msgstr "Niektóre opcje ankiety są puste"
+msgstr "Niektóre opcje ankiety są nieuzupełnione"
 
 #: src/components/compose.jsx:1063
 msgid "Some media have no descriptions. Continue?"
@@ -681,13 +681,13 @@ msgstr "Niektóre media nie posiadają opisów. Kontynuować?"
 
 #: src/components/compose.jsx:1115
 msgid "Attachment #{i} failed"
-msgstr "Załącznik #{i} nie powiódł się"
+msgstr "Załączenie #{i} nie powiodło się"
 
 #: src/components/compose.jsx:1211
 #: src/components/status.jsx:2098
 #: src/components/timeline.jsx:989
 msgid "Content warning"
-msgstr ""
+msgstr "Ostrzeżenie o zawartości"
 
 #: src/components/compose.jsx:1227
 msgid "Content warning or sensitive media"
@@ -730,15 +730,15 @@ msgstr "Opublikuj odpowiedź"
 
 #: src/components/compose.jsx:1289
 msgid "Edit your post"
-msgstr ""
+msgstr "Edytuj swój post"
 
 #: src/components/compose.jsx:1290
 msgid "What are you doing?"
-msgstr ""
+msgstr "Co robisz?"
 
 #: src/components/compose.jsx:1368
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Oznacz media jako \"wrażliwe\""
 
 #: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
@@ -749,11 +749,11 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: src/components/compose.jsx:1662
 msgid "Schedule"
-msgstr ""
+msgstr "Zaplanuj"
 
 #: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:154
@@ -789,19 +789,19 @@ msgstr "Więcej…"
 
 #: src/components/compose.jsx:2541
 msgid "Uploaded"
-msgstr "Opublikowano"
+msgstr "Załadowano"
 
 #: src/components/compose.jsx:2554
 msgid "Image description"
-msgstr "Opis zdjęcia"
+msgstr "Opis obrazka"
 
 #: src/components/compose.jsx:2555
 msgid "Video description"
-msgstr ""
+msgstr "Opis wideo"
 
 #: src/components/compose.jsx:2556
 msgid "Audio description"
-msgstr ""
+msgstr "Opis audio"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
@@ -841,24 +841,24 @@ msgstr ""
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr ""
+msgstr "Usuń"
 
 #: src/components/compose.jsx:2709
 #: src/compose.jsx:84
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 #: src/components/compose.jsx:2734
 msgid "Edit image description"
-msgstr ""
+msgstr "Edytuj opis obrazka"
 
 #: src/components/compose.jsx:2735
 msgid "Edit video description"
-msgstr ""
+msgstr "Edytuj opis wideo"
 
 #: src/components/compose.jsx:2736
 msgid "Edit audio description"
-msgstr ""
+msgstr "Edytuj opis audio"
 
 #: src/components/compose.jsx:2781
 #: src/components/compose.jsx:2830
@@ -892,33 +892,33 @@ msgstr ""
 
 #: src/components/compose.jsx:2887
 msgid "Done"
-msgstr ""
+msgstr "Zrobione"
 
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2923
 msgid "Choice {0}"
-msgstr ""
+msgstr "Wybór {0}"
 
 #: src/components/compose.jsx:2970
 msgid "Multiple choices"
-msgstr ""
+msgstr "Wielokrotny wybór"
 
 #: src/components/compose.jsx:2973
 msgid "Duration"
-msgstr ""
+msgstr "Czas trwania"
 
 #: src/components/compose.jsx:3004
 msgid "Remove poll"
-msgstr ""
+msgstr "Usuń ankietę"
 
 #: src/components/compose.jsx:3219
 msgid "Search accounts"
-msgstr ""
+msgstr "Szukaj kont"
 
 #: src/components/compose.jsx:3273
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Błąd ładowania kont"
 
 #: src/components/compose.jsx:3417
 msgid "Custom emojis"
@@ -926,7 +926,7 @@ msgstr "Własne emoji"
 
 #: src/components/compose.jsx:3437
 msgid "Search emoji"
-msgstr "Własne emoji"
+msgstr "Szkaj emoji"
 
 #: src/components/compose.jsx:3468
 msgid "Error loading custom emojis"
@@ -3495,19 +3495,19 @@ msgstr ""
 
 #: src/pages/scheduled-posts.jsx:336
 msgid "Reschedule"
-msgstr ""
+msgstr "Zaplanuj ponownie"
 
 #: src/pages/scheduled-posts.jsx:342
 msgid "Delete scheduled post?"
-msgstr ""
+msgstr "Skasować zaplanowany post?"
 
 #: src/pages/scheduled-posts.jsx:350
 msgid "Scheduled post deleted"
-msgstr ""
+msgstr "Zaplanowany post został skasowany"
 
 #: src/pages/scheduled-posts.jsx:357
 msgid "Failed to delete scheduled post"
-msgstr ""
+msgstr "Nie udało się skasować zaplanowanego postu"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"
@@ -3534,31 +3534,31 @@ msgstr ""
 #: src/pages/search.jsx:409
 #: src/pages/search.jsx:479
 msgid "See more"
-msgstr ""
+msgstr "Zobacz więcej"
 
 #: src/pages/search.jsx:381
 msgid "See more accounts"
-msgstr ""
+msgstr "Zobacz więcej kont"
 
 #: src/pages/search.jsx:395
 msgid "No accounts found."
-msgstr ""
+msgstr "Nie znaleziono żadnych kont."
 
 #: src/pages/search.jsx:451
 msgid "See more hashtags"
-msgstr ""
+msgstr "Zobacz więcej hashtagów"
 
 #: src/pages/search.jsx:465
 msgid "No hashtags found."
-msgstr ""
+msgstr "Nie znaleziono hashtagów"
 
 #: src/pages/search.jsx:509
 msgid "See more posts"
-msgstr ""
+msgstr "Zobacz więcej postów"
 
 #: src/pages/search.jsx:523
 msgid "No posts found."
-msgstr ""
+msgstr "Nie znaleziono postów."
 
 #: src/pages/search.jsx:567
 msgid "Enter your search term or paste a URL above to get started."
@@ -3566,27 +3566,27 @@ msgstr ""
 
 #: src/pages/settings.jsx:83
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: src/pages/settings.jsx:92
 msgid "Appearance"
-msgstr ""
+msgstr "Wygląd"
 
 #: src/pages/settings.jsx:168
 msgid "Light"
-msgstr ""
+msgstr "Jasny"
 
 #: src/pages/settings.jsx:179
 msgid "Dark"
-msgstr ""
+msgstr "Ciemny"
 
 #: src/pages/settings.jsx:192
 msgid "Auto"
-msgstr ""
+msgstr "Automatyczny"
 
 #: src/pages/settings.jsx:202
 msgid "Text size"
-msgstr ""
+msgstr "Rozmiar tekstu"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size

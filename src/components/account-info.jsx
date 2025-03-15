@@ -361,6 +361,8 @@ function AccountInfo({
     [id, instance],
   );
 
+  const isStringURL = isString && account && /^https?:\/\//.test(account);
+
   return (
     <div
       tabIndex="-1"
@@ -379,7 +381,13 @@ function AccountInfo({
           </p>
           {isString ? (
             <p>
-              <code class="insignificant">{account}</code>
+              {isStringURL ? (
+                <a href={account} target="_blank" rel="noopener">
+                  {account}
+                </a>
+              ) : (
+                <code class="insignificant">{account}</code>
+              )}
             </p>
           ) : (
             <p>

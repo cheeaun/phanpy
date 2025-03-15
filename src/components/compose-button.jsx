@@ -148,7 +148,7 @@ export default function ComposeButton() {
         boundingBoxPadding={safeBoundingBoxPadding()}
         containerProps={{
           style: {
-            zIndex: 9,
+            zIndex: 19,
           },
           onClick: () => {
             menuRef.current?.closeMenu?.();

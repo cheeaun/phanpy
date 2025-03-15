@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-15 03:28\n"
+"PO-Revision-Date: 2025-03-15 05:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -580,7 +580,7 @@ msgstr "发嘟"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
-msgstr "即将发布的嘟文"
+msgstr "定时嘟文"
 
 #: src/components/compose-button.jsx:175
 msgid "Add to thread"
@@ -742,7 +742,7 @@ msgstr "将媒体标记为敏感"
 
 #: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
-msgstr ""
+msgstr "发布于 <0/>"
 
 #: src/components/compose.jsx:1436
 #: src/components/compose.jsx:3260
@@ -753,7 +753,7 @@ msgstr "添加"
 
 #: src/components/compose.jsx:1662
 msgid "Schedule"
-msgstr ""
+msgstr "定时发嘟"
 
 #: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:154
@@ -1334,7 +1334,7 @@ msgstr "打开文件"
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "已设置定时发送"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
@@ -1342,7 +1342,7 @@ msgstr "嘟文已发布。点击查看。"
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
-msgstr ""
+msgstr "已设置定时回复"
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
@@ -3472,42 +3472,42 @@ msgstr "切换到本站时间线"
 
 #: src/pages/scheduled-posts.jsx:108
 msgid "No scheduled posts."
-msgstr ""
+msgstr "暂无定时嘟文。"
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
 #: src/pages/scheduled-posts.jsx:205
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
-msgstr ""
+msgstr "将在 <0><1/></0> <2>({0})</2> 发布"
 
 #. Scheduled [in 1 day]
 #: src/pages/scheduled-posts.jsx:261
 msgid "Scheduled <0><1/></0>"
-msgstr ""
+msgstr "将在 <0><1/></0> 发布"
 
 #: src/pages/scheduled-posts.jsx:306
 msgid "Scheduled post rescheduled"
-msgstr ""
+msgstr "已修改发布时间"
 
 #: src/pages/scheduled-posts.jsx:313
 msgid "Failed to reschedule post"
-msgstr ""
+msgstr "修改发布时间失败"
 
 #: src/pages/scheduled-posts.jsx:336
 msgid "Reschedule"
-msgstr ""
+msgstr "修改发布时间"
 
 #: src/pages/scheduled-posts.jsx:342
 msgid "Delete scheduled post?"
-msgstr ""
+msgstr "是否删除该定时嘟文？"
 
 #: src/pages/scheduled-posts.jsx:350
 msgid "Scheduled post deleted"
-msgstr ""
+msgstr "已删除该定时嘟文"
 
 #: src/pages/scheduled-posts.jsx:357
 msgid "Failed to delete scheduled post"
-msgstr ""
+msgstr "删除定时嘟文失败"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"

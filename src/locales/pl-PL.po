@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-08 01:54\n"
+"PO-Revision-Date: 2025-03-12 16:13\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -101,7 +101,7 @@ msgstr "Obserwującx"
 #: src/components/account-info.jsx:767
 #: src/components/account-info.jsx:784
 msgid "following.stats"
-msgstr ""
+msgstr "Statystyki obserwowanych"
 
 #: src/components/account-info.jsx:422
 #: src/components/account-info.jsx:801
@@ -119,8 +119,8 @@ msgstr "Wpisy"
 #: src/components/status.jsx:1770
 #: src/components/status.jsx:1787
 #: src/components/status.jsx:1912
-#: src/components/status.jsx:2517
-#: src/components/status.jsx:2520
+#: src/components/status.jsx:2519
+#: src/components/status.jsx:2522
 #: src/pages/account-statuses.jsx:523
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:200
@@ -311,7 +311,7 @@ msgstr "Nie udało się skopiować odnośnika"
 #: src/components/account-info.jsx:1336
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1219
-#: src/components/status.jsx:3296
+#: src/components/status.jsx:3298
 msgid "Copy"
 msgstr "Kopiuj"
 
@@ -441,9 +441,9 @@ msgstr "Obserwuj"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3020
-#: src/components/status.jsx:3260
-#: src/components/status.jsx:3760
+#: src/components/status.jsx:3022
+#: src/components/status.jsx:3262
+#: src/components/status.jsx:3762
 #: src/pages/accounts.jsx:37
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
@@ -506,11 +506,11 @@ msgstr "Nie udało się zaktualizować profilu."
 
 #: src/components/account-info.jsx:2207
 msgid "Header picture"
-msgstr ""
+msgstr "Obrazek w nagłówku"
 
 #: src/components/account-info.jsx:2259
 msgid "Profile picture"
-msgstr ""
+msgstr "Zdjęcie profilowe"
 
 #: src/components/account-info.jsx:2311
 #: src/components/list-add-edit.jsx:105
@@ -551,11 +551,11 @@ msgstr "nazwa domeny serwera"
 
 #: src/components/background-service.jsx:151
 msgid "Cloak mode disabled"
-msgstr "Tryb Cloak jest wyłączony"
+msgstr "Tryb \"Kloaka\" jest wyłączony"
 
 #: src/components/background-service.jsx:151
 msgid "Cloak mode enabled"
-msgstr "Tryb Cloak jest włączony"
+msgstr "Tryb \"Kloaka\" jest włączony"
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:176
@@ -580,39 +580,39 @@ msgstr "Utwórz wpis"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "Zaplanowane posty"
 
 #: src/components/compose-button.jsx:175
 msgid "Add to thread"
-msgstr ""
+msgstr "Dodaj do wątku"
 
 #: src/components/compose.jsx:211
 msgid "Take photo or video"
-msgstr ""
+msgstr "Zrób zdjęcie lub wideo"
 
 #: src/components/compose.jsx:212
 msgid "Add media"
-msgstr ""
+msgstr "Dodaj media"
 
 #: src/components/compose.jsx:213
 msgid "Add custom emoji"
-msgstr ""
+msgstr "Dodaj własne emoji"
 
 #: src/components/compose.jsx:214
 msgid "Add GIF"
-msgstr ""
+msgstr "Dodaj GIF"
 
 #: src/components/compose.jsx:215
 msgid "Add poll"
-msgstr ""
+msgstr "Dodaj ankietę"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr ""
+msgstr "Zaplanuj post"
 
 #: src/components/compose.jsx:415
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "Masz niezapisane zmiany. Czy chcesz porzucić ten wpis?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
@@ -634,7 +634,7 @@ msgstr ""
 
 #: src/components/compose.jsx:869
 msgid "Minimize"
-msgstr ""
+msgstr "Zminimalizuj"
 
 #: src/components/compose.jsx:905
 msgid "Looks like you closed the parent window."
@@ -673,7 +673,7 @@ msgstr "Ankieta musi mieć co najmniej 2 opcje"
 
 #: src/components/compose.jsx:1050
 msgid "Some poll choices are empty"
-msgstr "Niektóre opcje ankiety są puste"
+msgstr "Niektóre opcje ankiety są nieuzupełnione"
 
 #: src/components/compose.jsx:1063
 msgid "Some media have no descriptions. Continue?"
@@ -681,13 +681,13 @@ msgstr "Niektóre media nie posiadają opisów. Kontynuować?"
 
 #: src/components/compose.jsx:1115
 msgid "Attachment #{i} failed"
-msgstr "Załącznik #{i} nie powiódł się"
+msgstr "Załączenie #{i} nie powiodło się"
 
 #: src/components/compose.jsx:1211
 #: src/components/status.jsx:2098
 #: src/components/timeline.jsx:989
 msgid "Content warning"
-msgstr ""
+msgstr "Ostrzeżenie o zawartości"
 
 #: src/components/compose.jsx:1227
 msgid "Content warning or sensitive media"
@@ -730,15 +730,15 @@ msgstr "Opublikuj odpowiedź"
 
 #: src/components/compose.jsx:1289
 msgid "Edit your post"
-msgstr ""
+msgstr "Edytuj swój post"
 
 #: src/components/compose.jsx:1290
 msgid "What are you doing?"
-msgstr ""
+msgstr "Co robisz?"
 
 #: src/components/compose.jsx:1368
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "Oznacz media jako \"wrażliwe\""
 
 #: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
@@ -749,18 +749,18 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:362
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: src/components/compose.jsx:1662
 msgid "Schedule"
-msgstr ""
+msgstr "Zaplanuj"
 
 #: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:154
 #: src/components/status.jsx:984
 #: src/components/status.jsx:1750
 #: src/components/status.jsx:1751
-#: src/components/status.jsx:2421
+#: src/components/status.jsx:2423
 msgid "Reply"
 msgstr "Odpowiedz"
 
@@ -789,19 +789,19 @@ msgstr "Więcej…"
 
 #: src/components/compose.jsx:2541
 msgid "Uploaded"
-msgstr "Opublikowano"
+msgstr "Załadowano"
 
 #: src/components/compose.jsx:2554
 msgid "Image description"
-msgstr "Opis zdjęcia"
+msgstr "Opis obrazka"
 
 #: src/components/compose.jsx:2555
 msgid "Video description"
-msgstr ""
+msgstr "Opis wideo"
 
 #: src/components/compose.jsx:2556
 msgid "Audio description"
-msgstr ""
+msgstr "Opis audio"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
@@ -841,24 +841,24 @@ msgstr ""
 #: src/pages/catchup.jsx:1074
 #: src/pages/filters.jsx:412
 msgid "Remove"
-msgstr ""
+msgstr "Usuń"
 
 #: src/components/compose.jsx:2709
 #: src/compose.jsx:84
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 #: src/components/compose.jsx:2734
 msgid "Edit image description"
-msgstr ""
+msgstr "Edytuj opis obrazka"
 
 #: src/components/compose.jsx:2735
 msgid "Edit video description"
-msgstr ""
+msgstr "Edytuj opis wideo"
 
 #: src/components/compose.jsx:2736
 msgid "Edit audio description"
-msgstr ""
+msgstr "Edytuj opis audio"
 
 #: src/components/compose.jsx:2781
 #: src/components/compose.jsx:2830
@@ -892,41 +892,41 @@ msgstr ""
 
 #: src/components/compose.jsx:2887
 msgid "Done"
-msgstr ""
+msgstr "Zrobione"
 
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2923
 msgid "Choice {0}"
-msgstr ""
+msgstr "Wybór {0}"
 
 #: src/components/compose.jsx:2970
 msgid "Multiple choices"
-msgstr ""
+msgstr "Wielokrotny wybór"
 
 #: src/components/compose.jsx:2973
 msgid "Duration"
-msgstr ""
+msgstr "Czas trwania"
 
 #: src/components/compose.jsx:3004
 msgid "Remove poll"
-msgstr ""
+msgstr "Usuń ankietę"
 
 #: src/components/compose.jsx:3219
 msgid "Search accounts"
-msgstr ""
+msgstr "Szukaj kont"
 
 #: src/components/compose.jsx:3273
 #: src/components/generic-accounts.jsx:228
 msgid "Error loading accounts"
-msgstr ""
+msgstr "Błąd ładowania kont"
 
 #: src/components/compose.jsx:3417
 msgid "Custom emojis"
-msgstr ""
+msgstr "Własne emoji"
 
 #: src/components/compose.jsx:3437
 msgid "Search emoji"
-msgstr ""
+msgstr "Szkaj emoji"
 
 #: src/components/compose.jsx:3468
 msgid "Error loading custom emojis"
@@ -955,7 +955,7 @@ msgstr "Obsługiwane przez GIPHY"
 
 #: src/components/compose.jsx:3679
 msgid "Type to search GIFs"
-msgstr "Wyszukaj GIF"
+msgstr "Zacznij pisać, żeby wyszukać GIF'a"
 
 #: src/components/compose.jsx:3777
 #: src/components/media-modal.jsx:464
@@ -1202,9 +1202,9 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:175
 #: src/components/status.jsx:992
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2471
-#: src/components/status.jsx:2472
+#: src/components/status.jsx:2450
+#: src/components/status.jsx:2473
+#: src/components/status.jsx:2474
 msgid "Boost"
 msgstr ""
 
@@ -1214,8 +1214,8 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:183
 #: src/components/status.jsx:1055
-#: src/components/status.jsx:2496
-#: src/components/status.jsx:2497
+#: src/components/status.jsx:2498
+#: src/components/status.jsx:2499
 msgid "Bookmark"
 msgstr ""
 
@@ -1319,9 +1319,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr ""
 
 #: src/components/media-post.jsx:134
-#: src/components/status.jsx:3590
-#: src/components/status.jsx:3686
-#: src/components/status.jsx:3764
+#: src/components/status.jsx:3592
+#: src/components/status.jsx:3688
+#: src/components/status.jsx:3766
 #: src/components/timeline.jsx:978
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1877
@@ -2200,13 +2200,13 @@ msgstr ""
 
 #: src/components/status.jsx:992
 #: src/components/status.jsx:1032
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2471
+#: src/components/status.jsx:2450
+#: src/components/status.jsx:2473
 msgid "Unboost"
 msgstr ""
 
 #: src/components/status.jsx:1008
-#: src/components/status.jsx:2463
+#: src/components/status.jsx:2465
 msgid "Quote"
 msgstr ""
 
@@ -2226,20 +2226,20 @@ msgstr ""
 
 #: src/components/status.jsx:1045
 #: src/components/status.jsx:1760
-#: src/components/status.jsx:2484
+#: src/components/status.jsx:2486
 msgid "Unlike"
 msgstr ""
 
 #: src/components/status.jsx:1046
 #: src/components/status.jsx:1760
 #: src/components/status.jsx:1761
-#: src/components/status.jsx:2484
-#: src/components/status.jsx:2485
+#: src/components/status.jsx:2486
+#: src/components/status.jsx:2487
 msgid "Like"
 msgstr ""
 
 #: src/components/status.jsx:1055
-#: src/components/status.jsx:2496
+#: src/components/status.jsx:2498
 msgid "Unbookmark"
 msgstr ""
 
@@ -2257,7 +2257,7 @@ msgid "Edited: {editedDateText}"
 msgstr ""
 
 #: src/components/status.jsx:1254
-#: src/components/status.jsx:3265
+#: src/components/status.jsx:3267
 msgid "Embed post"
 msgstr ""
 
@@ -2337,17 +2337,17 @@ msgstr "Podbito wpis od @{7}"
 
 #: src/components/status.jsx:1761
 #: src/components/status.jsx:1797
-#: src/components/status.jsx:2485
+#: src/components/status.jsx:2487
 msgid "Liked"
 msgstr "Polubiono"
 
 #: src/components/status.jsx:1794
-#: src/components/status.jsx:2472
+#: src/components/status.jsx:2474
 msgid "Boosted"
 msgstr "Podbito"
 
 #: src/components/status.jsx:1804
-#: src/components/status.jsx:2497
+#: src/components/status.jsx:2499
 msgid "Bookmarked"
 msgstr "Zapisano"
 
@@ -2384,91 +2384,91 @@ msgstr "Pokaż zawartość"
 msgid "Show media"
 msgstr "Pokaż multimedia"
 
-#: src/components/status.jsx:2345
+#: src/components/status.jsx:2347
 msgid "Edited"
 msgstr "Edytowano"
 
-#: src/components/status.jsx:2422
+#: src/components/status.jsx:2424
 msgid "Comments"
 msgstr "Komentarze"
 
 #. More from [Author]
-#: src/components/status.jsx:2723
+#: src/components/status.jsx:2725
 msgid "More from <0/>"
 msgstr "Więcej od <0/>"
 
-#: src/components/status.jsx:3025
+#: src/components/status.jsx:3027
 msgid "Edit History"
 msgstr "Historia zmian"
 
-#: src/components/status.jsx:3029
+#: src/components/status.jsx:3031
 msgid "Failed to load history"
 msgstr "Nie udało się wczytać historii"
 
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3036
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Wczytywanie…"
 
-#: src/components/status.jsx:3270
+#: src/components/status.jsx:3272
 msgid "HTML Code"
 msgstr "Kod HTML"
 
-#: src/components/status.jsx:3287
+#: src/components/status.jsx:3289
 msgid "HTML code copied"
 msgstr "Kod HTML został skopiowany"
 
-#: src/components/status.jsx:3290
+#: src/components/status.jsx:3292
 msgid "Unable to copy HTML code"
 msgstr "Nie udało się skopiować kodu HTML"
 
-#: src/components/status.jsx:3302
+#: src/components/status.jsx:3304
 msgid "Media attachments:"
 msgstr "Załączniki:"
 
-#: src/components/status.jsx:3324
+#: src/components/status.jsx:3326
 msgid "Account Emojis:"
 msgstr "Emoji:"
 
-#: src/components/status.jsx:3355
-#: src/components/status.jsx:3400
+#: src/components/status.jsx:3357
+#: src/components/status.jsx:3402
 msgid "static URL"
 msgstr "statyczny adres URL"
 
-#: src/components/status.jsx:3369
+#: src/components/status.jsx:3371
 msgid "Emojis:"
 msgstr "Emoji:"
 
-#: src/components/status.jsx:3414
+#: src/components/status.jsx:3416
 msgid "Notes:"
 msgstr "Notatki:"
 
-#: src/components/status.jsx:3418
+#: src/components/status.jsx:3420
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Jest to strona statyczna, bez stylów i skryptów. Konieczne może być zastosowanie własnych stylów i edytowanie w razie potrzeby."
 
-#: src/components/status.jsx:3424
+#: src/components/status.jsx:3426
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Ankiety nie są interaktywne, stają się listą z liczbą głosów."
 
-#: src/components/status.jsx:3429
+#: src/components/status.jsx:3431
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Załącznikami mogą być zdjęcia, filmy, pliki audio lub dowolne inne typy plików."
 
-#: src/components/status.jsx:3435
+#: src/components/status.jsx:3437
 msgid "Post could be edited or deleted later."
 msgstr "Wpis może być edytowany lub usunięty później."
 
-#: src/components/status.jsx:3441
+#: src/components/status.jsx:3443
 msgid "Preview"
 msgstr "Podgląd"
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3452
 msgid "Note: This preview is lightly styled."
 msgstr "Uwaga: podgląd jest lekko stylizowany."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3694
+#: src/components/status.jsx:3696
 msgid "<0/> <1/> boosted"
 msgstr ""
 
@@ -3495,19 +3495,19 @@ msgstr ""
 
 #: src/pages/scheduled-posts.jsx:336
 msgid "Reschedule"
-msgstr ""
+msgstr "Zaplanuj ponownie"
 
 #: src/pages/scheduled-posts.jsx:342
 msgid "Delete scheduled post?"
-msgstr ""
+msgstr "Skasować zaplanowany post?"
 
 #: src/pages/scheduled-posts.jsx:350
 msgid "Scheduled post deleted"
-msgstr ""
+msgstr "Zaplanowany post został skasowany"
 
 #: src/pages/scheduled-posts.jsx:357
 msgid "Failed to delete scheduled post"
-msgstr ""
+msgstr "Nie udało się skasować zaplanowanego postu"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"
@@ -3534,31 +3534,31 @@ msgstr ""
 #: src/pages/search.jsx:409
 #: src/pages/search.jsx:479
 msgid "See more"
-msgstr ""
+msgstr "Zobacz więcej"
 
 #: src/pages/search.jsx:381
 msgid "See more accounts"
-msgstr ""
+msgstr "Zobacz więcej kont"
 
 #: src/pages/search.jsx:395
 msgid "No accounts found."
-msgstr ""
+msgstr "Nie znaleziono żadnych kont."
 
 #: src/pages/search.jsx:451
 msgid "See more hashtags"
-msgstr ""
+msgstr "Zobacz więcej hashtagów"
 
 #: src/pages/search.jsx:465
 msgid "No hashtags found."
-msgstr ""
+msgstr "Nie znaleziono hashtagów"
 
 #: src/pages/search.jsx:509
 msgid "See more posts"
-msgstr ""
+msgstr "Zobacz więcej postów"
 
 #: src/pages/search.jsx:523
 msgid "No posts found."
-msgstr ""
+msgstr "Nie znaleziono postów."
 
 #: src/pages/search.jsx:567
 msgid "Enter your search term or paste a URL above to get started."
@@ -3566,27 +3566,27 @@ msgstr ""
 
 #: src/pages/settings.jsx:83
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: src/pages/settings.jsx:92
 msgid "Appearance"
-msgstr ""
+msgstr "Wygląd"
 
 #: src/pages/settings.jsx:168
 msgid "Light"
-msgstr ""
+msgstr "Jasny"
 
 #: src/pages/settings.jsx:179
 msgid "Dark"
-msgstr ""
+msgstr "Ciemny"
 
 #: src/pages/settings.jsx:192
 msgid "Auto"
-msgstr ""
+msgstr "Automatyczny"
 
 #: src/pages/settings.jsx:202
 msgid "Text size"
-msgstr ""
+msgstr "Rozmiar tekstu"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
@@ -3597,7 +3597,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:246
 msgid "Display language"
-msgstr ""
+msgstr "Język wyświetlania"
 
 #: src/pages/settings.jsx:255
 msgid "Volunteer translations"

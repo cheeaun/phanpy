@@ -303,6 +303,7 @@ Costs involved in running and developing this web app:
 ### Translation volunteers
 
 <!-- i18n volunteers start -->
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16945821/medium/3da66a1dde4951ad34c33ca23241b864_default.png" alt="" width="16" height="16" /> A.Mason (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12571163/medium/9f3ea938f4243f5ffe2a43f814ddc9e8_default.png" alt="" width="16" height="16" /> alidsds11 (Arabic)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16180744/medium/5b04ae975b23895635130d7a176515cb_default.png" alt="" width="16" height="16" /> alternative (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16848873/medium/d8773fdb621f4c9c1b08d2c641fa519a.jpeg" alt="" width="16" height="16" /> AmaseCocoa (Japanese)

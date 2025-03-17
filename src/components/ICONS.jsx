@@ -178,5 +178,6 @@ export const ICONS = {
   schedule: () => import('@iconify-icons/mingcute/calendar-time-add-line'),
   month: () => import('@iconify-icons/mingcute/calendar-month-line'),
   day: () => import('@iconify-icons/mingcute/calendar-day-line'),
+  'fav-boost-celebrate': () => import('@iconify-icons/mingcute/celebrate-line'),
   camera: () => import('@iconify-icons/mingcute/camera-line'),
 };

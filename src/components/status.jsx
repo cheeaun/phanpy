@@ -806,26 +806,26 @@ function Status({
         reblogged: newReblogged,
         reblogsCount: reblogsCount + (newReblogged ? 1 : -1),
       };
-      
+
       // Execute actions based on state changes
       const actions = [];
       if (newFavourited !== favourited) {
         actions.push(
           newFavourited
             ? masto.v1.statuses.$select(id).favourite()
-            : masto.v1.statuses.$select(id).unfavourite()
+            : masto.v1.statuses.$select(id).unfavourite(),
         );
       }
       if (newReblogged !== reblogged) {
         actions.push(
           newReblogged
             ? masto.v1.statuses.$select(id).reblog()
-            : masto.v1.statuses.$select(id).unreblog()
+            : masto.v1.statuses.$select(id).unreblog(),
         );
       }
-      
+
       const results = await Promise.all(actions);
-      
+
       // If we're turning off both actions, refresh the status to ensure UI sync
       if (!newFavourited && !newReblogged) {
         const refreshedStatus = await masto.v1.statuses.$select(id).fetch();
@@ -834,7 +834,7 @@ function Status({
         const lastResult = results[results.length - 1];
         saveStatus(lastResult, instance);
       }
-      
+
       return true;
     } catch (e) {
       console.error(e);
@@ -853,7 +853,7 @@ function Status({
             ? t`Liked and boosted!`
             : favourited && reblogged
               ? t`Removed like and boost`
-              : t`Updated status`
+              : t`Updated status`,
         );
       }
     } catch (e) {
@@ -2568,13 +2568,17 @@ function Status({
                 </div>
                 <div class="action">
                   <button
-                    type="button" 
+                    type="button"
                     class={`plain favourite-boost-button ${favourited && reblogged ? 'checked' : ''}`}
                     title={t`Like and boost`}
                     disabled={!canBoost}
                     onClick={favouriteAndBoostStatusNotify}
                   >
-                    <Icon icon="fav-boost-celebrate" size="l" alt={t`Like and boost`} />
+                    <Icon
+                      icon="fav-boost-celebrate"
+                      size="l"
+                      alt={t`Like and boost`}
+                    />
                   </button>
                 </div>
                 {supports('@mastodon/post-bookmark') && (

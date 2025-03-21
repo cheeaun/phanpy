@@ -46,6 +46,7 @@ import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -2695,14 +2696,6 @@ function MediaFirstContainer(props) {
   );
 }
 
-function getDomain(url) {
-  return punycode.toUnicode(
-    URL.parse(url)
-      .hostname.replace(/^www\./, '')
-      .replace(/\/$/, ''),
-  );
-}
-
 // "Post": Quote post + card link preview combo
 // Assume all links from these domains are "posts"
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
@@ -3520,6 +3513,7 @@ const StatusButton = forwardRef((props, ref) => {
 function nicePostURL(url) {
   if (!url) return;
   const urlObj = URL.parse(url);
+  if (!urlObj) return;
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash

@@ -467,7 +467,7 @@ function AccountStatuses() {
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;
-    const domain = URL.parse(account.url).hostname;
+    const domain = URL.parse(account.url)?.hostname;
     return domain;
   }, [account]);
   const sameInstance = instance === accountInstance;

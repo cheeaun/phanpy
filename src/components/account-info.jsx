@@ -236,7 +236,9 @@ function AccountInfo({
 
   const accountInstance = useMemo(() => {
     if (!url) return null;
-    const domain = punycode.toUnicode(URL.parse(url).hostname);
+    const hostname = URL.parse(url)?.hostname;
+    if (!hostname) return null;
+    const domain = punycode.toUnicode(hostname);
     return domain;
   }, [url]);
 
@@ -1843,6 +1845,7 @@ function lightenRGB([r, g, b]) {
 function niceAccountURL(url) {
   if (!url) return;
   const urlObj = URL.parse(url);
+  if (!urlObj) return;
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (

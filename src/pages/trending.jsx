@@ -19,6 +19,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
@@ -252,11 +253,7 @@ function Trending({ columnMode, ...props }) {
                 : null;
               const isShortTitle = title.length < 30;
               const hasAuthor = !!(authorName || author);
-              const domain = punycode.toUnicode(
-                URL.parse(url)
-                  .hostname.replace(/^www\./, '')
-                  .replace(/\/$/, ''),
-              );
+              const domain = getDomain(url);
               let accentColor;
               if (blurhash) {
                 const averageColor = getBlurHashAverageColor(blurhash);

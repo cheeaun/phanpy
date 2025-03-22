@@ -1660,7 +1660,7 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   padding: 16px;
   background-color: var(--button-bg-blur-color);
   /* backdrop-filter: blur(16px); */
-  z-index: 10;
+  z-index: 20;
   box-shadow:
     0 3px 8px -1px var(--drop-shadow-color),
     0 10px 36px -4px var(--button-bg-blur-color);

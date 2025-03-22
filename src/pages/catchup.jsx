@@ -35,6 +35,7 @@ import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import htmlContentLength from '../utils/html-content-length';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
@@ -1171,11 +1172,7 @@ function Catchup() {
                         height,
                         publishedAt,
                       } = card;
-                      const domain = punycode.toUnicode(
-                        URL.parse(url)
-                          .hostname.replace(/^www\./, '')
-                          .replace(/\/$/, ''),
-                      );
+                      const domain = getDomain(url);
                       let accentColor;
                       if (blurhash) {
                         const averageColor = getBlurHashAverageColor(blurhash);

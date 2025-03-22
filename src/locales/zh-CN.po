@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-08 01:54\n"
+"PO-Revision-Date: 2025-03-15 05:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -119,8 +119,8 @@ msgstr "嘟文"
 #: src/components/status.jsx:1770
 #: src/components/status.jsx:1787
 #: src/components/status.jsx:1912
-#: src/components/status.jsx:2517
-#: src/components/status.jsx:2520
+#: src/components/status.jsx:2519
+#: src/components/status.jsx:2522
 #: src/pages/account-statuses.jsx:523
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:200
@@ -311,7 +311,7 @@ msgstr "无法复制链接"
 #: src/components/account-info.jsx:1336
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1219
-#: src/components/status.jsx:3296
+#: src/components/status.jsx:3298
 msgid "Copy"
 msgstr "复制"
 
@@ -441,9 +441,9 @@ msgstr "关注"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3020
-#: src/components/status.jsx:3260
-#: src/components/status.jsx:3760
+#: src/components/status.jsx:3022
+#: src/components/status.jsx:3262
+#: src/components/status.jsx:3762
 #: src/pages/accounts.jsx:37
 #: src/pages/catchup.jsx:1581
 #: src/pages/filters.jsx:224
@@ -506,11 +506,11 @@ msgstr "无法更新个人资料。"
 
 #: src/components/account-info.jsx:2207
 msgid "Header picture"
-msgstr ""
+msgstr "横幅图片"
 
 #: src/components/account-info.jsx:2259
 msgid "Profile picture"
-msgstr ""
+msgstr "头像"
 
 #: src/components/account-info.jsx:2311
 #: src/components/list-add-edit.jsx:105
@@ -580,15 +580,15 @@ msgstr "发嘟"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "定时嘟文"
 
 #: src/components/compose-button.jsx:175
 msgid "Add to thread"
-msgstr ""
+msgstr "添加到嘟文串"
 
 #: src/components/compose.jsx:211
 msgid "Take photo or video"
-msgstr ""
+msgstr "拍摄"
 
 #: src/components/compose.jsx:212
 msgid "Add media"
@@ -608,7 +608,7 @@ msgstr "添加投票"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr ""
+msgstr "设置定时发送"
 
 #: src/components/compose.jsx:415
 msgid "You have unsaved changes. Discard this post?"
@@ -742,7 +742,7 @@ msgstr "将媒体标记为敏感"
 
 #: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
-msgstr ""
+msgstr "发布于 <0/>"
 
 #: src/components/compose.jsx:1436
 #: src/components/compose.jsx:3260
@@ -753,14 +753,14 @@ msgstr "添加"
 
 #: src/components/compose.jsx:1662
 msgid "Schedule"
-msgstr ""
+msgstr "定时发嘟"
 
 #: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:154
 #: src/components/status.jsx:984
 #: src/components/status.jsx:1750
 #: src/components/status.jsx:1751
-#: src/components/status.jsx:2421
+#: src/components/status.jsx:2423
 msgid "Reply"
 msgstr "回复"
 
@@ -1202,9 +1202,9 @@ msgstr "<0>l</0> 或 <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:175
 #: src/components/status.jsx:992
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2471
-#: src/components/status.jsx:2472
+#: src/components/status.jsx:2450
+#: src/components/status.jsx:2473
+#: src/components/status.jsx:2474
 msgid "Boost"
 msgstr "转嘟"
 
@@ -1214,8 +1214,8 @@ msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:183
 #: src/components/status.jsx:1055
-#: src/components/status.jsx:2496
-#: src/components/status.jsx:2497
+#: src/components/status.jsx:2498
+#: src/components/status.jsx:2499
 msgid "Bookmark"
 msgstr "收藏"
 
@@ -1319,9 +1319,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "已过滤: {filterTitleStr}"
 
 #: src/components/media-post.jsx:134
-#: src/components/status.jsx:3590
-#: src/components/status.jsx:3686
-#: src/components/status.jsx:3764
+#: src/components/status.jsx:3592
+#: src/components/status.jsx:3688
+#: src/components/status.jsx:3766
 #: src/components/timeline.jsx:978
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1877
@@ -1334,7 +1334,7 @@ msgstr "打开文件"
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "已设置定时发送"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
@@ -1342,7 +1342,7 @@ msgstr "嘟文已发布。点击查看。"
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
-msgstr ""
+msgstr "已设置定时回复"
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
@@ -2200,13 +2200,13 @@ msgstr "旧嘟文 (<0>{0}</0>)"
 
 #: src/components/status.jsx:992
 #: src/components/status.jsx:1032
-#: src/components/status.jsx:2448
-#: src/components/status.jsx:2471
+#: src/components/status.jsx:2450
+#: src/components/status.jsx:2473
 msgid "Unboost"
 msgstr "取消转嘟"
 
 #: src/components/status.jsx:1008
-#: src/components/status.jsx:2463
+#: src/components/status.jsx:2465
 msgid "Quote"
 msgstr "引用"
 
@@ -2226,20 +2226,20 @@ msgstr "转嘟…"
 
 #: src/components/status.jsx:1045
 #: src/components/status.jsx:1760
-#: src/components/status.jsx:2484
+#: src/components/status.jsx:2486
 msgid "Unlike"
 msgstr "取消喜欢"
 
 #: src/components/status.jsx:1046
 #: src/components/status.jsx:1760
 #: src/components/status.jsx:1761
-#: src/components/status.jsx:2484
-#: src/components/status.jsx:2485
+#: src/components/status.jsx:2486
+#: src/components/status.jsx:2487
 msgid "Like"
 msgstr "赞"
 
 #: src/components/status.jsx:1055
-#: src/components/status.jsx:2496
+#: src/components/status.jsx:2498
 msgid "Unbookmark"
 msgstr "取消收藏"
 
@@ -2257,7 +2257,7 @@ msgid "Edited: {editedDateText}"
 msgstr "编辑于: {editedDateText}"
 
 #: src/components/status.jsx:1254
-#: src/components/status.jsx:3265
+#: src/components/status.jsx:3267
 msgid "Embed post"
 msgstr "嵌入嘟文"
 
@@ -2337,17 +2337,17 @@ msgstr "已转嘟 @{7} 的嘟文"
 
 #: src/components/status.jsx:1761
 #: src/components/status.jsx:1797
-#: src/components/status.jsx:2485
+#: src/components/status.jsx:2487
 msgid "Liked"
 msgstr "已点赞"
 
 #: src/components/status.jsx:1794
-#: src/components/status.jsx:2472
+#: src/components/status.jsx:2474
 msgid "Boosted"
 msgstr "已转嘟"
 
 #: src/components/status.jsx:1804
-#: src/components/status.jsx:2497
+#: src/components/status.jsx:2499
 msgid "Bookmarked"
 msgstr "已收藏"
 
@@ -2384,91 +2384,91 @@ msgstr "显示内容"
 msgid "Show media"
 msgstr "显示媒体"
 
-#: src/components/status.jsx:2345
+#: src/components/status.jsx:2347
 msgid "Edited"
 msgstr "已编辑"
 
-#: src/components/status.jsx:2422
+#: src/components/status.jsx:2424
 msgid "Comments"
 msgstr "评论"
 
 #. More from [Author]
-#: src/components/status.jsx:2723
+#: src/components/status.jsx:2725
 msgid "More from <0/>"
 msgstr "<0/> 的更多内容"
 
-#: src/components/status.jsx:3025
+#: src/components/status.jsx:3027
 msgid "Edit History"
 msgstr "编辑记录"
 
-#: src/components/status.jsx:3029
+#: src/components/status.jsx:3031
 msgid "Failed to load history"
 msgstr "无法加载编辑记录"
 
-#: src/components/status.jsx:3034
+#: src/components/status.jsx:3036
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "正在加载…"
 
-#: src/components/status.jsx:3270
+#: src/components/status.jsx:3272
 msgid "HTML Code"
 msgstr "HTML 代码"
 
-#: src/components/status.jsx:3287
+#: src/components/status.jsx:3289
 msgid "HTML code copied"
 msgstr "已复制 HTML 代码"
 
-#: src/components/status.jsx:3290
+#: src/components/status.jsx:3292
 msgid "Unable to copy HTML code"
 msgstr "无法复制 HTML 代码"
 
-#: src/components/status.jsx:3302
+#: src/components/status.jsx:3304
 msgid "Media attachments:"
 msgstr "媒体附件:"
 
-#: src/components/status.jsx:3324
+#: src/components/status.jsx:3326
 msgid "Account Emojis:"
 msgstr "账户表情:"
 
-#: src/components/status.jsx:3355
-#: src/components/status.jsx:3400
+#: src/components/status.jsx:3357
+#: src/components/status.jsx:3402
 msgid "static URL"
 msgstr "静态URL"
 
-#: src/components/status.jsx:3369
+#: src/components/status.jsx:3371
 msgid "Emojis:"
 msgstr "表情:"
 
-#: src/components/status.jsx:3414
+#: src/components/status.jsx:3416
 msgid "Notes:"
 msgstr "注意:"
 
-#: src/components/status.jsx:3418
+#: src/components/status.jsx:3420
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "此代码是静态代码，不包含样式和脚本。你可能需要进行编辑并按需应用自己的样式。"
 
-#: src/components/status.jsx:3424
+#: src/components/status.jsx:3426
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "代码中的投票无法交互，将显示为一个带有投票数的列表。"
 
-#: src/components/status.jsx:3429
+#: src/components/status.jsx:3431
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "媒体附件可以是图片、视频、音频或任何文件类型。"
 
-#: src/components/status.jsx:3435
+#: src/components/status.jsx:3437
 msgid "Post could be edited or deleted later."
 msgstr "嘟文可以稍后编辑或删除。"
 
-#: src/components/status.jsx:3441
+#: src/components/status.jsx:3443
 msgid "Preview"
 msgstr "预览"
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3452
 msgid "Note: This preview is lightly styled."
 msgstr "注意: 此预览带有少量额外的样式"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3694
+#: src/components/status.jsx:3696
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 转嘟了"
 
@@ -3472,42 +3472,42 @@ msgstr "切换到本站时间线"
 
 #: src/pages/scheduled-posts.jsx:108
 msgid "No scheduled posts."
-msgstr ""
+msgstr "暂无定时嘟文。"
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
 #: src/pages/scheduled-posts.jsx:205
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
-msgstr ""
+msgstr "将在 <0><1/></0> <2>({0})</2> 发布"
 
 #. Scheduled [in 1 day]
 #: src/pages/scheduled-posts.jsx:261
 msgid "Scheduled <0><1/></0>"
-msgstr ""
+msgstr "将在 <0><1/></0> 发布"
 
 #: src/pages/scheduled-posts.jsx:306
 msgid "Scheduled post rescheduled"
-msgstr ""
+msgstr "已修改发布时间"
 
 #: src/pages/scheduled-posts.jsx:313
 msgid "Failed to reschedule post"
-msgstr ""
+msgstr "修改发布时间失败"
 
 #: src/pages/scheduled-posts.jsx:336
 msgid "Reschedule"
-msgstr ""
+msgstr "修改发布时间"
 
 #: src/pages/scheduled-posts.jsx:342
 msgid "Delete scheduled post?"
-msgstr ""
+msgstr "是否删除该定时嘟文？"
 
 #: src/pages/scheduled-posts.jsx:350
 msgid "Scheduled post deleted"
-msgstr ""
+msgstr "已删除该定时嘟文"
 
 #: src/pages/scheduled-posts.jsx:357
 msgid "Failed to delete scheduled post"
-msgstr ""
+msgstr "删除定时嘟文失败"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-26 13:50\n"
+"PO-Revision-Date: 2025-03-26 15:38\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -631,7 +631,7 @@ msgstr "{maxMediaAttachments, plural, one {Możesz załączyć co najwyżej # pl
 
 #: src/components/compose.jsx:862
 msgid "Pop out"
-msgstr ""
+msgstr "Przenieś do wyskakującego okienka"
 
 #: src/components/compose.jsx:869
 msgid "Minimize"
@@ -639,11 +639,11 @@ msgstr "Zminimalizuj"
 
 #: src/components/compose.jsx:905
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "Wygląda na to, że zamknięto okno nadrzędne."
 
 #: src/components/compose.jsx:912
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "Wygląda na to, że masz też otwarte pole tworzenia wpisu w oknie głównym, gdzie aktualnie trwa publikowanie. Poczekaj, aż skończy i spróbuj ponownie później."
 
 #: src/components/compose.jsx:917
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
@@ -651,7 +651,7 @@ msgstr ""
 
 #: src/components/compose.jsx:960
 msgid "Pop in"
-msgstr ""
+msgstr "Przenieś z powrotem do okna głównego"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')

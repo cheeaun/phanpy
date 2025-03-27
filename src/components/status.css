@@ -2252,6 +2252,30 @@ a.card:is(:hover, :focus):visited {
 .status .action > button.plain.favourite-button.checked .icon {
   animation: hearted 1s ease-out;
 }
+.status .action > button.plain.favourite-boost-button:not(:disabled):is(:hover, :focus) {
+  color: var(--celebrate-color);
+}
+.status .action > button.plain.favourite-boost-button.checked {
+  color: var(--celebrate-color);
+  border-color: var(--celebrate-color);
+}
+@keyframes favouriteAndBoosted {
+  15% {
+    transform: scale(1.25) translateY(-1px);
+  }
+  30% {
+    transform: scale(1) rotate(10deg);
+  }
+  45% {
+    transform: scale(1.5) translateY(-2px) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.status .action > button.plain.favourite-boost-button.checked .icon {
+  animation: favouriteAndBoosted 1s ease-out;
+}
 .status .action > button.plain.bookmark-button.checked {
   color: var(--link-color);
   border-color: var(--link-color);

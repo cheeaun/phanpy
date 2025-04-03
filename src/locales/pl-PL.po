@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-26 15:38\n"
+"PO-Revision-Date: 2025-04-03 01:11\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -223,7 +223,7 @@ msgstr "Odpowiedzi"
 #: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1151
 msgid "Boosts"
-msgstr "Udostępnienia"
+msgstr "Podbicia"
 
 #: src/components/account-info.jsx:936
 msgid "Post stats unavailable."
@@ -884,7 +884,7 @@ msgstr "Wygeneruj opis…"
 #. placeholder {13}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
 msgid "Failed to generate description{13}"
-msgstr ""
+msgstr "Błąd przy generowaniu opisu {13}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2868
@@ -1195,7 +1195,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:167
 msgid "Like (favourite)"
-msgstr ""
+msgstr "Polub (ulubione)"
 
 #: src/components/keyboard-shortcuts-help.jsx:169
 msgid "<0>l</0> or <1>f</1>"
@@ -1335,7 +1335,7 @@ msgstr ""
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "Zaplanowany wpis"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
@@ -1414,7 +1414,7 @@ msgstr ""
 #: src/pages/bookmarks.jsx:12
 #: src/pages/bookmarks.jsx:24
 msgid "Bookmarks"
-msgstr ""
+msgstr "Zakładki"
 
 #: src/components/nav-menu.jsx:248
 #: src/components/shortcuts-settings.jsx:55
@@ -1800,7 +1800,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr ""
+msgstr "Nie można zgłosić wpisu"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
@@ -2284,7 +2284,7 @@ msgstr ""
 
 #: src/components/status.jsx:1292
 msgid "Mute conversation"
-msgstr ""
+msgstr "Wycisz konwersację"
 
 #: src/components/status.jsx:1308
 msgid "Post unpinned from profile"
@@ -2292,7 +2292,7 @@ msgstr ""
 
 #: src/components/status.jsx:1309
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "Wpis przypięty do profilu"
 
 #: src/components/status.jsx:1314
 msgid "Unable to unpin post"
@@ -2597,11 +2597,11 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:338
 msgid "+ Replies"
-msgstr ""
+msgstr "+ Odpowiedzi"
 
 #: src/pages/account-statuses.jsx:344
 msgid "Showing posts without boosts"
-msgstr ""
+msgstr "Posty z wyłączeniem podbić"
 
 #: src/pages/account-statuses.jsx:349
 msgid "- Boosts"
@@ -3441,7 +3441,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1256
 msgid "Dismissed"
-msgstr ""
+msgstr "Anulowane"
 
 #: src/pages/public.jsx:28
 msgid "Local timeline ({instance})"
@@ -3892,7 +3892,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1530
 msgid "View post with its replies"
-msgstr ""
+msgstr "Zobacz wpis z odpowiedziami"
 
 #: src/pages/trending.jsx:73
 msgid "Trending ({instance})"

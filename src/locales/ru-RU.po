@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-08 04:49\n"
+"PO-Revision-Date: 2025-04-08 19:10\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -404,7 +404,7 @@ msgstr "Отозвать запрос на подписку?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Отписаться от @{0}?"
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -820,7 +820,7 @@ msgstr "Файл слишком большой — при загрузке мо�
 #: src/components/compose.jsx:2604
 #: src/components/compose.jsx:2624
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Разрешение слишком большое. При загрузке могут возникнуть проблемы. Попробуйте уменьшить разрешение с {0}×{1}px to {2}×{3}px."
 
 #: src/components/compose.jsx:2632
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -859,7 +859,7 @@ msgstr "Создаём описание. Один момент, пожалуйс
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2801
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Не удалось сгенерировать описание: {0}"
 
 #: src/components/compose.jsx:2802
 msgid "Failed to generate description"
@@ -874,7 +874,7 @@ msgstr "Автоматическое описание…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Не удалось сгенерировать описание: {0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2868
@@ -2168,17 +2168,17 @@ msgstr "Удалена отметка \"нравится\" у поста от @{
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:825
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Понравился пост от @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:864
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Удалена закладка поста от @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:865
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Добавлена закладка поста от @{0}"
 
 #: src/components/status.jsx:962
 msgid "Some media have no descriptions."
@@ -2205,13 +2205,13 @@ msgstr "Цитировать"
 #: src/components/status.jsx:1021
 #: src/components/status.jsx:1476
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Прекратил(а) продвигать пост @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1022
 #: src/components/status.jsx:1477
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Продвинул(а) пост @{0}"
 
 #: src/components/status.jsx:1034
 msgid "Boost…"
@@ -2601,7 +2601,7 @@ msgstr "Посты, помеченные #{0}"
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Посты от {0}"
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
@@ -2820,7 +2820,7 @@ msgstr "Убираем Catch-up {0}"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1070
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Catch-up {0} убран"
 
 #: src/pages/catchup.jsx:1084
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3411,7 +3411,7 @@ msgstr "Разрешить"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Уведомления от @{0} теперь не будут отображаться в отфильтрованных уведомлениях."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3851,7 +3851,7 @@ msgstr "Не удалось переключиться"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Переключиться на инстанс поста ({0})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

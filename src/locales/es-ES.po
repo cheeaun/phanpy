@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-08 04:49\n"
+"PO-Revision-Date: 2025-04-08 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -404,7 +404,7 @@ msgstr "¿Desear retirar la solicitud de seguimiento?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "¿Dejar de seguir a @{0}?"
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -820,7 +820,7 @@ msgstr "El tamaño del archivo es demasiado grande. La carga podría tener probl
 #: src/components/compose.jsx:2604
 #: src/components/compose.jsx:2624
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "La dimensión es demasiado grande. La carga podrá tener problemas. Trata de reducir la dimensión de {0}×{1} a {2}×{3}px."
 
 #: src/components/compose.jsx:2632
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -859,7 +859,7 @@ msgstr "Generando descripción. Por favor, espera…"
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2801
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "No se ha podido generar la descripción: {0}"
 
 #: src/components/compose.jsx:2802
 msgid "Failed to generate description"
@@ -874,7 +874,7 @@ msgstr "Generar descripción…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "No se ha podido generar la descripción{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2868
@@ -2168,17 +2168,17 @@ msgstr "No me gustó la publicación de {0}"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:825
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Le gustó la publicación de @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:864
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Dejó de guardar como marcador la publicación de @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:865
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Guardó como marcador la publicación de @{0}"
 
 #: src/components/status.jsx:962
 msgid "Some media have no descriptions."
@@ -2205,13 +2205,13 @@ msgstr "Cita"
 #: src/components/status.jsx:1021
 #: src/components/status.jsx:1476
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Dejó de impulsar la publicación de @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1022
 #: src/components/status.jsx:1477
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Impulsó la publicación de @{0}"
 
 #: src/components/status.jsx:1034
 msgid "Boost…"
@@ -2601,7 +2601,7 @@ msgstr "Mostrando publicaciones etiquetadas con #{0}"
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Mostrando publicaciones en {0}"
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
@@ -2820,7 +2820,7 @@ msgstr "Eliminando la puesta al día {0}"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1070
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "La puesta al día {0} ha sido eliminada"
 
 #: src/pages/catchup.jsx:1084
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3411,7 +3411,7 @@ msgstr "Permitir"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Las notificaciones de @{0} no se mostrarán en las notificaciones filtradas a partir de ahora."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3851,7 +3851,7 @@ msgstr "No se ha podido cambiar"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Cambiar a la instancia de la publicación ({0})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

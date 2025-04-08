@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-08 04:49\n"
+"PO-Revision-Date: 2025-04-08 07:25\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -404,7 +404,7 @@ msgstr "Perutaanko seurauspyyntö?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Lopetetaanko käyttäjän @{0} seuraaminen?"
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -820,7 +820,7 @@ msgstr "Liian suuri tiedostokoko. Palveluun lataaminen saattaa aiheuttaa ongelmi
 #: src/components/compose.jsx:2604
 #: src/components/compose.jsx:2624
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Liian suuret mitat. Palveluun lataaminen saattaa aiheuttaa ongelmia. Kokeile pienentää kuvaa mitoista {0}×{1} px mittoihin {2}×{3} px."
 
 #: src/components/compose.jsx:2632
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -859,7 +859,7 @@ msgstr "Luodaan kuvausta. Odota hetki…"
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2801
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Kuvauksen luonti epäonnistui: {0}"
 
 #: src/components/compose.jsx:2802
 msgid "Failed to generate description"
@@ -874,7 +874,7 @@ msgstr "Luo kuvaus…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Kuvauksen luonti epäonnistui{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2868
@@ -1851,7 +1851,7 @@ msgstr "Julkaisut haulla <0>{query}</0>"
 #. placeholder {0}: query.replace(/^#/, '')
 #: src/components/search-form.jsx:228
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr "Julkaisut aihetunnisteella <0>#{0}</0>"
+msgstr "Julkaisut tunnisteella <0>#{0}</0>"
 
 #: src/components/search-form.jsx:242
 msgid "Look up <0>{query}</0>"
@@ -1972,7 +1972,7 @@ msgstr "Ei vielä pikavalintoja. Napauta Lisää pikavalinta -painiketta."
 
 #: src/components/shortcuts-settings.jsx:415
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr "Etkö ole varma, mitä lisätä?<0/>Kokeile lisätä ensin <1>Koti / Seuratut tai Ilmoitukset</1>."
+msgstr "Etkö ole varma, mitä lisätä?<0/>Kokeile lisätä ensin <1>Koti / Seurattavat tai Ilmoitukset</1>."
 
 #: src/components/shortcuts-settings.jsx:443
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2168,17 +2168,17 @@ msgstr "Kumottu käyttäjän @{0} julkaisun tykkäys"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:825
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Tykätty käyttäjän @{0} julkaisusta"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:864
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Poistettu käyttäjän @{0} julkaisu kirjanmerkeistä"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:865
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Lisätty käyttäjän @{0} julkaisu kirjanmerkkeihin"
 
 #: src/components/status.jsx:962
 msgid "Some media have no descriptions."
@@ -2205,13 +2205,13 @@ msgstr "Lainaa"
 #: src/components/status.jsx:1021
 #: src/components/status.jsx:1476
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Kumottu käyttäjän @{0} julkaisun tehostus"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1022
 #: src/components/status.jsx:1477
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Tehostettu käyttäjän @{0} julkaisua"
 
 #: src/components/status.jsx:1034
 msgid "Boost…"
@@ -2596,12 +2596,12 @@ msgstr "Näytetään julkaisut, joissa on mediaa"
 #. placeholder {0}: tag.name
 #: src/pages/account-statuses.jsx:372
 msgid "Showing posts tagged with #{0}"
-msgstr "Näytetään julkaisut aihetunnisteella #{0}"
+msgstr "Näytetään julkaisut tunnisteella #{0}"
 
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Näytetään julkaisut ajalta {0}"
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
@@ -2734,7 +2734,7 @@ msgstr "ennen viimeistä 12 tuntia"
 
 #: src/pages/catchup.jsx:74
 msgid "Followed tags"
-msgstr "Seuratut tunnisteet"
+msgstr "Seurattavat tunnisteet"
 
 #: src/pages/catchup.jsx:75
 msgid "Groups"
@@ -2742,7 +2742,7 @@ msgstr "Ryhmät"
 
 #: src/pages/catchup.jsx:597
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Näytetään {selectedFilterCategory, select, all {kaikki julkaisut} original {alkuperäiset julkaisut} replies {vastaukset} boosts {tehostukset} followedTags {seuratut aihetunnisteet} groups {ryhmät} filtered {suodatetut julkaisut}}, {sortBy, select, createdAt {{sortOrder, select, asc {vanhimmat} desc {uusimmat}}} reblogsCount {{sortOrder, select, asc {vähiten tehostetut} desc {eniten tehostetut}}} favouritesCount {{sortOrder, select, asc {vähiten tykätyt} desc {eniten tykätyt}}} repliesCount {{sortOrder, select, asc {vähiten vastauksia saaneet} desc {eniten vastauksia saanteet}}} density {{sortOrder, select, asc {vähiten tiheät} desc {tiheimmät}}}} ensin{groupBy, select, account {, tekijöittäin ryhmiteltynä} other {}}"
+msgstr "Näytetään {selectedFilterCategory, select, all {kaikki julkaisut} original {alkuperäiset julkaisut} replies {vastaukset} boosts {tehostukset} followedTags {seurattavat tunnisteet} groups {ryhmät} filtered {suodatetut julkaisut}}, {sortBy, select, createdAt {{sortOrder, select, asc {vanhimmat} desc {uusimmat}}} reblogsCount {{sortOrder, select, asc {vähiten tehostetut} desc {eniten tehostetut}}} favouritesCount {{sortOrder, select, asc {vähiten tykätyt} desc {eniten tykätyt}}} repliesCount {{sortOrder, select, asc {vähiten vastauksia saaneet} desc {eniten vastauksia saanteet}}} density {{sortOrder, select, asc {vähiten tiheät} desc {tiheimmät}}}} ensin{groupBy, select, account {, tekijöittäin ryhmiteltynä} other {}}"
 
 #: src/pages/catchup.jsx:883
 #: src/pages/catchup.jsx:907
@@ -2820,7 +2820,7 @@ msgstr "Poistetaan kiinnikuronta {0}"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1070
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Kiinnikuronta {0} poistettu"
 
 #: src/pages/catchup.jsx:1084
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3112,15 +3112,15 @@ msgstr "{hashtagTitle}"
 
 #: src/pages/hashtag.jsx:182
 msgid "No one has posted anything with this tag yet."
-msgstr "Kukaan ei ole julkaissut vielä mitään tällä aihetunnisteella."
+msgstr "Kukaan ei ole julkaissut vielä mitään tällä tunnisteella."
 
 #: src/pages/hashtag.jsx:183
 msgid "Unable to load posts with this tag"
-msgstr "Julkaisuja tällä aihetunnisteella ei voitu ladata"
+msgstr "Julkaisuja tällä tunnisteella ei voitu ladata"
 
 #: src/pages/hashtag.jsx:209
 msgid "Unfollow #{hashtag}?"
-msgstr "Lopetetaanko aihetunnisteen #{hashtag} seuraaminen?"
+msgstr "Lopetetaanko tunnisteen #{hashtag} seuraaminen?"
 
 #: src/pages/hashtag.jsx:224
 msgid "Unfollowed #{hashtag}"
@@ -3411,7 +3411,7 @@ msgstr "Salli"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1231
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Ilmoitukset käyttäjältä @{0} eivät näy suodatetuissa ilmoituksissa tästä lähtien."
 
 #: src/pages/notifications.jsx:1236
 msgid "Unable to dismiss notification request"
@@ -3851,7 +3851,7 @@ msgstr "Ei voitu vaihtaa"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Vaihda julkaisun instanssiin ({0})"
 
 #: src/pages/status.jsx:1296
 msgid "Switch to post's instance"

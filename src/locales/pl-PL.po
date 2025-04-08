@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-26 15:38\n"
+"PO-Revision-Date: 2025-04-08 04:49\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -223,7 +223,7 @@ msgstr "Odpowiedzi"
 #: src/pages/catchup.jsx:2067
 #: src/pages/settings.jsx:1151
 msgid "Boosts"
-msgstr "Udostępnienia"
+msgstr "Podbicia"
 
 #: src/components/account-info.jsx:936
 msgid "Post stats unavailable."
@@ -401,10 +401,10 @@ msgstr "Zgłoś <0>@{username}</0>…"
 msgid "Withdraw follow request?"
 msgstr "Wycofać prośbę o obserwację?"
 
-#. placeholder {1}: info.acct || info.username
+#. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
-msgid "Unfollow @{1}?"
-msgstr "Przestać obserwować @{1}?"
+msgid "Unfollow @{0}?"
+msgstr ""
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -805,31 +805,21 @@ msgid "Audio description"
 msgstr "Opis audio"
 
 #. placeholder {0}: prettyBytes( imageSize, )
+#. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
+#. placeholder {1}: prettyBytes(videoSizeLimit)
 #: src/components/compose.jsx:2592
+#: src/components/compose.jsx:2612
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr ""
 
-#. placeholder {2}: i18n.number( width, )
-#. placeholder {3}: i18n.number(height)
-#. placeholder {4}: i18n.number(newWidth)
-#. placeholder {5}: i18n.number( newHeight, )
+#. placeholder {0}: i18n.number( width, )
+#. placeholder {1}: i18n.number(height)
+#. placeholder {2}: i18n.number(newWidth)
+#. placeholder {3}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2604
-msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {2}×{3}px to {4}×{5}px."
-msgstr ""
-
-#. placeholder {6}: prettyBytes( videoSize, )
-#. placeholder {7}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2612
-msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {6} to {7} or lower."
-msgstr ""
-
-#. placeholder {8}: i18n.number( width, )
-#. placeholder {9}: i18n.number(height)
-#. placeholder {10}: i18n.number(newWidth)
-#. placeholder {11}: i18n.number( newHeight, )
 #: src/components/compose.jsx:2624
-msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {8}×{9}px to {10}×{11}px."
+msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr ""
 
 #: src/components/compose.jsx:2632
@@ -866,9 +856,9 @@ msgstr "Edytuj opis audio"
 msgid "Generating description. Please wait…"
 msgstr ""
 
-#. placeholder {12}: e.message
+#. placeholder {0}: e.message
 #: src/components/compose.jsx:2801
-msgid "Failed to generate description: {12}"
+msgid "Failed to generate description: {0}"
 msgstr ""
 
 #: src/components/compose.jsx:2802
@@ -881,9 +871,9 @@ msgstr ""
 msgid "Generate description…"
 msgstr "Wygeneruj opis…"
 
-#. placeholder {13}: e?.message ? `: ${e.message}` : ''
+#. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
-msgid "Failed to generate description{13}"
+msgid "Failed to generate description{0}"
 msgstr ""
 
 #. placeholder {0}: localeCode2Text(lang)
@@ -1195,7 +1185,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:167
 msgid "Like (favourite)"
-msgstr ""
+msgstr "Polub (ulubione)"
 
 #: src/components/keyboard-shortcuts-help.jsx:169
 msgid "<0>l</0> or <1>f</1>"
@@ -1335,7 +1325,7 @@ msgstr ""
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "Zaplanowany wpis"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
@@ -1414,7 +1404,7 @@ msgstr ""
 #: src/pages/bookmarks.jsx:12
 #: src/pages/bookmarks.jsx:24
 msgid "Bookmarks"
-msgstr ""
+msgstr "Zakładki"
 
 #: src/components/nav-menu.jsx:248
 #: src/components/shortcuts-settings.jsx:55
@@ -1800,7 +1790,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr ""
+msgstr "Nie można zgłosić wpisu"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
@@ -2175,19 +2165,19 @@ msgstr ""
 msgid "Unliked @{0}'s post"
 msgstr ""
 
-#. placeholder {1}: username || acct
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:825
-msgid "Liked @{1}'s post"
+msgid "Liked @{0}'s post"
 msgstr ""
 
-#. placeholder {2}: username || acct
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:864
-msgid "Unbookmarked @{2}'s post"
+msgid "Unbookmarked @{0}'s post"
 msgstr ""
 
-#. placeholder {3}: username || acct
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:865
-msgid "Bookmarked @{3}'s post"
+msgid "Bookmarked @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:962
@@ -2211,14 +2201,16 @@ msgstr ""
 msgid "Quote"
 msgstr ""
 
-#. placeholder {4}: username || acct
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:1021
-msgid "Unboosted @{4}'s post"
+#: src/components/status.jsx:1476
+msgid "Unboosted @{0}'s post"
 msgstr ""
 
-#. placeholder {5}: username || acct
+#. placeholder {0}: username || acct
 #: src/components/status.jsx:1022
-msgid "Boosted @{5}'s post"
+#: src/components/status.jsx:1477
+msgid "Boosted @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1034
@@ -2284,7 +2276,7 @@ msgstr ""
 
 #: src/components/status.jsx:1292
 msgid "Mute conversation"
-msgstr ""
+msgstr "Wycisz konwersację"
 
 #: src/components/status.jsx:1308
 msgid "Post unpinned from profile"
@@ -2292,7 +2284,7 @@ msgstr ""
 
 #: src/components/status.jsx:1309
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "Wpis przypięty do profilu"
 
 #: src/components/status.jsx:1314
 msgid "Unable to unpin post"
@@ -2325,16 +2317,6 @@ msgstr ""
 #: src/components/status.jsx:1406
 msgid "Report post…"
 msgstr ""
-
-#. placeholder {6}: username || acct
-#: src/components/status.jsx:1476
-msgid "Unboosted @{6}'s post"
-msgstr "Cofnięto podbicie wpisu od @{6}"
-
-#. placeholder {7}: username || acct
-#: src/components/status.jsx:1477
-msgid "Boosted @{7}'s post"
-msgstr "Podbito wpis od @{7}"
 
 #: src/components/status.jsx:1762
 #: src/components/status.jsx:1798
@@ -2597,11 +2579,11 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:338
 msgid "+ Replies"
-msgstr ""
+msgstr "+ Odpowiedzi"
 
 #: src/pages/account-statuses.jsx:344
 msgid "Showing posts without boosts"
-msgstr ""
+msgstr "Posty z wyłączeniem podbić"
 
 #: src/pages/account-statuses.jsx:349
 msgid "- Boosts"
@@ -2616,9 +2598,9 @@ msgstr ""
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
-#. placeholder {1}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
+#. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
-msgid "Showing posts in {1}"
+msgid "Showing posts in {0}"
 msgstr ""
 
 #: src/pages/account-statuses.jsx:500
@@ -2835,10 +2817,10 @@ msgstr "Usunąć to nadrabianie zaległości?"
 msgid "Removing Catch-up {0}"
 msgstr "Usuwanie nadrabiania zaległości {0}"
 
-#. placeholder {1}: pc.id
+#. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1070
-msgid "Catch-up {1} removed"
-msgstr "Nadrabianie zaległości {1} zostało usunięte"
+msgid "Catch-up {0} removed"
+msgstr ""
 
 #: src/pages/catchup.jsx:1084
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3426,9 +3408,9 @@ msgstr ""
 msgid "Allow"
 msgstr ""
 
-#. placeholder {1}: request.account.username
+#. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1231
-msgid "Notifications from @{1} will not show up in Filtered notifications from now on."
+msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
 
 #: src/pages/notifications.jsx:1236
@@ -3441,7 +3423,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1256
 msgid "Dismissed"
-msgstr ""
+msgstr "Anulowane"
 
 #: src/pages/public.jsx:28
 msgid "Local timeline ({instance})"
@@ -3866,9 +3848,9 @@ msgstr ""
 msgid "Unable to switch"
 msgstr ""
 
-#. placeholder {1}: punycode.toUnicode( postInstance, )
+#. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1293
-msgid "Switch to post's instance ({1})"
+msgid "Switch to post's instance ({0})"
 msgstr ""
 
 #: src/pages/status.jsx:1296
@@ -3892,7 +3874,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1530
 msgid "View post with its replies"
-msgstr ""
+msgstr "Zobacz wpis z odpowiedziami"
 
 #: src/pages/trending.jsx:73
 msgid "Trending ({instance})"

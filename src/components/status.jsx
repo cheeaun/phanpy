@@ -54,6 +54,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -317,6 +318,24 @@ const checkDifferentLanguage = (
   return different;
 };
 
+const getCurrentAccID = mem(
+  () => {
+    return getCurrentAccountID();
+  },
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
+
+const getPrefs = mem(
+  () => {
+    return store.account.get('preferences') || {};
+  },
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
+
 function Status({
   statusID,
   status,
@@ -330,7 +349,7 @@ function Status({
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
-  // allowFilters,
+  allowFilters,
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
@@ -447,16 +466,16 @@ function Status({
   const hasMediaAttachments = !!mediaAttachments?.length;
   if (mediaFirst && hasMediaAttachments) size = 's';
 
-  const currentAccount = useMemo(() => {
-    return getCurrentAccountID();
-  }, []);
+  const currentAccount = getCurrentAccID();
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;
   }, [accountId, currentAccount]);
 
   const filterContext = useContext(FilterContext);
   const filterInfo =
-    !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
+    !isSelf &&
+    ((!readOnly && !previewMode) || allowFilters) &&
+    isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') {
     return null;
@@ -472,7 +491,11 @@ function Status({
     }
   };
 
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
+  if (
+    (allowFilters || size !== 'l') &&
+    filterInfo &&
+    filterInfo.action !== 'blur'
+  ) {
     return (
       <FilteredStatus
         status={status}
@@ -515,13 +538,13 @@ function Status({
     mentions?.find((mention) => mention.id === currentAccount);
 
   const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
+    const prefs = getPrefs();
     return !!prefs['reading:expand:spoilers'];
   }, []);
   const readingExpandMedia = useMemo(() => {
     // default | show_all | hide_all
     // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
-    const prefs = store.account.get('preferences') || {};
+    const prefs = getPrefs();
     return prefs['reading:expand:media']?.toLowerCase() || 'default';
   }, []);
   // FOR TESTING:
@@ -2011,7 +2034,9 @@ function Status({
           )}
           <div
             class={`content-container ${
-              spoilerText || sensitive ? 'has-spoiler' : ''
+              spoilerText || sensitive || filterInfo?.action === 'blur'
+                ? 'has-spoiler'
+                : ''
             } ${showSpoiler ? 'show-spoiler' : ''} ${
               showSpoilerMedia ? 'show-media' : ''
             }`}
@@ -2184,7 +2209,7 @@ function Status({
                   />
                 )}
                 {!previewMode &&
-                  sensitive &&
+                  (sensitive || filterInfo?.action === 'blur') &&
                   !!mediaAttachments.length &&
                   readingExpandMedia !== 'show_all' && (
                     <button
@@ -2206,7 +2231,15 @@ function Status({
                       <Icon
                         icon={showSpoilerMedia ? 'eye-open' : 'eye-close'}
                       />{' '}
-                      {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      <span>
+                        {filterInfo?.action === 'blur' && (
+                          <small>
+                            <Trans>Filtered: {filterInfo?.titlesStr}</Trans>
+                            <br />
+                          </small>
+                        )}
+                        {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      </span>
                     </button>
                   )}
                 {!!mediaAttachments.length &&

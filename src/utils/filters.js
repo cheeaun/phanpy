@@ -16,7 +16,18 @@ function _isFiltered(filtered, filterContext) {
     return {
       action: 'hide',
     };
-  const isWarn = appliedFilters.some((f) => f.filter.filterAction === 'warn');
+  const isBlur = appliedFilters.every((f) => f.filter.filterAction === 'blur');
+  if (isBlur) {
+    const filterTitles = appliedFilters.map((f) => f.filter.title);
+    return {
+      action: 'blur',
+      titles: filterTitles,
+      titlesStr: filterTitles.join(' • '),
+    };
+  }
+  // const isWarn = appliedFilters.some((f) => f.filter.filterAction === 'warn');
+  const isWarn = appliedFilters.some((f) => !!f.filter.filterAction);
+  // Re: spec; unknown values for filter_action should be treated as warn.
   if (isWarn) {
     const filterTitles = appliedFilters.map((f) => f.filter.title);
     return {

@@ -608,8 +608,12 @@ const TimelineItem = memo(
           // }
           const aFiltered = isFiltered(a.filtered, filterContext);
           const bFiltered = isFiltered(b.filtered, filterContext);
-          if (aFiltered) filteredItemsIDs.add(a.id);
-          if (bFiltered) filteredItemsIDs.add(b.id);
+          if (aFiltered && aFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(a.id);
+          }
+          if (bFiltered && bFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(b.id);
+          }
           if (aFiltered && !bFiltered) {
             return 1;
           }

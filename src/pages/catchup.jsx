@@ -309,7 +309,7 @@ function Catchup() {
       original = 0;
     const links = {};
     for (const post of posts) {
-      if (post._filtered) {
+      if (post._filtered && post._filtered?.action !== 'blur') {
         filtered++;
         post.__FILTER = 'filtered';
       } else if (post.group) {
@@ -1711,7 +1711,7 @@ const PostLine = memo(
       __BOOSTERS,
     } = post;
     const isReplyTo = inReplyToId && inReplyToAccountId !== account.id;
-    const isFiltered = !!filterInfo;
+    const isFiltered = !!filterInfo && filterInfo?.action !== 'blur';
 
     const debugHover = (e) => {
       if (e.shiftKey) {
@@ -1853,7 +1853,9 @@ function PostPeek({ post, filterInfo }) {
     return !!prefs['reading:expand:spoilers'];
   }, []);
   // const readingExpandSpoilers = true;
-  const showMedia = readingExpandSpoilers || (!spoilerText && !sensitive);
+  const showMedia =
+    readingExpandSpoilers ||
+    (!spoilerText && !sensitive && filterInfo?.action !== 'blur');
   const postText = content ? statusPeek(post) : '';
 
   const showPostContent = !spoilerText || readingExpandSpoilers;
@@ -1866,7 +1868,7 @@ function PostPeek({ post, filterInfo }) {
             <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
           </>
         )}
-        {!!filterInfo ? (
+        {!!filterInfo && filterInfo?.action !== 'blur' ? (
           <span class="post-peek-filtered">
             {/* Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''} */}
             {filterInfo?.titlesStr
@@ -1918,7 +1920,7 @@ function PostPeek({ post, filterInfo }) {
           </>
         )}
       </span>
-      {!filterInfo && (
+      {(!filterInfo || filterInfo?.action === 'blur') && (
         <span class="post-peek-post-content">
           {!!poll && (
             <span class="post-peek-tag post-peek-poll">

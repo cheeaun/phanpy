@@ -554,7 +554,7 @@ function Status({
     previewMode || readingExpandSpoilers || !!snapStates.spoilers[id];
   const showSpoilerMedia =
     previewMode ||
-    readingExpandMedia === 'show_all' ||
+    (readingExpandMedia === 'show_all' && filterInfo?.action !== 'blur') ||
     !!snapStates.spoilersMedia[id];
 
   if (reblog) {
@@ -2211,7 +2211,8 @@ function Status({
                 {!previewMode &&
                   (sensitive || filterInfo?.action === 'blur') &&
                   !!mediaAttachments.length &&
-                  readingExpandMedia !== 'show_all' && (
+                  (readingExpandMedia === 'show_all' ||
+                    filterInfo?.action === 'blur') && (
                     <button
                       class={`plain spoiler-media-button ${
                         showSpoilerMedia ? 'spoiling' : ''

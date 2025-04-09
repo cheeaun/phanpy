@@ -18,7 +18,7 @@ import useInterval from '../utils/useInterval';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = ['home', 'public', 'notifications', 'thread', 'account'];
-const FILTER_CONTEXT_UNIMPLEMENTED = ['notifications', 'thread', 'account'];
+const FILTER_CONTEXT_UNIMPLEMENTED = ['thread', 'account'];
 const FILTER_CONTEXT_LABELS = {
   home: msg`Home and lists`,
   notifications: msg`Notifications`,

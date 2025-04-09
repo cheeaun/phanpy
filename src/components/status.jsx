@@ -3679,7 +3679,7 @@ function FilteredStatus({
 
   return (
     <div
-      class={
+      class={`${
         quoted
           ? ''
           : isReblog
@@ -3689,7 +3689,7 @@ function FilteredStatus({
             : isFollowedTags
               ? 'status-followed-tags'
               : ''
-      }
+      } visibility-${visibility}`}
       {...containerProps}
       // title={statusPeekText}
       onContextMenu={(e) => {

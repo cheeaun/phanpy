@@ -3578,6 +3578,7 @@ function StatusCompact({ sKey }) {
   if (!status) return null;
 
   const {
+    account: { id: accountId },
     sensitive,
     spoilerText,
     account: { avatar, avatarStatic, bot } = {},
@@ -3592,8 +3593,15 @@ function StatusCompact({ sKey }) {
   const srKey = statusKey(id, instance);
   const statusPeekText = statusPeek(status);
 
+  const currentAccount = getCurrentAccID();
+  const isSelf = currentAccount && currentAccount === accountId;
+
   const filterContext = useContext(FilterContext);
-  const filterInfo = isFiltered(filtered, filterContext);
+  let filterInfo = !isSelf && isFiltered(filtered, filterContext);
+
+  // This is fine. Images are converted to emojis so they are
+  // in a way, already "obscured"
+  if (filterInfo?.action === 'blur') filterInfo = null;
 
   if (filterInfo?.action === 'hide') return null;
 

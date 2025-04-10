@@ -968,7 +968,7 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
         lang={language}
         dir="auto"
       >
-        {!!filterInfo ? (
+        {!!filterInfo && filterInfo?.action !== 'blur' ? (
           <b
             class="status-filtered-badge badge-meta horizontal"
             title={filterInfo?.titlesStr || ''}

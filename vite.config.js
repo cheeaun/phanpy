@@ -63,7 +63,7 @@ export default defineConfig({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
       babel: {
-        plugins: ['macros'],
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
       },
     }),
     lingui(),

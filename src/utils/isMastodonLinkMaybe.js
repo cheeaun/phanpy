@@ -14,6 +14,7 @@ export default function isMastodonLinkMaybe(url) {
       (/(fed|bsky)\.brid\.gy/i.test(hostname) &&
         pathname.startsWith('/r/http')) || // Bridgy Fed
       /^\/[^\/]+\/p\/\d+\.\d+$/i.test(pathname) || // snac2
+      /^\/fediverse\/post\/[a-z0-9\-]+$/i.test(pathname) || // Wafrn
       /#\/[^\/]+\.[^\/]+\/s\/.+/i.test(hash) // Phanpy 🫣
     );
   } catch (e) {

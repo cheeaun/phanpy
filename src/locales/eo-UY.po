@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-14 00:05\n"
+"PO-Revision-Date: 2025-04-16 12:26\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -404,7 +404,7 @@ msgstr "Ĉu nuligi peton por sekvado?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Ĉu ĉesi sekvi @{0}?"
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -1319,7 +1319,7 @@ msgstr "Filtrila: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Filtrila"
 
-#: src/components/media.jsx:414
+#: src/components/media.jsx:417
 msgid "Open file"
 msgstr "Malfermi dosieron"
 
@@ -2168,17 +2168,17 @@ msgstr "Ne plu ŝatis la afiŝon de {0}"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:848
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Ŝatis la afiŝon de {0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:887
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Ne plu legosignis la afiŝon de @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:888
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Legosignis la afiŝon de @{0}"
 
 #: src/components/status.jsx:985
 msgid "Some media have no descriptions."
@@ -2205,13 +2205,13 @@ msgstr "Citaĵo"
 #: src/components/status.jsx:1044
 #: src/components/status.jsx:1499
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Ne plu diskonigita la afiŝon de @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1045
 #: src/components/status.jsx:1500
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Diskonigita la afiŝon de @{0}"
 
 #: src/components/status.jsx:1057
 msgid "Boost…"
@@ -2608,7 +2608,7 @@ msgstr "Montrante afiŝojn etikeditaj kun #{0}"
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Montrante afiŝojn en {0}"
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
@@ -2827,7 +2827,7 @@ msgstr "Forigante aktualiĝon {0}"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1070
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Aktualiĝo {0} forigita"
 
 #: src/pages/catchup.jsx:1084
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."

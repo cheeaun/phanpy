@@ -533,9 +533,9 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        oRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
       }}
       tabIndex="-1"
     >

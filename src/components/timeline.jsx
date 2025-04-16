@@ -392,10 +392,10 @@ function Timeline({
         }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef(node);
-          kRef(node);
-          oRef(node);
-          dotRef(node);
+          jRef.current = node;
+          kRef.current = node;
+          oRef.current = node;
+          dotRef.current = node;
         }}
         tabIndex="-1"
         onClick={(e) => {

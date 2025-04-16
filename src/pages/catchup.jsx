@@ -843,10 +843,10 @@ function Catchup() {
     <div
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        hlRef(node);
-        escRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        hlRef.current = node;
+        escRef.current = node;
       }}
       id="catchup-page"
       class="deck-container"

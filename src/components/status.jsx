@@ -1677,11 +1677,11 @@ function Status({
             node?.closest?.(
               '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
             ) || node;
-          rRef(nodeRef);
-          fRef(nodeRef);
-          dRef(nodeRef);
-          bRef(nodeRef);
-          xRef(nodeRef);
+          rRef.current = nodeRef;
+          fRef.current = nodeRef;
+          dRef.current = nodeRef;
+          bRef.current = nodeRef;
+          xRef.current = nodeRef;
         }}
         tabindex="-1"
         class={`status ${

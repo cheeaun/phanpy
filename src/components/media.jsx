@@ -185,7 +185,8 @@ function Media({
   const isImage =
     type === 'image' ||
     (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);
-  const isPreviewVideoMaybe = previewUrl &&
+  const isPreviewVideoMaybe =
+    previewUrl &&
     /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname);
 
   const parentRef = useRef();

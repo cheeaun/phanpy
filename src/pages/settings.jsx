@@ -24,6 +24,7 @@ import {
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getAPIVersions } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 const DEFAULT_TEXT_SIZE = 16;
@@ -595,29 +596,31 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            {authenticated && supports('@mastodon/grouped-notifications') && (
-              <li class="block">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={snapStates.settings.groupedNotificationsAlpha}
-                    onChange={(e) => {
-                      states.settings.groupedNotificationsAlpha =
-                        e.target.checked;
-                    }}
-                  />{' '}
-                  <Trans>Server-side grouped notifications</Trans>
-                </label>
-                <div class="sub-section insignificant">
-                  <small>
-                    <Trans>
-                      Alpha-stage feature. Potentially improved grouping window
-                      but basic grouping logic.
-                    </Trans>
-                  </small>
-                </div>
-              </li>
-            )}
+            {authenticated &&
+              supports('@mastodon/grouped-notifications') &&
+              getAPIVersions()?.mastodon >= 2 && (
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.groupedNotificationsAlpha}
+                      onChange={(e) => {
+                        states.settings.groupedNotificationsAlpha =
+                          e.target.checked;
+                      }}
+                    />{' '}
+                    <Trans>Server-side grouped notifications</Trans>
+                  </label>
+                  <div class="sub-section insignificant">
+                    <small>
+                      <Trans>
+                        Alpha-stage feature. Potentially improved grouping
+                        window but basic grouping logic.
+                      </Trans>
+                    </small>
+                  </div>
+                </li>
+              )}
             {authenticated && (
               <li class="block">
                 <label>

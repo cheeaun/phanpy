@@ -36,6 +36,7 @@ function NameText({
   onClick,
 }) {
   const { i18n } = useLingui();
+  if (!account) return null;
   const {
     acct,
     avatar,

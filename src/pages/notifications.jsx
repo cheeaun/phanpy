@@ -28,6 +28,7 @@ import Notification from '../components/notification';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import FilterContext from '../utils/filter-context';
 import groupNotifications, {
   groupNotifications2,
   massageNotifications2,
@@ -532,9 +533,9 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        oRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
       }}
       tabIndex="-1"
     >
@@ -797,7 +798,7 @@ function Notifications({ columnMode }) {
           </p>
         )}
         {snapStates.notifications.length ? (
-          <>
+          <FilterContext.Provider value="notifications">
             {snapStates.notifications
               // This is leaked from Notifications popover
               .filter((n) => n.type !== 'follow_request')
@@ -843,7 +844,7 @@ function Notifications({ columnMode }) {
                   </Fragment>
                 );
               })}
-          </>
+          </FilterContext.Provider>
         ) : (
           <>
             {uiState === 'loading' && (

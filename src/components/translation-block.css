@@ -55,7 +55,8 @@
     var(--bg-faded-blur-color)
   );
   white-space: pre-wrap;
-  box-shadow: inset 0 0 0 1px var(--bg-color),
+  box-shadow:
+    inset 0 0 0 1px var(--bg-color),
     0 1px 5px -2px var(--drop-shadow-color);
   text-shadow: 0 1px var(--bg-color);
 }
@@ -113,16 +114,19 @@
 .status-translation-block-mini {
   display: flex;
   margin: 8px 0 0;
-  padding: 8px 0 0;
   font-size: 90%;
-  border-top: var(--hairline-width) solid var(--outline-color);
-  color: var(--text-insignificant-color);
   gap: 8px;
-  transition: color 0.3s ease-in-out;
-}
-.status-translation-block-mini .icon {
-  margin-top: 2px;
-}
-.status:is(:hover, :active) .status-translation-block-mini {
-  color: var(--text-color);
+  --top-padding: 2px;
+  --top-border: 1px;
+
+  .icon {
+    color: var(--text-insignificant-color);
+    margin-top: calc(var(--top-padding) + var(--top-border) + 2px);
+  }
+
+  output {
+    padding: var(--top-padding) 0 0;
+    border-top: var(--top-border) dashed var(--outline-stronger-color);
+    text-wrap: pretty;
+  }
 }

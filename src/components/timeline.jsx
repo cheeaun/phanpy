@@ -392,10 +392,10 @@ function Timeline({
         }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef(node);
-          kRef(node);
-          oRef(node);
-          dotRef(node);
+          jRef.current = node;
+          kRef.current = node;
+          oRef.current = node;
+          dotRef.current = node;
         }}
         tabIndex="-1"
         onClick={(e) => {
@@ -608,8 +608,12 @@ const TimelineItem = memo(
           // }
           const aFiltered = isFiltered(a.filtered, filterContext);
           const bFiltered = isFiltered(b.filtered, filterContext);
-          if (aFiltered) filteredItemsIDs.add(a.id);
-          if (bFiltered) filteredItemsIDs.add(b.id);
+          if (aFiltered && aFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(a.id);
+          }
+          if (bFiltered && bFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(b.id);
+          }
           if (aFiltered && !bFiltered) {
             return 1;
           }
@@ -964,7 +968,7 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
         lang={language}
         dir="auto"
       >
-        {!!filterInfo ? (
+        {!!filterInfo && filterInfo?.action !== 'blur' ? (
           <b
             class="status-filtered-badge badge-meta horizontal"
             title={filterInfo?.titlesStr || ''}

@@ -277,8 +277,8 @@ function Search({ columnMode, ...props }) {
       tabIndex="-1"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
+        jRef.current = node;
+        kRef.current = node;
       }}
     >
       <div class="timeline-deck deck">

@@ -1105,69 +1105,50 @@ function Status({
           </MenuItem>
         </>
       )}
-      {!mediaFirst && (
+      {!mediaFirst && (enableTranslate || !language || differentLanguage) && (
         <>
-          {(enableTranslate || !language || differentLanguage) && (
-            <MenuDivider />
-          )}
-          {enableTranslate ? (
-            <div class={supportsTTS ? 'menu-horizontal' : ''}>
+          <MenuDivider />
+          <div class={supportsTTS ? 'menu-horizontal' : ''}>
+            {enableTranslate ? (
               <MenuItem
                 disabled={forceTranslate}
-                onClick={() => {
-                  setForceTranslate(true);
-                }}
+                onClick={() => setForceTranslate(true)}
               >
                 <Icon icon="translate" />
                 <span>
                   <Trans>Translate</Trans>
                 </span>
               </MenuItem>
-              {supportsTTS && (
-                <MenuItem
-                  onClick={() => {
+            ) : (
+              <MenuLink
+                to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+              >
+                <Icon icon="translate" />
+                <span>
+                  <Trans>Translate</Trans>
+                </span>
+              </MenuLink>
+            )}
+            {supportsTTS && (
+              <MenuItem
+                onClick={() => {
+                  try {
                     const postText = getPostText(status);
                     if (postText) {
                       speak(postText, language);
                     }
-                  }}
-                >
-                  <Icon icon="speak" />
-                  <span>
-                    <Trans>Speak</Trans>
-                  </span>
-                </MenuItem>
-              )}
-            </div>
-          ) : (
-            (!language || differentLanguage) && (
-              <div class={supportsTTS ? 'menu-horizontal' : ''}>
-                <MenuLink
-                  to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
-                >
-                  <Icon icon="translate" />
-                  <span>
-                    <Trans>Translate</Trans>
-                  </span>
-                </MenuLink>
-                {supportsTTS && (
-                  <MenuItem
-                    onClick={() => {
-                      const postText = getPostText(status);
-                      if (postText) {
-                        speak(postText, language);
-                      }
-                    }}
-                  >
-                    <Icon icon="speak" />
-                    <span>
-                      <Trans>Speak</Trans>
-                    </span>
-                  </MenuItem>
-                )}
-              </div>
-            )
-          )}
+                  } catch (error) {
+                    console.error('Failed to speak text:', error);
+                  }
+                }}
+              >
+                <Icon icon="speak" />
+                <span>
+                  <Trans>Speak</Trans>
+                </span>
+              </MenuItem>
+            )}
+          </div>
         </>
       )}
       {((!isSizeLarge && sameInstance) ||

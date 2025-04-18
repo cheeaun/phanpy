@@ -1105,51 +1105,72 @@ function Status({
           </MenuItem>
         </>
       )}
+      {(isSizeLarge ||
+        (!mediaFirst &&
+          (enableTranslate || !language || differentLanguage))) && (
+        <MenuDivider />
+      )}
       {!mediaFirst && (enableTranslate || !language || differentLanguage) && (
-        <>
-          <MenuDivider />
-          <div class={supportsTTS ? 'menu-horizontal' : ''}>
-            {enableTranslate ? (
-              <MenuItem
-                disabled={forceTranslate}
-                onClick={() => setForceTranslate(true)}
-              >
-                <Icon icon="translate" />
-                <span>
-                  <Trans>Translate</Trans>
-                </span>
-              </MenuItem>
-            ) : (
-              <MenuLink
-                to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
-              >
-                <Icon icon="translate" />
-                <span>
-                  <Trans>Translate</Trans>
-                </span>
-              </MenuLink>
-            )}
-            {supportsTTS && (
-              <MenuItem
-                onClick={() => {
-                  try {
-                    const postText = getPostText(status);
-                    if (postText) {
-                      speak(postText, language);
-                    }
-                  } catch (error) {
-                    console.error('Failed to speak text:', error);
+        <div class={supportsTTS ? 'menu-horizontal' : ''}>
+          {enableTranslate ? (
+            <MenuItem
+              disabled={forceTranslate}
+              onClick={() => setForceTranslate(true)}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuItem>
+          ) : (
+            <MenuLink
+              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuLink>
+          )}
+          {supportsTTS && (
+            <MenuItem
+              onClick={() => {
+                try {
+                  const postText = getPostText(status);
+                  if (postText) {
+                    speak(postText, language);
                   }
-                }}
-              >
-                <Icon icon="speak" />
-                <span>
-                  <Trans>Speak</Trans>
-                </span>
-              </MenuItem>
-            )}
-          </div>
-        </>
+                } catch (error) {
+                  console.error('Failed to speak text:', error);
+                }
+              }}
+            >
+              <Icon icon="speak" />
+              <span>
+                <Trans>Speak</Trans>
+              </span>
+            </MenuItem>
+          )}
+        </div>
+      )}
+      {isSizeLarge && (
+        <MenuItem
+          onClick={() => {
+            try {
+              const postText = getPostText(status);
+              navigator.clipboard.writeText(postText);
+              showToast(t`Post text copied`);
+            } catch (e) {
+              console.error(e);
+              showToast(t`Unable to copy post text`);
+            }
+          }}
+        >
+          <Icon icon="clipboard" />
+          <span>
+            <Trans>Copy post text</Trans>
+          </span>
+        </MenuItem>
       )}
       {((!isSizeLarge && sameInstance) ||
         enableTranslate ||

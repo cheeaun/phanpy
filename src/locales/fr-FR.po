@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-19 02:20\n"
+"PO-Revision-Date: 2025-04-19 03:16\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -25,12 +25,12 @@ msgstr "Verrouillé"
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:142
 msgid "Posts: {0}"
-msgstr "Messages : {0}"
+msgstr "Publications : {0}"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:147
 msgid "Last posted: {0}"
-msgstr "Dernier message : {0}"
+msgstr "Dernière publication : {0}"
 
 #: src/components/account-block.jsx:162
 #: src/components/account-info.jsx:690
@@ -109,7 +109,7 @@ msgstr ""
 #: src/pages/search.jsx:341
 #: src/pages/search.jsx:488
 msgid "Posts"
-msgstr "Messages"
+msgstr "Publications"
 
 #: src/components/account-info.jsx:444
 #: src/components/account-info.jsx:1200
@@ -130,11 +130,11 @@ msgstr "Messages"
 #: src/pages/status.jsx:1232
 #: src/pages/trending.jsx:469
 msgid "More"
-msgstr "Plus"
+msgstr "Davantage"
 
 #: src/components/account-info.jsx:456
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> a désormais le nouveau compte suivant :"
+msgstr "<0>{displayName}</0> a indiqué que son nouveau compte est désormais :"
 
 #: src/components/account-info.jsx:601
 #: src/components/account-info.jsx:1358
@@ -171,7 +171,7 @@ msgstr "Modifier votre profil"
 
 #: src/components/account-info.jsx:685
 msgid "In Memoriam"
-msgstr "In memoriam"
+msgstr "En mémoire"
 
 #: src/components/account-info.jsx:767
 #: src/components/account-info.jsx:810
@@ -183,7 +183,7 @@ msgstr "Cette personne ne souhaite pas partager cette information."
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:865
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "{0} messages, {1} réponses, {2} partages"
+msgstr "{0} publications, {1} réponses, {2} partages"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.daysSinceLastPost
@@ -194,13 +194,13 @@ msgstr "{0} messages, {1} réponses, {2} partages"
 #. placeholder {6}: postingStats.daysSinceLastPost
 #: src/components/account-info.jsx:881
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Dernier message aujourd’hui} other {Dernier message ces {2} derniers jours}}} other {{3, plural, one {{4} messages les plus récents aujourd’hui} other {{5} messages les plus récents ces {6} derniers jours}}}}"
+msgstr "{0, plural, one {{1, plural, one {Dernière publication aujourd’hui} other {Dernière publication ces {2} derniers jours}}} other {{3, plural, one {{4} publications les plus récentes aujourd’hui} other {{5} publications les plus récentes ces {6} derniers jours}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
 #: src/components/account-info.jsx:897
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
-msgstr "{0, plural, one {Dernier 1 message dans les dernières années} other {Derniers {1} messages dans les dernières années}}"
+msgstr "{0, plural, one {Dernière publication dans les dernières années} other {{1} dernières publications dans les dernières années}}"
 
 #: src/components/account-info.jsx:922
 #: src/pages/catchup.jsx:71
@@ -236,7 +236,7 @@ msgstr "Afficher les statistiques du message"
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-info.jsx:1148
 msgid "Last post: <0>{0}</0>"
-msgstr "Dernier message : <0>{0}</0>"
+msgstr "Dernière publication : <0>{0}</0>"
 
 #: src/components/account-info.jsx:1162
 msgid "Muted"
@@ -272,7 +272,7 @@ msgstr "Notifications activées pour les publications de @{username}."
 
 #: src/components/account-info.jsx:1277
 msgid " Notifications disabled for @{username}'s posts."
-msgstr " Notifications désactivées pour les publications de @{username}."
+msgstr "Notifications désactivées pour les publications de @{username}."
 
 #: src/components/account-info.jsx:1289
 msgid "Disable notifications"
@@ -3691,7 +3691,7 @@ msgstr "Notifications groupées côté serveur"
 
 #: src/pages/settings.jsx:616
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr ""
+msgstr "Fonctionnalité en phase alpha. Fenêtre de regroupement potentiellement améliorée, mais logique de regroupement de base."
 
 #: src/pages/settings.jsx:637
 msgid "\"Cloud\" import/export for shortcuts settings"
@@ -3868,7 +3868,7 @@ msgstr "Impossible de basculer"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1311
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Basculer vers l'instance de la publication ({0})"
 
 #: src/pages/status.jsx:1314
 msgid "Switch to post's instance"

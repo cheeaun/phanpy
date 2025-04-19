@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-19 01:11\n"
+"PO-Revision-Date: 2025-04-19 02:20\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -248,7 +248,7 @@ msgstr "Bloqué⋅e"
 
 #: src/components/account-info.jsx:1176
 msgid "Private note"
-msgstr ""
+msgstr "Note personnelle"
 
 #: src/components/account-info.jsx:1233
 msgid "Mention <0>@{username}</0>"
@@ -260,43 +260,43 @@ msgstr "Traduire la bio"
 
 #: src/components/account-info.jsx:1256
 msgid "Edit private note"
-msgstr ""
+msgstr "Modifier la note personnelle"
 
 #: src/components/account-info.jsx:1256
 msgid "Add private note"
-msgstr ""
+msgstr "Ajouter une note personnelle"
 
 #: src/components/account-info.jsx:1276
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "Notifications activées pour les publications de @{username}."
 
 #: src/components/account-info.jsx:1277
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr " Notifications désactivées pour les publications de @{username}."
 
 #: src/components/account-info.jsx:1289
 msgid "Disable notifications"
-msgstr ""
+msgstr "Désactiver les notifications"
 
 #: src/components/account-info.jsx:1290
 msgid "Enable notifications"
-msgstr ""
+msgstr "Activer les notifications"
 
 #: src/components/account-info.jsx:1307
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Partages de @{username} affichés."
 
 #: src/components/account-info.jsx:1308
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Partages de @{username} masqués."
 
 #: src/components/account-info.jsx:1319
 msgid "Disable boosts"
-msgstr ""
+msgstr "Masquer les partages"
 
 #: src/components/account-info.jsx:1319
 msgid "Enable boosts"
-msgstr ""
+msgstr "Afficher les partages"
 
 #: src/components/account-info.jsx:1335
 #: src/components/account-info.jsx:1345
@@ -334,7 +334,7 @@ msgstr "Partager…"
 
 #: src/components/account-info.jsx:1434
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "@{username} n’est plus masqué⋅e"
 
 #: src/components/account-info.jsx:1446
 msgid "Unmute <0>@{username}</0>"
@@ -347,11 +347,11 @@ msgstr "Masquer <0>@{username}</0>…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1494
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "@{username} masqué⋅e pendant {0}"
 
 #: src/components/account-info.jsx:1506
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Impossible de masquer @{username}"
 
 #: src/components/account-info.jsx:1527
 msgid "Remove <0>@{username}</0> from followers?"
@@ -359,7 +359,7 @@ msgstr "Retirer <0>@{username}</0> de vos abonné⋅e·s ?"
 
 #: src/components/account-info.jsx:1547
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} retiré⋅e de vos abonné⋅es"
 
 #: src/components/account-info.jsx:1559
 msgid "Remove follower…"
@@ -371,19 +371,19 @@ msgstr "Bloquer <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1594
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "@{username} débloqué⋅e"
 
 #: src/components/account-info.jsx:1602
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "@{username} bloqué⋅e"
 
 #: src/components/account-info.jsx:1610
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Impossible de débloquer @{username}"
 
 #: src/components/account-info.jsx:1612
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Impossible de bloquer @{username}"
 
 #: src/components/account-info.jsx:1622
 msgid "Unblock <0>@{username}</0>"
@@ -399,12 +399,12 @@ msgstr "Signaler <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1704
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Annuler la demande de suivi ?"
 
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1705
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Ne plus suivre @{0} ?"
 
 #: src/components/account-info.jsx:1756
 msgid "Unfollow…"
@@ -462,11 +462,11 @@ msgstr "Bio traduite"
 
 #: src/components/account-info.jsx:1973
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Impossible de retirer de la liste."
 
 #: src/components/account-info.jsx:1974
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Impossible d’ajouter à la liste."
 
 #: src/components/account-info.jsx:1993
 #: src/pages/lists.jsx:105
@@ -490,7 +490,7 @@ msgstr "Note personnelle à propos de <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2097
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Impossible de mettre à jour la note personnelle."
 
 #: src/components/account-info.jsx:2120
 #: src/components/account-info.jsx:2418
@@ -503,15 +503,15 @@ msgstr "Enregistrer et quitter"
 
 #: src/components/account-info.jsx:2242
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Impossible de mettre à jour le profil."
 
 #: src/components/account-info.jsx:2249
 msgid "Header picture"
-msgstr ""
+msgstr "Image d’en-tête"
 
 #: src/components/account-info.jsx:2301
 msgid "Profile picture"
-msgstr ""
+msgstr "Photo du profil"
 
 #: src/components/account-info.jsx:2353
 #: src/components/list-add-edit.jsx:105
@@ -581,15 +581,15 @@ msgstr "Rédiger"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:76
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "Publications planifiées"
 
 #: src/components/compose-button.jsx:182
 msgid "Add to thread"
-msgstr ""
+msgstr "Ajouter au fil"
 
 #: src/components/compose.jsx:211
 msgid "Take photo or video"
-msgstr ""
+msgstr "Prendre une photo ou une vidéo"
 
 #: src/components/compose.jsx:212
 msgid "Add media"
@@ -609,7 +609,7 @@ msgstr "Insérer un sondage"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr ""
+msgstr "Planifier la publication"
 
 #: src/components/compose.jsx:415
 msgid "You have unsaved changes. Discard this post?"
@@ -620,7 +620,7 @@ msgstr "Le message n’est pas sauvegardé. Annuler sa rédaction ?"
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
 #: src/components/compose.jsx:644
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
-msgstr ""
+msgstr "{0, plural, one {Le fichier {1} n'est pas pris en charge.} other {Les fichiers {2} ne sont pas pris en charge.}}"
 
 #: src/components/compose.jsx:654
 #: src/components/compose.jsx:672
@@ -743,7 +743,7 @@ msgstr "Marquer le média comme délicat"
 
 #: src/components/compose.jsx:1405
 msgid "Posting on <0/>"
-msgstr ""
+msgstr "Publier sur <0/>"
 
 #: src/components/compose.jsx:1436
 #: src/components/compose.jsx:3260
@@ -754,7 +754,7 @@ msgstr "Insérer"
 
 #: src/components/compose.jsx:1662
 msgid "Schedule"
-msgstr ""
+msgstr "Planifier"
 
 #: src/components/compose.jsx:1664
 #: src/components/keyboard-shortcuts-help.jsx:155
@@ -820,7 +820,7 @@ msgstr "Ce fichier est trop lourd. Son chargement pourrait échouer. Essayez de 
 #: src/components/compose.jsx:2604
 #: src/components/compose.jsx:2624
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Ce média est trop grand. Son chargement pourrait échouer. Essayez de réduire sa taille de {0}×{1}px à {2}×{3}px."
 
 #: src/components/compose.jsx:2632
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -859,7 +859,7 @@ msgstr "Description en cours de génération. Merci de patienter…"
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2801
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Échec lors de la génération d’une description : {0}"
 
 #: src/components/compose.jsx:2802
 msgid "Failed to generate description"
@@ -874,7 +874,7 @@ msgstr "Générer une description…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2853
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Échec lors de la génération d’une description{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2868
@@ -888,7 +888,7 @@ msgstr "Enregistrer"
 #. placeholder {0}: i + 1
 #: src/components/compose.jsx:2923
 msgid "Choice {0}"
-msgstr ""
+msgstr "Choix {0}"
 
 #: src/components/compose.jsx:2970
 msgid "Multiple choices"
@@ -904,7 +904,7 @@ msgstr "Supprimer le sondage"
 
 #: src/components/compose.jsx:3219
 msgid "Search accounts"
-msgstr ""
+msgstr "Rechercher des comptes"
 
 #: src/components/compose.jsx:3273
 #: src/components/generic-accounts.jsx:228
@@ -917,7 +917,7 @@ msgstr "Émojis personnalisés"
 
 #: src/components/compose.jsx:3437
 msgid "Search emoji"
-msgstr ""
+msgstr "Rechercher un émoji"
 
 #: src/components/compose.jsx:3468
 msgid "Error loading custom emojis"
@@ -925,11 +925,11 @@ msgstr "Les émojis personnalisés n’ont pas pu être chargés"
 
 #: src/components/compose.jsx:3479
 msgid "Recently used"
-msgstr ""
+msgstr "Récemment utilisé"
 
 #: src/components/compose.jsx:3480
 msgid "Others"
-msgstr ""
+msgstr "Autres"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/compose.jsx:3518
@@ -938,11 +938,11 @@ msgstr "{0} de plus…"
 
 #: src/components/compose.jsx:3656
 msgid "Search GIFs"
-msgstr ""
+msgstr "Rechercher des GIF"
 
 #: src/components/compose.jsx:3671
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Propulsé par GIPHY"
 
 #: src/components/compose.jsx:3679
 msgid "Type to search GIFs"
@@ -1320,11 +1320,11 @@ msgstr "Filtré"
 
 #: src/components/media.jsx:417
 msgid "Open file"
-msgstr ""
+msgstr "Ouvrir le fichier"
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "Publication planifiée"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
@@ -1332,7 +1332,7 @@ msgstr "Message publié. Voir le message."
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
-msgstr ""
+msgstr "Réponse planifiée"
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
@@ -1576,7 +1576,7 @@ msgstr "Avertissement de modération"
 
 #: src/components/notification.jsx:265
 msgid "Your {year} #Wrapstodon is here!"
-msgstr ""
+msgstr "Votre #Wrapstodon {year} est arrivé !"
 
 #: src/components/notification.jsx:271
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -1647,7 +1647,7 @@ msgstr "En savoir plus <0/>"
 
 #: src/components/notification.jsx:539
 msgid "View #Wrapstodon"
-msgstr ""
+msgstr "Afficher #Wrapstodon"
 
 #: src/components/notification.jsx:772
 #: src/components/status.jsx:299
@@ -2167,17 +2167,17 @@ msgstr "Message de @{0} retiré des favoris"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:848
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "A aimé la publication de {0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:887
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Publication de @{0} retirée des signets"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:888
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Publication de @{0} ajoutée aux signets"
 
 #: src/components/status.jsx:985
 msgid "Some media have no descriptions."
@@ -2204,13 +2204,13 @@ msgstr "Citer"
 #: src/components/status.jsx:1044
 #: src/components/status.jsx:1507
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Partage du message de @{0} annulé"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1045
 #: src/components/status.jsx:1508
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Publication de @{0} partagée"
 
 #: src/components/status.jsx:1057
 msgid "Boost…"
@@ -2237,15 +2237,15 @@ msgstr "Retirer des signets"
 
 #: src/components/status.jsx:1162
 msgid "Post text copied"
-msgstr ""
+msgstr "Texte de la publication copié"
 
 #: src/components/status.jsx:1165
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "Impossible de copier le texte de la publication"
 
 #: src/components/status.jsx:1171
 msgid "Copy post text"
-msgstr ""
+msgstr "Copier le texte de la publication"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1189
@@ -2396,7 +2396,7 @@ msgstr "Commentaires"
 #. More from [Author]
 #: src/components/status.jsx:2767
 msgid "More from <0/>"
-msgstr ""
+msgstr "Davantage de <0/>"
 
 #: src/components/status.jsx:3069
 msgid "Edit History"
@@ -2619,7 +2619,7 @@ msgstr "Affichage des messages marqués avec #{0}"
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:411
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Affichage des publications en {0}"
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
@@ -2838,7 +2838,7 @@ msgstr "Rattrapage {0} en cours de suppression"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1075
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Rattrapage {0} supprimé"
 
 #: src/pages/catchup.jsx:1089
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3059,7 +3059,7 @@ msgstr "Les messages filtrés seront …"
 
 #: src/pages/filters.jsx:538
 msgid "obscured (media only)"
-msgstr ""
+msgstr "flouté (médias uniquement)"
 
 #: src/pages/filters.jsx:552
 msgid "minimized"
@@ -3428,7 +3428,7 @@ msgstr "Autoriser"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1250
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Les notifications de @{0} n'apparaîtront plus dans les notifications filtrées, dorénavant."
 
 #: src/pages/notifications.jsx:1255
 msgid "Unable to dismiss notification request"
@@ -3472,42 +3472,42 @@ msgstr "Passer au fil local"
 
 #: src/pages/scheduled-posts.jsx:108
 msgid "No scheduled posts."
-msgstr ""
+msgstr "Aucune publication planifiée."
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
 #: src/pages/scheduled-posts.jsx:205
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
-msgstr ""
+msgstr "Planifié <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
 #: src/pages/scheduled-posts.jsx:261
 msgid "Scheduled <0><1/></0>"
-msgstr ""
+msgstr "Planifié <0><1/></0>"
 
 #: src/pages/scheduled-posts.jsx:306
 msgid "Scheduled post rescheduled"
-msgstr ""
+msgstr "Publication planifiée reprogrammée"
 
 #: src/pages/scheduled-posts.jsx:313
 msgid "Failed to reschedule post"
-msgstr ""
+msgstr "Impossible de reprogrammer la publication"
 
 #: src/pages/scheduled-posts.jsx:336
 msgid "Reschedule"
-msgstr ""
+msgstr "Replanifier"
 
 #: src/pages/scheduled-posts.jsx:342
 msgid "Delete scheduled post?"
-msgstr ""
+msgstr "Supprimer la publication planifiée ?"
 
 #: src/pages/scheduled-posts.jsx:350
 msgid "Scheduled post deleted"
-msgstr ""
+msgstr "Publication planifiée supprimée"
 
 #: src/pages/scheduled-posts.jsx:357
 msgid "Failed to delete scheduled post"
-msgstr ""
+msgstr "Impossible de supprimer la publication planifiée"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"
@@ -3642,7 +3642,7 @@ msgstr "Traduction des messages"
 
 #: src/pages/settings.jsx:390
 msgid "Translate to "
-msgstr ""
+msgstr "Traduire en "
 
 #: src/pages/settings.jsx:401
 msgid "System language ({systemTargetLanguageText})"

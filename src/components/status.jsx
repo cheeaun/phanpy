@@ -1482,16 +1482,22 @@ function Status({
   const hotkeysEnabled = !readOnly && !previewMode && !quoted;
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const bRef = useHotkeys(
     'shift+b',
-    () => {
+    (e) => {
+      // Need shiftKey check due to useKey: true
+      if (!e.shiftKey) return;
+
       (async () => {
         try {
           const done = await confirmBoostStatus();
@@ -1507,30 +1513,37 @@ function Status({
     },
     {
       enabled: hotkeysEnabled && canBoost,
+      useKey: true,
     },
   );
-  const xRef = useHotkeys('x', (e) => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    if (activeStatus) {
-      const spoilerButton = activeStatus.querySelector(
-        '.spoiler-button:not(.spoiling)',
+  const xRef = useHotkeys(
+    'x',
+    (e) => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
       );
-      if (spoilerButton) {
-        e.stopPropagation();
-        spoilerButton.click();
-      } else {
-        const spoilerMediaButton = activeStatus.querySelector(
-          '.spoiler-media-button:not(.spoiling)',
+      if (activeStatus) {
+        const spoilerButton = activeStatus.querySelector(
+          '.spoiler-button:not(.spoiling)',
         );
-        if (spoilerMediaButton) {
+        if (spoilerButton) {
           e.stopPropagation();
-          spoilerMediaButton.click();
+          spoilerButton.click();
+        } else {
+          const spoilerMediaButton = activeStatus.querySelector(
+            '.spoiler-media-button:not(.spoiling)',
+          );
+          if (spoilerMediaButton) {
+            e.stopPropagation();
+            spoilerMediaButton.click();
+          }
         }
       }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,

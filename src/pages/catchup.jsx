@@ -716,6 +716,7 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
       ignoreModifiers: true,
     },
@@ -760,6 +761,7 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
       ignoreModifiers: true,
     },
@@ -789,6 +791,7 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
       ignoreModifiers: true,
       enableOnFormTags: ['input'],
@@ -817,6 +820,7 @@ function Catchup() {
       });
     },
     {
+      useKey: true,
       preventDefault: true,
       ignoreModifiers: true,
       enableOnFormTags: ['input'],

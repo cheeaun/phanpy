@@ -144,13 +144,22 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   });
 
   // Global keyboard shortcuts "service"
-  useHotkeys('shift+alt+k', () => {
-    const currentCloakMode = states.settings.cloakMode;
-    states.settings.cloakMode = !currentCloakMode;
-    showToast({
-      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
-    });
-  });
+  useHotkeys(
+    'shift+alt+k',
+    (e) => {
+      // Need modifers check due to useKey: true
+      if (!e.shiftKey || !e.altKey) return;
+
+      const currentCloakMode = states.settings.cloakMode;
+      states.settings.cloakMode = !currentCloakMode;
+      showToast({
+        text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
+      });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   return null;
 });

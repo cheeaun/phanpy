@@ -68,31 +68,38 @@ function Columns() {
     }
   });
 
-  useHotkeys(['[', ']'], (e, handler) => {
-    const key = handler.keys[0];
-    const currentFocusedColumn = document.activeElement.closest('#columns > *');
+  useHotkeys(
+    ['[', ']'],
+    (e, handler) => {
+      const key = handler.keys[0];
+      const currentFocusedColumn =
+        document.activeElement.closest('#columns > *');
 
-    const rtl = isRTL();
-    const prevColKey = rtl ? ']' : '[';
-    const nextColKey = rtl ? '[' : ']';
-    let $column;
+      const rtl = isRTL();
+      const prevColKey = rtl ? ']' : '[';
+      const nextColKey = rtl ? '[' : ']';
+      let $column;
 
-    if (key === prevColKey) {
-      // If [, focus on left of focused column, else first column
-      $column = currentFocusedColumn
-        ? currentFocusedColumn.previousElementSibling
-        : document.querySelectorAll('#columns > *')[0];
-    } else if (key === nextColKey) {
-      // If ], focus on right of focused column, else 2nd column
-      $column = currentFocusedColumn
-        ? currentFocusedColumn.nextElementSibling
-        : document.querySelectorAll('#columns > *')[1];
-    }
-    if ($column) {
-      $column.focus();
-      $column.scrollIntoView(scrollIntoViewOptions);
-    }
-  });
+      if (key === prevColKey) {
+        // If [, focus on left of focused column, else first column
+        $column = currentFocusedColumn
+          ? currentFocusedColumn.previousElementSibling
+          : document.querySelectorAll('#columns > *')[0];
+      } else if (key === nextColKey) {
+        // If ], focus on right of focused column, else 2nd column
+        $column = currentFocusedColumn
+          ? currentFocusedColumn.nextElementSibling
+          : document.querySelectorAll('#columns > *')[1];
+      }
+      if ($column) {
+        $column.focus();
+        $column.scrollIntoView(scrollIntoViewOptions);
+      }
+    },
+    {
+      useKey: true,
+    },
+  );
 
   return (
     <div

@@ -847,6 +847,7 @@ function Catchup() {
         kRef.current = node;
         hlRef.current = node;
         escRef.current = node;
+        dotRef.current = node;
       }}
       id="catchup-page"
       class="deck-container"

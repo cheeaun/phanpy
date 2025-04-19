@@ -19,12 +19,13 @@ export default memo(function KeyboardShortcutsHelp() {
   }
 
   useHotkeys(
-    '?, shift+?, shift+slash',
-    (e) => {
+    '?',
+    () => {
       console.log('help');
       states.showKeyboardShortcutsHelp = true;
     },
     {
+      useKey: true,
       ignoreEventWhen: (e) => {
         const isCatchUpPage = /\/catchup/i.test(location.hash);
         return isCatchUpPage;

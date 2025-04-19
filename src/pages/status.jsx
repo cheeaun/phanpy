@@ -651,84 +651,102 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     location.hash = closeLink;
   });
 
-  useHotkeys('j', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    const activeStatusRect = activeStatus?.getBoundingClientRect();
-    const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
-    );
-    console.log({ allStatusLinks });
-    if (
-      activeStatus &&
-      activeStatusRect.top < scrollableRef.current.clientHeight &&
-      activeStatusRect.bottom > 0
-    ) {
-      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      let nextStatus = allStatusLinks[activeStatusIndex + 1];
-      if (nextStatus) {
-        nextStatus.focus();
-        nextStatus.scrollIntoView(scrollIntoViewOptions);
+  useHotkeys(
+    'j',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      const activeStatusRect = activeStatus?.getBoundingClientRect();
+      const allStatusLinks = Array.from(
+        scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
+      );
+      console.log({ allStatusLinks });
+      if (
+        activeStatus &&
+        activeStatusRect.top < scrollableRef.current.clientHeight &&
+        activeStatusRect.bottom > 0
+      ) {
+        const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+        let nextStatus = allStatusLinks[activeStatusIndex + 1];
+        if (nextStatus) {
+          nextStatus.focus();
+          nextStatus.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostStatusLink = allStatusLinks.find((statusLink) => {
+          const statusLinkRect = statusLink.getBoundingClientRect();
+          return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostStatusLink) {
+          topmostStatusLink.focus();
+          topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostStatusLink = allStatusLinks.find((statusLink) => {
-        const statusLinkRect = statusLink.getBoundingClientRect();
-        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostStatusLink) {
-        topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
-  useHotkeys('k', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    const activeStatusRect = activeStatus?.getBoundingClientRect();
-    const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
-    );
-    if (
-      activeStatus &&
-      activeStatusRect.top < scrollableRef.current.clientHeight &&
-      activeStatusRect.bottom > 0
-    ) {
-      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      let prevStatus = allStatusLinks[activeStatusIndex - 1];
-      if (prevStatus) {
-        prevStatus.focus();
-        prevStatus.scrollIntoView(scrollIntoViewOptions);
+  useHotkeys(
+    'k',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      const activeStatusRect = activeStatus?.getBoundingClientRect();
+      const allStatusLinks = Array.from(
+        scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
+      );
+      if (
+        activeStatus &&
+        activeStatusRect.top < scrollableRef.current.clientHeight &&
+        activeStatusRect.bottom > 0
+      ) {
+        const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+        let prevStatus = allStatusLinks[activeStatusIndex - 1];
+        if (prevStatus) {
+          prevStatus.focus();
+          prevStatus.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostStatusLink = allStatusLinks.find((statusLink) => {
+          const statusLinkRect = statusLink.getBoundingClientRect();
+          return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostStatusLink) {
+          topmostStatusLink.focus();
+          topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostStatusLink = allStatusLinks.find((statusLink) => {
-        const statusLinkRect = statusLink.getBoundingClientRect();
-        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostStatusLink) {
-        topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   // NOTE: I'm not sure if 'x' is the best shortcut for this, might change it later
   // IDEA: x is for expand
-  useHotkeys('x', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    if (activeStatus) {
-      const details = activeStatus.nextElementSibling;
-      if (details && details.tagName.toLowerCase() === 'details') {
-        details.open = !details.open;
+  useHotkeys(
+    'x',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      if (activeStatus) {
+        const details = activeStatus.nextElementSibling;
+        if (details && details.tagName.toLowerCase() === 'details') {
+          details.open = !details.open;
+        }
       }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   const [reachTopPost, setReachTopPost] = useState(false);
   // const { nearReachStart } = useScroll({

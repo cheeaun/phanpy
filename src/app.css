@@ -79,7 +79,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
 .deck-container,
 .deck.contained {
-  scroll-padding-top: 3em;
+  scroll-padding-top: 4em;
+
+  &:has(~ #shortcuts > .tab-bar) {
+    scroll-padding-top: 7em;
+  }
 }
 
 :is(#home-page, #welcome, #columns, #loader-root) ~ .deck-container {

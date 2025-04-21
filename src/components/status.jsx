@@ -119,8 +119,17 @@ function getPollText(poll) {
     )
     .join('\n')}`;
 }
-function getPostText(status) {
-  const { spoilerText, content, poll } = status;
+function getPostText(status, opts) {
+  const { maskCustomEmojis } = opts || {};
+  const { spoilerText, poll, emojis } = status;
+  let { content } = status;
+  if (maskCustomEmojis && emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '⬚');
+  }
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
     getHTMLText(content) +
@@ -139,8 +148,16 @@ function forgivingQSA(selectors = [], dom = document) {
   return [];
 }
 
-function isTranslateble(content) {
+function isTranslateble(content, emojis) {
   if (!content) return false;
+  // Remove custom emojis
+  if (emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '');
+  }
   content = content.trim();
   if (!content) return false;
   const text = getHTMLText(content, {
@@ -2212,7 +2229,7 @@ function Status({
                   />
                 )}
                 {(((enableTranslate || inlineTranslate) &&
-                  isTranslateble(content) &&
+                  isTranslateble(content, emojis) &&
                   differentLanguage) ||
                   forceTranslate) && (
                   <TranslationBlock
@@ -2220,7 +2237,9 @@ function Status({
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
                     autoDetected={languageAutoDetected}
-                    text={getPostText(status)}
+                    text={getPostText(status, {
+                      maskCustomEmojis: true,
+                    })}
                   />
                 )}
                 {!previewMode &&

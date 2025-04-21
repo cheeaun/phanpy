@@ -238,11 +238,15 @@ Available variables:
   - This is applied with the `<meta>` tag on the client-side.
   - The policy can also be set with `Referrer-Policy` header configured on the server-side (not this variable).
   - Note that since Phanpy uses hash-based URLs, the referrer does not include the hash part.
-- `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
+- `PHANPY_LINGVA_INSTANCES` (**DEPRECATED**, optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)
   - List of fallback instances hard-coded in `/.env`
   - [↗️ List of lingva-translate instances](https://github.com/thedaviddelta/lingva-translate?tab=readme-ov-file#instances)
+- `PHANPY_TRANSLANG_INSTANCES` (optional, space-separated list, default: `translang.phanpy.social`):
+  - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
+  - May specify a self-hosted Translating instance, powered by [translang-api](https://github.com/cheeaun/translang-api).
+  - List of instances hard-coded in `/.env`
 - `PHANPY_IMG_ALT_API_URL` (optional, no defaults):
   - API endpoint for self-hosted instance of [img-alt-api](https://github.com/cheeaun/img-alt-api).
   - If provided, a setting will appear for users to enable the image description generator in the composer. Disabled by default.

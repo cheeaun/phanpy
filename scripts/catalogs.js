@@ -3,6 +3,13 @@ import fs from 'node:fs';
 // Dependency from Lingui, not listed in package.json
 import PO from 'pofile';
 
+let listedLocales = [];
+try {
+  listedLocales = JSON.parse(
+    fs.readFileSync('src/data/listed-locales.json', 'utf8'),
+  );
+} catch (e) {}
+
 const DEFAULT_LANG = 'en';
 const IGNORE_LANGS = [DEFAULT_LANG, 'pseudo-LOCALE'];
 
@@ -82,12 +89,41 @@ const fullCatalogs = Object.entries(catalogs)
     return { code, nativeName, name, completion };
   });
 
+// Set listed: true if completion > PERCENTAGE_THRESHOLD
+const PERCENTAGE_THRESHOLD = 50;
+const listedCatalogs = fullCatalogs.map((catalog) => ({
+  ...catalog,
+  // Once listed, always listed
+  // A locale may exceed percentage threshold today, but not tomorrow
+  // So it should't suddenly become unlisted
+  listed:
+    listedLocales.includes(catalog.code) ||
+    catalog.completion >= PERCENTAGE_THRESHOLD,
+}));
+
 // Sort by completion
-const sortedCatalogs = [...fullCatalogs].sort(
+const sortedCatalogs = [...listedCatalogs].sort(
   (a, b) => b.completion - a.completion,
 );
+
 console.table(sortedCatalogs);
+console.log(
+  `Total listed/unlisted: ${listedCatalogs.filter((c) => c.listed).length}/${
+    listedCatalogs.filter((c) => !c.listed).length
+  }`,
+);
 
 const path = 'src/data/catalogs.json';
-fs.writeFileSync(path, JSON.stringify(fullCatalogs, null, 2));
+fs.writeFileSync(path, JSON.stringify(listedCatalogs, null, 2));
 console.log('File written:', path);
+
+const path2 = 'src/data/listed-locales.json';
+const codes = listedCatalogs.filter((c) => c.listed).map((c) => c.code);
+if (codes.length >= listedLocales.length) {
+  fs.writeFileSync(path2, JSON.stringify(codes, null, 2));
+  console.log('File written:', path2);
+} else {
+  console.error(
+    `Number of listed locales reduced from ${listedLocales.length} to ${codes.length}.`,
+  );
+}

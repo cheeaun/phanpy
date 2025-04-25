@@ -8,7 +8,7 @@ Phanpy is hosted on [Cloudflare Pages](https://pages.cloudflare.com/) as a stati
 
 ## Translations
 
-Phanpy uses [Lingva API](https://github.com/cheeaun/lingva-api) and [Lingva Translate](https://github.com/thedaviddelta/lingva-translate) as fallbacks for translating post content, profile bio and media description.
+Phanpy uses [TransLang API](https://github.com/cheeaun/translang-api) for translating post content, profile bio and media description. Read more about [TransLang API's privacy policy](https://github.com/cheeaun/translang-api/blob/main/PRIVACY.md).
 
 ## Error logging
 

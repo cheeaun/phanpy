@@ -261,7 +261,11 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 #### Lingva-translate or lingva-api hosting
 
-See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+⚠️ **DEPRECATED**. See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+
+#### Translang API hosting
+
+See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
 ## Community deployments
 

@@ -4,7 +4,7 @@ import localeMatch from './locale-match';
 import mem from './mem';
 import states from './states';
 
-const translationTargetLanguages = Object.entries(languages).map(
+const translationTargetLanguages = Object.entries(languages.tl).map(
   ([code, { name }]) => ({
     code,
     name,

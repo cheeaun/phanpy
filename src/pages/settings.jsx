@@ -10,7 +10,7 @@ import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
-import targetLanguages from '../data/lingva-target-languages';
+import languages from '../data/translang-languages';
 import { api } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
@@ -24,6 +24,7 @@ import {
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
+import { getAPIVersions } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 const DEFAULT_TEXT_SIZE = 16;
@@ -31,9 +32,17 @@ const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
+  PHANPY_TRANSLANG_INSTANCES: TRANSLANG_INSTANCES,
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
   PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
 } = import.meta.env;
+
+const targetLanguages = Object.entries(languages.tl).map(([code, name]) => ({
+  code,
+  name,
+}));
+
+const TRANSLATION_API_NAME = 'TransLang API';
 
 function Settings({ onClose }) {
   const { t } = useLingui();
@@ -362,46 +371,77 @@ function Settings({ onClose }) {
                 <Trans>Boosts carousel</Trans>
               </label>
             </li>
-            <li class="block">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={snapStates.settings.contentTranslation}
-                  onChange={(e) => {
-                    const { checked } = e.target;
-                    states.settings.contentTranslation = checked;
-                    if (!checked) {
-                      states.settings.contentTranslationTargetLanguage = null;
-                    }
-                  }}
-                />{' '}
-                <Trans>Post translation</Trans>
-              </label>
-              <div
-                class={`sub-section ${
-                  !snapStates.settings.contentTranslation
-                    ? 'more-insignificant'
-                    : ''
-                }`}
-              >
-                <div>
-                  <label>
-                    <Trans>Translate to </Trans>{' '}
-                    <select
-                      value={targetLanguage || ''}
-                      disabled={!snapStates.settings.contentTranslation}
-                      style={{ width: '10em' }}
-                      onChange={(e) => {
-                        states.settings.contentTranslationTargetLanguage =
-                          e.target.value || null;
-                      }}
-                    >
-                      <option value="">
-                        <Trans>
-                          System language ({systemTargetLanguageText})
-                        </Trans>
-                      </option>
-                      <option disabled>──────────</option>
+            {!!TRANSLANG_INSTANCES && (
+              <li class="block">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.contentTranslation}
+                    onChange={(e) => {
+                      const { checked } = e.target;
+                      states.settings.contentTranslation = checked;
+                      if (!checked) {
+                        states.settings.contentTranslationTargetLanguage = null;
+                      }
+                    }}
+                  />{' '}
+                  <Trans>Post translation</Trans>
+                </label>
+                <div
+                  class={`sub-section ${
+                    !snapStates.settings.contentTranslation
+                      ? 'more-insignificant'
+                      : ''
+                  }`}
+                >
+                  <div>
+                    <label>
+                      <Trans>Translate to </Trans>{' '}
+                      <select
+                        value={targetLanguage || ''}
+                        disabled={!snapStates.settings.contentTranslation}
+                        style={{ width: '10em' }}
+                        onChange={(e) => {
+                          states.settings.contentTranslationTargetLanguage =
+                            e.target.value || null;
+                        }}
+                      >
+                        <option value="">
+                          <Trans>
+                            System language ({systemTargetLanguageText})
+                          </Trans>
+                        </option>
+                        <option disabled>──────────</option>
+                        {targetLanguages.map((lang) => {
+                          const common = localeCode2Text({
+                            code: lang.code,
+                            fallback: lang.name,
+                          });
+                          const native = localeCode2Text({
+                            code: lang.code,
+                            locale: lang.code,
+                          });
+                          const showCommon = native && common !== native;
+                          return (
+                            <option value={lang.code}>
+                              {showCommon ? `${native} - ${common}` : common}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                  </div>
+                  <hr />
+                  <div class="checkbox-fieldset">
+                    <Plural
+                      value={
+                        snapStates.settings.contentTranslationHideLanguages
+                          .length
+                      }
+                      _0={`Hide "Translate" button for:`}
+                      other={`Hide "Translate" button for (#):`}
+                    />
+                    <div class="checkbox-fields">
                       {targetLanguages.map((lang) => {
                         const common = localeCode2Text({
                           code: lang.code,
@@ -411,120 +451,86 @@ function Settings({ onClose }) {
                           code: lang.code,
                           locale: lang.code,
                         });
-                        const showCommon = common !== native;
+                        const showCommon = native && common !== native;
                         return (
-                          <option value={lang.code}>
-                            {showCommon ? `${native} - ${common}` : common}
-                          </option>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={snapStates.settings.contentTranslationHideLanguages.includes(
+                                lang.code,
+                              )}
+                              onChange={(e) => {
+                                const { checked } = e.target;
+                                if (checked) {
+                                  states.settings.contentTranslationHideLanguages.push(
+                                    lang.code,
+                                  );
+                                } else {
+                                  states.settings.contentTranslationHideLanguages =
+                                    snapStates.settings.contentTranslationHideLanguages.filter(
+                                      (code) => code !== lang.code,
+                                    );
+                                }
+                              }}
+                            />{' '}
+                            {showCommon ? (
+                              <span>
+                                {native}{' '}
+                                <span class="insignificant ib">- {common}</span>
+                              </span>
+                            ) : (
+                              common
+                            )}
+                          </label>
                         );
                       })}
-                    </select>
-                  </label>
-                </div>
-                <hr />
-                <div class="checkbox-fieldset">
-                  <Plural
-                    value={
-                      snapStates.settings.contentTranslationHideLanguages.length
-                    }
-                    _0={`Hide "Translate" button for:`}
-                    other={`Hide "Translate" button for (#):`}
-                  />
-                  <div class="checkbox-fields">
-                    {targetLanguages.map((lang) => {
-                      const common = localeCode2Text({
-                        code: lang.code,
-                        fallback: lang.name,
-                      });
-                      const native = localeCode2Text({
-                        code: lang.code,
-                        locale: lang.code,
-                      });
-                      const showCommon = common !== native;
-                      return (
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={snapStates.settings.contentTranslationHideLanguages.includes(
-                              lang.code,
-                            )}
-                            onChange={(e) => {
-                              const { checked } = e.target;
-                              if (checked) {
-                                states.settings.contentTranslationHideLanguages.push(
-                                  lang.code,
-                                );
-                              } else {
-                                states.settings.contentTranslationHideLanguages =
-                                  snapStates.settings.contentTranslationHideLanguages.filter(
-                                    (code) => code !== lang.code,
-                                  );
-                              }
-                            }}
-                          />{' '}
-                          {showCommon ? (
-                            <span>
-                              {native}{' '}
-                              <span class="insignificant">- {common}</span>
-                            </span>
-                          ) : (
-                            common
-                          )}
-                        </label>
-                      );
-                    })}
+                    </div>
                   </div>
-                </div>
-                <p class="insignificant">
-                  <small>
-                    <Trans>
-                      Note: This feature uses external translation services,
-                      powered by{' '}
-                      <a
-                        href="https://github.com/cheeaun/lingva-api"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        Lingva API
-                      </a>{' '}
-                      &amp;{' '}
-                      <a
-                        href="https://github.com/thedaviddelta/lingva-translate"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        Lingva Translate
-                      </a>
-                      .
-                    </Trans>
-                  </small>
-                </p>
-                <hr />
-                <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={snapStates.settings.contentTranslationAutoInline}
-                      disabled={!snapStates.settings.contentTranslation}
-                      onChange={(e) => {
-                        states.settings.contentTranslationAutoInline =
-                          e.target.checked;
-                      }}
-                    />{' '}
-                    <Trans>Auto inline translation</Trans>
-                  </label>
                   <p class="insignificant">
                     <small>
                       <Trans>
-                        Automatically show translation for posts in timeline.
-                        Only works for <b>short</b> posts without content
-                        warning, media and poll.
+                        Note: This feature uses external translation services,
+                        powered by{' '}
+                        <a
+                          href="https://github.com/cheeaun/translang-api"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {TRANSLATION_API_NAME}
+                        </a>
+                        .
                       </Trans>
                     </small>
                   </p>
+                  <hr />
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          snapStates.settings.contentTranslationAutoInline
+                        }
+                        disabled={!snapStates.settings.contentTranslation}
+                        onChange={(e) => {
+                          states.settings.contentTranslationAutoInline =
+                            e.target.checked;
+                        }}
+                      />{' '}
+                      <Trans>Auto inline translation</Trans>
+                    </label>
+                    <p class="insignificant">
+                      <small>
+                        <Trans>
+                          Automatically show translation for posts in timeline.
+                          Only works for <b>short</b> posts without content
+                          warning, media and poll.
+                        </Trans>
+                      </small>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            )}
             {!!GIPHY_API_KEY && authenticated && (
               <li class="block">
                 <label>
@@ -595,29 +601,31 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            {authenticated && supports('@mastodon/grouped-notifications') && (
-              <li class="block">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={snapStates.settings.groupedNotificationsAlpha}
-                    onChange={(e) => {
-                      states.settings.groupedNotificationsAlpha =
-                        e.target.checked;
-                    }}
-                  />{' '}
-                  <Trans>Server-side grouped notifications</Trans>
-                </label>
-                <div class="sub-section insignificant">
-                  <small>
-                    <Trans>
-                      Alpha-stage feature. Potentially improved grouping window
-                      but basic grouping logic.
-                    </Trans>
-                  </small>
-                </div>
-              </li>
-            )}
+            {authenticated &&
+              supports('@mastodon/grouped-notifications') &&
+              getAPIVersions()?.mastodon >= 2 && (
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.groupedNotificationsAlpha}
+                      onChange={(e) => {
+                        states.settings.groupedNotificationsAlpha =
+                          e.target.checked;
+                      }}
+                    />{' '}
+                    <Trans>Server-side grouped notifications</Trans>
+                  </label>
+                  <div class="sub-section insignificant">
+                    <small>
+                      <Trans>
+                        Alpha-stage feature. Potentially improved grouping
+                        window but basic grouping logic.
+                      </Trans>
+                    </small>
+                  </div>
+                </li>
+              )}
             {authenticated && (
               <li class="block">
                 <label>

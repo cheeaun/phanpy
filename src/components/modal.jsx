@@ -123,7 +123,7 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
     <div
       ref={(node) => {
         modalRef.current = node;
-        escRef(node?.querySelector?.('[tabindex="-1"]') || node);
+        escRef.current = node?.querySelector?.('[tabindex="-1"]') || node;
       }}
       className={className}
       onClick={(e) => {

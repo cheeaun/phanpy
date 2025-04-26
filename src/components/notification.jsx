@@ -460,7 +460,6 @@ function Notification({
   const expandAccounts = diffCount ? 'remote' : 'local';
 
   // If there's a status and filter action is 'hide', then the notification is hidden
-  // TODO: Handle 'warn' action one day
   if (!!status?.filtered) {
     const isOwnPost = status?.account?.id === currentAccount;
     const filterInfo = isFiltered(status.filtered, 'notifications');
@@ -710,6 +709,7 @@ function Notification({
                     size="s"
                     previewMode
                     allowContextMenu
+                    allowFilters
                   />
                 </TruncatedLink>
               </li>
@@ -749,6 +749,7 @@ function Notification({
                 size="s"
                 readOnly
                 allowContextMenu
+                allowFilters
               />
             ) : (
               <Status
@@ -756,6 +757,7 @@ function Notification({
                 size="s"
                 readOnly
                 allowContextMenu
+                allowFilters
               />
             )}
           </TruncatedLink>

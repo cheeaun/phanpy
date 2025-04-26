@@ -20,6 +20,7 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
       }, 0);
     },
     {
+      useKey: true,
       preventDefault: true,
       ignoreEventWhen: (e) => {
         const isSearchPage = /\/search/.test(location.hash);

@@ -238,11 +238,15 @@ Available variables:
   - This is applied with the `<meta>` tag on the client-side.
   - The policy can also be set with `Referrer-Policy` header configured on the server-side (not this variable).
   - Note that since Phanpy uses hash-based URLs, the referrer does not include the hash part.
-- `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
+- `PHANPY_LINGVA_INSTANCES` (**DEPRECATED**, optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)
   - List of fallback instances hard-coded in `/.env`
   - [↗️ List of lingva-translate instances](https://github.com/thedaviddelta/lingva-translate?tab=readme-ov-file#instances)
+- `PHANPY_TRANSLANG_INSTANCES` (optional, space-separated list, default: `translang.phanpy.social`):
+  - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
+  - May specify a self-hosted Translating instance, powered by [translang-api](https://github.com/cheeaun/translang-api).
+  - List of instances hard-coded in `/.env`
 - `PHANPY_IMG_ALT_API_URL` (optional, no defaults):
   - API endpoint for self-hosted instance of [img-alt-api](https://github.com/cheeaun/img-alt-api).
   - If provided, a setting will appear for users to enable the image description generator in the composer. Disabled by default.
@@ -257,7 +261,11 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 #### Lingva-translate or lingva-api hosting
 
-See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+⚠️ **DEPRECATED**. See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+
+#### Translang API hosting
+
+See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
 ## Community deployments
 
@@ -370,6 +378,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/216e0f7a0c35b079920366939a3aaca7_default.png" alt="" width="16" height="16" /> xen4n (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532657/medium/f309f319266e1ff95f3070eab0c9a9d9_default.png" alt="" width="16" height="16" /> xqueralt (Catalan)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14360216/medium/7e48473691456fce95e1be687045377c.jpeg" alt="" width="16" height="16" /> Zet24 (Arabic)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14041603/medium/6ab77a0467b06aeb49927c6d9c409f89.jpg" alt="" width="16" height="16" /> ZiriSut (Kabyle)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530601/medium/e1b6d5c24953b6405405c1ab33c0fa46.jpeg" alt="" width="16" height="16" /> zkreml (Czech)
 <!-- i18n volunteers end -->

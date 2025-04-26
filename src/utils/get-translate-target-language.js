@@ -1,8 +1,15 @@
-import translationTargetLanguages from '../data/lingva-target-languages';
+import languages from '../data/translang-languages';
 
 import localeMatch from './locale-match';
 import mem from './mem';
 import states from './states';
+
+const translationTargetLanguages = Object.entries(languages.tl).map(
+  ([code, { name }]) => ({
+    code,
+    name,
+  }),
+);
 
 const locales = mem(() => [
   new Intl.DateTimeFormat().resolvedOptions().locale,

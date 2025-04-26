@@ -143,91 +143,115 @@ function Timeline({
 
   const itemsSelector = '.timeline-item, .timeline-item-alt';
 
-  const jRef = useHotkeys('j, shift+j', (_, handler) => {
-    // focus on next status after active item
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    ).filter((item) => !!item.offsetHeight);
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let nextItem = allItems[activeItemIndex + 1];
-      if (handler.shift) {
-        // get next status that's not .timeline-item-alt
-        nextItem = allItems.find(
-          (item, index) =>
-            index > activeItemIndex &&
-            !item.classList.contains('timeline-item-alt'),
-        );
-      }
-      if (nextItem) {
-        nextItem.focus();
-        nextItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+  const jRef = useHotkeys(
+    'j, shift+j',
+    (e, handler) => {
+      // Fix bug: shift+j is fired even when j is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
 
-  const kRef = useHotkeys('k, shift+k', (_, handler) => {
-    // focus on previous status after active item
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    ).filter((item) => !!item.offsetHeight);
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let prevItem = allItems[activeItemIndex - 1];
-      if (handler.shift) {
-        // get prev status that's not .timeline-item-alt
-        prevItem = allItems.findLast(
-          (item, index) =>
-            index < activeItemIndex &&
-            !item.classList.contains('timeline-item-alt'),
-        );
+      // focus on next status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      ).filter((item) => !!item.offsetHeight);
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let nextItem = allItems[activeItemIndex + 1];
+        if (handler.shift) {
+          // get next status that's not .timeline-item-alt
+          nextItem = allItems.find(
+            (item, index) =>
+              index > activeItemIndex &&
+              !item.classList.contains('timeline-item-alt'),
+          );
+        }
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-      if (prevItem) {
-        prevItem.focus();
-        prevItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
-  const oRef = useHotkeys(['enter', 'o'], () => {
-    // open active status
-    const activeItem = document.activeElement;
-    if (activeItem?.matches(itemsSelector)) {
-      activeItem.click();
-    }
-  });
+  const kRef = useHotkeys(
+    'k, shift+k',
+    (e, handler) => {
+      // Fix bug: shift+k is fired even when k is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
+
+      // focus on previous status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      ).filter((item) => !!item.offsetHeight);
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (handler.shift) {
+          // get prev status that's not .timeline-item-alt
+          prevItem = allItems.findLast(
+            (item, index) =>
+              index < activeItemIndex &&
+              !item.classList.contains('timeline-item-alt'),
+          );
+        }
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      }
+    },
+    {
+      useKey: true,
+    },
+  );
+
+  const oRef = useHotkeys(
+    ['enter', 'o'],
+    () => {
+      // open active status
+      const activeItem = document.activeElement;
+      if (activeItem?.matches(itemsSelector)) {
+        activeItem.click();
+      }
+    },
+    {
+      useKey: true,
+    },
+  );
 
   const showNewPostsIndicator =
     items.length > 0 && uiState !== 'loading' && showNew;
@@ -392,10 +416,10 @@ function Timeline({
         }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef(node);
-          kRef(node);
-          oRef(node);
-          dotRef(node);
+          jRef.current = node;
+          kRef.current = node;
+          oRef.current = node;
+          dotRef.current = node;
         }}
         tabIndex="-1"
         onClick={(e) => {
@@ -608,8 +632,12 @@ const TimelineItem = memo(
           // }
           const aFiltered = isFiltered(a.filtered, filterContext);
           const bFiltered = isFiltered(b.filtered, filterContext);
-          if (aFiltered) filteredItemsIDs.add(a.id);
-          if (bFiltered) filteredItemsIDs.add(b.id);
+          if (aFiltered && aFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(a.id);
+          }
+          if (bFiltered && bFiltered?.action !== 'blur') {
+            filteredItemsIDs.add(b.id);
+          }
           if (aFiltered && !bFiltered) {
             return 1;
           }
@@ -964,7 +992,7 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
         lang={language}
         dir="auto"
       >
-        {!!filterInfo ? (
+        {!!filterInfo && filterInfo?.action !== 'blur' ? (
           <b
             class="status-filtered-badge badge-meta horizontal"
             title={filterInfo?.titlesStr || ''}

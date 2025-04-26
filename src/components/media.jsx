@@ -185,6 +185,9 @@ function Media({
   const isImage =
     type === 'image' ||
     (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);
+  const isPreviewVideoMaybe =
+    previewUrl &&
+    /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname);
 
   const parentRef = useRef();
   const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
@@ -577,7 +580,7 @@ function Media({
             />
           ) : (
             <>
-              {previewUrl ? (
+              {previewUrl && !isPreviewVideoMaybe ? (
                 <img
                   src={previewUrl}
                   alt={showInlineDesc ? '' : description}

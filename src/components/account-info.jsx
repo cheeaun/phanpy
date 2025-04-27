@@ -634,23 +634,25 @@ function AccountInfo({
                         <Trans>View profile image</Trans>
                       </span>
                     </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        states.showMediaModal = {
-                          mediaAttachments: [
-                            {
-                              type: 'image',
-                              url: headerStatic,
-                            },
-                          ],
-                        };
-                      }}
-                    >
-                      <Icon icon="media" />
-                      <span>
-                        <Trans>View profile header</Trans>
-                      </span>
-                    </MenuItem>
+                    {!!headerStatic && !headerIsAvatar && (
+                      <MenuItem
+                        onClick={() => {
+                          states.showMediaModal = {
+                            mediaAttachments: [
+                              {
+                                type: 'image',
+                                url: headerStatic,
+                              },
+                            ],
+                          };
+                        }}
+                      >
+                        <Icon icon="media" />
+                        <span>
+                          <Trans>View profile header</Trans>
+                        </span>
+                      </MenuItem>
+                    )}
                     {currentAuthenticated &&
                       isSelf &&
                       supports('@mastodon/profile-edit') && (

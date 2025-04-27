@@ -109,6 +109,7 @@ function AccountBlock({
       <div class="avatar-container">
         <Avatar
           url={useAvatarStatic ? avatarStatic : avatar || avatarStatic}
+          staticUrl={useAvatarStatic ? undefined : avatarStatic}
           size={avatarSize}
           squircle={bot}
         />

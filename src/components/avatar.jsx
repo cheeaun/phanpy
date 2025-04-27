@@ -25,12 +25,12 @@ ctx.imageSmoothingEnabled = false;
 
 const MISSING_IMAGE_PATH_REGEX = /missing\.png$/;
 
-function Avatar({ url, size, alt = '', squircle, ...props }) {
+function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
   const isMissing = MISSING_IMAGE_PATH_REGEX.test(url);
   return (
-    <span
+    <picture
       ref={avatarRef}
       class={`avatar ${squircle ? 'squircle' : ''} ${
         alphaCache[url] ? 'has-alpha' : ''
@@ -42,6 +42,9 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
       title={alt}
       {...props}
     >
+      {!!staticUrl && (
+        <source srcset={staticUrl} media="(prefers-reduced-motion: reduce)" />
+      )}
       {!!url && (
         <img
           src={url}
@@ -95,7 +98,7 @@ function Avatar({ url, size, alt = '', squircle, ...props }) {
           }}
         />
       )}
-    </span>
+    </picture>
   );
 }
 

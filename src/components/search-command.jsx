@@ -45,6 +45,7 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
       enabled: showSearch,
       enableOnFormTags: true,
       preventDefault: true,
+      useKey: true,
     },
   );
 

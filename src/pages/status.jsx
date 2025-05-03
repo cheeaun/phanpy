@@ -644,12 +644,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const hasModal = !!document.querySelector('#modal-container > *');
         return hasModal;
       },
+      useKey: true,
     },
   );
   // For backspace, will always close both media and status page
-  useHotkeys('backspace', () => {
-    location.hash = closeLink;
-  });
+  useHotkeys(
+    'backspace',
+    () => {
+      location.hash = closeLink;
+    },
+    {
+      useKey: true,
+    },
+  );
 
   useHotkeys(
     'j',

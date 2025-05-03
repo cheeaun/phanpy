@@ -808,6 +808,7 @@ function Catchup() {
       preventDefault: true,
       ignoreModifiers: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 

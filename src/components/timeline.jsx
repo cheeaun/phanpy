@@ -262,7 +262,9 @@ function Timeline({
       behavior: 'smooth',
     });
   }, [loadItems, showNewPostsIndicator]);
-  const dotRef = useHotkeys('.', handleLoadNewPosts);
+  const dotRef = useHotkeys('.', handleLoadNewPosts, {
+    useKey: true,
+  });
 
   // const {
   //   scrollDirection,

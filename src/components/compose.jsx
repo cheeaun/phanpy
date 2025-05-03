@@ -519,6 +519,7 @@ function Compose({
     {
       enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
+      useKey: true,
     },
   );
   useHotkeys(
@@ -541,6 +542,7 @@ function Compose({
           modals.length === 1 && modals[0].querySelector('#compose-container');
         return hasModal && !hasOnlyComposer;
       },
+      useKey: true,
     },
   );
   useCloseWatcher(() => {
@@ -3141,6 +3143,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -3167,6 +3170,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -3192,6 +3196,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 

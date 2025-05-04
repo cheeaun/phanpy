@@ -2769,7 +2769,14 @@ function MediaFirstContainer(props) {
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
 // This is just "Progressive Enhancement"
 function isCardPost(domain) {
-  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+  return [
+    'x.com',
+    'twitter.com',
+    'threads.net',
+    'bsky.app',
+    'bsky.brid.gy',
+    'fed.brid.gy',
+  ].includes(domain);
 }
 
 function Byline({ authors, hidden, children }) {

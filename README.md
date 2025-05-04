@@ -272,7 +272,7 @@ See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 These are self-hosted by other wonderful folks.
 
 - [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
-- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@mookiesplace.com](https://mookiesplace.com/@mookie)
+- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
 - [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)

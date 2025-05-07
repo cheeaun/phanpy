@@ -253,6 +253,7 @@ function Compose({
       videoSizeLimit,
       videoMatrixLimit,
       videoFrameRateLimit,
+      descriptionLimit,
     } = {},
     polls: {
       maxOptions,
@@ -1337,6 +1338,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
                         const newAttachments = [...attachments];
@@ -2424,6 +2426,7 @@ function MediaAttachment({
   attachment,
   disabled,
   lang,
+  descriptionLimit = 1500,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
@@ -2565,8 +2568,7 @@ function MediaAttachment({
           dir="auto"
           disabled={disabled || uiState === 'loading'}
           class={uiState === 'loading' ? 'loading' : ''}
-          maxlength="1500" // Not unicode-aware :(
-          // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
+          maxlength={descriptionLimit} // Not unicode-aware :(
           onInput={(e) => {
             const { value } = e.target;
             setDescription(value);

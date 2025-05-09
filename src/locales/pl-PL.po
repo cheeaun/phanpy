@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-09 00:30\n"
+"PO-Revision-Date: 2025-05-09 01:39\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -552,11 +552,11 @@ msgstr "nazwa domeny serwera"
 
 #: src/components/background-service.jsx:156
 msgid "Cloak mode disabled"
-msgstr "Tryb Cloak jest wyłączony"
+msgstr "Tryb \"maskowanie\" jest wyłączony"
 
 #: src/components/background-service.jsx:156
 msgid "Cloak mode enabled"
-msgstr "Tryb Cloak jest włączony"
+msgstr "Tryb \"maskowanie\" jest włączony"
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:176
@@ -879,7 +879,7 @@ msgstr "Błąd podczas generowania opisu{0}"
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2872
 msgid "({0}) <0>— experimental</0>"
-msgstr ""
+msgstr "({0}) <0>— eksperymentalne</0>"
 
 #: src/components/compose.jsx:2891
 msgid "Done"
@@ -1212,7 +1212,7 @@ msgstr "Zakładka"
 
 #: src/components/keyboard-shortcuts-help.jsx:188
 msgid "Toggle Cloak mode"
-msgstr "Przełącz \"tryb kloaki\""
+msgstr "Przełącz tryb \"maskowania\""
 
 #: src/components/keyboard-shortcuts-help.jsx:190
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
@@ -1249,7 +1249,7 @@ msgstr "Ukryj posty z tej listy na Stronie głównej/Obserwowanych"
 #: src/components/list-add-edit.jsx:150
 #: src/pages/filters.jsx:570
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: src/components/list-add-edit.jsx:157
 msgid "Delete this list?"
@@ -1302,7 +1302,7 @@ msgstr "Zobacz wpis"
 
 #: src/components/media-post.jsx:128
 msgid "Sensitive media"
-msgstr ""
+msgstr "Media wrażliwe"
 
 #: src/components/media-post.jsx:133
 msgid "Filtered: {filterTitleStr}"
@@ -1316,7 +1316,7 @@ msgstr ""
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1882
 msgid "Filtered"
-msgstr ""
+msgstr "Odfiltrowane"
 
 #: src/components/media.jsx:417
 msgid "Open file"
@@ -1328,31 +1328,31 @@ msgstr "Zaplanowany wpis"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "Post opublikowany. Sprawdź to sobie."
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
-msgstr ""
+msgstr "Odpowiedź zaplanowana"
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
-msgstr ""
+msgstr "Odpowiedź wysłana. Sprawdź ją sobie."
 
 #: src/components/modals.jsx:80
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "Post został zaktualizowany. Sprawdź to sobie."
 
 #: src/components/nav-menu.jsx:118
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/components/nav-menu.jsx:154
 msgid "Reload page now to update?"
-msgstr ""
+msgstr "Odświeżyć stronę teraz, żeby zaktualizować?"
 
 #: src/components/nav-menu.jsx:166
 msgid "New update available…"
-msgstr ""
+msgstr "Nowa aktualizacja dostępna…"
 
 #. js-lingui-explicit-id
 #: src/components/nav-menu.jsx:185
@@ -1365,7 +1365,7 @@ msgstr ""
 #: src/components/nav-menu.jsx:192
 #: src/pages/catchup.jsx:878
 msgid "Catch-up"
-msgstr ""
+msgstr "Nadrabianie zaległości"
 
 #: src/components/nav-menu.jsx:199
 #: src/components/shortcuts-settings.jsx:58
@@ -1376,7 +1376,7 @@ msgstr ""
 #: src/pages/settings.jsx:1151
 #: src/pages/trending.jsx:379
 msgid "Mentions"
-msgstr ""
+msgstr "Wzmianki"
 
 #: src/components/nav-menu.jsx:206
 #: src/components/shortcuts-settings.jsx:49
@@ -1391,11 +1391,11 @@ msgstr "Powiadomienia"
 
 #: src/components/nav-menu.jsx:209
 msgid "New"
-msgstr ""
+msgstr "Nowe"
 
 #: src/components/nav-menu.jsx:220
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: src/components/nav-menu.jsx:228
 #: src/components/shortcuts-settings.jsx:54
@@ -1420,7 +1420,7 @@ msgstr "Polubienia"
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
-msgstr ""
+msgstr "Obserwowane hashtagi"
 
 #: src/components/nav-menu.jsx:268
 #: src/pages/account-statuses.jsx:326
@@ -1428,7 +1428,7 @@ msgstr ""
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:340
 msgid "Filters"
-msgstr ""
+msgstr "Filtry"
 
 #: src/components/nav-menu.jsx:276
 msgid "Muted users"
@@ -1436,7 +1436,7 @@ msgstr "Wyciszeni użytkownicy"
 
 #: src/components/nav-menu.jsx:284
 msgid "Muted users…"
-msgstr "Wyciszeniu użytkownicy..."
+msgstr "Wyciszeni użytkownicy…"
 
 #: src/components/nav-menu.jsx:291
 msgid "Blocked users"
@@ -1550,7 +1550,7 @@ msgstr "Zakończyła się ankieta, w której oddano głos."
 
 #: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
-msgstr "Wpis, na który zareagowano, został edytowany."
+msgstr "Wpis, na który zareagowano, został zedytowany."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1670,7 +1670,7 @@ msgstr "Ukryj wyniki"
 
 #: src/components/poll.jsx:188
 msgid "Vote"
-msgstr ""
+msgstr "Głosuj"
 
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
@@ -1683,7 +1683,7 @@ msgstr "Odśwież"
 #: src/components/poll.jsx:222
 #: src/components/poll.jsx:226
 msgid "Show results"
-msgstr ""
+msgstr "Pokaż wyniki"
 
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
@@ -1699,19 +1699,19 @@ msgstr ""
 
 #: src/components/poll.jsx:268
 msgid "Ended <0/>"
-msgstr ""
+msgstr "Zakończone <0/>"
 
 #: src/components/poll.jsx:272
 msgid "Ended"
-msgstr ""
+msgstr "Zakończone"
 
 #: src/components/poll.jsx:275
 msgid "Ending <0/>"
-msgstr ""
+msgstr "Koniec <0/>"
 
 #: src/components/poll.jsx:279
 msgid "Ending"
-msgstr ""
+msgstr "Koniec"
 
 #. Relative time in seconds, as short as possible
 #. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
@@ -1733,7 +1733,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:29
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: src/components/report-modal.jsx:30
 msgid "Malicious links, fake engagement, or repetitive replies"
@@ -1773,11 +1773,11 @@ msgstr "Zgłoś wpis"
 
 #: src/components/report-modal.jsx:68
 msgid "Report @{username}"
-msgstr ""
+msgstr "Zgłoś @{username}"
 
 #: src/components/report-modal.jsx:104
 msgid "Pending review"
-msgstr ""
+msgstr "Oczekuje na przejrzenie"
 
 #: src/components/report-modal.jsx:146
 msgid "Post reported"
@@ -1785,7 +1785,7 @@ msgstr "Wpis zgłoszony"
 
 #: src/components/report-modal.jsx:146
 msgid "Profile reported"
-msgstr ""
+msgstr "Profil został zgłoszony"
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
@@ -1793,7 +1793,7 @@ msgstr "Nie można zgłosić wpisu"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
-msgstr ""
+msgstr "Nie udało się zgłosić profilu"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
@@ -1805,7 +1805,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
-msgstr ""
+msgstr "Dodatkowe informacje"
 
 #: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
@@ -1813,7 +1813,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
-msgstr ""
+msgstr "Wyślij zgłoszenie"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
@@ -1870,11 +1870,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: src/components/shortcuts-settings.jsx:56
 msgid "Hashtag"
-msgstr ""
+msgstr "Hashtag"
 
 #: src/components/shortcuts-settings.jsx:63
 msgid "List ID"
@@ -2096,31 +2096,31 @@ msgstr "lub zastąp…"
 
 #: src/components/shortcuts-settings.jsx:1009
 msgid "Import…"
-msgstr ""
+msgstr "Import…"
 
 #: src/components/shortcuts-settings.jsx:1018
 msgid "Export"
-msgstr ""
+msgstr "Eksport"
 
 #: src/components/shortcuts-settings.jsx:1033
 msgid "Shortcuts copied"
-msgstr ""
+msgstr "Skrót skopiowany"
 
 #: src/components/shortcuts-settings.jsx:1036
 msgid "Unable to copy shortcuts"
-msgstr ""
+msgstr "Nie udało się skopiować skrótu"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Shortcut settings copied"
-msgstr ""
+msgstr "Ustawienia skrótu skopiowane"
 
 #: src/components/shortcuts-settings.jsx:1053
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "Nie udało się skopiować ustawień skrótu"
 
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
-msgstr ""
+msgstr "Udostępnij"
 
 #: src/components/shortcuts-settings.jsx:1122
 msgid "Saving shortcuts to instance server…"
@@ -2128,11 +2128,11 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1129
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "Skróty zapisane"
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "Nie udało się zapisać skrótów"
 
 #: src/components/shortcuts-settings.jsx:1137
 msgid "Sync to instance server"
@@ -2149,7 +2149,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1170
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "Import/eksport ustawień z/do serwera instancji (Bardzo eksperymentalne)"
 
 #: src/components/status.jsx:612
 msgid "<0/> <1>boosted</1>"
@@ -2198,7 +2198,7 @@ msgstr ""
 #: src/components/status.jsx:1049
 #: src/components/status.jsx:2534
 msgid "Quote"
-msgstr ""
+msgstr "Cytuj"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1061
@@ -2214,13 +2214,13 @@ msgstr ""
 
 #: src/components/status.jsx:1074
 msgid "Boost…"
-msgstr ""
+msgstr "Podbij…"
 
 #: src/components/status.jsx:1086
 #: src/components/status.jsx:1816
 #: src/components/status.jsx:2555
 msgid "Unlike"
-msgstr ""
+msgstr "Cofnij polubienie"
 
 #: src/components/status.jsx:1087
 #: src/components/status.jsx:1816
@@ -2233,19 +2233,19 @@ msgstr "Polub"
 #: src/components/status.jsx:1096
 #: src/components/status.jsx:2567
 msgid "Unbookmark"
-msgstr ""
+msgstr "Cofnij podbicie"
 
 #: src/components/status.jsx:1179
 msgid "Post text copied"
-msgstr ""
+msgstr "Tekst posta skopiowany"
 
 #: src/components/status.jsx:1182
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "Nie udało się skopiować tekstu posta"
 
 #: src/components/status.jsx:1188
 msgid "Copy post text"
-msgstr ""
+msgstr "Skopiuj tekst posta"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1206
@@ -2254,16 +2254,16 @@ msgstr "Zobacz wpisy autorstwa: <0>@{0}</0>"
 
 #: src/components/status.jsx:1227
 msgid "Show Edit History"
-msgstr ""
+msgstr "Pokaż historię edytowania"
 
 #: src/components/status.jsx:1230
 msgid "Edited: {editedDateText}"
-msgstr ""
+msgstr "Edytowano: {editedDateText}"
 
 #: src/components/status.jsx:1297
 #: src/components/status.jsx:3335
 msgid "Embed post"
-msgstr ""
+msgstr "Zagnieźdź post"
 
 #: src/components/status.jsx:1311
 msgid "Conversation unmuted"
@@ -2291,7 +2291,7 @@ msgstr "Wycisz konwersację"
 
 #: src/components/status.jsx:1350
 msgid "Post unpinned from profile"
-msgstr ""
+msgstr "Post został odpięty z profilu"
 
 #: src/components/status.jsx:1351
 msgid "Post pinned to profile"
@@ -2299,15 +2299,15 @@ msgstr "Wpis przypięty do profilu"
 
 #: src/components/status.jsx:1356
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "Nie udało się odpiąć postu"
 
 #: src/components/status.jsx:1356
 msgid "Unable to pin post"
-msgstr ""
+msgstr "Nie udało się przypiąć postu"
 
 #: src/components/status.jsx:1365
 msgid "Unpin from profile"
-msgstr ""
+msgstr "Odepnij z profilu"
 
 #: src/components/status.jsx:1372
 msgid "Pin to profile"
@@ -2315,19 +2315,19 @@ msgstr "Przypnij do profilu"
 
 #: src/components/status.jsx:1401
 msgid "Delete this post?"
-msgstr ""
+msgstr "Skasować ten post"
 
 #: src/components/status.jsx:1417
 msgid "Post deleted"
-msgstr ""
+msgstr "Post został skasowany"
 
 #: src/components/status.jsx:1420
 msgid "Unable to delete post"
-msgstr ""
+msgstr "Nie udało się usunąć posta"
 
 #: src/components/status.jsx:1448
 msgid "Report post…"
-msgstr ""
+msgstr "Zgłoś post…"
 
 #: src/components/status.jsx:1817
 #: src/components/status.jsx:1853
@@ -2557,7 +2557,7 @@ msgstr "Wymagane logowanie."
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:271
 msgid "Go home"
-msgstr ""
+msgstr "Idź na stronę główną"
 
 #: src/pages/account-statuses.jsx:232
 msgid "Account posts"
@@ -2585,15 +2585,15 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:316
 msgid "Clear filters"
-msgstr ""
+msgstr "Wyczyść filtry"
 
 #: src/pages/account-statuses.jsx:319
 msgid "Clear"
-msgstr ""
+msgstr "Wyczyść"
 
 #: src/pages/account-statuses.jsx:333
 msgid "Showing post with replies"
-msgstr ""
+msgstr "Posty z odpowiedziami"
 
 #: src/pages/account-statuses.jsx:338
 msgid "+ Replies"
@@ -2609,7 +2609,7 @@ msgstr "- Podbicia"
 
 #: src/pages/account-statuses.jsx:355
 msgid "Showing posts with media"
-msgstr ""
+msgstr "Posty z mediami"
 
 #. placeholder {0}: tag.name
 #: src/pages/account-statuses.jsx:372
@@ -2623,13 +2623,13 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:500
 msgid "Nothing to see here yet."
-msgstr ""
+msgstr "Nie ma tu nic do widzenia!"
 
 #: src/pages/account-statuses.jsx:501
 #: src/pages/public.jsx:98
 #: src/pages/trending.jsx:447
 msgid "Unable to load posts"
-msgstr ""
+msgstr "Nie można załadować postów"
 
 #: src/pages/account-statuses.jsx:542
 #: src/pages/account-statuses.jsx:572
@@ -2639,39 +2639,39 @@ msgstr ""
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:549
 msgid "Switch to account's instance {0}"
-msgstr ""
+msgstr "Przełącz na instancję danego konta {0}"
 
 #: src/pages/account-statuses.jsx:579
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Przełącz na moją instancję (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:641
 msgid "Month"
-msgstr ""
+msgstr "Miesiąc"
 
 #: src/pages/accounts.jsx:56
 msgid "Current"
-msgstr ""
+msgstr "Aktualny"
 
 #: src/pages/accounts.jsx:102
 msgid "Default"
-msgstr ""
+msgstr "Domyślny"
 
 #: src/pages/accounts.jsx:124
 msgid "Switch to this account"
-msgstr ""
+msgstr "Przełącz na to konto"
 
 #: src/pages/accounts.jsx:133
 msgid "Switch in new tab/window"
-msgstr ""
+msgstr "Przełącz na nowej zakładce/oknie"
 
 #: src/pages/accounts.jsx:147
 msgid "View profile…"
-msgstr ""
+msgstr "Zobacz profil…"
 
 #: src/pages/accounts.jsx:164
 msgid "Set as default"
-msgstr ""
+msgstr "Ustaw jako domyślne"
 
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:174
@@ -2680,11 +2680,11 @@ msgstr ""
 
 #: src/pages/accounts.jsx:197
 msgid "Log out…"
-msgstr ""
+msgstr "Wyloguj…"
 
 #: src/pages/accounts.jsx:210
 msgid "Add an existing account"
-msgstr ""
+msgstr "Dodaj istniejące konto"
 
 #: src/pages/accounts.jsx:217
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
@@ -2696,35 +2696,35 @@ msgstr ""
 
 #: src/pages/bookmarks.jsx:27
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "Nie udało się załadować zakładek."
 
 #: src/pages/catchup.jsx:55
 msgid "last 1 hour"
-msgstr ""
+msgstr "1 godzinę temu"
 
 #: src/pages/catchup.jsx:56
 msgid "last 2 hours"
-msgstr ""
+msgstr "2 godziny temu"
 
 #: src/pages/catchup.jsx:57
 msgid "last 3 hours"
-msgstr ""
+msgstr "3 godziny temu"
 
 #: src/pages/catchup.jsx:58
 msgid "last 4 hours"
-msgstr ""
+msgstr "4 godziny temu"
 
 #: src/pages/catchup.jsx:59
 msgid "last 5 hours"
-msgstr ""
+msgstr "5 godzin temu"
 
 #: src/pages/catchup.jsx:60
 msgid "last 6 hours"
-msgstr ""
+msgstr "6 godzin temu"
 
 #: src/pages/catchup.jsx:61
 msgid "last 7 hours"
-msgstr ""
+msgstr "7 godzin temu"
 
 #: src/pages/catchup.jsx:62
 msgid "last 8 hours"
@@ -2732,27 +2732,27 @@ msgstr "8 godzin temu"
 
 #: src/pages/catchup.jsx:63
 msgid "last 9 hours"
-msgstr ""
+msgstr "9 godzin temu"
 
 #: src/pages/catchup.jsx:64
 msgid "last 10 hours"
-msgstr ""
+msgstr "10 godzin temu"
 
 #: src/pages/catchup.jsx:65
 msgid "last 11 hours"
-msgstr ""
+msgstr "11 godzin temu"
 
 #: src/pages/catchup.jsx:66
 msgid "last 12 hours"
-msgstr ""
+msgstr "12 godzin temu"
 
 #: src/pages/catchup.jsx:67
 msgid "beyond 12 hours"
-msgstr ""
+msgstr "ponad 12 godzin temu"
 
 #: src/pages/catchup.jsx:74
 msgid "Followed tags"
-msgstr ""
+msgstr "Obserwowane tagi"
 
 #: src/pages/catchup.jsx:75
 msgid "Groups"
@@ -2782,7 +2782,7 @@ msgstr "Nadrabianie zaległości to osobna oś czasu, zapewniająca przejrzysty 
 
 #: src/pages/catchup.jsx:933
 msgid "Preview of Catch-up UI"
-msgstr "Podgląd interfejsu"
+msgstr "Podgląd interfejsu nadrabiania zaległości"
 
 #: src/pages/catchup.jsx:942
 msgid "Let's catch up"
@@ -2870,7 +2870,7 @@ msgstr "Od {0}"
 #: src/pages/mentions.jsx:148
 #: src/pages/search.jsx:326
 msgid "All"
-msgstr "Wszystko"
+msgstr "Wszystkie"
 
 #. placeholder {0}: authorCountsList.length
 #: src/pages/catchup.jsx:1404
@@ -2964,24 +2964,24 @@ msgstr "Strona główna i listy"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr ""
+msgstr "Publiczna oś czasu"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
-msgstr ""
+msgstr "Dyskusje"
 
 #: src/pages/filters.jsx:27
 msgid "Profiles"
-msgstr ""
+msgstr "Profile"
 
 #: src/pages/filters.jsx:42
 msgid "Never"
-msgstr ""
+msgstr "Nigdy"
 
 #: src/pages/filters.jsx:104
 #: src/pages/filters.jsx:229
 msgid "New filter"
-msgstr ""
+msgstr "Nowy filtr"
 
 #. placeholder {0}: filters.length
 #: src/pages/filters.jsx:152
@@ -2990,43 +2990,43 @@ msgstr ""
 
 #: src/pages/filters.jsx:167
 msgid "Unable to load filters."
-msgstr ""
+msgstr "Nie udało się załadować filtrów"
 
 #: src/pages/filters.jsx:171
 msgid "No filters yet."
-msgstr ""
+msgstr " Nie ma jeszcze filtrów."
 
 #: src/pages/filters.jsx:178
 msgid "Add filter"
-msgstr ""
+msgstr "Dodaj filtr"
 
 #: src/pages/filters.jsx:229
 msgid "Edit filter"
-msgstr ""
+msgstr "Edytuj filtr"
 
 #: src/pages/filters.jsx:346
 msgid "Unable to edit filter"
-msgstr ""
+msgstr "Nie udało się edytować filtr"
 
 #: src/pages/filters.jsx:347
 msgid "Unable to create filter"
-msgstr ""
+msgstr "Nie udało się utworzyć filtru"
 
 #: src/pages/filters.jsx:356
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: src/pages/filters.jsx:397
 msgid "Whole word"
-msgstr ""
+msgstr "Wszystkie słowa"
 
 #: src/pages/filters.jsx:423
 msgid "No keywords. Add one."
-msgstr ""
+msgstr "Brak słów kluczowych. Dodaj jakieś."
 
 #: src/pages/filters.jsx:450
 msgid "Add keyword"
-msgstr ""
+msgstr "Dodaj słowa kluczowe"
 
 #. placeholder {0}: filteredEditKeywords.length
 #: src/pages/filters.jsx:454
@@ -3063,19 +3063,19 @@ msgstr ""
 
 #: src/pages/filters.jsx:552
 msgid "minimized"
-msgstr ""
+msgstr "zminimalizowane"
 
 #: src/pages/filters.jsx:562
 msgid "hidden"
-msgstr ""
+msgstr "ukryte"
 
 #: src/pages/filters.jsx:579
 msgid "Delete this filter?"
-msgstr ""
+msgstr "Skasować filtr?"
 
 #: src/pages/filters.jsx:592
 msgid "Unable to delete filter."
-msgstr ""
+msgstr "Nie udało się skasować filtru."
 
 #: src/pages/filters.jsx:625
 msgid "Expired"
@@ -3096,20 +3096,20 @@ msgstr ""
 
 #: src/pages/followed-hashtags.jsx:86
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "Nie udało się załadować obserwowanych hashtagów."
 
 #: src/pages/followed-hashtags.jsx:90
 msgid "No hashtags followed yet."
-msgstr ""
+msgstr "Nie ma jeszcze obserwowanych hashtagów."
 
 #: src/pages/following.jsx:144
 msgid "Nothing to see here."
-msgstr ""
+msgstr "Nie ma tu nic do widzenia!"
 
 #: src/pages/following.jsx:145
 #: src/pages/list.jsx:109
 msgid "Unable to load posts."
-msgstr ""
+msgstr "Nie udało się załadować posta."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -3129,7 +3129,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:182
 msgid "No one has posted anything with this tag yet."
-msgstr ""
+msgstr "Nikt nie napisał jeszcze nic z tym tagiem."
 
 #: src/pages/hashtag.jsx:183
 msgid "Unable to load posts with this tag"
@@ -3298,15 +3298,15 @@ msgstr "Nie masz konta? Utwórz je!"
 
 #: src/pages/mentions.jsx:21
 msgid "Private mentions"
-msgstr "Wzmianka bezpośrednia"
+msgstr "Prywatne wzmianki"
 
 #: src/pages/mentions.jsx:160
 msgid "Private"
-msgstr ""
+msgstr "Prywatne"
 
 #: src/pages/mentions.jsx:170
 msgid "No one mentioned you :("
-msgstr "Brak wzmianek o tobie :("
+msgstr "Brak wzmianek o Tobie :("
 
 #: src/pages/mentions.jsx:171
 msgid "Unable to load mentions."
@@ -3609,7 +3609,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:282
 msgid "Default visibility"
-msgstr ""
+msgstr "Domyślna widoczność wpisów"
 
 #: src/pages/settings.jsx:283
 #: src/pages/settings.jsx:329
@@ -3630,7 +3630,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:359
 msgid "Auto refresh timeline posts"
-msgstr ""
+msgstr "Automatycznie odświeżaj posty na osi czasu"
 
 #: src/pages/settings.jsx:371
 msgid "Boosts carousel"
@@ -3699,7 +3699,7 @@ msgstr "Import/eksport ustawień skrótów z \"chmury\""
 
 #: src/pages/settings.jsx:647
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr "⚠️⚠️⚠️ Bardzo eksperymentalne.<0/>Przechowywane w notatkach własnego profilu. Notatki profilu (prywatne) są używane głównie dla innych profili i ukryte dla własnego profilu."
+msgstr "⚠️⚠️⚠️ Bardzo eksperymentalne.<0/>Przechowywane w notatkach Twojego własnego profilu. Notatki profilu (prywatne) są używane głównie dla innych profili i ukryte dla własnego profilu."
 
 #: src/pages/settings.jsx:658
 msgid "Note: This feature uses currently-logged-in instance server API."
@@ -3851,7 +3851,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1279
 msgid "Switch to Full view"
-msgstr ""
+msgstr "Przełącz na widok pełnego rozmiaru"
 
 #: src/pages/status.jsx:1297
 msgid "Show all sensitive content"
@@ -3859,20 +3859,20 @@ msgstr ""
 
 #: src/pages/status.jsx:1302
 msgid "Experimental"
-msgstr ""
+msgstr "Eksperymentalne"
 
 #: src/pages/status.jsx:1311
 msgid "Unable to switch"
-msgstr ""
+msgstr "Nie udało się przełączyć"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1318
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Przełącz na instancję posta ({0})"
 
 #: src/pages/status.jsx:1321
 msgid "Switch to post's instance"
-msgstr ""
+msgstr "Przełącz na instancję posta"
 
 #: src/pages/status.jsx:1379
 msgid "Unable to load post"

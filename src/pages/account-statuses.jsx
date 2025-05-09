@@ -300,6 +300,7 @@ function AccountStatuses() {
           fetchAccount={fetchAccount}
           authenticated={authenticated}
           standalone
+          showEndorsements
         />
         {!mediaFirst && (
           <div

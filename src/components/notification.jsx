@@ -596,7 +596,8 @@ function Notification({
                         _groupKeys.map(async (gKey) => {
                           const iterator = masto.v2.notifications
                             .$select(gKey)
-                            .accounts.list();
+                            .accounts.list()
+                            .values();
                           return [gKey, (await iterator.next()).value];
                         }),
                       );

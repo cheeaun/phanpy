@@ -14,7 +14,9 @@ function Favourites() {
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
     if (firstLoad || !favouritesIterator.current) {
-      favouritesIterator.current = masto.v1.favourites.list({ limit: LIMIT });
+      favouritesIterator.current = masto.v1.favourites
+        .list({ limit: LIMIT })
+        .values();
     }
     return await favouritesIterator.current.next();
   }

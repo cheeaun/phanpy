@@ -951,12 +951,14 @@ function Status({
         .$select(statusID)
         .rebloggedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
       favouriteIterator.current = masto.v1.statuses
         .$select(statusID)
         .favouritedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
     }
     const [{ value: reblogResults }, { value: favouriteResults }] =
       await Promise.allSettled([
@@ -2769,7 +2771,14 @@ function MediaFirstContainer(props) {
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
 // This is just "Progressive Enhancement"
 function isCardPost(domain) {
-  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+  return [
+    'x.com',
+    'twitter.com',
+    'threads.net',
+    'bsky.app',
+    'bsky.brid.gy',
+    'fed.brid.gy',
+  ].includes(domain);
 }
 
 function Byline({ authors, hidden, children }) {

@@ -67,9 +67,11 @@ function NavMenu(props) {
   const mutesIterator = useRef();
   async function fetchMutes(firstLoad) {
     if (firstLoad || !mutesIterator.current) {
-      mutesIterator.current = masto.v1.mutes.list({
-        limit: 80,
-      });
+      mutesIterator.current = masto.v1.mutes
+        .list({
+          limit: 80,
+        })
+        .values();
     }
     const results = await mutesIterator.current.next();
     return results;
@@ -78,9 +80,11 @@ function NavMenu(props) {
   const blocksIterator = useRef();
   async function fetchBlocks(firstLoad) {
     if (firstLoad || !blocksIterator.current) {
-      blocksIterator.current = masto.v1.blocks.list({
-        limit: 80,
-      });
+      blocksIterator.current = masto.v1.blocks
+        .list({
+          limit: 80,
+        })
+        .values();
     }
     const results = await blocksIterator.current.next();
     return results;

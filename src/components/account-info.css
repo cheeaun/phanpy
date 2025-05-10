@@ -956,3 +956,128 @@
     }
   }
 }
+
+.endorsements-container {
+  padding: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* background-image: linear-gradient(
+    to bottom,
+    var(--bg-faded-color),
+    var(--bg-color) calc(16px + 1em)
+  ); */
+  background-image: radial-gradient(
+    ellipse at top center,
+    var(--bg-faded-color),
+    var(--bg-color)
+  );
+  background-size: 100% 32px;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(
+    var(--to-forward),
+    transparent,
+    black 16px calc(100% - 16px),
+    transparent
+  );
+
+  h3 {
+    margin: 0;
+    padding: 0 0 8px;
+    font-weight: normal;
+    color: var(--text-insignificant-color);
+    font-size: 85%;
+    position: sticky;
+    left: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    > * {
+      vertical-align: text-bottom;
+    }
+  }
+
+  .endorsements {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    /* grid: 2 rows, infinite columns, no wrap */
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(9999, clamp(160px, 90%, 320px));
+    white-space: nowrap;
+    gap: 8px;
+
+    &.expanded {
+      grid-template-rows: repeat(3, auto);
+    }
+
+    > li {
+      display: flex;
+    }
+
+    .account-block {
+      overflow: hidden;
+      flex-grow: 1;
+      padding: 8px 16px;
+      background-color: var(--bg-faded-color);
+      background-image: linear-gradient(
+        15deg,
+        var(--link-bg-color),
+        var(--bg-faded-color) 8px calc(100% - 16px),
+        var(--bg-color)
+      );
+      &:dir(rtl) {
+        background-image: linear-gradient(
+          -15deg,
+          var(--link-bg-color),
+          var(--bg-faded-color) 16px calc(100% - 16px),
+          var(--bg-color)
+        );
+      }
+      /* box-shadow: inset 0 0 0 2px var(--bg-color); */
+      border-radius: 8px;
+      transition: all 0.15s ease-out;
+
+      .avatar {
+        transition: transform 0.15s ease-out;
+      }
+
+      .account-block-content {
+        min-width: 0;
+        mask-image: linear-gradient(
+          var(--to-backward),
+          transparent,
+          black 16px
+        );
+      }
+
+      .account-block-stats {
+        flex-wrap: nowrap;
+
+        > * {
+          flex-shrink: 0;
+        }
+      }
+
+      &:is(:hover, :focus-visible) {
+        background-color: var(--link-bg-hover-color);
+        box-shadow: inset 0 0 0 2px var(--link-light-color);
+
+        .avatar {
+          transform: rotate(15deg);
+        }
+      }
+
+      &:active {
+        transition-duration: 0s;
+        filter: brightness(0.8);
+      }
+
+      .tag {
+        background-color: var(--bg-color);
+      }
+    }
+  }
+}

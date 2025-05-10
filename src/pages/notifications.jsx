@@ -144,8 +144,7 @@ function Notifications({ columnMode }) {
       });
       notificationsIterator.current = notificationsIterable.current.values();
     }
-    // if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
-    if (!notificationsIterable.current?.params?.max_id) {
+    if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
       // Pixelfed returns next paginationed link with empty max_id
       // I assume, it's done (end of list)
       return {

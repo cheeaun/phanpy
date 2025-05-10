@@ -469,7 +469,7 @@ msgstr ""
 #: src/pages/catchup.jsx:1585
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:280
-#: src/pages/notifications.jsx:940
+#: src/pages/notifications.jsx:939
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
 #: src/pages/status.jsx:1326
@@ -558,7 +558,7 @@ msgstr ""
 #: src/components/list-add-edit.jsx:150
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
-#: src/pages/notifications.jsx:1006
+#: src/pages/notifications.jsx:1005
 msgid "Save"
 msgstr ""
 
@@ -586,7 +586,7 @@ msgstr ""
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:54
-#: src/pages/notifications.jsx:585
+#: src/pages/notifications.jsx:584
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr ""
@@ -1044,7 +1044,7 @@ msgid "Open in new window"
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:43
-#: src/pages/notifications.jsx:990
+#: src/pages/notifications.jsx:989
 msgid "Accept"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgid "Reject"
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:76
-#: src/pages/notifications.jsx:1274
+#: src/pages/notifications.jsx:1273
 msgid "Accepted"
 msgstr ""
 
@@ -1072,7 +1072,7 @@ msgstr ""
 #: src/components/generic-accounts.jsx:206
 #: src/components/timeline.jsx:547
 #: src/pages/list.jsx:299
-#: src/pages/notifications.jsx:920
+#: src/pages/notifications.jsx:919
 #: src/pages/search.jsx:558
 #: src/pages/status.jsx:1359
 msgid "Show more…"
@@ -1405,7 +1405,7 @@ msgstr ""
 #: src/pages/home.jsx:86
 #: src/pages/home.jsx:186
 #: src/pages/notifications.jsx:117
-#: src/pages/notifications.jsx:589
+#: src/pages/notifications.jsx:588
 msgid "Notifications"
 msgstr ""
 
@@ -2500,7 +2500,7 @@ msgstr ""
 
 #: src/components/timeline.jsx:582
 #: src/pages/home.jsx:216
-#: src/pages/notifications.jsx:896
+#: src/pages/notifications.jsx:895
 #: src/pages/status.jsx:1015
 #: src/pages/status.jsx:1388
 msgid "Try again"
@@ -3352,113 +3352,113 @@ msgstr ""
 msgid "Who are limited by server moderators"
 msgstr ""
 
-#: src/pages/notifications.jsx:603
-#: src/pages/notifications.jsx:944
+#: src/pages/notifications.jsx:602
+#: src/pages/notifications.jsx:943
 msgid "Notifications settings"
 msgstr ""
 
-#: src/pages/notifications.jsx:621
+#: src/pages/notifications.jsx:620
 msgid "New notifications"
 msgstr ""
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:632
+#: src/pages/notifications.jsx:631
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:679
+#: src/pages/notifications.jsx:678
 #: src/pages/settings.jsx:1167
 msgid "Follow requests"
 msgstr ""
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:684
+#: src/pages/notifications.jsx:683
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr ""
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:739
+#: src/pages/notifications.jsx:738
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:812
+#: src/pages/notifications.jsx:811
 msgid "Only mentions"
 msgstr ""
 
-#: src/pages/notifications.jsx:816
+#: src/pages/notifications.jsx:815
 msgid "Today"
 msgstr ""
 
-#: src/pages/notifications.jsx:821
+#: src/pages/notifications.jsx:820
 msgid "You're all caught up."
 msgstr ""
 
-#: src/pages/notifications.jsx:844
+#: src/pages/notifications.jsx:843
 msgid "Yesterday"
 msgstr ""
 
-#: src/pages/notifications.jsx:892
+#: src/pages/notifications.jsx:891
 msgid "Unable to load notifications"
 msgstr ""
 
-#: src/pages/notifications.jsx:971
+#: src/pages/notifications.jsx:970
 msgid "Notifications settings updated"
 msgstr ""
 
-#: src/pages/notifications.jsx:979
+#: src/pages/notifications.jsx:978
 msgid "Filter out notifications from people:"
 msgstr ""
 
-#: src/pages/notifications.jsx:993
+#: src/pages/notifications.jsx:992
 msgid "Filter"
 msgstr ""
 
-#: src/pages/notifications.jsx:996
+#: src/pages/notifications.jsx:995
 msgid "Ignore"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1069
+#: src/pages/notifications.jsx:1068
 msgid "Updated <0>{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1137
+#: src/pages/notifications.jsx:1136
 msgid "View notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1158
+#: src/pages/notifications.jsx:1157
 msgid "Notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1226
+#: src/pages/notifications.jsx:1225
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1231
+#: src/pages/notifications.jsx:1230
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1236
+#: src/pages/notifications.jsx:1235
 msgid "Allow"
 msgstr ""
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1256
+#: src/pages/notifications.jsx:1255
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Notifications from @{0} will not show up in Filtered notifications from now on."
 
-#: src/pages/notifications.jsx:1261
+#: src/pages/notifications.jsx:1260
 msgid "Unable to dismiss notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1266
+#: src/pages/notifications.jsx:1265
 msgid "Dismiss"
 msgstr ""
 
-#: src/pages/notifications.jsx:1281
+#: src/pages/notifications.jsx:1280
 msgid "Dismissed"
 msgstr ""
 

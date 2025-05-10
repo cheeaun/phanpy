@@ -1000,14 +1000,12 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    /* display: flex;
-    flex-direction: row;
-    gap: 8px; */
 
     /* grid: 2 rows, infinite columns, no wrap */
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(9999, clamp(160px, 90%, 320px));
     white-space: nowrap;
     gap: 8px;
 
@@ -1016,8 +1014,6 @@
     }
 
     > li {
-      min-width: 20em;
-      max-width: 90%;
       display: flex;
     }
 
@@ -1046,6 +1042,23 @@
 
       .avatar {
         transition: transform 0.15s ease-out;
+      }
+
+      .account-block-content {
+        min-width: 0;
+        mask-image: linear-gradient(
+          var(--to-backward),
+          transparent,
+          black 16px
+        );
+      }
+
+      .account-block-stats {
+        flex-wrap: nowrap;
+
+        > * {
+          flex-shrink: 0;
+        }
       }
 
       &:is(:hover, :focus-visible) {

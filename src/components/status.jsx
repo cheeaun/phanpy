@@ -951,12 +951,14 @@ function Status({
         .$select(statusID)
         .rebloggedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
       favouriteIterator.current = masto.v1.statuses
         .$select(statusID)
         .favouritedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
     }
     const [{ value: reblogResults }, { value: favouriteResults }] =
       await Promise.allSettled([

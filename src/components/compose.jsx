@@ -1308,7 +1308,7 @@ function Compose({
                   resolve: false,
                 });
               }
-              return masto.v2.search.fetch(params);
+              return masto.v2.search.list(params);
             }}
             onTrigger={(action) => {
               if (action?.name === 'custom-emojis') {

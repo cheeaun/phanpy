@@ -38,7 +38,7 @@ export default function HttpRoute() {
       // Fallback to search
       {
         const { masto: currentMasto, instance: currentInstance } = api();
-        const result = await currentMasto.v2.search.fetch({
+        const result = await currentMasto.v2.search.list({
           q: url,
           limit: 1,
           resolve: true,

@@ -117,14 +117,15 @@ function Catchup() {
     const maxCreatedAtDate = maxCreatedAt ? new Date(maxCreatedAt) : null;
     console.debug('fetchHome', maxCreatedAtDate);
     const allResults = [];
-    const homeIterator = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterable = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterator = homeIterable.values();
     mainloop: while (true) {
       try {
-        if (supportsPixelfed && homeIterator.nextParams) {
-          if (typeof homeIterator.nextParams === 'string') {
-            homeIterator.nextParams += '&include_reblogs=true';
+        if (supportsPixelfed && homeIterable.params) {
+          if (typeof homeIterable.params === 'string') {
+            homeIterable.params += '&include_reblogs=true';
           } else {
-            homeIterator.nextParams.include_reblogs = true;
+            homeIterable.params.include_reblogs = true;
           }
         }
         const results = await homeIterator.next();

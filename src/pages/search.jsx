@@ -133,7 +133,7 @@ function Search({ columnMode, ...props }) {
       }
 
       try {
-        const results = await masto.v2.search.fetch(params);
+        const results = await masto.v2.search.list(params);
         console.log(results);
         if (type) {
           if (firstLoad) {

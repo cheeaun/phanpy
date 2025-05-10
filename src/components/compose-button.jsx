@@ -32,7 +32,8 @@ const fetchLatestPostsMemoized = pmem(
         limit: 3,
         exclude_replies: true,
         exclude_reblogs: true,
-      });
+      })
+      .values();
     const { value } = await statusesIterator.next();
     return value || [];
   },

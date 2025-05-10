@@ -85,6 +85,7 @@ async function fetchPostingStats(accountID, masto) {
     .statuses.list({
       limit: 20,
     })
+    .values()
     .next();
 
   const { value: statuses } = await fetchStatuses;
@@ -252,9 +253,12 @@ function AccountInfo({
   const familiarFollowersCache = useRef([]);
   async function fetchFollowers(firstLoad) {
     if (firstLoad || !followersIterator.current) {
-      followersIterator.current = masto.v1.accounts.$select(id).followers.list({
-        limit: LIMIT,
-      });
+      followersIterator.current = masto.v1.accounts
+        .$select(id)
+        .followers.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followersIterator.current.next();
     if (isSelf) return results;
@@ -299,9 +303,12 @@ function AccountInfo({
   const followingIterator = useRef();
   async function fetchFollowing(firstLoad) {
     if (firstLoad || !followingIterator.current) {
-      followingIterator.current = masto.v1.accounts.$select(id).following.list({
-        limit: LIMIT,
-      });
+      followingIterator.current = masto.v1.accounts
+        .$select(id)
+        .following.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followingIterator.current.next();
     return results;
@@ -1147,7 +1154,7 @@ function RelatedActions({
           // Grab this account from my logged-in instance
           const acctHasInstance = info.acct.includes('@');
           try {
-            const results = await currentMasto.v2.search.fetch({
+            const results = await currentMasto.v2.search.list({
               q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
               type: 'accounts',
               limit: 1,

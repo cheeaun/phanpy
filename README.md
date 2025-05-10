@@ -273,6 +273,7 @@ These are self-hosted by other wonderful folks.
 
 - [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
 - [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
+- [phanpy.app](https://phanpy.app) by [@bumble@ibe.social](https://ibe.social/@bumble)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
 - [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)
@@ -285,7 +286,6 @@ These are self-hosted by other wonderful folks.
 - [phanpy.social.tchncs.de](https://phanpy.social.tchncs.de) by [@milan@social.tchncs.de](https://social.tchncs.de/@milan)
 - [phanpy.tilde.zone](https://phanpy.tilde.zone) by [@ben@tilde.zone](https://tilde.zone/@ben)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
-- [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 
 > Note: Add yours by creating a pull request.

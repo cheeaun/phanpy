@@ -43,7 +43,7 @@ export function initClient({ instance, accessToken }) {
   const masto = createRestAPIClient({
     url,
     accessToken, // Can be null
-    timeout: 60_000, // Unfortunatly this is global instead of per-request
+    timeout: 2 * 60_000, // Unfortunatly this is global instead of per-request
   });
 
   const client = {

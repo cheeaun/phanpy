@@ -43,6 +43,7 @@ import Login from './pages/login';
 import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
+import Sandbox from './pages/sandbox';
 import ScheduledPosts from './pages/scheduled-posts';
 import Search from './pages/search';
 import StatusRoute from './pages/status-route';
@@ -497,7 +498,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome)/i.test(pathname);
+    return !/^\/(login|welcome|_sandbox)/i.test(pathname);
   }, [location]);
 
   return (
@@ -505,6 +506,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      <Route path="/_sandbox" element={<Sandbox />} />
     </Routes>
   );
 });

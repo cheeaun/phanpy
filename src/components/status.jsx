@@ -40,7 +40,7 @@ import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
@@ -344,15 +344,6 @@ const getCurrentAccID = mem(
   },
 );
 
-const getPrefs = mem(
-  () => {
-    return store.account.get('preferences') || {};
-  },
-  {
-    maxAge: 60 * 1000, // 1 minute
-  },
-);
-
 function Status({
   statusID,
   status,
@@ -448,7 +439,7 @@ function Status({
     inReplyToAccountId,
     content,
     mentions,
-    mediaAttachments,
+    mediaAttachments = [],
     reblog,
     uri,
     url,
@@ -554,16 +545,14 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = getPrefs();
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
-  const readingExpandMedia = useMemo(() => {
-    // default | show_all | hide_all
-    // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
-    const prefs = getPrefs();
-    return prefs['reading:expand:media']?.toLowerCase() || 'default';
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
+
+  // default | show_all | hide_all
+  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
+  const readingExpandMedia =
+    prefs['reading:expand:media']?.toLowerCase() || 'default';
+
   // FOR TESTING:
   // const readingExpandSpoilers = true;
   // const readingExpandMedia = 'show_all';
@@ -713,8 +702,9 @@ function Status({
   const textWeight = useCallback(
     () =>
       Math.max(
-        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
-          1,
+        Math.round(
+          ((spoilerText?.length || 0) + htmlContentLength(content)) / 140,
+        ) || 1,
         1,
       ),
     [spoilerText, content],

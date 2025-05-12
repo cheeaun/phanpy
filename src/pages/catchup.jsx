@@ -15,7 +15,6 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
@@ -30,7 +29,7 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
@@ -1855,10 +1854,8 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
   // const readingExpandSpoilers = true;
   const showMedia =
     readingExpandSpoilers ||

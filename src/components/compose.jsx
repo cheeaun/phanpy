@@ -27,7 +27,7 @@ import poweredByGiphyURL from '../assets/powered-by-giphy.svg';
 import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
@@ -278,7 +278,7 @@ function Compose({
   const [poll, setPoll] = useState(null);
   const [scheduledAt, setScheduledAt] = useState(null);
 
-  const prefs = store.account.get('preferences') || {};
+  const prefs = getPreferences();
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;

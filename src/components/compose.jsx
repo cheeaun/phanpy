@@ -27,7 +27,7 @@ import poweredByGiphyURL from '../assets/powered-by-giphy.svg';
 import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
@@ -253,6 +253,7 @@ function Compose({
       videoSizeLimit,
       videoMatrixLimit,
       videoFrameRateLimit,
+      descriptionLimit,
     } = {},
     polls: {
       maxOptions,
@@ -277,7 +278,7 @@ function Compose({
   const [poll, setPoll] = useState(null);
   const [scheduledAt, setScheduledAt] = useState(null);
 
-  const prefs = store.account.get('preferences') || {};
+  const prefs = getPreferences();
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -519,6 +520,7 @@ function Compose({
     {
       enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
+      useKey: true,
     },
   );
   useHotkeys(
@@ -541,6 +543,7 @@ function Compose({
           modals.length === 1 && modals[0].querySelector('#compose-container');
         return hasModal && !hasOnlyComposer;
       },
+      useKey: true,
     },
   );
   useCloseWatcher(() => {
@@ -1305,7 +1308,7 @@ function Compose({
                   resolve: false,
                 });
               }
-              return masto.v2.search.fetch(params);
+              return masto.v2.search.list(params);
             }}
             onTrigger={(action) => {
               if (action?.name === 'custom-emojis') {
@@ -1335,6 +1338,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
                         const newAttachments = [...attachments];
@@ -2422,6 +2426,7 @@ function MediaAttachment({
   attachment,
   disabled,
   lang,
+  descriptionLimit = 1500,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
@@ -2563,8 +2568,7 @@ function MediaAttachment({
           dir="auto"
           disabled={disabled || uiState === 'loading'}
           class={uiState === 'loading' ? 'loading' : ''}
-          maxlength="1500" // Not unicode-aware :(
-          // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
+          maxlength={descriptionLimit} // Not unicode-aware :(
           onInput={(e) => {
             const { value } = e.target;
             setDescription(value);
@@ -3141,6 +3145,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -3167,6 +3172,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -3192,6 +3198,7 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 

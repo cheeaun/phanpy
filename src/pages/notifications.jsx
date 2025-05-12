@@ -28,6 +28,7 @@ import Notification from '../components/notification';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import FilterContext from '../utils/filter-context';
 import groupNotifications, {
   groupNotifications2,
   massageNotifications2,
@@ -63,7 +64,7 @@ const memSupportsGroupedNotifications = mem(
   },
 );
 
-export function mastoFetchNotifications(opts = {}) {
+function mastoFetchNotificationsIterable(opts = {}) {
   const { masto } = api();
   if (
     states.settings.groupedNotificationsAlpha &&
@@ -80,6 +81,9 @@ export function mastoFetchNotifications(opts = {}) {
       ...opts,
     });
   }
+}
+export function mastoFetchNotifications(opts = {}) {
+  return mastoFetchNotificationsIterable(opts).values();
 }
 
 export function getGroupedNotifications(notifications) {
@@ -130,13 +134,15 @@ function Notifications({ columnMode }) {
 
   console.debug('RENDER Notifications');
 
+  const notificationsIterable = useRef();
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
-      notificationsIterator.current = mastoFetchNotifications({
+      notificationsIterable.current = mastoFetchNotificationsIterable({
         excludeTypes: ['follow_request'],
       });
+      notificationsIterator.current = notificationsIterable.current.values();
     }
     if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
       // Pixelfed returns next paginationed link with empty max_id
@@ -450,72 +456,90 @@ function Notifications({ columnMode }) {
   }, []);
 
   const itemsSelector = '.notification';
-  const jRef = useHotkeys('j', () => {
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let nextItem = allItems[activeItemIndex + 1];
-      if (nextItem) {
-        nextItem.focus();
-        nextItem.scrollIntoView(scrollIntoViewOptions);
+  const jRef = useHotkeys(
+    'j',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let nextItem = allItems[activeItemIndex + 1];
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
-  const kRef = useHotkeys('k', () => {
-    // focus on previous status after active item
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let prevItem = allItems[activeItemIndex - 1];
-      if (prevItem) {
-        prevItem.focus();
-        prevItem.scrollIntoView(scrollIntoViewOptions);
+  const kRef = useHotkeys(
+    'k',
+    () => {
+      // focus on previous status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
-  const oRef = useHotkeys(['enter', 'o'], () => {
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const statusLink = activeItem?.querySelector('.status-link');
-    if (statusLink) {
-      statusLink.click();
-    }
-  });
+  const oRef = useHotkeys(
+    ['enter', 'o'],
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const statusLink = activeItem?.querySelector('.status-link');
+      if (statusLink) {
+        statusLink.click();
+      }
+    },
+    {
+      useKey: true,
+    },
+  );
 
   const today = new Date();
   const todaySubHeading = useMemo(() => {
@@ -532,9 +556,9 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        oRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
       }}
       tabIndex="-1"
     >
@@ -797,7 +821,7 @@ function Notifications({ columnMode }) {
           </p>
         )}
         {snapStates.notifications.length ? (
-          <>
+          <FilterContext.Provider value="notifications">
             {snapStates.notifications
               // This is leaked from Notifications popover
               .filter((n) => n.type !== 'follow_request')
@@ -843,7 +867,7 @@ function Notifications({ columnMode }) {
                   </Fragment>
                 );
               })}
-          </>
+          </FilterContext.Provider>
         ) : (
           <>
             {uiState === 'loading' && (

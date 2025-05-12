@@ -238,11 +238,15 @@ Available variables:
   - This is applied with the `<meta>` tag on the client-side.
   - The policy can also be set with `Referrer-Policy` header configured on the server-side (not this variable).
   - Note that since Phanpy uses hash-based URLs, the referrer does not include the hash part.
-- `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
+- `PHANPY_LINGVA_INSTANCES` (**DEPRECATED**, optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)
   - List of fallback instances hard-coded in `/.env`
   - [↗️ List of lingva-translate instances](https://github.com/thedaviddelta/lingva-translate?tab=readme-ov-file#instances)
+- `PHANPY_TRANSLANG_INSTANCES` (optional, space-separated list, default: `translang.phanpy.social`):
+  - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
+  - May specify a self-hosted Translating instance, powered by [translang-api](https://github.com/cheeaun/translang-api).
+  - List of instances hard-coded in `/.env`
 - `PHANPY_IMG_ALT_API_URL` (optional, no defaults):
   - API endpoint for self-hosted instance of [img-alt-api](https://github.com/cheeaun/img-alt-api).
   - If provided, a setting will appear for users to enable the image description generator in the composer. Disabled by default.
@@ -257,14 +261,19 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 #### Lingva-translate or lingva-api hosting
 
-See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+⚠️ **DEPRECATED**. See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+
+#### Translang API hosting
+
+See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
 ## Community deployments
 
 These are self-hosted by other wonderful folks.
 
 - [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
-- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@mookiesplace.com](https://mookiesplace.com/@mookie)
+- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
+- [phanpy.app](https://phanpy.app) by [@bumble@ibe.social](https://ibe.social/@bumble)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
 - [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)
@@ -277,7 +286,6 @@ These are self-hosted by other wonderful folks.
 - [phanpy.social.tchncs.de](https://phanpy.social.tchncs.de) by [@milan@social.tchncs.de](https://social.tchncs.de/@milan)
 - [phanpy.tilde.zone](https://phanpy.tilde.zone) by [@ben@tilde.zone](https://tilde.zone/@ben)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
-- [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 
 > Note: Add yours by creating a pull request.
@@ -335,6 +343,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/c008af10bc117fa9c9dcb70f2b291ee6.jpg" alt="" width="16" height="16" /> lucasofchirst (Occitan, Portuguese, Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" alt="" width="16" height="16" /> manuelviens (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
@@ -370,6 +379,8 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/216e0f7a0c35b079920366939a3aaca7_default.png" alt="" width="16" height="16" /> xen4n (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532657/medium/f309f319266e1ff95f3070eab0c9a9d9_default.png" alt="" width="16" height="16" /> xqueralt (Catalan)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15583431/medium/14973556de7721e642701bf74d6fb053.png" alt="" width="16" height="16" /> Yukaii (Chinese Traditional)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14360216/medium/7e48473691456fce95e1be687045377c.jpeg" alt="" width="16" height="16" /> Zet24 (Arabic)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14041603/medium/6ab77a0467b06aeb49927c6d9c409f89.jpg" alt="" width="16" height="16" /> ZiriSut (Kabyle)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530601/medium/e1b6d5c24953b6405405c1ab33c0fa46.jpeg" alt="" width="16" height="16" /> zkreml (Czech)
 <!-- i18n volunteers end -->

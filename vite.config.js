@@ -63,7 +63,7 @@ export default defineConfig({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
       babel: {
-        plugins: ['macros'],
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
       },
     }),
     lingui(),
@@ -126,7 +126,7 @@ export default defineConfig({
         short_name: CLIENT_NAME,
         description: 'Minimalistic opinionated Mastodon web client',
         // https://github.com/cheeaun/phanpy/issues/231
-        // theme_color: '#ffffff',
+        theme_color: undefined,
         icons: [
           {
             src: 'logo-192.png',

@@ -40,12 +40,13 @@ import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -53,6 +54,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -117,8 +119,17 @@ function getPollText(poll) {
     )
     .join('\n')}`;
 }
-function getPostText(status) {
-  const { spoilerText, content, poll } = status;
+function getPostText(status, opts) {
+  const { maskCustomEmojis } = opts || {};
+  const { spoilerText, poll, emojis } = status;
+  let { content } = status;
+  if (maskCustomEmojis && emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '⬚');
+  }
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
     getHTMLText(content) +
@@ -137,8 +148,16 @@ function forgivingQSA(selectors = [], dom = document) {
   return [];
 }
 
-function isTranslateble(content) {
+function isTranslateble(content, emojis) {
   if (!content) return false;
+  // Remove custom emojis
+  if (emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '');
+  }
   content = content.trim();
   if (!content) return false;
   const text = getHTMLText(content, {
@@ -316,6 +335,15 @@ const checkDifferentLanguage = (
   return different;
 };
 
+const getCurrentAccID = mem(
+  () => {
+    return getCurrentAccountID();
+  },
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
+
 function Status({
   statusID,
   status,
@@ -329,7 +357,7 @@ function Status({
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
-  // allowFilters,
+  allowFilters,
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
@@ -411,7 +439,7 @@ function Status({
     inReplyToAccountId,
     content,
     mentions,
-    mediaAttachments,
+    mediaAttachments = [],
     reblog,
     uri,
     url,
@@ -446,16 +474,16 @@ function Status({
   const hasMediaAttachments = !!mediaAttachments?.length;
   if (mediaFirst && hasMediaAttachments) size = 's';
 
-  const currentAccount = useMemo(() => {
-    return getCurrentAccountID();
-  }, []);
+  const currentAccount = getCurrentAccID();
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;
   }, [accountId, currentAccount]);
 
   const filterContext = useContext(FilterContext);
   const filterInfo =
-    !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
+    !isSelf &&
+    ((!readOnly && !previewMode) || allowFilters) &&
+    isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') {
     return null;
@@ -471,7 +499,11 @@ function Status({
     }
   };
 
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
+  if (
+    (allowFilters || size !== 'l') &&
+    filterInfo &&
+    filterInfo.action !== 'blur'
+  ) {
     return (
       <FilteredStatus
         status={status}
@@ -513,16 +545,14 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
-  const readingExpandMedia = useMemo(() => {
-    // default | show_all | hide_all
-    // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
-    const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media']?.toLowerCase() || 'default';
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
+
+  // default | show_all | hide_all
+  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
+  const readingExpandMedia =
+    prefs['reading:expand:media']?.toLowerCase() || 'default';
+
   // FOR TESTING:
   // const readingExpandSpoilers = true;
   // const readingExpandMedia = 'show_all';
@@ -530,7 +560,7 @@ function Status({
     previewMode || readingExpandSpoilers || !!snapStates.spoilers[id];
   const showSpoilerMedia =
     previewMode ||
-    readingExpandMedia === 'show_all' ||
+    (readingExpandMedia === 'show_all' && filterInfo?.action !== 'blur') ||
     !!snapStates.spoilersMedia[id];
 
   if (reblog) {
@@ -672,8 +702,9 @@ function Status({
   const textWeight = useCallback(
     () =>
       Math.max(
-        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
-          1,
+        Math.round(
+          ((spoilerText?.length || 0) + htmlContentLength(content)) / 140,
+        ) || 1,
         1,
       ),
     [spoilerText, content],
@@ -910,12 +941,14 @@ function Status({
         .$select(statusID)
         .rebloggedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
       favouriteIterator.current = masto.v1.statuses
         .$select(statusID)
         .favouritedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
     }
     const [{ value: reblogResults }, { value: favouriteResults }] =
       await Promise.allSettled([
@@ -1081,70 +1114,72 @@ function Status({
           </MenuItem>
         </>
       )}
-      {!mediaFirst && (
-        <>
-          {(enableTranslate || !language || differentLanguage) && (
-            <MenuDivider />
-          )}
+      {(isSizeLarge ||
+        (!mediaFirst &&
+          (enableTranslate || !language || differentLanguage))) && (
+        <MenuDivider />
+      )}
+      {!mediaFirst && (enableTranslate || !language || differentLanguage) && (
+        <div class={supportsTTS ? 'menu-horizontal' : ''}>
           {enableTranslate ? (
-            <div class={supportsTTS ? 'menu-horizontal' : ''}>
-              <MenuItem
-                disabled={forceTranslate}
-                onClick={() => {
-                  setForceTranslate(true);
-                }}
-              >
-                <Icon icon="translate" />
-                <span>
-                  <Trans>Translate</Trans>
-                </span>
-              </MenuItem>
-              {supportsTTS && (
-                <MenuItem
-                  onClick={() => {
-                    const postText = getPostText(status);
-                    if (postText) {
-                      speak(postText, language);
-                    }
-                  }}
-                >
-                  <Icon icon="speak" />
-                  <span>
-                    <Trans>Speak</Trans>
-                  </span>
-                </MenuItem>
-              )}
-            </div>
+            <MenuItem
+              disabled={forceTranslate}
+              onClick={() => setForceTranslate(true)}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuItem>
           ) : (
-            (!language || differentLanguage) && (
-              <div class={supportsTTS ? 'menu-horizontal' : ''}>
-                <MenuLink
-                  to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
-                >
-                  <Icon icon="translate" />
-                  <span>
-                    <Trans>Translate</Trans>
-                  </span>
-                </MenuLink>
-                {supportsTTS && (
-                  <MenuItem
-                    onClick={() => {
-                      const postText = getPostText(status);
-                      if (postText) {
-                        speak(postText, language);
-                      }
-                    }}
-                  >
-                    <Icon icon="speak" />
-                    <span>
-                      <Trans>Speak</Trans>
-                    </span>
-                  </MenuItem>
-                )}
-              </div>
-            )
+            <MenuLink
+              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuLink>
           )}
-        </>
+          {supportsTTS && (
+            <MenuItem
+              onClick={() => {
+                try {
+                  const postText = getPostText(status);
+                  if (postText) {
+                    speak(postText, language);
+                  }
+                } catch (error) {
+                  console.error('Failed to speak text:', error);
+                }
+              }}
+            >
+              <Icon icon="speak" />
+              <span>
+                <Trans>Speak</Trans>
+              </span>
+            </MenuItem>
+          )}
+        </div>
+      )}
+      {isSizeLarge && (
+        <MenuItem
+          onClick={() => {
+            try {
+              const postText = getPostText(status);
+              navigator.clipboard.writeText(postText);
+              showToast(t`Post text copied`);
+            } catch (e) {
+              console.error(e);
+              showToast(t`Unable to copy post text`);
+            }
+          }}
+        >
+          <Icon icon="clipboard" />
+          <span>
+            <Trans>Copy post text</Trans>
+          </span>
+        </MenuItem>
       )}
       {((!isSizeLarge && sameInstance) ||
         enableTranslate ||
@@ -1456,16 +1491,22 @@ function Status({
   const hotkeysEnabled = !readOnly && !previewMode && !quoted;
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
+    useKey: true,
   });
   const bRef = useHotkeys(
     'shift+b',
-    () => {
+    (e) => {
+      // Need shiftKey check due to useKey: true
+      if (!e.shiftKey) return;
+
       (async () => {
         try {
           const done = await confirmBoostStatus();
@@ -1481,30 +1522,37 @@ function Status({
     },
     {
       enabled: hotkeysEnabled && canBoost,
+      useKey: true,
     },
   );
-  const xRef = useHotkeys('x', (e) => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    if (activeStatus) {
-      const spoilerButton = activeStatus.querySelector(
-        '.spoiler-button:not(.spoiling)',
+  const xRef = useHotkeys(
+    'x',
+    (e) => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
       );
-      if (spoilerButton) {
-        e.stopPropagation();
-        spoilerButton.click();
-      } else {
-        const spoilerMediaButton = activeStatus.querySelector(
-          '.spoiler-media-button:not(.spoiling)',
+      if (activeStatus) {
+        const spoilerButton = activeStatus.querySelector(
+          '.spoiler-button:not(.spoiling)',
         );
-        if (spoilerMediaButton) {
+        if (spoilerButton) {
           e.stopPropagation();
-          spoilerMediaButton.click();
+          spoilerButton.click();
+        } else {
+          const spoilerMediaButton = activeStatus.querySelector(
+            '.spoiler-media-button:not(.spoiling)',
+          );
+          if (spoilerMediaButton) {
+            e.stopPropagation();
+            spoilerMediaButton.click();
+          }
         }
       }
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,
@@ -1653,11 +1701,11 @@ function Status({
             node?.closest?.(
               '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
             ) || node;
-          rRef(nodeRef);
-          fRef(nodeRef);
-          dRef(nodeRef);
-          bRef(nodeRef);
-          xRef(nodeRef);
+          rRef.current = nodeRef;
+          fRef.current = nodeRef;
+          dRef.current = nodeRef;
+          bRef.current = nodeRef;
+          xRef.current = nodeRef;
         }}
         tabindex="-1"
         class={`status ${
@@ -2010,7 +2058,9 @@ function Status({
           )}
           <div
             class={`content-container ${
-              spoilerText || sensitive ? 'has-spoiler' : ''
+              spoilerText || sensitive || filterInfo?.action === 'blur'
+                ? 'has-spoiler'
+                : ''
             } ${showSpoiler ? 'show-spoiler' : ''} ${
               showSpoilerMedia ? 'show-media' : ''
             }`}
@@ -2171,7 +2221,7 @@ function Status({
                   />
                 )}
                 {(((enableTranslate || inlineTranslate) &&
-                  isTranslateble(content) &&
+                  isTranslateble(content, emojis) &&
                   differentLanguage) ||
                   forceTranslate) && (
                   <TranslationBlock
@@ -2179,13 +2229,16 @@ function Status({
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
                     autoDetected={languageAutoDetected}
-                    text={getPostText(status)}
+                    text={getPostText(status, {
+                      maskCustomEmojis: true,
+                    })}
                   />
                 )}
                 {!previewMode &&
-                  sensitive &&
+                  (sensitive || filterInfo?.action === 'blur') &&
                   !!mediaAttachments.length &&
-                  readingExpandMedia !== 'show_all' && (
+                  (readingExpandMedia !== 'show_all' ||
+                    filterInfo?.action === 'blur') && (
                     <button
                       class={`plain spoiler-media-button ${
                         showSpoilerMedia ? 'spoiling' : ''
@@ -2205,7 +2258,15 @@ function Status({
                       <Icon
                         icon={showSpoilerMedia ? 'eye-open' : 'eye-close'}
                       />{' '}
-                      {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      <span>
+                        {filterInfo?.action === 'blur' && (
+                          <small>
+                            <Trans>Filtered: {filterInfo?.titlesStr}</Trans>
+                            <br />
+                          </small>
+                        )}
+                        {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      </span>
                     </button>
                   )}
                 {!!mediaAttachments.length &&
@@ -2695,20 +2756,19 @@ function MediaFirstContainer(props) {
   );
 }
 
-function getDomain(url) {
-  return punycode.toUnicode(
-    URL.parse(url)
-      .hostname.replace(/^www\./, '')
-      .replace(/\/$/, ''),
-  );
-}
-
 // "Post": Quote post + card link preview combo
 // Assume all links from these domains are "posts"
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
 // This is just "Progressive Enhancement"
 function isCardPost(domain) {
-  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+  return [
+    'x.com',
+    'twitter.com',
+    'threads.net',
+    'bsky.app',
+    'bsky.brid.gy',
+    'fed.brid.gy',
+  ].includes(domain);
 }
 
 function Byline({ authors, hidden, children }) {
@@ -3520,6 +3580,7 @@ const StatusButton = forwardRef((props, ref) => {
 function nicePostURL(url) {
   if (!url) return;
   const urlObj = URL.parse(url);
+  if (!urlObj) return;
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash
@@ -3550,6 +3611,7 @@ function StatusCompact({ sKey }) {
   if (!status) return null;
 
   const {
+    account: { id: accountId },
     sensitive,
     spoilerText,
     account: { avatar, avatarStatic, bot } = {},
@@ -3564,8 +3626,15 @@ function StatusCompact({ sKey }) {
   const srKey = statusKey(id, instance);
   const statusPeekText = statusPeek(status);
 
+  const currentAccount = getCurrentAccID();
+  const isSelf = currentAccount && currentAccount === accountId;
+
   const filterContext = useContext(FilterContext);
-  const filterInfo = isFiltered(filtered, filterContext);
+  let filterInfo = !isSelf && isFiltered(filtered, filterContext);
+
+  // This is fine. Images are converted to emojis so they are
+  // in a way, already "obscured"
+  if (filterInfo?.action === 'blur') filterInfo = null;
 
   if (filterInfo?.action === 'hide') return null;
 
@@ -3652,7 +3721,7 @@ function FilteredStatus({
 
   return (
     <div
-      class={
+      class={`${
         quoted
           ? ''
           : isReblog
@@ -3662,7 +3731,7 @@ function FilteredStatus({
             : isFollowedTags
               ? 'status-followed-tags'
               : ''
-      }
+      } visibility-${visibility}`}
       {...containerProps}
       // title={statusPeekText}
       onContextMenu={(e) => {

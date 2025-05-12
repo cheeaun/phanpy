@@ -32,7 +32,8 @@ const fetchLatestPostsMemoized = pmem(
         limit: 3,
         exclude_replies: true,
         exclude_reblogs: true,
-      });
+      })
+      .values();
     const { value } = await statusesIterator.next();
     return value || [];
   },
@@ -70,12 +71,19 @@ export default function ComposeButton() {
     }
   }
 
-  useHotkeys('c, shift+c', handleButton, {
-    ignoreEventWhen: (e) => {
-      const hasModal = !!document.querySelector('#modal-container > *');
-      return hasModal;
+  useHotkeys(
+    'c, shift+c',
+    handleButton,
+    {
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        return hasModal;
+      },
     },
-  });
+    {
+      useKey: true,
+    },
+  );
 
   // Setup longpress handler to open context menu
   const bindLongPress = useLongPress(

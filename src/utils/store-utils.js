@@ -164,6 +164,11 @@ export function getCurrentInstanceConfiguration() {
   return getInstanceConfiguration(instance);
 }
 
+export function getAPIVersions() {
+  const instance = getCurrentInstance();
+  return instance?.apiVersions || {};
+}
+
 export function getVapidKey() {
   // Vapid key has moved from account to instance config
   const config = getCurrentInstanceConfiguration();

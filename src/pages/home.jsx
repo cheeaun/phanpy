@@ -14,6 +14,7 @@ import Loader from '../components/loader';
 import Notification from '../components/notification';
 import { api } from '../utils/api';
 import db from '../utils/db';
+import FilterContext from '../utils/filter-context';
 import { massageNotifications2 } from '../utils/group-notifications';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
@@ -185,39 +186,41 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
           <Trans>Notifications</Trans>
         </h2>
       </header>
-      <main>
-        {snapStates.notifications.length ? (
-          <>
-            {snapStates.notifications
-              .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
-              .map((notification) => (
-                <Notification
-                  key={notification._ids || notification.id}
-                  instance={instance}
-                  notification={notification}
-                  disableContextMenu
-                />
-              ))}
-          </>
-        ) : uiState === 'loading' ? (
-          <div class="ui-state">
-            <Loader abrupt />
-          </div>
-        ) : (
-          uiState === 'error' && (
+      <FilterContext.Provider value="notifications">
+        <main>
+          {snapStates.notifications.length ? (
+            <>
+              {snapStates.notifications
+                .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
+                .map((notification) => (
+                  <Notification
+                    key={notification._ids || notification.id}
+                    instance={instance}
+                    notification={notification}
+                    disableContextMenu
+                  />
+                ))}
+            </>
+          ) : uiState === 'loading' ? (
             <div class="ui-state">
-              <p>
-                <Trans>Unable to fetch notifications.</Trans>
-              </p>
-              <p>
-                <button type="button" onClick={loadNotifications}>
-                  <Trans>Try again</Trans>
-                </button>
-              </p>
+              <Loader abrupt />
             </div>
-          )
-        )}
-      </main>
+          ) : (
+            uiState === 'error' && (
+              <div class="ui-state">
+                <p>
+                  <Trans>Unable to fetch notifications.</Trans>
+                </p>
+                <p>
+                  <button type="button" onClick={loadNotifications}>
+                    <Trans>Try again</Trans>
+                  </button>
+                </p>
+              </div>
+            )
+          )}
+        </main>
+      </FilterContext.Provider>
       <footer>
         <Link to="/mentions" class="button plain">
           <Icon icon="at" />{' '}

@@ -378,48 +378,7 @@ function AccountInfo({
 
   const [showEditProfile, setShowEditProfile] = useState(false);
 
-  const endorsementsContainer = useRef();
   const [renderEndorsements, setRenderEndorsements] = useState(false);
-  const [endorsementsUIState, setEndorsementsUIState] = useState('default');
-  const [endorsements, setEndorsements] = useState([]);
-  const [relationshipsMap, setRelationshipsMap] = useState({});
-  useEffect(() => {
-    if (!supports('@mastodon/endorsements')) return;
-    if (!showEndorsements) return;
-    if (!renderEndorsements) return;
-    (async () => {
-      setEndorsementsUIState('loading');
-      try {
-        const accounts = await masto.v1.accounts.$select(id).endorsements.list({
-          limit: ENDORSEMENTS_LIMIT,
-        });
-        console.log({ endorsements: accounts });
-        if (!accounts.length) {
-          setEndorsementsUIState('default');
-          return;
-        }
-        setEndorsements(accounts);
-        setEndorsementsUIState('default');
-        setTimeout(() => {
-          endorsementsContainer.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          });
-        }, 300);
-
-        const relationships = await fetchRelationships(
-          accounts,
-          relationshipsMap,
-        );
-        if (relationships) {
-          setRelationshipsMap(relationships);
-        }
-      } catch (e) {
-        console.error(e);
-        setEndorsementsUIState('error');
-      }
-    })();
-  }, [showEndorsements, renderEndorsements, id]);
 
   return (
     <>
@@ -1040,51 +999,19 @@ function AccountInfo({
                   onRelationshipChange={onRelationshipChange}
                   onProfileUpdate={onProfileUpdate}
                   setShowEditProfile={setShowEditProfile}
+                  showEndorsements={showEndorsements}
                   renderEndorsements={renderEndorsements}
                   setRenderEndorsements={setRenderEndorsements}
                 />
               </footer>
-              {renderEndorsements && (
-                <div class="shazam-container">
-                  <div class="shazam-container-inner">
-                    <div
-                      class="endorsements-container"
-                      ref={endorsementsContainer}
-                    >
-                      <h3>
-                        <Trans>Profiles featured by @{info.username}</Trans>
-                      </h3>
-                      {endorsementsUIState === 'loading' ? (
-                        <p class="ui-state">
-                          <Loader abrupt />
-                        </p>
-                      ) : endorsements.length > 0 ? (
-                        <ul
-                          class={`endorsements ${
-                            endorsements.length > 10 ? 'expanded' : ''
-                          }`}
-                        >
-                          {endorsements.map((account) => (
-                            <li>
-                              <AccountBlock
-                                key={account.id}
-                                account={account}
-                                showStats
-                                avatarSize="xxl"
-                                relationship={relationshipsMap[account.id]}
-                              />
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p class="ui-state insignificant">
-                          <Trans>No featured profiles.</Trans>
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
+              <Endorsements
+                accountID={id}
+                info={info}
+                open={renderEndorsements}
+                onlyOpenIfHasEndorsements={
+                  renderEndorsements === 'onlyOpenIfHasEndorsements'
+                }
+              />
             </>
           )
         )}
@@ -1119,6 +1046,7 @@ function RelatedActions({
   onRelationshipChange = () => {},
   onProfileUpdate = () => {},
   setShowEditProfile = () => {},
+  showEndorsements = false,
   renderEndorsements = false,
   setRenderEndorsements = () => {},
 }) {
@@ -1473,14 +1401,16 @@ function RelatedActions({
                       : 'Feature on profile'}
                   </MenuItem>
                 )}
-                {supportsEndorsements && !renderEndorsements && (
-                  <MenuItem onClick={() => setRenderEndorsements(true)}>
-                    <Icon icon="endorsement" />
-                    <span>
-                      <Trans>Show featured profiles</Trans>
-                    </span>
-                  </MenuItem>
-                )}
+                {showEndorsements &&
+                  supportsEndorsements &&
+                  !renderEndorsements && (
+                    <MenuItem onClick={() => setRenderEndorsements(true)}>
+                      <Icon icon="endorsement" />
+                      <span>
+                        <Trans>Show featured profiles</Trans>
+                      </span>
+                    </MenuItem>
+                  )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
                   <MenuItem
@@ -1908,7 +1838,7 @@ function RelatedActions({
 
                       // Show endorsements if start following
                       if (newRelationship.following) {
-                        setRenderEndorsements(true);
+                        setRenderEndorsements('onlyOpenIfHasEndorsements');
                       }
                     }
                     setRelationshipUIState('default');
@@ -2656,6 +2586,100 @@ function AccountHandleInfo({ acct, instance }) {
           <span class="handle-legend-icon server" />{' '}
           <Trans>server domain name</Trans>
         </span>
+      </div>
+    </div>
+  );
+}
+
+function Endorsements({
+  accountID: id,
+  info,
+  open = false,
+  onlyOpenIfHasEndorsements = false,
+}) {
+  const { masto } = api();
+  const endorsementsContainer = useRef();
+  const [endorsementsUIState, setEndorsementsUIState] = useState('default');
+  const [endorsements, setEndorsements] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+  useEffect(() => {
+    if (!supports('@mastodon/endorsements')) return;
+    if (!open) return;
+    (async () => {
+      setEndorsementsUIState('loading');
+      try {
+        const accounts = await masto.v1.accounts.$select(id).endorsements.list({
+          limit: ENDORSEMENTS_LIMIT,
+        });
+        console.log({ endorsements: accounts });
+        if (!accounts.length) {
+          setEndorsementsUIState('default');
+          return;
+        }
+        setEndorsements(accounts);
+        setEndorsementsUIState('default');
+        setTimeout(() => {
+          endorsementsContainer.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }, 300);
+
+        const relationships = await fetchRelationships(
+          accounts,
+          relationshipsMap,
+        );
+        if (relationships) {
+          setRelationshipsMap(relationships);
+        }
+      } catch (e) {
+        console.error(e);
+        setEndorsementsUIState('error');
+      }
+    })();
+  }, [open, id]);
+
+  const reallyOpen = onlyOpenIfHasEndorsements
+    ? open && endorsements.length > 0
+    : open;
+
+  if (!reallyOpen) return null;
+
+  return (
+    <div class="shazam-container">
+      <div class="shazam-container-inner">
+        <div class="endorsements-container" ref={endorsementsContainer}>
+          <h3>
+            <Trans>Profiles featured by @{info.username}</Trans>
+          </h3>
+          {endorsementsUIState === 'loading' ? (
+            <p class="ui-state">
+              <Loader abrupt />
+            </p>
+          ) : endorsements.length > 0 ? (
+            <ul
+              class={`endorsements ${
+                endorsements.length > 10 ? 'expanded' : ''
+              }`}
+            >
+              {endorsements.map((account) => (
+                <li>
+                  <AccountBlock
+                    key={account.id}
+                    account={account}
+                    showStats
+                    avatarSize="xxl"
+                    relationship={relationshipsMap[account.id]}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="ui-state insignificant">
+              <Trans>No featured profiles.</Trans>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

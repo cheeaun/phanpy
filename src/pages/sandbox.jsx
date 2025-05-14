@@ -38,6 +38,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     pollCount,
     pollMultiple,
     pollExpired,
+    showCard,
     size,
     filters,
     userPreferences,
@@ -251,6 +252,38 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
       .filter(Boolean);
   }
 
+  // Add link preview card if enabled
+  if (showCard) {
+    base.card = {
+      url: 'https://example.com/article',
+      title: 'Example Article Title',
+      description:
+        'This is a sample description for the link preview card that appears under content.',
+      type: 'link',
+      image: 'https://picsum.photos/seed/card/600/400',
+      width: 600,
+      height: 400,
+      providerName: 'Example Website',
+      providerUrl: 'https://example.com',
+      authorName: 'John Doe',
+      authorUrl: 'https://example.com/author',
+      language: 'en',
+      publishedAt: new Date().toISOString(),
+      authors: [
+        {
+          account: {
+            id: '1',
+            username: 'test 2',
+            name: 'Test 2',
+            avatar: '/logo-192.png',
+            acct: 'test2@localhost',
+            url: 'https://test2.localhost',
+          },
+        },
+      ],
+    };
+  }
+
   console.log('Final base', base);
   return base;
 };
@@ -269,6 +302,7 @@ export default function Sandbox() {
     pollCount: '0',
     pollMultiple: false,
     pollExpired: false,
+    showCard: false,
     size: 'medium',
     filters: [false, false, false], // hide, blur, warn
     mediaPreference: 'default',
@@ -342,6 +376,7 @@ export default function Sandbox() {
       pollCount: toggleState.pollCount,
       pollMultiple: toggleState.pollMultiple,
       pollExpired: toggleState.pollExpired,
+      showCard: toggleState.showCard,
       size: toggleState.size,
       filters: toggleState.filters,
     },
@@ -736,6 +771,18 @@ export default function Sandbox() {
                     />
                     <span>Expired</span>
                   </label>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.showCard}
+                    onChange={() =>
+                      updateToggles({ showCard: !toggleState.showCard })
+                    }
+                  />
+                  <span>Link preview card</span>
                 </label>
               </li>
             </ul>

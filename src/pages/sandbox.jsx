@@ -2,9 +2,15 @@ import './sandbox.css';
 
 import { useEffect, useState } from 'preact/hooks';
 
+import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
+import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
+import testAudioURL from '../assets/sandbox/big-buck-bunny.mp3';
+import testVideoURL from '../assets/sandbox/big-buck-bunny.webm';
+
 import Status from '../components/status';
 import { getPreferences } from '../utils/api';
 import FilterContext from '../utils/filter-context';
+import states from '../utils/states';
 import store from '../utils/store';
 
 function hashID(obj) {
@@ -85,24 +91,61 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
   if (mediaCount > 0) {
     base.mediaAttachments = Array(parseInt(mediaCount, 10))
       .fill(0)
-      .map((_, i) => ({
-        id: `media-${i}`,
-        type: 'image',
-        url: `https://picsum.photos/seed/media-${i}/600/400`,
-        previewUrl: `https://picsum.photos/seed/media-${i}/300/200`,
-        description:
-          i % 2 === 0 ? `Sample image description for media ${i + 1}` : '',
-        meta: {
-          original: {
-            width: 600,
-            height: 400,
-          },
-          small: {
-            width: 600,
-            height: 400,
-          },
-        },
-      }));
+      .map((_, i) => {
+        const mediaType = toggles.mediaTypes?.[i] || 'image';
+
+        // Configure media based on type
+        let mediaConfig = {
+          id: `media-${i}`,
+          type: mediaType,
+          description:
+            i % 2 === 0
+              ? `Sample ${mediaType} description for media ${i + 1}`
+              : '',
+        };
+
+        // Set URLs based on media type
+        switch (mediaType) {
+          case 'image':
+            mediaConfig.url = `https://picsum.photos/seed/media-${i}/600/400`;
+            mediaConfig.previewUrl = `https://picsum.photos/seed/media-${i}/300/200`;
+            mediaConfig.meta = {
+              original: {
+                width: 600,
+                height: 400,
+              },
+              small: {
+                width: 300,
+                height: 200,
+              },
+            };
+            break;
+          case 'gifv':
+            mediaConfig.type = 'gifv';
+            mediaConfig.url = testGIFURL;
+            mediaConfig.previewUrl = testPreviewURL;
+            mediaConfig.meta = {
+              original: {
+                width: 426,
+                height: 240,
+                duration: 14,
+              },
+            };
+            break;
+          case 'video':
+            mediaConfig.type = 'video';
+            mediaConfig.url = testVideoURL;
+            mediaConfig.previewUrl = testPreviewURL;
+            break;
+          case 'audio':
+            mediaConfig.type = 'audio';
+            mediaConfig.url = testAudioURL;
+            mediaConfig.previewUrl = i % 2 === 0 ? '' : testPreviewURL;
+            break;
+        }
+
+        return mediaConfig;
+      });
   }
 
   // Add poll if selected
@@ -222,6 +265,7 @@ export default function Sandbox() {
     hasSpoiler: false,
     spoilerType: 'all',
     mediaCount: '0',
+    mediaTypes: [],
     pollCount: '0',
     pollMultiple: false,
     pollExpired: false,
@@ -233,6 +277,10 @@ export default function Sandbox() {
 
   // Update function with view transitions
   const updateToggles = (updates) => {
+    if (typeof updates === 'function') {
+      updates = updates(toggleState);
+    }
+
     // Check for browser support
     if (!document.startViewTransition) {
       setToggleState((prev) => ({ ...prev, ...updates }));
@@ -290,6 +338,7 @@ export default function Sandbox() {
       spoiler: toggleState.hasSpoiler,
       spoilerType: toggleState.spoilerType,
       mediaCount: toggleState.mediaCount,
+      mediaTypes: toggleState.mediaTypes,
       pollCount: toggleState.pollCount,
       pollMultiple: toggleState.pollMultiple,
       pollExpired: toggleState.pollExpired,
@@ -335,6 +384,14 @@ export default function Sandbox() {
               allowFilters={true}
               // Add a key that changes when preferences change to force re-render
               key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${mockStatus.id}`}
+              // Prevent opening as URL
+              onMediaClick={(e, i, media, status) => {
+                e.preventDefault();
+                states.showMediaModal = {
+                  mediaAttachments: status.mediaAttachments,
+                  mediaIndex: i,
+                };
+              }}
             />
           )}
         </FilterContext.Provider>
@@ -512,6 +569,7 @@ export default function Sandbox() {
                       const newHasMedia = e.target.checked;
                       const updates = {
                         mediaCount: newHasMedia ? '1' : '0',
+                        mediaTypes: newHasMedia ? ['image'] : [],
                       };
 
                       // If removing media and no text content, enable text content
@@ -526,18 +584,104 @@ export default function Sandbox() {
                   <input
                     type="number"
                     min="1"
+                    // max="4"
                     value={
                       toggleState.mediaCount === '0'
                         ? '1'
                         : toggleState.mediaCount
                     }
                     step="1"
-                    onChange={(e) =>
-                      updateToggles({ mediaCount: e.target.value })
-                    }
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 1;
+                      updateToggles(({ mediaTypes = [] }) => {
+                        mediaTypes[value - 1] = 'image';
+                        return {
+                          mediaCount: String(value),
+                          mediaTypes,
+                        };
+                      });
+                    }}
                     disabled={parseInt(toggleState.mediaCount) === 0}
                   />
                 </label>
+
+                {parseInt(toggleState.mediaCount) > 0 && (
+                  <ul class="media-types">
+                    {Array.from(
+                      { length: parseInt(toggleState.mediaCount) },
+                      (_, index) => (
+                        <li key={`media-type-${index}`}>
+                          <label>
+                            <input
+                              type="radio"
+                              name={`mediaType${index}`}
+                              checked={
+                                toggleState.mediaTypes[index] === 'image'
+                              }
+                              onChange={() => {
+                                const newMediaTypes = [
+                                  ...toggleState.mediaTypes,
+                                ];
+                                newMediaTypes[index] = 'image';
+                                updateToggles({ mediaTypes: newMediaTypes });
+                              }}
+                            />
+                            <span>Image</span>
+                          </label>
+                          <label>
+                            <input
+                              type="radio"
+                              name={`mediaType${index}`}
+                              checked={toggleState.mediaTypes[index] === 'gifv'}
+                              onChange={() => {
+                                const newMediaTypes = [
+                                  ...toggleState.mediaTypes,
+                                ];
+                                newMediaTypes[index] = 'gifv';
+                                updateToggles({ mediaTypes: newMediaTypes });
+                              }}
+                            />
+                            <span>GIFV</span>
+                          </label>
+                          <label>
+                            <input
+                              type="radio"
+                              name={`mediaType${index}`}
+                              checked={
+                                toggleState.mediaTypes[index] === 'video'
+                              }
+                              onChange={() => {
+                                const newMediaTypes = [
+                                  ...toggleState.mediaTypes,
+                                ];
+                                newMediaTypes[index] = 'video';
+                                updateToggles({ mediaTypes: newMediaTypes });
+                              }}
+                            />
+                            <span>Video</span>
+                          </label>
+                          <label>
+                            <input
+                              type="radio"
+                              name={`mediaType${index}`}
+                              checked={
+                                toggleState.mediaTypes[index] === 'audio'
+                              }
+                              onChange={() => {
+                                const newMediaTypes = [
+                                  ...toggleState.mediaTypes,
+                                ];
+                                newMediaTypes[index] = 'audio';
+                                updateToggles({ mediaTypes: newMediaTypes });
+                              }}
+                            />
+                            <span>Audio</span>
+                          </label>
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                )}
               </li>
               <li>
                 <label>

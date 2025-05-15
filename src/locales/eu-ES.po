@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-13 12:51\n"
+"PO-Revision-Date: 2025-05-13 15:14\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -236,7 +236,7 @@ msgstr "Ikusi bidalketen estatistikak"
 #. placeholder {0}: info.username
 #: src/components/account-info.jsx:1055
 msgid "Profiles featured by @{0}"
-msgstr ""
+msgstr "@{0}(e)k nabarmendutako profilak"
 
 #: src/components/account-info.jsx:1081
 msgid "No featured profiles."
@@ -313,15 +313,15 @@ msgstr "@{username} zure profilean nabarmentzeari utzi zaio."
 
 #: src/components/account-info.jsx:1451
 msgid "@{username} is now featured on your profile."
-msgstr "@{username} zure profilean nabarmentzen ari da."
+msgstr "@{username} zure profilean nabarmenduta dago."
 
 #: src/components/account-info.jsx:1459
 msgid "Unable to unfeature @{username} on your profile."
-msgstr "Ezin izan da @{username} zure profilean nabarmentzeari utzi."
+msgstr "Ezin da @{username} zure profilean nabarmentzeari utzi."
 
 #: src/components/account-info.jsx:1463
 msgid "Unable to feature @{username} on your profile."
-msgstr "Ezin izan da @{username} zure profilean nabarmendu."
+msgstr "Ezin da @{username} zure profilean nabarmendu."
 
 #: src/components/account-info.jsx:1480
 msgid "Show featured profiles"
@@ -849,7 +849,7 @@ msgstr "Fitxategia handiegia da. Igoerak arazoak izan ditzake. Saiatu tamaina {0
 #: src/components/compose.jsx:2608
 #: src/components/compose.jsx:2628
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Neurria handiegia da. Igoerak arazoak izan ditzake. Saiatu neurria {0}×{1}px-etik {2}×{3}px-era murrizten."
 
 #: src/components/compose.jsx:2636
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -888,11 +888,11 @@ msgstr "Deskribapena sortzen. Itxaron…"
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2805
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Ezin izan da deskribapena sortu: {0}"
 
 #: src/components/compose.jsx:2806
 msgid "Failed to generate description"
-msgstr "Ezin da deskribapena sortu"
+msgstr "Ezin izan da deskribapena sortu"
 
 #: src/components/compose.jsx:2818
 #: src/components/compose.jsx:2824
@@ -903,7 +903,7 @@ msgstr "Sortu deskribapena…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2857
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Ezin izan da deskribapena sortu{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2872
@@ -2196,17 +2196,17 @@ msgstr "@{0}(r)en bidalketa gogoko izateari utzi diozu"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:855
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "@{0}(r)en bidalketa gogoko egin du"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:894
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "@{0}(r)en bidalketari laster-marka kendu dio"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:895
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "@{0}(r)en bidalketari laster-marka jarri dio"
 
 #: src/components/status.jsx:994
 msgid "Some media have no descriptions."
@@ -2233,13 +2233,13 @@ msgstr "Aipatu"
 #: src/components/status.jsx:1053
 #: src/components/status.jsx:1516
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "@{0}(r)en bidalketari bultzada kendu dio"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1054
 #: src/components/status.jsx:1517
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "@{0}(r)en bidalketa bultzatu du"
 
 #: src/components/status.jsx:1066
 msgid "Boost…"
@@ -2266,15 +2266,15 @@ msgstr "Kendu laster-marka"
 
 #: src/components/status.jsx:1171
 msgid "Post text copied"
-msgstr ""
+msgstr "Bidalketako testua kopiatu da"
 
 #: src/components/status.jsx:1174
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "Ezin da bidalketako testua kopiatu"
 
 #: src/components/status.jsx:1180
 msgid "Copy post text"
-msgstr "Kopiatu bidalketaren testua"
+msgstr "Kopiatu bidalketako testua"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1198
@@ -2867,7 +2867,7 @@ msgstr "{0} eguneraketa kentzen"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1076
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "{0} eguneraketa kendu da"
 
 #: src/pages/catchup.jsx:1090
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3088,7 +3088,7 @@ msgstr "Iragazitako bidalketak…"
 
 #: src/pages/filters.jsx:538
 msgid "obscured (media only)"
-msgstr ""
+msgstr "ilunduta (soilik multimedia)"
 
 #: src/pages/filters.jsx:552
 msgid "minimized"
@@ -3457,7 +3457,7 @@ msgstr "Baimendu"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1255
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Aurrerantzean ez dira @{0}(r)en jakinarazpenak erakutsiko iragazitako jakinarazpenetan."
 
 #: src/pages/notifications.jsx:1260
 msgid "Unable to dismiss notification request"
@@ -3684,7 +3684,7 @@ msgstr "{0, plural, one {}=0 {Ezkutatu \"Itzuli\" botoia honentzat:} other {Ezku
 
 #: src/pages/settings.jsx:491
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "Oharra: ezaugarri honek hirugarrenen itzulpen-zerbitzuak darabiltza, <0>{TRANSLATION_API_NAME}</0>(r)i esker."
 
 #: src/pages/settings.jsx:519
 msgid "Auto inline translation"

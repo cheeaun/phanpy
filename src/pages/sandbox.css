@@ -161,6 +161,11 @@
       margin: 0;
       padding: 0;
       list-style: none;
+
+      &.flex {
+        display: flex;
+        align-items: flex-start;
+      }
     }
 
     label {
@@ -179,6 +184,10 @@
       padding: 4px;
       gap: 4px;
       align-items: center;
+    }
+
+    ul li ul b {
+      font-weight: normal;
     }
 
     input[type='number'] {

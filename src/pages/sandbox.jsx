@@ -79,7 +79,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
                 ? mentionsContent
                 : shortContent
         : '',
-    visibility: 'public',
+    visibility: toggles.visibility || 'public',
     createdAt: new Date().toISOString(),
     reblogsCount: 0,
     favouritesCount: 0,
@@ -297,6 +297,7 @@ export default function Sandbox() {
     mediaFirst: false,
     hasContent: true,
     contentType: 'short',
+    visibility: 'public', // Default visibility
     hasSpoiler: false,
     spoilerType: 'all',
     mediaCount: '0',
@@ -374,6 +375,7 @@ export default function Sandbox() {
       mediaFirst: toggleState.mediaFirst,
       contentFormat: toggleState.hasContent ? 'text' : null,
       contentType: toggleState.contentType,
+      visibility: toggleState.visibility, // Add visibility for the status
       spoiler: toggleState.hasSpoiler,
       spoilerType: toggleState.spoilerType,
       mediaCount: toggleState.mediaCount,
@@ -689,6 +691,55 @@ export default function Sandbox() {
                     }
                   />
                   <span>Media first</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Visibility</b>
+            <ul>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="visibility"
+                    checked={toggleState.visibility === 'public'}
+                    onChange={() => updateToggles({ visibility: 'public' })}
+                  />
+                  <span>Public</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="visibility"
+                    checked={toggleState.visibility === 'unlisted'}
+                    onChange={() => updateToggles({ visibility: 'unlisted' })}
+                  />
+                  <span>Unlisted</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="visibility"
+                    checked={toggleState.visibility === 'private'}
+                    onChange={() => updateToggles({ visibility: 'private' })}
+                  />
+                  <span>Private</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="visibility"
+                    checked={toggleState.visibility === 'direct'}
+                    onChange={() => updateToggles({ visibility: 'direct' })}
+                  />
+                  <span>Direct</span>
                 </label>
               </li>
             </ul>

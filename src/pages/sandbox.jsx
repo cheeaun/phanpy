@@ -10,7 +10,7 @@ import testVideoURL from '../assets/sandbox/big-buck-bunny.webm';
 import Status from '../components/status';
 import { getPreferences } from '../utils/api';
 import FilterContext from '../utils/filter-context';
-import states from '../utils/states';
+import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
 
 function hashID(obj) {
@@ -24,6 +24,8 @@ function hashID(obj) {
     )
     .join('|');
 }
+
+const DEFAULT_INSTANCE = 'mastodon.social';
 
 const MOCK_STATUS = ({ toggles = {} } = {}) => {
   console.log('toggles', toggles);
@@ -303,6 +305,9 @@ export default function Sandbox() {
     pollMultiple: false,
     pollExpired: false,
     showCard: false,
+    showQuotes: false,
+    quotesCount: '1',
+    quoteNestingLevel: '0',
     size: 'medium',
     filters: [false, false, false], // hide, blur, warn
     mediaPreference: 'default',
@@ -377,10 +382,236 @@ export default function Sandbox() {
       pollMultiple: toggleState.pollMultiple,
       pollExpired: toggleState.pollExpired,
       showCard: toggleState.showCard,
+      showQuotes: toggleState.showQuotes,
+      quotesCount: toggleState.quotesCount,
+      quoteNestingLevel: toggleState.quoteNestingLevel,
       size: toggleState.size,
       filters: toggleState.filters,
     },
   });
+
+  // Directly observe the statusQuotes object for debugging
+  useEffect(() => {
+    console.log('Current statusQuotes:', states.statusQuotes);
+  }, [
+    toggleState.showQuotes,
+    toggleState.quotesCount,
+    toggleState.quoteNestingLevel,
+  ]);
+
+  // Create and update quote posts - using a fixed timestamp to keep IDs stable
+  useEffect(() => {
+    if (!mockStatus?.id) return;
+
+    // Create a properly formatted sKey for the Status component to find quotes
+    // Import statusKey from utils/states to create a proper key
+    const sKey = statusKey(mockStatus.id, DEFAULT_INSTANCE);
+
+    // Log the key we're using
+    console.log('Quote posts key:', sKey);
+
+    // Clear existing quotes for this status
+    delete states.statusQuotes[sKey];
+
+    if (toggleState.showQuotes && parseInt(toggleState.quotesCount, 10) > 0) {
+      console.log('Setting up quotes for status:', sKey);
+
+      // First, clean up all existing quote posts and their nested quotes
+      // This ensures that when we decrement nesting level, the nested quotes are removed
+      const cleanupExistingQuotes = () => {
+        // Find all existing quote keys for this status
+        Object.keys(states.statusQuotes).forEach((key) => {
+          if (
+            key.startsWith(DEFAULT_INSTANCE + '/quote-') ||
+            key.startsWith(DEFAULT_INSTANCE + '/nested-quote-') ||
+            key.startsWith(DEFAULT_INSTANCE + '/deep-nested-')
+          ) {
+            // Clean up nested quote references
+            delete states.statusQuotes[key];
+          }
+        });
+
+        // Also clean up the status objects
+        Object.keys(states.statuses).forEach((key) => {
+          if (
+            key.startsWith('quote-') ||
+            key.startsWith('nested-quote-') ||
+            key.startsWith('deep-nested-')
+          ) {
+            // Remove all quote-related status objects
+            delete states.statuses[key];
+          }
+        });
+      };
+
+      // Clean up all existing quotes and their status objects
+      cleanupExistingQuotes();
+
+      // Create a set of simpler quote references - this is what QuoteStatuses component expects
+      // Create only the exact number of quotes specified
+      const quotesCount = parseInt(toggleState.quotesCount, 10);
+      // Create exactly quotesCount number of quotes - no more, no less
+      const quotes = Array(quotesCount)
+        .fill(0)
+        .map((_, i) => {
+          // Use a stable ID format that doesn't change on re-render
+          const quoteId = `quote-${i}-12345`;
+          const nestingLevel = Math.min(
+            parseInt(toggleState.quoteNestingLevel, 10) || 0,
+            2,
+          );
+
+          // Create a simple reference object for QuoteStatuses
+          const quoteRef = {
+            id: quoteId,
+            instance: DEFAULT_INSTANCE,
+            url: `https://example.social/s/${quoteId}`, // Include URL to ensure uniqueness check works
+          };
+
+          // First, delete any existing status with this ID to avoid duplicates
+          delete states.statuses[quoteId];
+
+          // Create the actual status object that will be retrieved by QuoteStatuses
+          states.statuses[quoteId] = {
+            id: quoteId,
+            content: `<p>This is quote post ${i + 1}${i % 2 === 0 ? '' : ' with some extra text'}</p>`,
+            account: {
+              id: `quote-account-${i}`,
+              username: `quote${i}`,
+              name: `Quote User ${i}`,
+              avatar: '/logo-192.png',
+              acct: `quote${i}@example.social`,
+              url: `https://example.social/@quote${i}`,
+            },
+            visibility: 'public',
+            createdAt: new Date(Date.now() - i * 3600000).toISOString(), // Each post 1 hour older
+            emojis: [],
+            // First quote post should be plain (no media, no poll)
+            mediaAttachments:
+              i > 0 && i % 2 === 0
+                ? [
+                    {
+                      // Only non-first posts can have media (every 3rd post after the 1st)
+                      id: `quote-media-${i}`,
+                      type: 'image',
+                      url: `https://picsum.photos/seed/quote-${i}/600/400`,
+                      previewUrl: `https://picsum.photos/seed/quote-${i}/300/200`,
+                      meta: {
+                        original: { width: 600, height: 400 },
+                        small: { width: 300, height: 200 },
+                      },
+                    },
+                  ]
+                : [],
+            poll:
+              i > 0 && i % 3 === 0
+                ? {
+                    // Only non-first posts can have polls (every 4th post after the 1st)
+                    id: `quote-poll-${i}`,
+                    options: [
+                      {
+                        title: 'Option A',
+                        votesCount: Math.floor(Math.random() * 50),
+                      },
+                      {
+                        title: 'Option B',
+                        votesCount: Math.floor(Math.random() * 50),
+                      },
+                    ],
+                    expiresAt: new Date(
+                      Date.now() + 24 * 60 * 60 * 1000,
+                    ).toISOString(),
+                    multiple: false,
+                    votesCount: Math.floor(Math.random() * 100),
+                  }
+                : null,
+          };
+
+          // If nesting level > 0, add nested quotes to each quote post
+          if (nestingLevel > 0 && i % 2 === 0) {
+            // Add nested quotes to every other quote - use stable ID
+            const nestedQuoteId = `nested-quote-${i}-12345`;
+
+            // Add the nested quote post to states.statuses
+            states.statuses[nestedQuoteId] = {
+              id: nestedQuoteId,
+              content: `<p>This is a nested quote inside quote ${i + 1}</p>`,
+              account: {
+                id: `nested-account-${i}`,
+                username: `nested${i}`,
+                name: `Nested User ${i}`,
+                avatar: '/logo-192.png',
+                acct: `nested${i}@example.social`,
+                url: `https://example.social/@nested${i}`,
+              },
+              visibility: 'public',
+              createdAt: new Date(Date.now() - (i + 1) * 3600000).toISOString(),
+              emojis: [],
+              mediaAttachments: [], // No media in nested quotes for simplicity
+            };
+
+            // Create reference object for nested quote - critical for proper rendering
+            const nestedQuoteRef = {
+              id: nestedQuoteId,
+              instance: DEFAULT_INSTANCE,
+              url: `https://example.social/s/${nestedQuoteId}`,
+            };
+
+            // Add another level of nesting if specified
+            if (nestingLevel > 1 && i === 0) {
+              // Only add deepest nesting to first quote
+              const deepNestedId = `deep-nested-${i}-12345`;
+
+              states.statuses[deepNestedId] = {
+                id: deepNestedId,
+                content: `<p>This is a deeply nested quote (level 2)</p>`,
+                account: {
+                  id: `deep-account-${i}`,
+                  username: `deep${i}`,
+                  name: `Deep User ${i}`,
+                  avatar: '/logo-192.png',
+                  acct: `deep${i}@example.social`,
+                  url: `https://example.social/@deep${i}`,
+                },
+                visibility: 'public',
+                createdAt: new Date(
+                  Date.now() - (i + 2) * 3600000,
+                ).toISOString(),
+                emojis: [],
+              };
+
+              // Create deep nested reference
+              const deepNestedRef = {
+                id: deepNestedId,
+                instance: DEFAULT_INSTANCE,
+                url: `https://example.social/s/${deepNestedId}`,
+              };
+
+              // Important: Use the proper key format for the nested quote
+              const nestedKey = statusKey(nestedQuoteId, DEFAULT_INSTANCE);
+              states.statusQuotes[nestedKey] = [deepNestedRef];
+            }
+
+            // Add nested quote to the quote's quotes using the proper key format
+            const quoteKey = statusKey(quoteId, DEFAULT_INSTANCE);
+            states.statusQuotes[quoteKey] = [nestedQuoteRef];
+          }
+
+          return quoteRef;
+        });
+
+      // Set the quotes for the main status
+      states.statusQuotes[sKey] = quotes;
+    } else {
+      // Remove quotes when toggle is turned off
+      delete states.statusQuotes[sKey];
+    }
+  }, [
+    mockStatus?.id,
+    toggleState.showQuotes,
+    toggleState.quotesCount,
+    toggleState.quoteNestingLevel,
+  ]);
 
   // Handler for filter checkboxes
   const handleFilterChange = (index) => {
@@ -416,9 +647,8 @@ export default function Sandbox() {
                     ? 'm'
                     : 'l'
               }
+              instance={DEFAULT_INSTANCE}
               allowFilters={true}
-              // Add a key that changes when preferences change to force re-render
-              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${mockStatus.id}`}
               // Prevent opening as URL
               onMediaClick={(e, i, media, status) => {
                 e.preventDefault();
@@ -784,6 +1014,51 @@ export default function Sandbox() {
                   />
                   <span>Link preview card</span>
                 </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.showQuotes}
+                    onChange={() =>
+                      updateToggles({ showQuotes: !toggleState.showQuotes })
+                    }
+                  />
+                  <span>Quote post</span>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    value={toggleState.quotesCount}
+                    step="1"
+                    onChange={(e) => {
+                      // Make sure to convert to a number first to avoid string concatenation
+                      const count = parseInt(e.target.value, 10) || 1;
+                      updateToggles({ quotesCount: String(count) });
+                    }}
+                    disabled={!toggleState.showQuotes}
+                  />
+                </label>
+                <ul>
+                  <li>
+                    <label>
+                      <span>Nested quote post</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max="2"
+                        value={toggleState.quoteNestingLevel}
+                        step="1"
+                        onChange={(e) => {
+                          // Make sure to convert to a number first to avoid string concatenation
+                          const level = parseInt(e.target.value, 10) || 0;
+                          updateToggles({ quoteNestingLevel: String(level) });
+                        }}
+                        disabled={!toggleState.showQuotes}
+                      />
+                    </label>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>

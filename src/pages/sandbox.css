@@ -56,9 +56,10 @@
     display: flex;
     align-items: safe center;
     justify-content: center;
+    overflow-anchor: auto;
 
     > .status,
-    > * > .status {
+    > *:not(.status-card-link) > .status {
       min-width: 320px;
       max-width: 40em;
       background-color: var(--bg-color);
@@ -101,6 +102,12 @@
       }
       .card {
         view-transition-name: status-card;
+      }
+
+      .status-card-link {
+        * {
+          view-transition-name: none !important;
+        }
       }
     }
   }

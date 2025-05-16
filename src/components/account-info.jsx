@@ -2376,7 +2376,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                     onClick={() => {
                       states.showMediaModal = {
                         mediaAttachments: headerMediaAttachments,
-                        index: 0,
+                        mediaIndex: 0,
                       };
                     }}
                   >
@@ -2394,7 +2394,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                       onClick={() => {
                         states.showMediaModal = {
                           mediaAttachments: headerMediaAttachments,
-                          index: 1,
+                          mediaIndex: 1,
                         };
                       }}
                     >
@@ -2428,7 +2428,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                     onClick={() => {
                       states.showMediaModal = {
                         mediaAttachments: avatarMediaAttachments,
-                        index: 0,
+                        mediaIndex: 0,
                       };
                     }}
                   >
@@ -2446,7 +2446,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                       onClick={() => {
                         states.showMediaModal = {
                           mediaAttachments: avatarMediaAttachments,
-                          index: 1,
+                          mediaIndex: 1,
                         };
                       }}
                     >

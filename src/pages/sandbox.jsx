@@ -313,6 +313,7 @@ export default function Sandbox() {
     filters: [false, false, false], // hide, blur, warn
     mediaPreference: 'default',
     expandWarnings: false,
+    contextType: 'none', // Default context type
   });
 
   // Update function with view transitions
@@ -368,8 +369,8 @@ export default function Sandbox() {
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
 
-  // Generate status with current toggle values
-  const mockStatus = MOCK_STATUS({
+  // Generate status with current toggle values and context
+  let mockStatus = MOCK_STATUS({
     toggles: {
       loading: toggleState.loading,
       mediaFirst: toggleState.mediaFirst,
@@ -391,6 +392,54 @@ export default function Sandbox() {
       filters: toggleState.filters,
     },
   });
+
+  if (toggleState.contextType === 'reblog') {
+    const rebloggedStatus = { ...mockStatus };
+    mockStatus = {
+      id: 'reblog-' + mockStatus.id,
+      account: mockStatus.account, // Same account for simplicity
+      reblog: rebloggedStatus,
+      visibility: mockStatus.visibility,
+      createdAt: new Date().toISOString(),
+    };
+  } else if (toggleState.contextType === 'group') {
+    const groupStatus = { ...mockStatus };
+    mockStatus.account = { ...mockStatus.account, group: true };
+    mockStatus.reblog = groupStatus;
+  } else if (toggleState.contextType === 'followed-tags') {
+    const concreteId = 'followed-tags-status-123';
+    mockStatus.id = concreteId;
+
+    const sKey = statusKey(concreteId, DEFAULT_INSTANCE);
+    console.log('Setting followed tags for key:', sKey);
+
+    // Clear any existing tags for this status
+    Object.keys(states.statusFollowedTags).forEach((key) => {
+      delete states.statusFollowedTags[key];
+    });
+
+    states.statusFollowedTags[sKey] = ['hashtag', 'test'];
+  } else if (toggleState.contextType === 'reply-to') {
+    // Generate a unique ID
+    const parentID = Math.random().toString(36).substring(2, 15);
+    const parentAcct = 'parent_user@example.social';
+
+    mockStatus.inReplyToId = parentID;
+    mockStatus.inReplyToAccountId = parentID;
+
+    const parentAccount = {
+      id: parentID,
+      username: 'parent_user',
+      displayName: 'Parent User',
+      name: 'Parent User',
+      url: 'https://example.social/@parent_user',
+      acct: parentAcct,
+    };
+
+    mockStatus.mentions = [parentAccount];
+
+    mockStatus.id = 'reply-' + Math.random().toString(36).substring(2, 15);
+  }
 
   // Directly observe the statusQuotes object for debugging
   useEffect(() => {
@@ -651,6 +700,7 @@ export default function Sandbox() {
               }
               instance={DEFAULT_INSTANCE}
               allowFilters={true}
+              showFollowedTags
               // Prevent opening as URL
               onMediaClick={(e, i, media, status) => {
                 e.preventDefault();
@@ -1147,6 +1197,68 @@ export default function Sandbox() {
                     onChange={() => updateToggles({ size: 'large' })}
                   />
                   <span>Large</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Context</b>
+            <ul>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="contextType"
+                    checked={toggleState.contextType === 'none'}
+                    onChange={() => updateToggles({ contextType: 'none' })}
+                  />
+                  <span>None</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="contextType"
+                    checked={toggleState.contextType === 'reblog'}
+                    onChange={() => updateToggles({ contextType: 'reblog' })}
+                  />
+                  <span>Boost</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="contextType"
+                    checked={toggleState.contextType === 'group'}
+                    onChange={() => updateToggles({ contextType: 'group' })}
+                  />
+                  <span>Group</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="contextType"
+                    checked={toggleState.contextType === 'followed-tags'}
+                    onChange={() =>
+                      updateToggles({ contextType: 'followed-tags' })
+                    }
+                  />
+                  <span>Followed tags</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="contextType"
+                    checked={toggleState.contextType === 'reply-to'}
+                    onChange={() => updateToggles({ contextType: 'reply-to' })}
+                  />
+                  <span>Reply-to</span>
                 </label>
               </li>
             </ul>

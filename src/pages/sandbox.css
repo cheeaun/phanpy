@@ -58,8 +58,9 @@
     justify-content: center;
     overflow-anchor: auto;
 
+    > [class^='status-'],
     > .status,
-    > *:not(.status-card-link) > .status {
+    > *:not(.status-card-link, [class^='status-']) > .status {
       min-width: 320px;
       max-width: 40em;
       background-color: var(--bg-color);
@@ -68,6 +69,18 @@
         0 4px 16px var(--drop-shadow-color),
         0 8px 32px -4px var(--drop-shadow-color);
       view-transition-name: status;
+
+      > .status-pre-meta {
+        view-transition-name: status-pre-meta;
+      }
+    }
+
+    > .status,
+    > *:not(.status-card-link) > .status {
+      button,
+      a {
+        pointer-events: none;
+      }
 
       > .container > .meta {
         view-transition-name: status-meta;

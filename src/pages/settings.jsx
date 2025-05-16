@@ -850,6 +850,15 @@ function Settings({ onClose }) {
         {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
           <details class="debug-info">
             <summary></summary>
+            <p class="side">
+              <Link
+                to="/_sandbox"
+                onClick={onClose}
+                class="button plain6 small"
+              >
+                Sandbox
+              </Link>
+            </p>
             <p>Debugging</p>
             {__BENCH_RESULTS?.size > 0 && (
               <ul>

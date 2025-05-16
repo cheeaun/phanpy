@@ -679,7 +679,18 @@ export default function Sandbox() {
         </a>
         <h1>Sandbox</h1>
       </header>
-      <div class="sandbox-preview">
+      <div
+        class="sandbox-preview"
+        onClickCapture={(e) => {
+          const isAllowed = e.target.closest(
+            '.media, .media-caption, .spoiler-button, .spoiler-media-button',
+          );
+          if (isAllowed) return;
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }}
+      >
         <FilterContext.Provider value={'home'}>
           {toggleState.loading ? (
             <Status

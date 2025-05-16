@@ -77,11 +77,6 @@
 
     > .status,
     > *:not(.status-card-link) > .status {
-      button,
-      a {
-        pointer-events: none;
-      }
-
       > .container > .meta {
         view-transition-name: status-meta;
       }

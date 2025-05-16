@@ -12,6 +12,7 @@ import { getPreferences } from '../utils/api';
 import FilterContext from '../utils/filter-context';
 import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
+import useTitle from '../utils/useTitle';
 
 function hashID(obj) {
   if (!obj) return '';
@@ -291,6 +292,8 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
 };
 
 export default function Sandbox() {
+  useTitle('Sandbox', '/_sandbox');
+
   // Consolidated state for all toggles
   const [toggleState, setToggleState] = useState({
     loading: false,

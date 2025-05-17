@@ -58,8 +58,7 @@
     overflow-anchor: auto;
     position: relative;
 
-    container: preview / inline-size;
-    @container preview (inline-size > 400px) {
+    @media (width > calc(400px + 320px)) {
       &.narrow {
         > [class^='status-'],
         > .status,

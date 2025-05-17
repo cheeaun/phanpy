@@ -1361,10 +1361,10 @@ export default function Sandbox() {
                   <input
                     type="radio"
                     name="displayStyle"
-                    checked={toggleState.displayStyle === 'narrow'}
-                    onChange={() => updateToggles({ displayStyle: 'narrow' })}
+                    checked={toggleState.displayStyle === 'adaptive'}
+                    onChange={() => updateToggles({ displayStyle: 'adaptive' })}
                   />
-                  <span>Narrow</span>
+                  <span>Adaptive</span>
                 </label>
               </li>
               <li>
@@ -1372,10 +1372,10 @@ export default function Sandbox() {
                   <input
                     type="radio"
                     name="displayStyle"
-                    checked={toggleState.displayStyle === 'adaptive'}
-                    onChange={() => updateToggles({ displayStyle: 'adaptive' })}
+                    checked={toggleState.displayStyle === 'narrow'}
+                    onChange={() => updateToggles({ displayStyle: 'narrow' })}
                   />
-                  <span>Adaptive</span>
+                  <span>Narrow</span>
                 </label>
               </li>
             </ul>

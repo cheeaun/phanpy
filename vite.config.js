@@ -161,6 +161,7 @@ export default defineConfig({
     Sonda({
       detailed: true,
       brotli: true,
+      open: false,
     }),
   ],
   build: {

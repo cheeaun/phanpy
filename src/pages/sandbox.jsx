@@ -949,32 +949,34 @@ export default function Sandbox() {
                   />
                   <span>Content warning</span>
                 </label>
-                <ul>
-                  <li>
-                    <label>
-                      <input
-                        type="radio"
-                        name="spoilerType"
-                        checked={toggleState.spoilerType === 'all'}
-                        onChange={() => updateToggles({ spoilerType: 'all' })}
-                      />
-                      <span>Whole content</span>
-                    </label>
-                  </li>
-                  <li>
-                    <label>
-                      <input
-                        type="radio"
-                        name="spoilerType"
-                        checked={toggleState.spoilerType === 'mediaOnly'}
-                        onChange={() =>
-                          updateToggles({ spoilerType: 'mediaOnly' })
-                        }
-                      />
-                      <span>Media only</span>
-                    </label>
-                  </li>
-                </ul>
+                {toggleState.hasSpoiler && (
+                  <ul>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="spoilerType"
+                          checked={toggleState.spoilerType === 'all'}
+                          onChange={() => updateToggles({ spoilerType: 'all' })}
+                        />
+                        <span>Whole content</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="spoilerType"
+                          checked={toggleState.spoilerType === 'mediaOnly'}
+                          onChange={() =>
+                            updateToggles({ spoilerType: 'mediaOnly' })
+                          }
+                        />
+                        <span>Media only</span>
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li>
                 <label>
@@ -1191,26 +1193,27 @@ export default function Sandbox() {
                     disabled={!toggleState.showQuotes}
                   />
                 </label>
-                <ul>
-                  <li>
-                    <label>
-                      <span>Nested quote post</span>
-                      <input
-                        type="number"
-                        min="0"
-                        max="2"
-                        value={toggleState.quoteNestingLevel}
-                        step="1"
-                        onChange={(e) => {
-                          // Make sure to convert to a number first to avoid string concatenation
-                          const level = parseInt(e.target.value, 10) || 0;
-                          updateToggles({ quoteNestingLevel: String(level) });
-                        }}
-                        disabled={!toggleState.showQuotes}
-                      />
-                    </label>
-                  </li>
-                </ul>
+                {toggleState.showQuotes && (
+                  <ul>
+                    <li>
+                      <label>
+                        <span>Nested quote post</span>
+                        <input
+                          type="number"
+                          min="0"
+                          max="2"
+                          value={toggleState.quoteNestingLevel}
+                          step="1"
+                          onChange={(e) => {
+                            // Make sure to convert to a number first to avoid string concatenation
+                            const level = parseInt(e.target.value, 10) || 0;
+                            updateToggles({ quoteNestingLevel: String(level) });
+                          }}
+                        />
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
             </ul>
           </li>

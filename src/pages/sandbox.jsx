@@ -1455,9 +1455,16 @@ export default function Sandbox() {
             <li>"Always hide media" is not supported yet.</li>
           </ul>
           <p>
-            Images are from <a href="https://picsum.photos/">Lorem Picsum</a>.
-            Videos and audio are extracted from{' '}
-            <a href="https://en.wikipedia.org/wiki/Big_Buck_Bunny">
+            Images are from{' '}
+            <a href="https://picsum.photos/" target="_blank" rel="noopener">
+              Lorem Picsum
+            </a>
+            . Videos and audio are extracted from{' '}
+            <a
+              href="https://en.wikipedia.org/wiki/Big_Buck_Bunny"
+              target="_blank"
+              rel="noopener"
+            >
               Big Buck Bunny
             </a>
             .

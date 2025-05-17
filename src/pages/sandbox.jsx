@@ -715,6 +715,7 @@ export default function Sandbox() {
               instance={DEFAULT_INSTANCE}
               allowFilters={true}
               showFollowedTags
+              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${Date.now()}`}
               // Prevent opening as URL
               onMediaClick={(e, i, media, status) => {
                 e.preventDefault();

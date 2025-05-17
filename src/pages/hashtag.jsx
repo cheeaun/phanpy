@@ -70,7 +70,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
     //   hashtagsIterator.current = masto.v1.timelines.tag.$select(hashtag).list({
     //     limit: LIMIT,
     //     any: hashtags.slice(1),
-    //   });
+    //   }).values();
     // }
     // const results = await hashtagsIterator.current.next();
 
@@ -83,6 +83,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         maxId: firstLoad ? undefined : maxID.current,
         onlyMedia: media ? true : undefined,
       })
+      .values()
       .next();
     let { value } = results;
     if (value?.length) {
@@ -115,6 +116,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           since_id: latestItem.current,
           onlyMedia: media,
         })
+        .values()
         .next();
       let { value } = results;
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported

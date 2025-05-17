@@ -1,6 +1,8 @@
 import { compareVersions, satisfies, validate } from 'compare-versions';
 import { createRestAPIClient, createStreamingAPIClient } from 'masto';
 
+import mem from '../utils/mem';
+
 import store from './store';
 import {
   getAccount,
@@ -43,7 +45,7 @@ export function initClient({ instance, accessToken }) {
   const masto = createRestAPIClient({
     url,
     accessToken, // Can be null
-    timeout: 60_000, // Unfortunatly this is global instead of per-request
+    timeout: 2 * 60_000, // Unfortunatly this is global instead of per-request
   });
 
   const client = {
@@ -179,8 +181,20 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
   });
 }
 
+export const getPreferences = mem(
+  () => store.account.get('preferences') || {},
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
+
+export function setPreferences(preferences) {
+  getPreferences.clear(); // clear memo cache
+  store.account.set('preferences', preferences);
+}
+
 export function hasPreferences() {
-  return !!store.account.get('preferences');
+  return !!getPreferences();
 }
 
 // Get preferences
@@ -190,7 +204,7 @@ export async function initPreferences(client) {
     __BENCHMARK.start('fetch-preferences');
     const preferences = await masto.v1.preferences.fetch();
     __BENCHMARK.end('fetch-preferences');
-    store.account.set('preferences', preferences);
+    setPreferences(preferences);
   } catch (e) {
     // silently fail
     console.error(e);

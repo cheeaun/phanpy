@@ -88,6 +88,7 @@ function MediaModal({
         const hasModal = !!document.querySelector('#modal-container > *');
         return hasModal;
       },
+      useKey: true,
     },
     [onClose],
   );

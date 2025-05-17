@@ -15,7 +15,6 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
@@ -30,7 +29,7 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
@@ -117,14 +116,15 @@ function Catchup() {
     const maxCreatedAtDate = maxCreatedAt ? new Date(maxCreatedAt) : null;
     console.debug('fetchHome', maxCreatedAtDate);
     const allResults = [];
-    const homeIterator = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterable = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterator = homeIterable.values();
     mainloop: while (true) {
       try {
-        if (supportsPixelfed && homeIterator.nextParams) {
-          if (typeof homeIterator.nextParams === 'string') {
-            homeIterator.nextParams += '&include_reblogs=true';
+        if (supportsPixelfed && homeIterable.params) {
+          if (typeof homeIterable.params === 'string') {
+            homeIterable.params += '&include_reblogs=true';
           } else {
-            homeIterator.nextParams.include_reblogs = true;
+            homeIterable.params.include_reblogs = true;
           }
         }
         const results = await homeIterator.next();
@@ -808,6 +808,7 @@ function Catchup() {
       preventDefault: true,
       ignoreModifiers: true,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -1853,10 +1854,8 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
   // const readingExpandSpoilers = true;
   const showMedia =
     readingExpandSpoilers ||

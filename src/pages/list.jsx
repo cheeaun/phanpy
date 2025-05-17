@@ -36,9 +36,12 @@ function List(props) {
   const listIterator = useRef();
   async function fetchList(firstLoad) {
     if (firstLoad || !listIterator.current) {
-      listIterator.current = masto.v1.timelines.list.$select(id).list({
-        limit: LIMIT,
-      });
+      listIterator.current = masto.v1.timelines.list
+        .$select(id)
+        .list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await listIterator.current.next();
     let { value } = results;
@@ -244,7 +247,8 @@ function ListManageMembers({ listID, onClose }) {
             .$select(listID)
             .accounts.list({
               limit: MEMBERS_LIMIT,
-            });
+            })
+            .values();
         }
         const results = await membersIterator.current.next();
         let { done, value } = results;

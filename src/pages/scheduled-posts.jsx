@@ -41,7 +41,9 @@ export default function ScheduledPosts() {
     setUIState('loading');
     (async () => {
       try {
-        const postsIterator = masto.v1.scheduledStatuses.list({ limit: LIMIT });
+        const postsIterator = masto.v1.scheduledStatuses
+          .list({ limit: LIMIT })
+          .values();
         const allPosts = [];
         let posts;
         do {

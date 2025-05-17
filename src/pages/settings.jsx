@@ -11,7 +11,7 @@ import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
 import languages from '../data/translang-languages';
-import { api } from '../utils/api';
+import { api, getPreferences, setPreferences } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import prettyBytes from '../utils/pretty-bytes';
@@ -55,7 +55,7 @@ function Settings({ onClose }) {
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
-  const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
+  const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
@@ -300,7 +300,7 @@ function Settings({ onClose }) {
                               ...prefs,
                               'posting:default:visibility': value,
                             });
-                            store.account.set('preferences', {
+                            setPreferences({
                               ...prefs,
                               'posting:default:visibility': value,
                             });
@@ -850,6 +850,15 @@ function Settings({ onClose }) {
         {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
           <details class="debug-info">
             <summary></summary>
+            <p class="side">
+              <Link
+                to="/_sandbox"
+                onClick={onClose}
+                class="button plain6 small"
+              >
+                Sandbox
+              </Link>
+            </p>
             <p>Debugging</p>
             {__BENCH_RESULTS?.size > 0 && (
               <ul>

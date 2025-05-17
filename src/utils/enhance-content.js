@@ -43,6 +43,7 @@ function createDOM(html, isDocumentFragment) {
 }
 
 function _enhanceContent(content, opts = {}) {
+  if (!content) return '';
   const { emojis, returnDOM, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   // const dom = document.createElement('div');

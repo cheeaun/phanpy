@@ -34,8 +34,7 @@
     position: relative;
     padding: 16px;
     background-color: var(--bg-color);
-    /* No need for preview container transition */
-    /* chess board background, not rotated */
+    /* checkered background */
     background-image:
       linear-gradient(var(--bg-faded-color) 2px, transparent 2px),
       linear-gradient(90deg, var(--bg-faded-color) 2px, transparent 2px),
@@ -47,10 +46,10 @@
       10px 10px,
       10px 10px;
     background-position:
-      -2px -2px,
-      -2px -2px,
-      -1px -1px,
-      -1px -1px;
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%;
     overflow: auto;
     box-shadow: 0 0 0 1px var(--outline-color);
     display: flex;

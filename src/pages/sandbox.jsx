@@ -1,6 +1,7 @@
 import './sandbox.css';
 
 import { useEffect, useState } from 'preact/hooks';
+import { uid } from 'uid/single';
 
 import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
 import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
@@ -428,7 +429,7 @@ export default function Sandbox() {
     states.statusFollowedTags[sKey] = ['hashtag', 'test'];
   } else if (toggleState.contextType === 'reply-to') {
     // Generate a unique ID
-    const parentID = Math.random().toString(36).substring(2, 15);
+    const parentID = uid();
     const parentAcct = 'parent_user@example.social';
 
     mockStatus.inReplyToId = parentID;
@@ -445,7 +446,7 @@ export default function Sandbox() {
 
     mockStatus.mentions = [parentAccount];
 
-    mockStatus.id = 'reply-' + Math.random().toString(36).substring(2, 15);
+    mockStatus.id = 'reply-' + uid();
   }
 
   // Directly observe the statusQuotes object for debugging

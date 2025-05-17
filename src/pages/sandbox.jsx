@@ -728,7 +728,7 @@ export default function Sandbox() {
         </FilterContext.Provider>
       </div>
       <form class="sandbox-toggles" onSubmit={(e) => e.preventDefault()}>
-        <h2>Toggles</h2>
+        <h2>Post Controls</h2>
         <ul>
           <li>
             <b>Miscellaneous</b>
@@ -1128,6 +1128,7 @@ export default function Sandbox() {
                     }
                   />
                   <span>Link preview card</span>
+                  <sup>1</sup>
                 </label>
               </li>
               <li>
@@ -1355,6 +1356,7 @@ export default function Sandbox() {
                         }
                       />
                       <span>Always hide media</span>
+                      <sup>2</sup>
                     </label>
                   </li>
                 </ul>
@@ -1376,6 +1378,23 @@ export default function Sandbox() {
             </ul>
           </li>
         </ul>
+        <footer>
+          <ul>
+            <li>
+              Link preview card conditionally renders based on presence of other
+              elements like media, etc.
+            </li>
+            <li>"Always hide media" is not supported yet.</li>
+          </ul>
+          <p>
+            Images are from <a href="https://picsum.photos/">Lorem Picsum</a>.
+            Videos and audio are extracted from{' '}
+            <a href="https://en.wikipedia.org/wiki/Big_Buck_Bunny">
+              Big Buck Bunny
+            </a>
+            .
+          </p>
+        </footer>
       </form>
     </main>
   );

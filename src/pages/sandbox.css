@@ -56,6 +56,18 @@
     align-items: safe center;
     justify-content: center;
     overflow-anchor: auto;
+    position: relative;
+
+    container: preview / inline-size;
+    @container preview (inline-size > 400px) {
+      &.narrow {
+        > [class^='status-'],
+        > .status,
+        > *:not(.status-card-link, [class^='status-']) > .status {
+          max-width: 320px !important;
+        }
+      }
+    }
 
     > [class^='status-'],
     > .status,
@@ -233,6 +245,13 @@
     sup {
       transform: translateY(-0.5em);
       color: var(--text-insignificant-color);
+    }
+
+    .toggle-display {
+      display: none;
+      @media (width > calc(400px + 320px)) {
+        display: block;
+      }
     }
 
     footer {

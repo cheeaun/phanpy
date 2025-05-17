@@ -314,6 +314,7 @@ const INITIAL_STATE = {
   mediaPreference: 'default',
   expandWarnings: false,
   contextType: 'none', // Default context type
+  displayStyle: 'adaptive', // Display style for preview
 };
 
 export default function Sandbox() {
@@ -708,7 +709,7 @@ export default function Sandbox() {
         <h1>Sandbox</h1>
       </header>
       <div
-        class="sandbox-preview"
+        class={`sandbox-preview ${toggleState.displayStyle}`}
         onClickCapture={(e) => {
           const isAllowed = e.target.closest(
             '.media, .media-caption, .spoiler-button, .spoiler-media-button',
@@ -1348,6 +1349,33 @@ export default function Sandbox() {
                     onChange={() => handleFilterChange(2)}
                   />
                   <span>Warn</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li class="toggle-display">
+            <b>Display</b>
+            <ul>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="displayStyle"
+                    checked={toggleState.displayStyle === 'narrow'}
+                    onChange={() => updateToggles({ displayStyle: 'narrow' })}
+                  />
+                  <span>Narrow</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="displayStyle"
+                    checked={toggleState.displayStyle === 'adaptive'}
+                    onChange={() => updateToggles({ displayStyle: 'adaptive' })}
+                  />
+                  <span>Adaptive</span>
                 </label>
               </li>
             </ul>

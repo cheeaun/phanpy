@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-16 18:16\n"
+"PO-Revision-Date: 2025-05-17 15:56\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -544,7 +544,7 @@ msgstr "Bio"
 
 #: src/components/account-info.jsx:2487
 msgid "Extra fields"
-msgstr "Campos adicionais"
+msgstr "Espaços adicionais"
 
 #: src/components/account-info.jsx:2493
 msgid "Label"
@@ -1135,12 +1135,12 @@ msgstr "<0>Shift</0> + <1>k</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:83
 msgid "Load new posts"
-msgstr "Carregar novas publicações"
+msgstr "Carregar novidades"
 
 #: src/components/keyboard-shortcuts-help.jsx:87
 #: src/pages/catchup.jsx:1679
 msgid "Open post details"
-msgstr "Abrir detalhes da publicação"
+msgstr "Detalhes da publicação"
 
 #: src/components/keyboard-shortcuts-help.jsx:89
 msgid "<0>Enter</0> or <1>o</1>"
@@ -1542,7 +1542,7 @@ msgstr "{account} reagiu a sua publicação com {emojiObject}"
 
 #: src/components/notification.jsx:78
 msgid "{account} published a post."
-msgstr "{account} fez uma publicação."
+msgstr "{account} publicou algo."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1557,7 +1557,7 @@ msgstr "{count, plural, =1 {{account} seguiu você.} other {<0><1>{0}</1> pessoa
 
 #: src/components/notification.jsx:143
 msgid "{account} requested to follow you."
-msgstr "{account} solicitou seguir você."
+msgstr "{account} pediu para seguir você."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1622,7 +1622,7 @@ msgstr "Você bloqueou <0>{targetName}</0>.\n"
 
 #: src/components/notification.jsx:291
 msgid "Your account has received a moderation warning."
-msgstr "Sua conta recebeu um aviso da moderação."
+msgstr "Sua conta recebeu um aviso de moderação."
 
 #: src/components/notification.jsx:292
 msgid "Your account has been disabled."
@@ -1630,7 +1630,7 @@ msgstr "Sua conta foi desativada."
 
 #: src/components/notification.jsx:293
 msgid "Some of your posts have been marked as sensitive."
-msgstr "Algumas de suas publicações foram marcadas como sensíveis."
+msgstr "Algumas publicações suas foram marcadas como sensíveis."
 
 #: src/components/notification.jsx:294
 msgid "Some of your posts have been deleted."
@@ -1729,19 +1729,19 @@ msgstr "{votersCount, plural, one {<0>{0}</0> votante} other {<1>{1}</1> votante
 
 #: src/components/poll.jsx:268
 msgid "Ended <0/>"
-msgstr "Terminou <0/>"
+msgstr "Encerrou em <0/>"
 
 #: src/components/poll.jsx:272
 msgid "Ended"
-msgstr "Terminou"
+msgstr "Encerrado"
 
 #: src/components/poll.jsx:275
 msgid "Ending <0/>"
-msgstr "Terminando <0/>"
+msgstr "Encerrando em <0/>"
 
 #: src/components/poll.jsx:279
 msgid "Ending"
-msgstr "Terminando"
+msgstr "Encerrando"
 
 #. Relative time in seconds, as short as possible
 #. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
@@ -1775,7 +1775,7 @@ msgstr "Ilegal"
 
 #: src/components/report-modal.jsx:34
 msgid "Violates the law of your or the server's country"
-msgstr "Viola a lei do seu país ou do servidor"
+msgstr "Viola a lei do servidor ou da sua região"
 
 #: src/components/report-modal.jsx:37
 msgid "Server rule violation"
@@ -1795,7 +1795,7 @@ msgstr "Outro"
 
 #: src/components/report-modal.jsx:43
 msgid "Issue doesn't fit other categories"
-msgstr "O problema não se encaixa em outras categorias"
+msgstr "Nenhuma das listadas"
 
 #: src/components/report-modal.jsx:68
 msgid "Report Post"
@@ -1839,7 +1839,7 @@ msgstr "Informações adicionais"
 
 #: src/components/report-modal.jsx:256
 msgid "Forward to <0>{domain}</0>"
-msgstr "Encaminhar à <0>{domain}</0>"
+msgstr "Encaminhar para <0>{domain}</0>"
 
 #: src/components/report-modal.jsx:266
 msgid "Send Report"
@@ -1859,7 +1859,7 @@ msgstr "Enviar relatório <0>+ Silenciar perfil</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
-msgstr "Bloqueou {username}"
+msgstr "{username} bloqueado"
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
@@ -2045,7 +2045,7 @@ msgstr "Adicionar atalho"
 
 #: src/components/shortcuts-settings.jsx:623
 msgid "Timeline"
-msgstr "Linha do tempo"
+msgstr "Timeline"
 
 #: src/components/shortcuts-settings.jsx:649
 msgid "List"
@@ -2816,11 +2816,11 @@ msgstr "Prévia da interface de Reacompanhar"
 
 #: src/pages/catchup.jsx:942
 msgid "Let's catch up"
-msgstr "Vamos acompanhar"
+msgstr "Vamos reacompanhar"
 
 #: src/pages/catchup.jsx:947
 msgid "Let's catch up on the posts from your followings."
-msgstr "Vamos acompanhar as publicações de seus seguidores."
+msgstr "Vamos reacompanhar as publicações perdidas."
 
 #: src/pages/catchup.jsx:951
 msgid "Show me all posts from…"
@@ -2832,7 +2832,7 @@ msgstr "até o máximo"
 
 #: src/pages/catchup.jsx:1004
 msgid "Catch up"
-msgstr "Acompanhar"
+msgstr "Reacompanhar"
 
 #: src/pages/catchup.jsx:1010
 msgid "Overlaps with your last catch-up"
@@ -3242,7 +3242,7 @@ msgstr "Instância inválida"
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another instance…"
-msgstr "Ir à outra instância…"
+msgstr "Alterar instância…"
 
 #: src/pages/hashtag.jsx:519
 #: src/pages/public.jsx:171
@@ -3753,7 +3753,7 @@ msgstr "<0>Feito</0> por <1>@cheeaun</1>"
 
 #: src/pages/settings.jsx:777
 msgid "Sponsor"
-msgstr "Patrocinar"
+msgstr "Patrocinador"
 
 #: src/pages/settings.jsx:785
 msgid "Donate"

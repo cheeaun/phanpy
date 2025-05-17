@@ -291,33 +291,36 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
   return base;
 };
 
+// Initial state
+const INITIAL_STATE = {
+  loading: false,
+  mediaFirst: false,
+  hasContent: true,
+  contentType: 'short',
+  visibility: 'public', // Default visibility
+  hasSpoiler: false,
+  spoilerType: 'all',
+  mediaCount: '0',
+  mediaTypes: [],
+  pollCount: '0',
+  pollMultiple: false,
+  pollExpired: false,
+  showCard: false,
+  showQuotes: false,
+  quotesCount: '1',
+  quoteNestingLevel: '0',
+  size: 'medium',
+  filters: [false, false, false], // hide, blur, warn
+  mediaPreference: 'default',
+  expandWarnings: false,
+  contextType: 'none', // Default context type
+};
+
 export default function Sandbox() {
   useTitle('Sandbox', '/_sandbox');
 
   // Consolidated state for all toggles
-  const [toggleState, setToggleState] = useState({
-    loading: false,
-    mediaFirst: false,
-    hasContent: true,
-    contentType: 'short',
-    visibility: 'public', // Default visibility
-    hasSpoiler: false,
-    spoilerType: 'all',
-    mediaCount: '0',
-    mediaTypes: [],
-    pollCount: '0',
-    pollMultiple: false,
-    pollExpired: false,
-    showCard: false,
-    showQuotes: false,
-    quotesCount: '1',
-    quoteNestingLevel: '0',
-    size: 'medium',
-    filters: [false, false, false], // hide, blur, warn
-    mediaPreference: 'default',
-    expandWarnings: false,
-    contextType: 'none', // Default context type
-  });
+  const [toggleState, setToggleState] = useState(INITIAL_STATE);
 
   // Update function with view transitions
   const updateToggles = (updates) => {
@@ -674,6 +677,28 @@ export default function Sandbox() {
     updateToggles({ filters: newFilters });
   };
 
+  // Function to check if the current state is different from the initial state
+  const hasChanges = () => {
+    return Object.keys(INITIAL_STATE).some((key) => {
+      if (Array.isArray(INITIAL_STATE[key])) {
+        if (INITIAL_STATE[key].length !== toggleState[key].length) return true;
+        return INITIAL_STATE[key].some((val, i) => val !== toggleState[key][i]);
+      }
+      return INITIAL_STATE[key] !== toggleState[key];
+    });
+  };
+
+  // Function to reset state to initial values
+  const resetToInitialState = () => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        setToggleState({ ...INITIAL_STATE });
+      });
+    } else {
+      setToggleState({ ...INITIAL_STATE });
+    }
+  };
+
   return (
     <main id="sandbox">
       <header>
@@ -729,7 +754,17 @@ export default function Sandbox() {
         </FilterContext.Provider>
       </div>
       <form class="sandbox-toggles" onSubmit={(e) => e.preventDefault()}>
-        <h2>Post Controls</h2>
+        <header>
+          <h2>Post Controls</h2>
+          <button
+            type="button"
+            onClick={resetToInitialState}
+            class="reset-button small plain6"
+            hidden={!hasChanges()}
+          >
+            Reset
+          </button>
+        </header>
         <ul>
           <li>
             <b>Miscellaneous</b>

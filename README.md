@@ -49,15 +49,23 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Subtle UI implementations
 
+<details>
+<summary>
+
 ### User name display
+</summary>
 
 ![User name display](readme-assets/user-name-display.jpg)
 
 - On the timeline, the user name is displayed as `[NAME] @[username]`.
 - For the `@[username]`, always exclude the instance domain name.
 - If the `[NAME]` *looks the same* as the `@[username]`, then the `@[username]` is excluded as well.
+</details>
+<details>
+<summary>
 
 ### Boosts Carousel
+</summary>
 
 ![Boosts Carousel](readme-assets/boosts-carousel.jpg)
 
@@ -65,7 +73,13 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If number of boosts are more than 3 quarters of total posts, boosts carousel UI will be slotted at the end of total posts fetched (per "page").
 - Else, boosts carousel UI will be slotted in between the posts.
 
+</details>
+
+<details>
+<summary>
+
 ### Thread number badge (e.g. Thread 1/X)
+</summary>
 
 ![Thread number badge](readme-assets/thread-number-badge.jpg)
 
@@ -73,8 +87,13 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If root post is found, badge will show the index number of the post in the thread.
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
+</details>
+
+<details>
+<summary>
 
 ### Hashtag stuffing collapsing
+</summary>
 
 ![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
 
@@ -85,8 +104,13 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Collapsed hashtags will be appended with `...` at the end.
 - They are also slightly faded out to reduce visual noise.
 - Opening the post view will reveal the hashtags uncollapsed.
+</details>
+
+<details>
+<summary>
 
 ### Filtered posts
+</summary>
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.
 - "Hide with a warning"-filtered posts will be partially hidden, showing the filter name and author name.
@@ -94,6 +118,7 @@ Everything is designed and engineered following my taste and vision. This is a p
   - Clicking it will open the Post page.
   - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
   - On boosts carousel, they are sorted to the end of the carousel.
+</details>
 
 ## Development
 

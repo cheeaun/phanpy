@@ -442,7 +442,7 @@ And here I am. Building a Mastodon web client.
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/) - forks ↓
-  - [elk.fedified.com](https://elk.fedified.com/)
+  - [elk.fedified.com](https://elk.fedified.com/) (gone, redirects to elk.zone)
   - [crab](https://github.com/maybeanerd/crab)
   - [Glowrea](https://github.com/s414june/glowrea)
 - [Mastodeck](https://mastodeck.com/)

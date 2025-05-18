@@ -436,22 +436,24 @@ And here I am. Building a Mastodon web client.
 - Phanpy forks ↓
   - [Agora](https://agorasocial.app/)
 - [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
-  - [Semaphore](https://semaphore.social/)
+  - [Semaphore](https://semaphore.social/) ([archived](https://github.com/NickColley/semaphore))
   - [Enafore](https://enafore.social/)
-- [Cuckoo+](https://www.cuckoo.social/)
+- [Cuckoo+](https://www.cuckoo.social/) (down)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/) - forks ↓
   - [elk.fedified.com](https://elk.fedified.com/)
+  - [crab](https://github.com/maybeanerd/crab)
+  - [Glowrea](https://github.com/s414june/glowrea)
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)
-- [Tusked](https://tusked.app/)
+- [Tusked](https://tusked.app/) ([archived](https://github.com/raikasdev/tusked))
 - [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone)
 - [Mangane](https://github.com/BDX-town/Mangane)
-- [TheDesk](https://github.com/cutls/TheDesk)
+- [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

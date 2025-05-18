@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-17 23:20\n"
+"PO-Revision-Date: 2025-05-18 15:00\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -313,6 +313,15 @@ msgstr "Incapaz de remover destaque de @{username}"
 #: src/components/account-info.jsx:1391
 msgid "Unable to feature @{username} on your profile."
 msgstr "Impossível destacar @{username} no seu perfil."
+
+#: src/components/account-info.jsx:1400
+msgid "Don't feature on profile"
+msgstr ""
+
+#: src/components/account-info.jsx:1401
+#: src/pages/hashtag.jsx:331
+msgid "Feature on profile"
+msgstr "Destacar no perfil"
 
 #: src/components/account-info.jsx:1410
 msgid "Show featured profiles"
@@ -3193,10 +3202,6 @@ msgstr "Impossível remover destaque do perfil"
 #: src/pages/hashtag.jsx:324
 msgid "Featured on profile"
 msgstr "Destacado no perfil"
-
-#: src/pages/hashtag.jsx:331
-msgid "Feature on profile"
-msgstr "Destacar no perfil"
 
 #: src/pages/hashtag.jsx:396
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"

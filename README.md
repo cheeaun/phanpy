@@ -187,11 +187,17 @@ Two ways (choose one):
 
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
 
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`).
+
 ### Custom-build way
 
 Requires [Node.js](https://nodejs.org/).
 
 Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`). This can be configured with environment variables if you want to [self-host your own instance](#translang-api-hosting).
 
 Customization can be done by passing environment variables to the build command. Examples:
 

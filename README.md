@@ -171,6 +171,8 @@ Users can change the language in the settings, which sets the `localStorage` key
 
 [![Crowdin](https://badges.crowdin.net/phanpy/localized.svg)](https://crowdin.com/project/phanpy)
 
+[![Languages chart](https://badges.awesome-crowdin.com/translation-14836566-703337.png)](https://crowdin.com/project/phanpy)
+
 Translations are managed on [Crowdin](https://crowdin.com/project/phanpy). You can help by volunteering translations.
 
 Read the [intro documentation](https://support.crowdin.com/for-volunteer-translators/) to get started.

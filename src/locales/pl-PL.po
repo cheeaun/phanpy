@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-15 18:09\n"
+"PO-Revision-Date: 2025-05-18 15:00\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -221,7 +221,7 @@ msgstr "Odpowiedzi"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1159
+#: src/pages/settings.jsx:1168
 msgid "Boosts"
 msgstr "Podbicia"
 
@@ -314,6 +314,15 @@ msgstr "Nie udało się cofnąć wyróżnienia @{username} na Twoim profilu."
 msgid "Unable to feature @{username} on your profile."
 msgstr "Nie udało się wyróżnić @{username} na Twoim profilu."
 
+#: src/components/account-info.jsx:1400
+msgid "Don't feature on profile"
+msgstr ""
+
+#: src/components/account-info.jsx:1401
+#: src/pages/hashtag.jsx:331
+msgid "Feature on profile"
+msgstr "Wyróżnij na profilu"
+
 #: src/components/account-info.jsx:1410
 msgid "Show featured profiles"
 msgstr "Pokaż wyróżnione profile"
@@ -354,7 +363,7 @@ msgstr "Udostępnij…"
 
 #: src/components/account-info.jsx:1535
 msgid "Unmuted @{username}"
-msgstr "Nie wyciszaj @{username}"
+msgstr "Wyłączono wyciszenie @{username}"
 
 #: src/components/account-info.jsx:1547
 msgid "Unmute <0>@{username}</0>"
@@ -379,7 +388,7 @@ msgstr "Usunąć <0>@{username}</0> z obserwujących?"
 
 #: src/components/account-info.jsx:1648
 msgid "@{username} removed from followers"
-msgstr "@{username} usunięto z obserwujących"
+msgstr "Usunięto @{username} z obserwujących"
 
 #: src/components/account-info.jsx:1660
 msgid "Remove follower…"
@@ -1402,7 +1411,7 @@ msgstr "Nadrabianie zaległości"
 #: src/pages/home.jsx:228
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1151
+#: src/pages/settings.jsx:1160
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Wzmianki"
@@ -1441,7 +1450,7 @@ msgstr "Zakładki"
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1155
+#: src/pages/settings.jsx:1164
 msgid "Likes"
 msgstr "Polubienia"
 
@@ -2503,7 +2512,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> podbija"
 
 #: src/components/timeline.jsx:481
-#: src/pages/settings.jsx:1179
+#: src/pages/settings.jsx:1188
 msgid "New posts"
 msgstr "Nowe wpisy"
 
@@ -3193,10 +3202,6 @@ msgstr "Nie udało się cofnąć wyróżnienia na profilu"
 msgid "Featured on profile"
 msgstr "Wyróżnione na profilu"
 
-#: src/pages/hashtag.jsx:331
-msgid "Feature on profile"
-msgstr "Wyróżnij na profilu"
-
 #: src/pages/hashtag.jsx:396
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, few {maks # tagi} other {maks # tagów}}"
@@ -3376,7 +3381,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Ogłoszenie} few {Ogłoszenia} other {Ogłoszeń}}"
 
 #: src/pages/notifications.jsx:678
-#: src/pages/settings.jsx:1167
+#: src/pages/settings.jsx:1176
 msgid "Follow requests"
 msgstr "Prośby o obserwację"
 
@@ -3634,7 +3639,7 @@ msgstr "Pomóż w tłumaczeniu"
 
 #: src/pages/settings.jsx:275
 msgid "Posting"
-msgstr ""
+msgstr "Publikowanie wpisów"
 
 #: src/pages/settings.jsx:282
 msgid "Default visibility"
@@ -3780,57 +3785,57 @@ msgstr "Numer wersji został skopiowany"
 msgid "Unable to copy version string"
 msgstr "Nie udało się skopiować numeru wersji"
 
-#: src/pages/settings.jsx:1064
-#: src/pages/settings.jsx:1069
+#: src/pages/settings.jsx:1073
+#: src/pages/settings.jsx:1078
 msgid "Failed to update subscription. Please try again."
 msgstr "Nie udało się zaktualizować subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1075
+#: src/pages/settings.jsx:1084
 msgid "Failed to remove subscription. Please try again."
 msgstr "Nie udało się usunąć subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1082
+#: src/pages/settings.jsx:1091
 msgid "Push Notifications (beta)"
 msgstr "Powiadomienia push (beta)"
 
-#: src/pages/settings.jsx:1104
+#: src/pages/settings.jsx:1113
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "Powiadomienia push są blokowane. Włącz je w ustawieniach przeglądarki."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1113
+#: src/pages/settings.jsx:1122
 msgid "Allow from <0>{0}</0>"
 msgstr "Zezwalaj od <0>{0}</0>"
 
-#: src/pages/settings.jsx:1122
+#: src/pages/settings.jsx:1131
 msgid "anyone"
 msgstr "każdego"
 
-#: src/pages/settings.jsx:1126
+#: src/pages/settings.jsx:1135
 msgid "people I follow"
 msgstr "obserwowanych"
 
-#: src/pages/settings.jsx:1130
+#: src/pages/settings.jsx:1139
 msgid "followers"
 msgstr "obserwujących"
 
-#: src/pages/settings.jsx:1163
+#: src/pages/settings.jsx:1172
 msgid "Follows"
 msgstr "Obserwowani"
 
-#: src/pages/settings.jsx:1171
+#: src/pages/settings.jsx:1180
 msgid "Polls"
 msgstr "Ankiety"
 
-#: src/pages/settings.jsx:1175
+#: src/pages/settings.jsx:1184
 msgid "Post edits"
 msgstr "Edycje wpisów"
 
-#: src/pages/settings.jsx:1196
+#: src/pages/settings.jsx:1205
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Pozwolenie na powiadomienia push nie zostało przyznane od ostatniego logowania. Musisz <0><1>zalogować się</1> ponownie, aby pozwolić na powiadomienia push</0>."
 
-#: src/pages/settings.jsx:1212
+#: src/pages/settings.jsx:1221
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "UWAGA: powiadomienia push działają tylko dla <0>jednego konta</0>."
 

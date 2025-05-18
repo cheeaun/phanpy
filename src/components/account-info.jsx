@@ -1397,8 +1397,8 @@ function RelatedActions({
                   >
                     <Icon icon="endorsement" />
                     {endorsed
-                      ? "Don't feature on profile"
-                      : 'Feature on profile'}
+                      ? t`Don't feature on profile`
+                      : t`Feature on profile`}
                   </MenuItem>
                 )}
                 {showEndorsements &&

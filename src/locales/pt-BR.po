@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-17 23:20\n"
+"PO-Revision-Date: 2025-05-18 15:00\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -80,7 +80,7 @@ msgstr "Juntou-se em <0>{0}</0>"
 
 #: src/components/account-info.jsx:58
 msgid "Forever"
-msgstr "permanentemente"
+msgstr "Eu alterar"
 
 #: src/components/account-info.jsx:398
 msgid "Unable to load account."
@@ -314,6 +314,15 @@ msgstr "Incapaz de remover destaque de @{username}"
 msgid "Unable to feature @{username} on your profile."
 msgstr "Incapaz de destacar @{username} em seu perfil."
 
+#: src/components/account-info.jsx:1400
+msgid "Don't feature on profile"
+msgstr ""
+
+#: src/components/account-info.jsx:1401
+#: src/pages/hashtag.jsx:331
+msgid "Feature on profile"
+msgstr "Destacar no perfil"
+
 #: src/components/account-info.jsx:1410
 msgid "Show featured profiles"
 msgstr "Exibir destaques"
@@ -367,7 +376,7 @@ msgstr "Silenciar <0>@{username}</0>…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1595
 msgid "Muted @{username} for {0}"
-msgstr "@{username} silenciado por {0}"
+msgstr "@{username} silenciado até {0}"
 
 #: src/components/account-info.jsx:1607
 msgid "Unable to mute @{username}"
@@ -2872,7 +2881,7 @@ msgstr "Reacompanhamento {0} excluído"
 
 #: src/pages/catchup.jsx:1090
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr "Aviso: este espaço só armazenará 3 reacompanhamentos. Além disso, os outros serão excluídos."
+msgstr "Aviso: este espaço só armazenará 3 reacompanhamentos. Mais que isso, os outros serão excluídos."
 
 #: src/pages/catchup.jsx:1105
 msgid "Fetching posts…"
@@ -2994,7 +3003,7 @@ msgstr "Início e listas"
 
 #: src/pages/filters.jsx:25
 msgid "Public timelines"
-msgstr "Linhas de tempo públicas"
+msgstr "Timelines públicas"
 
 #: src/pages/filters.jsx:26
 msgid "Conversations"
@@ -3193,10 +3202,6 @@ msgstr "Não foi possível remover destaque do perfil"
 #: src/pages/hashtag.jsx:324
 msgid "Featured on profile"
 msgstr "Destacado no perfil"
-
-#: src/pages/hashtag.jsx:331
-msgid "Feature on profile"
-msgstr "Destacar no perfil"
 
 #: src/pages/hashtag.jsx:396
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
@@ -3474,19 +3479,19 @@ msgstr "Descartado"
 
 #: src/pages/public.jsx:28
 msgid "Local timeline ({instance})"
-msgstr "Linha de tempo local ({instance})"
+msgstr "Timeline Local ({instance})"
 
 #: src/pages/public.jsx:29
 msgid "Federated timeline ({instance})"
-msgstr "Linha de tempo federado ({instance})"
+msgstr "Timeline Federada ({instance})"
 
 #: src/pages/public.jsx:92
 msgid "Local timeline"
-msgstr "Linha de tempo local"
+msgstr "Timeline Local"
 
 #: src/pages/public.jsx:92
 msgid "Federated timeline"
-msgstr "Linha de tempo federado"
+msgstr "Timeline Federada"
 
 #: src/pages/public.jsx:98
 msgid "No one has posted anything yet."
@@ -3693,7 +3698,7 @@ msgstr "Tradução automática"
 
 #: src/pages/settings.jsx:523
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Exibe automaticamente tradução para publicações na linha de tempo. Só funciona para publicações <0>curtas</0> sem aviso de conteúdo, mídia ou enquete."
+msgstr "Exibe tradução automaticamente para publicações na timeline. Somente funciona para publicações <0>curtas</0>, sem aviso de conteúdo, mídia ou enquete."
 
 #: src/pages/settings.jsx:544
 msgid "GIF Picker for composer"
@@ -4024,15 +4029,15 @@ msgstr "Por padrão, uma única coluna para amadores do modo zen. Multi-coluna c
 
 #: src/pages/welcome.jsx:189
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
-msgstr "Captura de tela da linha de tempo multi-hashtag com uma maneira de adicionar mais hashtags"
+msgstr "Captura de tela duma timeline multi-hashtag com uma maneira de adicionar mais"
 
 #: src/pages/welcome.jsx:193
 msgid "Multi-hashtag timeline"
-msgstr "Linha de tempo multi-hashtag"
+msgstr "Timeline multi-hashtag"
 
 #: src/pages/welcome.jsx:196
 msgid "Up to 5 hashtags combined into a single timeline."
-msgstr "Até 5 hashtags combinadas em uma única linha do tempo."
+msgstr "Até 5 hashtags juntas numa timeline única."
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."

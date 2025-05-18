@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-18 11:51\n"
+"PO-Revision-Date: 2025-05-18 14:59\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -313,6 +313,15 @@ msgstr ""
 #: src/components/account-info.jsx:1391
 msgid "Unable to feature @{username} on your profile."
 msgstr ""
+
+#: src/components/account-info.jsx:1400
+msgid "Don't feature on profile"
+msgstr ""
+
+#: src/components/account-info.jsx:1401
+#: src/pages/hashtag.jsx:331
+msgid "Feature on profile"
+msgstr "Montri en profilo"
 
 #: src/components/account-info.jsx:1410
 msgid "Show featured profiles"
@@ -3192,10 +3201,6 @@ msgstr "Ne eblas nemontri en profilo"
 #: src/pages/hashtag.jsx:324
 msgid "Featured on profile"
 msgstr "Prezentita en profilo"
-
-#: src/pages/hashtag.jsx:331
-msgid "Feature on profile"
-msgstr "Montri en profilo"
 
 #: src/pages/hashtag.jsx:396
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-18 14:59\n"
+"PO-Revision-Date: 2025-05-19 11:30\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -55,7 +55,7 @@ msgstr "Richiesta inviata"
 #: src/components/account-block.jsx:188
 #: src/components/account-info.jsx:1861
 msgid "Following"
-msgstr "Seguiti"
+msgstr "Segui già"
 
 #: src/components/account-block.jsx:192
 #: src/components/account-info.jsx:1175
@@ -80,7 +80,7 @@ msgstr "Iscrizione: <0>{0}</0>"
 
 #: src/components/account-info.jsx:58
 msgid "Forever"
-msgstr "Per sempre"
+msgstr "Sempre"
 
 #: src/components/account-info.jsx:398
 msgid "Unable to load account."
@@ -101,7 +101,7 @@ msgstr "Seguaci"
 #: src/components/account-info.jsx:815
 #: src/components/account-info.jsx:834
 msgid "following.stats"
-msgstr "following.stats"
+msgstr "Seguiti"
 
 #: src/components/account-info.jsx:449
 #: src/components/account-info.jsx:851
@@ -134,7 +134,7 @@ msgstr "Altro"
 
 #: src/components/account-info.jsx:469
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> ha comunicato che il suo nuovo account è ora:"
+msgstr "<0>{displayName}</0> ha indicato che il suo nuovo account è ora:"
 
 #: src/components/account-info.jsx:614
 #: src/components/account-info.jsx:1459
@@ -153,7 +153,7 @@ msgstr "Copia nome utente"
 
 #: src/components/account-info.jsx:629
 msgid "Go to original profile page"
-msgstr "Vai alla pagina del profilo originale"
+msgstr "Vai alla pagina originale del profilo"
 
 #: src/components/account-info.jsx:647
 msgid "View profile image"
@@ -176,7 +176,7 @@ msgstr "In memoriam"
 #: src/components/account-info.jsx:782
 #: src/components/account-info.jsx:825
 msgid "This user has chosen to not make this information available."
-msgstr "L'utente ha deciso di non condividere questa informazione."
+msgstr "L'utente ha scelto di non condividere questa informazione."
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -316,12 +316,12 @@ msgstr "Impossibile aggiungere @{username} ai consigliati sul tuo profilo."
 
 #: src/components/account-info.jsx:1400
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "Non consigliare sul profilo"
 
 #: src/components/account-info.jsx:1401
 #: src/pages/hashtag.jsx:331
 msgid "Feature on profile"
-msgstr "Metti in evidenza sul profilo"
+msgstr "Consiglia sul profilo"
 
 #: src/components/account-info.jsx:1410
 msgid "Show featured profiles"
@@ -331,7 +331,7 @@ msgstr "Mostra profili consigliati"
 #: src/components/account-info.jsx:1435
 #: src/components/account-info.jsx:2041
 msgid "Add/Remove from Lists"
-msgstr "Aggiungi/rimuovi da liste"
+msgstr "Aggiungi/rimuovi dalle liste"
 
 #: src/components/account-info.jsx:1485
 #: src/components/status.jsx:1245
@@ -433,7 +433,7 @@ msgstr "Ritirare richiesta di seguire?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1806
 msgid "Unfollow @{0}?"
-msgstr "Smette di seguire @{0}?"
+msgstr "Smettere di seguire @{0}?"
 
 #: src/components/account-info.jsx:1864
 msgid "Unfollow…"
@@ -500,7 +500,7 @@ msgstr "Impossibile aggiungere alla lista."
 #: src/components/account-info.jsx:2101
 #: src/pages/lists.jsx:105
 msgid "Unable to load lists."
-msgstr "Impossibile caricare lista."
+msgstr "Impossibile caricare liste."
 
 #: src/components/account-info.jsx:2105
 msgid "No lists."
@@ -635,7 +635,7 @@ msgstr "Aggiungi media"
 
 #: src/components/compose.jsx:213
 msgid "Add custom emoji"
-msgstr "Aggiungo emoji personalizzata"
+msgstr "Aggiungi emoji personalizzata"
 
 #: src/components/compose.jsx:214
 msgid "Add GIF"
@@ -963,11 +963,11 @@ msgstr "Errore caricamento emoji personalizzate"
 
 #: src/components/compose.jsx:3486
 msgid "Recently used"
-msgstr "Utilizzate di recente"
+msgstr "Usate di recente"
 
 #: src/components/compose.jsx:3487
 msgid "Others"
-msgstr "Altri"
+msgstr "Altre"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/compose.jsx:3525
@@ -1009,7 +1009,7 @@ msgstr "Bozze in sospeso"
 
 #: src/components/drafts.jsx:69
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr "Sembra tu abbia delle bozze non inviate. Riprendiamo da lì."
+msgstr "Sembra tu abbia delle bozze in sospeso. Riprendiamo da lì."
 
 #: src/components/drafts.jsx:103
 msgid "Delete this draft?"
@@ -1017,7 +1017,7 @@ msgstr "Eliminare questa bozza?"
 
 #: src/components/drafts.jsx:118
 msgid "Error deleting draft! Please try again."
-msgstr "Errore nell'eliminazione della bozza! Riprova."
+msgstr "Errore eliminazione bozza! Riprova."
 
 #: src/components/drafts.jsx:128
 #: src/components/list-add-edit.jsx:186
@@ -1037,7 +1037,7 @@ msgstr "Eliminare tutte le bozze?"
 
 #: src/components/drafts.jsx:190
 msgid "Error deleting drafts! Please try again."
-msgstr "Errore nell'eliminazione delle bozze! Riprova."
+msgstr "Errore eliminazione bozze! Riprova."
 
 #: src/components/drafts.jsx:202
 msgid "Delete all…"
@@ -1398,7 +1398,7 @@ msgstr "Nuovo aggiornamento disponibile…"
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:144
 msgid "following.title"
-msgstr "following.title"
+msgstr "Seguiti"
 
 #: src/components/nav-menu.jsx:196
 #: src/pages/catchup.jsx:878
@@ -1598,7 +1598,7 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
-msgstr "{account} creato."
+msgstr "{account} ha effettuato l'iscrizione."
 
 #: src/components/notification.jsx:249
 msgid "{account} reported {targetAccount}"
@@ -1835,11 +1835,11 @@ msgstr "Impossibile segnalare profilo"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
-msgstr "Qual'è il problema con questo post?"
+msgstr "Qual è il problema con questo post?"
 
 #: src/components/report-modal.jsx:164
 msgid "What's the issue with this profile?"
-msgstr "Qual'è il problema con questo profilo?"
+msgstr "Qual è il problema con questo profilo?"
 
 #: src/components/report-modal.jsx:233
 msgid "Additional info"
@@ -1855,7 +1855,7 @@ msgstr "Invia segnalazione"
 
 #: src/components/report-modal.jsx:275
 msgid "Muted {username}"
-msgstr "Silenziato {username}"
+msgstr "Hai silenziato {username}"
 
 #: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
@@ -1863,11 +1863,11 @@ msgstr "Impossibile silenziare {username}"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr "Invia segnalazione <0>+ silenzia profilo</0>"
+msgstr "Invia segnalazione <0>+ Silenzia profilo</0>"
 
 #: src/components/report-modal.jsx:294
 msgid "Blocked {username}"
-msgstr "{username} Bloccato"
+msgstr "Hai bloccato {username}"
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
@@ -1875,11 +1875,11 @@ msgstr "Impossibile bloccare {username}"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
-msgstr "Invia segnalazione <0>+ blocca profilo</0>"
+msgstr "Invia segnalazione <0>+ Blocca profilo</0>"
 
 #: src/components/search-form.jsx:203
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr "{query}<0>- account, hashtag e post</0>"
+msgstr "{query} <0>- account, hashtag e post</0>"
 
 #: src/components/search-form.jsx:216
 msgid "Posts with <0>{query}</0>"
@@ -1888,7 +1888,7 @@ msgstr "Post con <0>{query}</0>"
 #. placeholder {0}: query.replace(/^#/, '')
 #: src/components/search-form.jsx:228
 msgid "Posts tagged with <0>#{0}</0>"
-msgstr "Post contenenti <0>#{0}</0>"
+msgstr "Post taggati con <0>#{0}</0>"
 
 #: src/components/search-form.jsx:242
 msgid "Look up <0>{query}</0>"
@@ -1933,7 +1933,7 @@ msgstr "Istanza"
 #: src/components/shortcuts-settings.jsx:87
 #: src/components/shortcuts-settings.jsx:125
 msgid "Optional, e.g. mastodon.social"
-msgstr "Opzionale, per es. mastodon.social"
+msgstr "Opzionale, es. mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
@@ -3191,16 +3191,16 @@ msgstr "Seguiti…"
 
 #: src/pages/hashtag.jsx:285
 msgid "Unfeatured on profile"
-msgstr "Non più in evidenza sul profilo"
+msgstr "Non più consigliato sul profilo"
 
 #: src/pages/hashtag.jsx:299
 msgid "Unable to unfeature on profile"
-msgstr "Impossibile rimuovere dai contenuti in evidenza sul profilo"
+msgstr "Impossibile rimuovere dai contenuti consigliati sul profilo"
 
 #: src/pages/hashtag.jsx:308
 #: src/pages/hashtag.jsx:324
 msgid "Featured on profile"
-msgstr "In evidenza sul profilo"
+msgstr "Consigliato sul profilo"
 
 #: src/pages/hashtag.jsx:396
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
@@ -3701,11 +3701,11 @@ msgstr "Mostra automaticamente la traduzione per i post nella timeline. Funziona
 
 #: src/pages/settings.jsx:544
 msgid "GIF Picker for composer"
-msgstr "Selezionatore di GIF per compositore"
+msgstr "Selettore GIF"
 
 #: src/pages/settings.jsx:548
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr "Nota: Questa funzione utilizza un servizio di ricerca GIF esterno, alimentato da <0>GIPHY</0>. Classificazione T (adatto a tutte le età), i parametri traccianti sono eliminati, le informazioni di referer sono omesse dalle richieste, ma i termini di ricerca e le informazioni sull'indirizzo IP raggiungeranno comunque i loro server."
+msgstr "Nota: Questa funzione utilizza un servizio di ricerca GIF esterno fornito da <0>GIPHY</0>. Classificazione T (adatto a tutte le età), i parametri traccianti sono eliminati e le informazioni di referer sono omesse dalle richieste, ma i termini di ricerca e le informazioni sull'indirizzo IP raggiungeranno comunque i loro server."
 
 #: src/pages/settings.jsx:577
 msgid "Image description generator"

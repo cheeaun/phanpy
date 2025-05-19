@@ -51,8 +51,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 <details>
 <summary>
-
-### User name display
+<b>User name display</b>
 </summary>
 
 ![User name display](readme-assets/user-name-display.jpg)
@@ -63,8 +62,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 </details>
 <details>
 <summary>
-
-### Boosts Carousel
+<b>Boosts Carousel</b>
 </summary>
 
 ![Boosts Carousel](readme-assets/boosts-carousel.jpg)
@@ -77,8 +75,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 <details>
 <summary>
-
-### Thread number badge (e.g. Thread 1/X)
+<b>Thread number badge (e.g. Thread 1/X)</b>
 </summary>
 
 ![Thread number badge](readme-assets/thread-number-badge.jpg)
@@ -91,8 +88,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 <details>
 <summary>
-
-### Hashtag stuffing collapsing
+<b>Hashtag stuffing collapsing</b>
 </summary>
 
 ![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
@@ -108,8 +104,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 <details>
 <summary>
-
-### Filtered posts
+<b>Filtered posts</b>
 </summary>
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.

@@ -89,8 +89,7 @@ export function groupNotifications2(groupNotifications) {
     } = gn;
     const date = createdAt ? new Date(createdAt).toLocaleDateString() : '';
     let virtualType = type;
-    // const sameCount =
-    notificationsCount > 0 && notificationsCount === sampleAccounts?.length;
+    // const sameCount = notificationsCount > 0 && notificationsCount === sampleAccounts?.length;
     // if (sameCount && (type === 'favourite' || type === 'reblog')) {
     if (type === 'favourite' || type === 'reblog') {
       virtualType = 'favourite+reblog';

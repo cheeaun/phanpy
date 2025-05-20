@@ -91,7 +91,14 @@ export function groupNotifications2(groupNotifications) {
     let virtualType = type;
     // const sameCount = notificationsCount > 0 && notificationsCount === sampleAccounts?.length;
     // if (sameCount && (type === 'favourite' || type === 'reblog')) {
-    if (type === 'favourite' || type === 'reblog') {
+    const sampleCountDiffNotificationsCount =
+      notificationsCount > 0 &&
+      sampleAccounts?.length > 0 &&
+      notificationsCount > sampleAccounts?.length;
+    if (
+      !sampleCountDiffNotificationsCount &&
+      (type === 'favourite' || type === 'reblog')
+    ) {
       virtualType = 'favourite+reblog';
     }
     // const key = `${status?.id}-${virtualType}-${date}-${sameCount ? 1 : 0}`;
@@ -122,6 +129,7 @@ export function groupNotifications2(groupNotifications) {
         notificationsCount,
       );
       mappedNotification._notificationsCount.push(notificationsCount);
+      mappedNotification._sampleAccountsCount.push(sampleAccounts?.length);
       mappedNotification._accounts = mappedNotification.sampleAccounts;
       mappedNotification._groupKeys.push(groupKey);
     } else {
@@ -136,6 +144,7 @@ export function groupNotifications2(groupNotifications) {
         _accounts: accounts,
         _groupKeys: groupKey ? [groupKey] : [],
         _notificationsCount: [notificationsCount],
+        _sampleAccountsCount: [sampleAccounts?.length],
       };
       newGroupNotifications1.push(notificationsMap[key]);
     }

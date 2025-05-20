@@ -100,6 +100,7 @@ function Shortcuts() {
     },
     {
       enabled: !isMultiColumnMode,
+      useKey: true,
     },
   );
 

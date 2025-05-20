@@ -120,7 +120,7 @@ Everything is designed and engineered following my taste and vision. This is a p
 Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
+- `npm run dev` - Start development server and `messages:extract` (`clean` + `watch`) in parallel
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`

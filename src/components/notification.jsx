@@ -613,6 +613,7 @@ function Notification({
                 onClick={() => {
                   states.showGenericAccounts = {
                     heading: genericAccountsHeading,
+                    accounts: _accounts,
                     fetchAccounts: async () => {
                       const keyAccounts = await Promise.allSettled(
                         _groupKeys.map(async (gKey) => {
@@ -649,7 +650,7 @@ function Notification({
                         value: accounts,
                       };
                     },
-                    showReactions: true,
+                    showReactions: type === 'favourite+reblog',
                     postID: statusKey(actualStatusID, instance),
                   };
                 }}

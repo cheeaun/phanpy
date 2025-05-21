@@ -383,7 +383,7 @@ function Notification({
 
   if (typeof text === 'function') {
     const count =
-      type === 'favourite' || type === 'reblog'
+      (type === 'favourite' || type === 'reblog') && notificationsCount
         ? notificationsCount
         : _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
     const postsCount = _statuses?.length || (status ? 1 : 0);

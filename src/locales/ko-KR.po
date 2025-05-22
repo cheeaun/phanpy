@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-18 15:00\n"
+"PO-Revision-Date: 2025-05-22 05:58\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -124,7 +124,7 @@ msgstr "게시물"
 #: src/pages/account-statuses.jsx:526
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:202
-#: src/pages/list.jsx:161
+#: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1239
@@ -461,9 +461,9 @@ msgstr "팔로"
 #: src/components/compose.jsx:3648
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
-#: src/components/generic-accounts.jsx:143
+#: src/components/generic-accounts.jsx:151
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/list-add-edit.jsx:36
+#: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:34
 #: src/components/media-modal.jsx:323
 #: src/components/notification-service.jsx:157
@@ -477,7 +477,7 @@ msgstr "팔로"
 #: src/pages/accounts.jsx:37
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
-#: src/pages/list.jsx:280
+#: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:939
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
@@ -498,7 +498,7 @@ msgid "Unable to add to list."
 msgstr ""
 
 #: src/components/account-info.jsx:2101
-#: src/pages/lists.jsx:105
+#: src/pages/lists.jsx:131
 msgid "Unable to load lists."
 msgstr "리스트를 불러 올 수 없음."
 
@@ -507,8 +507,8 @@ msgid "No lists."
 msgstr "리스트가 없음."
 
 #: src/components/account-info.jsx:2116
-#: src/components/list-add-edit.jsx:40
-#: src/pages/lists.jsx:59
+#: src/components/list-add-edit.jsx:41
+#: src/pages/lists.jsx:62
 msgid "New list"
 msgstr "새 리스트"
 
@@ -543,7 +543,7 @@ msgid "Profile picture"
 msgstr ""
 
 #: src/components/account-info.jsx:2461
-#: src/components/list-add-edit.jsx:105
+#: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr "이름"
 
@@ -564,7 +564,7 @@ msgid "Content"
 msgstr "내용"
 
 #: src/components/account-info.jsx:2529
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
 #: src/pages/notifications.jsx:1005
@@ -597,7 +597,7 @@ msgid "Cloak mode enabled"
 msgstr "가리기 모드 켜짐"
 
 #: src/components/columns.jsx:27
-#: src/components/nav-menu.jsx:180
+#: src/components/nav-menu.jsx:181
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:465
 #: src/pages/catchup.jsx:883
@@ -615,7 +615,7 @@ msgid "Compose"
 msgstr "쓰기"
 
 #: src/components/compose-button.jsx:170
-#: src/components/nav-menu.jsx:264
+#: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
@@ -739,7 +739,7 @@ msgid "Public"
 msgstr "공개"
 
 #: src/components/compose.jsx:1271
-#: src/components/nav-menu.jsx:348
+#: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:97
 msgid "Local"
@@ -786,7 +786,7 @@ msgstr ""
 #: src/components/compose.jsx:1440
 #: src/components/compose.jsx:3267
 #: src/components/shortcuts-settings.jsx:715
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Add"
 msgstr "더하기"
 
@@ -822,7 +822,7 @@ msgstr "움짤 받기 실패"
 
 #: src/components/compose.jsx:2036
 #: src/components/compose.jsx:2113
-#: src/components/nav-menu.jsx:243
+#: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "더 보기…"
 
@@ -945,7 +945,7 @@ msgid "Search accounts"
 msgstr ""
 
 #: src/components/compose.jsx:3280
-#: src/components/generic-accounts.jsx:228
+#: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "계정 불러오기 오류"
 
@@ -1020,7 +1020,7 @@ msgid "Error deleting draft! Please try again."
 msgstr "초고를 지우다가 오류가 났습니다! 다시 한 번 시도해 보세요."
 
 #: src/components/drafts.jsx:128
-#: src/components/list-add-edit.jsx:186
+#: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1420
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
@@ -1079,35 +1079,35 @@ msgstr "수락함"
 msgid "Rejected"
 msgstr "거절함"
 
-#: src/components/generic-accounts.jsx:146
-#: src/components/notification.jsx:445
+#: src/components/generic-accounts.jsx:154
+#: src/components/notification.jsx:449
 #: src/pages/accounts.jsx:42
 #: src/pages/search.jsx:331
 #: src/pages/search.jsx:364
 msgid "Accounts"
 msgstr "계정"
 
-#: src/components/generic-accounts.jsx:206
+#: src/components/generic-accounts.jsx:214
 #: src/components/timeline.jsx:547
-#: src/pages/list.jsx:299
+#: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:919
 #: src/pages/search.jsx:558
 #: src/pages/status.jsx:1359
 msgid "Show more…"
 msgstr "더 보기…"
 
-#: src/components/generic-accounts.jsx:211
+#: src/components/generic-accounts.jsx:219
 #: src/components/timeline.jsx:552
 #: src/pages/search.jsx:563
 msgid "The end."
 msgstr "끝"
 
-#: src/components/generic-accounts.jsx:232
+#: src/components/generic-accounts.jsx:240
 msgid "Nothing to show"
 msgstr "표시할 내용 없음"
 
 #: src/components/keyboard-shortcuts-help.jsx:47
-#: src/components/nav-menu.jsx:367
+#: src/components/nav-menu.jsx:368
 #: src/pages/catchup.jsx:1622
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
@@ -1204,7 +1204,7 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> 또는 <2>⌘</2> + <3>Enter</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:151
-#: src/components/nav-menu.jsx:336
+#: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:73
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
@@ -1256,46 +1256,52 @@ msgstr "가리기 모드 켜고 끄기"
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
-#: src/components/list-add-edit.jsx:40
+#: src/components/list-add-edit.jsx:41
 msgid "Edit list"
 msgstr "리스트 고치기"
 
-#: src/components/list-add-edit.jsx:96
+#: src/components/list-add-edit.jsx:97
 msgid "Unable to edit list."
 msgstr "리스트를 고칠 수 없습니다."
 
-#: src/components/list-add-edit.jsx:97
+#: src/components/list-add-edit.jsx:98
 msgid "Unable to create list."
 msgstr "리스트를 만들 수 없습니다."
 
-#: src/components/list-add-edit.jsx:125
+#: src/components/list-add-edit.jsx:126
 msgid "Show replies to list members"
 msgstr "리스트 구성원에게 단 댓글 보기"
 
-#: src/components/list-add-edit.jsx:128
+#: src/components/list-add-edit.jsx:129
 msgid "Show replies to people I follow"
 msgstr "내가 팔로하는 사용자에게 단 댓글 보기"
 
-#: src/components/list-add-edit.jsx:131
+#: src/components/list-add-edit.jsx:132
 msgid "Don't show replies"
 msgstr "댓글은 숨기기"
 
-#: src/components/list-add-edit.jsx:144
+#: src/components/list-add-edit.jsx:146
 msgid "Hide posts on this list from Home/Following"
 msgstr "이 리스트의 게시물은 첫 화면 및 팔로잉 타임라인에서 가리기"
 
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/pages/filters.jsx:570
 msgid "Create"
 msgstr "만들기"
 
-#: src/components/list-add-edit.jsx:157
+#: src/components/list-add-edit.jsx:159
 msgid "Delete this list?"
 msgstr "리스트를 지울까요?"
 
-#: src/components/list-add-edit.jsx:176
+#: src/components/list-add-edit.jsx:178
 msgid "Unable to delete list."
 msgstr "리스트를 지울 수 없습니다."
+
+#: src/components/list-exclusive-badge.jsx:14
+#: src/pages/list.jsx:179
+#: src/pages/lists.jsx:107
+msgid "Posts on this list are hidden from Home/Following"
+msgstr ""
 
 #: src/components/media-alt-modal.jsx:39
 #: src/components/media.jsx:51
@@ -1305,7 +1311,7 @@ msgstr "매체 설명"
 #: src/components/media-alt-modal.jsx:58
 #: src/components/status.jsx:1131
 #: src/components/status.jsx:1140
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate"
 msgstr "번역"
 
@@ -1380,32 +1386,32 @@ msgstr "댓글이 올라갔습니다. 확인 해 보세요."
 msgid "Post updated. Check it out."
 msgstr "게시물이 고쳐졌습니다. 확인 해 보세요."
 
-#: src/components/nav-menu.jsx:122
+#: src/components/nav-menu.jsx:123
 msgid "Menu"
 msgstr "메뉴"
 
-#: src/components/nav-menu.jsx:158
+#: src/components/nav-menu.jsx:159
 msgid "Reload page now to update?"
 msgstr "새로 고침하여 업데이트 할까요?"
 
-#: src/components/nav-menu.jsx:170
+#: src/components/nav-menu.jsx:171
 msgid "New update available…"
 msgstr "새 버전이 올라왔습니다…"
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:189
+#: src/components/nav-menu.jsx:190
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:144
 msgid "following.title"
 msgstr ""
 
-#: src/components/nav-menu.jsx:196
+#: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:878
 msgid "Catch-up"
 msgstr "따라잡기"
 
-#: src/components/nav-menu.jsx:203
+#: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:228
@@ -1416,7 +1422,7 @@ msgstr "따라잡기"
 msgid "Mentions"
 msgstr "언급"
 
-#: src/components/nav-menu.jsx:210
+#: src/components/nav-menu.jsx:211
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1427,15 +1433,15 @@ msgstr "언급"
 msgid "Notifications"
 msgstr "알림"
 
-#: src/components/nav-menu.jsx:213
+#: src/components/nav-menu.jsx:214
 msgid "New"
 msgstr "신규"
 
-#: src/components/nav-menu.jsx:224
+#: src/components/nav-menu.jsx:225
 msgid "Profile"
 msgstr "프로필"
 
-#: src/components/nav-menu.jsx:232
+#: src/components/nav-menu.jsx:233
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:12
@@ -1443,7 +1449,7 @@ msgstr "프로필"
 msgid "Bookmarks"
 msgstr "책갈피"
 
-#: src/components/nav-menu.jsx:252
+#: src/components/nav-menu.jsx:253
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1449
@@ -1454,13 +1460,13 @@ msgstr "책갈피"
 msgid "Likes"
 msgstr "좋아요"
 
-#: src/components/nav-menu.jsx:258
+#: src/components/nav-menu.jsx:259
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
 msgstr "팔로하는 해시태그"
 
-#: src/components/nav-menu.jsx:272
+#: src/components/nav-menu.jsx:273
 #: src/pages/account-statuses.jsx:329
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
@@ -1468,27 +1474,27 @@ msgstr "팔로하는 해시태그"
 msgid "Filters"
 msgstr "필터"
 
-#: src/components/nav-menu.jsx:280
+#: src/components/nav-menu.jsx:281
 msgid "Muted users"
 msgstr "뮤트한 사용자"
 
-#: src/components/nav-menu.jsx:288
+#: src/components/nav-menu.jsx:289
 msgid "Muted users…"
 msgstr "뮤트한 사용자들…"
 
-#: src/components/nav-menu.jsx:295
+#: src/components/nav-menu.jsx:296
 msgid "Blocked users"
 msgstr "차단한 사용자"
 
-#: src/components/nav-menu.jsx:303
+#: src/components/nav-menu.jsx:304
 msgid "Blocked users…"
 msgstr "차단한 사용자들…"
 
-#: src/components/nav-menu.jsx:315
+#: src/components/nav-menu.jsx:316
 msgid "Accounts…"
 msgstr "계정들…"
 
-#: src/components/nav-menu.jsx:325
+#: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:27
 #: src/pages/login.jsx:190
 #: src/pages/status.jsx:862
@@ -1496,40 +1502,40 @@ msgstr "계정들…"
 msgid "Log in"
 msgstr "로그인"
 
-#: src/components/nav-menu.jsx:342
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "인기"
 
-#: src/components/nav-menu.jsx:354
+#: src/components/nav-menu.jsx:355
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr "연합"
 
-#: src/components/nav-menu.jsx:377
+#: src/components/nav-menu.jsx:378
 msgid "Shortcuts / Columns…"
 msgstr "바로 가기·칼럼…"
 
-#: src/components/nav-menu.jsx:387
-#: src/components/nav-menu.jsx:401
+#: src/components/nav-menu.jsx:388
+#: src/components/nav-menu.jsx:402
 msgid "Settings…"
 msgstr "설정…"
 
-#: src/components/nav-menu.jsx:431
-#: src/components/nav-menu.jsx:458
+#: src/components/nav-menu.jsx:432
+#: src/components/nav-menu.jsx:467
 #: src/components/shortcuts-settings.jsx:50
 #: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:130
-#: src/pages/lists.jsx:17
-#: src/pages/lists.jsx:51
+#: src/pages/list.jsx:127
+#: src/pages/lists.jsx:18
+#: src/pages/lists.jsx:54
 msgid "Lists"
 msgstr "리스트"
 
-#: src/components/nav-menu.jsx:439
-#: src/components/shortcuts.jsx:214
-#: src/pages/list.jsx:137
+#: src/components/nav-menu.jsx:440
+#: src/components/shortcuts.jsx:216
+#: src/pages/list.jsx:139
 msgid "All Lists"
 msgstr "모든 리스트"
 
@@ -1656,38 +1662,38 @@ msgstr "계정이 제한되었습니다."
 msgid "Your account has been suspended."
 msgstr "계정이 정지되었습니다."
 
-#: src/components/notification.jsx:372
+#: src/components/notification.jsx:374
 msgid "[Unknown notification type: {type}]"
 msgstr "[알 수 없는 알림 유형: {type}]"
 
-#: src/components/notification.jsx:441
+#: src/components/notification.jsx:445
 #: src/components/status.jsx:1102
 #: src/components/status.jsx:1112
 msgid "Boosted/Liked by…"
 msgstr "부스트·좋아한 사용자…"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:446
 msgid "Liked by…"
 msgstr "좋아한 사람:"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:447
 msgid "Boosted by…"
 msgstr "부스트한 사람:"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:448
 msgid "Followed by…"
 msgstr "팔로한 사람:"
 
-#: src/components/notification.jsx:514
-#: src/components/notification.jsx:530
+#: src/components/notification.jsx:533
+#: src/components/notification.jsx:549
 msgid "Learn more <0/>"
 msgstr "자세히 보기 <0/>"
 
-#: src/components/notification.jsx:539
+#: src/components/notification.jsx:558
 msgid "View #Wrapstodon"
 msgstr ""
 
-#: src/components/notification.jsx:773
+#: src/components/notification.jsx:799
 #: src/components/status.jsx:316
 msgid "Read more →"
 msgstr "더 보기 →"
@@ -1953,7 +1959,7 @@ msgid "Media only"
 msgstr "매체만"
 
 #: src/components/shortcuts-settings.jsx:235
-#: src/components/shortcuts.jsx:191
+#: src/components/shortcuts.jsx:193
 msgid "Shortcuts"
 msgstr "바로 가기"
 
@@ -1991,7 +1997,7 @@ msgstr "아래로 내리기"
 
 #: src/components/shortcuts-settings.jsx:379
 #: src/components/status.jsx:1382
-#: src/pages/list.jsx:174
+#: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "고치기"
 
@@ -2544,28 +2550,28 @@ msgstr "글타래"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>필터됨</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:192
+#: src/components/translation-block.jsx:194
 msgid "Auto-translated from {sourceLangText}"
 msgstr "{sourceLangText}에서 자동 번역됨"
 
-#: src/components/translation-block.jsx:230
+#: src/components/translation-block.jsx:232
 msgid "Translating…"
 msgstr "번역중…"
 
-#: src/components/translation-block.jsx:233
+#: src/components/translation-block.jsx:235
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "{sourceLangText}(자동 인식됨)를 번역"
 
-#: src/components/translation-block.jsx:234
+#: src/components/translation-block.jsx:236
 msgid "Translate from {sourceLangText}"
 msgstr "{sourceLangText}를 번역"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:262
+#: src/components/translation-block.jsx:264
 msgid "Auto ({0})"
 msgstr "자동 ({0})"
 
-#: src/components/translation-block.jsx:275
+#: src/components/translation-block.jsx:277
 msgid "Failed to translate"
 msgstr "번역 실패"
 
@@ -3145,7 +3151,7 @@ msgid "Nothing to see here."
 msgstr "표시할 내용이 없습니다."
 
 #: src/pages/following.jsx:147
-#: src/pages/list.jsx:112
+#: src/pages/list.jsx:109
 msgid "Unable to load posts."
 msgstr "게시물을 불러 올 수 없습니다."
 
@@ -3274,30 +3280,30 @@ msgstr "불러오는 중…"
 msgid "Unable to resolve URL"
 msgstr "URL을 불러올 수 없음"
 
-#: src/pages/list.jsx:111
+#: src/pages/list.jsx:108
 msgid "Nothing yet."
 msgstr "아직 아무 것도 없습니다."
 
-#: src/pages/list.jsx:180
-#: src/pages/list.jsx:285
+#: src/pages/list.jsx:201
+#: src/pages/list.jsx:307
 msgid "Manage members"
 msgstr "구성원 관리"
 
 #. placeholder {0}: account.username
-#: src/pages/list.jsx:320
+#: src/pages/list.jsx:342
 msgid "Remove <0>@{0}</0> from list?"
 msgstr "<0>@{0}</0> 님을 리스트에서 뺄까요?"
 
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Remove…"
 msgstr "지우기…"
 
 #. placeholder {0}: lists.length
-#: src/pages/lists.jsx:94
+#: src/pages/lists.jsx:115
 msgid "{0, plural, one {# list} other {# lists}}"
 msgstr "{0, plural, other {리스트 #개}}"
 
-#: src/pages/lists.jsx:109
+#: src/pages/lists.jsx:135
 msgid "No lists yet."
 msgstr "아직 아무 리스트도 없습니다."
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-18 15:00\n"
+"PO-Revision-Date: 2025-05-22 05:59\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -124,7 +124,7 @@ msgstr "Tisuffaɣ"
 #: src/pages/account-statuses.jsx:526
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:202
-#: src/pages/list.jsx:161
+#: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1239
@@ -461,9 +461,9 @@ msgstr "Ḍfeṛ"
 #: src/components/compose.jsx:3648
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
-#: src/components/generic-accounts.jsx:143
+#: src/components/generic-accounts.jsx:151
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/list-add-edit.jsx:36
+#: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:34
 #: src/components/media-modal.jsx:323
 #: src/components/notification-service.jsx:157
@@ -477,7 +477,7 @@ msgstr "Ḍfeṛ"
 #: src/pages/accounts.jsx:37
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
-#: src/pages/list.jsx:280
+#: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:939
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
@@ -498,7 +498,7 @@ msgid "Unable to add to list."
 msgstr "D awezɣi ad yettwarnu ɣer tebdart."
 
 #: src/components/account-info.jsx:2101
-#: src/pages/lists.jsx:105
+#: src/pages/lists.jsx:131
 msgid "Unable to load lists."
 msgstr "D awezɣi ad d-alint tebdarin."
 
@@ -507,8 +507,8 @@ msgid "No lists."
 msgstr "Ulac tibdarin."
 
 #: src/components/account-info.jsx:2116
-#: src/components/list-add-edit.jsx:40
-#: src/pages/lists.jsx:59
+#: src/components/list-add-edit.jsx:41
+#: src/pages/lists.jsx:62
 msgid "New list"
 msgstr "Tabdart tamaynutt"
 
@@ -543,7 +543,7 @@ msgid "Profile picture"
 msgstr "Tugna n umaɣnu"
 
 #: src/components/account-info.jsx:2461
-#: src/components/list-add-edit.jsx:105
+#: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr "Isem"
 
@@ -564,7 +564,7 @@ msgid "Content"
 msgstr "Agbur"
 
 #: src/components/account-info.jsx:2529
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
 #: src/pages/notifications.jsx:1005
@@ -597,7 +597,7 @@ msgid "Cloak mode enabled"
 msgstr "Askar uffir yermed"
 
 #: src/components/columns.jsx:27
-#: src/components/nav-menu.jsx:180
+#: src/components/nav-menu.jsx:181
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:465
 #: src/pages/catchup.jsx:883
@@ -615,7 +615,7 @@ msgid "Compose"
 msgstr "Suddes"
 
 #: src/components/compose-button.jsx:170
-#: src/components/nav-menu.jsx:264
+#: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
@@ -739,7 +739,7 @@ msgid "Public"
 msgstr "Azayaz"
 
 #: src/components/compose.jsx:1271
-#: src/components/nav-menu.jsx:348
+#: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:97
 msgid "Local"
@@ -786,7 +786,7 @@ msgstr "Teffɣed ass n <0/>"
 #: src/components/compose.jsx:1440
 #: src/components/compose.jsx:3267
 #: src/components/shortcuts-settings.jsx:715
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Rnu"
 
@@ -822,7 +822,7 @@ msgstr "Yecceḍ usader n GIF"
 
 #: src/components/compose.jsx:2036
 #: src/components/compose.jsx:2113
-#: src/components/nav-menu.jsx:243
+#: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Ugar…"
 
@@ -945,7 +945,7 @@ msgid "Search accounts"
 msgstr "Nadi imiḍanen"
 
 #: src/components/compose.jsx:3280
-#: src/components/generic-accounts.jsx:228
+#: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Tuccḍa deg usali n imiḍanen"
 
@@ -1020,7 +1020,7 @@ msgid "Error deleting draft! Please try again."
 msgstr "Tuccḍa deg tukksa n urewway! Ttxil εreḍ tikkelt niḍen."
 
 #: src/components/drafts.jsx:128
-#: src/components/list-add-edit.jsx:186
+#: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1420
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
@@ -1079,35 +1079,35 @@ msgstr "Yettwaqbal"
 msgid "Rejected"
 msgstr "Yettwagi"
 
-#: src/components/generic-accounts.jsx:146
-#: src/components/notification.jsx:445
+#: src/components/generic-accounts.jsx:154
+#: src/components/notification.jsx:449
 #: src/pages/accounts.jsx:42
 #: src/pages/search.jsx:331
 #: src/pages/search.jsx:364
 msgid "Accounts"
 msgstr "Imiḍanen"
 
-#: src/components/generic-accounts.jsx:206
+#: src/components/generic-accounts.jsx:214
 #: src/components/timeline.jsx:547
-#: src/pages/list.jsx:299
+#: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:919
 #: src/pages/search.jsx:558
 #: src/pages/status.jsx:1359
 msgid "Show more…"
 msgstr "Sken-d ugar…"
 
-#: src/components/generic-accounts.jsx:211
+#: src/components/generic-accounts.jsx:219
 #: src/components/timeline.jsx:552
 #: src/pages/search.jsx:563
 msgid "The end."
 msgstr "Taggara."
 
-#: src/components/generic-accounts.jsx:232
+#: src/components/generic-accounts.jsx:240
 msgid "Nothing to show"
 msgstr "Ulac ara yettwaskanen"
 
 #: src/components/keyboard-shortcuts-help.jsx:47
-#: src/components/nav-menu.jsx:367
+#: src/components/nav-menu.jsx:368
 #: src/pages/catchup.jsx:1622
 msgid "Keyboard shortcuts"
 msgstr "Inegzumen n unasiw"
@@ -1204,7 +1204,7 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> neɣ <2>⌘</2> + <3>Enter</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:151
-#: src/components/nav-menu.jsx:336
+#: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:73
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
@@ -1256,46 +1256,52 @@ msgstr "Rmed/Sens askar uffir"
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
-#: src/components/list-add-edit.jsx:40
+#: src/components/list-add-edit.jsx:41
 msgid "Edit list"
 msgstr "Ẓreg tabdart"
 
-#: src/components/list-add-edit.jsx:96
+#: src/components/list-add-edit.jsx:97
 msgid "Unable to edit list."
 msgstr "D awezɣi ad tettwaẓrag tebdart."
 
-#: src/components/list-add-edit.jsx:97
+#: src/components/list-add-edit.jsx:98
 msgid "Unable to create list."
 msgstr "D awezɣi timerna n tebdart."
 
-#: src/components/list-add-edit.jsx:125
+#: src/components/list-add-edit.jsx:126
 msgid "Show replies to list members"
 msgstr "Sken tiririyin i yiεeggalen n tebdart"
 
-#: src/components/list-add-edit.jsx:128
+#: src/components/list-add-edit.jsx:129
 msgid "Show replies to people I follow"
 msgstr "Sken tiririyin i yimdanen i ṭṭafareɣ"
 
-#: src/components/list-add-edit.jsx:131
+#: src/components/list-add-edit.jsx:132
 msgid "Don't show replies"
 msgstr "Ur skan ara tiririyin"
 
-#: src/components/list-add-edit.jsx:144
+#: src/components/list-add-edit.jsx:146
 msgid "Hide posts on this list from Home/Following"
 msgstr "Ffer tisuffaɣ deg tebdart-a seg ugejdan/Aḍfar"
 
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/pages/filters.jsx:570
 msgid "Create"
 msgstr "Snulfu-d"
 
-#: src/components/list-add-edit.jsx:157
+#: src/components/list-add-edit.jsx:159
 msgid "Delete this list?"
 msgstr "Kkes tabdart-a?"
 
-#: src/components/list-add-edit.jsx:176
+#: src/components/list-add-edit.jsx:178
 msgid "Unable to delete list."
 msgstr "D awezɣi tukksa n tebdart."
+
+#: src/components/list-exclusive-badge.jsx:14
+#: src/pages/list.jsx:179
+#: src/pages/lists.jsx:107
+msgid "Posts on this list are hidden from Home/Following"
+msgstr ""
 
 #: src/components/media-alt-modal.jsx:39
 #: src/components/media.jsx:51
@@ -1305,7 +1311,7 @@ msgstr "Aglam n umidya"
 #: src/components/media-alt-modal.jsx:58
 #: src/components/status.jsx:1131
 #: src/components/status.jsx:1140
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate"
 msgstr "Suqel"
 
@@ -1380,32 +1386,32 @@ msgstr "Tiririt ɣef tsuffeɣt. Senqed-itt."
 msgid "Post updated. Check it out."
 msgstr "Yettwalqam yizen-nni. Mmuqel-it."
 
-#: src/components/nav-menu.jsx:122
+#: src/components/nav-menu.jsx:123
 msgid "Menu"
 msgstr "Umuɣ"
 
-#: src/components/nav-menu.jsx:158
+#: src/components/nav-menu.jsx:159
 msgid "Reload page now to update?"
 msgstr "Ales asali n usebter tura i uleqqem?"
 
-#: src/components/nav-menu.jsx:170
+#: src/components/nav-menu.jsx:171
 msgid "New update available…"
 msgstr "Yella lqem amaynut…"
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:189
+#: src/components/nav-menu.jsx:190
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:144
 msgid "following.title"
 msgstr "yettwaḍeffren"
 
-#: src/components/nav-menu.jsx:196
+#: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:878
 msgid "Catch-up"
 msgstr "Alukem"
 
-#: src/components/nav-menu.jsx:203
+#: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:228
@@ -1416,7 +1422,7 @@ msgstr "Alukem"
 msgid "Mentions"
 msgstr "Ibdaren"
 
-#: src/components/nav-menu.jsx:210
+#: src/components/nav-menu.jsx:211
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1427,15 +1433,15 @@ msgstr "Ibdaren"
 msgid "Notifications"
 msgstr "Alɣu"
 
-#: src/components/nav-menu.jsx:213
+#: src/components/nav-menu.jsx:214
 msgid "New"
 msgstr "Amaynut"
 
-#: src/components/nav-menu.jsx:224
+#: src/components/nav-menu.jsx:225
 msgid "Profile"
 msgstr "Amaɣnu"
 
-#: src/components/nav-menu.jsx:232
+#: src/components/nav-menu.jsx:233
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:12
@@ -1443,7 +1449,7 @@ msgstr "Amaɣnu"
 msgid "Bookmarks"
 msgstr "Ticraḍ n yisebtar"
 
-#: src/components/nav-menu.jsx:252
+#: src/components/nav-menu.jsx:253
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1449
@@ -1454,13 +1460,13 @@ msgstr "Ticraḍ n yisebtar"
 msgid "Likes"
 msgstr "Iεǧeb-as"
 
-#: src/components/nav-menu.jsx:258
+#: src/components/nav-menu.jsx:259
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
 msgstr "Ihacṭagen yettwaḍfaren"
 
-#: src/components/nav-menu.jsx:272
+#: src/components/nav-menu.jsx:273
 #: src/pages/account-statuses.jsx:329
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
@@ -1468,27 +1474,27 @@ msgstr "Ihacṭagen yettwaḍfaren"
 msgid "Filters"
 msgstr "Imzizdigen"
 
-#: src/components/nav-menu.jsx:280
+#: src/components/nav-menu.jsx:281
 msgid "Muted users"
 msgstr "Iseqdacen yettwasgugmen"
 
-#: src/components/nav-menu.jsx:288
+#: src/components/nav-menu.jsx:289
 msgid "Muted users…"
 msgstr "Iseqdacen yettwasgugmen…"
 
-#: src/components/nav-menu.jsx:295
+#: src/components/nav-menu.jsx:296
 msgid "Blocked users"
 msgstr "Imiḍanen yettusḥebsen"
 
-#: src/components/nav-menu.jsx:303
+#: src/components/nav-menu.jsx:304
 msgid "Blocked users…"
 msgstr "Imiḍanen yettusḥebsen…"
 
-#: src/components/nav-menu.jsx:315
+#: src/components/nav-menu.jsx:316
 msgid "Accounts…"
 msgstr "Imiḍanen…"
 
-#: src/components/nav-menu.jsx:325
+#: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:27
 #: src/pages/login.jsx:190
 #: src/pages/status.jsx:862
@@ -1496,40 +1502,40 @@ msgstr "Imiḍanen…"
 msgid "Log in"
 msgstr "Qqen"
 
-#: src/components/nav-menu.jsx:342
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "Mucaεen"
 
-#: src/components/nav-menu.jsx:354
+#: src/components/nav-menu.jsx:355
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr "Asedduklan"
 
-#: src/components/nav-menu.jsx:377
+#: src/components/nav-menu.jsx:378
 msgid "Shortcuts / Columns…"
 msgstr "Inegzumen / Ijga…"
 
-#: src/components/nav-menu.jsx:387
-#: src/components/nav-menu.jsx:401
+#: src/components/nav-menu.jsx:388
+#: src/components/nav-menu.jsx:402
 msgid "Settings…"
 msgstr "Iɣewwaṛen…"
 
-#: src/components/nav-menu.jsx:431
-#: src/components/nav-menu.jsx:458
+#: src/components/nav-menu.jsx:432
+#: src/components/nav-menu.jsx:467
 #: src/components/shortcuts-settings.jsx:50
 #: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:130
-#: src/pages/lists.jsx:17
-#: src/pages/lists.jsx:51
+#: src/pages/list.jsx:127
+#: src/pages/lists.jsx:18
+#: src/pages/lists.jsx:54
 msgid "Lists"
 msgstr "Tibdarin"
 
-#: src/components/nav-menu.jsx:439
-#: src/components/shortcuts.jsx:214
-#: src/pages/list.jsx:137
+#: src/components/nav-menu.jsx:440
+#: src/components/shortcuts.jsx:216
+#: src/pages/list.jsx:139
 msgid "All Lists"
 msgstr "Akk tibdarin"
 
@@ -1656,38 +1662,38 @@ msgstr "Amiḍan-ik yesεa tilas."
 msgid "Your account has been suspended."
 msgstr "Yettwaseḥbes umiḍan-ik."
 
-#: src/components/notification.jsx:372
+#: src/components/notification.jsx:374
 msgid "[Unknown notification type: {type}]"
 msgstr "[Anaw n wulɣu d arussin: {type}]"
 
-#: src/components/notification.jsx:441
+#: src/components/notification.jsx:445
 #: src/components/status.jsx:1102
 #: src/components/status.jsx:1112
 msgid "Boosted/Liked by…"
 msgstr "Izuzer-it/Iḥemmel-it…"
 
-#: src/components/notification.jsx:442
+#: src/components/notification.jsx:446
 msgid "Liked by…"
 msgstr "Iεǧeb-as i…"
 
-#: src/components/notification.jsx:443
+#: src/components/notification.jsx:447
 msgid "Boosted by…"
 msgstr "Izuzer-it…"
 
-#: src/components/notification.jsx:444
+#: src/components/notification.jsx:448
 msgid "Followed by…"
 msgstr "Iḍfer-it…"
 
-#: src/components/notification.jsx:514
-#: src/components/notification.jsx:530
+#: src/components/notification.jsx:533
+#: src/components/notification.jsx:549
 msgid "Learn more <0/>"
 msgstr "Issin ugar <0/>"
 
-#: src/components/notification.jsx:539
+#: src/components/notification.jsx:558
 msgid "View #Wrapstodon"
 msgstr "Wali #Wrapstodon"
 
-#: src/components/notification.jsx:773
+#: src/components/notification.jsx:799
 #: src/components/status.jsx:316
 msgid "Read more →"
 msgstr "Γer ugar →"
@@ -1953,7 +1959,7 @@ msgid "Media only"
 msgstr "Amidya kan"
 
 #: src/components/shortcuts-settings.jsx:235
-#: src/components/shortcuts.jsx:191
+#: src/components/shortcuts.jsx:193
 msgid "Shortcuts"
 msgstr "Inegzumen"
 
@@ -1991,7 +1997,7 @@ msgstr "Nkez d akessar"
 
 #: src/components/shortcuts-settings.jsx:379
 #: src/components/status.jsx:1382
-#: src/pages/list.jsx:174
+#: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Ẓreg"
 
@@ -2544,28 +2550,28 @@ msgstr "Asqerdec"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Yettwasizdeg</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:192
+#: src/components/translation-block.jsx:194
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Tasuqilt tawurmant seg {sourceLangText}"
 
-#: src/components/translation-block.jsx:230
+#: src/components/translation-block.jsx:232
 msgid "Translating…"
 msgstr "Yessuqul…"
 
-#: src/components/translation-block.jsx:233
+#: src/components/translation-block.jsx:235
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Suqel seg {sourceLangText} (tifin tawurmant)"
 
-#: src/components/translation-block.jsx:234
+#: src/components/translation-block.jsx:236
 msgid "Translate from {sourceLangText}"
 msgstr "Ssuqel seg {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:262
+#: src/components/translation-block.jsx:264
 msgid "Auto ({0})"
 msgstr "Awurman ({0})"
 
-#: src/components/translation-block.jsx:275
+#: src/components/translation-block.jsx:277
 msgid "Failed to translate"
 msgstr "Tuccḍa deg tsuqilt"
 
@@ -3145,7 +3151,7 @@ msgid "Nothing to see here."
 msgstr "Ulac acu ara twaliḍ dagi."
 
 #: src/pages/following.jsx:147
-#: src/pages/list.jsx:112
+#: src/pages/list.jsx:109
 msgid "Unable to load posts."
 msgstr "D awezɣi alluy n tsuffaɣ."
 
@@ -3274,30 +3280,30 @@ msgstr "Iferru…"
 msgid "Unable to resolve URL"
 msgstr "D awezɣi ferru n URL"
 
-#: src/pages/list.jsx:111
+#: src/pages/list.jsx:108
 msgid "Nothing yet."
 msgstr "Ulac i yellan akka tura."
 
-#: src/pages/list.jsx:180
-#: src/pages/list.jsx:285
+#: src/pages/list.jsx:201
+#: src/pages/list.jsx:307
 msgid "Manage members"
 msgstr "Sefrek imttekkiyen"
 
 #. placeholder {0}: account.username
-#: src/pages/list.jsx:320
+#: src/pages/list.jsx:342
 msgid "Remove <0>@{0}</0> from list?"
 msgstr "Kkes <0>@{0}</0> seg tebdart?"
 
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Remove…"
 msgstr "Kkes…"
 
 #. placeholder {0}: lists.length
-#: src/pages/lists.jsx:94
+#: src/pages/lists.jsx:115
 msgid "{0, plural, one {# list} other {# lists}}"
 msgstr "{0, plural, one {# tabdart} other {# tibdarin}}"
 
-#: src/pages/lists.jsx:109
+#: src/pages/lists.jsx:135
 msgid "No lists yet."
 msgstr "Ulac tibdarinakka tura."
 

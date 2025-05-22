@@ -120,7 +120,7 @@ function getPollText(poll) {
     .join('\n')}`;
 }
 function getPostText(status, opts) {
-  const { maskCustomEmojis } = opts || {};
+  const { maskCustomEmojis, maskURLs } = opts || {};
   const { spoilerText, poll, emojis } = status;
   let { content } = status;
   if (maskCustomEmojis && emojis?.length) {
@@ -132,7 +132,19 @@ function getPostText(status, opts) {
   }
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
-    getHTMLText(content) +
+    getHTMLText(content, {
+      preProcess:
+        maskURLs &&
+        ((dom) => {
+          // Remove links that contains text that starts with https?://
+          for (const a of dom.querySelectorAll('a')) {
+            const text = a.innerText.trim();
+            if (/^https?:\/\//i.test(text)) {
+              a.replaceWith('«🔗»');
+            }
+          }
+        }),
+    }) +
     getPollText(poll)
   );
 }
@@ -2231,6 +2243,7 @@ function Status({
                     autoDetected={languageAutoDetected}
                     text={getPostText(status, {
                       maskCustomEmojis: true,
+                      maskURLs: true,
                     })}
                   />
                 )}

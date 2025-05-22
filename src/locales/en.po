@@ -119,7 +119,7 @@ msgstr ""
 #: src/pages/account-statuses.jsx:526
 #: src/pages/accounts.jsx:110
 #: src/pages/hashtag.jsx:202
-#: src/pages/list.jsx:161
+#: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1239
@@ -458,7 +458,7 @@ msgstr ""
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/keyboard-shortcuts-help.jsx:43
-#: src/components/list-add-edit.jsx:36
+#: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:34
 #: src/components/media-modal.jsx:323
 #: src/components/notification-service.jsx:157
@@ -472,7 +472,7 @@ msgstr ""
 #: src/pages/accounts.jsx:37
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
-#: src/pages/list.jsx:280
+#: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:939
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
@@ -493,7 +493,7 @@ msgid "Unable to add to list."
 msgstr "Unable to add to list."
 
 #: src/components/account-info.jsx:2101
-#: src/pages/lists.jsx:105
+#: src/pages/lists.jsx:131
 msgid "Unable to load lists."
 msgstr ""
 
@@ -502,8 +502,8 @@ msgid "No lists."
 msgstr ""
 
 #: src/components/account-info.jsx:2116
-#: src/components/list-add-edit.jsx:40
-#: src/pages/lists.jsx:59
+#: src/components/list-add-edit.jsx:41
+#: src/pages/lists.jsx:62
 msgid "New list"
 msgstr ""
 
@@ -538,7 +538,7 @@ msgid "Profile picture"
 msgstr "Profile picture"
 
 #: src/components/account-info.jsx:2461
-#: src/components/list-add-edit.jsx:105
+#: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr ""
 
@@ -559,7 +559,7 @@ msgid "Content"
 msgstr ""
 
 #: src/components/account-info.jsx:2529
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
 #: src/pages/notifications.jsx:1005
@@ -592,7 +592,7 @@ msgid "Cloak mode enabled"
 msgstr ""
 
 #: src/components/columns.jsx:27
-#: src/components/nav-menu.jsx:180
+#: src/components/nav-menu.jsx:181
 #: src/components/shortcuts-settings.jsx:139
 #: src/components/timeline.jsx:465
 #: src/pages/catchup.jsx:883
@@ -610,7 +610,7 @@ msgid "Compose"
 msgstr ""
 
 #: src/components/compose-button.jsx:170
-#: src/components/nav-menu.jsx:264
+#: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
@@ -734,7 +734,7 @@ msgid "Public"
 msgstr ""
 
 #: src/components/compose.jsx:1271
-#: src/components/nav-menu.jsx:348
+#: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:97
 msgid "Local"
@@ -781,7 +781,7 @@ msgstr "Posting on <0/>"
 #: src/components/compose.jsx:1440
 #: src/components/compose.jsx:3267
 #: src/components/shortcuts-settings.jsx:715
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Add"
 msgstr ""
 
@@ -817,7 +817,7 @@ msgstr "Failed to download GIF"
 
 #: src/components/compose.jsx:2036
 #: src/components/compose.jsx:2113
-#: src/components/nav-menu.jsx:243
+#: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr ""
 
@@ -1015,7 +1015,7 @@ msgid "Error deleting draft! Please try again."
 msgstr ""
 
 #: src/components/drafts.jsx:128
-#: src/components/list-add-edit.jsx:186
+#: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1420
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: src/components/generic-accounts.jsx:214
 #: src/components/timeline.jsx:547
-#: src/pages/list.jsx:299
+#: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:919
 #: src/pages/search.jsx:558
 #: src/pages/status.jsx:1359
@@ -1102,7 +1102,7 @@ msgid "Nothing to show"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:47
-#: src/components/nav-menu.jsx:367
+#: src/components/nav-menu.jsx:368
 #: src/pages/catchup.jsx:1622
 msgid "Keyboard shortcuts"
 msgstr ""
@@ -1199,7 +1199,7 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:151
-#: src/components/nav-menu.jsx:336
+#: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:73
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
@@ -1251,46 +1251,52 @@ msgstr ""
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:40
+#: src/components/list-add-edit.jsx:41
 msgid "Edit list"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:96
+#: src/components/list-add-edit.jsx:97
 msgid "Unable to edit list."
 msgstr ""
 
-#: src/components/list-add-edit.jsx:97
+#: src/components/list-add-edit.jsx:98
 msgid "Unable to create list."
 msgstr ""
 
-#: src/components/list-add-edit.jsx:125
+#: src/components/list-add-edit.jsx:126
 msgid "Show replies to list members"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:128
+#: src/components/list-add-edit.jsx:129
 msgid "Show replies to people I follow"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:131
+#: src/components/list-add-edit.jsx:132
 msgid "Don't show replies"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:144
+#: src/components/list-add-edit.jsx:146
 msgid "Hide posts on this list from Home/Following"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:150
+#: src/components/list-add-edit.jsx:152
 #: src/pages/filters.jsx:570
 msgid "Create"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:157
+#: src/components/list-add-edit.jsx:159
 msgid "Delete this list?"
 msgstr ""
 
-#: src/components/list-add-edit.jsx:176
+#: src/components/list-add-edit.jsx:178
 msgid "Unable to delete list."
 msgstr ""
+
+#: src/components/list-exclusive-badge.jsx:14
+#: src/pages/list.jsx:179
+#: src/pages/lists.jsx:107
+msgid "Posts on this list are hidden from Home/Following"
+msgstr "Posts on this list are hidden from Home/Following"
 
 #: src/components/media-alt-modal.jsx:39
 #: src/components/media.jsx:51
@@ -1375,32 +1381,32 @@ msgstr ""
 msgid "Post updated. Check it out."
 msgstr ""
 
-#: src/components/nav-menu.jsx:122
+#: src/components/nav-menu.jsx:123
 msgid "Menu"
 msgstr ""
 
-#: src/components/nav-menu.jsx:158
+#: src/components/nav-menu.jsx:159
 msgid "Reload page now to update?"
 msgstr ""
 
-#: src/components/nav-menu.jsx:170
+#: src/components/nav-menu.jsx:171
 msgid "New update available…"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:189
+#: src/components/nav-menu.jsx:190
 #: src/components/shortcuts-settings.jsx:140
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:144
 msgid "following.title"
 msgstr "Following"
 
-#: src/components/nav-menu.jsx:196
+#: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:878
 msgid "Catch-up"
 msgstr ""
 
-#: src/components/nav-menu.jsx:203
+#: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
 #: src/pages/home.jsx:228
@@ -1411,7 +1417,7 @@ msgstr ""
 msgid "Mentions"
 msgstr ""
 
-#: src/components/nav-menu.jsx:210
+#: src/components/nav-menu.jsx:211
 #: src/components/shortcuts-settings.jsx:49
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
@@ -1422,15 +1428,15 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: src/components/nav-menu.jsx:213
+#: src/components/nav-menu.jsx:214
 msgid "New"
 msgstr ""
 
-#: src/components/nav-menu.jsx:224
+#: src/components/nav-menu.jsx:225
 msgid "Profile"
 msgstr ""
 
-#: src/components/nav-menu.jsx:232
+#: src/components/nav-menu.jsx:233
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:195
 #: src/pages/bookmarks.jsx:12
@@ -1438,7 +1444,7 @@ msgstr ""
 msgid "Bookmarks"
 msgstr ""
 
-#: src/components/nav-menu.jsx:252
+#: src/components/nav-menu.jsx:253
 #: src/components/shortcuts-settings.jsx:55
 #: src/components/shortcuts-settings.jsx:201
 #: src/pages/catchup.jsx:1449
@@ -1449,13 +1455,13 @@ msgstr ""
 msgid "Likes"
 msgstr ""
 
-#: src/components/nav-menu.jsx:258
+#: src/components/nav-menu.jsx:259
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
 msgstr ""
 
-#: src/components/nav-menu.jsx:272
+#: src/components/nav-menu.jsx:273
 #: src/pages/account-statuses.jsx:329
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
@@ -1463,27 +1469,27 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: src/components/nav-menu.jsx:280
+#: src/components/nav-menu.jsx:281
 msgid "Muted users"
 msgstr ""
 
-#: src/components/nav-menu.jsx:288
+#: src/components/nav-menu.jsx:289
 msgid "Muted users…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:295
+#: src/components/nav-menu.jsx:296
 msgid "Blocked users"
 msgstr ""
 
-#: src/components/nav-menu.jsx:303
+#: src/components/nav-menu.jsx:304
 msgid "Blocked users…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:315
+#: src/components/nav-menu.jsx:316
 msgid "Accounts…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:325
+#: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:27
 #: src/pages/login.jsx:190
 #: src/pages/status.jsx:862
@@ -1491,40 +1497,40 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: src/components/nav-menu.jsx:342
+#: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr ""
 
-#: src/components/nav-menu.jsx:354
+#: src/components/nav-menu.jsx:355
 #: src/components/shortcuts-settings.jsx:165
 msgid "Federated"
 msgstr ""
 
-#: src/components/nav-menu.jsx:377
+#: src/components/nav-menu.jsx:378
 msgid "Shortcuts / Columns…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:387
-#: src/components/nav-menu.jsx:401
+#: src/components/nav-menu.jsx:388
+#: src/components/nav-menu.jsx:402
 msgid "Settings…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:431
-#: src/components/nav-menu.jsx:458
+#: src/components/nav-menu.jsx:432
+#: src/components/nav-menu.jsx:467
 #: src/components/shortcuts-settings.jsx:50
 #: src/components/shortcuts-settings.jsx:158
-#: src/pages/list.jsx:130
-#: src/pages/lists.jsx:17
-#: src/pages/lists.jsx:51
+#: src/pages/list.jsx:127
+#: src/pages/lists.jsx:18
+#: src/pages/lists.jsx:54
 msgid "Lists"
 msgstr ""
 
-#: src/components/nav-menu.jsx:439
-#: src/components/shortcuts.jsx:215
-#: src/pages/list.jsx:137
+#: src/components/nav-menu.jsx:440
+#: src/components/shortcuts.jsx:216
+#: src/pages/list.jsx:139
 msgid "All Lists"
 msgstr ""
 
@@ -1948,7 +1954,7 @@ msgid "Media only"
 msgstr ""
 
 #: src/components/shortcuts-settings.jsx:235
-#: src/components/shortcuts.jsx:192
+#: src/components/shortcuts.jsx:193
 msgid "Shortcuts"
 msgstr ""
 
@@ -1986,7 +1992,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:379
 #: src/components/status.jsx:1382
-#: src/pages/list.jsx:174
+#: src/pages/list.jsx:195
 msgid "Edit"
 msgstr ""
 
@@ -3140,7 +3146,7 @@ msgid "Nothing to see here."
 msgstr ""
 
 #: src/pages/following.jsx:147
-#: src/pages/list.jsx:112
+#: src/pages/list.jsx:109
 msgid "Unable to load posts."
 msgstr ""
 
@@ -3269,30 +3275,30 @@ msgstr ""
 msgid "Unable to resolve URL"
 msgstr ""
 
-#: src/pages/list.jsx:111
+#: src/pages/list.jsx:108
 msgid "Nothing yet."
 msgstr ""
 
-#: src/pages/list.jsx:180
-#: src/pages/list.jsx:285
+#: src/pages/list.jsx:201
+#: src/pages/list.jsx:307
 msgid "Manage members"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/list.jsx:320
+#: src/pages/list.jsx:342
 msgid "Remove <0>@{0}</0> from list?"
 msgstr ""
 
-#: src/pages/list.jsx:366
+#: src/pages/list.jsx:388
 msgid "Remove…"
 msgstr ""
 
 #. placeholder {0}: lists.length
-#: src/pages/lists.jsx:94
+#: src/pages/lists.jsx:115
 msgid "{0, plural, one {# list} other {# lists}}"
 msgstr ""
 
-#: src/pages/lists.jsx:109
+#: src/pages/lists.jsx:135
 msgid "No lists yet."
 msgstr ""
 

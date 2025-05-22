@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ICONS } from './ICONS';
 
 const SIZES = {
+  xs: 8,
   s: 12,
   m: 16,
   l: 20,

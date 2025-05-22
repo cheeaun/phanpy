@@ -17,6 +17,7 @@ import supports from '../utils/supports';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuLink from './menu-link';
 import SubMenu2 from './submenu2';
 
@@ -444,7 +445,15 @@ function ListMenu({ menuState }) {
           <MenuDivider />
           {lists.map((list) => (
             <MenuLink key={list.id} to={`/l/${list.id}`}>
-              <span>{list.title}</span>
+              <span>
+                {list.title}
+                {list.exclusive && (
+                  <>
+                    {' '}
+                    <ListExclusiveBadge />
+                  </>
+                )}
+              </span>
             </MenuLink>
           ))}
         </>

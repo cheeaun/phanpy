@@ -2106,7 +2106,7 @@ body > .szh-menu-container {
   margin-block: 4px;
 
   > &:first-child,
-  li[role='none']:first-child + & {
+  li[role='none']:not(.szh-menu__header):first-child + & {
     display: none;
   }
 }

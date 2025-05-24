@@ -2,7 +2,7 @@ import './app.css';
 
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
-import { memo } from 'preact/compat';
+import { lazy, memo, Suspense } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -68,6 +68,12 @@ import {
 } from './utils/store-utils';
 
 import './utils/toast-alert';
+
+// Lazy load Sandbox component only in development
+const Sandbox =
+  import.meta.env.DEV || import.meta.env.PHANPY_DEV
+    ? lazy(() => import('./pages/sandbox'))
+    : () => null;
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -497,7 +503,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome)/i.test(pathname);
+    return !/^\/(login|welcome|_sandbox)/i.test(pathname);
   }, [location]);
 
   return (
@@ -505,6 +511,16 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
+        <Route
+          path="/_sandbox"
+          element={
+            <Suspense fallback={<Loader id="loader-sandbox" />}>
+              <Sandbox />
+            </Suspense>
+          }
+        />
+      )}
     </Routes>
   );
 });

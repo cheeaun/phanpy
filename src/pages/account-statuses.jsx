@@ -40,7 +40,7 @@ const supportsInputMonth = (() => {
 
 async function _isSearchEnabled(instance) {
   const { masto } = api({ instance });
-  const results = await masto.v2.search.fetch({
+  const results = await masto.v2.search.list({
     q: 'from:me',
     type: 'statuses',
     limit: 1,
@@ -137,7 +137,7 @@ function AccountStatuses() {
         searchOffsetRef.current += LIMIT;
       }
 
-      const searchResults = await masto.v2.search.fetch({
+      const searchResults = await masto.v2.search.list({
         q: `from:${account.acct} after:${afterStr} before:${beforeStr}`,
         type: 'statuses',
         limit,
@@ -162,6 +162,7 @@ function AccountStatuses() {
         .statuses.list({
           pinned: true,
         })
+        .values()
         .next();
       if (value?.length && !tagged && !media) {
         const pinnedStatuses = value.map((status) => {
@@ -192,7 +193,8 @@ function AccountStatuses() {
           exclude_reblogs: excludeBoosts,
           only_media: media || undefined,
           tagged,
-        });
+        })
+        .values();
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
@@ -300,6 +302,7 @@ function AccountStatuses() {
           fetchAccount={fetchAccount}
           authenticated={authenticated}
           standalone
+          showEndorsements
         />
         {!mediaFirst && (
           <div

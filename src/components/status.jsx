@@ -40,7 +40,7 @@ import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
@@ -120,7 +120,7 @@ function getPollText(poll) {
     .join('\n')}`;
 }
 function getPostText(status, opts) {
-  const { maskCustomEmojis } = opts || {};
+  const { maskCustomEmojis, maskURLs } = opts || {};
   const { spoilerText, poll, emojis } = status;
   let { content } = status;
   if (maskCustomEmojis && emojis?.length) {
@@ -132,7 +132,19 @@ function getPostText(status, opts) {
   }
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
-    getHTMLText(content) +
+    getHTMLText(content, {
+      preProcess:
+        maskURLs &&
+        ((dom) => {
+          // Remove links that contains text that starts with https?://
+          for (const a of dom.querySelectorAll('a')) {
+            const text = a.innerText.trim();
+            if (/^https?:\/\//i.test(text)) {
+              a.replaceWith('«🔗»');
+            }
+          }
+        }),
+    }) +
     getPollText(poll)
   );
 }
@@ -344,15 +356,6 @@ const getCurrentAccID = mem(
   },
 );
 
-const getPrefs = mem(
-  () => {
-    return store.account.get('preferences') || {};
-  },
-  {
-    maxAge: 60 * 1000, // 1 minute
-  },
-);
-
 function Status({
   statusID,
   status,
@@ -448,7 +451,7 @@ function Status({
     inReplyToAccountId,
     content,
     mentions,
-    mediaAttachments,
+    mediaAttachments = [],
     reblog,
     uri,
     url,
@@ -554,16 +557,14 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = getPrefs();
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
-  const readingExpandMedia = useMemo(() => {
-    // default | show_all | hide_all
-    // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
-    const prefs = getPrefs();
-    return prefs['reading:expand:media']?.toLowerCase() || 'default';
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
+
+  // default | show_all | hide_all
+  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
+  const readingExpandMedia =
+    prefs['reading:expand:media']?.toLowerCase() || 'default';
+
   // FOR TESTING:
   // const readingExpandSpoilers = true;
   // const readingExpandMedia = 'show_all';
@@ -713,8 +714,9 @@ function Status({
   const textWeight = useCallback(
     () =>
       Math.max(
-        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
-          1,
+        Math.round(
+          ((spoilerText?.length || 0) + htmlContentLength(content)) / 140,
+        ) || 1,
         1,
       ),
     [spoilerText, content],
@@ -951,12 +953,14 @@ function Status({
         .$select(statusID)
         .rebloggedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
       favouriteIterator.current = masto.v1.statuses
         .$select(statusID)
         .favouritedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
     }
     const [{ value: reblogResults }, { value: favouriteResults }] =
       await Promise.allSettled([
@@ -2239,6 +2243,7 @@ function Status({
                     autoDetected={languageAutoDetected}
                     text={getPostText(status, {
                       maskCustomEmojis: true,
+                      maskURLs: true,
                     })}
                   />
                 )}
@@ -2769,7 +2774,14 @@ function MediaFirstContainer(props) {
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
 // This is just "Progressive Enhancement"
 function isCardPost(domain) {
-  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+  return [
+    'x.com',
+    'twitter.com',
+    'threads.net',
+    'bsky.app',
+    'bsky.brid.gy',
+    'fed.brid.gy',
+  ].includes(domain);
 }
 
 function Byline({ authors, hidden, children }) {

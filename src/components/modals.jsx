@@ -168,7 +168,7 @@ export default function Modals() {
           <MediaModal
             mediaAttachments={snapStates.showMediaModal.mediaAttachments}
             instance={snapStates.showMediaModal.instance}
-            index={snapStates.showMediaModal.index}
+            index={snapStates.showMediaModal.mediaIndex}
             statusID={snapStates.showMediaModal.statusID}
             onClose={() => {
               states.showMediaModal = false;

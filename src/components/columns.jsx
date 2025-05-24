@@ -55,18 +55,24 @@ function Columns() {
     );
   });
 
-  useHotkeys(['1', '2', '3', '4', '5', '6', '7', '8', '9'], (e, handler) => {
-    try {
-      const index = parseInt(handler.keys[0], 10) - 1;
-      const $column = document.querySelectorAll('#columns > *')[index];
-      if ($column) {
-        $column.focus();
-        $column.scrollIntoView(scrollIntoViewOptions);
+  useHotkeys(
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    (e, handler) => {
+      try {
+        const index = parseInt(handler.keys[0], 10) - 1;
+        const $column = document.querySelectorAll('#columns > *')[index];
+        if ($column) {
+          $column.focus();
+          $column.scrollIntoView(scrollIntoViewOptions);
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
-    }
-  });
+    },
+    {
+      useKey: true,
+    },
+  );
 
   useHotkeys(
     ['[', ']'],

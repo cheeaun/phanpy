@@ -16,6 +16,7 @@ import states from '../utils/states';
 import AsyncText from './AsyncText';
 import Icon from './icon';
 import Link from './link';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuLink from './menu-link';
 import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
@@ -100,6 +101,7 @@ function Shortcuts() {
     },
     {
       enabled: !isMultiColumnMode,
+      useKey: true,
     },
   );
 
@@ -217,7 +219,15 @@ function Shortcuts() {
                   <MenuDivider />
                   {lists?.map((list) => (
                     <MenuLink key={list.id} to={`/l/${list.id}`}>
-                      <span>{list.title}</span>
+                      <span>
+                        {list.title}
+                        {list.exclusive && (
+                          <>
+                            {' '}
+                            <ListExclusiveBadge />
+                          </>
+                        )}
+                      </span>
                     </MenuLink>
                   ))}
                 </SubMenu2>

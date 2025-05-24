@@ -324,6 +324,8 @@ function Notification({
     sampleAccounts,
     notificationsCount,
     groupKey,
+    _notificationsCount,
+    _sampleAccountsCount,
   } = notification;
   let { type } = notification;
 
@@ -381,7 +383,9 @@ function Notification({
 
   if (typeof text === 'function') {
     const count =
-      _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
+      (type === 'favourite' || type === 'reblog') && notificationsCount
+        ? notificationsCount
+        : _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
     const postsCount = _statuses?.length || (status ? 1 : 0);
     if (type === 'admin.report') {
       const targetAccount = report?.targetAccount;
@@ -493,6 +497,21 @@ function Notification({
         )}
       </div>
       <div class="notification-content">
+        {/* {(type === 'favourite+reblog' ||
+          type === 'favourite' ||
+          type === 'reblog') && (
+          <>
+            💥 {type} {expandAccounts}{' '}
+            <mark>
+              N{_notificationsCount?.join(',')} + A
+              {_sampleAccountsCount?.join(',')}
+            </mark>{' '}
+            ‒{' '}
+            <mark>
+              N{notificationsCount} + A{sampleAccounts?.length}
+            </mark>
+          </>
+        )} */}
         {type !== 'mention' && (
           <>
             <p>{text}</p>
@@ -583,7 +602,10 @@ function Notification({
                 </a>{' '}
               </Fragment>
             ))}
-            {type === 'favourite+reblog' && expandAccounts === 'remote' ? (
+            {(type === 'favourite+reblog' ||
+              type === 'favourite' ||
+              type === 'reblog') &&
+            expandAccounts === 'remote' ? (
               <button
                 type="button"
                 class="small plain"
@@ -591,12 +613,14 @@ function Notification({
                 onClick={() => {
                   states.showGenericAccounts = {
                     heading: genericAccountsHeading,
+                    accounts: _accounts,
                     fetchAccounts: async () => {
                       const keyAccounts = await Promise.allSettled(
                         _groupKeys.map(async (gKey) => {
                           const iterator = masto.v2.notifications
                             .$select(gKey)
-                            .accounts.list();
+                            .accounts.list()
+                            .values();
                           return [gKey, (await iterator.next()).value];
                         }),
                       );
@@ -626,11 +650,14 @@ function Notification({
                         value: accounts,
                       };
                     },
-                    showReactions: true,
+                    showReactions: type === 'favourite+reblog',
                     postID: statusKey(actualStatusID, instance),
                   };
                 }}
               >
+                +
+                {(type === 'favourite' || type === 'reblog') &&
+                  notificationsCount - _accounts.length}
                 <Icon icon="chevron-down" />
               </button>
             ) : (

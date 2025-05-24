@@ -21,6 +21,7 @@ import i18nDuration from '../utils/i18n-duration';
 import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
@@ -84,6 +85,7 @@ async function fetchPostingStats(accountID, masto) {
     .statuses.list({
       limit: 20,
     })
+    .values()
     .next();
 
   const { value: statuses } = await fetchStatuses;
@@ -127,12 +129,15 @@ const memFetchPostingStats = pmem(fetchPostingStats, {
   maxAge: ACCOUNT_INFO_MAX_AGE,
 });
 
+const ENDORSEMENTS_LIMIT = 80;
+
 function AccountInfo({
   account,
   fetchAccount = () => {},
   standalone,
   instance,
   authenticated,
+  showEndorsements = false,
 }) {
   const { i18n, t } = useLingui();
   const { masto, authenticated: currentAuthenticated } = api({
@@ -248,9 +253,12 @@ function AccountInfo({
   const familiarFollowersCache = useRef([]);
   async function fetchFollowers(firstLoad) {
     if (firstLoad || !followersIterator.current) {
-      followersIterator.current = masto.v1.accounts.$select(id).followers.list({
-        limit: LIMIT,
-      });
+      followersIterator.current = masto.v1.accounts
+        .$select(id)
+        .followers.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followersIterator.current.next();
     if (isSelf) return results;
@@ -295,9 +303,12 @@ function AccountInfo({
   const followingIterator = useRef();
   async function fetchFollowing(firstLoad) {
     if (firstLoad || !followingIterator.current) {
-      followingIterator.current = masto.v1.accounts.$select(id).following.list({
-        limit: LIMIT,
-      });
+      followingIterator.current = masto.v1.accounts
+        .$select(id)
+        .following.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followingIterator.current.next();
     return results;
@@ -366,6 +377,8 @@ function AccountInfo({
   const isStringURL = isString && account && /^https?:\/\//.test(account);
 
   const [showEditProfile, setShowEditProfile] = useState(false);
+
+  const [renderEndorsements, setRenderEndorsements] = useState(false);
 
   return (
     <>
@@ -986,8 +999,19 @@ function AccountInfo({
                   onRelationshipChange={onRelationshipChange}
                   onProfileUpdate={onProfileUpdate}
                   setShowEditProfile={setShowEditProfile}
+                  showEndorsements={showEndorsements}
+                  renderEndorsements={renderEndorsements}
+                  setRenderEndorsements={setRenderEndorsements}
                 />
               </footer>
+              <Endorsements
+                accountID={id}
+                info={info}
+                open={renderEndorsements}
+                onlyOpenIfHasEndorsements={
+                  renderEndorsements === 'onlyOpenIfHasEndorsements'
+                }
+              />
             </>
           )
         )}
@@ -1022,6 +1046,9 @@ function RelatedActions({
   onRelationshipChange = () => {},
   onProfileUpdate = () => {},
   setShowEditProfile = () => {},
+  showEndorsements = false,
+  renderEndorsements = false,
+  setRenderEndorsements = () => {},
 }) {
   if (!info) return null;
   const { _, t } = useLingui();
@@ -1059,6 +1086,8 @@ function RelatedActions({
 
   const acctWithInstance = acct.includes('@') ? acct : `${acct}@${instance}`;
 
+  const supportsEndorsements = supports('@mastodon/endorsements');
+
   useEffect(() => {
     if (info) {
       const currentAccount = getCurrentAccountID();
@@ -1070,7 +1099,7 @@ function RelatedActions({
           // Grab this account from my logged-in instance
           const acctHasInstance = info.acct.includes('@');
           try {
-            const results = await currentMasto.v2.search.fetch({
+            const results = await currentMasto.v2.search.list({
               q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
               type: 'accounts',
               limit: 1,
@@ -1219,7 +1248,7 @@ function RelatedActions({
               }
             }}
           >
-            {currentAuthenticated && !isSelf && (
+            {currentAuthenticated && !isSelf ? (
               <>
                 <MenuItem
                   onClick={() => {
@@ -1323,6 +1352,65 @@ function RelatedActions({
                     </MenuItem>
                   </>
                 )}
+                {supportsEndorsements && following && (
+                  <MenuItem
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          if (endorsed) {
+                            const newRelationship =
+                              await currentMasto.v1.accounts
+                                .$select(currentInfo?.id || id)
+                                .unpin();
+                            setRelationship(newRelationship);
+                            setRelationshipUIState('default');
+                            showToast(
+                              t`@${username} is no longer featured on your profile.`,
+                            );
+                          } else {
+                            const newRelationship =
+                              await currentMasto.v1.accounts
+                                .$select(currentInfo?.id || id)
+                                .pin();
+                            setRelationship(newRelationship);
+                            setRelationshipUIState('default');
+                            showToast(
+                              t`@${username} is now featured on your profile.`,
+                            );
+                          }
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                          if (endorsed) {
+                            showToast(
+                              t`Unable to unfeature @${username} on your profile.`,
+                            );
+                          } else {
+                            showToast(
+                              t`Unable to feature @${username} on your profile.`,
+                            );
+                          }
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="endorsement" />
+                    {endorsed
+                      ? t`Don't feature on profile`
+                      : t`Feature on profile`}
+                  </MenuItem>
+                )}
+                {showEndorsements &&
+                  supportsEndorsements &&
+                  !renderEndorsements && (
+                    <MenuItem onClick={() => setRenderEndorsements(true)}>
+                      <Icon icon="endorsement" />
+                      <span>
+                        <Trans>Show featured profiles</Trans>
+                      </span>
+                    </MenuItem>
+                  )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
                   <MenuItem
@@ -1351,6 +1439,17 @@ function RelatedActions({
                 )}
                 <MenuDivider />
               </>
+            ) : (
+              supportsEndorsements &&
+              !renderEndorsements && (
+                <>
+                  <MenuItem onClick={() => setRenderEndorsements(true)}>
+                    <Icon icon="endorsement" />
+                    Show featured profiles
+                  </MenuItem>
+                  <MenuDivider />
+                </>
+              )
             )}
             <MenuItem
               onClick={() => {
@@ -1734,7 +1833,14 @@ function RelatedActions({
                         .follow();
                     }
 
-                    if (newRelationship) setRelationship(newRelationship);
+                    if (newRelationship) {
+                      setRelationship(newRelationship);
+
+                      // Show endorsements if start following
+                      if (newRelationship.following) {
+                        setRenderEndorsements('onlyOpenIfHasEndorsements');
+                      }
+                    }
                     setRelationshipUIState('default');
                   } catch (e) {
                     alert(e);
@@ -2270,7 +2376,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                     onClick={() => {
                       states.showMediaModal = {
                         mediaAttachments: headerMediaAttachments,
-                        index: 0,
+                        mediaIndex: 0,
                       };
                     }}
                   >
@@ -2288,7 +2394,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                       onClick={() => {
                         states.showMediaModal = {
                           mediaAttachments: headerMediaAttachments,
-                          index: 1,
+                          mediaIndex: 1,
                         };
                       }}
                     >
@@ -2322,7 +2428,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                     onClick={() => {
                       states.showMediaModal = {
                         mediaAttachments: avatarMediaAttachments,
-                        index: 0,
+                        mediaIndex: 0,
                       };
                     }}
                   >
@@ -2340,7 +2446,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                       onClick={() => {
                         states.showMediaModal = {
                           mediaAttachments: avatarMediaAttachments,
-                          index: 1,
+                          mediaIndex: 1,
                         };
                       }}
                     >
@@ -2480,6 +2586,100 @@ function AccountHandleInfo({ acct, instance }) {
           <span class="handle-legend-icon server" />{' '}
           <Trans>server domain name</Trans>
         </span>
+      </div>
+    </div>
+  );
+}
+
+function Endorsements({
+  accountID: id,
+  info,
+  open = false,
+  onlyOpenIfHasEndorsements = false,
+}) {
+  const { masto } = api();
+  const endorsementsContainer = useRef();
+  const [endorsementsUIState, setEndorsementsUIState] = useState('default');
+  const [endorsements, setEndorsements] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+  useEffect(() => {
+    if (!supports('@mastodon/endorsements')) return;
+    if (!open) return;
+    (async () => {
+      setEndorsementsUIState('loading');
+      try {
+        const accounts = await masto.v1.accounts.$select(id).endorsements.list({
+          limit: ENDORSEMENTS_LIMIT,
+        });
+        console.log({ endorsements: accounts });
+        if (!accounts.length) {
+          setEndorsementsUIState('default');
+          return;
+        }
+        setEndorsements(accounts);
+        setEndorsementsUIState('default');
+        setTimeout(() => {
+          endorsementsContainer.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }, 300);
+
+        const relationships = await fetchRelationships(
+          accounts,
+          relationshipsMap,
+        );
+        if (relationships) {
+          setRelationshipsMap(relationships);
+        }
+      } catch (e) {
+        console.error(e);
+        setEndorsementsUIState('error');
+      }
+    })();
+  }, [open, id]);
+
+  const reallyOpen = onlyOpenIfHasEndorsements
+    ? open && endorsements.length > 0
+    : open;
+
+  if (!reallyOpen) return null;
+
+  return (
+    <div class="shazam-container">
+      <div class="shazam-container-inner">
+        <div class="endorsements-container" ref={endorsementsContainer}>
+          <h3>
+            <Trans>Profiles featured by @{info.username}</Trans>
+          </h3>
+          {endorsementsUIState === 'loading' ? (
+            <p class="ui-state">
+              <Loader abrupt />
+            </p>
+          ) : endorsements.length > 0 ? (
+            <ul
+              class={`endorsements ${
+                endorsements.length > 10 ? 'expanded' : ''
+              }`}
+            >
+              {endorsements.map((account) => (
+                <li>
+                  <AccountBlock
+                    key={account.id}
+                    account={account}
+                    showStats
+                    avatarSize="xxl"
+                    relationship={relationshipsMap[account.id]}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="ui-state insignificant">
+              <Trans>No featured profiles.</Trans>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -644,12 +644,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const hasModal = !!document.querySelector('#modal-container > *');
         return hasModal;
       },
+      useKey: true,
     },
   );
   // For backspace, will always close both media and status page
-  useHotkeys('backspace', () => {
-    location.hash = closeLink;
-  });
+  useHotkeys(
+    'backspace',
+    () => {
+      location.hash = closeLink;
+    },
+    {
+      useKey: true,
+    },
+  );
 
   useHotkeys(
     'j',
@@ -871,7 +878,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                         setUIState('loading');
                         (async () => {
                           try {
-                            const results = await currentMasto.v2.search.fetch({
+                            const results = await currentMasto.v2.search.list({
                               q: heroStatus.url,
                               type: 'statuses',
                               resolve: true,

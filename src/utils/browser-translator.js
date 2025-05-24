@@ -1,29 +1,25 @@
 export const supportsBrowserTranslator =
-  'ai' in self && 'translator' in self.ai;
+  'LanguageDetector' in self && 'Translator' in self;
 
 // https://developer.chrome.com/docs/ai/language-detection
 export let langDetector;
 if (supportsBrowserTranslator) {
   (async () => {
     try {
-      const languageDetectorCapabilities =
-        await self.ai.languageDetector.capabilities();
-      const canDetect = languageDetectorCapabilities.capabilities;
-      if (canDetect === 'no') {
+      const availability = await LanguageDetector.availability();
+      if (availability === 'unavailable') {
         // The language detector isn't usable.
-        // return;
+        return;
       }
-      if (canDetect === 'readily') {
+      if (availability === 'available') {
         // The language detector can immediately be used.
-        langDetector = await self.ai.languageDetector.create();
+        langDetector = await LanguageDetector.create();
       } else {
         // The language detector can be used after model download.
-        langDetector = await self.ai.languageDetector.create({
+        langDetector = await LanguageDetector.create({
           monitor(m) {
             m.addEventListener('downloadprogress', (e) => {
-              console.log(
-                `Detector: Downloaded ${e.loaded} of ${e.total} bytes.`,
-              );
+              console.log(`Detector: Downloaded ${e.loaded * 100}%`);
             });
           },
         });
@@ -51,48 +47,45 @@ export const translate = async (text, source, target) => {
       };
     }
   }
-  console.groupCollapsed(
-    '💬 BROWSER TRANSLATE',
-    originalSource,
-    detectedSourceLanguage,
-    target,
-  );
-  console.log(text);
+  const groupLabel = `💬 BROWSER TRANSLATE ${text}`;
+  console.groupCollapsed(groupLabel);
+  console.log(originalSource, detectedSourceLanguage, target);
   try {
-    const translatorCapabilities = await self.ai.translator.capabilities();
-    const canTranslate = translatorCapabilities.languagePairAvailable(
-      source,
-      target,
-    );
-    if (canTranslate === 'no') {
-      console.groupEnd();
+    const translatorCapabilities = await Translator.availability({
+      sourceLanguage: source,
+      targetLanguage: target,
+    });
+    // Note: Translator.availability() returns 'unavailable', 'downloadable', 'downloading', or 'available'.
+    if (translatorCapabilities === 'unavailable') {
+      console.groupEnd(groupLabel);
       return {
         error: `Unsupported language pair: ${source} -> ${target}`,
       };
     }
     let translator;
-    if (canTranslate === 'readily') {
-      translator = await self.ai.translator.create({
+    if (translatorCapabilities === 'available') {
+      translator = await Translator.create({
         sourceLanguage: source,
         targetLanguage: target,
       });
     } else {
-      translator = await self.ai.translator.create({
+      translator = await Translator.create({
         sourceLanguage: source,
         targetLanguage: target,
         monitor(m) {
           m.addEventListener('downloadprogress', (e) => {
             console.log(
-              `Translate ${source} -> ${target}: Downloaded ${e.loaded} of ${e.total} bytes.`,
+              `Translate ${source} -> ${target}: Downloaded ${e.loaded * 100}%`,
             );
           });
         },
       });
+      await translator.ready;
     }
 
     const content = await translator.translate(text);
     console.log(content);
-    console.groupEnd();
+    console.groupEnd(groupLabel);
 
     return {
       content,
@@ -100,7 +93,7 @@ export const translate = async (text, source, target) => {
       provider: 'browser',
     };
   } catch (e) {
-    console.groupEnd();
+    console.groupEnd(groupLabel);
     console.error(e);
     return {
       error: e,

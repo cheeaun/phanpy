@@ -86,7 +86,7 @@ function MediaModal({
     {
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        return hasModal || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
       useKey: true,
     },

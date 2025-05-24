@@ -71,6 +71,7 @@ function Columns() {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -104,6 +105,7 @@ function Columns() {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

@@ -44,6 +44,7 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       keydown: false,
       keyup: true,
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
     [onClose],
   );

@@ -1504,14 +1504,17 @@ function Status({
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
     useKey: true,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
   });
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
     useKey: true,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
   });
   const bRef = useHotkeys(
     'shift+b',
@@ -1535,6 +1538,7 @@ function Status({
     {
       enabled: hotkeysEnabled && canBoost,
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
     },
   );
   const xRef = useHotkeys(
@@ -1563,6 +1567,7 @@ function Status({
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

@@ -99,6 +99,7 @@ function Shortcuts() {
     {
       enabled: !isMultiColumnMode,
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

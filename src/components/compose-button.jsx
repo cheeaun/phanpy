@@ -53,6 +53,10 @@ export default function ComposeButton() {
   const menuRef = useRef(null);
 
   function handleButton(e) {
+    // useKey will even listen to Shift
+    // e.g. press Shift (without c) will trigger this 😱
+    if (e.key.toLowerCase() !== 'c') return;
+
     if (snapStates.composerState.minimized) {
       states.composerState.minimized = false;
       openOSK();
@@ -71,19 +75,13 @@ export default function ComposeButton() {
     }
   }
 
-  useHotkeys(
-    'c, shift+c',
-    handleButton,
-    {
-      ignoreEventWhen: (e) => {
-        const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
-      },
+  useHotkeys('c, shift+c', handleButton, {
+    useKey: true,
+    ignoreEventWhen: (e) => {
+      const hasModal = !!document.querySelector('#modal-container > *');
+      return hasModal || e.metaKey || e.ctrlKey || e.altKey;
     },
-    {
-      useKey: true,
-    },
-  );
+  });
 
   // Setup longpress handler to open context menu
   const bindLongPress = useLongPress(

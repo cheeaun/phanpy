@@ -521,6 +521,7 @@ function Compose({
       enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
   useHotkeys(
@@ -536,12 +537,18 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
-      ignoreEventWhen: () => {
+      ignoreEventWhen: (e) => {
         const modals = document.querySelectorAll('#modal-container > *');
         const hasModal = !!modals;
         const hasOnlyComposer =
           modals.length === 1 && modals[0].querySelector('#compose-container');
-        return hasModal && !hasOnlyComposer;
+        return (
+          (hasModal && !hasOnlyComposer) ||
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey
+        );
       },
       useKey: true,
     },
@@ -3146,6 +3153,7 @@ function MentionModal({
       preventDefault: true,
       enableOnFormTags: ['input'],
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -3173,6 +3181,7 @@ function MentionModal({
       preventDefault: true,
       enableOnFormTags: ['input'],
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -3199,6 +3208,7 @@ function MentionModal({
       preventDefault: true,
       enableOnFormTags: ['input'],
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

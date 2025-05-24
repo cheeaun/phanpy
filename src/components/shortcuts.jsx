@@ -33,9 +33,6 @@ function Shortcuts() {
   const isMultiColumnMode =
     settings.shortcutsViewMode === 'multi-column' ||
     (!settings.shortcutsViewMode && settings.shortcutsColumnsMode);
-  if (isMultiColumnMode) {
-    return null;
-  }
 
   const menuRef = useRef();
 
@@ -106,6 +103,10 @@ function Shortcuts() {
   );
 
   const [lists, setLists] = useState([]);
+
+  if (isMultiColumnMode) {
+    return null;
+  }
 
   return (
     <div id="shortcuts">

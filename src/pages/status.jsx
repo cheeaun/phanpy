@@ -1185,8 +1185,12 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     .map((ancestor) => (
                       <Avatar
                         key={ancestor.account.id}
-                        url={ancestor.account.avatar}
+                        url={
+                          ancestor.account.avatarStatic ||
+                          ancestor.account.avatar
+                        }
                         alt={ancestor.account.displayName}
+                        squircle={ancestor.account?.bot}
                       />
                     ))}
                   {/* <Icon icon="comment" />{' '} */}

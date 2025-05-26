@@ -1,9 +1,10 @@
+const supportsLanguageDetector = 'LanguageDetector' in self;
 export const supportsBrowserTranslator =
-  'LanguageDetector' in self && 'Translator' in self;
+  supportsLanguageDetector && 'Translator' in self;
 
 // https://developer.chrome.com/docs/ai/language-detection
 export let langDetector;
-if (supportsBrowserTranslator) {
+if (supportsLanguageDetector) {
   (async () => {
     try {
       const availability = await LanguageDetector.availability();

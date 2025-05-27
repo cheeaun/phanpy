@@ -117,7 +117,7 @@ msgstr ""
 #: src/components/status.jsx:2598
 #: src/components/status.jsx:2601
 #: src/pages/account-statuses.jsx:526
-#: src/pages/accounts.jsx:110
+#: src/pages/accounts.jsx:113
 #: src/pages/hashtag.jsx:202
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
@@ -216,7 +216,7 @@ msgstr ""
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1168
+#: src/pages/settings.jsx:1171
 msgid "Boosts"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgstr ""
 #: src/components/status.jsx:3100
 #: src/components/status.jsx:3340
 #: src/components/status.jsx:3849
-#: src/pages/accounts.jsx:37
+#: src/pages/accounts.jsx:40
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
@@ -1076,7 +1076,7 @@ msgstr ""
 
 #: src/components/generic-accounts.jsx:154
 #: src/components/notification.jsx:449
-#: src/pages/accounts.jsx:42
+#: src/pages/accounts.jsx:45
 #: src/pages/search.jsx:334
 #: src/pages/search.jsx:367
 msgid "Accounts"
@@ -1412,7 +1412,7 @@ msgstr ""
 #: src/pages/home.jsx:228
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1160
+#: src/pages/settings.jsx:1163
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
@@ -1451,7 +1451,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1164
+#: src/pages/settings.jsx:1167
 msgid "Likes"
 msgstr ""
 
@@ -1490,8 +1490,8 @@ msgid "Accounts…"
 msgstr ""
 
 #: src/components/nav-menu.jsx:326
-#: src/pages/login.jsx:27
-#: src/pages/login.jsx:190
+#: src/pages/login.jsx:31
+#: src/pages/login.jsx:191
 #: src/pages/status.jsx:866
 #: src/pages/welcome.jsx:65
 msgid "Log in"
@@ -1754,19 +1754,19 @@ msgstr ""
 
 #. Relative time in seconds, as short as possible
 #. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
-#: src/components/relative-time.jsx:59
+#: src/components/relative-time.jsx:61
 msgid "{0}s"
 msgstr ""
 
 #. Relative time in minutes, as short as possible
 #. placeholder {0}: Math.floor(seconds / minute)
-#: src/components/relative-time.jsx:64
+#: src/components/relative-time.jsx:66
 msgid "{0}m"
 msgstr ""
 
 #. Relative time in hours, as short as possible
 #. placeholder {0}: Math.floor(seconds / hour)
-#: src/components/relative-time.jsx:69
+#: src/components/relative-time.jsx:71
 msgid "{0}h"
 msgstr ""
 
@@ -1926,7 +1926,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:194
+#: src/pages/login.jsx:195
 msgid "Instance"
 msgstr ""
 
@@ -2513,7 +2513,7 @@ msgid "<0/> <1/> boosted"
 msgstr ""
 
 #: src/components/timeline.jsx:485
-#: src/pages/settings.jsx:1188
+#: src/pages/settings.jsx:1191
 msgid "New posts"
 msgstr ""
 
@@ -2594,7 +2594,7 @@ msgstr "Login required."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:271
+#: src/pages/login.jsx:272
 msgid "Go home"
 msgstr ""
 
@@ -2688,44 +2688,49 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
-#: src/pages/accounts.jsx:56
+#: src/pages/accounts.jsx:59
 msgid "Current"
 msgstr ""
 
-#: src/pages/accounts.jsx:102
+#: src/pages/accounts.jsx:105
 msgid "Default"
 msgstr ""
 
-#: src/pages/accounts.jsx:124
+#: src/pages/accounts.jsx:127
 msgid "Switch to this account"
 msgstr "Switch to this account"
 
-#: src/pages/accounts.jsx:133
+#: src/pages/accounts.jsx:136
 msgid "Switch in new tab/window"
 msgstr "Switch in new tab/window"
 
-#: src/pages/accounts.jsx:147
+#: src/pages/accounts.jsx:150
 msgid "View profile…"
 msgstr ""
 
-#: src/pages/accounts.jsx:164
+#: src/pages/accounts.jsx:167
 msgid "Set as default"
 msgstr ""
 
 #. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:174
+#: src/pages/accounts.jsx:177
 msgid "Log out <0>@{0}</0>?"
 msgstr ""
 
-#: src/pages/accounts.jsx:197
+#: src/pages/accounts.jsx:206
 msgid "Log out…"
 msgstr ""
 
-#: src/pages/accounts.jsx:210
+#. placeholder {0}: niceDateTime(account.createdAt)
+#: src/pages/accounts.jsx:213
+msgid "Connected on {0} (<0/>)"
+msgstr "Connected on {0} (<0/>)"
+
+#: src/pages/accounts.jsx:230
 msgid "Add an existing account"
 msgstr ""
 
-#: src/pages/accounts.jsx:217
+#: src/pages/accounts.jsx:237
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr ""
 
@@ -3302,32 +3307,32 @@ msgstr ""
 msgid "No lists yet."
 msgstr ""
 
-#: src/pages/login.jsx:110
-#: src/pages/login.jsx:123
+#: src/pages/login.jsx:115
+#: src/pages/login.jsx:124
 msgid "Failed to register application"
 msgstr "Failed to register application"
 
-#: src/pages/login.jsx:209
+#: src/pages/login.jsx:210
 msgid "instance domain"
 msgstr "instance domain"
 
-#: src/pages/login.jsx:233
+#: src/pages/login.jsx:234
 msgid "e.g. “mastodon.social”"
 msgstr ""
 
-#: src/pages/login.jsx:244
+#: src/pages/login.jsx:245
 msgid "Failed to log in. Please try again or try another instance."
 msgstr ""
 
-#: src/pages/login.jsx:256
+#: src/pages/login.jsx:257
 msgid "Continue with {selectedInstanceText}"
 msgstr ""
 
-#: src/pages/login.jsx:257
+#: src/pages/login.jsx:258
 msgid "Continue"
 msgstr ""
 
-#: src/pages/login.jsx:265
+#: src/pages/login.jsx:266
 msgid "Don't have an account? Create one!"
 msgstr ""
 
@@ -3382,7 +3387,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:681
-#: src/pages/settings.jsx:1176
+#: src/pages/settings.jsx:1179
 msgid "Follow requests"
 msgstr ""
 
@@ -3786,57 +3791,57 @@ msgstr ""
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:1073
-#: src/pages/settings.jsx:1078
+#: src/pages/settings.jsx:1076
+#: src/pages/settings.jsx:1081
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1084
+#: src/pages/settings.jsx:1087
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1091
+#: src/pages/settings.jsx:1094
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1113
+#: src/pages/settings.jsx:1116
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1122
+#: src/pages/settings.jsx:1125
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1131
+#: src/pages/settings.jsx:1134
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1135
+#: src/pages/settings.jsx:1138
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1139
+#: src/pages/settings.jsx:1142
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1172
+#: src/pages/settings.jsx:1175
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1180
+#: src/pages/settings.jsx:1183
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1184
+#: src/pages/settings.jsx:1187
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1205
+#: src/pages/settings.jsx:1208
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1221
+#: src/pages/settings.jsx:1224
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

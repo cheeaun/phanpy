@@ -105,3 +105,32 @@ export async function getAccessToken({
   console.log({ tokenJSON });
   return tokenJSON;
 }
+
+export async function revokeAccessToken({
+  instanceURL,
+  client_id,
+  client_secret,
+  token,
+}) {
+  try {
+    const params = new URLSearchParams({
+      client_id,
+      client_secret,
+      token,
+    });
+
+    const revokeResponse = await fetch(`https://${instanceURL}/oauth/revoke`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+      keepalive: true,
+    });
+
+    return revokeResponse.ok;
+  } catch (error) {
+    console.erro('Error revoking token', error);
+    return false;
+  }
+}

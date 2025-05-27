@@ -14,6 +14,7 @@ import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
+import { revokeAccessToken } from '../utils/auth';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -185,9 +186,15 @@ function Accounts({ onClose }) {
                         }
                         disabled={!isCurrent}
                         menuItemClassName="danger"
-                        onClick={() => {
+                        onClick={async () => {
                           // const yes = confirm('Log out?');
                           // if (!yes) return;
+                          await revokeAccessToken({
+                            instanceURL: account.instanceURL,
+                            client_id: account.clientId,
+                            client_secret: account.clientSecret,
+                            token: account.accessToken,
+                          });
                           accounts.splice(i, 1);
                           store.local.setJSON('accounts', accounts);
                           // location.reload();

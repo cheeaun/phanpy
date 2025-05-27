@@ -169,9 +169,11 @@ export function getAPIVersions() {
   return instance?.apiVersions || {};
 }
 
-export function getVapidKey() {
+export function getVapidKey(instance) {
   // Vapid key has moved from account to instance config
-  const config = getCurrentInstanceConfiguration();
+  const config = instance
+    ? getInstanceConfiguration(instance)
+    : getCurrentInstanceConfiguration();
   const vapidKey = config?.vapid?.publicKey || config?.vapid?.public_key;
   return vapidKey || getCurrentAccount()?.vapidKey;
 }
@@ -179,4 +181,17 @@ export function getVapidKey() {
 export function isMediaFirstInstance() {
   const instance = getCurrentInstance();
   return /pixelfed/i.test(instance?.version);
+}
+
+const CREDENTIAL_APPLICATIONS_KEY = 'credentialApplications';
+
+export function storeCredentialApplication(instanceURL, credentialApplication) {
+  const stored = store.local.getJSON(CREDENTIAL_APPLICATIONS_KEY) || {};
+  stored[instanceURL] = credentialApplication;
+  store.local.setJSON(CREDENTIAL_APPLICATIONS_KEY, stored);
+}
+
+export function getCredentialApplication(instanceURL) {
+  const stored = store.local.getJSON(CREDENTIAL_APPLICATIONS_KEY) || {};
+  return stored[instanceURL] || null;
 }

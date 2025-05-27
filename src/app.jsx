@@ -63,7 +63,9 @@ import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
   getAccount,
+  getCredentialApplication,
   getCurrentAccount,
+  getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
 
@@ -367,9 +369,12 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.sessionCookie.get('clientID');
-      const clientSecret = store.sessionCookie.get('clientSecret');
-      const vapidKey = store.sessionCookie.get('vapidKey');
+      const {
+        client_id: clientID,
+        client_secret: clientSecret,
+        vapid_key,
+      } = getCredentialApplication(instanceURL) || {};
+      const vapidKey = getVapidKey(instanceURL) || vapid_key;
       const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {

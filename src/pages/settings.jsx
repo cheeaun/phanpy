@@ -24,7 +24,7 @@ import {
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getAPIVersions } from '../utils/store-utils';
+import { getAPIVersions, getVapidKey } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 const DEFAULT_TEXT_SIZE = 16;
@@ -860,6 +860,9 @@ function Settings({ onClose }) {
               </Link>
             </p>
             <p>Debugging</p>
+            <p>
+              <b>Vapid key</b>: {getVapidKey()}
+            </p>
             {__BENCH_RESULTS?.size > 0 && (
               <ul>
                 {Array.from(__BENCH_RESULTS.entries()).map(

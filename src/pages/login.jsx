@@ -18,6 +18,10 @@ import {
 } from '../utils/auth';
 import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
+import {
+  getCredentialApplication,
+  storeCredentialApplication,
+} from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
@@ -87,19 +91,20 @@ function Login() {
 
       setUIState('loading');
       try {
-        const { client_id, client_secret, vapid_key } =
-          await registerApplication({
+        let credentialApplication = getCredentialApplication(instanceURL);
+        if (!credentialApplication) {
+          credentialApplication = await registerApplication({
             instanceURL,
           });
+          storeCredentialApplication(instanceURL, credentialApplication);
+        }
+
+        const { client_id, client_secret } = credentialApplication;
 
         const authPKCE = await supportsPKCE({ instanceURL });
         console.log({ authPKCE });
         if (authPKCE) {
           if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
-
             const [url, verifier] = await getPKCEAuthorizationURL({
               instanceURL,
               client_id,
@@ -111,10 +116,6 @@ function Login() {
           }
         } else {
           if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
-
             location.href = await getAuthorizationURL({
               instanceURL,
               client_id,

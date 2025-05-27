@@ -29,6 +29,7 @@ function Accounts({ onClose }) {
   const accounts = store.local.getJSON('accounts');
   const currentAccount = getCurrentAccountID();
   const moreThanOneAccount = accounts.length > 1;
+  const moreThanThreeAccounts = accounts.length > 3;
 
   const [_, reload] = useReducer((x) => x + 1, 0);
   const [accountsListParent] = useAutoAnimate();
@@ -152,21 +153,71 @@ function Accounts({ onClose }) {
                       </MenuItem>
                       <MenuDivider />
                       {moreThanOneAccount && (
-                        <MenuItem
-                          disabled={isDefault}
-                          onClick={() => {
-                            // Move account to the top of the list
-                            accounts.splice(i, 1);
-                            accounts.unshift(account);
-                            store.local.setJSON('accounts', accounts);
-                            reload();
-                          }}
-                        >
-                          <Icon icon="check-circle" />
-                          <span>
-                            <Trans>Set as default</Trans>
-                          </span>
-                        </MenuItem>
+                        <>
+                          <MenuItem
+                            disabled={isDefault}
+                            onClick={() => {
+                              // Move account to the top of the list
+                              accounts.splice(i, 1);
+                              accounts.unshift(account);
+                              store.local.setJSON('accounts', accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="check-circle" />
+                            <span>
+                              <Trans>Set as default</Trans>
+                            </span>
+                          </MenuItem>
+                          {moreThanThreeAccounts && (
+                            <MenuItem
+                              disabled={i <= 2}
+                              onClick={() => {
+                                // Move account to position 1 (right below default)
+                                accounts.splice(i, 1);
+                                accounts.splice(1, 0, account);
+                                store.local.setJSON('accounts', accounts);
+                                reload();
+                              }}
+                            >
+                              <Icon icon="arrow-to-up-line" />
+                              <span>
+                                <Trans>Move to top</Trans>
+                              </span>
+                            </MenuItem>
+                          )}
+                          <MenuItem
+                            disabled={i <= 1}
+                            onClick={() => {
+                              // Move account one position up
+                              accounts.splice(i, 1);
+                              accounts.splice(i - 1, 0, account);
+                              store.local.setJSON('accounts', accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="arrow-up" />
+                            <span>
+                              <Trans>Move up</Trans>
+                            </span>
+                          </MenuItem>
+                          <MenuItem
+                            disabled={i === 0 || i === accounts.length - 1}
+                            onClick={() => {
+                              // Move account one position down
+                              accounts.splice(i, 1);
+                              accounts.splice(i + 1, 0, account);
+                              store.local.setJSON('accounts', accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="arrow-down" />
+                            <span>
+                              <Trans>Move down</Trans>
+                            </span>
+                          </MenuItem>
+                          <MenuDivider />
+                        </>
                       )}
                       <MenuConfirm
                         subMenu

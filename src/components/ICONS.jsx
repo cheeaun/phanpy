@@ -16,6 +16,7 @@ export const ICONS = {
   },
   'arrow-up': () => import('@iconify-icons/mingcute/arrow-up-line'),
   'arrow-down': () => import('@iconify-icons/mingcute/arrow-down-line'),
+  'arrow-to-up-line': () => import('@iconify-icons/mingcute/arrow-to-up-line'),
   earth: () => import('@iconify-icons/mingcute/earth-line'),
   lock: () => import('@iconify-icons/mingcute/lock-line'),
   unlock: () => import('@iconify-icons/mingcute/unlock-line'),

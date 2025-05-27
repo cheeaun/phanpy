@@ -20,6 +20,7 @@ import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
 import {
   getCredentialApplication,
+  hasAccountInInstance,
   storeCredentialApplication,
 } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
@@ -103,11 +104,13 @@ function Login() {
 
         const authPKCE = await supportsPKCE({ instanceURL });
         console.log({ authPKCE });
+        const forceLogin = hasAccountInInstance(instanceURL);
         if (authPKCE) {
           if (client_id && client_secret) {
             const [url, verifier] = await getPKCEAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
             store.sessionCookie.set('codeVerifier', verifier);
             location.href = url;
@@ -119,6 +122,7 @@ function Login() {
             location.href = await getAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
           } else {
             alert(t`Failed to register application`);

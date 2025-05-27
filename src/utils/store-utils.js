@@ -16,6 +16,11 @@ export function getAccountByInstance(instance) {
   return accounts.find((a) => a.instanceURL === instance);
 }
 
+export function hasAccountInInstance(instance) {
+  const accounts = store.local.getJSON('accounts') || [];
+  return accounts.some((a) => a.instanceURL === instance);
+}
+
 const standaloneMQ = window.matchMedia('(display-mode: standalone)');
 
 export function getCurrentAccountID() {

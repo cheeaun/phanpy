@@ -178,6 +178,7 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
     instanceURL: instance.toLowerCase(),
     accessToken,
     vapidKey,
+    createdAt: Date.now(),
   });
 }
 

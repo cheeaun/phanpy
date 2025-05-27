@@ -12,7 +12,9 @@ import MenuConfirm from '../components/menu-confirm';
 import MenuLink from '../components/menu-link';
 import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
+import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
@@ -197,6 +199,17 @@ function Accounts({ onClose }) {
                           <Trans>Log out…</Trans>
                         </span>
                       </MenuConfirm>
+                      {!!account?.createdAt && (
+                        <div class="footer">
+                          <Icon icon="account-add" />
+                          <span>
+                            <Trans>
+                              Connected on {niceDateTime(account.createdAt)} (
+                              <RelativeTime datetime={account.createdAt} />)
+                            </Trans>
+                          </span>
+                        </div>
+                      )}
                     </Menu2>
                   </div>
                 </li>

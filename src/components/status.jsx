@@ -104,7 +104,7 @@ const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const rtf = new Intl.RelativeTimeFormat();
+const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const REACTIONS_LIMIT = 80;
 
@@ -379,7 +379,8 @@ function Status({
   showReplyParent,
   mediaFirst,
 }) {
-  const { _, t } = useLingui();
+  const { _, t, i18n } = useLingui();
+  const rtf = RTF(i18n.locale);
 
   if (skeleton) {
     return (

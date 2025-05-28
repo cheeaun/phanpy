@@ -2298,7 +2298,7 @@ function Status({
                             media={media}
                             autoAnimate
                             showCaption
-                            allowLongerCaption={!content}
+                            allowLongerCaption={!content || isSizeLarge}
                             lang={language}
                             to={`/${instance}/s/${id}?${
                               withinContext ? 'media' : 'media-only'

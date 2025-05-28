@@ -12,7 +12,7 @@ import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID } from '../utils/store-utils';
+import { getAccounts, getCurrentAccountID } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import Avatar from './avatar';
@@ -27,7 +27,7 @@ function NavMenu(props) {
   const { masto, instance, authenticated } = api();
 
   const [currentAccount, moreThanOneAccount] = useMemo(() => {
-    const accounts = store.local.getJSON('accounts') || [];
+    const accounts = getAccounts();
     const acc =
       accounts.find((account) => account.info.id === getCurrentAccountID()) ||
       accounts[0];

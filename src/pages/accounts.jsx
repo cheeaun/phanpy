@@ -18,7 +18,12 @@ import { revokeAccessToken } from '../utils/auth';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
+import {
+  getAccounts,
+  getCurrentAccountID,
+  saveAccounts,
+  setCurrentAccountID,
+} from '../utils/store-utils';
 
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
@@ -26,7 +31,7 @@ function Accounts({ onClose }) {
   const { t } = useLingui();
   const { masto } = api();
   // Accounts
-  const accounts = store.local.getJSON('accounts');
+  const accounts = getAccounts();
   const currentAccount = getCurrentAccountID();
   const moreThanOneAccount = accounts.length > 1;
 
@@ -70,7 +75,7 @@ function Accounts({ onClose }) {
                               .fetch();
                             console.log('fetched account info', info);
                             account.info = info;
-                            store.local.setJSON('accounts', accounts);
+                            saveAccounts(accounts);
                             reload();
                           } catch (e) {}
                         }
@@ -159,7 +164,7 @@ function Accounts({ onClose }) {
                               // Move account to the top of the list
                               accounts.splice(i, 1);
                               accounts.unshift(account);
-                              store.local.setJSON('accounts', accounts);
+                              saveAccounts(accounts);
                               reload();
                             }}
                           >
@@ -174,7 +179,7 @@ function Accounts({ onClose }) {
                               // Move account one position up
                               accounts.splice(i, 1);
                               accounts.splice(i - 1, 0, account);
-                              store.local.setJSON('accounts', accounts);
+                              saveAccounts(accounts);
                               reload();
                             }}
                           >
@@ -189,7 +194,7 @@ function Accounts({ onClose }) {
                               // Move account one position down
                               accounts.splice(i, 1);
                               accounts.splice(i + 1, 0, account);
-                              store.local.setJSON('accounts', accounts);
+                              saveAccounts(accounts);
                               reload();
                             }}
                           >
@@ -229,7 +234,7 @@ function Accounts({ onClose }) {
                             token: account.accessToken,
                           });
                           accounts.splice(i, 1);
-                          store.local.setJSON('accounts', accounts);
+                          saveAccounts(accounts);
                           // location.reload();
                           location.href = location.pathname || '/';
                         }}

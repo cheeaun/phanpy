@@ -27,7 +27,12 @@ import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
+import {
+  getAccounts,
+  getCurrentAccountID,
+  saveAccounts,
+  updateAccount,
+} from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import AccountBlock from './account-block';
@@ -224,7 +229,7 @@ function AccountInfo({
       info?.url
     );
     if (isSelf && instance && infoHasEssentials) {
-      const accounts = store.local.getJSON('accounts');
+      const accounts = getAccounts();
       let updated = false;
       accounts.forEach((account) => {
         if (account.info.id === info.id && account.instanceURL === instance) {
@@ -234,7 +239,7 @@ function AccountInfo({
       });
       if (updated) {
         console.log('Updated account info', info);
-        store.local.setJSON('accounts', accounts);
+        saveAccounts(accounts);
       }
     }
   }, [isSelf, info, instance]);

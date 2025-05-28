@@ -29,7 +29,6 @@ function Accounts({ onClose }) {
   const accounts = store.local.getJSON('accounts');
   const currentAccount = getCurrentAccountID();
   const moreThanOneAccount = accounts.length > 1;
-  const moreThanThreeAccounts = accounts.length > 3;
 
   const [_, reload] = useReducer((x) => x + 1, 0);
   const [accountsListParent] = useAutoAnimate();
@@ -169,23 +168,6 @@ function Accounts({ onClose }) {
                               <Trans>Set as default</Trans>
                             </span>
                           </MenuItem>
-                          {moreThanThreeAccounts && (
-                            <MenuItem
-                              disabled={i <= 2}
-                              onClick={() => {
-                                // Move account to position 1 (right below default)
-                                accounts.splice(i, 1);
-                                accounts.splice(1, 0, account);
-                                store.local.setJSON('accounts', accounts);
-                                reload();
-                              }}
-                            >
-                              <Icon icon="arrow-to-up-line" />
-                              <span>
-                                <Trans>Move to top</Trans>
-                              </span>
-                            </MenuItem>
-                          )}
                           <MenuItem
                             disabled={i <= 1}
                             onClick={() => {

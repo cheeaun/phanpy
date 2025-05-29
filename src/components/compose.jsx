@@ -287,8 +287,8 @@ function Compose({
   const focusTextarea = () => {
     setTimeout(() => {
       if (!textareaRef.current) return;
-      // status starts with newline, focus on first position
-      if (draftStatus?.status?.startsWith?.('\n')) {
+      // status starts with newline or space, focus on first position
+      if (/^\n|\s/.test(draftStatus?.status)) {
         textareaRef.current.selectionStart = 0;
         textareaRef.current.selectionEnd = 0;
       }

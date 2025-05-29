@@ -168,126 +168,147 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
   }, []);
 
   return (
-    <Timeline
-      key={instance + hashtagTitle}
-      title={title}
-      titleComponent={
-        !!instance && (
-          <h1 class="header-double-lines">
-            <b dir="auto">{hashtagTitle}</b>
-            <div>{instance}</div>
-          </h1>
-        )
-      }
-      id="hashtag"
-      instance={instance}
-      emptyText={t`No one has posted anything with this tag yet.`}
-      errorText={t`Unable to load posts with this tag`}
-      fetchItems={fetchHashtags}
-      checkForUpdates={checkForUpdates}
-      useItemID
-      view={media || mediaFirst ? 'media' : undefined}
-      refresh={media}
-      // allowFilters
-      filterContext="public"
-      headerEnd={
-        <Menu2
-          portal
-          setDownOverflow
-          overflow="auto"
-          // viewScroll="close"
-          position="anchor"
-          menuButton={
-            <button type="button" class="plain">
-              <Icon icon="more" size="l" alt={t`More`} />
-            </button>
-          }
-        >
-          {!!info && hashtags.length === 1 && (
-            <>
-              <MenuConfirm
-                subMenu
-                confirm={info.following}
-                confirmLabel={t`Unfollow #${hashtag}?`}
-                disabled={followUIState === 'loading' || !authenticated}
-                onClick={() => {
-                  setFollowUIState('loading');
-                  if (info.following) {
-                    // const yes = confirm(`Unfollow #${hashtag}?`);
-                    // if (!yes) {
-                    //   setFollowUIState('default');
-                    //   return;
-                    // }
-                    masto.v1.tags
-                      .$select(hashtag)
-                      .unfollow()
-                      .then(() => {
-                        setInfo({ ...info, following: false });
-                        showToast(t`Unfollowed #${hashtag}`);
-                      })
-                      .catch((e) => {
-                        alert(e);
-                        console.error(e);
-                      })
-                      .finally(() => {
-                        setFollowUIState('default');
-                      });
-                  } else {
-                    masto.v1.tags
-                      .$select(hashtag)
-                      .follow()
-                      .then(() => {
-                        setInfo({ ...info, following: true });
-                        showToast(t`Followed #${hashtag}`);
-                      })
-                      .catch((e) => {
-                        alert(e);
-                        console.error(e);
-                      })
-                      .finally(() => {
-                        setFollowUIState('default');
-                      });
-                  }
-                }}
-              >
-                {info.following ? (
-                  <>
-                    <Icon icon="check-circle" />{' '}
-                    <span>
-                      <Trans>Following…</Trans>
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <Icon icon="plus" />{' '}
-                    <span>
-                      <Trans>Follow</Trans>
-                    </span>
-                  </>
-                )}
-              </MenuConfirm>
-              <MenuItem
-                type="checkbox"
-                checked={isFeaturedTag}
-                disabled={featuredUIState === 'loading' || !authenticated}
-                onClick={() => {
-                  setFeaturedUIState('loading');
-                  if (isFeaturedTag) {
-                    const featuredTagID = featuredTags.find(
-                      (tag) => tag.name.toLowerCase() === hashtag.toLowerCase(),
-                    ).id;
-                    if (featuredTagID) {
-                      masto.v1.featuredTags
-                        .$select(featuredTagID)
-                        .remove()
+    <>
+      <Timeline
+        key={instance + hashtagTitle}
+        title={title}
+        titleComponent={
+          !!instance && (
+            <h1 class="header-double-lines">
+              <b dir="auto">{hashtagTitle}</b>
+              <div>{instance}</div>
+            </h1>
+          )
+        }
+        id="hashtag"
+        instance={instance}
+        emptyText={t`No one has posted anything with this tag yet.`}
+        errorText={t`Unable to load posts with this tag`}
+        fetchItems={fetchHashtags}
+        checkForUpdates={checkForUpdates}
+        useItemID
+        view={media || mediaFirst ? 'media' : undefined}
+        refresh={media}
+        // allowFilters
+        filterContext="public"
+        headerEnd={
+          <Menu2
+            portal
+            setDownOverflow
+            overflow="auto"
+            // viewScroll="close"
+            position="anchor"
+            menuButton={
+              <button type="button" class="plain">
+                <Icon icon="more" size="l" alt={t`More`} />
+              </button>
+            }
+          >
+            {!!info && hashtags.length === 1 && (
+              <>
+                <MenuConfirm
+                  subMenu
+                  confirm={info.following}
+                  confirmLabel={t`Unfollow #${hashtag}?`}
+                  disabled={followUIState === 'loading' || !authenticated}
+                  onClick={() => {
+                    setFollowUIState('loading');
+                    if (info.following) {
+                      // const yes = confirm(`Unfollow #${hashtag}?`);
+                      // if (!yes) {
+                      //   setFollowUIState('default');
+                      //   return;
+                      // }
+                      masto.v1.tags
+                        .$select(hashtag)
+                        .unfollow()
                         .then(() => {
-                          setIsFeaturedTag(false);
-                          showToast(t`Unfeatured on profile`);
-                          setFeaturedTags(
-                            featuredTags.filter(
-                              (tag) => tag.id !== featuredTagID,
-                            ),
-                          );
+                          setInfo({ ...info, following: false });
+                          showToast(t`Unfollowed #${hashtag}`);
+                        })
+                        .catch((e) => {
+                          alert(e);
+                          console.error(e);
+                        })
+                        .finally(() => {
+                          setFollowUIState('default');
+                        });
+                    } else {
+                      masto.v1.tags
+                        .$select(hashtag)
+                        .follow()
+                        .then(() => {
+                          setInfo({ ...info, following: true });
+                          showToast(t`Followed #${hashtag}`);
+                        })
+                        .catch((e) => {
+                          alert(e);
+                          console.error(e);
+                        })
+                        .finally(() => {
+                          setFollowUIState('default');
+                        });
+                    }
+                  }}
+                >
+                  {info.following ? (
+                    <>
+                      <Icon icon="check-circle" />{' '}
+                      <span>
+                        <Trans>Following…</Trans>
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon="plus" />{' '}
+                      <span>
+                        <Trans>Follow</Trans>
+                      </span>
+                    </>
+                  )}
+                </MenuConfirm>
+                <MenuItem
+                  type="checkbox"
+                  checked={isFeaturedTag}
+                  disabled={featuredUIState === 'loading' || !authenticated}
+                  onClick={() => {
+                    setFeaturedUIState('loading');
+                    if (isFeaturedTag) {
+                      const featuredTagID = featuredTags.find(
+                        (tag) =>
+                          tag.name.toLowerCase() === hashtag.toLowerCase(),
+                      ).id;
+                      if (featuredTagID) {
+                        masto.v1.featuredTags
+                          .$select(featuredTagID)
+                          .remove()
+                          .then(() => {
+                            setIsFeaturedTag(false);
+                            showToast(t`Unfeatured on profile`);
+                            setFeaturedTags(
+                              featuredTags.filter(
+                                (tag) => tag.id !== featuredTagID,
+                              ),
+                            );
+                          })
+                          .catch((e) => {
+                            console.error(e);
+                          })
+                          .finally(() => {
+                            setFeaturedUIState('default');
+                          });
+                      } else {
+                        showToast(t`Unable to unfeature on profile`);
+                      }
+                    } else {
+                      masto.v1.featuredTags
+                        .create({
+                          name: hashtag,
+                        })
+                        .then((value) => {
+                          setIsFeaturedTag(true);
+                          showToast(t`Featured on profile`);
+                          setFeaturedTags(featuredTags.concat(value));
                         })
                         .catch((e) => {
                           console.error(e);
@@ -295,86 +316,109 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                         .finally(() => {
                           setFeaturedUIState('default');
                         });
-                    } else {
-                      showToast(t`Unable to unfeature on profile`);
                     }
-                  } else {
-                    masto.v1.featuredTags
-                      .create({
-                        name: hashtag,
-                      })
-                      .then((value) => {
-                        setIsFeaturedTag(true);
-                        showToast(t`Featured on profile`);
-                        setFeaturedTags(featuredTags.concat(value));
-                      })
-                      .catch((e) => {
-                        console.error(e);
-                      })
-                      .finally(() => {
-                        setFeaturedUIState('default');
-                      });
-                  }
-                }}
-              >
-                {isFeaturedTag ? (
-                  <>
-                    <Icon icon="check-circle" />
-                    <span>
-                      <Trans>Featured on profile</Trans>
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <Icon icon="check-circle" />
-                    <span>
-                      <Trans>Feature on profile</Trans>
-                    </span>
-                  </>
-                )}
-              </MenuItem>
-              <MenuDivider />
-            </>
-          )}
-          {!mediaFirst && (
-            <>
-              <MenuHeader className="plain">
-                <Trans>Filters</Trans>
-              </MenuHeader>
-              <MenuItem
-                type="checkbox"
-                checked={!!media}
-                onClick={() => {
-                  if (media) {
-                    searchParams.delete('media');
-                  } else {
-                    searchParams.set('media', '1');
-                  }
-                  setSearchParams(searchParams);
-                }}
-              >
-                <Icon icon="check-circle" alt="☑️" />{' '}
-                <span class="menu-grow">
-                  <Trans>Media only</Trans>
-                </span>
-              </MenuItem>
-              <MenuDivider />
-            </>
-          )}
-          <FocusableItem className="menu-field" disabled={reachLimit}>
-            {({ ref }) => (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const newHashtag = e.target[0].value?.trim?.();
-                  // Use includes but need to be case insensitive
-                  if (
-                    newHashtag &&
-                    !hashtags.some(
-                      (t) => t.toLowerCase() === newHashtag.toLowerCase(),
-                    )
-                  ) {
-                    hashtags.push(newHashtag);
+                  }}
+                >
+                  {isFeaturedTag ? (
+                    <>
+                      <Icon icon="check-circle" />
+                      <span>
+                        <Trans>Featured on profile</Trans>
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Icon icon="check-circle" />
+                      <span>
+                        <Trans>Feature on profile</Trans>
+                      </span>
+                    </>
+                  )}
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+            {!mediaFirst && (
+              <>
+                <MenuHeader className="plain">
+                  <Trans>Filters</Trans>
+                </MenuHeader>
+                <MenuItem
+                  type="checkbox"
+                  checked={!!media}
+                  onClick={() => {
+                    if (media) {
+                      searchParams.delete('media');
+                    } else {
+                      searchParams.set('media', '1');
+                    }
+                    setSearchParams(searchParams);
+                  }}
+                >
+                  <Icon icon="check-circle" alt="☑️" />{' '}
+                  <span class="menu-grow">
+                    <Trans>Media only</Trans>
+                  </span>
+                </MenuItem>
+                <MenuDivider />
+              </>
+            )}
+            <FocusableItem className="menu-field" disabled={reachLimit}>
+              {({ ref }) => (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const newHashtag = e.target[0].value?.trim?.();
+                    // Use includes but need to be case insensitive
+                    if (
+                      newHashtag &&
+                      !hashtags.some(
+                        (t) => t.toLowerCase() === newHashtag.toLowerCase(),
+                      )
+                    ) {
+                      hashtags.push(newHashtag);
+                      hashtags.sort();
+                      // navigate(
+                      //   instance
+                      //     ? `/${instance}/t/${hashtags.join('+')}`
+                      //     : `/t/${hashtags.join('+')}`,
+                      // );
+                      location.hash = instance
+                        ? `/${instance}/t/${hashtags.join('+')}${linkParams}`
+                        : `/t/${hashtags.join('+')}${linkParams}`;
+                    }
+                  }}
+                >
+                  <Icon icon="hashtag" />
+                  <input
+                    ref={ref}
+                    type="text"
+                    placeholder={
+                      reachLimit
+                        ? plural(TOTAL_TAGS_LIMIT, {
+                            other: 'Max # tags',
+                          })
+                        : t`Add hashtag`
+                    }
+                    required
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellCheck={false}
+                    // no spaces, no hashtags
+                    pattern="[^#][^\s#]+[^#]"
+                    disabled={reachLimit}
+                    dir="auto"
+                  />
+                </form>
+              )}
+            </FocusableItem>
+            <MenuGroup takeOverflow>
+              {hashtags.map((tag, i) => (
+                <MenuItem
+                  key={tag}
+                  disabled={hashtags.length === 1}
+                  onClick={(e) => {
+                    hashtags.splice(i, 1);
                     hashtags.sort();
                     // navigate(
                     //   instance
@@ -384,147 +428,116 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                     location.hash = instance
                       ? `/${instance}/t/${hashtags.join('+')}${linkParams}`
                       : `/t/${hashtags.join('+')}${linkParams}`;
-                  }
-                }}
-              >
-                <Icon icon="hashtag" />
-                <input
-                  ref={ref}
-                  type="text"
-                  placeholder={
-                    reachLimit
-                      ? plural(TOTAL_TAGS_LIMIT, {
-                          other: 'Max # tags',
-                        })
-                      : t`Add hashtag`
-                  }
-                  required
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellCheck={false}
-                  // no spaces, no hashtags
-                  pattern="[^#][^\s#]+[^#]"
-                  disabled={reachLimit}
-                  dir="auto"
-                />
-              </form>
-            )}
-          </FocusableItem>
-          <MenuGroup takeOverflow>
-            {hashtags.map((tag, i) => (
-              <MenuItem
-                key={tag}
-                disabled={hashtags.length === 1}
-                onClick={(e) => {
-                  hashtags.splice(i, 1);
-                  hashtags.sort();
-                  // navigate(
-                  //   instance
-                  //     ? `/${instance}/t/${hashtags.join('+')}`
-                  //     : `/t/${hashtags.join('+')}`,
-                  // );
-                  location.hash = instance
-                    ? `/${instance}/t/${hashtags.join('+')}${linkParams}`
-                    : `/t/${hashtags.join('+')}${linkParams}`;
-                }}
-              >
-                <Icon icon="x" alt={t`Remove hashtag`} class="danger-icon" />
-                <span class="bidi-isolate">
-                  <span class="more-insignificant">#</span>
-                  {tag}
-                </span>
-              </MenuItem>
-            ))}
-          </MenuGroup>
-          <MenuDivider />
-          <MenuItem
-            disabled={!currentAuthenticated}
-            onClick={() => {
-              if (states.shortcuts.length >= SHORTCUTS_LIMIT) {
-                alert(
-                  plural(SHORTCUTS_LIMIT, {
-                    one: 'Max # shortcut reached. Unable to add shortcut.',
-                    other: 'Max # shortcuts reached. Unable to add shortcut.',
-                  }),
-                );
-                return;
-              }
-              const shortcut = {
-                type: 'hashtag',
-                hashtag: hashtags.join(' '),
-                instance,
-                media: media ? 'on' : undefined,
-              };
-              // Check if already exists
-              const exists = states.shortcuts.some(
-                (s) =>
-                  s.type === shortcut.type &&
-                  s.hashtag
-                    .split(/[\s+]+/)
-                    .sort()
-                    .join(' ') ===
-                    shortcut.hashtag
+                  }}
+                >
+                  <Icon icon="x" alt={t`Remove hashtag`} class="danger-icon" />
+                  <span class="bidi-isolate">
+                    <span class="more-insignificant">#</span>
+                    {tag}
+                  </span>
+                </MenuItem>
+              ))}
+            </MenuGroup>
+            <MenuDivider />
+            <MenuItem
+              disabled={!currentAuthenticated}
+              onClick={() => {
+                if (states.shortcuts.length >= SHORTCUTS_LIMIT) {
+                  alert(
+                    plural(SHORTCUTS_LIMIT, {
+                      one: 'Max # shortcut reached. Unable to add shortcut.',
+                      other: 'Max # shortcuts reached. Unable to add shortcut.',
+                    }),
+                  );
+                  return;
+                }
+                const shortcut = {
+                  type: 'hashtag',
+                  hashtag: hashtags.join(' '),
+                  instance,
+                  media: media ? 'on' : undefined,
+                };
+                // Check if already exists
+                const exists = states.shortcuts.some(
+                  (s) =>
+                    s.type === shortcut.type &&
+                    s.hashtag
                       .split(/[\s+]+/)
                       .sort()
-                      .join(' ') &&
-                  (s.instance ? s.instance === shortcut.instance : true) &&
-                  (s.media ? !!s.media === !!shortcut.media : true),
-              );
-              if (exists) {
-                alert(t`This shortcut already exists`);
-              } else {
-                states.shortcuts.push(shortcut);
-                showToast(t`Hashtag shortcut added`);
-              }
-            }}
-          >
-            <Icon icon="shortcut" />{' '}
-            <span>
-              <Trans>Add to Shortcuts</Trans>
-            </span>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              let newInstance = prompt(
-                t`Enter a new instance e.g. "mastodon.social"`,
-              );
-              if (!/\./.test(newInstance)) {
-                if (newInstance) alert(t`Invalid instance`);
-                return;
-              }
-              if (newInstance) {
-                newInstance = newInstance.toLowerCase().trim();
-                // navigate(`/${newInstance}/t/${hashtags.join('+')}`);
-                location.hash = `/${newInstance}/t/${hashtags.join(
-                  '+',
-                )}${linkParams}`;
-              }
-            }}
-          >
-            <Icon icon="bus" />{' '}
-            <span>
-              <Trans>Go to another instance…</Trans>
-            </span>
-          </MenuItem>
-          {currentInstance !== instance && (
+                      .join(' ') ===
+                      shortcut.hashtag
+                        .split(/[\s+]+/)
+                        .sort()
+                        .join(' ') &&
+                    (s.instance ? s.instance === shortcut.instance : true) &&
+                    (s.media ? !!s.media === !!shortcut.media : true),
+                );
+                if (exists) {
+                  alert(t`This shortcut already exists`);
+                } else {
+                  states.shortcuts.push(shortcut);
+                  showToast(t`Hashtag shortcut added`);
+                }
+              }}
+            >
+              <Icon icon="shortcut" />{' '}
+              <span>
+                <Trans>Add to Shortcuts</Trans>
+              </span>
+            </MenuItem>
             <MenuItem
               onClick={() => {
-                location.hash = `/${currentInstance}/t/${hashtags.join(
-                  '+',
-                )}${linkParams}`;
+                let newInstance = prompt(
+                  t`Enter a new instance e.g. "mastodon.social"`,
+                );
+                if (!/\./.test(newInstance)) {
+                  if (newInstance) alert(t`Invalid instance`);
+                  return;
+                }
+                if (newInstance) {
+                  newInstance = newInstance.toLowerCase().trim();
+                  // navigate(`/${newInstance}/t/${hashtags.join('+')}`);
+                  location.hash = `/${newInstance}/t/${hashtags.join(
+                    '+',
+                  )}${linkParams}`;
+                }
               }}
             >
               <Icon icon="bus" />{' '}
-              <small class="menu-double-lines">
-                <Trans>
-                  Go to my instance (<b>{currentInstance}</b>)
-                </Trans>
-              </small>
+              <span>
+                <Trans>Go to another instance…</Trans>
+              </span>
             </MenuItem>
-          )}
-        </Menu2>
-      }
-    />
+            {currentInstance !== instance && (
+              <MenuItem
+                onClick={() => {
+                  location.hash = `/${currentInstance}/t/${hashtags.join(
+                    '+',
+                  )}${linkParams}`;
+                }}
+              >
+                <Icon icon="bus" />{' '}
+                <small class="menu-double-lines">
+                  <Trans>
+                    Go to my instance (<b>{currentInstance}</b>)
+                  </Trans>
+                </small>
+              </MenuItem>
+            )}
+          </Menu2>
+        }
+      />
+      {!!hashtags?.length && (
+        <data
+          class="compose-data"
+          value={JSON.stringify({
+            draftStatus: {
+              status: `${hashtags.length > 1 ? '\n\n' : ' '}${hashtagTitle}`,
+            },
+          })}
+        />
+      )}
+    </>
   );
 }
 

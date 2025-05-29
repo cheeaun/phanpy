@@ -63,15 +63,22 @@ export default function ComposeButton() {
       return;
     }
 
+    const composeDataElements = document.querySelectorAll('data.compose-data');
+    // If there's a lot of them, ignore
+    const opts =
+      composeDataElements.length === 1
+        ? JSON.parse(composeDataElements[0].value)
+        : undefined;
+
     if (e.shiftKey) {
-      const newWin = openCompose();
+      const newWin = openCompose(opts);
 
       if (!newWin) {
-        states.showCompose = true;
+        states.showCompose = opts || true;
       }
     } else {
       openOSK();
-      states.showCompose = true;
+      states.showCompose = opts || true;
     }
   }
 

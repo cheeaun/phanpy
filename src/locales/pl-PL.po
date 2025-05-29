@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 09:17\n"
+"PO-Revision-Date: 2025-05-29 13:27\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -105,7 +105,7 @@ msgstr "Statystyki obserwowanych"
 
 #: src/components/account-info.jsx:454
 #: src/components/account-info.jsx:856
-#: src/pages/account-statuses.jsx:482
+#: src/pages/account-statuses.jsx:483
 #: src/pages/search.jsx:344
 #: src/pages/search.jsx:491
 msgid "Posts"
@@ -121,9 +121,9 @@ msgstr "Wpisy"
 #: src/components/status.jsx:1978
 #: src/components/status.jsx:2599
 #: src/components/status.jsx:2602
-#: src/pages/account-statuses.jsx:526
+#: src/pages/account-statuses.jsx:527
 #: src/pages/accounts.jsx:118
-#: src/pages/hashtag.jsx:202
+#: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
@@ -319,7 +319,7 @@ msgid "Don't feature on profile"
 msgstr "Nie wyróżniaj na profilu"
 
 #: src/components/account-info.jsx:1406
-#: src/pages/hashtag.jsx:331
+#: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr "Wyróżnij na profilu"
 
@@ -445,7 +445,7 @@ msgstr "Wycofaj…"
 
 #: src/components/account-info.jsx:1885
 #: src/components/account-info.jsx:1889
-#: src/pages/hashtag.jsx:264
+#: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Obserwuj"
 
@@ -609,19 +609,19 @@ msgstr "Tryb \"maskowanie\" jest włączony"
 msgid "Home"
 msgstr "Strona główna"
 
-#: src/components/compose-button.jsx:141
+#: src/components/compose-button.jsx:148
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Utwórz wpis"
 
-#: src/components/compose-button.jsx:168
+#: src/components/compose-button.jsx:175
 #: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
 msgstr "Zaplanowane posty"
 
-#: src/components/compose-button.jsx:181
+#: src/components/compose-button.jsx:188
 msgid "Add to thread"
 msgstr "Dodaj do wątku"
 
@@ -1470,7 +1470,7 @@ msgstr "Obserwowane hashtagi"
 #: src/pages/account-statuses.jsx:329
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:342
+#: src/pages/hashtag.jsx:344
 msgid "Filters"
 msgstr "Filtry"
 
@@ -1954,7 +1954,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "np. PixelArt (maksymalnie 5, oddzielone spacją)"
 
 #: src/components/shortcuts-settings.jsx:117
-#: src/pages/hashtag.jsx:358
+#: src/pages/hashtag.jsx:360
 msgid "Media only"
 msgstr "Tylko multimedia"
 
@@ -2667,31 +2667,31 @@ msgstr "Wyświetlanie wpisów oznaczonych #{0}"
 msgid "Showing posts in {0}"
 msgstr "Wyświetlanie wpisów w {0}"
 
-#: src/pages/account-statuses.jsx:503
+#: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
 msgstr "Nie ma tu nic do widzenia!"
 
-#: src/pages/account-statuses.jsx:504
+#: src/pages/account-statuses.jsx:505
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "Nie można załadować postów"
 
-#: src/pages/account-statuses.jsx:545
-#: src/pages/account-statuses.jsx:575
+#: src/pages/account-statuses.jsx:546
+#: src/pages/account-statuses.jsx:576
 msgid "Unable to fetch account info"
 msgstr "Nie udało się pobrać informacji o koncie"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:552
+#: src/pages/account-statuses.jsx:553
 msgid "Switch to account's instance {0}"
 msgstr "Przełącz na instancję danego konta {0}"
 
-#: src/pages/account-statuses.jsx:582
+#: src/pages/account-statuses.jsx:583
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
 msgstr "Przełącz na moją instancję (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:644
+#: src/pages/account-statuses.jsx:656
 msgid "Month"
 msgstr "Miesiąc"
 
@@ -3178,90 +3178,90 @@ msgstr "{hashtagTitle} (tylko media)"
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:184
+#: src/pages/hashtag.jsx:185
 msgid "No one has posted anything with this tag yet."
 msgstr "Nikt nie napisał jeszcze nic z tym tagiem."
 
-#: src/pages/hashtag.jsx:185
+#: src/pages/hashtag.jsx:186
 msgid "Unable to load posts with this tag"
 msgstr "Nie udało się załadować postów z tym tagiem"
 
-#: src/pages/hashtag.jsx:211
+#: src/pages/hashtag.jsx:212
 msgid "Unfollow #{hashtag}?"
 msgstr "Przestać obserwować #{hashtag}?"
 
-#: src/pages/hashtag.jsx:226
+#: src/pages/hashtag.jsx:227
 msgid "Unfollowed #{hashtag}"
 msgstr "Przestano obserwować #{hashtag}"
 
-#: src/pages/hashtag.jsx:241
+#: src/pages/hashtag.jsx:242
 msgid "Followed #{hashtag}"
 msgstr "Zaobserwowano #{hashtag}"
 
-#: src/pages/hashtag.jsx:257
+#: src/pages/hashtag.jsx:258
 msgid "Following…"
 msgstr "Obserwowane…"
 
-#: src/pages/hashtag.jsx:285
+#: src/pages/hashtag.jsx:287
 msgid "Unfeatured on profile"
 msgstr "Cofnięto wyróżnienie na profilu"
 
-#: src/pages/hashtag.jsx:299
+#: src/pages/hashtag.jsx:301
 msgid "Unable to unfeature on profile"
 msgstr "Nie udało się cofnąć wyróżnienia na profilu"
 
-#: src/pages/hashtag.jsx:308
-#: src/pages/hashtag.jsx:324
+#: src/pages/hashtag.jsx:310
+#: src/pages/hashtag.jsx:326
 msgid "Featured on profile"
 msgstr "Wyróżnione na profilu"
 
-#: src/pages/hashtag.jsx:396
+#: src/pages/hashtag.jsx:398
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, few {maks # tagi} other {maks # tagów}}"
 
-#: src/pages/hashtag.jsx:399
+#: src/pages/hashtag.jsx:401
 msgid "Add hashtag"
 msgstr "Dodaj hashtag"
 
-#: src/pages/hashtag.jsx:431
+#: src/pages/hashtag.jsx:433
 msgid "Remove hashtag"
 msgstr "Usuń hashtag"
 
-#: src/pages/hashtag.jsx:445
+#: src/pages/hashtag.jsx:447
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "Osiągnięto limit {SHORTCUTS_LIMIT, plural, one {# taga.} few {# tagów.} other {# tagów.}} Nie można dodać więcej."
 
-#: src/pages/hashtag.jsx:474
+#: src/pages/hashtag.jsx:476
 msgid "This shortcut already exists"
 msgstr "Ten skrót już istnieje"
 
-#: src/pages/hashtag.jsx:477
+#: src/pages/hashtag.jsx:479
 msgid "Hashtag shortcut added"
 msgstr "Dodano skrót taga"
 
-#: src/pages/hashtag.jsx:483
+#: src/pages/hashtag.jsx:485
 msgid "Add to Shortcuts"
 msgstr "Dodaj do skrótów"
 
-#: src/pages/hashtag.jsx:489
+#: src/pages/hashtag.jsx:491
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new instance e.g. \"mastodon.social\""
 msgstr "Wprowadź nowy serwer, np. \"mastodon.social\""
 
-#: src/pages/hashtag.jsx:492
+#: src/pages/hashtag.jsx:494
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid instance"
 msgstr "Nieprawidłowy serwer"
 
-#: src/pages/hashtag.jsx:506
+#: src/pages/hashtag.jsx:508
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another instance…"
 msgstr "Przejdź do innego serwera…"
 
-#: src/pages/hashtag.jsx:519
+#: src/pages/hashtag.jsx:521
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my instance (<0>{currentInstance}</0>)"

@@ -55,7 +55,7 @@ export default function ComposeButton() {
   function handleButton(e) {
     // useKey will even listen to Shift
     // e.g. press Shift (without c) will trigger this 😱
-    if (e.key.toLowerCase() !== 'c') return;
+    if (e.key && e.key.toLowerCase() !== 'c') return;
 
     if (snapStates.composerState.minimized) {
       states.composerState.minimized = false;

@@ -57,9 +57,9 @@ function Columns() {
 
   useHotkeys(
     ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    (e, handler) => {
+    (e) => {
       try {
-        const index = parseInt(handler.keys[0], 10) - 1;
+        const index = parseInt(e.key, 10) - 1;
         const $column = document.querySelectorAll('#columns > *')[index];
         if ($column) {
           $column.focus();

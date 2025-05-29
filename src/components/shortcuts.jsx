@@ -86,8 +86,8 @@ function Shortcuts() {
   const navigate = useNavigate();
   useHotkeys(
     ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    (e, handler) => {
-      const index = parseInt(handler.keys[0], 10) - 1;
+    (e) => {
+      const index = parseInt(e.key, 10) - 1;
       if (index < formattedShortcuts.length) {
         const { path } = formattedShortcuts[index];
         if (path) {

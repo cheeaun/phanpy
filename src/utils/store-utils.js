@@ -10,8 +10,12 @@ export function saveAccounts(accounts) {
 
 export function getAccount(id) {
   const accounts = getAccounts();
-  if (!id) return accounts[0];
-  return accounts.find((a) => a.info.id === id) || accounts[0];
+  const account = id ? accounts.find((a) => a.info.id === id) : accounts[0];
+  account.lastAccessedAt = Date.now();
+  setTimeout(() => {
+    saveAccounts(accounts);
+  }, 1);
+  return account;
 }
 
 export function getAccountByAccessToken(accessToken) {

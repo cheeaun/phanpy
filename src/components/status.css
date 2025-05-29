@@ -1824,17 +1824,14 @@ body:has(#modal-container .carousel) .status .media img:hover {
   opacity: 0;
 }
 @media (hover: hover) {
-  .carousel-item button.media-alt {
+  .carousel-item button.media-alt:not([hidden]) {
     opacity: 0;
     transform: translateY(var(--bottom)) scale(0.95);
     transition: all 0.2s ease-in-out;
   }
-  .carousel-item:hover button.media-alt {
+  .carousel-item:hover button.media-alt:not([hidden]) {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-  .carousel-item button.media-alt[hidden] {
-    opacity: 1;
   }
 }
 

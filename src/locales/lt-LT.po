@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 09:17\n"
+"PO-Revision-Date: 2025-05-29 11:39\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -300,23 +300,23 @@ msgstr "Įjungti pasidalinimus"
 
 #: src/components/account-info.jsx:1374
 msgid "@{username} is no longer featured on your profile."
-msgstr ""
+msgstr "@{username} neberodomas jūsų profilyje."
 
 #: src/components/account-info.jsx:1384
 msgid "@{username} is now featured on your profile."
-msgstr ""
+msgstr "@{username} dabar rodomas jūsų profilyje."
 
 #: src/components/account-info.jsx:1392
 msgid "Unable to unfeature @{username} on your profile."
-msgstr ""
+msgstr "Nepavyksta neberodyti @{username} jūsų profilyje."
 
 #: src/components/account-info.jsx:1396
 msgid "Unable to feature @{username} on your profile."
-msgstr ""
+msgstr "Nepavyksta rodyti @{username} jūsų profilyje."
 
 #: src/components/account-info.jsx:1405
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "Nerodyti profilyje"
 
 #: src/components/account-info.jsx:1406
 #: src/pages/hashtag.jsx:331
@@ -325,7 +325,7 @@ msgstr "Rodyti profilyje"
 
 #: src/components/account-info.jsx:1415
 msgid "Show featured profiles"
-msgstr ""
+msgstr "Rodyti rodomus profilius"
 
 #: src/components/account-info.jsx:1430
 #: src/components/account-info.jsx:1440
@@ -433,7 +433,7 @@ msgstr "Atšaukti sekimo prašymą?"
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1811
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Nebesekti @{0}?"
 
 #: src/components/account-info.jsx:1869
 msgid "Unfollow…"
@@ -582,11 +582,11 @@ msgstr "serverio domeno vardas"
 #. placeholder {0}: info.username
 #: src/components/account-info.jsx:2658
 msgid "Profiles featured by @{0}"
-msgstr ""
+msgstr "Profilius, kuriuos rodė @{0}"
 
 #: src/components/account-info.jsx:2684
 msgid "No featured profiles."
-msgstr ""
+msgstr "Nėra rodomų profilių."
 
 #: src/components/background-service.jsx:158
 msgid "Cloak mode disabled"
@@ -858,7 +858,7 @@ msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandyk sumažin
 #: src/components/compose.jsx:2615
 #: src/components/compose.jsx:2635
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Per didelis matmuo. Įkeliant gali kilti problemų. Bandykite sumažinti matmenis nuo {0}×{1} tšk. iki {2}×{3} tšk."
 
 #: src/components/compose.jsx:2643
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -897,7 +897,7 @@ msgstr "Generuojamas aprašymas. Palauk…"
 #. placeholder {0}: e.message
 #: src/components/compose.jsx:2812
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Nepavyko sugeneruoti aprašo: {0}."
 
 #: src/components/compose.jsx:2813
 msgid "Failed to generate description"
@@ -912,7 +912,7 @@ msgstr "Generuoti aprašymą…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/compose.jsx:2864
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Nepavyko sugeneruoti aprašo{0}."
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/compose.jsx:2879
@@ -1301,7 +1301,7 @@ msgstr "Nepavyksta ištrinti sąrašo."
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr ""
+msgstr "Įrašai šiame sąraše paslėpti nuo pagrindinio / sekimų"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -2213,17 +2213,17 @@ msgstr "Panaikintas @{0} patiktuko įrašas"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:868
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Patiko @{0} įrašas"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:907
 msgid "Unbookmarked @{0}'s post"
-msgstr ""
+msgstr "Pašalintas @{0} įrašas iš žymių"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:908
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "Pridėtas @{0} įrašas prie žymių"
 
 #: src/components/status.jsx:1007
 msgid "Some media have no descriptions."
@@ -2250,13 +2250,13 @@ msgstr "Cituoti"
 #: src/components/status.jsx:1066
 #: src/components/status.jsx:1532
 msgid "Unboosted @{0}'s post"
-msgstr ""
+msgstr "Panaikintas @{0} įrašo pasidalinimas"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1067
 #: src/components/status.jsx:1533
 msgid "Boosted @{0}'s post"
-msgstr ""
+msgstr "Pasidalintas @{0} įrašas"
 
 #: src/components/status.jsx:1079
 msgid "Boost…"
@@ -2283,15 +2283,15 @@ msgstr "Pašalinti iš žymių"
 
 #: src/components/status.jsx:1184
 msgid "Post text copied"
-msgstr ""
+msgstr "Įrašo tekstas nukopijuotas"
 
 #: src/components/status.jsx:1187
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "Nepavyksta nukopijuoti įrašo teksto."
 
 #: src/components/status.jsx:1193
 msgid "Copy post text"
-msgstr ""
+msgstr "Kopijuoti įrašo tekstą"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1211
@@ -2665,7 +2665,7 @@ msgstr "Rodomi įrašai pažymėti su #{0}"
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
 #: src/pages/account-statuses.jsx:414
 msgid "Showing posts in {0}"
-msgstr ""
+msgstr "Rodomi įrašai rikiavime {0}"
 
 #: src/pages/account-statuses.jsx:503
 msgid "Nothing to see here yet."
@@ -2731,7 +2731,7 @@ msgstr "Atsijungti…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Prijungta prie {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"
@@ -2889,7 +2889,7 @@ msgstr "Pašalinima {0} pasivijimas"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1076
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Pašalintas {0} pasivijimas"
 
 #: src/pages/catchup.jsx:1090
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3110,7 +3110,7 @@ msgstr "Filtruotas įrašas bus…"
 
 #: src/pages/filters.jsx:538
 msgid "obscured (media only)"
-msgstr ""
+msgstr "uždengta (tik medija)"
 
 #: src/pages/filters.jsx:552
 msgid "minimized"
@@ -3475,7 +3475,7 @@ msgstr "Leisti"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1258
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Pranešimai iš @{0} nuo šiol nebus rodomi filtruotuose pranešimuose."
 
 #: src/pages/notifications.jsx:1263
 msgid "Unable to dismiss notification request"
@@ -3702,7 +3702,7 @@ msgstr "{0, plural, one {Slėpti Versti mygtuką (#):} few {Slėpti Versti mygtu
 
 #: src/pages/settings.jsx:491
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "Pastaba: ši funkcija naudoja išorines vertimo paslaugas, veikiančias su <0>„{TRANSLATION_API_NAME}“</0>."
 
 #: src/pages/settings.jsx:519
 msgid "Auto inline translation"
@@ -3915,7 +3915,7 @@ msgstr "Nepavyksta perjungti."
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1326
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Perjungti į įrašo serverį ({0})"
 
 #: src/pages/status.jsx:1329
 msgid "Switch to post's instance"

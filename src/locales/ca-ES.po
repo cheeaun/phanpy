@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 09:17\n"
+"PO-Revision-Date: 2025-05-30 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -105,7 +105,7 @@ msgstr "Seguint-ne"
 
 #: src/components/account-info.jsx:454
 #: src/components/account-info.jsx:856
-#: src/pages/account-statuses.jsx:482
+#: src/pages/account-statuses.jsx:483
 #: src/pages/search.jsx:344
 #: src/pages/search.jsx:491
 msgid "Posts"
@@ -121,9 +121,9 @@ msgstr "Publicacions"
 #: src/components/status.jsx:1978
 #: src/components/status.jsx:2599
 #: src/components/status.jsx:2602
-#: src/pages/account-statuses.jsx:526
+#: src/pages/account-statuses.jsx:527
 #: src/pages/accounts.jsx:118
-#: src/pages/hashtag.jsx:202
+#: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
@@ -319,7 +319,7 @@ msgid "Don't feature on profile"
 msgstr "No incloure al perfil"
 
 #: src/components/account-info.jsx:1406
-#: src/pages/hashtag.jsx:331
+#: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr "Destaca al perfil"
 
@@ -445,7 +445,7 @@ msgstr "Descarta…"
 
 #: src/components/account-info.jsx:1885
 #: src/components/account-info.jsx:1889
-#: src/pages/hashtag.jsx:264
+#: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Segueix"
 
@@ -609,19 +609,19 @@ msgstr "Mode ocult activat"
 msgid "Home"
 msgstr "Inici"
 
-#: src/components/compose-button.jsx:141
+#: src/components/compose-button.jsx:148
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Redacta"
 
-#: src/components/compose-button.jsx:168
+#: src/components/compose-button.jsx:175
 #: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
 msgstr "Publicacions programades"
 
-#: src/components/compose-button.jsx:181
+#: src/components/compose-button.jsx:188
 msgid "Add to thread"
 msgstr "Afegeix al fil"
 
@@ -1301,7 +1301,7 @@ msgstr "No s'ha pogut esborrar la llista."
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr ""
+msgstr "Les publicacions d'aquesta llista estan ocultes a Inici/Seguint"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -1414,7 +1414,7 @@ msgstr "Posada al dia"
 #: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
-#: src/pages/home.jsx:228
+#: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1163
@@ -1427,7 +1427,7 @@ msgstr "Mencions"
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:86
-#: src/pages/home.jsx:186
+#: src/pages/home.jsx:198
 #: src/pages/notifications.jsx:117
 #: src/pages/notifications.jsx:591
 msgid "Notifications"
@@ -1470,7 +1470,7 @@ msgstr "Etiquetes seguides"
 #: src/pages/account-statuses.jsx:329
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:342
+#: src/pages/hashtag.jsx:344
 msgid "Filters"
 msgstr "Filtres"
 
@@ -1955,7 +1955,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "p. ex. PixelArt (màx. 5, separats per espais)"
 
 #: src/components/shortcuts-settings.jsx:117
-#: src/pages/hashtag.jsx:358
+#: src/pages/hashtag.jsx:360
 msgid "Media only"
 msgstr "Només mèdia"
 
@@ -2526,7 +2526,7 @@ msgid "New posts"
 msgstr "Publicacions noves"
 
 #: src/components/timeline.jsx:586
-#: src/pages/home.jsx:216
+#: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
 #: src/pages/status.jsx:1019
 #: src/pages/status.jsx:1396
@@ -2668,31 +2668,31 @@ msgstr "Es mostren les publicacions etiquetades amb #{0}"
 msgid "Showing posts in {0}"
 msgstr "Es mostren publicacions a {0}"
 
-#: src/pages/account-statuses.jsx:503
+#: src/pages/account-statuses.jsx:504
 msgid "Nothing to see here yet."
 msgstr "No hi ha res a veure encara."
 
-#: src/pages/account-statuses.jsx:504
+#: src/pages/account-statuses.jsx:505
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "No ha estat possible carregar les publicacions"
 
-#: src/pages/account-statuses.jsx:545
-#: src/pages/account-statuses.jsx:575
+#: src/pages/account-statuses.jsx:546
+#: src/pages/account-statuses.jsx:576
 msgid "Unable to fetch account info"
 msgstr "No ha estat possible la informació del compte"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:552
+#: src/pages/account-statuses.jsx:553
 msgid "Switch to account's instance {0}"
 msgstr "Canvia a la instància del compte {0}"
 
-#: src/pages/account-statuses.jsx:582
+#: src/pages/account-statuses.jsx:583
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
 msgstr "Canvia a la meva instància (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:644
+#: src/pages/account-statuses.jsx:656
 msgid "Month"
 msgstr "Mes"
 
@@ -2732,7 +2732,7 @@ msgstr "Tanca la sessió…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Connectat a {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"
@@ -3179,104 +3179,104 @@ msgstr "{hashtagTitle} (només multimèdia)"
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:184
+#: src/pages/hashtag.jsx:185
 msgid "No one has posted anything with this tag yet."
 msgstr "Ningú ha publicat res encara amb aquesta etiqueta."
 
-#: src/pages/hashtag.jsx:185
+#: src/pages/hashtag.jsx:186
 msgid "Unable to load posts with this tag"
 msgstr "No ha estat possible carregar les publicacions amb aquesta etiqueta"
 
-#: src/pages/hashtag.jsx:211
+#: src/pages/hashtag.jsx:212
 msgid "Unfollow #{hashtag}?"
 msgstr "Voleu deixar de seguir #{hashtag}?"
 
-#: src/pages/hashtag.jsx:226
+#: src/pages/hashtag.jsx:227
 msgid "Unfollowed #{hashtag}"
 msgstr "Deixa de seguir l'etiqueta #{hashtag}"
 
-#: src/pages/hashtag.jsx:241
+#: src/pages/hashtag.jsx:242
 msgid "Followed #{hashtag}"
 msgstr "Etiquetes seguides #{hashtag}"
 
-#: src/pages/hashtag.jsx:257
+#: src/pages/hashtag.jsx:258
 msgid "Following…"
 msgstr "Seguint…"
 
-#: src/pages/hashtag.jsx:285
+#: src/pages/hashtag.jsx:287
 msgid "Unfeatured on profile"
 msgstr "No es mostra al perfil"
 
-#: src/pages/hashtag.jsx:299
+#: src/pages/hashtag.jsx:301
 msgid "Unable to unfeature on profile"
 msgstr "No s'ha eliminat dels elements destacats del perfil"
 
-#: src/pages/hashtag.jsx:308
-#: src/pages/hashtag.jsx:324
+#: src/pages/hashtag.jsx:310
+#: src/pages/hashtag.jsx:326
 msgid "Featured on profile"
 msgstr "Destacades al perfil"
 
-#: src/pages/hashtag.jsx:396
+#: src/pages/hashtag.jsx:398
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, one {}other {Màxim de # etiquetes}}"
 
-#: src/pages/hashtag.jsx:399
+#: src/pages/hashtag.jsx:401
 msgid "Add hashtag"
 msgstr "Afegeix etiqueta"
 
-#: src/pages/hashtag.jsx:431
+#: src/pages/hashtag.jsx:433
 msgid "Remove hashtag"
 msgstr "Elimina etiqueta"
 
-#: src/pages/hashtag.jsx:445
+#: src/pages/hashtag.jsx:447
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "{SHORTCUTS_LIMIT, plural, one {S'ha arribat al màxim de # drecera. No es pot afegir un altra.} other {S'ha arribat al màxim de # dreceres. No es pot afegir un altra.}}"
 
-#: src/pages/hashtag.jsx:474
+#: src/pages/hashtag.jsx:476
 msgid "This shortcut already exists"
 msgstr "Aquesta drecera ja existeix"
 
-#: src/pages/hashtag.jsx:477
+#: src/pages/hashtag.jsx:479
 msgid "Hashtag shortcut added"
 msgstr "S'ha afegit una drecera a l'etiqueta"
 
-#: src/pages/hashtag.jsx:483
+#: src/pages/hashtag.jsx:485
 msgid "Add to Shortcuts"
 msgstr "Afegeix a les dreceres"
 
-#: src/pages/hashtag.jsx:489
+#: src/pages/hashtag.jsx:491
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new instance e.g. \"mastodon.social\""
 msgstr "Introduïu una nova instància, p. ex. \"mastodon.social\""
 
-#: src/pages/hashtag.jsx:492
+#: src/pages/hashtag.jsx:494
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid instance"
 msgstr "La instància no és vàlida"
 
-#: src/pages/hashtag.jsx:506
+#: src/pages/hashtag.jsx:508
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another instance…"
 msgstr "Ves a una altra instància…"
 
-#: src/pages/hashtag.jsx:519
+#: src/pages/hashtag.jsx:521
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr "Ves a la meva instància (<0>{currentInstance}</0>)"
 
-#: src/pages/home.jsx:212
+#: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
 msgstr "No s'han pogut recuperar les notificacions."
 
-#: src/pages/home.jsx:233
+#: src/pages/home.jsx:245
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr "<0>Noves</0> <1>sol·licituds de seguiment</1>"
 
-#: src/pages/home.jsx:239
+#: src/pages/home.jsx:251
 msgid "See all"
 msgstr "Veure-ho tot"
 

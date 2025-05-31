@@ -642,14 +642,22 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       enabled: !showMedia,
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        return hasModal || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
+      useKey: true,
     },
   );
   // For backspace, will always close both media and status page
-  useHotkeys('backspace', () => {
-    location.hash = closeLink;
-  });
+  useHotkeys(
+    'backspace',
+    () => {
+      location.hash = closeLink;
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   useHotkeys(
     'j',
@@ -687,6 +695,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -725,6 +734,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -745,6 +755,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -871,7 +882,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                         setUIState('loading');
                         (async () => {
                           try {
-                            const results = await currentMasto.v2.search.fetch({
+                            const results = await currentMasto.v2.search.list({
                               q: heroStatus.url,
                               type: 'statuses',
                               resolve: true,
@@ -1174,8 +1185,12 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     .map((ancestor) => (
                       <Avatar
                         key={ancestor.account.id}
-                        url={ancestor.account.avatar}
+                        url={
+                          ancestor.account.avatarStatic ||
+                          ancestor.account.avatar
+                        }
                         alt={ancestor.account.displayName}
+                        squircle={ancestor.account?.bot}
                       />
                     ))}
                   {/* <Icon icon="comment" />{' '} */}

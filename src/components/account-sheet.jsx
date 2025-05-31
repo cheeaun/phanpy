@@ -51,7 +51,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               return info;
             } catch (e) {
-              const result = await masto.v2.search.fetch({
+              const result = await masto.v2.search.list({
                 q: account,
                 type: 'accounts',
                 limit: 1,
@@ -67,7 +67,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
                     pathname.replace(/^\//, '').replace(/\/$/, '') +
                     '@' +
                     hostname;
-                  const result = await masto.v2.search.fetch({
+                  const result = await masto.v2.search.list({
                     q: acct,
                     type: 'accounts',
                     limit: 1,

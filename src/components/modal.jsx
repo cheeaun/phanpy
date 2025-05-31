@@ -43,6 +43,8 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       // This will run "later" to prevent clash with esc handlers from other components
       keydown: false,
       keyup: true,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
     [onClose],
   );

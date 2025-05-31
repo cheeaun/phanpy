@@ -28,7 +28,7 @@ export default memo(function KeyboardShortcutsHelp() {
       useKey: true,
       ignoreEventWhen: (e) => {
         const isCatchUpPage = /\/catchup/i.test(location.hash);
-        return isCatchUpPage;
+        return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;
         // const hasModal = !!document.querySelector('#modal-container > *');
         // return hasModal;
       },

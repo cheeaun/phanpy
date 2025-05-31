@@ -1,19 +1,36 @@
 import store from './store';
 
+export function getAccounts() {
+  return store.local.getJSON('accounts') || [];
+}
+
+export function saveAccounts(accounts) {
+  store.local.setJSON('accounts', accounts);
+}
+
 export function getAccount(id) {
-  const accounts = store.local.getJSON('accounts') || [];
-  if (!id) return accounts[0];
-  return accounts.find((a) => a.info.id === id) || accounts[0];
+  const accounts = getAccounts();
+  const account = id ? accounts.find((a) => a.info.id === id) : accounts[0];
+  account.lastAccessedAt = Date.now();
+  setTimeout(() => {
+    saveAccounts(accounts);
+  }, 1);
+  return account;
 }
 
 export function getAccountByAccessToken(accessToken) {
-  const accounts = store.local.getJSON('accounts') || [];
+  const accounts = getAccounts();
   return accounts.find((a) => a.accessToken === accessToken);
 }
 
 export function getAccountByInstance(instance) {
-  const accounts = store.local.getJSON('accounts') || [];
+  const accounts = getAccounts();
   return accounts.find((a) => a.instanceURL === instance);
+}
+
+export function hasAccountInInstance(instance) {
+  const accounts = getAccounts();
+  return accounts.some((a) => a.instanceURL === instance);
 }
 
 const standaloneMQ = window.matchMedia('(display-mode: standalone)');
@@ -64,7 +81,7 @@ export function getCurrentAccountNS() {
 }
 
 export function saveAccount(account) {
-  const accounts = store.local.getJSON('accounts') || [];
+  const accounts = getAccounts();
   const acc = accounts.find((a) => a.info.id === account.info.id);
   if (acc) {
     acc.info = account.info;
@@ -74,13 +91,12 @@ export function saveAccount(account) {
   } else {
     accounts.push(account);
   }
-  store.local.setJSON('accounts', accounts);
-  setCurrentAccountID(account.info.id);
+  saveAccounts(accounts);
 }
 
 export function updateAccount(accountInfo) {
   // Only update if displayName or avatar or avatar_static is different
-  const accounts = store.local.getJSON('accounts') || [];
+  const accounts = getAccounts();
   const acc = accounts.find((a) => a.info.id === accountInfo.id);
   if (acc) {
     if (
@@ -92,7 +108,7 @@ export function updateAccount(accountInfo) {
         ...acc.info,
         ...accountInfo,
       };
-      store.local.setJSON('accounts', accounts);
+      saveAccounts(accounts);
     }
   }
 }
@@ -169,9 +185,11 @@ export function getAPIVersions() {
   return instance?.apiVersions || {};
 }
 
-export function getVapidKey() {
+export function getVapidKey(instance) {
   // Vapid key has moved from account to instance config
-  const config = getCurrentInstanceConfiguration();
+  const config = instance
+    ? getInstanceConfiguration(instance)
+    : getCurrentInstanceConfiguration();
   const vapidKey = config?.vapid?.publicKey || config?.vapid?.public_key;
   return vapidKey || getCurrentAccount()?.vapidKey;
 }
@@ -179,4 +197,17 @@ export function getVapidKey() {
 export function isMediaFirstInstance() {
   const instance = getCurrentInstance();
   return /pixelfed/i.test(instance?.version);
+}
+
+const CREDENTIAL_APPLICATIONS_KEY = 'credentialApplications';
+
+export function storeCredentialApplication(instanceURL, credentialApplication) {
+  const stored = store.local.getJSON(CREDENTIAL_APPLICATIONS_KEY) || {};
+  stored[instanceURL] = credentialApplication;
+  store.local.setJSON(CREDENTIAL_APPLICATIONS_KEY, stored);
+}
+
+export function getCredentialApplication(instanceURL) {
+  const stored = store.local.getJSON(CREDENTIAL_APPLICATIONS_KEY) || {};
+  return stored[instanceURL] || null;
 }

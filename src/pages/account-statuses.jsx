@@ -40,7 +40,7 @@ const supportsInputMonth = (() => {
 
 async function _isSearchEnabled(instance) {
   const { masto } = api({ instance });
-  const results = await masto.v2.search.fetch({
+  const results = await masto.v2.search.list({
     q: 'from:me',
     type: 'statuses',
     limit: 1,
@@ -137,7 +137,7 @@ function AccountStatuses() {
         searchOffsetRef.current += LIMIT;
       }
 
-      const searchResults = await masto.v2.search.fetch({
+      const searchResults = await masto.v2.search.list({
         q: `from:${account.acct} after:${afterStr} before:${beforeStr}`,
         type: 'statuses',
         limit,
@@ -162,6 +162,7 @@ function AccountStatuses() {
         .statuses.list({
           pinned: true,
         })
+        .values()
         .next();
       if (value?.length && !tagged && !media) {
         const pinnedStatuses = value.map((status) => {
@@ -192,7 +193,8 @@ function AccountStatuses() {
           exclude_reblogs: excludeBoosts,
           only_media: media || undefined,
           tagged,
-        });
+        })
+        .values();
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
@@ -300,6 +302,7 @@ function AccountStatuses() {
           fetchAccount={fetchAccount}
           authenticated={authenticated}
           standalone
+          showEndorsements
         />
         {!mediaFirst && (
           <div
@@ -474,99 +477,70 @@ function AccountStatuses() {
   const allowSwitch = !!account && !sameInstance;
 
   return (
-    <Timeline
-      key={id}
-      title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
-      titleComponent={
-        <h1
-          class="header-double-lines header-account"
-          // onClick={() => {
-          //   states.showAccount = {
-          //     account,
-          //     instance,
-          //   };
-          // }}
-        >
-          <b>
-            <EmojiText text={displayName} emojis={emojis} />
-          </b>
-          <div>
-            <span class="bidi-isolate">@{acct}</span>
-          </div>
-        </h1>
-      }
-      id="account-statuses"
-      instance={instance}
-      emptyText={t`Nothing to see here yet.`}
-      errorText={t`Unable to load posts`}
-      fetchItems={fetchAccountStatuses}
-      useItemID
-      view={media || mediaFirst ? 'media' : undefined}
-      boostsCarousel={snapStates.settings.boostsCarousel}
-      timelineStart={TimelineStart}
-      refresh={[
-        excludeReplies,
-        excludeBoosts,
-        tagged,
-        media,
-        month + account?.acct,
-      ].toString()}
-      headerEnd={
-        <Menu2
-          portal
-          // setDownOverflow
-          overflow="auto"
-          viewScroll="close"
-          position="anchor"
-          menuButton={
-            <button type="button" class="plain">
-              <Icon icon="more" size="l" alt={t`More`} />
-            </button>
-          }
-        >
-          <MenuItem
-            disabled={!allowSwitch}
-            onClick={() => {
-              (async () => {
-                try {
-                  const { masto } = api({
-                    instance: accountInstance,
-                  });
-                  const acc = await masto.v1.accounts.lookup({
-                    acct: account.acct,
-                  });
-                  const { id } = acc;
-                  location.hash = `/${accountInstance}/a/${id}`;
-                } catch (e) {
-                  console.error(e);
-                  alert(t`Unable to fetch account info`);
-                }
-              })();
-            }}
+    <>
+      <Timeline
+        key={id}
+        title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
+        titleComponent={
+          <h1
+            class="header-double-lines header-account"
+            // onClick={() => {
+            //   states.showAccount = {
+            //     account,
+            //     instance,
+            //   };
+            // }}
           >
-            <Icon icon="transfer" />{' '}
-            <small class="menu-double-lines">
-              <Trans>
-                Switch to account's instance{' '}
-                {accountInstance ? (
-                  <>
-                    {' '}
-                    (<b>{punycode.toUnicode(accountInstance)}</b>)
-                  </>
-                ) : null}
-              </Trans>
-            </small>
-          </MenuItem>
-          {!sameCurrentInstance && (
+            <b>
+              <EmojiText text={displayName} emojis={emojis} />
+            </b>
+            <div>
+              <span class="bidi-isolate">@{acct}</span>
+            </div>
+          </h1>
+        }
+        id="account-statuses"
+        instance={instance}
+        emptyText={t`Nothing to see here yet.`}
+        errorText={t`Unable to load posts`}
+        fetchItems={fetchAccountStatuses}
+        useItemID
+        view={media || mediaFirst ? 'media' : undefined}
+        boostsCarousel={snapStates.settings.boostsCarousel}
+        timelineStart={TimelineStart}
+        refresh={[
+          excludeReplies,
+          excludeBoosts,
+          tagged,
+          media,
+          month + account?.acct,
+        ].toString()}
+        headerEnd={
+          <Menu2
+            portal
+            // setDownOverflow
+            overflow="auto"
+            viewScroll="close"
+            position="anchor"
+            menuButton={
+              <button type="button" class="plain">
+                <Icon icon="more" size="l" alt={t`More`} />
+              </button>
+            }
+          >
             <MenuItem
+              disabled={!allowSwitch}
               onClick={() => {
                 (async () => {
                   try {
-                    const acc = await currentMasto.v1.accounts.lookup({
-                      acct: account.acct + '@' + instance,
+                    const { masto } = api({
+                      instance: accountInstance,
+                    });
+                    const acc = await masto.v1.accounts.lookup({
+                      acct: account.acct,
                     });
                     const { id } = acc;
-                    location.hash = `/${currentInstance}/a/${id}`;
+                    location.hash = `/${accountInstance}/a/${id}`;
                   } catch (e) {
                     console.error(e);
                     alert(t`Unable to fetch account info`);
@@ -577,14 +551,55 @@ function AccountStatuses() {
               <Icon icon="transfer" />{' '}
               <small class="menu-double-lines">
                 <Trans>
-                  Switch to my instance (<b>{currentInstance}</b>)
+                  Switch to account's instance{' '}
+                  {accountInstance ? (
+                    <>
+                      {' '}
+                      (<b>{punycode.toUnicode(accountInstance)}</b>)
+                    </>
+                  ) : null}
                 </Trans>
               </small>
             </MenuItem>
-          )}
-        </Menu2>
-      }
-    />
+            {!sameCurrentInstance && (
+              <MenuItem
+                onClick={() => {
+                  (async () => {
+                    try {
+                      const acc = await currentMasto.v1.accounts.lookup({
+                        acct: account.acct + '@' + instance,
+                      });
+                      const { id } = acc;
+                      location.hash = `/${currentInstance}/a/${id}`;
+                    } catch (e) {
+                      console.error(e);
+                      alert(t`Unable to fetch account info`);
+                    }
+                  })();
+                }}
+              >
+                <Icon icon="transfer" />{' '}
+                <small class="menu-double-lines">
+                  <Trans>
+                    Switch to my instance (<b>{currentInstance}</b>)
+                  </Trans>
+                </small>
+              </MenuItem>
+            )}
+          </Menu2>
+        }
+      />
+      {acct && (
+        <data
+          class="compose-data"
+          value={JSON.stringify({
+            draftStatus: {
+              status: `@${acct} `,
+            },
+          })}
+        />
+      )}
+    </>
   );
 }
 

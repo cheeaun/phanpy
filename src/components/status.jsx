@@ -679,8 +679,8 @@ function Status({
       spoilerText ||
       sensitive ||
       poll ||
-      card ||
-      mediaAttachments?.length
+      card /*||
+      mediaAttachments?.length*/
     ) {
       return false;
     }

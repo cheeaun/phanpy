@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 13:27\n"
+"PO-Revision-Date: 2025-06-02 02:08\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -1414,7 +1414,7 @@ msgstr "Nadrabianie zaległości"
 #: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
-#: src/pages/home.jsx:228
+#: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1163
@@ -1427,7 +1427,7 @@ msgstr "Wzmianki"
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:86
-#: src/pages/home.jsx:186
+#: src/pages/home.jsx:198
 #: src/pages/notifications.jsx:117
 #: src/pages/notifications.jsx:591
 msgid "Notifications"
@@ -2525,7 +2525,7 @@ msgid "New posts"
 msgstr "Nowe wpisy"
 
 #: src/components/timeline.jsx:586
-#: src/pages/home.jsx:216
+#: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
 #: src/pages/status.jsx:1019
 #: src/pages/status.jsx:1396
@@ -3267,15 +3267,15 @@ msgstr "Przejdź do innego serwera…"
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr "Przejdź do mojego serwera (<0>{currentInstance}</0>)"
 
-#: src/pages/home.jsx:212
+#: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
 msgstr "Nie można wczytać powiadomień."
 
-#: src/pages/home.jsx:233
+#: src/pages/home.jsx:245
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr "<0>Nowe</0> <1>Prośby o obserwację</1>"
 
-#: src/pages/home.jsx:239
+#: src/pages/home.jsx:251
 msgid "See all"
 msgstr "Pokaż wszystko"
 
@@ -3294,7 +3294,7 @@ msgstr "Nie ma tu jeszcze nic."
 #: src/pages/list.jsx:201
 #: src/pages/list.jsx:307
 msgid "Manage members"
-msgstr "Zarządzaj"
+msgstr "Zarządzaj członkami"
 
 #. placeholder {0}: account.username
 #: src/pages/list.jsx:342

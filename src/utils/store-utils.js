@@ -11,6 +11,7 @@ export function saveAccounts(accounts) {
 export function getAccount(id) {
   const accounts = getAccounts();
   const account = id ? accounts.find((a) => a.info.id === id) : accounts[0];
+  if (!account) return null;
   account.lastAccessedAt = Date.now();
   setTimeout(() => {
     saveAccounts(accounts);

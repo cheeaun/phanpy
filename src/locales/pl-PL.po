@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 13:27\n"
+"PO-Revision-Date: 2025-06-02 03:05\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -1029,7 +1029,7 @@ msgstr "Usuń…"
 
 #: src/components/drafts.jsx:147
 msgid "Error fetching reply-to status!"
-msgstr "Wystąpił błąd podczas wczytywania stanu komentarzy!"
+msgstr "Wystąpił błąd podczas wczytywania statusu odpowiedzi!"
 
 #: src/components/drafts.jsx:172
 msgid "Delete all drafts?"
@@ -1414,7 +1414,7 @@ msgstr "Nadrabianie zaległości"
 #: src/components/nav-menu.jsx:204
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:146
-#: src/pages/home.jsx:228
+#: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1163
@@ -1427,7 +1427,7 @@ msgstr "Wzmianki"
 #: src/components/shortcuts-settings.jsx:152
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:86
-#: src/pages/home.jsx:186
+#: src/pages/home.jsx:198
 #: src/pages/notifications.jsx:117
 #: src/pages/notifications.jsx:591
 msgid "Notifications"
@@ -2525,7 +2525,7 @@ msgid "New posts"
 msgstr "Nowe wpisy"
 
 #: src/components/timeline.jsx:586
-#: src/pages/home.jsx:216
+#: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
 #: src/pages/status.jsx:1019
 #: src/pages/status.jsx:1396
@@ -2584,7 +2584,7 @@ msgstr "Edytowanie oryginalnego statusu"
 #. placeholder {0}: replyToStatus.account?.acct || replyToStatus.account?.username
 #: src/compose.jsx:35
 msgid "Replying to @{0}"
-msgstr "Komentowanie @{0}"
+msgstr "Odpowiedź do @{0}"
 
 #: src/compose.jsx:63
 msgid "You may close this page now."
@@ -2611,7 +2611,7 @@ msgstr "Wpisy konta"
 
 #: src/pages/account-statuses.jsx:241
 msgid "{accountDisplay} (+ Replies)"
-msgstr "{accountDisplay} (+ Komentarze)"
+msgstr "{accountDisplay} (+ Odpowiedzi)"
 
 #: src/pages/account-statuses.jsx:243
 msgid "{accountDisplay} (- Boosts)"
@@ -2731,7 +2731,7 @@ msgstr "Wyloguj…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Data połączenia: {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"
@@ -3267,15 +3267,15 @@ msgstr "Przejdź do innego serwera…"
 msgid "Go to my instance (<0>{currentInstance}</0>)"
 msgstr "Przejdź do mojego serwera (<0>{currentInstance}</0>)"
 
-#: src/pages/home.jsx:212
+#: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
 msgstr "Nie można wczytać powiadomień."
 
-#: src/pages/home.jsx:233
+#: src/pages/home.jsx:245
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr "<0>Nowe</0> <1>Prośby o obserwację</1>"
 
-#: src/pages/home.jsx:239
+#: src/pages/home.jsx:251
 msgid "See all"
 msgstr "Pokaż wszystko"
 
@@ -3294,7 +3294,7 @@ msgstr "Nie ma tu jeszcze nic."
 #: src/pages/list.jsx:201
 #: src/pages/list.jsx:307
 msgid "Manage members"
-msgstr "Zarządzaj"
+msgstr "Zarządzaj członkami"
 
 #. placeholder {0}: account.username
 #: src/pages/list.jsx:342
@@ -3860,7 +3860,7 @@ msgstr "post.title"
 
 #: src/pages/status.jsx:853
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr "Nie zalogowano. Interakcje (komentarze, podbicia, itp.) nie są możliwe."
+msgstr "Nie zalogowano. Interakcje (odpowiedzi, podbicia, itp.) nie są możliwe."
 
 #: src/pages/status.jsx:873
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
@@ -3876,7 +3876,7 @@ msgstr "Przełącz na mój serwer, aby włączyć interakcje"
 
 #: src/pages/status.jsx:1010
 msgid "Unable to load replies."
-msgstr "Nie udało się wczytać komentarzy."
+msgstr "Nie udało się wczytać odpowiedzi."
 
 #: src/pages/status.jsx:1122
 msgid "Back"
@@ -3929,12 +3929,12 @@ msgstr "Nie udało się załadować wpisu"
 #. placeholder {1}: shortenNumber(replies.length)
 #: src/pages/status.jsx:1523
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
-msgstr "{0, plural, one {# komentarz} few {# komentarze} other {# komentarzy}}"
+msgstr "{0, plural, one {# odpowiedź} other {<0>{1}</0> odpowiedzi}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
 #: src/pages/status.jsx:1541
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
-msgstr "{totalComments, plural, one {# komentarz} other {<0>{0}</0> komentarze}}"
+msgstr "{totalComments, plural, one {# odpowiedź} other {<0>{0}</0> odpowiedzi}}"
 
 #: src/pages/status.jsx:1563
 msgid "View post with its replies"
@@ -4013,7 +4013,7 @@ msgstr "Zagnieżdżone komentarze"
 
 #: src/pages/welcome.jsx:149
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
-msgstr "Bezproblemowo śledź rozmowy. Częściowo ukrywalne komentarze."
+msgstr "Bezproblemowo śledź rozmowy. Częściowo ukrywalne odpowiedzi."
 
 #: src/pages/welcome.jsx:157
 msgid "Screenshot of grouped notifications"

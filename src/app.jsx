@@ -345,6 +345,20 @@ window.__BENCHMARK = {
   },
 };
 
+if (import.meta.env.DEV) {
+  // If press shift down, set --time-scale to 10 in root
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.add('slow-mo');
+    }
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.remove('slow-mo');
+    }
+  });
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');

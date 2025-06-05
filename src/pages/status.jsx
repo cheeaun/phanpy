@@ -23,6 +23,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import { getSafeViewTransitionName } from '../components/media';
 import MediaModal from '../components/media-modal';
 import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
@@ -39,7 +40,6 @@ import states, {
 } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
-import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
@@ -129,11 +129,16 @@ function StatusPage(params) {
     ? snapStates.statuses[statusKey(mediaStatusID, instance)]?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
-  const handleMediaClose = useCallback(() => {
-    if (
-      !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
-      snapStates.prevLocation
-    ) {
+  const postViewState = () =>
+    window.matchMedia('(min-width: calc(40em + 350px))').matches
+      ? 'large'
+      : 'small';
+  const mediaClose = useCallback(() => {
+    console.log('xxx', {
+      postViewState: postViewState(),
+      showMediaOnly,
+    });
+    if (postViewState() === 'small' && snapStates.prevLocation) {
       history.back();
     } else {
       if (showMediaOnly) {
@@ -145,6 +150,59 @@ function StatusPage(params) {
       }
     }
   }, [showMediaOnly, closeLink, snapStates.prevLocation]);
+  const handleMediaClose = useCallback(
+    (e, currentIndex, mediaAttachments, carouselRef) => {
+      if (postViewState() === 'large' && !showMediaOnly) {
+        mediaClose();
+        return;
+      }
+      if (showMedia && document.startViewTransition) {
+        const media = mediaAttachments[currentIndex];
+        const { id, blurhash, url } = media;
+        const mediaVTN = getSafeViewTransitionName(id || blurhash || url);
+        const els = document.querySelectorAll(
+          `.status .media [data-view-transition-name="${mediaVTN}"]`,
+        );
+        const foundEls = [...els]?.filter?.((el) => {
+          const elBounds = el.getBoundingClientRect();
+          return (
+            elBounds.top < window.innerHeight &&
+            elBounds.bottom > 0 &&
+            elBounds.left < window.innerWidth &&
+            elBounds.right > 0
+          );
+        });
+        // If more than one, get the one in status page
+        const el =
+          foundEls.length === 1
+            ? foundEls[0]
+            : foundEls.find((el) => !!el.closest('.status-deck'));
+
+        console.log('xxx', { media, id, els, el });
+        if (el) {
+          const transition = document.startViewTransition(() => {
+            el.style.viewTransitionName = mediaVTN;
+            if (carouselRef?.current) {
+              carouselRef.current
+                .querySelectorAll('.media img, .media video')
+                ?.forEach((el) => {
+                  el.style.viewTransitionName = '';
+                });
+            }
+            mediaClose();
+          });
+          transition.ready.finally(() => {
+            el.style.viewTransitionName = '';
+          });
+        } else {
+          mediaClose();
+        }
+      } else {
+        mediaClose();
+      }
+    },
+    [showMedia, showMediaOnly],
+  );
 
   useEffect(() => {
     let timer = setTimeout(() => {

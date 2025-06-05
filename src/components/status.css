@@ -1228,7 +1228,7 @@
   border-color: var(--outline-hover-color);
 }
 .status .media:active:not(:has(button:active)) {
-  filter: brightness(0.8);
+  /* filter: brightness(0.8); */
   transform: scale(0.99);
 }
 .status .media :is(img, video) {
@@ -2844,4 +2844,68 @@ a.card:is(:hover, :focus):visited {
       mix-blend-mode: normal;
     }
   }
+}
+
+/* VIEW TRANSITIONS */
+@media not (prefers-reduced-motion: reduce) {
+  :root {
+    --media-swoosh-duration: 0.1s;
+  }
+  :root.slow-mo {
+    --media-swoosh-duration: 3s;
+  }
+  ::view-transition-group(.media-swoosh) {
+    animation-duration: var(--media-swoosh-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--timing-function);
+  }
+  ::view-transition-old(.media-swoosh),
+  ::view-transition-new(.media-swoosh) {
+    overflow: clip;
+    animation: none;
+    width: 100%;
+    height: 100%;
+  }
+  ::view-transition-old(.media-swoosh-in) {
+    object-fit: cover;
+  }
+  ::view-transition-new(.media-swoosh-in) {
+    object-fit: contain;
+  }
+  ::view-transition-old(.media-swoosh-out) {
+    object-fit: contain;
+    transform: scale(0.99); /* pressed down */
+  }
+  ::view-transition-new(.media-swoosh-out) {
+    object-fit: cover;
+  }
+  .status .media :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-in;
+  }
+  .carousel .carousel-item :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-out;
+  }
+  /* delay render .media bg image */
+  .carousel .carousel-item .media {
+    animation: delayBg calc(var(--media-swoosh-duration) + 0.1s) steps(1)
+      forwards;
+  }
+}
+
+@keyframes delayBg {
+  from {
+    background-image: none;
+  }
+  to {
+    background-image: var(--bg-image);
+  }
+}
+
+.status .media :is(img, video),
+.carousel .carousel-item :is(img, video) {
+  interpolate-size: allow-keywords;
+  transition-property: width, height;
+  transition-timing-function: var(--timing-function);
+  transition-duration: 0.1s;
+  transition-behavior: allow-discrete;
 }

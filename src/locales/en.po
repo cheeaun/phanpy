@@ -110,7 +110,7 @@ msgstr ""
 #: src/components/account-info.jsx:1236
 #: src/components/compose.jsx:2783
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-modal.jsx:359
+#: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
 #: src/components/status.jsx:1853
 #: src/components/status.jsx:1978
@@ -122,7 +122,7 @@ msgstr ""
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1247
+#: src/pages/status.jsx:1305
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr ""
@@ -207,8 +207,8 @@ msgstr ""
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
-#: src/pages/status.jsx:966
-#: src/pages/status.jsx:1593
+#: src/pages/status.jsx:1024
+#: src/pages/status.jsx:1651
 msgid "Replies"
 msgstr ""
 
@@ -460,7 +460,7 @@ msgstr ""
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-modal.jsx:323
+#: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
 #: src/components/report-modal.jsx:75
 #: src/components/shortcuts-settings.jsx:230
@@ -476,7 +476,7 @@ msgstr ""
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
-#: src/pages/status.jsx:1334
+#: src/pages/status.jsx:1392
 msgid "Close"
 msgstr ""
 
@@ -982,13 +982,13 @@ msgid "Type to search GIFs"
 msgstr ""
 
 #: src/components/compose.jsx:3794
-#: src/components/media-modal.jsx:465
+#: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr ""
 
 #: src/components/compose.jsx:3812
-#: src/components/media-modal.jsx:484
+#: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr ""
@@ -1087,7 +1087,7 @@ msgstr ""
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:922
 #: src/pages/search.jsx:561
-#: src/pages/status.jsx:1367
+#: src/pages/status.jsx:1425
 msgid "Show more…"
 msgstr ""
 
@@ -1315,27 +1315,27 @@ msgstr ""
 msgid "Speak"
 msgstr ""
 
-#: src/components/media-modal.jsx:370
+#: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
 msgstr ""
 
-#: src/components/media-modal.jsx:374
+#: src/components/media-modal.jsx:378
 msgid "Open original media"
 msgstr ""
 
-#: src/components/media-modal.jsx:390
+#: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
 msgstr ""
 
-#: src/components/media-modal.jsx:405
+#: src/components/media-modal.jsx:409
 msgid "Failed to describe image"
 msgstr ""
 
-#: src/components/media-modal.jsx:415
+#: src/components/media-modal.jsx:419
 msgid "Describe image…"
 msgstr ""
 
-#: src/components/media-modal.jsx:439
+#: src/components/media-modal.jsx:443
 msgid "View post"
 msgstr ""
 
@@ -1357,7 +1357,7 @@ msgstr ""
 msgid "Filtered"
 msgstr ""
 
-#: src/components/media.jsx:417
+#: src/components/media.jsx:465
 msgid "Open file"
 msgstr "Open file"
 
@@ -1492,7 +1492,7 @@ msgstr ""
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
 #: src/pages/login.jsx:195
-#: src/pages/status.jsx:866
+#: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
 msgstr ""
@@ -1714,8 +1714,8 @@ msgstr ""
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1236
-#: src/pages/status.jsx:1259
+#: src/pages/status.jsx:1294
+#: src/pages/status.jsx:1317
 msgid "Refresh"
 msgstr ""
 
@@ -2522,8 +2522,8 @@ msgstr ""
 #: src/components/timeline.jsx:586
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
-#: src/pages/status.jsx:1019
-#: src/pages/status.jsx:1396
+#: src/pages/status.jsx:1077
+#: src/pages/status.jsx:1454
 msgid "Try again"
 msgstr ""
 
@@ -3848,90 +3848,90 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:599
-#: src/pages/status.jsx:1162
+#: src/pages/status.jsx:657
+#: src/pages/status.jsx:1220
 msgid "post.title"
 msgstr "Post"
 
-#: src/pages/status.jsx:853
+#: src/pages/status.jsx:911
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:873
+#: src/pages/status.jsx:931
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:901
+#: src/pages/status.jsx:959
 msgid "Error: {e}"
 msgstr ""
 
-#: src/pages/status.jsx:908
+#: src/pages/status.jsx:966
 msgid "Switch to my instance to enable interactions"
 msgstr ""
 
-#: src/pages/status.jsx:1010
+#: src/pages/status.jsx:1068
 msgid "Unable to load replies."
 msgstr ""
 
-#: src/pages/status.jsx:1122
+#: src/pages/status.jsx:1180
 msgid "Back"
 msgstr ""
 
-#: src/pages/status.jsx:1153
+#: src/pages/status.jsx:1211
 msgid "Go to main post"
 msgstr ""
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1176
+#: src/pages/status.jsx:1234
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
 
-#: src/pages/status.jsx:1223
-#: src/pages/status.jsx:1286
+#: src/pages/status.jsx:1281
+#: src/pages/status.jsx:1344
 msgid "Switch to Side Peek view"
 msgstr ""
 
-#: src/pages/status.jsx:1287
+#: src/pages/status.jsx:1345
 msgid "Switch to Full view"
 msgstr ""
 
-#: src/pages/status.jsx:1305
+#: src/pages/status.jsx:1363
 msgid "Show all sensitive content"
 msgstr ""
 
-#: src/pages/status.jsx:1310
+#: src/pages/status.jsx:1368
 msgid "Experimental"
 msgstr ""
 
-#: src/pages/status.jsx:1319
+#: src/pages/status.jsx:1377
 msgid "Unable to switch"
 msgstr ""
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1326
+#: src/pages/status.jsx:1384
 msgid "Switch to post's instance ({0})"
 msgstr "Switch to post's instance ({0})"
 
-#: src/pages/status.jsx:1329
+#: src/pages/status.jsx:1387
 msgid "Switch to post's instance"
 msgstr ""
 
-#: src/pages/status.jsx:1387
+#: src/pages/status.jsx:1445
 msgid "Unable to load post"
 msgstr ""
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1523
+#: src/pages/status.jsx:1581
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1541
+#: src/pages/status.jsx:1599
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
 
-#: src/pages/status.jsx:1563
+#: src/pages/status.jsx:1621
 msgid "View post with its replies"
 msgstr ""
 

@@ -67,8 +67,8 @@ function MediaModal({
   const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
-    let handleSwipe = () => {
-      onClose();
+    let handleSwipe = (e) => {
+      onClose(e, currentIndex, mediaAttachments, carouselRef);
     };
     if (carouselRef.current) {
       carouselRef.current.addEventListener('swiped-down', handleSwipe);
@@ -78,11 +78,13 @@ function MediaModal({
         carouselRef.current.removeEventListener('swiped-down', handleSwipe);
       }
     };
-  }, []);
+  }, [currentIndex, mediaAttachments]);
 
   useHotkeys(
     'esc',
-    onClose,
+    (e) => {
+      onClose(e, currentIndex, mediaAttachments, carouselRef);
+    },
     {
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
@@ -90,7 +92,7 @@ function MediaModal({
       },
       useKey: true,
     },
-    [onClose],
+    [onClose, currentIndex, mediaAttachments],
   );
 
   useEffect(() => {
@@ -240,7 +242,7 @@ function MediaModal({
             e.target.classList.contains('media') ||
             e.target.classList.contains('media-zoom')
           ) {
-            onClose();
+            onClose(e, currentIndex, mediaAttachments, carouselRef);
           }
         }}
         style={
@@ -318,7 +320,9 @@ function MediaModal({
           <button
             type="button"
             class="carousel-button"
-            onClick={() => onClose()}
+            onClick={(e) =>
+              onClose(e, currentIndex, mediaAttachments, carouselRef)
+            }
           >
             <Icon icon="x" alt={t`Close`} />
           </button>

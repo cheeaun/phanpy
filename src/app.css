@@ -2708,6 +2708,10 @@ ul.link-list li a .icon {
   #columns > * {
     padding: 0 16px;
 
+    &:not(.deck-container) {
+      display: none;
+    }
+
     &:is(#notifications-page) {
       padding-inline: 0;
 

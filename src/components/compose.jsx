@@ -1701,7 +1701,9 @@ function Compose({
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
-              const textBeforeMention = text.slice(0, selectionStart);
+              let textBeforeMention = text.slice(0, selectionStart);
+              // Remove zero-width space from end of text
+              textBeforeMention = textBeforeMention.replace(/\u200B$/, '');
               const spaceBeforeMention = textBeforeMention
                 ? /[\s\t\n\r]$/.test(textBeforeMention)
                   ? ''
@@ -1748,7 +1750,9 @@ function Compose({
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
-              const textBeforeEmoji = text.slice(0, selectionStart);
+              let textBeforeEmoji = text.slice(0, selectionStart);
+              // Remove zero-width space from end of text
+              textBeforeEmoji = textBeforeEmoji.replace(/\u200B$/, '');
               const spaceBeforeEmoji = textBeforeEmoji
                 ? /[\s\t\n\r]$/.test(textBeforeEmoji)
                   ? ''
@@ -2357,8 +2361,7 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          // Replace zero-width space
-          const text = target.value.replace(/\u200b/g, '');
+          const text = target.value;
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);

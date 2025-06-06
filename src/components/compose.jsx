@@ -2152,7 +2152,7 @@ const Textarea = forwardRef((props, ref) => {
             }, 300);
           }
         } else if (key === '@') {
-          e.detail.value = value ? `@${value} ` : '​'; // zero-width space
+          e.detail.value = value ? `@${value}` : '​'; // zero-width space
           if (more) {
             e.detail.continue = true;
             setTimeout(() => {

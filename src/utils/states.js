@@ -223,6 +223,18 @@ export function saveStatus(status, instance, opts) {
         },
       ];
     }
+    // Mastodon native quotes
+    if (status.quote?.state === 'accepted' && status.quote?.quotedStatus) {
+      const { quotedStatus } = status.quote;
+      const sKey = statusKey(quotedStatus.id, instance);
+      states.statuses[sKey] = quotedStatus;
+      states.statusQuotes[key] = [
+        {
+          id: quotedStatus.id,
+          instance,
+        },
+      ];
+    }
   });
 
   // THREAD TRAVERSER

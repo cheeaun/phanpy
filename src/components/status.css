@@ -1966,7 +1966,7 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
-  touch-action: auto;
+  touch-action: manipulation;
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);

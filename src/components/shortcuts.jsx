@@ -16,6 +16,7 @@ import states from '../utils/states';
 import AsyncText from './AsyncText';
 import Icon from './icon';
 import Link from './link';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuLink from './menu-link';
 import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
@@ -32,9 +33,6 @@ function Shortcuts() {
   const isMultiColumnMode =
     settings.shortcutsViewMode === 'multi-column' ||
     (!settings.shortcutsViewMode && settings.shortcutsColumnsMode);
-  if (isMultiColumnMode) {
-    return null;
-  }
 
   const menuRef = useRef();
 
@@ -88,8 +86,8 @@ function Shortcuts() {
   const navigate = useNavigate();
   useHotkeys(
     ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    (e, handler) => {
-      const index = parseInt(handler.keys[0], 10) - 1;
+    (e) => {
+      const index = parseInt(e.key, 10) - 1;
       if (index < formattedShortcuts.length) {
         const { path } = formattedShortcuts[index];
         if (path) {
@@ -100,10 +98,16 @@ function Shortcuts() {
     },
     {
       enabled: !isMultiColumnMode,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
   const [lists, setLists] = useState([]);
+
+  if (isMultiColumnMode) {
+    return null;
+  }
 
   return (
     <div id="shortcuts">
@@ -217,7 +221,15 @@ function Shortcuts() {
                   <MenuDivider />
                   {lists?.map((list) => (
                     <MenuLink key={list.id} to={`/l/${list.id}`}>
-                      <span>{list.title}</span>
+                      <span>
+                        {list.title}
+                        {list.exclusive && (
+                          <>
+                            {' '}
+                            <ListExclusiveBadge />
+                          </>
+                        )}
+                      </span>
                     </MenuLink>
                   ))}
                 </SubMenu2>

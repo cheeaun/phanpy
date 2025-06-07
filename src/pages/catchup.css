@@ -45,7 +45,8 @@
         transform: translateY(-10vh);
         color: var(--text-color);
         background-color: var(--bg-color);
-        background-image: radial-gradient(
+        background-image:
+          radial-gradient(
             farthest-corner at 25% 0,
             transparent 80%,
             var(--bg-faded-color) 95%,
@@ -343,7 +344,8 @@
         filter: none;
 
         .avatar {
-          box-shadow: 0 0 0 0.5px var(--bg-color),
+          box-shadow:
+            0 0 0 0.5px var(--bg-color),
             0 0 0 3px var(--link-faded-color) !important;
 
           img {
@@ -372,7 +374,9 @@
         filter: none;
 
         .avatar {
-          box-shadow: 0 0 0 1px var(--bg-color), 0 0 0 3px var(--link-color);
+          box-shadow:
+            0 0 0 1px var(--bg-color),
+            0 0 0 3px var(--link-color);
         }
 
         .username {
@@ -526,7 +530,8 @@
         position: relative;
         z-index: 1;
         background-color: var(--bg-faded-color);
-        box-shadow: 0 8px 16px -8px var(--drop-shadow-color),
+        box-shadow:
+          0 8px 16px -8px var(--drop-shadow-color),
           inset 0 1px var(--bg-color);
         text-shadow: 0 1px var(--bg-color);
       }
@@ -781,6 +786,15 @@
 
         br {
           content: ' ';
+          display: inline;
+
+          + br,
+          + br + br,
+          + br + br + br,
+          + br + br + br + br,
+          + br + br + br + br + br {
+            display: none;
+          }
         }
 
         /* all block level elements */

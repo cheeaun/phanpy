@@ -64,7 +64,7 @@ const memSupportsGroupedNotifications = mem(
   },
 );
 
-export function mastoFetchNotifications(opts = {}) {
+function mastoFetchNotificationsIterable(opts = {}) {
   const { masto } = api();
   if (
     states.settings.groupedNotificationsAlpha &&
@@ -81,6 +81,9 @@ export function mastoFetchNotifications(opts = {}) {
       ...opts,
     });
   }
+}
+export function mastoFetchNotifications(opts = {}) {
+  return mastoFetchNotificationsIterable(opts).values();
 }
 
 export function getGroupedNotifications(notifications) {
@@ -131,13 +134,15 @@ function Notifications({ columnMode }) {
 
   console.debug('RENDER Notifications');
 
+  const notificationsIterable = useRef();
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
-      notificationsIterator.current = mastoFetchNotifications({
+      notificationsIterable.current = mastoFetchNotificationsIterable({
         excludeTypes: ['follow_request'],
       });
+      notificationsIterator.current = notificationsIterable.current.values();
     }
     if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
       // Pixelfed returns next paginationed link with empty max_id
@@ -483,6 +488,7 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -519,6 +525,7 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -533,6 +540,7 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

@@ -961,6 +961,19 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   filter: drop-shadow(0 0 16px var(--bg-color))
     drop-shadow(0 0 8px var(--bg-color)) drop-shadow(0 0 8px var(--bg-color));
 }
+.timeline:not(.flat) {
+  > li.timeline-item-container-type-thread.timeline-item-container-middle:not(
+      .timeline-item-diff-author
+    ) {
+    > :is(.status-link, .status-focus) {
+      > .status > .container {
+        > .meta {
+          display: none;
+        }
+      }
+    }
+  }
+}
 
 .timeline .show-more {
   padding-inline-start: calc(
@@ -1440,7 +1453,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   max-width: 100%;
   height: auto;
   max-height: 100vh;
-  max-height: 100dvh;
+  max-height: 100svh;
   vertical-align: middle;
 }
 .carousel .carousel-item video {
@@ -1567,9 +1580,6 @@ button.carousel-dot:is(.active, [disabled].active) .icon {
     transition-duration: 0s;
   }
 
-  :is(.carousel-top-controls, .carousel-controls)[hidden] {
-    opacity: 1;
-  }
   .carousel:hover + .carousel-top-controls,
   .carousel:hover + .carousel-top-controls + .carousel-controls,
   .carousel-top-controls:hover,
@@ -2106,7 +2116,7 @@ body > .szh-menu-container {
   margin-block: 4px;
 
   > &:first-child,
-  li[role='none']:first-child + & {
+  li[role='none']:not(.szh-menu__header):first-child + & {
     display: none;
   }
 }
@@ -2453,6 +2463,7 @@ body > .szh-menu-container {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+  align-items: center;
 }
 /* I'm just feeling bored, so having fun here */
 @media (hover: hover) {
@@ -2696,6 +2707,10 @@ ul.link-list li a .icon {
   }
   #columns > * {
     padding: 0 16px;
+
+    &:not(.deck-container) {
+      display: none;
+    }
 
     &:is(#notifications-page) {
       padding-inline: 0;
@@ -2996,6 +3011,7 @@ ul.link-list li a .icon {
   .deck > header {
     text-shadow: 0 1px var(--bg-color);
 
+    .szh-menu-container,
     form {
       text-shadow: none;
     }
@@ -3109,6 +3125,10 @@ ul.link-list li a .icon {
   }
   summary::-webkit-details-marker {
     display: none;
+  }
+
+  .side {
+    float: var(--forward);
   }
 
   p,

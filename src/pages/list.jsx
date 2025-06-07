@@ -1,7 +1,7 @@
 import './lists.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { InView } from 'react-intersection-observer';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,8 +9,8 @@ import { useSnapshot } from 'valtio';
 
 import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
-import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
+import ListExclusiveBadge from '../components/list-exclusive-badge';
 import MenuConfirm from '../components/menu-confirm';
 import MenuLink from '../components/menu-link';
 import Menu2 from '../components/menu2';
@@ -36,9 +36,12 @@ function List(props) {
   const listIterator = useRef();
   async function fetchList(firstLoad) {
     if (firstLoad || !listIterator.current) {
-      listIterator.current = masto.v1.timelines.list.$select(id).list({
-        limit: LIMIT,
-      });
+      listIterator.current = masto.v1.timelines.list
+        .$select(id)
+        .list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await listIterator.current.next();
     let { value } = results;
@@ -77,9 +80,6 @@ function List(props) {
   }
 
   const [lists, setLists] = useState([]);
-  useEffect(() => {
-    getLists().then(setLists);
-  }, []);
 
   const [list, setList] = useState({ title: 'List' });
   // const [title, setTitle] = useState(`List`);
@@ -128,6 +128,11 @@ function List(props) {
                 <Icon icon="chevron-down" size="s" />
               </button>
             }
+            onMenuChange={(e) => {
+              if (e.open) {
+                getLists().then(setLists);
+              }
+            }}
           >
             <MenuLink to="/l">
               <span>
@@ -139,7 +144,15 @@ function List(props) {
                 <MenuDivider />
                 {lists.map((list) => (
                   <MenuLink key={list.id} to={`/l/${list.id}`}>
-                    <span>{list.title}</span>
+                    <span>
+                      {list.title}
+                      {list.exclusive && (
+                        <>
+                          {' '}
+                          <ListExclusiveBadge />
+                        </>
+                      )}
+                    </span>
                   </MenuLink>
                 ))}
               </>
@@ -159,6 +172,17 @@ function List(props) {
               </button>
             }
           >
+            {list?.exclusive && (
+              <>
+                <MenuHeader className="plain">
+                  <ListExclusiveBadge />{' '}
+                  <Trans>
+                    Posts on this list are hidden from Home/Following
+                  </Trans>
+                </MenuHeader>
+                <MenuDivider />
+              </>
+            )}
             <MenuItem
               onClick={() =>
                 setShowListAddEditModal({
@@ -222,6 +246,7 @@ function List(props) {
 }
 
 const MEMBERS_LIMIT = 40;
+
 function ListManageMembers({ listID, onClose }) {
   const { t } = useLingui();
   // Show list of members with [Remove] button
@@ -244,7 +269,8 @@ function ListManageMembers({ listID, onClose }) {
             .$select(listID)
             .accounts.list({
               limit: MEMBERS_LIMIT,
-            });
+            })
+            .values();
         }
         const results = await membersIterator.current.next();
         let { done, value } = results;

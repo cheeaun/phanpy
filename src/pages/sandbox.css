@@ -1,0 +1,298 @@
+#sandbox {
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  width: 100%;
+  height: 100svh;
+  background-color: var(--bg-faded-color);
+
+  @media (min-width: 40em) {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr min(40%, 320px);
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    grid-column: 1 / -1;
+
+    h1 {
+      font-size: 1em;
+      font-weight: normal;
+      text-transform: uppercase;
+      margin: 0;
+      padding: 0;
+      color: var(--text-insignificant-color);
+    }
+  }
+
+  + #compose-button,
+  ~ #shortcuts {
+    display: none;
+  }
+
+  .sandbox-preview {
+    position: relative;
+    padding: 16px;
+    background-color: var(--bg-color);
+    /* checkered background */
+    background-image:
+      linear-gradient(var(--bg-faded-color) 2px, transparent 2px),
+      linear-gradient(90deg, var(--bg-faded-color) 2px, transparent 2px),
+      linear-gradient(var(--bg-faded-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-faded-color) 1px, transparent 1px);
+    background-size:
+      50px 50px,
+      50px 50px,
+      10px 10px,
+      10px 10px;
+    background-position:
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%;
+    overflow: auto;
+    box-shadow: 0 0 0 1px var(--outline-color);
+    display: flex;
+    align-items: safe center;
+    justify-content: center;
+    overflow-anchor: auto;
+    position: relative;
+
+    @media (width > calc(400px + 320px)) {
+      &.narrow {
+        > [class^='status-'],
+        > .status,
+        > *:not(.status-card-link, [class^='status-']) > .status {
+          max-width: 320px !important;
+        }
+      }
+    }
+
+    > [class^='status-'],
+    > .status,
+    > *:not(.status-card-link, [class^='status-']) > .status {
+      min-width: 320px;
+      max-width: 40em;
+      background-color: var(--bg-color);
+      border-radius: 8px;
+      box-shadow:
+        0 4px 16px var(--drop-shadow-color),
+        0 8px 32px -4px var(--drop-shadow-color);
+      view-transition-name: status;
+
+      > .status-pre-meta {
+        view-transition-name: status-pre-meta;
+      }
+    }
+
+    > .status,
+    > *:not(.status-card-link) > .status {
+      > .container > .meta {
+        view-transition-name: status-meta;
+      }
+
+      > a > .avatar {
+        view-transition-name: status-avatar;
+      }
+
+      .content-container {
+        view-transition-name: status-content-container;
+      }
+
+      .media-container {
+        view-transition-name: status-media;
+      }
+
+      .poll {
+        view-transition-name: status-poll;
+      }
+
+      .status-badge {
+        view-transition-name: status-badge;
+      }
+
+      .actions {
+        view-transition-name: status-actions;
+      }
+
+      .card-byline {
+        view-transition-name: status-card-byline;
+      }
+      .card {
+        view-transition-name: status-card;
+      }
+
+      .status-card-link {
+        * {
+          view-transition-name: none !important;
+        }
+      }
+    }
+  }
+
+  .sandbox-toggles {
+    padding: 16px;
+    font-size: 0.8em;
+    overflow: auto;
+    background-color: var(--bg-blur-color);
+    box-shadow: 0 0 0 1px var(--outline-color);
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h2 {
+      margin-top: 0;
+      padding-top: 0;
+      color: var(--text-insignificant-color);
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      color: var(--text-insignificant-color);
+      font-size: 1em;
+    }
+
+    > ul {
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+
+      li:has(> label) ul {
+        padding-inline-start: 24px;
+      }
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      ul:not(:has(ul)) {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 4px;
+
+        li {
+          padding-inline-start: 0;
+        }
+      }
+    }
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &.flex {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+
+    label {
+      cursor: pointer;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: var(--link-bg-color);
+      }
+    }
+
+    label,
+    b,
+    i {
+      display: flex;
+      padding: 4px;
+      gap: 4px;
+      align-items: center;
+    }
+
+    ul li ul b {
+      font-weight: normal;
+    }
+
+    input[type='number'] {
+      width: 3em;
+      text-align: end;
+    }
+
+    input[type='radio'],
+    input[type='checkbox'] {
+      margin: 0;
+    }
+
+    /* Media types styling */
+    .media-types {
+      padding-inline-start: 12px;
+      li {
+        list-style: decimal;
+        display: flex;
+        counter-increment: index;
+        align-items: center;
+
+        &:before {
+          content: counter(index);
+          color: var(--text-insignificant-color);
+          font-variant: tabular-nums;
+        }
+      }
+    }
+
+    sup {
+      transform: translateY(-0.5em);
+      color: var(--text-insignificant-color);
+    }
+
+    .toggle-display {
+      display: none;
+      @media (width > calc(400px + 320px)) {
+        display: block;
+      }
+    }
+
+    footer {
+      margin-top: 2em;
+      border-top: 1px solid var(--divider-color);
+      padding: 2em 0;
+      color: var(--text-insignificant-color);
+
+      ul,
+      li {
+        list-style: decimal;
+      }
+
+      ul {
+        padding-inline-start: 1em;
+      }
+    }
+  }
+}
+
+::view-transition-old(status),
+::view-transition-new(status) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-media),
+::view-transition-new(status-media) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-poll),
+::view-transition-new(status-poll) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-card-byline),
+::view-transition-new(status-card-byline),
+::view-transition-old(status-card),
+::view-transition-new(status-card) {
+  width: 100%;
+  height: 100%;
+}

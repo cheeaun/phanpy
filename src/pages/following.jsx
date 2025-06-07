@@ -28,6 +28,7 @@ function Following({ title, path, id, ...props }) {
   );
   const { masto, streaming, instance } = api();
   const snapStates = useSnapshot(states);
+  const homeIterable = useRef();
   const homeIterator = useRef();
   const latestItem = useRef();
   __BENCHMARK.end('time-to-following');
@@ -38,13 +39,14 @@ function Following({ title, path, id, ...props }) {
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
       __BENCHMARK.start('fetch-home-first');
-      homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
+      homeIterable.current = masto.v1.timelines.home.list({ limit: LIMIT });
+      homeIterator.current = homeIterable.current.values();
     }
-    if (supportsPixelfed && homeIterator.current?.nextParams) {
-      if (typeof homeIterator.current.nextParams === 'string') {
-        homeIterator.current.nextParams += '&include_reblogs=true';
+    if (supportsPixelfed && homeIterable.current?.params) {
+      if (typeof homeIterable.current.params === 'string') {
+        homeIterable.current.params += '&include_reblogs=true';
       } else {
-        homeIterator.current.nextParams.include_reblogs = true;
+        homeIterable.current.params.include_reblogs = true;
       }
     }
     const results = await homeIterator.current.next();
@@ -90,7 +92,7 @@ function Following({ title, path, id, ...props }) {
       if (supports('@pixelfed/home-include-reblogs')) {
         opts.include_reblogs = true;
       }
-      const results = await masto.v1.timelines.home.list(opts).next();
+      const results = await masto.v1.timelines.home.list(opts).values().next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
@@ -104,6 +106,7 @@ function Following({ title, path, id, ...props }) {
       }
       return false;
     } catch (e) {
+      console.error(e);
       return false;
     }
   }

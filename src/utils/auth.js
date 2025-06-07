@@ -45,7 +45,11 @@ export async function registerApplication({ instanceURL }) {
   return registrationJSON;
 }
 
-export async function getPKCEAuthorizationURL({ instanceURL, client_id }) {
+export async function getPKCEAuthorizationURL({
+  instanceURL,
+  client_id,
+  forceLogin = false,
+}) {
   const codeVerifier = verifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
   const params = new URLSearchParams({
@@ -56,11 +60,16 @@ export async function getPKCEAuthorizationURL({ instanceURL, client_id }) {
     response_type: 'code',
     scope: SCOPES,
   });
+  if (forceLogin) params.append('force_login', true);
   const authorizationURL = `https://${instanceURL}/oauth/authorize?${params.toString()}`;
   return [authorizationURL, codeVerifier];
 }
 
-export async function getAuthorizationURL({ instanceURL, client_id }) {
+export async function getAuthorizationURL({
+  instanceURL,
+  client_id,
+  forceLogin = false,
+}) {
   const authorizationParams = new URLSearchParams({
     client_id,
     scope: SCOPES,
@@ -68,6 +77,7 @@ export async function getAuthorizationURL({ instanceURL, client_id }) {
     // redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
     response_type: 'code',
   });
+  if (forceLogin) authorizationParams.append('force_login', true);
   const authorizationURL = `https://${instanceURL}/oauth/authorize?${authorizationParams.toString()}`;
   return authorizationURL;
 }
@@ -104,4 +114,33 @@ export async function getAccessToken({
   const tokenJSON = await tokenResponse.json();
   console.log({ tokenJSON });
   return tokenJSON;
+}
+
+export async function revokeAccessToken({
+  instanceURL,
+  client_id,
+  client_secret,
+  token,
+}) {
+  try {
+    const params = new URLSearchParams({
+      client_id,
+      client_secret,
+      token,
+    });
+
+    const revokeResponse = await fetch(`https://${instanceURL}/oauth/revoke`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+      keepalive: true,
+    });
+
+    return revokeResponse.ok;
+  } catch (error) {
+    console.erro('Error revoking token', error);
+    return false;
+  }
 }

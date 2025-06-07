@@ -27,7 +27,7 @@ import poweredByGiphyURL from '../assets/powered-by-giphy.svg';
 import Menu2 from '../components/menu2';
 import supportedLanguages from '../data/status-supported-languages';
 import urlRegex from '../data/url-regex';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
@@ -253,6 +253,7 @@ function Compose({
       videoSizeLimit,
       videoMatrixLimit,
       videoFrameRateLimit,
+      descriptionLimit,
     } = {},
     polls: {
       maxOptions,
@@ -277,7 +278,7 @@ function Compose({
   const [poll, setPoll] = useState(null);
   const [scheduledAt, setScheduledAt] = useState(null);
 
-  const prefs = store.account.get('preferences') || {};
+  const prefs = getPreferences();
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -286,8 +287,8 @@ function Compose({
   const focusTextarea = () => {
     setTimeout(() => {
       if (!textareaRef.current) return;
-      // status starts with newline, focus on first position
-      if (draftStatus?.status?.startsWith?.('\n')) {
+      // status starts with newline or space, focus on first position
+      if (/^\n|\s/.test(draftStatus?.status)) {
         textareaRef.current.selectionStart = 0;
         textareaRef.current.selectionEnd = 0;
       }
@@ -519,6 +520,8 @@ function Compose({
     {
       enabled: !supportsCloseWatcher,
       enableOnFormTags: true,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
   useHotkeys(
@@ -534,13 +537,20 @@ function Compose({
       enableOnFormTags: true,
       // Use keyup because Esc keydown will close the confirm dialog on Safari
       keyup: true,
-      ignoreEventWhen: () => {
+      ignoreEventWhen: (e) => {
         const modals = document.querySelectorAll('#modal-container > *');
         const hasModal = !!modals;
         const hasOnlyComposer =
           modals.length === 1 && modals[0].querySelector('#compose-container');
-        return hasModal && !hasOnlyComposer;
+        return (
+          (hasModal && !hasOnlyComposer) ||
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey
+        );
       },
+      useKey: true,
     },
   );
   useCloseWatcher(() => {
@@ -1305,7 +1315,7 @@ function Compose({
                   resolve: false,
                 });
               }
-              return masto.v2.search.fetch(params);
+              return masto.v2.search.list(params);
             }}
             onTrigger={(action) => {
               if (action?.name === 'custom-emojis') {
@@ -1335,6 +1345,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
                         const newAttachments = [...attachments];
@@ -1690,7 +1701,9 @@ function Compose({
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
-              const textBeforeMention = text.slice(0, selectionStart);
+              let textBeforeMention = text.slice(0, selectionStart);
+              // Remove zero-width space from end of text
+              textBeforeMention = textBeforeMention.replace(/\u200B$/, '');
               const spaceBeforeMention = textBeforeMention
                 ? /[\s\t\n\r]$/.test(textBeforeMention)
                   ? ''
@@ -1737,7 +1750,9 @@ function Compose({
               if (!textarea) return;
               const { selectionStart, selectionEnd } = textarea;
               const text = textarea.value;
-              const textBeforeEmoji = text.slice(0, selectionStart);
+              let textBeforeEmoji = text.slice(0, selectionStart);
+              // Remove zero-width space from end of text
+              textBeforeEmoji = textBeforeEmoji.replace(/\u200B$/, '');
               const spaceBeforeEmoji = textBeforeEmoji
                 ? /[\s\t\n\r]$/.test(textBeforeEmoji)
                   ? ''
@@ -2141,7 +2156,7 @@ const Textarea = forwardRef((props, ref) => {
             }, 300);
           }
         } else if (key === '@') {
-          e.detail.value = value ? `@${value} ` : '​'; // zero-width space
+          e.detail.value = value ? `@${value}` : '​'; // zero-width space
           if (more) {
             e.detail.continue = true;
             setTimeout(() => {
@@ -2346,8 +2361,7 @@ const Textarea = forwardRef((props, ref) => {
         }}
         onInput={(e) => {
           const { target } = e;
-          // Replace zero-width space
-          const text = target.value.replace(/\u200b/g, '');
+          const text = target.value;
           setText(text);
           autoResizeTextarea(target);
           props.onInput?.(e);
@@ -2422,6 +2436,7 @@ function MediaAttachment({
   attachment,
   disabled,
   lang,
+  descriptionLimit = 1500,
   onDescriptionChange = () => {},
   onRemove = () => {},
 }) {
@@ -2563,8 +2578,7 @@ function MediaAttachment({
           dir="auto"
           disabled={disabled || uiState === 'loading'}
           class={uiState === 'loading' ? 'loading' : ''}
-          maxlength="1500" // Not unicode-aware :(
-          // TODO: Un-hard-code this maxlength, ref: https://github.com/mastodon/mastodon/blob/b59fb28e90bc21d6fd1a6bafd13cfbd81ab5be54/app/models/media_attachment.rb#L39
+          maxlength={descriptionLimit} // Not unicode-aware :(
           onInput={(e) => {
             const { value } = e.target;
             setDescription(value);
@@ -3141,6 +3155,8 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -3167,6 +3183,8 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -3192,6 +3210,8 @@ function MentionModal({
     {
       preventDefault: true,
       enableOnFormTags: ['input'],
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

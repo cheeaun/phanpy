@@ -8,6 +8,8 @@ var _rollbarConfig = {
   payload: {
     environment: isDev ? 'development' : 'production',
   },
+  captureIp: false,
+  scrubTelemetryInputs: true,
 };
 
 // Rollbar Snippet
@@ -72,7 +74,7 @@ var _rollbarConfig = {
     (_rollbarConfig = _rollbarConfig || {}),
       (_rollbarConfig.rollbarJsUrl =
         _rollbarConfig.rollbarJsUrl ||
-        'https://cdn.rollbar.com/rollbarjs/refs/tags/v2.26.0/rollbar.min.js'),
+        'https://cdn.rollbar.com/rollbarjs/refs/tags/v2.26.4/rollbar.min.js'),
       (_rollbarConfig.async =
         void 0 === _rollbarConfig.async || _rollbarConfig.async);
     var a = n.setupShim(window, _rollbarConfig),

@@ -6,6 +6,7 @@ import { useEffect, useReducer, useState } from 'preact/hooks';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
+import ListExclusiveBadge from '../components/list-exclusive-badge';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
@@ -35,6 +36,8 @@ function Lists() {
   }, [reloadCount]);
 
   const [showListAddEditModal, setShowListAddEditModal] = useState(false);
+
+  const hasExclusiveLists = lists.some((list) => list.exclusive);
 
   return (
     <div id="lists-page" class="deck-container" tabIndex="-1">
@@ -68,8 +71,15 @@ function Lists() {
                 {lists.map((list) => (
                   <li>
                     <Link to={`/l/${list.id}`}>
+                      <Icon icon="list" />{' '}
                       <span>
-                        <Icon icon="list" /> <span>{list.title}</span>
+                        {list.title}
+                        {list.exclusive && (
+                          <>
+                            {' '}
+                            <ListExclusiveBadge insignificant />
+                          </>
+                        )}
                       </span>
                       {/* <button
                       type="button"
@@ -90,9 +100,25 @@ function Lists() {
               </ul>
               {lists.length > 1 && (
                 <footer class="ui-state">
-                  <small class="insignificant">
-                    <Plural value={lists.length} one="# list" other="# lists" />
-                  </small>
+                  {hasExclusiveLists && (
+                    <p>
+                      <small class="insignificant">
+                        <ListExclusiveBadge />{' '}
+                        <Trans>
+                          Posts on this list are hidden from Home/Following
+                        </Trans>
+                      </small>
+                    </p>
+                  )}
+                  <p>
+                    <small class="insignificant">
+                      <Plural
+                        value={lists.length}
+                        one="# list"
+                        other="# lists"
+                      />
+                    </small>
+                  </p>
                 </footer>
               )}
             </>

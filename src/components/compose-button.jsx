@@ -53,37 +53,42 @@ export default function ComposeButton() {
   const menuRef = useRef(null);
 
   function handleButton(e) {
+    // useKey will even listen to Shift
+    // e.g. press Shift (without c) will trigger this 😱
+    if (e.key && e.key.toLowerCase() !== 'c') return;
+
     if (snapStates.composerState.minimized) {
       states.composerState.minimized = false;
       openOSK();
       return;
     }
 
+    const composeDataElements = document.querySelectorAll('data.compose-data');
+    // If there's a lot of them, ignore
+    const opts =
+      composeDataElements.length === 1
+        ? JSON.parse(composeDataElements[0].value)
+        : undefined;
+
     if (e.shiftKey) {
-      const newWin = openCompose();
+      const newWin = openCompose(opts);
 
       if (!newWin) {
-        states.showCompose = true;
+        states.showCompose = opts || true;
       }
     } else {
       openOSK();
-      states.showCompose = true;
+      states.showCompose = opts || true;
     }
   }
 
-  useHotkeys(
-    'c, shift+c',
-    handleButton,
-    {
-      ignoreEventWhen: (e) => {
-        const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
-      },
+  useHotkeys('c, shift+c', handleButton, {
+    useKey: true,
+    ignoreEventWhen: (e) => {
+      const hasModal = !!document.querySelector('#modal-container > *');
+      return hasModal || e.metaKey || e.ctrlKey || e.altKey;
     },
-    {
-      useKey: true,
-    },
-  );
+  });
 
   // Setup longpress handler to open context menu
   const bindLongPress = useLongPress(

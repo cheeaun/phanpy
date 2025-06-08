@@ -34,8 +34,7 @@
     position: relative;
     padding: 16px;
     background-color: var(--bg-color);
-    /* No need for preview container transition */
-    /* chess board background, not rotated */
+    /* checkered background */
     background-image:
       linear-gradient(var(--bg-faded-color) 2px, transparent 2px),
       linear-gradient(90deg, var(--bg-faded-color) 2px, transparent 2px),
@@ -47,18 +46,31 @@
       10px 10px,
       10px 10px;
     background-position:
-      -2px -2px,
-      -2px -2px,
-      -1px -1px,
-      -1px -1px;
+      50% 50%,
+      50% 50%,
+      50% 50%,
+      50% 50%;
     overflow: auto;
     box-shadow: 0 0 0 1px var(--outline-color);
     display: flex;
     align-items: safe center;
     justify-content: center;
+    overflow-anchor: auto;
+    position: relative;
 
+    @media (width > calc(400px + 320px)) {
+      &.narrow {
+        > [class^='status-'],
+        > .status,
+        > *:not(.status-card-link, [class^='status-']) > .status {
+          max-width: 320px !important;
+        }
+      }
+    }
+
+    > [class^='status-'],
     > .status,
-    > * > .status {
+    > *:not(.status-card-link, [class^='status-']) > .status {
       min-width: 320px;
       max-width: 40em;
       background-color: var(--bg-color);
@@ -68,11 +80,18 @@
         0 8px 32px -4px var(--drop-shadow-color);
       view-transition-name: status;
 
-      .meta {
+      > .status-pre-meta {
+        view-transition-name: status-pre-meta;
+      }
+    }
+
+    > .status,
+    > *:not(.status-card-link) > .status {
+      > .container > .meta {
         view-transition-name: status-meta;
       }
 
-      .avatar {
+      > a > .avatar {
         view-transition-name: status-avatar;
       }
 
@@ -95,6 +114,19 @@
       .actions {
         view-transition-name: status-actions;
       }
+
+      .card-byline {
+        view-transition-name: status-card-byline;
+      }
+      .card {
+        view-transition-name: status-card;
+      }
+
+      .status-card-link {
+        * {
+          view-transition-name: none !important;
+        }
+      }
     }
   }
 
@@ -104,6 +136,12 @@
     overflow: auto;
     background-color: var(--bg-blur-color);
     box-shadow: 0 0 0 1px var(--outline-color);
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     h2 {
       margin-top: 0;
@@ -147,6 +185,11 @@
       margin: 0;
       padding: 0;
       list-style: none;
+
+      &.flex {
+        display: flex;
+        align-items: flex-start;
+      }
     }
 
     label {
@@ -167,14 +210,89 @@
       align-items: center;
     }
 
+    ul li ul b {
+      font-weight: normal;
+    }
+
     input[type='number'] {
       width: 3em;
       text-align: end;
     }
 
-    input[type='radio' i],
-    input[type='checkbox' i] {
+    input[type='radio'],
+    input[type='checkbox'] {
       margin: 0;
     }
+
+    /* Media types styling */
+    .media-types {
+      padding-inline-start: 12px;
+      li {
+        list-style: decimal;
+        display: flex;
+        counter-increment: index;
+        align-items: center;
+
+        &:before {
+          content: counter(index);
+          color: var(--text-insignificant-color);
+          font-variant: tabular-nums;
+        }
+      }
+    }
+
+    sup {
+      transform: translateY(-0.5em);
+      color: var(--text-insignificant-color);
+    }
+
+    .toggle-display {
+      display: none;
+      @media (width > calc(400px + 320px)) {
+        display: block;
+      }
+    }
+
+    footer {
+      margin-top: 2em;
+      border-top: 1px solid var(--divider-color);
+      padding: 2em 0;
+      color: var(--text-insignificant-color);
+
+      ul,
+      li {
+        list-style: decimal;
+      }
+
+      ul {
+        padding-inline-start: 1em;
+      }
+    }
   }
+}
+
+::view-transition-old(status),
+::view-transition-new(status) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-media),
+::view-transition-new(status-media) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-poll),
+::view-transition-new(status-poll) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-card-byline),
+::view-transition-new(status-card-byline),
+::view-transition-old(status-card),
+::view-transition-new(status-card) {
+  width: 100%;
+  height: 100%;
 }

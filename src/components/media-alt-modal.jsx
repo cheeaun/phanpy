@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
@@ -11,6 +11,8 @@ import states from '../utils/states';
 import Icon from './icon';
 import Menu2 from './menu2';
 import TranslationBlock from './translation-block';
+
+const FORCE_TRANSLATE_LIMIT = 140;
 
 export default function MediaAltModal({ alt, lang, onClose }) {
   const { t } = useLingui();
@@ -26,6 +28,13 @@ export default function MediaAltModal({ alt, lang, onClose }) {
     !contentTranslationHideLanguages.find(
       (l) => lang === l || localeMatch([lang], [l]),
     );
+
+  useEffect(() => {
+    const isShortAlt = alt?.length > 0 && alt?.length <= FORCE_TRANSLATE_LIMIT;
+    if (differentLanguage && isShortAlt) {
+      setForceTranslate(true);
+    }
+  }, [differentLanguage, alt]);
 
   return (
     <div class="sheet" tabindex="-1">

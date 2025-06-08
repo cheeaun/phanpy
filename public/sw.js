@@ -47,7 +47,7 @@ const assetsRoute = new Route(
     networkTimeoutSeconds: 5,
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 30,
+        maxEntries: 40,
         purgeOnQuotaError: true,
       }),
       new CacheableResponsePlugin({

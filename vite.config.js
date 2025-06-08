@@ -22,6 +22,7 @@ const {
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
   PHANPY_REFERRER_POLICY: REFERRER_POLICY,
+  PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
@@ -161,6 +162,7 @@ export default defineConfig({
     Sonda({
       detailed: true,
       brotli: true,
+      open: false,
     }),
   ],
   build: {
@@ -189,7 +191,28 @@ export default defineConfig({
           }
           return 'assets/[name]-[hash].js';
         },
+        assetFileNames: (assetInfo) => {
+          const { originalFileNames } = assetInfo;
+          if (originalFileNames?.[0]?.includes('assets/sandbox')) {
+            return 'assets/sandbox/[name]-[hash].[ext]';
+          }
+          return 'assets/[name]-[hash].[ext]';
+        },
       },
+      plugins: [
+        {
+          name: 'exclude-sandbox',
+          generateBundle(_, bundle) {
+            if (!PHANPY_DEV) {
+              Object.entries(bundle).forEach(([name, chunk]) => {
+                if (name.includes('sandbox')) {
+                  delete bundle[name];
+                }
+              });
+            }
+          },
+        },
+      ],
     },
   },
 });

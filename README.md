@@ -49,15 +49,21 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Subtle UI implementations
 
-### User name display
+<details>
+<summary>
+<b>User name display</b>
+</summary>
 
 ![User name display](readme-assets/user-name-display.jpg)
 
 - On the timeline, the user name is displayed as `[NAME] @[username]`.
 - For the `@[username]`, always exclude the instance domain name.
 - If the `[NAME]` *looks the same* as the `@[username]`, then the `@[username]` is excluded as well.
-
-### Boosts Carousel
+</details>
+<details>
+<summary>
+<b>Boosts Carousel</b>
+</summary>
 
 ![Boosts Carousel](readme-assets/boosts-carousel.jpg)
 
@@ -65,7 +71,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If number of boosts are more than 3 quarters of total posts, boosts carousel UI will be slotted at the end of total posts fetched (per "page").
 - Else, boosts carousel UI will be slotted in between the posts.
 
-### Thread number badge (e.g. Thread 1/X)
+</details>
+
+<details>
+<summary>
+<b>Thread number badge (e.g. Thread 1/X)</b>
+</summary>
 
 ![Thread number badge](readme-assets/thread-number-badge.jpg)
 
@@ -73,8 +84,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If root post is found, badge will show the index number of the post in the thread.
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
+</details>
 
-### Hashtag stuffing collapsing
+<details>
+<summary>
+<b>Hashtag stuffing collapsing</b>
+</summary>
 
 ![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
 
@@ -85,8 +100,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Collapsed hashtags will be appended with `...` at the end.
 - They are also slightly faded out to reduce visual noise.
 - Opening the post view will reveal the hashtags uncollapsed.
+</details>
 
-### Filtered posts
+<details>
+<summary>
+<b>Filtered posts</b>
+</summary>
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.
 - "Hide with a warning"-filtered posts will be partially hidden, showing the filter name and author name.
@@ -94,13 +113,14 @@ Everything is designed and engineered following my taste and vision. This is a p
   - Clicking it will open the Post page.
   - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
   - On boosts carousel, they are sorted to the end of the carousel.
+</details>
 
 ## Development
 
 Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
+- `npm run dev` - Start development server and `messages:extract` (`clean` + `watch`) in parallel
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
@@ -171,6 +191,8 @@ Users can change the language in the settings, which sets the `localStorage` key
 
 [![Crowdin](https://badges.crowdin.net/phanpy/localized.svg)](https://crowdin.com/project/phanpy)
 
+[![Languages chart](https://badges.awesome-crowdin.com/translation-14836566-703337.png)](https://crowdin.com/project/phanpy)
+
 Translations are managed on [Crowdin](https://crowdin.com/project/phanpy). You can help by volunteering translations.
 
 Read the [intro documentation](https://support.crowdin.com/for-volunteer-translators/) to get started.
@@ -185,11 +207,17 @@ Two ways (choose one):
 
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
 
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`).
+
 ### Custom-build way
 
 Requires [Node.js](https://nodejs.org/).
 
 Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`). This can be configured with environment variables if you want to [self-host your own instance](#translang-api-hosting).
 
 Customization can be done by passing environment variables to the build command. Examples:
 
@@ -340,12 +368,13 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15791971/medium/1790a2101ceb13f61816b8fe6fbe6d90.jpeg" alt="" width="16" height="16" /> katullo11 (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e53420d200961f48602324e18c091bdc.png" alt="" width="16" height="16" /> Kytta (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/c008af10bc117fa9c9dcb70f2b291ee6.jpg" alt="" width="16" height="16" /> lucasofchirst (Occitan, Portuguese, Portuguese, Brazilian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/a662122faa4f9a71b259b0e561f923b4.png" alt="" width="16" height="16" /> lucsdev24 (Occitan, Portuguese, Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" alt="" width="16" height="16" /> manuelviens (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" alt="" width="16" height="16" /> misk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
@@ -362,6 +391,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" alt="" width="16" height="16" /> rwmpelstilzchen (Esperanto, Hebrew)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" alt="" width="16" height="16" /> SadmL_AI (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16121928/medium/b1dd34dc3e93b64b93b94aedca0c5b7d.jpg" alt="" width="16" height="16" /> Schishka71 (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)
@@ -402,22 +432,26 @@ And here I am. Building a Mastodon web client.
 - Phanpy forks ↓
   - [Agora](https://agorasocial.app/)
 - [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
-  - [Semaphore](https://semaphore.social/)
+  - [Semaphore](https://semaphore.social/) ([archived](https://github.com/NickColley/semaphore))
   - [Enafore](https://enafore.social/)
-- [Cuckoo+](https://www.cuckoo.social/)
+- [Cuckoo+](https://www.cuckoo.social/) (down)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/) - forks ↓
-  - [elk.fedified.com](https://elk.fedified.com/)
+  - [elk.fedified.com](https://elk.fedified.com/) (gone, redirects to elk.zone)
+  - [crab](https://github.com/maybeanerd/crab)
+  - [Glowrea](https://github.com/s414june/glowrea)
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)
-- [Tusked](https://tusked.app/)
-- [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone)
+- [Tusked](https://tusked.app/) ([archived](https://github.com/raikasdev/tusked))
+- [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone) - forks ↓
+  - [Masto-FE (🦥 flavour)](https://masto-fe.superseriousbusiness.org)
+- [pl-fe](https://pl.mkljczk.pl)
 - [Mangane](https://github.com/BDX-town/Mangane)
-- [TheDesk](https://github.com/cutls/TheDesk)
+- [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

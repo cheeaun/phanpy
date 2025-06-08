@@ -92,7 +92,7 @@ function Following({ title, path, id, ...props }) {
       if (supports('@pixelfed/home-include-reblogs')) {
         opts.include_reblogs = true;
       }
-      const results = await masto.v1.timelines.home.list(opts).next();
+      const results = await masto.v1.timelines.home.list(opts).values().next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
@@ -106,6 +106,7 @@ function Following({ title, path, id, ...props }) {
       }
       return false;
     } catch (e) {
+      console.error(e);
       return false;
     }
   }

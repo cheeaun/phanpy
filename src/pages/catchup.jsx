@@ -718,7 +718,7 @@ function Catchup() {
     {
       useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -763,7 +763,7 @@ function Catchup() {
     {
       useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -793,7 +793,7 @@ function Catchup() {
     {
       useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
     },
   );
@@ -806,7 +806,7 @@ function Catchup() {
     },
     {
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
       useKey: true,
     },
@@ -823,7 +823,7 @@ function Catchup() {
     {
       useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
     },
   );

@@ -206,6 +206,7 @@ function Search({ columnMode, ...props }) {
     {
       useKey: true,
       preventDefault: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -242,6 +243,7 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -278,6 +280,7 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 

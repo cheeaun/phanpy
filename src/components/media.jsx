@@ -76,9 +76,10 @@ function Media({
   allowLongerCaption,
   altIndex,
   checkAspectRatio = true,
-  onClick = () => {},
+  onClick,
 }) {
   let {
+    id,
     blurhash,
     description,
     meta,
@@ -91,6 +92,7 @@ function Media({
   if (/no\-preview\./i.test(previewUrl)) {
     previewUrl = null;
   }
+  const mediaVTN = getSafeViewTransitionName(id || blurhash || url);
   const { original = {}, small, focus } = meta || {};
 
   const width = showOriginal
@@ -103,6 +105,7 @@ function Media({
   const remoteMediaURL = showOriginal
     ? remoteUrl
     : previewRemoteUrl || remoteUrl;
+  const hasPreviewDimensions = small?.width && small?.height;
   const hasDimensions = width && height;
   const orientation = hasDimensions
     ? width > height
@@ -260,6 +263,41 @@ function Media({
 
   const [hasNaturalAspectRatio, setHasNaturalAspectRatio] = useState(undefined);
 
+  const postViewState = () =>
+    window.matchMedia('(min-width: calc(40em + 350px))').matches
+      ? 'large'
+      : 'small';
+  const interceptOnClick = useCallback(
+    (e) => {
+      const isOnPostPage = e.target.closest('.status-deck');
+      if (
+        showOriginal ||
+        (postViewState() === 'large' && isOnPostPage) ||
+        !document.startViewTransition
+      ) {
+        onClick?.(e);
+        return;
+      }
+      const el =
+        e.target.closest('[data-view-transition-name]') ||
+        e.target.querySelector('[data-view-transition-name]');
+      if (el) {
+        if (!onClick) e.preventDefault();
+        el.style.viewTransitionName = mediaVTN;
+        document.startViewTransition(() => {
+          el.style.viewTransitionName = '';
+          onClick?.(e);
+          if (!onClick || !e.defaultPrevented) {
+            location.hash = `#${to}`;
+          }
+        });
+      } else {
+        onClick?.(e);
+      }
+    },
+    [mediaVTN, showOriginal, onClick],
+  );
+
   if (isImage) {
     // Note: type: unknown might not have width/height
     quickPinchZoomProps.containerProps.style.display = 'inherit';
@@ -282,7 +320,7 @@ function Media({
         <Parent
           ref={parentRef}
           class={`media media-image ${className}`}
-          onClick={onClick}
+          onClick={interceptOnClick}
           data-orientation={orientation}
           data-has-alt={!showInlineDesc || undefined}
           data-has-natural-aspect-ratio={hasNaturalAspectRatio || undefined}
@@ -290,6 +328,7 @@ function Media({
             showOriginal
               ? {
                   backgroundImage: `url(${previewUrl})`,
+                  '--bg-image': `url(${previewUrl})`,
                   backgroundSize: imageSmallerThanParent
                     ? `${width}px ${height}px`
                     : undefined,
@@ -309,9 +348,17 @@ function Media({
                 data-orientation={orientation}
                 loading="eager"
                 decoding="sync"
+                style={{
+                  'view-transition-name': mediaVTN,
+                }}
                 onLoad={(e) => {
-                  e.target.closest('.media-image').style.backgroundImage = '';
-                  e.target.closest('.media-zoom').style.display = '';
+                  const el = e.target;
+                  const mediaImage = el.closest('.media-image');
+                  if (mediaImage) {
+                    mediaImage.style.backgroundImage = `url(${el.src})`;
+                    mediaImage.style.removeProperty('--bg-image');
+                  }
+                  el.closest('.media-zoom').style.display = '';
                   setPinchZoomEnabled(true);
                 }}
                 onError={(e) => {
@@ -335,6 +382,7 @@ function Media({
                 height={height}
                 data-orientation={orientation}
                 loading="lazy"
+                data-view-transition-name={mediaVTN}
                 style={{
                   // backgroundColor:
                   //   rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -352,7 +400,7 @@ function Media({
                   // e.target.closest('.media-image').style.backgroundImage = '';
                   e.target.dataset.loaded = true;
                   const $media = e.target.closest('.media');
-                  if (!hasDimensions && $media) {
+                  if (!hasPreviewDimensions && $media) {
                     const { naturalWidth, naturalHeight } = e.target;
                     $media.dataset.orientation =
                       naturalWidth > naturalHeight ? 'landscape' : 'portrait';
@@ -440,6 +488,7 @@ function Media({
         width="${width}"
         height="${height}"
         data-orientation="${orientation}"
+        style="view-transition-name: ${mediaVTN}"
         preload="auto"
         autoplay
         muted
@@ -461,6 +510,7 @@ function Media({
         width="${width}"
         height="${height}"
         data-orientation="${orientation}"
+        style="view-transition-name: ${mediaVTN}"
         preload="auto"
         autoplay
         playsinline
@@ -472,6 +522,7 @@ function Media({
     return (
       <Figure>
         <Parent
+          ref={parentRef}
           class={`media ${className} media-${isGIF ? 'gif' : 'video'} ${
             autoGIFAnimate ? 'media-contain' : ''
           } ${hoverAnimate ? 'media-hover-animate' : ''}`}
@@ -494,7 +545,7 @@ function Media({
                 videoRef.current.pause();
               } catch (e) {}
             }
-            onClick(e);
+            interceptOnClick(e);
           }}
           onMouseEnter={() => {
             if (hoverAnimate) {
@@ -556,6 +607,7 @@ function Media({
               width={width}
               height={height}
               data-orientation={orientation}
+              data-view-transition-name={mediaVTN}
               preload="auto"
               // controls
               playsinline
@@ -589,8 +641,9 @@ function Media({
                   data-orientation={orientation}
                   loading="lazy"
                   decoding="async"
+                  data-view-transition-name={mediaVTN}
                   onLoad={(e) => {
-                    if (!hasDimensions) {
+                    if (!hasPreviewDimensions) {
                       const $media = e.target.closest('.media');
                       if ($media) {
                         const { naturalHeight, naturalWidth } = e.target;
@@ -617,6 +670,7 @@ function Media({
                   width={width}
                   height={height}
                   data-orientation={orientation}
+                  data-view-transition-name={mediaVTN}
                   preload="metadata"
                   muted
                   disablePictureInPicture
@@ -696,6 +750,19 @@ function Media({
 function getURLObj(url) {
   // Fake base URL if url doesn't have https:// prefix
   return URL.parse(url, location.origin);
+}
+
+export function getSafeViewTransitionName(inputString) {
+  // Replace any character that is not a letter, number, hyphen, or underscore with a hyphen.
+  let safeName = inputString.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+  // Ensure it starts with a letter, underscore, or two hyphens (to prevent starting with a number or single hyphen).
+  // This covers edge cases where the original string might start with an invalid character after replacement.
+  if (safeName.match(/^[0-9-]/)) {
+    safeName = 'vt-' + safeName;
+  }
+
+  return safeName;
 }
 
 export default memo(Media, (oldProps, newProps) => {

@@ -12,10 +12,18 @@ import MenuConfirm from '../components/menu-confirm';
 import MenuLink from '../components/menu-link';
 import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
+import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
+import { revokeAccessToken } from '../utils/auth';
+import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID, setCurrentAccountID } from '../utils/store-utils';
+import {
+  getAccounts,
+  getCurrentAccountID,
+  saveAccounts,
+  setCurrentAccountID,
+} from '../utils/store-utils';
 
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
@@ -23,7 +31,7 @@ function Accounts({ onClose }) {
   const { t } = useLingui();
   const { masto } = api();
   // Accounts
-  const accounts = store.local.getJSON('accounts');
+  const accounts = getAccounts();
   const currentAccount = getCurrentAccountID();
   const moreThanOneAccount = accounts.length > 1;
 
@@ -67,7 +75,7 @@ function Accounts({ onClose }) {
                               .fetch();
                             console.log('fetched account info', info);
                             account.info = info;
-                            store.local.setJSON('accounts', accounts);
+                            saveAccounts(accounts);
                             reload();
                           } catch (e) {}
                         }
@@ -149,21 +157,54 @@ function Accounts({ onClose }) {
                       </MenuItem>
                       <MenuDivider />
                       {moreThanOneAccount && (
-                        <MenuItem
-                          disabled={isDefault}
-                          onClick={() => {
-                            // Move account to the top of the list
-                            accounts.splice(i, 1);
-                            accounts.unshift(account);
-                            store.local.setJSON('accounts', accounts);
-                            reload();
-                          }}
-                        >
-                          <Icon icon="check-circle" />
-                          <span>
-                            <Trans>Set as default</Trans>
-                          </span>
-                        </MenuItem>
+                        <>
+                          <MenuItem
+                            disabled={isDefault}
+                            onClick={() => {
+                              // Move account to the top of the list
+                              accounts.splice(i, 1);
+                              accounts.unshift(account);
+                              saveAccounts(accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="check-circle" />
+                            <span>
+                              <Trans>Set as default</Trans>
+                            </span>
+                          </MenuItem>
+                          <MenuItem
+                            disabled={i <= 1}
+                            onClick={() => {
+                              // Move account one position up
+                              accounts.splice(i, 1);
+                              accounts.splice(i - 1, 0, account);
+                              saveAccounts(accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="arrow-up" />
+                            <span>
+                              <Trans>Move up</Trans>
+                            </span>
+                          </MenuItem>
+                          <MenuItem
+                            disabled={i === 0 || i === accounts.length - 1}
+                            onClick={() => {
+                              // Move account one position down
+                              accounts.splice(i, 1);
+                              accounts.splice(i + 1, 0, account);
+                              saveAccounts(accounts);
+                              reload();
+                            }}
+                          >
+                            <Icon icon="arrow-down" />
+                            <span>
+                              <Trans>Move down</Trans>
+                            </span>
+                          </MenuItem>
+                          <MenuDivider />
+                        </>
                       )}
                       <MenuConfirm
                         subMenu
@@ -183,11 +224,17 @@ function Accounts({ onClose }) {
                         }
                         disabled={!isCurrent}
                         menuItemClassName="danger"
-                        onClick={() => {
+                        onClick={async () => {
                           // const yes = confirm('Log out?');
                           // if (!yes) return;
+                          await revokeAccessToken({
+                            instanceURL: account.instanceURL,
+                            client_id: account.clientId,
+                            client_secret: account.clientSecret,
+                            token: account.accessToken,
+                          });
                           accounts.splice(i, 1);
-                          store.local.setJSON('accounts', accounts);
+                          saveAccounts(accounts);
                           // location.reload();
                           location.href = location.pathname || '/';
                         }}
@@ -197,6 +244,17 @@ function Accounts({ onClose }) {
                           <Trans>Log out…</Trans>
                         </span>
                       </MenuConfirm>
+                      {!!account?.createdAt && (
+                        <div class="footer">
+                          <Icon icon="account-add" />
+                          <span>
+                            <Trans>
+                              Connected on {niceDateTime(account.createdAt)} (
+                              <RelativeTime datetime={account.createdAt} />)
+                            </Trans>
+                          </span>
+                        </div>
+                      )}
                     </Menu2>
                   </div>
                 </li>

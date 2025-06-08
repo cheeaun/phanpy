@@ -47,8 +47,10 @@ const rtfFromNow = (date) => {
     return rtf.format(Math.floor(seconds / hour), 'hour');
   } else if (absSeconds < 30 * day) {
     return rtf.format(Math.floor(seconds / day), 'day');
-  } else {
+  } else if (absSeconds < 365 * day) {
     return rtf.format(Math.floor(seconds / day / 30), 'month');
+  } else {
+    return rtf.format(Math.floor(seconds / day / 365), 'year');
   }
 };
 

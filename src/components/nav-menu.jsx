@@ -12,11 +12,12 @@ import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID } from '../utils/store-utils';
+import { getAccounts, getCurrentAccountID } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import Avatar from './avatar';
 import Icon from './icon';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuLink from './menu-link';
 import SubMenu2 from './submenu2';
 
@@ -26,7 +27,7 @@ function NavMenu(props) {
   const { masto, instance, authenticated } = api();
 
   const [currentAccount, moreThanOneAccount] = useMemo(() => {
-    const accounts = store.local.getJSON('accounts') || [];
+    const accounts = getAccounts();
     const acc =
       accounts.find((account) => account.info.id === getCurrentAccountID()) ||
       accounts[0];
@@ -67,9 +68,11 @@ function NavMenu(props) {
   const mutesIterator = useRef();
   async function fetchMutes(firstLoad) {
     if (firstLoad || !mutesIterator.current) {
-      mutesIterator.current = masto.v1.mutes.list({
-        limit: 80,
-      });
+      mutesIterator.current = masto.v1.mutes
+        .list({
+          limit: 80,
+        })
+        .values();
     }
     const results = await mutesIterator.current.next();
     return results;
@@ -78,9 +81,11 @@ function NavMenu(props) {
   const blocksIterator = useRef();
   async function fetchBlocks(firstLoad) {
     if (firstLoad || !blocksIterator.current) {
-      blocksIterator.current = masto.v1.blocks.list({
-        limit: 80,
-      });
+      blocksIterator.current = masto.v1.blocks
+        .list({
+          limit: 80,
+        })
+        .values();
     }
     const results = await blocksIterator.current.next();
     return results;
@@ -440,7 +445,15 @@ function ListMenu({ menuState }) {
           <MenuDivider />
           {lists.map((list) => (
             <MenuLink key={list.id} to={`/l/${list.id}`}>
-              <span>{list.title}</span>
+              <span>
+                {list.title}
+                {list.exclusive && (
+                  <>
+                    {' '}
+                    <ListExclusiveBadge />
+                  </>
+                )}
+              </span>
             </MenuLink>
           ))}
         </>

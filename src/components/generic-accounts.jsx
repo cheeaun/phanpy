@@ -29,7 +29,6 @@ export default function GenericAccounts({
   const snapStates = useSnapshot(states);
   ``;
   const [uiState, setUIState] = useState('default');
-  const [accounts, setAccounts] = useState([]);
   const [showMore, setShowMore] = useState(false);
 
   useLocationChange(onClose);
@@ -45,6 +44,10 @@ export default function GenericAccounts({
     accounts: staticAccounts,
     showReactions,
   } = snapStates.showGenericAccounts;
+
+  const [accounts, setAccounts] = useState(
+    staticAccounts?.length ? staticAccounts : [],
+  );
 
   const [relationshipsMap, setRelationshipsMap] = useState({});
 
@@ -62,7 +65,7 @@ export default function GenericAccounts({
 
   const loadAccounts = (firstLoad) => {
     if (!fetchAccounts) return;
-    if (firstLoad) setAccounts([]);
+    if (firstLoad && !accounts?.length) setAccounts([]);
     setUIState('loading');
     (async () => {
       try {
@@ -117,14 +120,19 @@ export default function GenericAccounts({
 
   const firstLoad = useRef(true);
   useEffect(() => {
-    if (staticAccounts?.length > 0) {
-      setAccounts(staticAccounts);
-      loadRelationships(staticAccounts);
+    if (accounts?.length > 0) {
+      // setAccounts(staticAccounts);
+      if (fetchAccounts) {
+        loadAccounts(true);
+        firstLoad.current = false;
+      } else {
+        loadRelationships(accounts);
+      }
     } else {
       loadAccounts(true);
       firstLoad.current = false;
     }
-  }, [staticAccounts, fetchAccounts]);
+  }, [fetchAccounts]);
 
   useEffect(() => {
     if (firstLoad.current) return;

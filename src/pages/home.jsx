@@ -140,13 +140,15 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     });
   }
 
-  function loadNotifications() {
+  function loadNotifications({ skipFollowRequests = false } = {}) {
     setUIState('loading');
     (async () => {
       try {
         await fetchNotifications();
-        const followRequests = await fetchFollowRequests();
-        setHasFollowRequests(!!followRequests?.length);
+        if (!skipFollowRequests) {
+          const followRequests = await fetchFollowRequests();
+          setHasFollowRequests(!!followRequests?.length);
+        }
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -154,11 +156,21 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     })();
   }
 
-  useEffect(() => {
-    if (state === 'open') loadNotifications();
-  }, [state]);
-
   const menuRef = useRef();
+  const headerHeight = 52;
+  useEffect(() => {
+    if (state !== 'open') return;
+    if (snapStates.notificationsShowNew) {
+      const menuElement = menuRef.current;
+      if (menuElement?.scrollTop <= headerHeight) {
+        loadNotifications({
+          skipFollowRequests: true,
+        });
+      }
+    } else {
+      loadNotifications();
+    }
+  }, [state, snapStates.notificationsShowNew]);
 
   return (
     <ControlledMenu

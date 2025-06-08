@@ -218,6 +218,10 @@
   box-shadow: inset 0 0 4px var(--outline-color);
   /* box-shadow: inset 0 0 0 2px var(--bg-faded-color); */
   /* filter: drop-shadow(0 2px 4px var(--bg-faded-color)); */
+
+  .quote-post-native > & {
+    border-radius: 8px;
+  }
 }
 .status-card:has(.status-badge:not(:empty)) {
   border-start-end-radius: 8px;
@@ -671,6 +675,10 @@
     pointer-events: none;
     user-select: none;
 
+    ruby {
+      filter: contrast(0);
+      background-color: #000;
+    }
     * {
       text-decoration-color: inherit;
       text-decoration-thickness: 1.5em;
@@ -1224,7 +1232,7 @@
   border-color: var(--outline-hover-color);
 }
 .status .media:active:not(:has(button:active)) {
-  filter: brightness(0.8);
+  /* filter: brightness(0.8); */
   transform: scale(0.99);
 }
 .status .media :is(img, video) {
@@ -1704,7 +1712,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
 /* Collapse possible hashtag stuffing */
 /* If >= 9 hashtags, collapse */
 /* TODO: lower the threshold one day */
-.status:not(.large, .contextual .status)
+/* NOTE: disabled for now due to inaccuracy */
+/* .status:not(.large, .contextual .status)
   p:not(.hashtag-stuffing):has(.hashtag:nth-of-type(1)):has(
     .hashtag:nth-of-type(2)
   ):has(.hashtag:nth-of-type(3)):has(.hashtag:nth-of-type(4)):has(
@@ -1716,7 +1725,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-}
+} */
 
 .media-figure-multiple {
   margin: 0;
@@ -1819,17 +1828,14 @@ body:has(#modal-container .carousel) .status .media img:hover {
   opacity: 0;
 }
 @media (hover: hover) {
-  .carousel-item button.media-alt {
+  .carousel-item button.media-alt:not([hidden]) {
     opacity: 0;
     transform: translateY(var(--bottom)) scale(0.95);
     transition: all 0.2s ease-in-out;
   }
-  .carousel-item:hover button.media-alt {
+  .carousel-item:hover button.media-alt:not([hidden]) {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-  .carousel-item button.media-alt[hidden] {
-    opacity: 1;
   }
 }
 
@@ -1960,6 +1966,7 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
+  touch-action: manipulation;
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);
@@ -2842,4 +2849,67 @@ a.card:is(:hover, :focus):visited {
       mix-blend-mode: normal;
     }
   }
+}
+
+/* VIEW TRANSITIONS */
+@media not (prefers-reduced-motion: reduce) {
+  :root {
+    --media-swoosh-duration: 0.1s;
+  }
+  :root.slow-mo {
+    --media-swoosh-duration: 3s;
+  }
+  ::view-transition-group(.media-swoosh) {
+    animation-duration: var(--media-swoosh-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--timing-function);
+  }
+  ::view-transition-old(.media-swoosh),
+  ::view-transition-new(.media-swoosh) {
+    overflow: clip;
+    animation: none;
+    width: 100%;
+    height: 100%;
+  }
+  ::view-transition-old(.media-swoosh-in) {
+    object-fit: cover;
+  }
+  ::view-transition-new(.media-swoosh-in) {
+    object-fit: contain;
+  }
+  ::view-transition-old(.media-swoosh-out) {
+    object-fit: contain;
+    transform: scale(0.99); /* pressed down */
+  }
+  ::view-transition-new(.media-swoosh-out) {
+    object-fit: cover;
+  }
+  .status .media :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-in;
+  }
+  .carousel .carousel-item :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-out;
+  }
+  /* delay render .media bg image */
+  .carousel .carousel-item .media {
+    animation: delayBg calc(var(--media-swoosh-duration) + 0.1s) steps(1)
+      forwards;
+  }
+}
+
+@keyframes delayBg {
+  from {
+    background-image: none;
+  }
+  to {
+    background-image: var(--bg-image);
+  }
+}
+
+.status .media :is(img, video),
+.carousel .carousel-item :is(img, video) {
+  transition-property: width, height;
+  transition-timing-function: var(--timing-function);
+  transition-duration: 0.1s;
+  transition-behavior: allow-discrete;
 }

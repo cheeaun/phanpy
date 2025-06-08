@@ -32,10 +32,12 @@ export default memo(function BackgroundService({ isLoggedIn }) {
 
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
-      const notificationsIterator = masto.v1.notifications.list({
-        limit: 1,
-        sinceId: states.notificationsLast.id,
-      });
+      const notificationsIterator = masto.v1.notifications
+        .list({
+          limit: 1,
+          sinceId: states.notificationsLast.id,
+        })
+        .values();
       const { value: notifications } = await notificationsIterator.next();
       if (notifications?.length) {
         if (skipCheckMarkers) {
@@ -158,6 +160,7 @@ export default memo(function BackgroundService({ isLoggedIn }) {
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey,
     },
   );
 

@@ -188,6 +188,7 @@ function Timeline({
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
     },
   );
 
@@ -236,6 +237,7 @@ function Timeline({
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
     },
   );
 
@@ -250,6 +252,7 @@ function Timeline({
     },
     {
       useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -262,7 +265,10 @@ function Timeline({
       behavior: 'smooth',
     });
   }, [loadItems, showNewPostsIndicator]);
-  const dotRef = useHotkeys('.', handleLoadNewPosts);
+  const dotRef = useHotkeys('.', handleLoadNewPosts, {
+    useKey: true,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+  });
 
   // const {
   //   scrollDirection,

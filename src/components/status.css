@@ -2908,7 +2908,6 @@ a.card:is(:hover, :focus):visited {
 
 .status .media :is(img, video),
 .carousel .carousel-item :is(img, video) {
-  interpolate-size: allow-keywords;
   transition-property: width, height;
   transition-timing-function: var(--timing-function);
   transition-duration: 0.1s;

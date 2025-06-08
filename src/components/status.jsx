@@ -3661,7 +3661,7 @@ function StatusCompact({ sKey }) {
 
   return (
     <article
-      class={`status compact-reply ${
+      class={`status compact-reply shazam ${
         visibility === 'direct' ? 'visibility-direct' : ''
       }`}
       tabindex="-1"

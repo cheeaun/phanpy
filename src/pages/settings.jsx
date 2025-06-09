@@ -793,6 +793,14 @@ function Settings({ onClose }) {
               Patreon
             </a>{' '}
             &middot;{' '}
+            <a
+              href="https://github.com/cheeaun/phanpy/blob/main/CHANGELOG.md"
+              target="_blank"
+              rel="noopener"
+            >
+              <Trans>What's new</Trans>
+            </a>{' '}
+            &middot;{' '}
             <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener">
               <Trans>Privacy Policy</Trans>
             </a>

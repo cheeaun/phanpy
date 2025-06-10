@@ -59,7 +59,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               if (result.accounts.length) {
                 return result.accounts[0];
-              } else if (/https?:\/\/[^/]+\/@/.test(account)) {
+              } else if (/^https?:\/\/[^/]+\/@[^/]+$/.test(account)) {
                 const accountURL = URL.parse(account);
                 if (accountURL) {
                   const { hostname, pathname } = accountURL;

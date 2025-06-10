@@ -1240,6 +1240,7 @@
   height: 100%;
   object-fit: cover;
   vertical-align: middle;
+  dynamic-range-limit: standard; /* Disable HDR */
 }
 :is(.status, .media-post) .media {
   cursor: pointer;

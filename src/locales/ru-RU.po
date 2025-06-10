@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 08:26\n"
+"PO-Revision-Date: 2025-06-10 14:00\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1080,7 +1080,7 @@ msgid "Rejected"
 msgstr "Отклонён"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:449
+#: src/components/notification.jsx:455
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:334
 #: src/pages/search.jsx:367
@@ -1666,34 +1666,34 @@ msgstr "Действие вашей учётной записи приостан
 msgid "[Unknown notification type: {type}]"
 msgstr "[Неизвестный тип уведомления: {type}]"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:451
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:1125
 msgid "Boosted/Liked by…"
 msgstr "Продвинули/Отметили как \"нравится\"…"
 
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:452
 msgid "Liked by…"
 msgstr "Нравится…"
 
-#: src/components/notification.jsx:447
+#: src/components/notification.jsx:453
 msgid "Boosted by…"
 msgstr "Продвинули…"
 
-#: src/components/notification.jsx:448
+#: src/components/notification.jsx:454
 msgid "Followed by…"
 msgstr "Подписались…"
 
-#: src/components/notification.jsx:533
-#: src/components/notification.jsx:549
+#: src/components/notification.jsx:535
+#: src/components/notification.jsx:551
 msgid "Learn more <0/>"
 msgstr "Подробнее <0/>"
 
-#: src/components/notification.jsx:558
+#: src/components/notification.jsx:560
 msgid "View #Wrapstodon"
 msgstr "Посмотреть #Wrapstodon"
 
-#: src/components/notification.jsx:799
+#: src/components/notification.jsx:801
 #: src/components/status.jsx:328
 msgid "Read more →"
 msgstr "Читать далее →"
@@ -2518,6 +2518,22 @@ msgstr "Примечание: Этот предварительный просм
 #: src/components/status.jsx:3784
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> продвинули"
+
+#: src/components/status.jsx:3897
+msgid "Post removed by author."
+msgstr ""
+
+#: src/components/status.jsx:3906
+msgid "You’re not authorized to view this post."
+msgstr ""
+
+#: src/components/status.jsx:3915
+msgid "Post pending author approval."
+msgstr ""
+
+#: src/components/status.jsx:3924
+msgid "Quoting not allowed by the author."
+msgstr ""
 
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1199

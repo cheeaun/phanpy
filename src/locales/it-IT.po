@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 10:58\n"
+"PO-Revision-Date: 2025-06-10 14:00\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -205,7 +205,7 @@ msgstr "{0, plural, one {Ultimo post nell'ultimo anno(i)} other {Ultimi {1} post
 #: src/components/account-info.jsx:942
 #: src/pages/catchup.jsx:70
 msgid "Original"
-msgstr "Originale"
+msgstr "Originali"
 
 #: src/components/account-info.jsx:946
 #: src/components/status.jsx:2383
@@ -1080,7 +1080,7 @@ msgid "Rejected"
 msgstr "Rifiutata"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:449
+#: src/components/notification.jsx:455
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:334
 #: src/pages/search.jsx:367
@@ -1223,7 +1223,7 @@ msgstr "<0>Maiusc</0> + <1>r</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:168
 msgid "Like (favourite)"
-msgstr "Mi piace (apprezzamento)"
+msgstr "Mi piace (preferiti)"
 
 #: src/components/keyboard-shortcuts-help.jsx:170
 msgid "<0>l</0> or <1>f</1>"
@@ -1666,34 +1666,34 @@ msgstr "Il tuo account è stato sospeso."
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo notifica sconosciuto: {type}]"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:451
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:1125
 msgid "Boosted/Liked by…"
 msgstr "Rebloggato da/Piace a…"
 
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:452
 msgid "Liked by…"
 msgstr "Piace a…"
 
-#: src/components/notification.jsx:447
+#: src/components/notification.jsx:453
 msgid "Boosted by…"
 msgstr "Rebloggato da…"
 
-#: src/components/notification.jsx:448
+#: src/components/notification.jsx:454
 msgid "Followed by…"
 msgstr "Seguito da…"
 
-#: src/components/notification.jsx:533
-#: src/components/notification.jsx:549
+#: src/components/notification.jsx:535
+#: src/components/notification.jsx:551
 msgid "Learn more <0/>"
 msgstr "Scopri di più <0/>"
 
-#: src/components/notification.jsx:558
+#: src/components/notification.jsx:560
 msgid "View #Wrapstodon"
 msgstr "Visualizza #Wrapstodon"
 
-#: src/components/notification.jsx:799
+#: src/components/notification.jsx:801
 #: src/components/status.jsx:328
 msgid "Read more →"
 msgstr "Leggi di più →"
@@ -2199,7 +2199,7 @@ msgstr "Importa/esporta impostazioni da/su un server istanza (molto sperimentale
 
 #: src/components/status.jsx:614
 msgid "<0/> <1>boosted</1>"
-msgstr "<0/><1>rebloggato</1>"
+msgstr "<0/> <1>ha rebloggato</1>"
 
 #: src/components/status.jsx:713
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
@@ -2208,12 +2208,12 @@ msgstr "Spiacenti, l'istanza a cui sei connesso non può interagire coi post di 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:867
 msgid "Unliked @{0}'s post"
-msgstr "Non ti piace più il post di @{0}"
+msgstr "Hai annullato il Mi piace al post di @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:868
 msgid "Liked @{0}'s post"
-msgstr "Ti piace il post di @{0}"
+msgstr "Hai messo Mi piace al post di @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:907
@@ -2519,6 +2519,22 @@ msgstr "Nota: Questa anteprima è leggermente stilizzata."
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> ha rebloggato"
 
+#: src/components/status.jsx:3897
+msgid "Post removed by author."
+msgstr ""
+
+#: src/components/status.jsx:3906
+msgid "You’re not authorized to view this post."
+msgstr ""
+
+#: src/components/status.jsx:3915
+msgid "Post pending author approval."
+msgstr ""
+
+#: src/components/status.jsx:3924
+msgid "Quoting not allowed by the author."
+msgstr ""
+
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1199
 msgid "New posts"
@@ -2685,7 +2701,7 @@ msgstr "Impossibile recuperare info account"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:553
 msgid "Switch to account's instance {0}"
-msgstr "Passa all'istanza {0} dell'account "
+msgstr "Passa all'istanza dell'account {0}"
 
 #: src/pages/account-statuses.jsx:583
 msgid "Switch to my instance (<0>{currentInstance}</0>)"

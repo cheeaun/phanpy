@@ -3889,6 +3889,42 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (level > 2) return;
 
   return uniqueQuotes.map((q) => {
+    if (q.state === 'deleted')
+      return (
+        <div class="status-card-unfulfilled">
+          <Icon icon="quote" />
+          <i>
+            <Trans>Post removed by author.</Trans>
+          </i>
+        </div>
+      );
+    if (q.state === 'unauthorized')
+      return (
+        <div class="status-card-unfulfilled">
+          <Icon icon="quote" />
+          <i>
+            <Trans>You’re not authorized to view this post.</Trans>
+          </i>
+        </div>
+      );
+    if (q.state === 'pending')
+      return (
+        <div class="status-card-unfulfilled">
+          <Icon icon="quote" />
+          <i>
+            <Trans>Post pending author approval.</Trans>
+          </i>
+        </div>
+      );
+    if (q.state === 'rejected' || q.state === 'revoked')
+      return (
+        <div class="status-card-unfulfilled">
+          <Icon icon="quote" />
+          <i>
+            <Trans>Quoting not allowed by the author.</Trans>
+          </i>
+        </div>
+      );
     const Parent = q.native ? Fragment : LazyShazam;
     return (
       <Parent id={q.instance + q.id} key={q.instance + q.id}>

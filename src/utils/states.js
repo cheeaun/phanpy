@@ -229,7 +229,7 @@ export function saveStatus(status, instance, opts) {
     }
     // Mastodon native quotes
     if (status.quote?.state === 'accepted' && status.quote?.quotedStatus) {
-      const { quotedStatus } = status.quote;
+      const { quotedStatus, state } = status.quote;
       const { id } = quotedStatus;
       const selfURL = `/${instance}/s/${id}`;
       const sKey = statusKey(id, instance);
@@ -239,6 +239,7 @@ export function saveStatus(status, instance, opts) {
           id,
           instance,
           url: selfURL,
+          state,
           native: true,
         },
       ];

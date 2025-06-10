@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 06:25\n"
+"PO-Revision-Date: 2025-06-10 08:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -221,7 +221,7 @@ msgstr "Odpowiedzi"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1171
+#: src/pages/settings.jsx:1179
 msgid "Boosts"
 msgstr "Podbicia"
 
@@ -1322,11 +1322,11 @@ msgstr "Powiedz"
 
 #: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
-msgstr "Otwórz oryginalne media w nowym oknie"
+msgstr "Otwórz oryginalny plik w nowym oknie"
 
 #: src/components/media-modal.jsx:378
 msgid "Open original media"
-msgstr "Otwórz oryginalne media"
+msgstr "Otwórz oryginalny plik"
 
 #: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
@@ -1417,7 +1417,7 @@ msgstr "Nadrabianie zaległości"
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1163
+#: src/pages/settings.jsx:1171
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Wzmianki"
@@ -1456,7 +1456,7 @@ msgstr "Zakładki"
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1167
+#: src/pages/settings.jsx:1175
 msgid "Likes"
 msgstr "Polubienia"
 
@@ -2520,7 +2520,7 @@ msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> podbija"
 
 #: src/components/timeline.jsx:485
-#: src/pages/settings.jsx:1191
+#: src/pages/settings.jsx:1199
 msgid "New posts"
 msgstr "Nowe wpisy"
 
@@ -3184,7 +3184,7 @@ msgstr "Nikt nie napisał jeszcze nic z tym tagiem."
 
 #: src/pages/hashtag.jsx:186
 msgid "Unable to load posts with this tag"
-msgstr "Nie udało się załadować postów z tym tagiem"
+msgstr "Nie udało się załadować wpisów z tym tagiem"
 
 #: src/pages/hashtag.jsx:212
 msgid "Unfollow #{hashtag}?"
@@ -3394,7 +3394,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Ogłoszenie} few {Ogłoszenia} other {Ogłoszeń}}"
 
 #: src/pages/notifications.jsx:681
-#: src/pages/settings.jsx:1179
+#: src/pages/settings.jsx:1187
 msgid "Follow requests"
 msgstr "Prośby o obserwację"
 
@@ -3507,7 +3507,7 @@ msgstr "Sfederowana oś czasu"
 
 #: src/pages/public.jsx:98
 msgid "No one has posted anything yet."
-msgstr "Nikt jeszcze niczego nie opublikował."
+msgstr "Nikt tu jeszcze niczego nie opublikował."
 
 #: src/pages/public.jsx:125
 msgid "Switch to Federated"
@@ -3534,7 +3534,7 @@ msgstr "Zaplanowano <0><1/></0>"
 
 #: src/pages/scheduled-posts.jsx:308
 msgid "Scheduled post rescheduled"
-msgstr "Zaplanowany wpis przełożony"
+msgstr "Przełożono zaplanowany wpis"
 
 #: src/pages/scheduled-posts.jsx:315
 msgid "Failed to reschedule post"
@@ -3546,15 +3546,15 @@ msgstr "Zaplanuj ponownie"
 
 #: src/pages/scheduled-posts.jsx:344
 msgid "Delete scheduled post?"
-msgstr "Skasować zaplanowany post?"
+msgstr "Skasować zaplanowany wpis?"
 
 #: src/pages/scheduled-posts.jsx:352
 msgid "Scheduled post deleted"
-msgstr "Zaplanowany post został skasowany"
+msgstr "Zaplanowany wpis został skasowany"
 
 #: src/pages/scheduled-posts.jsx:359
 msgid "Failed to delete scheduled post"
-msgstr "Nie udało się skasować zaplanowanego postu"
+msgstr "Nie udało się skasować zaplanowanego wpisu"
 
 #: src/pages/search.jsx:50
 msgid "Search: {q} (Posts)"
@@ -3601,11 +3601,11 @@ msgstr "Nie znaleziono hashtagów"
 
 #: src/pages/search.jsx:525
 msgid "See more posts"
-msgstr "Zobacz więcej postów"
+msgstr "Zobacz więcej wpisów"
 
 #: src/pages/search.jsx:539
 msgid "No posts found."
-msgstr "Nie znaleziono postów."
+msgstr "Nie znaleziono wpisów."
 
 #: src/pages/search.jsx:583
 msgid "Enter your search term or paste a URL above to get started."
@@ -3677,7 +3677,7 @@ msgstr "Eksperymenty"
 
 #: src/pages/settings.jsx:359
 msgid "Auto refresh timeline posts"
-msgstr "Automatycznie odświeżaj posty na osi czasu"
+msgstr "Automatycznie odświeżaj wpisy na osi czasu"
 
 #: src/pages/settings.jsx:371
 msgid "Boosts carousel"
@@ -3776,79 +3776,83 @@ msgstr "Sponsoruj"
 msgid "Donate"
 msgstr "Wspieraj"
 
-#: src/pages/settings.jsx:797
+#: src/pages/settings.jsx:801
+msgid "What's new"
+msgstr ""
+
+#: src/pages/settings.jsx:805
 msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:804
+#: src/pages/settings.jsx:812
 msgid "<0>Site:</0> {0}"
 msgstr "<0>Strona:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:811
+#: src/pages/settings.jsx:819
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>Wersja:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:826
+#: src/pages/settings.jsx:834
 msgid "Version string copied"
 msgstr "Numer wersji został skopiowany"
 
-#: src/pages/settings.jsx:829
+#: src/pages/settings.jsx:837
 msgid "Unable to copy version string"
 msgstr "Nie udało się skopiować numeru wersji"
 
-#: src/pages/settings.jsx:1076
-#: src/pages/settings.jsx:1081
+#: src/pages/settings.jsx:1084
+#: src/pages/settings.jsx:1089
 msgid "Failed to update subscription. Please try again."
 msgstr "Nie udało się zaktualizować subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1087
+#: src/pages/settings.jsx:1095
 msgid "Failed to remove subscription. Please try again."
 msgstr "Nie udało się usunąć subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1094
+#: src/pages/settings.jsx:1102
 msgid "Push Notifications (beta)"
 msgstr "Powiadomienia push (beta)"
 
-#: src/pages/settings.jsx:1116
+#: src/pages/settings.jsx:1124
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "Powiadomienia push są blokowane. Włącz je w ustawieniach przeglądarki."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1125
+#: src/pages/settings.jsx:1133
 msgid "Allow from <0>{0}</0>"
 msgstr "Zezwalaj od <0>{0}</0>"
 
-#: src/pages/settings.jsx:1134
+#: src/pages/settings.jsx:1142
 msgid "anyone"
 msgstr "każdego"
 
-#: src/pages/settings.jsx:1138
+#: src/pages/settings.jsx:1146
 msgid "people I follow"
 msgstr "obserwowanych"
 
-#: src/pages/settings.jsx:1142
+#: src/pages/settings.jsx:1150
 msgid "followers"
 msgstr "obserwujących"
 
-#: src/pages/settings.jsx:1175
+#: src/pages/settings.jsx:1183
 msgid "Follows"
 msgstr "Obserwowani"
 
-#: src/pages/settings.jsx:1183
+#: src/pages/settings.jsx:1191
 msgid "Polls"
 msgstr "Ankiety"
 
-#: src/pages/settings.jsx:1187
+#: src/pages/settings.jsx:1195
 msgid "Post edits"
-msgstr "Edycje wpisów"
+msgstr "Edycje wpisu"
 
-#: src/pages/settings.jsx:1208
+#: src/pages/settings.jsx:1216
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Pozwolenie na powiadomienia push nie zostało przyznane od ostatniego logowania. Musisz <0><1>zalogować się</1> ponownie, aby pozwolić na powiadomienia push</0>."
 
-#: src/pages/settings.jsx:1224
+#: src/pages/settings.jsx:1232
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "UWAGA: powiadomienia push działają tylko dla <0>jednego konta</0>."
 
@@ -3856,7 +3860,7 @@ msgstr "UWAGA: powiadomienia push działają tylko dla <0>jednego konta</0>."
 #: src/pages/status.jsx:657
 #: src/pages/status.jsx:1220
 msgid "post.title"
-msgstr "post.title"
+msgstr "Tytuł wpisu"
 
 #: src/pages/status.jsx:911
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -3864,7 +3868,7 @@ msgstr "Nie zalogowano. Interakcje (odpowiedzi, podbicia, itp.) nie są możliwe
 
 #: src/pages/status.jsx:931
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr "Ten wpis jest z innego serwera (<0>{instance}</0>). Interakcje (komantarze, podbicia, itp.) nie są możliwe."
+msgstr "Ten wpis jest z innego serwera (<0>{instance}</0>). Interakcje (odpowiedzi, podbicia, itp.) nie są możliwe."
 
 #: src/pages/status.jsx:959
 msgid "Error: {e}"

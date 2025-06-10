@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-02 03:05\n"
+"PO-Revision-Date: 2025-06-10 06:25\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -101,7 +101,7 @@ msgstr "Obserwujący"
 #: src/components/account-info.jsx:820
 #: src/components/account-info.jsx:839
 msgid "following.stats"
-msgstr "Statystyki obserwowanych"
+msgstr "obserwowanych"
 
 #: src/components/account-info.jsx:454
 #: src/components/account-info.jsx:856
@@ -113,9 +113,9 @@ msgstr "Wpisy"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2783
+#: src/components/compose.jsx:2786
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-modal.jsx:359
+#: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
 #: src/components/status.jsx:1853
 #: src/components/status.jsx:1978
@@ -127,7 +127,7 @@ msgstr "Wpisy"
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1247
+#: src/pages/status.jsx:1305
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Więcej"
@@ -212,8 +212,8 @@ msgstr "Oryginalne"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
-#: src/pages/status.jsx:966
-#: src/pages/status.jsx:1593
+#: src/pages/status.jsx:1024
+#: src/pages/status.jsx:1651
 msgid "Replies"
 msgstr "Odpowiedzi"
 
@@ -455,17 +455,17 @@ msgstr "Obserwuj"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2739
-#: src/components/compose.jsx:3219
-#: src/components/compose.jsx:3428
-#: src/components/compose.jsx:3658
+#: src/components/compose.jsx:2742
+#: src/components/compose.jsx:3222
+#: src/components/compose.jsx:3431
+#: src/components/compose.jsx:3661
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-modal.jsx:323
+#: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
 #: src/components/report-modal.jsx:75
 #: src/components/shortcuts-settings.jsx:230
@@ -481,7 +481,7 @@ msgstr "Obserwuj"
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:87
-#: src/pages/status.jsx:1334
+#: src/pages/status.jsx:1392
 msgid "Close"
 msgstr "Zamknij"
 
@@ -515,7 +515,7 @@ msgstr "Nowa lista"
 #. placeholder {0}: account?.username || account?.acct
 #: src/components/account-info.jsx:2180
 msgid "Private note about <0>@{0}</0>"
-msgstr "Notatka o <0>@{0}</0>"
+msgstr "Prywatna notatka o <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2210
 msgid "Unable to update private note."
@@ -619,7 +619,7 @@ msgstr "Utwórz wpis"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
-msgstr "Zaplanowane posty"
+msgstr "Zaplanowane wpisy"
 
 #: src/components/compose-button.jsx:188
 msgid "Add to thread"
@@ -647,7 +647,7 @@ msgstr "Dodaj ankietę"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr "Zaplanuj post"
+msgstr "Zaplanuj wpis"
 
 #: src/components/compose.jsx:416
 msgid "You have unsaved changes. Discard this post?"
@@ -662,8 +662,8 @@ msgstr "{0, plural, one {Plik {1} nie jest obsługiwany.} few {Pliki {2} nie są
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1788
-#: src/components/compose.jsx:1913
+#: src/components/compose.jsx:1792
+#: src/components/compose.jsx:1917
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Możesz załączyć co najwyżej # plik.} few {Możesz załączyć co najwyżej # pliki.} many {Możesz załączyć co najwyżej # plików.} other {Możesz załączyć co najwyżej # pliku.}}"
 
@@ -695,16 +695,16 @@ msgstr "Przenieś z powrotem do okna głównego"
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
 #: src/components/compose.jsx:980
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr "Odpowiedz na post @{0}(<0>{1}</0>)"
+msgstr "Odpowiedz na wpis @{0}(<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #: src/components/compose.jsx:990
 msgid "Replying to @{0}’s post"
-msgstr "Odpowiedz na post @{0}"
+msgstr "Odpowiedz na wpis @{0}"
 
 #: src/components/compose.jsx:1003
 msgid "Editing source post"
-msgstr "Edycja postu źródłowego"
+msgstr "Edycja wpisu źródłowego"
 
 #: src/components/compose.jsx:1056
 msgid "Poll must have at least 2 options"
@@ -761,7 +761,7 @@ msgstr "Tylko obserwujący"
 #: src/components/status.jsx:100
 #: src/components/status.jsx:2042
 msgid "Private mention"
-msgstr "Prywatne wzmianki"
+msgstr "Prywatna wzmianka"
 
 #: src/components/compose.jsx:1297
 msgid "Post your reply"
@@ -769,7 +769,7 @@ msgstr "Opublikuj odpowiedź"
 
 #: src/components/compose.jsx:1299
 msgid "Edit your post"
-msgstr "Edytuj swój post"
+msgstr "Edytuj swój wpis"
 
 #: src/components/compose.jsx:1300
 msgid "What are you doing?"
@@ -784,7 +784,7 @@ msgid "Posting on <0/>"
 msgstr "Opublikowano <0/>"
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3277
+#: src/components/compose.jsx:3280
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
@@ -812,33 +812,33 @@ msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Opublikuj"
 
-#: src/components/compose.jsx:1800
+#: src/components/compose.jsx:1804
 msgid "Downloading GIF…"
 msgstr "Pobieram GIF…"
 
-#: src/components/compose.jsx:1828
+#: src/components/compose.jsx:1832
 msgid "Failed to download GIF"
 msgstr "Pobieranie GIF'a nie powiodło się"
 
-#: src/components/compose.jsx:2043
-#: src/components/compose.jsx:2120
+#: src/components/compose.jsx:2047
+#: src/components/compose.jsx:2124
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Więcej…"
 
-#: src/components/compose.jsx:2553
+#: src/components/compose.jsx:2556
 msgid "Uploaded"
 msgstr "Załadowano"
 
-#: src/components/compose.jsx:2566
+#: src/components/compose.jsx:2569
 msgid "Image description"
 msgstr "Opis obrazka"
 
-#: src/components/compose.jsx:2567
+#: src/components/compose.jsx:2570
 msgid "Video description"
 msgstr "Opis wideo"
 
-#: src/components/compose.jsx:2568
+#: src/components/compose.jsx:2571
 msgid "Audio description"
 msgstr "Opis audio"
 
@@ -846,8 +846,8 @@ msgstr "Opis audio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2603
-#: src/components/compose.jsx:2623
+#: src/components/compose.jsx:2606
+#: src/components/compose.jsx:2626
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Rozmiar pliku jest za duży. Upload może spowodować błędy. Spróbuj zredukować rozmiar pliku z {0} do maksymalnie {1}."
 
@@ -855,150 +855,150 @@ msgstr "Rozmiar pliku jest za duży. Upload może spowodować błędy. Spróbuj 
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2615
-#: src/components/compose.jsx:2635
+#: src/components/compose.jsx:2618
+#: src/components/compose.jsx:2638
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Wymiary są za duże. Upload może spowodować błędy. Spróbuj zredukować wymiary z {0}×{1} do {2}×{3}px."
 
-#: src/components/compose.jsx:2643
+#: src/components/compose.jsx:2646
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Liczba klatek na sekundę jest za wysoka. Upload może spowodować błędy."
 
-#: src/components/compose.jsx:2703
-#: src/components/compose.jsx:2953
+#: src/components/compose.jsx:2706
+#: src/components/compose.jsx:2956
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Usuń"
 
-#: src/components/compose.jsx:2720
+#: src/components/compose.jsx:2723
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Błąd"
 
-#: src/components/compose.jsx:2745
+#: src/components/compose.jsx:2748
 msgid "Edit image description"
 msgstr "Edytuj opis obrazka"
 
-#: src/components/compose.jsx:2746
+#: src/components/compose.jsx:2749
 msgid "Edit video description"
 msgstr "Edytuj opis wideo"
 
-#: src/components/compose.jsx:2747
+#: src/components/compose.jsx:2750
 msgid "Edit audio description"
 msgstr "Edytuj opis audio"
 
-#: src/components/compose.jsx:2792
-#: src/components/compose.jsx:2841
+#: src/components/compose.jsx:2795
+#: src/components/compose.jsx:2844
 msgid "Generating description. Please wait…"
 msgstr "Generowanie opisu. Proszę czekać…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2812
+#: src/components/compose.jsx:2815
 msgid "Failed to generate description: {0}"
 msgstr "Błąd podczas generowania opisu: {0}"
 
-#: src/components/compose.jsx:2813
+#: src/components/compose.jsx:2816
 msgid "Failed to generate description"
 msgstr "Błąd przy generowaniu opisu."
 
-#: src/components/compose.jsx:2825
-#: src/components/compose.jsx:2831
-#: src/components/compose.jsx:2877
+#: src/components/compose.jsx:2828
+#: src/components/compose.jsx:2834
+#: src/components/compose.jsx:2880
 msgid "Generate description…"
 msgstr "Wygeneruj opis…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2864
+#: src/components/compose.jsx:2867
 msgid "Failed to generate description{0}"
 msgstr "Błąd podczas generowania opisu{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2879
+#: src/components/compose.jsx:2882
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— eksperymentalne</0>"
 
-#: src/components/compose.jsx:2898
+#: src/components/compose.jsx:2901
 msgid "Done"
 msgstr "Zrobione"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2934
+#: src/components/compose.jsx:2937
 msgid "Choice {0}"
 msgstr "Wybór {0}"
 
-#: src/components/compose.jsx:2981
+#: src/components/compose.jsx:2984
 msgid "Multiple choices"
 msgstr "Wielokrotny wybór"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2987
 msgid "Duration"
 msgstr "Czas trwania"
 
-#: src/components/compose.jsx:3015
+#: src/components/compose.jsx:3018
 msgid "Remove poll"
 msgstr "Usuń ankietę"
 
-#: src/components/compose.jsx:3236
+#: src/components/compose.jsx:3239
 msgid "Search accounts"
 msgstr "Szukaj kont"
 
-#: src/components/compose.jsx:3290
+#: src/components/compose.jsx:3293
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Błąd ładowania kont"
 
-#: src/components/compose.jsx:3434
+#: src/components/compose.jsx:3437
 msgid "Custom emojis"
 msgstr "Własne emoji"
 
-#: src/components/compose.jsx:3454
+#: src/components/compose.jsx:3457
 msgid "Search emoji"
 msgstr "Szkaj emoji"
 
-#: src/components/compose.jsx:3485
+#: src/components/compose.jsx:3488
 msgid "Error loading custom emojis"
 msgstr "Błąd podczas ładowania własnych emoji."
 
-#: src/components/compose.jsx:3496
+#: src/components/compose.jsx:3499
 msgid "Recently used"
 msgstr "Niedawno użyte"
 
-#: src/components/compose.jsx:3497
+#: src/components/compose.jsx:3500
 msgid "Others"
 msgstr "Inne"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3535
+#: src/components/compose.jsx:3538
 msgid "{0} more…"
 msgstr "{0} więcej…"
 
-#: src/components/compose.jsx:3673
+#: src/components/compose.jsx:3676
 msgid "Search GIFs"
 msgstr "Znajdź GIF"
 
-#: src/components/compose.jsx:3688
+#: src/components/compose.jsx:3691
 msgid "Powered by GIPHY"
 msgstr "Obsługiwane przez GIPHY"
 
-#: src/components/compose.jsx:3696
+#: src/components/compose.jsx:3699
 msgid "Type to search GIFs"
 msgstr "Zacznij pisać, żeby wyszukać GIF'a"
 
-#: src/components/compose.jsx:3794
-#: src/components/media-modal.jsx:465
+#: src/components/compose.jsx:3797
+#: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Poprzednie"
 
-#: src/components/compose.jsx:3812
-#: src/components/media-modal.jsx:484
+#: src/components/compose.jsx:3815
+#: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Następne"
 
-#: src/components/compose.jsx:3829
+#: src/components/compose.jsx:3832
 msgid "Error loading GIFs"
 msgstr "Wystąpił błąd podczas wczytywania GIFów"
 
@@ -1092,7 +1092,7 @@ msgstr "Konta"
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:922
 #: src/pages/search.jsx:561
-#: src/pages/status.jsx:1367
+#: src/pages/status.jsx:1425
 msgid "Show more…"
 msgstr "Pokaż więcej…"
 
@@ -1301,7 +1301,7 @@ msgstr "Nie można skasować listy."
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr "Posty z tej listy są ukryte na osi głównej/obserwowanych"
+msgstr "Wpisy z tej listy są ukryte na osi głównej/obserwowanych"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -1313,34 +1313,34 @@ msgstr "Opis mediów"
 #: src/components/status.jsx:1153
 #: src/components/translation-block.jsx:237
 msgid "Translate"
-msgstr "Tłumacz"
+msgstr "Przetłumacz"
 
 #: src/components/media-alt-modal.jsx:78
 #: src/components/status.jsx:1172
 msgid "Speak"
 msgstr "Powiedz"
 
-#: src/components/media-modal.jsx:370
+#: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
 msgstr "Otwórz oryginalne media w nowym oknie"
 
-#: src/components/media-modal.jsx:374
+#: src/components/media-modal.jsx:378
 msgid "Open original media"
 msgstr "Otwórz oryginalne media"
 
-#: src/components/media-modal.jsx:390
+#: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
 msgstr "Próba opisania obrazka. Proszę czekać..."
 
-#: src/components/media-modal.jsx:405
+#: src/components/media-modal.jsx:409
 msgid "Failed to describe image"
 msgstr "Błąd podczas opisywania obrazka"
 
-#: src/components/media-modal.jsx:415
+#: src/components/media-modal.jsx:419
 msgid "Describe image…"
 msgstr "Opisz obrazek"
 
-#: src/components/media-modal.jsx:439
+#: src/components/media-modal.jsx:443
 msgid "View post"
 msgstr "Zobacz wpis"
 
@@ -1362,7 +1362,7 @@ msgstr "Odfiltrowano: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Odfiltrowane"
 
-#: src/components/media.jsx:417
+#: src/components/media.jsx:465
 msgid "Open file"
 msgstr "Otwórz plik"
 
@@ -1372,7 +1372,7 @@ msgstr "Zaplanowany wpis"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
-msgstr "Post opublikowany. Sprawdź to sobie."
+msgstr "Wpis opublikowany. Sprawdź to sobie."
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
@@ -1384,7 +1384,7 @@ msgstr "Odpowiedź wysłana. Sprawdź ją sobie."
 
 #: src/components/modals.jsx:80
 msgid "Post updated. Check it out."
-msgstr "Post został zaktualizowany. Sprawdź to sobie."
+msgstr "Wpis został zaktualizowany. Sprawdź to sobie."
 
 #: src/components/nav-menu.jsx:123
 msgid "Menu"
@@ -1497,7 +1497,7 @@ msgstr "Konta…"
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
 #: src/pages/login.jsx:195
-#: src/pages/status.jsx:866
+#: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
 msgstr "Zaloguj się"
@@ -1563,7 +1563,7 @@ msgstr "{account} publikuje wpis."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:86
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija twój komentarz.} other {{account} podbija twój wpis.}}} few {{postType, select, reply {{account} podbija {postsCount} twoje komentarze.} other {{account} podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija {postsCount} twoich komentarzy.} other {{account} podbija {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają twój komentarz.} other {<0><1>{0}</1> osoby</0> podbijają twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija twój komentarz.} other {<0><1>{0}</1> osób</0> podbija twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoich wpisów.}}}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija twoją odpowiedź.} other {{account} podbija twój wpis.}}} few {{postType, select, reply {{account} podbija {postsCount} twoje odpowiedzi.} other {{account} podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija {postsCount} twoich odpowiedzi.} other {{account} podbija {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> podbijają twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija twoją odpowiedź.} other {<0><1>{0}</1> osób</0> podbija twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija {postsCount} twoich wpisów.}}}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:129
@@ -1578,7 +1578,7 @@ msgstr "{account} chce cię obserwować."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:152
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} lubi twój komentarz.} other {{account} lubi twój wpis.}}} few {{postType, select, reply {{account} lubi {postsCount} twoje komentarze.} other {{account} lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} lubi {postsCount} twoich komentarzy.} other {{account} lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią twój komentarz.} other {<0><1>{0}</1> osoby</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> lubi twój komentarz.} other {<0><1>{0}</1> osób</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoich wpisów.}}}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} lubi twoją odpowiedź.} other {{account} lubi twój wpis.}}} few {{postType, select, reply {{account} lubi {postsCount} twoje odpowiedzi.} other {{account} lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} lubi {postsCount} twoich odpowiedzi.} other {{account} lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osoby</0> lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> lubi twoją odpowiedź.} other {<0><1>{0}</1> osób</0> lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> lubi {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osób</0> lubi {postsCount} twoich wpisów.}}}}}}"
 
 #: src/components/notification.jsx:194
 msgid "A poll you have voted in or created has ended."
@@ -1600,7 +1600,7 @@ msgstr "Wpis, na który zareagowano, został zedytowany."
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:205
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija i lubi twój komentarz.} other {{account} podbija i lubi twój wpis.}}} few {{postType, select, reply {{account} podbija i lubi {postsCount} twoje komentarze.} other {{account} podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija i lubi {postsCount} twoich komentarzy.} other {{account} podbija i lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twój komentarz.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje komentarze.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twój komentarz.} other {<0><1>{0}</1> osób</0> podbija i lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje komentarze.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich komentarzy.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich wpisów.}}}}}}"
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} podbija i lubi twoją odpowiedź.} other {{account} podbija i lubi twój wpis.}}} few {{postType, select, reply {{account} podbija i lubi {postsCount} twoje odpowiedzi.} other {{account} podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {{account} podbija i lubi {postsCount} twoich odpowiedzi.} other {{account} podbija i lubi {postsCount} twoich wpisów.}}}}} few {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią twoją odpowiedź.} other {<0><1>{0}</1> osoby</0> podbijają i lubią twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osoby</0> podbijają i lubią {postsCount} twoich wpisów.}}}}} other {{postsCount, plural, =1 {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi twoją odpowiedź.} other {<0><1>{0}</1> osób</0> podbija i lubi twój wpis.}}} few {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoje wpisy.}}} other {{postType, select, reply {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich odpowiedzi.} other {<0><1>{0}</1> osób</0> podbija i lubi {postsCount} twoich wpisów.}}}}}}"
 
 #: src/components/notification.jsx:247
 msgid "{account} signed up."
@@ -1719,8 +1719,8 @@ msgstr "Głosuj"
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1236
-#: src/pages/status.jsx:1259
+#: src/pages/status.jsx:1294
+#: src/pages/status.jsx:1317
 msgid "Refresh"
 msgstr "Odśwież"
 
@@ -2283,15 +2283,15 @@ msgstr "Cofnij podbicie"
 
 #: src/components/status.jsx:1184
 msgid "Post text copied"
-msgstr "Tekst posta skopiowany"
+msgstr "Tekst wpisu został skopiowany"
 
 #: src/components/status.jsx:1187
 msgid "Unable to copy post text"
-msgstr "Nie udało się skopiować tekstu posta"
+msgstr "Nie udało się skopiować tekstu wpisu"
 
 #: src/components/status.jsx:1193
 msgid "Copy post text"
-msgstr "Skopiuj tekst posta"
+msgstr "Skopiuj tekst wpisu"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1211
@@ -2309,7 +2309,7 @@ msgstr "Edytowano: {editedDateText}"
 #: src/components/status.jsx:1302
 #: src/components/status.jsx:3346
 msgid "Embed post"
-msgstr "Zagnieźdź post"
+msgstr "Zagnieźdź wpis"
 
 #: src/components/status.jsx:1316
 msgid "Conversation unmuted"
@@ -2337,7 +2337,7 @@ msgstr "Wycisz konwersację"
 
 #: src/components/status.jsx:1355
 msgid "Post unpinned from profile"
-msgstr "Post został odpięty z profilu"
+msgstr "Wpis został odpięty z profilu"
 
 #: src/components/status.jsx:1356
 msgid "Post pinned to profile"
@@ -2345,11 +2345,11 @@ msgstr "Wpis przypięty do profilu"
 
 #: src/components/status.jsx:1361
 msgid "Unable to unpin post"
-msgstr "Nie udało się odpiąć postu"
+msgstr "Nie udało się odpiąć wpisu"
 
 #: src/components/status.jsx:1361
 msgid "Unable to pin post"
-msgstr "Nie udało się przypiąć postu"
+msgstr "Nie udało się przypiąć wpisu"
 
 #: src/components/status.jsx:1370
 msgid "Unpin from profile"
@@ -2361,19 +2361,19 @@ msgstr "Przypnij do profilu"
 
 #: src/components/status.jsx:1406
 msgid "Delete this post?"
-msgstr "Skasować ten post"
+msgstr "Skasować ten wpis?"
 
 #: src/components/status.jsx:1422
 msgid "Post deleted"
-msgstr "Post został skasowany"
+msgstr "Wpis został skasowany"
 
 #: src/components/status.jsx:1425
 msgid "Unable to delete post"
-msgstr "Nie udało się usunąć posta"
+msgstr "Nie udało się usunąć wpisu"
 
 #: src/components/status.jsx:1453
 msgid "Report post…"
-msgstr "Zgłoś post…"
+msgstr "Zgłoś wpis…"
 
 #: src/components/status.jsx:1827
 #: src/components/status.jsx:1863
@@ -2402,7 +2402,7 @@ msgstr "Usunięto"
 
 #: src/components/status.jsx:1961
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
-msgstr "{repliesCount, plural, one {# komentarz} few {# komentarze} other {# komentarzy}}"
+msgstr "{repliesCount, plural, one {# odpowiedź} few {# odpowiedzi} other {# odpowiedzi}}"
 
 #. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
 #: src/components/status.jsx:2051
@@ -2437,7 +2437,7 @@ msgstr "Edytowano"
 
 #: src/components/status.jsx:2504
 msgid "Comments"
-msgstr "Komentarze"
+msgstr "Odpowiedzi"
 
 #. More from [Author]
 #: src/components/status.jsx:2804
@@ -2527,8 +2527,8 @@ msgstr "Nowe wpisy"
 #: src/components/timeline.jsx:586
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
-#: src/pages/status.jsx:1019
-#: src/pages/status.jsx:1396
+#: src/pages/status.jsx:1077
+#: src/pages/status.jsx:1454
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
@@ -2639,7 +2639,7 @@ msgstr "Wyczyść"
 
 #: src/pages/account-statuses.jsx:336
 msgid "Showing post with replies"
-msgstr "Posty z odpowiedziami"
+msgstr "Wpisy z odpowiedziami"
 
 #: src/pages/account-statuses.jsx:341
 msgid "+ Replies"
@@ -2647,7 +2647,7 @@ msgstr "+ Odpowiedzi"
 
 #: src/pages/account-statuses.jsx:347
 msgid "Showing posts without boosts"
-msgstr "Posty z wyłączeniem podbić"
+msgstr "Wpisy z wyłączeniem podbić"
 
 #: src/pages/account-statuses.jsx:352
 msgid "- Boosts"
@@ -2655,7 +2655,7 @@ msgstr "- Podbicia"
 
 #: src/pages/account-statuses.jsx:358
 msgid "Showing posts with media"
-msgstr "Posty z mediami"
+msgstr "Wpisy z mediami"
 
 #. placeholder {0}: tag.name
 #: src/pages/account-statuses.jsx:375
@@ -2675,7 +2675,7 @@ msgstr "Nie ma tu nic do widzenia!"
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
-msgstr "Nie można załadować postów"
+msgstr "Nie można załadować wpisów"
 
 #: src/pages/account-statuses.jsx:546
 #: src/pages/account-statuses.jsx:576
@@ -2811,7 +2811,7 @@ msgstr "Grupy"
 
 #: src/pages/catchup.jsx:597
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Wyświetlanie {selectedFilterCategory, select, all {wszystkich wpisów} original {oryginalnych wpisów} replies {komentarzy} boosts {podbić} followedTags {obserwowanych hashtagów} groups {grup} filtered {odfiltrowanych wpisów}}, {sortBy, select, createdAt {{sortOrder, select, asc {najstarsze} desc {najnowsze}}} reblogsCount {{sortOrder, select, asc {najmniej podbić} desc {najwięcej podbić}}} favouritesCount {{sortOrder, select, asc {najmniej polubień} desc {najwięcej polubień}}} repliesCount {{sortOrder, select, asc {najmniej odpowiedzi} desc {najwięcej odpowiedzi}}} density {{sortOrder, select, asc {najkrótsze} desc {najdłuższe}}}} najpierw{groupBy, select, account {, pogrupowane według autorstwa} other {}}"
+msgstr "Wyświetlanie {selectedFilterCategory, select, all {wszystkich wpisów} original {oryginalnych wpisów} replies {odpowiedzi} boosts {podbić} followedTags {obserwowanych hashtagów} groups {grup} filtered {odfiltrowanych wpisów}}, {sortBy, select, createdAt {{sortOrder, select, asc {najstarsze} desc {najnowsze}}} reblogsCount {{sortOrder, select, asc {najmniej podbić} desc {najwięcej podbić}}} favouritesCount {{sortOrder, select, asc {najmniej polubień} desc {najwięcej polubień}}} repliesCount {{sortOrder, select, asc {najmniej odpowiedzi} desc {najwięcej odpowiedzi}}} density {{sortOrder, select, asc {najkrótsze} desc {najdłuższe}}}} najpierw{groupBy, select, account {, pogrupowane według autorstwa} other {}}"
 
 #: src/pages/catchup.jsx:889
 #: src/pages/catchup.jsx:913
@@ -3160,7 +3160,7 @@ msgstr "Nie ma tu nic do widzenia!"
 #: src/pages/following.jsx:148
 #: src/pages/list.jsx:109
 msgid "Unable to load posts."
-msgstr "Nie udało się załadować posta."
+msgstr "Nie udało się załadować wpisu."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -3373,7 +3373,7 @@ msgstr "z nowym kontem"
 
 #: src/pages/notifications.jsx:111
 msgid "Who unsolicitedly private mention you"
-msgstr "które wysłały do ciebie niechcianą wzmiankę bezpośrednią"
+msgstr "które wysłały do ciebie niechcianą prywatną wzmiankę"
 
 #: src/pages/notifications.jsx:112
 msgid "Who are limited by server moderators"
@@ -3644,7 +3644,7 @@ msgstr "A"
 
 #: src/pages/settings.jsx:255
 msgid "Display language"
-msgstr "Język wyświetlania"
+msgstr "Język interfejsu"
 
 #: src/pages/settings.jsx:264
 msgid "Volunteer translations"
@@ -3669,7 +3669,7 @@ msgstr "Nie udało się zaktualizować ustawień prywatności wpisów"
 
 #: src/pages/settings.jsx:331
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-msgstr "Synchronizowano z ustawieniami serwera twojej instancji. <0>Przejdź do swojej instancji ({instance}), aby uzyskać więcej ustawień.</0>"
+msgstr "Synchronizowano z ustawieniami serwera twojej instancji. <0>Przejdź do swojej instancji ({instance}) po więcej ustawień.</0>"
 
 #: src/pages/settings.jsx:346
 msgid "Experiments"
@@ -3853,90 +3853,90 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "UWAGA: powiadomienia push działają tylko dla <0>jednego konta</0>."
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:599
-#: src/pages/status.jsx:1162
+#: src/pages/status.jsx:657
+#: src/pages/status.jsx:1220
 msgid "post.title"
 msgstr "post.title"
 
-#: src/pages/status.jsx:853
+#: src/pages/status.jsx:911
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "Nie zalogowano. Interakcje (odpowiedzi, podbicia, itp.) nie są możliwe."
 
-#: src/pages/status.jsx:873
+#: src/pages/status.jsx:931
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Ten wpis jest z innego serwera (<0>{instance}</0>). Interakcje (komantarze, podbicia, itp.) nie są możliwe."
 
-#: src/pages/status.jsx:901
+#: src/pages/status.jsx:959
 msgid "Error: {e}"
 msgstr "Błąd: {e}"
 
-#: src/pages/status.jsx:908
+#: src/pages/status.jsx:966
 msgid "Switch to my instance to enable interactions"
 msgstr "Przełącz na mój serwer, aby włączyć interakcje"
 
-#: src/pages/status.jsx:1010
+#: src/pages/status.jsx:1068
 msgid "Unable to load replies."
 msgstr "Nie udało się wczytać odpowiedzi."
 
-#: src/pages/status.jsx:1122
+#: src/pages/status.jsx:1180
 msgid "Back"
 msgstr "Wróć"
 
-#: src/pages/status.jsx:1153
+#: src/pages/status.jsx:1211
 msgid "Go to main post"
 msgstr "Przejdź do głównego wpisu"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1176
+#: src/pages/status.jsx:1234
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} wpisów powyżej - Przejdź do góry"
 
-#: src/pages/status.jsx:1223
-#: src/pages/status.jsx:1286
+#: src/pages/status.jsx:1281
+#: src/pages/status.jsx:1344
 msgid "Switch to Side Peek view"
 msgstr "Przełącz na widok Podglądu Bocznego"
 
-#: src/pages/status.jsx:1287
+#: src/pages/status.jsx:1345
 msgid "Switch to Full view"
-msgstr "Przełącz na widok pełnego rozmiaru"
+msgstr "Przełącz na widok pełnej szerokości"
 
-#: src/pages/status.jsx:1305
+#: src/pages/status.jsx:1363
 msgid "Show all sensitive content"
 msgstr "Pokaż wszystkie wrażliwe treści"
 
-#: src/pages/status.jsx:1310
+#: src/pages/status.jsx:1368
 msgid "Experimental"
 msgstr "Eksperymentalne"
 
-#: src/pages/status.jsx:1319
+#: src/pages/status.jsx:1377
 msgid "Unable to switch"
 msgstr "Nie udało się przełączyć"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1326
+#: src/pages/status.jsx:1384
 msgid "Switch to post's instance ({0})"
-msgstr "Przełącz na instancję posta ({0})"
-
-#: src/pages/status.jsx:1329
-msgid "Switch to post's instance"
-msgstr "Przełącz na instancję posta"
+msgstr "Przełącz na instancję wpisu ({0})"
 
 #: src/pages/status.jsx:1387
+msgid "Switch to post's instance"
+msgstr "Przełącz na instancję wpisu"
+
+#: src/pages/status.jsx:1445
 msgid "Unable to load post"
 msgstr "Nie udało się załadować wpisu"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1523
+#: src/pages/status.jsx:1581
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# odpowiedź} other {<0>{1}</0> odpowiedzi}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1541
+#: src/pages/status.jsx:1599
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# odpowiedź} other {<0>{0}</0> odpowiedzi}}"
 
-#: src/pages/status.jsx:1563
+#: src/pages/status.jsx:1621
 msgid "View post with its replies"
 msgstr "Zobacz wpis z odpowiedziami"
 
@@ -3956,7 +3956,7 @@ msgstr "Od {0}"
 
 #: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
-msgstr "Wróć do wyświetlania popularnych wpisów"
+msgstr "Wróć do popularnych wpisów"
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
 #: src/pages/trending.jsx:416
@@ -4005,11 +4005,11 @@ msgstr "Oddziel wizualnie oryginalne wpisy i podbicia."
 
 #: src/pages/welcome.jsx:142
 msgid "Screenshot of nested comments thread"
-msgstr "Zrzut ekranu zagnieżdżonych komentarzy"
+msgstr "Zrzut ekranu zagnieżdżonych odpowiedzi"
 
 #: src/pages/welcome.jsx:146
 msgid "Nested comments thread"
-msgstr "Zagnieżdżone komentarze"
+msgstr "Zagnieżdżone odpowiedzi"
 
 #: src/pages/welcome.jsx:149
 msgid "Effortlessly follow conversations. Semi-collapsible replies."

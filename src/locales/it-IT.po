@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 09:40\n"
+"PO-Revision-Date: 2025-06-10 10:58\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2009,11 +2009,11 @@ msgstr "Aggiungi più di una scorciatoia/colonna per fare in modo che funzioni."
 
 #: src/components/shortcuts-settings.jsx:411
 msgid "No columns yet. Tap on the Add column button."
-msgstr "Ancora nessuna colonna. Clicca il bottone Aggiungi colonna."
+msgstr "Nessuna colonna. Usa il tasto Aggiungi colonna."
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr "Ancora nessuna scorciatoia. Clicca il bottone Aggiungi scorciatoia."
+msgstr "Nessuna scorciatoia. Usa il tasto Aggiungi scorciatoia."
 
 #: src/components/shortcuts-settings.jsx:415
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
@@ -2743,7 +2743,7 @@ msgstr "Nota: L'account <0>default</0> verrà sempre usato per il primo accesso.
 
 #: src/pages/bookmarks.jsx:28
 msgid "No bookmarks yet. Go bookmark something!"
-msgstr "Ancora nessun segnalibro. Vai e aggiungi qualcosa!"
+msgstr "Nessun segnalibro. Vai e aggiungi qualcosa!"
 
 #: src/pages/bookmarks.jsx:29
 msgid "Unable to load bookmarks."
@@ -3003,7 +3003,7 @@ msgstr "Torna su"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
-msgstr "Ancora nessun Mi piace. Metti Mi piace a qualcosa!"
+msgstr "Nessun Mi piace. Metti Mi piace a qualcosa!"
 
 #: src/pages/favourites.jsx:29
 msgid "Unable to load likes."
@@ -3045,7 +3045,7 @@ msgstr "Impossibile caricare filtri."
 
 #: src/pages/filters.jsx:171
 msgid "No filters yet."
-msgstr "Ancora nessun filtro."
+msgstr "Nessun filtro."
 
 #: src/pages/filters.jsx:178
 msgid "Add filter"
@@ -3151,7 +3151,7 @@ msgstr "Impossibile caricare hashtag sguiti."
 
 #: src/pages/followed-hashtags.jsx:90
 msgid "No hashtags followed yet."
-msgstr "Ancora nessun hashtag seguito."
+msgstr "Nessun hashtag seguito."
 
 #: src/pages/following.jsx:147
 msgid "Nothing to see here."
@@ -3259,7 +3259,7 @@ msgstr "Istanza non valida"
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another instance…"
-msgstr "Vai in un'altra istanza…"
+msgstr "Vai a un'altra istanza…"
 
 #: src/pages/hashtag.jsx:521
 #: src/pages/public.jsx:171
@@ -3312,7 +3312,7 @@ msgstr "{0, plural, one {# lista} other {# liste}}"
 
 #: src/pages/lists.jsx:135
 msgid "No lists yet."
-msgstr "Ancora nessuna lista."
+msgstr "Nessuna lista."
 
 #: src/pages/login.jsx:118
 #: src/pages/login.jsx:128
@@ -3349,7 +3349,7 @@ msgstr "Menzioni private"
 
 #: src/pages/mentions.jsx:166
 msgid "Private"
-msgstr "Privato"
+msgstr "Private"
 
 #: src/pages/mentions.jsx:176
 msgid "No one mentioned you :("
@@ -3365,11 +3365,11 @@ msgstr "Non segui"
 
 #: src/pages/notifications.jsx:109
 msgid "Who don't follow you"
-msgstr "Chi non ti segue"
+msgstr "Non ti segue"
 
 #: src/pages/notifications.jsx:110
 msgid "With a new account"
-msgstr "Con un nuovo account"
+msgstr "Ha un nuovo account"
 
 #: src/pages/notifications.jsx:111
 msgid "Who unsolicitedly private mention you"
@@ -3377,7 +3377,7 @@ msgstr "Ti menziona in privato dal nulla"
 
 #: src/pages/notifications.jsx:112
 msgid "Who are limited by server moderators"
-msgstr "È limitato dai moderatori dei server"
+msgstr "Ha un account limitato dai moderatori"
 
 #: src/pages/notifications.jsx:605
 #: src/pages/notifications.jsx:946
@@ -3434,7 +3434,7 @@ msgstr "Impostazioni di notifica aggiornate"
 
 #: src/pages/notifications.jsx:981
 msgid "Filter out notifications from people:"
-msgstr "Blocca notifiche da chi:"
+msgstr "Filtra le notifiche di chi:"
 
 #: src/pages/notifications.jsx:995
 msgid "Filter"
@@ -3778,7 +3778,7 @@ msgstr "Dona"
 
 #: src/pages/settings.jsx:801
 msgid "What's new"
-msgstr ""
+msgstr "Novità"
 
 #: src/pages/settings.jsx:805
 msgid "Privacy Policy"
@@ -3830,15 +3830,15 @@ msgstr "chiunque"
 
 #: src/pages/settings.jsx:1146
 msgid "people I follow"
-msgstr "persone che seguo"
+msgstr "chi seguo"
 
 #: src/pages/settings.jsx:1150
 msgid "followers"
-msgstr "seguaci"
+msgstr "chi mi segue"
 
 #: src/pages/settings.jsx:1183
 msgid "Follows"
-msgstr "Seguiti"
+msgstr "Nuovi seguaci"
 
 #: src/pages/settings.jsx:1191
 msgid "Polls"
@@ -3846,7 +3846,7 @@ msgstr "Sondaggi"
 
 #: src/pages/settings.jsx:1195
 msgid "Post edits"
-msgstr "Modifiche del post"
+msgstr "Modifiche post"
 
 #: src/pages/settings.jsx:1216
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
@@ -3854,13 +3854,13 @@ msgstr "Il permesso push non è stato concesso dopo il tuo ultimo login. Dovrai 
 
 #: src/pages/settings.jsx:1232
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr "NOTA: Le notifiche push funzionano per <0>un account</0>."
+msgstr "NOTA: Le notifiche push funzionano solo per <0>un account</0>."
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:657
 #: src/pages/status.jsx:1220
 msgid "post.title"
-msgstr "post.title"
+msgstr "Post"
 
 #: src/pages/status.jsx:911
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 08:26\n"
+"PO-Revision-Date: 2025-06-10 14:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1080,7 +1080,7 @@ msgid "Rejected"
 msgstr "거절함"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:449
+#: src/components/notification.jsx:455
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:334
 #: src/pages/search.jsx:367
@@ -1666,34 +1666,34 @@ msgstr "계정이 정지되었습니다."
 msgid "[Unknown notification type: {type}]"
 msgstr "[알 수 없는 알림 유형: {type}]"
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:451
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:1125
 msgid "Boosted/Liked by…"
 msgstr "부스트·좋아한 사용자…"
 
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:452
 msgid "Liked by…"
 msgstr "좋아한 사람:"
 
-#: src/components/notification.jsx:447
+#: src/components/notification.jsx:453
 msgid "Boosted by…"
 msgstr "부스트한 사람:"
 
-#: src/components/notification.jsx:448
+#: src/components/notification.jsx:454
 msgid "Followed by…"
 msgstr "팔로한 사람:"
 
-#: src/components/notification.jsx:533
-#: src/components/notification.jsx:549
+#: src/components/notification.jsx:535
+#: src/components/notification.jsx:551
 msgid "Learn more <0/>"
 msgstr "자세히 보기 <0/>"
 
-#: src/components/notification.jsx:558
+#: src/components/notification.jsx:560
 msgid "View #Wrapstodon"
 msgstr ""
 
-#: src/components/notification.jsx:799
+#: src/components/notification.jsx:801
 #: src/components/status.jsx:328
 msgid "Read more →"
 msgstr "더 보기 →"
@@ -2518,6 +2518,22 @@ msgstr "참고로 위 미리 보기는 다소 스타일이 적용되어 있습�
 #: src/components/status.jsx:3784
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 님이 부스트 함"
+
+#: src/components/status.jsx:3897
+msgid "Post removed by author."
+msgstr ""
+
+#: src/components/status.jsx:3906
+msgid "You’re not authorized to view this post."
+msgstr ""
+
+#: src/components/status.jsx:3915
+msgid "Post pending author approval."
+msgstr ""
+
+#: src/components/status.jsx:3924
+msgid "Quoting not allowed by the author."
+msgstr ""
 
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1199

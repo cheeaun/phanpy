@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-11 06:42\n"
+"PO-Revision-Date: 2025-06-11 08:22\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -549,7 +549,7 @@ msgstr "Nazwa"
 
 #: src/components/account-info.jsx:2479
 msgid "Bio"
-msgstr "Opis"
+msgstr "Biogram"
 
 #: src/components/account-info.jsx:2492
 msgid "Extra fields"
@@ -1128,7 +1128,7 @@ msgstr "Poprzedni wpis"
 
 #: src/components/keyboard-shortcuts-help.jsx:67
 msgid "Skip carousel to next post"
-msgstr "Pomiń przejście do następnego wpisu"
+msgstr "Przejdź w \"karuzeli\" do nowego wpisu"
 
 #: src/components/keyboard-shortcuts-help.jsx:69
 msgid "<0>Shift</0> + <1>j</1>"
@@ -1136,7 +1136,7 @@ msgstr "<0>Shift</0> + <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:75
 msgid "Skip carousel to previous post"
-msgstr "Pomiń przejście do poprzedniego wpisu"
+msgstr "Przejdź w \"karuzeli\" do poprzedniego wpisu"
 
 #: src/components/keyboard-shortcuts-help.jsx:77
 msgid "<0>Shift</0> + <1>k</1>"
@@ -1372,7 +1372,7 @@ msgstr "Zaplanowany wpis"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
-msgstr "Wpis opublikowany. Sprawdź to sobie."
+msgstr "Wpis opublikowany. Kliknij tutaj, żeby go sprawdzić."
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
@@ -1384,7 +1384,7 @@ msgstr "Odpowiedź wysłana. Sprawdź ją sobie."
 
 #: src/components/modals.jsx:80
 msgid "Post updated. Check it out."
-msgstr "Wpis został zaktualizowany. Sprawdź to sobie."
+msgstr "Wpis został zaktualizowany. Kliknij tutaj, żeby go sprawdzić."
 
 #: src/components/nav-menu.jsx:123
 msgid "Menu"
@@ -1969,7 +1969,7 @@ msgstr "beta"
 
 #: src/components/shortcuts-settings.jsx:249
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr "Określ listę skrótów, które będą wyświetlane jako:"
+msgstr "Określ skróty, które będą wyświetlane jako:"
 
 #: src/components/shortcuts-settings.jsx:255
 msgid "Floating button"
@@ -2296,7 +2296,7 @@ msgstr "Skopiuj tekst wpisu"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1211
 msgid "View post by <0>@{0}</0>"
-msgstr "Wpisy autorstwa: <0>@{0}</0>"
+msgstr "Wpisy <0>@{0}</0>"
 
 #: src/components/status.jsx:1232
 msgid "Show Edit History"
@@ -2963,7 +2963,7 @@ msgstr "group.filter"
 
 #: src/pages/catchup.jsx:1489
 msgid "Authors"
-msgstr "Autorstwa"
+msgstr "Autorzy"
 
 #: src/pages/catchup.jsx:1490
 msgid "None"
@@ -3511,7 +3511,7 @@ msgstr "Lokalna oś czasu ({instance})"
 
 #: src/pages/public.jsx:29
 msgid "Federated timeline ({instance})"
-msgstr "Sfederowana oś czasu ({instance})"
+msgstr "Globalna (sfederowana) oś czasu ({instance})"
 
 #: src/pages/public.jsx:92
 msgid "Local timeline"
@@ -3519,7 +3519,7 @@ msgstr "Lokalna oś czasu"
 
 #: src/pages/public.jsx:92
 msgid "Federated timeline"
-msgstr "Sfederowana oś czasu"
+msgstr "Globalna (sfederowana) oś czasu"
 
 #: src/pages/public.jsx:98
 msgid "No one has posted anything yet."
@@ -3527,11 +3527,11 @@ msgstr "Nikt tu jeszcze niczego nie opublikował."
 
 #: src/pages/public.jsx:125
 msgid "Switch to Federated"
-msgstr "Przełącz na Sfederowane"
+msgstr "Przełącz na Globalną"
 
 #: src/pages/public.jsx:132
 msgid "Switch to Local"
-msgstr "Przełącz na Lokalny"
+msgstr "Przełącz na Lokalną"
 
 #: src/pages/scheduled-posts.jsx:110
 msgid "No scheduled posts."
@@ -3918,7 +3918,7 @@ msgstr "Przełącz na widok Podglądu Bocznego"
 
 #: src/pages/status.jsx:1345
 msgid "Switch to Full view"
-msgstr "Przełącz na widok pełnej szerokości"
+msgstr "Przełącz na widok pełnoekranowy"
 
 #: src/pages/status.jsx:1363
 msgid "Show all sensitive content"

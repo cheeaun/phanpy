@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-12 09:41\n"
+"PO-Revision-Date: 2025-06-12 11:13\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2595,7 +2595,7 @@ msgstr "Traduzione fallita"
 
 #: src/compose.jsx:33
 msgid "Editing source status"
-msgstr "Modifico stato originale"
+msgstr "Modificando post originale"
 
 #. placeholder {0}: replyToStatus.account?.acct || replyToStatus.account?.username
 #: src/compose.jsx:35
@@ -2619,7 +2619,7 @@ msgstr "Accesso richiesto."
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:276
 msgid "Go home"
-msgstr "Vai alla home"
+msgstr "Vai alla Home"
 
 #: src/pages/account-statuses.jsx:234
 msgid "Account posts"
@@ -2755,7 +2755,7 @@ msgstr "Aggiungi un account esistente"
 
 #: src/pages/accounts.jsx:275
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr "Nota: L'account <0>default</0> verrà sempre usato per il primo accesso. Gli account a cui passi rimarranno attivi durante la sessione."
+msgstr "Nota: l'account <0>di default</0> verrà sempre usato per il primo caricamento. Gli account a cui passi rimarranno attivi durante la sessione."
 
 #: src/pages/bookmarks.jsx:28
 msgid "No bookmarks yet. Go bookmark something!"
@@ -2900,7 +2900,7 @@ msgstr "Rimuovere questo recupero?"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1072
 msgid "Removing Catch-up {0}"
-msgstr "Rimozione \"Recupera\" {0}"
+msgstr "Rimuovo Recupera {0}"
 
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1076
@@ -2926,7 +2926,7 @@ msgstr "Reimposta filtri"
 #: src/pages/catchup.jsx:1151
 #: src/pages/catchup.jsx:1594
 msgid "Top links"
-msgstr "Top link"
+msgstr "Link popolari"
 
 #. placeholder {0}: sharers.map((s) => { const { avatarStatic, displayName } = s; return ( <button type="button" class="plain" style={{ padding: 0, }} onClick={(e) => { e.preventDefault(); e.stopPropagation(); // Reset and filter to author const { id } = s; setSelectedAuthor(id); setSelectedFilterCategory('all'); }} > <Avatar url={avatarStatic} size="s" alt={displayName} /> </button> ); })
 #: src/pages/catchup.jsx:1264
@@ -2995,7 +2995,7 @@ msgstr "Ordina: Densità"
 
 #: src/pages/catchup.jsx:1606
 msgid "Posts are sorted by information density or depth. Shorter posts are \"lighter\" while longer posts are \"heavier\". Posts with photos are \"heavier\" than posts without photos."
-msgstr "I post sono ordinati in base alla loro densità o profondità informativa. I post più brevi sono più \"leggeri\" mentre i post più lunghi sono più \"pesanti\". I post con foto sono più \"pesanti\" dei post senza foto."
+msgstr "I post sono ordinati in base alla loro densità o profondità informativa. I post brevi sono più \"leggeri\" mentre i post lunghi sono più \"pesanti\". I post con foto sono più \"pesanti\" dei post senza foto."
 
 #: src/pages/catchup.jsx:1613
 msgid "Group: Authors"
@@ -3003,7 +3003,7 @@ msgstr "Gruppo: Autori"
 
 #: src/pages/catchup.jsx:1616
 msgid "Posts are grouped by authors, sorted by posts count per author."
-msgstr "I post vengono raggruppati in base agli autori, ordinati dal numero di post per autore."
+msgstr "I post vengono raggruppati in base agli autori, ordinati per numero di post per autore."
 
 #: src/pages/catchup.jsx:1663
 msgid "Next author"
@@ -3263,7 +3263,7 @@ msgstr "Aggiungi a Scorciatoie"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new instance e.g. \"mastodon.social\""
-msgstr "Inserisci una nuova istanza es. \"mastodon.social\""
+msgstr "Inserisci una nuova istanza, es. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:494
 #: src/pages/public.jsx:144
@@ -3738,15 +3738,15 @@ msgstr "Nota: Questa funzione utilizza un servizio di ricerca GIF esterno fornit
 
 #: src/pages/settings.jsx:577
 msgid "Image description generator"
-msgstr "Generatore di descrizioni d'immagine"
+msgstr "Generatore descrizioni immagini"
 
 #: src/pages/settings.jsx:582
 msgid "Only for new images while composing new posts."
-msgstr "Solo per le nuove immagini mentre si compongono nuovi post."
+msgstr "Solo per le nuove immagini mentre si compone un nuovo post."
 
 #: src/pages/settings.jsx:589
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
-msgstr "Nota: Questa funzionalità usa un servizio IA esterno, alimentato da <0>img-alt-api</0>. Potrebbe non funzionare correttamente. Solo per immagini e in inglese."
+msgstr "Nota: questa funzionalità usa un servizio IA esterno, fornito da <0>img-alt-api</0>. Potrebbe non funzionare correttamente. Solo per le immagini e in inglese."
 
 #: src/pages/settings.jsx:617
 msgid "Server-side grouped notifications"
@@ -3754,7 +3754,7 @@ msgstr "Notifiche raggruppate dal server"
 
 #: src/pages/settings.jsx:621
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr "Funzionalità in stato alfa. Potenziale miglioramento nel raggruppamento delle finestre ma con una logica base di raggruppamento."
+msgstr "Funzionalità in stato alfa. Potenziale miglioramento della finestra di raggruppamento ma con una logica di raggruppamento basica."
 
 #: src/pages/settings.jsx:642
 msgid "\"Cloud\" import/export for shortcuts settings"
@@ -3762,11 +3762,11 @@ msgstr "Importazione/esportazione \"cloud\" per le impostazioni delle scorciatoi
 
 #: src/pages/settings.jsx:647
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr "⚠️⚠️⚠️ Molto sperimentale.<0/>Conservato nelle note del tuo profilo. Le note (private) del profilo sono usate principalmente per gli altri profili e sono nascoste per il tuo profilo."
+msgstr "⚠️⚠️⚠️ Molto sperimentale.<0/>Conservato nelle tue note del profilo. Le note (private) del profilo sono usate principalmente per gli altri profili e sono nascoste per il tuo profilo."
 
 #: src/pages/settings.jsx:658
 msgid "Note: This feature uses currently-logged-in instance server API."
-msgstr "Nota: Questa funzionalità usa l'API del server d'istanza attualmente in accesso."
+msgstr "Nota: questa funzionalità usa l'API del server dell'istanza a cui si è collegati."
 
 #: src/pages/settings.jsx:675
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -3774,7 +3774,7 @@ msgstr "Modalità mantello <0>(<1>Testo</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:684
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr "Sostituisci testo con blocchi, utile per fare screenshot e per questioni di privacy."
+msgstr "Oscura il testo con dei blocchi, utile per gli screenshot e per proteggere la privacy."
 
 #: src/pages/settings.jsx:709
 msgid "About"
@@ -3812,28 +3812,28 @@ msgstr "<0>Versione:</0> <1/> {0}"
 
 #: src/pages/settings.jsx:834
 msgid "Version string copied"
-msgstr "Stringa di versione copiata"
+msgstr "Stringa versione copiata"
 
 #: src/pages/settings.jsx:837
 msgid "Unable to copy version string"
-msgstr "Impossibile copiare la stringa della versione"
+msgstr "Impossibile copiare stringa versione"
 
 #: src/pages/settings.jsx:1084
 #: src/pages/settings.jsx:1089
 msgid "Failed to update subscription. Please try again."
-msgstr "Impossibile aggiornare iscrizione. Si prega di riprovare."
+msgstr "Impossibile aggiornare abbonamento. Riprova."
 
 #: src/pages/settings.jsx:1095
 msgid "Failed to remove subscription. Please try again."
-msgstr "Impossibile rimuovere l'iscrizione. Per favore riprova."
+msgstr "Impossibile rimuovere abbonamento. Riprova."
 
 #: src/pages/settings.jsx:1102
 msgid "Push Notifications (beta)"
-msgstr "Notifiche Push (beta)"
+msgstr "Notifiche push (beta)"
 
 #: src/pages/settings.jsx:1124
 msgid "Push notifications are blocked. Please enable them in your browser settings."
-msgstr "Le notifiche push sono bloccate. Si prega di abilitarle nelle impostazioni del tuo browser."
+msgstr "Le notifiche push sono bloccate. Abilitale nelle impostazioni del browser."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
 #: src/pages/settings.jsx:1133
@@ -3866,7 +3866,7 @@ msgstr "Modifiche post"
 
 #: src/pages/settings.jsx:1216
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr "Il permesso push non è stato concesso dopo il tuo ultimo login. Dovrai <0><1>effettuare l'accesso</1> di nuovo per concedere l'autorizzazione push</0>."
+msgstr "L'autorizzazione push non è stata concessa dall'ultimo accesso. <0><1>Accedi</1> di nuovo per concedere l'autorizzazione push</0>."
 
 #: src/pages/settings.jsx:1232
 msgid "NOTE: Push notifications only work for <0>one account</0>."
@@ -4009,7 +4009,7 @@ msgstr "Collega il tuo account Mastodon o del Fediverso.<0/>Le tue credenziali n
 
 #: src/pages/welcome.jsx:95
 msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
-msgstr "<0>Costruito</0> da <1>@cheeaun</1>. <2>Infromativa sulla privacy</2>."
+msgstr "<0>Sviluppato</0> da <1>@cheeaun</1>. <2>Politica sulla privacy</2>."
 
 #: src/pages/welcome.jsx:126
 msgid "Screenshot of Boosts Carousel"

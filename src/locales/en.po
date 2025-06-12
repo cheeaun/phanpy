@@ -216,7 +216,7 @@ msgstr ""
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1171
+#: src/pages/settings.jsx:1179
 msgid "Boosts"
 msgstr ""
 
@@ -604,19 +604,19 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: src/components/compose-button.jsx:148
+#: src/components/compose-button.jsx:150
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr ""
 
-#: src/components/compose-button.jsx:175
+#: src/components/compose-button.jsx:177
 #: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
 msgstr "Scheduled Posts"
 
-#: src/components/compose-button.jsx:188
+#: src/components/compose-button.jsx:190
 msgid "Add to thread"
 msgstr "Add to thread"
 
@@ -1075,7 +1075,7 @@ msgid "Rejected"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:449
+#: src/components/notification.jsx:455
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:334
 #: src/pages/search.jsx:367
@@ -1412,7 +1412,7 @@ msgstr ""
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1163
+#: src/pages/settings.jsx:1171
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
@@ -1451,7 +1451,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1167
+#: src/pages/settings.jsx:1175
 msgid "Likes"
 msgstr ""
 
@@ -1661,34 +1661,34 @@ msgstr ""
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:445
+#: src/components/notification.jsx:451
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:1125
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:446
+#: src/components/notification.jsx:452
 msgid "Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:447
+#: src/components/notification.jsx:453
 msgid "Boosted by…"
 msgstr ""
 
-#: src/components/notification.jsx:448
+#: src/components/notification.jsx:454
 msgid "Followed by…"
 msgstr ""
 
-#: src/components/notification.jsx:533
-#: src/components/notification.jsx:549
+#: src/components/notification.jsx:535
+#: src/components/notification.jsx:551
 msgid "Learn more <0/>"
 msgstr ""
 
-#: src/components/notification.jsx:558
+#: src/components/notification.jsx:560
 msgid "View #Wrapstodon"
 msgstr "View #Wrapstodon"
 
-#: src/components/notification.jsx:799
+#: src/components/notification.jsx:801
 #: src/components/status.jsx:328
 msgid "Read more →"
 msgstr ""
@@ -2514,8 +2514,24 @@ msgstr ""
 msgid "<0/> <1/> boosted"
 msgstr ""
 
+#: src/components/status.jsx:3897
+msgid "Post removed by author."
+msgstr "Post removed by author."
+
+#: src/components/status.jsx:3906
+msgid "You’re not authorized to view this post."
+msgstr "You’re not authorized to view this post."
+
+#: src/components/status.jsx:3915
+msgid "Post pending author approval."
+msgstr "Post pending author approval."
+
+#: src/components/status.jsx:3924
+msgid "Quoting not allowed by the author."
+msgstr "Quoting not allowed by the author."
+
 #: src/components/timeline.jsx:485
-#: src/pages/settings.jsx:1191
+#: src/pages/settings.jsx:1199
 msgid "New posts"
 msgstr ""
 
@@ -3389,7 +3405,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:681
-#: src/pages/settings.jsx:1179
+#: src/pages/settings.jsx:1187
 msgid "Follow requests"
 msgstr ""
 
@@ -3771,79 +3787,83 @@ msgstr ""
 msgid "Donate"
 msgstr "Donate"
 
-#: src/pages/settings.jsx:797
+#: src/pages/settings.jsx:801
+msgid "What's new"
+msgstr "What's new"
+
+#: src/pages/settings.jsx:805
 msgid "Privacy Policy"
 msgstr ""
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:804
+#: src/pages/settings.jsx:812
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:811
+#: src/pages/settings.jsx:819
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:826
+#: src/pages/settings.jsx:834
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:829
+#: src/pages/settings.jsx:837
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:1076
-#: src/pages/settings.jsx:1081
+#: src/pages/settings.jsx:1084
+#: src/pages/settings.jsx:1089
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1087
+#: src/pages/settings.jsx:1095
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1094
+#: src/pages/settings.jsx:1102
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1116
+#: src/pages/settings.jsx:1124
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1125
+#: src/pages/settings.jsx:1133
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1134
+#: src/pages/settings.jsx:1142
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1138
+#: src/pages/settings.jsx:1146
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1142
+#: src/pages/settings.jsx:1150
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1175
+#: src/pages/settings.jsx:1183
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1183
+#: src/pages/settings.jsx:1191
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1187
+#: src/pages/settings.jsx:1195
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1208
+#: src/pages/settings.jsx:1216
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1224
+#: src/pages/settings.jsx:1232
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

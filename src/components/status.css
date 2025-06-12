@@ -265,6 +265,23 @@
   content: none !important;
 }
 
+.status-card-unfulfilled {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: calc(var(--text-size) * 0.9);
+  margin: 1em 0 0;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-color);
+  box-shadow: inset 0 0 4px var(--outline-color);
+
+  .icon {
+    color: var(--text-insignificant-color);
+  }
+}
+
 @keyframes skeleton-breathe {
   0% {
     opacity: 1;
@@ -1240,6 +1257,7 @@
   height: 100%;
   object-fit: cover;
   vertical-align: middle;
+  dynamic-range-limit: standard; /* Disable HDR */
 }
 :is(.status, .media-post) .media {
   cursor: pointer;

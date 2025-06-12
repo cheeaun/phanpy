@@ -381,10 +381,16 @@ function Notification({
       <b {...props} />
     );
 
+  const diffCount =
+    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
+  const expandAccounts = diffCount ? 'remote' : 'local';
+
   if (typeof text === 'function') {
     const count =
       (type === 'favourite' || type === 'reblog') && notificationsCount
-        ? notificationsCount
+        ? diffCount
+          ? notificationsCount
+          : sampleAccounts?.length
         : _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
     const postsCount = _statuses?.length || (status ? 1 : 0);
     if (type === 'admin.report') {
@@ -458,10 +464,6 @@ function Notification({
   };
 
   console.debug('RENDER Notification', notification.id);
-
-  const diffCount =
-    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
-  const expandAccounts = diffCount ? 'remote' : 'local';
 
   // If there's a status and filter action is 'hide', then the notification is hidden
   if (!!status?.filtered) {

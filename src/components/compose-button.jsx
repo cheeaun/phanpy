@@ -52,6 +52,8 @@ export default function ComposeButton() {
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
 
+  const columnMode = snapStates.settings.shortcutsViewMode === 'multi-column';
+
   function handleButton(e) {
     // useKey will even listen to Shift
     // e.g. press Shift (without c) will trigger this 😱
@@ -66,7 +68,7 @@ export default function ComposeButton() {
     const composeDataElements = document.querySelectorAll('data.compose-data');
     // If there's a lot of them, ignore
     const opts =
-      composeDataElements.length === 1
+      !columnMode && composeDataElements.length === 1
         ? JSON.parse(composeDataElements[0].value)
         : undefined;
 

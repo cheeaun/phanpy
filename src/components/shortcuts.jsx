@@ -3,7 +3,7 @@ import './shortcuts.css';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
-import { useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -35,6 +35,7 @@ function Shortcuts() {
     (!settings.shortcutsViewMode && settings.shortcutsColumnsMode);
 
   const menuRef = useRef();
+  const tabBarRef = useRef();
 
   const hasLists = useRef(false);
   const formattedShortcuts = shortcuts
@@ -83,6 +84,27 @@ function Shortcuts() {
     })
     .filter(Boolean);
 
+  // Auto-scroll to active tab on first render
+  useEffect(() => {
+    if (
+      snapStates.settings.shortcutsViewMode === 'tab-menu-bar' &&
+      tabBarRef.current
+    ) {
+      const timeoutId = setTimeout(() => {
+        const activeTab = tabBarRef.current?.querySelector('.is-active');
+        if (activeTab) {
+          activeTab.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center',
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, []);
+
   const navigate = useNavigate();
   useHotkeys(
     ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -113,6 +135,7 @@ function Shortcuts() {
     <div id="shortcuts">
       {snapStates.settings.shortcutsViewMode === 'tab-menu-bar' ? (
         <nav
+          ref={tabBarRef}
           class="tab-bar"
           onContextMenu={(e) => {
             e.preventDefault();

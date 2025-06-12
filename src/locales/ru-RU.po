@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-10 14:00\n"
+"PO-Revision-Date: 2025-06-12 20:13\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -609,19 +609,19 @@ msgstr "Режим маскировки включён"
 msgid "Home"
 msgstr "Домашняя"
 
-#: src/components/compose-button.jsx:148
+#: src/components/compose-button.jsx:150
 #: src/compose.jsx:38
 msgid "Compose"
 msgstr "Написать"
 
-#: src/components/compose-button.jsx:175
+#: src/components/compose-button.jsx:177
 #: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
 msgstr "Отложенные посты"
 
-#: src/components/compose-button.jsx:188
+#: src/components/compose-button.jsx:190
 msgid "Add to thread"
 msgstr "Добавить в обсуждение"
 
@@ -2521,19 +2521,19 @@ msgstr "<0/> <1/> продвинули"
 
 #: src/components/status.jsx:3897
 msgid "Post removed by author."
-msgstr ""
+msgstr "Пост удален автором."
 
 #: src/components/status.jsx:3906
 msgid "You’re not authorized to view this post."
-msgstr ""
+msgstr "У вас нет прав для просмотра этого поста."
 
 #: src/components/status.jsx:3915
 msgid "Post pending author approval."
-msgstr ""
+msgstr "Пост в ожидании одобрения автора."
 
 #: src/components/status.jsx:3924
 msgid "Quoting not allowed by the author."
-msgstr ""
+msgstr "Цитирование не разрешено автором."
 
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1199
@@ -2747,7 +2747,7 @@ msgstr "Выйти…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Подключено к {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"
@@ -3794,7 +3794,7 @@ msgstr "Поддержать монеткой"
 
 #: src/pages/settings.jsx:801
 msgid "What's new"
-msgstr ""
+msgstr "Что нового"
 
 #: src/pages/settings.jsx:805
 msgid "Privacy Policy"

@@ -1710,7 +1710,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
     bottom: calc(16px + env(safe-area-inset-bottom) + 52px);
 
     body.exp-tab-bar-v2 & {
-      bottom: max(16px, var(--sai-bottom));
+      bottom: max(
+        16px,
+        min(var(--sai-left), var(--sai-right), var(--sai-bottom))
+      );
     }
   }
 }

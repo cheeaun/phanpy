@@ -73,6 +73,10 @@ function Settings({ onClose }) {
   //   })();
   // }, []);
 
+  const [expTabBarV2, setExpTabBarV2] = useState(
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
+
   return (
     <div
       id="settings-container"
@@ -925,6 +929,24 @@ function Settings({ onClose }) {
             >
               Clear all caches
             </button>
+            <p>Temporary Experiments</p>
+            <label>
+              <input
+                type="checkbox"
+                checked={expTabBarV2}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  document.body.classList.toggle('exp-tab-bar-v2', checked);
+                  setExpTabBarV2(checked);
+                  if (checked) {
+                    store.local.set('experiments-tabBarV2', true);
+                  } else {
+                    store.local.del('experiments-tabBarV2');
+                  }
+                }}
+              />{' '}
+              Tab bar v2
+            </label>
           </details>
         )}
       </main>

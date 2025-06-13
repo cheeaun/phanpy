@@ -57,6 +57,14 @@
 
 /* TAB BAR */
 
+body.exp-tab-bar-v2 {
+  --compose-button-width: 56px;
+  --inset-inline-new: max(var(--sai-left), var(--sai-right));
+  --inset-new: calc(
+    (var(--sai-bottom) - var(--inset-inline-new)) / 3 + var(--inset-inline-new)
+  );
+}
+
 #shortcuts .tab-bar:not([hidden]) {
   position: fixed;
   bottom: 0;
@@ -80,15 +88,10 @@
       all 0.3s ease-in-out,
       max-width 0s;
     inset-inline-end: auto;
-    --inset-inline-start: max(16px, var(--sai-inline-start));
-    --inset-inline-end: max(16px, var(--sai-inline-end));
-    --inset-block-end: max(16px, var(--sai-bottom));
-    --compose-button-width: 56px;
+    --inset-inline-start: max(16px, var(--inset-new));
+    --inset-inline-end: max(16px, var(--inset-new));
     inset-inline-start: var(--inset-inline-start);
-    inset-block-end: max(
-      16px,
-      min(var(--sai-left), var(--sai-right), var(--sai-bottom))
-    );
+    inset-block-end: max(16px, var(--inset-new));
     max-width: calc(
       100vw - var(--inset-inline-start) - var(--inset-inline-end) -
         var(--compose-button-width) - 8px

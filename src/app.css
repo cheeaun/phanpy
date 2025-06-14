@@ -1710,6 +1710,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
     bottom: calc(16px + env(safe-area-inset-bottom) + 52px);
 
     body.exp-tab-bar-v2 & {
+      --inset-inline-end: max(16px, var(--inset-new), var(--sai-inline-end));
+      inset-inline-end: var(--inset-inline-end);
       bottom: max(16px, var(--inset-new));
     }
   }

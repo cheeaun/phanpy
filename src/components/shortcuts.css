@@ -61,7 +61,9 @@ body.exp-tab-bar-v2 {
   --compose-button-width: 56px;
   --tmp-inset-sides: max(var(--sai-left), var(--sai-right), 16px);
   --tmp-inset-bottom: max(16px, var(--sai-bottom));
-  --tmp-inset-new: calc(var(--tmp-inset-sides) + var(--tmp-inset-bottom) / 2.4);
+  --tmp-inset-new: calc(
+    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) / 2.4
+  );
   --inset-new: var(--tmp-inset-new);
 }
 

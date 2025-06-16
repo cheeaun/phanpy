@@ -527,7 +527,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           </Menu2>
         }
       />
-      {!!hashtags?.length && (
+      {!columnMode && !!hashtags?.length && (
         <data
           class="compose-data"
           value={JSON.stringify({

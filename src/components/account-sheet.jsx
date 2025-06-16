@@ -54,12 +54,18 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               const result = await masto.v2.search.list({
                 q: account,
                 type: 'accounts',
-                limit: 1,
+                limit: authenticated ? 1 : 11, // Magic number
                 resolve: authenticated,
               });
               if (result.accounts.length) {
-                return result.accounts[0];
-              } else if (/https?:\/\/[^/]+\/@/.test(account)) {
+                const accountWithSameString = result.accounts.find(
+                  (a) => a.url === account || account.startsWith(a.url),
+                );
+                if (accountWithSameString) {
+                  return accountWithSameString;
+                }
+              }
+              if (/^https?:\/\/[^/]+\/@[^/]+$/.test(account)) {
                 const accountURL = URL.parse(account);
                 if (accountURL) {
                   const { hostname, pathname } = accountURL;

@@ -2,10 +2,21 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  interpolate-size: allow-keywords;
+
   --sai-top: env(safe-area-inset-top);
   --sai-right: env(safe-area-inset-right);
   --sai-bottom: env(safe-area-inset-bottom);
   --sai-left: env(safe-area-inset-left);
+
+  --sai-inline-start: var(--sai-left);
+  &:dir(rtl) {
+    --sai-inline-start: var(--sai-right);
+  }
+  --sai-inline-end: var(--sai-right);
+  &:dir(rtl) {
+    --sai-inline-end: var(--sai-left);
+  }
 
   --text-size: 16px;
   --main-width: 40em;
@@ -587,6 +598,16 @@ kbd {
 }
 .shazam-container-horizontal[hidden] {
   grid-template-columns: 0fr;
+}
+
+.shazam {
+  transition: all 0.3s ease-out allow-discrete;
+  @starting-style {
+    display: none;
+    opacity: 0;
+    height: 0;
+    overflow: clip;
+  }
 }
 
 @keyframes spin {

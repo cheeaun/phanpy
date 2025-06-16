@@ -282,15 +282,19 @@ function Media({
         e.target.closest('[data-view-transition-name]') ||
         e.target.querySelector('[data-view-transition-name]');
       if (el) {
-        if (!onClick) e.preventDefault();
-        el.style.viewTransitionName = mediaVTN;
-        document.startViewTransition(() => {
-          el.style.viewTransitionName = '';
-          onClick?.(e);
-          if (!onClick || !e.defaultPrevented) {
+        // BUG: both link and onClick is triggered at the same time
+        // Temporarily disable view transition if has onClick
+        // Detecting preventDefault for an onClick has to happen before view transition but it's only possible after click, and this mean the link is already clicked even before we know it's default prevented.
+        if (onClick) {
+          onClick(e);
+        } else {
+          e.preventDefault();
+          el.style.viewTransitionName = mediaVTN;
+          document.startViewTransition(() => {
+            el.style.viewTransitionName = '';
             location.hash = `#${to}`;
-          }
-        });
+          });
+        }
       } else {
         onClick?.(e);
       }

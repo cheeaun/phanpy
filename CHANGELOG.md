@@ -333,7 +333,9 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 🙈 Handle Mastodon's upcoming `blur` filter https://mastodon.social/@cheeaun/114301571477875063
 - 🐛 Bug fixes
 
-## Next
+## June 8, 2025
+
+📢 https://mastodon.social/@cheeaun/114647753143423772
 
 - 🌟 Featured profiles (for upcoming Mastodon v4.4)
 - 🔑 Revoke access token when logging out

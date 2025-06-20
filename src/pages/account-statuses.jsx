@@ -664,7 +664,9 @@ function MonthPicker(props) {
           <option
             value={
               // Month is 1-indexed
-              (i + 1).toString().padStart(2, '0')
+              (i + 1)
+                .toString()
+                .padStart(2, '0')
             }
             key={i}
           >

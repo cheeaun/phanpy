@@ -7,8 +7,8 @@ import groupedNotificationsUrl from '../assets/features/grouped-notifications.jp
 import multiColumnUrl from '../assets/features/multi-column.jpg';
 import multiHashtagTimelineUrl from '../assets/features/multi-hashtag-timeline.jpg';
 import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.jpg';
-import logoText from '../assets/logo-text.svg';
 import logo from '../assets/logo.svg';
+import logoText from '../assets/logo-text.svg';
 
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';

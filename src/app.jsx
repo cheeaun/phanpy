@@ -359,6 +359,15 @@ if (import.meta.env.DEV) {
   });
 }
 
+{
+  // Temporary Experiments
+  // May be removed in the future
+  document.body.classList.toggle(
+    'exp-tab-bar-v2',
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');

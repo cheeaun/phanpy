@@ -160,7 +160,7 @@ export default defineConfig({
       },
     }),
     Sonda({
-      detailed: true,
+      deep: true,
       brotli: true,
       open: false,
     }),

@@ -24,18 +24,17 @@
     line-height: 1;
     border: 1px solid var(--outline-color);
     background-color: var(--bg-faded-color);
-    background-image: linear-gradient(
-      to top,
-      var(--bg-blur-color),
-      transparent
-    );
+    background-image: linear-gradient(to top, var(--bg-blur-color), transparent);
     text-shadow: 0 1px var(--bg-color);
-    box-shadow: 0 1px var(--drop-shadow-color),
-      0 1px 1px var(--drop-shadow-color), 0 1px 8px var(--drop-shadow-color),
+    box-shadow:
+      0 1px var(--drop-shadow-color),
+      0 1px 1px var(--drop-shadow-color),
+      0 1px 8px var(--drop-shadow-color),
       inset 0 1px var(--bg-blur-color);
 
     &:active {
-      box-shadow: 0 1px 4px var(--drop-shadow-color),
+      box-shadow:
+        0 1px 4px var(--drop-shadow-color),
         inset 0 1px var(--bg-blur-color);
       transform: translateY(1px);
       filter: brightness(0.95);

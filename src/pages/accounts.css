@@ -36,7 +36,9 @@
   opacity: 1;
 }
 #accounts-container section > ul > li .current.is-current + .avatar {
-  box-shadow: 0 0 0 1.5px var(--green-color), 0 0 8px var(--green-color);
+  box-shadow:
+    0 0 0 1.5px var(--green-color),
+    0 0 8px var(--green-color);
 }
 #accounts-container section > ul > li .avatar + .name-text {
   vertical-align: middle;

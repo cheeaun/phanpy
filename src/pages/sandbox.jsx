@@ -3,10 +3,10 @@ import './sandbox.css';
 import { useEffect, useState } from 'preact/hooks';
 import { uid } from 'uid/single';
 
-import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
-import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
 import testAudioURL from '../assets/sandbox/big-buck-bunny.mp3';
 import testVideoURL from '../assets/sandbox/big-buck-bunny.webm';
+import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
+import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
 
 import Status from '../components/status';
 import { getPreferences } from '../utils/api';

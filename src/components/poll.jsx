@@ -52,7 +52,7 @@ export default function Poll({
   //   };
   // }, [expired, expiresAtDate]);
 
-  const pollVotesCount = multiple ? votersCount : votesCount;
+  const pollVotesCount = multiple ? votersCount || votesCount : votesCount;
   let roundPrecision = 0;
 
   if (pollVotesCount <= 1000) {

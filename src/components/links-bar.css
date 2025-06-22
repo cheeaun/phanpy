@@ -86,7 +86,8 @@
 
     &:not(:active):is(:hover, :focus-visible) {
       border-color: var(--accent-color, var(--link-light-color));
-      box-shadow: 0 4px 8px var(--drop-shadow-color),
+      box-shadow:
+        0 4px 8px var(--drop-shadow-color),
         0 8px 16px var(--drop-shadow-color);
       transform-origin: center bottom;
       transform: scale(1.02);

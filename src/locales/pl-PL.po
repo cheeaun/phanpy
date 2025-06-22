@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-13 16:19\n"
+"PO-Revision-Date: 2025-06-20 01:13\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -221,7 +221,7 @@ msgstr "Odpowiedzi"
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1201
+#: src/pages/settings.jsx:1198
 msgid "Boosts"
 msgstr "Podbicia"
 
@@ -480,7 +480,7 @@ msgstr "Obserwuj"
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
-#: src/pages/settings.jsx:91
+#: src/pages/settings.jsx:90
 #: src/pages/status.jsx:1392
 msgid "Close"
 msgstr "Zamknij"
@@ -734,7 +734,7 @@ msgstr "Ostrzeżenie o treściach lub wrażliwych plikach"
 
 #: src/components/compose.jsx:1273
 #: src/components/status.jsx:96
-#: src/pages/settings.jsx:319
+#: src/pages/settings.jsx:318
 msgid "Public"
 msgstr "Publiczny"
 
@@ -747,13 +747,13 @@ msgstr "Lokalne"
 
 #: src/components/compose.jsx:1282
 #: src/components/status.jsx:98
-#: src/pages/settings.jsx:322
+#: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr "Niepubliczny"
 
 #: src/components/compose.jsx:1285
 #: src/components/status.jsx:99
-#: src/pages/settings.jsx:325
+#: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr "Tylko obserwujący"
 
@@ -1003,7 +1003,7 @@ msgid "Error loading GIFs"
 msgstr "Wystąpił błąd podczas wczytywania GIFów"
 
 #: src/components/drafts.jsx:64
-#: src/pages/settings.jsx:705
+#: src/pages/settings.jsx:702
 msgid "Unsent drafts"
 msgstr "Nieopublikowane szkice"
 
@@ -1380,7 +1380,7 @@ msgstr "Odpowiedź zaplanowana"
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
-msgstr "Odpowiedź wysłana. Sprawdź ją sobie."
+msgstr "Odpowiedź wysłana. Kliknij tutaj, żeby ją sprawdzić."
 
 #: src/components/modals.jsx:80
 msgid "Post updated. Check it out."
@@ -1417,7 +1417,7 @@ msgstr "Nadrabianie zaległości"
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1193
+#: src/pages/settings.jsx:1190
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Wzmianki"
@@ -1456,7 +1456,7 @@ msgstr "Zakładki"
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1197
+#: src/pages/settings.jsx:1194
 msgid "Likes"
 msgstr "Polubienia"
 
@@ -2536,7 +2536,7 @@ msgid "Quoting not allowed by the author."
 msgstr "Cytowanie zostało zablokowane przez autora."
 
 #: src/components/timeline.jsx:485
-#: src/pages/settings.jsx:1221
+#: src/pages/settings.jsx:1218
 msgid "New posts"
 msgstr "Nowe wpisy"
 
@@ -3410,7 +3410,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Ogłoszenie} few {Ogłoszenia} other {Ogłoszeń}}"
 
 #: src/pages/notifications.jsx:681
-#: src/pages/settings.jsx:1209
+#: src/pages/settings.jsx:1206
 msgid "Follow requests"
 msgstr "Prośby o obserwację"
 
@@ -3627,248 +3627,248 @@ msgstr "Nie znaleziono wpisów."
 msgid "Enter your search term or paste a URL above to get started."
 msgstr "Wprowadź wyszukiwane hasło lub wklej adres URL powyżej, aby rozpocząć."
 
-#: src/pages/settings.jsx:96
+#: src/pages/settings.jsx:95
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: src/pages/settings.jsx:105
+#: src/pages/settings.jsx:104
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: src/pages/settings.jsx:181
+#: src/pages/settings.jsx:180
 msgid "Light"
 msgstr "Jasny"
 
-#: src/pages/settings.jsx:192
+#: src/pages/settings.jsx:191
 msgid "Dark"
 msgstr "Ciemny"
 
-#: src/pages/settings.jsx:205
+#: src/pages/settings.jsx:204
 msgid "Auto"
 msgstr "Automatyczny"
 
-#: src/pages/settings.jsx:215
+#: src/pages/settings.jsx:214
 msgid "Text size"
 msgstr "Rozmiar tekstu"
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
-#: src/pages/settings.jsx:220
-#: src/pages/settings.jsx:245
+#: src/pages/settings.jsx:219
+#: src/pages/settings.jsx:244
 msgid "A"
 msgstr "A"
 
-#: src/pages/settings.jsx:259
+#: src/pages/settings.jsx:258
 msgid "Display language"
 msgstr "Język interfejsu"
 
-#: src/pages/settings.jsx:268
+#: src/pages/settings.jsx:267
 msgid "Volunteer translations"
 msgstr "Pomóż w tłumaczeniu"
 
-#: src/pages/settings.jsx:279
+#: src/pages/settings.jsx:278
 msgid "Posting"
 msgstr "Publikowanie wpisów"
 
-#: src/pages/settings.jsx:286
+#: src/pages/settings.jsx:285
 msgid "Default visibility"
 msgstr "Domyślna widoczność wpisów"
 
-#: src/pages/settings.jsx:287
-#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:286
+#: src/pages/settings.jsx:332
 msgid "Synced"
 msgstr "Zsynchronizowano"
 
-#: src/pages/settings.jsx:312
+#: src/pages/settings.jsx:311
 msgid "Failed to update posting privacy"
 msgstr "Nie udało się zaktualizować ustawień prywatności wpisów"
 
-#: src/pages/settings.jsx:335
+#: src/pages/settings.jsx:334
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
 msgstr "Synchronizowano z ustawieniami serwera twojej instancji. <0>Przejdź do swojej instancji ({instance}) po więcej ustawień.</0>"
 
-#: src/pages/settings.jsx:350
+#: src/pages/settings.jsx:349
 msgid "Experiments"
 msgstr "Eksperymenty"
 
-#: src/pages/settings.jsx:363
+#: src/pages/settings.jsx:362
 msgid "Auto refresh timeline posts"
 msgstr "Automatycznie odświeżaj wpisy na osi czasu"
 
-#: src/pages/settings.jsx:375
+#: src/pages/settings.jsx:374
 msgid "Boosts carousel"
 msgstr "Karuzela podbić"
 
-#: src/pages/settings.jsx:392
+#: src/pages/settings.jsx:391
 msgid "Post translation"
 msgstr "Tłumaczenie"
 
-#: src/pages/settings.jsx:403
+#: src/pages/settings.jsx:402
 msgid "Translate to "
 msgstr "Przetłumacz na "
 
-#: src/pages/settings.jsx:414
+#: src/pages/settings.jsx:413
 msgid "System language ({systemTargetLanguageText})"
 msgstr "Język systemu ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:440
+#: src/pages/settings.jsx:439
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, =0 {Ukryj przycisk tłumaczenia dla:} other {Ukryj przycisk tłumaczenia dla (#):}}"
 
-#: src/pages/settings.jsx:495
+#: src/pages/settings.jsx:494
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "Uwaga: Ta funkcja używa zewnętrznych tłumaczeń, zasilanych przez <0>{TRANSLATION_API_NAME}</0>."
 
-#: src/pages/settings.jsx:523
+#: src/pages/settings.jsx:522
 msgid "Auto inline translation"
 msgstr "Automatyczne tłumaczenie"
 
-#: src/pages/settings.jsx:527
+#: src/pages/settings.jsx:526
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "Pokazuj automatycznie przetłumaczone wpisy na osi czasu. Działa tylko w przypadku <0>krótkich</0> wpisów bez ostrzeżeń, multimediów i ankiet."
 
-#: src/pages/settings.jsx:548
+#: src/pages/settings.jsx:547
 msgid "GIF Picker for composer"
 msgstr "Selektor GIFów"
 
-#: src/pages/settings.jsx:552
+#: src/pages/settings.jsx:551
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "Uwaga: ta funkcja korzysta z zewnętrznej usługi wyszukiwania GIFów, obsługiwanej przez <0>GIPHY</0>. Klasyfikacja G (odpowiednie dla wszystkich grup wiekowych), parametry śledzące są usuwane, informacje o źródle są pomijane w zapytaniach, ale wyszukiwania i informacje o adresie IP nadal będą trafiać na ich serwery."
 
-#: src/pages/settings.jsx:581
+#: src/pages/settings.jsx:580
 msgid "Image description generator"
 msgstr "Generator opisu zdjęć"
 
-#: src/pages/settings.jsx:586
+#: src/pages/settings.jsx:585
 msgid "Only for new images while composing new posts."
 msgstr "Tylko dla nowych zdjęć podczas tworzenia nowych wpisów."
 
-#: src/pages/settings.jsx:593
+#: src/pages/settings.jsx:592
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "Uwaga: ta funkcja korzysta z zewnętrznej usługi AI, obsługiwanej przez <0>img-alt-api</0>. Może nie działać prawidłowo. Tylko dla zdjęć i tylko po angielsku."
 
-#: src/pages/settings.jsx:621
+#: src/pages/settings.jsx:618
 msgid "Server-side grouped notifications"
 msgstr "Powiadomienia pogrupowane po stronie serwera"
 
-#: src/pages/settings.jsx:625
+#: src/pages/settings.jsx:622
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr "Funkcja w fazie alfa. Potencjalnie ulepszone okno grupowania, ale podstawowa logika grupowania."
 
-#: src/pages/settings.jsx:646
+#: src/pages/settings.jsx:643
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "Import/eksport ustawień skrótów z \"chmury\""
 
-#: src/pages/settings.jsx:651
+#: src/pages/settings.jsx:648
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ Bardzo eksperymentalne.<0/>Przechowywane w notatkach Twojego własnego profilu. Notatki profilu (prywatne) są używane głównie dla innych profili i ukryte dla własnego profilu."
 
-#: src/pages/settings.jsx:662
+#: src/pages/settings.jsx:659
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "Uwaga: ta funkcja korzysta z API aktywnego serwera."
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:676
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "Tryb maskowania <0>(<1>Tekst</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:688
+#: src/pages/settings.jsx:685
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "Zastępuje tekst blokami, co jest przydatne podczas robienia zrzutów ekranu w celu zachowania prywatności."
 
-#: src/pages/settings.jsx:713
+#: src/pages/settings.jsx:710
 msgid "About"
 msgstr "Informacje"
 
-#: src/pages/settings.jsx:752
+#: src/pages/settings.jsx:749
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<0>Stworzone</0> przez <1>@cheeaun</1>"
 
-#: src/pages/settings.jsx:781
+#: src/pages/settings.jsx:778
 msgid "Sponsor"
 msgstr "Sponsoruj"
 
-#: src/pages/settings.jsx:789
+#: src/pages/settings.jsx:786
 msgid "Donate"
 msgstr "Wspieraj"
 
-#: src/pages/settings.jsx:805
+#: src/pages/settings.jsx:802
 msgid "What's new"
 msgstr "Co nowego?"
 
-#: src/pages/settings.jsx:809
+#: src/pages/settings.jsx:806
 msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:816
+#: src/pages/settings.jsx:813
 msgid "<0>Site:</0> {0}"
 msgstr "<0>Strona:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:823
+#: src/pages/settings.jsx:820
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>Wersja:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:838
+#: src/pages/settings.jsx:835
 msgid "Version string copied"
 msgstr "Numer wersji został skopiowany"
 
-#: src/pages/settings.jsx:841
+#: src/pages/settings.jsx:838
 msgid "Unable to copy version string"
 msgstr "Nie udało się skopiować numeru wersji"
 
-#: src/pages/settings.jsx:1106
-#: src/pages/settings.jsx:1111
+#: src/pages/settings.jsx:1103
+#: src/pages/settings.jsx:1108
 msgid "Failed to update subscription. Please try again."
 msgstr "Nie udało się zaktualizować subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1117
+#: src/pages/settings.jsx:1114
 msgid "Failed to remove subscription. Please try again."
 msgstr "Nie udało się usunąć subskrypcji. Spróbuj ponownie."
 
-#: src/pages/settings.jsx:1124
+#: src/pages/settings.jsx:1121
 msgid "Push Notifications (beta)"
 msgstr "Powiadomienia push (beta)"
 
-#: src/pages/settings.jsx:1146
+#: src/pages/settings.jsx:1143
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "Powiadomienia push są blokowane. Włącz je w ustawieniach przeglądarki."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1155
+#: src/pages/settings.jsx:1152
 msgid "Allow from <0>{0}</0>"
 msgstr "Zezwalaj od <0>{0}</0>"
 
-#: src/pages/settings.jsx:1164
+#: src/pages/settings.jsx:1161
 msgid "anyone"
 msgstr "każdego"
 
-#: src/pages/settings.jsx:1168
+#: src/pages/settings.jsx:1165
 msgid "people I follow"
 msgstr "obserwowanych"
 
-#: src/pages/settings.jsx:1172
+#: src/pages/settings.jsx:1169
 msgid "followers"
 msgstr "obserwujących"
 
-#: src/pages/settings.jsx:1205
+#: src/pages/settings.jsx:1202
 msgid "Follows"
 msgstr "Obserwowani"
 
-#: src/pages/settings.jsx:1213
+#: src/pages/settings.jsx:1210
 msgid "Polls"
 msgstr "Ankiety"
 
-#: src/pages/settings.jsx:1217
+#: src/pages/settings.jsx:1214
 msgid "Post edits"
 msgstr "Edycje wpisu"
 
-#: src/pages/settings.jsx:1238
+#: src/pages/settings.jsx:1235
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Pozwolenie na powiadomienia push nie zostało przyznane od ostatniego logowania. Musisz <0><1>zalogować się</1> ponownie, aby pozwolić na powiadomienia push</0>."
 
-#: src/pages/settings.jsx:1254
+#: src/pages/settings.jsx:1251
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "UWAGA: powiadomienia push działają tylko dla <0>jednego konta</0>."
 

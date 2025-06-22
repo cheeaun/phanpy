@@ -62,7 +62,8 @@ body.exp-tab-bar-v2 {
   --tmp-inset-sides: max(var(--sai-left), var(--sai-right), 16px);
   --tmp-inset-bottom: max(16px, var(--sai-bottom));
   --tmp-inset-new: calc(
-    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) / 2.4
+    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) /
+    2.4
   );
   --inset-new: var(--tmp-inset-new);
 }
@@ -95,8 +96,11 @@ body.exp-tab-bar-v2 {
     inset-inline-start: var(--inset-inline-start);
     inset-block-end: max(16px, var(--inset-new));
     max-width: calc(
-      100vw - var(--inset-inline-start) - var(--inset-inline-end) -
-        var(--compose-button-width) - 8px
+      100vw -
+      var(--inset-inline-start) -
+      var(--inset-inline-end) -
+      var(--compose-button-width) -
+      8px
     );
     border-radius: 999px;
     box-shadow:
@@ -116,9 +120,7 @@ body.exp-tab-bar-v2 {
 body.exp-tab-bar-v2 {
   #filters-page ~ #shortcuts .tab-bar:not([hidden]),
   #lists-page ~ #shortcuts .tab-bar:not([hidden]) {
-    max-width: calc(
-      100vw - var(--inset-inline-start) - var(--inset-inline-end)
-    );
+    max-width: calc(100vw - var(--inset-inline-start) - var(--inset-inline-end));
   }
 }
 #shortcuts .tab-bar ul {

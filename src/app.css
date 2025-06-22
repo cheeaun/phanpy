@@ -448,8 +448,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       var(--line-radius), var(--line-radius); */
     --curves-radius: calc(var(--curves-width) / 2);
     height: calc(var(--curves-width) - var(--line-width));
-    background-image:
-      radial-gradient(
+    background-image: radial-gradient(
         circle at bottom var(--forward),
         transparent calc(var(--curves-radius) - var(--line-width)),
         var(--comment-line-color) calc(var(--curves-radius) - var(--line-width))
@@ -480,8 +479,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     transparent
   );
   &.hero:not(:has(+ .thread), :first-child, :only-child, :last-child) {
-    background-image:
-      linear-gradient(
+    background-image: linear-gradient(
         var(--line-dir),
         transparent,
         transparent var(--indent-small-start),
@@ -557,8 +555,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   .replies-summary {
   margin-inline-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
-      (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end) +
+    (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 .timeline.contextual
@@ -567,8 +567,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   :is(.status-link, .status-focus) {
   padding-inline-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
-      (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end) +
+    (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 .timeline.contextual
@@ -577,7 +579,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   .replies-summary {
   margin-inline-start: calc(
-    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
+    var(--thread-start) +
+    var(--line-margin-end) *
+    var(--comments-level)
   );
 }
 .timeline.contextual
@@ -586,7 +590,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   :is(.status-link, .status-focus) {
   padding-inline-start: calc(
-    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
+    var(--thread-start) +
+    var(--line-margin-end) *
+    var(--comments-level)
   );
 }
 .timeline.contextual > li.descendant:not(.thread):before {
@@ -611,7 +617,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li.ancestor .replies-link {
   margin-inline-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end)
   );
 }
 .timeline.contextual
@@ -619,7 +627,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   > :is(.status-link, .status-focus)
   .replies-link {
   margin-inline-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end)
   );
 }
 .timeline.contextual > li .replies-link * {
@@ -774,7 +784,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li .replies li:not(.content li) {
   --line-start: calc(
-    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
+    var(--thread-start) +
+    var(--line-margin-end) *
+    var(--comments-level)
   );
   --line-end: calc(var(--line-start) + var(--line-width));
   background-image: linear-gradient(
@@ -796,8 +808,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 } */
 .timeline.contextual > li.thread .replies li:not(.content li) {
   --line-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
-      (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end) +
+    (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 /* .timeline.contextual > li.thread .replies .replies li {
@@ -840,8 +854,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 } */
 .timeline.contextual > li.thread .replies li:not(.content li):before {
   --line-start: calc(
-    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
-      (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) +
+    var(--avatar-margin-start) +
+    var(--avatar-margin-end) +
+    (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 /* .timeline.contextual > li.thread .replies .replies li:before {
@@ -976,9 +992,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline .show-more {
-  padding-inline-start: calc(
-    var(--line-end) + var(--line-margin-end)
-  ) !important;
+  padding-inline-start: calc(var(--line-end) + var(--line-margin-end)) !important;
   text-align: start;
   background-color: transparent !important;
   backdrop-filter: none !important;
@@ -1069,13 +1083,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(
+  background-image: radial-gradient(
       ellipse 50% 32px at bottom center,
       var(--carousel-faded-color),
       transparent
-    ),
-    linear-gradient(to top, var(--bg-color) 8px, transparent 64px);
+    ), linear-gradient(to top, var(--bg-color) 8px, transparent 64px);
   background-repeat: no-repeat;
   background-position: bottom center;
 }
@@ -2346,8 +2358,7 @@ body > .szh-menu-container {
       var(--bg-color) var(--middle-circle-radius),
       transparent var(--middle-circle-radius)
     );
-    background-image:
-      var(--middle-circle),
+    background-image: var(--middle-circle),
       conic-gradient(var(--color) var(--fill), var(--outline-color) 0);
     transform: scale(0.7);
     &:dir(rtl) {
@@ -2690,14 +2701,17 @@ ul.link-list li a .icon {
 }
 #columns {
   /* Any buttons except nav menu button on first header-side, on 1st column */
-  .deck-container:first-of-type
-    .header-grid
+  .deck-container:first-of-type .header-grid
     .header-side:first-of-type
     > *:not(.nav-menu-button),
   /* Any buttons on last header-side, on 1st column */
-  .deck-container:first-of-type .header-grid .header-side:last-of-type > *,
+    .deck-container:first-of-type .header-grid
+    .header-side:last-of-type
+    > *,
   /* Any buttons on any header-side, on columns after 1st */
-  .deck-container:not(:first-of-type) .header-grid .header-side > * {
+    .deck-container:not(:first-of-type) .header-grid
+    .header-side
+    > * {
     display: none;
   }
 }

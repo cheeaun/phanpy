@@ -108,7 +108,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2788
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
@@ -216,7 +216,7 @@ msgstr ""
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1450
 #: src/pages/catchup.jsx:2073
-#: src/pages/settings.jsx:1201
+#: src/pages/settings.jsx:1198
 msgid "Boosts"
 msgstr ""
 
@@ -450,10 +450,10 @@ msgstr ""
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2744
+#: src/components/compose.jsx:3224
+#: src/components/compose.jsx:3433
+#: src/components/compose.jsx:3663
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -475,7 +475,7 @@ msgstr ""
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
-#: src/pages/settings.jsx:91
+#: src/pages/settings.jsx:90
 #: src/pages/status.jsx:1392
 msgid "Close"
 msgstr ""
@@ -657,8 +657,8 @@ msgstr "{0, plural, one {File {1} is not supported.} other {Files {2} are not su
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr "Content warning or sensitive media"
 
 #: src/components/compose.jsx:1273
 #: src/components/status.jsx:96
-#: src/pages/settings.jsx:319
+#: src/pages/settings.jsx:318
 msgid "Public"
 msgstr ""
 
@@ -742,13 +742,13 @@ msgstr ""
 
 #: src/components/compose.jsx:1282
 #: src/components/status.jsx:98
-#: src/pages/settings.jsx:322
+#: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr ""
 
 #: src/components/compose.jsx:1285
 #: src/components/status.jsx:99
-#: src/pages/settings.jsx:325
+#: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr ""
 
@@ -779,17 +779,17 @@ msgid "Posting on <0/>"
 msgstr "Posting on <0/>"
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3282
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr ""
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr "Schedule"
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1030
 #: src/components/status.jsx:1816
@@ -798,42 +798,42 @@ msgstr "Schedule"
 msgid "Reply"
 msgstr ""
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Update"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Post"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "Downloading GIF…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Failed to download GIF"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr ""
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2558
 msgid "Uploaded"
 msgstr ""
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2571
 msgid "Image description"
 msgstr "Image description"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2572
 msgid "Video description"
 msgstr "Video description"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2573
 msgid "Audio description"
 msgstr "Audio description"
 
@@ -841,8 +841,8 @@ msgstr "Audio description"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2608
+#: src/components/compose.jsx:2628
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 
@@ -850,155 +850,155 @@ msgstr "File size too large. Uploading might encounter issues. Try reduce the fi
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2620
+#: src/components/compose.jsx:2640
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2648
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frame rate too high. Uploading might encounter issues."
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2708
+#: src/components/compose.jsx:2958
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr ""
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2725
 #: src/compose.jsx:84
 msgid "Error"
 msgstr ""
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2750
 msgid "Edit image description"
 msgstr "Edit image description"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2751
 msgid "Edit video description"
 msgstr "Edit video description"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2752
 msgid "Edit audio description"
 msgstr "Edit audio description"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2797
+#: src/components/compose.jsx:2846
 msgid "Generating description. Please wait…"
 msgstr "Generating description. Please wait…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2817
 msgid "Failed to generate description: {0}"
 msgstr "Failed to generate description: {0}"
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2818
 msgid "Failed to generate description"
 msgstr "Failed to generate description"
 
-#: src/components/compose.jsx:2828
-#: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2830
+#: src/components/compose.jsx:2836
+#: src/components/compose.jsx:2882
 msgid "Generate description…"
 msgstr ""
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2869
 msgid "Failed to generate description{0}"
 msgstr "Failed to generate description{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2884
 msgid "({0}) <0>— experimental</0>"
 msgstr ""
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2903
 msgid "Done"
 msgstr ""
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2939
 msgid "Choice {0}"
 msgstr "Choice {0}"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2986
 msgid "Multiple choices"
 msgstr ""
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2989
 msgid "Duration"
 msgstr ""
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3020
 msgid "Remove poll"
 msgstr ""
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3241
 msgid "Search accounts"
 msgstr "Search accounts"
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3295
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr ""
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3439
 msgid "Custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3459
 msgid "Search emoji"
 msgstr "Search emoji"
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3490
 msgid "Error loading custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3501
 msgid "Recently used"
 msgstr "Recently used"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3502
 msgid "Others"
 msgstr "Others"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3540
 msgid "{0} more…"
 msgstr ""
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3678
 msgid "Search GIFs"
 msgstr "Search GIFs"
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3693
 msgid "Powered by GIPHY"
 msgstr "Powered by GIPHY"
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3701
 msgid "Type to search GIFs"
 msgstr ""
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3799
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr ""
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3817
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr ""
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3834
 msgid "Error loading GIFs"
 msgstr ""
 
 #: src/components/drafts.jsx:64
-#: src/pages/settings.jsx:705
+#: src/pages/settings.jsx:702
 msgid "Unsent drafts"
 msgstr ""
 
@@ -1412,7 +1412,7 @@ msgstr ""
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1193
+#: src/pages/settings.jsx:1190
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
@@ -1451,7 +1451,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2067
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1197
+#: src/pages/settings.jsx:1194
 msgid "Likes"
 msgstr ""
 
@@ -2531,7 +2531,7 @@ msgid "Quoting not allowed by the author."
 msgstr "Quoting not allowed by the author."
 
 #: src/components/timeline.jsx:485
-#: src/pages/settings.jsx:1221
+#: src/pages/settings.jsx:1218
 msgid "New posts"
 msgstr ""
 
@@ -3405,7 +3405,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:681
-#: src/pages/settings.jsx:1209
+#: src/pages/settings.jsx:1206
 msgid "Follow requests"
 msgstr ""
 
@@ -3622,248 +3622,248 @@ msgstr ""
 msgid "Enter your search term or paste a URL above to get started."
 msgstr ""
 
-#: src/pages/settings.jsx:96
+#: src/pages/settings.jsx:95
 msgid "Settings"
 msgstr ""
 
-#: src/pages/settings.jsx:105
+#: src/pages/settings.jsx:104
 msgid "Appearance"
 msgstr ""
 
-#: src/pages/settings.jsx:181
+#: src/pages/settings.jsx:180
 msgid "Light"
 msgstr ""
 
-#: src/pages/settings.jsx:192
+#: src/pages/settings.jsx:191
 msgid "Dark"
 msgstr ""
 
-#: src/pages/settings.jsx:205
+#: src/pages/settings.jsx:204
 msgid "Auto"
 msgstr ""
 
-#: src/pages/settings.jsx:215
+#: src/pages/settings.jsx:214
 msgid "Text size"
 msgstr ""
 
 #. Preview of one character, in smallest size
 #. Preview of one character, in largest size
-#: src/pages/settings.jsx:220
-#: src/pages/settings.jsx:245
+#: src/pages/settings.jsx:219
+#: src/pages/settings.jsx:244
 msgid "A"
 msgstr ""
 
-#: src/pages/settings.jsx:259
+#: src/pages/settings.jsx:258
 msgid "Display language"
 msgstr ""
 
-#: src/pages/settings.jsx:268
+#: src/pages/settings.jsx:267
 msgid "Volunteer translations"
 msgstr "Volunteer translations"
 
-#: src/pages/settings.jsx:279
+#: src/pages/settings.jsx:278
 msgid "Posting"
 msgstr ""
 
-#: src/pages/settings.jsx:286
+#: src/pages/settings.jsx:285
 msgid "Default visibility"
 msgstr ""
 
-#: src/pages/settings.jsx:287
-#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:286
+#: src/pages/settings.jsx:332
 msgid "Synced"
 msgstr ""
 
-#: src/pages/settings.jsx:312
+#: src/pages/settings.jsx:311
 msgid "Failed to update posting privacy"
 msgstr ""
 
-#: src/pages/settings.jsx:335
+#: src/pages/settings.jsx:334
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:350
+#: src/pages/settings.jsx:349
 msgid "Experiments"
 msgstr ""
 
-#: src/pages/settings.jsx:363
+#: src/pages/settings.jsx:362
 msgid "Auto refresh timeline posts"
 msgstr ""
 
-#: src/pages/settings.jsx:375
+#: src/pages/settings.jsx:374
 msgid "Boosts carousel"
 msgstr ""
 
-#: src/pages/settings.jsx:392
+#: src/pages/settings.jsx:391
 msgid "Post translation"
 msgstr ""
 
-#: src/pages/settings.jsx:403
+#: src/pages/settings.jsx:402
 msgid "Translate to "
 msgstr "Translate to "
 
-#: src/pages/settings.jsx:414
+#: src/pages/settings.jsx:413
 msgid "System language ({systemTargetLanguageText})"
 msgstr ""
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:440
+#: src/pages/settings.jsx:439
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr ""
 
-#: src/pages/settings.jsx:495
+#: src/pages/settings.jsx:494
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 
-#: src/pages/settings.jsx:523
+#: src/pages/settings.jsx:522
 msgid "Auto inline translation"
 msgstr ""
 
-#: src/pages/settings.jsx:527
+#: src/pages/settings.jsx:526
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr ""
 
-#: src/pages/settings.jsx:548
+#: src/pages/settings.jsx:547
 msgid "GIF Picker for composer"
 msgstr ""
 
-#: src/pages/settings.jsx:552
+#: src/pages/settings.jsx:551
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr ""
 
-#: src/pages/settings.jsx:581
+#: src/pages/settings.jsx:580
 msgid "Image description generator"
 msgstr ""
 
-#: src/pages/settings.jsx:586
+#: src/pages/settings.jsx:585
 msgid "Only for new images while composing new posts."
 msgstr ""
 
-#: src/pages/settings.jsx:593
+#: src/pages/settings.jsx:592
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr ""
 
-#: src/pages/settings.jsx:621
+#: src/pages/settings.jsx:618
 msgid "Server-side grouped notifications"
 msgstr ""
 
-#: src/pages/settings.jsx:625
+#: src/pages/settings.jsx:622
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr ""
 
-#: src/pages/settings.jsx:646
+#: src/pages/settings.jsx:643
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr ""
 
-#: src/pages/settings.jsx:651
+#: src/pages/settings.jsx:648
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:662
+#: src/pages/settings.jsx:659
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr ""
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:676
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:688
+#: src/pages/settings.jsx:685
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
 
-#: src/pages/settings.jsx:713
+#: src/pages/settings.jsx:710
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:752
+#: src/pages/settings.jsx:749
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr ""
 
-#: src/pages/settings.jsx:781
+#: src/pages/settings.jsx:778
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:789
+#: src/pages/settings.jsx:786
 msgid "Donate"
 msgstr "Donate"
 
-#: src/pages/settings.jsx:805
+#: src/pages/settings.jsx:802
 msgid "What's new"
 msgstr "What's new"
 
-#: src/pages/settings.jsx:809
+#: src/pages/settings.jsx:806
 msgid "Privacy Policy"
 msgstr ""
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:816
+#: src/pages/settings.jsx:813
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:823
+#: src/pages/settings.jsx:820
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:838
+#: src/pages/settings.jsx:835
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:841
+#: src/pages/settings.jsx:838
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:1106
-#: src/pages/settings.jsx:1111
+#: src/pages/settings.jsx:1103
+#: src/pages/settings.jsx:1108
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1117
+#: src/pages/settings.jsx:1114
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1124
+#: src/pages/settings.jsx:1121
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1146
+#: src/pages/settings.jsx:1143
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1155
+#: src/pages/settings.jsx:1152
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1164
+#: src/pages/settings.jsx:1161
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1168
+#: src/pages/settings.jsx:1165
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1172
+#: src/pages/settings.jsx:1169
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1205
+#: src/pages/settings.jsx:1202
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1213
+#: src/pages/settings.jsx:1210
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1217
+#: src/pages/settings.jsx:1214
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1238
+#: src/pages/settings.jsx:1235
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1254
+#: src/pages/settings.jsx:1251
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

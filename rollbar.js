@@ -330,7 +330,6 @@ var _rollbarConfig = {
         for (
           var a = e.removeEventListener;
           a._rollbarOldRemove && a.belongsToShim;
-
         )
           a = a._rollbarOldRemove;
         var l = function (r, e, o) {
@@ -407,7 +406,6 @@ var _rollbarConfig = {
               },
               i = 0;
             (o = window._rollbarShims[i++]);
-
           )
             n || (n = o.handler),
               o.handler._swapAndProcessMessages(l, o.messages);

@@ -25,7 +25,6 @@ import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
 import { getAPIVersions, getVapidKey } from '../utils/store-utils';
-import supports from '../utils/supports';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
@@ -72,6 +71,10 @@ function Settings({ onClose }) {
   //     }
   //   })();
   // }, []);
+
+  const [expTabBarV2, setExpTabBarV2] = useState(
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
 
   return (
     <div
@@ -601,31 +604,29 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            {authenticated &&
-              supports('@mastodon/grouped-notifications') &&
-              getAPIVersions()?.mastodon >= 2 && (
-                <li class="block">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={snapStates.settings.groupedNotificationsAlpha}
-                      onChange={(e) => {
-                        states.settings.groupedNotificationsAlpha =
-                          e.target.checked;
-                      }}
-                    />{' '}
-                    <Trans>Server-side grouped notifications</Trans>
-                  </label>
-                  <div class="sub-section insignificant">
-                    <small>
-                      <Trans>
-                        Alpha-stage feature. Potentially improved grouping
-                        window but basic grouping logic.
-                      </Trans>
-                    </small>
-                  </div>
-                </li>
-              )}
+            {authenticated && getAPIVersions()?.mastodon >= 2 && (
+              <li class="block">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.groupedNotificationsAlpha}
+                    onChange={(e) => {
+                      states.settings.groupedNotificationsAlpha =
+                        e.target.checked;
+                    }}
+                  />{' '}
+                  <Trans>Server-side grouped notifications</Trans>
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    <Trans>
+                      Alpha-stage feature. Potentially improved grouping window
+                      but basic grouping logic.
+                    </Trans>
+                  </small>
+                </div>
+              </li>
+            )}
             {authenticated && (
               <li class="block">
                 <label>
@@ -925,6 +926,24 @@ function Settings({ onClose }) {
             >
               Clear all caches
             </button>
+            <p>Temporary Experiments</p>
+            <label>
+              <input
+                type="checkbox"
+                checked={expTabBarV2}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  document.body.classList.toggle('exp-tab-bar-v2', checked);
+                  setExpTabBarV2(checked);
+                  if (checked) {
+                    store.local.set('experiments-tabBarV2', true);
+                  } else {
+                    store.local.del('experiments-tabBarV2');
+                  }
+                }}
+              />{' '}
+              Tab bar v2
+            </label>
           </details>
         )}
       </main>

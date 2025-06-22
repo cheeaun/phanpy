@@ -1621,8 +1621,10 @@ function Compose({
             <label
               class={`toolbar-button ${
                 language !== prevLanguage.current ||
-                (autoDetectedLanguages?.length &&
-                  !autoDetectedLanguages.includes(language))
+                (
+                  autoDetectedLanguages?.length &&
+                    !autoDetectedLanguages.includes(language)
+                )
                   ? 'highlight'
                   : ''
               }`}

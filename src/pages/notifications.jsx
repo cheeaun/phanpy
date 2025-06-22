@@ -41,7 +41,7 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import { getCurrentInstance } from '../utils/store-utils';
+import { getAPIVersions, getCurrentInstance } from '../utils/store-utils';
 import supports from '../utils/supports';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
@@ -58,7 +58,7 @@ const scrollIntoViewOptions = {
 };
 
 const memSupportsGroupedNotifications = mem(
-  () => supports('@mastodon/grouped-notifications'),
+  () => getAPIVersions()?.mastodon >= 2,
   {
     maxAge: 1000 * 60 * 5, // 5 minutes
   },

@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import regexSupplant from 'twitter-text/dist/lib/regexSupplant.js';
 import validDomain from 'twitter-text/dist/regexp/validDomain.js';
 import validPortNumber from 'twitter-text/dist/regexp/validPortNumber.js';

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:13\n"
+"PO-Revision-Date: 2025-06-30 18:18\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -113,7 +113,7 @@ msgstr "Дописів"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2788
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
@@ -248,7 +248,7 @@ msgstr "Заблокований(-а)"
 
 #: src/components/account-info.jsx:1212
 msgid "Private note"
-msgstr ""
+msgstr "Приватна нотатка"
 
 #: src/components/account-info.jsx:1269
 msgid "Mention <0>@{username}</0>"
@@ -260,63 +260,63 @@ msgstr "Перекласти біографію"
 
 #: src/components/account-info.jsx:1292
 msgid "Edit private note"
-msgstr ""
+msgstr "Редагувати приватну нотатку"
 
 #: src/components/account-info.jsx:1292
 msgid "Add private note"
-msgstr ""
+msgstr "Додати приватну нотатку"
 
 #: src/components/account-info.jsx:1312
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "Сповіщення для постів @{username} увімкнено."
 
 #: src/components/account-info.jsx:1313
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr " Сповіщення для постів @{username} вимкнено."
 
 #: src/components/account-info.jsx:1325
 msgid "Disable notifications"
-msgstr ""
+msgstr "Вимкнути сповіщення"
 
 #: src/components/account-info.jsx:1326
 msgid "Enable notifications"
-msgstr ""
+msgstr "Увімкнути сповіщення"
 
 #: src/components/account-info.jsx:1343
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "Поширення від @{username} увімкнено."
 
 #: src/components/account-info.jsx:1344
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "Поширення від @{username} вимкнено."
 
 #: src/components/account-info.jsx:1355
 msgid "Disable boosts"
-msgstr ""
+msgstr "Вимкнути поширення"
 
 #: src/components/account-info.jsx:1355
 msgid "Enable boosts"
-msgstr ""
+msgstr "Увімкнути поширення"
 
 #: src/components/account-info.jsx:1374
 msgid "@{username} is no longer featured on your profile."
-msgstr ""
+msgstr "@{username} більше не рекомендується у вашому профілі."
 
 #: src/components/account-info.jsx:1384
 msgid "@{username} is now featured on your profile."
-msgstr ""
+msgstr "Тепер @{username} рекомендується у вашому профілі."
 
 #: src/components/account-info.jsx:1392
 msgid "Unable to unfeature @{username} on your profile."
-msgstr ""
+msgstr "Не вдалося скасувати рекомендацію @{username} у вашому профілі."
 
 #: src/components/account-info.jsx:1396
 msgid "Unable to feature @{username} on your profile."
-msgstr ""
+msgstr "Не вдалося порекомендувати @{username} у вашому профілі."
 
 #: src/components/account-info.jsx:1405
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "Не рекомендувати в профілі"
 
 #: src/components/account-info.jsx:1406
 #: src/pages/hashtag.jsx:333
@@ -325,7 +325,7 @@ msgstr "Рекомендувати в профілі"
 
 #: src/components/account-info.jsx:1415
 msgid "Show featured profiles"
-msgstr ""
+msgstr "Показати рекомендовані профілі"
 
 #: src/components/account-info.jsx:1430
 #: src/components/account-info.jsx:1440
@@ -363,7 +363,7 @@ msgstr "Поширити…"
 
 #: src/components/account-info.jsx:1540
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Розглушено @{username}"
 
 #: src/components/account-info.jsx:1552
 msgid "Unmute <0>@{username}</0>"
@@ -376,11 +376,11 @@ msgstr "Заглушити <0>@{username}</0>"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/account-info.jsx:1600
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "Заглушено @{username} на {0}"
 
 #: src/components/account-info.jsx:1612
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "Не вдалося заглушити @{username}"
 
 #: src/components/account-info.jsx:1633
 msgid "Remove <0>@{username}</0> from followers?"
@@ -388,7 +388,7 @@ msgstr "Відписати <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1653
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} видалено з підписників"
 
 #: src/components/account-info.jsx:1665
 msgid "Remove follower…"
@@ -400,19 +400,19 @@ msgstr "Заблокувати <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1700
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "Розблоковано @{username}"
 
 #: src/components/account-info.jsx:1708
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "Заблоковано @{username}"
 
 #: src/components/account-info.jsx:1716
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "Не вдалося розблокувати @{username}"
 
 #: src/components/account-info.jsx:1718
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "Не вдалося заблокувати @{username}"
 
 #: src/components/account-info.jsx:1728
 msgid "Unblock <0>@{username}</0>"
@@ -428,12 +428,12 @@ msgstr "Поскаржитися на <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1810
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Відкликати запит на підписку?"
 
 #. placeholder {0}: info.acct || info.username
 #: src/components/account-info.jsx:1811
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "Відписатися від @{0}?"
 
 #: src/components/account-info.jsx:1869
 msgid "Unfollow…"
@@ -455,10 +455,10 @@ msgstr "Підписатися"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2744
+#: src/components/compose.jsx:3224
+#: src/components/compose.jsx:3433
+#: src/components/compose.jsx:3663
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -491,11 +491,11 @@ msgstr "Перекладена біографія"
 
 #: src/components/account-info.jsx:2086
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "Не вдалося видалити зі списку."
 
 #: src/components/account-info.jsx:2087
 msgid "Unable to add to list."
-msgstr ""
+msgstr "Не вдалося додати до списку."
 
 #: src/components/account-info.jsx:2106
 #: src/pages/lists.jsx:131
@@ -519,7 +519,7 @@ msgstr "Приватна нотатка про <0>@{0}</0>"
 
 #: src/components/account-info.jsx:2210
 msgid "Unable to update private note."
-msgstr ""
+msgstr "Не вдалося оновити приватну нотатку."
 
 #: src/components/account-info.jsx:2233
 #: src/components/account-info.jsx:2531
@@ -532,15 +532,15 @@ msgstr "Зберегти і закрити"
 
 #: src/components/account-info.jsx:2355
 msgid "Unable to update profile."
-msgstr ""
+msgstr "Не вдалося оновити профіль."
 
 #: src/components/account-info.jsx:2362
 msgid "Header picture"
-msgstr ""
+msgstr "Зображення шапки"
 
 #: src/components/account-info.jsx:2414
 msgid "Profile picture"
-msgstr ""
+msgstr "Зображення профілю"
 
 #: src/components/account-info.jsx:2466
 #: src/components/list-add-edit.jsx:106
@@ -582,11 +582,11 @@ msgstr "доменне ім'я сервера"
 #. placeholder {0}: info.username
 #: src/components/account-info.jsx:2658
 msgid "Profiles featured by @{0}"
-msgstr ""
+msgstr "Профілі, рекомендовані @{0}"
 
 #: src/components/account-info.jsx:2684
 msgid "No featured profiles."
-msgstr ""
+msgstr "Немає рекомендованих профілів."
 
 #: src/components/background-service.jsx:158
 msgid "Cloak mode disabled"
@@ -619,7 +619,7 @@ msgstr "Написати"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "Заплановані пости"
 
 #: src/components/compose-button.jsx:190
 msgid "Add to thread"
@@ -662,8 +662,8 @@ msgstr "{0, plural, one {Файл {1} не підтримується.} other {�
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Ви можете прикріпити до 1 файлу.} other {Ви можете прикріпити до # файлів.}}"
 
@@ -784,17 +784,17 @@ msgid "Posting on <0/>"
 msgstr ""
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3282
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Додати"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr ""
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1030
 #: src/components/status.jsx:1816
@@ -803,42 +803,42 @@ msgstr ""
 msgid "Reply"
 msgstr "Відповісти"
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Оновити"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Опублікувати"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "Завантаження GIF…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Не вдалося завантажити GIF"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Більше…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2558
 msgid "Uploaded"
 msgstr "Вивантажено"
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2571
 msgid "Image description"
 msgstr "Опис зображення"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2572
 msgid "Video description"
 msgstr "Опис відео"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2573
 msgid "Audio description"
 msgstr "Опис аудіо"
 
@@ -846,8 +846,8 @@ msgstr "Опис аудіо"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2608
+#: src/components/compose.jsx:2628
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Розмір файлу завеликий. Можуть виникнути проблеми з вивантаженням файлу. Спробуйте зменшити його розмір з {0} до {1} або менше."
 
@@ -855,150 +855,150 @@ msgstr "Розмір файлу завеликий. Можуть виникну�
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2620
+#: src/components/compose.jsx:2640
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr ""
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2648
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Частота кадрів зависока. Можуть виникнути проблеми із вивантаженням. "
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2708
+#: src/components/compose.jsx:2958
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Вилучити"
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2725
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Помилка"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2750
 msgid "Edit image description"
 msgstr "Редагувати опис зображення"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2751
 msgid "Edit video description"
 msgstr "Редагувати опис відео"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2752
 msgid "Edit audio description"
 msgstr "Редагувати опис аудіо"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2797
+#: src/components/compose.jsx:2846
 msgid "Generating description. Please wait…"
 msgstr "Генерується опис. Будь ласка, зачекайте…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2817
 msgid "Failed to generate description: {0}"
 msgstr ""
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2818
 msgid "Failed to generate description"
 msgstr "Помилка генерації опису"
 
-#: src/components/compose.jsx:2828
-#: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2830
+#: src/components/compose.jsx:2836
+#: src/components/compose.jsx:2882
 msgid "Generate description…"
 msgstr "Згенерувати опис…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2869
 msgid "Failed to generate description{0}"
 msgstr ""
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2884
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— експериментально</0>"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2903
 msgid "Done"
 msgstr "Готово"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2939
 msgid "Choice {0}"
 msgstr ""
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2986
 msgid "Multiple choices"
 msgstr "Кілька варіантів відповідей"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2989
 msgid "Duration"
 msgstr "Тривалість"
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3020
 msgid "Remove poll"
 msgstr "Прибрати опитування"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3241
 msgid "Search accounts"
 msgstr ""
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3295
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Помилка завантаження облікових записів"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3439
 msgid "Custom emojis"
 msgstr "Користувацькі емодзі"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3459
 msgid "Search emoji"
 msgstr ""
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3490
 msgid "Error loading custom emojis"
 msgstr "Помилка завантаження емодзі"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3501
 msgid "Recently used"
 msgstr ""
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3502
 msgid "Others"
 msgstr ""
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3540
 msgid "{0} more…"
 msgstr "{0} більше…"
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3678
 msgid "Search GIFs"
 msgstr ""
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3693
 msgid "Powered by GIPHY"
 msgstr ""
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3701
 msgid "Type to search GIFs"
 msgstr "Почніть набирати для пошуку GIF-ок"
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3799
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Попередні"
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3817
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Наступні"
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3834
 msgid "Error loading GIFs"
 msgstr "Помилка завантаження GIF-ок"
 

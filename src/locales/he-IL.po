@@ -8,7 +8,7 @@ msgstr ""
 "Language: he\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-30 15:16\n"
+"PO-Revision-Date: 2025-06-30 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
@@ -25,7 +25,7 @@ msgstr "נעול"
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:143
 msgid "Posts: {0}"
-msgstr "הודעות: {0}"
+msgstr "טיוטים: {0}"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:148
@@ -171,7 +171,7 @@ msgstr "עריכת פרופיל"
 
 #: src/components/account-info.jsx:705
 msgid "In Memoriam"
-msgstr ""
+msgstr "חשבון זכרון"
 
 #: src/components/account-info.jsx:787
 #: src/components/account-info.jsx:830
@@ -227,11 +227,11 @@ msgstr "הדהודים"
 
 #: src/components/account-info.jsx:956
 msgid "Post stats unavailable."
-msgstr ""
+msgstr "הסטטיסטיקה על הטיוטים לא זמינה."
 
 #: src/components/account-info.jsx:987
 msgid "View post stats"
-msgstr "הצגת סטטיסטיקה"
+msgstr ""
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-info.jsx:1184
@@ -248,7 +248,7 @@ msgstr "חסום"
 
 #: src/components/account-info.jsx:1212
 msgid "Private note"
-msgstr ""
+msgstr "הערה לעצמי"
 
 #: src/components/account-info.jsx:1269
 msgid "Mention <0>@{username}</0>"
@@ -260,11 +260,11 @@ msgstr ""
 
 #: src/components/account-info.jsx:1292
 msgid "Edit private note"
-msgstr ""
+msgstr "עריכת ההערה לעצמי"
 
 #: src/components/account-info.jsx:1292
 msgid "Add private note"
-msgstr ""
+msgstr "הוספת הערה לעצמי"
 
 #: src/components/account-info.jsx:1312
 msgid "Notifications enabled for @{username}'s posts."
@@ -284,19 +284,19 @@ msgstr ""
 
 #: src/components/account-info.jsx:1343
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "הדהודים מ־@{username} מאופשרים כעת."
 
 #: src/components/account-info.jsx:1344
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "הדהודים מ־@{username} מכובים כעת."
 
 #: src/components/account-info.jsx:1355
 msgid "Disable boosts"
-msgstr ""
+msgstr "ביטול הדהודים"
 
 #: src/components/account-info.jsx:1355
 msgid "Enable boosts"
-msgstr ""
+msgstr "אפשור הדהודים"
 
 #: src/components/account-info.jsx:1374
 msgid "@{username} is no longer featured on your profile."
@@ -341,7 +341,7 @@ msgstr "הקישור הועתק"
 #: src/components/account-info.jsx:1493
 #: src/components/status.jsx:1261
 msgid "Unable to copy link"
-msgstr ""
+msgstr "לא ניתן להעתיק את הקישור"
 
 #: src/components/account-info.jsx:1499
 #: src/components/shortcuts-settings.jsx:1059
@@ -380,7 +380,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1612
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "לא ניתן להשתיק את @{username}"
 
 #: src/components/account-info.jsx:1633
 msgid "Remove <0>@{username}</0> from followers?"
@@ -396,35 +396,35 @@ msgstr ""
 
 #: src/components/account-info.jsx:1676
 msgid "Block <0>@{username}</0>?"
-msgstr ""
+msgstr "לחסום את <0>@{username}</0>?"
 
 #: src/components/account-info.jsx:1700
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "חסימת החשבון @{username} בוטלה"
 
 #: src/components/account-info.jsx:1708
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "החשבון @{username} נחסם"
 
 #: src/components/account-info.jsx:1716
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "לא ניתן לבטל את חסימת @{username}"
 
 #: src/components/account-info.jsx:1718
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "לא ניתן לחסום את @{username}"
 
 #: src/components/account-info.jsx:1728
 msgid "Unblock <0>@{username}</0>"
-msgstr ""
+msgstr "ביטול חסימת <0>@{username}</0>"
 
 #: src/components/account-info.jsx:1737
 msgid "Block <0>@{username}</0>…"
-msgstr ""
+msgstr "חסימת <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1754
 msgid "Report <0>@{username}</0>…"
-msgstr ""
+msgstr "דיווח על <0>@{username}</0>…"
 
 #: src/components/account-info.jsx:1810
 msgid "Withdraw follow request?"
@@ -483,7 +483,7 @@ msgstr "לעקוב"
 #: src/pages/settings.jsx:90
 #: src/pages/status.jsx:1392
 msgid "Close"
-msgstr ""
+msgstr "סגירה"
 
 #: src/components/account-info.jsx:1991
 msgid "Translated Bio"
@@ -491,16 +491,16 @@ msgstr ""
 
 #: src/components/account-info.jsx:2086
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "לא ניתן להסיר מהרשימה."
 
 #: src/components/account-info.jsx:2087
 msgid "Unable to add to list."
-msgstr ""
+msgstr "לא ניתן להוסיף לרשימה."
 
 #: src/components/account-info.jsx:2106
 #: src/pages/lists.jsx:131
 msgid "Unable to load lists."
-msgstr ""
+msgstr "לא ניתן לטעון את הרשימות."
 
 #: src/components/account-info.jsx:2110
 msgid "No lists."
@@ -515,11 +515,11 @@ msgstr "רשימה חדשה"
 #. placeholder {0}: account?.username || account?.acct
 #: src/components/account-info.jsx:2180
 msgid "Private note about <0>@{0}</0>"
-msgstr ""
+msgstr "הערה לעצמי בנוגע ל־<0>@{0}</0>"
 
 #: src/components/account-info.jsx:2210
 msgid "Unable to update private note."
-msgstr ""
+msgstr "לא ניתן לעדכן את ההערה האישית."
 
 #: src/components/account-info.jsx:2233
 #: src/components/account-info.jsx:2531
@@ -532,24 +532,24 @@ msgstr "שמירה וסגירה"
 
 #: src/components/account-info.jsx:2355
 msgid "Unable to update profile."
-msgstr ""
+msgstr "לא ניתן לעדכן את הפרופיל."
 
 #: src/components/account-info.jsx:2362
 msgid "Header picture"
-msgstr ""
+msgstr "תמונת כותרת"
 
 #: src/components/account-info.jsx:2414
 msgid "Profile picture"
-msgstr ""
+msgstr "תמונת פרופיל"
 
 #: src/components/account-info.jsx:2466
 #: src/components/list-add-edit.jsx:106
 msgid "Name"
-msgstr ""
+msgstr "שם"
 
 #: src/components/account-info.jsx:2479
 msgid "Bio"
-msgstr ""
+msgstr "אודות"
 
 #: src/components/account-info.jsx:2492
 msgid "Extra fields"
@@ -557,11 +557,11 @@ msgstr "שדות נוספים"
 
 #: src/components/account-info.jsx:2498
 msgid "Label"
-msgstr ""
+msgstr "תווית"
 
 #: src/components/account-info.jsx:2501
 msgid "Content"
-msgstr ""
+msgstr "תוכן"
 
 #: src/components/account-info.jsx:2534
 #: src/components/list-add-edit.jsx:152
@@ -573,11 +573,11 @@ msgstr "שמירה"
 
 #: src/components/account-info.jsx:2588
 msgid "username"
-msgstr ""
+msgstr "שם משתמש·ת"
 
 #: src/components/account-info.jsx:2592
 msgid "server domain name"
-msgstr ""
+msgstr "שם המתחם של השרת"
 
 #. placeholder {0}: info.username
 #: src/components/account-info.jsx:2658
@@ -590,11 +590,11 @@ msgstr ""
 
 #: src/components/background-service.jsx:158
 msgid "Cloak mode disabled"
-msgstr ""
+msgstr "מצב הסרה בוטל"
 
 #: src/components/background-service.jsx:158
 msgid "Cloak mode enabled"
-msgstr ""
+msgstr "מצב הסתרה הוחל"
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:181
@@ -607,31 +607,31 @@ msgstr ""
 #: src/pages/notifications.jsx:587
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
-msgstr ""
+msgstr "בית"
 
 #: src/components/compose-button.jsx:150
 #: src/compose.jsx:38
 msgid "Compose"
-msgstr ""
+msgstr "כתיבה"
 
 #: src/components/compose-button.jsx:177
 #: src/components/nav-menu.jsx:265
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "טיוטים מתוזמנים"
 
 #: src/components/compose-button.jsx:190
 msgid "Add to thread"
-msgstr ""
+msgstr "הוספה לשרשור"
 
 #: src/components/compose.jsx:211
 msgid "Take photo or video"
-msgstr ""
+msgstr "צילום תמונה או סרטון"
 
 #: src/components/compose.jsx:212
 msgid "Add media"
-msgstr ""
+msgstr "הוספת מדיה"
 
 #: src/components/compose.jsx:213
 msgid "Add custom emoji"
@@ -639,15 +639,15 @@ msgstr "הוספת אימוג׳י מיוחד"
 
 #: src/components/compose.jsx:214
 msgid "Add GIF"
-msgstr ""
+msgstr "הוספת גיף"
 
 #: src/components/compose.jsx:215
 msgid "Add poll"
-msgstr ""
+msgstr "הוספת סקר"
 
 #: src/components/compose.jsx:216
 msgid "Schedule post"
-msgstr ""
+msgstr "תזמון טיוט"
 
 #: src/components/compose.jsx:416
 msgid "You have unsaved changes. Discard this post?"
@@ -704,7 +704,7 @@ msgstr "בתגובה להודעה של @{0}"
 
 #: src/components/compose.jsx:1003
 msgid "Editing source post"
-msgstr ""
+msgstr "עריכת הטיוט המקורי"
 
 #: src/components/compose.jsx:1056
 msgid "Poll must have at least 2 options"
@@ -761,7 +761,7 @@ msgstr "לעוקבים בלבד"
 #: src/components/status.jsx:100
 #: src/components/status.jsx:2042
 msgid "Private mention"
-msgstr ""
+msgstr "אזכור בפרטי"
 
 #: src/components/compose.jsx:1297
 msgid "Post your reply"
@@ -769,11 +769,11 @@ msgstr ""
 
 #: src/components/compose.jsx:1299
 msgid "Edit your post"
-msgstr ""
+msgstr "עריכת הטיוט"
 
 #: src/components/compose.jsx:1300
 msgid "What are you doing?"
-msgstr ""
+msgstr "פתח·י פיך ויאירו דבריך…"
 
 #: src/components/compose.jsx:1379
 msgid "Mark media as sensitive"
@@ -1009,7 +1009,7 @@ msgstr "טיוטות שלא נשלחו"
 
 #: src/components/drafts.jsx:69
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "נראה שיש לך טיוטות שלא נשלחו. נמשיך מהנקודה שבה הפסקנו."
 
 #: src/components/drafts.jsx:103
 msgid "Delete this draft?"
@@ -1033,7 +1033,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:172
 msgid "Delete all drafts?"
-msgstr ""
+msgstr "למחוק את כל הטיוטות?"
 
 #: src/components/drafts.jsx:190
 msgid "Error deleting drafts! Please try again."
@@ -1041,11 +1041,11 @@ msgstr "תקלה במחיקת הטיוטות! אנא נסו שנית."
 
 #: src/components/drafts.jsx:202
 msgid "Delete all…"
-msgstr ""
+msgstr "מחיקת כל הטיוטות…"
 
 #: src/components/drafts.jsx:210
 msgid "No drafts found."
-msgstr ""
+msgstr "לא נמצאו טיוטות."
 
 #: src/components/drafts.jsx:247
 #: src/pages/catchup.jsx:1932
@@ -1144,12 +1144,12 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:83
 msgid "Load new posts"
-msgstr "טעינת הודעות חדשות"
+msgstr "טעינת טיוטים חדשים"
 
 #: src/components/keyboard-shortcuts-help.jsx:87
 #: src/pages/catchup.jsx:1679
 msgid "Open post details"
-msgstr "פתיחת פרטי ההודעה"
+msgstr "פתיחת פרטי הטיוט"
 
 #: src/components/keyboard-shortcuts-help.jsx:89
 msgid "<0>Enter</0> or <1>o</1>"
@@ -1161,7 +1161,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:105
 msgid "Close post or dialogs"
-msgstr ""
+msgstr "סגירת טיוט או תיבות דו־שיח"
 
 #: src/components/keyboard-shortcuts-help.jsx:107
 msgid "<0>Esc</0> or <1>Backspace</1>"
@@ -1185,11 +1185,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:129
 msgid "Compose new post"
-msgstr "כתיבת הודעה חדשה"
+msgstr "כתיבת טיוט חדש"
 
 #: src/components/keyboard-shortcuts-help.jsx:133
 msgid "Compose new post (new window)"
-msgstr ""
+msgstr "כתיבת טיוט חדש (בחלון חדש)"
 
 #: src/components/keyboard-shortcuts-help.jsx:136
 msgid "<0>Shift</0> + <1>c</1>"
@@ -1197,7 +1197,7 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:142
 msgid "Send post"
-msgstr ""
+msgstr "שליחת טיוט"
 
 #: src/components/keyboard-shortcuts-help.jsx:144
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
@@ -1262,11 +1262,11 @@ msgstr "עריכת רשימה"
 
 #: src/components/list-add-edit.jsx:97
 msgid "Unable to edit list."
-msgstr ""
+msgstr "לא ניתן לערוך את הרשימה."
 
 #: src/components/list-add-edit.jsx:98
 msgid "Unable to create list."
-msgstr ""
+msgstr "לא ניתן ליצור את הרשימה."
 
 #: src/components/list-add-edit.jsx:126
 msgid "Show replies to list members"
@@ -1295,7 +1295,7 @@ msgstr "למחוק את הרשימה?"
 
 #: src/components/list-add-edit.jsx:178
 msgid "Unable to delete list."
-msgstr ""
+msgstr "לא ניתן למחוק את הרשימה."
 
 #: src/components/list-exclusive-badge.jsx:14
 #: src/pages/list.jsx:179
@@ -1368,11 +1368,11 @@ msgstr ""
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
-msgstr ""
+msgstr "הטיוט תוזמן"
 
 #: src/components/modals.jsx:76
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "הטיוט פורסם. איך יצא?"
 
 #: src/components/modals.jsx:78
 msgid "Reply scheduled"
@@ -1380,11 +1380,11 @@ msgstr ""
 
 #: src/components/modals.jsx:79
 msgid "Reply posted. Check it out."
-msgstr ""
+msgstr "התגובה פורסמה. איך יצא?"
 
 #: src/components/modals.jsx:80
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "הטיוט עודכן. איך יצא?"
 
 #: src/components/nav-menu.jsx:123
 msgid "Menu"
@@ -1553,7 +1553,7 @@ msgstr ""
 
 #: src/components/notification.jsx:71
 msgid "{account} reacted to your post with {emojiObject}"
-msgstr ""
+msgstr "החשבון {account} הגיב לטיוט שלך ב־{emojiObject}"
 
 #: src/components/notification.jsx:78
 msgid "{account} published a post."
@@ -1670,7 +1670,7 @@ msgstr ""
 #: src/components/status.jsx:1115
 #: src/components/status.jsx:1125
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "הודהד/חובב על ידי…"
 
 #: src/components/notification.jsx:452
 msgid "Liked by…"
@@ -1678,7 +1678,7 @@ msgstr ""
 
 #: src/components/notification.jsx:453
 msgid "Boosted by…"
-msgstr ""
+msgstr "הודהד על ידי…"
 
 #: src/components/notification.jsx:454
 msgid "Followed by…"
@@ -1833,11 +1833,11 @@ msgstr ""
 
 #: src/components/report-modal.jsx:154
 msgid "Unable to report post"
-msgstr ""
+msgstr "לא ניתן לדווח על הטיוט"
 
 #: src/components/report-modal.jsx:155
 msgid "Unable to report profile"
-msgstr ""
+msgstr "לא ניתן לדווח על הפרופיל"
 
 #: src/components/report-modal.jsx:163
 msgid "What's the issue with this post?"
@@ -1865,7 +1865,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:278
 msgid "Unable to mute {username}"
-msgstr ""
+msgstr "לא ניתן להשתיק את {username}"
 
 #: src/components/report-modal.jsx:283
 msgid "Send Report <0>+ Mute profile</0>"
@@ -1877,7 +1877,7 @@ msgstr ""
 
 #: src/components/report-modal.jsx:297
 msgid "Unable to block {username}"
-msgstr ""
+msgstr "לא ניתן לחסום את {username}"
 
 #: src/components/report-modal.jsx:302
 msgid "Send Report <0>+ Block profile</0>"
@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:851
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "לא ניתן להוריד את קיצורי הדרך"
 
 #: src/components/shortcuts-settings.jsx:854
 msgid "Download shortcuts from instance server"
@@ -2154,7 +2154,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1036
 msgid "Unable to copy shortcuts"
-msgstr ""
+msgstr "לא ניתן להעתיק את קיצורי הדרך"
 
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Shortcut settings copied"
@@ -2162,7 +2162,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1053
 msgid "Unable to copy shortcut settings"
-msgstr ""
+msgstr "לא ניתן להעתיק את הגדרות קיצורי הדרך"
 
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
@@ -2178,7 +2178,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:1134
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "לא ניתן לשמור את קיצורי הדרך"
 
 #: src/components/shortcuts-settings.jsx:1137
 msgid "Sync to instance server"
@@ -2260,13 +2260,13 @@ msgstr ""
 
 #: src/components/status.jsx:1079
 msgid "Boost…"
-msgstr ""
+msgstr "הדהוד…"
 
 #: src/components/status.jsx:1091
 #: src/components/status.jsx:1826
 #: src/components/status.jsx:2566
 msgid "Unlike"
-msgstr ""
+msgstr "ביטול חיבוב"
 
 #: src/components/status.jsx:1092
 #: src/components/status.jsx:1826
@@ -2274,7 +2274,7 @@ msgstr ""
 #: src/components/status.jsx:2566
 #: src/components/status.jsx:2567
 msgid "Like"
-msgstr ""
+msgstr "חיבוב"
 
 #: src/components/status.jsx:1101
 #: src/components/status.jsx:2578
@@ -2287,7 +2287,7 @@ msgstr ""
 
 #: src/components/status.jsx:1187
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "לא ניתן להעתיק את הטקסט של הטיוט"
 
 #: src/components/status.jsx:1193
 msgid "Copy post text"
@@ -2321,11 +2321,11 @@ msgstr ""
 
 #: src/components/status.jsx:1322
 msgid "Unable to unmute conversation"
-msgstr ""
+msgstr "לא ניתן לבטל את השתקת השיחה"
 
 #: src/components/status.jsx:1323
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "לא ניתן להשתיק את השיחה"
 
 #: src/components/status.jsx:1332
 msgid "Unmute conversation"
@@ -2345,11 +2345,11 @@ msgstr ""
 
 #: src/components/status.jsx:1361
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "לא ניתן לבטל את נעיצת הטיוט"
 
 #: src/components/status.jsx:1361
 msgid "Unable to pin post"
-msgstr ""
+msgstr "לא ניתן לנעוץ את הטיוט"
 
 #: src/components/status.jsx:1370
 msgid "Unpin from profile"
@@ -2369,7 +2369,7 @@ msgstr ""
 
 #: src/components/status.jsx:1425
 msgid "Unable to delete post"
-msgstr ""
+msgstr "לא ניתן למחוק את הטיוט"
 
 #: src/components/status.jsx:1453
 msgid "Report post…"
@@ -2379,12 +2379,12 @@ msgstr ""
 #: src/components/status.jsx:1863
 #: src/components/status.jsx:2567
 msgid "Liked"
-msgstr ""
+msgstr "חובב"
 
 #: src/components/status.jsx:1860
 #: src/components/status.jsx:2554
 msgid "Boosted"
-msgstr ""
+msgstr "הודהד"
 
 #: src/components/status.jsx:1870
 #: src/components/status.jsx:2579
@@ -2467,7 +2467,7 @@ msgstr ""
 
 #: src/components/status.jsx:3371
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "לא ניתן להעתיק את קוד ה־HTML"
 
 #: src/components/status.jsx:3383
 msgid "Media attachments:"
@@ -2663,11 +2663,11 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:351
 msgid "Showing posts without boosts"
-msgstr ""
+msgstr "מציג טיוטים, בלי הדהודים"
 
 #: src/pages/account-statuses.jsx:356
 msgid "- Boosts"
-msgstr ""
+msgstr "- הדהודים"
 
 #: src/pages/account-statuses.jsx:362
 msgid "Showing posts with media"
@@ -2691,12 +2691,12 @@ msgstr ""
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
-msgstr ""
+msgstr "לא ניתן לטעון טיוטים"
 
 #: src/pages/account-statuses.jsx:550
 #: src/pages/account-statuses.jsx:580
 msgid "Unable to fetch account info"
-msgstr ""
+msgstr "לא ניתן לטעון את המידע אודות החשבון"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:557
@@ -2763,7 +2763,7 @@ msgstr ""
 
 #: src/pages/bookmarks.jsx:29
 msgid "Unable to load bookmarks."
-msgstr ""
+msgstr "לא ניתן לטעון את הסימניות."
 
 #: src/pages/catchup.jsx:54
 msgid "last 1 hour"
@@ -3023,7 +3023,7 @@ msgstr ""
 
 #: src/pages/favourites.jsx:29
 msgid "Unable to load likes."
-msgstr ""
+msgstr "לא ניתן לטעון חיבובים."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
@@ -3057,7 +3057,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:167
 msgid "Unable to load filters."
-msgstr ""
+msgstr "לא ניתן לטעון את המסננים."
 
 #: src/pages/filters.jsx:171
 msgid "No filters yet."
@@ -3073,11 +3073,11 @@ msgstr ""
 
 #: src/pages/filters.jsx:346
 msgid "Unable to edit filter"
-msgstr ""
+msgstr "לא ניתן לערוך את המסנן"
 
 #: src/pages/filters.jsx:347
 msgid "Unable to create filter"
-msgstr ""
+msgstr "לא ניתן ליצור את המסנן"
 
 #: src/pages/filters.jsx:356
 msgid "Title"
@@ -3142,7 +3142,7 @@ msgstr ""
 
 #: src/pages/filters.jsx:592
 msgid "Unable to delete filter."
-msgstr ""
+msgstr "לא ניתן למחוק את המסנן."
 
 #: src/pages/filters.jsx:625
 msgid "Expired"
@@ -3163,7 +3163,7 @@ msgstr ""
 
 #: src/pages/followed-hashtags.jsx:86
 msgid "Unable to load followed hashtags."
-msgstr ""
+msgstr "לא ניתן לטעון את רשימת התגיות הנעקבות."
 
 #: src/pages/followed-hashtags.jsx:90
 msgid "No hashtags followed yet."
@@ -3176,7 +3176,7 @@ msgstr ""
 #: src/pages/following.jsx:148
 #: src/pages/list.jsx:109
 msgid "Unable to load posts."
-msgstr ""
+msgstr "לא ניתן לטעון טיוטים."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -3200,7 +3200,7 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:186
 msgid "Unable to load posts with this tag"
-msgstr ""
+msgstr "לא ניתן לטעון טיוטים עם התגית הזו"
 
 #: src/pages/hashtag.jsx:212
 msgid "Unfollow #{hashtag}?"
@@ -3285,7 +3285,7 @@ msgstr ""
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
-msgstr ""
+msgstr "לא ניתן לטעון את ההתרעות."
 
 #: src/pages/home.jsx:245
 msgid "<0>New</0> <1>Follow Requests</1>"
@@ -3361,11 +3361,11 @@ msgstr ""
 
 #: src/pages/mentions.jsx:21
 msgid "Private mentions"
-msgstr ""
+msgstr "אזכורים בפרטי"
 
 #: src/pages/mentions.jsx:166
 msgid "Private"
-msgstr ""
+msgstr "פרטי"
 
 #: src/pages/mentions.jsx:176
 msgid "No one mentioned you :("
@@ -3373,7 +3373,7 @@ msgstr ""
 
 #: src/pages/mentions.jsx:177
 msgid "Unable to load mentions."
-msgstr ""
+msgstr "לא ניתן לטעון אזכורים."
 
 #: src/pages/notifications.jsx:108
 msgid "You don't follow"
@@ -3442,7 +3442,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:894
 msgid "Unable to load notifications"
-msgstr ""
+msgstr "לא ניתן לטעון את ההתרעות"
 
 #: src/pages/notifications.jsx:973
 msgid "Notifications settings updated"
@@ -3482,7 +3482,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1233
 msgid "Unable to accept notification request"
-msgstr ""
+msgstr "לא ניתן לקבל את בקשת ההתרעות"
 
 #: src/pages/notifications.jsx:1238
 msgid "Allow"
@@ -3495,7 +3495,7 @@ msgstr ""
 
 #: src/pages/notifications.jsx:1263
 msgid "Unable to dismiss notification request"
-msgstr ""
+msgstr "לא ניתן לבטל את בקשת ההתרעות"
 
 #: src/pages/notifications.jsx:1268
 msgid "Dismiss"
@@ -3697,7 +3697,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:374
 msgid "Boosts carousel"
-msgstr ""
+msgstr "סבסבת הדהודים"
 
 #: src/pages/settings.jsx:391
 msgid "Post translation"
@@ -3816,7 +3816,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:838
 msgid "Unable to copy version string"
-msgstr ""
+msgstr "לא ניתן להעתיק את מזהה הגרסה"
 
 #: src/pages/settings.jsx:1103
 #: src/pages/settings.jsx:1108
@@ -3896,7 +3896,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1068
 msgid "Unable to load replies."
-msgstr ""
+msgstr "לא ניתן לטעון תגובות."
 
 #: src/pages/status.jsx:1180
 msgid "Back"
@@ -3926,11 +3926,11 @@ msgstr ""
 
 #: src/pages/status.jsx:1368
 msgid "Experimental"
-msgstr ""
+msgstr "נסיוני"
 
 #: src/pages/status.jsx:1377
 msgid "Unable to switch"
-msgstr ""
+msgstr "לא ניתן לעבור"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1384
@@ -3943,7 +3943,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1445
 msgid "Unable to load post"
-msgstr ""
+msgstr "לא ניתן לטעות את הטיוט"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
@@ -4017,11 +4017,11 @@ msgstr ""
 
 #: src/pages/welcome.jsx:130
 msgid "Boosts Carousel"
-msgstr ""
+msgstr "סבסבת הדהודים"
 
 #: src/pages/welcome.jsx:133
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
-msgstr ""
+msgstr "הפרדה חזותית בין טיוטים מקוריים וטיוטים שהודהדו."
 
 #: src/pages/welcome.jsx:142
 msgid "Screenshot of nested comments thread"
@@ -4073,7 +4073,7 @@ msgstr ""
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."
-msgstr ""
+msgstr "נראה שהדפדפן שלך חוסם חלונות קופצים."
 
 #: src/utils/show-compose.js:16
 msgid "A draft post is currently minimized. Post or discard it before creating a new one."

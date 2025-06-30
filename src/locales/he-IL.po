@@ -8,7 +8,7 @@ msgstr ""
 "Language: he\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:13\n"
+"PO-Revision-Date: 2025-06-30 15:16\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/components/account-block.jsx:137
 msgid "Locked"
-msgstr ""
+msgstr "נעול"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:143
@@ -30,7 +30,7 @@ msgstr "הודעות: {0}"
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/account-block.jsx:148
 msgid "Last posted: {0}"
-msgstr ""
+msgstr "טיוט אחרון: {0}"
 
 #: src/components/account-block.jsx:163
 #: src/components/account-info.jsx:710
@@ -69,7 +69,7 @@ msgstr ""
 #: src/components/account-block.jsx:209
 #: src/components/account-info.jsx:758
 msgid "Verified"
-msgstr ""
+msgstr "מאומת"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
@@ -84,7 +84,7 @@ msgstr "לתמיד"
 
 #: src/components/account-info.jsx:403
 msgid "Unable to load account."
-msgstr ""
+msgstr "לא ניתן לטעון את החשבון."
 
 #: src/components/account-info.jsx:418
 msgid "Go to account page"
@@ -113,7 +113,7 @@ msgstr "הודעות"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2788
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
@@ -139,17 +139,17 @@ msgstr ""
 #: src/components/account-info.jsx:619
 #: src/components/account-info.jsx:1464
 msgid "Handle copied"
-msgstr ""
+msgstr "המזהה הועתק"
 
 #: src/components/account-info.jsx:622
 #: src/components/account-info.jsx:1467
 msgid "Unable to copy handle"
-msgstr ""
+msgstr "לא ניתן להעתיק את המזהה"
 
 #: src/components/account-info.jsx:628
 #: src/components/account-info.jsx:1473
 msgid "Copy handle"
-msgstr ""
+msgstr "העתקת המזהה"
 
 #: src/components/account-info.jsx:634
 msgid "Go to original profile page"
@@ -455,10 +455,10 @@ msgstr "לעקוב"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2744
+#: src/components/compose.jsx:3224
+#: src/components/compose.jsx:3433
+#: src/components/compose.jsx:3663
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -662,8 +662,8 @@ msgstr ""
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
@@ -784,17 +784,17 @@ msgid "Posting on <0/>"
 msgstr ""
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3282
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "הוספה"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr ""
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1030
 #: src/components/status.jsx:1816
@@ -803,42 +803,42 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr ""
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr ""
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr ""
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr ""
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "עוד…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2558
 msgid "Uploaded"
 msgstr ""
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2571
 msgid "Image description"
 msgstr "תיאור תמונה"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2572
 msgid "Video description"
 msgstr "תיאור סרטון"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2573
 msgid "Audio description"
 msgstr "תיאור שמע"
 
@@ -846,8 +846,8 @@ msgstr "תיאור שמע"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2608
+#: src/components/compose.jsx:2628
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr ""
 
@@ -855,150 +855,150 @@ msgstr ""
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2620
+#: src/components/compose.jsx:2640
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr ""
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2648
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr ""
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2708
+#: src/components/compose.jsx:2958
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr ""
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2725
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "תקלה"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2750
 msgid "Edit image description"
 msgstr ""
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2751
 msgid "Edit video description"
 msgstr ""
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2752
 msgid "Edit audio description"
 msgstr ""
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2797
+#: src/components/compose.jsx:2846
 msgid "Generating description. Please wait…"
 msgstr ""
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2817
 msgid "Failed to generate description: {0}"
 msgstr ""
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2818
 msgid "Failed to generate description"
 msgstr ""
 
-#: src/components/compose.jsx:2828
-#: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2830
+#: src/components/compose.jsx:2836
+#: src/components/compose.jsx:2882
 msgid "Generate description…"
 msgstr ""
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2869
 msgid "Failed to generate description{0}"
 msgstr ""
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2884
 msgid "({0}) <0>— experimental</0>"
 msgstr ""
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2903
 msgid "Done"
 msgstr ""
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2939
 msgid "Choice {0}"
 msgstr ""
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2986
 msgid "Multiple choices"
 msgstr "בחירה מרובה"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2989
 msgid "Duration"
 msgstr ""
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3020
 msgid "Remove poll"
 msgstr "הסרת סקר"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3241
 msgid "Search accounts"
 msgstr ""
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3295
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "תקלה בטעינת חשבונות"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3439
 msgid "Custom emojis"
 msgstr "אימוג׳י מיוחדים"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3459
 msgid "Search emoji"
 msgstr ""
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3490
 msgid "Error loading custom emojis"
 msgstr "תקלה בטעינת אימוג׳י מיוחדים"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3501
 msgid "Recently used"
 msgstr ""
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3502
 msgid "Others"
 msgstr ""
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3540
 msgid "{0} more…"
 msgstr ""
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3678
 msgid "Search GIFs"
 msgstr ""
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3693
 msgid "Powered by GIPHY"
 msgstr ""
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3701
 msgid "Type to search GIFs"
 msgstr ""
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3799
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr ""
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3817
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr ""
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3834
 msgid "Error loading GIFs"
 msgstr "תקלה בטעינת גיפים"
 

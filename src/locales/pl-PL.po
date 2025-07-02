@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-02 01:13\n"
+"PO-Revision-Date: 2025-07-02 02:29\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/components/account-block.jsx:137
 msgid "Locked"
-msgstr "Prywatne"
+msgstr "Zablokowane"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #: src/components/account-block.jsx:143
@@ -134,12 +134,12 @@ msgstr "Więcej"
 
 #: src/components/account-info.jsx:474
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr "<0>{displayName}</0> informuje, że ma teraz nowe konto:"
+msgstr "<0>{displayName}</0> używa teraz nowego konta:"
 
 #: src/components/account-info.jsx:619
 #: src/components/account-info.jsx:1464
 msgid "Handle copied"
-msgstr "Identyfikator skopiowany"
+msgstr "Skopiowano identyfikator"
 
 #: src/components/account-info.jsx:622
 #: src/components/account-info.jsx:1467
@@ -183,7 +183,7 @@ msgstr "Ta osoba nie udostępnia tych informacji."
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:885
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr "wpisy: {0}, komentarze: {1}, podbicia: {2}"
+msgstr "wpisy: {0}, odpowiedzi: {1}, podbicia: {2}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.daysSinceLastPost
@@ -194,7 +194,7 @@ msgstr "wpisy: {0}, komentarze: {1}, podbicia: {2}"
 #. placeholder {6}: postingStats.daysSinceLastPost
 #: src/components/account-info.jsx:901
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
-msgstr "{0, plural, one {{1, plural, one {Ostatni wpis w ciągu minionych 24 godzin} few {Ostatni wpis w ciągu minionych {2} dni} many {Ostatni wpis w ciągu minionych {2} dni} other {Ostatni wpis w ciągu minionych {2} dni}}} few {{3, plural, one {Ostatni {4} wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}} many {{3, plural, one {Ostatni {4} wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}} other {{3, plural, one {Ostatni {4} wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}}}"
+msgstr "{0, plural, one {{1, plural, one {Ostatni wpis w ciągu minionych 24 godzin} few {Ostatni wpis w ciągu minionych {2} dni} many {Ostatni wpis w ciągu minionych {2} dni} other {Ostatni wpis w ciągu minionych {2} dni}}} few {{3, plural, one {Ostatni {4} wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}} many {{3, plural, one {Ostatni {4} wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}} other {{3, plural, one {Ostatni wpis w ciągu minionych 24 godzin} few {Ostatnie {5} wpisy w ciągu minionych {6} dni} many {Ostatnie {5} wpisów w ciągu minionych {6} dni} other {Ostatnie {5} wpisów w ciągu minionych {6} dni}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
@@ -248,7 +248,7 @@ msgstr "Zablokowano"
 
 #: src/components/account-info.jsx:1212
 msgid "Private note"
-msgstr "Notatka"
+msgstr "Prywatna notatka"
 
 #: src/components/account-info.jsx:1269
 msgid "Mention <0>@{username}</0>"
@@ -260,11 +260,11 @@ msgstr "Przetłumacz biogram"
 
 #: src/components/account-info.jsx:1292
 msgid "Edit private note"
-msgstr "Edytuj notatkę"
+msgstr "Edytuj prywatną notatkę"
 
 #: src/components/account-info.jsx:1292
 msgid "Add private note"
-msgstr "Dodaj notatkę"
+msgstr "Dodaj prywatną notatkę"
 
 #: src/components/account-info.jsx:1312
 msgid "Notifications enabled for @{username}'s posts."
@@ -1594,7 +1594,7 @@ msgstr "Zakończyła się ankieta, w której został oddany twój głos."
 
 #: src/components/notification.jsx:197
 msgid "A post you interacted with has been edited."
-msgstr "Wpis, na który zareagowano, został zedytowany."
+msgstr "Wpis został wyedytowany już po twojej interakcji z nim."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1700,7 +1700,7 @@ msgstr "Więcej →"
 
 #: src/components/poll.jsx:113
 msgid "Voted"
-msgstr "Zagłosowano"
+msgstr "Twój głos został oddany"
 
 #: src/components/poll.jsx:119
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1943,7 +1943,7 @@ msgstr "Opcjonalnie, np. mastodon.social"
 
 #: src/components/shortcuts-settings.jsx:93
 msgid "Search term"
-msgstr "Szukaj"
+msgstr "Wyszukiwane hasło"
 
 #: src/components/shortcuts-settings.jsx:96
 msgid "Optional, unless for multi-column mode"
@@ -2109,7 +2109,7 @@ msgstr "Dodać do skrótów?"
 
 #: src/components/shortcuts-settings.jsx:938
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr "Tylko nieistniejące skróty zostaną dodane."
+msgstr "Tylko brakujące skróty zostaną dodane."
 
 #: src/components/shortcuts-settings.jsx:960
 msgid "No new shortcuts to import"
@@ -2604,7 +2604,7 @@ msgstr "Odpowiedź do @{0}"
 
 #: src/compose.jsx:63
 msgid "You may close this page now."
-msgstr "Możesz teraz zamknąć tę stronę."
+msgstr "Możesz już zamknąć tę stronę."
 
 #: src/compose.jsx:71
 msgid "Close window"
@@ -2905,11 +2905,11 @@ msgstr "Usuwanie nadrabiania zaległości {0}"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1076
 msgid "Catch-up {0} removed"
-msgstr "Usunięto catch-up {0}"
+msgstr "Usunięto nadrabianie zaległości {0}"
 
 #: src/pages/catchup.jsx:1090
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
-msgstr "Uwaga: tylko 3 zostaną zapisane. Pozostałe będą usuwane automatycznie."
+msgstr "Uwaga: tylko maksymalnie 3 zostaną zapisane. Pozostałe będą usunięte automatycznie."
 
 #: src/pages/catchup.jsx:1105
 msgid "Fetching posts…"
@@ -3369,7 +3369,7 @@ msgstr "Prywatne"
 
 #: src/pages/mentions.jsx:176
 msgid "No one mentioned you :("
-msgstr "Brak wzmianek o Tobie :("
+msgstr "Brak wzmianek o tobie :("
 
 #: src/pages/mentions.jsx:177
 msgid "Unable to load mentions."
@@ -3527,7 +3527,7 @@ msgstr "Nikt tu jeszcze niczego nie opublikował."
 
 #: src/pages/public.jsx:125
 msgid "Switch to Federated"
-msgstr "Przełącz na Globalną"
+msgstr "Przełącz na Globalną (sfederowaną)"
 
 #: src/pages/public.jsx:132
 msgid "Switch to Local"
@@ -3685,7 +3685,7 @@ msgstr "Nie udało się zaktualizować ustawień prywatności wpisów"
 
 #: src/pages/settings.jsx:334
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
-msgstr "Synchronizowano z ustawieniami serwera twojej instancji. <0>Przejdź do swojej instancji ({instance}) po więcej ustawień.</0>"
+msgstr "Synchronizowano z ustawieniami serwera twojej instancji. <0>Przejdź do swojej instancji ({instance}), aby uzyskać więcej ustawień.</0>"
 
 #: src/pages/settings.jsx:349
 msgid "Experiments"
@@ -3701,7 +3701,7 @@ msgstr "Karuzela podbić"
 
 #: src/pages/settings.jsx:391
 msgid "Post translation"
-msgstr "Tłumaczenie"
+msgstr "Tłumaczenie wpisu"
 
 #: src/pages/settings.jsx:402
 msgid "Translate to "
@@ -3718,7 +3718,7 @@ msgstr "{0, plural, =0 {Ukryj przycisk tłumaczenia dla:} other {Ukryj przycisk 
 
 #: src/pages/settings.jsx:494
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr "Uwaga: Ta funkcja używa zewnętrznych tłumaczeń, zasilanych przez <0>{TRANSLATION_API_NAME}</0>."
+msgstr "Uwaga: Ta funkcja używa zewnętrznych tłumaczeń, wykorzystując <0>{TRANSLATION_API_NAME}</0>."
 
 #: src/pages/settings.jsx:522
 msgid "Auto inline translation"
@@ -3790,7 +3790,7 @@ msgstr "Sponsoruj"
 
 #: src/pages/settings.jsx:786
 msgid "Donate"
-msgstr "Wspieraj"
+msgstr "Wesprzyj"
 
 #: src/pages/settings.jsx:802
 msgid "What's new"
@@ -3866,7 +3866,7 @@ msgstr "Edycje wpisu"
 
 #: src/pages/settings.jsx:1235
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
-msgstr "Zgoda na powiadomienia push nie została udzielona od ostatniego logowania. Musisz <0><1>zalogować się</1> ponownie, aby pozwolić na powiadomienia push</0>."
+msgstr "Zgoda na powiadomienia push nie została udzielona od ostatniego logowania. Musisz <0><1>zalogować się</1> ponownie, aby zezwolić na powiadomienia push</0>."
 
 #: src/pages/settings.jsx:1251
 msgid "NOTE: Push notifications only work for <0>one account</0>."

@@ -2324,7 +2324,11 @@ const Textarea = forwardRef((props, ref) => {
           // Get line before cursor position after pressing 'Enter'
           const { key, target } = e;
           const hasTextExpander = hasTextExpanderRef.current;
-          if (key === 'Enter' && !(e.ctrlKey || e.metaKey || hasTextExpander)) {
+          if (
+            key === 'Enter' &&
+            !(e.ctrlKey || e.metaKey || hasTextExpander) &&
+            !e.isComposing
+          ) {
             try {
               const { value, selectionStart } = target;
               const textBeforeCursor = value.slice(0, selectionStart);

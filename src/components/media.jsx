@@ -290,10 +290,12 @@ function Media({
         } else {
           e.preventDefault();
           el.style.viewTransitionName = mediaVTN;
-          document.startViewTransition(() => {
-            el.style.viewTransitionName = '';
-            location.hash = `#${to}`;
-          });
+          setTimeout(() => {
+            document.startViewTransition(() => {
+              el.style.viewTransitionName = '';
+              location.hash = `#${to}`;
+            });
+          }, 1);
         }
       } else {
         onClick?.(e);

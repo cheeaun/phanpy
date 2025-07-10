@@ -280,6 +280,10 @@
   .icon {
     color: var(--text-insignificant-color);
   }
+
+  &.status-card-ghost {
+    border-style: dashed;
+  }
 }
 
 @keyframes skeleton-breathe {

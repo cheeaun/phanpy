@@ -45,6 +45,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     showCard,
     size,
     filters,
+    quoteFilters,
     userPreferences,
   } = toggles;
 
@@ -312,6 +313,7 @@ const INITIAL_STATE = {
   quoteNestingLevel: '0',
   size: 'medium',
   filters: [false, false, false], // hide, blur, warn
+  quoteFilters: [false, false, false], // hide, blur, warn for quotes
   mediaPreference: 'default',
   expandWarnings: false,
   contextType: 'none', // Default context type
@@ -398,6 +400,7 @@ export default function Sandbox() {
       quoteNestingLevel: toggleState.quoteNestingLevel,
       size: toggleState.size,
       filters: toggleState.filters,
+      quoteFilters: toggleState.quoteFilters,
     },
   });
 
@@ -531,7 +534,7 @@ export default function Sandbox() {
           delete states.statuses[quoteId];
 
           // Create the actual status object that will be retrieved by QuoteStatuses
-          states.statuses[quoteId] = {
+          const quoteStatus = {
             id: quoteId,
             content: `<p>This is quote post ${i + 1}${i % 2 === 0 ? '' : ' with some extra text'}</p>`,
             account: {
@@ -585,6 +588,32 @@ export default function Sandbox() {
                   }
                 : null,
           };
+
+          // Add filtering to quote posts if enabled
+          if (
+            toggleState.quoteFilters &&
+            toggleState.quoteFilters.some((f) => f)
+          ) {
+            quoteStatus.filtered = toggleState.quoteFilters
+              .map((enabled, filterIndex) => {
+                if (!enabled) return null;
+                const filterTypes = ['hide', 'blur', 'warn'];
+                return {
+                  filter: {
+                    id: `quote-filter-${i}-${filterIndex}`,
+                    title: `Quote ${filterTypes[filterIndex]} filter`,
+                    context: ['home', 'public', 'thread', 'account'],
+                    filterAction: filterTypes[filterIndex],
+                  },
+                  keywordMatches: [],
+                  statusMatches: [],
+                };
+              })
+              .filter(Boolean);
+          }
+
+          // Assign the quote status to the states
+          states.statuses[quoteId] = quoteStatus;
 
           // If nesting level > 0, add nested quotes to each quote post
           if (nestingLevel > 0 && i % 2 === 0) {
@@ -670,6 +699,7 @@ export default function Sandbox() {
     toggleState.showQuotes,
     toggleState.quotesCount,
     toggleState.quoteNestingLevel,
+    toggleState.quoteFilters,
   ]);
 
   // Handler for filter checkboxes
@@ -677,6 +707,13 @@ export default function Sandbox() {
     const newFilters = [...toggleState.filters];
     newFilters[index] = !newFilters[index];
     updateToggles({ filters: newFilters });
+  };
+
+  // Handler for quote filter checkboxes
+  const handleQuoteFilterChange = (index) => {
+    const newQuoteFilters = [...toggleState.quoteFilters];
+    newQuoteFilters[index] = !newQuoteFilters[index];
+    updateToggles({ quoteFilters: newQuoteFilters });
   };
 
   // Function to check if the current state is different from the initial state
@@ -1213,6 +1250,41 @@ export default function Sandbox() {
                           }}
                         />
                       </label>
+                    </li>
+                    <li>
+                      <b>Quote Filters</b>
+                      <ul>
+                        <li>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={toggleState.quoteFilters[0]}
+                              onChange={() => handleQuoteFilterChange(0)}
+                            />
+                            <span>Hide</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={toggleState.quoteFilters[1]}
+                              onChange={() => handleQuoteFilterChange(1)}
+                            />
+                            <span>Blur</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={toggleState.quoteFilters[2]}
+                              onChange={() => handleQuoteFilterChange(2)}
+                            />
+                            <span>Warn</span>
+                          </label>
+                        </li>
+                      </ul>
                     </li>
                   </ul>
                 )}

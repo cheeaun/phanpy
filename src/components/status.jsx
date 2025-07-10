@@ -378,6 +378,7 @@ function Status({
   showActionsBar,
   showReplyParent,
   mediaFirst,
+  showFilteredHidden,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
@@ -499,6 +500,16 @@ function Status({
     isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') {
+    if (showFilteredHidden) {
+      return (
+        <div class="status-card-unfulfilled status-card-ghost">
+          <Icon icon="quote" />
+          <i>
+            <Trans>Post hidden by your filters</Trans>
+          </i>
+        </div>
+      );
+    }
     return null;
   }
 
@@ -3940,6 +3951,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             size="s"
             quoted={level + 1}
             enableCommentHint
+            showFilteredHidden
           />
         </Link>
       </Parent>

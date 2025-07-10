@@ -16,7 +16,8 @@
     "readme:i18n-volunteers": "node scripts/update-i18n-volunteers-readme.js",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:headed": "playwright test --headed"
+    "test:headed": "playwright test --headed",
+    "formatting-check": "npx biome check"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "~0.6.1",

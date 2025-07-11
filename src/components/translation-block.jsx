@@ -60,7 +60,9 @@ function _translangTranslate(text, source, target) {
     } else {
       // GET
       fetchPromise = fetch(
-        `https://${instance}/api/v1/translate?sl=${encodeURIComponent(source)}&tl=${encodeURIComponent(target)}&text=${encodeURIComponent(text)}`,
+        `https://${instance}/api/v1/translate?sl=${encodeURIComponent(
+          source,
+        )}&tl=${encodeURIComponent(target)}&text=${encodeURIComponent(text)}`,
         {
           priority: 'low',
           referrerPolicy: 'no-referrer',

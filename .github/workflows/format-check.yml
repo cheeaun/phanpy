@@ -13,4 +13,4 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npx biome check
+      - run: npm run formatting-check

@@ -35,10 +35,9 @@
     padding: 16px;
     background-color: var(--bg-color);
     /* checkered background */
-    background-image: linear-gradient(
-        var(--bg-faded-color) 2px,
-        transparent 2px
-      ), linear-gradient(90deg, var(--bg-faded-color) 2px, transparent 2px),
+    background-image:
+      linear-gradient(var(--bg-faded-color) 2px, transparent 2px),
+      linear-gradient(90deg, var(--bg-faded-color) 2px, transparent 2px),
       linear-gradient(var(--bg-faded-color) 1px, transparent 1px),
       linear-gradient(90deg, var(--bg-faded-color) 1px, transparent 1px);
     background-size:

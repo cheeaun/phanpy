@@ -417,11 +417,9 @@
   width: 80px;
   height: 80px;
   /* checkerboard background */
-  background-image: linear-gradient(
-      45deg,
-      var(--img-bg-color) 25%,
-      transparent 25%
-    ), linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
+  background-image:
+    linear-gradient(45deg, var(--img-bg-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
     linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
   background-size: 10px 10px;
@@ -687,11 +685,9 @@
   overflow: hidden;
   box-shadow: 0 2px 16px var(--img-bg-color);
   /* checkerboard background */
-  background-image: linear-gradient(
-      45deg,
-      var(--img-bg-color) 25%,
-      transparent 25%
-    ), linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
+  background-image:
+    linear-gradient(45deg, var(--img-bg-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
     linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
   background-size: 20px 20px;

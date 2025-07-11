@@ -42,7 +42,7 @@ export const translate = async (text, source, target) => {
       source = results[0].detectedLanguage;
       detectedSourceLanguage = source;
     } catch (e) {
-      console.error(e);
+      console.warn(e);
       return {
         error: e,
       };

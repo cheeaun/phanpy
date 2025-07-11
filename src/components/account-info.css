@@ -845,11 +845,9 @@
       overflow: hidden;
       border: 1px solid var(--outline-color);
       /* checkerboard background */
-      background-image: linear-gradient(
-          45deg,
-          var(--img-bg-color) 25%,
-          transparent 25%
-        ), linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
+      background-image:
+        linear-gradient(45deg, var(--img-bg-color) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
         linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
         linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
       background-size: 10px 10px;

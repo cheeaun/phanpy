@@ -93,7 +93,11 @@ function Login() {
       setUIState('loading');
       try {
         let credentialApplication = getCredentialApplication(instanceURL);
-        if (!credentialApplication) {
+        if (
+          !credentialApplication ||
+          !credentialApplication.client_id ||
+          !credentialApplication.client_secret
+        ) {
           credentialApplication = await registerApplication({
             instanceURL,
           });

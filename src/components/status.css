@@ -973,6 +973,11 @@
   > :is(div, blockquote) > :is(ul, ol) li > :is(ul, ol) {
     padding-inline-start: 1.5em;
   }
+
+  /* Hide inline quote (RE: [LINK]) when there's a native quote */
+  &:has(~ .quote-post-native) .quote-inline {
+    display: none;
+  }
 }
 .status .content ul {
   list-style-type: disc;

@@ -311,6 +311,7 @@ const INITIAL_STATE = {
   showQuotes: false,
   quotesCount: '1',
   quoteNestingLevel: '0',
+  quoteState: 'accepted', // State for all quote posts
   size: 'medium',
   filters: [false, false, false], // hide, blur, warn
   quoteFilters: [false, false, false], // hide, blur, warn for quotes
@@ -398,6 +399,7 @@ export default function Sandbox() {
       showQuotes: toggleState.showQuotes,
       quotesCount: toggleState.quotesCount,
       quoteNestingLevel: toggleState.quoteNestingLevel,
+      quoteState: toggleState.quoteState,
       size: toggleState.size,
       filters: toggleState.filters,
       quoteFilters: toggleState.quoteFilters,
@@ -528,162 +530,173 @@ export default function Sandbox() {
             id: quoteId,
             instance: DEFAULT_INSTANCE,
             url: `https://example.social/s/${quoteId}`, // Include URL to ensure uniqueness check works
+            state:
+              toggleState.quoteState === 'accepted'
+                ? undefined
+                : toggleState.quoteState, // Only set state if not accepted
           };
 
           // First, delete any existing status with this ID to avoid duplicates
-          delete states.statuses[quoteId];
+          const quoteStatusKey = statusKey(quoteId, DEFAULT_INSTANCE);
+          delete states.statuses[quoteStatusKey];
 
-          // Create the actual status object that will be retrieved by QuoteStatuses
-          const quoteStatus = {
-            id: quoteId,
-            content: `<p>This is quote post ${i + 1}${i % 2 === 0 ? '' : ' with some extra text'}</p>`,
-            account: {
-              id: `quote-account-${i}`,
-              username: `quote${i}`,
-              name: `Quote User ${i}`,
-              avatar: '/logo-192.png',
-              acct: `quote${i}@example.social`,
-              url: `https://example.social/@quote${i}`,
-            },
-            visibility: 'public',
-            createdAt: new Date(Date.now() - i * 3600000).toISOString(), // Each post 1 hour older
-            emojis: [],
-            // First quote post should be plain (no media, no poll)
-            mediaAttachments:
-              i > 0 && i % 2 === 0
-                ? [
-                    {
-                      // Only non-first posts can have media (every 3rd post after the 1st)
-                      id: `quote-media-${i}`,
-                      type: 'image',
-                      url: `https://picsum.photos/seed/quote-${i}/600/400`,
-                      previewUrl: `https://picsum.photos/seed/quote-${i}/300/200`,
-                      meta: {
-                        original: { width: 600, height: 400 },
-                        small: { width: 300, height: 200 },
-                      },
-                    },
-                  ]
-                : [],
-            poll:
-              i > 0 && i % 3 === 0
-                ? {
-                    // Only non-first posts can have polls (every 4th post after the 1st)
-                    id: `quote-poll-${i}`,
-                    options: [
-                      {
-                        title: 'Option A',
-                        votesCount: Math.floor(Math.random() * 50),
-                      },
-                      {
-                        title: 'Option B',
-                        votesCount: Math.floor(Math.random() * 50),
-                      },
-                    ],
-                    expiresAt: new Date(
-                      Date.now() + 24 * 60 * 60 * 1000,
-                    ).toISOString(),
-                    multiple: false,
-                    votesCount: Math.floor(Math.random() * 100),
-                  }
-                : null,
-          };
-
-          // Add filtering to quote posts if enabled
-          if (
-            toggleState.quoteFilters &&
-            toggleState.quoteFilters.some((f) => f)
-          ) {
-            quoteStatus.filtered = toggleState.quoteFilters
-              .map((enabled, filterIndex) => {
-                if (!enabled) return null;
-                const filterTypes = ['hide', 'blur', 'warn'];
-                return {
-                  filter: {
-                    id: `quote-filter-${i}-${filterIndex}`,
-                    title: `Quote ${filterTypes[filterIndex]} filter`,
-                    context: ['home', 'public', 'thread', 'account'],
-                    filterAction: filterTypes[filterIndex],
-                  },
-                  keywordMatches: [],
-                  statusMatches: [],
-                };
-              })
-              .filter(Boolean);
-          }
-
-          // Assign the quote status to the states
-          states.statuses[quoteId] = quoteStatus;
-
-          // If nesting level > 0, add nested quotes to each quote post
-          if (nestingLevel > 0 && i % 2 === 0) {
-            // Add nested quotes to every other quote - use stable ID
-            const nestedQuoteId = `nested-quote-${i}-12345`;
-
-            // Add the nested quote post to states.statuses
-            states.statuses[nestedQuoteId] = {
-              id: nestedQuoteId,
-              content: `<p>This is a nested quote inside quote ${i + 1}</p>`,
+          // Create the actual status object for all quote states
+          // This allows filtering logic to run even for non-accepted states
+          {
+            // Create the actual status object that will be retrieved by QuoteStatuses
+            const quoteStatus = {
+              id: quoteId,
+              content: `<p>This is quote post ${i + 1}${i % 2 === 0 ? '' : ' with some extra text'}</p>`,
               account: {
-                id: `nested-account-${i}`,
-                username: `nested${i}`,
-                name: `Nested User ${i}`,
+                id: `quote-account-${i}`,
+                username: `quote${i}`,
+                name: `Quote User ${i}`,
                 avatar: '/logo-192.png',
-                acct: `nested${i}@example.social`,
-                url: `https://example.social/@nested${i}`,
+                acct: `quote${i}@example.social`,
+                url: `https://example.social/@quote${i}`,
               },
               visibility: 'public',
-              createdAt: new Date(Date.now() - (i + 1) * 3600000).toISOString(),
+              createdAt: new Date(Date.now() - i * 3600000).toISOString(), // Each post 1 hour older
               emojis: [],
-              mediaAttachments: [], // No media in nested quotes for simplicity
+              // First quote post should be plain (no media, no poll)
+              mediaAttachments:
+                i > 0 && i % 2 === 0
+                  ? [
+                      {
+                        // Only non-first posts can have media (every 3rd post after the 1st)
+                        id: `quote-media-${i}`,
+                        type: 'image',
+                        url: `https://picsum.photos/seed/quote-${i}/600/400`,
+                        previewUrl: `https://picsum.photos/seed/quote-${i}/300/200`,
+                        meta: {
+                          original: { width: 600, height: 400 },
+                          small: { width: 300, height: 200 },
+                        },
+                      },
+                    ]
+                  : [],
+              poll:
+                i > 0 && i % 3 === 0
+                  ? {
+                      // Only non-first posts can have polls (every 4th post after the 1st)
+                      id: `quote-poll-${i}`,
+                      options: [
+                        {
+                          title: 'Option A',
+                          votesCount: Math.floor(Math.random() * 50),
+                        },
+                        {
+                          title: 'Option B',
+                          votesCount: Math.floor(Math.random() * 50),
+                        },
+                      ],
+                      expiresAt: new Date(
+                        Date.now() + 24 * 60 * 60 * 1000,
+                      ).toISOString(),
+                      multiple: false,
+                      votesCount: Math.floor(Math.random() * 100),
+                    }
+                  : null,
             };
 
-            // Create reference object for nested quote - critical for proper rendering
-            const nestedQuoteRef = {
-              id: nestedQuoteId,
-              instance: DEFAULT_INSTANCE,
-              url: `https://example.social/s/${nestedQuoteId}`,
-            };
+            // Add filtering to quote posts if enabled
+            if (
+              toggleState.quoteFilters &&
+              toggleState.quoteFilters.some((f) => f)
+            ) {
+              quoteStatus.filtered = toggleState.quoteFilters
+                .map((enabled, filterIndex) => {
+                  if (!enabled) return null;
+                  const filterTypes = ['hide', 'blur', 'warn'];
+                  return {
+                    filter: {
+                      id: `quote-filter-${i}-${filterIndex}`,
+                      title: `Quote ${filterTypes[filterIndex]} filter`,
+                      context: ['home', 'public', 'thread', 'account'],
+                      filterAction: filterTypes[filterIndex],
+                    },
+                    keywordMatches: [],
+                    statusMatches: [],
+                  };
+                })
+                .filter(Boolean);
+            }
 
-            // Add another level of nesting if specified
-            if (nestingLevel > 1 && i === 0) {
-              // Only add deepest nesting to first quote
-              const deepNestedId = `deep-nested-${i}-12345`;
+            // Assign the quote status to the states using the correct key format
+            states.statuses[quoteStatusKey] = quoteStatus;
 
-              states.statuses[deepNestedId] = {
-                id: deepNestedId,
-                content: `<p>This is a deeply nested quote (level 2)</p>`,
+            // If nesting level > 0, add nested quotes to each quote post
+            if (nestingLevel > 0 && i % 2 === 0) {
+              // Add nested quotes to every other quote - use stable ID
+              const nestedQuoteId = `nested-quote-${i}-12345`;
+
+              // Add the nested quote post to states.statuses
+              states.statuses[nestedQuoteId] = {
+                id: nestedQuoteId,
+                content: `<p>This is a nested quote inside quote ${i + 1}</p>`,
                 account: {
-                  id: `deep-account-${i}`,
-                  username: `deep${i}`,
-                  name: `Deep User ${i}`,
+                  id: `nested-account-${i}`,
+                  username: `nested${i}`,
+                  name: `Nested User ${i}`,
                   avatar: '/logo-192.png',
-                  acct: `deep${i}@example.social`,
-                  url: `https://example.social/@deep${i}`,
+                  acct: `nested${i}@example.social`,
+                  url: `https://example.social/@nested${i}`,
                 },
                 visibility: 'public',
                 createdAt: new Date(
-                  Date.now() - (i + 2) * 3600000,
+                  Date.now() - (i + 1) * 3600000,
                 ).toISOString(),
                 emojis: [],
+                mediaAttachments: [], // No media in nested quotes for simplicity
               };
 
-              // Create deep nested reference
-              const deepNestedRef = {
-                id: deepNestedId,
+              // Create reference object for nested quote - critical for proper rendering
+              const nestedQuoteRef = {
+                id: nestedQuoteId,
                 instance: DEFAULT_INSTANCE,
-                url: `https://example.social/s/${deepNestedId}`,
+                url: `https://example.social/s/${nestedQuoteId}`,
               };
 
-              // Important: Use the proper key format for the nested quote
-              const nestedKey = statusKey(nestedQuoteId, DEFAULT_INSTANCE);
-              states.statusQuotes[nestedKey] = [deepNestedRef];
-            }
+              // Add another level of nesting if specified
+              if (nestingLevel > 1 && i === 0) {
+                // Only add deepest nesting to first quote
+                const deepNestedId = `deep-nested-${i}-12345`;
 
-            // Add nested quote to the quote's quotes using the proper key format
-            const quoteKey = statusKey(quoteId, DEFAULT_INSTANCE);
-            states.statusQuotes[quoteKey] = [nestedQuoteRef];
-          }
+                states.statuses[deepNestedId] = {
+                  id: deepNestedId,
+                  content: `<p>This is a deeply nested quote (level 2)</p>`,
+                  account: {
+                    id: `deep-account-${i}`,
+                    username: `deep${i}`,
+                    name: `Deep User ${i}`,
+                    avatar: '/logo-192.png',
+                    acct: `deep${i}@example.social`,
+                    url: `https://example.social/@deep${i}`,
+                  },
+                  visibility: 'public',
+                  createdAt: new Date(
+                    Date.now() - (i + 2) * 3600000,
+                  ).toISOString(),
+                  emojis: [],
+                };
+
+                // Create deep nested reference
+                const deepNestedRef = {
+                  id: deepNestedId,
+                  instance: DEFAULT_INSTANCE,
+                  url: `https://example.social/s/${deepNestedId}`,
+                };
+
+                // Important: Use the proper key format for the nested quote
+                const nestedKey = statusKey(nestedQuoteId, DEFAULT_INSTANCE);
+                states.statusQuotes[nestedKey] = [deepNestedRef];
+              }
+
+              // Add nested quote to the quote's quotes using the proper key format
+              const quoteKey = statusKey(quoteId, DEFAULT_INSTANCE);
+              states.statusQuotes[quoteKey] = [nestedQuoteRef];
+            }
+          } // Close the quote status creation block
 
           return quoteRef;
         });
@@ -699,6 +712,7 @@ export default function Sandbox() {
     toggleState.showQuotes,
     toggleState.quotesCount,
     toggleState.quoteNestingLevel,
+    toggleState.quoteState,
     toggleState.quoteFilters,
   ]);
 
@@ -1250,6 +1264,98 @@ export default function Sandbox() {
                           }}
                         />
                       </label>
+                    </li>
+
+                    <li>
+                      <span>Quote state</span>
+                      <ul>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="accepted"
+                              checked={toggleState.quoteState === 'accepted'}
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Accepted</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="deleted"
+                              checked={toggleState.quoteState === 'deleted'}
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Deleted</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="unauthorized"
+                              checked={
+                                toggleState.quoteState === 'unauthorized'
+                              }
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Unauthorized</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="pending"
+                              checked={toggleState.quoteState === 'pending'}
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Pending</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="rejected"
+                              checked={toggleState.quoteState === 'rejected'}
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Rejected</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="quoteState"
+                              value="revoked"
+                              checked={toggleState.quoteState === 'revoked'}
+                              onChange={(e) => {
+                                updateToggles({ quoteState: e.target.value });
+                              }}
+                            />
+                            <span>Revoked</span>
+                          </label>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       <b>Quote Filters</b>

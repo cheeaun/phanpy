@@ -378,7 +378,6 @@ function Status({
   showActionsBar,
   showReplyParent,
   mediaFirst,
-  showFilteredHidden,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
@@ -500,16 +499,6 @@ function Status({
     isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') {
-    if (showFilteredHidden) {
-      return (
-        <div class="status-card-unfulfilled status-card-ghost">
-          <Icon icon="quote" />
-          <i>
-            <Trans>Post hidden by your filters</Trans>
-          </i>
-        </div>
-      );
-    }
     return null;
   }
 
@@ -3886,6 +3875,22 @@ function FilteredStatus({
   );
 }
 
+const handledUnfulfilledStates = [
+  'deleted',
+  'unauthorized',
+  'pending',
+  'rejected',
+  'revoked',
+];
+const unfulfilledText = {
+  filterHidden: msg`Post hidden by your filters`,
+  deleted: msg`Post removed by author.`,
+  unauthorized: msg`You’re not authorized to view this post.`,
+  pending: msg`Post pending author approval.`,
+  rejected: msg`Quoting not allowed by the author.`,
+  revoked: msg`Quoting not allowed by the author.`,
+};
+
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (!id || !instance) return;
   const { _ } = useLingui();
@@ -3899,43 +3904,43 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (!uniqueQuotes?.length) return;
   if (level > 2) return;
 
+  const filterContext = useContext(FilterContext);
+  const currentAccount = getCurrentAccID();
+
   return uniqueQuotes.map((q) => {
-    if (q.state === 'deleted')
+    let unfulfilledState;
+
+    const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+    if (quoteStatus) {
+      const isSelf =
+        currentAccount && currentAccount === quoteStatus.account?.id;
+      const filterInfo =
+        !isSelf && isFiltered(quoteStatus.filtered, filterContext);
+
+      if (filterInfo?.action === 'hide') {
+        unfulfilledState = 'filterHidden';
+      }
+    }
+
+    if (!unfulfilledState) {
+      unfulfilledState = handledUnfulfilledStates.find(
+        (state) => q.state === state,
+      );
+    }
+
+    if (unfulfilledState) {
       return (
-        <div class="status-card-unfulfilled">
+        <div
+          class={`status-card-unfulfilled ${
+            unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
+          }`}
+        >
           <Icon icon="quote" />
-          <i>
-            <Trans>Post removed by author.</Trans>
-          </i>
+          <i>{_(unfulfilledText[unfulfilledState])}</i>
         </div>
       );
-    if (q.state === 'unauthorized')
-      return (
-        <div class="status-card-unfulfilled">
-          <Icon icon="quote" />
-          <i>
-            <Trans>You’re not authorized to view this post.</Trans>
-          </i>
-        </div>
-      );
-    if (q.state === 'pending')
-      return (
-        <div class="status-card-unfulfilled">
-          <Icon icon="quote" />
-          <i>
-            <Trans>Post pending author approval.</Trans>
-          </i>
-        </div>
-      );
-    if (q.state === 'rejected' || q.state === 'revoked')
-      return (
-        <div class="status-card-unfulfilled">
-          <Icon icon="quote" />
-          <i>
-            <Trans>Quoting not allowed by the author.</Trans>
-          </i>
-        </div>
-      );
+    }
+
     const Parent = q.native ? Fragment : LazyShazam;
     return (
       <Parent id={q.instance + q.id} key={q.instance + q.id}>
@@ -3951,7 +3956,6 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             size="s"
             quoted={level + 1}
             enableCommentHint
-            showFilteredHidden
           />
         </Link>
       </Parent>

@@ -282,7 +282,9 @@
   }
 
   &.status-card-ghost {
-    border-style: dashed;
+    color: var(--text-insignificant-color);
+    border: var(--hairline-width) dashed var(--text-insignificant-color);
+    box-shadow: none;
   }
 }
 

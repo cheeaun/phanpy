@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:14\n"
+"PO-Revision-Date: 2025-07-11 04:12\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -113,7 +113,7 @@ msgstr "Publicações"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2792
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1836
@@ -455,10 +455,10 @@ msgstr "Seguir"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:3228
+#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3667
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -467,7 +467,7 @@ msgstr "Seguir"
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
-#: src/components/report-modal.jsx:75
+#: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
@@ -662,8 +662,8 @@ msgstr "{0, plural, one {O arquivo {1} não é suportado.} other {Os arquivos {2
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural,one {Você só pode anexar até 1 arquivo.} other {Você só pode anexar até # arquivos.}}"
 
@@ -784,17 +784,17 @@ msgid "Posting on <0/>"
 msgstr "Publicando em <0/>"
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3286
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Adicionar"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr "Agendar"
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1030
 #: src/components/status.jsx:1816
@@ -803,42 +803,42 @@ msgstr "Agendar"
 msgid "Reply"
 msgstr "Responder"
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Atualizar"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Publicar"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "Baixando GIF…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Houve um erro ao baixar GIF"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Mais…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2562
 msgid "Uploaded"
 msgstr "Enviado"
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2575
 msgid "Image description"
 msgstr "Descrição da imagem"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2576
 msgid "Video description"
 msgstr "Descrição do vídeo"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2577
 msgid "Audio description"
 msgstr "Descrição do áudio"
 
@@ -846,8 +846,8 @@ msgstr "Descrição do áudio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2612
+#: src/components/compose.jsx:2632
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "O arquivo é muito grande. Enviá-lo pode enfrentar problemas. Reduza o tamanho do arquivo de {0} a {1} ou menor."
 
@@ -855,150 +855,150 @@ msgstr "O arquivo é muito grande. Enviá-lo pode enfrentar problemas. Reduza o 
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2624
+#: src/components/compose.jsx:2644
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "A dimensão é muito grande. Enviá-lo pode enfrentar problemas. Reduza a dimensão de {0}×{1}px a {2}×{3}px."
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2652
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "A taxa de quadros está muito alta. Enviá-lo pode enfrentar problemas."
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2712
+#: src/components/compose.jsx:2962
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Excluir"
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2729
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Erro"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2754
 msgid "Edit image description"
 msgstr "Editar descrição da imagem"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2755
 msgid "Edit video description"
 msgstr "Editar descrição do vídeo"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2756
 msgid "Edit audio description"
 msgstr "Editar descrição do áudio"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2801
+#: src/components/compose.jsx:2850
 msgid "Generating description. Please wait…"
 msgstr "Gerando descrição. Por favor, espere…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2821
 msgid "Failed to generate description: {0}"
 msgstr "Houve um erro ao gerar descrição: {0}"
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2822
 msgid "Failed to generate description"
 msgstr "Houve um erro ao gerar descrição"
 
-#: src/components/compose.jsx:2828
 #: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2840
+#: src/components/compose.jsx:2886
 msgid "Generate description…"
 msgstr "Gerar descrição…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2873
 msgid "Failed to generate description{0}"
 msgstr "Houve um erro ao gerar descrição{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2888
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— experimental</0>"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2907
 msgid "Done"
 msgstr "Concluído"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2943
 msgid "Choice {0}"
 msgstr "Opção {0}"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2990
 msgid "Multiple choices"
 msgstr "Várias opções"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2993
 msgid "Duration"
 msgstr "Duração"
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3024
 msgid "Remove poll"
 msgstr "Excluir enquete"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3245
 msgid "Search accounts"
 msgstr "Procurar contas"
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3299
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Erro ao carregar contas"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3443
 msgid "Custom emojis"
 msgstr "Emojis personalizados"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3463
 msgid "Search emoji"
 msgstr "Buscar emoji"
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3494
 msgid "Error loading custom emojis"
 msgstr "Erro ao carregar emojis personalizados"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3505
 msgid "Recently used"
 msgstr "Usado recentemente"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3506
 msgid "Others"
 msgstr "Outros"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3544
 msgid "{0} more…"
 msgstr "{0} mais…"
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3682
 msgid "Search GIFs"
 msgstr "Procurar GIFs"
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3697
 msgid "Powered by GIPHY"
 msgstr "Desenvolvido por GIPHY"
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3705
 msgid "Type to search GIFs"
 msgstr "Escreva para pesquisar GIFs"
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3803
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3821
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Seguinte"
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3838
 msgid "Error loading GIFs"
 msgstr "Erro ao carregar GIFs"
 
@@ -1311,7 +1311,7 @@ msgstr "Descrição da mídia"
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1144
 #: src/components/status.jsx:1153
-#: src/components/translation-block.jsx:237
+#: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr "Traduzir"
 
@@ -1362,7 +1362,7 @@ msgstr "Filtrado: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Filtrado"
 
-#: src/components/media.jsx:469
+#: src/components/media.jsx:471
 msgid "Open file"
 msgstr "Abrir arquivo"
 
@@ -1496,7 +1496,7 @@ msgstr "Contas…"
 
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
-#: src/pages/login.jsx:195
+#: src/pages/login.jsx:199
 #: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
@@ -1776,111 +1776,111 @@ msgstr "{0}m"
 msgid "{0}h"
 msgstr "{0}h"
 
-#: src/components/report-modal.jsx:29
+#: src/components/report-modal.jsx:30
 msgid "Spam"
 msgstr "Spam"
 
-#: src/components/report-modal.jsx:30
+#: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
 msgstr "Links falsos, interações falsas, ou respostas repetitivas"
 
-#: src/components/report-modal.jsx:33
+#: src/components/report-modal.jsx:34
 msgid "Illegal"
 msgstr "Ilegal"
 
-#: src/components/report-modal.jsx:34
+#: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
 msgstr "Viola a lei do servidor ou da sua região"
 
-#: src/components/report-modal.jsx:37
+#: src/components/report-modal.jsx:38
 msgid "Server rule violation"
 msgstr "Regra de violação do servidor"
 
-#: src/components/report-modal.jsx:38
+#: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
 msgstr "Quebra regras específicas do servidor"
 
-#: src/components/report-modal.jsx:39
+#: src/components/report-modal.jsx:40
 msgid "Violation"
 msgstr "Violação"
 
-#: src/components/report-modal.jsx:42
+#: src/components/report-modal.jsx:43
 msgid "Other"
 msgstr "Outro"
 
-#: src/components/report-modal.jsx:43
+#: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
 msgstr "Nenhuma das listadas"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report Post"
 msgstr "Denunciar publicação"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report @{username}"
 msgstr "Denunciar @{username}"
 
-#: src/components/report-modal.jsx:104
+#: src/components/report-modal.jsx:147
 msgid "Pending review"
 msgstr "Revisão pendente"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Post reported"
 msgstr "Publicação denunciada"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Profile reported"
 msgstr "Perfil denunciado"
 
-#: src/components/report-modal.jsx:154
+#: src/components/report-modal.jsx:197
 msgid "Unable to report post"
 msgstr "Impossível denunciar publicação"
 
-#: src/components/report-modal.jsx:155
+#: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
 msgstr "Impossível denunciar perfil"
 
-#: src/components/report-modal.jsx:163
+#: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
 msgstr "O que tem de errado com a publicação?"
 
-#: src/components/report-modal.jsx:164
+#: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
 msgstr "O que tem de errado com o perfil?"
 
-#: src/components/report-modal.jsx:233
+#: src/components/report-modal.jsx:276
 msgid "Additional info"
 msgstr "Informações adicionais"
 
-#: src/components/report-modal.jsx:256
+#: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
 msgstr "Encaminhar para <0>{domain}</0>"
 
-#: src/components/report-modal.jsx:266
+#: src/components/report-modal.jsx:309
 msgid "Send Report"
 msgstr "Enviar relatório"
 
-#: src/components/report-modal.jsx:275
+#: src/components/report-modal.jsx:318
 msgid "Muted {username}"
 msgstr "Silenciou {username}"
 
-#: src/components/report-modal.jsx:278
+#: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
 msgstr "Impossível silenciar {username}"
 
-#: src/components/report-modal.jsx:283
+#: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr "Enviar relatório <0>+ Silenciar perfil</0>"
 
-#: src/components/report-modal.jsx:294
+#: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
 msgstr "{username} bloqueado"
 
-#: src/components/report-modal.jsx:297
+#: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
 msgstr "Impossível bloquear {username}"
 
-#: src/components/report-modal.jsx:302
+#: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
 msgstr "Enviar relatório <0>+ Bloquear perfil</0>"
 
@@ -1932,7 +1932,7 @@ msgstr "Apenas local"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:199
+#: src/pages/login.jsx:203
 msgid "Instance"
 msgstr "Instância"
 
@@ -2520,19 +2520,24 @@ msgstr "Nota: Esta prévia tem um estilo levemente padronizado."
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsionou"
 
-#: src/components/status.jsx:3897
+#: src/components/status.jsx:3886
+msgid "Post hidden by your filters"
+msgstr ""
+
+#: src/components/status.jsx:3887
 msgid "Post removed by author."
 msgstr "Publicação removida pelo autor."
 
-#: src/components/status.jsx:3906
+#: src/components/status.jsx:3888
 msgid "You’re not authorized to view this post."
 msgstr "Você não tem permissão para visualizar esta publicação."
 
-#: src/components/status.jsx:3915
+#: src/components/status.jsx:3889
 msgid "Post pending author approval."
 msgstr "Publicação aguardando resposta do autor."
 
-#: src/components/status.jsx:3924
+#: src/components/status.jsx:3890
+#: src/components/status.jsx:3891
 msgid "Quoting not allowed by the author."
 msgstr "O autor não permite citações."
 
@@ -2569,28 +2574,28 @@ msgstr "Tópico"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:194
+#: src/components/translation-block.jsx:196
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Traduzido automaticamente de {sourceLangText}"
 
-#: src/components/translation-block.jsx:232
+#: src/components/translation-block.jsx:234
 msgid "Translating…"
 msgstr "Traduzindo…"
 
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Traduzir do {sourceLangText} (detectado automaticamente)"
 
-#: src/components/translation-block.jsx:236
+#: src/components/translation-block.jsx:238
 msgid "Translate from {sourceLangText}"
 msgstr "Traduzir do {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:266
 msgid "Auto ({0})"
 msgstr "Auto ({0})"
 
-#: src/components/translation-block.jsx:277
+#: src/components/translation-block.jsx:279
 msgid "Failed to translate"
 msgstr "Houve um erro ao traduzir"
 
@@ -2618,7 +2623,7 @@ msgstr "Requer registro."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:276
+#: src/pages/login.jsx:280
 msgid "Go home"
 msgstr "Voltar ao início"
 
@@ -3331,32 +3336,32 @@ msgstr "{0, plural, one {# lista} other {# listas}}"
 msgid "No lists yet."
 msgstr "Não há listas ainda."
 
-#: src/pages/login.jsx:118
-#: src/pages/login.jsx:128
+#: src/pages/login.jsx:122
+#: src/pages/login.jsx:132
 msgid "Failed to register application"
 msgstr "Houve um erro ao registrar aplicação"
 
-#: src/pages/login.jsx:214
+#: src/pages/login.jsx:218
 msgid "instance domain"
 msgstr "domínio de instância"
 
-#: src/pages/login.jsx:238
+#: src/pages/login.jsx:242
 msgid "e.g. “mastodon.social”"
 msgstr "ex. “mastodon.social”"
 
-#: src/pages/login.jsx:249
+#: src/pages/login.jsx:253
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "Houve um erro ao registrar-se. Tente novamente ou tente outra instância."
 
-#: src/pages/login.jsx:261
+#: src/pages/login.jsx:265
 msgid "Continue with {selectedInstanceText}"
 msgstr "Continuar com {selectedInstanceText}"
 
-#: src/pages/login.jsx:262
+#: src/pages/login.jsx:266
 msgid "Continue"
 msgstr "Continuar"
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:274
 msgid "Don't have an account? Create one!"
 msgstr "Não tem uma conta? Crie uma!"
 

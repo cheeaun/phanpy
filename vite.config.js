@@ -6,7 +6,7 @@ import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
 import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -83,7 +83,6 @@ export default defineConfig({
         // },
       ],
     }),
-    splitVendorChunkPlugin(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
@@ -177,9 +176,10 @@ export default defineConfig({
         compose: resolve(__dirname, 'compose/index.html'),
       },
       output: {
-        manualChunks: {
-          // 'intl-segmenter-polyfill': ['@formatjs/intl-segmenter/polyfill'],
-          'tinyld-light': ['tinyld/light'],
+        manualChunks: (id) => {
+          // if (id.includes('@formatjs/intl-segmenter/polyfill')) return 'intl-segmenter-polyfill';
+          if (id.includes('tinyld/light')) return 'tinyld-light';
+          if (id.includes('node_modules')) return 'vendor';
         },
         chunkFileNames: (chunkInfo) => {
           const { facadeModuleId } = chunkInfo;

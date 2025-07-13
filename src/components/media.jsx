@@ -291,10 +291,16 @@ function Media({
           e.preventDefault();
           el.style.viewTransitionName = mediaVTN;
           setTimeout(() => {
-            document.startViewTransition(() => {
+            try {
+              document.startViewTransition(() => {
+                el.style.viewTransitionName = '';
+                location.hash = `#${to}`;
+              });
+            } catch (e) {
+              console.error(e);
               el.style.viewTransitionName = '';
               location.hash = `#${to}`;
-            });
+            }
           }, 1);
         }
       } else {

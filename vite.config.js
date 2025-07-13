@@ -176,10 +176,23 @@ export default defineConfig({
         compose: resolve(__dirname, 'compose/index.html'),
       },
       output: {
-        manualChunks: (id) => {
+        manualChunks: (id, { getModuleInfo }) => {
           // if (id.includes('@formatjs/intl-segmenter/polyfill')) return 'intl-segmenter-polyfill';
-          if (id.includes('tinyld/light')) return 'tinyld-light';
-          if (id.includes('node_modules')) return 'vendor';
+          if (/tiny.*light/.test(id)) return 'tinyld-light';
+
+          // Implement logic similar to splitVendorChunkPlugin
+          if (id.includes('node_modules')) {
+            // Check if this module is dynamically imported
+            const moduleInfo = getModuleInfo(id);
+            if (moduleInfo) {
+              // If it's imported dynamically, don't put in vendor
+              const isDynamicOnly =
+                moduleInfo.importers.length === 0 &&
+                moduleInfo.dynamicImporters.length > 0;
+              if (isDynamicOnly) return null;
+            }
+            return 'vendor';
+          }
         },
         chunkFileNames: (chunkInfo) => {
           const { facadeModuleId } = chunkInfo;

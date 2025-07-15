@@ -8,7 +8,7 @@ msgstr ""
 "Language: fa\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-11 04:12\n"
+"PO-Revision-Date: 2025-07-15 09:08\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -39,7 +39,7 @@ msgstr "خودکارشده"
 
 #: src/components/account-block.jsx:170
 #: src/components/account-info.jsx:715
-#: src/components/status.jsx:590
+#: src/components/status.jsx:665
 msgid "Group"
 msgstr "گروه"
 
@@ -116,11 +116,11 @@ msgstr "فرسته"
 #: src/components/compose.jsx:2792
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
-#: src/components/status.jsx:1836
-#: src/components/status.jsx:1853
-#: src/components/status.jsx:1978
-#: src/components/status.jsx:2599
-#: src/components/status.jsx:2602
+#: src/components/status.jsx:1915
+#: src/components/status.jsx:1932
+#: src/components/status.jsx:2057
+#: src/components/status.jsx:2686
+#: src/components/status.jsx:2689
 #: src/pages/account-statuses.jsx:531
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -208,7 +208,7 @@ msgid "Original"
 msgstr "اصلی"
 
 #: src/components/account-info.jsx:946
-#: src/components/status.jsx:2383
+#: src/components/status.jsx:2470
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
@@ -334,30 +334,30 @@ msgid "Add/Remove from Lists"
 msgstr "افزودن/حذف کردن از سیاهه‌ها"
 
 #: src/components/account-info.jsx:1490
-#: src/components/status.jsx:1258
+#: src/components/status.jsx:1337
 msgid "Link copied"
 msgstr "پیوند رونوشت شد"
 
 #: src/components/account-info.jsx:1493
-#: src/components/status.jsx:1261
+#: src/components/status.jsx:1340
 msgid "Unable to copy link"
 msgstr "ناتوان در رونوشت برداشتن از پیوند"
 
 #: src/components/account-info.jsx:1499
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1267
-#: src/components/status.jsx:3377
+#: src/components/status.jsx:1346
+#: src/components/status.jsx:3464
 msgid "Copy"
 msgstr "رونوشت"
 
 #: src/components/account-info.jsx:1514
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1283
+#: src/components/status.jsx:1362
 msgid "Sharing doesn't seem to work."
 msgstr "انگار همرسانی کار نمیکند."
 
 #: src/components/account-info.jsx:1520
-#: src/components/status.jsx:1289
+#: src/components/status.jsx:1368
 msgid "Share…"
 msgstr "همرسانی…"
 
@@ -471,9 +471,9 @@ msgstr "پی گرفتن"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3101
-#: src/components/status.jsx:3341
-#: src/components/status.jsx:3850
+#: src/components/status.jsx:3188
+#: src/components/status.jsx:3428
+#: src/components/status.jsx:3937
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
@@ -723,7 +723,7 @@ msgid "Attachment #{i} failed"
 msgstr "پیوست #{i} شکست خورد"
 
 #: src/components/compose.jsx:1221
-#: src/components/status.jsx:2166
+#: src/components/status.jsx:2245
 #: src/components/timeline.jsx:1023
 msgid "Content warning"
 msgstr "هشدار محتوا"
@@ -733,7 +733,7 @@ msgid "Content warning or sensitive media"
 msgstr "هشدار محتوا یا رسانهٔ حساس"
 
 #: src/components/compose.jsx:1273
-#: src/components/status.jsx:96
+#: src/components/status.jsx:99
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr "همگانی"
@@ -741,25 +741,25 @@ msgstr "همگانی"
 #: src/components/compose.jsx:1278
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
-#: src/components/status.jsx:97
+#: src/components/status.jsx:100
 msgid "Local"
 msgstr "محلی"
 
 #: src/components/compose.jsx:1282
-#: src/components/status.jsx:98
+#: src/components/status.jsx:101
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr "فهرست‌نشده"
 
 #: src/components/compose.jsx:1285
-#: src/components/status.jsx:99
+#: src/components/status.jsx:102
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr "فقط پی‌گیرنده"
 
 #: src/components/compose.jsx:1288
-#: src/components/status.jsx:100
-#: src/components/status.jsx:2042
+#: src/components/status.jsx:103
+#: src/components/status.jsx:2121
 msgid "Private mention"
 msgstr "اشارهٔ خصوصی"
 
@@ -796,10 +796,10 @@ msgstr ""
 
 #: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1030
-#: src/components/status.jsx:1816
-#: src/components/status.jsx:1817
-#: src/components/status.jsx:2503
+#: src/components/status.jsx:1109
+#: src/components/status.jsx:1895
+#: src/components/status.jsx:1896
+#: src/components/status.jsx:2590
 msgid "Reply"
 msgstr "پاسخ دادن"
 
@@ -1021,7 +1021,7 @@ msgstr "خطا در حذف پیش‌نویس! لطفا دوباره تلاش ک�
 
 #: src/components/drafts.jsx:128
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1433
+#: src/components/status.jsx:1512
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
 msgid "Delete…"
@@ -1230,10 +1230,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>م</0> یا <1>ب</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
+#: src/components/status.jsx:2641
 msgid "Boost"
 msgstr "تقویت"
 
@@ -1242,9 +1242,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>تبدیل</0> + <1>ذ</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
+#: src/components/status.jsx:2666
 msgid "Bookmark"
 msgstr "نشانک‌گذاری"
 
@@ -1309,14 +1309,14 @@ msgid "Media description"
 msgstr "شرح رسانه"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1144
-#: src/components/status.jsx:1153
+#: src/components/status.jsx:1223
+#: src/components/status.jsx:1232
 #: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr "ترجمه"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1172
+#: src/components/status.jsx:1251
 msgid "Speak"
 msgstr "حرف زدن"
 
@@ -1353,16 +1353,16 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "پالایش‌شده: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3680
-#: src/components/status.jsx:3776
-#: src/components/status.jsx:3854
+#: src/components/status.jsx:3767
+#: src/components/status.jsx:3863
+#: src/components/status.jsx:3941
 #: src/components/timeline.jsx:1012
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1880
 msgid "Filtered"
 msgstr "پالایش‌شده"
 
-#: src/components/media.jsx:471
+#: src/components/media.jsx:477
 msgid "Open file"
 msgstr ""
 
@@ -1667,8 +1667,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[نوع ناشناختهٔ آگاهی: {type}]"
 
 #: src/components/notification.jsx:451
-#: src/components/status.jsx:1115
-#: src/components/status.jsx:1125
+#: src/components/status.jsx:1194
+#: src/components/status.jsx:1204
 msgid "Boosted/Liked by…"
 msgstr "تقویت‌شده/برگزیده‌شده توسط…"
 
@@ -1694,7 +1694,7 @@ msgid "View #Wrapstodon"
 msgstr ""
 
 #: src/components/notification.jsx:801
-#: src/components/status.jsx:328
+#: src/components/status.jsx:403
 msgid "Read more →"
 msgstr "بیشتر خوانید ←"
 
@@ -1998,7 +1998,7 @@ msgid "Move down"
 msgstr "حرکت به پایین"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1395
+#: src/components/status.jsx:1474
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "ویرایش"
@@ -2197,346 +2197,362 @@ msgstr "جیسون خالص میانبرها"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "ورود/صدور تنظیمات از/به کارساز نمونه (خیلی آزمایشی)"
 
-#: src/components/status.jsx:614
+#: src/components/status.jsx:277
+msgid "Unable to format math"
+msgstr ""
+
+#: src/components/status.jsx:292
+msgid "Math expressions found."
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Show markup"
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Format math"
+msgstr ""
+
+#: src/components/status.jsx:689
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>تقویت کرد</1>"
 
-#: src/components/status.jsx:713
+#: src/components/status.jsx:792
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "متأسفانه نمونه‌ای که شما در آن وارد شده‌اید نمیتواند با این فرسته از یک نمونهٔ دیگر تعامل داشته باشد."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:867
+#: src/components/status.jsx:946
 msgid "Unliked @{0}'s post"
 msgstr "فرستهٔ @{0} نابرگزیده شد"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:868
+#: src/components/status.jsx:947
 msgid "Liked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:907
+#: src/components/status.jsx:986
 msgid "Unbookmarked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:908
+#: src/components/status.jsx:987
 msgid "Bookmarked @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1007
+#: src/components/status.jsx:1086
 msgid "Some media have no descriptions."
 msgstr "بعضی از رسانه‌ها شرح ندارند."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1014
+#: src/components/status.jsx:1093
 msgid "Old post (<0>{0}</0>)"
 msgstr "فرستهٔ قدیمی (<0>{0}</0>)"
 
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:1078
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:1157
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
 msgid "Unboost"
 msgstr "ناتقویت"
 
-#: src/components/status.jsx:1054
-#: src/components/status.jsx:2545
+#: src/components/status.jsx:1133
+#: src/components/status.jsx:2632
 msgid "Quote"
 msgstr "نقل قول"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1066
-#: src/components/status.jsx:1532
+#: src/components/status.jsx:1145
+#: src/components/status.jsx:1611
 msgid "Unboosted @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1067
-#: src/components/status.jsx:1533
+#: src/components/status.jsx:1146
+#: src/components/status.jsx:1612
 msgid "Boosted @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1079
+#: src/components/status.jsx:1158
 msgid "Boost…"
 msgstr "تقویت…"
 
-#: src/components/status.jsx:1091
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:2566
+#: src/components/status.jsx:1170
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:2653
 msgid "Unlike"
 msgstr "نابرگزیدن"
 
-#: src/components/status.jsx:1092
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:2566
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1171
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:2653
+#: src/components/status.jsx:2654
 msgid "Like"
 msgstr "برگزیدن"
 
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
 msgid "Unbookmark"
 msgstr "نانشانک‌گذاری"
 
-#: src/components/status.jsx:1184
+#: src/components/status.jsx:1263
 msgid "Post text copied"
 msgstr ""
 
-#: src/components/status.jsx:1187
+#: src/components/status.jsx:1266
 msgid "Unable to copy post text"
 msgstr ""
 
-#: src/components/status.jsx:1193
+#: src/components/status.jsx:1272
 msgid "Copy post text"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1211
+#: src/components/status.jsx:1290
 msgid "View post by <0>@{0}</0>"
 msgstr ""
 
-#: src/components/status.jsx:1232
+#: src/components/status.jsx:1311
 msgid "Show Edit History"
 msgstr "نمایش تاریخچهٔ ویرایش"
 
-#: src/components/status.jsx:1235
+#: src/components/status.jsx:1314
 msgid "Edited: {editedDateText}"
 msgstr "ویرایش‌شده: {editedDateText}"
 
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3346
+#: src/components/status.jsx:1381
+#: src/components/status.jsx:3433
 msgid "Embed post"
 msgstr "فرستهٔ جاسازی‌شده"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation unmuted"
 msgstr "گفتگو ناخموشیده شد"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation muted"
 msgstr "گفتگو خموشیده شد"
 
-#: src/components/status.jsx:1322
+#: src/components/status.jsx:1401
 msgid "Unable to unmute conversation"
 msgstr "ناتوان در ناخموشاندن گفتگو"
 
-#: src/components/status.jsx:1323
+#: src/components/status.jsx:1402
 msgid "Unable to mute conversation"
 msgstr "ناتوان در خموشاندن گفتگو"
 
-#: src/components/status.jsx:1332
+#: src/components/status.jsx:1411
 msgid "Unmute conversation"
 msgstr "ناخموشاندن گفتگو"
 
-#: src/components/status.jsx:1339
+#: src/components/status.jsx:1418
 msgid "Mute conversation"
 msgstr "خموشاندن گفتگو"
 
-#: src/components/status.jsx:1355
+#: src/components/status.jsx:1434
 msgid "Post unpinned from profile"
 msgstr "سنجاق فرسته از نمایه برداشته شد"
 
-#: src/components/status.jsx:1356
+#: src/components/status.jsx:1435
 msgid "Post pinned to profile"
 msgstr "فرسته به نمایه سنجاق شد"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to unpin post"
 msgstr "ناتوان در برداشتن سنجاق فرسته"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to pin post"
 msgstr "ناتوان در سنجاق کردن فرسته"
 
-#: src/components/status.jsx:1370
+#: src/components/status.jsx:1449
 msgid "Unpin from profile"
 msgstr "برداشتن سنجاق "
 
-#: src/components/status.jsx:1377
+#: src/components/status.jsx:1456
 msgid "Pin to profile"
 msgstr "سنجاق کردن به نمایه"
 
-#: src/components/status.jsx:1406
+#: src/components/status.jsx:1485
 msgid "Delete this post?"
 msgstr "این فرسته را حذف میکنید؟"
 
-#: src/components/status.jsx:1422
+#: src/components/status.jsx:1501
 msgid "Post deleted"
 msgstr ""
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1504
 msgid "Unable to delete post"
 msgstr ""
 
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1532
 msgid "Report post…"
 msgstr "گزارش دادن فرسته…"
 
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:1863
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:1942
+#: src/components/status.jsx:2654
 msgid "Liked"
 msgstr ""
 
-#: src/components/status.jsx:1860
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1939
+#: src/components/status.jsx:2641
 msgid "Boosted"
 msgstr ""
 
-#: src/components/status.jsx:1870
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1949
+#: src/components/status.jsx:2666
 msgid "Bookmarked"
 msgstr ""
 
-#: src/components/status.jsx:1874
+#: src/components/status.jsx:1953
 msgid "Pinned"
 msgstr ""
 
-#: src/components/status.jsx:1920
-#: src/components/status.jsx:2391
+#: src/components/status.jsx:1999
+#: src/components/status.jsx:2478
 msgid "Deleted"
 msgstr ""
 
-#: src/components/status.jsx:1961
+#: src/components/status.jsx:2040
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr ""
 
 #. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
-#: src/components/status.jsx:2051
+#: src/components/status.jsx:2130
 msgid "Thread{0}"
 msgstr ""
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
+#: src/components/status.jsx:2374
 msgid "Show less"
 msgstr ""
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
 msgid "Show content"
 msgstr ""
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2283
+#: src/components/status.jsx:2370
 #: src/pages/catchup.jsx:1879
 msgid "Filtered: {0}"
 msgstr "پالایش‌شده: {0}"
 
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2374
 msgid "Show media"
 msgstr ""
 
-#: src/components/status.jsx:2427
+#: src/components/status.jsx:2514
 msgid "Edited"
 msgstr ""
 
-#: src/components/status.jsx:2504
+#: src/components/status.jsx:2591
 msgid "Comments"
 msgstr ""
 
 #. More from [Author]
-#: src/components/status.jsx:2804
+#: src/components/status.jsx:2891
 msgid "More from <0/>"
 msgstr ""
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3193
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:3110
+#: src/components/status.jsx:3197
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3202
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr ""
 
-#: src/components/status.jsx:3351
+#: src/components/status.jsx:3438
 msgid "HTML Code"
 msgstr ""
 
-#: src/components/status.jsx:3368
+#: src/components/status.jsx:3455
 msgid "HTML code copied"
 msgstr ""
 
-#: src/components/status.jsx:3371
+#: src/components/status.jsx:3458
 msgid "Unable to copy HTML code"
 msgstr ""
 
-#: src/components/status.jsx:3383
+#: src/components/status.jsx:3470
 msgid "Media attachments:"
 msgstr ""
 
-#: src/components/status.jsx:3405
+#: src/components/status.jsx:3492
 msgid "Account Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3436
-#: src/components/status.jsx:3481
+#: src/components/status.jsx:3523
+#: src/components/status.jsx:3568
 msgid "static URL"
 msgstr ""
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3537
 msgid "Emojis:"
 msgstr ""
 
-#: src/components/status.jsx:3495
+#: src/components/status.jsx:3582
 msgid "Notes:"
 msgstr ""
 
-#: src/components/status.jsx:3499
+#: src/components/status.jsx:3586
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr ""
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3592
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr ""
 
-#: src/components/status.jsx:3510
+#: src/components/status.jsx:3597
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr ""
 
-#: src/components/status.jsx:3516
+#: src/components/status.jsx:3603
 msgid "Post could be edited or deleted later."
 msgstr "فرسته بعدا میتواند ویرایش یا حذف شود."
 
-#: src/components/status.jsx:3522
+#: src/components/status.jsx:3609
 msgid "Preview"
 msgstr "پیش‌نمایش"
 
-#: src/components/status.jsx:3531
+#: src/components/status.jsx:3618
 msgid "Note: This preview is lightly styled."
 msgstr "نکته: این پیش‌نمایش بصورت طراحی سبک است."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3784
+#: src/components/status.jsx:3871
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> تقویت‌شده"
 
-#: src/components/status.jsx:3886
+#: src/components/status.jsx:3973
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3887
+#: src/components/status.jsx:3974
 msgid "Post removed by author."
 msgstr ""
 
-#: src/components/status.jsx:3888
+#: src/components/status.jsx:3975
 msgid "You’re not authorized to view this post."
 msgstr ""
 
-#: src/components/status.jsx:3889
+#: src/components/status.jsx:3976
 msgid "Post pending author approval."
 msgstr ""
 
-#: src/components/status.jsx:3890
-#: src/components/status.jsx:3891
+#: src/components/status.jsx:3977
+#: src/components/status.jsx:3978
 msgid "Quoting not allowed by the author."
 msgstr ""
 

@@ -183,4 +183,5 @@ export const ICONS = {
     module: () => import('@iconify-icons/mingcute/user-star-line'),
     rtl: true,
   },
+  formula: () => import('@iconify-icons/mingcute/formula-line'),
 };

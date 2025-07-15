@@ -2941,3 +2941,51 @@ a.card:is(:hover, :focus):visited {
   transition-duration: 0.1s;
   transition-behavior: allow-discrete;
 }
+
+/* MATH */
+
+.math-block {
+  color: var(--text-insignificant-color);
+  margin: 8px 0;
+  border-top: 1px dashed var(--outline-color);
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 90%;
+}
+.status .inner-content math[display='block'] {
+  background-image:
+    linear-gradient(
+      var(--divider-color) var(--hairline-width),
+      transparent var(--hairline-width)
+    ),
+    linear-gradient(
+      to right,
+      var(--divider-color) var(--hairline-width),
+      transparent var(--hairline-width)
+    );
+  background-size: var(--text-size) var(--text-size);
+  overflow: auto;
+
+  --padding: 8px;
+  background-position: center var(--padding);
+  &:has(mrow) {
+    /* 0.5ex is for mrow from Temml-Local.css */
+    background-position-y: calc(var(--padding) + 0.5ex);
+  }
+  padding: var(--padding);
+  /* mask the padding with gradients */
+  mask-image:
+    linear-gradient(to top, transparent, black var(--padding)),
+    linear-gradient(to bottom, transparent, black var(--padding)),
+    linear-gradient(to left, transparent, black var(--padding)),
+    linear-gradient(to right, transparent, black var(--padding));
+  mask-composite: intersect;
+
+  animation: appear-smooth 0.3s ease-out;
+  *:nth-child(even):not(:has(*)) {
+    /* sprinkle a bit more gradual magical feel */
+    animation: appear 1s ease-out;
+  }
+}

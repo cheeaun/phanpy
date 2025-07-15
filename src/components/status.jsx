@@ -1,4 +1,6 @@
 import './status.css';
+import 'temml/dist/Temml-Local.css';
+
 import '@justinribeiro/lite-youtube';
 
 import { msg, plural } from '@lingui/core/macro';
@@ -22,6 +24,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'preact/hooks';
@@ -222,6 +225,78 @@ function getHTMLTextForDetectLang(content, emojis) {
 }
 
 const HTTP_REGEX = /^http/i;
+
+// Follow https://mathstodon.xyz/about
+// > You can use LaTeX in toots here! Use \( and \) for inline, and \[ and \] for display mode.
+const DELIMITERS_PATTERNS = [
+  // '\\$\\$[\\s\\S]*?\\$\\$', // $$...$$
+  '\\\\\\[[\\s\\S]*?\\\\\\]', // \[...\]
+  '\\\\\\([\\s\\S]*?\\\\\\)', // \(...\)
+  // '\\\\begin\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}[\\s\\S]*?\\\\end\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}', // AMS environments
+  // '\\\\(?:ref|eqref)\\{[^}]*\\}', // \ref{...}, \eqref{...}
+];
+const DELIMITERS_REGEX = new RegExp(DELIMITERS_PATTERNS.join('|'), 'g');
+
+const MathBlock = ({ content, contentRef, onRevert }) => {
+  const { t } = useLingui();
+  const [mathRendered, setMathRendered] = useState(false);
+  const hasLatexContent = useMemo(
+    () => DELIMITERS_REGEX.test(content),
+    [content],
+  );
+
+  const toggleMathRendering = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (mathRendered) {
+        // Revert to original content by refreshing PostContent
+        setMathRendered(false);
+        onRevert();
+      } else {
+        // Render math
+        try {
+          // This needs global because the codebase inside temml is calling a function from global.temml 🤦‍♂️
+          const temml =
+            window.temml || (window.temml = (await import('temml'))?.default);
+
+          const oriignalContentRefHTML = contentRef.current.innerHTML;
+          temml.renderMathInElement(contentRef.current, {
+            fences: '(', // This should sync with DELIMITERS_REGEX
+            throwOnError: true,
+            errorCallback: (err) => {
+              console.warn('Failed to render LaTeX:', err);
+            },
+          });
+
+          const hasMath = contentRef.current.querySelector('math.tml-display');
+          const htmlChanged =
+            contentRef.current.innerHTML !== oriignalContentRefHTML;
+          if (hasMath && htmlChanged) {
+            setMathRendered(true);
+          } else {
+            showToast(t`Unable to format math`);
+            setMathRendered(false);
+          }
+        } catch (e) {
+          console.error('Failed to LaTeX:', e);
+        }
+      }
+    },
+    [mathRendered],
+  );
+
+  if (!hasLatexContent) return null;
+
+  return (
+    <div class="math-block">
+      <Icon icon="formula" size="s" /> <span>{t`Math expressions found.`}</span>{' '}
+      <button type="button" class="light small" onClick={toggleMathRendering}>
+        {mathRendered ? t`Show markup` : t`Format math`}
+      </button>
+    </div>
+  );
+};
+
 const PostContent =
   /*memo(*/
   ({ post, instance, previewMode }) => {
@@ -709,6 +784,10 @@ function Status({
   const mediaContainerRef = useTruncated();
 
   const statusRef = useRef(null);
+  const [reloadPostContentCount, reloadPostContent] = useReducer(
+    (c) => c + 1,
+    0,
+  );
 
   const unauthInteractionErrorMessage = t`Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
@@ -2201,12 +2280,20 @@ function Status({
                     inert={!!spoilerText && !showSpoiler ? true : undefined}
                   >
                     <PostContent
+                      key={reloadPostContentCount}
                       post={status}
                       instance={instance}
                       previewMode={previewMode}
                     />
                     <QuoteStatuses id={id} instance={instance} level={quoted} />
                   </div>
+                )}
+                {!!content && (
+                  <MathBlock
+                    content={content}
+                    contentRef={contentRef}
+                    onRevert={reloadPostContent}
+                  />
                 )}
                 {!!poll && (
                   <Poll

@@ -462,7 +462,7 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
-#: src/components/report-modal.jsx:75
+#: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
@@ -1306,7 +1306,7 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1144
 #: src/components/status.jsx:1153
-#: src/components/translation-block.jsx:237
+#: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr ""
 
@@ -1491,7 +1491,7 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
-#: src/pages/login.jsx:195
+#: src/pages/login.jsx:199
 #: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
@@ -1770,111 +1770,111 @@ msgstr ""
 msgid "{0}h"
 msgstr ""
 
-#: src/components/report-modal.jsx:29
+#: src/components/report-modal.jsx:30
 msgid "Spam"
 msgstr ""
 
-#: src/components/report-modal.jsx:30
+#: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
 msgstr ""
 
-#: src/components/report-modal.jsx:33
+#: src/components/report-modal.jsx:34
 msgid "Illegal"
 msgstr ""
 
-#: src/components/report-modal.jsx:34
+#: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
 msgstr ""
 
-#: src/components/report-modal.jsx:37
+#: src/components/report-modal.jsx:38
 msgid "Server rule violation"
 msgstr ""
 
-#: src/components/report-modal.jsx:38
+#: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
 msgstr ""
 
-#: src/components/report-modal.jsx:39
+#: src/components/report-modal.jsx:40
 msgid "Violation"
 msgstr ""
 
-#: src/components/report-modal.jsx:42
+#: src/components/report-modal.jsx:43
 msgid "Other"
 msgstr ""
 
-#: src/components/report-modal.jsx:43
+#: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
 msgstr ""
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report Post"
 msgstr ""
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report @{username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:104
+#: src/components/report-modal.jsx:147
 msgid "Pending review"
 msgstr ""
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Post reported"
 msgstr ""
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Profile reported"
 msgstr ""
 
-#: src/components/report-modal.jsx:154
+#: src/components/report-modal.jsx:197
 msgid "Unable to report post"
 msgstr ""
 
-#: src/components/report-modal.jsx:155
+#: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
 msgstr ""
 
-#: src/components/report-modal.jsx:163
+#: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
 msgstr ""
 
-#: src/components/report-modal.jsx:164
+#: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
 msgstr ""
 
-#: src/components/report-modal.jsx:233
+#: src/components/report-modal.jsx:276
 msgid "Additional info"
 msgstr ""
 
-#: src/components/report-modal.jsx:256
+#: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
 msgstr ""
 
-#: src/components/report-modal.jsx:266
+#: src/components/report-modal.jsx:309
 msgid "Send Report"
 msgstr ""
 
-#: src/components/report-modal.jsx:275
+#: src/components/report-modal.jsx:318
 msgid "Muted {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:278
+#: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:283
+#: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr ""
 
-#: src/components/report-modal.jsx:294
+#: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:297
+#: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
 msgstr ""
 
-#: src/components/report-modal.jsx:302
+#: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
 msgstr ""
 
@@ -1926,7 +1926,7 @@ msgstr ""
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:199
+#: src/pages/login.jsx:203
 msgid "Instance"
 msgstr ""
 
@@ -2514,19 +2514,24 @@ msgstr ""
 msgid "<0/> <1/> boosted"
 msgstr ""
 
-#: src/components/status.jsx:3897
+#: src/components/status.jsx:3886
+msgid "Post hidden by your filters"
+msgstr "Post hidden by your filters"
+
+#: src/components/status.jsx:3887
 msgid "Post removed by author."
 msgstr "Post removed by author."
 
-#: src/components/status.jsx:3906
+#: src/components/status.jsx:3888
 msgid "You’re not authorized to view this post."
 msgstr "You’re not authorized to view this post."
 
-#: src/components/status.jsx:3915
+#: src/components/status.jsx:3889
 msgid "Post pending author approval."
 msgstr "Post pending author approval."
 
-#: src/components/status.jsx:3924
+#: src/components/status.jsx:3890
+#: src/components/status.jsx:3891
 msgid "Quoting not allowed by the author."
 msgstr "Quoting not allowed by the author."
 
@@ -2563,28 +2568,28 @@ msgstr ""
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
-#: src/components/translation-block.jsx:194
+#: src/components/translation-block.jsx:196
 msgid "Auto-translated from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:232
+#: src/components/translation-block.jsx:234
 msgid "Translating…"
 msgstr ""
 
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr ""
 
-#: src/components/translation-block.jsx:236
+#: src/components/translation-block.jsx:238
 msgid "Translate from {sourceLangText}"
 msgstr ""
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:266
 msgid "Auto ({0})"
 msgstr ""
 
-#: src/components/translation-block.jsx:277
+#: src/components/translation-block.jsx:279
 msgid "Failed to translate"
 msgstr ""
 
@@ -2612,7 +2617,7 @@ msgstr "Login required."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:276
+#: src/pages/login.jsx:280
 msgid "Go home"
 msgstr ""
 
@@ -3325,32 +3330,32 @@ msgstr ""
 msgid "No lists yet."
 msgstr ""
 
-#: src/pages/login.jsx:118
-#: src/pages/login.jsx:128
+#: src/pages/login.jsx:122
+#: src/pages/login.jsx:132
 msgid "Failed to register application"
 msgstr "Failed to register application"
 
-#: src/pages/login.jsx:214
+#: src/pages/login.jsx:218
 msgid "instance domain"
 msgstr "instance domain"
 
-#: src/pages/login.jsx:238
+#: src/pages/login.jsx:242
 msgid "e.g. “mastodon.social”"
 msgstr ""
 
-#: src/pages/login.jsx:249
+#: src/pages/login.jsx:253
 msgid "Failed to log in. Please try again or try another instance."
 msgstr ""
 
-#: src/pages/login.jsx:261
+#: src/pages/login.jsx:265
 msgid "Continue with {selectedInstanceText}"
 msgstr ""
 
-#: src/pages/login.jsx:262
+#: src/pages/login.jsx:266
 msgid "Continue"
 msgstr ""
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:274
 msgid "Don't have an account? Create one!"
 msgstr ""
 

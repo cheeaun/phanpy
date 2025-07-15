@@ -392,6 +392,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" alt="" width="16" height="16" /> SadmL_AI (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16121928/medium/b1dd34dc3e93b64b93b94aedca0c5b7d.jpg" alt="" width="16" height="16" /> Schishka71 (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" alt="" width="16" height="16" /> seizeheures (Esperanto)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)

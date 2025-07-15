@@ -262,6 +262,7 @@ const MathBlock = ({ content, contentRef, onRevert }) => {
           const oriignalContentRefHTML = contentRef.current.innerHTML;
           temml.renderMathInElement(contentRef.current, {
             fences: '(', // This should sync with DELIMITERS_REGEX
+            annotate: true,
             throwOnError: true,
             errorCallback: (err) => {
               console.warn('Failed to render LaTeX:', err);

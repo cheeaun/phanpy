@@ -2970,7 +2970,7 @@ a.card:is(:hover, :focus):visited {
 
   --padding: 8px;
   background-position: center var(--padding);
-  &:has(mrow) {
+  &:has(> mrow) {
     /* 0.5ex is for mrow from Temml-Local.css */
     background-position-y: calc(var(--padding) + 0.5ex);
   }

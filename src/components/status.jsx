@@ -363,7 +363,17 @@ const MathBlock = ({ content, contentRef, onRevert }) => {
     <div class="math-block">
       <Icon icon="formula" size="s" /> <span>{t`Math expressions found.`}</span>{' '}
       <button type="button" class="light small" onClick={toggleMathRendering}>
-        {mathRendered ? t`Show markup` : t`Format math`}
+        {mathRendered
+          ? t({
+              comment:
+                'Action to switch from rendered math back to raw (LaTeX) markup',
+              message: 'Show markup',
+            })
+          : t({
+              comment:
+                'Action to render math expressions from raw (LaTeX) markup',
+              message: 'Format math',
+            })}
       </button>
     </div>
   );

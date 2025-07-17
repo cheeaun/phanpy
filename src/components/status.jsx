@@ -319,6 +319,7 @@ const MathBlock = ({ content, contentRef, onRevert }) => {
   const toggleMathRendering = useCallback(
     async (e) => {
       e.preventDefault();
+      e.stopPropagation();
       if (mathRendered) {
         // Revert to original content by refreshing PostContent
         setMathRendered(false);

@@ -344,6 +344,14 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 🧪 Sandbox https://mastodon.social/@cheeaun/114494995294330803
 - 🐛 Bug fixes
 
+## July 18, 2025
+
+📢 https://mastodon.social/@cheeaun/114874317126202331
+
+- 💬 Better display support for Mastodon v4.4's native quote posts
+- 🧮 Math formatting for LaTeX
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

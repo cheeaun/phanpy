@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:13\n"
+"PO-Revision-Date: 2025-07-15 09:08\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -39,7 +39,7 @@ msgstr "Automaticky"
 
 #: src/components/account-block.jsx:170
 #: src/components/account-info.jsx:715
-#: src/components/status.jsx:590
+#: src/components/status.jsx:665
 msgid "Group"
 msgstr "Skupina"
 
@@ -113,14 +113,14 @@ msgstr "Příspěvky"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2792
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
-#: src/components/status.jsx:1836
-#: src/components/status.jsx:1853
-#: src/components/status.jsx:1978
-#: src/components/status.jsx:2599
-#: src/components/status.jsx:2602
+#: src/components/status.jsx:1915
+#: src/components/status.jsx:1932
+#: src/components/status.jsx:2057
+#: src/components/status.jsx:2686
+#: src/components/status.jsx:2689
 #: src/pages/account-statuses.jsx:531
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -208,7 +208,7 @@ msgid "Original"
 msgstr "Originál"
 
 #: src/components/account-info.jsx:946
-#: src/components/status.jsx:2383
+#: src/components/status.jsx:2470
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
@@ -334,30 +334,30 @@ msgid "Add/Remove from Lists"
 msgstr "Přidat/odebrat ze seznamu"
 
 #: src/components/account-info.jsx:1490
-#: src/components/status.jsx:1258
+#: src/components/status.jsx:1337
 msgid "Link copied"
 msgstr "Odkaz zkopírován"
 
 #: src/components/account-info.jsx:1493
-#: src/components/status.jsx:1261
+#: src/components/status.jsx:1340
 msgid "Unable to copy link"
 msgstr "Nebylo možné zkopírovat soubor"
 
 #: src/components/account-info.jsx:1499
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1267
-#: src/components/status.jsx:3377
+#: src/components/status.jsx:1346
+#: src/components/status.jsx:3464
 msgid "Copy"
 msgstr "Kopírovat"
 
 #: src/components/account-info.jsx:1514
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1283
+#: src/components/status.jsx:1362
 msgid "Sharing doesn't seem to work."
 msgstr "Sdílení zřejmě nefunguje."
 
 #: src/components/account-info.jsx:1520
-#: src/components/status.jsx:1289
+#: src/components/status.jsx:1368
 msgid "Share…"
 msgstr "Sdílet…"
 
@@ -455,10 +455,10 @@ msgstr "Sledovat"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:3228
+#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3667
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -467,13 +467,13 @@ msgstr "Sledovat"
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
-#: src/components/report-modal.jsx:75
+#: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3101
-#: src/components/status.jsx:3341
-#: src/components/status.jsx:3850
+#: src/components/status.jsx:3188
+#: src/components/status.jsx:3428
+#: src/components/status.jsx:3937
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
@@ -662,8 +662,8 @@ msgstr ""
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Můžete připojit pouze 1 soubor.} few {Můžete připojit pouze # souborů.} many {Můžete připojit pouze # souborů.} other {Můžete připojit pouze # souborů.}}"
 
@@ -723,7 +723,7 @@ msgid "Attachment #{i} failed"
 msgstr "Příloha #{i} selhala"
 
 #: src/components/compose.jsx:1221
-#: src/components/status.jsx:2166
+#: src/components/status.jsx:2245
 #: src/components/timeline.jsx:1023
 msgid "Content warning"
 msgstr "Varování o obsahu"
@@ -733,7 +733,7 @@ msgid "Content warning or sensitive media"
 msgstr "Upozornění na obsah nebo citlivá média"
 
 #: src/components/compose.jsx:1273
-#: src/components/status.jsx:96
+#: src/components/status.jsx:99
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr "Veřejný"
@@ -741,25 +741,25 @@ msgstr "Veřejný"
 #: src/components/compose.jsx:1278
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
-#: src/components/status.jsx:97
+#: src/components/status.jsx:100
 msgid "Local"
 msgstr "Místní"
 
 #: src/components/compose.jsx:1282
-#: src/components/status.jsx:98
+#: src/components/status.jsx:101
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr "Neveřejný"
 
 #: src/components/compose.jsx:1285
-#: src/components/status.jsx:99
+#: src/components/status.jsx:102
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr "Pouze pro sledující"
 
 #: src/components/compose.jsx:1288
-#: src/components/status.jsx:100
-#: src/components/status.jsx:2042
+#: src/components/status.jsx:103
+#: src/components/status.jsx:2121
 msgid "Private mention"
 msgstr "Soukromá zmínka"
 
@@ -784,61 +784,61 @@ msgid "Posting on <0/>"
 msgstr ""
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3286
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Přidat"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr ""
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1030
-#: src/components/status.jsx:1816
-#: src/components/status.jsx:1817
-#: src/components/status.jsx:2503
+#: src/components/status.jsx:1109
+#: src/components/status.jsx:1895
+#: src/components/status.jsx:1896
+#: src/components/status.jsx:2590
 msgid "Reply"
 msgstr "Odpovědět"
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Příspěvek"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "Stahování GIFu…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Nepodařilo se stáhnout GIF"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Více…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2562
 msgid "Uploaded"
 msgstr "Odesláno"
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2575
 msgid "Image description"
 msgstr "Popis obrázku"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2576
 msgid "Video description"
 msgstr "Popis videa"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2577
 msgid "Audio description"
 msgstr "Popis audia"
 
@@ -846,8 +846,8 @@ msgstr "Popis audia"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2612
+#: src/components/compose.jsx:2632
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Velikost souboru je příliš velká. Při nahrávání mohou vzniknout problémy. Zkuste zmenšit velikost souboru z {0} na {1} nebo nižší."
 
@@ -855,150 +855,150 @@ msgstr "Velikost souboru je příliš velká. Při nahrávání mohou vzniknout 
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2624
+#: src/components/compose.jsx:2644
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr ""
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2652
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Snímková frekvence je příliš vysoká. Při nahrávání mohou vzniknout problémy."
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2712
+#: src/components/compose.jsx:2962
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2729
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Chyba"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2754
 msgid "Edit image description"
 msgstr "Upravit popis obrázku"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2755
 msgid "Edit video description"
 msgstr "Upravit popis videa"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2756
 msgid "Edit audio description"
 msgstr "Upravit popis audia"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2801
+#: src/components/compose.jsx:2850
 msgid "Generating description. Please wait…"
 msgstr "Generování popisu. Počkejte prosím…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2821
 msgid "Failed to generate description: {0}"
 msgstr ""
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2822
 msgid "Failed to generate description"
 msgstr "Nepodařilo se vytvořit popis"
 
-#: src/components/compose.jsx:2828
 #: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2840
+#: src/components/compose.jsx:2886
 msgid "Generate description…"
 msgstr "Vytvořit popis…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2873
 msgid "Failed to generate description{0}"
 msgstr ""
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2888
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>– experimentální</0>"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2907
 msgid "Done"
 msgstr "Hotovo"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2943
 msgid "Choice {0}"
 msgstr "Volba {0}"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2990
 msgid "Multiple choices"
 msgstr "Více možností"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2993
 msgid "Duration"
 msgstr "Trvání"
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3024
 msgid "Remove poll"
 msgstr "Odstranit anketu"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3245
 msgid "Search accounts"
 msgstr "Hledat účty"
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3299
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Chyba při načítání účtů"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3443
 msgid "Custom emojis"
 msgstr "Vlastní emoji"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3463
 msgid "Search emoji"
 msgstr "Hledat emoji"
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3494
 msgid "Error loading custom emojis"
 msgstr "Chyba při načítání vlastních emoji"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3505
 msgid "Recently used"
 msgstr "Nedávno použité"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3506
 msgid "Others"
 msgstr "Ostatní"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3544
 msgid "{0} more…"
 msgstr "{0} další…"
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3682
 msgid "Search GIFs"
 msgstr "Hledat GIFy"
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3697
 msgid "Powered by GIPHY"
 msgstr "Běží na GIPHY"
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3705
 msgid "Type to search GIFs"
 msgstr "Zadejte pro vyhledávání GIFů"
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3803
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Zpět"
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3821
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Další"
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3838
 msgid "Error loading GIFs"
 msgstr "Chyba při načítání GIFů"
 
@@ -1021,7 +1021,7 @@ msgstr "Chyba při mazání konceptu. Zkuste to prosím znovu."
 
 #: src/components/drafts.jsx:128
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1433
+#: src/components/status.jsx:1512
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
 msgid "Delete…"
@@ -1230,10 +1230,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> nebo <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
+#: src/components/status.jsx:2641
 msgid "Boost"
 msgstr "Boost"
 
@@ -1242,9 +1242,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
+#: src/components/status.jsx:2666
 msgid "Bookmark"
 msgstr "Oblíbené položky"
 
@@ -1309,14 +1309,14 @@ msgid "Media description"
 msgstr "Popis médií"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1144
-#: src/components/status.jsx:1153
-#: src/components/translation-block.jsx:237
+#: src/components/status.jsx:1223
+#: src/components/status.jsx:1232
+#: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr "Přeložit"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1172
+#: src/components/status.jsx:1251
 msgid "Speak"
 msgstr "Přečíst"
 
@@ -1353,16 +1353,16 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrováno: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3680
-#: src/components/status.jsx:3776
-#: src/components/status.jsx:3854
+#: src/components/status.jsx:3767
+#: src/components/status.jsx:3863
+#: src/components/status.jsx:3941
 #: src/components/timeline.jsx:1012
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1880
 msgid "Filtered"
 msgstr "Filtrovaný"
 
-#: src/components/media.jsx:469
+#: src/components/media.jsx:477
 msgid "Open file"
 msgstr ""
 
@@ -1496,7 +1496,7 @@ msgstr "Účty…"
 
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
-#: src/pages/login.jsx:195
+#: src/pages/login.jsx:199
 #: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
@@ -1667,8 +1667,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[Neznámý typ oznámení: {type}]"
 
 #: src/components/notification.jsx:451
-#: src/components/status.jsx:1115
-#: src/components/status.jsx:1125
+#: src/components/status.jsx:1194
+#: src/components/status.jsx:1204
 msgid "Boosted/Liked by…"
 msgstr "Boost/Líbilo se mi…"
 
@@ -1694,7 +1694,7 @@ msgid "View #Wrapstodon"
 msgstr "Zobrazit #Wrapstodon"
 
 #: src/components/notification.jsx:801
-#: src/components/status.jsx:328
+#: src/components/status.jsx:403
 msgid "Read more →"
 msgstr "Přečti si více →"
 
@@ -1775,111 +1775,111 @@ msgstr "{0}m"
 msgid "{0}h"
 msgstr "{0}h"
 
-#: src/components/report-modal.jsx:29
+#: src/components/report-modal.jsx:30
 msgid "Spam"
 msgstr "Nevyžádané"
 
-#: src/components/report-modal.jsx:30
+#: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
 msgstr "Škodlivé odkazy, falešné interakce nebo opakované odpovědi"
 
-#: src/components/report-modal.jsx:33
+#: src/components/report-modal.jsx:34
 msgid "Illegal"
 msgstr "Nelegální"
 
-#: src/components/report-modal.jsx:34
+#: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
 msgstr "Porušuje zákon vaší nebo země serveru"
 
-#: src/components/report-modal.jsx:37
+#: src/components/report-modal.jsx:38
 msgid "Server rule violation"
 msgstr "Porušení pravidla serveru"
 
-#: src/components/report-modal.jsx:38
+#: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
 msgstr "Porušuje specifická pravidla serveru"
 
-#: src/components/report-modal.jsx:39
+#: src/components/report-modal.jsx:40
 msgid "Violation"
 msgstr "Porušení"
 
-#: src/components/report-modal.jsx:42
+#: src/components/report-modal.jsx:43
 msgid "Other"
 msgstr "Ostatní"
 
-#: src/components/report-modal.jsx:43
+#: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
 msgstr "Problém neodpovídá ostatním kategoriím"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report Post"
 msgstr "Nahlásit příspěvek"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report @{username}"
 msgstr "Nahlásit @{username}"
 
-#: src/components/report-modal.jsx:104
+#: src/components/report-modal.jsx:147
 msgid "Pending review"
 msgstr "Čeká na posouzení"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Post reported"
 msgstr "Příspěvek nahlášen"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Profile reported"
 msgstr "Profil nahlášen"
 
-#: src/components/report-modal.jsx:154
+#: src/components/report-modal.jsx:197
 msgid "Unable to report post"
 msgstr "Nelze nahlásit příspěvek"
 
-#: src/components/report-modal.jsx:155
+#: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
 msgstr "Profil nelze nahlásit"
 
-#: src/components/report-modal.jsx:163
+#: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
 msgstr "Jaký je s tímto příspěvkem problém?"
 
-#: src/components/report-modal.jsx:164
+#: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
 msgstr "Jaký je s tímto účtem problém?"
 
-#: src/components/report-modal.jsx:233
+#: src/components/report-modal.jsx:276
 msgid "Additional info"
 msgstr "Další informace"
 
-#: src/components/report-modal.jsx:256
+#: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
 msgstr "Přeposlat na <0>{domain}</0>"
 
-#: src/components/report-modal.jsx:266
+#: src/components/report-modal.jsx:309
 msgid "Send Report"
 msgstr "Odeslat hlášení"
 
-#: src/components/report-modal.jsx:275
+#: src/components/report-modal.jsx:318
 msgid "Muted {username}"
 msgstr "Ztlumit {username}"
 
-#: src/components/report-modal.jsx:278
+#: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
 msgstr "Nebylo možné ztlumit {username}"
 
-#: src/components/report-modal.jsx:283
+#: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr "Odeslat hlášení <0>+ ztlumit profil</0>"
 
-#: src/components/report-modal.jsx:294
+#: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
 msgstr "Zablokován {username}"
 
-#: src/components/report-modal.jsx:297
+#: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
 msgstr "Nelze zablokovat {username}"
 
-#: src/components/report-modal.jsx:302
+#: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
 msgstr "Odeslat hlášení <0>+ Blokovat profil</0>"
 
@@ -1931,7 +1931,7 @@ msgstr "Pouze místní"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:199
+#: src/pages/login.jsx:203
 msgid "Instance"
 msgstr "Instance"
 
@@ -1998,7 +1998,7 @@ msgid "Move down"
 msgstr "Dolů"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1395
+#: src/components/status.jsx:1474
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Upravit"
@@ -2197,341 +2197,362 @@ msgstr "Nezpracované zkratky JSON"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "Importovat/exportovat nastavení z/do instance serveru (experimentální)"
 
-#: src/components/status.jsx:614
+#: src/components/status.jsx:277
+msgid "Unable to format math"
+msgstr ""
+
+#: src/components/status.jsx:292
+msgid "Math expressions found."
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Show markup"
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Format math"
+msgstr ""
+
+#: src/components/status.jsx:689
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>boostnul</1>"
 
-#: src/components/status.jsx:713
+#: src/components/status.jsx:792
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "Omlouváme se, vaše aktuální přihlášená instance nemůže komunikovat s tímto příspěvkem z jiné instance."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:867
+#: src/components/status.jsx:946
 msgid "Unliked @{0}'s post"
 msgstr "Nelíbí se @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:868
+#: src/components/status.jsx:947
 msgid "Liked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:907
+#: src/components/status.jsx:986
 msgid "Unbookmarked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:908
+#: src/components/status.jsx:987
 msgid "Bookmarked @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1007
+#: src/components/status.jsx:1086
 msgid "Some media have no descriptions."
 msgstr "Některá média jsou bez popisu."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1014
+#: src/components/status.jsx:1093
 msgid "Old post (<0>{0}</0>)"
 msgstr "Starý příspěvek (<0>{0}</0>)"
 
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:1078
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:1157
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
 msgid "Unboost"
 msgstr "Zrušit boostnutí"
 
-#: src/components/status.jsx:1054
-#: src/components/status.jsx:2545
+#: src/components/status.jsx:1133
+#: src/components/status.jsx:2632
 msgid "Quote"
 msgstr "Citace"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1066
-#: src/components/status.jsx:1532
+#: src/components/status.jsx:1145
+#: src/components/status.jsx:1611
 msgid "Unboosted @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1067
-#: src/components/status.jsx:1533
+#: src/components/status.jsx:1146
+#: src/components/status.jsx:1612
 msgid "Boosted @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1079
+#: src/components/status.jsx:1158
 msgid "Boost…"
 msgstr "Boostnout…"
 
-#: src/components/status.jsx:1091
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:2566
+#: src/components/status.jsx:1170
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:2653
 msgid "Unlike"
 msgstr "Nelíbí se mi"
 
-#: src/components/status.jsx:1092
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:2566
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1171
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:2653
+#: src/components/status.jsx:2654
 msgid "Like"
 msgstr "Líbí se mi"
 
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
 msgid "Unbookmark"
 msgstr "Odebrat záložku"
 
-#: src/components/status.jsx:1184
+#: src/components/status.jsx:1263
 msgid "Post text copied"
 msgstr ""
 
-#: src/components/status.jsx:1187
+#: src/components/status.jsx:1266
 msgid "Unable to copy post text"
 msgstr ""
 
-#: src/components/status.jsx:1193
+#: src/components/status.jsx:1272
 msgid "Copy post text"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1211
+#: src/components/status.jsx:1290
 msgid "View post by <0>@{0}</0>"
 msgstr "Zobrazit příspěvek od <0>@{0}</0>"
 
-#: src/components/status.jsx:1232
+#: src/components/status.jsx:1311
 msgid "Show Edit History"
 msgstr "Ukázat historii úprav"
 
-#: src/components/status.jsx:1235
+#: src/components/status.jsx:1314
 msgid "Edited: {editedDateText}"
 msgstr "Upraveno: {editedDateText}"
 
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3346
+#: src/components/status.jsx:1381
+#: src/components/status.jsx:3433
 msgid "Embed post"
 msgstr "Vložit příspěvek"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation unmuted"
 msgstr "Ztlumení konverzace zrušeno"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation muted"
 msgstr "Konverzace ztlumena"
 
-#: src/components/status.jsx:1322
+#: src/components/status.jsx:1401
 msgid "Unable to unmute conversation"
 msgstr "Nelze zrušit ztlumení konverzace"
 
-#: src/components/status.jsx:1323
+#: src/components/status.jsx:1402
 msgid "Unable to mute conversation"
 msgstr "Nelze ztlumit konverzaci"
 
-#: src/components/status.jsx:1332
+#: src/components/status.jsx:1411
 msgid "Unmute conversation"
 msgstr "Zrušit ztlumení konverzace"
 
-#: src/components/status.jsx:1339
+#: src/components/status.jsx:1418
 msgid "Mute conversation"
 msgstr "Ztlumit konverzaci"
 
-#: src/components/status.jsx:1355
+#: src/components/status.jsx:1434
 msgid "Post unpinned from profile"
 msgstr "Příspěvek odepnut z profilu"
 
-#: src/components/status.jsx:1356
+#: src/components/status.jsx:1435
 msgid "Post pinned to profile"
 msgstr "Příspěvek připnut na profil"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to unpin post"
 msgstr "Nelze odepnout příspěvek"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to pin post"
 msgstr "Příspěvek nelze připnout"
 
-#: src/components/status.jsx:1370
+#: src/components/status.jsx:1449
 msgid "Unpin from profile"
 msgstr "Odepnout z profilu"
 
-#: src/components/status.jsx:1377
+#: src/components/status.jsx:1456
 msgid "Pin to profile"
 msgstr "Připnout na profil"
 
-#: src/components/status.jsx:1406
+#: src/components/status.jsx:1485
 msgid "Delete this post?"
 msgstr "Smazat tento příspěvek?"
 
-#: src/components/status.jsx:1422
+#: src/components/status.jsx:1501
 msgid "Post deleted"
 msgstr "Příspěvek odstraněn"
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1504
 msgid "Unable to delete post"
 msgstr "Příspěvek nelze odstranit"
 
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1532
 msgid "Report post…"
 msgstr "Nahlásit příspěvek…"
 
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:1863
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:1942
+#: src/components/status.jsx:2654
 msgid "Liked"
 msgstr "Líbí se"
 
-#: src/components/status.jsx:1860
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1939
+#: src/components/status.jsx:2641
 msgid "Boosted"
 msgstr "Boosty"
 
-#: src/components/status.jsx:1870
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1949
+#: src/components/status.jsx:2666
 msgid "Bookmarked"
 msgstr "Záložky"
 
-#: src/components/status.jsx:1874
+#: src/components/status.jsx:1953
 msgid "Pinned"
 msgstr "Připnuto"
 
-#: src/components/status.jsx:1920
-#: src/components/status.jsx:2391
+#: src/components/status.jsx:1999
+#: src/components/status.jsx:2478
 msgid "Deleted"
 msgstr "Smazat"
 
-#: src/components/status.jsx:1961
+#: src/components/status.jsx:2040
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# odpověď} few {# odpovědi} many {# odpovědi} other {# odpovědi}}"
 
 #. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
-#: src/components/status.jsx:2051
+#: src/components/status.jsx:2130
 msgid "Thread{0}"
 msgstr "Vlákna{0}"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
+#: src/components/status.jsx:2374
 msgid "Show less"
 msgstr "Zobrazit méně"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
 msgid "Show content"
 msgstr "Zobrazit obsah"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2283
+#: src/components/status.jsx:2370
 #: src/pages/catchup.jsx:1879
 msgid "Filtered: {0}"
 msgstr "Filtrováno: {0}"
 
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2374
 msgid "Show media"
 msgstr "Zobrazit média"
 
-#: src/components/status.jsx:2427
+#: src/components/status.jsx:2514
 msgid "Edited"
 msgstr "Upraveno"
 
-#: src/components/status.jsx:2504
+#: src/components/status.jsx:2591
 msgid "Comments"
 msgstr "Komentáře"
 
 #. More from [Author]
-#: src/components/status.jsx:2804
+#: src/components/status.jsx:2891
 msgid "More from <0/>"
 msgstr "Více od <0/>"
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3193
 msgid "Edit History"
 msgstr "Historie úprav"
 
-#: src/components/status.jsx:3110
+#: src/components/status.jsx:3197
 msgid "Failed to load history"
 msgstr "Nepodařilo se načíst historii"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3202
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Načítání…"
 
-#: src/components/status.jsx:3351
+#: src/components/status.jsx:3438
 msgid "HTML Code"
 msgstr "HTML kód"
 
-#: src/components/status.jsx:3368
+#: src/components/status.jsx:3455
 msgid "HTML code copied"
 msgstr "HTML kód zkopírován"
 
-#: src/components/status.jsx:3371
+#: src/components/status.jsx:3458
 msgid "Unable to copy HTML code"
 msgstr "Nelze kopírovat HTML kód"
 
-#: src/components/status.jsx:3383
+#: src/components/status.jsx:3470
 msgid "Media attachments:"
 msgstr "Přílohy médií:"
 
-#: src/components/status.jsx:3405
+#: src/components/status.jsx:3492
 msgid "Account Emojis:"
 msgstr "Emoji účtu:"
 
-#: src/components/status.jsx:3436
-#: src/components/status.jsx:3481
+#: src/components/status.jsx:3523
+#: src/components/status.jsx:3568
 msgid "static URL"
 msgstr "statická URL"
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3537
 msgid "Emojis:"
 msgstr "Emoji:"
 
-#: src/components/status.jsx:3495
+#: src/components/status.jsx:3582
 msgid "Notes:"
 msgstr "Poznámky:"
 
-#: src/components/status.jsx:3499
+#: src/components/status.jsx:3586
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Toto je statické, nestylizované a bez skriptů. Možná budete muset použít vlastní styly a podle potřeby upravovat."
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3592
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Hlasování v anketách není interaktivní, místo toho se zobrazí seznam s počty hlasů."
 
-#: src/components/status.jsx:3510
+#: src/components/status.jsx:3597
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Mediální přílohy mohou být obrázky, videa, audio nebo jakékoli typy souborů."
 
-#: src/components/status.jsx:3516
+#: src/components/status.jsx:3603
 msgid "Post could be edited or deleted later."
 msgstr "Příspěvek může být později upraven nebo odstraněn."
 
-#: src/components/status.jsx:3522
+#: src/components/status.jsx:3609
 msgid "Preview"
 msgstr "Náhled"
 
-#: src/components/status.jsx:3531
+#: src/components/status.jsx:3618
 msgid "Note: This preview is lightly styled."
 msgstr "Poznámka: Tento náhled je lehce stylizovaný."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3784
+#: src/components/status.jsx:3871
 msgid "<0/> <1/> boosted"
 msgstr "<0/><1/> boostnuto"
 
-#: src/components/status.jsx:3897
+#: src/components/status.jsx:3973
+msgid "Post hidden by your filters"
+msgstr ""
+
+#: src/components/status.jsx:3974
 msgid "Post removed by author."
 msgstr ""
 
-#: src/components/status.jsx:3906
+#: src/components/status.jsx:3975
 msgid "You’re not authorized to view this post."
 msgstr ""
 
-#: src/components/status.jsx:3915
+#: src/components/status.jsx:3976
 msgid "Post pending author approval."
 msgstr ""
 
-#: src/components/status.jsx:3924
+#: src/components/status.jsx:3977
+#: src/components/status.jsx:3978
 msgid "Quoting not allowed by the author."
 msgstr ""
 
@@ -2568,28 +2589,28 @@ msgstr "Vlákno"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrované</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:194
+#: src/components/translation-block.jsx:196
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Automaticky přeloženo z {sourceLangText}"
 
-#: src/components/translation-block.jsx:232
+#: src/components/translation-block.jsx:234
 msgid "Translating…"
 msgstr "Překlad…"
 
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Přeložit z {sourceLangText} (detekováno automaticky)"
 
-#: src/components/translation-block.jsx:236
+#: src/components/translation-block.jsx:238
 msgid "Translate from {sourceLangText}"
 msgstr "Přeložit z {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:266
 msgid "Auto ({0})"
 msgstr "Auto ({0})"
 
-#: src/components/translation-block.jsx:277
+#: src/components/translation-block.jsx:279
 msgid "Failed to translate"
 msgstr "Překlad se nezdařil"
 
@@ -2617,7 +2638,7 @@ msgstr "Vyžadováno přihlášení."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:276
+#: src/pages/login.jsx:280
 msgid "Go home"
 msgstr "Domů"
 
@@ -3330,32 +3351,32 @@ msgstr ""
 msgid "No lists yet."
 msgstr "Nemáte žádné seznamy."
 
-#: src/pages/login.jsx:118
-#: src/pages/login.jsx:128
+#: src/pages/login.jsx:122
+#: src/pages/login.jsx:132
 msgid "Failed to register application"
 msgstr "Nepodařilo se zaregistrovat aplikaci"
 
-#: src/pages/login.jsx:214
+#: src/pages/login.jsx:218
 msgid "instance domain"
 msgstr ""
 
-#: src/pages/login.jsx:238
+#: src/pages/login.jsx:242
 msgid "e.g. “mastodon.social”"
 msgstr "např. “mastodon.social”"
 
-#: src/pages/login.jsx:249
+#: src/pages/login.jsx:253
 msgid "Failed to log in. Please try again or try another instance."
 msgstr ""
 
-#: src/pages/login.jsx:261
+#: src/pages/login.jsx:265
 msgid "Continue with {selectedInstanceText}"
 msgstr ""
 
-#: src/pages/login.jsx:262
+#: src/pages/login.jsx:266
 msgid "Continue"
 msgstr "Pokračovat"
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:274
 msgid "Don't have an account? Create one!"
 msgstr "Nemáte účet? Vytvořte si účet!"
 

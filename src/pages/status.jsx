@@ -193,6 +193,7 @@ function StatusPage(params) {
           });
           transition.ready.finally(() => {
             el.style.viewTransitionName = '';
+            el.dataset.viewTransitioned = mediaVTN;
           });
         } else {
           mediaClose();

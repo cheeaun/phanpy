@@ -37,12 +37,17 @@ export const translate = async (text, source, target) => {
   let detectedSourceLanguage;
   const originalSource = source;
   if (source === 'auto') {
+    if (!langDetector?.detect) {
+      return {
+        error: 'No language detector',
+      };
+    }
     try {
       const results = await langDetector.detect(text);
       source = results[0].detectedLanguage;
       detectedSourceLanguage = source;
     } catch (e) {
-      console.error(e);
+      console.warn(e);
       return {
         error: e,
       };

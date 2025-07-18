@@ -289,11 +289,21 @@ function Media({
           onClick(e);
         } else {
           e.preventDefault();
-          el.style.viewTransitionName = mediaVTN;
-          document.startViewTransition(() => {
-            el.style.viewTransitionName = '';
+          if (el.dataset.viewTransitioned) {
+            el.style.viewTransitionName = mediaVTN;
+            try {
+              document.startViewTransition(() => {
+                el.style.viewTransitionName = '';
+                location.hash = `#${to}`;
+              });
+            } catch (e) {
+              console.error(e);
+              el.style.viewTransitionName = '';
+              location.hash = `#${to}`;
+            }
+          } else {
             location.hash = `#${to}`;
-          });
+          }
         }
       } else {
         onClick?.(e);

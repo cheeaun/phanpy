@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:14\n"
+"PO-Revision-Date: 2025-07-15 09:07\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -39,7 +39,7 @@ msgstr "Aŭtomatigita"
 
 #: src/components/account-block.jsx:170
 #: src/components/account-info.jsx:715
-#: src/components/status.jsx:590
+#: src/components/status.jsx:665
 msgid "Group"
 msgstr "Grupo"
 
@@ -113,14 +113,14 @@ msgstr "Afiŝoj"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2792
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
-#: src/components/status.jsx:1836
-#: src/components/status.jsx:1853
-#: src/components/status.jsx:1978
-#: src/components/status.jsx:2599
-#: src/components/status.jsx:2602
+#: src/components/status.jsx:1915
+#: src/components/status.jsx:1932
+#: src/components/status.jsx:2057
+#: src/components/status.jsx:2686
+#: src/components/status.jsx:2689
 #: src/pages/account-statuses.jsx:531
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -208,7 +208,7 @@ msgid "Original"
 msgstr "Originala"
 
 #: src/components/account-info.jsx:946
-#: src/components/status.jsx:2383
+#: src/components/status.jsx:2470
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
@@ -334,30 +334,30 @@ msgid "Add/Remove from Lists"
 msgstr "Aldoni/Forigi el Listoj"
 
 #: src/components/account-info.jsx:1490
-#: src/components/status.jsx:1258
+#: src/components/status.jsx:1337
 msgid "Link copied"
 msgstr "Ligilo kopiita"
 
 #: src/components/account-info.jsx:1493
-#: src/components/status.jsx:1261
+#: src/components/status.jsx:1340
 msgid "Unable to copy link"
 msgstr "Ne eblas kopii la ligilon"
 
 #: src/components/account-info.jsx:1499
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1267
-#: src/components/status.jsx:3377
+#: src/components/status.jsx:1346
+#: src/components/status.jsx:3464
 msgid "Copy"
 msgstr "Kopii"
 
 #: src/components/account-info.jsx:1514
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1283
+#: src/components/status.jsx:1362
 msgid "Sharing doesn't seem to work."
 msgstr "Kunhavigo ŝajnas ne funkcii."
 
 #: src/components/account-info.jsx:1520
-#: src/components/status.jsx:1289
+#: src/components/status.jsx:1368
 msgid "Share…"
 msgstr "Diskonigi…"
 
@@ -455,10 +455,10 @@ msgstr "Sekvi"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:3228
+#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3667
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -467,13 +467,13 @@ msgstr "Sekvi"
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
-#: src/components/report-modal.jsx:75
+#: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3101
-#: src/components/status.jsx:3341
-#: src/components/status.jsx:3850
+#: src/components/status.jsx:3188
+#: src/components/status.jsx:3428
+#: src/components/status.jsx:3937
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
@@ -662,8 +662,8 @@ msgstr "{0, plural, one {La dosiero {1} ne estas subtenata.} other {La dosieroj 
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Vi povas nur kunsendi ĝis 1 dosieron.} other {Vi povas nur kunsendi ĝis # dosierojn.}}"
 
@@ -723,7 +723,7 @@ msgid "Attachment #{i} failed"
 msgstr "Eraro aldonante #{i}"
 
 #: src/components/compose.jsx:1221
-#: src/components/status.jsx:2166
+#: src/components/status.jsx:2245
 #: src/components/timeline.jsx:1023
 msgid "Content warning"
 msgstr "Enhavaverto"
@@ -733,7 +733,7 @@ msgid "Content warning or sensitive media"
 msgstr "Enhavaverto aŭ sentema plurmedio"
 
 #: src/components/compose.jsx:1273
-#: src/components/status.jsx:96
+#: src/components/status.jsx:99
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr "Publika"
@@ -741,25 +741,25 @@ msgstr "Publika"
 #: src/components/compose.jsx:1278
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
-#: src/components/status.jsx:97
+#: src/components/status.jsx:100
 msgid "Local"
 msgstr "Loka"
 
 #: src/components/compose.jsx:1282
-#: src/components/status.jsx:98
+#: src/components/status.jsx:101
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr "Nelistigita"
 
 #: src/components/compose.jsx:1285
-#: src/components/status.jsx:99
+#: src/components/status.jsx:102
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr "Nur sekvantoj"
 
 #: src/components/compose.jsx:1288
-#: src/components/status.jsx:100
-#: src/components/status.jsx:2042
+#: src/components/status.jsx:103
+#: src/components/status.jsx:2121
 msgid "Private mention"
 msgstr "Privata mencio"
 
@@ -784,61 +784,61 @@ msgid "Posting on <0/>"
 msgstr "Afiŝi la <0/>"
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3286
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Aldoni"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr "Plani"
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1030
-#: src/components/status.jsx:1816
-#: src/components/status.jsx:1817
-#: src/components/status.jsx:2503
+#: src/components/status.jsx:1109
+#: src/components/status.jsx:1895
+#: src/components/status.jsx:1896
+#: src/components/status.jsx:2590
 msgid "Reply"
 msgstr "Respondi"
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Ĝisdatigi"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Afiŝi"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "Elŝutante movbildon…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Malsukcesis elŝuti movbildon"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Pli…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2562
 msgid "Uploaded"
 msgstr "Ĝisdatigita"
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2575
 msgid "Image description"
 msgstr "Priskribo de bildo"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2576
 msgid "Video description"
 msgstr "Priskribo de filmeto"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2577
 msgid "Audio description"
 msgstr "Priskribo de aŭdaĵo"
 
@@ -846,8 +846,8 @@ msgstr "Priskribo de aŭdaĵo"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2612
+#: src/components/compose.jsx:2632
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Dosiergrandeco estas tro granda. Alŝuto eble renkontos problemojn. Provu redukti la dosiergrandecon de {0} al {1} ​​aŭ malpli."
 
@@ -855,150 +855,150 @@ msgstr "Dosiergrandeco estas tro granda. Alŝuto eble renkontos problemojn. Prov
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2624
+#: src/components/compose.jsx:2644
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimensio estas tro granda. Alŝuto eble renkontos problemojn. Provu redukti dimension de {0}x{1}px al {2}x{3}px."
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2652
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Bildrapido estas tro alta. Alŝuto eble renkontos problemojn."
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2712
+#: src/components/compose.jsx:2962
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Forigi"
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2729
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Eraro"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2754
 msgid "Edit image description"
 msgstr "Redakti bildopriskribon"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2755
 msgid "Edit video description"
 msgstr "Redakti videopriskribon"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2756
 msgid "Edit audio description"
 msgstr "Redakti aŭdpriskribon"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2801
+#: src/components/compose.jsx:2850
 msgid "Generating description. Please wait…"
 msgstr "Kreante priskribon. Bonvolu atendi…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2821
 msgid "Failed to generate description: {0}"
 msgstr "Malsukcesis generi priskribon: {0}"
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2822
 msgid "Failed to generate description"
 msgstr "Malsukcesis krei priskribon"
 
-#: src/components/compose.jsx:2828
 #: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2840
+#: src/components/compose.jsx:2886
 msgid "Generate description…"
 msgstr "Krei priskribon…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2873
 msgid "Failed to generate description{0}"
 msgstr "Malsukcesis generi priskribon{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2888
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— eksperimenta</0>"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2907
 msgid "Done"
 msgstr "Farite"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2943
 msgid "Choice {0}"
 msgstr "Elekti {0}"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2990
 msgid "Multiple choices"
 msgstr "Multoblaj elektoj"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2993
 msgid "Duration"
 msgstr "Daŭro"
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3024
 msgid "Remove poll"
 msgstr "Forigi balotenketon"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3245
 msgid "Search accounts"
 msgstr "Serĉi kontojn"
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3299
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "Eraro dum ŝargo de kontoj"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3443
 msgid "Custom emojis"
 msgstr "Propraj emoĝioj"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3463
 msgid "Search emoji"
 msgstr "Serĉi emoĝion"
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3494
 msgid "Error loading custom emojis"
 msgstr "Eraro dum ŝarĝo de propraj emoĝioj"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3505
 msgid "Recently used"
 msgstr "Ofte uzataj"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3506
 msgid "Others"
 msgstr "Aliaj"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3544
 msgid "{0} more…"
 msgstr "{0} pli…"
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3682
 msgid "Search GIFs"
 msgstr "Serĉi GIF-movbildojn"
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3697
 msgid "Powered by GIPHY"
 msgstr "Funkciigita de GIPHY"
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3705
 msgid "Type to search GIFs"
 msgstr "Tajpi por serĉi movbildojn"
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3803
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Antaŭa"
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3821
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Sekva"
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3838
 msgid "Error loading GIFs"
 msgstr "Eraro dum ŝargo de movbildoj"
 
@@ -1021,7 +1021,7 @@ msgstr "Eraro dum forigo de malneto! Bonvolu provi denove."
 
 #: src/components/drafts.jsx:128
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1433
+#: src/components/status.jsx:1512
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
 msgid "Delete…"
@@ -1230,10 +1230,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> aŭ <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
+#: src/components/status.jsx:2641
 msgid "Boost"
 msgstr "Diskonigi"
 
@@ -1242,9 +1242,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Ŝovo</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
+#: src/components/status.jsx:2666
 msgid "Bookmark"
 msgstr "Legosigni"
 
@@ -1301,7 +1301,7 @@ msgstr "Ne eblas forigi liston."
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr ""
+msgstr "Afiŝoj en ĉi tiu listo ne aperos en Hejmo/Sekvatoj"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -1309,14 +1309,14 @@ msgid "Media description"
 msgstr "Priskribo de plurmedio"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1144
-#: src/components/status.jsx:1153
-#: src/components/translation-block.jsx:237
+#: src/components/status.jsx:1223
+#: src/components/status.jsx:1232
+#: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr "Traduki"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1172
+#: src/components/status.jsx:1251
 msgid "Speak"
 msgstr "Paroli"
 
@@ -1353,16 +1353,16 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrila: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3680
-#: src/components/status.jsx:3776
-#: src/components/status.jsx:3854
+#: src/components/status.jsx:3767
+#: src/components/status.jsx:3863
+#: src/components/status.jsx:3941
 #: src/components/timeline.jsx:1012
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1880
 msgid "Filtered"
 msgstr "Filtrila"
 
-#: src/components/media.jsx:469
+#: src/components/media.jsx:477
 msgid "Open file"
 msgstr "Malfermi dosieron"
 
@@ -1496,7 +1496,7 @@ msgstr "Kontoj…"
 
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
-#: src/pages/login.jsx:195
+#: src/pages/login.jsx:199
 #: src/pages/status.jsx:924
 #: src/pages/welcome.jsx:65
 msgid "Log in"
@@ -1667,8 +1667,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[Nekonata tipo de sciigo: {type}]"
 
 #: src/components/notification.jsx:451
-#: src/components/status.jsx:1115
-#: src/components/status.jsx:1125
+#: src/components/status.jsx:1194
+#: src/components/status.jsx:1204
 msgid "Boosted/Liked by…"
 msgstr "Diskonigita/Ŝatita de…"
 
@@ -1694,7 +1694,7 @@ msgid "View #Wrapstodon"
 msgstr "Vidu #Wrapstodon"
 
 #: src/components/notification.jsx:801
-#: src/components/status.jsx:328
+#: src/components/status.jsx:403
 msgid "Read more →"
 msgstr "Legi pli →"
 
@@ -1775,111 +1775,111 @@ msgstr "{0}m"
 msgid "{0}h"
 msgstr "{0}h"
 
-#: src/components/report-modal.jsx:29
+#: src/components/report-modal.jsx:30
 msgid "Spam"
 msgstr "Trudaĵo"
 
-#: src/components/report-modal.jsx:30
+#: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
 msgstr "Trompaj ligiloj, falsa engaĝiĝo aŭ ripetaj respondoj"
 
-#: src/components/report-modal.jsx:33
+#: src/components/report-modal.jsx:34
 msgid "Illegal"
 msgstr "Kontraŭleĝa"
 
-#: src/components/report-modal.jsx:34
+#: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
 msgstr "Malobservas la leĝon de via aŭ de la servilo lando"
 
-#: src/components/report-modal.jsx:37
+#: src/components/report-modal.jsx:38
 msgid "Server rule violation"
 msgstr "Malobservo de servila regulo"
 
-#: src/components/report-modal.jsx:38
+#: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
 msgstr "Malobservas specifajn servilajn regulojn"
 
-#: src/components/report-modal.jsx:39
+#: src/components/report-modal.jsx:40
 msgid "Violation"
 msgstr "Malobservo"
 
-#: src/components/report-modal.jsx:42
+#: src/components/report-modal.jsx:43
 msgid "Other"
 msgstr "Alia"
 
-#: src/components/report-modal.jsx:43
+#: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
 msgstr "La problemo ne taŭgas en aliaj kategorioj"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report Post"
 msgstr "Raporti afiŝon"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report @{username}"
 msgstr "Raporti @{username}"
 
-#: src/components/report-modal.jsx:104
+#: src/components/report-modal.jsx:147
 msgid "Pending review"
 msgstr "Atendante revizion"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Post reported"
 msgstr "Afiŝo raportita"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Profile reported"
 msgstr "Raportita profilo"
 
-#: src/components/report-modal.jsx:154
+#: src/components/report-modal.jsx:197
 msgid "Unable to report post"
 msgstr "Ne eblas raporti afiŝon"
 
-#: src/components/report-modal.jsx:155
+#: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
 msgstr "Ne eblas raporti profilon"
 
-#: src/components/report-modal.jsx:163
+#: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
 msgstr "Kio estas la problema kun ĉi tiu afiŝo?"
 
-#: src/components/report-modal.jsx:164
+#: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
 msgstr "Kio estas la problemo kun ĉi tiu profilo?"
 
-#: src/components/report-modal.jsx:233
+#: src/components/report-modal.jsx:276
 msgid "Additional info"
 msgstr "Pliaj informoj"
 
-#: src/components/report-modal.jsx:256
+#: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
 msgstr "Sendi al <0>{domain}</0>"
 
-#: src/components/report-modal.jsx:266
+#: src/components/report-modal.jsx:309
 msgid "Send Report"
 msgstr "Sendi Raporton"
 
-#: src/components/report-modal.jsx:275
+#: src/components/report-modal.jsx:318
 msgid "Muted {username}"
 msgstr "Silentigita {username}"
 
-#: src/components/report-modal.jsx:278
+#: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
 msgstr "Ne eblas silentigi {username}"
 
-#: src/components/report-modal.jsx:283
+#: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr "Sendi raporton <0>+ Silentigi profilon</0>"
 
-#: src/components/report-modal.jsx:294
+#: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
 msgstr "Blokita {username}"
 
-#: src/components/report-modal.jsx:297
+#: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
 msgstr "Ne eblas bloki {username}"
 
-#: src/components/report-modal.jsx:302
+#: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
 msgstr "Sendi raporton <0>+ Bloki profilon</0>"
 
@@ -1931,7 +1931,7 @@ msgstr "Nur loka"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:199
+#: src/pages/login.jsx:203
 msgid "Instance"
 msgstr "Nodo"
 
@@ -1998,7 +1998,7 @@ msgid "Move down"
 msgstr "Moviĝi malsupren"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1395
+#: src/components/status.jsx:1474
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Redakti"
@@ -2197,343 +2197,364 @@ msgstr "Ne estas plu ŝparvojoj por importi"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "Importi/eksporti agordojn de/al nodservilo (Tre eksperimenta)"
 
-#: src/components/status.jsx:614
+#: src/components/status.jsx:277
+msgid "Unable to format math"
+msgstr ""
+
+#: src/components/status.jsx:292
+msgid "Math expressions found."
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Show markup"
+msgstr ""
+
+#: src/components/status.jsx:294
+msgid "Format math"
+msgstr ""
+
+#: src/components/status.jsx:689
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>diskonigita</1>"
 
-#: src/components/status.jsx:713
+#: src/components/status.jsx:792
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "Pardonu, la nodo en kiu vi estas ensalutinta ne permesas vin interagi kun ĉi tiu afiŝo de alia nodo."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:867
+#: src/components/status.jsx:946
 msgid "Unliked @{0}'s post"
 msgstr "Ne plu ŝatis la afiŝon de {0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:868
+#: src/components/status.jsx:947
 msgid "Liked @{0}'s post"
 msgstr "Ŝatis la afiŝon de {0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:907
+#: src/components/status.jsx:986
 msgid "Unbookmarked @{0}'s post"
 msgstr "Ne plu legosignis la afiŝon de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:908
+#: src/components/status.jsx:987
 msgid "Bookmarked @{0}'s post"
 msgstr "Legosignis la afiŝon de @{0}"
 
-#: src/components/status.jsx:1007
+#: src/components/status.jsx:1086
 msgid "Some media have no descriptions."
 msgstr "Iuj plurmedioj ne havas priskribojn."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1014
+#: src/components/status.jsx:1093
 msgid "Old post (<0>{0}</0>)"
 msgstr "Malnova afiŝo (<0>{0}</0>)"
 
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:1078
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
+#: src/components/status.jsx:1117
+#: src/components/status.jsx:1157
+#: src/components/status.jsx:2617
+#: src/components/status.jsx:2640
 msgid "Unboost"
 msgstr "Ne plu diskonigi"
 
-#: src/components/status.jsx:1054
-#: src/components/status.jsx:2545
+#: src/components/status.jsx:1133
+#: src/components/status.jsx:2632
 msgid "Quote"
 msgstr "Citaĵo"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1066
-#: src/components/status.jsx:1532
+#: src/components/status.jsx:1145
+#: src/components/status.jsx:1611
 msgid "Unboosted @{0}'s post"
 msgstr "Ne plu diskonigita la afiŝon de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1067
-#: src/components/status.jsx:1533
+#: src/components/status.jsx:1146
+#: src/components/status.jsx:1612
 msgid "Boosted @{0}'s post"
 msgstr "Diskonigita la afiŝon de @{0}"
 
-#: src/components/status.jsx:1079
+#: src/components/status.jsx:1158
 msgid "Boost…"
 msgstr "Diskonigi…"
 
-#: src/components/status.jsx:1091
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:2566
+#: src/components/status.jsx:1170
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:2653
 msgid "Unlike"
 msgstr "Ne plu ŝati"
 
-#: src/components/status.jsx:1092
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:2566
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1171
+#: src/components/status.jsx:1905
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:2653
+#: src/components/status.jsx:2654
 msgid "Like"
 msgstr "Ŝatata"
 
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
+#: src/components/status.jsx:1180
+#: src/components/status.jsx:2665
 msgid "Unbookmark"
 msgstr "Ne plu legosignis"
 
-#: src/components/status.jsx:1184
+#: src/components/status.jsx:1263
 msgid "Post text copied"
 msgstr "Teksto de la afiŝo kopiita"
 
-#: src/components/status.jsx:1187
+#: src/components/status.jsx:1266
 msgid "Unable to copy post text"
 msgstr "Ne eblas kopii tekston de la afiŝo"
 
-#: src/components/status.jsx:1193
+#: src/components/status.jsx:1272
 msgid "Copy post text"
 msgstr "Kopii tekston de la afiŝo"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1211
+#: src/components/status.jsx:1290
 msgid "View post by <0>@{0}</0>"
 msgstr "Vidi afiŝon de <0>@{0}</0>"
 
-#: src/components/status.jsx:1232
+#: src/components/status.jsx:1311
 msgid "Show Edit History"
 msgstr "Montri redaktan historion"
 
-#: src/components/status.jsx:1235
+#: src/components/status.jsx:1314
 msgid "Edited: {editedDateText}"
 msgstr "Redaktita: {editedDateText}"
 
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3346
+#: src/components/status.jsx:1381
+#: src/components/status.jsx:3433
 msgid "Embed post"
 msgstr "Enkorpigi afiŝon"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation unmuted"
 msgstr "Konversacion nesilentigita"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1395
 msgid "Conversation muted"
 msgstr "Konversacion silentigita"
 
-#: src/components/status.jsx:1322
+#: src/components/status.jsx:1401
 msgid "Unable to unmute conversation"
 msgstr "Ne eblas nesilentigi konversacion"
 
-#: src/components/status.jsx:1323
+#: src/components/status.jsx:1402
 msgid "Unable to mute conversation"
 msgstr "Ne eblas silentigi konversacion"
 
-#: src/components/status.jsx:1332
+#: src/components/status.jsx:1411
 msgid "Unmute conversation"
 msgstr "Nesilentigi konversacion"
 
-#: src/components/status.jsx:1339
+#: src/components/status.jsx:1418
 msgid "Mute conversation"
 msgstr "Silentigi konversacion"
 
-#: src/components/status.jsx:1355
+#: src/components/status.jsx:1434
 msgid "Post unpinned from profile"
 msgstr "Afiŝo depinglinta de profilo"
 
-#: src/components/status.jsx:1356
+#: src/components/status.jsx:1435
 msgid "Post pinned to profile"
 msgstr "Afiŝo alpinglita al profilo"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to unpin post"
 msgstr "Ne eblas depingli afiŝon"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1440
 msgid "Unable to pin post"
 msgstr "Ne eblas alpingli afiŝon"
 
-#: src/components/status.jsx:1370
+#: src/components/status.jsx:1449
 msgid "Unpin from profile"
 msgstr "Depingli de profilo"
 
-#: src/components/status.jsx:1377
+#: src/components/status.jsx:1456
 msgid "Pin to profile"
 msgstr "Alpingli al la profilo"
 
-#: src/components/status.jsx:1406
+#: src/components/status.jsx:1485
 msgid "Delete this post?"
 msgstr "Ĉu forigi ĉi tiun afiŝon?"
 
-#: src/components/status.jsx:1422
+#: src/components/status.jsx:1501
 msgid "Post deleted"
 msgstr "Afiŝo forigita"
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1504
 msgid "Unable to delete post"
 msgstr "Ne eblas forigi afiŝon"
 
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1532
 msgid "Report post…"
 msgstr "Raporti afiŝon…"
 
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:1863
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1906
+#: src/components/status.jsx:1942
+#: src/components/status.jsx:2654
 msgid "Liked"
 msgstr "Ŝatita"
 
-#: src/components/status.jsx:1860
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1939
+#: src/components/status.jsx:2641
 msgid "Boosted"
 msgstr "Diskonigita"
 
-#: src/components/status.jsx:1870
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1949
+#: src/components/status.jsx:2666
 msgid "Bookmarked"
 msgstr "Legosignita"
 
-#: src/components/status.jsx:1874
+#: src/components/status.jsx:1953
 msgid "Pinned"
 msgstr "Alpinglita"
 
-#: src/components/status.jsx:1920
-#: src/components/status.jsx:2391
+#: src/components/status.jsx:1999
+#: src/components/status.jsx:2478
 msgid "Deleted"
 msgstr "Forigita"
 
-#: src/components/status.jsx:1961
+#: src/components/status.jsx:2040
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# respondo} other {# respondoj}}"
 
 #. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
-#: src/components/status.jsx:2051
+#: src/components/status.jsx:2130
 msgid "Thread{0}"
 msgstr "Fadeno{0}"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
+#: src/components/status.jsx:2374
 msgid "Show less"
 msgstr "Montru malpli"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
+#: src/components/status.jsx:2208
+#: src/components/status.jsx:2270
 msgid "Show content"
 msgstr "Montru envahon"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2283
+#: src/components/status.jsx:2370
 #: src/pages/catchup.jsx:1879
 msgid "Filtered: {0}"
 msgstr "Filtrita: {0}"
 
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2374
 msgid "Show media"
 msgstr "Montri plurmedion"
 
-#: src/components/status.jsx:2427
+#: src/components/status.jsx:2514
 msgid "Edited"
 msgstr "Redaktita"
 
-#: src/components/status.jsx:2504
+#: src/components/status.jsx:2591
 msgid "Comments"
 msgstr "Komentoj"
 
 #. More from [Author]
-#: src/components/status.jsx:2804
+#: src/components/status.jsx:2891
 msgid "More from <0/>"
 msgstr "Pli de <0/>"
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3193
 msgid "Edit History"
 msgstr "Redaktan historion"
 
-#: src/components/status.jsx:3110
+#: src/components/status.jsx:3197
 msgid "Failed to load history"
 msgstr "Malsukcesis ŝargi historion"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3202
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Ŝargante…"
 
-#: src/components/status.jsx:3351
+#: src/components/status.jsx:3438
 msgid "HTML Code"
 msgstr "HTML-kodo"
 
-#: src/components/status.jsx:3368
+#: src/components/status.jsx:3455
 msgid "HTML code copied"
 msgstr "HTML-kodo kopiita"
 
-#: src/components/status.jsx:3371
+#: src/components/status.jsx:3458
 msgid "Unable to copy HTML code"
 msgstr "Ne eblas kopii HTML-kodon"
 
-#: src/components/status.jsx:3383
+#: src/components/status.jsx:3470
 msgid "Media attachments:"
 msgstr "Plurmediaj aldonaĵoj:"
 
-#: src/components/status.jsx:3405
+#: src/components/status.jsx:3492
 msgid "Account Emojis:"
 msgstr "Emoĝioj de la konto:"
 
-#: src/components/status.jsx:3436
-#: src/components/status.jsx:3481
+#: src/components/status.jsx:3523
+#: src/components/status.jsx:3568
 msgid "static URL"
 msgstr "statika URL"
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3537
 msgid "Emojis:"
 msgstr "Emoĝioj:"
 
-#: src/components/status.jsx:3495
+#: src/components/status.jsx:3582
 msgid "Notes:"
 msgstr "Notoj:"
 
-#: src/components/status.jsx:3499
+#: src/components/status.jsx:3586
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Ĉi tio estas senmova, ne stilita kaj senskriba. Vi eble bezonos apliki viajn proprajn stilojn kaj redakti laŭbezone."
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3592
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Balotenketoj ne estas interagaj kaj estos konvertitaj al listo kun balotkalkuloj."
 
-#: src/components/status.jsx:3510
+#: src/components/status.jsx:3597
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Plurmediaj aldonaĵoj povas esti bildoj, filmetoj, sonaĵoj aŭ ajnaj dosiertipoj."
 
-#: src/components/status.jsx:3516
+#: src/components/status.jsx:3603
 msgid "Post could be edited or deleted later."
 msgstr "Afiŝo povus esti redaktita aŭ forigita poste."
 
-#: src/components/status.jsx:3522
+#: src/components/status.jsx:3609
 msgid "Preview"
 msgstr "Antaŭrigardo"
 
-#: src/components/status.jsx:3531
+#: src/components/status.jsx:3618
 msgid "Note: This preview is lightly styled."
 msgstr "Noto: Ĉi tiu antaŭmontro estas malpeze stilita."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3784
+#: src/components/status.jsx:3871
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> diskonigita"
 
-#: src/components/status.jsx:3897
+#: src/components/status.jsx:3973
+msgid "Post hidden by your filters"
+msgstr ""
+
+#: src/components/status.jsx:3974
 msgid "Post removed by author."
 msgstr ""
 
-#: src/components/status.jsx:3906
+#: src/components/status.jsx:3975
 msgid "You’re not authorized to view this post."
-msgstr ""
+msgstr "Vi ne rajtas vidi ĉi tiun afiŝon."
 
-#: src/components/status.jsx:3915
+#: src/components/status.jsx:3976
 msgid "Post pending author approval."
 msgstr ""
 
-#: src/components/status.jsx:3924
+#: src/components/status.jsx:3977
+#: src/components/status.jsx:3978
 msgid "Quoting not allowed by the author."
-msgstr ""
+msgstr "Citado ne estas permesita de la aŭtoro."
 
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1218
@@ -2568,28 +2589,28 @@ msgstr "Fadeno"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrita</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:194
+#: src/components/translation-block.jsx:196
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Aŭtomate tradukita el {sourceLangText}"
 
-#: src/components/translation-block.jsx:232
+#: src/components/translation-block.jsx:234
 msgid "Translating…"
 msgstr "Tradukante…"
 
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Traduki el {sourceLangText} (aŭtomate detektita)"
 
-#: src/components/translation-block.jsx:236
+#: src/components/translation-block.jsx:238
 msgid "Translate from {sourceLangText}"
 msgstr "Traduki el {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:266
 msgid "Auto ({0})"
 msgstr "Aŭtomata ({0})"
 
-#: src/components/translation-block.jsx:277
+#: src/components/translation-block.jsx:279
 msgid "Failed to translate"
 msgstr "Malsukcesis traduki"
 
@@ -2617,7 +2638,7 @@ msgstr "Ensaluto bezonata."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:276
+#: src/pages/login.jsx:280
 msgid "Go home"
 msgstr "Iru hejmen"
 
@@ -3330,32 +3351,32 @@ msgstr "{0, plural, one {#listo} other {# listoj}}"
 msgid "No lists yet."
 msgstr "Ankoraŭ ne estas listoj."
 
-#: src/pages/login.jsx:118
-#: src/pages/login.jsx:128
+#: src/pages/login.jsx:122
+#: src/pages/login.jsx:132
 msgid "Failed to register application"
 msgstr "Malsukcesis registri aplikaĵon"
 
-#: src/pages/login.jsx:214
+#: src/pages/login.jsx:218
 msgid "instance domain"
 msgstr "noda domajno"
 
-#: src/pages/login.jsx:238
+#: src/pages/login.jsx:242
 msgid "e.g. “mastodon.social”"
 msgstr "ekz. “mastodon.social”"
 
-#: src/pages/login.jsx:249
+#: src/pages/login.jsx:253
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "Malsukcesis ensaluti. Bonvolu provi denove aŭ provi alian nodon."
 
-#: src/pages/login.jsx:261
+#: src/pages/login.jsx:265
 msgid "Continue with {selectedInstanceText}"
 msgstr "Daŭrigi per {selectedInstanceText}"
 
-#: src/pages/login.jsx:262
+#: src/pages/login.jsx:266
 msgid "Continue"
 msgstr "Daŭrigi"
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:274
 msgid "Don't have an account? Create one!"
 msgstr "Ĉu vi ankoraŭ ne havas konton? Kreu unu!"
 
@@ -3794,7 +3815,7 @@ msgstr "Donaci"
 
 #: src/pages/settings.jsx:802
 msgid "What's new"
-msgstr ""
+msgstr "Lastatempaj ŝanĝoj"
 
 #: src/pages/settings.jsx:806
 msgid "Privacy Policy"

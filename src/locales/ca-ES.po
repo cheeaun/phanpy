@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-20 01:13\n"
+"PO-Revision-Date: 2025-07-16 22:17\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -39,7 +39,7 @@ msgstr "Automatitzat"
 
 #: src/components/account-block.jsx:170
 #: src/components/account-info.jsx:715
-#: src/components/status.jsx:590
+#: src/components/status.jsx:747
 msgid "Group"
 msgstr "Grup"
 
@@ -113,21 +113,21 @@ msgstr "Publicacions"
 
 #: src/components/account-info.jsx:462
 #: src/components/account-info.jsx:1236
-#: src/components/compose.jsx:2786
+#: src/components/compose.jsx:2792
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
-#: src/components/status.jsx:1836
-#: src/components/status.jsx:1853
-#: src/components/status.jsx:1978
-#: src/components/status.jsx:2599
-#: src/components/status.jsx:2602
+#: src/components/status.jsx:1997
+#: src/components/status.jsx:2014
+#: src/components/status.jsx:2139
+#: src/components/status.jsx:2768
+#: src/components/status.jsx:2771
 #: src/pages/account-statuses.jsx:531
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1305
+#: src/pages/status.jsx:1306
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Més"
@@ -208,12 +208,12 @@ msgid "Original"
 msgstr "Original"
 
 #: src/components/account-info.jsx:946
-#: src/components/status.jsx:2383
+#: src/components/status.jsx:2552
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
-#: src/pages/status.jsx:1024
-#: src/pages/status.jsx:1651
+#: src/pages/status.jsx:1025
+#: src/pages/status.jsx:1652
 msgid "Replies"
 msgstr "Respostes"
 
@@ -334,30 +334,30 @@ msgid "Add/Remove from Lists"
 msgstr "Afegeix/elimina de les llistes"
 
 #: src/components/account-info.jsx:1490
-#: src/components/status.jsx:1258
+#: src/components/status.jsx:1419
 msgid "Link copied"
 msgstr "Enllaç copiat"
 
 #: src/components/account-info.jsx:1493
-#: src/components/status.jsx:1261
+#: src/components/status.jsx:1422
 msgid "Unable to copy link"
 msgstr "No s'ha pogut copiar l'enllaç"
 
 #: src/components/account-info.jsx:1499
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1267
-#: src/components/status.jsx:3377
+#: src/components/status.jsx:1428
+#: src/components/status.jsx:3546
 msgid "Copy"
 msgstr "Copia"
 
 #: src/components/account-info.jsx:1514
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1283
+#: src/components/status.jsx:1444
 msgid "Sharing doesn't seem to work."
 msgstr "Sembla que la compartició no funciona."
 
 #: src/components/account-info.jsx:1520
-#: src/components/status.jsx:1289
+#: src/components/status.jsx:1450
 msgid "Share…"
 msgstr "Comparteix…"
 
@@ -455,10 +455,10 @@ msgstr "Segueix"
 #: src/components/account-info.jsx:2295
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:891
-#: src/components/compose.jsx:2742
-#: src/components/compose.jsx:3222
-#: src/components/compose.jsx:3431
-#: src/components/compose.jsx:3661
+#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:3228
+#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3667
 #: src/components/drafts.jsx:59
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
@@ -467,13 +467,13 @@ msgstr "Segueix"
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
-#: src/components/report-modal.jsx:75
+#: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3101
-#: src/components/status.jsx:3341
-#: src/components/status.jsx:3850
+#: src/components/status.jsx:3270
+#: src/components/status.jsx:3510
+#: src/components/status.jsx:4019
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
@@ -481,7 +481,7 @@ msgstr "Segueix"
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:90
-#: src/pages/status.jsx:1392
+#: src/pages/status.jsx:1393
 msgid "Close"
 msgstr "Tanca"
 
@@ -662,8 +662,8 @@ msgstr "{0, plural, one {{1} fitxer no és compatible.} other {{2} fitxers no s�
 
 #: src/components/compose.jsx:664
 #: src/components/compose.jsx:682
-#: src/components/compose.jsx:1792
-#: src/components/compose.jsx:1917
+#: src/components/compose.jsx:1794
+#: src/components/compose.jsx:1919
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Només podeu adjuntar com a màxim 1 fitxer.} other {Només podeu adjuntar un màxim de # fitxers.}}"
 
@@ -723,7 +723,7 @@ msgid "Attachment #{i} failed"
 msgstr "El fitxer adjunt #{i} ha fallat"
 
 #: src/components/compose.jsx:1221
-#: src/components/status.jsx:2166
+#: src/components/status.jsx:2327
 #: src/components/timeline.jsx:1023
 msgid "Content warning"
 msgstr "Avís de contingut"
@@ -733,7 +733,7 @@ msgid "Content warning or sensitive media"
 msgstr "Advertiment de contingut o mitjans sensibles"
 
 #: src/components/compose.jsx:1273
-#: src/components/status.jsx:96
+#: src/components/status.jsx:99
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr "Públic"
@@ -741,25 +741,25 @@ msgstr "Públic"
 #: src/components/compose.jsx:1278
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
-#: src/components/status.jsx:97
+#: src/components/status.jsx:100
 msgid "Local"
 msgstr "Local"
 
 #: src/components/compose.jsx:1282
-#: src/components/status.jsx:98
+#: src/components/status.jsx:101
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr "Sense llistar"
 
 #: src/components/compose.jsx:1285
-#: src/components/status.jsx:99
+#: src/components/status.jsx:102
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr "Només per als seguidors"
 
 #: src/components/compose.jsx:1288
-#: src/components/status.jsx:100
-#: src/components/status.jsx:2042
+#: src/components/status.jsx:103
+#: src/components/status.jsx:2203
 msgid "Private mention"
 msgstr "Menció privada"
 
@@ -784,61 +784,61 @@ msgid "Posting on <0/>"
 msgstr "Data de la publicació: <0/>"
 
 #: src/components/compose.jsx:1447
-#: src/components/compose.jsx:3280
+#: src/components/compose.jsx:3286
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "Afegeix"
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1675
 msgid "Schedule"
 msgstr "Programa"
 
-#: src/components/compose.jsx:1675
+#: src/components/compose.jsx:1677
 #: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1030
-#: src/components/status.jsx:1816
-#: src/components/status.jsx:1817
-#: src/components/status.jsx:2503
+#: src/components/status.jsx:1191
+#: src/components/status.jsx:1977
+#: src/components/status.jsx:1978
+#: src/components/status.jsx:2672
 msgid "Reply"
 msgstr "Respon"
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1679
 msgid "Update"
 msgstr "Actualitza"
 
-#: src/components/compose.jsx:1678
+#: src/components/compose.jsx:1680
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Publica"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1806
 msgid "Downloading GIF…"
 msgstr "S'està baixant el GIF…"
 
-#: src/components/compose.jsx:1832
+#: src/components/compose.jsx:1834
 msgid "Failed to download GIF"
 msgstr "Ha fallat la descàrrega del GIF"
 
-#: src/components/compose.jsx:2047
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2126
 #: src/components/nav-menu.jsx:244
 msgid "More…"
 msgstr "Més…"
 
-#: src/components/compose.jsx:2556
+#: src/components/compose.jsx:2562
 msgid "Uploaded"
 msgstr "Pujat"
 
-#: src/components/compose.jsx:2569
+#: src/components/compose.jsx:2575
 msgid "Image description"
 msgstr "Descripció de la imatge"
 
-#: src/components/compose.jsx:2570
+#: src/components/compose.jsx:2576
 msgid "Video description"
 msgstr "Descripció del vídeo"
 
-#: src/components/compose.jsx:2571
+#: src/components/compose.jsx:2577
 msgid "Audio description"
 msgstr "Descripció de l'àudio"
 
@@ -846,8 +846,8 @@ msgstr "Descripció de l'àudio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2606
-#: src/components/compose.jsx:2626
+#: src/components/compose.jsx:2612
+#: src/components/compose.jsx:2632
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la mida del fitxer de {0} a {1} o inferior."
 
@@ -855,150 +855,150 @@ msgstr "La mida del fitxer és massa gran. La càrrega pot tenir problemes. Prov
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2618
-#: src/components/compose.jsx:2638
+#: src/components/compose.jsx:2624
+#: src/components/compose.jsx:2644
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "La resolució del fitxer és massa gran. La càrrega pot tenir problemes. Proveu de reduir la resolució de {0}×{1}px a {2}×{3}px."
 
-#: src/components/compose.jsx:2646
+#: src/components/compose.jsx:2652
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "La velocitat de fotogrames és massa alta. La càrrega pot tenir problemes."
 
-#: src/components/compose.jsx:2706
-#: src/components/compose.jsx:2956
+#: src/components/compose.jsx:2712
+#: src/components/compose.jsx:2962
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1081
 #: src/pages/filters.jsx:413
 msgid "Remove"
 msgstr "Suprimeix"
 
-#: src/components/compose.jsx:2723
+#: src/components/compose.jsx:2729
 #: src/compose.jsx:84
 msgid "Error"
 msgstr "Error"
 
-#: src/components/compose.jsx:2748
+#: src/components/compose.jsx:2754
 msgid "Edit image description"
 msgstr "Edita la descripció de la imatge"
 
-#: src/components/compose.jsx:2749
+#: src/components/compose.jsx:2755
 msgid "Edit video description"
 msgstr "Edita la descripció del vídeo"
 
-#: src/components/compose.jsx:2750
+#: src/components/compose.jsx:2756
 msgid "Edit audio description"
 msgstr "Edita la descripció de l'àudio"
 
-#: src/components/compose.jsx:2795
-#: src/components/compose.jsx:2844
+#: src/components/compose.jsx:2801
+#: src/components/compose.jsx:2850
 msgid "Generating description. Please wait…"
 msgstr "Generant descripció. Si us plau, espereu…"
 
 #. placeholder {0}: e.message
-#: src/components/compose.jsx:2815
+#: src/components/compose.jsx:2821
 msgid "Failed to generate description: {0}"
 msgstr "No s'ha pogut generar la descripció: {0}"
 
-#: src/components/compose.jsx:2816
+#: src/components/compose.jsx:2822
 msgid "Failed to generate description"
 msgstr "No s'ha pogut generar la descripció"
 
-#: src/components/compose.jsx:2828
 #: src/components/compose.jsx:2834
-#: src/components/compose.jsx:2880
+#: src/components/compose.jsx:2840
+#: src/components/compose.jsx:2886
 msgid "Generate description…"
 msgstr "Genera una descripció…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2867
+#: src/components/compose.jsx:2873
 msgid "Failed to generate description{0}"
 msgstr "No s'ha pogut generar la descripció{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2882
+#: src/components/compose.jsx:2888
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— experimental</0>"
 
-#: src/components/compose.jsx:2901
+#: src/components/compose.jsx:2907
 msgid "Done"
 msgstr "Fet"
 
 #. placeholder {0}: i + 1
-#: src/components/compose.jsx:2937
+#: src/components/compose.jsx:2943
 msgid "Choice {0}"
 msgstr "Opció {0}"
 
-#: src/components/compose.jsx:2984
+#: src/components/compose.jsx:2990
 msgid "Multiple choices"
 msgstr "Opció múltiple"
 
-#: src/components/compose.jsx:2987
+#: src/components/compose.jsx:2993
 msgid "Duration"
 msgstr "Durada"
 
-#: src/components/compose.jsx:3018
+#: src/components/compose.jsx:3024
 msgid "Remove poll"
 msgstr "Elimina l'enquesta"
 
-#: src/components/compose.jsx:3239
+#: src/components/compose.jsx:3245
 msgid "Search accounts"
 msgstr "Cerca comptes"
 
-#: src/components/compose.jsx:3293
+#: src/components/compose.jsx:3299
 #: src/components/generic-accounts.jsx:236
 msgid "Error loading accounts"
 msgstr "S'ha produït un error en carregar els comptes"
 
-#: src/components/compose.jsx:3437
+#: src/components/compose.jsx:3443
 msgid "Custom emojis"
 msgstr "Emojis personalitzats"
 
-#: src/components/compose.jsx:3457
+#: src/components/compose.jsx:3463
 msgid "Search emoji"
 msgstr "Cerca un emoji"
 
-#: src/components/compose.jsx:3488
+#: src/components/compose.jsx:3494
 msgid "Error loading custom emojis"
 msgstr "S'ha produït un error en carregar els emojis personalitzats"
 
-#: src/components/compose.jsx:3499
+#: src/components/compose.jsx:3505
 msgid "Recently used"
 msgstr "Usats recentment"
 
-#: src/components/compose.jsx:3500
+#: src/components/compose.jsx:3506
 msgid "Others"
 msgstr "Altres"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3538
+#: src/components/compose.jsx:3544
 msgid "{0} more…"
 msgstr "{0} més…"
 
-#: src/components/compose.jsx:3676
+#: src/components/compose.jsx:3682
 msgid "Search GIFs"
 msgstr "Cerca GIF"
 
-#: src/components/compose.jsx:3691
+#: src/components/compose.jsx:3697
 msgid "Powered by GIPHY"
 msgstr "Desenvolupat per GIPHY"
 
-#: src/components/compose.jsx:3699
+#: src/components/compose.jsx:3705
 msgid "Type to search GIFs"
 msgstr "Escriviu per cercar un GIF"
 
-#: src/components/compose.jsx:3797
+#: src/components/compose.jsx:3803
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:927
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/components/compose.jsx:3815
+#: src/components/compose.jsx:3821
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:944
 msgid "Next"
 msgstr "Següent"
 
-#: src/components/compose.jsx:3832
+#: src/components/compose.jsx:3838
 msgid "Error loading GIFs"
 msgstr "S'ha produït un error en carregar els GIF"
 
@@ -1021,7 +1021,7 @@ msgstr "Error quan desava l'esborrany. Torneu a intentar-ho."
 
 #: src/components/drafts.jsx:128
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1433
+#: src/components/status.jsx:1594
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:369
 msgid "Delete…"
@@ -1092,7 +1092,7 @@ msgstr "Comptes"
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:922
 #: src/pages/search.jsx:561
-#: src/pages/status.jsx:1425
+#: src/pages/status.jsx:1426
 msgid "Show more…"
 msgstr "Mostra'n més…"
 
@@ -1230,10 +1230,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> o <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:1199
+#: src/components/status.jsx:2699
+#: src/components/status.jsx:2722
+#: src/components/status.jsx:2723
 msgid "Boost"
 msgstr "Impulsa"
 
@@ -1242,9 +1242,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:1262
+#: src/components/status.jsx:2747
+#: src/components/status.jsx:2748
 msgid "Bookmark"
 msgstr "Afegeix als marcadors"
 
@@ -1309,14 +1309,14 @@ msgid "Media description"
 msgstr "Descripció dels mitjans"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1144
-#: src/components/status.jsx:1153
-#: src/components/translation-block.jsx:237
+#: src/components/status.jsx:1305
+#: src/components/status.jsx:1314
+#: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr "Tradueix"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1172
+#: src/components/status.jsx:1333
 msgid "Speak"
 msgstr "Pronuncia"
 
@@ -1353,16 +1353,16 @@ msgid "Filtered: {filterTitleStr}"
 msgstr "Filtrat: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3680
-#: src/components/status.jsx:3776
-#: src/components/status.jsx:3854
+#: src/components/status.jsx:3849
+#: src/components/status.jsx:3945
+#: src/components/status.jsx:4023
 #: src/components/timeline.jsx:1012
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1880
 msgid "Filtered"
 msgstr "Filtrat"
 
-#: src/components/media.jsx:469
+#: src/components/media.jsx:479
 msgid "Open file"
 msgstr "Obre el fitxer"
 
@@ -1496,8 +1496,8 @@ msgstr "Comptes…"
 
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
-#: src/pages/login.jsx:195
-#: src/pages/status.jsx:924
+#: src/pages/login.jsx:199
+#: src/pages/status.jsx:925
 #: src/pages/welcome.jsx:65
 msgid "Log in"
 msgstr "Inicia sessió"
@@ -1668,8 +1668,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[Tipus de notificació desconeguda: {type}]"
 
 #: src/components/notification.jsx:451
-#: src/components/status.jsx:1115
-#: src/components/status.jsx:1125
+#: src/components/status.jsx:1276
+#: src/components/status.jsx:1286
 msgid "Boosted/Liked by…"
 msgstr "Impulsat/Afavorit per…"
 
@@ -1695,7 +1695,7 @@ msgid "View #Wrapstodon"
 msgstr "Visualitzeu el #Wrapstodon"
 
 #: src/components/notification.jsx:801
-#: src/components/status.jsx:328
+#: src/components/status.jsx:485
 msgid "Read more →"
 msgstr "Llegiu més →"
 
@@ -1720,8 +1720,8 @@ msgstr "Vota"
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1294
-#: src/pages/status.jsx:1317
+#: src/pages/status.jsx:1295
+#: src/pages/status.jsx:1318
 msgid "Refresh"
 msgstr "Actualitza"
 
@@ -1776,111 +1776,111 @@ msgstr "{0}m"
 msgid "{0}h"
 msgstr "{0}h"
 
-#: src/components/report-modal.jsx:29
+#: src/components/report-modal.jsx:30
 msgid "Spam"
 msgstr "Contingut brossa"
 
-#: src/components/report-modal.jsx:30
+#: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
 msgstr "Enllaços maliciosos, interacció falsa o respostes repetitives"
 
-#: src/components/report-modal.jsx:33
+#: src/components/report-modal.jsx:34
 msgid "Illegal"
 msgstr "Il·legal"
 
-#: src/components/report-modal.jsx:34
+#: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
 msgstr "Viola la llei del vostre país o del país on és el servidor"
 
-#: src/components/report-modal.jsx:37
+#: src/components/report-modal.jsx:38
 msgid "Server rule violation"
 msgstr "Incompliment d'alguna regla del servidor"
 
-#: src/components/report-modal.jsx:38
+#: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
 msgstr "Viola regles específiques del servidor"
 
-#: src/components/report-modal.jsx:39
+#: src/components/report-modal.jsx:40
 msgid "Violation"
 msgstr "Violació"
 
-#: src/components/report-modal.jsx:42
+#: src/components/report-modal.jsx:43
 msgid "Other"
 msgstr "Altres"
 
-#: src/components/report-modal.jsx:43
+#: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
 msgstr "El problema no encaixa en altres categories"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report Post"
 msgstr "Denuncia la publicació"
 
-#: src/components/report-modal.jsx:68
+#: src/components/report-modal.jsx:111
 msgid "Report @{username}"
 msgstr "Informar sobre @{username}"
 
-#: src/components/report-modal.jsx:104
+#: src/components/report-modal.jsx:147
 msgid "Pending review"
 msgstr "Pendent de revisió"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Post reported"
 msgstr "Publicació denunciada"
 
-#: src/components/report-modal.jsx:146
+#: src/components/report-modal.jsx:189
 msgid "Profile reported"
 msgstr "Perfil denunciat"
 
-#: src/components/report-modal.jsx:154
+#: src/components/report-modal.jsx:197
 msgid "Unable to report post"
 msgstr "No ha estat possible denunciar la publicació"
 
-#: src/components/report-modal.jsx:155
+#: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
 msgstr "No ha estat possible denunciar el perfil"
 
-#: src/components/report-modal.jsx:163
+#: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
 msgstr "Quin és el problema amb aquesta publicació?"
 
-#: src/components/report-modal.jsx:164
+#: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
 msgstr "Quin és el problema amb aquest perfil?"
 
-#: src/components/report-modal.jsx:233
+#: src/components/report-modal.jsx:276
 msgid "Additional info"
 msgstr "Informació addicional"
 
-#: src/components/report-modal.jsx:256
+#: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
 msgstr "Reenvia a <0>{domain}</0>"
 
-#: src/components/report-modal.jsx:266
+#: src/components/report-modal.jsx:309
 msgid "Send Report"
 msgstr "Envia informe"
 
-#: src/components/report-modal.jsx:275
+#: src/components/report-modal.jsx:318
 msgid "Muted {username}"
 msgstr "Silencia a @{username}"
 
-#: src/components/report-modal.jsx:278
+#: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
 msgstr "No ha estat possible silenciar a {username}"
 
-#: src/components/report-modal.jsx:283
+#: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
 msgstr "Envia l'informe <0>+ Silencia el perfil</0>"
 
-#: src/components/report-modal.jsx:294
+#: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
 msgstr "Bloca a {username}"
 
-#: src/components/report-modal.jsx:297
+#: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
 msgstr "No ha estat possible blocar a {username}"
 
-#: src/components/report-modal.jsx:302
+#: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
 msgstr "Envia l'informe <0>+ Bloca el perfil</0>"
 
@@ -1932,7 +1932,7 @@ msgstr "Només local"
 #: src/components/shortcuts-settings.jsx:75
 #: src/components/shortcuts-settings.jsx:84
 #: src/components/shortcuts-settings.jsx:122
-#: src/pages/login.jsx:199
+#: src/pages/login.jsx:203
 msgid "Instance"
 msgstr "Instància"
 
@@ -1999,7 +1999,7 @@ msgid "Move down"
 msgstr "Mou cap avall"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1395
+#: src/components/status.jsx:1556
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Edita"
@@ -2198,341 +2198,364 @@ msgstr "Dreceres JSON en brut"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "Importació o exportació de la configuració des de o cap a la instància del servidor (molt experimental)"
 
-#: src/components/status.jsx:614
+#: src/components/status.jsx:350
+msgid "Unable to format math"
+msgstr "No s'ha pogut donar format matemàtic"
+
+#: src/components/status.jsx:364
+msgid "Math expressions found."
+msgstr "Expressions matemàtiques trobades."
+
+#. Action to switch from rendered math back to raw (LaTeX) markup
+#: src/components/status.jsx:367
+msgid "Show markup"
+msgstr "Mostra el marcatge"
+
+#. Action to render math expressions from raw (LaTeX) markup
+#: src/components/status.jsx:372
+msgid "Format math"
+msgstr "Dona format matemàtic"
+
+#: src/components/status.jsx:771
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>ha impulsat</1>"
 
-#: src/components/status.jsx:713
+#: src/components/status.jsx:874
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "Ho sentim, la instància en què heu iniciat la sessió actual no pot interactuar amb aquesta publicació des d'una altra instància."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:867
+#: src/components/status.jsx:1028
 msgid "Unliked @{0}'s post"
 msgstr "La publicació de @{0} s'ha eliminat dels favorits"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:868
+#: src/components/status.jsx:1029
 msgid "Liked @{0}'s post"
 msgstr "La publicació de @{0} s'ha afegit als favorits"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:907
+#: src/components/status.jsx:1068
 msgid "Unbookmarked @{0}'s post"
 msgstr "La publicació de @{0} s'ha eliminat dels marcadors"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:908
+#: src/components/status.jsx:1069
 msgid "Bookmarked @{0}'s post"
 msgstr "La publicació de @{0} s'ha afegit als marcadors"
 
-#: src/components/status.jsx:1007
+#: src/components/status.jsx:1168
 msgid "Some media have no descriptions."
 msgstr "No tots els mèdia tenen descripció."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1014
+#: src/components/status.jsx:1175
 msgid "Old post (<0>{0}</0>)"
 msgstr "Publicacions antigues (<0>{0}</0>)"
 
-#: src/components/status.jsx:1038
-#: src/components/status.jsx:1078
-#: src/components/status.jsx:2530
-#: src/components/status.jsx:2553
+#: src/components/status.jsx:1199
+#: src/components/status.jsx:1239
+#: src/components/status.jsx:2699
+#: src/components/status.jsx:2722
 msgid "Unboost"
 msgstr "Desfés l'impuls"
 
-#: src/components/status.jsx:1054
-#: src/components/status.jsx:2545
+#: src/components/status.jsx:1215
+#: src/components/status.jsx:2714
 msgid "Quote"
 msgstr "Cita"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1066
-#: src/components/status.jsx:1532
+#: src/components/status.jsx:1227
+#: src/components/status.jsx:1693
 msgid "Unboosted @{0}'s post"
 msgstr "S'ha eliminat l'impuls de la publicació de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1067
-#: src/components/status.jsx:1533
+#: src/components/status.jsx:1228
+#: src/components/status.jsx:1694
 msgid "Boosted @{0}'s post"
 msgstr "Heu impulsat la publicació de @{0}"
 
-#: src/components/status.jsx:1079
+#: src/components/status.jsx:1240
 msgid "Boost…"
 msgstr "Impulsa…"
 
-#: src/components/status.jsx:1091
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:2566
+#: src/components/status.jsx:1252
+#: src/components/status.jsx:1987
+#: src/components/status.jsx:2735
 msgid "Unlike"
 msgstr "Ja no m'agrada"
 
-#: src/components/status.jsx:1092
-#: src/components/status.jsx:1826
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:2566
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1253
+#: src/components/status.jsx:1987
+#: src/components/status.jsx:1988
+#: src/components/status.jsx:2735
+#: src/components/status.jsx:2736
 msgid "Like"
 msgstr "M'agrada"
 
-#: src/components/status.jsx:1101
-#: src/components/status.jsx:2578
+#: src/components/status.jsx:1262
+#: src/components/status.jsx:2747
 msgid "Unbookmark"
 msgstr "Suprimeix l'adreça d'interès"
 
-#: src/components/status.jsx:1184
+#: src/components/status.jsx:1345
 msgid "Post text copied"
 msgstr "Publica el text copiat"
 
-#: src/components/status.jsx:1187
+#: src/components/status.jsx:1348
 msgid "Unable to copy post text"
 msgstr "No es pot copiar el text de la publicació"
 
-#: src/components/status.jsx:1193
+#: src/components/status.jsx:1354
 msgid "Copy post text"
 msgstr "Copia el text de la publicació"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1211
+#: src/components/status.jsx:1372
 msgid "View post by <0>@{0}</0>"
 msgstr "Mostra la publicació de <0>@{0}</0>"
 
-#: src/components/status.jsx:1232
+#: src/components/status.jsx:1393
 msgid "Show Edit History"
 msgstr "Mostra l'historial d'edició"
 
-#: src/components/status.jsx:1235
+#: src/components/status.jsx:1396
 msgid "Edited: {editedDateText}"
 msgstr "Editat: {editedDateText}"
 
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3346
+#: src/components/status.jsx:1463
+#: src/components/status.jsx:3515
 msgid "Embed post"
 msgstr "Insereix la publicació"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1477
 msgid "Conversation unmuted"
 msgstr "La conversa ha deixat d'estar silenciada"
 
-#: src/components/status.jsx:1316
+#: src/components/status.jsx:1477
 msgid "Conversation muted"
 msgstr "Conversa silenciada"
 
-#: src/components/status.jsx:1322
+#: src/components/status.jsx:1483
 msgid "Unable to unmute conversation"
 msgstr "No s'ha pogut reactivar la conversa"
 
-#: src/components/status.jsx:1323
+#: src/components/status.jsx:1484
 msgid "Unable to mute conversation"
 msgstr "No ha estat possible silenciar la conversa"
 
-#: src/components/status.jsx:1332
+#: src/components/status.jsx:1493
 msgid "Unmute conversation"
 msgstr "Deixa de silenciar la conversa"
 
-#: src/components/status.jsx:1339
+#: src/components/status.jsx:1500
 msgid "Mute conversation"
 msgstr "Silencia la conversa"
 
-#: src/components/status.jsx:1355
+#: src/components/status.jsx:1516
 msgid "Post unpinned from profile"
 msgstr "La publicació ja no està fixada al perfil"
 
-#: src/components/status.jsx:1356
+#: src/components/status.jsx:1517
 msgid "Post pinned to profile"
 msgstr "La publicació s'ha fixat al perfil"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1522
 msgid "Unable to unpin post"
 msgstr "No s'ha pogut desenganxar la publicació"
 
-#: src/components/status.jsx:1361
+#: src/components/status.jsx:1522
 msgid "Unable to pin post"
 msgstr "No s'ha pogut desenganxar la publicació"
 
-#: src/components/status.jsx:1370
+#: src/components/status.jsx:1531
 msgid "Unpin from profile"
 msgstr "Desfixa del perfil"
 
-#: src/components/status.jsx:1377
+#: src/components/status.jsx:1538
 msgid "Pin to profile"
 msgstr "Fixa al perfil"
 
-#: src/components/status.jsx:1406
+#: src/components/status.jsx:1567
 msgid "Delete this post?"
 msgstr "Voleu suprimir aquesta publicació?"
 
-#: src/components/status.jsx:1422
+#: src/components/status.jsx:1583
 msgid "Post deleted"
 msgstr "Publicació esborrada"
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1586
 msgid "Unable to delete post"
 msgstr "No ha estat possible esborrar la publicació"
 
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1614
 msgid "Report post…"
 msgstr "Denuncia la publicació…"
 
-#: src/components/status.jsx:1827
-#: src/components/status.jsx:1863
-#: src/components/status.jsx:2567
+#: src/components/status.jsx:1988
+#: src/components/status.jsx:2024
+#: src/components/status.jsx:2736
 msgid "Liked"
 msgstr "M'ha agradat"
 
-#: src/components/status.jsx:1860
-#: src/components/status.jsx:2554
+#: src/components/status.jsx:2021
+#: src/components/status.jsx:2723
 msgid "Boosted"
 msgstr "Millorats"
 
-#: src/components/status.jsx:1870
-#: src/components/status.jsx:2579
+#: src/components/status.jsx:2031
+#: src/components/status.jsx:2748
 msgid "Bookmarked"
 msgstr "Afegit a marcadors"
 
-#: src/components/status.jsx:1874
+#: src/components/status.jsx:2035
 msgid "Pinned"
 msgstr "Fixat"
 
-#: src/components/status.jsx:1920
-#: src/components/status.jsx:2391
+#: src/components/status.jsx:2081
+#: src/components/status.jsx:2560
 msgid "Deleted"
 msgstr "Eliminat"
 
-#: src/components/status.jsx:1961
+#: src/components/status.jsx:2122
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# resposta} other {# respostes}}"
 
 #. placeholder {0}: snapStates.statusThreadNumber[sKey] ? ` ${snapStates.statusThreadNumber[sKey]}/X` : ''
-#: src/components/status.jsx:2051
+#: src/components/status.jsx:2212
 msgid "Thread{0}"
 msgstr "Fil{0}"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2290
+#: src/components/status.jsx:2352
+#: src/components/status.jsx:2456
 msgid "Show less"
 msgstr "Mostra'n menys"
 
-#: src/components/status.jsx:2129
-#: src/components/status.jsx:2191
+#: src/components/status.jsx:2290
+#: src/components/status.jsx:2352
 msgid "Show content"
 msgstr "Mostra el contingut"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2283
+#: src/components/status.jsx:2452
 #: src/pages/catchup.jsx:1879
 msgid "Filtered: {0}"
 msgstr "Filtrat: {0}"
 
-#: src/components/status.jsx:2287
+#: src/components/status.jsx:2456
 msgid "Show media"
 msgstr "Mostra els mèdia"
 
-#: src/components/status.jsx:2427
+#: src/components/status.jsx:2596
 msgid "Edited"
 msgstr "Editat"
 
-#: src/components/status.jsx:2504
+#: src/components/status.jsx:2673
 msgid "Comments"
 msgstr "Comentaris"
 
 #. More from [Author]
-#: src/components/status.jsx:2804
+#: src/components/status.jsx:2973
 msgid "More from <0/>"
 msgstr "Més de <0/>"
 
-#: src/components/status.jsx:3106
+#: src/components/status.jsx:3275
 msgid "Edit History"
 msgstr "Edita l'Historial"
 
-#: src/components/status.jsx:3110
+#: src/components/status.jsx:3279
 msgid "Failed to load history"
 msgstr "No s'ha pogut carregar l'historial"
 
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3284
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Carregant…"
 
-#: src/components/status.jsx:3351
+#: src/components/status.jsx:3520
 msgid "HTML Code"
 msgstr "Codi HTML"
 
-#: src/components/status.jsx:3368
+#: src/components/status.jsx:3537
 msgid "HTML code copied"
 msgstr "Codi HTML copiat"
 
-#: src/components/status.jsx:3371
+#: src/components/status.jsx:3540
 msgid "Unable to copy HTML code"
 msgstr "No s'ha pogut copiar el codi HTML"
 
-#: src/components/status.jsx:3383
+#: src/components/status.jsx:3552
 msgid "Media attachments:"
 msgstr "Adjunts multimèdia:"
 
-#: src/components/status.jsx:3405
+#: src/components/status.jsx:3574
 msgid "Account Emojis:"
 msgstr "Emojis d'aquest compte:"
 
-#: src/components/status.jsx:3436
-#: src/components/status.jsx:3481
+#: src/components/status.jsx:3605
+#: src/components/status.jsx:3650
 msgid "static URL"
 msgstr "URL estàtic"
 
-#: src/components/status.jsx:3450
+#: src/components/status.jsx:3619
 msgid "Emojis:"
 msgstr "Emojis:"
 
-#: src/components/status.jsx:3495
+#: src/components/status.jsx:3664
 msgid "Notes:"
 msgstr "Notes:"
 
-#: src/components/status.jsx:3499
+#: src/components/status.jsx:3668
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Això és estàtic, sense estil i sense guió. És possible que hàgiu d'aplicar els vostres propis estils i editar-los segons sigui necessari."
 
-#: src/components/status.jsx:3505
+#: src/components/status.jsx:3674
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Les enquestes no són interactives, es converteixen en una llista amb recompte de vots."
 
-#: src/components/status.jsx:3510
+#: src/components/status.jsx:3679
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Els mèdia adjunts poden ser imatges, vídeos, àudios o qualsevol altre tipus de fitxer."
 
-#: src/components/status.jsx:3516
+#: src/components/status.jsx:3685
 msgid "Post could be edited or deleted later."
 msgstr "La publicació pot ser editada o eliminada després."
 
-#: src/components/status.jsx:3522
+#: src/components/status.jsx:3691
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: src/components/status.jsx:3531
+#: src/components/status.jsx:3700
 msgid "Note: This preview is lightly styled."
 msgstr "Nota: a aquesta vista prèvia se li ha aplicat cert estil."
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3784
+#: src/components/status.jsx:3953
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> ha impulsat"
 
-#: src/components/status.jsx:3897
+#: src/components/status.jsx:4055
+msgid "Post hidden by your filters"
+msgstr "Publicació amagada pels filtres"
+
+#: src/components/status.jsx:4056
 msgid "Post removed by author."
 msgstr "Publicació eliminada per l'autor o l'autora."
 
-#: src/components/status.jsx:3906
+#: src/components/status.jsx:4057
 msgid "You’re not authorized to view this post."
 msgstr "No teniu autorització per veure aquesta publicació."
 
-#: src/components/status.jsx:3915
+#: src/components/status.jsx:4058
 msgid "Post pending author approval."
 msgstr "Publicació pendent d'aprovació de l'autor o l'autora."
 
-#: src/components/status.jsx:3924
+#: src/components/status.jsx:4059
+#: src/components/status.jsx:4060
 msgid "Quoting not allowed by the author."
 msgstr "Citació no permesa per l'autor o l'autora."
 
@@ -2544,8 +2567,8 @@ msgstr "Publicacions noves"
 #: src/components/timeline.jsx:586
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
-#: src/pages/status.jsx:1077
-#: src/pages/status.jsx:1454
+#: src/pages/status.jsx:1078
+#: src/pages/status.jsx:1455
 msgid "Try again"
 msgstr "Torna-ho a provar"
 
@@ -2569,28 +2592,28 @@ msgstr "Fil"
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrat</0>: <1>{0}</1>"
 
-#: src/components/translation-block.jsx:194
+#: src/components/translation-block.jsx:196
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Traducció automàtica des del {sourceLangText}"
 
-#: src/components/translation-block.jsx:232
+#: src/components/translation-block.jsx:234
 msgid "Translating…"
 msgstr "Traducció en procés…"
 
-#: src/components/translation-block.jsx:235
+#: src/components/translation-block.jsx:237
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Tradueix des del {sourceLangText} (autodetectat)"
 
-#: src/components/translation-block.jsx:236
+#: src/components/translation-block.jsx:238
 msgid "Translate from {sourceLangText}"
 msgstr "Tradueix des del {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:266
 msgid "Auto ({0})"
 msgstr "Automàtic ({0})"
 
-#: src/components/translation-block.jsx:277
+#: src/components/translation-block.jsx:279
 msgid "Failed to translate"
 msgstr "No s'ha pogut traduir"
 
@@ -2618,7 +2641,7 @@ msgstr "Cal iniciar sessió."
 #: src/compose.jsx:91
 #: src/pages/annual-report.jsx:164
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:276
+#: src/pages/login.jsx:280
 msgid "Go home"
 msgstr "Ves a la pàgina d'inici"
 
@@ -3331,32 +3354,32 @@ msgstr "{0, plural, one {# llista} other {# llistes}}"
 msgid "No lists yet."
 msgstr "Encara no hi ha cap llista."
 
-#: src/pages/login.jsx:118
-#: src/pages/login.jsx:128
+#: src/pages/login.jsx:122
+#: src/pages/login.jsx:132
 msgid "Failed to register application"
 msgstr "No s'ha pogut registrar l'aplicació"
 
-#: src/pages/login.jsx:214
+#: src/pages/login.jsx:218
 msgid "instance domain"
 msgstr "domini de la instància"
 
-#: src/pages/login.jsx:238
+#: src/pages/login.jsx:242
 msgid "e.g. “mastodon.social”"
 msgstr "p. ex. \"mastodont.social\""
 
-#: src/pages/login.jsx:249
+#: src/pages/login.jsx:253
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "No s'ha pogut iniciar la sessió. Torneu-ho a provar o canvieu d'instància."
 
-#: src/pages/login.jsx:261
+#: src/pages/login.jsx:265
 msgid "Continue with {selectedInstanceText}"
 msgstr "Continueu amb {selectedInstanceText}"
 
-#: src/pages/login.jsx:262
+#: src/pages/login.jsx:266
 msgid "Continue"
 msgstr "Continua"
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:274
 msgid "Don't have an account? Create one!"
 msgstr "No hi teniu compte? Creeu-n'hi un!"
 
@@ -3875,90 +3898,90 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: les notificacions només funcionen per a <0>un compte</0>."
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:657
-#: src/pages/status.jsx:1220
+#: src/pages/status.jsx:658
+#: src/pages/status.jsx:1221
 msgid "post.title"
 msgstr "Publicació"
 
-#: src/pages/status.jsx:911
+#: src/pages/status.jsx:912
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "No heu iniciat la sessió. Les interaccions (resposta, impuls, etc.) no són possibles."
 
-#: src/pages/status.jsx:931
+#: src/pages/status.jsx:932
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Aquesta publicació és d'una altra instància (<0>{instance}</0>). Les interaccions (resposta, impuls, etc.) no són possibles."
 
-#: src/pages/status.jsx:959
+#: src/pages/status.jsx:960
 msgid "Error: {e}"
 msgstr "Error: {e}"
 
-#: src/pages/status.jsx:966
+#: src/pages/status.jsx:967
 msgid "Switch to my instance to enable interactions"
 msgstr "Canvia a la meva instància per permetre interaccions"
 
-#: src/pages/status.jsx:1068
+#: src/pages/status.jsx:1069
 msgid "Unable to load replies."
 msgstr "No s'han pogut obtenir les respostes."
 
-#: src/pages/status.jsx:1180
+#: src/pages/status.jsx:1181
 msgid "Back"
 msgstr "Enrere"
 
-#: src/pages/status.jsx:1211
+#: src/pages/status.jsx:1212
 msgid "Go to main post"
 msgstr "Ves a la publicació principal"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1234
+#: src/pages/status.jsx:1235
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} publicacions més amunt ‒ Ves a la part superior"
 
-#: src/pages/status.jsx:1281
-#: src/pages/status.jsx:1344
+#: src/pages/status.jsx:1282
+#: src/pages/status.jsx:1345
 msgid "Switch to Side Peek view"
 msgstr "Canvia a vista lateral"
 
-#: src/pages/status.jsx:1345
+#: src/pages/status.jsx:1346
 msgid "Switch to Full view"
 msgstr "Canvia a vista completa"
 
-#: src/pages/status.jsx:1363
+#: src/pages/status.jsx:1364
 msgid "Show all sensitive content"
 msgstr "Mostra tot el contingut sensitiu"
 
-#: src/pages/status.jsx:1368
+#: src/pages/status.jsx:1369
 msgid "Experimental"
 msgstr "Experimental"
 
-#: src/pages/status.jsx:1377
+#: src/pages/status.jsx:1378
 msgid "Unable to switch"
 msgstr "No s'ha pogut canviar"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1384
+#: src/pages/status.jsx:1385
 msgid "Switch to post's instance ({0})"
 msgstr "Canvia a la instància de la publicació ({0})"
 
-#: src/pages/status.jsx:1387
+#: src/pages/status.jsx:1388
 msgid "Switch to post's instance"
 msgstr "Canvia a la instància de la publicació"
 
-#: src/pages/status.jsx:1445
+#: src/pages/status.jsx:1446
 msgid "Unable to load post"
 msgstr "No ha estat possible carregar la publicació"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1581
+#: src/pages/status.jsx:1582
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# resposta} other {<0>{1}</0> respostes}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1599
+#: src/pages/status.jsx:1600
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# comentari} other {<0>{0}</0> comentaris}}"
 
-#: src/pages/status.jsx:1621
+#: src/pages/status.jsx:1622
 msgid "View post with its replies"
 msgstr "Mostra la publicació amb respostes"
 

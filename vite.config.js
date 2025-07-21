@@ -6,7 +6,7 @@ import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
 import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -83,7 +83,6 @@ export default defineConfig({
         // },
       ],
     }),
-    splitVendorChunkPlugin(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
@@ -177,10 +176,26 @@ export default defineConfig({
         compose: resolve(__dirname, 'compose/index.html'),
       },
       output: {
-        manualChunks: {
-          // 'intl-segmenter-polyfill': ['@formatjs/intl-segmenter/polyfill'],
-          'tinyld-light': ['tinyld/light'],
-        },
+        // NOTE: Comment this for now. This messes up async imports.
+        // Without SplitVendorChunkPlugin, pushing everything to vendor is not "smart" enough
+        // manualChunks: (id, { getModuleInfo }) => {
+        //   // if (id.includes('@formatjs/intl-segmenter/polyfill')) return 'intl-segmenter-polyfill';
+        //   if (/tiny.*light/.test(id)) return 'tinyld-light';
+
+        //   // Implement logic similar to splitVendorChunkPlugin
+        //   if (id.includes('node_modules')) {
+        //     // Check if this module is dynamically imported
+        //     const moduleInfo = getModuleInfo(id);
+        //     if (moduleInfo) {
+        //       // If it's imported dynamically, don't put in vendor
+        //       const isDynamicOnly =
+        //         moduleInfo.importers.length === 0 &&
+        //         moduleInfo.dynamicImporters.length > 0;
+        //       if (isDynamicOnly) return null;
+        //     }
+        //     return 'vendor';
+        //   }
+        // },
         chunkFileNames: (chunkInfo) => {
           const { facadeModuleId } = chunkInfo;
           if (facadeModuleId && facadeModuleId.includes('icon')) {

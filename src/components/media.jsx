@@ -289,13 +289,21 @@ function Media({
           onClick(e);
         } else {
           e.preventDefault();
-          el.style.viewTransitionName = mediaVTN;
-          setTimeout(() => {
-            document.startViewTransition(() => {
+          if (el.dataset.viewTransitioned) {
+            el.style.viewTransitionName = mediaVTN;
+            try {
+              document.startViewTransition(() => {
+                el.style.viewTransitionName = '';
+                location.hash = `#${to}`;
+              });
+            } catch (e) {
+              console.error(e);
               el.style.viewTransitionName = '';
               location.hash = `#${to}`;
-            });
-          }, 1);
+            }
+          } else {
+            location.hash = `#${to}`;
+          }
         }
       } else {
         onClick?.(e);

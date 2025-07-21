@@ -51,13 +51,14 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
 
   const shortContent = 'This is a test status with short text content.';
   const longContent = `<p>This is a test status with long text content. It contains multiple paragraphs and spans several lines to demonstrate how longer content appears.</p>
-  
+
   <p>Second paragraph goes here with more sample text. The Status component will render this appropriately based on the current size setting.</p>
-  
+
   <p>Third paragraph adds even more content to ensure we have a properly long post that might get truncated depending on the view settings.</p>`;
   const linksContent = `<p>This is a test status with links. Check out <a href="https://example.com">this website</a> and <a href="https://google.com">Google</a>. Links should be clickable and properly styled.</p>`;
   const hashtagsContent = `<p>This is a test status with hashtags. <a href="https://example.social/tags/coding" class="hashtag" rel="tag">#coding</a> <a href="https://example.social/tags/webdev" class="hashtag" rel="tag">#webdev</a> <a href="https://example.social/tags/javascript" class="hashtag" rel="tag">#javascript</a> <a href="https://example.social/tags/reactjs" class="hashtag" rel="tag">#reactjs</a> <a href="https://example.social/tags/preact" class="hashtag" rel="tag">#preact</a></p><p>Hashtags should be formatted and clickable.</p>`;
   const mentionsContent = `<p>This is a test status with mentions. Hello <a href="https://example.social/@cheeaun" class="u-url mention">@cheeaun</a> and <a href="https://example.social/@test" class="u-url mention">@test</a>! What do you think about this <a href="https://example.social/@another_user" class="u-url mention">@another_user</a>?</p><p>Mentions should be highlighted and clickable.</p>`;
+  const mathContent = `<p>This is a test status with mathematical expressions. Here's an inline formula \\( E = mc^2 \\) and a display formula:</p><p>\\[ \\frac{\\left(n!\\right)^2}{2}\\sum _{k=0}^m\\frac{1}{n-k}{n-k \\choose k}^2 \\]</p><p>The MathBlock component should detect and offer to render these LaTeX expressions.</p>`;
 
   const base = {
     // Random ID to un-memoize Status
@@ -80,7 +81,9 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
               ? hashtagsContent
               : contentType === 'mentions'
                 ? mentionsContent
-                : shortContent
+                : contentType === 'math'
+                  ? mathContent
+                  : shortContent
         : '',
     visibility: toggles.visibility || 'public',
     createdAt: new Date().toISOString(),
@@ -764,7 +767,7 @@ export default function Sandbox() {
         class={`sandbox-preview ${toggleState.displayStyle}`}
         onClickCapture={(e) => {
           const isAllowed = e.target.closest(
-            '.media, .media-caption, .spoiler-button, .spoiler-media-button',
+            '.media, .media-caption, .spoiler-button, .spoiler-media-button, .math-block button',
           );
           if (isAllowed) return;
           e.preventDefault();
@@ -987,6 +990,18 @@ export default function Sandbox() {
                         disabled={!toggleState.hasContent}
                       />
                       <span>With mentions</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="contentType"
+                        checked={toggleState.contentType === 'math'}
+                        onChange={() => updateToggles({ contentType: 'math' })}
+                        disabled={!toggleState.hasContent}
+                      />
+                      <span>With math</span>
                     </label>
                   </li>
                 </ul>

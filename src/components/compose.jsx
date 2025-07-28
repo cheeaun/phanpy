@@ -1846,17 +1846,27 @@ const supportsCameraCapture = (() => {
   const input = document.createElement('input');
   return 'capture' in input;
 })();
+const isMobileSafari =
+  /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 function CameraCaptureInput({
   hidden,
   disabled = false,
   supportedMimeTypes,
   setMediaAttachments,
 }) {
+  // If not Mobile Safari, only apply image/*
+  // Chrome Android doesn't show the camera if image and video combined
+  // It also can't switch between photo and video mode like iOS/Safari
+  const filteredSupportedMimeTypes = isMobileSafari
+    ? supportedMimeTypes
+    : supportedMimeTypes?.filter((mimeType) => !/^image\//i.test(mimeType));
+
   return (
     <input
       type="file"
       hidden={hidden}
-      accept={supportedMimeTypes?.join(',')}
+      accept={filteredSupportedMimeTypes?.join(',')}
       capture="environment"
       disabled={disabled}
       onChange={(e) => {

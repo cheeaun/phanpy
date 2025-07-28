@@ -101,8 +101,8 @@ msgstr "Following"
 #: src/components/account-info.jsx:454
 #: src/components/account-info.jsx:856
 #: src/pages/account-statuses.jsx:487
-#: src/pages/search.jsx:344
-#: src/pages/search.jsx:491
+#: src/pages/search.jsx:345
+#: src/pages/search.jsx:492
 msgid "Posts"
 msgstr ""
 
@@ -1077,8 +1077,8 @@ msgstr ""
 #: src/components/generic-accounts.jsx:154
 #: src/components/notification.jsx:455
 #: src/pages/accounts.jsx:50
-#: src/pages/search.jsx:334
-#: src/pages/search.jsx:367
+#: src/pages/search.jsx:335
+#: src/pages/search.jsx:368
 msgid "Accounts"
 msgstr ""
 
@@ -1086,14 +1086,14 @@ msgstr ""
 #: src/components/timeline.jsx:551
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:922
-#: src/pages/search.jsx:561
+#: src/pages/search.jsx:562
 #: src/pages/status.jsx:1426
 msgid "Show more…"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:219
 #: src/components/timeline.jsx:556
-#: src/pages/search.jsx:566
+#: src/pages/search.jsx:567
 msgid "The end."
 msgstr ""
 
@@ -1200,11 +1200,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:151
 #: src/components/nav-menu.jsx:337
-#: src/components/search-form.jsx:73
+#: src/components/search-form.jsx:204
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
-#: src/pages/search.jsx:46
-#: src/pages/search.jsx:316
+#: src/pages/search.jsx:47
+#: src/pages/search.jsx:317
 msgid "Search"
 msgstr ""
 
@@ -1752,6 +1752,24 @@ msgstr ""
 msgid "Ending"
 msgstr ""
 
+#: src/components/recent-searches.jsx:27
+msgid "Cleared recent searches"
+msgstr "Cleared recent searches"
+
+#: src/components/recent-searches.jsx:49
+#: src/components/search-form.jsx:328
+msgid "Recent searches"
+msgstr "Recent searches"
+
+#: src/components/recent-searches.jsx:59
+msgid "Clear all"
+msgstr "Clear all"
+
+#: src/components/recent-searches.jsx:94
+#: src/pages/account-statuses.jsx:326
+msgid "Clear"
+msgstr ""
+
 #. Relative time in seconds, as short as possible
 #. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
 #: src/components/relative-time.jsx:61
@@ -1878,25 +1896,30 @@ msgstr ""
 msgid "Send Report <0>+ Block profile</0>"
 msgstr ""
 
-#: src/components/search-form.jsx:203
-msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
-
-#: src/components/search-form.jsx:216
+#: src/components/search-form.jsx:18
 msgid "Posts with <0>{query}</0>"
 msgstr ""
 
+#: src/components/search-form.jsx:26
+msgid "Accounts with <0>{query}</0>"
+msgstr ""
+
 #. placeholder {0}: query.replace(/^#/, '')
-#: src/components/search-form.jsx:228
+#: src/components/search-form.jsx:34
 msgid "Posts tagged with <0>#{0}</0>"
 msgstr ""
 
-#: src/components/search-form.jsx:242
+#: src/components/search-form.jsx:43
+msgid "{query} <0>‒ accounts, hashtags & posts</0>"
+msgstr ""
+
+#: src/components/search-form.jsx:135
 msgid "Look up <0>{query}</0>"
 msgstr ""
 
-#: src/components/search-form.jsx:253
-msgid "Accounts with <0>{query}</0>"
+#: src/components/search-form.jsx:361
+#: src/pages/home.jsx:251
+msgid "See all"
 msgstr ""
 
 #: src/components/shortcuts-settings.jsx:48
@@ -2667,10 +2690,6 @@ msgstr ""
 msgid "Clear filters"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:326
-msgid "Clear"
-msgstr ""
-
 #: src/pages/account-statuses.jsx:340
 msgid "Showing post with replies"
 msgstr ""
@@ -2953,7 +2972,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1319
 #: src/pages/mentions.jsx:154
-#: src/pages/search.jsx:329
+#: src/pages/search.jsx:330
 msgid "All"
 msgstr ""
 
@@ -3309,10 +3328,6 @@ msgstr ""
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr ""
 
-#: src/pages/home.jsx:251
-msgid "See all"
-msgstr ""
-
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
 msgstr ""
@@ -3590,58 +3605,58 @@ msgstr "Scheduled post deleted"
 msgid "Failed to delete scheduled post"
 msgstr "Failed to delete scheduled post"
 
-#: src/pages/search.jsx:50
+#: src/pages/search.jsx:51
 msgid "Search: {q} (Posts)"
 msgstr ""
 
-#: src/pages/search.jsx:53
+#: src/pages/search.jsx:54
 msgid "Search: {q} (Accounts)"
 msgstr ""
 
-#: src/pages/search.jsx:56
+#: src/pages/search.jsx:57
 msgid "Search: {q} (Hashtags)"
 msgstr ""
 
-#: src/pages/search.jsx:59
+#: src/pages/search.jsx:60
 msgid "Search: {q}"
 msgstr ""
 
-#: src/pages/search.jsx:339
-#: src/pages/search.jsx:421
+#: src/pages/search.jsx:340
+#: src/pages/search.jsx:422
 msgid "Hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:371
-#: src/pages/search.jsx:425
-#: src/pages/search.jsx:495
+#: src/pages/search.jsx:372
+#: src/pages/search.jsx:426
+#: src/pages/search.jsx:496
 msgid "See more"
 msgstr ""
 
-#: src/pages/search.jsx:397
+#: src/pages/search.jsx:398
 msgid "See more accounts"
 msgstr ""
 
-#: src/pages/search.jsx:411
+#: src/pages/search.jsx:412
 msgid "No accounts found."
 msgstr ""
 
-#: src/pages/search.jsx:467
+#: src/pages/search.jsx:468
 msgid "See more hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:481
+#: src/pages/search.jsx:482
 msgid "No hashtags found."
 msgstr ""
 
-#: src/pages/search.jsx:525
+#: src/pages/search.jsx:526
 msgid "See more posts"
 msgstr ""
 
-#: src/pages/search.jsx:539
+#: src/pages/search.jsx:540
 msgid "No posts found."
 msgstr ""
 
-#: src/pages/search.jsx:583
+#: src/pages/search.jsx:585
 msgid "Enter your search term or paste a URL above to get started."
 msgstr ""
 

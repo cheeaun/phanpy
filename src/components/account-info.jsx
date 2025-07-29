@@ -15,6 +15,7 @@ import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import getDomain from '../utils/get-domain';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import i18nDuration from '../utils/i18n-duration';
@@ -244,13 +245,7 @@ function AccountInfo({
     }
   }, [isSelf, info, instance]);
 
-  const accountInstance = useMemo(() => {
-    if (!url) return null;
-    const hostname = URL.parse(url)?.hostname;
-    if (!hostname) return null;
-    const domain = punycode.toUnicode(hostname);
-    return domain;
-  }, [url]);
+  const accountInstance = getDomain(url);
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 

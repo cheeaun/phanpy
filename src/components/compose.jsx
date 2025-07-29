@@ -31,6 +31,7 @@ import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import getDomain from '../utils/get-domain';
 import i18nDuration from '../utils/i18n-duration';
 import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
@@ -2096,8 +2097,11 @@ const Textarea = forwardRef((props, ref) => {
                   acct,
                   emojis,
                   history,
+                  roles,
+                  url,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
+                const accountInstance = getDomain(url);
                 // const item = menuItem.cloneNode();
                 if (acct) {
                   html += `
@@ -2112,6 +2116,17 @@ const Textarea = forwardRef((props, ref) => {
                         <br><span class="bidi-isolate">@${encodeHTML(
                           acct,
                         )}</span>
+                        ${roles?.map(
+                          (role) => ` <span class="tag collapsed">
+                            ${role.name}
+                            ${
+                              !!accountInstance &&
+                              `<span class="more-insignificant">
+                                ${accountInstance}
+                              </span>`
+                            }
+                          </span>`,
+                        )}
                       </span>
                     </li>
                   `;

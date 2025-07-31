@@ -112,7 +112,7 @@ function NameText({
       {displayName && !short ? (
         <>
           <b dir="auto">
-            <EmojiText text={displayName} emojis={emojis} />
+            <EmojiText text={displayName} emojis={emojis} staticEmoji />
           </b>
           {!showAcct && !hideUsername && (
             <>

@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-29 05:50\n"
+"PO-Revision-Date: 2025-07-31 11:19\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -105,7 +105,7 @@ msgstr "Sekimai"
 
 #: src/components/account-info.jsx:449
 #: src/components/account-info.jsx:851
-#: src/pages/account-statuses.jsx:487
+#: src/pages/account-statuses.jsx:495
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
@@ -121,7 +121,7 @@ msgstr "Įrašai"
 #: src/components/status.jsx:2140
 #: src/components/status.jsx:2769
 #: src/components/status.jsx:2772
-#: src/pages/account-statuses.jsx:531
+#: src/pages/account-statuses.jsx:539
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
@@ -1053,7 +1053,7 @@ msgid "Poll"
 msgstr "Apklausa"
 
 #: src/components/drafts.jsx:250
-#: src/pages/account-statuses.jsx:367
+#: src/pages/account-statuses.jsx:375
 msgid "Media"
 msgstr "Medija"
 
@@ -1467,7 +1467,7 @@ msgid "Followed Hashtags"
 msgstr "Sekami saitažodžiai"
 
 #: src/components/nav-menu.jsx:273
-#: src/pages/account-statuses.jsx:333
+#: src/pages/account-statuses.jsx:341
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:344
@@ -1771,7 +1771,7 @@ msgid "Clear all"
 msgstr ""
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:326
+#: src/pages/account-statuses.jsx:334
 msgid "Clear"
 msgstr "Valyti"
 
@@ -2565,20 +2565,14 @@ msgid "Post hidden by your filters"
 msgstr "Įrašas paslėptas pagal jūsų filtrus"
 
 #: src/components/status.jsx:4057
-msgid "Post removed by author."
+msgid "Post pending"
 msgstr ""
 
 #: src/components/status.jsx:4058
-msgid "You’re not authorized to view this post."
-msgstr ""
-
 #: src/components/status.jsx:4059
-msgid "Post pending author approval."
-msgstr ""
-
 #: src/components/status.jsx:4060
 #: src/components/status.jsx:4061
-msgid "Quoting not allowed by the author."
+msgid "Post unavailable"
 msgstr ""
 
 #: src/components/timeline.jsx:485
@@ -2667,89 +2661,89 @@ msgstr "Privalomas prisijungimas."
 msgid "Go home"
 msgstr "Eiti į pagrindinį"
 
-#: src/pages/account-statuses.jsx:238
+#: src/pages/account-statuses.jsx:241
 msgid "Account posts"
 msgstr "Paskyros įrašai"
 
-#: src/pages/account-statuses.jsx:245
+#: src/pages/account-statuses.jsx:248
 msgid "{accountDisplay} (+ Replies)"
 msgstr "{accountDisplay} (+ atsakymai)"
 
-#: src/pages/account-statuses.jsx:247
+#: src/pages/account-statuses.jsx:250
 msgid "{accountDisplay} (- Boosts)"
 msgstr "{accountDisplay} (- pasidalinimai)"
 
-#: src/pages/account-statuses.jsx:249
+#: src/pages/account-statuses.jsx:252
 msgid "{accountDisplay} (#{tagged})"
 msgstr "{accountDisplay} (#{tagged})"
 
-#: src/pages/account-statuses.jsx:251
+#: src/pages/account-statuses.jsx:254
 msgid "{accountDisplay} (Media)"
 msgstr "{accountDisplay} (medija)"
 
-#: src/pages/account-statuses.jsx:257
+#: src/pages/account-statuses.jsx:260
 msgid "{accountDisplay} ({monthYear})"
 msgstr "{accountDisplay} ({monthYear})"
 
-#: src/pages/account-statuses.jsx:323
+#: src/pages/account-statuses.jsx:331
 msgid "Clear filters"
 msgstr "Valyti filtrus"
 
-#: src/pages/account-statuses.jsx:340
+#: src/pages/account-statuses.jsx:348
 msgid "Showing post with replies"
 msgstr "Rodomas įrašas su atsakymais"
 
-#: src/pages/account-statuses.jsx:345
+#: src/pages/account-statuses.jsx:353
 msgid "+ Replies"
 msgstr "+ atsakymai"
 
-#: src/pages/account-statuses.jsx:351
+#: src/pages/account-statuses.jsx:359
 msgid "Showing posts without boosts"
 msgstr "Rodomi įrašai be pasidalinimų"
 
-#: src/pages/account-statuses.jsx:356
+#: src/pages/account-statuses.jsx:364
 msgid "- Boosts"
 msgstr "- pasidalinimai"
 
-#: src/pages/account-statuses.jsx:362
+#: src/pages/account-statuses.jsx:370
 msgid "Showing posts with media"
 msgstr "Rodomi įrašai su medija"
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:379
+#: src/pages/account-statuses.jsx:387
 msgid "Showing posts tagged with #{0}"
 msgstr "Rodomi įrašai pažymėti su #{0}"
 
 #. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
-#: src/pages/account-statuses.jsx:418
+#: src/pages/account-statuses.jsx:426
 msgid "Showing posts in {0}"
 msgstr "Rodomi įrašai rikiavime {0}"
 
-#: src/pages/account-statuses.jsx:508
+#: src/pages/account-statuses.jsx:516
 msgid "Nothing to see here yet."
 msgstr "Kol kas nėra čia ką matyti."
 
-#: src/pages/account-statuses.jsx:509
+#: src/pages/account-statuses.jsx:517
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "Nepavyksta įkelti įrašų."
 
-#: src/pages/account-statuses.jsx:550
-#: src/pages/account-statuses.jsx:580
+#: src/pages/account-statuses.jsx:558
+#: src/pages/account-statuses.jsx:588
 msgid "Unable to fetch account info"
 msgstr "Nepavyksta gauti paskyros informacijos."
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:557
+#: src/pages/account-statuses.jsx:565
 msgid "Switch to account's instance {0}"
 msgstr "Perjungti į paskyros serverį {0}"
 
-#: src/pages/account-statuses.jsx:587
+#: src/pages/account-statuses.jsx:595
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
 msgstr "Perjungti į mano serverį (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:660
+#: src/pages/account-statuses.jsx:668
 msgid "Month"
 msgstr "Mėnuo"
 

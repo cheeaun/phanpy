@@ -1,12 +1,56 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { forwardRef } from 'preact/compat';
-import { useImperativeHandle, useRef, useState } from 'preact/hooks';
+import { useImperativeHandle, useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
 import { api } from '../utils/api';
+import { addToSearchHistory, getSearchHistory } from '../utils/search-history';
 
 import Icon from './icon';
 import Link from './link';
+
+// Helper function to generate search item data (label and URL)
+export const generateSearchItemData = (query, queryType, instance) => {
+  let label, to, icon;
+
+  if (queryType === 'statuses') {
+    label = (
+      <Trans>
+        Posts with <q>{query}</q>
+      </Trans>
+    );
+    to = `/search?q=${encodeURIComponent(query)}&type=statuses`;
+    icon = 'document';
+  } else if (queryType === 'accounts') {
+    label = (
+      <Trans>
+        Accounts with <q>{query}</q>
+      </Trans>
+    );
+    to = `/search?q=${encodeURIComponent(query)}&type=accounts`;
+    icon = 'group';
+  } else if (queryType === 'hashtags') {
+    label = (
+      <Trans>
+        Posts tagged with <mark>#{query.replace(/^#/, '')}</mark>
+      </Trans>
+    );
+    to = `/${instance}/t/${query.replace(/^#/, '')}`;
+    icon = 'hashtag';
+  } else {
+    // Default/general search
+    label = (
+      <Trans>
+        {query}{' '}
+        <small class="insignificant">‒ accounts, hashtags &amp; posts</small>
+      </Trans>
+    );
+    to = `/search?q=${encodeURIComponent(query)}`;
+    icon = 'search';
+  }
+
+  return { label, to, icon };
+};
 
 const SearchForm = forwardRef((props, ref) => {
   const { t } = useLingui();
@@ -32,6 +76,91 @@ const SearchForm = forwardRef((props, ref) => {
       searchFieldRef.current.blur();
     },
   }));
+
+  const searchHistory = useMemo(
+    () => getSearchHistory({ limit: 5 }),
+    [props?.hidden],
+  );
+
+  const searchSuggestionsData = useMemo(() => {
+    if (!query) return [];
+
+    const matchingHistory = searchHistory
+      .filter((historyItem) => {
+        // Filter out exact matches with current query
+        if (historyItem.query === query) return false;
+        // Check if history item contains the current query (case insensitive)
+        return historyItem.query.toLowerCase().includes(query.toLowerCase());
+      })
+      .slice(0, 2); // Max 2 recent searches
+
+    const recentSearchItems = matchingHistory.map((historyItem) => ({
+      ...generateSearchItemData(
+        historyItem.query,
+        historyItem.queryType,
+        instance,
+      ),
+      queryType: historyItem.queryType,
+      isRecentSearch: true,
+      historyItem,
+    }));
+
+    const allItems = [
+      // General search
+      {
+        ...generateSearchItemData(query, null, instance),
+        top: !type && !/\s/.test(query),
+        hidden: !!type,
+      },
+      // Recent searches
+      ...recentSearchItems,
+      // Posts search
+      {
+        ...generateSearchItemData(query, 'statuses', instance),
+        hidden: /^https?:/.test(query),
+        top: /\s/.test(query),
+        queryType: 'statuses',
+      },
+      // Hashtag search
+      {
+        ...generateSearchItemData(query, 'hashtags', instance),
+        hidden: /^@/.test(query) || /^https?:/.test(query) || /\s/.test(query),
+        top: /^#/.test(query),
+        type: 'link',
+        queryType: 'hashtags',
+      },
+      // URL lookup (unique case)
+      {
+        label: (
+          <Trans>
+            Look up <mark>{query}</mark>
+          </Trans>
+        ),
+        to: `/${query}`,
+        hidden: !/^https?:/.test(query),
+        top: /^https?:/.test(query),
+        type: 'link',
+        icon: 'arrow-right',
+      },
+      // Accounts search
+      {
+        ...generateSearchItemData(query, 'accounts', instance),
+        queryType: 'accounts',
+      },
+    ];
+
+    return allItems
+      .sort((a, b) => {
+        if (type) {
+          if (a.queryType === type) return -1;
+          if (b.queryType === type) return 1;
+        }
+        if (a.top && !b.top) return -1;
+        if (!a.top && b.top) return 1;
+        return 0;
+      })
+      .filter(({ hidden }) => !hidden);
+  }, [query, type, instance]);
 
   return (
     <form
@@ -61,6 +190,8 @@ const SearchForm = forwardRef((props, ref) => {
           }
         }
 
+        addToSearchHistory(query, type);
+
         props?.onSubmit?.(e);
       }}
     >
@@ -87,9 +218,13 @@ const SearchForm = forwardRef((props, ref) => {
         }}
         onFocus={() => {
           setSearchMenuOpen(true);
-          formRef.current
-            ?.querySelector('.search-popover-item')
-            ?.classList.add('focus');
+          // Focus first item
+          const firstItem = formRef.current?.querySelector(
+            '.search-popover-item',
+          );
+          if (firstItem) {
+            firstItem.classList.add('focus');
+          }
         }}
         onBlur={() => {
           setTimeout(() => {
@@ -158,9 +293,10 @@ const SearchForm = forwardRef((props, ref) => {
                     });
                   }
                 } else {
-                  const lastItem = document.querySelector(
-                    '.search-popover-item:last-child',
+                  const items = document.querySelectorAll(
+                    '.search-popover-item',
                   );
+                  const lastItem = items[items.length - 1];
                   if (lastItem) {
                     lastItem.classList.add('focus');
                   }
@@ -183,109 +319,74 @@ const SearchForm = forwardRef((props, ref) => {
           }
         }}
       />
-      <div class="search-popover" hidden={!searchMenuOpen || !query}>
-        {/* {!!query && (
-          <Link
-            to={`/search?q=${encodeURIComponent(query)}`}
-            class="search-popover-item focus"
-            onClick={(e) => {
-              props?.onSubmit?.(e);
-            }}
-          >
-            <Icon icon="search" />
-            <span>{query}</span>
-          </Link>
-        )} */}
-        {!!query &&
-          [
-            {
-              label: (
-                <Trans>
-                  {query}{' '}
-                  <small class="insignificant">
-                    ‒ accounts, hashtags &amp; posts
-                  </small>
-                </Trans>
-              ),
-              to: `/search?q=${encodeURIComponent(query)}`,
-              top: !type && !/\s/.test(query),
-              hidden: !!type,
-            },
-            {
-              label: (
-                <Trans>
-                  Posts with <q>{query}</q>
-                </Trans>
-              ),
-              to: `/search?q=${encodeURIComponent(query)}&type=statuses`,
-              hidden: /^https?:/.test(query),
-              top: /\s/.test(query),
-              icon: 'document',
-              queryType: 'statuses',
-            },
-            {
-              label: (
-                <Trans>
-                  Posts tagged with <mark>#{query.replace(/^#/, '')}</mark>
-                </Trans>
-              ),
-              to: `/${instance}/t/${query.replace(/^#/, '')}`,
-              hidden:
-                /^@/.test(query) || /^https?:/.test(query) || /\s/.test(query),
-              top: /^#/.test(query),
-              type: 'link',
-              icon: 'hashtag',
-              queryType: 'hashtags',
-            },
-            {
-              label: (
-                <Trans>
-                  Look up <mark>{query}</mark>
-                </Trans>
-              ),
-              to: `/${query}`,
-              hidden: !/^https?:/.test(query),
-              top: /^https?:/.test(query),
-              type: 'link',
-            },
-            {
-              label: (
-                <Trans>
-                  Accounts with <q>{query}</q>
-                </Trans>
-              ),
-              to: `/search?q=${encodeURIComponent(query)}&type=accounts`,
-              icon: 'group',
-              queryType: 'accounts',
-            },
-          ]
-            .sort((a, b) => {
-              if (type) {
-                if (a.queryType === type) return -1;
-                if (b.queryType === type) return 1;
+      <div class="search-popover" hidden={!searchMenuOpen}>
+        {/* Search History - show when no query */}
+        {!query && searchHistory.length > 0 && (
+          <div class="search-popover-recent-searches">
+            <div class="search-popover-header">
+              <Icon icon="history" size="s" />
+              <Trans>Recent searches</Trans>
+            </div>
+            {searchHistory.map((historyItem, i) => {
+              const { label, to, icon } = generateSearchItemData(
+                historyItem.query,
+                historyItem.queryType,
+                instance,
+              );
+
+              return (
+                <Link
+                  key={`${historyItem.query}-${historyItem.queryType}-${historyItem.timestamp}`}
+                  to={to}
+                  class={`search-popover-item ${i === 0 ? 'focus' : ''}`}
+                  onClick={(e) => {
+                    addToSearchHistory(
+                      historyItem.query,
+                      historyItem.queryType,
+                    );
+                    props?.onSubmit?.(e);
+                  }}
+                >
+                  <Icon icon={icon} class="more-insignificant" />
+                  <span>{label}</span>
+                </Link>
+              );
+            })}
+            <Link
+              to="/search"
+              class="search-popover-item search-history-see-all"
+            >
+              <Icon icon="more2" class="more-insignificant" />
+              <span>
+                <Trans>See all</Trans>
+              </span>
+            </Link>
+          </div>
+        )}
+
+        {/* Search Suggestions - show when there's a query */}
+        {searchSuggestionsData.map(
+          ({ label, to, icon, queryType, isRecentSearch, historyItem }, i) => (
+            <Link
+              key={
+                isRecentSearch
+                  ? `recent-${historyItem.query}-${historyItem.queryType}-${historyItem.timestamp}`
+                  : `suggestion-${queryType || 'general'}-${i}`
               }
-              if (a.top && !b.top) return -1;
-              if (!a.top && b.top) return 1;
-              return 0;
-            })
-            .filter(({ hidden }) => !hidden)
-            .map(({ label, to, icon, type }, i) => (
-              <Link
-                to={to}
-                class={`search-popover-item ${i === 0 ? 'focus' : ''}`}
-                // hidden={hidden}
-                onClick={(e) => {
-                  console.log('onClick', e);
-                  props?.onSubmit?.(e);
-                }}
-              >
-                <Icon
-                  icon={icon || (type === 'link' ? 'arrow-right' : 'search')}
-                  class="more-insignificant"
-                />
-                <span>{label}</span>{' '}
-              </Link>
-            ))}
+              to={to}
+              class={`search-popover-item ${isRecentSearch ? 'search-popover-item-recent' : ''} ${i === 0 ? 'focus' : ''}`}
+              onClick={(e) => {
+                if (!isRecentSearch) {
+                  addToSearchHistory(query, queryType);
+                }
+                props?.onSubmit?.(e);
+              }}
+            >
+              <Icon icon={icon} class="more-insignificant" />
+              <span>{label}</span>
+            </Link>
+          ),
+        )}
       </div>
     </form>
   );

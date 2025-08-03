@@ -2116,8 +2116,9 @@ const Textarea = forwardRef((props, ref) => {
                         <br><span class="bidi-isolate">@${encodeHTML(
                           acct,
                         )}</span>
-                        ${roles?.map(
-                          (role) => ` <span class="tag collapsed">
+                        ${
+                          roles?.map(
+                            (role) => ` <span class="tag collapsed">
                             ${role.name}
                             ${
                               !!accountInstance &&
@@ -2126,7 +2127,8 @@ const Textarea = forwardRef((props, ref) => {
                               </span>`
                             }
                           </span>`,
-                        )}
+                          ) || ''
+                        }
                       </span>
                     </li>
                   `;

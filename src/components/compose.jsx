@@ -328,7 +328,7 @@ function Compose({
           prefs['posting:default:language']?.toLowerCase() ||
           DEFAULT_LANG,
       );
-      setSensitive(sensitive && !!spoilerText);
+      setSensitive(sensitive || spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
         editStatus;

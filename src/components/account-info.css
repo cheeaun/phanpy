@@ -394,6 +394,9 @@
 .timeline-start .account-container .stats {
   flex-wrap: wrap;
 }
+.account-container .stats > * {
+  flex-shrink: 0;
+}
 .account-container .stats a:not(.insignificant) {
   color: inherit;
 }

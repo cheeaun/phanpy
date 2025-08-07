@@ -122,6 +122,7 @@ ul.link-list.hashtag-list li a {
   display: flex;
   gap: 8px;
   align-items: center;
+  border-radius: 0;
 }
 .search-popover-item[hidden] {
   display: none;
@@ -160,4 +161,97 @@ ul.link-list.hashtag-list li a {
 }
 .search-popover-item:is(:hover, :focus, .focus) > .icon {
   opacity: 1;
+}
+
+/* Recent search items styling */
+.search-popover-item-recent {
+  background-color: var(--bg-faded-blur-color);
+}
+.search-popover-item-recent:is(:hover, :focus, .focus) {
+  background-color: var(--link-bg-color);
+}
+
+.search-popover-header {
+  background-image: linear-gradient(
+    to bottom,
+    var(--outline-color),
+    transparent
+  );
+  text-shadow: 0 1px var(--bg-color);
+  padding: 8px 10px;
+  color: var(--text-insignificant-color);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.search-history-see-all {
+  font-size: smaller;
+  color: var(--text-insignificant-color) !important;
+}
+.search-history-see-all:is(:hover, :focus, .focus) {
+  color: var(--text-color) !important;
+  background-color: var(--link-bg-color) !important;
+}
+
+/* Hide recent searches in popover when on search page */
+#search-page .search-popover-recent-searches {
+  display: none;
+}
+
+/* Recent Searches */
+.recent-searches {
+  .recent-searches-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-inline-start: calc(16px + 12px);
+    padding-block-end: 8px;
+    text-align: start;
+  }
+
+  .recent-searches-list {
+    padding-block: 0 !important;
+  }
+
+  .recent-searches-item {
+    display: flex;
+    background-color: var(--bg-faded-blur-color);
+    align-items: center;
+
+    @media (min-width: 40em) {
+      background-color: var(--bg-blur-color);
+    }
+
+    --radius: 8px;
+    &:first-child {
+      border-start-start-radius: var(--radius);
+      border-start-end-radius: var(--radius);
+    }
+    &:last-child {
+      border-end-start-radius: var(--radius);
+      border-end-end-radius: var(--radius);
+    }
+
+    button {
+      margin: 0 8px;
+    }
+  }
+
+  .recent-searches-link {
+    flex-grow: 1;
+    font-weight: normal;
+  }
+
+  .recent-searches-label :is(mark, q) {
+    color: var(--text-color);
+    background-color: var(--link-bg-color);
+    unicode-bidi: isolate;
+    direction: initial;
+  }
 }

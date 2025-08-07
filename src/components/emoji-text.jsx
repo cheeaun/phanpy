@@ -8,7 +8,7 @@ const shortcodesRegexp = mem((shortcodes) => {
   return new RegExp(`:(${shortcodes.join('|')}):`, 'g');
 });
 
-function EmojiText({ text, emojis }) {
+function EmojiText({ text, emojis, staticEmoji }) {
   if (!text) return '';
   if (!emojis?.length) return text;
   if (text.indexOf(':') === -1) return text;
@@ -23,9 +23,9 @@ function EmojiText({ text, emojis }) {
       const { url, staticUrl } = emoji;
       return (
         <CustomEmoji
-          staticUrl={staticUrl}
+          staticUrl={staticEmoji ? undefined : staticUrl}
           alt={word}
-          url={url}
+          url={staticEmoji ? staticUrl || url : url}
           key={word + '-' + i} // Handle >= 2 same shortcodes
         />
       );

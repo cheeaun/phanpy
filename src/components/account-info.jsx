@@ -1,7 +1,7 @@
 import './account-info.css';
 
 import { msg, plural } from '@lingui/core/macro';
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -15,6 +15,7 @@ import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import getDomain from '../utils/get-domain';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import i18nDuration from '../utils/i18n-duration';
@@ -244,13 +245,7 @@ function AccountInfo({
     }
   }, [isSelf, info, instance]);
 
-  const accountInstance = useMemo(() => {
-    if (!url) return null;
-    const hostname = URL.parse(url)?.hostname;
-    if (!hostname) return null;
-    const domain = punycode.toUnicode(hostname);
-    return domain;
-  }, [url]);
+  const accountInstance = getDomain(url);
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
@@ -804,10 +799,25 @@ function AccountInfo({
                           </span>
                         </span>
                       )}
-                      <span title={followersCount}>
-                        {shortenNumber(followersCount)}
-                      </span>{' '}
-                      <Trans>Followers</Trans>
+                      <Plural
+                        value={followersCount}
+                        one={
+                          <Trans>
+                            <span title={followersCount}>
+                              {shortenNumber(followersCount)}
+                            </span>{' '}
+                            Follower
+                          </Trans>
+                        }
+                        other={
+                          <Trans>
+                            <span title={followersCount}>
+                              {shortenNumber(followersCount)}
+                            </span>{' '}
+                            Followers
+                          </Trans>
+                        }
+                      />
                     </LinkOrDiv>
                     <LinkOrDiv
                       class="insignificant"
@@ -833,10 +843,17 @@ function AccountInfo({
                         }, 0);
                       }}
                     >
-                      <span title={followingCount}>
-                        {shortenNumber(followingCount)}
-                      </span>{' '}
-                      <Trans id="following.stats">Following</Trans>
+                      <Plural
+                        value={followingCount}
+                        other={
+                          <Trans>
+                            <span title={followingCount}>
+                              {shortenNumber(followingCount)}
+                            </span>{' '}
+                            Following
+                          </Trans>
+                        }
+                      />
                       <br />
                     </LinkOrDiv>
                     <LinkOrDiv
@@ -850,10 +867,25 @@ function AccountInfo({
                       //       }
                       // }
                     >
-                      <span title={statusesCount}>
-                        {shortenNumber(statusesCount)}
-                      </span>{' '}
-                      <Trans>Posts</Trans>
+                      <Plural
+                        value={statusesCount}
+                        one={
+                          <Trans>
+                            <span title={statusesCount}>
+                              {shortenNumber(statusesCount)}
+                            </span>{' '}
+                            Post
+                          </Trans>
+                        }
+                        other={
+                          <Trans>
+                            <span title={statusesCount}>
+                              {shortenNumber(statusesCount)}
+                            </span>{' '}
+                            Posts
+                          </Trans>
+                        }
+                      />
                     </LinkOrDiv>
                     {!!createdAt && (
                       <div class="insignificant">

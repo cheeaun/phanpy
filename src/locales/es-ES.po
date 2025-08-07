@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-05 04:12\n"
+"PO-Revision-Date: 2025-08-05 13:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -179,18 +179,18 @@ msgstr "Este usuario ha optado por no hacer esta información disponible."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:802
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural,one {<0>{0}</0> Seguidor}other {<1>{1}</1> Seguidores}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:846
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural,other {<0>{0}</0> Siguiendo}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:870
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural,one {<0>{0}</0> Publicación} other {<1>{1}</1> Publicaciones}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })

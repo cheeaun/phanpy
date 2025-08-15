@@ -57,10 +57,12 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
     },
   );
 
+  const hidden = !showSearch;
+
   return (
     <div
       id="search-command-container"
-      hidden={!showSearch}
+      hidden={hidden}
       onClick={(e) => {
         console.log(e);
         if (e.target === e.currentTarget) {
@@ -70,6 +72,7 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
     >
       <SearchForm
         ref={searchFormRef}
+        hidden={hidden}
         onSubmit={() => {
           closeSearch();
         }}

@@ -21,7 +21,10 @@ import { api } from '../utils/api';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
-import { isMediaFirstInstance } from '../utils/store-utils';
+import {
+  getCurrentAccountID,
+  isMediaFirstInstance,
+} from '../utils/store-utils';
 import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
@@ -291,6 +294,11 @@ function AccountStatuses() {
   }, [id, mediaFirst]);
 
   const { displayName, acct, emojis } = account || {};
+
+  const isSelf = useMemo(
+    () => account?.id === getCurrentAccountID(),
+    [account?.id],
+  );
 
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
@@ -593,7 +601,7 @@ function AccountStatuses() {
           </Menu2>
         }
       />
-      {acct && (
+      {acct && !isSelf && (
         <data
           class="compose-data"
           value={JSON.stringify({

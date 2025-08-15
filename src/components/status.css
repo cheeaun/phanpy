@@ -2239,12 +2239,14 @@ a.card:is(:hover, :focus):visited {
   border: 1.5px solid transparent;
   backdrop-filter: none;
 }
-.status .action > button.plain:not(:disabled):is(:hover, :focus) {
-  color: var(--link-color);
-  background-color: var(--button-plain-bg-hover-color);
-}
-.status .action > button.plain.reblog-button:not(:disabled):is(:hover, :focus) {
-  color: var(--reblog-color);
+@media (hover: hover) {
+  .status .action > button.plain:not(:disabled):hover {
+    color: var(--link-color);
+    background-color: var(--button-plain-bg-hover-color);
+  }
+  .status .action > button.plain.reblog-button:not(:disabled):hover {
+    color: var(--reblog-color);
+  }
 }
 .status .action > button.plain.reblog-button.checked {
   color: var(--reblog-color);
@@ -2268,8 +2270,10 @@ a.card:is(:hover, :focus):visited {
 .status .action > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
-.status .action > button.plain.favourite-button:is(:hover, :focus) {
-  color: var(--favourite-color);
+@media (hover: hover) {
+  .status .action > button.plain.favourite-button:hover {
+    color: var(--favourite-color);
+  }
 }
 .status .action > button.plain.favourite-button.checked {
   color: var(--favourite-color);

@@ -45,7 +45,7 @@
 
 @media (min-width: 40em) {
   #search-command-container {
-    align-items: center;
+    padding-top: max(calc(50vh - 10em), 16px);
     background-image: radial-gradient(
       closest-side,
       var(--backdrop-color),

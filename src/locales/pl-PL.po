@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-15 15:40\n"
+"PO-Revision-Date: 2025-08-15 17:19\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -179,18 +179,18 @@ msgstr "Ta osoba nie udostępnia tych informacji."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:802
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> obserwujący} few {<1>{1}</1> obserwujących} many {<1>{1}</1> obserwujących} other {<1>{1}</1> obserwujących}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:846
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr "{followingCount, plural, one {} few {<0>{0}</0> obserwowanych} many {<0>{0}</0> obserwowanych}other {<0>{0}</0> obserwowanych}}"
+msgstr "{followingCount, plural, one {<0>{0}</0> obserwowany} few {<0>{0}</0> obserwowanych} many {<0>{0}</0> obserwowanych}other {<0>{0}</0> obserwowanych}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:870
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> wpis} few {<1>{1}</1> wpisy} many {<1>{1}</1> wpisy} other {<1>{1}</1> wpisów}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })

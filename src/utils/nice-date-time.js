@@ -3,14 +3,15 @@ import { i18n } from '@lingui/core';
 import localeMatch from './locale-match';
 import mem from './mem';
 
-const defaultLocale = mem(
-  () => new Intl.DateTimeFormat().resolvedOptions().locale,
-);
+const locales = mem(() => [
+  ...navigator.languages,
+  new Intl.DateTimeFormat().resolvedOptions().locale,
+]);
 
 const _DateTimeFormat = (opts) => {
   const { locale, dateYear, hideTime, formatOpts, forceOpts } = opts || {};
   const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
-  const loc = localeMatch([regionlessLocale], [defaultLocale], locale);
+  const loc = localeMatch([regionlessLocale], locales(), locale);
   const currentYear = new Date().getFullYear();
   const options = forceOpts || {
     // Show year if not current year

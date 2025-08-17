@@ -4054,11 +4054,11 @@ const handledUnfulfilledStates = [
 ];
 const unfulfilledText = {
   filterHidden: msg`Post hidden by your filters`,
-  deleted: msg`Post removed by author.`,
-  unauthorized: msg`You’re not authorized to view this post.`,
-  pending: msg`Post pending author approval.`,
-  rejected: msg`Quoting not allowed by the author.`,
-  revoked: msg`Quoting not allowed by the author.`,
+  pending: msg`Post pending`,
+  deleted: msg`Post unavailable`,
+  unauthorized: msg`Post unavailable`,
+  rejected: msg`Post unavailable`,
+  revoked: msg`Post unavailable`,
 };
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {

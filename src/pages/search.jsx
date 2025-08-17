@@ -12,6 +12,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import NavMenu from '../components/nav-menu';
+import RecentSearches from '../components/recent-searches';
 import SearchForm from '../components/search-form';
 import Status from '../components/status';
 import { api } from '../utils/api';
@@ -579,11 +580,14 @@ function Search({ columnMode, ...props }) {
               <Loader abrupt />
             </p>
           ) : (
-            <p class="ui-state">
-              <Trans>
-                Enter your search term or paste a URL above to get started.
-              </Trans>
-            </p>
+            <>
+              <p class="ui-state insignificant">
+                <Trans>
+                  Enter your search term or paste a URL above to get started.
+                </Trans>
+              </p>
+              <RecentSearches />
+            </>
           )}
         </main>
       </div>

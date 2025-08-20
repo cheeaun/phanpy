@@ -1083,9 +1083,7 @@ function Status({
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   const [differentLanguage, setDifferentLanguage] = useState(
-    () =>
-      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] ||
-      checkDifferentLanguage(language, contentTranslationHideLanguages),
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages],
   );
   useEffect(() => {
     if (!language || differentLanguage) {
@@ -1106,7 +1104,7 @@ function Status({
       if (different) setDifferentLanguage(different);
     }, 1);
     return () => clearTimeout(timeout);
-  }, [language, differentLanguage, contentTranslationHideLanguages]);
+  }, [language, differentLanguage]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();

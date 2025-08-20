@@ -1,6 +1,8 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import DateTimeFormat from '../src/utils/date-time-format.js';
+import DateTimeFormat, {
+  refreshLocales,
+} from '../src/utils/date-time-format.js';
 
 // Store original navigator properties for cleanup
 let originalLanguage;
@@ -22,6 +24,9 @@ const mockNavigator = (language, languages) => {
     get: () => languages || [language],
     configurable: true,
   });
+
+  // Automatically refresh locales after mocking
+  refreshLocales();
 };
 
 // Reset navigator to original state

@@ -1,13 +1,23 @@
-import localeMatch from './locale-match';
-import mem from './mem';
+import localeMatch from './locale-match.js';
+import mem from './mem.js';
 
-const locales = [...navigator.languages];
-try {
-  const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
-  if (!locales.includes(dtfLocale)) {
-    locales.push(dtfLocale);
-  }
-} catch {}
+function initLocales() {
+  const newLocales = [...navigator.languages];
+  try {
+    const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+    if (!newLocales.includes(dtfLocale)) {
+      newLocales.push(dtfLocale);
+    }
+  } catch {}
+  return newLocales;
+}
+
+let locales = initLocales();
+
+// For testing: refresh locales from current navigator state
+export function refreshLocales() {
+  locales = initLocales();
+}
 
 const createLocale = mem((language, options = {}) => {
   try {

@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-05 04:12\n"
+"PO-Revision-Date: 2025-08-12 16:26\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -179,18 +179,18 @@ msgstr "Erabiltzaileak informazio hau publiko ez egitea aukeratu du."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:802
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {Jarraitzaile <0>{0}</0>} other {<1>{1}</1> jarraitzaile}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:846
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, one {}other {<0>{0}</0> jarraitzen}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:870
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {Bidalketa <0>{0}</0>} other {<1>{1}</1> bidalketa}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -2580,14 +2580,14 @@ msgstr "Iragazkiek ezkutatutako bidalketa"
 
 #: src/components/status.jsx:4057
 msgid "Post pending"
-msgstr ""
+msgstr "Bidalketa zain dago"
 
 #: src/components/status.jsx:4058
 #: src/components/status.jsx:4059
 #: src/components/status.jsx:4060
 #: src/components/status.jsx:4061
 msgid "Post unavailable"
-msgstr ""
+msgstr "Bidalketa ez dago eskuragarri"
 
 #: src/components/timeline.jsx:485
 #: src/pages/settings.jsx:1218

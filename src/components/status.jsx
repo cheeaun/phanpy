@@ -81,6 +81,7 @@ import Link from './link';
 import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
+import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
@@ -2064,6 +2065,12 @@ function Status({
                   showAcct={isSizeLarge}
                 />
               </span>
+              {withinContext && isThread && (
+                <ThreadBadge
+                  showIcon={isSizeLarge}
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
+              )}
               {/* {inReplyToAccount && !withinContext && size !== 's' && (
                 <>
                   {' '}
@@ -2206,15 +2213,11 @@ function Status({
           {!withinContext && (
             <>
               {isThread ? (
-                <div class="status-thread-badge">
-                  <Icon icon="thread" size="s" />
-                  <Trans>
-                    Thread
-                    {snapStates.statusThreadNumber[sKey]
-                      ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-                      : ''}
-                  </Trans>
-                </div>
+                <ThreadBadge
+                  showIcon
+                  showText
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
               ) : (
                 !!inReplyToId &&
                 !!inReplyToAccount &&

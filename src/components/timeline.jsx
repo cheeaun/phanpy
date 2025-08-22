@@ -31,6 +31,7 @@ import Link from './link';
 import MediaPost from './media-post';
 import NavMenu from './nav-menu';
 import Status from './status';
+import ThreadBadge from './thread-badge';
 
 const scrollIntoViewOptions = {
   block: 'start',
@@ -980,18 +981,9 @@ function TimelineStatusCompact({ status, instance, filterContext }) {
       }`}
       tabindex="-1"
     >
-      {!!snapStates.statusThreadNumber[sKey] ? (
-        <div class="status-thread-badge">
-          <Icon icon="thread" size="s" alt={t`Thread`} />
-          {snapStates.statusThreadNumber[sKey]
-            ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-            : ''}
-        </div>
-      ) : (
-        <div class="status-thread-badge">
-          <Icon icon="thread" size="s" alt={t`Thread`} />
-        </div>
-      )}
+      <div class="status-thread-badge-container">
+        <ThreadBadge index={snapStates.statusThreadNumber[sKey]} />
+      </div>
       <div
         class="content-compact"
         title={statusPeekText}

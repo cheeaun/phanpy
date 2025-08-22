@@ -17,7 +17,8 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "formatting-check": "npx biome check"
+    "formatting-check": "npx biome check",
+    "git:po-filter": "git config --local diff.po-filter.textconv \"sed 's/:[0-9]*$//'\""
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "~0.6.1",

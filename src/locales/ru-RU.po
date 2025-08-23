@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-23 11:16\n"
+"PO-Revision-Date: 2025-08-23 15:26\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "Взаимная подписка"
 
 #: src/components/account-block.jsx:204
-#: src/components/account-info.jsx:1907
+#: src/components/account-info.jsx:1912
 msgid "Requested"
 msgstr "Запрос отправлен"
 
 #: src/components/account-block.jsx:208
-#: src/components/account-info.jsx:1898
+#: src/components/account-info.jsx:1903
 msgid "Following"
 msgstr "Подписка"
 
@@ -162,7 +162,7 @@ msgstr "Открыть изображение-шапку"
 
 #: src/components/account-info.jsx:681
 #: src/components/account-info.jsx:1806
-#: src/components/account-info.jsx:2332
+#: src/components/account-info.jsx:2337
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
@@ -343,7 +343,7 @@ msgstr "Показать рекомендуемые профили"
 
 #: src/components/account-info.jsx:1462
 #: src/components/account-info.jsx:1472
-#: src/components/account-info.jsx:2078
+#: src/components/account-info.jsx:2083
 msgid "Add/Remove from Lists"
 msgstr "Управление списками"
 
@@ -449,24 +449,24 @@ msgstr "Отозвать запрос на подписку?"
 msgid "Unfollow @{0}?"
 msgstr "Отписаться от @{0}?"
 
-#: src/components/account-info.jsx:1901
+#: src/components/account-info.jsx:1906
 msgid "Unfollow…"
 msgstr "Отписаться…"
 
-#: src/components/account-info.jsx:1910
+#: src/components/account-info.jsx:1915
 msgid "Withdraw…"
 msgstr "Отозвать…"
 
-#: src/components/account-info.jsx:1917
-#: src/components/account-info.jsx:1921
+#: src/components/account-info.jsx:1922
+#: src/components/account-info.jsx:1926
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Подписаться"
 
-#: src/components/account-info.jsx:2018
-#: src/components/account-info.jsx:2073
-#: src/components/account-info.jsx:2207
-#: src/components/account-info.jsx:2327
+#: src/components/account-info.jsx:2023
+#: src/components/account-info.jsx:2078
+#: src/components/account-info.jsx:2212
+#: src/components/account-info.jsx:2332
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:892
 #: src/components/compose.jsx:2775
@@ -499,85 +499,85 @@ msgstr "Подписаться"
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/components/account-info.jsx:2023
+#: src/components/account-info.jsx:2028
 msgid "Translated Bio"
 msgstr "Перевод поля «О себе»"
 
-#: src/components/account-info.jsx:2118
+#: src/components/account-info.jsx:2123
 msgid "Unable to remove from list."
 msgstr "Не удалось убрать из списка."
 
-#: src/components/account-info.jsx:2119
+#: src/components/account-info.jsx:2124
 msgid "Unable to add to list."
 msgstr "Не удалось добавить в список."
 
-#: src/components/account-info.jsx:2138
+#: src/components/account-info.jsx:2143
 #: src/pages/lists.jsx:131
 msgid "Unable to load lists."
 msgstr "Не удалось загрузить списки."
 
-#: src/components/account-info.jsx:2142
+#: src/components/account-info.jsx:2147
 msgid "No lists."
 msgstr "Списки отсутствуют."
 
-#: src/components/account-info.jsx:2153
+#: src/components/account-info.jsx:2158
 #: src/components/list-add-edit.jsx:41
 #: src/pages/lists.jsx:62
 msgid "New list"
 msgstr "Новый список"
 
 #. placeholder {0}: account?.username || account?.acct
-#: src/components/account-info.jsx:2212
+#: src/components/account-info.jsx:2217
 msgid "Private note about <0>@{0}</0>"
 msgstr "Личная заметка о <0>@{0}</0>"
 
-#: src/components/account-info.jsx:2242
+#: src/components/account-info.jsx:2247
 msgid "Unable to update private note."
 msgstr "Не удалось обновить личную заметку."
 
-#: src/components/account-info.jsx:2265
-#: src/components/account-info.jsx:2563
+#: src/components/account-info.jsx:2270
+#: src/components/account-info.jsx:2568
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/account-info.jsx:2270
+#: src/components/account-info.jsx:2275
 msgid "Save & close"
 msgstr "Сохранить и закрыть"
 
-#: src/components/account-info.jsx:2387
+#: src/components/account-info.jsx:2392
 msgid "Unable to update profile."
 msgstr "Не удалось обновить профиль."
 
-#: src/components/account-info.jsx:2394
+#: src/components/account-info.jsx:2399
 msgid "Header picture"
 msgstr "Изображение заголовка"
 
-#: src/components/account-info.jsx:2446
+#: src/components/account-info.jsx:2451
 msgid "Profile picture"
 msgstr "Изображение профиля"
 
-#: src/components/account-info.jsx:2498
+#: src/components/account-info.jsx:2503
 #: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr "Название"
 
-#: src/components/account-info.jsx:2511
+#: src/components/account-info.jsx:2516
 msgid "Bio"
 msgstr "О себе"
 
-#: src/components/account-info.jsx:2524
+#: src/components/account-info.jsx:2529
 msgid "Extra fields"
 msgstr "Дополнительные поля"
 
-#: src/components/account-info.jsx:2530
+#: src/components/account-info.jsx:2535
 msgid "Label"
 msgstr "Заголовок"
 
-#: src/components/account-info.jsx:2533
+#: src/components/account-info.jsx:2538
 msgid "Content"
 msgstr "Содержание"
 
-#: src/components/account-info.jsx:2566
+#: src/components/account-info.jsx:2571
 #: src/components/list-add-edit.jsx:152
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
@@ -585,20 +585,20 @@ msgstr "Содержание"
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/components/account-info.jsx:2620
+#: src/components/account-info.jsx:2625
 msgid "username"
 msgstr "имя пользователя"
 
-#: src/components/account-info.jsx:2624
+#: src/components/account-info.jsx:2629
 msgid "server domain name"
 msgstr "доменное имя сервера"
 
 #. placeholder {0}: info.username
-#: src/components/account-info.jsx:2690
+#: src/components/account-info.jsx:2695
 msgid "Profiles featured by @{0}"
 msgstr "Профили, которые рекомендует @{0}"
 
-#: src/components/account-info.jsx:2716
+#: src/components/account-info.jsx:2721
 msgid "No featured profiles."
 msgstr "Нет рекомендуемых профилей."
 
@@ -2593,12 +2593,12 @@ msgstr "Обсуждение"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Обсуждение {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Обсуждение {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
@@ -3961,11 +3961,11 @@ msgstr "Не удалось загрузить ответы."
 
 #: src/pages/status.jsx:1146
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural, one {# месяц спустя} other {# месяц(а/ев) спустя}}"
 
 #: src/pages/status.jsx:1152
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural, one {# год спустя} other {# года спустя}}"
 
 #: src/pages/status.jsx:1275
 msgid "Back"

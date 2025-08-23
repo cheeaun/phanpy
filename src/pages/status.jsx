@@ -1,7 +1,8 @@
 import './status.css';
 
+import { plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Menu, MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
+import { MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import debounce from 'just-debounce-it';
 import pRetry from 'p-retry';
 import { memo } from 'preact/compat';
@@ -75,7 +76,6 @@ const STATUS_URL_REGEX = /\/s\//i;
 import { ThreadCountContext } from '../utils/thread-count-context';
 
 function StatusPage(params) {
-  const { t } = useLingui();
   const { id } = params;
   const { masto, instance } = api({ instance: params.instance });
   const snapStates = useSnapshot(states);
@@ -274,6 +274,8 @@ function StatusParent(props) {
 function createdAtSort(a, b) {
   return new Date(b.created_at) - new Date(a.created_at);
 }
+
+const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 30;
 
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const { t } = useLingui();
@@ -497,6 +499,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           weight: calcStatusWeight(s),
           level: 1,
           replies: expandReplies(s.__replies, 1),
+          createdAt: s.createdAt,
         }));
         const allStatuses = [
           ...ancestors.map((s) => ({
@@ -507,11 +510,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             account: s.account,
             repliesCount: s.repliesCount,
             weight: calcStatusWeight(s),
+            createdAt: s.createdAt,
           })),
           {
             id,
             accountID: heroStatus.account.id,
             weight: calcStatusWeight(heroStatus),
+            createdAt: heroStatus.createdAt,
           },
           ...mappedNestedDescendants,
         ];
@@ -1134,10 +1139,82 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     return ids.map((id) => statusKey(id, instance));
   }, [showMore, statuses, limit, instance]);
 
-  const statusesList = useMemo(
-    () => statuses.slice(0, limit).map(renderStatus),
-    [statuses, limit, renderStatus],
-  );
+  // Helper function to format time differences between two dates
+  function formatTimeGap(months) {
+    if (months < 12) {
+      return plural(months, {
+        one: '# month later',
+        other: '# months later',
+      });
+    } else {
+      const years = Math.floor(months / 12);
+      return plural(years, {
+        one: '# year later',
+        other: '# years later',
+      });
+    }
+  }
+
+  const statusesList = useMemo(() => {
+    const result = [];
+    const slicedStatuses = statuses.slice(0, limit);
+
+    for (let i = 0; i < slicedStatuses.length; i++) {
+      const status = slicedStatuses[i];
+
+      // Add time gap indicator if needed
+      if (i > 0) {
+        const prevStatus = slicedStatuses[i - 1];
+
+        const { createdAt, descendant, thread, id } = status;
+
+        if (prevStatus?.createdAt && createdAt) {
+          const currentDate = Date.parse(createdAt);
+          if (isFinite(currentDate) && currentDate > MONTH_IN_MS) {
+            const prevDate = Date.parse(prevStatus.createdAt);
+
+            if (prevDate && isFinite(prevDate)) {
+              const { ancestor, id: prevID } = prevStatus;
+              const timeDiff = currentDate - prevDate;
+              const monthsDiff = ~~(timeDiff / MONTH_IN_MS);
+
+              if (monthsDiff > 0) {
+                result.push(
+                  <li
+                    key={`time-gap-${id}-${prevID}`}
+                    style={{
+                      '--time-gap-range': Math.min(12, monthsDiff),
+                    }}
+                    class={`time-gap ${ancestor ? 'ancestor' : ''} ${descendant ? 'descendant' : ''} ${
+                      thread ? 'thread' : ''
+                    }`}
+                  >
+                    {formatTimeGap(monthsDiff)}
+                  </li>,
+                );
+              } else {
+                // NOTE: For testing purposes
+                // result.push(
+                //   <li
+                //     key={`time-gap-${id}`}
+                //     class={`time-gap ${ancestor ? 'ancestor' : ''} ${descendant ? 'descendant' : ''} ${
+                //       thread ? 'thread' : ''
+                //     }`}
+                //   >
+                //     One eternity later
+                //   </li>,
+                // );
+              }
+            }
+          }
+        }
+      }
+
+      result.push(renderStatus(status, i));
+    }
+
+    return result;
+  }, [statuses, limit, renderStatus]);
 
   // If there's spoiler in hero status, auto-expand it
   useEffect(() => {

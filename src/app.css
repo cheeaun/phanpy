@@ -898,6 +898,35 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   }
 }
 
+.timeline.contextual .time-gap {
+  padding-block: calc(24px + var(--time-gap-range, 0) * 4px) !important;
+  padding-inline-start: calc(var(--line-start) + 16px);
+  padding-inline-end: 16px;
+  color: var(--text-insignificant-color);
+  font-style: italic;
+  font-size: 0.9em;
+  position: relative;
+
+  &:before {
+    content: none !important;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--line-start);
+    width: var(--line-width);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent var(--line-width),
+      var(--bg-color) var(--line-width),
+      var(--bg-color) calc(var(--line-width) * 2)
+    );
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+  }
+}
+
 .timeline-deck.compact .status {
   max-height: max(25vh, 160px);
   overflow: hidden;

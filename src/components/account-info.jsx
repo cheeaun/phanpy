@@ -1874,7 +1874,12 @@ function RelatedActions({
                       setRelationship(newRelationship);
 
                       // Show endorsements if start following
-                      if (newRelationship.following) {
+                      if (
+                        showEndorsements &&
+                        supportsEndorsements &&
+                        !renderEndorsements &&
+                        newRelationship.following
+                      ) {
                         setRenderEndorsements('onlyOpenIfHasEndorsements');
                       }
                     }

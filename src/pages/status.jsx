@@ -527,7 +527,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             : mappedNestedDescendants.filter((s) => s.thread);
         const threadsCount =
           (ancestorsIsThread ? ancestors.length : 0) + descendantsThread.length;
-        if (threadsCount) {
+        if (threadsCount > 0 && threadsCount < 100) {
+          // Cap at 100 because there's no point showing 100+
           // Include hero as part of thread count
           setThreadsCount(threadsCount + 1);
         }

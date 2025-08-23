@@ -13,7 +13,7 @@ function ThreadBadge({ index, showIcon, showText }) {
   const { t } = useLingui();
   const total = useContext(ThreadCountContext);
   const hasIndex = index > 0;
-  const hasTotal = (total || 0) > 0;
+  const hasTotal = total > 0;
 
   return (
     <div class="status-thread-badge">

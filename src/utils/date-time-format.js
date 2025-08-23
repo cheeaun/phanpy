@@ -6,7 +6,7 @@ function initLocales() {
   try {
     const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
     if (!newLocales.includes(dtfLocale)) {
-      newLocales.push(dtfLocale);
+      newLocales.unshift(dtfLocale);
     }
   } catch {}
   return newLocales;

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-22 05:59\n"
+"PO-Revision-Date: 2025-08-23 11:15\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -124,7 +124,7 @@ msgstr "投稿"
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1323
+#: src/pages/status.jsx:1401
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "その他"
@@ -226,8 +226,8 @@ msgstr "オリジナル"
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
-#: src/pages/status.jsx:1040
-#: src/pages/status.jsx:1670
+#: src/pages/status.jsx:1046
+#: src/pages/status.jsx:1748
 msgid "Replies"
 msgstr "返信"
 
@@ -495,7 +495,7 @@ msgstr "フォロー"
 #: src/pages/notifications.jsx:942
 #: src/pages/scheduled-posts.jsx:259
 #: src/pages/settings.jsx:90
-#: src/pages/status.jsx:1410
+#: src/pages/status.jsx:1488
 msgid "Close"
 msgstr "閉じる"
 
@@ -1106,7 +1106,7 @@ msgstr "アカウント"
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:922
 #: src/pages/search.jsx:562
-#: src/pages/status.jsx:1443
+#: src/pages/status.jsx:1521
 msgid "Show more…"
 msgstr "もっと見る…"
 
@@ -1511,7 +1511,7 @@ msgstr "アカウント…"
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:32
 #: src/pages/login.jsx:199
-#: src/pages/status.jsx:940
+#: src/pages/status.jsx:946
 #: src/pages/welcome.jsx:65
 msgid "Log in"
 msgstr "ログイン"
@@ -1733,8 +1733,8 @@ msgstr ""
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1312
-#: src/pages/status.jsx:1335
+#: src/pages/status.jsx:1390
+#: src/pages/status.jsx:1413
 msgid "Refresh"
 msgstr "更新"
 
@@ -2618,8 +2618,8 @@ msgstr "新しい投稿"
 #: src/components/timeline.jsx:587
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:898
-#: src/pages/status.jsx:1093
-#: src/pages/status.jsx:1472
+#: src/pages/status.jsx:1099
+#: src/pages/status.jsx:1550
 msgid "Try again"
 msgstr ""
 
@@ -3935,90 +3935,98 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:673
-#: src/pages/status.jsx:1237
+#: src/pages/status.jsx:679
+#: src/pages/status.jsx:1315
 msgid "post.title"
 msgstr ""
 
-#: src/pages/status.jsx:927
+#: src/pages/status.jsx:933
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:947
+#: src/pages/status.jsx:953
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:975
+#: src/pages/status.jsx:981
 msgid "Error: {e}"
 msgstr ""
 
-#: src/pages/status.jsx:982
+#: src/pages/status.jsx:988
 msgid "Switch to my instance to enable interactions"
 msgstr ""
 
-#: src/pages/status.jsx:1084
+#: src/pages/status.jsx:1090
 msgid "Unable to load replies."
 msgstr ""
 
-#: src/pages/status.jsx:1197
+#: src/pages/status.jsx:1146
+msgid "{months, plural, one {# month later} other {# months later}}"
+msgstr ""
+
+#: src/pages/status.jsx:1152
+msgid "{years, plural, one {# year later} other {# years later}}"
+msgstr ""
+
+#: src/pages/status.jsx:1275
 msgid "Back"
 msgstr ""
 
-#: src/pages/status.jsx:1228
+#: src/pages/status.jsx:1306
 msgid "Go to main post"
 msgstr ""
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1251
+#: src/pages/status.jsx:1329
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
 
-#: src/pages/status.jsx:1299
-#: src/pages/status.jsx:1362
+#: src/pages/status.jsx:1377
+#: src/pages/status.jsx:1440
 msgid "Switch to Side Peek view"
 msgstr ""
 
-#: src/pages/status.jsx:1363
+#: src/pages/status.jsx:1441
 msgid "Switch to Full view"
 msgstr ""
 
-#: src/pages/status.jsx:1381
+#: src/pages/status.jsx:1459
 msgid "Show all sensitive content"
 msgstr ""
 
-#: src/pages/status.jsx:1386
+#: src/pages/status.jsx:1464
 msgid "Experimental"
 msgstr ""
 
-#: src/pages/status.jsx:1395
+#: src/pages/status.jsx:1473
 msgid "Unable to switch"
 msgstr ""
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1402
+#: src/pages/status.jsx:1480
 msgid "Switch to post's instance ({0})"
 msgstr ""
 
-#: src/pages/status.jsx:1405
+#: src/pages/status.jsx:1483
 msgid "Switch to post's instance"
 msgstr ""
 
-#: src/pages/status.jsx:1463
+#: src/pages/status.jsx:1541
 msgid "Unable to load post"
 msgstr ""
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1600
+#: src/pages/status.jsx:1678
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1618
+#: src/pages/status.jsx:1696
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
 
-#: src/pages/status.jsx:1640
+#: src/pages/status.jsx:1718
 msgid "View post with its replies"
 msgstr ""
 
